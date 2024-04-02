@@ -96,14 +96,14 @@ public class SiteInitializerSerializerImpl
 				"documents/group", zipWriter);
 			_serializeDDMStructures(groupId, zipWriter);
 			_serializeDDMTemplates(groupId, zipWriter);
-			_serializeLayoutPageTemplates(groupId, zipWriter);
-			_serializeLayouts(groupId, "layouts", zipWriter);
 			_serializeJournalArticles(
 				groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				"journal-articles", zipWriter);
+			_serializeLayoutPageTemplates(groupId, zipWriter);
+			_serializeLayoutUtilityPageEntries(groupId, zipWriter);
+			_serializeLayouts(groupId, "layouts", zipWriter);
 			_serializeStyleBookEntries(groupId, zipWriter);
 			_serializeUserAccounts(groupId, zipWriter);
-			_serializeUtilityLayouts(groupId, zipWriter);
 
 			return zipWriter.getFile();
 		}
@@ -464,6 +464,53 @@ public class SiteInitializerSerializerImpl
 			zipWriter);
 	}
 
+	private void _serializeLayoutUtilityPageEntries(
+			long groupId, ZipWriter zipWriter)
+		throws Exception {
+
+		List<LayoutUtilityPageEntry> layoutUtilityPageEntries =
+			_layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
+				groupId);
+
+		long[] layoutUtilityPageEntryIds =
+			new long[layoutUtilityPageEntries.size()];
+
+		for (int index = 0; index < layoutUtilityPageEntries.size(); index++) {
+			layoutUtilityPageEntryIds[index] = layoutUtilityPageEntries.get(
+				index
+			).getLayoutUtilityPageEntryId();
+		}
+
+		File layoutUtilityPageEntriesFile =
+			_layoutsExporter.exportLayoutUtilityPageEntries(
+				layoutUtilityPageEntryIds);
+
+		ZipReader zipReader = null;
+
+		try {
+			zipReader = _zipReaderFactory.getZipReader(
+				layoutUtilityPageEntriesFile);
+
+			for (String name : zipReader.getEntries()) {
+				InputStream inputStream = zipReader.getEntryAsInputStream(name);
+
+				String entryNewName = StringUtil.removeSubstring(
+					name, "layout-utility-page-template/");
+
+				_addZipEntry(
+					"layout-utility-page-entries/" + entryNewName, inputStream,
+					zipWriter);
+			}
+		}
+		finally {
+			if (zipReader != null) {
+				zipReader.close();
+			}
+
+			layoutUtilityPageEntriesFile.delete();
+		}
+	}
+
 	private void _serializeOrganization(
 		JSONArray jsonArray, Organization organization) {
 
@@ -612,52 +659,6 @@ public class SiteInitializerSerializerImpl
 					);
 				}),
 			zipWriter);
-	}
-
-	private void _serializeUtilityLayouts(long groupId, ZipWriter zipWriter)
-		throws Exception {
-
-		List<LayoutUtilityPageEntry> layoutUtilityPageEntries =
-			_layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
-				groupId);
-
-		long[] layoutUtilityPageEntryIds =
-			new long[layoutUtilityPageEntries.size()];
-
-		for (int index = 0; index < layoutUtilityPageEntries.size(); index++) {
-			layoutUtilityPageEntryIds[index] = layoutUtilityPageEntries.get(
-				index
-			).getLayoutUtilityPageEntryId();
-		}
-
-		File layoutUtilityPageEntriesFile =
-			_layoutsExporter.exportLayoutUtilityPageEntries(
-				layoutUtilityPageEntryIds);
-
-		ZipReader zipReader = null;
-
-		try {
-			zipReader = _zipReaderFactory.getZipReader(
-				layoutUtilityPageEntriesFile);
-
-			for (String name : zipReader.getEntries()) {
-				InputStream inputStream = zipReader.getEntryAsInputStream(name);
-
-				String entryNewName = StringUtil.removeSubstring(
-					name, "layout-utility-page-template/");
-
-				_addZipEntry(
-					"layout-utility-page-entries/" + entryNewName, inputStream,
-					zipWriter);
-			}
-		}
-		finally {
-			if (zipReader != null) {
-				zipReader.close();
-			}
-
-			layoutUtilityPageEntriesFile.delete();
-		}
 	}
 
 	@Reference

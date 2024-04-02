@@ -129,22 +129,9 @@ public class LoginAction implements Action {
 		}
 
 		if (Validator.isNull(redirect)) {
-			Layout loginUtilityPage =
-				LayoutUtilityPageEntryLayoutProviderUtil.
-					getDefaultLayoutUtilityPageEntryLayout(
-						themeDisplay.getScopeGroupId(),
-						LayoutUtilityPageEntryConstants.TYPE_LOGIN);
-
-			long plid = themeDisplay.getPlid();
-
-			
-			if (loginUtilityPage != null) {
-				plid = loginUtilityPage.getPlid();
-			}
-
 			redirect = PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
-					httpServletRequest, PortletKeys.LOGIN, plid,
+					httpServletRequest, PortletKeys.LOGIN,
 					PortletRequest.RENDER_PHASE)
 			).setMVCRenderCommandName(
 				"/login/login"

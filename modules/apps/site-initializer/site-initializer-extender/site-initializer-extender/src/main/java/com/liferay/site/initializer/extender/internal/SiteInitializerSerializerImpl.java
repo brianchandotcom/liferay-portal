@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -468,38 +469,24 @@ public class SiteInitializerSerializerImpl
 			long groupId, ZipWriter zipWriter)
 		throws Exception {
 
-		List<LayoutUtilityPageEntry> layoutUtilityPageEntries =
-			_layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
-				groupId);
-
-		long[] layoutUtilityPageEntryIds =
-			new long[layoutUtilityPageEntries.size()];
-
-		for (int index = 0; index < layoutUtilityPageEntries.size(); index++) {
-			layoutUtilityPageEntryIds[index] = layoutUtilityPageEntries.get(
-				index
-			).getLayoutUtilityPageEntryId();
-		}
-
-		File layoutUtilityPageEntriesFile =
-			_layoutsExporter.exportLayoutUtilityPageEntries(
-				layoutUtilityPageEntryIds);
-
+		File file = _layoutsExporter.exportLayoutUtilityPageEntries(
+			ListUtil.toLongArray(
+				_layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
+					groupId),
+				LayoutUtilityPageEntry.LAYOUT_UTILITY_PAGE_ENTRY_ID_ACCESSOR));
 		ZipReader zipReader = null;
 
 		try {
-			zipReader = _zipReaderFactory.getZipReader(
-				layoutUtilityPageEntriesFile);
+			zipReader = _zipReaderFactory.getZipReader(file);
 
 			for (String name : zipReader.getEntries()) {
-				InputStream inputStream = zipReader.getEntryAsInputStream(name);
+				String fileName = "layout-utility-page-entries/";
 
-				String entryNewName = StringUtil.removeSubstring(
+				fileName += StringUtil.removeSubstring(
 					name, "layout-utility-page-template/");
 
 				_addZipEntry(
-					"layout-utility-page-entries/" + entryNewName, inputStream,
-					zipWriter);
+					fileName, zipReader.getEntryAsInputStream(name), zipWriter);
 			}
 		}
 		finally {
@@ -507,7 +494,7 @@ public class SiteInitializerSerializerImpl
 				zipReader.close();
 			}
 
-			layoutUtilityPageEntriesFile.delete();
+			file.delete();
 		}
 	}
 

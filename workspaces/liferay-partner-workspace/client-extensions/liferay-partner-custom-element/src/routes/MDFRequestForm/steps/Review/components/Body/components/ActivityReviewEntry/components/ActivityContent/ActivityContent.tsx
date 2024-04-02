@@ -85,9 +85,9 @@ const ActivityContent = ({mdfRequestActivity}: IProps) => {
 						label: '',
 					},
 				]}
+				layoutAuto
 				rows={leadList}
-				tableLayoutAuto={true}
-			/>
+				/>
 		</>
 	);
 };

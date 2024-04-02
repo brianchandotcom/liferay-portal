@@ -8,6 +8,7 @@ import {Locator, Page} from '@playwright/test';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
 export class PagesAdminPage {
 	readonly configurationSaveButton: Locator;
@@ -54,10 +55,15 @@ export class PagesAdminPage {
 			state: 'visible',
 		});
 
-		await this.page
-			.frameLocator('#selectGlobalJSCETs_iframe_')
-			.getByLabel(clientExtensionName)
-			.check();
+		const frameLocator = this.page.frameLocator(
+			'#selectGlobalJSCETs_iframe_'
+		);
+
+		await frameLocator
+			.getByText('Select Items')
+			.waitFor({state: 'visible'});
+
+		await frameLocator.getByLabel(clientExtensionName).check();
 
 		const addButton = this.page.getByRole('button', {
 			exact: true,
@@ -74,6 +80,8 @@ export class PagesAdminPage {
 		});
 
 		await this.configurationSaveButton.click();
+
+		await waitForSuccessAlert(this.page);
 	}
 
 	async selectThemeCSSClientExtension(clientExtensionName: string) {

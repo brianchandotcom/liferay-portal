@@ -66,8 +66,8 @@ definition {
 
 			// TODO Clean up after CLDR update is finished
 
-			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy K", "UTC");
-			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yy K", "UTC");
+			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy h", "UTC");
+			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yy h", "UTC");
 
 			AssertElementPresent(locator1 = "//div[contains(@class,'table-list-title')]/a[contains(.,'')]/following::div[4 and (contains(text(),'${currentDateYYYY}') or contains(text(),'${currentDateYY}'))]");
 		}
@@ -80,8 +80,8 @@ definition {
 
 			// TODO Clean up after CLDR update is finished
 
-			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy K", "UTC");
-			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yy K", "UTC");
+			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy h", "UTC");
+			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yy h", "UTC");
 
 			AssertElementPresent(locator1 = "//dt[contains(.,'Order Date')]/following-sibling::dd | //div[contains(@class,'commerce-panel')]//div[4]//dd[contains(., '${currentDateYYYY}') or contains(., '${currentDateYY}')]");
 		}
@@ -1251,8 +1251,8 @@ definition {
 
 			// TODO Clean up after CLDR update is finished
 
-			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy K", "UTC");
-			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy K", "UTC");
+			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy h", "UTC");
+			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy h", "UTC");
 
 			AssertElementPresent(locator1 = "//dt[contains(.,'Order Date')]/following-sibling::dd | //div[contains(@class,'commerce-panel')]//div[4]//dd[contains(., '${currentDateYYYY}') or contains(., '${currentDateYY}')]");
 		}

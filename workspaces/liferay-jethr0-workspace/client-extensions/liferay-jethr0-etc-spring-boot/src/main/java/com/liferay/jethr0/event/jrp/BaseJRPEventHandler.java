@@ -113,8 +113,8 @@ public abstract class BaseJRPEventHandler extends BaseEventHandler {
 			throw new InvalidJSONException("Missing \"name\" from build JSON");
 		}
 
-		BuildEntity.State state = BuildEntity.State.getByKey(
-			buildJSONObject.optString("state"));
+		BuildEntity.State state = BuildEntity.State.get(
+			buildJSONObject.opt("state"));
 
 		if (state == null) {
 			state = BuildEntity.State.OPENED;

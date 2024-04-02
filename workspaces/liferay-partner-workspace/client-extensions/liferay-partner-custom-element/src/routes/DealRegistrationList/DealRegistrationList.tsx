@@ -158,8 +158,8 @@ const DealRegistrationList = ({sort}: IProps) => {
 					<Table<DealRegistrationListItem>
 						columns={columns}
 						customClickOnRow={handleCustomClickOnRow}
+						layoutAuto
 						rows={items}
-						tableLayoutAuto={true}
 					/>
 
 					<ClayPaginationBarWithBasicItems

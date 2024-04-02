@@ -18,8 +18,8 @@ interface TableProps<T> {
 	className?: string;
 	columns: TableColumn<T>[];
 	customClickOnRow?: (item: T) => void;
+	layoutAuto: boolean;
 	rows: T[];
-	tableLayoutAuto: boolean;
 }
 
 type ChildrenRender<T> = ((item: T) => React.ReactElement) & string;
@@ -28,14 +28,14 @@ const Table = <T extends BasicRow>({
 	className,
 	columns,
 	customClickOnRow,
+	layoutAuto,
 	rows,
-	tableLayoutAuto,
 }: TableProps<T>) => (
 	<ClayTooltipProvider>
 		<ClayTable
 			borderless
 			className={classNames(className, {
-				'table-layout-auto': tableLayoutAuto,
+				'table-layout-auto': layoutAuto,
 			})}
 			columnsVisibility={false}
 			noWrap

@@ -53,25 +53,23 @@ public class SaveFormInstanceMVCResourceCommandTest {
 
 		if (!JavaDetector.isJDK8() && javaLocaleProviders.equals("CLDR")) {
 			Assert.assertEquals(
-				"Apr 18, 2018, 2:00 PM",
-				_saveFormInstanceMVCResourceCommand.formatDate(
-					date, LocaleUtil.US, "UTC"));
-
-			Assert.assertEquals(
 				"Apr 18, 2018, 11:00 AM",
 				_saveFormInstanceMVCResourceCommand.formatDate(
 					date, LocaleUtil.US, "America/Sao_Paulo"));
-		}
-		else {
 			Assert.assertEquals(
-				"Apr 18, 2018 2:00 PM",
+				"Apr 18, 2018, 2:00 PM",
 				_saveFormInstanceMVCResourceCommand.formatDate(
 					date, LocaleUtil.US, "UTC"));
-
+		}
+		else {
 			Assert.assertEquals(
 				"Apr 18, 2018 11:00 AM",
 				_saveFormInstanceMVCResourceCommand.formatDate(
 					date, LocaleUtil.US, "America/Sao_Paulo"));
+			Assert.assertEquals(
+				"Apr 18, 2018 2:00 PM",
+				_saveFormInstanceMVCResourceCommand.formatDate(
+					date, LocaleUtil.US, "UTC"));
 		}
 	}
 

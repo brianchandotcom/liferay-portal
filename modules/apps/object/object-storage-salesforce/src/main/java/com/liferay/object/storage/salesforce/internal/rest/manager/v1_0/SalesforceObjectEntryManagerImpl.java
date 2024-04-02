@@ -14,33 +14,22 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.filter.factory.FilterFactory;
-import com.liferay.object.rest.manager.exception.ObjectEntryManagerHttpException;
+import com.liferay.object.rest.manager.http.ObjectEntryManagerHttp;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.storage.salesforce.configuration.SalesforceConfiguration;
-import com.liferay.object.storage.salesforce.internal.web.cache.SalesforceAccessTokenWebCacheItem;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,8 +38,6 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.net.HttpURLConnection;
 
 import java.util.Collections;
 import java.util.List;
@@ -82,7 +69,7 @@ public class SalesforceObjectEntryManagerImpl
 			ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, scopeKey,
 			dtoConverterContext.getUser());
 
-		JSONObject responseJSONObject = _salesforceHttp.post(
+		JSONObject responseJSONObject = _objectEntryManagerHttp.post(
 			objectDefinition.getCompanyId(),
 			getGroupId(objectDefinition, scopeKey),
 			"sobjects/" + objectDefinition.getExternalReferenceCode(),
@@ -106,7 +93,7 @@ public class SalesforceObjectEntryManagerImpl
 			ActionKeys.DELETE, objectDefinition, scopeKey,
 			dtoConverterContext.getUser());
 
-		_salesforceHttp.delete(
+		_objectEntryManagerHttp.delete(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			StringBundler.concat(
 				"sobjects/", objectDefinition.getExternalReferenceCode(), "/",
@@ -148,7 +135,7 @@ public class SalesforceObjectEntryManagerImpl
 		return toObjectEntry(
 			companyId, getDateFormat(), _defaultObjectFieldNames,
 			dtoConverterContext,
-			_salesforceHttp.get(
+			_objectEntryManagerHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
 				StringBundler.concat(
 					"sobjects/", objectDefinition.getExternalReferenceCode(),
@@ -178,7 +165,7 @@ public class SalesforceObjectEntryManagerImpl
 			ActionKeys.UPDATE, objectDefinition, scopeKey,
 			dtoConverterContext.getUser());
 
-		_salesforceHttp.patch(
+		_objectEntryManagerHttp.patch(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			StringBundler.concat(
 				"sobjects/", objectDefinition.getExternalReferenceCode(), "/",
@@ -253,7 +240,7 @@ public class SalesforceObjectEntryManagerImpl
 			String filterString, String search, Sort[] sorts)
 		throws Exception {
 
-		JSONObject responseJSONObject = _salesforceHttp.get(
+		JSONObject responseJSONObject = _objectEntryManagerHttp.get(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			_getLocation(
 				objectDefinition, pagination,
@@ -387,7 +374,7 @@ public class SalesforceObjectEntryManagerImpl
 		String predicateString, String scopeKey, String search) {
 
 		if (Validator.isNotNull(search)) {
-			JSONObject responseJSONObject = _salesforceHttp.get(
+			JSONObject responseJSONObject = _objectEntryManagerHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
 				_getLocation(
 					objectDefinition, Pagination.of(1, 200), predicateString,
@@ -399,7 +386,7 @@ public class SalesforceObjectEntryManagerImpl
 			return jsonArray.length();
 		}
 
-		JSONObject responseJSONObject = _salesforceHttp.get(
+		JSONObject responseJSONObject = _objectEntryManagerHttp.get(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			HttpComponentsUtil.addParameter(
 				"query", "q",
@@ -439,9 +426,6 @@ public class SalesforceObjectEntryManagerImpl
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
-	@Reference
-	private ConfigurationProvider _configurationProvider;
-
 	private final Map<String, String> _defaultObjectFieldNames =
 		HashMapBuilder.put(
 			"createDate", "CreatedDate"
@@ -463,183 +447,14 @@ public class SalesforceObjectEntryManagerImpl
 	private FilterFactory<String> _filterFactory;
 
 	@Reference
-	private Http _http;
-
-	@Reference
 	private InlineSQLHelper _inlineSQLHelper;
 
-	@Reference
-	private JSONFactory _jsonFactory;
+	@Reference(
+		target = "(object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE + ")"
+	)
+	private ObjectEntryManagerHttp _objectEntryManagerHttp;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	private final SalesforceHttp _salesforceHttp = new SalesforceHttp();
-
-	private class SalesforceHttp {
-
-		public JSONObject delete(
-			long companyId, long groupId, String location) {
-
-			try {
-				return _invoke(
-					companyId, groupId, location, Http.Method.DELETE, null);
-			}
-			catch (Exception exception) {
-				return ReflectionUtil.throwException(exception);
-			}
-		}
-
-		public JSONObject get(long companyId, long groupId, String location) {
-			try {
-				return _invoke(
-					companyId, groupId, location, Http.Method.GET, null);
-			}
-			catch (Exception exception) {
-				return ReflectionUtil.throwException(exception);
-			}
-		}
-
-		public JSONObject patch(
-			long companyId, long groupId, String location,
-			JSONObject bodyJSONObject) {
-
-			try {
-				return _invoke(
-					companyId, groupId, location, Http.Method.PATCH,
-					bodyJSONObject);
-			}
-			catch (Exception exception) {
-				return ReflectionUtil.throwException(exception);
-			}
-		}
-
-		public JSONObject post(
-			long companyId, long groupId, String location,
-			JSONObject bodyJSONObject) {
-
-			try {
-				return _invoke(
-					companyId, groupId, location, Http.Method.POST,
-					bodyJSONObject);
-			}
-			catch (Exception exception) {
-				return ReflectionUtil.throwException(exception);
-			}
-		}
-
-		private JSONObject _getSalesforceAccessTokenJSONObject(
-			SalesforceConfiguration salesforceConfiguration) {
-
-			int retry = 0;
-
-			while (retry < 3) {
-				JSONObject jSONObject = SalesforceAccessTokenWebCacheItem.get(
-					salesforceConfiguration);
-
-				if (jSONObject != null) {
-					return jSONObject;
-				}
-
-				try {
-					Thread.sleep(500);
-				}
-				catch (InterruptedException interruptedException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(interruptedException);
-					}
-				}
-
-				retry++;
-			}
-
-			throw new ObjectEntryManagerHttpException(
-				"Unable to authenticate with Salesforce");
-		}
-
-		private SalesforceConfiguration _getSalesforceConfiguration(
-			long companyId, long groupId) {
-
-			try {
-				if (groupId == 0) {
-					return _configurationProvider.getCompanyConfiguration(
-						SalesforceConfiguration.class, companyId);
-				}
-
-				return _configurationProvider.getGroupConfiguration(
-					SalesforceConfiguration.class, groupId);
-			}
-			catch (ConfigurationException configurationException) {
-				return ReflectionUtil.throwException(configurationException);
-			}
-		}
-
-		private JSONObject _invoke(
-				long companyId, long groupId, String location,
-				Http.Method method, JSONObject bodyJSONObject)
-			throws Exception {
-
-			byte[] bytes = _invokeAsBytes(
-				companyId, groupId, location, method, bodyJSONObject);
-
-			if (bytes == null) {
-				return _jsonFactory.createJSONObject();
-			}
-
-			return _jsonFactory.createJSONObject(new String(bytes));
-		}
-
-		private byte[] _invokeAsBytes(
-				long companyId, long groupId, String location,
-				Http.Method method, JSONObject bodyJSONObject)
-			throws Exception {
-
-			Http.Options options = new Http.Options();
-
-			if (bodyJSONObject != null) {
-				options.addHeader(
-					HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-			}
-
-			JSONObject jsonObject = _getSalesforceAccessTokenJSONObject(
-				_getSalesforceConfiguration(companyId, groupId));
-
-			options.addHeader(
-				"Authorization",
-				"Bearer " + jsonObject.getString("access_token"));
-
-			if (bodyJSONObject != null) {
-				options.setBody(
-					bodyJSONObject.toString(), ContentTypes.APPLICATION_JSON,
-					StringPool.UTF8);
-			}
-
-			options.setFollowRedirects(false);
-			options.setLocation(
-				StringBundler.concat(
-					jsonObject.getString("instance_url"),
-					"/services/data/v54.0/", location));
-			options.setMethod(method);
-
-			byte[] bytes = _http.URLtoByteArray(options);
-
-			Http.Response response = options.getResponse();
-
-			if ((response.getResponseCode() < HttpURLConnection.HTTP_OK) ||
-				(response.getResponseCode() >=
-					HttpURLConnection.HTTP_MULT_CHOICE)) {
-
-				throw new ObjectEntryManagerHttpException(
-					StringBundler.concat(
-						"Unexpected response code ", response.getResponseCode(),
-						" with response message: ", new String(bytes)));
-			}
-
-			return bytes;
-		}
-
-		private final Log _log = LogFactoryUtil.getLog(SalesforceHttp.class);
-
-	}
 
 }

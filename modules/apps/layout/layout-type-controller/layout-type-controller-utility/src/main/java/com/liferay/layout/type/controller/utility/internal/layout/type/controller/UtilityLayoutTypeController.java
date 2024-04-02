@@ -207,7 +207,7 @@ public class UtilityLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	public boolean isFirstPageable() {
-		return false;
+		return true;
 	}
 
 	@Override

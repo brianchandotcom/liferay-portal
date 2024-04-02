@@ -122,8 +122,6 @@ public abstract class BaseEntityDALO<T extends Entity>
 		return entities;
 	}
 
-	protected abstract EntityFactory<T> getEntityFactory();
-
 	protected T newEntity(JSONObject jsonObject) {
 		EntityFactory<T> entityFactory = getEntityFactory();
 

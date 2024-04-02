@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 public class EnvironmentEntityDALO extends BaseEntityDALO<EnvironmentEntity> {
 
 	@Override
-	protected EntityFactory<EnvironmentEntity> getEntityFactory() {
+	public EntityFactory<EnvironmentEntity> getEntityFactory() {
 		return _environmentEntityFactory;
 	}
 

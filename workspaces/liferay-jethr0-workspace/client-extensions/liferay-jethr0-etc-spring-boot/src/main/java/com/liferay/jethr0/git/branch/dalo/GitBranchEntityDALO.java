@@ -54,7 +54,7 @@ public class GitBranchEntityDALO extends BaseEntityDALO<GitBranchEntity> {
 	}
 
 	@Override
-	protected EntityFactory<GitBranchEntity> getEntityFactory() {
+	public EntityFactory<GitBranchEntity> getEntityFactory() {
 		return _gitBranchEntityFactory;
 	}
 

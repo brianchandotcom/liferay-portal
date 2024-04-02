@@ -21,7 +21,7 @@ public class JobPrioritizerEntityDALO
 	extends BaseEntityDALO<JobPrioritizerEntity> {
 
 	@Override
-	protected EntityFactory<JobPrioritizerEntity> getEntityFactory() {
+	public EntityFactory<JobPrioritizerEntity> getEntityFactory() {
 		return _jobPrioritizerEntityFactory;
 	}
 

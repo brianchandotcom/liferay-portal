@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 public class JenkinsNodeEntityDALO extends BaseEntityDALO<JenkinsNodeEntity> {
 
 	@Override
-	protected EntityFactory<JenkinsNodeEntity> getEntityFactory() {
+	public EntityFactory<JenkinsNodeEntity> getEntityFactory() {
 		return _jenkinsNodeEntityFactory;
 	}
 

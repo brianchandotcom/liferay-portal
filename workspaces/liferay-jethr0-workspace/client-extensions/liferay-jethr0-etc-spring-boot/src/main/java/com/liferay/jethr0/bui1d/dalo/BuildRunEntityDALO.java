@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 public class BuildRunEntityDALO extends BaseEntityDALO<BuildRunEntity> {
 
 	@Override
-	protected EntityFactory<BuildRunEntity> getEntityFactory() {
+	public EntityFactory<BuildRunEntity> getEntityFactory() {
 		return _buildRunEntityFactory;
 	}
 

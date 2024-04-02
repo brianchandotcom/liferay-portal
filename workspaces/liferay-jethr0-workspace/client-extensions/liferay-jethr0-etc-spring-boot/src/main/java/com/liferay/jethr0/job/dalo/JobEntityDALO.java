@@ -25,6 +25,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class JobEntityDALO extends BaseEntityDALO<JobEntity> {
 
+	@Override
+	public EntityFactory<JobEntity> getEntityFactory() {
+		return _jobEntityFactory;
+	}
+
 	public Set<JobEntity> getJobsByState(JobEntity.State... states) {
 		Set<JobEntity> jobEntities = new HashSet<>();
 
@@ -51,11 +56,6 @@ public class JobEntityDALO extends BaseEntityDALO<JobEntity> {
 		}
 
 		return jobEntities;
-	}
-
-	@Override
-	protected EntityFactory<JobEntity> getEntityFactory() {
-		return _jobEntityFactory;
 	}
 
 	@Autowired

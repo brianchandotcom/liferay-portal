@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 public class TaskEntityDALO extends BaseEntityDALO<TaskEntity> {
 
 	@Override
-	protected EntityFactory<TaskEntity> getEntityFactory() {
+	public EntityFactory<TaskEntity> getEntityFactory() {
 		return _taskEntityFactory;
 	}
 

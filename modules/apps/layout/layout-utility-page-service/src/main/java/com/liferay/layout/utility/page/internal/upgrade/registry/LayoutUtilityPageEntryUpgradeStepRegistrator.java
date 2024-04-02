@@ -5,6 +5,7 @@
 
 package com.liferay.layout.utility.page.internal.upgrade.registry;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -36,6 +37,15 @@ public class LayoutUtilityPageEntryUpgradeStepRegistrator
 			"1.2.0", "1.3.0",
 			UpgradeProcessFactory.alterColumnType(
 				"LayoutUtilityPageEntry", "type_", "VARCHAR(75) null"));
+
+		registry.register(
+			"1.3.0", "1.4.0",
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"update Layout set privateLayout = [$FALSE$], type_ = ",
+					"'utility' where classPK in (select plid from ",
+					"LayoutUtilityPageEntry) or plid in (select plid from ",
+					"LayoutUtilityPageEntry)")));
 	}
 
 }

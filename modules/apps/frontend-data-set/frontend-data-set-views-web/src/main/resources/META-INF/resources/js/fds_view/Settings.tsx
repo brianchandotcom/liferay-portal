@@ -8,6 +8,7 @@ import {Option, Picker, Text} from '@clayui/core';
 import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayLink from '@clayui/link';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {fetch, navigate} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -38,6 +39,7 @@ const Settings = ({
 	const [defaultVisualizationMode, setDefaultVisualizationMode] = useState(
 		NOT_CONFIGURED_VISUALIZATION_MODE.type
 	);
+	const [loading, setLoading] = useState(true);
 	const [visualizationModes, setVisualizationModes] = useState<
 		Array<TVisualizationMode>
 	>([]);
@@ -57,6 +59,8 @@ const Settings = ({
 			openDefaultFailureToast();
 
 			setVisualizationModes([]);
+
+			setLoading(false);
 
 			return;
 		}
@@ -102,6 +106,8 @@ const Settings = ({
 					: NOT_CONFIGURED_VISUALIZATION_MODE.type;
 			}
 		});
+
+		setLoading(false);
 	};
 
 	const updateFDSViewSettings = async () => {
@@ -159,7 +165,7 @@ const Settings = ({
 				</h3>
 
 				<ClayLayout.Row className="align-items-center justify-content-between">
-					<ClayLayout.Col size={9}>
+					<ClayLayout.Col size={8}>
 						<div>
 							<label htmlFor="view-mode-picker" id="view-mode">
 								{Liferay.Language.get(
@@ -190,65 +196,89 @@ const Settings = ({
 						</div>
 					</ClayLayout.Col>
 
-					<ClayLayout.Col size={3}>
-						<Picker
-							aria-labelledby="view-mode"
-							id="view-mode-picker"
-							items={visualizationModes}
-							onSelectionChange={(option: React.Key) => {
-								if (
-									option ===
+					<ClayLayout.Col size={4}>
+						{!loading && (
+							<Picker
+								aria-labelledby="view-mode"
+								className="mb-2"
+								disabled={!visualizationModes.length}
+								id="view-mode-picker"
+								items={visualizationModes}
+								onSelectionChange={(option: React.Key) => {
+									if (
+										option !==
+										NOT_CONFIGURED_VISUALIZATION_MODE.type
+									) {
+										setDefaultVisualizationMode(
+											option as string
+										);
+									}
+								}}
+								placeholder={
 									NOT_CONFIGURED_VISUALIZATION_MODE.type
-								) {
-									onActiveSectionChange(1);
 								}
-								else {
-									setDefaultVisualizationMode(
-										option as string
-									);
-								}
-							}}
-							placeholder={NOT_CONFIGURED_VISUALIZATION_MODE.type}
-							selectedKey={defaultVisualizationMode}
-						>
-							{visualizationModes.length ? (
-								({label, thumbnail, type}) => (
-									<Option key={type} textValue={label}>
-										<ClayIcon
-											className="mr-3"
-											symbol={thumbnail}
-										/>
+								selectedKey={defaultVisualizationMode}
+							>
+								{visualizationModes.length ? (
+									({label, thumbnail, type}) => (
+										<Option key={type} textValue={label}>
+											<ClayIcon
+												className="mr-3"
+												symbol={thumbnail}
+											/>
 
-										{label}
-									</Option>
-								)
-							) : (
-								<DropDown.Group
-									header={Liferay.Language.get(
-										'not-configured'
-									)}
-								>
-									<Option
-										key={
-											NOT_CONFIGURED_VISUALIZATION_MODE.type
-										}
-										textValue={
-											NOT_CONFIGURED_VISUALIZATION_MODE.type
-										}
+											{label}
+										</Option>
+									)
+								) : (
+									<DropDown.Group
+										header={Liferay.Language.get(
+											'not-configured'
+										)}
 									>
-										<ClayLayout.Row>
-											<ClayLayout.Col>
-												<Text size={3}>
-													{
-														NOT_CONFIGURED_VISUALIZATION_MODE.label
-													}
-												</Text>
-											</ClayLayout.Col>
-										</ClayLayout.Row>
-									</Option>
-								</DropDown.Group>
-							)}
-						</Picker>
+										<Option
+											key={
+												NOT_CONFIGURED_VISUALIZATION_MODE.type
+											}
+											textValue={
+												NOT_CONFIGURED_VISUALIZATION_MODE.type
+											}
+										>
+											<ClayLayout.Row>
+												<ClayLayout.Col>
+													<Text size={3}>
+														{
+															NOT_CONFIGURED_VISUALIZATION_MODE.label
+														}
+													</Text>
+												</ClayLayout.Col>
+											</ClayLayout.Row>
+										</Option>
+									</DropDown.Group>
+								)}
+							</Picker>
+						)}
+
+						{!loading && !visualizationModes.length && (
+							<ClayLink
+								borderless
+								onClick={() => onActiveSectionChange(1)}
+								onKeyPress={() => onActiveSectionChange(1)}
+								tabIndex={0}
+								weight="semi-bold"
+							>
+								<span className="inline-item inline-item-before">
+									<ClayIcon
+										spritemap={spritemap}
+										symbol="shortcut"
+									/>
+								</span>
+
+								{Liferay.Language.get(
+									'go-to-visualization-modes'
+								)}
+							</ClayLink>
+						)}
 					</ClayLayout.Col>
 				</ClayLayout.Row>
 			</ClayLayout.SheetSection>

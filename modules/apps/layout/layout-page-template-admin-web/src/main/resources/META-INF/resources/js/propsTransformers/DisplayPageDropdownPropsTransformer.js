@@ -117,6 +117,7 @@ const ACTIONS = {
 		portletNamespace
 	) {
 		openSelectionModal({
+			height: '70vh',
 			onSelect: (selectedItem) => {
 				const form = document.getElementById(
 					`${portletNamespace}moveEntriesFm`
@@ -131,6 +132,7 @@ const ACTIONS = {
 				submitForm(form);
 			},
 			selectEventName: 'selectFolder',
+			size: 'md',
 			title: sub(
 				Liferay.Language.get('move-x-to'),
 				`"${layoutPageTemplateEntryName}"`

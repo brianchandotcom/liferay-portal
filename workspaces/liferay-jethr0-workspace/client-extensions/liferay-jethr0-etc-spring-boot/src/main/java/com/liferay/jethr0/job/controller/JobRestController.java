@@ -9,6 +9,8 @@ import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
+import com.liferay.jethr0.event.EventHandler;
+import com.liferay.jethr0.event.liferay.LiferayEventHandlerFactory;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.definition.JobDefinition;
@@ -47,11 +49,16 @@ public class JobRestController {
 	public ResponseEntity<String> action(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String body) {
 
-		JSONObject jsonObject = new JSONObject(body);
+		try {
+			EventHandler eventHandler =
+				_liferayEventHandlerFactory.newEventHandler(
+					new JSONObject(body));
 
-		System.out.println(jsonObject.toString(2));
-
-		return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
+			return new ResponseEntity<>(eventHandler.process(), HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	@PostMapping("/create")
@@ -277,5 +284,8 @@ public class JobRestController {
 
 	@Autowired
 	private JobQueue _jobQueue;
+
+	@Autowired
+	private LiferayEventHandlerFactory _liferayEventHandlerFactory;
 
 }

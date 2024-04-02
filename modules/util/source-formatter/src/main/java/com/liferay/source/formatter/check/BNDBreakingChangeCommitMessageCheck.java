@@ -8,6 +8,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.GitUtil;
@@ -210,6 +211,26 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 						"There should be an empty line after/before '----', ",
 						"'# breaking', '## What', '## Why' and '## ",
 						"Alternatives'"));
+			}
+
+			if (header.equals("## Alternatives") || header.equals("## What") ||
+				header.equals("## Why")) {
+
+				String explanationLine = SourceUtil.getLine(
+					parts[1], lineNumber + 2);
+
+				if (Validator.isNull(explanationLine) ||
+					ArrayUtil.contains(
+						_BREAKING_CHANGE_HEADER_NAMES, explanationLine)) {
+
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Incorrect commit message in SHA ", parts[0], ": ",
+							"There should be at least a line containing an ",
+							"explanation after '## What', '## Why' and '## ",
+							"Alternatives'"));
+				}
 			}
 		}
 	}

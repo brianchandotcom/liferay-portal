@@ -8,6 +8,7 @@ import ClayIcon from '@clayui/icon';
 import './LicensePriceChildren.scss';
 import {CurrencyAbbreviation} from '../../enums/CurrencyAbbreviation';
 import {App} from '../../pages/ReviewAndSubmitAppPage/ReviewAndSubmitAppPageUtil';
+import {isTrialSKU} from '../../utils/productUtils';
 
 export type TierPrices = {
 	skuId: number;
@@ -32,115 +33,88 @@ const LicensePriceChildren = ({
 }: LicensePriceChildrenType) => {
 	const {skus} = app;
 
-	const productSkus = tierPrices
-		.map((sku) => {
-			const {skuId, tierPrice} = sku;
-
-			return {
-				sku: skus.find(({id}) => id === skuId) as SKU,
-				tierPrices: tierPrice,
-			};
-		})
-		.filter(({sku}) => {
-			if (!sku || sku.sku.endsWith('ts')) {
-				return false;
-			}
-
-			if (
-				sku.skuOptions.some(({value}) =>
-					['yes', 'trial'].includes(value)
-				)
-			) {
-				return false;
-			}
-
-			return true;
-		});
+	const productSkus =
+		tierPrices
+			.map((sku) => ({
+				sku: skus.find(({id}) => id === sku.skuId) as SKU,
+				tierPrices: sku.tierPrice,
+			}))
+			.filter(({sku}) => !isTrialSKU(sku)) || [];
 
 	return (
 		<div className="align-items-start d-flex flex-column justify-content-between license-container mt-6 text-nowrap">
-			{productSkus?.map(({sku, tierPrices: licenses}, index: number) => {
-				return (
-					<div
-						className="align-items-baseline d-flex mb-6"
-						key={index}
-					>
-						<div className="font-weight-bold license-type p-0">
-							<span className="text-capitalize">
-								{` ${
-									isCloud
-										? 'Standard'
-										: sku.skuOptions[0].value
-								} Licenses`}
-							</span>
-						</div>
-						<div className="align-items-start d-flex flex-column">
-							{licenses?.map((license, indexLicense: number) => {
-								const {
-									currency,
-									priceFormatted,
-									quantity,
-								} = license;
-
-								const minPriceLicenseOption =
-									indexLicense === licenses?.length - 1;
-
-								const toLicenseQuantityValue =
-									licenses[indexLicense + 1]?.quantity - 1;
-
-								return (
-									<div
-										className="d-flex flex-row"
-										key={indexLicense}
-									>
-										<div className="license-tier-prices p-0">
-											<span className="font-weight-bold text-muted">
-												From
-											</span>
-
-											<span className="font-weight-bold mx-2">
-												{quantity}
-											</span>
-
-											<span className="font-weight-bold text-muted">
-												To
-											</span>
-
-											<span className="font-weight-bold mx-2">
-												{minPriceLicenseOption ? (
-													<span id="infinity-symbol">
-														∞
-													</span>
-												) : (
-													toLicenseQuantityValue
-												)}
-											</span>
-										</div>
-
-										<div className="align-items-end d-flex">
-											<span>-</span>
-
-											<div className="mx-2">
-												<ClayIcon symbol="en-us" />
-											</div>
-
-											<span className="font-weight-bold">
-												{currency === 'US Dollar'
-													? CurrencyAbbreviation.USD
-													: currency}
-											</span>
-
-											<span className="mx-2">
-												{priceFormatted}
-											</span>
-										</div>
-									</div>
-								);
-							})}
-						</div>
+			{productSkus.map(({sku, tierPrices}, index) => (
+				<div className="align-items-baseline d-flex mb-6" key={index}>
+					<div className="font-weight-bold license-type p-0">
+						<span className="text-capitalize">
+							{` ${
+								isCloud ? 'Standard' : sku.skuOptions[0].value
+							} Licenses`}
+						</span>
 					</div>
-				);
-			})}
+					<div className="align-items-start d-flex flex-column">
+						{tierPrices.map((tierPrice, indexTP) => {
+							const {
+								currency,
+								priceFormatted,
+								quantity,
+							} = tierPrice;
+
+							const minPriceLicenseOption =
+								indexTP === tierPrices?.length - 1;
+
+							const toLicenseQuantityValue =
+								tierPrices[indexTP + 1]?.quantity - 1;
+
+							return (
+								<div className="d-flex flex-row" key={indexTP}>
+									<div className="license-tier-prices p-0">
+										<span className="font-weight-bold text-muted">
+											From
+										</span>
+
+										<span className="font-weight-bold mx-2">
+											{quantity}
+										</span>
+
+										<span className="font-weight-bold text-muted">
+											To
+										</span>
+
+										<span className="font-weight-bold mx-2">
+											{minPriceLicenseOption ? (
+												<span id="infinity-symbol">
+													∞
+												</span>
+											) : (
+												toLicenseQuantityValue
+											)}
+										</span>
+									</div>
+
+									<div className="align-items-end d-flex">
+										<span>-</span>
+
+										<div className="mx-2">
+											<ClayIcon symbol="en-us" />
+										</div>
+
+										<span className="font-weight-bold">
+											{currency === 'US Dollar'
+												? CurrencyAbbreviation.USD
+												: currency}
+										</span>
+
+										<span className="mx-2">
+											{priceFormatted}
+										</span>
+									</div>
+								</div>
+							);
+						})}
+					</div>
+				</div>
+			))}
 		</div>
 	);
 };

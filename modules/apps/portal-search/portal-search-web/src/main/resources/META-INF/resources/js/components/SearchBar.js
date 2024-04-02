@@ -13,6 +13,7 @@ import getCN from 'classnames';
 import {addParams, fetch, navigate} from 'frontend-js-web';
 import React, {useCallback, useRef, useState} from 'react';
 
+import {FacetUtil} from '../FacetUtil';
 import useDebounceCallback from '../hooks/useDebounceCallback';
 import cleanSuggestionsContributorConfiguration from '../utils/clean_suggestions_contributor_configuration';
 
@@ -171,8 +172,15 @@ export default function SearchBar({
 		event.stopPropagation();
 
 		if (!!inputValue.trim().length || emptySearchEnabled) {
+			const keyword = inputValue.trim();
+			const oldKeyword = localStorage.getItem('keyword');
 			const queryString = _updateQueryString(document.location.search);
 
+			if (oldKeyword && keyword !== oldKeyword) {
+				FacetUtil.clearAllSelections(queryString);
+			}
+
+			localStorage.setItem('keyword', keyword);
 			navigate(searchURL + queryString);
 		}
 	};

@@ -5,6 +5,9 @@
 
 package com.liferay.portal.tools.db.partition.migration.validator;
 
+import com.fasterxml.jackson.core.util.DefaultIndenter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -309,10 +312,18 @@ public class DBPartitionMigrationValidator {
 
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
+				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				enable(SerializationFeature.INDENT_OUTPUT);
 				setDateFormat(new ISO8601DateFormat());
 			}
 		};
+
+		DefaultPrettyPrinter prettyPrinter = new DefaultPrettyPrinter();
+
+		prettyPrinter.indentArraysWith(
+			DefaultIndenter.SYSTEM_LINEFEED_INSTANCE);
+
+		objectMapper.setDefaultPrettyPrinter(prettyPrinter);
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 			"yyyyMMddHHmmss");

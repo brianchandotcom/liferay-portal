@@ -25,6 +25,12 @@ public class BatchEngineTaskExecutorUtil {
 			User user)
 		throws Throwable {
 
+		AuditRequestThreadLocal auditRequestThreadLocal =
+			AuditRequestThreadLocal.getAuditThreadLocal();
+
+		auditRequestThreadLocal.setRealUserEmailAddress(user.getEmailAddress());
+		auditRequestThreadLocal.setRealUserId(user.getUserId());
+
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
@@ -36,12 +42,6 @@ public class BatchEngineTaskExecutorUtil {
 			PermissionThreadLocal.setPermissionChecker(
 				new LiberalPermissionChecker(user));
 		}
-
-		AuditRequestThreadLocal auditRequestThreadLocal =
-			AuditRequestThreadLocal.getAuditThreadLocal();
-
-		auditRequestThreadLocal.setRealUserEmailAddress(user.getEmailAddress());
-		auditRequestThreadLocal.setRealUserId(user.getUserId());
 
 		String name = PrincipalThreadLocal.getName();
 

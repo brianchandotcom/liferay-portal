@@ -15,12 +15,9 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintStream;
 
 import java.security.Permission;
-
-import java.sql.SQLException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,6 +29,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
+import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Luis Ortiz
@@ -54,9 +53,7 @@ public class DBPartitionMigrationValidatorExportTest extends MockDatabaseUtil {
 	}
 
 	@Test
-	public void testMultipleCompanyDefaultDatabase()
-		throws IOException, SQLException {
-
+	public void testMultipleCompanyDefaultDatabase() throws Exception {
 		_export(
 			_generateCompanies(),
 			Arrays.asList(
@@ -67,9 +64,7 @@ public class DBPartitionMigrationValidatorExportTest extends MockDatabaseUtil {
 	}
 
 	@Test
-	public void testMultipleCompanyNondefaultDatabase()
-		throws IOException, SQLException {
-
+	public void testMultipleCompanyNondefaultDatabase() throws Exception {
 		_export(
 			_generateCompanies(),
 			Arrays.asList(
@@ -80,9 +75,7 @@ public class DBPartitionMigrationValidatorExportTest extends MockDatabaseUtil {
 	}
 
 	@Test
-	public void testSingleCompanyDefaultDatabase()
-		throws IOException, SQLException {
-
+	public void testSingleCompanyDefaultDatabase() throws Exception {
 		_export(
 			_generateCompanies(),
 			Arrays.asList(
@@ -92,9 +85,7 @@ public class DBPartitionMigrationValidatorExportTest extends MockDatabaseUtil {
 	}
 
 	@Test
-	public void testSingleCompanyNondefaultDatabase()
-		throws IOException, SQLException {
-
+	public void testSingleCompanyNondefaultDatabase() throws Exception {
 		_export(
 			_generateCompanies(),
 			Arrays.asList(
@@ -107,48 +98,48 @@ public class DBPartitionMigrationValidatorExportTest extends MockDatabaseUtil {
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	private void _assertFileContent(
-		List<Company> companies, List<Long> companyInfoIds, String content,
-		boolean defaultPartition, List<Release> releases) {
-
-		content = content.replaceAll("\n", "");
-		content = content.replaceAll("\r", "");
-		content = content.replaceAll(" ", "");
+			List<Company> companies, List<Long> companyInfoIds, String content,
+			boolean defaultPartition, List<Release> releases)
+		throws Exception {
 
 		if (companyInfoIds.size() > 1) {
-			Assert.assertTrue(content.contains("\"exportedCompanyId\":null"));
+			JSONAssert.assertEquals(
+				"{\"exportedCompanyId\":null}", content, false);
 		}
 		else {
-			Assert.assertTrue(
-				content.contains(
-					"\"exportedCompanyId\":" + companyInfoIds.get(0)));
+			JSONAssert.assertEquals(
+				"{\"exportedCompanyId\": " + companyInfoIds.get(0) + "}",
+				content, false);
 		}
 
 		if (defaultPartition) {
-			Assert.assertTrue(
-				content.contains("\"exportedCompanyDefault\":true"));
+			JSONAssert.assertEquals(
+				"{\"exportedCompanyDefault\":true}", content, false);
 		}
 		else {
-			Assert.assertTrue(
-				content.contains("\"exportedCompanyDefault\":false"));
+			JSONAssert.assertEquals(
+				"{\"exportedCompanyDefault\":false}", content, false);
 		}
 
-		Assert.assertTrue(
-			content.contains("\"tableNames\":[\"Table1\",\"Table2"));
+		JSONAssert.assertEquals(
+			"{\"tableNames\":[\"Table1\",\"Table2\"]}", content, false);
 
-		Assert.assertTrue(content.contains(_getReleasesOutput(releases)));
+		JSONAssert.assertEquals(_getReleasesOutput(releases), content, false);
 
-		Assert.assertTrue(content.contains(_getCompaniesOutput(companies)));
+		JSONAssert.assertEquals(_getCompaniesOutput(companies), content, false);
 	}
 
 	private void _export(
 			List<Company> companies, List<Long> companyIds,
 			List<Long> companyInfoIds, boolean defaultPartition,
 			List<Release> releases)
-		throws IOException, SQLException {
+		throws Exception {
 
 		_mockDatabase(
 			companies, companyIds, companyInfoIds, defaultPartition, releases,
-			Arrays.asList("Table1", "Company", "Table2", "Object_x_25000"));
+			Arrays.asList(
+				"Table1", "Company", "Table2",
+				"Object_x_" + companyIds.get(0)));
 
 		File outputDirectory = temporaryFolder.newFolder("tempExports");
 
@@ -176,7 +167,7 @@ public class DBPartitionMigrationValidatorExportTest extends MockDatabaseUtil {
 				return;
 			}
 
-			Assert.fail();
+			Assert.assertEquals("0", runtimeException.getMessage());
 		}
 
 		File[] files = outputDirectory.listFiles();
@@ -209,30 +200,30 @@ public class DBPartitionMigrationValidatorExportTest extends MockDatabaseUtil {
 		StringBundler sb = new StringBundler();
 		int count = 0;
 
-		sb.append("\"companies\":[");
+		sb.append("{\"companies\":[");
 
 		for (Company company : companies) {
-			sb.append("{\"virtualHostName\":\"");
-			sb.append(company.getVirtualHostName());
-			sb.append("\",\"companyName\":\"");
+			sb.append("{\"companyId\":");
+			sb.append(company.getCompanyId());
+			sb.append(",\"companyName\":\"");
 			sb.append(company.getCompanyName());
+			sb.append("\",\"virtualHostName\":\"");
+			sb.append(company.getVirtualHostName());
 			sb.append("\",\"webId\":\"");
 			sb.append(company.getWebId());
-			sb.append("\",\"companyId\":");
-			sb.append(company.getCompanyId());
-			sb.append("}");
+			sb.append("\"}");
 
 			if (++count < companies.size()) {
 				sb.append(",");
 			}
 		}
 
-		sb.append("]");
+		sb.append("]}");
 
 		return sb.toString();
 	}
 
-	private String _getFileContent(File file) throws IOException {
+	private String _getFileContent(File file) throws Exception {
 		StringBuilder sb = new StringBuilder();
 
 		try (BufferedReader bufferedReader = new BufferedReader(
@@ -252,12 +243,10 @@ public class DBPartitionMigrationValidatorExportTest extends MockDatabaseUtil {
 		StringBundler sb = new StringBundler();
 		int count = 0;
 
-		sb.append("\"releases\":[");
+		sb.append("{\"releases\":[");
 
 		for (Release release : releases) {
-			sb.append("{\"state\":");
-			sb.append(release.getState());
-			sb.append(",\"schemaVersion\":{\"major\":");
+			sb.append("{\"schemaVersion\":{\"major\":");
 			sb.append(
 				release.getSchemaVersion(
 				).getMajor());
@@ -283,18 +272,20 @@ public class DBPartitionMigrationValidatorExportTest extends MockDatabaseUtil {
 					).getQualifier());
 			}
 
-			sb.append("},\"verified\":");
-			sb.append(release.getVerified() ? "true" : "false");
-			sb.append(",\"servletContextName\":\"");
+			sb.append("},\"servletContextName\":\"");
 			sb.append(release.getServletContextName());
-			sb.append("\"}");
+			sb.append("\",\"state\":");
+			sb.append(release.getState());
+			sb.append(",\"verified\":");
+			sb.append(release.getVerified() ? "true" : "false");
+			sb.append("}");
 
 			if (++count < releases.size()) {
 				sb.append(",");
 			}
 		}
 
-		sb.append("]");
+		sb.append("]}");
 
 		return sb.toString();
 	}
@@ -303,7 +294,7 @@ public class DBPartitionMigrationValidatorExportTest extends MockDatabaseUtil {
 			List<Company> companies, List<Long> companyIds,
 			List<Long> companyInfoIds, boolean defaultPartition,
 			List<Release> releases, List<String> tableNames)
-		throws SQLException {
+		throws Exception {
 
 		mockCompanies(companies);
 		mockDatabaseConnection(
@@ -338,9 +329,7 @@ public class DBPartitionMigrationValidatorExportTest extends MockDatabaseUtil {
 		public void checkExit(int status) {
 			super.checkExit(status);
 
-			if (status != 0) {
-				throw new RuntimeException(String.valueOf(status));
-			}
+			throw new RuntimeException(String.valueOf(status));
 		}
 
 		@Override

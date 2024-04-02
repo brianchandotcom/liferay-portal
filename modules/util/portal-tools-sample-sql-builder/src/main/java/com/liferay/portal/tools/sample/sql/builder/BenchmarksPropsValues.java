@@ -224,6 +224,28 @@ public class BenchmarksPropsValues {
 	public static final int MAX_PUBLICATION_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_PUBLICATION_COUNT));
 
+	public static final int MAX_PUBLICATION_JOURNAL_ARTICLE_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.MAX_PUBLICATION_JOURNAL_ARTICLE_COUNT));
+
+	public static final int MAX_PUBLICATION_JOURNAL_ARTICLE_PAGE_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.
+					MAX_PUBLICATION_JOURNAL_ARTICLE_PAGE_COUNT));
+
+	public static final int MAX_PUBLICATION_JOURNAL_ARTICLE_SIZE =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.MAX_PUBLICATION_JOURNAL_ARTICLE_SIZE));
+
+	public static final int MAX_PUBLICATION_JOURNAL_ARTICLE_VERSION_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.
+					MAX_PUBLICATION_JOURNAL_ARTICLE_VERSION_COUNT));
+
 	public static final int MAX_SEGMENTS_ENTRY_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_SEGMENTS_ENTRY_COUNT));
 

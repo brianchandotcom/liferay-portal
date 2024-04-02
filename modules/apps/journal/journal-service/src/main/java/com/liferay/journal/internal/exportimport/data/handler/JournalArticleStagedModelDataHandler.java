@@ -83,7 +83,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlEscapableObject;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -1402,21 +1401,6 @@ public class JournalArticleStagedModelDataHandler
 
 		articleNewPrimaryKeys.put(
 			article.getResourcePrimKey(), importedArticle.getResourcePrimKey());
-
-		if (ListUtil.isEmpty(assetDisplayPageEntryElements)) {
-			AssetDisplayPageEntry existingAssetDisplayPageEntry =
-				_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-					importedArticle.getGroupId(),
-					_portal.getClassNameId(JournalArticle.class.getName()),
-					importedArticle.getResourcePrimKey());
-
-			if (existingAssetDisplayPageEntry != null) {
-				_assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(
-					existingAssetDisplayPageEntry);
-			}
-
-			return;
-		}
 
 		for (Element assetDisplayPageEntryElement :
 				assetDisplayPageEntryElements) {

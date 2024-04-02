@@ -950,7 +950,7 @@
 					},
 					"name": "Jethr0EtcSpringBootJobAdd",
 					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-job-action",
-					"objectActionTriggerKey": "onAfterAdd",
+					"objectActionTriggerKey": "standalone",
 					"parameters": {
 					}
 				},

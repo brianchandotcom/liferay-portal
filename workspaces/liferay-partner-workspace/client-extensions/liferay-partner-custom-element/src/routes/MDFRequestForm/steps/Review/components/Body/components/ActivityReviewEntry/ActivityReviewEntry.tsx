@@ -54,6 +54,7 @@ const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
 						label: '',
 					},
 				]}
+				layoutAuto
 				rows={[
 					{
 						title: 'Activity name',
@@ -93,7 +94,6 @@ const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
 							),
 					},
 				]}
-				tableLayoutAuto={true}
 			/>
 
 			<ActivityContent mdfRequestActivity={mdfRequestActivity} />

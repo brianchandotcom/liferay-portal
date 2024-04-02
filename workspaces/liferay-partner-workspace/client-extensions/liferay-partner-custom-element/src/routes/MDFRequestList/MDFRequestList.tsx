@@ -131,8 +131,8 @@ const MDFRequestList = () => {
 				<div className="mt-3">
 					<Table<MDFRequestListItem>
 						columns={columns}
+						layoutAuto
 						rows={items}
-						tableLayoutAuto={true}
 					/>
 
 					<ClayPaginationBarWithBasicItems

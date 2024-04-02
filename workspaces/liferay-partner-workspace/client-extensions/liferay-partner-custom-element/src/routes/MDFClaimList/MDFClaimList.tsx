@@ -101,8 +101,8 @@ const MDFClaimList = () => {
 				<div className="mt-3">
 					<Table<MDFClaimListItem>
 						columns={columns}
+						layoutAuto
 						rows={items}
-						tableLayoutAuto={true}
 					/>
 
 					<ClayPaginationBarWithBasicItems

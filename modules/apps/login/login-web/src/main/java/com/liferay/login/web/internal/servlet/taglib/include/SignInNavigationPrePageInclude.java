@@ -5,6 +5,8 @@
 
 package com.liferay.login.web.internal.servlet.taglib.include;
 
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.model.Layout;
@@ -14,6 +16,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -86,7 +89,19 @@ public class SignInNavigationPrePageInclude implements PageInclude {
 
 		try {
 			if (_featureFlagManager.isEnabled("LPD-6378")) {
-				signInURL = _getSignInURL(httpServletRequest, themeDisplay);
+				Layout layout =
+					_layoutUtilityPageEntryLayoutProvider.
+						getDefaultLayoutUtilityPageEntryLayout(
+							themeDisplay.getScopeGroupId(),
+							LayoutUtilityPageEntryConstants.
+								TYPE_LOGIN);
+
+				if (layout != null) {
+					signInURL = _portal.getLayoutURL(layout, themeDisplay);
+				}
+				else {
+					signInURL = _getSignInURL(httpServletRequest, themeDisplay);
+				}
 			}
 			else {
 				signInURL = themeDisplay.getURLSignIn();
@@ -164,5 +179,12 @@ public class SignInNavigationPrePageInclude implements PageInclude {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutUtilityPageEntryLayoutProvider
+		_layoutUtilityPageEntryLayoutProvider;
+
+	@Reference
+	private Portal _portal;
 
 }

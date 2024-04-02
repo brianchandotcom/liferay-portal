@@ -11,7 +11,7 @@ import {Button} from '../../../../common/components';
 import getKebabCase from '../../../../common/utils/getKebabCase';
 import {useCustomerPortal} from '../../context';
 import {MENU_TYPES, PRODUCT_TYPES} from '../../utils/constants';
-import { getProperProductsNames } from '../../utils/getProperProductsNames';
+import { getProperProductNames } from '../../utils/getProperProductNames';
 import SideMenuSkeleton from './Skeleton';
 import MenuItem from './components/MenuItem';
 
@@ -89,7 +89,7 @@ const SideMenu = () => {
 							setActive={menuUpdateStatus}
 							to={`${ACTIVATION_PATH}/${redirectPage}`}
 						>
-							{getProperProductsNames(name)}
+							{getProperProductNames(name)}
 						</MenuItem>
 					);
 				}
@@ -119,7 +119,7 @@ const SideMenu = () => {
 									PRODUCT_TYPES.liferayExperienceCloud
 								)}
 							>
-								{getProperProductsNames(MENU_TYPES.liferayExperienceCloud)}
+								{getProperProductNames(MENU_TYPES.liferayExperienceCloud)}
 							</MenuItem>
 						</div>
 					)}

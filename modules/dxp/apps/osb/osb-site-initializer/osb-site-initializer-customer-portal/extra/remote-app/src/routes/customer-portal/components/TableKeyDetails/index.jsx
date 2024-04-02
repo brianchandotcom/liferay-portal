@@ -14,7 +14,7 @@ import {DXPIcon} from '../../../../common/icons/navigation-menu';
 import {FORMAT_DATE_TYPES} from '../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../common/utils/getDateCustomFormat';
 import {
-	getFormatedProductName,
+	getFormattedProductName,
 	getProductDescription,
 	getProductName,
 	getStatusActivationTag,
@@ -111,7 +111,7 @@ const TableKeyDetails = ({activationKeys, setValueToCopyToClipboard}) => {
 						<p className="align-items-center bg-brand-primary-lighten-5 cp-key-details-paragraph d-flex px-3 py-2 rounded">
 							<DXPIcon className="mr-2" />
 
-							{getFormatedProductName(
+							{getFormattedProductName(
 								activationKeys?.productName
 							)}
 						</p>

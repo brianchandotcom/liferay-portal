@@ -305,18 +305,15 @@ public class ObjectEntryOpenAPIResourceImpl
 							ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
 						 Objects.equals(
 							 objectField.getBusinessType(),
+							 ObjectFieldConstants.
+								 BUSINESS_TYPE_AUTO_INCREMENT) ||
+						 Objects.equals(
+							 objectField.getBusinessType(),
 							 ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN) ||
 						 Objects.equals(
 							 objectField.getBusinessType(),
 							 ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) &&
 						!FeatureFlagManagerUtil.isEnabled("LPD-6683")) {
-
-						return "CSV";
-					}
-					else if (Objects.equals(
-								objectField.getBusinessType(),
-								ObjectFieldConstants.
-									BUSINESS_TYPE_AUTO_INCREMENT)) {
 
 						return "CSV";
 					}

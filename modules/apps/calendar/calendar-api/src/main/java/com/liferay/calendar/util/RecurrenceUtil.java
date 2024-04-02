@@ -286,7 +286,8 @@ public class RecurrenceUtil {
 				formattedWeekdays.add(_weekdayLabels.get(weekday.toString()));
 			}
 
-			arguments.add(ListUtil.toString(formattedWeekdays, StringPool.BLANK));
+			arguments.add(
+				ListUtil.toString(formattedWeekdays, StringPool.BLANK));
 		}
 
 		Calendar untilJCalendar = recurrence.getUntilJCalendar();

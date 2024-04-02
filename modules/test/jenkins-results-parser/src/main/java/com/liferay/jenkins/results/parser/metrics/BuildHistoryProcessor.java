@@ -66,7 +66,7 @@ public class BuildHistoryProcessor {
 
 			};
 
-		return _getBuildHistories(duration, null, startTime, biConsumer);
+		return _getBuildHistories(duration, null, null, biConsumer, startTime);
 	}
 
 	public static Collection<BuildHistory> newDefaultJobHistories(
@@ -87,7 +87,7 @@ public class BuildHistoryProcessor {
 
 			};
 
-		return _getBuildHistories(duration, null, startTime, biConsumer);
+		return _getBuildHistories(duration, null, null, biConsumer, startTime);
 	}
 
 	public static Collection<BuildHistory> newTestSuiteJobHistories(
@@ -150,7 +150,7 @@ public class BuildHistoryProcessor {
 			};
 
 		return _getBuildHistories(
-			duration, jobNamePattern, startTime, biConsumer);
+			duration, null, jobNamePattern, biConsumer, startTime);
 	}
 
 	private static void _addToBuildHistoriesMap(
@@ -179,9 +179,11 @@ public class BuildHistoryProcessor {
 	}
 
 	private static Collection<BuildHistory> _getBuildHistories(
-		long duration, Pattern jobNamePattern, long startTime,
+		long duration, Pattern jobNameExcludesPattern,
+		Pattern jobNameIncludesPattern,
 		BiConsumer<Set<BuildJSONObject>, Map<String, BuildHistory>>
-			buildHistoryBiConsumer) {
+			buildHistoryBiConsumer,
+		long startTime) {
 
 		Map<String, BuildHistory> buildHistoriesMap = new HashMap<>();
 
@@ -193,16 +195,26 @@ public class BuildHistoryProcessor {
 			for (BuildJSONObject buildJSONObject :
 					_getBuildJSONObjects(dateString)) {
 
-				if (jobNamePattern == null) {
+				if (jobNameExcludesPattern != null) {
+					Matcher jobNameExcludesMatcher =
+						jobNameExcludesPattern.matcher(
+							buildJSONObject.getJobName());
+
+					if (jobNameExcludesMatcher.matches()) {
+						continue;
+					}
+				}
+
+				if (jobNameIncludesPattern == null) {
 					buildJSONObjects.add(buildJSONObject);
 
 					continue;
 				}
 
-				Matcher jobNameMatcher = jobNamePattern.matcher(
+				Matcher jobNameIncludesMatcher = jobNameIncludesPattern.matcher(
 					buildJSONObject.getJobName());
 
-				if (jobNameMatcher.matches()) {
+				if (jobNameIncludesMatcher.matches()) {
 					buildJSONObjects.add(buildJSONObject);
 				}
 			}

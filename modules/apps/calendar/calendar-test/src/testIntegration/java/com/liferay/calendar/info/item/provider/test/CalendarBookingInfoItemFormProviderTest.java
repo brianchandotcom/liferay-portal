@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -175,8 +174,6 @@ public class CalendarBookingInfoItemFormProviderTest {
 
 	@Test
 	public void testGetInfoItemFieldValues() throws Exception {
-		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
-
 		InfoItemFieldValuesProvider<CalendarBooking>
 			infoItemFieldValuesProvider =
 				(InfoItemFieldValuesProvider<CalendarBooking>)

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.text.ParseException;
@@ -233,7 +233,7 @@ public class RecurrenceUtil {
 
 		if (recurrence == null) {
 			return LanguageUtil.get(
-				LocaleThreadLocal.getThemeDisplayLocale(), "false");
+				LocaleUtil.getMostRelevantLocale(), "false");
 		}
 
 		List<Object> params = new ArrayList<>();
@@ -305,7 +305,7 @@ public class RecurrenceUtil {
 		}
 
 		return LanguageUtil.format(
-			LocaleThreadLocal.getThemeDisplayLocale(), sb.toString(),
+			LocaleUtil.getMostRelevantLocale(), sb.toString(),
 			params.toArray(new Object[0]));
 	}
 

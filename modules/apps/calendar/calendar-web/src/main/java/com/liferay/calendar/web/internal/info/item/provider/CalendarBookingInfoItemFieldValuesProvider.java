@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -200,7 +199,7 @@ public class CalendarBookingInfoItemFieldValuesProvider
 	private String _getInvitations(CalendarBooking calendarBooking)
 		throws PortalException {
 
-		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+		Locale locale = LocaleUtil.getMostRelevantLocale();
 
 		List<CalendarBooking> acceptedCalendarBookings =
 			_calendarBookingService.getChildCalendarBookings(

@@ -67,7 +67,8 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 		Matcher matcher = _alterTableAddColumnCallPattern.matcher(content);
 
 		while (matcher.find()) {
-			String methodCall1 = _getMethodCall(content, matcher.start(1));
+			String methodCall1 = JavaSourceUtil.getMethodCall(
+				content, matcher.start(1));
 
 			if (methodCall1 == null) {
 				continue;
@@ -86,11 +87,17 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 
 			String followingContent = content.substring(x);
 
+			if (!followingContent.startsWith(";\n")) {
+				continue;
+			}
+
+			followingContent = followingContent.substring(2);
+
 			if (!followingContent.startsWith(matcher.group(1))) {
 				continue;
 			}
 
-			String methodCall2 = _getMethodCall(content, x);
+			String methodCall2 = JavaSourceUtil.getMethodCall(content, x);
 
 			if (methodCall2 == null) {
 				continue;
@@ -170,24 +177,6 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 		}
 
 		return -1;
-	}
-
-	private String _getMethodCall(String content, int start) {
-		int end = start;
-
-		while (true) {
-			end = content.indexOf(");\n", end + 1);
-
-			if (end == -1) {
-				return null;
-			}
-
-			String methodCall = content.substring(start, end + 3);
-
-			if (getLevel(methodCall) == 0) {
-				return methodCall;
-			}
-		}
 	}
 
 	private synchronized Object[] _getModelInformation(String packagePath) {

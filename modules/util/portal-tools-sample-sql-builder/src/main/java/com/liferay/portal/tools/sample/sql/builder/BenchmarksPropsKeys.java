@@ -159,6 +159,18 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_PUBLICATION_COUNT =
 		"sample.sql.max.publication.count";
 
+	public static final String MAX_PUBLICATION_JOURNAL_ARTICLE_COUNT =
+		"sample.sql.max.publication.journal.article.count";
+
+	public static final String MAX_PUBLICATION_JOURNAL_ARTICLE_PAGE_COUNT =
+		"sample.sql.max.publication.journal.article.page.count";
+
+	public static final String MAX_PUBLICATION_JOURNAL_ARTICLE_SIZE =
+		"sample.sql.max.publication.journal.article.size";
+
+	public static final String MAX_PUBLICATION_JOURNAL_ARTICLE_VERSION_COUNT =
+		"sample.sql.max.publication.journal.article.version.count";
+
 	public static final String MAX_SEGMENTS_ENTRY_COUNT =
 		"sample.sql.max.segments.entry.count";
 

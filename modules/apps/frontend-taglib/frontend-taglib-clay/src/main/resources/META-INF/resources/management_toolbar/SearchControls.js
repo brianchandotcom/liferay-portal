@@ -24,6 +24,10 @@ const SearchControls = ({
 	const searchInputRef = useRef();
 	const [searchDisabled, setSearchDisabled] = useState(true);
 
+	const searchTitle = Liferay.FeatureFlags['LPD-11313']
+		? Liferay.Language.get('search')
+		: Liferay.Language.get('search-for');
+
 	const onClick = () => {
 		setSearchDisabled(true);
 
@@ -74,27 +78,25 @@ const SearchControls = ({
 					>
 						<ClayInput.GroupItem>
 							<ClayInput
-								aria-label={`${Liferay.Language.get(
-									'search'
-								)}:`}
+								aria-label={`${searchTitle}:`}
 								autoFocus={searchInputAutoFocus}
 								className="form-control input-group-inset input-group-inset-after"
 								defaultValue={searchValue}
 								disabled={disabled}
 								name={searchInputName}
-								placeholder={Liferay.Language.get('search')}
+								placeholder={searchTitle}
 								ref={searchInputRef}
 								type="search"
 							/>
 
 							<ClayInput.GroupInsetItem after tag="span">
 								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get('search')}
+									aria-label={searchTitle}
 									disabled={searchDisabled}
 									displayType="unstyled"
 									onClick={onClick}
 									symbol="search"
-									title={Liferay.Language.get('search')}
+									title={searchTitle}
 									type="submit"
 								/>
 							</ClayInput.GroupInsetItem>

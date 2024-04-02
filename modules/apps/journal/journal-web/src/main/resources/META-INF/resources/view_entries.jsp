@@ -494,6 +494,14 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							value="--"
 						/>
 
+						<c:if test="<%= !journalDisplayContext.isHighlightedDDMStructure() %>">
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smallest table-cell-minw-150"
+								name="type"
+								value='<%= LanguageUtil.get(request, "folder") %>'
+							/>
+						</c:if>
+
 						<liferay-ui:search-container-column-date
 							cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 							name="modified-date"
@@ -513,12 +521,6 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 								value="<%= curFolder.getCreateDate() %>"
 							/>
 						</c:if>
-
-						<liferay-ui:search-container-column-text
-							cssClass="table-cell-expand-smallest table-cell-minw-150"
-							name="type"
-							value='<%= LanguageUtil.get(request, "folder") %>'
-						/>
 
 						<liferay-ui:search-container-column-text>
 							<clay:dropdown-actions

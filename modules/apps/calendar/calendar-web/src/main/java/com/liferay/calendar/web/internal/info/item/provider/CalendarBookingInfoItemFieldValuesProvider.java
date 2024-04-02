@@ -78,7 +78,7 @@ public class CalendarBookingInfoItemFieldValuesProvider
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(
-				"Caught unexpected exception", portalException);
+				"Unexpected portal exception", portalException);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException("Unexpected exception", exception);

@@ -444,6 +444,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _maxLineLength;
 	}
 
+	protected Object[] getModelInformation(String packagePath) {
+		return _modelInformationsMap.get(packagePath);
+	}
+
 	protected String getModulesPropertiesContent(String absolutePath)
 		throws IOException {
 
@@ -791,6 +795,48 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _subrepository;
 	}
 
+	protected synchronized void populateModelInformations() throws IOException {
+		File portalDir = getPortalDir();
+
+		List<String> serviceXMLFileNames = SourceFormatterUtil.scanForFileNames(
+			portalDir.getCanonicalPath(), new String[] {"**/service.xml"});
+
+		for (String serviceXMLFileName : serviceXMLFileNames) {
+			Document serviceXMLDocument = SourceUtil.readXML(
+				FileUtil.read(new File(serviceXMLFileName)));
+
+			if (serviceXMLDocument == null) {
+				continue;
+			}
+
+			Element serviceXMLElement = serviceXMLDocument.getRootElement();
+
+			serviceXMLFileName = StringUtil.replace(
+				serviceXMLFileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			String packagePath = "";
+			String tablesSQLFilePath = "";
+
+			if (serviceXMLFileName.contains("/portal-impl/")) {
+				packagePath = "portal-impl";
+				tablesSQLFilePath = portalDir + "/sql/portal-tables.sql";
+			}
+			else {
+				packagePath = serviceXMLElement.attributeValue("package-path");
+
+				int x = serviceXMLFileName.lastIndexOf("/");
+
+				tablesSQLFilePath =
+					serviceXMLFileName.substring(0, x) +
+						"/src/main/resources/META-INF/sql/tables.sql";
+			}
+
+			_modelInformationsMap.put(
+				packagePath,
+				new Object[] {serviceXMLElement, tablesSQLFilePath});
+		}
+	}
+
 	protected String stripQuotes(String s) {
 		return stripQuotes(s, CharPool.APOSTROPHE, CharPool.QUOTE);
 	}
@@ -936,6 +982,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private List<String> _filterCheckNames;
 	private int _maxDirLevel;
 	private int _maxLineLength;
+	private Map<String, Object[]> _modelInformationsMap;
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private Document _portalCustomSQLDocument;
 	private boolean _portalSource;

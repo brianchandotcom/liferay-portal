@@ -5,10 +5,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -17,19 +13,13 @@ import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
-import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.dom4j.Document;
-import org.dom4j.Element;
 
 /**
  * @author Alan Huang
@@ -104,7 +94,9 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 				continue;
 			}
 
-			Object[] modelInformation = _getModelInformation(packagePath);
+			populateModelInformations();
+
+			Object[] modelInformation = getModelInformation(packagePath);
 
 			if (modelInformation == null) {
 				continue;
@@ -130,10 +122,10 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 
 			String tableName = StringUtil.unquote(parameterNames1.get(0));
 
-			int index1 = _getColumnIndex(
+			int index1 = SourceUtil.getColumnIndex(
 				tablesSQLContent, tableName,
 				StringUtil.unquote(parameterNames1.get(1)));
-			int index2 = _getColumnIndex(
+			int index2 = SourceUtil.getColumnIndex(
 				tablesSQLContent, tableName,
 				StringUtil.unquote(parameterNames2.get(1)));
 
@@ -149,115 +141,7 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 		return content;
 	}
 
-	private int _getColumnIndex(
-		String tablesSQLContent, String tableName, String columnName) {
-
-		String tableSQL = _getTableSQL(tablesSQLContent, tableName);
-
-		if (tableSQL == null) {
-			return -1;
-		}
-
-		Pattern pattern = Pattern.compile(
-			StringBundler.concat(
-				"(?i)\n\\s*", columnName, "_?\\s+([\\w\\(\\)]+)[\\s,]"));
-
-		Matcher matcher = pattern.matcher(tableSQL);
-
-		if (matcher.find()) {
-			return matcher.start();
-		}
-
-		return -1;
-	}
-
-	private synchronized Object[] _getModelInformation(String packagePath) {
-		if (_modelInformationsMap != null) {
-			return _modelInformationsMap.get(packagePath);
-		}
-
-		_modelInformationsMap = new HashMap<>();
-
-		try {
-			_populateTablesSQLFileLocations();
-		}
-		catch (IOException ioException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ioException);
-			}
-
-			return null;
-		}
-
-		return _modelInformationsMap.get(packagePath);
-	}
-
-	private String _getTableSQL(String tablesSQLContent, String tableName) {
-		Pattern pattern = Pattern.compile("create table " + tableName + "_? ");
-
-		Matcher matcher = pattern.matcher(tablesSQLContent);
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		int x = tablesSQLContent.indexOf(");", matcher.start());
-
-		if (x == -1) {
-			return null;
-		}
-
-		return tablesSQLContent.substring(matcher.start(), x + 1);
-	}
-
-	private void _populateTablesSQLFileLocations() throws IOException {
-		File portalDir = getPortalDir();
-
-		List<String> serviceXMLFileNames = SourceFormatterUtil.scanForFileNames(
-			portalDir.getCanonicalPath(), new String[] {"**/service.xml"});
-
-		for (String serviceXMLFileName : serviceXMLFileNames) {
-			Document serviceXMLDocument = SourceUtil.readXML(
-				FileUtil.read(new File(serviceXMLFileName)));
-
-			if (serviceXMLDocument == null) {
-				continue;
-			}
-
-			Element serviceXMLElement = serviceXMLDocument.getRootElement();
-
-			serviceXMLFileName = StringUtil.replace(
-				serviceXMLFileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			String packagePath = "";
-			String tablesSQLFilePath = "";
-
-			if (serviceXMLFileName.contains("/portal-impl/")) {
-				packagePath = "portal-impl";
-				tablesSQLFilePath = portalDir + "/sql/portal-tables.sql";
-			}
-			else {
-				packagePath = serviceXMLElement.attributeValue("package-path");
-
-				int x = serviceXMLFileName.lastIndexOf("/");
-
-				tablesSQLFilePath =
-					serviceXMLFileName.substring(0, x) +
-						"/src/main/resources/META-INF/sql/tables.sql";
-			}
-
-			_modelInformationsMap.put(
-				packagePath,
-				new Object[] {serviceXMLElement, tablesSQLFilePath});
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JavaUpgradeAlterTableAddColumnCallsOrderCheck.class);
-
 	private static final Pattern _alterTableAddColumnCallPattern =
 		Pattern.compile("\n(\t+alterTableAddColumn\\()");
-
-	private Map<String, Object[]> _modelInformationsMap;
 
 }

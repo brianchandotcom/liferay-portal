@@ -112,19 +112,19 @@ public class LoginAction implements Action {
 			return null;
 		}
 
-		Layout loginUtilityPage =
+		Layout layout =
 			LayoutUtilityPageEntryLayoutProviderUtil.
 				getDefaultLayoutUtilityPageEntryLayout(
 					themeDisplay.getScopeGroupId(),
 					LayoutUtilityPageEntryConstants.TYPE_LOGIN);
 
-		if ((loginUtilityPage != null) &&
+		if ((layout != null) &&
 			!Objects.equals(
 				getWindowState(httpServletRequest),
 				LiferayWindowState.EXCLUSIVE)) {
 
 			httpServletResponse.sendRedirect(
-				PortalUtil.getLayoutURL(loginUtilityPage, themeDisplay));
+				PortalUtil.getLayoutURL(layout, themeDisplay));
 
 			return null;
 		}

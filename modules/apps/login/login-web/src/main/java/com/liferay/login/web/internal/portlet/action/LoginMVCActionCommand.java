@@ -252,19 +252,17 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 		String portletName = liferayPortletRequest.getPortletName();
 
-		Layout layout = (Layout)actionRequest.getAttribute(WebKeys.LAYOUT);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout loginUtilityPage =
+		Layout layout =
 			_layoutUtilityPageEntryLayoutProvider.
 				getDefaultLayoutUtilityPageEntryLayout(
 					themeDisplay.getScopeGroupId(),
 					LayoutUtilityPageEntryConstants.TYPE_LOGIN);
 
-		if (loginUtilityPage != null) {
-			layout = loginUtilityPage;
+		if (layout == null) {
+			layout = (Layout)actionRequest.getAttribute(WebKeys.LAYOUT);
 		}
 
 		PortletURL portletURL = PortletURLBuilder.create(

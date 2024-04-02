@@ -136,7 +136,8 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 				populateModelInformations();
 
 				Object[] modelInformation = getModelInformation(
-					_packagePath(absolutePath, variableTypeName, importNames));
+					_getPackagePath(
+						absolutePath, variableTypeName, importNames));
 
 				if (modelInformation == null) {
 					continue outerLoop;
@@ -201,6 +202,41 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		return content;
 	}
 
+	private String _getPackagePath(
+		String absolutePath, String variableTypeName,
+		List<String> importNames) {
+
+		int x = variableTypeName.lastIndexOf(StringPool.PERIOD);
+
+		if (x != -1) {
+			String packageName = variableTypeName.substring(0, x);
+
+			if (packageName.startsWith("com.liferay.") &&
+				packageName.endsWith(".model")) {
+
+				return StringUtil.replaceLast(
+					packageName, ".model", StringPool.BLANK);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		for (String importName : importNames) {
+			if (importName.startsWith("com.liferay.") &&
+				importName.endsWith(".model." + variableTypeName)) {
+
+				return StringUtil.replaceLast(
+					importName, ".model." + variableTypeName, StringPool.BLANK);
+			}
+		}
+
+		if (absolutePath.contains("/portal-impl/")) {
+			return "portal-impl";
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private String _getTableName(
 		String variableTypeName, Element serviceXMLElement) {
 
@@ -231,7 +267,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		populateModelInformations();
 
 		Object[] modelInformation = getModelInformation(
-			_packagePath(absolutePath, variableTypeName, importNames));
+			_getPackagePath(absolutePath, variableTypeName, importNames));
 
 		if (modelInformation == null) {
 			return false;
@@ -272,41 +308,6 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		}
 
 		return false;
-	}
-
-	private String _packagePath(
-		String absolutePath, String variableTypeName,
-		List<String> importNames) {
-
-		int x = variableTypeName.lastIndexOf(StringPool.PERIOD);
-
-		if (x != -1) {
-			String packageName = variableTypeName.substring(0, x);
-
-			if (packageName.startsWith("com.liferay.") &&
-				packageName.endsWith(".model")) {
-
-				return StringUtil.replaceLast(
-					packageName, ".model", StringPool.BLANK);
-			}
-
-			return StringPool.BLANK;
-		}
-
-		for (String importName : importNames) {
-			if (importName.startsWith("com.liferay.") &&
-				importName.endsWith(".model." + variableTypeName)) {
-
-				return StringUtil.replaceLast(
-					importName, ".model." + variableTypeName, StringPool.BLANK);
-			}
-		}
-
-		if (absolutePath.contains("/portal-impl/")) {
-			return "portal-impl";
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private static final Pattern _getterCallPattern = Pattern.compile(

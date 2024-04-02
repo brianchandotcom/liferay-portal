@@ -42,9 +42,7 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		if (!fileName.endsWith("UpgradeProcess.java") ||
-			!absolutePath.contains("-service/")) {
-
+		if (!absolutePath.contains("/upgrade/v")) {
 			return content;
 		}
 

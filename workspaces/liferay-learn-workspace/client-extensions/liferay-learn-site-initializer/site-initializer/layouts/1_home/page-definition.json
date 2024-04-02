@@ -30,6 +30,7 @@
 									},
 									"fragmentFields": [
 										{
+											"id": "element-text",
 											"value": {
 												"text": {
 													"value_i18n": {
@@ -57,6 +58,7 @@
 									},
 									"fragmentFields": [
 										{
+											"id": "element-text",
 											"value": {
 												"text": {
 													"value_i18n": {
@@ -99,6 +101,10 @@
 				"pageElements": [
 					{
 						"definition": {
+							"cssClasses": [
+								"tab"
+							],
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n.navbar-collapse{\njustify-content: center;\n}\n}",
 							"fragment": {
 								"key": "dialect-tabs",
 								"siteKey": "Liferay Learn"
@@ -107,30 +113,49 @@
 								"iconAlignment": "none",
 								"iconName": "check-circle",
 								"numberOfTabs": 2,
-								"tabActiveBarPosition": "bottom",
-								"tabDirection": "horizontal",
-								"tabStyle": "underline"
+								"tabActiveBarPosition": "nav-active-bar-top",
+								"tabDirection": "",
+								"tabStyle": "segment"
 							},
 							"fragmentFields": [
 								{
+									"id": "title1",
 									"value": {
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Capabilities"
+												"en_US": "Browse By Capability"
 											}
 										}
 									}
 								},
 								{
+									"id": "title2",
 									"value": {
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Products"
+												"en_US": "Browse By Product"
 											}
 										}
 									}
 								}
-							]
+							],
+							"fragmentStyle": {
+								"textAlign": "center"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"marginLeft": "3",
+										"marginRight": "3"
+									},
+									"id": "tablet"
+								}
+							],
+							"indexed": true
 						},
 						"pageElements": [
 							{
@@ -140,27 +165,41 @@
 								"pageElements": [
 									{
 										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] {\ntext-align: left !important;\n}",
+											"fragmentStyle": {
+												"marginTop": "4",
+												"textAlign": "center"
+											},
+											"indexed": true,
 											"layout": {
 												"contentDisplay": "FlexRow",
-												"flexWrap": "Wrap"
+												"flexWrap": "Wrap",
+												"justify": "SpaceBetween",
+												"marginTop": 2
 											}
 										},
 										"pageElements": [
 											{
 												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
 													"fragmentStyle": {
-														"backgroundColor": "colorNeutral1",
+														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
+														"borderWidth": "1px",
+														"marginBottom": "2",
+														"marginTop": "3",
 														"paddingBottom": "3",
-														"paddingLeft": "4",
-														"paddingRight": "4",
+														"paddingLeft": "3",
+														"paddingRight": "3",
 														"paddingTop": "3"
 													},
+													"indexed": true,
 													"layout": {
 														"contentDisplay": "FlexRow",
+														"marginTop": 1,
 														"paddingBottom": 1,
-														"paddingLeft": 2,
-														"paddingRight": 2,
+														"paddingLeft": 1,
+														"paddingRight": 1,
 														"paddingTop": 1
 													}
 												},
@@ -171,14 +210,21 @@
 																"key": "BASIC_COMPONENT-image"
 															},
 															"fragmentConfig": {
-																"imageSize": "w-100"
+																"imageSize": "w-0"
 															},
 															"fragmentFields": [
 																{
+																	"id": "image-square",
 																	"value": {
 																		"fragmentImage": {
+																			"description": {
+																				"value_i18n": {
+																					"en_US": ""
+																				}
+																			},
 																			"url": {
 																				"value_i18n": {
+																					"en_US": "/documents/d/liferay-learn/cloud-svg?imagePreview=1"
 																				}
 																			}
 																		},
@@ -186,13 +232,20 @@
 																		}
 																	}
 																}
-															]
+															],
+															"fragmentStyle": {
+																"marginRight": "3"
+															},
+															"indexed": true
 														},
 														"type": "Fragment"
 													},
 													{
 														"definition": {
+															"indexed": true,
 															"layout": {
+																"align": "Start",
+																"contentDisplay": "FlexColumn"
 															}
 														},
 														"pageElements": [
@@ -203,38 +256,62 @@
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph-lg",
+																		"textType": "h6",
 																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
+																			"id": "element-text",
 																			"value": {
 																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Cloud"
+																					}
 																				}
 																			}
 																		}
-																	]
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "700",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
 																},
 																"type": "Fragment"
 															},
 															{
 																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
-																		"textType": "h5",
+																		"textType": "text-paragraph-xs",
 																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
+																			"id": "element-text",
 																			"value": {
 																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Use Liferay's Cloud infrastructure to launch your solutions more quickly and securely."
+																					}
 																				}
 																			}
 																		}
-																	]
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3",
+																		"marginTop": "2",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
 																},
 																"type": "Fragment"
 															}
@@ -246,19 +323,25 @@
 											},
 											{
 												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
 													"fragmentStyle": {
-														"backgroundColor": "colorNeutral1",
+														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
+														"borderWidth": "1px",
+														"marginBottom": "2",
+														"marginTop": "3",
 														"paddingBottom": "3",
-														"paddingLeft": "4",
-														"paddingRight": "4",
+														"paddingLeft": "3",
+														"paddingRight": "3",
 														"paddingTop": "3"
 													},
+													"indexed": true,
 													"layout": {
 														"contentDisplay": "FlexRow",
+														"marginTop": 1,
 														"paddingBottom": 1,
-														"paddingLeft": 2,
-														"paddingRight": 2,
+														"paddingLeft": 1,
+														"paddingRight": 1,
 														"paddingTop": 1
 													}
 												},
@@ -269,14 +352,16 @@
 																"key": "BASIC_COMPONENT-image"
 															},
 															"fragmentConfig": {
-																"imageSize": "w-100"
+																"imageSize": "w-0"
 															},
 															"fragmentFields": [
 																{
+																	"id": "image-square",
 																	"value": {
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
+																					"en_US": "/documents/d/liferay-learn/commerce-svg?imagePreview=1"
 																				}
 																			}
 																		},
@@ -284,13 +369,20 @@
 																		}
 																	}
 																}
-															]
+															],
+															"fragmentStyle": {
+																"marginRight": "3"
+															},
+															"indexed": true
 														},
 														"type": "Fragment"
 													},
 													{
 														"definition": {
+															"indexed": true,
 															"layout": {
+																"align": "Start",
+																"contentDisplay": "FlexColumn"
 															}
 														},
 														"pageElements": [
@@ -301,38 +393,62 @@
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph-lg",
+																		"textType": "h6",
 																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
+																			"id": "element-text",
 																			"value": {
 																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Commerce"
+																					}
 																				}
 																			}
 																		}
-																	]
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "700",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
 																},
 																"type": "Fragment"
 															},
 															{
 																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
-																		"textType": "h5",
+																		"textType": "text-paragraph-xs",
 																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
+																			"id": "element-text",
 																			"value": {
 																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Increase orders with enriching product information, easy ordering tools, and product recommendations."
+																					}
 																				}
 																			}
 																		}
-																	]
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3",
+																		"marginTop": "2",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
 																},
 																"type": "Fragment"
 															}
@@ -344,19 +460,25 @@
 											},
 											{
 												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
 													"fragmentStyle": {
-														"backgroundColor": "colorNeutral1",
+														"backgroundColor": "#fff",
 														"borderRadius": "borderRadiusLg",
+														"borderWidth": "1px",
+														"marginBottom": "2",
+														"marginTop": "3",
 														"paddingBottom": "3",
-														"paddingLeft": "4",
-														"paddingRight": "4",
+														"paddingLeft": "3",
+														"paddingRight": "3",
 														"paddingTop": "3"
 													},
+													"indexed": true,
 													"layout": {
 														"contentDisplay": "FlexRow",
+														"marginTop": 1,
 														"paddingBottom": 1,
-														"paddingLeft": 2,
-														"paddingRight": 2,
+														"paddingLeft": 1,
+														"paddingRight": 1,
 														"paddingTop": 1
 													}
 												},
@@ -367,14 +489,16 @@
 																"key": "BASIC_COMPONENT-image"
 															},
 															"fragmentConfig": {
-																"imageSize": "w-100"
+																"imageSize": "w-0"
 															},
 															"fragmentFields": [
 																{
+																	"id": "image-square",
 																	"value": {
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
+																					"en_US": "/documents/d/liferay-learn/content_ms-svg?imagePreview=1"
 																				}
 																			}
 																		},
@@ -382,13 +506,20 @@
 																		}
 																	}
 																}
-															]
+															],
+															"fragmentStyle": {
+																"marginRight": "3"
+															},
+															"indexed": true
 														},
 														"type": "Fragment"
 													},
 													{
 														"definition": {
+															"indexed": true,
 															"layout": {
+																"align": "Start",
+																"contentDisplay": "FlexColumn"
 															}
 														},
 														"pageElements": [
@@ -399,38 +530,62 @@
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph-lg",
+																		"textType": "h6",
 																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
+																			"id": "element-text",
 																			"value": {
 																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Content Management System"
+																					}
 																				}
 																			}
 																		}
-																	]
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "700",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
 																},
 																"type": "Fragment"
 															},
 															{
 																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
-																		"textType": "h5",
+																		"textType": "text-paragraph-xs",
 																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
+																			"id": "element-text",
 																			"value": {
 																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Create, publish, and manage content, pages, and multimedia across different channels faster."
+																					}
 																				}
 																			}
 																		}
-																	]
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3",
+																		"marginTop": "2",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
 																},
 																"type": "Fragment"
 															}
@@ -442,19 +597,24 @@
 											},
 											{
 												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
 													"fragmentStyle": {
-														"backgroundColor": "colorNeutral1",
+														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
+														"borderWidth": "1px",
+														"marginBottom": "2",
+														"marginTop": "2",
 														"paddingBottom": "3",
-														"paddingLeft": "4",
-														"paddingRight": "4",
+														"paddingLeft": "3",
+														"paddingRight": "3",
 														"paddingTop": "3"
 													},
+													"indexed": true,
 													"layout": {
 														"contentDisplay": "FlexRow",
 														"paddingBottom": 1,
-														"paddingLeft": 2,
-														"paddingRight": 2,
+														"paddingLeft": 1,
+														"paddingRight": 1,
 														"paddingTop": 1
 													}
 												},
@@ -465,14 +625,16 @@
 																"key": "BASIC_COMPONENT-image"
 															},
 															"fragmentConfig": {
-																"imageSize": "w-100"
+																"imageSize": "w-0"
 															},
 															"fragmentFields": [
 																{
+																	"id": "image-square",
 																	"value": {
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
+																					"en_US": "/documents/d/liferay-learn/development_t-svg?imagePreview=1"
 																				}
 																			}
 																		},
@@ -480,13 +642,20 @@
 																		}
 																	}
 																}
-															]
+															],
+															"fragmentStyle": {
+																"marginRight": "3"
+															},
+															"indexed": true
 														},
 														"type": "Fragment"
 													},
 													{
 														"definition": {
+															"indexed": true,
 															"layout": {
+																"align": "Start",
+																"contentDisplay": "FlexColumn"
 															}
 														},
 														"pageElements": [
@@ -497,38 +666,62 @@
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph-lg",
+																		"textType": "h6",
 																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
+																			"id": "element-text",
 																			"value": {
 																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Development and Tooling"
+																					}
 																				}
 																			}
 																		}
-																	]
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "700",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
 																},
 																"type": "Fragment"
 															},
 															{
 																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
-																		"textType": "h5",
+																		"textType": "text-paragraph-xs",
 																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
+																			"id": "element-text",
 																			"value": {
 																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Use out-of-the-box features and development tools to deliver solutions to users faster."
+																					}
 																				}
 																			}
 																		}
-																	]
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3",
+																		"marginTop": "2",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
 																},
 																"type": "Fragment"
 															}
@@ -540,19 +733,24 @@
 											},
 											{
 												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
 													"fragmentStyle": {
-														"backgroundColor": "colorNeutral1",
+														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
+														"borderWidth": "1px",
+														"marginBottom": "2",
+														"marginTop": "2",
 														"paddingBottom": "3",
-														"paddingLeft": "4",
-														"paddingRight": "4",
+														"paddingLeft": "3",
+														"paddingRight": "3",
 														"paddingTop": "3"
 													},
+													"indexed": true,
 													"layout": {
 														"contentDisplay": "FlexRow",
 														"paddingBottom": 1,
-														"paddingLeft": 2,
-														"paddingRight": 2,
+														"paddingLeft": 1,
+														"paddingRight": 1,
 														"paddingTop": 1
 													}
 												},
@@ -563,14 +761,16 @@
 																"key": "BASIC_COMPONENT-image"
 															},
 															"fragmentConfig": {
-																"imageSize": "w-100"
+																"imageSize": "w-0"
 															},
 															"fragmentFields": [
 																{
+																	"id": "image-square",
 																	"value": {
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
+																					"en_US": "/documents/d/liferay-learn/digital_ams-svg?imagePreview=1"
 																				}
 																			}
 																		},
@@ -578,13 +778,20 @@
 																		}
 																	}
 																}
-															]
+															],
+															"fragmentStyle": {
+																"marginRight": "3"
+															},
+															"indexed": true
 														},
 														"type": "Fragment"
 													},
 													{
 														"definition": {
+															"indexed": true,
 															"layout": {
+																"align": "Start",
+																"contentDisplay": "FlexColumn"
 															}
 														},
 														"pageElements": [
@@ -595,20 +802,135 @@
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph-lg",
+																		"textType": "h6",
 																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
+																			"id": "element-text",
 																			"value": {
 																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Digital Asset Management"
+																					}
 																				}
 																			}
 																		}
-																	]
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "700",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
 																},
 																"type": "Fragment"
 															},
+															{
+																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																	"fragment": {
+																		"key": "dialect-text",
+																		"siteKey": "Liferay Learn"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph-xs",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Use Liferay's Cloud infrastructure to launch your solutions more quickly and securely."
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3",
+																		"marginTop": "2",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"fragmentStyle": {
+														"backgroundColor": "colorNeutral0",
+														"borderRadius": "borderRadiusLg",
+														"borderWidth": "1px",
+														"marginBottom": "2",
+														"marginTop": "2",
+														"paddingBottom": "3",
+														"paddingLeft": "3",
+														"paddingRight": "3",
+														"paddingTop": "3"
+													},
+													"indexed": true,
+													"layout": {
+														"contentDisplay": "FlexRow",
+														"paddingBottom": 1,
+														"paddingLeft": 1,
+														"paddingRight": 1,
+														"paddingTop": 1
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-0"
+															},
+															"fragmentFields": [
+																{
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"value_i18n": {
+																					"en_US": "/documents/d/liferay-learn/dxp_shima-svg?imagePreview=1"
+																				}
+																			}
+																		},
+																		"fragmentLink": {
+																		},
+																		"id": "image-square"
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginRight": "3"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"indexed": true,
+															"layout": {
+																"align": "Start",
+																"contentDisplay": "FlexColumn"
+															}
+														},
+														"pageElements": [
 															{
 																"definition": {
 																	"fragment": {
@@ -616,17 +938,878 @@
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
-																		"textType": "h5",
+																		"textType": "h6",
 																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
+																			"id": "element-text",
 																			"value": {
 																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "DXP Self-Hosted Installation, Maintenance, and Administration"
+																					}
 																				}
 																			}
 																		}
-																	]
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "700",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																	"fragment": {
+																		"key": "dialect-text",
+																		"siteKey": "Liferay Learn"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph-xs",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Deploy, configure, and maintain Liferay DXP on your own infrastructure."
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3",
+																		"marginTop": "2",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"fragmentStyle": {
+														"backgroundColor": "colorNeutral0",
+														"borderRadius": "borderRadiusLg",
+														"borderWidth": "1px",
+														"marginBottom": "2",
+														"marginTop": "2",
+														"paddingBottom": "3",
+														"paddingLeft": "3",
+														"paddingRight": "3",
+														"paddingTop": "3"
+													},
+													"indexed": true,
+													"layout": {
+														"contentDisplay": "FlexRow",
+														"paddingBottom": 1,
+														"paddingLeft": 1,
+														"paddingRight": 1,
+														"paddingTop": 1
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-0"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"value_i18n": {
+																					"en_US": "/documents/d/liferay-learn/integration-svg?imagePreview=1"
+																				}
+																			}
+																		},
+																		"fragmentLink": {
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginRight": "3"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"indexed": true,
+															"layout": {
+																"align": "Start",
+																"contentDisplay": "FlexColumn"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-text",
+																		"siteKey": "Liferay Learn"
+																	},
+																	"fragmentConfig": {
+																		"textType": "h6",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Integration"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "700",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																	"fragment": {
+																		"key": "dialect-text",
+																		"siteKey": "Liferay Learn"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph-xs",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Unify systems, applications, and data with a single platform."
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3",
+																		"marginTop": "2",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"fragmentStyle": {
+														"backgroundColor": "colorNeutral0",
+														"borderRadius": "borderRadiusLg",
+														"borderWidth": "1px",
+														"marginBottom": "2",
+														"marginTop": "2",
+														"paddingBottom": "3",
+														"paddingLeft": "3",
+														"paddingRight": "3",
+														"paddingTop": "3"
+													},
+													"indexed": true,
+													"layout": {
+														"contentDisplay": "FlexRow",
+														"paddingBottom": 1,
+														"paddingLeft": 1,
+														"paddingRight": 1,
+														"paddingTop": 1
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-0"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"value_i18n": {
+																					"en_US": "/documents/d/liferay-learn/personalization-svg?imagePreview=1"
+																				}
+																			}
+																		},
+																		"fragmentLink": {
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginRight": "3"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"indexed": true,
+															"layout": {
+																"align": "Start",
+																"contentDisplay": "FlexColumn"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-text",
+																		"siteKey": "Liferay Learn"
+																	},
+																	"fragmentConfig": {
+																		"textType": "h6",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Personalization"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "700",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																	"fragment": {
+																		"key": "dialect-text",
+																		"siteKey": "Liferay Learn"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph-xs",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Deliver more personalized and relevant content through enhanced segmentation, AI-generated recommendations, and A/B testing."
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3",
+																		"marginTop": "2",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"fragmentStyle": {
+														"backgroundColor": "colorNeutral0",
+														"borderRadius": "borderRadiusLg",
+														"borderWidth": "1px",
+														"marginBottom": "2",
+														"marginTop": "2",
+														"paddingBottom": "3",
+														"paddingLeft": "3",
+														"paddingRight": "3",
+														"paddingTop": "3"
+													},
+													"indexed": true,
+													"layout": {
+														"contentDisplay": "FlexRow",
+														"paddingBottom": 1,
+														"paddingLeft": 1,
+														"paddingRight": 1,
+														"paddingTop": 1
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-0"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"value_i18n": {
+																					"en_US": "/documents/d/liferay-learn/platform-svg?imagePreview=1"
+																				}
+																			}
+																		},
+																		"fragmentLink": {
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginRight": "3"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"indexed": true,
+															"layout": {
+																"align": "Start",
+																"contentDisplay": "FlexColumn"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-text",
+																		"siteKey": "Liferay Learn"
+																	},
+																	"fragmentConfig": {
+																		"textType": "h6",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Platform"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "700",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																	"fragment": {
+																		"key": "dialect-text",
+																		"siteKey": "Liferay Learn"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph-xs",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Send email notifications, test content updates, deliver solutions across multiple channels, and more with out-of-the-box platform features."
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3",
+																		"marginTop": "2",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"fragmentStyle": {
+														"backgroundColor": "colorNeutral0",
+														"borderRadius": "borderRadiusLg",
+														"borderWidth": "1px",
+														"marginBottom": "2",
+														"marginTop": "2",
+														"paddingBottom": "3",
+														"paddingLeft": "3",
+														"paddingRight": "3",
+														"paddingTop": "3"
+													},
+													"indexed": true,
+													"layout": {
+														"contentDisplay": "FlexRow",
+														"paddingBottom": 1,
+														"paddingLeft": 1,
+														"paddingRight": 1,
+														"paddingTop": 1
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-0"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"value_i18n": {
+																					"en_US": "/documents/d/liferay-learn/search-svg?imagePreview=1"
+																				}
+																			}
+																		},
+																		"fragmentLink": {
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginRight": "3"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"indexed": true,
+															"layout": {
+																"align": "Start",
+																"contentDisplay": "FlexColumn"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-text",
+																		"siteKey": "Liferay Learn"
+																	},
+																	"fragmentConfig": {
+																		"textType": "h6",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Search"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "700",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																	"fragment": {
+																		"key": "dialect-text",
+																		"siteKey": "Liferay Learn"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph-xs",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Save users time with personalized, integrated, and organized search results."
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3",
+																		"marginTop": "2",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"fragmentStyle": {
+														"backgroundColor": "colorNeutral0",
+														"borderRadius": "borderRadiusLg",
+														"borderWidth": "1px",
+														"marginBottom": "2",
+														"marginTop": "2",
+														"paddingBottom": "3",
+														"paddingLeft": "3",
+														"paddingRight": "3",
+														"paddingTop": "3"
+													},
+													"indexed": true,
+													"layout": {
+														"contentDisplay": "FlexRow",
+														"paddingBottom": 1,
+														"paddingLeft": 1,
+														"paddingRight": 1,
+														"paddingTop": 1
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-0"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"value_i18n": {
+																					"en_US": "/documents/d/liferay-learn/security-svg?imagePreview=1"
+																				}
+																			}
+																		},
+																		"fragmentLink": {
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginRight": "3"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"indexed": true,
+															"layout": {
+																"align": "Start",
+																"contentDisplay": "FlexColumn"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-text",
+																		"siteKey": "Liferay Learn"
+																	},
+																	"fragmentConfig": {
+																		"textType": "h6",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Security"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "700",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																	"fragment": {
+																		"key": "dialect-text",
+																		"siteKey": "Liferay Learn"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph-xs",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Protect users, data, and solutions with a platform designed with security in mind."
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3",
+																		"marginTop": "2",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"fragmentStyle": {
+														"backgroundColor": "colorNeutral0",
+														"borderRadius": "borderRadiusLg",
+														"borderWidth": "1px",
+														"marginBottom": "2",
+														"marginTop": "2",
+														"paddingBottom": "3",
+														"paddingLeft": "3",
+														"paddingRight": "3",
+														"paddingTop": "3"
+													},
+													"indexed": true,
+													"layout": {
+														"contentDisplay": "FlexRow",
+														"paddingBottom": 1,
+														"paddingLeft": 1,
+														"paddingRight": 1,
+														"paddingTop": 1
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-0"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"value_i18n": {
+																					"en_US": "/documents/d/liferay-learn/sites-svg?imagePreview=1"
+																				}
+																			}
+																		},
+																		"fragmentLink": {
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginRight": "3"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"indexed": true,
+															"layout": {
+																"align": "Start",
+																"contentDisplay": "FlexColumn"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-text",
+																		"siteKey": "Liferay Learn"
+																	},
+																	"fragmentConfig": {
+																		"textType": "h6",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Sites"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "700",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																	"fragment": {
+																		"key": "dialect-text",
+																		"siteKey": "Liferay Learn"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph-xs",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Deliver customized pages and sites on any device or channel."
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3",
+																		"marginTop": "2",
+																		"maxWidth": "285px"
+																	},
+																	"indexed": true
 																},
 																"type": "Fragment"
 															}
@@ -649,103 +1832,435 @@
 								"pageElements": [
 									{
 										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] {\ntext-align: left !important;\nimg {\nwidth: 50px;\nheight: 50px;\n}\n}\n",
+											"fragmentStyle": {
+												"marginTop": "4",
+												"textAlign": "center"
+											},
+											"indexed": true,
 											"layout": {
 												"contentDisplay": "FlexRow",
-												"flexWrap": "Wrap"
+												"flexWrap": "Wrap",
+												"justify": "SpaceBetween",
+												"marginTop": 2
 											}
 										},
 										"pageElements": [
 											{
 												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "colorNeutral1",
-														"borderRadius": "borderRadiusLg",
-														"paddingBottom": "3",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "3"
-													},
+													"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: 1rem;\n}",
+													"indexed": true,
 													"layout": {
 														"contentDisplay": "FlexRow",
-														"paddingBottom": 1,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 1
+														"justify": "Center",
+														"widthType": "Fixed"
 													}
 												},
 												"pageElements": [
 													{
 														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
+															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+															"fragmentStyle": {
+																"backgroundColor": "colorNeutral0",
+																"borderRadius": "borderRadiusLg",
+																"borderWidth": "1px",
+																"marginBottom": "2",
+																"marginTop": "2",
+																"paddingBottom": "3",
+																"paddingLeft": "3",
+																"paddingRight": "3",
+																"paddingTop": "3"
 															},
-															"fragmentConfig": {
-																"imageSize": "w-100"
-															},
-															"fragmentFields": [
-																{
-																	"value": {
-																		"fragmentImage": {
-																			"url": {
-																				"value_i18n": {
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															]
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
+															"indexed": true,
 															"layout": {
+																"contentDisplay": "FlexRow",
+																"paddingBottom": 1,
+																"paddingLeft": 1,
+																"paddingRight": 1,
+																"paddingTop": 1
 															}
 														},
 														"pageElements": [
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "dialect-text",
-																		"siteKey": "Liferay Learn"
+																		"key": "BASIC_COMPONENT-image"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph-lg",
-																		"truncateText": false
+																		"imageSize": "w-0"
 																	},
 																	"fragmentFields": [
 																		{
+																			"id": "image-square",
 																			"value": {
+																				"fragmentImage": {
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "/documents/d/liferay-learn/analytics_c-svg?imagePreview=1"
+																						}
+																					}
+																				},
 																				"fragmentLink": {
 																				}
 																			}
 																		}
-																	]
+																	],
+																	"fragmentStyle": {
+																		"marginRight": "3"
+																	},
+																	"indexed": true
 																},
 																"type": "Fragment"
 															},
 															{
 																"definition": {
+																	"indexed": true,
+																	"layout": {
+																		"align": "Start",
+																		"contentDisplay": "FlexColumn"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Liferay Learn"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h6",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Analytics Cloud"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "700",
+																				"maxWidth": "285px"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Liferay Learn"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph-xs",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Understand your audience with integrated analytics for Liferay DXP."
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"marginBottom": "3",
+																				"marginTop": "2",
+																				"maxWidth": "285px"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+															"fragmentStyle": {
+																"backgroundColor": "colorNeutral0",
+																"borderRadius": "borderRadiusLg",
+																"borderWidth": "1px",
+																"marginBottom": "2",
+																"marginTop": "2",
+																"paddingBottom": "3",
+																"paddingLeft": "3",
+																"paddingRight": "3",
+																"paddingTop": "3"
+															},
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow",
+																"paddingBottom": 1,
+																"paddingLeft": 1,
+																"paddingRight": 1,
+																"paddingTop": 1
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
 																	"fragment": {
-																		"key": "dialect-text",
-																		"siteKey": "Liferay Learn"
+																		"key": "BASIC_COMPONENT-image"
 																	},
 																	"fragmentConfig": {
-																		"textType": "h5",
-																		"truncateText": false
+																		"imageSize": "w-0"
 																	},
 																	"fragmentFields": [
 																		{
+																			"id": "image-square",
 																			"value": {
+																				"fragmentImage": {
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "/documents/d/liferay-learn/commerce_product-svg?imagePreview=1"
+																						}
+																					}
+																				},
 																				"fragmentLink": {
 																				}
 																			}
 																		}
-																	]
+																	],
+																	"fragmentStyle": {
+																		"marginRight": "3"
+																	},
+																	"indexed": true
 																},
 																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"indexed": true,
+																	"layout": {
+																		"align": "Start",
+																		"contentDisplay": "FlexColumn"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Liferay Learn"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h6",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Commerce"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "700",
+																				"maxWidth": "285px"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Liferay Learn"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph-xs",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Launch modern B2B commerce experiences on Liferay DXP."
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"marginBottom": "3",
+																				"marginTop": "2",
+																				"maxWidth": "285px"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+															"fragmentStyle": {
+																"backgroundColor": "colorNeutral0",
+																"borderRadius": "borderRadiusLg",
+																"borderWidth": "1px",
+																"marginBottom": "2",
+																"marginTop": "2",
+																"paddingBottom": "3",
+																"paddingLeft": "3",
+																"paddingRight": "3",
+																"paddingTop": "3"
+															},
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow",
+																"paddingBottom": 1,
+																"paddingLeft": 1,
+																"paddingRight": 1,
+																"paddingTop": 1
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-0"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "/documents/d/liferay-learn/dxp_p-svg?imagePreview=1"
+																						}
+																					}
+																				},
+																				"fragmentLink": {
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginRight": "3"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"indexed": true,
+																	"layout": {
+																		"align": "Start",
+																		"contentDisplay": "FlexColumn"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Liferay Learn"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h6",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "DXP"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "700",
+																				"maxWidth": "285px"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Liferay Learn"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph-xs",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Transition from legacy systems and build digital experiences on a single powerful platform."
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"marginBottom": "3",
+																				"marginTop": "2",
+																				"maxWidth": "285px"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
 															}
 														],
 														"type": "Section"
@@ -755,389 +2270,283 @@
 											},
 											{
 												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "colorNeutral1",
-														"borderRadius": "borderRadiusLg",
-														"paddingBottom": "3",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "3"
-													},
+													"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: 1rem;\n}",
+													"indexed": true,
 													"layout": {
 														"contentDisplay": "FlexRow",
-														"paddingBottom": 1,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 1
+														"justify": "Center",
+														"widthType": "Fixed"
 													}
 												},
 												"pageElements": [
 													{
 														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
+															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+															"fragmentStyle": {
+																"backgroundColor": "colorNeutral0",
+																"borderRadius": "borderRadiusLg",
+																"borderWidth": "1px",
+																"marginBottom": "2",
+																"marginTop": "2",
+																"paddingBottom": "3",
+																"paddingLeft": "3",
+																"paddingRight": "3",
+																"paddingTop": "3"
 															},
-															"fragmentConfig": {
-																"imageSize": "w-100"
-															},
-															"fragmentFields": [
-																{
-																	"value": {
-																		"fragmentImage": {
-																			"url": {
-																				"value_i18n": {
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															]
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
+															"indexed": true,
 															"layout": {
+																"contentDisplay": "FlexRow",
+																"paddingBottom": 1,
+																"paddingLeft": 1,
+																"paddingRight": 1,
+																"paddingTop": 1
 															}
 														},
 														"pageElements": [
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "dialect-text",
-																		"siteKey": "Liferay Learn"
+																		"key": "BASIC_COMPONENT-image"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph-lg",
-																		"truncateText": false
+																		"imageSize": "w-0"
 																	},
 																	"fragmentFields": [
 																		{
+																			"id": "image-square",
 																			"value": {
+																				"fragmentImage": {
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "/documents/d/liferay-learn/dxp_c-svg?imagePreview=1"
+																						}
+																					}
+																				},
 																				"fragmentLink": {
 																				}
 																			}
 																		}
-																	]
+																	],
+																	"fragmentStyle": {
+																		"marginRight": "3"
+																	},
+																	"indexed": true
 																},
 																"type": "Fragment"
 															},
 															{
 																"definition": {
-																	"fragment": {
-																		"key": "dialect-text",
-																		"siteKey": "Liferay Learn"
-																	},
-																	"fragmentConfig": {
-																		"textType": "h5",
-																		"truncateText": false
-																	},
-																	"fragmentFields": [
-																		{
-																			"value": {
-																				"fragmentLink": {
-																				}
-																			}
-																		}
-																	]
+																	"indexed": true,
+																	"layout": {
+																		"align": "Start",
+																		"contentDisplay": "FlexColumn"
+																	}
 																},
-																"type": "Fragment"
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Liferay Learn"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h6",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Liferay Cloud"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "700",
+																				"maxWidth": "285px"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Liferay Learn"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph-xs",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Enterprise PaaS tailored for Liferay Digital Experience Platform."
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"marginBottom": "3",
+																				"marginTop": "2",
+																				"maxWidth": "285px"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
 															}
 														],
 														"type": "Section"
-													}
-												],
-												"type": "Section"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "colorNeutral1",
-														"borderRadius": "borderRadiusLg",
-														"paddingBottom": "3",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "3"
-													},
-													"layout": {
-														"contentDisplay": "FlexRow",
-														"paddingBottom": 1,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 1
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
-															},
-															"fragmentConfig": {
-																"imageSize": "w-100"
-															},
-															"fragmentFields": [
-																{
-																	"value": {
-																		"fragmentImage": {
-																			"url": {
-																				"value_i18n": {
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															]
-														},
-														"type": "Fragment"
 													},
 													{
 														"definition": {
+															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+															"fragmentStyle": {
+																"backgroundColor": "colorNeutral0",
+																"borderRadius": "borderRadiusLg",
+																"borderWidth": "1px",
+																"marginBottom": "2",
+																"marginTop": "2",
+																"paddingBottom": "3",
+																"paddingLeft": "3",
+																"paddingRight": "3",
+																"paddingTop": "3"
+															},
+															"indexed": true,
 															"layout": {
+																"contentDisplay": "FlexRow",
+																"paddingBottom": 1,
+																"paddingLeft": 1,
+																"paddingRight": 1,
+																"paddingTop": 1
 															}
 														},
 														"pageElements": [
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "dialect-text",
-																		"siteKey": "Liferay Learn"
+																		"key": "BASIC_COMPONENT-image"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph-lg",
-																		"truncateText": false
+																		"imageSize": "w-0"
 																	},
 																	"fragmentFields": [
 																		{
+																			"id": "image-square",
 																			"value": {
+																				"fragmentImage": {
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "/documents/d/liferay-learn/reference-svg?imagePreview=1"
+																						}
+																					}
+																				},
 																				"fragmentLink": {
 																				}
 																			}
 																		}
-																	]
+																	],
+																	"fragmentStyle": {
+																		"marginRight": "3"
+																	},
+																	"indexed": true
 																},
 																"type": "Fragment"
 															},
 															{
 																"definition": {
-																	"fragment": {
-																		"key": "dialect-text",
-																		"siteKey": "Liferay Learn"
-																	},
-																	"fragmentConfig": {
-																		"textType": "h5",
-																		"truncateText": false
-																	},
-																	"fragmentFields": [
-																		{
-																			"value": {
-																				"fragmentLink": {
-																				}
-																			}
-																		}
-																	]
-																},
-																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													}
-												],
-												"type": "Section"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "colorNeutral1",
-														"borderRadius": "borderRadiusLg",
-														"paddingBottom": "3",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "3"
-													},
-													"layout": {
-														"contentDisplay": "FlexRow",
-														"paddingBottom": 1,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 1
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
-															},
-															"fragmentConfig": {
-																"imageSize": "w-100"
-															},
-															"fragmentFields": [
-																{
-																	"value": {
-																		"fragmentImage": {
-																			"url": {
-																				"value_i18n": {
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
+																	"indexed": true,
+																	"layout": {
+																		"align": "Start",
+																		"contentDisplay": "FlexColumn"
 																	}
-																}
-															]
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"layout": {
-															}
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "dialect-text",
-																		"siteKey": "Liferay Learn"
-																	},
-																	"fragmentConfig": {
-																		"textType": "text-paragraph-lg",
-																		"truncateText": false
-																	},
-																	"fragmentFields": [
-																		{
-																			"value": {
-																				"fragmentLink": {
-																				}
-																			}
-																		}
-																	]
 																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "dialect-text",
-																		"siteKey": "Liferay Learn"
-																	},
-																	"fragmentConfig": {
-																		"textType": "h5",
-																		"truncateText": false
-																	},
-																	"fragmentFields": [
-																		{
-																			"value": {
-																				"fragmentLink": {
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Liferay Learn"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h6",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Reference"
+																							}
+																						}
+																					}
 																				}
-																			}
-																		}
-																	]
-																},
-																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													}
-												],
-												"type": "Section"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "colorNeutral1",
-														"borderRadius": "borderRadiusLg",
-														"paddingBottom": "3",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "3"
-													},
-													"layout": {
-														"contentDisplay": "FlexRow",
-														"paddingBottom": 1,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 1
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
-															},
-															"fragmentConfig": {
-																"imageSize": "w-100"
-															},
-															"fragmentFields": [
-																{
-																	"value": {
-																		"fragmentImage": {
-																			"url": {
-																				"value_i18n": {
-																				}
-																			}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "700",
+																				"maxWidth": "285px"
+																			},
+																			"indexed": true
 																		},
-																		"fragmentLink": {
-																		}
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Liferay Learn"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph-xs",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Documents and resources to further help implementation."
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"marginBottom": "3",
+																				"marginTop": "2",
+																				"maxWidth": "285px"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
 																	}
-																}
-															]
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"layout": {
-															}
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "dialect-text",
-																		"siteKey": "Liferay Learn"
-																	},
-																	"fragmentConfig": {
-																		"textType": "text-paragraph-lg",
-																		"truncateText": false
-																	},
-																	"fragmentFields": [
-																		{
-																			"value": {
-																				"fragmentLink": {
-																				}
-																			}
-																		}
-																	]
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "dialect-text",
-																		"siteKey": "Liferay Learn"
-																	},
-																	"fragmentConfig": {
-																		"textType": "h5",
-																		"truncateText": false
-																	},
-																	"fragmentFields": [
-																		{
-																			"value": {
-																				"fragmentLink": {
-																				}
-																			}
-																		}
-																	]
-																},
-																"type": "Fragment"
+																],
+																"type": "Section"
 															}
 														],
 														"type": "Section"

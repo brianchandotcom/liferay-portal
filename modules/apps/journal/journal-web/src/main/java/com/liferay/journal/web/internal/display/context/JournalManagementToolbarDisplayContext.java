@@ -335,7 +335,7 @@ public class JournalManagementToolbarDisplayContext
 		).setKeywords(
 			StringPool.BLANK
 		).setNavigation(
-			StringPool.BLANK
+			(String)null
 		).setParameter(
 			"assetCategoryId", (String)null
 		).setParameter(
@@ -445,6 +445,8 @@ public class JournalManagementToolbarDisplayContext
 					PortletURLBuilder.create(
 						PortletURLUtil.clone(
 							currentURLObj, liferayPortletResponse)
+					).setNavigation(
+						(String)null
 					).setParameter(
 						"navigationMine", (String)null
 					).buildString());
@@ -468,6 +470,8 @@ public class JournalManagementToolbarDisplayContext
 					PortletURLBuilder.create(
 						PortletURLUtil.clone(
 							currentURLObj, liferayPortletResponse)
+					).setNavigation(
+						(String)null
 					).setParameter(
 						"navigationRecent", (String)null
 					).buildString());

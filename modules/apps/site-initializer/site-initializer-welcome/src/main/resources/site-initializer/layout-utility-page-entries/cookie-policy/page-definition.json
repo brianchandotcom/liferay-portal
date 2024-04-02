@@ -1,0 +1,640 @@
+{
+	"pageElement": {
+		"id": "192f0431-0d3e-cc31-0b55-2d50e19fdab8",
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"widthType": "Fixed"
+					}
+				},
+				"id": "f1c22020-8552-e5c8-c02c-c752976111b9",
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"height": "64px",
+								"marginBottom": "3",
+								"marginLeft": "3",
+								"marginRight": "3"
+							},
+							"indexed": true,
+							"layout": {
+								"align": "Center",
+								"contentDisplay": "FlexRow",
+								"justify": "SpaceBetween",
+								"marginBottom": 1,
+								"marginLeft": 1,
+								"marginRight": 1
+							},
+							"name": "Header"
+						},
+						"id": "3c450d4c-e08e-1967-c6fd-0d011d59cb3b",
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-heading"
+									},
+									"fragmentConfig": {
+										"headingLevel": "h2"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Cookies List"
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"id": "555b9a1f-61e3-1f94-e225-cc0170aad3aa",
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-button"
+									},
+									"fragmentConfig": {
+										"buttonSize": "sm",
+										"buttonType": "secondary",
+										"type": "action"
+									},
+									"fragmentFields": [
+										{
+											"id": "link",
+											"value": {
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "action",
+											"value": {
+												"text": {
+													"value_i18n": {
+														"en_US": "Manage Cookies Settings"
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"id": "8ccf7738-54bd-e011-4ab2-dbb31dc0822b",
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+							},
+							"name": "Body"
+						},
+						"id": "f14588de-6772-2f8a-5976-30a55ad01152",
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-paragraph"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "<div>A cookie is a small piece of data (text file) that a website – when visited by a user – asks your browser to store on your device in order to remember information about you, such as your language preference or login information. Those cookies are set by us and called first-party cookies. We also use third-party cookies – which are cookies from a domain different than the domain of the website you are visiting – for our advertising and marketing efforts. More specifically, we use cookies and other tracking technologies for the following purposes:</div>\n"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"fontSize": "18px",
+										"marginBottom": "5",
+										"marginLeft": "3",
+										"marginRight": "3"
+									},
+									"indexed": true,
+									"name": "Cookies Description"
+								},
+								"id": "997f5b39-38e7-3b33-96ef-1b52727562ff",
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"indexed": true,
+									"layout": {
+									},
+									"name": "Cookies Categories"
+								},
+								"id": "eeec9e70-f7d8-196e-316f-1bb4f79ddba3",
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginBottom": "5"
+											},
+											"indexed": true,
+											"layout": {
+												"marginBottom": 4
+											},
+											"name": "Strictly Necessary Cookies"
+										},
+										"id": "c07e0271-7291-d549-2dd7-5fb39b3f7993",
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"marginBottom": "3",
+														"marginLeft": "3",
+														"marginRight": "3"
+													},
+													"indexed": true,
+													"layout": {
+														"marginBottom": 1,
+														"marginLeft": 1,
+														"marginRight": 1
+													},
+													"name": "Header and Paragraph"
+												},
+												"id": "7dcf5c6a-e844-c98a-3b61-c28178e4eec1",
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-heading"
+															},
+															"fragmentConfig": {
+																"headingLevel": "h3"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Strictly Necessary Cookies"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"height": "27px",
+																"marginBottom": "3"
+															},
+															"indexed": true
+														},
+														"id": "f154a2be-0e49-3e2b-2393-0ea80e4b654d",
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-paragraph"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "These cookies are necessary for the website to function and cannot be switched off in our systems. They are usually only set in response to actions made by you which amount to a request for services, such as setting your privacy preferences, logging in or filling in forms. You can set your browser to block or alert you about these cookies, but some parts of the site will then not work. These cookies do not store any personally identifiable information."
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontSize": "18px"
+															},
+															"indexed": true
+														},
+														"id": "f6c4d952-6004-395e-0263-5fd3620c86dc",
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"indexed": true,
+													"layout": {
+													},
+													"name": "Collections"
+												},
+												"id": "953cc04e-df57-9921-4f1a-d9fca0bc36c9",
+												"pageElements": [
+													{
+														"definition": {
+															"widgetInstance": {
+																"widgetConfig": {
+																},
+																"widgetName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:NecessaryCookieEntry$]"
+															}
+														},
+														"type": "Widget"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginBottom": "5",
+												"marginLeft": "3",
+												"marginRight": "3"
+											},
+											"indexed": true,
+											"layout": {
+												"marginBottom": 4,
+												"marginLeft": 1,
+												"marginRight": 1
+											},
+											"name": "Functional Cookies"
+										},
+										"id": "65d87abc-a9f6-eea1-c5f6-2f99bb8b6762",
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"marginBottom": "3"
+													},
+													"indexed": true,
+													"layout": {
+														"marginBottom": 1
+													},
+													"name": "Header and Paragraph"
+												},
+												"id": "9f8dd5f6-d4bc-da68-78ef-6cb2021cb295",
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-heading"
+															},
+															"fragmentConfig": {
+																"headingLevel": "h3"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Functional Cookies"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"height": "27px",
+																"marginBottom": "3"
+															},
+															"indexed": true
+														},
+														"id": "fdb1b99e-9ae9-d5bd-7b3a-025740ac7149",
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-paragraph"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "These cookies enable the website to provide enhanced functionality and personalisation. They may be set by us or by third party providers whose services we have added to our pages. If you do not allow these cookies, then some or all of these services may not function properly."
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontSize": "18px"
+															},
+															"indexed": true
+														},
+														"id": "b6b356f7-bc1f-eff7-2626-a80f68bc338d",
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"indexed": true,
+													"layout": {
+													},
+													"name": "Collections"
+												},
+												"id": "0be6ffe5-26d0-29fb-ddef-f3dc88488b4f",
+												"pageElements": [
+													{
+														"definition": {
+															"widgetInstance": {
+																"widgetConfig": {
+																},
+																"widgetName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:FunctionalCookieEntry$]"
+															}
+														},
+														"type": "Widget"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginBottom": "5",
+												"marginLeft": "3",
+												"marginRight": "3"
+											},
+											"indexed": true,
+											"layout": {
+												"marginBottom": 4,
+												"marginLeft": 1,
+												"marginRight": 1
+											},
+											"name": "Performance Cookies"
+										},
+										"id": "72812211-79fd-7da2-a313-21e802af0129",
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"marginBottom": "3"
+													},
+													"indexed": true,
+													"layout": {
+														"marginBottom": 1
+													},
+													"name": "Header and Paragraph"
+												},
+												"id": "54b4ba89-ef09-bab5-826a-df4877e8795b",
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-heading"
+															},
+															"fragmentConfig": {
+																"headingLevel": "h3"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Performance Cookies"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"height": "27px",
+																"marginBottom": "3"
+															},
+															"indexed": true
+														},
+														"id": "58c7c8d7-4110-7731-9214-3b548e5466b1",
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-paragraph"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. If you do not allow these cookies, we will not know when you have visited our site."
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontSize": "18px"
+															},
+															"indexed": true
+														},
+														"id": "5afb4e18-856e-f800-124b-8e05509b9dcb",
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"indexed": true,
+													"layout": {
+													},
+													"name": "Collections"
+												},
+												"id": "9d1eb7ce-3c32-a1a2-cf93-622c79b2430d",
+												"pageElements": [
+													{
+														"definition": {
+															"widgetInstance": {
+																"widgetConfig": {
+																},
+																"widgetName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:PerformanceCookieEntry$]"
+															}
+														},
+														"type": "Widget"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginBottom": "5",
+												"marginLeft": "3",
+												"marginRight": "3"
+											},
+											"indexed": true,
+											"layout": {
+												"marginBottom": 4,
+												"marginLeft": 1,
+												"marginRight": 1
+											},
+											"name": "Personalization Cookies"
+										},
+										"id": "3fa7637f-9e8a-a768-b35a-a3035480bf41",
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"marginBottom": "3"
+													},
+													"indexed": true,
+													"layout": {
+														"marginBottom": 1
+													},
+													"name": "Header and paragraph"
+												},
+												"id": "e6f0a973-fe68-f2c3-7623-4d2c3c95aacb",
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-heading"
+															},
+															"fragmentConfig": {
+																"headingLevel": "h3"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Personalization Cookies"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"height": "27px",
+																"marginBottom": "3"
+															},
+															"indexed": true
+														},
+														"id": "cc87e564-c18c-222e-68d6-3a955e37cfcc",
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-paragraph"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and Internet device. If you do not allow these cookies, you will experience less targeted advertising."
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontSize": "18px",
+																"marginTop": "10px"
+															},
+															"indexed": true
+														},
+														"id": "6ad9dbf6-a583-e3f6-2a12-ced09a080556",
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"indexed": true,
+													"layout": {
+													},
+													"name": "Collections"
+												},
+												"id": "781a4021-32be-953d-56cc-9f1598563062",
+												"pageElements": [
+													{
+														"definition": {
+															"widgetInstance": {
+																"widgetConfig": {
+																},
+																"widgetName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:PersonalizationCookieEntry$]"
+															}
+														},
+														"type": "Widget"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	},
+	"version": 1.1
+}

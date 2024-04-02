@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -109,19 +110,29 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	@Override
 	public boolean isEnabled(HttpServletRequest httpServletRequest) {
-		if (_captchaConfiguration.maxChallenges() == 0) {
+		HttpSession httpSession = _getHttpSession(httpServletRequest);
+
+		String key = _CAPTCHA_MAX_CHALLENGES;
+
+		String portletId = portal.getPortletId(httpServletRequest);
+
+		if (Validator.isNotNull(portletId)) {
+			key = portal.getPortletNamespace(portletId) + key;
+		}
+
+		int curMaxChallenges = GetterUtil.getInteger(
+			httpSession.getAttribute(key),
+			_captchaConfiguration.maxChallenges());
+
+		if (curMaxChallenges == 0) {
 			return true;
 		}
 
-		if (_captchaConfiguration.maxChallenges() > 0) {
-			HttpSession httpSession = _getHttpSession(httpServletRequest);
-
+		if (curMaxChallenges > 0) {
 			Integer count = (Integer)httpSession.getAttribute(
 				_getHttpSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest));
 
-			if ((count != null) &&
-				(count >= _captchaConfiguration.maxChallenges())) {
-
+			if ((count != null) && (count >= curMaxChallenges)) {
 				return false;
 			}
 

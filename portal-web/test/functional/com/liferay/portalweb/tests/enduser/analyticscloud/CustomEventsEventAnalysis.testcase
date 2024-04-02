@@ -462,6 +462,8 @@ definition {
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10307 | Test Summary: Total Chart, Unique Chart and Average Chart data shown"
 	@priority = 5
 	test CheckTotalAndUniqueAndAverageChartDataIsShown {
+		property test.run.type = "single";
+
 		var attributeName = "pageTitle";
 		var layoutNameList = "Custom 1,Custom 2";
 		var dataSource = StringUtil.extractFirst(${assignedPropertyName}, " ");
@@ -471,7 +473,7 @@ definition {
 
 			ACCustomEvents.createCustomEvent(
 				customEventName = ${customEventName},
-				timeToSendCustomEvent = 3);
+				timeToSendCustomEvent = 6);
 		}
 
 		task ("Close sessions") {
@@ -495,7 +497,7 @@ definition {
 		task ("Fill fields and make new interactions with custom event") {
 			ACCustomEvents.createCustomEvent(
 				customEventName = ${customEventName},
-				timeToSendCustomEvent = 2);
+				timeToSendCustomEvent = 3);
 		}
 
 		task ("Close sessions") {
@@ -545,11 +547,11 @@ definition {
 		task ("Check that the chart appears for the total tab") {
 			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
 				columnInformationValue = "ac page - site name - ${dataSource}",
-				totalEventsValue = 3);
+				totalEventsValue = 6);
 
 			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
 				columnInformationValue = "custom 2 - site name - ${dataSource}",
-				totalEventsValue = 2);
+				totalEventsValue = 3);
 
 			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
 				columnInformationValue = "custom 1 - site name - ${dataSource}",
@@ -581,11 +583,11 @@ definition {
 		task ("Check that the chart appears for the average tab") {
 			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
 				columnInformationValue = "ac page - site name - ${dataSource}",
-				totalEventsValue = 3);
+				totalEventsValue = 6);
 
 			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
 				columnInformationValue = "custom 2 - site name - ${dataSource}",
-				totalEventsValue = 2);
+				totalEventsValue = 3);
 
 			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
 				columnInformationValue = "custom 1 - site name - ${dataSource}",

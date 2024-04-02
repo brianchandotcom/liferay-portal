@@ -26,6 +26,8 @@ public abstract class BaseVirtualInstanceOperation {
 	public void onVirtualInstance(
 		Callable<Company> callable, Map<String, Object> properties) {
 
+		String servicePid = (String)properties.get("service.pid");
+
 		try {
 			Company company = callable.call();
 
@@ -33,6 +35,20 @@ public abstract class BaseVirtualInstanceOperation {
 				_deleteConfiguration(
 					"com.liferay.portal.instances.internal.configuration." +
 						"PortalInstancesConfiguration~" + company.getWebId());
+
+				if (servicePid.contains("Extract")) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Virtual Instance with company ID " +
+								company.getCompanyId() +
+									" extracted successfully");
+					}
+				}
+				else if (_log.isInfoEnabled()) {
+					_log.info(
+						"Virtual Instance with company ID " +
+							company.getCompanyId() + " imported successfully");
+				}
 			}
 		}
 		catch (Exception exception) {
@@ -40,7 +56,7 @@ public abstract class BaseVirtualInstanceOperation {
 				"Unable to perform operation on virtual instance", exception);
 		}
 		finally {
-			_deleteConfiguration((String)properties.get("service.pid"));
+			_deleteConfiguration(servicePid);
 		}
 	}
 

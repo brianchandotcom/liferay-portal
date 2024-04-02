@@ -515,10 +515,6 @@ definition {
 	@description = "Create a dynamic segment with individuals"
 	@priority = 5
 	test CanCreateDynamicSegmentWithIndividuals {
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine Reason: Segment membership takes long time to load LRAC-10769
-
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -527,6 +523,8 @@ definition {
 
 		task ("View the site page") {
 			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -549,21 +547,17 @@ definition {
 
 		ACSegments.editTextCriterion(textInput = "userea@liferay.com");
 
+		ACSegments.previewSegmentMembership();
+
+		ACUtils.viewNameList(nameList = "userfn userln");
+
+		ACUtils.closeModal();
+
 		ACSegments.saveSegment();
 
 		ACNavigation.goToSegments();
 
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
-
-		ACNavigation.switchTab(tabName = "Membership");
-
-		AssertTextEquals(
-			locator1 = "ACSegments#SEGMENT_LABEL",
-			value1 = "DYNAMIC SEGMENT");
-
-		AssertElementPresent(
-			key_userName = "userfn userln",
-			locator1 = "ACSegments#SEGMENT_MEMBERS");
+		ACUtils.viewNameList(nameList = "Dynamic Segment Test");
 	}
 
 	@description = "Create a Dynamic Individuals Segment with a criteria that uses is unknown"

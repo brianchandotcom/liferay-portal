@@ -18,6 +18,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'COMMERCE-8087': true,
 		'LPS-164948': true,
+		'LPS-196724': true,
 	}),
 	loginTest(),
 	dataMigrationCenterPagesTest,
@@ -33,7 +34,7 @@ const companyObjectDefinition = {
 		{
 			DBType: 'String',
 			businessType: 'Aggregation',
-			externalReferenceCode: 'Test-aggregation',
+			externalReferenceCode: 'Test-AggregationField',
 			indexed: false,
 			indexedAsKeyword: false,
 			indexedLanguageId: '',
@@ -49,9 +50,28 @@ const companyObjectDefinition = {
 			type: 'String',
 		},
 		{
+			DBType: 'String',
+			businessType: 'AutoIncrement',
+			externalReferenceCode: 'Test-AutoIncrementField',
+			indexed: true,
+			indexedAsKeyword: false,
+			indexedLanguageId: '',
+			label: {en_US: 'testAutoIncrementField'},
+			listTypeDefinitionId: 0,
+			name: 'testAutoIncrementField',
+			objectFieldSettings: [
+				{name: 'prefix', value: 'prefix-'},
+				{name: 'initialValue', value: '1'},
+				{name: 'suffix', value: '-suffix'},
+			],
+			required: false,
+			system: false,
+			type: 'String',
+		},
+		{
 			DBType: 'Boolean',
 			businessType: 'Boolean',
-			externalReferenceCode: 'Test-boolean',
+			externalReferenceCode: 'Test-BooleanField',
 			indexed: true,
 			indexedAsKeyword: false,
 			indexedLanguageId: '',
@@ -65,7 +85,7 @@ const companyObjectDefinition = {
 		{
 			DBType: 'Date',
 			businessType: 'Date',
-			externalReferenceCode: 'Test-date',
+			externalReferenceCode: 'Test-DateField',
 			indexed: true,
 			indexedAsKeyword: false,
 			indexedLanguageId: '',
@@ -140,7 +160,7 @@ const companyObjectDefinition = {
 		{
 			DBType: 'Long',
 			businessType: 'LongInteger',
-			externalReferenceCode: 'Test-LongInteger',
+			externalReferenceCode: 'Test-LongIntegerField',
 			indexed: true,
 			indexedAsKeyword: false,
 			indexedLanguageId: '',
@@ -196,7 +216,7 @@ const companyObjectDefinition = {
 		{
 			DBType: 'String',
 			businessType: 'Text',
-			externalReferenceCode: 'Test-name',
+			externalReferenceCode: 'Test-NameField',
 			indexed: true,
 			indexedAsKeyword: false,
 			indexedLanguageId: '',
@@ -242,7 +262,7 @@ const siteObjectDefinition = {
 		{
 			DBType: 'String',
 			businessType: 'Aggregation',
-			externalReferenceCode: 'Test-aggregation',
+			externalReferenceCode: 'Test-AggregationField',
 			indexed: false,
 			indexedAsKeyword: false,
 			indexedLanguageId: '',
@@ -258,9 +278,28 @@ const siteObjectDefinition = {
 			type: 'String',
 		},
 		{
+			DBType: 'String',
+			businessType: 'AutoIncrement',
+			externalReferenceCode: 'Test-AutoIncrementField',
+			indexed: true,
+			indexedAsKeyword: false,
+			indexedLanguageId: '',
+			label: {en_US: 'testAutoIncrementField'},
+			listTypeDefinitionId: 0,
+			name: 'testAutoIncrementField',
+			objectFieldSettings: [
+				{name: 'prefix', value: 'prefix-'},
+				{name: 'initialValue', value: '1'},
+				{name: 'suffix', value: '-suffix'},
+			],
+			required: false,
+			system: false,
+			type: 'String',
+		},
+		{
 			DBType: 'Boolean',
 			businessType: 'Boolean',
-			externalReferenceCode: 'Test-boolean',
+			externalReferenceCode: 'Test-BooleanField',
 			indexed: true,
 			indexedAsKeyword: false,
 			indexedLanguageId: '',
@@ -274,7 +313,7 @@ const siteObjectDefinition = {
 		{
 			DBType: 'Date',
 			businessType: 'Date',
-			externalReferenceCode: 'Test-date',
+			externalReferenceCode: 'Test-DateField',
 			indexed: true,
 			indexedAsKeyword: false,
 			indexedLanguageId: '',
@@ -349,7 +388,7 @@ const siteObjectDefinition = {
 		{
 			DBType: 'Long',
 			businessType: 'LongInteger',
-			externalReferenceCode: 'Test-LongInteger',
+			externalReferenceCode: 'Test-LongIntegerField',
 			indexed: true,
 			indexedAsKeyword: false,
 			indexedLanguageId: '',
@@ -405,7 +444,7 @@ const siteObjectDefinition = {
 		{
 			DBType: 'String',
 			businessType: 'Text',
-			externalReferenceCode: 'Test-name',
+			externalReferenceCode: 'Test-NameField',
 			indexed: true,
 			indexedAsKeyword: false,
 			indexedLanguageId: '',
@@ -486,6 +525,7 @@ test('can import CSV file with an unexisting field', async ({
 			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testAggregationField: '0',
+			testAutoIncrementField: 'prefix-1-suffix',
 			testBooleanField: false,
 			testDateField: '2024-01-05T00:00:00Z',
 			testDateTimeField: '2024-01-05T15:00:00.000Z',
@@ -552,6 +592,7 @@ test('can import CSV file with custom columns order', async ({
 			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testAggregationField: '0',
+			testAutoIncrementField: 'prefix-1-suffix',
 			testBooleanField: true,
 			testDateField: '2024-01-05T00:00:00Z',
 			testDateTimeField: '2024-01-05T15:00:00.000Z',
@@ -618,6 +659,7 @@ test('can import CSV file with multiple site scoped object entries', async ({
 			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testAggregationField: '0',
+			testAutoIncrementField: 'prefix-1-suffix',
 			testBooleanField: true,
 			testDateField: '2024-01-05T00:00:00Z',
 			testDateTimeField: '2024-01-05T15:00:00.000Z',
@@ -649,6 +691,7 @@ test('can import CSV file with multiple site scoped object entries', async ({
 			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testAggregationField: '0',
+			testAutoIncrementField: 'prefix-2-suffix',
 			testBooleanField: false,
 			testDateField: '2024-01-06T00:00:00Z',
 			testDateTimeField: '2024-01-06T15:00:00.000Z',
@@ -728,6 +771,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testAggregationField: '0',
+			testAutoIncrementField: 'prefix-1-suffix',
 			testBooleanField: false,
 			testDateField: '2024-01-05T00:00:00Z',
 			testDateTimeField: '2024-01-05T15:00:00.000Z',
@@ -759,6 +803,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testAggregationField: '0',
+			testAutoIncrementField: 'prefix-2-suffix',
 			testBooleanField: true,
 			testDateField: '2024-01-06T00:00:00Z',
 			testDateTimeField: '2024-01-06T15:00:00.000Z',
@@ -833,6 +878,7 @@ test('can import CSV file with new and modified existing company scoped object e
 			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testAggregationField: '0',
+			testAutoIncrementField: 'prefix-1-suffix',
 			testBooleanField: true,
 			testDateField: '2024-01-05T00:00:00Z',
 			testDateTimeField: '2024-01-05T15:00:00.000Z',
@@ -863,6 +909,7 @@ test('can import CSV file with new and modified existing company scoped object e
 			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testAggregationField: '0',
+			testAutoIncrementField: 'prefix-2-suffix',
 			testBooleanField: false,
 			testDateField: '2024-01-06T00:00:00Z',
 			testDateTimeField: '2024-01-06T15:00:00.000Z',
@@ -901,6 +948,7 @@ test('can map all imported fields', async ({
 	await expect(page.getByText('externalReferenceCode')).toBeVisible();
 	await expect(page.getByText('keywords', {exact: true})).toBeVisible();
 	await expect(page.getByText('taxonomyCategoryIds')).toBeVisible();
+	await expect(page.getByText('testAutoIncrementField')).toBeVisible();
 	await expect(page.getByText('testBooleanField')).toBeVisible();
 	await expect(page.getByText('testDateField')).toBeVisible();
 	await expect(page.getByText('testDecimalField')).toBeVisible();
@@ -945,6 +993,11 @@ test('can preview CSV file', async ({
 		page
 			.getByLabel('Preview')
 			.getByRole('cell', {exact: true, name: 'name'})
+	).toBeVisible();
+	await expect(
+		page
+			.getByLabel('Preview')
+			.getByRole('cell', {exact: true, name: 'testAutoIncrementField'})
 	).toBeVisible();
 	await expect(
 		page
@@ -1010,7 +1063,7 @@ test('can show duplicate error message with CSV import existing entry and only a
 
 	await dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,
-		path.join(__dirname, '/dependencies/object_entries.csv'),
+		path.join(__dirname, '/dependencies/object_entry_same_erc.csv'),
 		'INSERT',
 		'UPDATE'
 	);
@@ -1018,6 +1071,43 @@ test('can show duplicate error message with CSV import existing entry and only a
 	await expect(
 		page.getByText(
 			'com.liferay.object.exception.DuplicateObjectEntryExternalReferenceCodeException'
+		)
+	).toBeVisible();
+
+	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
+});
+
+test('can show unique contraint error message with CSV import existing entry and only add new record fields', async ({
+	apiHelpers,
+	dataMigrationCenterPage,
+	page,
+}) => {
+	const response = await apiHelpers.objectAdmin.postObjectDefinition(
+		companyObjectDefinition
+	);
+
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToImportFile();
+
+	await dataMigrationCenterPage.importFile(
+		OBJECT_ENTRY_ENTITY_TYPE,
+		path.join(__dirname, '/dependencies/object_entries.csv'),
+		'UPSERT',
+		'UPDATE'
+	);
+
+	await page.getByRole('button', {exact: true, name: 'Close'}).click();
+
+	await dataMigrationCenterPage.importFile(
+		OBJECT_ENTRY_ENTITY_TYPE,
+		path.join(__dirname, '/dependencies/object_entries.csv'),
+		'INSERT',
+		'UPDATE'
+	);
+
+	await expect(
+		page.getByText(
+			'com.liferay.object.exception.ObjectEntryValuesException$UniqueValueConstraintViolation'
 		)
 	).toBeVisible();
 

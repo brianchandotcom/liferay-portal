@@ -46,6 +46,13 @@ public class DateDDMFormFieldValueRendererTest {
 		ReflectionTestUtil.setFieldValue(
 			LocaleThreadLocal.class, "_themeDisplayLocale",
 			_themeDisplayLocale);
+
+		String javaLocaleProviders = System.getProperty(
+			"java.locale.providers");
+
+		_cldr = javaLocaleProviders.equals("CLDR");
+
+		_cldrAndJdk21 = _cldr && JavaDetector.isJDK21();
 	}
 
 	@After
@@ -89,26 +96,14 @@ public class DateDDMFormFieldValueRendererTest {
 				LocaleUtil.GERMANY, "25.01.2015"
 			).put(
 				LocaleUtil.HUNGARY,
-				() -> {
-					if (_isCLDRAndJDK21InUse()) {
-						return "2015. 01. 25.";
-					}
-
-					return "2015.01.25.";
-				}
+				_cldrAndJdk21 ? "2015. 01. 25." : "2015.01.25."
 			).put(
 				LocaleUtil.JAPAN, "2015/01/25"
 			).put(
 				LocaleUtil.NETHERLANDS, "25-01-2015"
 			).put(
 				LocaleUtil.SIMPLIFIED_CHINESE,
-				() -> {
-					if (_isCLDRAndJDK21InUse()) {
-						return "2015/01/25";
-					}
-
-					return "2015-01-25";
-				}
+				_cldrAndJdk21 ? "2015/01/25" : "2015-01-25"
 			).put(
 				LocaleUtil.SPAIN, "25/01/2015"
 			).put(
@@ -128,79 +123,39 @@ public class DateDDMFormFieldValueRendererTest {
 				).setExtension(
 					Locale.UNICODE_LOCALE_EXTENSION, "nu-arab"
 				).build(),
-				() -> {
-					if (JavaDetector.isJDK8()) {
-						return "٢٥\u200F/٠١\u200F/٢٠١٥ ٠١:٠٠ ص";
-					}
-
-					return "٢٥\u200F/٠١\u200F/٢٠١٥، ٠١:٠٠ ص";
-				}
+				JavaDetector.isJDK8() ? "٢٥\u200F/٠١\u200F/٢٠١٥ ٠١:٠٠ ص" :
+					"٢٥\u200F/٠١\u200F/٢٠١٥، ٠١:٠٠ ص"
 			).put(
 				LocaleUtil.BRAZIL, "25/01/2015 01:00"
 			).put(
 				new Locale("ca", "ES"), "25/01/2015 01:00"
 			).put(
 				new Locale("fi", "FI"),
-				() -> {
-					if (_isCLDRInUse()) {
-						return "25.01.2015 01.00";
-					}
-
-					return "25.01.2015 01:00";
-				}
+				_cldr ? "25.01.2015 01.00" : "25.01.2015 01:00"
 			).put(
 				LocaleUtil.FRANCE, "25/01/2015 01:00"
 			).put(
 				LocaleUtil.GERMANY,
-				() -> {
-					if (_isCLDRAndJDK21InUse()) {
-						return "25.01.2015, 01:00";
-					}
-
-					return "25.01.2015 01:00";
-				}
+				_cldrAndJdk21 ? "25.01.2015, 01:00" : "25.01.2015 01:00"
 			).put(
 				LocaleUtil.HUNGARY,
-				() -> {
-					if (_isCLDRAndJDK21InUse()) {
-						return "2015. 01. 25. 01:00";
-					}
-
-					return "2015.01.25. 01:00";
-				}
+				_cldrAndJdk21 ? "2015. 01. 25. 01:00" : "2015.01.25. 01:00"
 			).put(
 				LocaleUtil.JAPAN, "2015/01/25 01:00"
 			).put(
 				LocaleUtil.NETHERLANDS, "25-01-2015 01:00"
 			).put(
 				LocaleUtil.SIMPLIFIED_CHINESE,
-				() -> {
-					if (_isCLDRAndJDK21InUse()) {
-						return "2015/01/25 01:00";
-					}
-
-					return "2015-01-25 上午01:00";
-				}
+				_cldrAndJdk21 ? "2015/01/25 01:00" : "2015-01-25 上午01:00"
 			).put(
 				LocaleUtil.SPAIN,
-				() -> {
-					if (_isCLDRAndJDK21InUse()) {
-						return "25/01/2015, 01:00";
-					}
-
-					return "25/01/2015 01:00";
-				}
+				_cldrAndJdk21 ? "25/01/2015, 01:00" : "25/01/2015 01:00"
 			).put(
 				new Locale("sv", "SE"), "2015-01-25 01:00"
 			).put(
 				LocaleUtil.US,
-				() -> {
-					if (_isCLDRAndJDK21InUse()) {
-						return "01/25/2015, 01:00\u202fAM";
-					}
-
-					return "01/25/2015 01:00 AM";
-				}
+				_cldrAndJdk21 ? "01/25/2015, 01:00\u202fAM" :
+					"01/25/2015 01:00 AM"
 			).build(),
 			"2015-01-25 1:00");
 		_assertRenderValues(
@@ -217,7 +172,7 @@ public class DateDDMFormFieldValueRendererTest {
 		_assertRenderValues(
 			_getSingleValueExpectedValuesMap("01/25/2015"), "2015-01-25");
 
-		if (_isCLDRAndJDK21InUse()) {
+		if (_cldrAndJdk21) {
 			_assertRenderValues(
 				_getSingleValueExpectedValuesMap("01/25/2015, 01:00\u202fAM"),
 				"2015-01-25 1:00");
@@ -294,27 +249,11 @@ public class DateDDMFormFieldValueRendererTest {
 
 	// TODO Clean up after CLDR update is finished
 
-	private boolean _isCLDRAndJDK21InUse() {
-		if (_isCLDRInUse() && JavaDetector.isJDK21()) {
-			return true;
-		}
+	private static boolean _cldr;
 
-		return false;
-	}
+	// TODO Clean up after JDK21 update is finished
 
-	// TODO Clean up after CLDR update is finished
-
-	private boolean _isCLDRInUse() {
-		String javaLocaleProviders = System.getProperty(
-			"java.locale.providers");
-
-		if (javaLocaleProviders.equals("CLDR")) {
-			return true;
-		}
-
-		return false;
-	}
-
+	private static boolean _cldrAndJdk21;
 	private static final ThreadLocal<Locale> _themeDisplayLocale =
 		new CentralizedThreadLocal<>(
 			LocaleThreadLocal.class + "._themeDisplayLocale");

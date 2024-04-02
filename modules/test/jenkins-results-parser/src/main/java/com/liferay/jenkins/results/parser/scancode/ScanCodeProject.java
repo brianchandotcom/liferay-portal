@@ -130,8 +130,7 @@ public class ScanCodeProject {
 		).put(
 			"labels", _LABELS
 		).put(
-			"name",
-			"Master Daily Scan-" + _simpleDateFormat.format(new Date())
+			"name", "Master Daily Scan-" + _simpleDateFormat.format(new Date())
 		).put(
 			"pipeline", _pipelineName
 		);
@@ -382,9 +381,6 @@ public class ScanCodeProject {
 		setProjectURL(_projectID, _projectName);
 	}
 
-	private final SimpleDateFormat _simpleDateFormat =
-		new SimpleDateFormat("MMM d yy HH:mm:ss");
-
 	private static final String _API_URL =
 		"https://scancode.liferay.com/api/projects/";
 
@@ -404,5 +400,7 @@ public class ScanCodeProject {
 	private String _projectNameFromURL;
 	private final List<String> _projectStatuses = new ArrayList<>();
 	private String _projectURL;
+	private final SimpleDateFormat _simpleDateFormat = new SimpleDateFormat(
+		"MMM d yy HH:mm:ss");
 
 }

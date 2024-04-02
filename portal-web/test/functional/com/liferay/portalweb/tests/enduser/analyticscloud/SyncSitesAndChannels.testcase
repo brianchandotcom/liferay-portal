@@ -227,6 +227,8 @@ definition {
 		}
 
 		task ("Toggle Commerce Off > Try to assign channels to the property") {
+			ACUtils.waitForSendingRequest();
+
 			Uncheck.uncheckToggleSwitch(
 				key_propertyName = ${assignedPropertyName},
 				locator1 = "ACDXPSettings#COMMERCE_PROPERTY_TOGGLE");

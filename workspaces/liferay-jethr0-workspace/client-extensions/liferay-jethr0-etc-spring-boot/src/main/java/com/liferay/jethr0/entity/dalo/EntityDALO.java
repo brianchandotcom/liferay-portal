@@ -6,6 +6,7 @@
 package com.liferay.jethr0.entity.dalo;
 
 import com.liferay.jethr0.entity.Entity;
+import com.liferay.jethr0.entity.factory.EntityFactory;
 
 import java.util.Date;
 import java.util.Set;
@@ -28,6 +29,8 @@ public interface EntityDALO<T extends Entity> extends DALO {
 	public Set<T> getAllAfterCreatedDate(Date createdDate);
 
 	public Set<T> getAllAfterModifiedDate(Date modifiedDate);
+
+	public EntityFactory<T> getEntityFactory();
 
 	public T update(T entity);
 

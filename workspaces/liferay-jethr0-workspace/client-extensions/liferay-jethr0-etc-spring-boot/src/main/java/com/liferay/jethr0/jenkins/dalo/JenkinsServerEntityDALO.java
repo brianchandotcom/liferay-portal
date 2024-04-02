@@ -21,7 +21,7 @@ public class JenkinsServerEntityDALO
 	extends BaseEntityDALO<JenkinsServerEntity> {
 
 	@Override
-	protected EntityFactory<JenkinsServerEntity> getEntityFactory() {
+	public EntityFactory<JenkinsServerEntity> getEntityFactory() {
 		return _jenkinsServerEntityFactory;
 	}
 

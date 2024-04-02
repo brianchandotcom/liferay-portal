@@ -21,7 +21,7 @@ public class JenkinsCohortEntityDALO
 	extends BaseEntityDALO<JenkinsCohortEntity> {
 
 	@Override
-	protected EntityFactory<JenkinsCohortEntity> getEntityFactory() {
+	public EntityFactory<JenkinsCohortEntity> getEntityFactory() {
 		return _jenkinsCohortEntityFactory;
 	}
 

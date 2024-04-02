@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 public class TestSuiteEntityDALO extends BaseEntityDALO<TestSuiteEntity> {
 
 	@Override
-	protected EntityFactory<TestSuiteEntity> getEntityFactory() {
+	public EntityFactory<TestSuiteEntity> getEntityFactory() {
 		return _testSuiteEntityFactory;
 	}
 

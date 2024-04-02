@@ -24,6 +24,7 @@ pipeline {
 				]) {
 					sh '''
 						export ANT_OPTS=-Xmx6g
+						export FARO_ENVIRONMENT_NAME=$FARO_ENVIRONMENT
 						export GRADLE_OPTS=-Xmx6g
 
 						mkdir ~/.ssh
@@ -54,7 +55,7 @@ pipeline {
 
 						cd modules/dxp/apps/osb/osb-faro
 
-						../../../../../gradlew copyCloudResources
+						../../../../../gradlew copyCloudResources -Dliferay.ci=true
 
 						mkdir -p osb-faro-docker/cloud/license
 

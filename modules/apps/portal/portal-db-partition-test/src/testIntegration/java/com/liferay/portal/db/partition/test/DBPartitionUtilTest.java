@@ -194,10 +194,17 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				Assert.assertEquals(0, _getViewsCount(companyId));
 
 				for (String viewName : viewNames.get(companyId)) {
-					Assert.assertEquals(
-						viewName + " count",
-						_getCount(viewName, true, companyId),
-						_getCount(viewName, false, companyId));
+					if (!isCopyableQuartzTable(viewName)) {
+						Assert.assertEquals(
+							viewName + " count",
+							_getCount(viewName, true, companyId),
+							_getCount(viewName, false, companyId));
+					}
+					else {
+						Assert.assertEquals(
+							viewName + " count", 0,
+							_getCount(viewName, false, companyId));
+					}
 				}
 			}
 		}

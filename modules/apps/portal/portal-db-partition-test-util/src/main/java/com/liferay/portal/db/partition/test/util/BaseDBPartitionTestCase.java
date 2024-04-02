@@ -344,6 +344,12 @@ public abstract class BaseDBPartitionTestCase {
 		}
 	}
 
+	protected static boolean isCopyableQuartzTable(String tableName) {
+		return ReflectionTestUtil.invoke(
+			DBPartitionUtil.class, "_isCopyableQuartzTable",
+			new Class<?>[] {String.class}, tableName);
+	}
+
 	protected static void removeDBPartitions() throws Exception {
 		removeDBPartitions(COMPANY_IDS);
 	}

@@ -120,6 +120,7 @@ export default function useFilters(
 				: initialFilter.concat(`(${statusFilter})`);
 
 			urlParams.delete('status');
+
 			filters.status.value.forEach((value) =>
 				urlParams.append('status', value)
 			);
@@ -142,6 +143,7 @@ export default function useFilters(
 				: initialFilter.concat(`(${partnerFilter})`);
 
 			urlParams.delete('partner');
+
 			filters.partner.value.forEach((value) =>
 				urlParams.append('partner', value)
 			);

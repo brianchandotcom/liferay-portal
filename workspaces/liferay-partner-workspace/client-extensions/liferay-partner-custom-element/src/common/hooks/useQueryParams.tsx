@@ -10,6 +10,7 @@ import {Liferay} from '../services/liferay';
 export default function useQueryParams() {
 	const [urlParams] = useState(new URLSearchParams(window.location.search));
 	const urlParamsEntries = urlParams.entries();
+
 	useEffect(() => {
 		window.history.replaceState(
 			null,

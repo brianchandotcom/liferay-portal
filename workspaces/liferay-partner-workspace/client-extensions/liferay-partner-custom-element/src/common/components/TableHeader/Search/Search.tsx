@@ -32,6 +32,7 @@ const Search = ({initialSearchTerm, onSearchSubmit, urlParams}: IProps) => {
 
 					return;
 				}
+
 				urlParams.delete('searchterm');
 			}
 
@@ -41,6 +42,7 @@ const Search = ({initialSearchTerm, onSearchSubmit, urlParams}: IProps) => {
 		setTerm('');
 		onSearchSubmit('');
 		setSearching(true);
+
 		if (urlParams) {
 			urlParams.delete('searchterm');
 		}

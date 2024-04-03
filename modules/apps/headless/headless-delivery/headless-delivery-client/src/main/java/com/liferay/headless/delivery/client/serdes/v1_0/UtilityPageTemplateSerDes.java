@@ -70,6 +70,20 @@ public class UtilityPageTemplateSerDes {
 			sb.append("\"");
 		}
 
+		if (utilityPageTemplate.getFriendlyURL() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(utilityPageTemplate.getFriendlyURL()));
+
+			sb.append("\"");
+		}
+
 		if (utilityPageTemplate.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -82,6 +96,16 @@ public class UtilityPageTemplateSerDes {
 			sb.append(_escape(utilityPageTemplate.getName()));
 
 			sb.append("\"");
+		}
+
+		if (utilityPageTemplate.getPrivateLayout() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"privateLayout\": ");
+
+			sb.append(utilityPageTemplate.getPrivateLayout());
 		}
 
 		if (utilityPageTemplate.getType() != null) {
@@ -137,11 +161,29 @@ public class UtilityPageTemplateSerDes {
 				String.valueOf(utilityPageTemplate.getExternalReferenceCode()));
 		}
 
+		if (utilityPageTemplate.getFriendlyURL() == null) {
+			map.put("friendlyURL", null);
+		}
+		else {
+			map.put(
+				"friendlyURL",
+				String.valueOf(utilityPageTemplate.getFriendlyURL()));
+		}
+
 		if (utilityPageTemplate.getName() == null) {
 			map.put("name", null);
 		}
 		else {
 			map.put("name", String.valueOf(utilityPageTemplate.getName()));
+		}
+
+		if (utilityPageTemplate.getPrivateLayout() == null) {
+			map.put("privateLayout", null);
+		}
+		else {
+			map.put(
+				"privateLayout",
+				String.valueOf(utilityPageTemplate.getPrivateLayout()));
 		}
 
 		if (utilityPageTemplate.getType() == null) {
@@ -186,9 +228,21 @@ public class UtilityPageTemplateSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "friendlyURL")) {
+				if (jsonParserFieldValue != null) {
+					utilityPageTemplate.setFriendlyURL(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					utilityPageTemplate.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "privateLayout")) {
+				if (jsonParserFieldValue != null) {
+					utilityPageTemplate.setPrivateLayout(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

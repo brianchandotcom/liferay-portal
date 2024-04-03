@@ -68,10 +68,6 @@ definition {
 		var key_subSubContent = ${checkSubSubContent};
 
 		Check.checkNotVisible(locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_SUB_SUBCONTENT_CHECKBOX");
-
-		AssertClick(
-			locator1 = "Button#OK",
-			value1 = "OK");
 	}
 
 	@summary = "Default summary"

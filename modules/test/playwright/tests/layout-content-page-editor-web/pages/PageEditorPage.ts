@@ -357,6 +357,18 @@ export class PageEditorPage {
 		);
 	}
 
+	async removeFragment(fragmentId: string) {
+		await this.selectFragment(fragmentId);
+
+		const fragment = this.getFragment(fragmentId);
+
+		await this.page.keyboard.press('Backspace');
+
+		await this.waitForChangesSaved();
+
+		await fragment.waitFor({state: 'hidden'});
+	}
+
 	async resetSpacing(fragmentId: string, spacingType: SpacingType) {
 		await this.openSpacingSelector(fragmentId, spacingType);
 

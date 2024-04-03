@@ -36,7 +36,7 @@ const Modal = ({
 
 	return (
 		<ClayModal center observer={observer} size={size} status={status}>
-			<ClayModal.Header>{title}</ClayModal.Header>
+			{title && <ClayModal.Header>{title}</ClayModal.Header>}
 
 			{subtitle && (
 				<ClayModal.SubtitleSection>
@@ -48,7 +48,7 @@ const Modal = ({
 
 			<ClayModal.Body>{children}</ClayModal.Body>
 
-			{first || (last && <ClayModal.Footer first={first} last={last} />)}
+			{(first || last) && <ClayModal.Footer first={first} last={last} />}
 		</ClayModal>
 	);
 };

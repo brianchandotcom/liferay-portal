@@ -139,9 +139,7 @@ const Licenses = () => {
 						)}
 						displayType="primary"
 						onClick={() => {
-							licenseKeyModal.onClose();
-
-							deactivateLicenseModal.onOpenChange(true);
+							onDownload(modalData as LicenseKey);
 						}}
 						title={
 							isLicenseExpired(
@@ -159,7 +157,7 @@ const Licenses = () => {
 				</>
 			),
 		}),
-		[licenseKeyModal, deactivateLicenseModal, modalData]
+		[licenseKeyModal, modalData, deactivateLicenseModal, onDownload]
 	);
 
 	if (isLoading) {
@@ -178,9 +176,7 @@ const Licenses = () => {
 
 								deactivateLicenseModal.onOpenChange(true);
 							}}
-							onDownload={() => {
-								onDownload(row);
-							}}
+							onDownload={() => onDownload(row)}
 							onView={() => onViewLicenseKey(row)}
 							tooltip={
 								isLicenseExpired(row.expirationDate)
@@ -339,8 +335,7 @@ const Licenses = () => {
 					last={buttonsInfo.last}
 					observer={licenseKeyModal.observer}
 					size="lg"
-					title=""
-					visible={false}
+					visible={true}
 				>
 					<LicenceKeyModalContent
 						Header={

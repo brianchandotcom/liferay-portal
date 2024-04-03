@@ -168,14 +168,11 @@ public class SugarCRMQueryExpressionVisitorImpl
 	private void _buildBinaryOperationAndOr(
 		Object left, String operator, Object right, StringBuilder sb) {
 
-		JSONArray jsonArray = null;
-
 		JSONObject leftJSONObject = (JSONObject)left;
 
-		if (Validator.isNotNull(leftJSONObject.getJSONArray(operator))) {
-			jsonArray = leftJSONObject.getJSONArray(operator);
-		}
-		else {
+		JSONArray jsonArray = leftJSONObject.getJSONArray(operator);
+
+		if (jsonArray == null) {
 			jsonArray = JSONUtil.put(leftJSONObject);
 		}
 

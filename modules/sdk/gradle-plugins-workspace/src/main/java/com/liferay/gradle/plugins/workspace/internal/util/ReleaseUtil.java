@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.function.Function;
 
+import org.gradle.api.GradleException;
+
 /**
  * @author Drew Brokke
  */
@@ -165,6 +167,10 @@ public class ReleaseUtil {
 			ResourceUtil.getLocalFileResolver(releasesJsonFile),
 			ResourceUtil.getClassLoaderResolver("/releases.json"));
 
+		if (releaseEntries == null) {
+			throw new GradleException("Could not read releases.json file");
+		}
+
 		for (ReleaseEntry releaseEntry : releaseEntries) {
 			_releaseEntryMap.put(releaseEntry.getReleaseKey(), releaseEntry);
 		}
@@ -196,6 +202,11 @@ public class ReleaseUtil {
 				productReleasePropertiesCacheDir, releasesCDNUrl),
 			ResourceUtil.getURLResolver(
 				productReleasePropertiesCacheDir, releasesUrl));
+
+		if (properties == null) {
+			throw new GradleException(
+				"No release properties found for product key " + releaseKey);
+		}
 
 		return new ReleaseProperties(properties);
 	}

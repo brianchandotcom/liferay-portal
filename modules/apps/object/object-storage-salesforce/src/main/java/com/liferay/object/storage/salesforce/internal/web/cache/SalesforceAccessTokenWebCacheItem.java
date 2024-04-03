@@ -34,6 +34,7 @@ public class SalesforceAccessTokenWebCacheItem implements WebCacheItem {
 				SalesforceAccessTokenWebCacheItem.class.getName(),
 				StringPool.POUND, salesforceConfiguration.consumerKey(),
 				StringPool.POUND, salesforceConfiguration.consumerSecret(),
+				StringPool.POUND, salesforceConfiguration.password(),
 				StringPool.POUND, salesforceConfiguration.username()),
 			new SalesforceAccessTokenWebCacheItem(salesforceConfiguration));
 	}

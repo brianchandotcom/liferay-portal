@@ -53,16 +53,17 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 	}
 
 	public static LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-			String externalReferenceCode, long userId, long groupId, long plid,
-			long previewFileEntryId, boolean defaultLayoutUtilityPageEntry,
-			String name, String type, long masterLayoutPlid,
+			String externalReferenceCode, String friendlyURL, long userId,
+			long groupId, long plid, long previewFileEntryId,
+			boolean defaultLayoutUtilityPageEntry, String name, String type,
+			long masterLayoutPlid, boolean privateLayout,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addLayoutUtilityPageEntry(
-			externalReferenceCode, userId, groupId, plid, previewFileEntryId,
-			defaultLayoutUtilityPageEntry, name, type, masterLayoutPlid,
-			serviceContext);
+			externalReferenceCode, friendlyURL, userId, groupId, plid,
+			previewFileEntryId, defaultLayoutUtilityPageEntry, name, type,
+			masterLayoutPlid, privateLayout, serviceContext);
 	}
 
 	public static LayoutUtilityPageEntry copyLayoutUtilityPageEntry(

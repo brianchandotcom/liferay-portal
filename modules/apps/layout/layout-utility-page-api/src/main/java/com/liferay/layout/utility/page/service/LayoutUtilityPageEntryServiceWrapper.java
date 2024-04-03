@@ -31,16 +31,17 @@ public class LayoutUtilityPageEntryServiceWrapper
 
 	@Override
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-			String externalReferenceCode, long groupId, long plid,
-			long previewFileEntryId, boolean defaultLayoutUtilityPageEntry,
-			String name, String type, long masterLayoutPlid,
+			String externalReferenceCode, String friendlyURL, long groupId,
+			long plid, long previewFileEntryId,
+			boolean defaultLayoutUtilityPageEntry, String name, String type,
+			long masterLayoutPlid, boolean privateLayout,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
-			externalReferenceCode, groupId, plid, previewFileEntryId,
-			defaultLayoutUtilityPageEntry, name, type, masterLayoutPlid,
-			serviceContext);
+			externalReferenceCode, friendlyURL, groupId, plid,
+			previewFileEntryId, defaultLayoutUtilityPageEntry, name, type,
+			masterLayoutPlid, privateLayout, serviceContext);
 	}
 
 	@Override

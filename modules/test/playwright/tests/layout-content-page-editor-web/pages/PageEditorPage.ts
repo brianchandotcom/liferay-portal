@@ -5,7 +5,7 @@
 
 // @ts-ignore
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {liferayConfig} from '../../../liferay.config';
 import {SegmentEditorPage} from '../../../pages/segments-web/SegmentEditorPage';
@@ -339,7 +339,13 @@ export class PageEditorPage {
 			return;
 		}
 
-		await this.getFragment(fragmentId, isDesktop).click();
+		const fragment = await this.getFragment(fragmentId, isDesktop);
+
+		await fragment.click();
+
+		const isActive = await this.isActive(fragmentId, isDesktop);
+
+		await expect(isActive).toBe(true);
 	}
 
 	async switchExperience(experience: string) {

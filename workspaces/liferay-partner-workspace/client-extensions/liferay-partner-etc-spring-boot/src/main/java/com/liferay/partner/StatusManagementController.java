@@ -76,6 +76,8 @@ public class StatusManagementController {
 					JSONArray mdfClaims = mdfRequestJSONObject.getJSONArray(
 						"mdfReqToMDFClms");
 
+					Double claimPaidTotal = 0.0;
+
 					for (int j = 0; j < mdfClaims.length(); j++) {
 						JSONObject mdfClaimJSONObject = mdfClaims.getJSONObject(
 							j);
@@ -86,12 +88,13 @@ public class StatusManagementController {
 							).getString(
 								"key"
 							);
-
 						Double mdfClaimPaid = mdfClaimJSONObject.getDouble(
 							"claimPaid");
 
+						claimPaidTotal += mdfClaimPaid;
+
 						if (mdfClaimStatus.equals("claimPaid") &&
-							(mdfClaimPaid >= mdfRequestAmount)) {
+							(claimPaidTotal >= mdfRequestAmount)) {
 
 							String mdfRequestExternalReferenceCode =
 								mdfRequestJSONObject.getString(

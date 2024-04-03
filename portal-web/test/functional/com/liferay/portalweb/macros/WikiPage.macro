@@ -1850,7 +1850,7 @@ definition {
 			var key_tagName = ${tagName};
 
 			AssertElementPresent(
-				key_tagName = StringUtil.lowerCase(${tagName}),
+				key_tagName = ${tagName},
 				locator1 = "AssetCategorization#TAG");
 		}
 	}

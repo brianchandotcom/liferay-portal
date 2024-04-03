@@ -410,7 +410,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 						bundleSymbolicName, schemaCreator.getSchemaVersion(),
 						"0.0.0");
 
-					release.setVerified(true);
+					release.setVerified(false);
 				}
 				catch (Exception exception) {
 					release = _releaseLocalService.addRelease(

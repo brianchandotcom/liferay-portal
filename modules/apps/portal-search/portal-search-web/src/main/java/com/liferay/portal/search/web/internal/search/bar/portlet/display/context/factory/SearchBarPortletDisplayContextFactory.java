@@ -123,16 +123,18 @@ public class SearchBarPortletDisplayContextFactory {
 		searchBarPortletDisplayContext.setDisplayStyleGroupId(
 			getDisplayStyleGroupId(
 				searchBarPortletInstanceConfiguration, themeDisplay));
-		searchBarPortletDisplayContext.setEmptySearchEnabled(
-			_isEmptySearchEnabled(portletSharedSearchResponse));
-		searchBarPortletDisplayContext.setEverythingSearchScopeParameterString(
-			SearchScope.EVERYTHING.getParameterString());
 
-		SearchResponse searchResponse = _getSearchResponse(
-			portletSharedSearchResponse, searchBarPortletPreferences);
+		SearchResponse searchResponse =
+			portletSharedSearchResponse.getFederatedSearchResponse(
+				searchBarPortletPreferences.getFederatedSearchKey());
 
 		SearchRequest searchRequest = searchResponse.getRequest();
 
+		searchBarPortletDisplayContext.setEmptySearchEnabled(
+			searchRequest.isEmptySearchEnabled());
+
+		searchBarPortletDisplayContext.setEverythingSearchScopeParameterString(
+			SearchScope.EVERYTHING.getParameterString());
 		searchBarPortletDisplayContext.setInputPlaceholder(
 			LanguageUtil.get(
 				getHttpServletRequest(_renderRequest), "search-..."));
@@ -153,6 +155,9 @@ public class SearchBarPortletDisplayContextFactory {
 		searchBarPortletDisplayContext.setPaginationStartParameterName(
 			GetterUtil.getString(
 				searchRequest.getPaginationStartParameterName()));
+
+		searchBarPortletDisplayContext.setRetainFacetSelections(
+			searchRequest.isRetainFacetSelections());
 
 		String scopeParameterName = _getScopeParameterName(
 			portletPreferencesLookup, searchBarPrecedenceHelper,
@@ -408,27 +413,8 @@ public class SearchBarPortletDisplayContextFactory {
 		return searchBarPortletPreferences.getScopeParameterName();
 	}
 
-	private SearchResponse _getSearchResponse(
-		PortletSharedSearchResponse portletSharedSearchResponse,
-		SearchBarPortletPreferences searchBarPortletPreferences) {
-
-		return portletSharedSearchResponse.getFederatedSearchResponse(
-			searchBarPortletPreferences.getFederatedSearchKey());
-	}
-
 	private String _getURLCurrentPath(ThemeDisplay themeDisplay) {
 		return HttpComponentsUtil.getPath(themeDisplay.getURLCurrent());
-	}
-
-	private boolean _isEmptySearchEnabled(
-		PortletSharedSearchResponse portletSharedSearchResponse) {
-
-		SearchResponse searchResponse =
-			portletSharedSearchResponse.getSearchResponse();
-
-		SearchRequest searchRequest = searchResponse.getRequest();
-
-		return searchRequest.isEmptySearchEnabled();
 	}
 
 	private void _setSelectedSearchScopePreference(

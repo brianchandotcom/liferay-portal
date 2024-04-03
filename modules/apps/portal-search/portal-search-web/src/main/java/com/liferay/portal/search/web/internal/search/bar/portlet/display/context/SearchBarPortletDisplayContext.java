@@ -98,6 +98,10 @@ public class SearchBarPortletDisplayContext {
 		return _renderNothing;
 	}
 
+	public boolean isRetainFacetSelections() {
+		return _retainFacetSelections;
+	}
+
 	public boolean isSearchExperiencesSupported() {
 		return _searchExperiencesSupported;
 	}
@@ -189,6 +193,10 @@ public class SearchBarPortletDisplayContext {
 		_renderNothing = renderNothing;
 	}
 
+	public void setRetainFacetSelections(boolean retainFacetSelections) {
+		_retainFacetSelections = retainFacetSelections;
+	}
+
 	public void setScopeParameterName(String scopeParameterName) {
 		_scopeParameterName = scopeParameterName;
 	}
@@ -268,6 +276,7 @@ public class SearchBarPortletDisplayContext {
 	private boolean _letTheUserChooseTheSearchScope;
 	private String _paginationStartParameterName;
 	private boolean _renderNothing;
+	private boolean _retainFacetSelections;
 	private String _scopeParameterName;
 	private String _scopeParameterValue;
 	private SearchBarPortletInstanceConfiguration

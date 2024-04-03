@@ -25,6 +25,7 @@ const TYPE_ITEMS = [
 ];
 
 interface IProps {
+	disabled?: boolean;
 	index: number;
 	name: string;
 	onAddClick: (index: number) => void;
@@ -36,6 +37,7 @@ interface IProps {
 }
 
 export default function AttributeFields({
+	disabled,
 	index,
 	name,
 	onAddClick,
@@ -59,6 +61,7 @@ export default function AttributeFields({
 			>
 				<FieldBase
 					className="mb-0"
+					disabled={disabled}
 					errorMessage={errorMessage}
 					id={nameId}
 					label={Liferay.Language.get('attribute')}
@@ -67,6 +70,7 @@ export default function AttributeFields({
 					<ClayInput
 						aria-required={true}
 						defaultValue={name}
+						disabled={disabled}
 						id={nameId}
 						onChange={({target}) => {
 							if (target.value.toLowerCase().trim() === 'src') {
@@ -90,12 +94,14 @@ export default function AttributeFields({
 			<ClayLayout.Col size={4}>
 				<FieldBase
 					className="mb-0"
+					disabled={disabled}
 					id={typeId}
 					label={Liferay.Language.get('type')}
 				>
 					<Picker
 						aria-labelledby="picker-label"
 						defaultSelectedKey={type}
+						disabled={disabled}
 						id={typeId}
 						items={TYPE_ITEMS}
 						onSelectionChange={(type) =>
@@ -119,6 +125,7 @@ export default function AttributeFields({
 				<ClayForm.Group className="d-flex flex-column-reverse justify-content-end">
 					{type !== TYPE_BOOLEAN ? (
 						<ClayInput
+							disabled={disabled}
 							id={valueId}
 							onChange={({target}) =>
 								onAttributeChange(index, {value: target.value})
@@ -130,6 +137,7 @@ export default function AttributeFields({
 						<Picker
 							aria-labelledby="picker-label"
 							defaultSelectedKey={value.toString()}
+							disabled={disabled}
 							id={valueId}
 							items={BOOLEAN_VALUE_ITEMS}
 							onSelectionChange={(value) =>
@@ -147,7 +155,10 @@ export default function AttributeFields({
 					)}
 
 					<div className="d-flex justify-content-between">
-						<label htmlFor={valueId}>
+						<label
+							className={disabled ? 'disabled' : ''}
+							htmlFor={valueId}
+						>
 							{Liferay.Language.get('value')}
 						</label>
 
@@ -158,6 +169,7 @@ export default function AttributeFields({
 										'remove-attribute'
 									)}
 									className="btn btn-primary btn-xs dm-field-repeatable-delete-button rounded-pill"
+									disabled={disabled}
 									onClick={() => onRemoveClick(index)}
 									symbol="hr"
 									title={Liferay.Language.get('remove')}
@@ -170,6 +182,7 @@ export default function AttributeFields({
 									'add-new-attribute'
 								)}
 								className="btn btn-primary btn-xs dm-field-repeatable-add-button ml-1 rounded-pill"
+								disabled={disabled}
 								onClick={() =>
 									name.trim()
 										? onAddClick(index)

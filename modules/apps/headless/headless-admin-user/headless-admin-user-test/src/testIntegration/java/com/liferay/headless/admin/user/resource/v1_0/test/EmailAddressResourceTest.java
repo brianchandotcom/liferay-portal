@@ -125,6 +125,24 @@ public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 			ListTypeConstants.CONTACT_EMAIL_ADDRESS);
 	}
 
+	protected EmailAddress
+			testGetOrganizationByExternalReferenceCodeEmailAddressesPage_addEmailAddress(
+				String externalReferenceCode, EmailAddress emailAddress)
+		throws Exception {
+
+		return _addEmailAddress(
+			emailAddress, Organization.class.getName(),
+			_organization.getOrganizationId(),
+			ListTypeConstants.ORGANIZATION_EMAIL_ADDRESS);
+	}
+
+	protected String
+			testGetOrganizationByExternalReferenceCodeEmailAddressesPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _organization.getExternalReferenceCode();
+	}
+
 	@Override
 	protected EmailAddress
 			testGetOrganizationEmailAddressesPage_addEmailAddress(
@@ -132,7 +150,7 @@ public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 		throws Exception {
 
 		return _addEmailAddress(
-			emailAddress, _organization.getModelClassName(),
+			emailAddress, Organization.class.getName(),
 			_organization.getOrganizationId(),
 			ListTypeConstants.ORGANIZATION_EMAIL_ADDRESS);
 	}
@@ -140,6 +158,23 @@ public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 	@Override
 	protected String testGetOrganizationEmailAddressesPage_getOrganizationId() {
 		return String.valueOf(_organization.getOrganizationId());
+	}
+
+	protected EmailAddress
+			testGetUserAccountByExternalReferenceCodeEmailAddressesPage_addEmailAddress(
+				String externalReferenceCode, EmailAddress emailAddress)
+		throws Exception {
+
+		return _addEmailAddress(
+			emailAddress, Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_EMAIL_ADDRESS);
+	}
+
+	protected String
+			testGetUserAccountByExternalReferenceCodeEmailAddressesPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _user.getExternalReferenceCode();
 	}
 
 	@Override

@@ -8,6 +8,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
+import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
@@ -61,6 +62,17 @@ public class WebUrlResourceImpl extends BaseWebUrlResourceImpl {
 	}
 
 	@Override
+	public Page<WebUrl> getOrganizationByExternalReferenceCodeWebUrlsPage(
+			String externalReferenceCode)
+		throws Exception {
+
+		return getOrganizationWebUrlsPage(
+			String.valueOf(
+				DTOConverterUtil.getModelPrimaryKey(
+					_organizationResourceDTOConverter, externalReferenceCode)));
+	}
+
+	@Override
 	public Page<WebUrl> getOrganizationWebUrlsPage(String organizationId)
 		throws Exception {
 
@@ -73,6 +85,16 @@ public class WebUrlResourceImpl extends BaseWebUrlResourceImpl {
 					organization.getModelClassName(),
 					organization.getOrganizationId()),
 				WebUrlUtil::toWebUrl));
+	}
+
+	@Override
+	public Page<WebUrl> getUserAccountByExternalReferenceCodeWebUrlsPage(
+			String externalReferenceCode)
+		throws Exception {
+
+		return getUserAccountWebUrlsPage(
+			DTOConverterUtil.getModelPrimaryKey(
+				_userResourceDTOConverter, externalReferenceCode));
 	}
 
 	@Override
@@ -105,6 +127,9 @@ public class WebUrlResourceImpl extends BaseWebUrlResourceImpl {
 	private DTOConverter
 		<Organization, com.liferay.headless.admin.user.dto.v1_0.Organization>
 			_organizationResourceDTOConverter;
+
+	@Reference(target = DTOConverterConstants.USER_RESOURCE_DTO_CONVERTER)
+	private DTOConverter<User, UserAccount> _userResourceDTOConverter;
 
 	@Reference
 	private UserService _userService;

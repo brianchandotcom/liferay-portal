@@ -115,12 +115,32 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 	}
 
 	@Override
+	protected Phone
+			testGetOrganizationByExternalReferenceCodePhonesPage_addPhone(
+				String externalReferenceCode, Phone phone)
+		throws Exception {
+
+		return _addPhone(
+			phone, Organization.class.getName(),
+			_organization.getOrganizationId(),
+			ListTypeConstants.ORGANIZATION_PHONE);
+	}
+
+	@Override
+	protected String
+			testGetOrganizationByExternalReferenceCodePhonesPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _organization.getExternalReferenceCode();
+	}
+
+	@Override
 	protected Phone testGetOrganizationPhonesPage_addPhone(
 			String organizationId, Phone phone)
 		throws Exception {
 
 		return _addPhone(
-			phone, _organization.getModelClassName(),
+			phone, Organization.class.getName(),
 			_organization.getOrganizationId(),
 			ListTypeConstants.ORGANIZATION_PHONE);
 	}
@@ -135,6 +155,25 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 		return _addPhone(
 			randomPhone(), Contact.class.getName(), _user.getContactId(),
 			ListTypeConstants.CONTACT_PHONE);
+	}
+
+	@Override
+	protected Phone
+			testGetUserAccountByExternalReferenceCodePhonesPage_addPhone(
+				String externalReferenceCode, Phone phone)
+		throws Exception {
+
+		return _addPhone(
+			phone, Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_PHONE);
+	}
+
+	@Override
+	protected String
+			testGetUserAccountByExternalReferenceCodePhonesPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _user.getExternalReferenceCode();
 	}
 
 	@Override

@@ -29,6 +29,11 @@ public abstract class BaseFailureMessageGenerator
 	implements FailureMessageGenerator {
 
 	@Override
+	public String getMessage(Build build) {
+		return null;
+	}
+
+	@Override
 	public Element getMessageElement(Build build) {
 		return getMessageElement(build.getConsoleText());
 	}
@@ -114,9 +119,7 @@ public abstract class BaseFailureMessageGenerator
 	protected String getConsoleTextSnippet(
 		String consoleText, boolean truncateTop, int start, int end) {
 
-		return "<pre><code>" +
-			_getConsoleTextSnippet(consoleText, truncateTop, start, end) +
-				"</code></pre>";
+		return _getConsoleTextSnippet(consoleText, truncateTop, start, end);
 	}
 
 	protected Element getConsoleTextSnippetElement(

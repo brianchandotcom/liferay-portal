@@ -37,6 +37,9 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -76,7 +79,7 @@ public class SugarCRMObjectEntryManagerImpl
 				_getUnsafeTriConsumer(objectDefinition)));
 
 		return toObjectEntry(
-			objectDefinition.getCompanyId(), getDateFormat(),
+			objectDefinition.getCompanyId(), _getDateFormat(),
 			_defaultObjectFieldNamesToJSONObjectKeys, dtoConverterContext,
 			responseJSONObject, objectDefinition);
 	}
@@ -131,7 +134,7 @@ public class SugarCRMObjectEntryManagerImpl
 		}
 
 		return toObjectEntry(
-			companyId, getDateFormat(),
+			companyId, _getDateFormat(),
 			_defaultObjectFieldNamesToJSONObjectKeys, dtoConverterContext,
 			_objectEntryManagerHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
@@ -178,7 +181,7 @@ public class SugarCRMObjectEntryManagerImpl
 				_getUnsafeTriConsumer(objectDefinition)));
 
 		return toObjectEntry(
-			objectDefinition.getCompanyId(), getDateFormat(),
+			objectDefinition.getCompanyId(), _getDateFormat(),
 			_defaultObjectFieldNamesToJSONObjectKeys, dtoConverterContext,
 			responseJSONObject, objectDefinition);
 	}
@@ -247,6 +250,10 @@ public class SugarCRMObjectEntryManagerImpl
 		}
 	}
 
+	private DateFormat _getDateFormat() {
+		return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+	}
+
 	private String _getLocation(
 			ObjectDefinition objectDefinition, String filterString,
 			Pagination pagination, Sort[] sorts, boolean count)
@@ -294,9 +301,9 @@ public class SugarCRMObjectEntryManagerImpl
 
 		return Page.of(
 			toObjectEntries(
-				companyId, _defaultObjectFieldNamesToJSONObjectKeys,
-				dtoConverterContext, responseJSONObject.getJSONArray("records"),
-				objectDefinition),
+				companyId, _getDateFormat(),
+				_defaultObjectFieldNamesToJSONObjectKeys, dtoConverterContext,
+				responseJSONObject.getJSONArray("records"), objectDefinition),
 			pagination,
 			_getTotalCount(
 				companyId, objectDefinition, scopeKey, filterString, pagination,

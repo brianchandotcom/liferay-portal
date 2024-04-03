@@ -48,6 +48,9 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -142,7 +145,7 @@ public class SalesforceObjectEntryManagerImpl
 		}
 
 		return toObjectEntry(
-			companyId, getDateFormat(),
+			companyId, _getDateFormat(),
 			_defaultObjectFieldNamesToJSONObjectKeys, dtoConverterContext,
 			_objectEntryManagerHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
@@ -219,6 +222,10 @@ public class SalesforceObjectEntryManagerImpl
 			"')");
 	}
 
+	private DateFormat _getDateFormat() {
+		return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+	}
+
 	private String _getLocation(
 		ObjectDefinition objectDefinition, Pagination pagination,
 		String predicateString, String search, Sort[] sorts) {
@@ -270,8 +277,9 @@ public class SalesforceObjectEntryManagerImpl
 
 		return Page.of(
 			toObjectEntries(
-				companyId, _defaultObjectFieldNamesToJSONObjectKeys,
-				dtoConverterContext, jsonArray, objectDefinition),
+				companyId, _getDateFormat(),
+				_defaultObjectFieldNamesToJSONObjectKeys, dtoConverterContext,
+				jsonArray, objectDefinition),
 			pagination,
 			_getTotalCount(
 				companyId, objectDefinition,

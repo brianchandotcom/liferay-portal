@@ -109,10 +109,6 @@ public abstract class BaseObjectEntryManager {
 		return null;
 	}
 
-	protected DateFormat getDateFormat() {
-		return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-	}
-
 	protected long getGroupId(
 		ObjectDefinition objectDefinition, String scopeKey) {
 
@@ -242,13 +238,11 @@ public abstract class BaseObjectEntryManager {
 
 	protected List<com.liferay.object.rest.dto.v1_0.ObjectEntry>
 			toObjectEntries(
-				long companyId,
+				long companyId, DateFormat dateFormat,
 				Map<String, String> defaultObjectFieldNamesToJSONObjectKeys,
 				DTOConverterContext dtoConverterContext, JSONArray jsonArray,
 				ObjectDefinition objectDefinition)
 		throws Exception {
-
-		DateFormat dateFormat = getDateFormat();
 
 		return JSONUtil.toList(
 			jsonArray,

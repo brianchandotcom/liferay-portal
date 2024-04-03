@@ -146,11 +146,11 @@ public class KoroneikiRestController extends BaseRestController {
 				if (Objects.equals(
 						productConsumption.getProductPurchaseKey(),
 						productPurchase.getKey()) &&
-					(productConsumption.getEndDate(
+					(productPurchase.getPerpetual() ||
+					 productConsumption.getEndDate(
 					 ).after(
 						 new Date()
-					) ||
-					 productPurchase.getPerpetual())) {
+					 ))) {
 
 					provisionedCount++;
 				}
@@ -560,24 +560,32 @@ public class KoroneikiRestController extends BaseRestController {
 			Map<String, String> productSpecificationsMap)
 		throws Exception {
 
-		ProductPurchase productPurchase = new ProductPurchase();
-
 		ZonedDateTime zonedDateTime = ZonedDateTime.now();
 
+		ProductPurchase productPurchase = new ProductPurchase();
+
+		productPurchase.setPerpetual(
+			Objects.equals(
+				productSpecificationsMap.get("license-type"), "Perpetual"));
+
 		if (Objects.equals(
-				productSpecificationsMap.get("license-type"), "Subscription")) {
+				_getDXPLicenseUsageType(orderItem.getOptions()), "trial")) {
+
+			productPurchase.setEndDate(
+				Date.from(
+					zonedDateTime.plusMonths(
+						1
+					).toInstant()));
+
+			productPurchase.setPerpetual(false);
+		}
+		else if (Objects.equals(
+					productSpecificationsMap.get("license-type"),
+					"Subscription")) {
 
 			Instant instant = zonedDateTime.plusYears(
 				1
 			).toInstant();
-
-			if (Objects.equals(
-					_getDXPLicenseUsageType(orderItem.getOptions()), "trial")) {
-
-				instant = zonedDateTime.plusMonths(
-					1
-				).toInstant();
-			}
 
 			productPurchase.setEndDate(Date.from(instant));
 		}
@@ -590,9 +598,6 @@ public class KoroneikiRestController extends BaseRestController {
 
 		productPurchase.setExternalLinks(new ExternalLink[] {externalLink});
 
-		productPurchase.setPerpetual(
-			Objects.equals(
-				productSpecificationsMap.get("license-type"), "Perpetual"));
 		productPurchase.setProductKey(orderItem.getSkuExternalReferenceCode());
 		productPurchase.setQuantity(
 			orderItem.getQuantity(

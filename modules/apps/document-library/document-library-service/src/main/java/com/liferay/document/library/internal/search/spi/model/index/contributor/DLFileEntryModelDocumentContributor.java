@@ -5,6 +5,8 @@
 
 package com.liferay.document.library.internal.search.spi.model.index.contributor;
 
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.document.library.internal.configuration.DLIndexerConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
@@ -23,6 +25,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -42,6 +45,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextExtractor;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.util.PropsValues;
@@ -291,7 +295,7 @@ public class DLFileEntryModelDocumentContributor
 			inputStream, PropsValues.DL_FILE_INDEXING_MAX_SIZE);
 
 		if (_dlIndexerConfiguration.cacheTextExtraction() &&
-			Validator.isNotNull(text)) {
+			Validator.isNotNull(text) && !_isReadOnlyCtCollection()) {
 
 			_dlStore.addFile(
 				DLStoreRequest.builder(
@@ -348,8 +352,28 @@ public class DLFileEntryModelDocumentContributor
 		return true;
 	}
 
+	private boolean _isReadOnlyCtCollection() throws PortalException {
+		if (CTCollectionThreadLocal.isProductionMode()) {
+			return false;
+		}
+
+		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
+			CTCollectionThreadLocal.getCTCollectionId());
+
+		if ((ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
+			(ctCollection.getStatus() != WorkflowConstants.STATUS_PENDING)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryModelDocumentContributor.class);
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private DDMIndexer _ddmIndexer;

@@ -17,6 +17,7 @@
 
 package org.opensaml.messaging.context;
 
+import java.io.Serializable;
 
 /**
  * A context component which holds the state related to the processing of a single message.
@@ -31,7 +32,7 @@ package org.opensaml.messaging.context;
  *
  * @param <MessageType> the message type of the message context 
  */
-public class MessageContext<MessageType> extends BaseContext {
+public class MessageContext<MessageType> extends BaseContext implements Serializable {
 
     /** The message represented. */
     private MessageType msg;
@@ -55,3 +56,4 @@ public class MessageContext<MessageType> extends BaseContext {
     }
 
 }
+/* @generated */

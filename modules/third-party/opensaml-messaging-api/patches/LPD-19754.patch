@@ -1,0 +1,30 @@
+diff --git a/org/opensaml/messaging/context/MessageContext.java b/org/opensaml/messaging/context/MessageContext.java
+index c4dc178..cd81faf 100644
+--- a/org/opensaml/messaging/context/MessageContext.java
++++ b/org/opensaml/messaging/context/MessageContext.java
+@@ -17,6 +17,7 @@
+ 
+ package org.opensaml.messaging.context;
+ 
++import java.io.Serializable;
+ 
+ /**
+  * A context component which holds the state related to the processing of a single message.
+@@ -31,7 +32,7 @@ package org.opensaml.messaging.context;
+  *
+  * @param <MessageType> the message type of the message context 
+  */
+-public class MessageContext<MessageType> extends BaseContext {
++public class MessageContext<MessageType> extends BaseContext implements Serializable {
+ 
+     /** The message represented. */
+     private MessageType msg;
+@@ -54,4 +55,5 @@ public class MessageContext<MessageType> extends BaseContext {
+         msg = message;
+     }
+ 
+-}
+\ No newline at end of file
++}
++/* @generated */
+\ No newline at end of file

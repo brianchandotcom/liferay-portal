@@ -309,7 +309,8 @@ public class CPInstanceCommercePriceEntryDisplayContext
 	public String getPrice() throws PortalException {
 		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
 
-		return _commercePriceFormatter.format(commercePriceEntry.getPrice(), cpRequestHelper.getLocale());
+		return _commercePriceFormatter.format(
+			commercePriceEntry.getPrice(), cpRequestHelper.getLocale());
 	}
 
 	@Override
@@ -379,9 +380,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 	}
 
 	private final CommercePriceEntryService _commercePriceEntryService;
-
 	private final CommercePriceFormatter _commercePriceFormatter;
-
 	private final CommercePriceListActionHelper _commercePriceListActionHelper;
 	private final CommercePriceListService _commercePriceListService;
 	private CPInstance _cpInstance;

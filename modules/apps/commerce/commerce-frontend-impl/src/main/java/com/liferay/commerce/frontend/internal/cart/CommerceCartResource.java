@@ -224,8 +224,8 @@ public class CommerceCartResource {
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(), cpInstanceId, options,
-					formattedQuantity, 0, BigDecimal.ZERO,
-					unitOfMeasureKey, commerceContext, serviceContext);
+					formattedQuantity, 0, BigDecimal.ZERO, unitOfMeasureKey,
+					commerceContext, serviceContext);
 
 			cart = _getCart(
 				commerceOrderItem.getCommerceOrderId(),
@@ -615,6 +615,10 @@ public class CommerceCartResource {
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 
 	@Reference
+	private CommerceOrderItemQuantityFormatter
+		_commerceOrderItemQuantityFormatter;
+
+	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
@@ -637,10 +641,6 @@ public class CommerceCartResource {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private CommerceOrderItemQuantityFormatter
-		_commerceOrderItemQuantityFormatter;
 
 	@Reference
 	private ProductHelper _productHelper;

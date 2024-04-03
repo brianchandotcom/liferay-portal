@@ -13,6 +13,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.persistence.InMemoryOnlyConfigurationThreadLocal;
 import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
 import com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration;
+import com.liferay.portal.k8s.agent.custodian.VirtualInstanceCustodian;
 import com.liferay.portal.k8s.agent.internal.threadlocal.AgentPortalK8sThreadLocal;
 import com.liferay.portal.k8s.agent.mutator.PortalK8sConfigurationPropertiesMutator;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
@@ -22,9 +23,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Validator;
 
 import io.fabric8.kubernetes.api.model.ConfigMap;
 import io.fabric8.kubernetes.api.model.ConfigMapBuilder;
+import io.fabric8.kubernetes.api.model.ConfigMapList;
 import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.fabric8.kubernetes.client.Config;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
@@ -73,10 +76,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	configurationPid = "com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	property = "portalK8sConfigurationPropertiesMutators.cardinality.minimum:Integer=3",
-	service = PortalK8sConfigMapModifier.class
+	service = {PortalK8sConfigMapModifier.class, VirtualInstanceCustodian.class}
 )
 public class AgentPortalK8sConfigMapModifier
-	implements PortalK8sConfigMapModifier {
+	implements PortalK8sConfigMapModifier, VirtualInstanceCustodian {
 
 	@Activate
 	public AgentPortalK8sConfigMapModifier(
@@ -122,6 +125,36 @@ public class AgentPortalK8sConfigMapModifier
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Initialized K8s agent");
+		}
+	}
+
+	@Override
+	public void clean(List<String> companyWebIds) {
+		ConfigMapList configMapList = _kubernetesClient.configMaps(
+		).withLabel(
+			"lxc.liferay.com/metadataType", "dxp"
+		).list();
+
+		for (ConfigMap configMap : configMapList.getItems()) {
+			ObjectMeta metadata = configMap.getMetadata();
+
+			Map<String, String> labels = metadata.getLabels();
+
+			String virtualInstanceId = labels.get(
+				"dxp.lxc.liferay.com/virtualInstanceId");
+
+			if (Validator.isNull(virtualInstanceId) ||
+				!companyWebIds.contains(virtualInstanceId)) {
+
+				_kubernetesClient.configMaps(
+				).delete(
+					configMap
+				);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Custodian deleted " + configMap);
+				}
+			}
 		}
 	}
 

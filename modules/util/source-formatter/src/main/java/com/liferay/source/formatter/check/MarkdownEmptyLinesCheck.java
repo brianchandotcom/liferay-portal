@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -49,7 +50,9 @@ public class MarkdownEmptyLinesCheck extends BaseFileCheck {
 					continue;
 				}
 
-				if (trimmedLine.startsWith("```")) {
+				if (trimmedLine.startsWith("```") &&
+					(StringUtil.count(trimmedLine, "```") == 1)) {
+
 					if (!codeBlock && !Validator.isBlank(previousLine)) {
 						sb.append("\n");
 					}
@@ -75,7 +78,9 @@ public class MarkdownEmptyLinesCheck extends BaseFileCheck {
 				}
 
 				if ((!codeBlock &&
-					 (_isHeader(line) || previousLine.startsWith("```")) &&
+					 (_isHeader(line) ||
+					  (previousLine.startsWith("```") &&
+					   (StringUtil.count(previousLine, "```") == 1))) &&
 					 (sb.index() > 0) && !Validator.isBlank(previousLine)) ||
 					(_isHeader(previousLine) && !line.startsWith("- ") &&
 					 !line.startsWith("* ")) ||

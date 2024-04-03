@@ -159,20 +159,26 @@ export function ModalPublishObjectDefinitions({
 		setModalHeaderMessage(`${Liferay.Language.get('publishing')}...`);
 		setPublishObjectDefinitionsStatus(STATUS.PENDING);
 
-		const publishObjectDefinitionPromises = selectedDraftObjectDefinitions.map(
-			({id, status}) => {
+		try {
+			const publishObjectDefinitionResponses = [];
+
+			for (const selectedDraftObjectDefinition of selectedDraftObjectDefinitions) {
 				setSelectedDraftObjectDefinitions((prevState) =>
-					updateObjectDefinitionStatus(prevState, id, status)
+					updateObjectDefinitionStatus(
+						prevState,
+						selectedDraftObjectDefinition.id,
+						selectedDraftObjectDefinition.status
+					)
 				);
 
-				return publishObjectDefinition(id);
-			}
-		);
+				const publishObjectDefinitionResponse = await publishObjectDefinition(
+					selectedDraftObjectDefinition.id
+				);
 
-		try {
-			const publishObjectDefinitionResponses = await Promise.all(
-				publishObjectDefinitionPromises
-			);
+				publishObjectDefinitionResponses.push(
+					publishObjectDefinitionResponse
+				);
+			}
 
 			const hasRejectedPublishObjectDefinitionResponses = publishObjectDefinitionResponses.some(
 				(publishObjectDefinitionResponse) =>

@@ -211,7 +211,6 @@ public class SugarCRMObjectEntryManagerImplTest
 				"filter", "firstName eq " + StringUtil.quote(firstName1)
 			).build(),
 			objectEntry1);
-
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
@@ -220,7 +219,6 @@ public class SugarCRMObjectEntryManagerImplTest
 					"lastName eq ", StringUtil.quote(lastName1))
 			).build(),
 			objectEntry1);
-
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
@@ -314,7 +312,6 @@ public class SugarCRMObjectEntryManagerImplTest
 		Assert.assertEquals(
 			firstName,
 			MapUtil.getString(objectEntry.getProperties(), "firstName"));
-
 		Assert.assertEquals(
 			lastName,
 			MapUtil.getString(objectEntry.getProperties(), "lastName"));

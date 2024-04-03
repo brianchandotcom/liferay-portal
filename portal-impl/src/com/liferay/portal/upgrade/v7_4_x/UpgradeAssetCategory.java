@@ -29,9 +29,9 @@ public class UpgradeAssetCategory extends UpgradeProcess {
 	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.alterColumnType(
-				"AssetCategory", "description", "TEXT null"),
-			UpgradeProcessFactory.alterColumnType(
 				"AssetCategory", "title", "TEXT null"),
+			UpgradeProcessFactory.alterColumnType(
+				"AssetCategory", "description", "TEXT null"),
 			UpgradeProcessFactory.addColumns(
 				"AssetCategory", "externalReferenceCode VARCHAR(75)")
 		};

@@ -150,5 +150,5 @@ CPPriceRangeFacetsDisplayContext cpPriceRangeFacetsDisplayContext = (CPPriceRang
 			"maxValue", Double.MAX_VALUE
 		).build()
 	%>'
-	module="js/price_range_facets/view"
+	module="{priceRangeFacetsView} from commerce-product-content-search-web"
 />

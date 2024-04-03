@@ -18,5 +18,5 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 </aui:fieldset>
 
 <liferay-frontend:component
-	module="js/configuration/selection_style"
+	module="{selectionStyle} from commerce-product-content-search-web"
 />

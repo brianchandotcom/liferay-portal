@@ -66,5 +66,5 @@ SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer = cpSearchResultsD
 			"portletDisplayId", portletDisplay.getId()
 		).build()
 	%>'
-	module="js/sort/view"
+	module="{sortView} from commerce-product-content-search-web"
 />

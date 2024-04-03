@@ -31,5 +31,5 @@ List<CPContentListRenderer> cpContentListRenderers = cpSearchResultsDisplayConte
 </aui:fieldset>
 
 <liferay-frontend:component
-	module="js/configuration/product_list_renderer"
+	module="{productListRenderer} from commerce-product-content-search-web"
 />

@@ -23,7 +23,10 @@ public interface GlobalJSCET extends CET {
 	)
 	public String getScriptElementAttributesJSON();
 
-	@CETProperty(defaultValue = "", name = "url", type = CETProperty.Type.URL)
+	@CETProperty(
+		defaultValue = "", label = "js-url", name = "url",
+		type = CETProperty.Type.URL
+	)
 	public String getURL();
 
 }

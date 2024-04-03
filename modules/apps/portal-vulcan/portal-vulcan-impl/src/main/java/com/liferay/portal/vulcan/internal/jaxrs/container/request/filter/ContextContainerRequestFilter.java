@@ -56,6 +56,7 @@ import javax.ws.rs.ext.Provider;
 
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.jaxrs.impl.UriInfoImpl;
+import org.apache.cxf.jaxrs.utils.JAXRSUtils;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.PhaseInterceptorChain;
 
@@ -111,7 +112,8 @@ public class ContextContainerRequestFilter
 			ContainerResponseContext containerResponseContext)
 		throws IOException {
 
-		ContextProviderUtil.releaseResourceInstance();
+		ContextProviderUtil.releaseResourceInstance(
+			JAXRSUtils.getContextMessage(JAXRSUtils.getCurrentMessage()));
 	}
 
 	public void handleMessage(

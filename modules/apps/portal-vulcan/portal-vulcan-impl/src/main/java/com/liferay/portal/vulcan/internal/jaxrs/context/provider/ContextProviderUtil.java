@@ -119,10 +119,7 @@ public class ContextProviderUtil {
 		};
 	}
 
-	public static void releaseResourceInstance() {
-		Message message = JAXRSUtils.getContextMessage(
-			JAXRSUtils.getCurrentMessage());
-
+	public static void releaseResourceInstance(Message message) {
 		Exchange exchange = message.getExchange();
 
 		Object resource = getMatchedResource(message);

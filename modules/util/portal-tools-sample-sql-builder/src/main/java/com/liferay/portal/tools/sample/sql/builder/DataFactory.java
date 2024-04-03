@@ -3195,6 +3195,81 @@ public class DataFactory {
 		return layoutModels;
 	}
 
+	public JournalArticleModel newCTCollectionJournalArticleModel(
+			long ctCollectionId,
+			JournalArticleResourceModel journalArticleResourceModel,
+			int articleIndex, int versionIndex)
+		throws PortalException {
+
+		JournalArticleModel journalArticleModel = newJournalArticleModel(
+			journalArticleResourceModel, articleIndex, versionIndex);
+
+		journalArticleModel.setCtCollectionId(ctCollectionId);
+
+		return journalArticleModel;
+	}
+
+	public JournalArticleResourceModel
+		newCTCollectionJournalArticleResourceModel(
+			long ctCollectionid, long groupId) {
+
+		JournalArticleResourceModel journalArticleResourceModel =
+			newJournalArticleResourceModel(groupId);
+
+		journalArticleResourceModel.setCtCollectionId(ctCollectionid);
+
+		return journalArticleResourceModel;
+	}
+
+	public List<PortletPreferenceValueModel>
+		newCTCollectionJournalArticleResourcePortletPreferenceValueModels(
+			long ctCollectionId,
+			PortletPreferencesModel portletPreferencesModel,
+			JournalArticleResourceModel journalArticleResourceModel) {
+
+		PortletPreferenceValueModel articleIdValue =
+			newPortletPreferenceValueModel(
+				portletPreferencesModel, "articleId", 0,
+				journalArticleResourceModel.getArticleId());
+
+		articleIdValue.setCtCollectionId(ctCollectionId);
+
+		PortletPreferenceValueModel groupIdValue =
+			newPortletPreferenceValueModel(
+				portletPreferencesModel, "groupId", 0,
+				String.valueOf(journalArticleResourceModel.getGroupId()));
+
+		groupIdValue.setCtCollectionId(ctCollectionId);
+
+		return Arrays.asList(articleIdValue, groupIdValue);
+	}
+
+	public LayoutClassedModelUsageModel
+		newCTCollectionLayoutClassedModelUsageModel(
+			long ctCollectionId, long groupId, long plid, String containerKey,
+			JournalArticleResourceModel journalArticleResourceModel) {
+
+		LayoutClassedModelUsageModel layoutClassedModelUsageModel =
+			newLayoutClassedModelUsageModel(
+				groupId, plid, containerKey, journalArticleResourceModel);
+
+		layoutClassedModelUsageModel.setCtCollectionId(ctCollectionId);
+
+		return layoutClassedModelUsageModel;
+	}
+
+	public LayoutModel newCTCollectionLayoutModel(
+		long ctCollectionId, long groupId, String name, String column1,
+		String column2) {
+
+		LayoutModel layoutModel = newLayoutModel(
+			groupId, "2_columns_ii", name, false, column1, column2);
+
+		layoutModel.setCtCollectionId(ctCollectionId);
+
+		return layoutModel;
+	}
+
 	public CTCollectionModel newCTCollectionModel(
 		int index, CTSchemaVersionModel ctSchemaVersionModel) {
 
@@ -3229,6 +3304,35 @@ public class DataFactory {
 		}
 
 		return ctCollectionModels;
+	}
+
+	public PortletPreferencesModel newCTCollectionPortletPreferencesModel(
+		long ctCollectionId, long plid, String portletId) {
+
+		PortletPreferencesModel portletPreferencesModel =
+			newPortletPreferencesModel(plid, portletId);
+
+		portletPreferencesModel.setCtCollectionId(ctCollectionId);
+
+		return portletPreferencesModel;
+	}
+
+	public List<ResourcePermissionModel>
+		newCTCollectionResourcePermissionModels(
+			long ctCollectionId, String name, long primKey) {
+
+		List<ResourcePermissionModel> resourcePermissionModels =
+			new ArrayList<>();
+
+		for (ResourcePermissionModel resourcePermissionModel :
+				newResourcePermissionModels(name, primKey)) {
+
+			resourcePermissionModel.setCtCollectionId(ctCollectionId);
+
+			resourcePermissionModels.add(resourcePermissionModel);
+		}
+
+		return resourcePermissionModels;
 	}
 
 	public CTEntryModel newCTEntryModel(
@@ -6070,6 +6174,24 @@ public class DataFactory {
 
 	public void setWebId(String webId) {
 		_webId = webId;
+	}
+
+	public String toCTCollectionInsertSQL(
+		CTModel<?> ctModel, long ctCollectionId) {
+
+		ctModel.setCtCollectionId(ctCollectionId);
+
+		CTEntryModel ctEntryModel = newCTEntryModel(
+			ctCollectionId, ctModel, getCtChangeTypeAddition());
+
+		return toInsertSQL(ctModel) + "\n" + toInsertSQL(ctEntryModel);
+	}
+
+	public String toCTCollectionInsertSQL(
+		CTModel<?> ctModel, String ctCollectionId) {
+
+		return toCTCollectionInsertSQL(
+			ctModel, GetterUtil.getLong(ctCollectionId));
 	}
 
 	public String toInsertSQL(BaseModel<?> baseModel) {

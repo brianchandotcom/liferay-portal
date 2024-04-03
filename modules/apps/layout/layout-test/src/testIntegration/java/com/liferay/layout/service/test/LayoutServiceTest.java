@@ -7,22 +7,38 @@ package com.liferay.layout.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -47,6 +63,28 @@ public class LayoutServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_locale = _portal.getSiteDefaultLocale(_group);
+	}
+
+	@Test
+	public void testAddPortletsToPrivateLayout() throws Exception {
+		_testAddPortletsToLayout(true);
+	}
+
+	@Test
+	public void testAddPortletsToPublicLayout() throws Exception {
+		_testAddPortletsToLayout(false);
+	}
+
+	@Test
+	public void testAddPrivateLayout() throws Exception {
+		_assertAddLayout(true);
+	}
+
+	@Test
+	public void testAddPublicLayout() throws Exception {
+		_assertAddLayout(false);
 	}
 
 	@Test
@@ -104,11 +142,185 @@ public class LayoutServiceTest {
 		}
 	}
 
+	@Test
+	public void testUpdateLayoutTemplate() throws Exception {
+		Layout layout = _addTypePortletLayout(
+			RandomTestUtil.randomString(), false, StringPool.BLANK);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		for (String layoutTemplateId : _LAYOUT_TEMPLATE_IDS) {
+			Assert.assertNotEquals(
+				layoutTemplateId,
+				typeSettingsUnicodeProperties.getProperty(
+					"layout-template-id"));
+
+			typeSettingsUnicodeProperties.setProperty(
+				"layout-template-id", layoutTemplateId);
+
+			layout = _layoutService.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), typeSettingsUnicodeProperties.toString());
+
+			typeSettingsUnicodeProperties = layout.getTypeSettingsProperties();
+
+			Assert.assertEquals(
+				layoutTemplateId,
+				typeSettingsUnicodeProperties.getProperty(
+					"layout-template-id"));
+		}
+	}
+
+	private String[] _addPortletsToLayout(
+			int columnIndex, long plid, String[] portletNames)
+		throws Exception {
+
+		String[] portletIds = new String[portletNames.length];
+
+		for (int i = 0; i < portletNames.length; i++) {
+			portletIds[i] = _addPortletToLayout(
+				columnIndex, i, plid, portletNames[i]);
+		}
+
+		return portletIds;
+	}
+
+	private String _addPortletToLayout(
+			int columnIndex, int columnPos, long plid, String portletName)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.getLayout(plid);
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		String columnId = "column-" + columnIndex;
+
+		String portletId = layoutTypePortlet.addPortletId(
+			TestPropsValues.getUserId(), portletName, columnId, columnPos);
+
+		layoutTypePortlet.resetModes();
+		layoutTypePortlet.resetStates();
+
+		_layoutService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
+
+		return portletId;
+	}
+
+	private Layout _addTypePortletLayout(
+			String name, boolean privateLayout, String typeSettings)
+		throws Exception {
+
+		HashMap<Locale, String> map = HashMapBuilder.put(
+			_locale, name
+		).build();
+
+		return _layoutService.addLayout(
+			_group.getGroupId(), privateLayout,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0, map, map,
+			Collections.emptyMap(), Collections.emptyMap(),
+			Collections.emptyMap(), LayoutConstants.TYPE_PORTLET, typeSettings,
+			false, false,
+			HashMapBuilder.put(
+				_locale,
+				_friendlyURLNormalizer.normalizeWithEncoding(
+					StringPool.SLASH + name)
+			).build(),
+			0,
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
+	}
+
+	private void _assertAddLayout(boolean privateLayout) throws Exception {
+		String name = RandomTestUtil.randomString();
+
+		Layout layout = _addTypePortletLayout(
+			name, privateLayout, StringPool.BLANK);
+
+		Assert.assertEquals(name, layout.getName(_locale));
+		Assert.assertEquals(privateLayout, layout.isPrivateLayout());
+		Assert.assertTrue(layout.isTypePortlet());
+	}
+
+	private void _assertPortletIdsInColumn(
+			int columnIndex, long plid, String[] portletIds)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.getLayout(plid);
+
+		UnicodeProperties layoutTypeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		Assert.assertArrayEquals(
+			portletIds,
+			StringUtil.split(
+				layoutTypeSettingsUnicodeProperties.getProperty(
+					"column-" + columnIndex)));
+	}
+
+	private void _testAddPortletsToLayout(boolean privateLayout)
+		throws Exception {
+
+		Layout layout = _addTypePortletLayout(
+			RandomTestUtil.randomString(), privateLayout,
+			"layout-template-id=2_columns_ii");
+
+		String[] column1PortletIds = _addPortletsToLayout(
+			1, layout.getPlid(), _COLUMN_1_PORTLET_NAMES);
+		String[] column2PortletIds = _addPortletsToLayout(
+			2, layout.getPlid(), _COLUMN_2_PORTLET_NAMES);
+
+		_assertPortletIdsInColumn(1, layout.getPlid(), column1PortletIds);
+		_assertPortletIdsInColumn(2, layout.getPlid(), column2PortletIds);
+	}
+
+	private static final String[] _COLUMN_1_PORTLET_NAMES = {
+		"com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+		"com_liferay_blogs_web_portlet_BlogsPortlet",
+		"com_liferay_site_navigation_breadcrumb_web_portlet_" +
+			"SiteNavigationBreadcrumbPortlet",
+		"com_liferay_asset_categories_navigation_web_portlet_" +
+			"AssetCategoriesNavigationPortlet",
+		"com_liferay_document_library_web_portlet_DLPortlet"
+	};
+
+	private static final String[] _COLUMN_2_PORTLET_NAMES = {
+		"com_liferay_site_navigation_language_web_portlet_" +
+			"SiteNavigationLanguagePortlet",
+		"com_liferay_document_library_web_portlet_IGDisplayPortlet",
+		"com_liferay_message_boards_web_portlet_MBPortlet",
+		"com_liferay_site_my_sites_web_portlet_MySitesPortlet",
+		"com_liferay_site_navigation_menu_web_portlet_" +
+			"SiteNavigationMenuPortlet",
+		"com_liferay_asset_publisher_web_portlet_RelatedAssetsPortlet"
+	};
+
+	private static final String[] _LAYOUT_TEMPLATE_IDS = {
+		"1-column", "2-columns-i", "2-columns-ii", "2-columns-iii", "3-columns",
+		"1-2-columns-i", "1-2-columns-ii", "1-2-1-columns-i",
+		"1-2-1-columns-ii", "1-3-1-columns", "1-3-2-columns", "2-1-2-columns",
+		"2-2-columns", "3-2-3-columns"
+	};
+
+	@Inject
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
 	private LayoutService _layoutService;
+
+	private Locale _locale;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

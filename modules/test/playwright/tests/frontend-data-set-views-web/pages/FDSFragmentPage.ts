@@ -17,6 +17,8 @@ export class FDSFragmentPage {
 	readonly fdsListWrapper: Locator;
 	readonly fdsTableWrapper: Locator;
 	readonly fragmentWidgetSearchInput: Locator;
+	readonly itemActionButton: Locator;
+	readonly itemActionMenuButton: Locator;
 	readonly page: Page;
 	readonly publishPageButton: Locator;
 
@@ -30,6 +32,8 @@ export class FDSFragmentPage {
 		this.fragmentWidgetSearchInput = page.getByLabel(
 			'Search Fragments and Widgets'
 		);
+		this.itemActionButton = page.getByTestId('fdsItemActionButton');
+		this.itemActionMenuButton = page.getByTestId('fdsItemActionMenuButton');
 		this.page = page;
 		this.publishPageButton = page.getByRole('button', {
 			name: 'Publish',

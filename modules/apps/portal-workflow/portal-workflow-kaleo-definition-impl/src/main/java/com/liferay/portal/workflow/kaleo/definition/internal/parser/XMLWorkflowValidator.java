@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(service = WorkflowValidator.class)
-public class DefaultWorkflowValidator implements WorkflowValidator {
+public class XMLWorkflowValidator implements WorkflowValidator {
 
 	@Override
 	public void validate(Definition definition) throws WorkflowException {

@@ -12,6 +12,18 @@ components:
                     format: int64
                     type: integer
             type: object
+        TestrayTestSuite:
+            properties:
+                caseAmount:
+                    format: int32
+                    type: integer
+                runtime:
+                    format: int64
+                    type: integer
+                tarFileName:
+                    type: string
+                xmlFileName:
+                    type: string
 info:
     license:
         name: "Apache 2.0"
@@ -55,3 +67,35 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/TestrayRunComparison"
             tags: ["TestrayRunComparison"]
+    "/testray-test-suite":
+        post:
+            operationId: postTestrayTestSuite
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                            type: object
+            responses:
+                204:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TestrayTestSuite"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TestrayTestSuite"
+                400:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TestrayTestSuite"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TestrayTestSuite"
+                    description:
+                        Invalid answer provided
+            tags: ["TestrayTestSuite"]

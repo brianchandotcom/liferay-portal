@@ -43,7 +43,8 @@ const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = 
 				searchParams.delete('filter');
 				searchParams.delete('filterSchema');
 				searchParams.delete('page');
-			} else {
+			}
+			else {
 				searchParams.set('filter', JSON.stringify(filterJSON));
 			}
 

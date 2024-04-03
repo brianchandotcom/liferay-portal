@@ -333,6 +333,7 @@ function CriteriaRow({
 				<div
 					className={classNames(
 						'criterion-row-root',
+						`drop-zone-${propertyKey}`,
 						dropZoneClassName,
 						{
 							'criterion-row-root-error': error,

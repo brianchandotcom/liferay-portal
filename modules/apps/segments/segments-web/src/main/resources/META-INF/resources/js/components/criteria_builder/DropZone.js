@@ -152,6 +152,7 @@ function DropZone({
 		<div
 			className={classNames(
 				'drop-zone-root position-relative',
+				`drop-zone-${propertyKey}`,
 				dropZoneClassName
 			)}
 			ref={ref}

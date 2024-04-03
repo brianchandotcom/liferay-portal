@@ -1,0 +1,662 @@
+[
+	{
+		"accountEntryRestricted": false,
+		"accountEntryRestrictedObjectFieldName": "",
+		"actions": {
+			"delete": {
+			},
+			"exportBoundObjectDefinitions": {
+			},
+			"get": {
+			},
+			"permissions": {
+			},
+			"publish": {
+			},
+			"unbind": {
+			},
+			"update": {
+			}
+		},
+		"active": false,
+		"defaultLanguageId": "en_US",
+		"enableCategorization": true,
+		"enableComments": false,
+		"enableLocalization": false,
+		"enableObjectEntryDraft": false,
+		"enableObjectEntryHistory": false,
+		"externalReferenceCode": "TESTINVALIDROOTOJBECTDEFINITION",
+		"label": {
+			"en_US": "!!Invalid Root Object Definition@"
+		},
+		"modifiable": true,
+		"name": "!!TestInvalidRootObjectDefinition@",
+		"objectActions": [
+		],
+		"objectFields": [
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Author"
+				},
+				"localized": false,
+				"name": "creator",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Create Date"
+				},
+				"localized": false,
+				"name": "createDate",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Date",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "External Reference Code"
+				},
+				"localized": false,
+				"name": "externalReferenceCode",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "Long",
+				"businessType": "LongInteger",
+				"indexed": true,
+				"indexedAsKeyword": true,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "ID"
+				},
+				"localized": false,
+				"name": "id",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Long",
+				"unique": false
+			},
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Modified Date"
+				},
+				"localized": false,
+				"name": "modifiedDate",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Date",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Status"
+				},
+				"localized": false,
+				"name": "status",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			}
+		],
+		"objectFolderExternalReferenceCode": "default",
+		"objectLayouts": [
+		],
+		"objectRelationships": [
+			{
+				"deletionType": "cascade",
+				"edge": true,
+				"externalReferenceCode": "fbbbac7e-677b-6308-84e1-621e50e84499",
+				"label": {
+					"en_US": "RootToBranch"
+				},
+				"name": "rootToBranch",
+				"objectDefinitionExternalReferenceCode1": "TESTINVALIDROOTOJBECTDEFINITION",
+				"objectDefinitionExternalReferenceCode2": "TESTBRANCHOBJECTDEFINITION",
+				"objectDefinitionModifiable2": true,
+				"objectDefinitionName2": "Branch",
+				"objectDefinitionSystem2": false,
+				"objectField": {
+					"DBType": "Long",
+					"businessType": "Relationship",
+					"externalReferenceCode": "17649c5c-7758-06e0-f4f2-b18e050349a2",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "RootToBranch"
+					},
+					"localized": false,
+					"name": "r_rootToBranch_c_rootId",
+					"objectFieldSettings": [
+						{
+							"name": "objectDefinition1ShortName",
+							"value": "!!TestInvalidRootObjectDefinition@"
+						},
+						{
+							"name": "objectRelationshipERCObjectFieldName",
+							"value": "r_rootToBranch_c_rootERC"
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"relationshipType": "oneToMany",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "Long",
+					"unique": false
+				},
+				"parameterObjectFieldId": 0,
+				"parameterObjectFieldName": "",
+				"reverse": false,
+				"system": false,
+				"type": "oneToMany"
+			}
+		],
+		"objectValidationRules": [
+		],
+		"objectViews": [
+		],
+		"panelCategoryKey": "",
+		"parameterRequired": false,
+		"pluralLabel": {
+			"en_US": "roots"
+		},
+		"portlet": true,
+		"restContextPath": "/o/c/roots",
+		"rootObjectDefinitionExternalReferenceCode": "TESTINVALIDROOTOJBECTDEFINITION",
+		"scope": "company",
+		"status": {
+			"code": 2,
+			"label": "draft",
+			"label_i18n": "Draft"
+		},
+		"system": false,
+		"titleObjectFieldName": "id"
+	},
+	{
+		"accountEntryRestricted": false,
+		"accountEntryRestrictedObjectFieldName": "",
+		"actions": {
+			"delete": {
+			},
+			"get": {
+			},
+			"permissions": {
+			},
+			"publish": {
+			},
+			"unbind": {
+			},
+			"update": {
+			}
+		},
+		"active": false,
+		"defaultLanguageId": "en_US",
+		"enableCategorization": true,
+		"enableComments": false,
+		"enableLocalization": false,
+		"enableObjectEntryDraft": false,
+		"enableObjectEntryHistory": false,
+		"externalReferenceCode": "TESTBRANCHOBJECTDEFINITION",
+		"label": {
+			"en_US": "Test Branch Object Definition"
+		},
+		"modifiable": true,
+		"name": "TestBranchObjectDefinition",
+		"objectActions": [
+		],
+		"objectFields": [
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Author"
+				},
+				"localized": false,
+				"name": "creator",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Create Date"
+				},
+				"localized": false,
+				"name": "createDate",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Date",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "External Reference Code"
+				},
+				"localized": false,
+				"name": "externalReferenceCode",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "LongInteger",
+				"indexed": true,
+				"indexedAsKeyword": true,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "ID"
+				},
+				"localized": false,
+				"name": "id",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Modified Date"
+				},
+				"localized": false,
+				"name": "modifiedDate",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Date",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Status"
+				},
+				"localized": false,
+				"name": "status",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			}
+		],
+		"objectFolderExternalReferenceCode": "default",
+		"objectLayouts": [
+		],
+		"objectRelationships": [
+			{
+				"deletionType": "cascade",
+				"edge": true,
+				"externalReferenceCode": "b741a60a-982d-ede2-634f-59549459e624",
+				"label": {
+					"en_US": "BranchToLeaf"
+				},
+				"name": "branchToLeaf",
+				"objectDefinitionExternalReferenceCode1": "TESTBRANCHOBJECTDEFINITION",
+				"objectDefinitionExternalReferenceCode2": "TESTINVALIDLEAFOJBECTDEFINITION",
+				"objectDefinitionModifiable2": true,
+				"objectDefinitionName2": "Leaf",
+				"objectDefinitionSystem2": false,
+				"objectField": {
+					"DBType": "Long",
+					"businessType": "Relationship",
+					"externalReferenceCode": "a27d6d84-7b52-3ad7-8615-80efeabb0dff",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "BranchToLeaf"
+					},
+					"localized": false,
+					"name": "r_branchToLeaf_c_branchId",
+					"objectFieldSettings": [
+						{
+							"name": "objectDefinition1ShortName",
+							"value": "Branch"
+						},
+						{
+							"name": "objectRelationshipERCObjectFieldName",
+							"value": "r_branchToLeaf_c_branchERC"
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"relationshipType": "oneToMany",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "Long",
+					"unique": false
+				},
+				"parameterObjectFieldId": 0,
+				"parameterObjectFieldName": "",
+				"reverse": false,
+				"system": false,
+				"type": "oneToMany"
+			}
+		],
+		"objectValidationRules": [
+		],
+		"objectViews": [
+		],
+		"panelCategoryKey": "",
+		"parameterRequired": false,
+		"pluralLabel": {
+			"en_US": "branchs"
+		},
+		"portlet": false,
+		"restContextPath": "/o/c/roots/branches",
+		"rootObjectDefinitionExternalReferenceCode": "TESTINVALIDROOTOJBECTDEFINITION",
+		"scope": "company",
+		"status": {
+			"code": 2,
+			"label": "draft",
+			"label_i18n": "Draft"
+		},
+		"system": false,
+		"titleObjectFieldName": "id"
+	},
+	{
+		"accountEntryRestricted": false,
+		"accountEntryRestrictedObjectFieldName": "",
+		"actions": {
+			"delete": {
+			},
+			"get": {
+			},
+			"permissions": {
+			},
+			"publish": {
+			},
+			"unbind": {
+			},
+			"update": {
+			}
+		},
+		"active": false,
+		"defaultLanguageId": "en_US",
+		"enableCategorization": true,
+		"enableComments": false,
+		"enableLocalization": false,
+		"enableObjectEntryDraft": false,
+		"enableObjectEntryHistory": false,
+		"externalReferenceCode": "TESTINVALIDLEAFOJBECTDEFINITION",
+		"label": {
+			"en_US": "!Test Invalid Leaf Object Definition @@"
+		},
+		"modifiable": true,
+		"name": "!TestInvalidLeafObjectDefinition@@",
+		"objectActions": [
+		],
+		"objectFields": [
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Author"
+				},
+				"localized": false,
+				"name": "creator",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Create Date"
+				},
+				"localized": false,
+				"name": "createDate",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Date",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "External Reference Code"
+				},
+				"localized": false,
+				"name": "externalReferenceCode",
+				"objectFieldSettings": [
+				],
+				"readOnly": "false",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			},
+			{
+				"DBType": "Long",
+				"businessType": "LongInteger",
+				"indexed": true,
+				"indexedAsKeyword": true,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "ID"
+				},
+				"localized": false,
+				"name": "id",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Long",
+				"unique": false
+			},
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Modified Date"
+				},
+				"localized": false,
+				"name": "modifiedDate",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Date",
+				"unique": false
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Status"
+				},
+				"localized": false,
+				"name": "status",
+				"objectFieldSettings": [
+				],
+				"readOnly": "true",
+				"readOnlyConditionExpression": "",
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String",
+				"unique": false
+			}
+		],
+		"objectFolderExternalReferenceCode": "default",
+		"objectLayouts": [
+		],
+		"objectRelationships": [
+		],
+		"objectValidationRules": [
+		],
+		"objectViews": [
+		],
+		"panelCategoryKey": "",
+		"parameterRequired": false,
+		"pluralLabel": {
+			"en_US": "leaves"
+		},
+		"portlet": false,
+		"restContextPath": "/o/c/roots/leafs",
+		"rootObjectDefinitionExternalReferenceCode": "TESTINVALIDROOTOJBECTDEFINITION",
+		"scope": "company",
+		"status": {
+			"code": 2,
+			"label": "draft",
+			"label_i18n": "Draft"
+		},
+		"system": false,
+		"titleObjectFieldName": "id"
+	}
+]

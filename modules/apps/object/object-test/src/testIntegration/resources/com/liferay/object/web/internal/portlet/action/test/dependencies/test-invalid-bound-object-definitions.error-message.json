@@ -1,0 +1,17 @@
+{
+	"message": [
+		{
+			"error": {
+				"type": "ObjectDefinitionNameException.MustOnlyContainLettersAndDigits"
+			},
+			"objectDefinitionName": "!!TestInvalidRootObjectDefinition@"
+		},
+		{
+			"error": {
+				"type": "ObjectDefinitionNameException.MustOnlyContainLettersAndDigits"
+			},
+			"objectDefinitionName": "!TestInvalidLeafObjectDefinition@@"
+		}
+	],
+	"type": "importMultipleObjectDefinitions"
+}

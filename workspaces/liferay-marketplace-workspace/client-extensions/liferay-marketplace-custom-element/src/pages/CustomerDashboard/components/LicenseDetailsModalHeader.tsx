@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getThumbnailByProductAttachment} from '../../../../../../../utils/util';
-import AccountEmailInfo from '../../../../../../CreateLicense/AccountInfo';
-import OrderDetailsHeader from '../../../../../components/OrderDetailsHeader';
+import {getThumbnailByProductAttachment} from '../../../utils/util';
+import AccountEmailInfo from '../pages/Apps/App/Licenses/CreateLicense/AccountInfo';
+import OrderDetailsHeader from './OrderDetailsHeader';
 
 type LicenseDetailsModalHeaderProps = {
 	modalData: any;

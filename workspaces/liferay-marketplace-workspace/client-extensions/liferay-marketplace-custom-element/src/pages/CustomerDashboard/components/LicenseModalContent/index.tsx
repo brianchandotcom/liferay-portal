@@ -9,8 +9,8 @@ import './index.scss';
 
 import {format, isBefore} from 'date-fns';
 
-import i18n from '../../../../../../../../i18n';
-import {LicenseKey} from '../../../../../../../../services/oauth/MarketplaceSpringBootOAuth2';
+import i18n from '../../../../i18n';
+import {LicenseKey} from '../../../../services/oauth/MarketplaceSpringBootOAuth2';
 
 type LicenseKeyModalProps = {
 	Header: React.ReactNode;

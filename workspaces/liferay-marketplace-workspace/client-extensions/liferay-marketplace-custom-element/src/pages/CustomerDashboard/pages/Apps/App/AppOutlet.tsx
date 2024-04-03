@@ -19,9 +19,8 @@ import i18n from '../../../../../i18n';
 import OrderDetailsHeader from '../../../components/OrderDetailsHeader';
 
 import './App.scss';
-
-import ClayLoadingIndicator from '@clayui/loading-indicator';
-
+import {PageRenderer} from '../../../../../components/Page';
+import {isTrialSKU} from '../../../../../utils/productUtils';
 import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel';
 
 type AppNavbarProps = {
@@ -65,58 +64,52 @@ const AppNavbar: React.FC<AppNavbarProps> = ({showLicenseTab}) => {
 };
 
 const AppOutlet = () => {
-	const navigate = useNavigate();
-
 	const {orderId} = useParams();
-
 	const {data, error, isLoading} = useGetProductByOrderId(orderId as string);
-
+	const product = data?.product;
+	const {isFreeApp} = getProductPriceModel(product);
+	const navigate = useNavigate();
+	const placedOrderItems = data?.placedOrder.placedOrderItems ?? [];
 	const productCreatorAccountName = data?.product?.catalogName || '';
 
-	if (isLoading) {
-		return <ClayLoadingIndicator />;
-	}
-
-	if (error) {
-		return <div>Error: {error.message}</div>;
-	}
-
-	const placedOrderItems = data?.placedOrder.placedOrderItems ?? [];
-
-	const {isFreeApp} = getProductPriceModel(data?.product);
-
 	return (
-		<div className="app-details-header d-flex flex-column w-100">
-			<ClayButton
-				className="align-items-center d-flex"
-				displayType="unstyled"
-				onClick={() => navigate('..')}
-			>
-				<ClayIcon className="mr-2" symbol="order-arrow-left" />
-				<h5 className="mt-1">{i18n.translate('back-to-my-apps')}</h5>
-			</ClayButton>
+		<PageRenderer error={error} isLoading={isLoading}>
+			<div className="app-details-header d-flex flex-column w-100">
+				<ClayButton
+					className="align-items-center d-flex"
+					displayType="unstyled"
+					onClick={() => navigate('..')}
+				>
+					<ClayIcon className="mr-2" symbol="order-arrow-left" />
+					<h5 className="mt-1">
+						{i18n.translate('back-to-my-apps')}
+					</h5>
+				</ClayButton>
 
-			<OrderDetailsHeader
-				className="d-flex flex-row justify-content-between pb-3 pt-5"
-				hasOrderDetails
-				image={placedOrderItems[0]?.thumbnail}
-				name={data?.product?.name}
-				order={data?.placedOrder}
-				productOwner={productCreatorAccountName}
-			/>
+				<OrderDetailsHeader
+					className="d-flex flex-row justify-content-between pb-3 pt-5"
+					hasOrderDetails
+					image={placedOrderItems[0]?.thumbnail}
+					name={data?.product?.name}
+					order={data?.placedOrder}
+					productOwner={productCreatorAccountName}
+				/>
 
-			<AppNavbar
-				showLicenseTab={
-					!(
-						isFreeApp ||
-						(placedOrderItems[0]?.price?.price === 0 &&
-							placedOrderItems[0]?.sku !== 'TRIAL')
-					)
-				}
-			/>
+				<AppNavbar
+					showLicenseTab={
+						!(
+							isFreeApp ||
+							(placedOrderItems[0]?.price?.price === 0 &&
+								product?.skus?.some((sku) =>
+									isTrialSKU((sku as unknown) as SKU)
+								))
+						)
+					}
+				/>
 
-			<Outlet context={data} />
-		</div>
+				<Outlet context={data} />
+			</div>
+		</PageRenderer>
 	);
 };
 

@@ -5,7 +5,7 @@
 
 import ClaySticker from '@clayui/sticker';
 
-import emptyPictureIcon from '../../../assets/icons/empty_picture_icon.svg';
+import emptyPictureIcon from '../../../../../../../../assets/icons/empty_picture_icon.svg';
 
 import './index.scss';
 

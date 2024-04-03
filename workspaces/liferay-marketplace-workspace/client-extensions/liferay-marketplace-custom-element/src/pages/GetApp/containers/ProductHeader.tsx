@@ -5,7 +5,7 @@
 
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {getValueFromDeliverySpecifications} from '../../../utils/util';
-import AccountEmailInfo from '../../CreateLicense/AccountInfo';
+import AccountEmailInfo from '../../CustomerDashboard/pages/Apps/App/Licenses/CreateLicense/AccountInfo';
 import {useGetAppContext} from '../GetAppContextProvider';
 import {getProductBasePriceAndTrial} from '../GetAppOutlet';
 import {ProductCardRevamp} from '../components/ProductCard/ProductCard';

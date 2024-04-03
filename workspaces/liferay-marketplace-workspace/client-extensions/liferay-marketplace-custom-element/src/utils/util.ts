@@ -346,19 +346,19 @@ export async function submitBase64EncodedFile({
 	});
 }
 
-export function safeJSONParse(
+export function safeJSONParse<T = any>(
 	value: string | null,
 	defaultValue: unknown = null
-) {
+): T {
 	if (defaultValue && typeof value !== 'string') {
-		return defaultValue;
+		return defaultValue as T;
 	}
 
 	try {
 		return JSON.parse(value as string);
 	}
 	catch (error) {
-		return defaultValue;
+		return defaultValue as T;
 	}
 }
 

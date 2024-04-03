@@ -5,9 +5,9 @@
 
 import {FieldErrors, UseFormRegister} from 'react-hook-form';
 
-import {RequiredMask} from '../../../components/FieldBase';
-import FormInput from '../../../components/Input/formInput';
-import {CreateLicenseForm} from '../Types';
+import {RequiredMask} from '../../../../../../../components/FieldBase';
+import FormInput from '../../../../../../../components/Input/formInput';
+import {CreateLicenseForm} from './Types';
 
 type InputPropsLicense = {
 	inputProps: {

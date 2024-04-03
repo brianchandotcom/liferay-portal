@@ -204,18 +204,12 @@ const GetAppOutlet = () => {
 				`${encodeURIComponent(cartResponse.id)}`
 			);
 
-			if (paymentMethod === PaymentMethod.PAY) {
-				const paymentMethodURL = await getPaymentMethodURL(
-					cartResponse.id,
-					nextStepsCallbackURL
-				);
+			const paymentMethodURL = await getPaymentMethodURL(
+				cartResponse.id,
+				nextStepsCallbackURL
+			);
 
-				window.location.href = paymentMethodURL;
-
-				return;
-			}
-
-			window.location.href = nextStepsCallbackURL;
+			window.location.href = paymentMethodURL || nextStepsCallbackURL;
 		}
 		catch (error) {
 			console.error('Unable to handleGetApp', error);

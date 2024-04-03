@@ -17,7 +17,7 @@ export type CreateLicenseForm = {
 	subscription: any;
 };
 
-export type StepsInformationProps = {
+type StepsInformationProps = {
 	backStep: string;
 	nextStep: string;
 	stepTitle: string;

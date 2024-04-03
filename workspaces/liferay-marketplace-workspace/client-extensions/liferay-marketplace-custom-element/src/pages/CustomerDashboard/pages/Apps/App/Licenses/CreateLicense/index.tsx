@@ -11,15 +11,15 @@ import {useForm} from 'react-hook-form';
 import {useNavigate, useParams} from 'react-router-dom';
 import {z} from 'zod';
 
-import FooterButtons from '../../components/FooterButtons';
-import {useMarketplaceContext} from '../../context/MarketplaceContext';
-import useGetProductByOrderId from '../../hooks/useGetProductByOrderId';
-import useMarketplaceSpringBootOAuth2 from '../../hooks/useMarketplaceSpringBootOAuth2';
-import {Liferay} from '../../liferay/liferay';
-import zodSchema from '../../schema/zod';
-import ProductCard from '../GetApp/components/ProductCard/ProductCard';
-import StepWizard from '../GetApp/components/StepWizard/StepWizard';
-import {formatDate} from '../PublisherDashboard/PublisherDashboardPageUtil';
+import FooterButtons from '../../../../../../../components/FooterButtons';
+import {useMarketplaceContext} from '../../../../../../../context/MarketplaceContext';
+import useGetProductByOrderId from '../../../../../../../hooks/useGetProductByOrderId';
+import useMarketplaceSpringBootOAuth2 from '../../../../../../../hooks/useMarketplaceSpringBootOAuth2';
+import {Liferay} from '../../../../../../../liferay/liferay';
+import zodSchema from '../../../../../../../schema/zod';
+import ProductCard from '../../../../../../GetApp/components/ProductCard/ProductCard';
+import StepWizard from '../../../../../../GetApp/components/StepWizard/StepWizard';
+import {formatDate} from '../../../../../../PublisherDashboard/PublisherDashboardPageUtil';
 import AccountEmailInfo from './AccountInfo';
 import LicenseDetails from './LicenseDetails';
 import SelectSubscription from './SelectSubscription';
@@ -75,7 +75,7 @@ const stepsInformation: StepsInformation = {
 
 const CreateLicense = () => {
 	const [loading, setLoading] = useState(false);
-	const [step, setStep] = useState<string>(StepCreateLicense.SUBSCRIPTION);
+	const [step, setStep] = useState(StepCreateLicense.SUBSCRIPTION);
 	const {orderId} = useParams();
 	const {myUserAccount} = useMarketplaceContext();
 	const {data} = useGetProductByOrderId(orderId as string);
@@ -83,7 +83,7 @@ const CreateLicense = () => {
 	const navigate = useNavigate();
 	const product = data?.product;
 
-	const productCreatorAccountName: string = product?.catalogName || '';
+	const productCreatorAccountName = product?.catalogName || '';
 	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
 
 	const {

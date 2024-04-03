@@ -5,11 +5,11 @@
 
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
-import CreateLicense from '../CreateLicense';
 import CustomerDashboardOutlet from './CustomerDashboardOutlet';
 import Apps from './pages/Apps';
 import App from './pages/Apps/App/App';
 import AppOutlet from './pages/Apps/App/AppOutlet';
+import CreateLicense from './pages/Apps/App/Licenses/CreateLicense';
 import Licenses from './pages/Apps/App/Licenses/Licenses';
 import Members from './pages/Members';
 import Solutions from './pages/Solutions';

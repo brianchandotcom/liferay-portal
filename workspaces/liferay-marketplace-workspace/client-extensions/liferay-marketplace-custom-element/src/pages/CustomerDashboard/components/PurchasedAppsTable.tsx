@@ -16,6 +16,7 @@ import Table from '../../../components/Table/Table';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {OrderType} from '../../../enums/OrderType';
 import i18n from '../../../i18n';
+import {safeJSONParse} from '../../../utils/util';
 
 type AppsTableProps = {
 	items: Order[];
@@ -127,9 +128,15 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 						const orderStatusIsNotCompleted =
 							orderStatusInfo?.label !== OrderStatuses.COMPLETED;
 
+						const orderOptions = safeJSONParse<
+							Array<{key: string; value: string[]}>
+						>(placedOrderItems?.[0]?.options, []);
+
 						const isFreeApp =
 							placedOrderItems?.[0]?.price?.price === 0 &&
-							placedOrderItems?.[0]?.sku !== 'TRIAL';
+							!orderOptions.some(({value}) =>
+								value.includes('trial')
+							);
 
 						return (
 							<div onClick={(event) => event.stopPropagation()}>

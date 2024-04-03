@@ -8,7 +8,7 @@ import {HashRouter, Route, Routes} from 'react-router-dom';
 import AdministratorDashboardOutlet from './AdministratorDashboardOutlet';
 
 import './index.scss';
-import App from '../PublishedAppsDashboard/Apps/App';
+import App from '../PublisherDashboard/pages/Apps/App';
 import Apps from './pages/Apps';
 import Metrics from './pages/Metrics';
 import PublisherRequest from './pages/PublisherRequest';

@@ -1,0 +1,246 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {ClayButtonWithIcon} from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
+import {ClayTooltipProvider} from '@clayui/tooltip';
+import {useNavigate} from 'react-router-dom';
+
+import {DashboardEmptyTable} from '../../../components/DashboardTable/DashboardEmptyTable';
+import OrderStatus, {
+	Statuses as OrderStatuses,
+} from '../../../components/OrderStatus';
+import Table from '../../../components/Table/Table';
+import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import {OrderType} from '../../../enums/OrderType';
+import i18n from '../../../i18n';
+
+type AppsTableProps = {
+	items: Order[];
+};
+
+const AppsTable: React.FC<AppsTableProps> = ({items}) => {
+	const navigate = useNavigate();
+	const {properties} = useMarketplaceContext();
+
+	if (!items?.length) {
+		return (
+			<DashboardEmptyTable
+				description1={i18n.translate(
+					'purchase-and-install-new-apps-and-they-will-show-up-here'
+				)}
+				description2={i18n.translate('click-on-add-apps-to-start')}
+				icon="grid"
+				title={i18n.translate('no-apps-yet')}
+			/>
+		);
+	}
+
+	return (
+		<Table
+			columns={[
+				{
+					key: 'name',
+					render: (name, {thumbnail}) => (
+						<div style={{width: 200}}>
+							<img
+								alt="App Image"
+								className="order-details-publisher-table-icon"
+								src={thumbnail}
+							/>
+
+							<span className="font-weight-semi-bold ml-2">
+								{name}
+							</span>
+						</div>
+					),
+					title: i18n.translate('name'),
+				},
+				{
+					key: 'author',
+					render: (author, {createDate}) => {
+						return (
+							<div className="d-flex flex-column">
+								<span className="dashboard-table-row-text">
+									{author}
+								</span>
+
+								<span className="dashboard-table-row-purchased-date">
+									{new Date(createDate).toLocaleDateString(
+										'en-US',
+										{
+											day: 'numeric',
+											month: 'short',
+											year: 'numeric',
+										}
+									)}
+								</span>
+							</div>
+						);
+					},
+					title: i18n.translate('purchased-by'),
+				},
+
+				{
+					key: 'type',
+					render: (type) => (
+						<span className="dashboard-table-row-type">{type}</span>
+					),
+					title: i18n.translate('license-type'),
+				},
+				{
+					key: 'orderTypeExternalReferenceCode',
+					render: (orderTypeExternalReferenceCode) =>
+						orderTypeExternalReferenceCode === OrderType.DXP
+							? 'DXP'
+							: 'Cloud',
+					title: i18n.translate('app-type'),
+				},
+				{
+					key: 'id',
+					title: i18n.translate('order-id'),
+				},
+				{
+					key: 'orderStatusInfo',
+					render: (orderStatusInfo) => (
+						<OrderStatus orderStatus={orderStatusInfo?.label}>
+							{orderStatusInfo?.label}
+						</OrderStatus>
+					),
+					title: i18n.translate('order-status'),
+				},
+				{
+					align: 'center',
+					key: 'status',
+					render: (
+						_,
+						{
+							id,
+							orderStatusInfo,
+							orderTypeExternalReferenceCode,
+							placedOrderItems,
+							virtualURL,
+						}
+					) => {
+						const orderStatusIsNotCompleted =
+							orderStatusInfo?.label !== OrderStatuses.COMPLETED;
+
+						const isFreeApp =
+							placedOrderItems?.[0]?.price?.price === 0 &&
+							placedOrderItems?.[0]?.sku !== 'TRIAL';
+
+						return (
+							<div onClick={(event) => event.stopPropagation()}>
+								<ClayDropDown
+									trigger={
+										<ClayButtonWithIcon
+											aria-label="Kebab Button"
+											displayType={null}
+											symbol="ellipsis-v"
+											title="Kebab Button"
+										/>
+									}
+								>
+									<ClayDropDown.ItemList>
+										{orderTypeExternalReferenceCode ===
+											OrderType.DXP &&
+											!isFreeApp && (
+												<>
+													<ClayTooltipProvider>
+														<ClayDropDown.Item
+															data-tooltip-align="left"
+															disabled={
+																orderStatusIsNotCompleted
+															}
+															onClick={() =>
+																navigate(
+																	`order/${id}/create-license`
+																)
+															}
+															title={
+																orderStatusIsNotCompleted
+																	? i18n.translate(
+																			'the-order-must-be-completed-before-licensing-this-app.'
+																	  )
+																	: undefined
+															}
+														>
+															{i18n.translate(
+																'create-license-key'
+															)}
+														</ClayDropDown.Item>
+													</ClayTooltipProvider>
+
+													<ClayDropDown.Item
+														disabled={isFreeApp}
+														onClick={() => {
+															navigate(
+																`order/${id}/licenses`
+															);
+														}}
+													>
+														{i18n.translate(
+															'manage-license-keys'
+														)}
+													</ClayDropDown.Item>
+												</>
+											)}
+
+										{orderTypeExternalReferenceCode ===
+											OrderType.CLOUD && (
+											<ClayDropDown.Item
+												onClick={() => {
+													window.open(
+														properties.cloudBaseURL
+													);
+												}}
+											>
+												{i18n.translate(
+													'access-console'
+												)}
+											</ClayDropDown.Item>
+										)}
+
+										{orderTypeExternalReferenceCode ===
+											OrderType.DXP && (
+											<ClayTooltipProvider>
+												<ClayDropDown.Item
+													data-tooltip-align="left"
+													disabled={
+														isFreeApp
+															? false
+															: orderStatusIsNotCompleted
+													}
+													onClick={() => {
+														window.location.href = virtualURL;
+													}}
+													title={
+														orderStatusIsNotCompleted
+															? i18n.translate(
+																	'this-order-must-be-completed-before-downloading-this-app.'
+															  )
+															: undefined
+													}
+												>
+													{i18n.translate(
+														'download-app'
+													)}
+												</ClayDropDown.Item>
+											</ClayTooltipProvider>
+										)}
+									</ClayDropDown.ItemList>
+								</ClayDropDown>
+							</div>
+						);
+					},
+				},
+			]}
+			onClickRow={({id}) => navigate(`order/${id}`)}
+			rows={items}
+		/>
+	);
+};
+
+export default AppsTable;

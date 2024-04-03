@@ -5,7 +5,7 @@
 
 import ClayIcon from '@clayui/icon';
 
-import {MemberProps} from '../../pages/PublishedAppsDashboard/PublishedDashboardPageUtil';
+import {MemberProps} from '../../pages/PublisherDashboard/PublisherDashboardPageUtil';
 
 import './MemberProfile.scss';
 

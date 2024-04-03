@@ -12,7 +12,7 @@ import i18n from '../../../../i18n';
 import {
 	formatDate,
 	getProductTypeFromSpecifications,
-} from '../../../PublishedAppsDashboard/PublishedDashboardPageUtil';
+} from '../../../PublisherDashboard/PublisherDashboardPageUtil';
 
 type AppsTableProps = {
 	items: PublisherRequestInfo[];

@@ -11,7 +11,7 @@ import {Header} from './Header/Header';
 import Loading from './Loading';
 
 export type PageRendererProps = {
-	children: ReactElement;
+	children: any;
 	error?: FetcherError;
 	isLoading: boolean;
 };

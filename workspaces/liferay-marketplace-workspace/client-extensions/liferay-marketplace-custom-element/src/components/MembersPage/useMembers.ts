@@ -12,7 +12,7 @@ import {
 	UserAccountProps,
 	customerRoles,
 	publisherRoles,
-} from '../../pages/PublishedAppsDashboard/PublishedDashboardPageUtil';
+} from '../../pages/PublisherDashboard/PublisherDashboardPageUtil';
 import {getUserAccounts} from '../../utils/api';
 
 type Props = {

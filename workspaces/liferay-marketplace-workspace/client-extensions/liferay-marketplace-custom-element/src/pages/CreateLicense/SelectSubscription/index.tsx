@@ -11,7 +11,7 @@ import useSWR from 'swr';
 import RadioCardList from '../../../components/RadioCardList/RadioCardList';
 import useMarketplaceSpringBootOAuth2 from '../../../hooks/useMarketplaceSpringBootOAuth2';
 import i18n from '../../../i18n';
-import {formatDate} from '../../PublishedAppsDashboard/PublishedDashboardPageUtil';
+import {formatDate} from '../../PublisherDashboard/PublisherDashboardPageUtil';
 
 type SubscriptionSelectionProps = {
 	onSelectSubscription: (subscription: any) => void;

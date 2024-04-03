@@ -13,7 +13,7 @@ import {
 	adminRoles,
 	customerRoles,
 	publisherRoles,
-} from '../../pages/PublishedAppsDashboard/PublishedDashboardPageUtil';
+} from '../../pages/PublisherDashboard/PublisherDashboardPageUtil';
 import {DashboardMemberTableRow} from '../DashboardTable/DashboardMemberTableRow';
 import {DashboardTable, TableHeaders} from '../DashboardTable/DashboardTable';
 import {InviteMemberModal} from '../InviteMemberModal/InviteMemberModal';

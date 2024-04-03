@@ -22,7 +22,7 @@ import useCommerceRegions from '../../../hooks/useCommerceRegions';
 import {Liferay} from '../../../liferay/liferay';
 import zodSchema from '../../../schema/zod';
 import {phones} from '../../../utils/phones';
-import {usePurchasedOrders} from '../../PurchasedAppsDashboard/usePurchasedOrders';
+import {usePurchasedOrders} from '../../CustomerDashboard/usePurchasedOrders';
 
 export type UserForm = z.infer<typeof zodSchema.accountCreator>;
 

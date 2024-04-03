@@ -4,22 +4,22 @@
  */
 
 import AdministratorDashboardRouter from './pages/AdministratorDashboard/AdministratorDashboardRouter';
+import CustomerDashboardRouter from './pages/CustomerDashboard/CustomerDashboardRouter';
 import {CustomerGatePage} from './pages/CustomerGatePage/CustomerGatePage';
 import GetAppRouter from './pages/GetApp/GetAppRouter';
 import GetSolutionRouter from './pages/GetSolution/GetSolutionRouter';
 import {NextSteps} from './pages/NextSteps';
-import PublishedAppsDashboardRouter from './pages/PublishedAppsDashboard/PublishedAppsDashboardRouter';
+import PublisherDashboardRouter from './pages/PublisherDashboard/PublisherDashboardRouter';
 import PublisherGateRouter from './pages/PublisherGate/PublisheGateRouter';
-import PurchasedAppsDashboardRouter from './pages/PurchasedAppsDashboard/PurchasedAppsDashboardRouter';
 
 const Routes = {
 	'administrator-dashboard': AdministratorDashboardRouter,
 	'customer-gate': CustomerGatePage,
 	'get-app': GetAppRouter,
 	'next-steps': NextSteps,
-	'published-apps': PublishedAppsDashboardRouter,
+	'published-apps': PublisherDashboardRouter,
 	'publisher-gate': PublisherGateRouter,
-	'purchased-apps': PurchasedAppsDashboardRouter,
+	'purchased-apps': CustomerDashboardRouter,
 	'purchased-solutions': GetSolutionRouter,
 } as const;
 

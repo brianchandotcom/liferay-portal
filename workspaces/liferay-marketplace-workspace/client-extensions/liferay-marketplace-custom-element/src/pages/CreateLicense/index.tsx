@@ -19,7 +19,7 @@ import {Liferay} from '../../liferay/liferay';
 import zodSchema from '../../schema/zod';
 import ProductCard from '../GetApp/components/ProductCard/ProductCard';
 import StepWizard from '../GetApp/components/StepWizard/StepWizard';
-import {formatDate} from '../PublishedAppsDashboard/PublishedDashboardPageUtil';
+import {formatDate} from '../PublisherDashboard/PublisherDashboardPageUtil';
 import AccountEmailInfo from './AccountInfo';
 import LicenseDetails from './LicenseDetails';
 import SelectSubscription from './SelectSubscription';

@@ -49,15 +49,13 @@ export class PagesAdminPage {
 
 		await this.page.getByRole('menuitem', {name: 'In Page Head'}).click();
 
-		const frameLocator = this.page.frameLocator(
-			'#selectGlobalJSCETs_iframe_'
-		);
+		const iframe = this.page.frameLocator('#selectGlobalJSCETs_iframe_');
 
-		await frameLocator
-			.getByText('Select Items')
-			.waitFor({state: 'visible'});
+		// Wait for "Select Items" checkbox label to be visible which occurs when JavaScript hydration is complete.
 
-		await frameLocator.getByLabel(clientExtensionName).check();
+		await iframe.getByText('Select Items').waitFor({state: 'visible'});
+
+		await iframe.getByLabel(clientExtensionName).check();
 
 		const addButton = this.page.getByRole('button', {
 			exact: true,

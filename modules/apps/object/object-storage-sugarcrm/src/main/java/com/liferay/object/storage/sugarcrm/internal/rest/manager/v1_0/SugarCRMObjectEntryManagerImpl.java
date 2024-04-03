@@ -16,7 +16,6 @@ import com.liferay.object.rest.manager.http.BaseObjectEntryManagerHttp;
 import com.liferay.object.rest.manager.http.ObjectEntryManagerHttp;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.storage.sugarcrm.configuration.SugarCRMConfiguration;
 import com.liferay.object.storage.sugarcrm.internal.web.cache.SugarCRMAccessTokenWebCacheItem;
 import com.liferay.petra.function.UnsafeTriConsumer;
@@ -39,6 +38,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -219,10 +219,17 @@ public class SugarCRMObjectEntryManagerImpl
 
 		sb.append("&order_by=");
 
+		List<ObjectField> objectFields =
+			objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId());
+
 		for (int i = 0; i < sorts.length; i++) {
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				objectDefinition.getObjectDefinitionId(),
-				sorts[i].getFieldName());
+			ObjectField objectField = fetchObjectFieldByName(
+				sorts[i].getFieldName(), objectFields);
+
+			if (objectField == null) {
+				continue;
+			}
 
 			if (i > 0) {
 				sb.append(",");
@@ -385,8 +392,5 @@ public class SugarCRMObjectEntryManagerImpl
 			}
 
 		};
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
 
 }

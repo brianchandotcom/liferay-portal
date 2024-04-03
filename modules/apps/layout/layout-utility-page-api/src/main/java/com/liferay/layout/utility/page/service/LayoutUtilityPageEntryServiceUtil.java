@@ -33,14 +33,15 @@ public class LayoutUtilityPageEntryServiceUtil {
 	public static LayoutUtilityPageEntry addLayoutUtilityPageEntry(
 			String externalReferenceCode, long groupId, long plid,
 			long previewFileEntryId, boolean defaultLayoutUtilityPageEntry,
-			String name, String type, long masterLayoutPlid,
+			String name, String type, long masterLayoutPlid, String friendlyURL,
+			boolean privateLayout,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addLayoutUtilityPageEntry(
 			externalReferenceCode, groupId, plid, previewFileEntryId,
 			defaultLayoutUtilityPageEntry, name, type, masterLayoutPlid,
-			serviceContext);
+			friendlyURL, privateLayout, serviceContext);
 	}
 
 	public static LayoutUtilityPageEntry copyLayoutUtilityPageEntry(

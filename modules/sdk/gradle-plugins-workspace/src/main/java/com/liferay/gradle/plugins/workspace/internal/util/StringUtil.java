@@ -79,6 +79,14 @@ public class StringUtil {
 		return dockerSafeName.toLowerCase();
 	}
 
+	public static boolean isBlank(String s) {
+		if ((s == null) || s.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static String join(String delimiter, Collection<?> objects) {
 		return join(delimiter, objects.stream());
 	}

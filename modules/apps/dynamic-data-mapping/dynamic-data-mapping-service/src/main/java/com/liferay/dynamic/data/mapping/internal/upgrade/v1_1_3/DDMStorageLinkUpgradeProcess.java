@@ -42,12 +42,19 @@ public class DDMStorageLinkUpgradeProcess extends UpgradeProcess {
 				"select DDMStructureVersion.structureVersionId, " +
 					"DDMStructureVersion.definition from DDMStructureVersion " +
 						"where structureId = ?");
-			PreparedStatement preparedStatement3 =
+			PreparedStatement preparedStatement3 = connection.prepareStatement(
+				StringBundler.concat(
+					"select distinct DDMStorageLink.structureId, (select ",
+					"max(structureVersionId) from DDMStructureVersion where ",
+					"DDMStructureVersion.structureId = ",
+					"DDMStorageLink.structureId) as structureVersionId from ",
+					"DDMStorageLink"));
+			PreparedStatement preparedStatement4 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMStorageLink set structureVersionId = ? where " +
 						"structureId = ? and structureVersionId is null");
-			PreparedStatement preparedStatement4 =
+			PreparedStatement preparedStatement5 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMStorageLink set structureVersionId = ? where " +
@@ -78,32 +85,41 @@ public class DDMStorageLinkUpgradeProcess extends UpgradeProcess {
 							continue;
 						}
 
-						preparedStatement3.setLong(
+						preparedStatement4.setLong(
 							1, resultSet2.getLong("structureVersionId"));
-						preparedStatement3.setLong(
+						preparedStatement4.setLong(
 							2, resultSet1.getLong("structureId"));
 
-						preparedStatement3.addBatch();
+						preparedStatement4.addBatch();
 
 						ddmStructureVersionIds.put(
 							resultSet1.getLong("storageLinkId"),
 							resultSet2.getLong("structureVersionId"));
 					}
+				}
+			}
 
-					preparedStatement3.executeBatch();
+			try (ResultSet resultSet3 = preparedStatement3.executeQuery()) {
+				while (resultSet3.next()) {
+					preparedStatement4.setLong(
+						1, resultSet3.getLong("structureVersionId"));
+					preparedStatement4.setLong(
+						2, resultSet3.getLong("structureId"));
+					preparedStatement4.addBatch();
 				}
 			}
 
 			for (Map.Entry<Long, Long> entry :
 					ddmStructureVersionIds.entrySet()) {
 
-				preparedStatement4.setLong(1, entry.getValue());
-				preparedStatement4.setLong(2, entry.getKey());
+				preparedStatement5.setLong(1, entry.getValue());
+				preparedStatement5.setLong(2, entry.getKey());
 
-				preparedStatement4.addBatch();
+				preparedStatement5.addBatch();
 			}
 
 			preparedStatement4.executeBatch();
+			preparedStatement5.executeBatch();
 		}
 	}
 

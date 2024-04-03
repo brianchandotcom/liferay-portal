@@ -66,7 +66,7 @@
 		md="2"
 	>
 		<div class="aspect-ratio">
-			<img class="aspect-ratio-item-fluid" src="https://clayui.com/images/thumbnail_hot_air_ballon.jpg" />
+			<img alt="Thumbnail of hot air ballon" class="aspect-ratio-item-fluid" src="https://clayui.com/images/thumbnail_hot_air_ballon.jpg" />
 
 			<clay:sticker
 				displayType="danger"
@@ -80,7 +80,7 @@
 		md="2"
 	>
 		<div class="aspect-ratio">
-			<img class="aspect-ratio-item-fluid" src="https://clayui.com/images/thumbnail_hot_air_ballon.jpg" />
+			<img alt="Thumbnail of hot air ballon" class="aspect-ratio-item-fluid" src="https://clayui.com/images/thumbnail_hot_air_ballon.jpg" />
 
 			<clay:sticker
 				displayType="danger"
@@ -94,7 +94,7 @@
 		md="2"
 	>
 		<div class="aspect-ratio">
-			<img class="aspect-ratio-item-fluid" src="https://clayui.com/images/thumbnail_hot_air_ballon.jpg" />
+			<img alt="Thumbnail of hot air ballon" class="aspect-ratio-item-fluid" src="https://clayui.com/images/thumbnail_hot_air_ballon.jpg" />
 
 			<clay:sticker
 				displayType="danger"
@@ -108,7 +108,7 @@
 		md="2"
 	>
 		<div class="aspect-ratio">
-			<img class="aspect-ratio-item-fluid" src="https://clayui.com/images/thumbnail_hot_air_ballon.jpg" />
+			<img alt="Thumbnail of hot air ballon" class="aspect-ratio-item-fluid" src="https://clayui.com/images/thumbnail_hot_air_ballon.jpg" />
 
 			<clay:sticker
 				displayType="danger"

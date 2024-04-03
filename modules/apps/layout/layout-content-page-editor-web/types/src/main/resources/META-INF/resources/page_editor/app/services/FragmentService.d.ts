@@ -128,7 +128,7 @@ declare const _default: {
 		segmentsExperienceId,
 	}: {
 		fragmentEntryLinkId: string;
-		itemClassName: string;
+		itemClassName?: string | null | undefined;
 		itemClassPK?: string | null | undefined;
 		itemExternalReferenceCode?: string | null | undefined;
 		languageId: Liferay.Language.Locale;

@@ -272,7 +272,8 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 			const MODAL_ITEM_ACTION_NAME = 'Modal item action';
 			const MODAL_ITEM_ACTION_TITLE = 'Modal title';
 			const SIDE_PANEL_ITEM_ACTION_NAME = 'SidePanel item action';
-			const SIDE_PANEL_ITEM_ACTION_URL = liferayConfig.environment.baseUrl;
+			const SIDE_PANEL_ITEM_ACTION_URL =
+				liferayConfig.environment.baseUrl;
 
 			fragmentTest.step('Create Item Actions', async () => {
 				dataSetManagerApiHelpers.createDataSetViewItemAction({

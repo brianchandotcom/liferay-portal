@@ -332,8 +332,8 @@ public class SugarCRMObjectEntryManagerImpl
 	}
 
 	private UnsafeTriConsumer
-		<Map<String, Object>, Object, ObjectField, Exception> _getUnsafeTriConsumer(
-			ObjectDefinition objectDefinition) {
+		<Map<String, Object>, Object, ObjectField, Exception>
+			_getUnsafeTriConsumer(ObjectDefinition objectDefinition) {
 
 		return (map, value, objectField) -> {
 			if (Objects.equals(

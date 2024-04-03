@@ -54,6 +54,16 @@ public class NotificationUtil {
 	public static void sendEmail(
 		String senderEmailAddress, String senderName,
 		String recipientEmailAddress, String subject, String body,
+		String attachmentFileName) {
+
+		sendEmail(
+			senderEmailAddress, senderName, recipientEmailAddress, subject,
+			body, attachmentFileName, null);
+	}
+
+	public static void sendEmail(
+		String senderEmailAddress, String senderName,
+		String recipientEmailAddress, String subject, String body,
 		String attachmentFileName, String mimeType) {
 
 		body = JenkinsResultsParserUtil.redact(body);

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -328,27 +327,21 @@ public class SalesforceObjectEntryManagerImplTest
 
 		Date date = RandomTestUtil.nextDate();
 
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
-			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			"queued", date, false, null, title1);
 
 		LocalDateTime localDateTime1 = LocalDateTime.now();
 
-		LocalDateTime localDateTime2 = localDateTime1.plusHours(1);
-
-		String dateTimeString1 = dateTimeFormatter.format(
-			localDateTime1.withNano(0));
-
-		String dateTimeString2 = dateTimeFormatter.format(
-			localDateTime2.withNano(0));
-
-		ObjectEntry objectEntry1 = _addObjectEntry(
-			"queued", date, false, null, title1);
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			"started", new Date(date.getTime() - Time.DAY), false, localDateTime1,
 			title2);
+
+		LocalDateTime localDateTime2 = localDateTime1.plusHours(1);
+
 		ObjectEntry objectEntry3 = _addObjectEntry(
 			"completed", new Date(date.getTime() + Time.DAY), false, localDateTime2,
 			title3);
+
 		ObjectEntry objectEntry4 = _addObjectEntry(
 			"queued", date, false, null, title4);
 		ObjectEntry objectEntry5 = _addObjectEntry("queued", date, false, null, null);
@@ -409,6 +402,25 @@ public class SalesforceObjectEntryManagerImplTest
 					_buildNotEqualsExpressionFilterString("title", title1))
 			).build(),
 			objectEntry2, objectEntry3, objectEntry4);
+
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
+			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+		String dateTimeString1 = dateTimeFormatter.format(
+			localDateTime1.withNano(0));
+
+		String dateTimeString2 = dateTimeFormatter.format(
+			localDateTime2.withNano(0));
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				filterString.concat(
+					StringBundler.concat(
+						"startDate ne ", dateTimeString1, " or startDate eq ",
+						dateTimeString2))
+			).build(),
+			objectEntry1, objectEntry3, objectEntry4);
 
 		// Equals/not equals expression
 
@@ -527,16 +539,6 @@ public class SalesforceObjectEntryManagerImplTest
 				"filter", filterString.concat("startDate lt " + dateTimeString2)
 			).build(),
 			objectEntry2);
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				filterString.concat(
-					StringBundler.concat(
-						"startDate ne ", dateTimeString1, " or startDate eq ",
-						dateTimeString2))
-			).build(),
-			objectEntry1, objectEntry3, objectEntry4);
 	}
 
 	@Test

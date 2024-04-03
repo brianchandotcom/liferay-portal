@@ -9,6 +9,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
+import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.admin.user.resource.v1_0.PhoneResource;
@@ -58,6 +59,17 @@ public class PhoneResourceImpl extends BasePhoneResourceImpl {
 	}
 
 	@Override
+	public Page<Phone> getOrganizationByExternalReferenceCodePhonesPage(
+			String externalReferenceCode)
+		throws Exception {
+
+		return getOrganizationPhonesPage(
+			String.valueOf(
+				DTOConverterUtil.getModelPrimaryKey(
+					_organizationResourceDTOConverter, externalReferenceCode)));
+	}
+
+	@Override
 	public Page<Phone> getOrganizationPhonesPage(String organizationId)
 		throws Exception {
 
@@ -75,6 +87,16 @@ public class PhoneResourceImpl extends BasePhoneResourceImpl {
 	@Override
 	public Phone getPhone(Long phoneId) throws Exception {
 		return PhoneUtil.toPhone(_phoneService.getPhone(phoneId));
+	}
+
+	@Override
+	public Page<Phone> getUserAccountByExternalReferenceCodePhonesPage(
+			String externalReferenceCode)
+		throws Exception {
+
+		return getUserAccountPhonesPage(
+			DTOConverterUtil.getModelPrimaryKey(
+				_userResourceDTOConverter, externalReferenceCode));
 	}
 
 	@Override
@@ -105,6 +127,9 @@ public class PhoneResourceImpl extends BasePhoneResourceImpl {
 
 	@Reference
 	private PhoneService _phoneService;
+
+	@Reference(target = DTOConverterConstants.USER_RESOURCE_DTO_CONVERTER)
+	private DTOConverter<User, UserAccount> _userResourceDTOConverter;
 
 	@Reference
 	private UserService _userService;

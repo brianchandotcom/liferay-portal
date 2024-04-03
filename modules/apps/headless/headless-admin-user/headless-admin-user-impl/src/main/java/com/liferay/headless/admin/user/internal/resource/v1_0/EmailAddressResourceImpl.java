@@ -9,6 +9,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
+import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
 import com.liferay.headless.admin.user.resource.v1_0.EmailAddressResource;
@@ -67,6 +68,18 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 	}
 
 	@Override
+	public Page<EmailAddress>
+			getOrganizationByExternalReferenceCodeEmailAddressesPage(
+				String externalReferenceCode)
+		throws Exception {
+
+		return getOrganizationEmailAddressesPage(
+			String.valueOf(
+				DTOConverterUtil.getModelPrimaryKey(
+					_organizationResourceDTOConverter, externalReferenceCode)));
+	}
+
+	@Override
 	public Page<EmailAddress> getOrganizationEmailAddressesPage(
 			String organizationId)
 		throws Exception {
@@ -80,6 +93,17 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 					organization.getModelClassName(),
 					organization.getOrganizationId()),
 				EmailAddressUtil::toEmailAddress));
+	}
+
+	@Override
+	public Page<EmailAddress>
+			getUserAccountByExternalReferenceCodeEmailAddressesPage(
+				String externalReferenceCode)
+		throws Exception {
+
+		return getUserAccountEmailAddressesPage(
+			DTOConverterUtil.getModelPrimaryKey(
+				_userResourceDTOConverter, externalReferenceCode));
 	}
 
 	@Override
@@ -111,6 +135,9 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 	private DTOConverter
 		<Organization, com.liferay.headless.admin.user.dto.v1_0.Organization>
 			_organizationResourceDTOConverter;
+
+	@Reference(target = DTOConverterConstants.USER_RESOURCE_DTO_CONVERTER)
+	private DTOConverter<User, UserAccount> _userResourceDTOConverter;
 
 	@Reference
 	private UserService _userService;

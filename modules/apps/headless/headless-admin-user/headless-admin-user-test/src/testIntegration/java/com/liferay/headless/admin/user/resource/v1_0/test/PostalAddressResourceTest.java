@@ -112,6 +112,26 @@ public class PostalAddressResourceTest
 	}
 
 	@Override
+	protected PostalAddress
+			testGetAccountByExternalReferenceCodePostalAddressesPage_addPostalAddress(
+				String externalReferenceCode, PostalAddress postalAddress)
+		throws Exception {
+
+		return _addPostalAddress(
+			postalAddress, AccountEntry.class.getName(),
+			_accountEntry.getAccountEntryId(),
+			AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
+	}
+
+	@Override
+	protected String
+			testGetAccountByExternalReferenceCodePostalAddressesPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _accountEntry.getExternalReferenceCode();
+	}
+
+	@Override
 	protected PostalAddress testGetAccountPostalAddressesPage_addPostalAddress(
 			Long accountId, PostalAddress postalAddress)
 		throws Exception {
@@ -138,12 +158,32 @@ public class PostalAddressResourceTest
 
 	@Override
 	protected PostalAddress
+			testGetOrganizationByExternalReferenceCodePostalAddressesPage_addPostalAddress(
+				String externalReferenceCode, PostalAddress postalAddress)
+		throws Exception {
+
+		return _addPostalAddress(
+			postalAddress, Organization.class.getName(),
+			_organization.getOrganizationId(),
+			ListTypeConstants.ORGANIZATION_ADDRESS);
+	}
+
+	@Override
+	protected String
+			testGetOrganizationByExternalReferenceCodePostalAddressesPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _organization.getExternalReferenceCode();
+	}
+
+	@Override
+	protected PostalAddress
 			testGetOrganizationPostalAddressesPage_addPostalAddress(
 				String organizationId, PostalAddress postalAddress)
 		throws Exception {
 
 		return _addPostalAddress(
-			postalAddress, _organization.getModelClassName(),
+			postalAddress, Organization.class.getName(),
 			_organization.getOrganizationId(),
 			ListTypeConstants.ORGANIZATION_ADDRESS);
 	}
@@ -162,6 +202,25 @@ public class PostalAddressResourceTest
 		return _addPostalAddress(
 			randomPostalAddress(), Contact.class.getName(),
 			_user.getContactId(), ListTypeConstants.CONTACT_ADDRESS);
+	}
+
+	@Override
+	protected PostalAddress
+			testGetUserAccountByExternalReferenceCodePostalAddressesPage_addPostalAddress(
+				String externalReferenceCode, PostalAddress postalAddress)
+		throws Exception {
+
+		return _addPostalAddress(
+			postalAddress, Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_ADDRESS);
+	}
+
+	@Override
+	protected String
+			testGetUserAccountByExternalReferenceCodePostalAddressesPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _user.getExternalReferenceCode();
 	}
 
 	@Override

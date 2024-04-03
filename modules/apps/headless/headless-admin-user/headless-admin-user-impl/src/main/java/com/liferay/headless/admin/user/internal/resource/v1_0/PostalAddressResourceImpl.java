@@ -8,7 +8,9 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 import com.liferay.account.constants.AccountListTypeConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
+import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.resource.v1_0.PostalAddressResource;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.service.permission.CommonPermissionUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.Iterator;
@@ -59,6 +62,17 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	}
 
 	@Override
+	public Page<PostalAddress>
+			getAccountByExternalReferenceCodePostalAddressesPage(
+				String externalReferenceCode)
+		throws Exception {
+
+		return getAccountPostalAddressesPage(
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountResourceDTOConverter, externalReferenceCode));
+	}
+
+	@Override
 	public Page<PostalAddress> getAccountPostalAddressesPage(Long accountId)
 		throws Exception {
 
@@ -72,6 +86,18 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 					contextAcceptLanguage.isAcceptAllLanguages(), address,
 					contextCompany.getCompanyId(),
 					contextAcceptLanguage.getPreferredLocale())));
+	}
+
+	@Override
+	public Page<PostalAddress>
+			getOrganizationByExternalReferenceCodePostalAddressesPage(
+				String externalReferenceCode)
+		throws Exception {
+
+		return getOrganizationPostalAddressesPage(
+			String.valueOf(
+				DTOConverterUtil.getModelPrimaryKey(
+					_organizationResourceDTOConverter, externalReferenceCode)));
 	}
 
 	@Override
@@ -102,6 +128,17 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			_addressService.getAddress(postalAddressId),
 			contextCompany.getCompanyId(),
 			contextAcceptLanguage.getPreferredLocale());
+	}
+
+	@Override
+	public Page<PostalAddress>
+			getUserAccountByExternalReferenceCodePostalAddressesPage(
+				String externalReferenceCode)
+		throws Exception {
+
+		return getUserAccountPostalAddressesPage(
+			DTOConverterUtil.getModelPrimaryKey(
+				_userResourceDTOConverter, externalReferenceCode));
 	}
 
 	@Override
@@ -352,6 +389,9 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	@Reference
 	private AccountEntryService _accountEntryService;
 
+	@Reference(target = DTOConverterConstants.ACCOUNT_RESOURCE_DTO_CONVERTER)
+	private DTOConverter<AccountEntry, Account> _accountResourceDTOConverter;
+
 	@Reference
 	private AddressService _addressService;
 
@@ -373,6 +413,9 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Reference
 	private RegionService _regionService;
+
+	@Reference(target = DTOConverterConstants.USER_RESOURCE_DTO_CONVERTER)
+	private DTOConverter<User, UserAccount> _userResourceDTOConverter;
 
 	@Reference
 	private UserService _userService;

@@ -114,12 +114,32 @@ public class WebUrlResourceTest extends BaseWebUrlResourceTestCase {
 	}
 
 	@Override
+	protected WebUrl
+			testGetOrganizationByExternalReferenceCodeWebUrlsPage_addWebUrl(
+				String externalReferenceCode, WebUrl webUrl)
+		throws Exception {
+
+		return _addWebUrl(
+			webUrl, Organization.class.getName(),
+			_organization.getOrganizationId(),
+			ListTypeConstants.ORGANIZATION_WEBSITE);
+	}
+
+	@Override
+	protected String
+			testGetOrganizationByExternalReferenceCodeWebUrlsPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _organization.getExternalReferenceCode();
+	}
+
+	@Override
 	protected WebUrl testGetOrganizationWebUrlsPage_addWebUrl(
 			String organizationId, WebUrl webUrl)
 		throws Exception {
 
 		return _addWebUrl(
-			webUrl, _organization.getModelClassName(),
+			webUrl, Organization.class.getName(),
 			_organization.getOrganizationId(),
 			ListTypeConstants.ORGANIZATION_WEBSITE);
 	}
@@ -127,6 +147,25 @@ public class WebUrlResourceTest extends BaseWebUrlResourceTestCase {
 	@Override
 	protected String testGetOrganizationWebUrlsPage_getOrganizationId() {
 		return String.valueOf(_organization.getOrganizationId());
+	}
+
+	@Override
+	protected WebUrl
+			testGetUserAccountByExternalReferenceCodeWebUrlsPage_addWebUrl(
+				String externalReferenceCode, WebUrl webUrl)
+		throws Exception {
+
+		return _addWebUrl(
+			webUrl, Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_WEBSITE);
+	}
+
+	@Override
+	protected String
+			testGetUserAccountByExternalReferenceCodeWebUrlsPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _user.getExternalReferenceCode();
 	}
 
 	@Override

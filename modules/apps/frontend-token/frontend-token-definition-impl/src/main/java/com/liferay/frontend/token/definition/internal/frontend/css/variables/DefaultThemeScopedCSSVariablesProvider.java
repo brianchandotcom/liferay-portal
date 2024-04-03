@@ -14,6 +14,7 @@ import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collection;
@@ -69,9 +70,14 @@ public class DefaultThemeScopedCSSVariablesProvider
 			for (FrontendTokenMapping frontendTokenMapping :
 					frontendTokenMappings) {
 
-				cssVariables.put(
-					frontendTokenMapping.getValue(),
-					frontendToken.getDefaultValue());
+				if (Validator.isNotNull(
+						String.valueOf(
+							frontendToken.<Object>getDefaultValue()))) {
+
+					cssVariables.put(
+						frontendTokenMapping.getValue(),
+						frontendToken.getDefaultValue());
+				}
 			}
 		}
 

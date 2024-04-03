@@ -570,7 +570,7 @@ const filterSchema = {
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.team, {
-				disabled: true,
+				disabled: false,
 				name: 'componentToCaseResult/r_teamToComponents_c_teamId',
 				type: 'multiselect',
 			}),
@@ -660,6 +660,15 @@ const filterSchema = {
 			}),
 			overrides(baseFilters.team, {
 				name: 'testrayTeamId',
+				resource: ({runA, runB}) =>
+					`/teams?sort=name:asc&pageSize=100&filter=${SearchBuilder.eq(
+						'teamToComponents/componentToCaseResult/r_runToCaseResult_c_runId',
+						runA as string
+					)} or ${SearchBuilder.eq(
+						'teamToComponents/componentToCaseResult/r_runToCaseResult_c_runId',
+						runB as string
+					)}`,
+
 				type: 'select',
 			}),
 		] as RendererFields[],

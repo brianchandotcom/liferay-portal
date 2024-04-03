@@ -4,16 +4,12 @@ window.onload = function () {
 	triggerEvent(statusChangesRowHeader, 'click');
 }
 
-var headerElement = document.getElementById('report-name');
-
-headerElement.textContent = reportName;
-
-var titleElement = document.getElementById('title');
-
-titleElement.textContent = reportName;
+addReportName();
 
 if ((typeof tableData !== 'undefined') && tableData) {
-	createTable(tableData, 'test-suite-data-table');
+	let tableElement = createTable(tableData, 'test-suite-data-table');
+
+	addTotalColumn(tableElement);
 
 	Sortable.init();
 }

@@ -1,3 +1,26 @@
+const COLORS = [
+	'#59adf6',
+	'#42d6a4',
+	'#ff6961',
+	'#ffb480',
+	'#f8f38d',
+	'#08cad1',
+	'#9d94ff',
+	'#c780e8'
+];
+
+const MAX_WEEKLY_SERVER_DURATION_MILLIS = 2370 * 7 * 24 * 60 * 60 * 1000;
+
+function addReportName() {
+	var headerElement = document.getElementById('report-name');
+
+	headerElement.textContent = reportName;
+
+	var titleElement = document.getElementById('title');
+
+	titleElement.textContent = reportName;
+}
+
 function addTotalColumn(tableElement) {
 	theadElement = tableElement.querySelector('thead tr');
 
@@ -59,6 +82,8 @@ function createTable(table, tableElementID) {
 					thElement.classList.add('col-2');
 				}
 				else {
+					thElement.setAttribute('value', cellValue);
+
 					let date = moment(cellValue, 'YYYYMMDD');
 
 					cellValue = date.format('ddd MMM DD');
@@ -116,7 +141,11 @@ function createTable(table, tableElementID) {
 
 	});
 
-	addTotalColumn(tableElement);
+	return tableElement;
+}
+
+function getColor(index) {
+	return COLORS[index % COLORS.length];
 }
 
 function getElementByXpath(path) {

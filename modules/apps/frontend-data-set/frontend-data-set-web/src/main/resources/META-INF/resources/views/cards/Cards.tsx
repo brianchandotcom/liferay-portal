@@ -11,6 +11,7 @@ import React, {useContext, useRef} from 'react';
 import FrontendDataSetContext, {
 	IFrontendDataSetContext,
 } from '../../FrontendDataSetContext';
+import handleActionClick from '../../actions/handleActionClick';
 import {IItemsActions} from '../../index';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
 import getRandomId from '../../utils/getRandomId';
@@ -28,14 +29,18 @@ interface ICardSchema {
 
 const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 	const {
+		executeAsyncItemAction,
+		highlightItems,
 		itemsActions,
 		loadData,
 		onActionDropdownItemClick,
+		openModal,
 		openSidePanel,
 		selectItems,
 		selectable,
 		selectedItemsKey,
 		selectedItemsValue,
+		toggleItemInlineEdit,
 	}: IFrontendDataSetContext = useContext(FrontendDataSetContext);
 
 	const actionsRef = useRef(
@@ -67,6 +72,21 @@ const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 							itemData: item,
 							loadData,
 							openSidePanel,
+						});
+					}
+					else {
+						handleActionClick({
+							action,
+							event,
+							executeAsyncItemAction,
+							highlightItems,
+							itemData: item,
+							itemId: selectedItemKey,
+							loadData,
+							onActionDropdownItemClick,
+							openModal,
+							openSidePanel,
+							toggleItemInlineEdit,
 						});
 					}
 				},

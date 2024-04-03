@@ -18,7 +18,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "0px",
+							"defaultValue": "0",
 							"editorType": "Length",
 							"label": "border-width",
 							"mappings": [

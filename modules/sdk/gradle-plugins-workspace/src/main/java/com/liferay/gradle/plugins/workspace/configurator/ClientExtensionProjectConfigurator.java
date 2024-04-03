@@ -26,6 +26,7 @@ import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExte
 import com.liferay.gradle.plugins.workspace.internal.client.extension.NodeBuildConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeCSSTypeConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.internal.util.JsonNodeUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.copy.HashifyAction;
 import com.liferay.gradle.plugins.workspace.task.CreateClientExtensionConfigTask;
@@ -627,7 +628,7 @@ public class ClientExtensionProjectConfigurator
 
 			JsonNode jsonNode = rootJsonNode.deepCopy();
 
-			_overrideJsonNodeValues(jsonNode, _getJsonNode(file));
+			JsonNodeUtil.overrideJsonNodeValues(jsonNode, _getJsonNode(file));
 
 			profileJsonNodes.put(profileName, jsonNode);
 
@@ -1054,46 +1055,6 @@ public class ClientExtensionProjectConfigurator
 		}
 
 		return false;
-	}
-
-	private void _overrideJsonNodeValues(
-		JsonNode baseJsonNode, JsonNode overrideJsonNode) {
-
-		if (overrideJsonNode.isEmpty()) {
-			return;
-		}
-
-		Iterator<String> iterator = overrideJsonNode.fieldNames();
-
-		while (iterator.hasNext()) {
-			String fieldName = iterator.next();
-
-			JsonNode fieldNameBaseJsonNode = baseJsonNode.path(fieldName);
-
-			JsonNode fieldNameOverrideJsonNode = overrideJsonNode.path(
-				fieldName);
-
-			if (fieldNameOverrideJsonNode.isMissingNode()) {
-				continue;
-			}
-
-			if (fieldNameBaseJsonNode.isObject()) {
-				_overrideJsonNodeValues(
-					fieldNameBaseJsonNode, fieldNameOverrideJsonNode);
-
-				continue;
-			}
-
-			ObjectNode baseObjectNode = (ObjectNode)baseJsonNode;
-
-			if (fieldNameBaseJsonNode.isMissingNode()) {
-				baseObjectNode.set(fieldName, fieldNameOverrideJsonNode);
-
-				continue;
-			}
-
-			baseObjectNode.replace(fieldName, fieldNameOverrideJsonNode);
-		}
 	}
 
 	private void _validateClientExtension(

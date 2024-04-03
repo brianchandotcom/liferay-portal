@@ -9,6 +9,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 
 import java.math.BigDecimal;
+
 import java.util.Locale;
 
 /**

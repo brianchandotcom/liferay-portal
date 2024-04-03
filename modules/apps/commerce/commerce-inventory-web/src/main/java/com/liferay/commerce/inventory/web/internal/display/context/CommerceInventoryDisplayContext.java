@@ -198,12 +198,6 @@ public class CommerceInventoryDisplayContext {
 		return formattedQuantity.toString();
 	}
 
-	public String getParsedQuantity(BigDecimal quantity)
-		throws Exception {
-
-		return _commerceQuantityFormatter.parse(quantity,_cpRequestHelper.getLocale());
-	}
-
 	public List<HeaderActionModel> getHeaderActionModels() {
 		List<HeaderActionModel> headerActionModels = new ArrayList<>();
 
@@ -237,6 +231,11 @@ public class CommerceInventoryDisplayContext {
 		}
 
 		return creationMenu;
+	}
+
+	public String getParsedQuantity(BigDecimal quantity) throws Exception {
+		return _commerceQuantityFormatter.parse(
+			quantity, _cpRequestHelper.getLocale());
 	}
 
 	public PortletURL getPortletURL() {

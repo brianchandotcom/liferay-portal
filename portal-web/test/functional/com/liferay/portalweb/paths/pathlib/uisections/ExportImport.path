@@ -101,7 +101,7 @@
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_SUB_SUBCONTENT_CHECKBOX</td>
-	<td>//input[contains(@data-name,'${key_subSubContent}')]</td>
+	<td>//ul/li[@class='handler-control' and contains(.,'${key_contentName}')]//input[@data-name='${key_subSubContent}']</td>
 	<td></td>
 </tr>
 <tr>

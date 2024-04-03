@@ -158,7 +158,6 @@ function ActionsDropdown({
 			<LinkOrButton
 				aria-label={action.label}
 				className="btn btn-secondary btn-sm"
-				data-testid="fdsItemActionButton"
 				href={
 					isLink(
 						action.target,
@@ -219,7 +218,6 @@ function ActionsDropdown({
 
 			<ClayDropDown
 				active={menuActive}
-				data-testid="fdsItemActionMenuButton"
 				onActiveChange={() => onMenuActiveChange(!menuActive)}
 				trigger={
 					<ClayButton

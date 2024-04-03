@@ -171,6 +171,9 @@ public interface SearchRequestBuilder {
 	 */
 	public SearchRequestBuilder rescores(List<Rescore> rescores);
 
+	public SearchRequestBuilder retainFacetSelections(
+		boolean retainFacetSelections);
+
 	public SearchRequestBuilder size(Integer size);
 
 	public SearchRequestBuilder sorts(Sort... sorts);

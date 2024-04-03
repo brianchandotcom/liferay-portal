@@ -193,8 +193,7 @@ public class SugarCRMObjectEntryManagerImpl
 			return;
 		}
 
-		sb.append(StringPool.AMPERSAND);
-		sb.append("filter");
+		sb.append("&filter");
 		sb.append(StringPool.EQUAL);
 		sb.append(StringPool.OPEN_BRACKET);
 		sb.append(
@@ -204,7 +203,7 @@ public class SugarCRMObjectEntryManagerImpl
 	}
 
 	private void _appendPagination(StringBuilder sb, Pagination pagination) {
-		sb.append("max_num=");
+		sb.append("&max_num=");
 		sb.append(pagination.getPageSize());
 		sb.append("&offset=");
 		sb.append((pagination.getPage() - 1) * pagination.getPageSize());
@@ -218,7 +217,7 @@ public class SugarCRMObjectEntryManagerImpl
 			return;
 		}
 
-		sb.append("order_by=");
+		sb.append("&order_by=");
 
 		for (int i = 0; i < sorts.length; i++) {
 			ObjectField objectField = _objectFieldLocalService.getObjectField(
@@ -239,8 +238,6 @@ public class SugarCRMObjectEntryManagerImpl
 				sb.append("ASC");
 			}
 		}
-
-		sb.append("&");
 	}
 
 	private String _getLocation(
@@ -259,13 +256,12 @@ public class SugarCRMObjectEntryManagerImpl
 
 		sb.append(StringPool.QUESTION);
 
-		if (!count) {
-			_appendSorts(sb, objectDefinition, sorts);
-
-			_appendPagination(sb, pagination);
-		}
-
 		_appendFilter(sb, objectDefinition, filterString);
+
+		if (!count) {
+			_appendPagination(sb, pagination);
+			_appendSorts(sb, objectDefinition, sorts);
+		}
 
 		// TODO Add keyword search
 

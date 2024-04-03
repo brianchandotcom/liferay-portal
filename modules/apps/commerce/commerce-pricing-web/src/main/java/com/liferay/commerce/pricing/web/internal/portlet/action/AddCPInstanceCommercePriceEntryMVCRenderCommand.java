@@ -64,8 +64,8 @@ public class AddCPInstanceCommercePriceEntryMVCRenderCommand
 			CPInstanceCommercePriceEntryDisplayContext
 				cpInstanceCommercePriceEntryDisplayContext =
 					new CPInstanceCommercePriceEntryDisplayContext(
-						_actionHelper, _commercePriceEntryService, _commercePriceFormatter,
-						_commercePriceListActionHelper,
+						_actionHelper, _commercePriceEntryService,
+						_commercePriceFormatter, _commercePriceListActionHelper,
 						_commercePriceListService, httpServletRequest,
 						_itemSelector);
 
@@ -95,6 +95,9 @@ public class AddCPInstanceCommercePriceEntryMVCRenderCommand
 	private CommercePriceEntryService _commercePriceEntryService;
 
 	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
 	private CommercePriceListActionHelper _commercePriceListActionHelper;
 
 	@Reference
@@ -105,9 +108,6 @@ public class AddCPInstanceCommercePriceEntryMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.pricing.web)"

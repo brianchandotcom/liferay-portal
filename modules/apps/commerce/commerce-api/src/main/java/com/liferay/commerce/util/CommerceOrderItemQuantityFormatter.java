@@ -23,8 +23,7 @@ public interface CommerceOrderItemQuantityFormatter {
 			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure, Locale locale)
 		throws PortalException;
 
-	public String format(
-		CommerceOrderItem commerceOrderItem, Locale locale)
+	public String format(CommerceOrderItem commerceOrderItem, Locale locale)
 		throws PortalException;
 
 	public BigDecimal parse(String quantity, Locale locale) throws Exception;

@@ -15,7 +15,9 @@ import {actionsPageTest} from './fixtures/actionsPageTest';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 
-const LINK_ITEM_ACTION_NAME = 'Link creation action';
+const LINK_ITEM_ACTION_NAME = 'Link item action';
+const LINK_ITEM_ACTION_CONFIRMATION_MESSAGE =
+	'Do you want to navigate to http://www.liferay.com?';
 
 export const test = mergeTests(
 	actionsPageTest,
@@ -169,6 +171,92 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 					await expect(
 						fdsFragmentPage.itemActionMenuButton
 					).not.toBeVisible();
+				}
+			);
+		}
+	);
+
+	fragmentTest(
+		'Link Item Action (single action) is shown in the fragment',
+		async ({
+			apiHelpers,
+			dataSetManagerApiHelpers,
+			fdsFragmentPage,
+			page,
+			site,
+		}) => {
+			fragmentTest.step('Create Item Action', async () => {
+				dataSetManagerApiHelpers.createDataSetViewItemAction({
+					confirmationMessage_i18n: {
+						en_US: LINK_ITEM_ACTION_CONFIRMATION_MESSAGE,
+					},
+					label_i18n: {en_US: LINK_ITEM_ACTION_NAME},
+					r_fdsViewFDSItemActionRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'link',
+				});
+			});
+
+			const layout = await fragmentTest.step(
+				'Create a new page',
+				async () => {
+					const pageLayout =
+						await apiHelpers.headlessDelivery.createSitePage({
+							siteId: site.id,
+							title: getRandomString(),
+						});
+
+					return pageLayout;
+				}
+			);
+
+			await fragmentTest.step(
+				'Configure Data Set in the page',
+				async () => {
+					await fdsFragmentPage.configureDataSetFragment({
+						layout,
+						site,
+						viewLabel: actionsDataSetViewLabel,
+					});
+				}
+			);
+
+			await fragmentTest.step(
+				'Check that the Item Action button is present',
+				async () => {
+					await expect(
+						fdsFragmentPage.page
+							.getByLabel(LINK_ITEM_ACTION_NAME)
+							.first()
+					).toBeVisible();
+				}
+			);
+
+			await fragmentTest.step(
+				'Check that the Item Action works',
+				async () => {
+					const dialogPromise = page
+						.waitForEvent('dialog')
+						.then(async (dialog) => {
+							await dialog.accept();
+
+							return dialog.message();
+						});
+
+					await fdsFragmentPage.page
+						.getByLabel(LINK_ITEM_ACTION_NAME)
+						.first()
+						.click();
+
+					const confirmationMessage = await dialogPromise;
+
+					expect(confirmationMessage).toBe(
+						LINK_ITEM_ACTION_CONFIRMATION_MESSAGE
+					);
+
+					await expect(
+						page.getByText('Welcome to Liferay')
+					).toBeVisible();
 				}
 			);
 		}

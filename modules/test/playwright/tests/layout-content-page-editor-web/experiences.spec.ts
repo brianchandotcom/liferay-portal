@@ -255,3 +255,38 @@ test('allows duplicating an experience', async ({
 	await expect(row).toContainText('Copy of E1');
 	await expect(row).toContainText('Inactive');
 });
+
+test('allows creating experiences with different fragments', async ({
+	apiHelpers,
+	pageEditorPage,
+	site,
+}) => {
+
+	// Create a page with a Heading fragment and go to edit mode
+
+	const headingId = getRandomString();
+	const headingDefinition = getFragmentDefinition(
+		headingId,
+		'BASIC_COMPONENT-heading'
+	);
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([headingDefinition]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+
+	// Create new experience and remove the fragment
+
+	await pageEditorPage.createExperience('E1');
+
+	await pageEditorPage.removeFragment(headingId);
+
+	// Change to Default experience again and check the fragment is present
+
+	await pageEditorPage.switchExperience('Default');
+
+	await expect(pageEditorPage.getFragment(headingId)).toBeVisible();
+});

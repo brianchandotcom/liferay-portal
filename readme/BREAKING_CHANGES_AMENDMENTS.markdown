@@ -479,3 +479,35 @@ The method getBatchEngineTaskItemDelegate(String itemClassName, String taskItemD
 
 To get the BatchEngineTaskItemDelegate based on the company too, it must be scoped by the company, because it depends on the company that a taskItemDelegateName exists or not (an Object Definition given its name)
 ```
+
+----
+
+# ac48b1fe243d41f6e4691e3f6e7025037811e4ac
+
+The breaking change message has a wrong formatting. The correct message is:
+
+```
+LRAC-15144 segments-service Add Experiment type support
+
+# breaking
+
+## What modules/apps/segments/segments-service/src/main/java/com/liferay/segments/service/impl/SegmentsExperimentServiceImpl.java
+
+Added the Experiment type parameter to the runSegmentsExpeirment
+
+## Why
+
+To support additional Experiment types
+
+----
+
+# breaking
+
+## What modules/apps/segments/segments-service/src/main/java/com/liferay/segments/service/impl/SegmentsExperimentLocalServiceImpl.java
+
+Added the Experiment type parameter to the runSegmentsExpeirment
+
+## Why
+
+To support additional Experiment types
+```

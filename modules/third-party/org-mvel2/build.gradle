@@ -8,7 +8,7 @@ sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
 dependencies {
-	api group: "org.mvel", name: "mvel2", version: "2.1.0.drools16"
+	api group: "com.liferay", name: "org.mvel2", version: "2.1.0.drools16.LIFERAY-PATCHED-2"
 }
 
 jarSources {
@@ -21,7 +21,6 @@ patch {
 	}
 
 	fileNames "org/mvel2/compiler/AbstractParser.java"
-	fileNames "org/mvel2/optimizers/impl/asm/ASMAccessorOptimizer.java"
 
-	originalLibModuleName = "mvel2"
+	originalLibModuleName = "org.mvel2"
 }

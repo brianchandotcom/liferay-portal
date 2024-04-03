@@ -26,12 +26,6 @@ public class PortalHotfixReleasePortalTopLevelBuild
 
 	@Override
 	public String getBaseGitRepositoryName() {
-		String branchName = getBranchName();
-
-		if (branchName.equals("master")) {
-			return "liferay-portal";
-		}
-
 		return "liferay-portal-ee";
 	}
 

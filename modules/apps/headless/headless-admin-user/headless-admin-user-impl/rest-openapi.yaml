@@ -2291,6 +2291,31 @@ paths:
                                 type: array
                     # @review
             tags: ["Phone"]
+    "/accounts/by-external-reference-code/{externalReferenceCode}/postal-addresses":
+        get:
+            description:
+                Retrieves the account's postal addresses.
+            operationId: getAccountByExternalReferenceCodePostalAddressesPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PostalAddress"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PostalAddress"
+                                type: array
+            tags: ["PostalAddress"]
     "/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts":
         get:
             # @review
@@ -3615,6 +3640,106 @@ paths:
                     description:
                         "Organization successfully replaced"
             tags: ["Organization"]
+    "/organizations/by-external-reference-code/{externalReferenceCode}/email-addresses":
+        get:
+            description:
+                Retrieves the organization's email addresses.
+            operationId: getOrganizationByExternalReferenceCodeEmailAddressesPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/EmailAddress"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/EmailAddress"
+                                type: array
+            tags: ["EmailAddress"]
+    "/organizations/by-external-reference-code/{externalReferenceCode}/phones":
+        get:
+            description:
+                Retrieves the organization's phone numbers.
+            operationId: getOrganizationByExternalReferenceCodePhonesPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Phone"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Phone"
+                                type: array
+            tags: ["Phone"]
+    "/organizations/by-external-reference-code/{externalReferenceCode}/postal-addresses":
+        get:
+            description:
+                Retrieves the organization's postal addresses.
+            operationId: getOrganizationByExternalReferenceCodePostalAddressesPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PostalAddress"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PostalAddress"
+                                type: array
+            tags: ["PostalAddress"]
+    "/organizations/by-external-reference-code/{externalReferenceCode}/web-urls":
+        get:
+            description:
+                Retrieves the organization's web URLs.
+            operationId: getOrganizationByExternalReferenceCodeWebUrlsPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WebUrl"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WebUrl"
+                                type: array
+            tags: ["WebUrl"]
     "/organizations/move-accounts/{sourceOrganizationId}/{targetOrganizationId}":
         patch:
             operationId: patchOrganizationMoveAccounts
@@ -5101,6 +5226,106 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
             tags: ["UserAccount"]
+    "/user-accounts/by-external-reference-code/{externalReferenceCode}/email-addresses":
+        get:
+            description:
+                Retrieves the user's email addresses.
+            operationId: getUserAccountByExternalReferenceCodeEmailAddressesPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/EmailAddress"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/EmailAddress"
+                                type: array
+            tags: ["EmailAddress"]
+    "/user-accounts/by-external-reference-code/{externalReferenceCode}/phones":
+        get:
+            description:
+                Retrieves the user's phone numbers.
+            operationId: getUserAccountByExternalReferenceCodePhonesPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Phone"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Phone"
+                                type: array
+            tags: ["Phone"]
+    "/user-accounts/by-external-reference-code/{externalReferenceCode}/postal-addresses":
+        get:
+            description:
+                Retrieves the user's postal addresses.
+            operationId: getUserAccountByExternalReferenceCodePostalAddressesPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PostalAddress"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PostalAddress"
+                                type: array
+            tags: ["PostalAddress"]
+    "/user-accounts/by-external-reference-code/{externalReferenceCode}/web-urls":
+        get:
+            description:
+                Retrieves the user's web URLs.
+            operationId: getUserAccountByExternalReferenceCodeWebUrlsPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WebUrl"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WebUrl"
+                                type: array
+            tags: ["WebUrl"]
     "/user-accounts/by-status/{status}":
         get:
             operationId: getUserAccountsByStatusPage

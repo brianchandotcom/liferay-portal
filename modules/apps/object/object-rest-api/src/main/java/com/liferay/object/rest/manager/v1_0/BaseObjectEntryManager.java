@@ -144,7 +144,7 @@ public abstract class BaseObjectEntryManager {
 		return 0;
 	}
 
-	protected ObjectField getObjectFieldByName(
+	protected ObjectField fetchObjectFieldByName(
 		String name, List<ObjectField> objectFields) {
 
 		for (ObjectField objectField : objectFields) {
@@ -184,7 +184,7 @@ public abstract class BaseObjectEntryManager {
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		for (String key : properties.keySet()) {
-			ObjectField objectField = getObjectFieldByName(key, objectFields);
+			ObjectField objectField = fetchObjectFieldByName(key, objectFields);
 
 			if (objectField == null) {
 				continue;
@@ -407,7 +407,7 @@ public abstract class BaseObjectEntryManager {
 		};
 	}
 
-	private ObjectField _getObjectFieldByExternalReferenceCode(
+	private ObjectField _fetchObjectFieldByExternalReferenceCode(
 		String externalReferenceCode, List<ObjectField> objectFields) {
 
 		for (ObjectField objectField : objectFields) {
@@ -442,7 +442,7 @@ public abstract class BaseObjectEntryManager {
 		Map<String, Object> properties = new HashMap<>();
 
 		for (String key : jsonObject.keySet()) {
-			ObjectField objectField = _getObjectFieldByExternalReferenceCode(
+			ObjectField objectField = _fetchObjectFieldByExternalReferenceCode(
 				key, objectFields);
 
 			if (objectField == null) {

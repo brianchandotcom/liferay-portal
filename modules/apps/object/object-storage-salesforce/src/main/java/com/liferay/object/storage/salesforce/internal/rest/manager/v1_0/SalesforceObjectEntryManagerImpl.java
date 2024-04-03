@@ -315,7 +315,7 @@ public class SalesforceObjectEntryManagerImpl
 				sb.append(defaultFieldName);
 			}
 			else {
-				ObjectField objectField = getObjectFieldByName(
+				ObjectField objectField = fetchObjectFieldByName(
 					fieldName, objectFields);
 
 				if (objectField == null) {

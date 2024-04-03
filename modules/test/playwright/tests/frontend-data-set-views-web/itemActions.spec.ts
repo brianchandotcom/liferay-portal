@@ -101,7 +101,7 @@ test.describe('Item Actions in the Data Set Manager', () => {
 
 		await test.step('Navigate to the Item Actions tab', async () => {
 			await actionsPage.itemActionsTab.click();
-			await actionsPage.newCreationActionButton.waitFor();
+			await actionsPage.newItemActionButton.waitFor();
 		});
 
 		await test.step('Create an item action', async () => {
@@ -643,6 +643,87 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 
 					await expect(alert).toHaveText(
 						'Success:Your request completed successfully.'
+					);
+				}
+			);
+		}
+	);
+
+	fragmentTest(
+		'Async Item Action shows an error toast in the fragment when a failure occurs',
+		async ({
+			apiHelpers,
+			dataSetManagerApiHelpers,
+			fdsFragmentPage,
+			page,
+			site,
+		}) => {
+			const ASYNC_ITEM_ACTION_NAME = 'Async item action';
+			const ASYNC_ITEM_ACTION_METHOD = 'DELETE';
+			const ASYNC_ITEM_ACTION_WRONG_URL =
+				'/o/data-set-manager/fields/{foo}';
+
+			fragmentTest.step('Create Item Actions', async () => {
+				dataSetManagerApiHelpers.createDataSetViewItemAction({
+					label_i18n: {en_US: ASYNC_ITEM_ACTION_NAME},
+					method: ASYNC_ITEM_ACTION_METHOD,
+					r_fdsViewFDSItemActionRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'async',
+					url: ASYNC_ITEM_ACTION_WRONG_URL,
+				});
+			});
+
+			const layout = await fragmentTest.step(
+				'Create a new page',
+				async () => {
+					const pageLayout =
+						await apiHelpers.headlessDelivery.createSitePage({
+							siteId: site.id,
+							title: getRandomString(),
+						});
+
+					return pageLayout;
+				}
+			);
+
+			await fragmentTest.step(
+				'Configure Data Set in the page',
+				async () => {
+					await fdsFragmentPage.configureDataSetFragment({
+						layout,
+						site,
+						viewLabel: actionsDataSetViewLabel,
+					});
+				}
+			);
+
+			const datasetRow = await fragmentTest.step(
+				'Checkt that the Item Actions is present in table row',
+				async () => {
+					const tableRow = await page
+						.locator('.dnd-td.item-actions')
+						.first();
+
+					await expect(tableRow.getByRole('button')).toBeVisible();
+
+					return tableRow;
+				}
+			);
+
+			await fragmentTest.step(
+				'Click in the async Item Action shows an error toast.',
+				async () => {
+					await datasetRow
+						.getByRole('button', {name: ASYNC_ITEM_ACTION_NAME})
+						.click();
+
+					await page.getByRole('alert').waitFor();
+
+					const alert = await page.getByRole('alert').first();
+
+					await expect(alert).toHaveText(
+						'Error:An unexpected error occurred.'
 					);
 				}
 			);

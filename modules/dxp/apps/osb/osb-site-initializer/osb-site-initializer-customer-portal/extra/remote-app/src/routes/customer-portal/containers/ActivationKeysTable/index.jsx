@@ -224,7 +224,7 @@ const ActivationKeysTable = ({
 					<div className="align-center cp-activation-key-container d-flex justify-content-between mb-2">
 						<h3 className="m-0">
 							{isRenewTable
-								? i18n.translate('renew-x-activation-key', productName)
+								? i18n.sub('renew-x-activation-key', productName)
 								: i18n.translate('activation-keys')}
 						</h3>
 

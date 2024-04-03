@@ -158,10 +158,7 @@ public class CommerceOrderEngineTest {
 	public void tearDown() throws PortalException {
 		_commerceOrderLocalService.deleteCommerceOrder(_commerceOrder);
 
-		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
 		CentralizedThreadLocal.clearShortLivedThreadLocals();
-
-		CompanyThreadLocal.setCompanyId(_originalCompanyId);
 	}
 
 	@Test

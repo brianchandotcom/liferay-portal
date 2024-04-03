@@ -152,7 +152,6 @@ public class CommerceOrderHttpHelperImplTest {
 			_commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 		}
 
-		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
 		CentralizedThreadLocal.clearShortLivedThreadLocals();
 	}
 

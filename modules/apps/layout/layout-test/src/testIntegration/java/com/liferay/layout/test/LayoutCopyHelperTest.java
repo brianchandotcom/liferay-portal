@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -482,9 +483,11 @@ public class LayoutCopyHelperTest {
 					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 						ctCollection.getCtCollectionId())) {
 
-				_layoutCopyHelper.copyLayoutContent(
-					displayPageTemplateLayout.fetchDraftLayout(),
-					displayPageTemplateLayout);
+				try (LoggingTimer loggingTimer = new LoggingTimer()) {
+					_layoutCopyHelper.copyLayoutContent(
+						displayPageTemplateLayout.fetchDraftLayout(),
+						displayPageTemplateLayout);
+				}
 
 				_assertLayoutContent(layoutPlidMap, locale);
 			}

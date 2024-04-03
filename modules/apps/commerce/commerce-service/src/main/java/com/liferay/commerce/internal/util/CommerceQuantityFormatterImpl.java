@@ -13,8 +13,10 @@ import com.liferay.commerce.util.CommerceQuantityFormatter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -69,6 +71,12 @@ public class CommerceQuantityFormatterImpl
 			quantity);
 	}
 
+	public String parse(BigDecimal quantity, Locale locale) throws Exception {
+		DecimalFormat decimalFormat = _getDecimalFormat(locale);
+
+		return decimalFormat.format(quantity);
+	}
+
 	private BigDecimal _format(
 		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure, BigDecimal quantity) {
 
@@ -84,15 +92,7 @@ public class CommerceQuantityFormatterImpl
 		return quantity.setScale(0, RoundingMode.HALF_UP);
 	}
 
-	public String parse(BigDecimal quantity, Locale locale) throws Exception {
-
-		DecimalFormat decimalFormat = _getDecimalFormat(locale);
-
-		return decimalFormat.format(quantity);
-	}
-
 	private DecimalFormat _getDecimalFormat(Locale locale) {
-
 		DecimalFormat decimalFormat = new DecimalFormat(
 			CommerceOrderConstants.DECIMAL_FORMAT_PATTERN,
 			DecimalFormatSymbols.getInstance(locale));
@@ -103,7 +103,6 @@ public class CommerceQuantityFormatterImpl
 
 		return decimalFormat;
 	}
-
 
 	@Reference
 	private CPInstanceUnitOfMeasureLocalService

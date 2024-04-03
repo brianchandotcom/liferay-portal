@@ -23,7 +23,7 @@ import React, {useEffect, useState} from 'react';
 
 import {IFDSViewSectionProps} from '../../../FDSView';
 import {FDSViewType} from '../../../FDSViews';
-import {getFields, isSortable} from '../../../api';
+import {getFields} from '../../../api';
 import AutoSearch from '../../../components/AutoSearch';
 import OrderableTable from '../../../components/OrderableTable';
 import SearchResultsMessage from '../../../components/SearchResultsMessage';
@@ -39,7 +39,7 @@ import '../../../../css/TableVisualizationMode.scss';
 
 import ClayIcon from '@clayui/icon';
 
-import {IFDSField, IField} from '../../../utils/types';
+import {EFieldType, IFDSField, IField} from '../../../utils/types';
 import AddFieldsModalContent from './modal_content/AddFieldsModalContent';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
@@ -161,7 +161,6 @@ const SaveFDSFieldsModalContent = ({
 
 		const creationData: Array<{
 			name: string;
-			sortable: boolean;
 			type: string;
 		}> = [];
 		const deletionIds: Array<number> = [];
@@ -170,8 +169,7 @@ const SaveFDSFieldsModalContent = ({
 			if (field.selected && !field.id) {
 				creationData.push({
 					name: field.name,
-					sortable: isSortable(field),
-					type: field.type || 'string',
+					type: field.type || EFieldType.STRING,
 				});
 			}
 
@@ -437,10 +435,8 @@ const EditFDSFieldModalContent = ({
 		fdsField.renderer ?? 'default'
 	);
 
-	const isSortableField = isSortable(fdsField);
-
 	const [fdsFieldSortable, setFSDFieldSortable] = useState<boolean>(
-		fdsField.sortable ?? isSortableField
+		fdsField.sortable ?? fdsField.type !== EFieldType.OBJECT
 	);
 
 	const fdsInternalCellRendererNames = FDS_INTERNAL_CELL_RENDERERS.map(
@@ -621,7 +617,7 @@ const EditFDSFieldModalContent = ({
 				<ClayForm.Group>
 					<ClayCheckbox
 						checked={fdsFieldSortable}
-						disabled={!isSortableField}
+						disabled={fdsField.type === EFieldType.OBJECT}
 						inline
 						label={Liferay.Language.get('sortable')}
 						onChange={({target: {checked}}) =>
@@ -629,7 +625,7 @@ const EditFDSFieldModalContent = ({
 						}
 					/>
 
-					{isSortableField && (
+					{fdsField.type !== EFieldType.OBJECT && (
 						<span
 							className="label-icon lfr-portal-tooltip ml-2"
 							title={Liferay.Language.get(

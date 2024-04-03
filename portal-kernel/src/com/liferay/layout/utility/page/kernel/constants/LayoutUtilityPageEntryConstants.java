@@ -10,6 +10,8 @@ package com.liferay.layout.utility.page.kernel.constants;
  */
 public class LayoutUtilityPageEntryConstants {
 
+	public static final String TYPE_COOKIE_POLICY = "COOKIE_POLICY";
+
 	public static final String TYPE_CREATE_ACCOUNT = "CREATE_ACCOUNT";
 
 	public static final String TYPE_FORGOT_PASSWORD = "FORGOT_PASSWORD";

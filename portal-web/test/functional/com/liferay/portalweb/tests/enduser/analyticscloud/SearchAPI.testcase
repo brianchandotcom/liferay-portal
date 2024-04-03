@@ -101,7 +101,15 @@ definition {
 		}
 
 		task ("Go to the search bar and search for a keyword") {
-			SearchPage.searchEmbedded(searchTerm = ${keyword});
+			for (var n : list "1,2,3,4") {
+				SearchPage.searchEmbedded(searchTerm = ${keyword});
+
+				ACUtils.waitForSendingRequest();
+			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Run curl command to get keyword results using languageId = en-US") {
@@ -206,7 +214,13 @@ definition {
 		task ("Type keyword in search bar") {
 			for (var keyword : list "${keyword1},${keyword2}") {
 				SearchPage.searchEmbedded(searchTerm = ${keyword});
+
+				ACUtils.waitForSendingRequest();
 			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Run curl command without optional parameters to get keyword results") {
@@ -250,7 +264,13 @@ definition {
 		task ("Go to the search bar and search for a keyword") {
 			for (var keyword : list "${firstKeyword},${secondKeyword}") {
 				SearchPage.searchEmbedded(searchTerm = ${keyword});
+
+				ACUtils.waitForSendingRequest();
 			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Run curl command to get keyword results using page = 0") {
@@ -318,7 +338,13 @@ definition {
 		task ("Type keyword in search bar") {
 			for (var keyword : list "${keyword1},${keyword2},${keyword3}") {
 				SearchPage.searchEmbedded(searchTerm = ${keyword});
+
+				ACUtils.waitForSendingRequest();
 			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Run curl command to get keyword results") {

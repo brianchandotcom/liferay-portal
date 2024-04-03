@@ -14,6 +14,8 @@ import org.dom4j.Element;
  */
 public interface FailureMessageGenerator {
 
+	public String getMessage(Build build);
+
 	public Element getMessageElement(Build build);
 
 	public Element getMessageElement(String consoleText);

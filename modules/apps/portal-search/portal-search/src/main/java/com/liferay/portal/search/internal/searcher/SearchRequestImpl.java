@@ -74,6 +74,7 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 		_query = searchRequestImpl._query;
 		_rescoreQuery = searchRequestImpl._rescoreQuery;
 		_rescores.addAll(searchRequestImpl._rescores);
+		_retainFacetSelections = searchRequestImpl._retainFacetSelections;
 		_searchContext = searchRequestImpl._searchContext;
 		_size = searchRequestImpl._size;
 		_sorts.addAll(searchRequestImpl._sorts);
@@ -319,6 +320,11 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 		return _includeResponseString;
 	}
 
+	@Override
+	public boolean isRetainFacetSelections() {
+		return _retainFacetSelections;
+	}
+
 	public void setBasicFacetSelection(boolean basicFacetSelection) {
 		_basicFacetSelection = basicFacetSelection;
 
@@ -443,6 +449,14 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 		_rescores = rescores;
 	}
 
+	public void setRetainFacetSelections(boolean retainFacetSelections) {
+		_retainFacetSelections = retainFacetSelections;
+
+		_searchContext.setAttribute(
+			SearchContextAttributes.ATTRIBUTE_KEY_RETAIN_FACET_SELECTIONS,
+			Boolean.valueOf(retainFacetSelections));
+	}
+
 	public void setSelectedFieldNames(String... selectedFieldNames) {
 		QueryConfig queryConfig = _searchContext.getQueryConfig();
 
@@ -495,6 +509,7 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	private Query _query;
 	private Query _rescoreQuery;
 	private List<Rescore> _rescores = new ArrayList<>();
+	private boolean _retainFacetSelections;
 	private final SearchContext _searchContext;
 	private Integer _size;
 	private final List<Sort> _sorts = new ArrayList<>();

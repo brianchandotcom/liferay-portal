@@ -453,4 +453,199 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 			);
 		}
 	);
+
+	fragmentTest(
+		'Async and Headless Item Actions (multiple actions) are shown in fragment',
+		async ({
+			apiHelpers,
+			dataSetManagerApiHelpers,
+			fdsFragmentPage,
+			page,
+			site,
+		}) => {
+			const ASYNC_ITEM_ACTION_NAME = 'Async item action';
+			const ASYNC_ITEM_ACTION_METHOD = 'DELETE';
+			const ASYNC_ITEM_ACTION_URL = '/o/data-set-manager/fields/{id}';
+			const HEADLESS_ITEM_ACTION_NAME = 'Headless item action';
+			const HEADLESS_ITEM_ACTION_PERMISSION_KEY = 'delete';
+			const NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME =
+				'Useless Headless Item Action';
+
+			fragmentTest.step('Create Item Actions', async () => {
+				dataSetManagerApiHelpers.createDataSetViewItemAction({
+					label_i18n: {en_US: HEADLESS_ITEM_ACTION_NAME},
+					permissionKey: HEADLESS_ITEM_ACTION_PERMISSION_KEY,
+					r_fdsViewFDSItemActionRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'headless',
+				});
+
+				dataSetManagerApiHelpers.createDataSetViewItemAction({
+					label_i18n: {en_US: ASYNC_ITEM_ACTION_NAME},
+					method: ASYNC_ITEM_ACTION_METHOD,
+					r_fdsViewFDSItemActionRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'async',
+					url: ASYNC_ITEM_ACTION_URL,
+				});
+
+				dataSetManagerApiHelpers.createDataSetViewItemAction({
+					label_i18n: {
+						en_US: NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME,
+					},
+					permissionKey: 'remove',
+					r_fdsViewFDSItemActionRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'headless',
+				});
+			});
+
+			const layout = await fragmentTest.step(
+				'Create a new page',
+				async () => {
+					const pageLayout =
+						await apiHelpers.headlessDelivery.createSitePage({
+							siteId: site.id,
+							title: getRandomString(),
+						});
+
+					return pageLayout;
+				}
+			);
+
+			await fragmentTest.step(
+				'Configure Data Set in the page',
+				async () => {
+					await fdsFragmentPage.configureDataSetFragment({
+						layout,
+						site,
+						viewLabel: actionsDataSetViewLabel,
+					});
+				}
+			);
+
+			const datasetRow = await fragmentTest.step(
+				'Checkt that the Item Actions dropdown (only 2 items) is present in table row',
+				async () => {
+					const tableRow = await page
+						.locator('.dnd-td.item-actions')
+						.first();
+
+					await expect(
+						tableRow.getByRole('button', {
+							exact: true,
+							name: 'Actions',
+						})
+					).toBeVisible;
+
+					const button = await tableRow.getByRole('button', {
+						exact: true,
+						name: 'Actions',
+					});
+					const dropdownId = await button.evaluate((node) =>
+						node.getAttribute('aria-controls')
+					);
+
+					await button.click();
+
+					await page
+						.locator(`#${dropdownId}`)
+						.filter({has: page.getByRole('menu')})
+						.waitFor();
+
+					await expect(
+						page.locator(`#${dropdownId}`).getByRole('menuitem')
+					).toHaveCount(2);
+
+					await expect(
+						page.locator(`#${dropdownId}`).getByRole('menuitem', {
+							name: NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME,
+						})
+					).not.toBeVisible();
+
+					await page.keyboard.press('Escape');
+
+					return tableRow;
+				}
+			);
+
+			await fragmentTest.step(
+				'Click in the headless item action executes the action',
+				async () => {
+					const button = await datasetRow.getByRole('button', {
+						exact: true,
+						name: 'Actions',
+					});
+
+					const dropdownId = await button.evaluate((node) =>
+						node.getAttribute('aria-controls')
+					);
+
+					await button.click();
+
+					await page
+						.locator(`#${dropdownId}`)
+						.filter({has: page.getByRole('menu')})
+						.waitFor();
+
+					await page
+						.locator(`#${dropdownId}`)
+						.getByRole('menuitem', {
+							exact: true,
+							name: HEADLESS_ITEM_ACTION_NAME,
+						})
+						.click();
+
+					await page.getByRole('alert').waitFor();
+
+					const alert = await page.getByRole('alert').first();
+
+					await expect(alert).toHaveText(
+						'Success:Your request completed successfully.'
+					);
+				}
+			);
+
+			await fragmentTest.step(
+				'Click in the async item action executes the action',
+				async () => {
+					const nextTableRow = await page
+						.locator('.dnd-td.item-actions')
+						.first();
+
+					const button = await nextTableRow.getByRole('button', {
+						exact: true,
+						name: 'Actions',
+					});
+
+					const dropdownId = await button.evaluate((node) =>
+						node.getAttribute('aria-controls')
+					);
+
+					await button.click();
+
+					await page
+						.locator(`#${dropdownId}`)
+						.filter({has: page.getByRole('menu')})
+						.waitFor();
+
+					await page
+						.locator(`#${dropdownId}`)
+						.getByRole('menuitem', {
+							exact: true,
+							name: ASYNC_ITEM_ACTION_NAME,
+						})
+						.click();
+
+					await page.getByRole('alert').waitFor();
+
+					const alert = await page.getByRole('alert').first();
+
+					await expect(alert).toHaveText(
+						'Success:Your request completed successfully.'
+					);
+				}
+			);
+		}
+	);
 });

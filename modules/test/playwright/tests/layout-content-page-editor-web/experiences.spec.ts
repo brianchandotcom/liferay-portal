@@ -10,6 +10,8 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import getRandomString from '../../utils/getRandomString';
 import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
+import getFragmentDefinition from './utils/getFragmentDefinition';
+import getPageDefinition from './utils/getPageDefinition';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -76,4 +78,57 @@ test('allows changing the segment of an existing experience', async ({
 	const row = page.locator('.dropdown-menu__experience', {hasText: 'E1'});
 
 	await expect(row).toContainText('AudienceS1');
+});
+
+test('creates new experiences as expected', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+
+	// Create a page with a Heading fragment and go to edit mode
+
+	const headingId = getRandomString();
+	const headingDefinition = getFragmentDefinition(
+		headingId,
+		'BASIC_COMPONENT-heading'
+	);
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([headingDefinition]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+
+	// Create new experience and check it's the last one and inactive
+
+	await pageEditorPage.createExperience('E1');
+
+	await expect(page.getByLabel('Experience: E1')).toBeVisible();
+
+	await pageEditorPage.openExperienceSelector();
+
+	const row = page.locator('.dropdown-menu__experience').last();
+
+	await expect(row).toContainText('E1');
+	await expect(row).toContainText('Inactive');
+
+	await pageEditorPage.closeExperienceSelector();
+
+	// Edit heading text in E1 experience
+
+	await pageEditorPage.editEditableText(headingId, 'element-text', 'E1 Text');
+
+	await pageEditorPage.publishPage();
+
+	// Go to view mode of page and check it displays the Default experience text
+
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+	await expect(page.getByText('E1 Text')).not.toBeAttached();
+
+	await expect(page.getByText('Heading Example')).toBeVisible();
 });

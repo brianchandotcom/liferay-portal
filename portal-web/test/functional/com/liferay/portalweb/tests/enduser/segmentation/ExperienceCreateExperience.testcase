@@ -237,62 +237,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-106776. When the user creates a new experience, it is always placed in the last position of the list, always below the default experience and always set as non-active"
-	@priority = 5
-	test AddNewAnyoneExperience {
-		property portal.acceptance = "true";
-
-		task ("Edit page to add heading fragment") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-
-			PageEditor.viewFragmentStyle(
-				fragmentName = "Heading",
-				headingLevel = "h1");
-
-			PageEditor.editFragmentText(
-				fragmentName = "Heading",
-				id = "element-text",
-				text = "Default");
-		}
-
-		task ("Add an Experience for that page") {
-			PageEditor.addExperience(
-				experienceName = "NewAnyoneExperience",
-				segmentName = "Anyone");
-		}
-
-		task ("Edit the experience created") {
-			PageEditor.viewFragmentStyle(
-				fragmentName = "Heading",
-				headingLevel = "h1");
-
-			PageEditor.editFragmentText(
-				fragmentName = "Heading",
-				id = "element-text",
-				text = "Anyone1");
-
-			PageEditor.publish();
-		}
-
-		task ("Logout and assert the default experience is displayed") {
-			User.logoutPG();
-
-			Navigator.gotoSitePage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			AssertTextEquals(
-				locator1 = "Experience#FRAGMENT_HEADING",
-				value1 = "Default");
-		}
-	}
-
 	@description = "The Add new experience modals appears after click on cancel in the Edit experience modal"
 	@priority = 5
 	test AddNewExperienceAfterCancelEdit {

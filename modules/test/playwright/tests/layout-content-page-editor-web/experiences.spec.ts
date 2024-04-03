@@ -223,3 +223,35 @@ test('styles changes affect to current experience only', async ({
 		'8px'
 	);
 });
+
+test('allows duplicating an experience', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+
+	// Create a page and go to edit mode
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+
+	// Create new experience and duplicate it
+
+	await pageEditorPage.createExperience('E1');
+
+	await pageEditorPage.duplicateExperience('E1');
+
+	await expect(page.getByLabel('Experience: Copy of E1')).toBeVisible();
+
+	await pageEditorPage.openExperienceSelector();
+
+	const row = page.locator('.dropdown-menu__experience').last();
+
+	await expect(row).toContainText('Copy of E1');
+	await expect(row).toContainText('Inactive');
+});

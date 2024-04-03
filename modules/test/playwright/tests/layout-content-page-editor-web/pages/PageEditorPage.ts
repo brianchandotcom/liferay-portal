@@ -177,6 +177,42 @@ export class PageEditorPage {
 		);
 	}
 
+	async editEditableText(
+		fragmentId: string,
+		editableId: string,
+		value: string
+	) {
+
+		// Select fragment and editable
+
+		await this.selectFragment(fragmentId);
+
+		await this.selectEditable(fragmentId, editableId);
+
+		// Click editable again to enable edition
+
+		const editable = this.getEditable(fragmentId, editableId);
+
+		await editable.click();
+
+		// Click CKEditor
+
+		await editable.locator('.cke_editable_inline').waitFor();
+
+		await editable.locator('.cke_editable_inline').click();
+
+		// Clear current content and fill with new one
+
+		await this.page.keyboard.press('Control+KeyA');
+		await this.page.keyboard.press('Backspace');
+
+		await this.page.keyboard.type(value);
+
+		await this.page.locator('header.page-editor__disabled-area').click();
+
+		await this.waitForChangesSaved();
+	}
+
 	async editExperienceName(name: string, newName: string) {
 		await this.openExperienceSelector();
 
@@ -348,6 +384,24 @@ export class PageEditorPage {
 		await expect(isActive).toBe(true);
 	}
 
+	async selectEditable(
+		fragmentId: string,
+		editableId: string,
+		isDesktop = true
+	) {
+		await this.selectFragment(fragmentId, isDesktop);
+
+		const editable = await this.getEditable(
+			fragmentId,
+			editableId,
+			isDesktop
+		);
+
+		await editable.click();
+
+		await expect(editable).toBeFocused();
+	}
+
 	async switchExperience(experience: string) {
 		await this.openExperienceSelector();
 
@@ -389,6 +443,12 @@ export class PageEditorPage {
 				.frameLocator('.page-editor__global-context-iframe')
 				.locator(`.lfr-layout-structure-item-${fragmentId}`);
 		}
+	}
+
+	getEditable(fragmentId: string, editableId: string, isDesktop = true) {
+		return this.getFragment(fragmentId, isDesktop).locator(
+			`[data-lfr-editable-id="${editableId}"]`
+		);
 	}
 
 	getTopper(fragmentId: string, isDesktop = true) {

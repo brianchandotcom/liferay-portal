@@ -164,7 +164,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 				_updateFieldsDisplay(
 					ddmFields, ddmFormField.getName(),
-					String.valueOf(ddmStructure.getStructureId()));
+					StringUtil.randomString());
 			}
 
 			_addNestedDDMFields(

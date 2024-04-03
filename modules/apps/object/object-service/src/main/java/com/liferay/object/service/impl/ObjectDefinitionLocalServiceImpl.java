@@ -45,6 +45,7 @@ import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.deployer.InactiveObjectDefinitionDeployerImpl;
 import com.liferay.object.internal.deployer.ObjectDefinitionDeployerImpl;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
+import com.liferay.object.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -101,7 +102,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -116,7 +116,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
@@ -560,29 +559,13 @@ public class ObjectDefinitionLocalServiceImpl
 			try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
 					objectDefinition.getCompanyId())) {
 
-				for (ResourceAction resourceAction :
-						_resourceActionLocalService.getResourceActions(
-							objectDefinition.getClassName())) {
-
-					_resourceActionLocalService.deleteResourceAction(
-						resourceAction);
-				}
-
-				for (ResourceAction resourceAction :
-						_resourceActionLocalService.getResourceActions(
-							objectDefinition.getPortletId())) {
-
-					_resourceActionLocalService.deleteResourceAction(
-						resourceAction);
-				}
-
-				for (ResourceAction resourceAction :
-						_resourceActionLocalService.getResourceActions(
-							objectDefinition.getResourceName())) {
-
-					_resourceActionLocalService.deleteResourceAction(
-						resourceAction);
-				}
+				ObjectDefinitionResourcePermissionUtil.removeResourceActions(
+					_objectActionLocalService, objectDefinition,
+					objectDefinitionPersistence, _resourceActions,
+					_treeFactory);
+			}
+			catch (Exception exception) {
+				throw new PortalException(exception);
 			}
 
 			_dropTable(objectDefinition.getDBTableName());
@@ -2526,9 +2509,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private PortletLocalService _portletLocalService;
-
-	@Reference
-	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private ResourceActions _resourceActions;

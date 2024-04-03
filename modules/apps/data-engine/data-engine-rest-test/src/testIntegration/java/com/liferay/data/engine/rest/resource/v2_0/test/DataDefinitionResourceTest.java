@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -75,9 +74,8 @@ public class DataDefinitionResourceTest
 	}
 
 	@AfterClass
-	public static void tearDownClass() {
-		ModelResourceActionTestUtil.deleteModelResourceAction(
-			_resourceActionLocalService, _resourceActions);
+	public static void tearDownClass() throws Exception {
+		ModelResourceActionTestUtil.deleteModelResourceAction(_resourceActions);
 	}
 
 	@Override
@@ -964,9 +962,6 @@ public class DataDefinitionResourceTest
 	}
 
 	private static final String _CONTENT_TYPE = "test";
-
-	@Inject
-	private static ResourceActionLocalService _resourceActionLocalService;
 
 	@Inject
 	private static ResourceActions _resourceActions;

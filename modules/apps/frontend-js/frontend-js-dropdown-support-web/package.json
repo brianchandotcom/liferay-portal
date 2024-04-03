@@ -3,7 +3,7 @@
 		"dom-align": "1.12.2",
 		"frontend-js-web": "*"
 	},
-	"main": "index.js",
+	"main": "index.ts",
 	"name": "frontend-js-dropdown-support-web",
 	"private": true,
 	"scripts": {

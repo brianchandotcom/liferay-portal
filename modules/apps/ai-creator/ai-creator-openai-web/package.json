@@ -12,6 +12,7 @@
 		"frontend-js-web": "*",
 		"react": "16.12.0"
 	},
+	"main": "ai_creator_modal/index.ts",
 	"name": "@liferay/ai-creator-openai-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

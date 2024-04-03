@@ -2,7 +2,7 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
-	"main": "js/index.js",
+	"main": "js/index.ts",
 	"name": "@liferay/product-navigation-site-administration",
 	"private": true,
 	"scripts": {

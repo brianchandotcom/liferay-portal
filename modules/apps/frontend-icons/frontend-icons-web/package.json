@@ -1,5 +1,5 @@
 {
-	"main": "js/index.js",
+	"main": "js/index.ts",
 	"name": "@liferay/frontend-icons-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

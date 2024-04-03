@@ -43,9 +43,8 @@ public class MultipleReleaseInstanceResourceProvider
 
 	@Override
 	public void releaseInstance(Message message, Object object) {
-		if (_instances.contains(object)) {
+		if (_instances.remove(object)) {
 			_resourceProvider.releaseInstance(message, object);
-			_instances.remove(object);
 		}
 	}
 

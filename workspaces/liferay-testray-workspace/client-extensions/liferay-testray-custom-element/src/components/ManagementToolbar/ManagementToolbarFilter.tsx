@@ -104,7 +104,6 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 
 	const handleRemoveItemFromFilter = useCallback(() => {
 		const searchParams = new URLSearchParams(location.search);
-
 		searchParams.delete('filter');
 		searchParams.delete('filterSchema');
 
@@ -136,8 +135,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 						(options: Option) => options.value || options
 					),
 				};
-			}
-			else {
+			} else {
 				return {
 					name: key,
 					value: filterCleaned[key],
@@ -159,6 +157,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 			updateUrlParams({
 				filter: JSON.stringify(formattedFilter),
 				filterSchema: filterSchema?.name as string,
+				page: '1',
 			});
 		}
 
@@ -182,6 +181,14 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		setIsVisible,
 		updateUrlParams,
 	]);
+
+	useEffect(() => {
+		const searchParams = new URLSearchParams(location.search);
+
+		if (!searchParams.get('filter')) {
+			setForm(initialFilters);
+		}
+	}, [initialFilters, location.search]);
 
 	useHotkeys('enter', onApply, {enabled: true}, [fields, form]);
 

@@ -17,7 +17,7 @@ public class SEOConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryIcon() {
-		return "search-experiences";
+		return "seo";
 	}
 
 	@Override

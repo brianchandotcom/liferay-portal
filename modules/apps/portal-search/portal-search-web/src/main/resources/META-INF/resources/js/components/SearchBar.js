@@ -20,12 +20,13 @@ import cleanSuggestionsContributorConfiguration from '../utils/clean_suggestions
 export default function SearchBar({
 	destinationFriendlyURL,
 	emptySearchEnabled,
+	initialKeywords = '',
 	isDXP = true,
 	isSearchExperiencesSupported = true,
-	keywords = '',
 	keywordsParameterName = 'q',
 	letUserChooseScope = false,
 	paginationStartParameterName,
+	retainFacetSelections,
 	scopeParameterName,
 	scopeParameterStringCurrentSite,
 	scopeParameterStringEverything,
@@ -42,7 +43,7 @@ export default function SearchBar({
 
 	const [active, setActive] = useState(false);
 	const [autocompleteSearchValue, setAutocompleteSearchValue] = useState('');
-	const [inputValue, setInputValue] = useState(keywords);
+	const [inputValue, setInputValue] = useState(initialKeywords);
 	const [loading, setLoading] = useState(false);
 	const [scope, setScope] = useState(
 		selectedEverythingSearchScope
@@ -172,15 +173,16 @@ export default function SearchBar({
 		event.stopPropagation();
 
 		if (!!inputValue.trim().length || emptySearchEnabled) {
-			const keyword = inputValue.trim();
-			const oldKeyword = localStorage.getItem('keyword');
-			const queryString = _updateQueryString(document.location.search);
+			const keywords = inputValue.trim();
+			let queryString = _updateQueryString(document.location.search);
 
-			if (keyword === '' || keyword !== oldKeyword) {
-				FacetUtil.clearAllSelections(queryString);
+			if (
+				(initialKeywords !== keywords || keywords === '') &&
+				!retainFacetSelections
+			) {
+				queryString = FacetUtil.removeAllFacetParameters(queryString);
 			}
 
-			localStorage.setItem('keyword', keyword);
 			navigate(searchURL + queryString);
 		}
 	};

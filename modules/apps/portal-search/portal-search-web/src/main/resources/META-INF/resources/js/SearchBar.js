@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export default function ({formId}) {
+import {FacetUtil} from './FacetUtil';
+
+export default function ({formId, initialKeywords, retainFacetSelections}) {
 	const form = document.getElementById(formId);
 
 	if (!form) {
@@ -61,9 +63,17 @@ export default function ({formId}) {
 
 	function search() {
 		if (isSubmitEnabled()) {
+			const keywords = getKeywords();
 			const searchURL = form.action;
 
-			const queryString = updateQueryString(document.location.search);
+			let queryString = updateQueryString(document.location.search);
+
+			if (
+				(initialKeywords !== keywords || keywords === '') &&
+				!retainFacetSelections
+			) {
+				queryString = FacetUtil.removeAllFacetParameters(queryString);
+			}
 
 			document.location.href = searchURL + queryString;
 		}

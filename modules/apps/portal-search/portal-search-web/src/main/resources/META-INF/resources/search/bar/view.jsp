@@ -87,17 +87,19 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 									).put(
 										"emptySearchEnabled", searchBarPortletDisplayContext.isEmptySearchEnabled()
 									).put(
+										"initialKeywords", searchBarPortletDisplayContext.getKeywords()
+									).put(
 										"isDXP", ReleaseInfo.isDXP()
 									).put(
 										"isSearchExperiencesSupported", searchBarPortletDisplayContext.isSearchExperiencesSupported()
-									).put(
-										"keywords", searchBarPortletDisplayContext.getKeywords()
 									).put(
 										"keywordsParameterName", searchBarPortletDisplayContext.getKeywordsParameterName()
 									).put(
 										"letUserChooseScope", searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope()
 									).put(
 										"paginationStartParameterName", searchBarPortletDisplayContext.getPaginationStartParameterName()
+									).put(
+										"retainFacetSelections", searchBarPortletDisplayContext.isRetainFacetSelections()
 									).put(
 										"scopeParameterName", searchBarPortletDisplayContext.getScopeParameterName()
 									).put(
@@ -173,6 +175,10 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 			context='<%=
 				HashMapBuilder.<String, Object>put(
 					"formId", randomNamespace + "fm"
+				).put(
+					"initialKeywords", searchBarPortletDisplayContext.getKeywords()
+				).put(
+					"retainFacetSelections", searchBarPortletDisplayContext.isRetainFacetSelections()
 				).build()
 			%>'
 			module="{SearchBar} from portal-search-web"

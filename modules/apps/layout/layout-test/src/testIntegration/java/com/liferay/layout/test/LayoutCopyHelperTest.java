@@ -12,21 +12,39 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.model.FragmentEntryLinkModel;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.layout.content.LayoutContentProvider;
 import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.constants.LayoutPortletKeys;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
@@ -52,24 +70,32 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.awt.image.BufferedImage;
 
 import java.io.ByteArrayOutputStream;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -426,6 +452,53 @@ public class LayoutCopyHelperTest {
 	}
 
 	@Test
+	public void testCopyLayoutContentWithPublication() throws Exception {
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CTSettingsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).build())) {
+
+			Layout displayPageTemplateLayout = _addDisplayPageTemplateLayout();
+
+			Map<Long, String> layoutPlidMap = _addContentLayouts();
+
+			Locale locale = _portal.getSiteDefaultLocale(_group);
+
+			CTCollection ctCollection =
+				_ctCollectionLocalService.addCTCollection(
+					null, TestPropsValues.getCompanyId(),
+					TestPropsValues.getUserId(), 0,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString());
+
+			_entityCache.clearCache();
+			_multiVMPool.clear();
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollection.getCtCollectionId())) {
+
+				_layoutCopyHelper.copyLayoutContent(
+					displayPageTemplateLayout.fetchDraftLayout(),
+					displayPageTemplateLayout);
+
+				_assertLayoutContent(layoutPlidMap, locale);
+			}
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				_assertLayoutContent(layoutPlidMap, locale);
+			}
+		}
+	}
+
+	@Test
 	public void testCopyLayoutDefaultSegmentsExperience() throws Exception {
 		Layout sourceLayout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -641,6 +714,138 @@ public class LayoutCopyHelperTest {
 				"lfr-theme:regular:show-header"));
 	}
 
+	private Map<Long, String> _addContentLayouts() throws Exception {
+		Map<Long, String> map = new HashMap<>();
+
+		FragmentEntry fragmentEntry = _addFragmentEntry();
+
+		Locale locale = _portal.getSiteDefaultLocale(_group);
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		for (int i = 0; i < _NUMBER_PAGES; i++) {
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			Assert.assertNotNull(draftLayout);
+
+			List<String> list = new ArrayList<>();
+
+			for (int j = 0; j < _NUMBER_FRAGMENT_ENTRY_LINKS; j++) {
+				String elementText = RandomTestUtil.randomString();
+
+				ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+					JSONUtil.put(
+						FragmentEntryProcessorConstants.
+							KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+						JSONUtil.put(
+							"element-text",
+							JSONUtil.put(languageId, elementText))
+					).toString(),
+					fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+					fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(), draftLayout,
+					fragmentEntry.getFragmentEntryKey(),
+					fragmentEntry.getType(), null, 0,
+					_segmentsExperienceLocalService.
+						fetchDefaultSegmentsExperienceId(
+							draftLayout.getPlid()));
+
+				list.add(elementText);
+			}
+
+			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+			String content = _getLayoutContent(layout, locale);
+
+			for (String text : list) {
+				Assert.assertTrue(
+					StringUtil.contains(content, text, StringPool.BLANK));
+			}
+
+			map.put(layout.getPlid(), content);
+		}
+
+		return map;
+	}
+
+	private Layout _addDisplayPageTemplateLayout() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				_group.getGroupId(), 0,
+				_portal.getClassNameId(AssetCategory.class.getName()), 0,
+				RandomTestUtil.randomString(), 0,
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
+		FragmentEntry fragmentEntry = _addFragmentEntry();
+
+		for (int i = 0; i < _NUMBER_FRAGMENT_ENTRY_LINKS; i++) {
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"element-text",
+						JSONUtil.put("mappedField", "AssetCategory_name"))
+				).toString(),
+				fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), draftLayout,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				null, 0,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
+		}
+
+		Assert.assertEquals(
+			_NUMBER_FRAGMENT_ENTRY_LINKS,
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksCountByPlid(
+				_group.getGroupId(), draftLayout.getPlid()));
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		Assert.assertEquals(
+			_NUMBER_FRAGMENT_ENTRY_LINKS,
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksCountByPlid(
+				_group.getGroupId(), layout.getPlid()));
+
+		return _layoutLocalService.getLayout(layout.getPlid());
+	}
+
+	private FragmentEntry _addFragmentEntry() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		String html =
+			"<h1 data-lfr-editable-id=\"element-text\" " +
+				"data-lfr-editable-type=\"text\">Heading Example</h1>";
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), null, serviceContext);
+
+		return _fragmentEntryLocalService.addFragmentEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			fragmentCollection.getFragmentCollectionId(), null,
+			RandomTestUtil.randomString(), null, html, null, false, null, null,
+			0, false, FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
 	private long[] _assertFragmentEntryLinksAndGetOriginalFragmentEntryLinkIds(
 		List<FragmentEntryLink> copiedFragmentEntryLinks,
 		List<FragmentEntryLink> sourceFragmentEntryLinks) {
@@ -704,6 +909,62 @@ public class LayoutCopyHelperTest {
 		return originalFragmentEntryLinkIds;
 	}
 
+	private void _assertLayoutContent(
+			Map<Long, String> layoutPlidMap, Locale locale)
+		throws Exception {
+
+		for (Map.Entry<Long, String> entry : layoutPlidMap.entrySet()) {
+			Long plid = entry.getKey();
+
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					fetchLayoutPageTemplateStructure(_group.getGroupId(), plid);
+
+			LayoutStructure layoutStructure = LayoutStructure.of(
+				layoutPageTemplateStructure.getData(
+					SegmentsExperienceConstants.KEY_DEFAULT));
+
+			Map<Long, LayoutStructureItem> fragmentEntryLinkIdMap =
+				layoutStructure.getFragmentLayoutStructureItems();
+
+			Assert.assertEquals(
+				fragmentEntryLinkIdMap.toString(), _NUMBER_FRAGMENT_ENTRY_LINKS,
+				fragmentEntryLinkIdMap.size());
+
+			for (long fragmentEntryLinkId : fragmentEntryLinkIdMap.keySet()) {
+				Assert.assertNotNull(
+					_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+						fragmentEntryLinkId));
+			}
+
+			Assert.assertEquals(
+				entry.getValue(),
+				_getLayoutContent(_layoutLocalService.getLayout(plid), locale));
+		}
+	}
+
+	private String _getLayoutContent(Layout layout, Locale locale)
+		throws Exception {
+
+		try (AutoCloseable autoCloseable =
+				_layoutServiceContextHelper.getServiceContextAutoCloseable(
+					layout)) {
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			return _layoutContentProvider.getLayoutContent(
+				themeDisplay.getRequest(), themeDisplay.getResponse(), layout,
+				locale);
+		}
+	}
+
+	private static final int _NUMBER_FRAGMENT_ENTRY_LINKS = 10;
+
+	private static final int _NUMBER_PAGES = 10;
+
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -711,7 +972,19 @@ public class LayoutCopyHelperTest {
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Inject
+	private EntityCache _entityCache;
+
+	@Inject
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
@@ -724,14 +997,29 @@ public class LayoutCopyHelperTest {
 		_layoutClassedModelUsageLocalService;
 
 	@Inject
+	private LayoutContentProvider _layoutContentProvider;
+
+	@Inject
 	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
+
+	@Inject
+	private MultiVMPool _multiVMPool;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject(
 		filter = "javax.portlet.name=" + LayoutPortletKeys.LAYOUT_TEST_PORTLET

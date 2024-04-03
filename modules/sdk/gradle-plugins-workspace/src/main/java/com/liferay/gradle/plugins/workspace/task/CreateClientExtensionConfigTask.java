@@ -20,6 +20,7 @@ import com.google.common.collect.Sets;
 import com.liferay.gradle.plugins.workspace.configurator.ClientExtensionProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtension;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.internal.util.JsonNodeUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.ResourceUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 
@@ -192,10 +193,14 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		pluginPackageProperties.put("name", _project.getName());
 
 		_writeToOutputFile(
-			classificationGrouping, getInputDockerfileFile(), getDockerFile(),
-			substitutionMap);
+			ResourceUtil.readString(
+				ResourceUtil.getLocalFileResolver(getInputDockerfileFile()),
+				ResourceUtil.getClassLoaderResolver(
+					CreateClientExtensionConfigTask.class,
+					_getTemplatePath(classificationGrouping, "Dockerfile"))),
+			getDockerFile(), substitutionMap);
 		_writeToOutputFile(
-			classificationGrouping, getInputLcpJsonFile(), getLcpJsonFile(),
+			_getLCPJsonFileContent(classificationGrouping), getLcpJsonFile(),
 			substitutionMap);
 
 		_addRequiredDeploymentContexts(
@@ -432,6 +437,82 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		return id;
 	}
 
+	private String _getLCPJsonFileContent(String classificationGrouping) {
+		String lcpJsonContent = ResourceUtil.readString(
+			ResourceUtil.getLocalFileResolver(getInputLcpJsonFile()));
+		String templateLCPJsonContent = ResourceUtil.readString(
+			ResourceUtil.getClassLoaderResolver(
+				CreateClientExtensionConfigTask.class,
+				_getTemplatePath(classificationGrouping, "LCP.json")));
+
+		if (StringUtil.isBlank(lcpJsonContent) &&
+			StringUtil.isBlank(templateLCPJsonContent)) {
+
+			return null;
+		}
+
+		if (StringUtil.isBlank(lcpJsonContent)) {
+			return templateLCPJsonContent;
+		}
+
+		if (StringUtil.isBlank(templateLCPJsonContent)) {
+			return lcpJsonContent;
+		}
+
+		try {
+			Logger logger = _project.getLogger();
+
+			if (logger.isInfoEnabled()) {
+				logger.info("Merging LCP.json with the default values");
+			}
+
+			JsonNode templateJsonNode = _objectMapper.readTree(
+				templateLCPJsonContent);
+
+			JsonNode kindNodeJsonNode = templateJsonNode.get("kind");
+
+			String oldKind = kindNodeJsonNode.asText();
+
+			JsonNodeUtil.overrideJsonNodeValues(
+				templateJsonNode, _objectMapper.readTree(lcpJsonContent));
+
+			kindNodeJsonNode = templateJsonNode.get("kind");
+
+			String newKind = kindNodeJsonNode.asText();
+
+			if (!Objects.equals(oldKind, newKind)) {
+				throw new GradleException(
+					String.format(
+						"LCP.json: %s must be %s", StringUtil.quote("kind"),
+						StringUtil.quote(oldKind)));
+			}
+
+			ObjectWriter objectWriter =
+				_objectMapper.writerWithDefaultPrettyPrinter();
+
+			String content = objectWriter.writeValueAsString(templateJsonNode);
+
+			if (logger.isInfoEnabled()) {
+				File buildDir = _project.getBuildDir();
+
+				File projectDir = _project.getProjectDir();
+
+				Path projectDirPath = projectDir.toPath();
+
+				logger.info(
+					"See {}/{}/LCP.json for the merged file",
+					projectDirPath.relativize(buildDir.toPath()),
+					ClientExtensionProjectConfigurator.
+						CLIENT_EXTENSION_BUILD_DIR);
+			}
+
+			return content;
+		}
+		catch (IOException ioException) {
+			throw new GradleException("LCP.json is not valid JSON");
+		}
+	}
+
 	private List<String> _getMatchingPaths(Path basePath, String glob) {
 		FileSystem fileSystem = basePath.getFileSystem();
 
@@ -493,6 +574,14 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		return pluginPackageProperties;
 	}
 
+	private String _getTemplatePath(
+		String classificationGrouping, String fileName) {
+
+		return String.format(
+			"dependencies/templates/%s/%s.tpl", classificationGrouping,
+			fileName);
+	}
+
 	private void _inlineFrontendTokenDefinitionJSON(
 		ClientExtension clientExtension) {
 
@@ -509,7 +598,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 			ResourceUtil.getLocalFileResolver(
 				_project.file(frontendTokenDefinitionFile)));
 
-		if (json.isEmpty()) {
+		if (StringUtil.isBlank(json)) {
 			json = "{}";
 		}
 
@@ -792,30 +881,22 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	}
 
 	private void _writeToOutputFile(
-		String classificationGrouping, File inputFile, File outputFile,
-		Map<String, String> substitutionMap) {
+		String content, File outputFile, Map<String, String> substitutionMap) {
+
+		if (content == null) {
+			throw new GradleException(
+				String.format(
+					"Required file %s not found in project %s",
+					StringUtil.quote(outputFile.getName()),
+					StringUtil.quote(_project.getName())));
+		}
 
 		try {
-			String content = ResourceUtil.readString(
-				ResourceUtil.getLocalFileResolver(inputFile),
-				ResourceUtil.getClassLoaderResolver(
-					CreateClientExtensionConfigTask.class,
-					String.format(
-						"dependencies/templates/%s/%s.tpl",
-						classificationGrouping, inputFile.getName())));
-
 			for (Map.Entry<String, String> entry : substitutionMap.entrySet()) {
 				content = content.replace(entry.getKey(), entry.getValue());
 			}
 
 			Files.write(outputFile.toPath(), content.getBytes());
-		}
-		catch (GradleException gradleException) {
-			throw new GradleException(
-				String.format(
-					"Required file %s not found in project %s",
-					StringUtil.quote(inputFile.getName()),
-					StringUtil.quote(_project.getName())));
 		}
 		catch (IOException ioException) {
 			throw new GradleException(

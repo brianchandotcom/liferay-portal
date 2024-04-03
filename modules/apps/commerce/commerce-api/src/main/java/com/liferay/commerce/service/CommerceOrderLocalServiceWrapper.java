@@ -258,7 +258,8 @@ public class CommerceOrderLocalServiceWrapper
 
 	@Override
 	public void deleteCommerceOrdersByAccountId(
-		long commerceAccountId, java.util.Date date, int status) {
+			long commerceAccountId, java.util.Date date, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_commerceOrderLocalService.deleteCommerceOrdersByAccountId(
 			commerceAccountId, date, status);

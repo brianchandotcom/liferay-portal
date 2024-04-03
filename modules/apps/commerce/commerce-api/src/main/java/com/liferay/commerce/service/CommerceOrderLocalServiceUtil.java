@@ -246,7 +246,8 @@ public class CommerceOrderLocalServiceUtil {
 	}
 
 	public static void deleteCommerceOrdersByAccountId(
-		long commerceAccountId, java.util.Date date, int status) {
+			long commerceAccountId, java.util.Date date, int status)
+		throws PortalException {
 
 		getService().deleteCommerceOrdersByAccountId(
 			commerceAccountId, date, status);

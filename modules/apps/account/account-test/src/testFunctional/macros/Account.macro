@@ -331,8 +331,6 @@ definition {
 			IFrame.selectTagFrame();
 
 			for (var tagName : list ${tagNameList}) {
-				var tagName = StringUtil.lowerCase(${tagName});
-
 				Check(
 					key_rowEntry = ${tagName},
 					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
@@ -344,8 +342,6 @@ definition {
 		}
 		else {
 			for (var tagName : list ${tagNameList}) {
-				var tagName = StringUtil.lowerCase(${tagName});
-
 				AssetCategorization.addTag(tagName = ${tagName});
 			}
 		}

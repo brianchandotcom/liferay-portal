@@ -1938,8 +1938,6 @@ definition {
 		}
 		else {
 			for (var tagName : list ${tagNameList}) {
-				var tagName = StringUtil.lowerCase(${tagName});
-
 				AssetCategorization.addTag(tagName = ${tagName});
 			}
 		}
@@ -2587,8 +2585,6 @@ definition {
 		IFrame.selectTagFrame();
 
 		for (var tagName : list ${tagNameList}) {
-			var tagName = StringUtil.lowerCase(${tagName});
-
 			Check(
 				key_rowEntry = ${tagName},
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
@@ -2601,8 +2597,6 @@ definition {
 			value1 = "Done");
 
 		for (var tagName : list ${tagNameList}) {
-			var tagName = StringUtil.lowerCase(${tagName});
-
 			AssertTextEquals(
 				key_tagName = ${tagName},
 				locator1 = "AssetCategorization#TAG",

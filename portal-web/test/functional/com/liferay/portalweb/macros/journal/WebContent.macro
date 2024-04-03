@@ -2469,8 +2469,6 @@ definition {
 		Click(locator1 = "Icon#INFO");
 
 		for (var tagName : list ${tagNameList}) {
-			var tagName = StringUtil.lowerCase(${tagName});
-
 			AssertElementNotPresent(
 				key_tagName = ${tagName},
 				locator1 = "WC#SIDEBAR_TAG");
@@ -2670,8 +2668,6 @@ definition {
 
 	@summary = "Default summary"
 	macro viewTagFromInfoPanel(webContentTitle = null) {
-		var tagName = StringUtil.lowerCase(${tagName});
-
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Check(

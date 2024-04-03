@@ -4245,7 +4245,7 @@ definition {
 	macro viewNoTagInfo() {
 		for (var tagName : list ${tagName}) {
 			AssertElementNotPresent(
-				key_tagName = StringUtil.lowerCase(${tagName}),
+				key_tagName = ${tagName},
 				locator1 = "DocumentsAndMedia#TAG");
 		}
 	}
@@ -4791,8 +4791,6 @@ definition {
 
 		for (var tagName : list ${tagName}) {
 			ScrollWebElementIntoView(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RATING");
-
-			var tagName = StringUtil.lowerCase(${tagName});
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TAGS",

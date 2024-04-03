@@ -2213,8 +2213,6 @@ definition {
 		UserNavigator.gotoUser(userScreenName = "usersn");
 
 		for (var tagName : list "global tag name 1,global tag name 2") {
-			var tagName = StringUtil.lowerCase(${tagName});
-
 			AssetCategorization.viewTag(tagName = ${tagName});
 		}
 
@@ -2244,8 +2242,6 @@ definition {
 		UserNavigator.gotoUser(userScreenName = "usersn");
 
 		for (var tagName : list "global tag name 1,global tag name 2") {
-			var tagName = StringUtil.lowerCase(${tagName});
-
 			AssetCategorization.viewTag(tagName = ${tagName});
 		}
 	}

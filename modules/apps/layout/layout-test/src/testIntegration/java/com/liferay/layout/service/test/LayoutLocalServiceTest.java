@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -450,21 +451,25 @@ public class LayoutLocalServiceTest {
 
 		Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
 
-		friendlyURLMap.put(
-			LocaleUtil.GERMANY,
+		String friendlyURL = _friendlyURLNormalizer.normalizeWithEncoding(
 			StringPool.SLASH + RandomTestUtil.randomString());
+
+		friendlyURLMap.put(LocaleUtil.GERMANY, friendlyURL);
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setUserId(userId);
 
-		_layoutLocalService.updateLayout(
+		layout = _layoutLocalService.updateLayout(
 			_group.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getParentLayoutId(), layout.getNameMap(),
 			layout.getTitleMap(), layout.getDescriptionMap(),
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
 			layout.isHidden(), friendlyURLMap, layout.getIconImage(), null, 0,
 			0, 0, serviceContext);
+
+		Assert.assertEquals(
+			friendlyURL, layout.getFriendlyURL(LocaleUtil.GERMANY));
 	}
 
 	@Test
@@ -503,13 +508,22 @@ public class LayoutLocalServiceTest {
 			_group.getGroupId(), false, layout.getLayoutId(),
 			"test_WAR_testtheme", "01", StringPool.BLANK);
 
+		Assert.assertEquals(StringPool.BLANK, layout.getCss());
+		Assert.assertEquals("01", layout.getColorSchemeId());
+		Assert.assertEquals("test_WAR_testtheme", layout.getThemeId());
+
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
 		layoutTypePortlet.setLayoutTemplateId(
 			layout.getUserId(), "1_column", false);
 
-		_layoutLocalService.updateLayout(layout);
+		layout = _layoutLocalService.updateLayout(layout);
+
+		layoutTypePortlet = (LayoutTypePortlet)layout.getLayoutType();
+
+		Assert.assertEquals(
+			"1_column", layoutTypePortlet.getLayoutTemplateId());
 	}
 
 	@Test(expected = MasterLayoutException.class)
@@ -613,6 +627,9 @@ public class LayoutLocalServiceTest {
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@DeleteAfterTestRun
 	private Group _group;

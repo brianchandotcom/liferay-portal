@@ -133,6 +133,8 @@ public class SugarCRMObjectEntryManagerImplTest
 				ObjectDefinitionConstants.STORAGE_TYPE_SUGARCRM,
 				Collections.emptyList());
 
+		_objectDefinition.setExternalReferenceCode("Contacts");
+
 		ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
 			).externalReferenceCode(
@@ -162,8 +164,6 @@ public class SugarCRMObjectEntryManagerImplTest
 			).build());
 
 		_objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
-
-		_objectDefinition.setExternalReferenceCode("Contacts");
 
 		_objectDefinition = objectDefinitionLocalService.updateObjectDefinition(
 			_objectDefinition);

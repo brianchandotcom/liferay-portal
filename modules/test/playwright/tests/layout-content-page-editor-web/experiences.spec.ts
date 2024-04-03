@@ -132,3 +132,40 @@ test('creates new experiences as expected', async ({
 
 	await expect(page.getByText('Heading Example')).toBeVisible();
 });
+
+test('keeps modal open when canceling segment creation', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+
+	// Create page and go to edit mode
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+
+	// Open experience creation modal and go to create new segment
+
+	await pageEditorPage.experienceSelector.click();
+
+	await page.getByText('Select Experience').waitFor();
+	await page.getByLabel('New Experience').click();
+
+	await page.getByText('New Segment').waitFor();
+	await page.getByText('New Segment').click();
+
+	// Cancel segment creation and check we are back to page editor
+
+	await page.getByText('No Conditions yet').waitFor();
+
+	await page.getByText('Cancel', {exact: true}).click();
+
+	await expect(
+		page.locator('.modal-title', {hasText: 'New Experience'})
+	).toBeVisible();
+});

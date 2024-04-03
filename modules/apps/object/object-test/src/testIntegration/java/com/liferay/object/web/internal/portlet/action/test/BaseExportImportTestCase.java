@@ -5,8 +5,12 @@
 
 package com.liferay.object.web.internal.portlet.action.test;
 
+import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
@@ -22,7 +26,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.File;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -35,10 +39,13 @@ import com.liferay.portal.upload.test.util.UploadTestUtil;
 
 import java.util.Objects;
 
+import org.junit.Before;
+
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockMultipartHttpServletRequest;
 
@@ -47,56 +54,216 @@ import org.springframework.mock.web.MockMultipartHttpServletRequest;
  */
 public abstract class BaseExportImportTestCase {
 
+	@Before
+	public void setUp() throws Exception {
+		user = TestPropsValues.getUser();
+
+		ObjectDefinitionResource.Builder builder =
+			objectDefinitionResourceFactory.create();
+
+		objectDefinitionResource = builder.user(
+			user
+		).build();
+
+		Class<?> clazz = getClazz();
+
+		defaultDraftObjectDefinitionJSON = StringUtil.read(
+			clazz.getResourceAsStream(
+				"dependencies/test-default-draft-object-definition.json"));
+		defaultObjectRelationshipJSON = StringUtil.read(
+			clazz.getResourceAsStream(
+				"dependencies/test-default-object-relationship.json"));
+	}
+
 	public void testExportImport(
 			String actualFileName, String expectedFileName,
 			String externalReferenceCode, String name)
 		throws Exception {
 
+		Class<?> clazz = getClazz();
+
+		testExportImportJSON(
+			StringUtil.read(
+				clazz.getResourceAsStream("dependencies/" + actualFileName)),
+			StringUtil.read(
+				clazz.getResourceAsStream("dependencies/" + expectedFileName)),
+			externalReferenceCode, name);
+	}
+
+	public void testExportImportJSON(
+			String actualJSON, String expectedJSON,
+			String externalReferenceCode, String name)
+		throws Exception {
+
 		// MVCActionCommand
+
+		_import(externalReferenceCode, actualJSON, name);
+
+		// MVCResourceCommand
+
+		MVCResourceCommand mvcResourceCommand = getMVCResourceCommand();
+
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			new MockLiferayResourceRequest();
+
+		mockLiferayResourceRequest.addParameter(
+			getIdentifierName(), String.valueOf(getId(name)));
+		mockLiferayResourceRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		MockLiferayResourceResponse mockLiferayResourceResponse =
+			new MockLiferayResourceResponse();
+
+		mvcResourceCommand.serveResource(
+			mockLiferayResourceRequest, mockLiferayResourceResponse);
+
+		JSONAssert.assertEquals(
+			expectedJSON,
+			String.valueOf(
+				mockLiferayResourceResponse.getPortletOutputStream()),
+			JSONCompareMode.LENIENT);
+	}
+
+	public void testFailedImportJSON(
+			String actualJSON, String expectedJSON,
+			String externalReferenceCode, String name)
+		throws Exception {
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			_import(externalReferenceCode, actualJSON, name);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			(MockHttpServletResponse)
+				mockLiferayPortletActionResponse.getHttpServletResponse();
+
+		JSONAssert.assertEquals(
+			expectedJSON, mockHttpServletResponse.getContentAsString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	protected JSONObject createOneToManyObjectRelationship(
+			String objectDefinitionExternalReferenceCode1,
+			String objectDefinitionExternalReferenceCode2,
+			String objectDefinitionName2, String objectRelationshipName)
+		throws Exception {
+
+		return jsonFactory.createJSONObject(
+			defaultObjectRelationshipJSON
+		).put(
+			"edge", true
+		).put(
+			"name", objectRelationshipName
+		).put(
+			"objectDefinitionExternalReferenceCode1",
+			objectDefinitionExternalReferenceCode1
+		).put(
+			"objectDefinitionExternalReferenceCode2",
+			objectDefinitionExternalReferenceCode2
+		).put(
+			"objectDefinitionName2", objectDefinitionName2
+		).put(
+			"type", "oneToMany"
+		);
+	}
+
+	protected abstract ClassLoader getClassLoader();
+
+	protected abstract Class<?> getClazz();
+
+	protected abstract long getId(String name) throws Exception;
+
+	protected abstract String getIdentifierName();
+
+	protected abstract String getJSONName();
+
+	protected abstract MVCActionCommand getMVCActionCommand();
+
+	protected abstract MVCResourceCommand getMVCResourceCommand();
+
+	protected String defaultDraftObjectDefinitionJSON;
+	protected String defaultObjectRelationshipJSON;
+
+	@Inject
+	protected JSONFactory jsonFactory;
+
+	protected ObjectDefinitionResource objectDefinitionResource;
+
+	@Inject
+	protected ObjectDefinitionResource.Factory objectDefinitionResourceFactory;
+
+	protected User user;
+
+	private ThemeDisplay _getThemeDisplay() throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		Layout layout = new LayoutImpl();
+
+		layout.setType(LayoutConstants.TYPE_CONTROL_PANEL);
+
+		themeDisplay.setLayout(layout);
+
+		themeDisplay.setLocale(LocaleUtil.US);
+		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
+		themeDisplay.setSiteDefaultLocale(LocaleUtil.US);
+		themeDisplay.setUser(user);
+
+		return themeDisplay;
+	}
+
+	private MockLiferayPortletActionResponse _import(
+			String externalReferenceCode, String json, String name)
+		throws Exception {
 
 		MVCActionCommand mvcActionCommand = getMVCActionCommand();
 
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
 			new MockMultipartHttpServletRequest();
 
-		Class<?> clazz = getClazz();
-
-		byte[] bytes = _file.getBytes(
-			clazz.getResourceAsStream("dependencies/" + actualFileName));
-
-		mockMultipartHttpServletRequest.addFile(
-			new MockMultipartFile(actualFileName, bytes));
-
-		mockMultipartHttpServletRequest.setCharacterEncoding(StringPool.UTF8);
-
-		String boundary = "WebKitFormBoundary" + StringUtil.randomString();
-
-		String start = StringBundler.concat(
-			StringPool.DOUBLE_DASH, boundary,
-			"\r\nContent-Disposition:form-data;name=\"", getJSONName(),
-			"\";filename=\"", actualFileName,
-			"\";\r\nContent-type:application/json\r\n\r\n");
-		String end = StringBundler.concat(
-			"\r\n--", boundary, StringPool.DOUBLE_DASH);
-
-		mockMultipartHttpServletRequest.setContent(
-			ArrayUtil.append(start.getBytes(), bytes, end.getBytes()));
-
-		mockMultipartHttpServletRequest.setContentType(
-			MediaType.MULTIPART_FORM_DATA_VALUE + "; boundary=" + boundary);
-
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest(
 				mockMultipartHttpServletRequest);
 
-		if (Validator.isNotNull(externalReferenceCode)) {
-			mockLiferayPortletActionRequest.addParameter(
-				"externalReferenceCode", externalReferenceCode);
+		if (JSONUtil.isJSONArray(json)) {
+			mockMultipartHttpServletRequest.addParameter(
+				"objectDefinitions", json);
+		}
+		else {
+			byte[] bytes = json.getBytes();
+
+			mockMultipartHttpServletRequest.addFile(
+				new MockMultipartFile("import-file.json", bytes));
+
+			mockMultipartHttpServletRequest.setCharacterEncoding(
+				StringPool.UTF8);
+
+			String boundary = "WebKitFormBoundary" + StringUtil.randomString();
+
+			String start = StringBundler.concat(
+				StringPool.DOUBLE_DASH, boundary,
+				"\r\nContent-Disposition:form-data;name=\"", getJSONName(),
+				"\";filename=\"import-file.json",
+				"\";\r\nContent-type:application/json\r\n\r\n");
+			String end = StringBundler.concat(
+				"\r\n--", boundary, StringPool.DOUBLE_DASH);
+
+			mockMultipartHttpServletRequest.setContent(
+				ArrayUtil.append(start.getBytes(), bytes, end.getBytes()));
+
+			mockMultipartHttpServletRequest.setContentType(
+				MediaType.MULTIPART_FORM_DATA_VALUE + "; boundary=" + boundary);
+
+			if (Validator.isNotNull(externalReferenceCode)) {
+				mockLiferayPortletActionRequest.addParameter(
+					"externalReferenceCode", externalReferenceCode);
+			}
+
+			mockLiferayPortletActionRequest.addParameter("name", name);
 		}
 
-		mockLiferayPortletActionRequest.addParameter("name", name);
 		mockLiferayPortletActionRequest.addParameter(
 			"redirect", RandomTestUtil.randomString());
+		mockLiferayPortletActionRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG, null);
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
@@ -123,70 +290,14 @@ public abstract class BaseExportImportTestCase {
 					return method.invoke(_portal, args);
 				}));
 
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
+
 		mvcActionCommand.processAction(
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
 
-		// MVCResourceCommand
-
-		MVCResourceCommand mvcResourceCommand = getMVCResourceCommand();
-
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			new MockLiferayResourceRequest();
-
-		mockLiferayResourceRequest.addParameter(
-			getIdentifierName(), String.valueOf(getId(name)));
-		mockLiferayResourceRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
-
-		mvcResourceCommand.serveResource(
-			mockLiferayResourceRequest, mockLiferayResourceResponse);
-
-		JSONAssert.assertEquals(
-			StringUtil.read(
-				clazz.getResourceAsStream("dependencies/" + expectedFileName)),
-			String.valueOf(
-				mockLiferayResourceResponse.getPortletOutputStream()),
-			JSONCompareMode.LENIENT);
+		return mockLiferayPortletActionResponse;
 	}
-
-	protected abstract ClassLoader getClassLoader();
-
-	protected abstract Class<?> getClazz();
-
-	protected abstract long getId(String name) throws Exception;
-
-	protected abstract String getIdentifierName();
-
-	protected abstract String getJSONName();
-
-	protected abstract MVCActionCommand getMVCActionCommand();
-
-	protected abstract MVCResourceCommand getMVCResourceCommand();
-
-	protected User user;
-
-	private ThemeDisplay _getThemeDisplay() throws Exception {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		Layout layout = new LayoutImpl();
-
-		layout.setType(LayoutConstants.TYPE_CONTROL_PANEL);
-
-		themeDisplay.setLayout(layout);
-
-		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
-		themeDisplay.setSiteDefaultLocale(LocaleUtil.US);
-		themeDisplay.setUser(user);
-
-		return themeDisplay;
-	}
-
-	@Inject
-	private File _file;
 
 	@Inject
 	private Portal _portal;

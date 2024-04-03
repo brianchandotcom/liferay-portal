@@ -48,6 +48,7 @@ public class ObjectFolderExportImportTest extends BaseExportImportTestCase {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		user = TestPropsValues.getUser();
 

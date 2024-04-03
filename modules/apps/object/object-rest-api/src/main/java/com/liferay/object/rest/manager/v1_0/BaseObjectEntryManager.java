@@ -380,21 +380,6 @@ public abstract class BaseObjectEntryManager {
 	@Reference
 	protected UserLocalService userLocalService;
 
-	private ObjectField _fetchObjectFieldByExternalReferenceCode(
-		String externalReferenceCode, List<ObjectField> objectFields) {
-
-		for (ObjectField objectField : objectFields) {
-			if (Objects.equals(
-					externalReferenceCode,
-					objectField.getExternalReferenceCode())) {
-
-				return objectField;
-			}
-		}
-
-		return null;
-	}
-
 	private ListEntry _fetchListEntry(
 		DTOConverterContext dtoConverterContext, String externalReferenceCode,
 		ObjectDefinition objectDefinition, ObjectField objectField) {
@@ -420,6 +405,21 @@ public abstract class BaseObjectEntryManager {
 						listTypeEntry.getNameMap()));
 			}
 		};
+	}
+
+	private ObjectField _fetchObjectFieldByExternalReferenceCode(
+		String externalReferenceCode, List<ObjectField> objectFields) {
+
+		for (ObjectField objectField : objectFields) {
+			if (Objects.equals(
+					externalReferenceCode,
+					objectField.getExternalReferenceCode())) {
+
+				return objectField;
+			}
+		}
+
+		return null;
 	}
 
 	private boolean _hasPortletResourcePermission(

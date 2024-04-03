@@ -85,6 +85,14 @@ public interface LayoutUtilityPageEntryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
+			String externalReferenceCode, long userId, long groupId,
+			String friendlyURL, long plid, long previewFileEntryId,
+			boolean defaultLayoutUtilityPageEntry, String name, String type,
+			long masterLayoutPlid, boolean privateLayout,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
 			long userId, long groupId, long sourceLayoutUtilityPageEntryId,
 			ServiceContext serviceContext)

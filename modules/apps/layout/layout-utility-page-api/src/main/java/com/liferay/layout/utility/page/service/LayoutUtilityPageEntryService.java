@@ -53,6 +53,14 @@ public interface LayoutUtilityPageEntryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
+			String externalReferenceCode, long groupId, String friendlyURL,
+			long plid, long previewFileEntryId,
+			boolean defaultLayoutUtilityPageEntry, String name, String type,
+			long masterLayoutPlid, boolean privateLayout,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
 			long groupId, long sourceLayoutUtilityPageEntryId,
 			ServiceContext serviceContext)

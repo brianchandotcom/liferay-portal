@@ -111,7 +111,7 @@ public class ObjectDefinitionUtil {
 		).put(
 			"CommerceReturn", "/commerce-returns"
 		).put(
-			"CommerceReturnItem", "/commerce-return-Items"
+			"CommerceReturnItem", "/commerce-return-items"
 		).put(
 			"FDSAction", "/data-set-manager/actions"
 		).put(

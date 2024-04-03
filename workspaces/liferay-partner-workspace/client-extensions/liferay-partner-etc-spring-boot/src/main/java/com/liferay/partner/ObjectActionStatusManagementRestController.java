@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequestMapping("/statusManagement")
 @RestController
-public class StatusManagementController extends BaseRestController {
+public class ObjectActionStatusManagementRestController
+	extends BaseRestController {
 
 	@GetMapping
 	public void closeCompleteRequest() {

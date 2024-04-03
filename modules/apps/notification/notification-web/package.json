@@ -15,7 +15,7 @@
 		"frontend-js-web": "*",
 		"react": "16.12.0"
 	},
-	"main": "js/index.js",
+	"main": "js/index.ts",
 	"name": "@liferay/notification-web",
 	"private": true,
 	"scripts": {

@@ -15,7 +15,7 @@
 		"axe-core": "4.2.0",
 		"react": "16.12.0"
 	},
-	"main": "index.js",
+	"main": "index.tsx",
 	"name": "@liferay/frontend-js-a11y-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

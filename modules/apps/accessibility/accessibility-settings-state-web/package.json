@@ -2,7 +2,7 @@
 	"dependencies": {
 		"@liferay/frontend-js-state-web": "*"
 	},
-	"main": "index.js",
+	"main": "index.ts",
 	"name": "@liferay/accessibility-settings-state-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

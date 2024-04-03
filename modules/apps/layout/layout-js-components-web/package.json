@@ -24,7 +24,7 @@
 		"react-dom": "16.12.0",
 		"uuid": "9.0.0"
 	},
-	"main": "js/index.js",
+	"main": "js/index.ts",
 	"name": "@liferay/layout-js-components-web",
 	"optionalDependencies": {
 		"fsevents": "^1.2.7"

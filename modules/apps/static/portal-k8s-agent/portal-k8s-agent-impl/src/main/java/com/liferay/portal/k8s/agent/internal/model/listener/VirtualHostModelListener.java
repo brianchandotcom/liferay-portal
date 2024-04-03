@@ -5,9 +5,14 @@
 
 package com.liferay.portal.k8s.agent.internal.model.listener;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
+import com.liferay.portal.k8s.agent.internal.threadlocal.AgentPortalK8sThreadLocal;
 import com.liferay.portal.k8s.agent.internal.util.CompanyConfigMapUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -16,9 +21,6 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
-import com.liferay.portal.util.PropsValues;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -35,11 +37,27 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 		Company company = _companyLocalService.fetchCompanyById(
 			virtualHost.getCompanyId());
 
+		if (company == null) {
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"After create virtual host ", virtualHost.getHostname(),
+					" for virtual instance ", company.getWebId()));
+		}
+
 		PortalK8sConfigMapModifier portalK8sConfigMapModifier =
 			_portalK8sConfigMapModifierSnapshot.get();
 
-		CompanyConfigMapUtil.modifyConfigMap(
-			company, portalK8sConfigMapModifier, _virtualHostLocalService);
+		try (SafeCloseable safeCloseable =
+				AgentPortalK8sThreadLocal.
+					executeOnCurrentNodeWithSafeCloseable()) {
+
+			CompanyConfigMapUtil.modifyConfigMap(
+				company, portalK8sConfigMapModifier, _virtualHostLocalService);
+		}
 	}
 
 	@Override
@@ -49,18 +67,27 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 		Company company = _companyLocalService.fetchCompanyById(
 			virtualHost.getCompanyId());
 
-		if ((company == null) ||
-			Objects.equals(
-				company.getWebId(), PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-
+		if (company == null) {
 			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"After remove virtual host ", virtualHost.getHostname(),
+					" for virtual instance ", company.getWebId()));
 		}
 
 		PortalK8sConfigMapModifier portalK8sConfigMapModifier =
 			_portalK8sConfigMapModifierSnapshot.get();
 
-		CompanyConfigMapUtil.modifyConfigMap(
-			company, portalK8sConfigMapModifier, _virtualHostLocalService);
+		try (SafeCloseable safeCloseable =
+				AgentPortalK8sThreadLocal.
+					executeOnCurrentNodeWithSafeCloseable()) {
+
+			CompanyConfigMapUtil.modifyConfigMap(
+				company, portalK8sConfigMapModifier, _virtualHostLocalService);
+		}
 	}
 
 	@Override
@@ -71,11 +98,27 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 		Company company = _companyLocalService.fetchCompanyById(
 			virtualHost.getCompanyId());
 
+		if (company == null) {
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"After update virtual host ", virtualHost.getHostname(),
+					" for virtual instance ", company.getWebId()));
+		}
+
 		PortalK8sConfigMapModifier portalK8sConfigMapModifier =
 			_portalK8sConfigMapModifierSnapshot.get();
 
-		CompanyConfigMapUtil.modifyConfigMap(
-			company, portalK8sConfigMapModifier, _virtualHostLocalService);
+		try (SafeCloseable safeCloseable =
+				AgentPortalK8sThreadLocal.
+					executeOnCurrentNodeWithSafeCloseable()) {
+
+			CompanyConfigMapUtil.modifyConfigMap(
+				company, portalK8sConfigMapModifier, _virtualHostLocalService);
+		}
 	}
 
 	@Activate
@@ -87,6 +130,9 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 			company -> CompanyConfigMapUtil.modifyConfigMap(
 				company, portalK8sConfigMapModifier, _virtualHostLocalService));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		VirtualHostModelListener.class);
 
 	private static final Snapshot<PortalK8sConfigMapModifier>
 		_portalK8sConfigMapModifierSnapshot = new Snapshot<>(

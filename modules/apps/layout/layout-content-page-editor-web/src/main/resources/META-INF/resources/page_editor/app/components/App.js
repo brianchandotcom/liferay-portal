@@ -23,6 +23,7 @@ import {
 } from '../contexts/KeyboardMovementContext';
 import {LayoutKeyboardContextProvider} from '../contexts/LayoutKeyboardContext';
 import {LocalConfigContextProvider} from '../contexts/LocalConfigContext';
+import {PortletContentContextProvider} from '../contexts/PortletContentContext';
 import {StoreContextProvider} from '../contexts/StoreContext';
 import AppHooks from '../hooks/app_hooks/index';
 import {reducer} from '../reducers/index';
@@ -75,23 +76,25 @@ export default function App({state}) {
 
 											<KeyboardMovementText />
 
-											<LocalConfigContextProvider>
-												<GlobalContextProvider>
-													<CommonStylesManager />
+											<PortletContentContextProvider>
+												<LocalConfigContextProvider>
+													<GlobalContextProvider>
+														<CommonStylesManager />
 
-													<StyleBookContextProvider>
-														<Sidebar />
+														<StyleBookContextProvider>
+															<Sidebar />
 
-														<LayoutKeyboardContextProvider>
-															<LayoutViewport />
-														</LayoutKeyboardContextProvider>
+															<LayoutKeyboardContextProvider>
+																<LayoutViewport />
+															</LayoutKeyboardContextProvider>
 
-														<LayoutBreadcrumbs />
+															<LayoutBreadcrumbs />
 
-														<ItemConfigurationSidebar />
-													</StyleBookContextProvider>
-												</GlobalContextProvider>
-											</LocalConfigContextProvider>
+															<ItemConfigurationSidebar />
+														</StyleBookContextProvider>
+													</GlobalContextProvider>
+												</LocalConfigContextProvider>
+											</PortletContentContextProvider>
 										</KeyboardMovementContextProvider>
 									</FormValidationContextProvider>
 								</DisplayPagePreviewItemContextProvider>

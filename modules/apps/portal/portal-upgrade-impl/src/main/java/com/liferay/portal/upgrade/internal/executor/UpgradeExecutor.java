@@ -216,7 +216,7 @@ public class UpgradeExecutor {
 				bundleSymbolicName);
 
 			if (release != null) {
-				release.setVerified(_isInitialRelease(upgradeInfos));
+				release.setVerified(false);
 				release.setState(state);
 
 				_releaseLocalService.updateRelease(release);

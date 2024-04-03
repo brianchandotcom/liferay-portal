@@ -22,4 +22,7 @@ public class SearchContextAttributes {
 	public static final String ATTRIBUTE_KEY_LUCENE_SYNTAX =
 		"search.lucene.syntax";
 
+	public static final String ATTRIBUTE_KEY_RETAIN_FACET_SELECTIONS =
+		"search.retain.facet.selections";
+
 }

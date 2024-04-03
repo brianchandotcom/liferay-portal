@@ -82,7 +82,7 @@ const LiferayExperienceCloudModal = ({
 					<div className="d-flex justify-content-between">
 						<h4 className="ml-4 mt-4 text-brand-primary text-paragraph">
 							{i18n
-								.translate('liferay-experience-cloud-setup')
+								.translate('liferay-saas-setup')
 								.toUpperCase()}
 						</h4>
 
@@ -97,7 +97,7 @@ const LiferayExperienceCloudModal = ({
 					</div>
 
 					<h2 className="ml-4 text-neutral-10">
-						{i18n.translate('lxc-project-id')}
+						{i18n.translate('liferay-saas-project-id')}
 					</h2>
 
 					<div className="mx-2">
@@ -126,7 +126,7 @@ const LiferayExperienceCloudModal = ({
 						) : (
 							<p className="mb-2 ml-4 mt-4">
 								{i18n.translate(
-									'please-confirm-the-lxc-project-id'
+									'please-confirm-the-liferay-saas-project-id'
 								)}
 							</p>
 						)}

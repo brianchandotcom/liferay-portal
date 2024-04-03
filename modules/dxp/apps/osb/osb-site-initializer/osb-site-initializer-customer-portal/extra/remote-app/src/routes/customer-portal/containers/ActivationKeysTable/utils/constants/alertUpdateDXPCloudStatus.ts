@@ -8,6 +8,6 @@ import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType
 
 export const ALERT_UPDATE_DXP_CLOUD_STATUS = {
 	[ALERT_DOWNLOAD_TYPE.success]: i18n.translate(
-		'your-lxc-sm-environments-are-ready'
+		'your-liferay-paas-environments-are-ready'
 	),
 };

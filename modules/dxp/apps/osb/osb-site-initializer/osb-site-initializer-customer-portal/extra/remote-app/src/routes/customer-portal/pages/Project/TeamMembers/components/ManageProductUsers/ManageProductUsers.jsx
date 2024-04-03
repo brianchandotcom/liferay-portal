@@ -46,7 +46,7 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 						accountSubscriptionGroupLiferayExperienceCloud.manageContactsURL
 					}
 					title={i18n.translate(
-						'manage-liferay-experience-cloud-users'
+						'manage-liferay-saas-users'
 					)}
 				/>
 			);
@@ -62,7 +62,7 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 									href={manageContactsURL}
 									key={index}
 									title={i18n.translate(
-										'manage-lxc-sm-users'
+										'manage-liferay-paas-users'
 									)}
 								/>
 							);
@@ -95,7 +95,7 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 						{featureFlags.includes('LPS-153478') &&
 						accountSubscriptionGroupLiferayExperienceCloud
 							? i18n.translate(
-									'manage-liferay-experience-cloud-users'
+									'manage-liferay-saas-users'
 							  )
 							: i18n.translate('manage-product-users')}
 					</h4>

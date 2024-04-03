@@ -133,7 +133,7 @@ const ModalDXPCActivationStatus = ({
 				<div className="bg-neutral-1 cp-liferay-experience-cloud-status-modal">
 					<div className="d-flex justify-content-between">
 						<h4 className="ml-4 mt-4 text-brand-primary text-paragraph">
-							{i18n.translate('lxc-sm-setup').toUpperCase()}
+							{i18n.translate('liferay-paas-setup').toUpperCase()}
 						</h4>
 
 						<div className="mr-4 mt-3">
@@ -152,7 +152,7 @@ const ModalDXPCActivationStatus = ({
 
 					<p className="mb-2 ml-4 mt-4">
 						{i18n.translate(
-							'confirm-the-final-project-id-used-to-create-the-customer-s-lxc-sm-environments'
+							'confirm-the-final-project-id-used-to-create-the-customer-s-liferay-paas-environments'
 						)}
 					</p>
 

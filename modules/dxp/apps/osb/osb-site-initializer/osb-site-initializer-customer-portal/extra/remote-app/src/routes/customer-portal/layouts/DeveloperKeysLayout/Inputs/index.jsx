@@ -146,7 +146,7 @@ const DeveloperKeysInputs = ({
 
 			<p className="text-neutral-7">
 				{`${i18n.translate(
-					'for-instructions-on-how-to-activate-your-liferay-dxp-or-liferay-portal-instance-please-read-the'
+					'for-instructions-on-how-to-activate-your-liferay-self-hosted-or-liferay-portal-instance-please-read-the'
 				)} `}
 
 				<a

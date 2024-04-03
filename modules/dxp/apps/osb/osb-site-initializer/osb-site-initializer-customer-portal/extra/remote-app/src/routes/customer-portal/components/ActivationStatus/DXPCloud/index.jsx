@@ -40,12 +40,12 @@ const submittedModalTexts = {
 		'return-to-the-product-activation-page-to-view-the-current-activation-status'
 	),
 	subtitle: i18n.translate(
-		'we-ll-need-a-few-details-to-finish-building-your-lxc-sm-environment'
+		'we-ll-need-a-few-details-to-finish-building-your-liferay-paas-environment'
 	),
 	text: i18n.translate(
-		'another-user-already-submitted-the-lxc-sm-activation-request'
+		'another-user-already-submitted-the-liferay-paas-activation-request'
 	),
-	title: i18n.translate('set-up-lxc-sm'),
+	title: i18n.translate('set-up-liferay-paas'),
 };
 
 const SetupDXPCloudModal = ({
@@ -160,10 +160,10 @@ const ActivationStatusDXPCloud = ({
 			id: STATUS_TAG_TYPES.active,
 			subtitle: (
 				<>
-					{i18n.translate('your-lxc-sm')}
+					{i18n.translate('your-liferay-paas')}
 					<PopoverIcon />
 					{i18n.translate(
-						'environments-are-ready-go-to-the-product-console-to-view-lxc-sm-details'
+						'environments-are-ready-go-to-the-product-console-to-view-liferay-paas-details'
 					)}
 				</>
 			),
@@ -195,7 +195,7 @@ const ActivationStatusDXPCloud = ({
 			id: STATUS_TAG_TYPES.inProgress,
 			subtitle: (
 				<>
-					{i18n.translate('your-lxc-sm')}
+					{i18n.translate('your-liferay-paas')}
 					<PopoverIcon />
 					{i18n.translate(
 						'environments-are-being-set-up-and-will-be-available-soon'
@@ -218,7 +218,7 @@ const ActivationStatusDXPCloud = ({
 			id: STATUS_TAG_TYPES.notActivated,
 			subtitle: (
 				<>
-					{i18n.translate('almost-there-setup-lxc-sm')}
+					{i18n.translate('almost-there-setup-liferay-paas')}
 					<PopoverIcon />
 					{i18n.translate('by-finishing-the-activation-form')}
 				</>

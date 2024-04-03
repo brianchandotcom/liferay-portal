@@ -15,13 +15,11 @@ const ConfirmationMessageModal: React.FC<ConfirmationMessageModalProps> = ({
 }) => (
 	<div className="d-flex flex-column p-4">
 		<div className="mb-4">
-			<p className="h2 mb-1">
-				{i18n.translate('set-up-liferay-experience-cloud')}
-			</p>
+			<p className="h2 mb-1">{i18n.translate('set-up-liferay-saas')}</p>
 
 			<p className="text-paragraph-sm">
 				{i18n.translate(
-					'we-ll-need-a-few-details-to-finish-creating-your-liferay-experience-cloud-workspace'
+					'we-ll-need-a-few-details-to-finish-creating-your-liferay-saas-workspace'
 				)}
 			</p>
 		</div>
@@ -33,7 +31,7 @@ const ConfirmationMessageModal: React.FC<ConfirmationMessageModalProps> = ({
 
 			<p>
 				{i18n.translate(
-					'your-liferay-experience-cloud-project-will-be-provisioned-within-5-business-days-an-email-will-be-sent-once-your-project-is-ready'
+					'your-liferay-saas-project-will-be-provisioned-within-5-business-days-an-email-will-be-sent-once-your-project-is-ready'
 				)}
 			</p>
 		</div>

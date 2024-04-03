@@ -10,10 +10,10 @@ export const submittedModalTexts = {
 		'return-to-the-product-activation-page-to-view-the-current-activation-status'
 	),
 	subtitle: i18n.translate(
-		'we-ll-need-a-few-details-to-finish-building-your-liferay-experience-cloud-workspaces'
+		'we-ll-need-a-few-details-to-finish-building-your-liferay-saas-workspaces'
 	),
 	text: i18n.translate(
-		'another-user-already-submitted-the-liferay-experience-cloud-activation-request'
+		'another-user-already-submitted-the-liferay-saas-activation-request'
 	),
-	title: i18n.translate('set-up-liferay-experience-cloud'),
+	title: i18n.translate('set-up-liferay-saas'),
 };

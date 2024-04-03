@@ -7,6 +7,6 @@ import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType
 
 export const ALERT_UPDATE_LIFERAY_EXPERIENCE_CLOUD_STATUS = {
 	[ALERT_DOWNLOAD_TYPE.success]: i18n.translate(
-		'your-liferay-experience-cloud-environments-are-ready'
+		'your-liferay-saas-environments-are-ready'
 	),
 };

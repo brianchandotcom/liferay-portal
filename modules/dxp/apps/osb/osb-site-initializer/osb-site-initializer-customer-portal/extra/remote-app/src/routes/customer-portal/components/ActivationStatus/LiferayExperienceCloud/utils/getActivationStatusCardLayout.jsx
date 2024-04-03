@@ -37,7 +37,7 @@ export default function getActivationStatusCardLayout(
 							title="link-only-accessible-to-current-product-users-permissions-and-roles-are-managed-separately-within-each-product"
 						/>
 
-						{i18n.translate('go-to-liferay-experience-cloud')}
+						{i18n.translate('go-to-liferay-saas')}
 
 						<ClayIcon className="ml-1" symbol="order-arrow-right" />
 					</a>
@@ -77,9 +77,9 @@ export default function getActivationStatusCardLayout(
 			),
 			id: STATUS_TAG_TYPES.active,
 			subtitle: i18n.translate(
-				'your-experience-cloud-project-is-being-set-up-and-will-be-available-soon'
+				'your-liferay-saas-project-is-being-set-up-and-will-be-available-soon'
 			),
-			title: i18n.translate('liferay-experience-cloud-activation'),
+			title: i18n.translate('liferay-saas-activation'),
 		},
 		[STATUS_TAG_TYPE_NAMES.inProgress]: {
 			dropdownIcon: (userAccount.isStaff ||
@@ -106,9 +106,9 @@ export default function getActivationStatusCardLayout(
 			),
 			id: STATUS_TAG_TYPES.inProgress,
 			subtitle: i18n.translate(
-				'your-experience-cloud-project-is-being-set-up-and-will-be-available-soon'
+				'your-liferay-saas-project-is-being-set-up-and-will-be-available-soon'
 			),
-			title: i18n.translate('liferay-experience-cloud-activation'),
+			title: i18n.translate('liferay-saas-activation'),
 		},
 		[STATUS_TAG_TYPE_NAMES.notActivated]: {
 			buttonLink: userAccount.isAccountAdmin && (
@@ -123,9 +123,9 @@ export default function getActivationStatusCardLayout(
 			),
 			id: STATUS_TAG_TYPES.notActivated,
 			subtitle: i18n.translate(
-				'almost-there-setup-experience-cloud-by-finishing-the-activation-form'
+				'almost-there-setup-liferay-saas-by-finishing-the-activation-form'
 			),
-			title: i18n.translate('liferay-experience-cloud-activation'),
+			title: i18n.translate('liferay-saas-activation'),
 		},
 	};
 }

@@ -180,9 +180,9 @@ const SetupLiferayExperienceCloudPage = ({
 			}}
 			headerProps={{
 				helper: i18n.translate(
-					'we-ll-need-a-few-details-to-finish-creating-your-liferay-experience-cloud-workspace'
+					'we-ll-need-a-few-details-to-finish-creating-your-liferay-saas-workspace'
 				),
-				title: i18n.translate('set-up-liferay-experience-cloud'),
+				title: i18n.translate('set-up-liferay-saas'),
 			}}
 		>
 			{step === 1 && (
@@ -322,9 +322,9 @@ const SetupLiferayExperienceCloudPage = ({
 			}}
 			headerProps={{
 				helper: i18n.translate(
-					'we-ll-need-a-few-details-to-finish-creating-your-liferay-experience-cloud-workspace'
+					'we-ll-need-a-few-details-to-finish-creating-your-liferay-saas-workspace'
 				),
-				title: i18n.translate('set-up-liferay-experience-cloud'),
+				title: i18n.translate('set-up-liferay-saas'),
 			}}
 		>
 			<FieldArray

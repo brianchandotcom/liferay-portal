@@ -189,19 +189,18 @@ public class SugarCRMObjectEntryManagerImpl
 
 		filterString = StringUtil.trim(filterString);
 
-		if (!filterString.isEmpty()) {
-			sb.append(StringPool.AMPERSAND);
-			sb.append("filter");
-			sb.append(StringPool.EQUAL);
-			sb.append(StringPool.OPEN_BRACKET);
-
-			String filterSugarQueryString = _filterFactory.create(
-				filterString, objectDefinition);
-
-			sb.append(URLCodec.encodeURL(filterSugarQueryString));
-
-			sb.append(StringPool.CLOSE_BRACKET);
+		if (filterString.isEmpty()) {
+			return;
 		}
+
+		sb.append(StringPool.AMPERSAND);
+		sb.append("filter");
+		sb.append(StringPool.EQUAL);
+		sb.append(StringPool.OPEN_BRACKET);
+		sb.append(
+			URLCodec.encodeURL(
+				_filterFactory.create(filterString, objectDefinition)));
+		sb.append(StringPool.CLOSE_BRACKET);
 	}
 
 	private void _appendPagination(StringBuilder sb, Pagination pagination) {

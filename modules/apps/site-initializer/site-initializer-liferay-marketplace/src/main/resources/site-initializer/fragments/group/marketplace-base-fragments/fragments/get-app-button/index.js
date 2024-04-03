@@ -19,24 +19,32 @@ const productId = fragmentElement
 	.innerText.replace(/[\n\r]+|[\s]{2,}/g, ' ')
 	.trim();
 
-const getSkuOptionValue = (sku, optionValue) =>
-	sku.toLowerCase() === optionValue ||
-	(sku?.skuOptions?.some(
-		(skuOption) => skuOption.skuOptionValueKey === optionType
-	) &&
-		sku.purchasable);
-
 const getProductPrice = (product) => {
 	const {productSpecifications = []} = product;
 
-	const priceModel = productSpecifications.find(
+	const isFreeApp = productSpecifications.some(
 		(productSpecification) =>
-			productSpecification.specificationKey === 'price-model'
+			productSpecification.specificationKey === 'price-model' &&
+			productSpecification.value === 'Free'
 	);
 
-	if (priceModel?.value === 'Free') {
+	if (isFreeApp) {
 		return 'Free';
 	}
+
+	const skus = product.skus.filter(({purchasable}) => purchasable);
+
+	const hasTrialSku = skus.some(({skuOptions}) =>
+		skuOptions.find((skuOption) =>
+			['trial', 'yes'].includes(skuOption.skuOptionValueKey)
+		)
+	);
+
+	const standardSku = skus.find(({skuOptions}) =>
+		skuOptions.some((skuOption) =>
+			['standard', 'no'].includes(skuOption.skuOptionValueKey)
+		)
+	);
 
 	const licenseType = productSpecifications.find(
 		(productSpecification) =>
@@ -45,14 +53,6 @@ const getProductPrice = (product) => {
 
 	const licenseTypeText =
 		licenseType?.value === 'Perpetual' ? 'One-Time' : 'Annually';
-
-	const hasTrialSku = product?.skus?.some(({sku}) =>
-		getSkuOptionValue(sku, 'trial')
-	);
-
-	const standardSku =
-		product?.skus?.find(({sku}) => getSkuOptionValue(sku, 'standard')) ??
-		product?.skus[0];
 
 	const standardPrice = standardSku
 		? standardSku?.price?.priceFormatted?.replace(' ', '').replace(',', '.')
@@ -64,7 +64,7 @@ const getProductPrice = (product) => {
 };
 
 const customizeGetAppButton = (product) => {
-	getAppButtonElement.onclick = async () => {
+	getAppButtonElement.onclick = () => {
 		Liferay.Util.navigate(`${getSiteURL()}/get-app?productId=${productId}`);
 	};
 
@@ -89,7 +89,7 @@ const getCommerceProduct = async (channelId) => {
 const getSiteURL = () => {
 	const layoutRelativeURL = Liferay.ThemeDisplay.getLayoutRelativeURL();
 
-	if (layoutRelativeURL.includes('web')) {
+	if (layoutRelativeURL.startsWith('/web/')) {
 		return layoutRelativeURL.split('/').slice(0, 3).join('/');
 	}
 

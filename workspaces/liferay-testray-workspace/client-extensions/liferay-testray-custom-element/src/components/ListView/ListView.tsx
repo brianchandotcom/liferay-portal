@@ -180,6 +180,13 @@ const ListView: React.FC<ListViewProps> = ({
 						({value}) => value
 				  )
 				: [],
+			testrayTeamId: Array.isArray(
+				filterVariables.appliedFilter?.testrayTeamId
+			)
+				? filterVariables.appliedFilter?.testrayTeamId?.map(
+						({value}) => value
+				  )
+				: [],
 		}),
 		[
 			onApplyFilterMemo,

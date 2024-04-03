@@ -83,14 +83,14 @@ public class ContextProviderUtil {
 		ResourceProvider resourceProvider =
 			classResourceInfo.getResourceProvider();
 
-		if (!(resourceProvider instanceof
-				SafeReleaseInstanceResourceProvider)) {
-
-			classResourceInfo.setResourceProvider(
-				new SafeReleaseInstanceResourceProvider(resourceProvider));
-		}
-
 		if (resourceProvider != null) {
+			if (!(resourceProvider instanceof
+					SafeReleaseInstanceResourceProvider)) {
+
+				classResourceInfo.setResourceProvider(
+					new SafeReleaseInstanceResourceProvider(resourceProvider));
+			}
+
 			Object instance = resourceProvider.getInstance(message);
 
 			resourceContext.initResource(instance);

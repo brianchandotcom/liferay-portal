@@ -50,6 +50,11 @@ public class GlobalJSCETImpl extends BaseCETImpl implements GlobalJSCET {
 	}
 
 	@Override
+	public String getViewJSP() {
+		return "/admin/view_global_js.jsp";
+	}
+
+	@Override
 	public boolean hasProperties() {
 		return false;
 	}

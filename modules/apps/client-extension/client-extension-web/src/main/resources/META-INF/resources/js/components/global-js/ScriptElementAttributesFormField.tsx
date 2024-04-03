@@ -51,11 +51,13 @@ const parseAttributes = (attributes: string) => {
 };
 
 interface IProps {
+	disabled?: boolean;
 	portletNamespace: string;
 	scriptElementAttributesJSON?: string;
 }
 
 export default function ScriptElementAttributesFormField({
+	disabled,
 	portletNamespace,
 	scriptElementAttributesJSON: initialAttributes,
 }: IProps) {
@@ -80,6 +82,7 @@ export default function ScriptElementAttributesFormField({
 	return (
 		<>
 			<input
+				disabled={disabled}
 				name={`${portletNamespace}scriptElementAttributesJSON`}
 				type="hidden"
 				value={toJSONObjectString(attributes)}
@@ -87,6 +90,7 @@ export default function ScriptElementAttributesFormField({
 
 			{attributes.map((attribute, index) => (
 				<AttributeFields
+					disabled={disabled}
 					index={index}
 					key={attribute.id}
 					name={attribute.name}

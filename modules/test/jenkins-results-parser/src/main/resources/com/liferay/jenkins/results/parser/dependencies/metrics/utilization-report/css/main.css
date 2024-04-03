@@ -1,0 +1,16 @@
+.col-1 {
+	left: 0px;
+	max-width: 270px;
+	min-width: 270px;
+	position: sticky;
+	width: 270px;
+}
+
+.col-2 {
+	left: 270px;
+	position: sticky;
+}
+
+.table-wrapper{
+    max-height: 1080px;
+}

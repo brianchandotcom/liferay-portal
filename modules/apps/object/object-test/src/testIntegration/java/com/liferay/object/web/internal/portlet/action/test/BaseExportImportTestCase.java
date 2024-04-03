@@ -7,6 +7,7 @@ package com.liferay.object.web.internal.portlet.action.test;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
@@ -22,7 +23,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.File;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -39,6 +40,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockMultipartHttpServletRequest;
 
@@ -52,80 +54,24 @@ public abstract class BaseExportImportTestCase {
 			String externalReferenceCode, String name)
 		throws Exception {
 
-		// MVCActionCommand
-
-		MVCActionCommand mvcActionCommand = getMVCActionCommand();
-
-		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
-			new MockMultipartHttpServletRequest();
-
 		Class<?> clazz = getClazz();
 
-		byte[] bytes = _file.getBytes(
-			clazz.getResourceAsStream("dependencies/" + actualFileName));
+		testExportImportJSONString(
+			StringUtil.read(
+				clazz.getResourceAsStream("dependencies/" + actualFileName)),
+			StringUtil.read(
+				clazz.getResourceAsStream("dependencies/" + expectedFileName)),
+			externalReferenceCode, name);
+	}
 
-		mockMultipartHttpServletRequest.addFile(
-			new MockMultipartFile(actualFileName, bytes));
+	public void testExportImportJSONString(
+			String actualJSONString, String expectedJSONString,
+			String externalReferenceCode, String name)
+		throws Exception {
 
-		mockMultipartHttpServletRequest.setCharacterEncoding(StringPool.UTF8);
+		// MVCActionCommand
 
-		String boundary = "WebKitFormBoundary" + StringUtil.randomString();
-
-		String start = StringBundler.concat(
-			StringPool.DOUBLE_DASH, boundary,
-			"\r\nContent-Disposition:form-data;name=\"", getJSONName(),
-			"\";filename=\"", actualFileName,
-			"\";\r\nContent-type:application/json\r\n\r\n");
-		String end = StringBundler.concat(
-			"\r\n--", boundary, StringPool.DOUBLE_DASH);
-
-		mockMultipartHttpServletRequest.setContent(
-			ArrayUtil.append(start.getBytes(), bytes, end.getBytes()));
-
-		mockMultipartHttpServletRequest.setContentType(
-			MediaType.MULTIPART_FORM_DATA_VALUE + "; boundary=" + boundary);
-
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest(
-				mockMultipartHttpServletRequest);
-
-		if (Validator.isNotNull(externalReferenceCode)) {
-			mockLiferayPortletActionRequest.addParameter(
-				"externalReferenceCode", externalReferenceCode);
-		}
-
-		mockLiferayPortletActionRequest.addParameter("name", name);
-		mockLiferayPortletActionRequest.addParameter(
-			"redirect", RandomTestUtil.randomString());
-		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
-		ReflectionTestUtil.setFieldValue(
-			mvcActionCommand, "_portal",
-			ProxyUtil.newProxyInstance(
-				getClassLoader(), new Class<?>[] {Portal.class},
-				(proxy, method, args) -> {
-					if (Objects.equals(
-							method.getName(), "getUploadPortletRequest")) {
-
-						LiferayPortletRequest liferayPortletRequest =
-							_portal.getLiferayPortletRequest(
-								mockLiferayPortletActionRequest);
-
-						return UploadTestUtil.createUploadPortletRequest(
-							_portal.getUploadServletRequest(
-								liferayPortletRequest.getHttpServletRequest()),
-							liferayPortletRequest,
-							_portal.getPortletNamespace(
-								liferayPortletRequest.getPortletName()));
-					}
-
-					return method.invoke(_portal, args);
-				}));
-
-		mvcActionCommand.processAction(
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+		_import(externalReferenceCode, actualJSONString, name);
 
 		// MVCResourceCommand
 
@@ -146,10 +92,26 @@ public abstract class BaseExportImportTestCase {
 			mockLiferayResourceRequest, mockLiferayResourceResponse);
 
 		JSONAssert.assertEquals(
-			StringUtil.read(
-				clazz.getResourceAsStream("dependencies/" + expectedFileName)),
+			expectedJSONString,
 			String.valueOf(
 				mockLiferayResourceResponse.getPortletOutputStream()),
+			JSONCompareMode.LENIENT);
+	}
+
+	public void testFailedImportJSONString(
+			String actualJSONString, String expectedJSONString,
+			String externalReferenceCode, String name)
+		throws Exception {
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			_import(externalReferenceCode, actualJSONString, name);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			(MockHttpServletResponse)
+				mockLiferayPortletActionResponse.getHttpServletResponse();
+
+		JSONAssert.assertEquals(
+			expectedJSONString, mockHttpServletResponse.getContentAsString(),
 			JSONCompareMode.LENIENT);
 	}
 
@@ -178,6 +140,7 @@ public abstract class BaseExportImportTestCase {
 
 		themeDisplay.setLayout(layout);
 
+		themeDisplay.setLocale(LocaleUtil.US);
 		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
 		themeDisplay.setSiteDefaultLocale(LocaleUtil.US);
 		themeDisplay.setUser(user);
@@ -185,8 +148,94 @@ public abstract class BaseExportImportTestCase {
 		return themeDisplay;
 	}
 
-	@Inject
-	private File _file;
+	private MockLiferayPortletActionResponse _import(
+			String externalReferenceCode, String jsonString, String name)
+		throws Exception {
+
+		MVCActionCommand mvcActionCommand = getMVCActionCommand();
+
+		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
+			new MockMultipartHttpServletRequest();
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest(
+				mockMultipartHttpServletRequest);
+
+		if (JSONUtil.isJSONArray(jsonString)) {
+			mockMultipartHttpServletRequest.addParameter(
+				"objectDefinitions", jsonString);
+		}
+		else {
+			byte[] bytes = jsonString.getBytes();
+
+			mockMultipartHttpServletRequest.addFile(
+				new MockMultipartFile("import-file.json", bytes));
+
+			mockMultipartHttpServletRequest.setCharacterEncoding(
+				StringPool.UTF8);
+
+			String boundary = "WebKitFormBoundary" + StringUtil.randomString();
+
+			String start = StringBundler.concat(
+				StringPool.DOUBLE_DASH, boundary,
+				"\r\nContent-Disposition:form-data;name=\"", getJSONName(),
+				"\";filename=\"import-file.json",
+				"\";\r\nContent-type:application/json\r\n\r\n");
+			String end = StringBundler.concat(
+				"\r\n--", boundary, StringPool.DOUBLE_DASH);
+
+			mockMultipartHttpServletRequest.setContent(
+				ArrayUtil.append(start.getBytes(), bytes, end.getBytes()));
+
+			mockMultipartHttpServletRequest.setContentType(
+				MediaType.MULTIPART_FORM_DATA_VALUE + "; boundary=" + boundary);
+
+			if (Validator.isNotNull(externalReferenceCode)) {
+				mockLiferayPortletActionRequest.addParameter(
+					"externalReferenceCode", externalReferenceCode);
+			}
+
+			mockLiferayPortletActionRequest.addParameter("name", name);
+		}
+
+		mockLiferayPortletActionRequest.addParameter(
+			"redirect", RandomTestUtil.randomString());
+		mockLiferayPortletActionRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG, null);
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		ReflectionTestUtil.setFieldValue(
+			mvcActionCommand, "_portal",
+			ProxyUtil.newProxyInstance(
+				getClassLoader(), new Class<?>[] {Portal.class},
+				(proxy, method, args) -> {
+					if (Objects.equals(
+							method.getName(), "getUploadPortletRequest")) {
+
+						LiferayPortletRequest liferayPortletRequest =
+							_portal.getLiferayPortletRequest(
+								mockLiferayPortletActionRequest);
+
+						return UploadTestUtil.createUploadPortletRequest(
+							_portal.getUploadServletRequest(
+								liferayPortletRequest.getHttpServletRequest()),
+							liferayPortletRequest,
+							_portal.getPortletNamespace(
+								liferayPortletRequest.getPortletName()));
+					}
+
+					return method.invoke(_portal, args);
+				}));
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
+
+		mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
+
+		return mockLiferayPortletActionResponse;
+	}
 
 	@Inject
 	private Portal _portal;

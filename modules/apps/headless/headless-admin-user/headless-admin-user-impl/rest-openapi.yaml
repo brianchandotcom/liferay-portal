@@ -1319,7 +1319,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.user.client', and version '4.0.59'."
+        'com.liferay.headless.admin.user.client', and version '4.0.60'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -4655,6 +4655,26 @@ paths:
                         "Roles successfully created"
             tags: ["Role"]
     "/roles/by-external-reference-code/{externalReferenceCode}":
+        get:
+            description:
+                Retrieves the role by its external reference code.
+            operationId: getRoleByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Role"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Role"
+            tags: ["Role"]
         put:
             description:
                 update the given Role
@@ -4682,6 +4702,51 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Role"
+            tags: ["Role"]
+    "/roles/by-external-reference-code/{externalReferenceCode}/association/user-account/{userAccountId}":
+        delete:
+            description:
+                Unassociates a role by external reference code with a user account
+            operationId: deleteRoleByExternalReferenceCodeUserAccountAssociation
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Role"]
+        post:
+            description:
+                Associates a role by external reference code with a user account
+            operationId: postRoleByExternalReferenceCodeUserAccountAssociation
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json: {}
+                        application/xml: {}
             tags: ["Role"]
     "/roles/{roleId}":
         get:

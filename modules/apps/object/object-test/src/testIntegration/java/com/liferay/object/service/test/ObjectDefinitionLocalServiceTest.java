@@ -77,10 +77,12 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -1445,6 +1447,24 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Resources
 
+		List<String> resourceActions = _resourceActions.getModelResourceActions(
+			objectDefinition.getClassName());
+
+		Assert.assertEquals(
+			resourceActions.toString(), 0, resourceActions.size());
+
+		resourceActions = _resourceActions.getModelResourceActions(
+			objectDefinition.getResourceName());
+
+		Assert.assertEquals(
+			resourceActions.toString(), 0, resourceActions.size());
+
+		Map<String, ?> resourceActionsBagMap = ReflectionTestUtil.getFieldValue(
+			_resourceActions, "_resourceActionsBags");
+
+		Assert.assertNull(
+			resourceActionsBagMap.get(objectDefinition.getPortletId()));
+
 		Assert.assertEquals(
 			0,
 			_resourceActionLocalService.getResourceActionsCount(
@@ -2771,6 +2791,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Inject
 	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Inject
+	private ResourceActions _resourceActions;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

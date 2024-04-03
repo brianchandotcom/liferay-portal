@@ -102,6 +102,11 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		return false;
 	}
 
+	@Override
+	public int ordering() {
+		return 1;
+	}
+
 	protected void addApiUses(Analyzer analyzer, String originalContent) {
 		String content = _removeComments(originalContent);
 

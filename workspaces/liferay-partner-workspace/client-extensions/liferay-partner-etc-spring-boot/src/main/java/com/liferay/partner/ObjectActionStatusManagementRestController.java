@@ -6,7 +6,6 @@
 package com.liferay.partner;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,85 +22,74 @@ public class ObjectActionStatusManagementRestController
 
 	@GetMapping
 	public void closeCompleteRequest() {
-		JSONObject mdfRequestsJSONObject = get(
+		JSONObject mdfClaimsJSONObject = get(
 			uriBuilder -> uriBuilder.path(
-				"/o/c/mdfrequests"
-			).queryParam(
-				"nestedFields", "mdfReqToMDFClms"
+				"/o/c/mdfclaims/"
 			).queryParam(
 				"page", "1"
 			).queryParam(
 				"pageSize", "-1"
 			).build());
 
-		JSONArray mdfRequestsJSONArray = mdfRequestsJSONObject.getJSONArray(
+		JSONArray mdfClaimsJSONArray = mdfClaimsJSONObject.getJSONArray(
 			"items");
 
-		for (int i = 0; i < mdfRequestsJSONArray.length(); i++) {
-			try {
-				JSONObject mdfRequestJSONObject =
-					mdfRequestsJSONArray.getJSONObject(i);
+		Double claimPaidTotal = 0.0;
 
-				String mdfRequestStatus = mdfRequestJSONObject.getJSONObject(
-					"mdfRequestStatus"
-				).getString(
-					"key"
-				);
+		for (int i = 0; i < mdfClaimsJSONArray.length(); i++) {
+			JSONObject mdfClaimJSONObject = mdfClaimsJSONArray.getJSONObject(i);
 
-				Double mdfRequestAmount = mdfRequestJSONObject.getDouble(
-					"totalMDFRequestAmount");
+			Double claimPaid = mdfClaimJSONObject.getDouble("claimPaid");
+			Double totalMDFRequestedAmount = mdfClaimJSONObject.getDouble(
+				"totalMDFRequestedAmount");
+			String mdfClaimStatus = mdfClaimJSONObject.getJSONObject(
+				"mdfClaimStatus"
+			).getString(
+				"key"
+			);
 
-				if (mdfRequestStatus.equals("approved")) {
-					JSONArray mdfClaims = mdfRequestJSONObject.getJSONArray(
-						"mdfReqToMDFClms");
+			if (mdfClaimStatus.equals("claimPaid")) {
+				if ((claimPaid >= totalMDFRequestedAmount) &&
+					(claimPaidTotal >= totalMDFRequestedAmount)) {
 
-					Double claimPaidTotal = 0.0;
+					String mdfRequestExternalReferenceCode =
+						mdfClaimJSONObject.getString(
+							"r_mdfReqToMDFClms_c_mdfRequestERC");
 
-					for (int j = 0; j < mdfClaims.length(); j++) {
-						JSONObject mdfClaimJSONObject = mdfClaims.getJSONObject(
-							j);
+					updateMdfRequestStatus(mdfRequestExternalReferenceCode);
 
-						String mdfClaimStatus =
-							mdfClaimJSONObject.getJSONObject(
-								"mdfClaimStatus"
-							).getString(
-								"key"
-							);
-						Double mdfClaimPaid = mdfClaimJSONObject.getDouble(
-							"claimPaid");
+					break;
+				}
 
-						claimPaidTotal += mdfClaimPaid;
+				claimPaidTotal += claimPaid;
 
-						if (mdfClaimStatus.equals("claimPaid") &&
-							(claimPaidTotal >= mdfRequestAmount)) {
+				if (claimPaidTotal >= totalMDFRequestedAmount) {
+					String mdfRequestExternalReferenceCode =
+						mdfClaimJSONObject.getString(
+							"r_mdfReqToMDFClms_c_mdfRequestERC");
 
-							String mdfRequestExternalReferenceCode =
-								mdfRequestJSONObject.getString(
-									"externalReferenceCode");
-
-							JSONObject newMdfRequestStatus = new JSONObject();
-
-							newMdfRequestStatus.put("key", "completed");
-							newMdfRequestStatus.put("name", "Completed");
-
-							JSONObject mdfRequestStatusWrapper =
-								new JSONObject();
-
-							mdfRequestStatusWrapper.put(
-								"mdfRequestStatus", newMdfRequestStatus);
-
-							patch(
-								mdfRequestStatusWrapper.toString(),
-								"/o/c/mdfrequests/by-external-reference-code/" +
-									mdfRequestExternalReferenceCode);
-						}
-					}
+					updateMdfRequestStatus(mdfRequestExternalReferenceCode);
 				}
 			}
-			catch (JSONException e) {
-				e.printStackTrace();
-			}
 		}
+	}
+
+	private void updateMdfRequestStatus(
+		String mdfRequestExternalReferenceCode) {
+
+		JSONObject newMdfRequestStatus = new JSONObject();
+
+		newMdfRequestStatus.put("key", "completed");
+		newMdfRequestStatus.put("name", "Completed");
+
+		JSONObject mdfRequestStatusWrapper = new JSONObject();
+
+		mdfRequestStatusWrapper.put("mdfRequestStatus", newMdfRequestStatus);
+
+		patch(
+			mdfRequestStatusWrapper.toString(),
+			"/o/c/mdfrequests/by-external-reference-code/" +
+				mdfRequestExternalReferenceCode);
 	}
 
 }

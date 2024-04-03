@@ -181,7 +181,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 				int index2 = SourceUtil.getColumnIndex(
 					tablesSQLContent, tableName, setterObjectName);
 
-				if ((index2 != -1) && (index1 > index2)) {
+				if ((index2 != -1) && ((index1 > index2) || (index1 == -1))) {
 					x = matcher2.start();
 
 					int y = content.lastIndexOf(previousMatch, x);

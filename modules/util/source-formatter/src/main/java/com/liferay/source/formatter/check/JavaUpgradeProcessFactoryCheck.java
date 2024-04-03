@@ -148,7 +148,9 @@ public class JavaUpgradeProcessFactoryCheck extends BaseFileCheck {
 					int index2 = SourceUtil.getColumnIndex(
 						tablesSQLContent, tableName, columnName);
 
-					if ((index2 != -1) && (index1 > index2)) {
+					if ((index2 != -1) &&
+						((index1 > index2) || (index1 == -1))) {
+
 						int x = matcher2.start();
 
 						int y = content.lastIndexOf(previousMatch, x);

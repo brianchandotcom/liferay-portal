@@ -129,7 +129,7 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 				tablesSQLContent, tableName,
 				StringUtil.unquote(parameterNames2.get(1)));
 
-			if ((index2 != -1) && (index1 > index2)) {
+			if ((index2 != -1) && ((index1 > index2) || (index1 == -1))) {
 				content = StringUtil.replaceFirst(
 					content, methodCall2, methodCall1, matcher.start());
 

@@ -14,10 +14,9 @@ import org.apache.cxf.message.Message;
 /**
  * @author Alejandro Tardín
  */
-public class MultipleReleaseInstanceResourceProvider
-	implements ResourceProvider {
+public class SafeReleaseInstanceResourceProvider implements ResourceProvider {
 
-	public MultipleReleaseInstanceResourceProvider(
+	public SafeReleaseInstanceResourceProvider(
 		ResourceProvider resourceProvider) {
 
 		_resourceProvider = resourceProvider;

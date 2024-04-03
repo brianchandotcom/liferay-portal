@@ -49,12 +49,6 @@ export class PagesAdminPage {
 
 		await this.page.getByRole('menuitem', {name: 'In Page Head'}).click();
 
-		const iframe = this.page.locator('#selectGlobalJSCETs_iframe_');
-
-		await iframe.waitFor({
-			state: 'visible',
-		});
-
 		const frameLocator = this.page.frameLocator(
 			'#selectGlobalJSCETs_iframe_'
 		);

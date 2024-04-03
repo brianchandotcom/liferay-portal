@@ -67,6 +67,27 @@ public class UtilityPageTemplate implements Cloneable, Serializable {
 
 	protected String externalReferenceCode;
 
+	public String getFriendlyURL() {
+		return friendlyURL;
+	}
+
+	public void setFriendlyURL(String friendlyURL) {
+		this.friendlyURL = friendlyURL;
+	}
+
+	public void setFriendlyURL(
+		UnsafeSupplier<String, Exception> friendlyURLUnsafeSupplier) {
+
+		try {
+			friendlyURL = friendlyURLUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String friendlyURL;
+
 	public String getName() {
 		return name;
 	}
@@ -85,6 +106,27 @@ public class UtilityPageTemplate implements Cloneable, Serializable {
 	}
 
 	protected String name;
+
+	public Boolean getPrivateLayout() {
+		return privateLayout;
+	}
+
+	public void setPrivateLayout(Boolean privateLayout) {
+		this.privateLayout = privateLayout;
+	}
+
+	public void setPrivateLayout(
+		UnsafeSupplier<Boolean, Exception> privateLayoutUnsafeSupplier) {
+
+		try {
+			privateLayout = privateLayoutUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean privateLayout;
 
 	public Type getType() {
 		return type;
@@ -146,10 +188,10 @@ public class UtilityPageTemplate implements Cloneable, Serializable {
 
 	public static enum Type {
 
-		CREATE_ACCOUNT("CreateAccount"), ERROR("Error"),
-		ERROR_CODE404("ErrorCode404"), ERROR_CODE500("ErrorCode500"),
-		FORGOT_PASSWORD("ForgotPassword"), LOGIN("Login"),
-		TERMS_OF_USE("TermsOfUse");
+		COOKIE_POLICY("CookiePolicy"), CREATE_ACCOUNT("CreateAccount"),
+		ERROR("Error"), ERROR_CODE404("ErrorCode404"),
+		ERROR_CODE500("ErrorCode500"), FORGOT_PASSWORD("ForgotPassword"),
+		LOGIN("Login"), TERMS_OF_USE("TermsOfUse");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

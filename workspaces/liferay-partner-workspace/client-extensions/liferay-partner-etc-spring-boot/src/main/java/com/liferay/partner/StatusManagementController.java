@@ -38,9 +38,9 @@ import reactor.netty.resources.ConnectionProvider;
 /**
  * @author Elias Santos
  */
-@RequestMapping("/test")
+@RequestMapping("/statusManagement")
 @RestController
-public class StatusController {
+public class StatusManagementController {
 
 	@GetMapping
 	public void closeCompleteRequest() {

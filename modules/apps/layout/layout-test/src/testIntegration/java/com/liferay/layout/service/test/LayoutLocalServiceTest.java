@@ -21,9 +21,12 @@ import com.liferay.portal.kernel.exception.MasterLayoutException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -42,9 +45,12 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.sites.kernel.util.Sites;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -434,6 +440,35 @@ public class LayoutLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateFriendlyURLMap() throws Exception {
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		long userId = layout.getUserId();
+
+		layout.setUserId(-1);
+
+		layout = LayoutLocalServiceUtil.updateLayout(layout);
+
+		Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
+
+		friendlyURLMap.put(
+			LocaleUtil.GERMANY,
+			StringPool.SLASH + RandomTestUtil.randomString());
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setUserId(userId);
+
+		LayoutLocalServiceUtil.updateLayout(
+			_group.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getParentLayoutId(), layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
+			layout.isHidden(), friendlyURLMap, layout.getIconImage(), null, 0,
+			0, 0, serviceContext);
+	}
+
+	@Test
 	public void testUpdateLayoutWithEmptyDefaultFriendlyURLAndAnotherLocaleAdded()
 		throws Exception {
 
@@ -461,6 +496,23 @@ public class LayoutLocalServiceTest {
 		Assert.assertEquals("/home", layout.getFriendlyURL(LocaleUtil.US));
 	}
 
+	@Test
+	public void testUpdateLookAndFeel() throws Exception {
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		layout = LayoutLocalServiceUtil.updateLookAndFeel(
+			_group.getGroupId(), false, layout.getLayoutId(),
+			"test_WAR_testtheme", "01", StringPool.BLANK);
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		layoutTypePortlet.setLayoutTemplateId(
+			layout.getUserId(), "1_column", false);
+
+		LayoutLocalServiceUtil.updateLayout(layout);
+	}
+
 	@Test(expected = MasterLayoutException.class)
 	public void testUpdateMasterLayoutWithInvalidPlid1() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
@@ -482,6 +534,39 @@ public class LayoutLocalServiceTest {
 			layout.isHidden(), layout.getFriendlyURLMap(),
 			layout.getIconImage(), null, layout.getStyleBookEntryId(),
 			layout.getFaviconFileEntryId(), layout.getPlid(), _serviceContext);
+	}
+
+	@Test
+	public void testUpdateTypeSettings() throws Exception {
+		LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
+			RandomTestUtil.randomString());
+
+		Layout layout = layoutPrototype.getLayout();
+
+		layout = LayoutLocalServiceUtil.updateLayout(layout);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setUserId(layout.getUserId());
+
+		LayoutLocalServiceUtil.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getParentLayoutId(), layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
+			layout.isHidden(), layout.getFriendlyURLMap(),
+			layout.getIconImage(), null, 0, 0, 0, serviceContext);
+
+		Layout updatedLayout = LayoutLocalServiceUtil.getLayout(
+			layout.getPlid());
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			updatedLayout.getTypeSettingsProperties();
+
+		Assert.assertFalse(
+			"Updating layout prototype should not add property \"" +
+				Sites.LAYOUT_UPDATEABLE + "\"",
+			typeSettingsUnicodeProperties.containsKey(Sites.LAYOUT_UPDATEABLE));
 	}
 
 	private void _assertSearch(

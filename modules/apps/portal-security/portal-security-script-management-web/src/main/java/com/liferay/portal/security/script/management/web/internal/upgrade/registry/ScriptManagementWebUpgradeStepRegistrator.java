@@ -6,6 +6,7 @@
 package com.liferay.portal.security.script.management.web.internal.upgrade.registry;
 
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.security.script.management.web.internal.upgrade.v1_0_0.ScriptManagementConfigurationUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -26,10 +27,13 @@ public class ScriptManagementWebUpgradeStepRegistrator
 		registry.register(
 			"0.0.1", "1.0.0",
 			new ScriptManagementConfigurationUpgradeProcess(
-				_configurationProvider));
+				_configurationProvider, _jsonFactory));
 	}
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

@@ -8,12 +8,20 @@ package com.liferay.portal.security.script.management.web.internal.upgrade.v1_0_
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.security.script.management.configuration.ScriptManagementConfiguration;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Queue;
 
 /**
  * @author Feliphe Marinho
@@ -22,9 +30,10 @@ public class ScriptManagementConfigurationUpgradeProcess
 	extends UpgradeProcess {
 
 	public ScriptManagementConfigurationUpgradeProcess(
-		ConfigurationProvider configurationProvider) {
+		ConfigurationProvider configurationProvider, JSONFactory jsonFactory) {
 
 		_configurationProvider = configurationProvider;
+		_jsonFactory = jsonFactory;
 	}
 
 	@Override
@@ -66,12 +75,7 @@ public class ScriptManagementConfigurationUpgradeProcess
 			}
 
 			while (resultSet1.next()) {
-				String content = resultSet1.getString(1);
-
-				if (content.contains(
-						"{\"#tag-name\":\"script-language\",\"#value\":" +
-							"\"groovy\"}")) {
-
+				if (_hasWorkflowDefinitionGroovyScriptUse(resultSet1)) {
 					return true;
 				}
 			}
@@ -80,6 +84,44 @@ public class ScriptManagementConfigurationUpgradeProcess
 		return false;
 	}
 
+	private boolean _hasWorkflowDefinitionGroovyScriptUse(ResultSet resultSet)
+		throws Exception {
+
+		Queue<Map<String, Object>> queue = new LinkedList<>();
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			resultSet.getString(1));
+
+		queue.add(jsonObject.toMap());
+
+		while (!queue.isEmpty()) {
+			Map<String, Object> jsonObjectsMap = queue.poll();
+
+			for (Map.Entry<String, Object> entry : jsonObjectsMap.entrySet()) {
+				if (entry.getValue() instanceof List) {
+					if (Objects.equals(entry.getKey(), "#cdata-value")) {
+						continue;
+					}
+
+					queue.addAll((List<Map<String, Object>>)entry.getValue());
+				}
+				else if (jsonObjectsMap.size() == 2) {
+					if (Objects.equals(
+							jsonObjectsMap.get("#tag-name"),
+							"script-language") &&
+						Objects.equals(
+							jsonObjectsMap.get("#value"), "groovy")) {
+
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
 	private final ConfigurationProvider _configurationProvider;
+	private final JSONFactory _jsonFactory;
 
 }

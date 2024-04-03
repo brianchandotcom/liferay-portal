@@ -27,6 +27,8 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -213,7 +215,10 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		ServiceContext currentServiceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		try {
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					targetLayout.getCtCollectionId())) {
+
 			CopyLayoutThreadLocal.setCopyLayout(true);
 
 			User user = _getUser(

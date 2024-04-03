@@ -267,7 +267,7 @@ public class SugarCRMObjectEntryManagerImpl
 
 		_appendFilter(sb, objectDefinition, filterString);
 
-		/* TODO: Add implementation for search */
+		// TODO Add keyword search
 
 		return sb.toString();
 	}

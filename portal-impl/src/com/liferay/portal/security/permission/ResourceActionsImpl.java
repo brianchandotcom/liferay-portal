@@ -602,6 +602,94 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
+	@Override
+	public void removeModelResources(Document document) {
+		Element rootElement = document.getRootElement();
+
+		for (Element modelResourceElement :
+				rootElement.elements("model-resource")) {
+
+			String modelName = modelResourceElement.elementTextTrim(
+				"model-name");
+
+			if (Validator.isNull(modelName)) {
+				modelName = _getCompositeModelName(
+					modelResourceElement.element("composite-model-name"));
+			}
+
+			List<ResourceAction> resourceActions =
+				resourceActionLocalService.getResourceActions(modelName);
+
+			for (ResourceAction resourceAction : resourceActions) {
+				resourceActionLocalService.deleteResourceAction(resourceAction);
+			}
+
+			synchronized (_resourceActionsBags) {
+				_resourceActionsBags.remove(modelName);
+			}
+
+			Element portletRefElement = modelResourceElement.element(
+				"portlet-ref");
+
+			for (Element portletNameElement :
+					portletRefElement.elements("portlet-name")) {
+
+				String portletName = portletNameElement.getTextTrim();
+
+				String portletRootModelResourceName =
+					_portletRootModelResources.get(portletName);
+
+				if (Objects.equals(portletRootModelResourceName, modelName)) {
+					_portletRootModelResources.remove(portletName);
+				}
+
+				Set<String> modelResourceNames = _resourceReferences.get(
+					portletName);
+
+				if (modelResourceNames == null) {
+					continue;
+				}
+
+				modelResourceNames.remove(modelName);
+
+				if (modelResourceNames.isEmpty()) {
+					_resourceReferences.remove(portletName);
+				}
+			}
+
+			_resourceReferences.remove(modelName);
+
+			_organizationModelResources.remove(modelName);
+
+			_modelResourceWeights.remove(modelName);
+
+			_portalModelResources.remove(modelName);
+		}
+	}
+
+	@Override
+	public void removePortletResources(Document document) {
+		Element rootElement = document.getRootElement();
+
+		for (Element portletResourceElement :
+				rootElement.elements("portlet-resource")) {
+
+			String portletName = portletResourceElement.elementTextTrim(
+				"portlet-name");
+
+			List<ResourceAction> resourceActions =
+				resourceActionLocalService.getResourceActions(portletName);
+
+			for (ResourceAction resourceAction : resourceActions) {
+				resourceActionLocalService.deleteResourceAction(resourceAction);
+			}
+
+			synchronized (_resourceActionsBags) {
+				_resourceActionsBags.remove(portletName);
+			}
+		}
+	}
+
 	@BeanReference(type = PortletLocalService.class)
 	protected PortletLocalService portletLocalService;
 

@@ -18,7 +18,7 @@ const CompareRunsTeams = () => {
 			managementToolbarProps={{
 				applyFilters: true,
 				display: {columns: false},
-				filterSchema: 'compareRunsTeams',
+				filterSchema: 'compareRunsTeamsAndComponents',
 			}}
 			matrixProps={{title: 'Teams'}}
 			resource={`/testray-run-comparisons/${runAId}/${runBId}`}

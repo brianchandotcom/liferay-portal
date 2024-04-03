@@ -164,7 +164,7 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testImportCopyAsNewIfUtilityPageAlreadyExists()
+	public void testImportLayoutUtilityPageEntryWithCopyAsNewAndAlreadyExists()
 		throws Exception {
 
 		initExport();

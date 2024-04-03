@@ -17,6 +17,7 @@
 		},
 		"type": {
 			"enum": [
+				"CookiePolicy",
 				"CreateAccount",
 				"Error",
 				"ErrorCode404",

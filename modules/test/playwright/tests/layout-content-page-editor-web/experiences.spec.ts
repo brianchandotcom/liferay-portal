@@ -169,3 +169,57 @@ test('keeps modal open when canceling segment creation', async ({
 		page.locator('.modal-title', {hasText: 'New Experience'})
 	).toBeVisible();
 });
+
+test('styles changes affect to current experience only', async ({
+	apiHelpers,
+	pageEditorPage,
+	site,
+}) => {
+
+	// Create a page with a Heading fragment and go to edit mode
+
+	const headingId = getRandomString();
+	const headingDefinition = getFragmentDefinition(
+		headingId,
+		'BASIC_COMPONENT-heading'
+	);
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([headingDefinition]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+
+	// Change heading margin top
+
+	await pageEditorPage.changeFragmentSpacing(headingId, 'Margin Top', '2');
+
+	expect(await pageEditorPage.getFragmentStyle(headingId, 'marginTop')).toBe(
+		'8px'
+	);
+
+	// Create new experience and change margin top again
+
+	await pageEditorPage.createExperience('E1');
+
+	await pageEditorPage.changeFragmentSpacing(
+		headingId,
+		'Margin Top',
+		'5',
+		'px'
+	);
+
+	expect(await pageEditorPage.getFragmentStyle(headingId, 'marginTop')).toBe(
+		'5px'
+	);
+
+	// Change to Default experience again and check previous margin
+
+	await pageEditorPage.switchExperience('Default');
+
+	expect(await pageEditorPage.getFragmentStyle(headingId, 'marginTop')).toBe(
+		'8px'
+	);
+});

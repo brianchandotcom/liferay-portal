@@ -2116,10 +2116,20 @@ war.path=${app.server.portal.dir}/</echo>
 						</else>
 					</if>
 
-					<mirrors-get
-						dest="@{patching.tool.dir}/patches"
-						src="http://files.liferay.com/private/ee/fix-packs/${patch.portal.version}/dxp/liferay-fix-pack-${fixpack.build.name}.zip"
-					/>
+					<if>
+						<and>
+							<isset property="patch.portal.version" />
+							<not>
+								<matches pattern="\d{4}.q[1234].\d+" string="${patch.portal.version}" />
+							</not>
+						</and>
+						<then>
+							<mirrors-get
+								dest="@{patching.tool.dir}/patches"
+								src="http://files.liferay.com/private/ee/fix-packs/${patch.portal.version}/dxp/liferay-fix-pack-${fixpack.build.name}.zip"
+							/>
+						</then>
+					</if>
 				</then>
 			</if>
 		</sequential>

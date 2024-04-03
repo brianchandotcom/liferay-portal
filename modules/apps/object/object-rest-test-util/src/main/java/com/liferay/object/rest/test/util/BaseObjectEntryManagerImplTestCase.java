@@ -116,6 +116,10 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 	}
 
 	protected String getValue(Object value) {
+		if (value == null) {
+			return null;
+		}
+
 		if (value instanceof Date) {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 				"yyyy-MM-dd");

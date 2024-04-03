@@ -48,26 +48,10 @@ public class SOSQLExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		StringBuilder sb = new StringBuilder();
 
 		if (Objects.equals(BinaryExpression.Operation.AND, operation)) {
-			_buildBinaryOperation(
-				StringBundler.concat(
-					StringPool.OPEN_PARENTHESIS, left,
-					StringPool.CLOSE_PARENTHESIS),
-				" AND ",
-				StringBundler.concat(
-					StringPool.OPEN_PARENTHESIS, right,
-					StringPool.CLOSE_PARENTHESIS),
-				sb);
+			_buildBinaryOperationAndOr(left, " AND ", right, sb);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.OR, operation)) {
-			_buildBinaryOperation(
-				StringBundler.concat(
-					StringPool.OPEN_PARENTHESIS, left,
-					StringPool.CLOSE_PARENTHESIS),
-				" OR ",
-				StringBundler.concat(
-					StringPool.OPEN_PARENTHESIS, right,
-					StringPool.CLOSE_PARENTHESIS),
-				sb);
+			_buildBinaryOperationAndOr(left, " OR ", right, sb);
 		}
 		else {
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
@@ -186,6 +170,20 @@ public class SOSQLExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		sb.append(left);
 		sb.append(operator);
 		sb.append(right);
+	}
+
+	private void _buildBinaryOperationAndOr(
+		Object left, String operator, Object right, StringBuilder sb) {
+
+		_buildBinaryOperation(
+			StringBundler.concat(
+				StringPool.OPEN_PARENTHESIS, left,
+				StringPool.CLOSE_PARENTHESIS),
+			operator,
+			StringBundler.concat(
+				StringPool.OPEN_PARENTHESIS, right,
+				StringPool.CLOSE_PARENTHESIS),
+			sb);
 	}
 
 	private final long _objectDefinitionId;

@@ -56,11 +56,11 @@ public class SugarCRMQueryExpressionVisitorImpl
 		}
 		else {
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-				_objectDefinitionId, left.toString());
+				_objectDefinitionId, (String)left);
 
 			if (objectField != null) {
 				left = objectField.getExternalReferenceCode();
-				right = StringUtil.unquote(right.toString());
+				right = StringUtil.unquote((String)right);
 			}
 		}
 

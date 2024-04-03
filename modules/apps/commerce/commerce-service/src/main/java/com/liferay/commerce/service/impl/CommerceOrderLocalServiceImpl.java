@@ -92,8 +92,8 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -481,10 +481,8 @@ public class CommerceOrderLocalServiceImpl
 
 			// Commerce order items
 
-			User user = _userService.getCurrentUser();
-
 			_commerceOrderItemLocalService.deleteCommerceOrderItems(
-				user.getUserId(), commerceOrder.getCommerceOrderId());
+				_getUserId(commerceOrder), commerceOrder.getCommerceOrderId());
 
 			// Commerce order notes
 
@@ -2334,6 +2332,21 @@ public class CommerceOrderLocalServiceImpl
 			serviceContext);
 	}
 
+	private long _getUserId(CommerceOrder commerceOrder) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			User user = _userLocalService.fetchUser(serviceContext.getUserId());
+
+			if (user != null) {
+				return user.getUserId();
+			}
+		}
+
+		return commerceOrder.getUserId();
+	}
+
 	private boolean _hasWorkflowDefinition(long groupId, long typePK)
 		throws PortalException {
 
@@ -2916,9 +2929,6 @@ public class CommerceOrderLocalServiceImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UserService _userService;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

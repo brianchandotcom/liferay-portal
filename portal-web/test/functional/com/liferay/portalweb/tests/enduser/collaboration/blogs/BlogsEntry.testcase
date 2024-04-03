@@ -535,7 +535,7 @@ definition {
 				portlet = "Blogs");
 
 			Click(
-				key_card = "test",
+				key_card = "Test",
 				locator1 = "Card#CARD_TITLE_LINK");
 		}
 

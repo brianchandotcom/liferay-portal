@@ -20,8 +20,7 @@ pipeline {
 			steps {
 				withCredentials([
 					string(credentialsId: 'analytics_cloud_ci_ssh', variable: 'SECRET'),
-					string(credentialsId: 'analytics_cloud_faro_license_prd', variable: 'LICENSE_PRD'),
-					string(credentialsId: 'analytics_cloud_faro_license_uat', variable: 'LICENSE_UAT')
+					string(credentialsId: 'analytics_cloud_faro_license', variable: 'LICENSE')
 				]) {
 					sh '''
 						export ANT_OPTS=-Xmx6g
@@ -59,16 +58,9 @@ pipeline {
 
 						mkdir -p osb-faro-docker/cloud/license
 
-						if [ "${FARO_ENVIRONMENT}" == "prd" ];
-						then
-							echo "Deploying production license."
+						echo "Deploying license."
 
-							echo "${LICENSE_PRD}" | base64 --decode > osb-faro-docker/cloud/license/license.xml
-						else
-							echo "Deploying UAT license."
-
-							echo "${LICENSE_UAT}" | base64 --decode > osb-faro-docker/cloud/license/license.xml
-						fi
+						echo "${LICENSE}" | base64 --decode > osb-faro-docker/cloud/license/license.xml
 					'''
                 }
 			}

@@ -19,10 +19,15 @@ public interface SearchOptionsPortletPreferences {
 	public static final String PREFERENCE_KEY_FEDERATED_SEARCH_KEY =
 		"federatedSearchKey";
 
+	public static final String PREFERENCE_KEY_RETAIN_FACET_SELECTIONS =
+		"retainFacetSelections";
+
 	public String getFederatedSearchKey();
 
 	public boolean isAllowEmptySearches();
 
 	public boolean isBasicFacetSelection();
+
+	public boolean isRetainFacetSelections();
 
 }

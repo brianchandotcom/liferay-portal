@@ -44,4 +44,12 @@ public class SearchOptionsPortletPreferencesImpl
 			false);
 	}
 
+	@Override
+	public boolean isRetainFacetSelections() {
+		return getBoolean(
+			SearchOptionsPortletPreferences.
+				PREFERENCE_KEY_RETAIN_FACET_SELECTIONS,
+			false);
+	}
+
 }

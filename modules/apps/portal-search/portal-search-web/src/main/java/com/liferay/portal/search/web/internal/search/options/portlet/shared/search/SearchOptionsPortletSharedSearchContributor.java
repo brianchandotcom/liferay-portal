@@ -40,6 +40,8 @@ public class SearchOptionsPortletSharedSearchContributor
 			searchOptionsPortletPreferences.isBasicFacetSelection()
 		).emptySearchEnabled(
 			searchOptionsPortletPreferences.isAllowEmptySearches()
+		).retainFacetSelections(
+			searchOptionsPortletPreferences.isRetainFacetSelections()
 		);
 	}
 

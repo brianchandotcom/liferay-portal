@@ -209,7 +209,7 @@ html#{$cadmin-selector} {
 			padding-left: 0;
 		}
 
-		.control-menu-nav-category {
+		.control-menu-nav-category:not(.tools-control-group) {
 			min-width: auto;
 		}
 

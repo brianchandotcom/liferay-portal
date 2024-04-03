@@ -13,18 +13,20 @@ const filterItemActions = (
 		? actions.reduce(
 				(actions: Array<IItemsActions>, action: IItemsActions) => {
 					if (action.data?.permissionKey) {
+						const itemDataActionKeys = Object.keys(
+							itemData.actions
+						);
+
 						if (
 							itemData.actions &&
-							Object.keys(itemData.actions).some(
+							itemDataActionKeys.some(
 								(itemAction) =>
 									itemAction.toLowerCase() ===
 									action.data?.permissionKey?.toLowerCase()
 							)
 						) {
 							if (action.target === 'headless') {
-								const matchedPermissionKey = Object.keys(
-									itemData.actions
-								).filter(
+								const matchedPermissionKey = itemDataActionKeys.filter(
 									(itemAction) =>
 										itemAction.toLowerCase() ===
 										action.data?.permissionKey?.toLowerCase()

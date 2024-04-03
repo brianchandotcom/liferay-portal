@@ -60,6 +60,7 @@ const DropDown = ({
 				<ClayButton
 					aria-label={Liferay.Language.get('new')}
 					className="nav-btn nav-btn-monospaced"
+					data-testid="fdsCreationActionButton"
 					title={Liferay.Language.get('new')}
 					{...(inEmptyState && EMPTY_STATE_BUTTON_PROPS)}
 				>
@@ -131,6 +132,7 @@ function CreationMenu({
 						<ClayButton
 							aria-label={primaryItems[0].label}
 							className="nav-btn nav-btn-monospaced"
+							data-testid="fdsCreationActionButton"
 							data-tooltip-align="top"
 							onClick={() => {
 								const item = primaryItems[0];

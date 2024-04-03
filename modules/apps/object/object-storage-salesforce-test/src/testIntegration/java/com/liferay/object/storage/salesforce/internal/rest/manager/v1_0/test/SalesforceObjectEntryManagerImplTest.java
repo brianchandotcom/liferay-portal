@@ -405,7 +405,7 @@ public class SalesforceObjectEntryManagerImplTest
 
 		testGetObjectEntries(
 			HashMapBuilder.put(
-				"filter", "title eq null"
+				"filter", buildEqualsExpressionFilterString("title", null)
 			).build(),
 			objectEntry5);
 

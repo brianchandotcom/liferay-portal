@@ -1,25 +1,10 @@
 {
-	"cpu": 8,
-	"env": {
-		"ES_JAVA_OPTS": "-Xms4g -Xmx4g"
-	},
-	"environments": {
-		"infra": {
-			"deploy": false
-		}
-	},
+	"kind": "StatefulSet",
 	"id": "search",
 	"image": "liferaycloud/elasticsearch:7.17.16-5.2.1",
-	"kind": "StatefulSet",
-	"livenessProbe": {
-		"httpGet": {
-			"path": "/_cluster/health",
-			"port": 9200
-		},
-		"initialDelaySeconds": 45,
-		"timeoutSeconds": 1
-	},
+	"cpu": 8,
 	"memory": 8192,
+	"scale": 1,
 	"ports": [
 		{
 			"external": false,
@@ -39,5 +24,25 @@
 		"periodSeconds": 10,
 		"successThreshold": 2,
 		"timeoutSeconds": 5
+	},
+	"livenessProbe": {
+		"httpGet": {
+			"path": "/_cluster/health",
+			"port": 9200
+		},
+		"initialDelaySeconds": 45,
+		"timeoutSeconds": 1
+	},
+	"env": {
+		"ES_JAVA_OPTS": "-Xms4g -Xmx4g"
+	},
+	"volumes": {
+		"esdata": "/data"
+	},
+	"podManagementPolicy": "Parallel",
+	"environments": {
+		"infra": {
+	  		"deploy": false
+		}
 	}
 }

@@ -69,6 +69,21 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return addLayoutUtilityPageEntry(
+			externalReferenceCode, userId, groupId, null, plid,
+			previewFileEntryId, defaultLayoutUtilityPageEntry, name, type,
+			masterLayoutPlid, true, serviceContext);
+	}
+
+	@Override
+	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
+			String externalReferenceCode, long userId, long groupId,
+			String friendlyURL, long plid, long previewFileEntryId,
+			boolean defaultLayoutUtilityPageEntry, String name, String type,
+			long masterLayoutPlid, boolean privateLayout,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		_validateName(groupId, 0, name, type);
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
@@ -96,7 +111,8 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		if (plid == 0) {
 			Layout layout = _addLayout(
-				userId, groupId, name, masterLayoutPlid, serviceContext);
+				userId, groupId, friendlyURL, name, masterLayoutPlid,
+				privateLayout, serviceContext);
 
 			if (layout != null) {
 				plid = layout.getPlid();
@@ -402,7 +418,8 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 	}
 
 	private Layout _addLayout(
-			long userId, long groupId, String name, long masterLayoutPlid,
+			long userId, long groupId, String friendlyURL, String name,
+			long masterLayoutPlid, boolean privateLayout,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -431,9 +448,16 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = _layoutLocalService.addLayout(
-			userId, groupId, true, 0, 0, 0, titleMap, titleMap, null, null,
-			null, LayoutConstants.TYPE_CONTENT, typeSettings, true, true,
+			userId, groupId, privateLayout, 0, 0, 0, titleMap, titleMap, null,
+			null, null, LayoutConstants.TYPE_CONTENT, typeSettings, true, true,
 			new HashMap<>(), masterLayoutPlid, serviceContext);
+
+		if (Validator.isNotNull(friendlyURL)) {
+			layout = _layoutLocalService.updateFriendlyURL(
+				userId, layout.getPlid(), friendlyURL,
+				LocaleUtil.getSiteDefault(
+				).toString());
+		}
 
 		Layout draftLayout = layout.fetchDraftLayout();
 

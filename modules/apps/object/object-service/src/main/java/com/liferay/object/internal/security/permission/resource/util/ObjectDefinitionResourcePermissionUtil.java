@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.util.Iterator;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Carolina Barbosa
@@ -43,46 +45,9 @@ public class ObjectDefinitionResourcePermissionUtil {
 			return;
 		}
 
-		ClassLoader classLoader =
-			ObjectDefinitionResourcePermissionUtil.class.getClassLoader();
-
-		String objectActionPermissionKeys = _getObjectActionPermissionKeys(
-			objectActionLocalService, objectDefinition.getObjectDefinitionId());
-
-		String resourceActionsFileName =
-			"resource-actions/resource-actions.xml.tpl";
-
-		if (!StringUtil.equals(
-				objectDefinition.getStorageType(),
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
-
-			resourceActionsFileName =
-				"resource-actions/resource-actions-nondefault-storage-type." +
-					"xml.tpl";
-		}
-
-		Document document = SAXReaderUtil.read(
-			StringUtil.replace(
-				StringUtil.read(classLoader, resourceActionsFileName),
-				new String[] {
-					"[$MODEL_NAME$]", "[$PERMISSIONS_GUEST_UNSUPPORTED$]",
-					"[$PERMISSIONS_SUPPORTS$]", "[$PORTLET_NAME$]",
-					"[$RESOURCE_NAME$]",
-					"[%ROOT_DESCENDANT_NODE_OBJECT_DEFINITIONS_MODEL_" +
-						"RESOURCES%]"
-				},
-				new String[] {
-					objectDefinition.getClassName(),
-					_getPermissionsGuestUnsupported(objectDefinition) +
-						objectActionPermissionKeys,
-					_getPermissionsSupports(objectDefinition) +
-						objectActionPermissionKeys,
-					objectDefinition.getPortletId(),
-					objectDefinition.getResourceName(),
-					_getRootDescendantNodeObjectDefinitionsModelResources(
-						objectActionLocalService, objectDefinitionPersistence,
-						objectDefinition, treeFactory)
-				}));
+		Document document = _readDocument(
+			objectActionLocalService, objectDefinition,
+			objectDefinitionPersistence, treeFactory);
 
 		resourceActions.populateModelResources(document);
 
@@ -91,8 +56,34 @@ public class ObjectDefinitionResourcePermissionUtil {
 
 		if (portlet != null) {
 			resourceActions.populatePortletResource(
-				portlet, classLoader, document);
+				portlet,
+				ObjectDefinitionResourcePermissionUtil.class.getClassLoader(),
+				document);
 		}
+
+		_objectDefinitionResourceActionDocumentsMap.put(
+			objectDefinition, document);
+	}
+
+	public static void removeResourceActions(
+			ObjectActionLocalService objectActionLocalService,
+			ObjectDefinition objectDefinition,
+			ObjectDefinitionPersistence objectDefinitionPersistence,
+			ResourceActions resourceActions, TreeFactory treeFactory)
+		throws Exception {
+
+		Document document = _objectDefinitionResourceActionDocumentsMap.remove(
+			objectDefinition);
+
+		if (document == null) {
+			document = _readDocument(
+				objectActionLocalService, objectDefinition,
+				objectDefinitionPersistence, treeFactory);
+		}
+
+		resourceActions.removeModelResources(document);
+
+		resourceActions.removePortletResources(document);
 	}
 
 	private static String _getObjectActionPermissionKeys(
@@ -192,6 +183,58 @@ public class ObjectDefinitionResourcePermissionUtil {
 		return modelResources;
 	}
 
+	private static Document _readDocument(
+			ObjectActionLocalService objectActionLocalService,
+			ObjectDefinition objectDefinition,
+			ObjectDefinitionPersistence objectDefinitionPersistence,
+			TreeFactory treeFactory)
+		throws Exception {
+
+		String objectActionPermissionKeys = _getObjectActionPermissionKeys(
+			objectActionLocalService, objectDefinition.getObjectDefinitionId());
+
+		String resourceActionsFileName =
+			"resource-actions/resource-actions.xml.tpl";
+
+		if (!StringUtil.equals(
+				objectDefinition.getStorageType(),
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
+
+			resourceActionsFileName =
+				"resource-actions/resource-actions-nondefault-storage-type." +
+					"xml.tpl";
+		}
+
+		return SAXReaderUtil.read(
+			StringUtil.replace(
+				StringUtil.read(
+					ObjectDefinitionResourcePermissionUtil.class.
+						getClassLoader(),
+					resourceActionsFileName),
+				new String[] {
+					"[$MODEL_NAME$]", "[$PERMISSIONS_GUEST_UNSUPPORTED$]",
+					"[$PERMISSIONS_SUPPORTS$]", "[$PORTLET_NAME$]",
+					"[$RESOURCE_NAME$]",
+					"[%ROOT_DESCENDANT_NODE_OBJECT_DEFINITIONS_MODEL_" +
+						"RESOURCES%]"
+				},
+				new String[] {
+					objectDefinition.getClassName(),
+					_getPermissionsGuestUnsupported(objectDefinition) +
+						objectActionPermissionKeys,
+					_getPermissionsSupports(objectDefinition) +
+						objectActionPermissionKeys,
+					objectDefinition.getPortletId(),
+					objectDefinition.getResourceName(),
+					_getRootDescendantNodeObjectDefinitionsModelResources(
+						objectActionLocalService, objectDefinitionPersistence,
+						objectDefinition, treeFactory)
+				}));
+	}
+
 	private static final int _INITIAL_WEIGHT = 3;
+
+	private static final Map<ObjectDefinition, Document>
+		_objectDefinitionResourceActionDocumentsMap = new ConcurrentHashMap<>();
 
 }

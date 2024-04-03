@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -56,9 +55,8 @@ public class DataRecordCollectionResourceTest
 	}
 
 	@AfterClass
-	public static void tearDownClass() {
-		ModelResourceActionTestUtil.deleteModelResourceAction(
-			_resourceActionLocalService, _resourceActions);
+	public static void tearDownClass() throws Exception {
+		ModelResourceActionTestUtil.deleteModelResourceAction(_resourceActions);
 	}
 
 	@Before
@@ -415,9 +413,6 @@ public class DataRecordCollectionResourceTest
 		dataRecordCollectionResource.deleteDataRecordCollection(
 			dataRecordCollection.getId());
 	}
-
-	@Inject
-	private static ResourceActionLocalService _resourceActionLocalService;
 
 	@Inject
 	private static ResourceActions _resourceActions;

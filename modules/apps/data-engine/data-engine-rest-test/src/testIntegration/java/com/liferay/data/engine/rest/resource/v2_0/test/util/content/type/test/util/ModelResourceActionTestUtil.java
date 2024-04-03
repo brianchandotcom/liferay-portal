@@ -5,13 +5,12 @@
 
 package com.liferay.data.engine.rest.resource.v2_0.test.util.content.type.test.util;
 
-import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
+
+import java.io.InputStream;
 
 import java.net.URL;
-
-import java.util.List;
 
 /**
  * @author Jiaxu Wei
@@ -22,30 +21,15 @@ public class ModelResourceActionTestUtil {
 		"com_liferay_data_engine_test_portlet_DataEngineTestPortlet";
 
 	public static void deleteModelResourceAction(
-		ResourceActionLocalService resourceActionLocalService,
-		ResourceActions resourceActions) {
+			ResourceActions resourceActions)
+		throws Exception {
 
-		List<ResourceAction> portletResourceActions =
-			resourceActionLocalService.getResourceActions(
-				PORTLET_RESOURCE_NAME);
+		try (InputStream inputStream =
+				ModelResourceActionTestUtil.class.getResourceAsStream(
+					"dependencies/resource-actions.xml")) {
 
-		for (ResourceAction portletResourceAction : portletResourceActions) {
-			resourceActionLocalService.deleteResourceAction(
-				portletResourceAction);
-		}
-
-		List<String> modelResourceNames =
-			resourceActions.getPortletModelResources(PORTLET_RESOURCE_NAME);
-
-		for (String modelResourceName : modelResourceNames) {
-			List<ResourceAction> modelResourceActions =
-				resourceActionLocalService.getResourceActions(
-					modelResourceName);
-
-			for (ResourceAction modelResourceAction : modelResourceActions) {
-				resourceActionLocalService.deleteResourceAction(
-					modelResourceAction);
-			}
+			resourceActions.removeModelResources(
+				UnsecureSAXReaderUtil.read(inputStream, true));
 		}
 	}
 

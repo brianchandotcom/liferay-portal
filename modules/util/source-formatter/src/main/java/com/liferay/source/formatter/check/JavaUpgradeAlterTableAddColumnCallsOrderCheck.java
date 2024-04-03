@@ -83,7 +83,7 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 				continue;
 			}
 
-			String methodCall2 = JavaSourceUtil.getMethodCall(content, x);
+			String methodCall2 = JavaSourceUtil.getMethodCall(content, x + 2);
 
 			List<String> parameterNames2 = JavaSourceUtil.getParameterNames(
 				methodCall2);

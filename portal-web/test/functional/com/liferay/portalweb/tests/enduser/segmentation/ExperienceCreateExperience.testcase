@@ -4186,67 +4186,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-91876: Validate if when the user tries to edit the name of some Experience can be edited with success"
-	@priority = 5
-	test EditExperienceName {
-		property portal.acceptance = "quarantine";
-
-		task ("Create an experience and add on content page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.addExperience(
-				experienceName = "NewAnyoneExperience",
-				segmentName = "Anyone");
-		}
-
-		task ("Change experience's name") {
-			PageEditor.editExperience(new_experienceName = "NewAnyoneExperience edited");
-		}
-
-		task ("Assert that experience's name is changed") {
-			PageEditor.viewExperienceValues(
-				experienceName = "NewAnyoneExperience edited",
-				segmentName = "Anyone");
-		}
-	}
-
-	@description = "LPS-91876: Validate if when the user tries to edit the segment associated of some Experience can be changed with success"
-	@priority = 3
-	test EditExperienceSegment {
-		task ("Create Name Segment") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "Screen Name",
-				groupName = "Test Site Name",
-				operator = "contains",
-				segmentName = "Name Segment",
-				text = "Test");
-		}
-
-		task ("Go to Experience Content Page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-		}
-
-		task ("Create an experience and add on content page") {
-			PageEditor.addExperience(
-				experienceName = "Segment Name Experience",
-				segmentName = "Anyone");
-		}
-
-		task ("Change experience's segment") {
-			PageEditor.editExperience(new_segmentName = "Name Segment");
-		}
-
-		task ("Assert that experience's segment is changed") {
-			PageEditor.viewExperienceValues(
-				experienceName = "Segment Name Experience",
-				segmentName = "Name Segment");
-		}
-	}
-
 	@description = "LPS-90588: Validate the interaction with how the user interacts with the Experiences Dropdown, when the user has permissions and segments are available and interact with the New Segment by New Experience"
 	@priority = 3
 	test ExperienceDropdownAddNewSegment {

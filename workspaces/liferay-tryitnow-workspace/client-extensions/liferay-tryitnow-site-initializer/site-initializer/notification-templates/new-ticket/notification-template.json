@@ -1,12 +1,12 @@
 {
 	"description": "This template will be used when a new ticket is submitted.",
 	"editorType": "richText",
-	"externalReferenceCode": "M2H8-NEW-TICKET-USER-TEMPLATE",
+	"externalReferenceCode": "M2H8_NEW_TICKET_USER_TEMPLATE",
 	"name": "M2H8 New Ticket User Template",
 	"name_i18n": {
 		"en_US": "M2H8 New Ticket User Template"
 	},
-	"objectDefinitionExternalReferenceCode": "J3Y7-TICKET",
+	"objectDefinitionExternalReferenceCode": "J3Y7_TICKET",
 	"recipientType": "role",
 	"recipients": [
 		{

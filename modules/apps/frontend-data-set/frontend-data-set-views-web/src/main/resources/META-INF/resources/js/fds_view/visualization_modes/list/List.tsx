@@ -87,7 +87,21 @@ export default function List(props: IFDSViewSectionProps) {
 		);
 	};
 
-	const clearFDSListSection = async (listSection: IListSection) => {
+	const clearFDSListSection = async ({
+		closeModal,
+		listSection,
+	}: {
+		closeModal?: Function;
+		listSection: IListSection;
+	}) => {
+		if (!listSection.externalReferenceCode) {
+			if (closeModal) {
+				closeModal();
+			}
+
+			return;
+		}
+
 		setSaveButtonDisabled(true);
 
 		const response = await fetch(
@@ -101,6 +115,10 @@ export default function List(props: IFDSViewSectionProps) {
 			openDefaultFailureToast();
 
 			return;
+		}
+
+		if (closeModal) {
+			closeModal();
 		}
 
 		setListSections(
@@ -117,6 +135,8 @@ export default function List(props: IFDSViewSectionProps) {
 				return nextListSection;
 			})
 		);
+
+		openDefaultSuccessToast();
 	};
 
 	const saveFDSListSection = async ({
@@ -224,14 +244,19 @@ export default function List(props: IFDSViewSectionProps) {
 							listSection={listSection}
 							modalProps={props}
 							onClearSelection={() => {
-								clearFDSListSection(listSection);
+								clearFDSListSection({listSection});
 							}}
 							onSelect={({closeModal, selectedField}) => {
-								saveFDSListSection({
-									closeModal,
-									field: selectedField,
-									listSection,
-								});
+								selectedField
+									? saveFDSListSection({
+											closeModal,
+											field: selectedField,
+											listSection,
+									  })
+									: clearFDSListSection({
+											closeModal,
+											listSection,
+									  });
 							}}
 							saveButtonDisabled={saveButtonDisabled}
 						/>

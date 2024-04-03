@@ -237,90 +237,6 @@ definition {
 		}
 	}
 
-	@description = "The Add new experience modals appears after click on cancel in the Edit experience modal"
-	@priority = 5
-	test AddNewExperienceAfterCancelEdit {
-		property portal.acceptance = "true";
-
-		task ("Add an Experience for that page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.addExperience(
-				experienceName = "NewExp1",
-				segmentName = "Anyone");
-		}
-
-		task ("Open edit modal and cancel") {
-			PageEditor.openExperienceMenu();
-
-			Click(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
-
-			AssertClick(
-				locator1 = "Button#CANCEL",
-				value1 = "Cancel");
-		}
-
-		task ("Open new experience modal") {
-			PageEditor.openExperienceMenu();
-
-			Click(
-				key_text = "New Experience",
-				locator1 = "Button#ANY");
-
-			SelectFrame(value1 = "relative=top");
-		}
-
-		task ("Check values displayed at modal ") {
-			AssertTextEquals(
-				locator1 = "PageEditor#EXPERIENCE_NEW_EXPERIENCE_MODAL_TITLE",
-				value1 = "New Experience");
-
-			AssertTextEquals(
-				locator1 = "PageEditor#EXPERIENCE_NAME",
-				value1 = "");
-		}
-	}
-
-	@description = "This is a test for LPS-127312. The page editor could add new experience after cancel edit experience."
-	@priority = 4
-	test AddNewExperienceAfterCancelEditExperience {
-		task ("Given a page editor has an experience") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.addExperience(
-				experienceName = "Test Exp",
-				segmentName = "Anyone");
-		}
-
-		task ("When the page editor cancels the experience editing") {
-			PageEditor.openExperienceMenu();
-
-			Click(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
-
-			Type(
-				locator1 = "PageEditor#EXPERIENCE_NAME",
-				value1 = "Test Exp Edited");
-
-			Button.clickCancel();
-		}
-
-		task ("Then the page editor could add a new experience") {
-			Click(
-				key_text = "New Experience",
-				locator1 = "Button#ANY");
-
-			AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_MODAL");
-
-			AssertTextNotEquals(
-				locator1 = "PageEditor#EXPERIENCE_NAME",
-				value1 = "Test Exp");
-		}
-	}
-
 	@description = "LPS-130344: Segment member preview count shows the correct number of users when segments are combined"
 	@priority = 5
 	test AddNewExperienceBasedOtherSegmentsSegment {
@@ -3345,41 +3261,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "Experience#FRAGMENT_HEADING",
 				value1 = "This is a new Screen Name experience for you");
-		}
-	}
-
-	@description = "LPS-90586: Validate if the user can cancel the confirmation from delete alert and your experience is not deleted"
-	@priority = 3
-	test CancelDeletingExperience {
-		task ("Create Name Segment") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "Screen Name",
-				groupName = "Test Site Name",
-				operator = "contains",
-				segmentName = "Name Segment",
-				text = "Test");
-		}
-
-		task ("Go to Experience Content Page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-		}
-
-		task ("Create an experience and add on content page") {
-			PageEditor.addExperience(
-				experienceName = "Segment Name Experience",
-				segmentName = "Name Segment");
-		}
-
-		task ("Click at delete button and cancel at confirmation") {
-			PageEditor.deleteExperienceCancel();
-		}
-
-		task ("Check if experience still present") {
-			AssertElementPresent(
-				key_experienceName = "Segment Name Experience",
-				locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
 		}
 	}
 

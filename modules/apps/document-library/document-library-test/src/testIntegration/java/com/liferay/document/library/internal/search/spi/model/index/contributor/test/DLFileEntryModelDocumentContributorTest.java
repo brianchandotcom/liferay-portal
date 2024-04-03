@@ -17,6 +17,7 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
@@ -25,12 +26,13 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
 
@@ -54,12 +56,7 @@ public class DLFileEntryModelDocumentContributorTest {
 	@Test
 	public void testCachedTextExtractionIsNotReused() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.document.library.internal.configuration." +
-						"DLIndexerConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"cacheTextExtraction", false
-					).build())) {
+				_getConfigurationTemporarySwapper(false)) {
 
 			DLFileEntry dlFileEntry = _addDLFileEntry();
 
@@ -90,12 +87,7 @@ public class DLFileEntryModelDocumentContributorTest {
 	@Test
 	public void testCachedTextExtractionIsReused() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.document.library.internal.configuration." +
-						"DLIndexerConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"cacheTextExtraction", true
-					).build())) {
+				_getConfigurationTemporarySwapper(true)) {
 
 			DLFileEntry dlFileEntry = _addDLFileEntry();
 
@@ -126,71 +118,35 @@ public class DLFileEntryModelDocumentContributorTest {
 	@Test
 	public void testTextExtractionIsCachedInDLStore() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.document.library.internal.configuration." +
-						"DLIndexerConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"cacheTextExtraction", true
-					).build())) {
+				_getConfigurationTemporarySwapper(true)) {
 
 			DLFileEntry dlFileEntry = _addDLFileEntry();
 
-			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-			Assert.assertFalse(
-				_dlStore.hasFile(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					dlFileVersion.getStoreFileName() + ".index"));
+			Assert.assertFalse(_hasFile(dlFileEntry));
 
 			_dlFileEntryModelDocumentContributor.contribute(
 				new DocumentImpl(), dlFileEntry);
 
 			Assert.assertEquals(
 				StreamUtil.toString(dlFileEntry.getContentStream()),
-				StringUtil.trim(
-					StreamUtil.toString(
-						_dlStore.getFileAsStream(
-							dlFileEntry.getCompanyId(),
-							dlFileEntry.getDataRepositoryId(),
-							dlFileEntry.getName(),
-							dlFileVersion.getStoreFileName() + ".index"))));
-			Assert.assertTrue(
-				_dlStore.hasFile(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					dlFileVersion.getStoreFileName() + ".index"));
+				_getFileAsString(dlFileEntry));
+			Assert.assertTrue(_hasFile(dlFileEntry));
 		}
 	}
 
 	@Test
 	public void testTextExtractionIsNotCachedInDLStore() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.document.library.internal.configuration." +
-						"DLIndexerConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"cacheTextExtraction", false
-					).build())) {
+				_getConfigurationTemporarySwapper(false)) {
 
 			DLFileEntry dlFileEntry = _addDLFileEntry();
 
-			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-			Assert.assertFalse(
-				_dlStore.hasFile(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					dlFileVersion.getStoreFileName() + ".index"));
+			Assert.assertFalse(_hasFile(dlFileEntry));
 
 			_dlFileEntryModelDocumentContributor.contribute(
 				new DocumentImpl(), dlFileEntry);
 
-			Assert.assertFalse(
-				_dlStore.hasFile(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					dlFileVersion.getStoreFileName() + ".index"));
+			Assert.assertFalse(_hasFile(dlFileEntry));
 		}
 	}
 
@@ -210,6 +166,39 @@ public class DLFileEntryModelDocumentContributorTest {
 			null, null, ServiceContextTestUtil.getServiceContext());
 	}
 
+	private ConfigurationTemporarySwapper _getConfigurationTemporarySwapper(
+			boolean cacheTextExtraction)
+		throws Exception {
+
+		return new ConfigurationTemporarySwapper(
+			"com.liferay.document.library.internal.configuration." +
+				"DLIndexerConfiguration",
+			HashMapDictionaryBuilder.<String, Object>put(
+				"cacheTextExtraction", cacheTextExtraction
+			).build());
+	}
+
+	private String _getFileAsString(DLFileEntry dlFileEntry)
+		throws IOException, PortalException {
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		return StringUtil.trim(
+			StreamUtil.toString(
+				_dlStore.getFileAsStream(
+					dlFileEntry.getCompanyId(),
+					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
+					dlFileVersion.getStoreFileName() + ".index")));
+	}
+
+	private boolean _hasFile(DLFileEntry dlFileEntry) throws PortalException {
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		return _dlStore.hasFile(
+			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(), dlFileVersion.getStoreFileName() + ".index");
+	}
+
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
@@ -221,8 +210,5 @@ public class DLFileEntryModelDocumentContributorTest {
 
 	@Inject
 	private DLStore _dlStore;
-
-	@Inject
-	private Portal _portal;
 
 }

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -447,7 +446,7 @@ public class LayoutLocalServiceTest {
 
 		layout.setUserId(-1);
 
-		layout = LayoutLocalServiceUtil.updateLayout(layout);
+		layout = _layoutLocalService.updateLayout(layout);
 
 		Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
 
@@ -459,7 +458,7 @@ public class LayoutLocalServiceTest {
 
 		serviceContext.setUserId(userId);
 
-		LayoutLocalServiceUtil.updateLayout(
+		_layoutLocalService.updateLayout(
 			_group.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getParentLayoutId(), layout.getNameMap(),
 			layout.getTitleMap(), layout.getDescriptionMap(),
@@ -500,7 +499,7 @@ public class LayoutLocalServiceTest {
 	public void testUpdateLookAndFeel() throws Exception {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
-		layout = LayoutLocalServiceUtil.updateLookAndFeel(
+		layout = _layoutLocalService.updateLookAndFeel(
 			_group.getGroupId(), false, layout.getLayoutId(),
 			"test_WAR_testtheme", "01", StringPool.BLANK);
 
@@ -510,7 +509,7 @@ public class LayoutLocalServiceTest {
 		layoutTypePortlet.setLayoutTemplateId(
 			layout.getUserId(), "1_column", false);
 
-		LayoutLocalServiceUtil.updateLayout(layout);
+		_layoutLocalService.updateLayout(layout);
 	}
 
 	@Test(expected = MasterLayoutException.class)
@@ -543,13 +542,13 @@ public class LayoutLocalServiceTest {
 
 		Layout layout = layoutPrototype.getLayout();
 
-		layout = LayoutLocalServiceUtil.updateLayout(layout);
+		layout = _layoutLocalService.updateLayout(layout);
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setUserId(layout.getUserId());
 
-		LayoutLocalServiceUtil.updateLayout(
+		_layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getParentLayoutId(), layout.getNameMap(),
 			layout.getTitleMap(), layout.getDescriptionMap(),
@@ -557,8 +556,7 @@ public class LayoutLocalServiceTest {
 			layout.isHidden(), layout.getFriendlyURLMap(),
 			layout.getIconImage(), null, 0, 0, 0, serviceContext);
 
-		Layout updatedLayout = LayoutLocalServiceUtil.getLayout(
-			layout.getPlid());
+		Layout updatedLayout = _layoutLocalService.getLayout(layout.getPlid());
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			updatedLayout.getTypeSettingsProperties();

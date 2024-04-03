@@ -18,6 +18,10 @@ import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 const LINK_ITEM_ACTION_NAME = 'Link item action';
 const LINK_ITEM_ACTION_CONFIRMATION_MESSAGE =
 	'Do you want to navigate to http://www.liferay.com?';
+const MODAL_ITEM_ACTION_NAME = 'Modal item action';
+const MODAL_ITEM_ACTION_TITLE = 'Modal title';
+const SIDE_PANEL_ITEM_ACTION_NAME = 'SidePanel item action';
+const SIDE_PANEL_ITEM_ACTION_URL = liferayConfig.environment.baseUrl;
 
 export const test = mergeTests(
 	actionsPageTest,
@@ -165,11 +169,9 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 				'Check that the Item Action button is not present',
 				async () => {
 					await expect(
-						fdsFragmentPage.itemActionButton
-					).not.toBeVisible();
-
-					await expect(
-						fdsFragmentPage.itemActionMenuButton
+						fdsFragmentPage.page
+							.getByLabel(LINK_ITEM_ACTION_NAME)
+							.first()
 					).not.toBeVisible();
 				}
 			);
@@ -257,6 +259,196 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 					await expect(
 						page.getByText('Welcome to Liferay')
 					).toBeVisible();
+				}
+			);
+		}
+	);
+
+	fragmentTest(
+		'Link, Modal and Side Panel Item Actions (multiple actions) are shown in fragment',
+		async ({
+			apiHelpers,
+			dataSetManagerApiHelpers,
+			fdsFragmentPage,
+			page,
+			site,
+		}) => {
+			fragmentTest.step('Create Item Actions', async () => {
+				dataSetManagerApiHelpers.createDataSetViewItemAction({
+					label_i18n: {en_US: LINK_ITEM_ACTION_NAME},
+					r_fdsViewFDSItemActionRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'link',
+				});
+
+				dataSetManagerApiHelpers.createDataSetViewItemAction({
+					label_i18n: {en_US: MODAL_ITEM_ACTION_NAME},
+					modalSize: 'sm',
+					r_fdsViewFDSItemActionRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					title_i18n: {en_US: MODAL_ITEM_ACTION_TITLE},
+					type: 'modal',
+					url: liferayConfig.environment.baseUrl,
+				});
+
+				dataSetManagerApiHelpers.createDataSetViewItemAction({
+					label_i18n: {en_US: SIDE_PANEL_ITEM_ACTION_NAME},
+					modalSize: 'sm',
+					r_fdsViewFDSItemActionRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					title_i18n: {en_US: SIDE_PANEL_ITEM_ACTION_NAME},
+					type: 'sidePanel',
+					url: liferayConfig.environment.baseUrl,
+				});
+			});
+
+			const layout = await fragmentTest.step(
+				'Create a new page',
+				async () => {
+					const pageLayout =
+						await apiHelpers.headlessDelivery.createSitePage({
+							siteId: site.id,
+							title: getRandomString(),
+						});
+
+					return pageLayout;
+				}
+			);
+
+			await fragmentTest.step(
+				'Configure Data Set in the page',
+				async () => {
+					await fdsFragmentPage.configureDataSetFragment({
+						layout,
+						site,
+						viewLabel: actionsDataSetViewLabel,
+					});
+				}
+			);
+
+			const datasetRow = await fragmentTest.step(
+				'Checkt that the Item Actions dropdown is present in table row',
+				async () => {
+					const tableRow = await page
+						.locator('.dnd-td.item-actions')
+						.first();
+
+					await expect(
+						tableRow.getByRole('button', {
+							exact: true,
+							name: 'Actions',
+						})
+					).toBeVisible;
+
+					const button = await tableRow.getByRole('button', {
+						exact: true,
+						name: 'Actions',
+					});
+					const dropdownId = await button.evaluate((node) =>
+						node.getAttribute('aria-controls')
+					);
+
+					await button.click();
+
+					await page
+						.locator(`#${dropdownId}`)
+						.filter({has: page.getByRole('menu')})
+						.waitFor();
+
+					await expect(
+						page.locator(`#${dropdownId}`).getByRole('menuitem')
+					).toHaveCount(3);
+
+					await page.keyboard.press('Escape');
+
+					return tableRow;
+				}
+			);
+
+			await fragmentTest.step(
+				'Click the modal item action opens a modal window',
+				async () => {
+					const button = await datasetRow.getByRole('button', {
+						exact: true,
+						name: 'Actions',
+					});
+
+					const dropdownId = await button.evaluate((node) =>
+						node.getAttribute('aria-controls')
+					);
+
+					await button.click();
+
+					await page
+						.locator(`#${dropdownId}`)
+						.filter({has: page.getByRole('menu')})
+						.waitFor();
+
+					await page
+						.locator(`#${dropdownId}`)
+						.getByRole('menuitem', {
+							exact: true,
+							name: MODAL_ITEM_ACTION_NAME,
+						})
+						.click();
+
+					await page.getByRole('dialog').waitFor();
+
+					const dialog = await page.getByRole('dialog');
+					await expect(dialog.getByRole('heading')).toHaveText(
+						MODAL_ITEM_ACTION_TITLE
+					);
+
+					await dialog.getByRole('button', {name: 'close'}).click();
+
+					await expect(dialog).not.toBeInViewport();
+				}
+			);
+
+			await fragmentTest.step(
+				'Click the side panel item action opens a side panel',
+				async () => {
+					const button = await datasetRow.getByRole('button', {
+						exact: true,
+						name: 'Actions',
+					});
+
+					const dropdownId = await button.evaluate((node) =>
+						node.getAttribute('aria-controls')
+					);
+
+					await button.click();
+
+					await page
+						.locator(`#${dropdownId}`)
+						.filter({has: page.getByRole('menu')})
+						.waitFor();
+
+					await page
+						.locator(`#${dropdownId}`)
+						.getByRole('menuitem', {
+							exact: true,
+							name: SIDE_PANEL_ITEM_ACTION_NAME,
+						})
+						.click();
+
+					await page.getByRole('tabpanel').waitFor();
+
+					const sidePanel = await page.getByRole('tabpanel');
+
+					const iframeElement = await sidePanel
+						.locator('iframe')
+						.elementHandle();
+
+					const frame = await iframeElement.contentFrame();
+
+					await frame.waitForURL(
+						new RegExp(`.*${SIDE_PANEL_ITEM_ACTION_URL}`, 'i')
+					);
+
+					await page.keyboard.press('Escape');
+
+					await expect(sidePanel).not.toBeInViewport();
 				}
 			);
 		}

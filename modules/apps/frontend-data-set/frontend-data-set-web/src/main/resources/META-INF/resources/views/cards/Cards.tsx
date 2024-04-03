@@ -21,6 +21,7 @@ interface ICardSchema {
 	description: string;
 	image: string;
 	link: string;
+	sticker: string;
 	symbol: string;
 	title: string;
 }
@@ -81,7 +82,7 @@ const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 					: undefined
 			}
 			selected={cardSelected}
-			stickerProps={null}
+			stickerProps={schema.sticker && item[schema.sticker] || null}
 			symbol={schema.symbol && item[schema.symbol]}
 			title={localizedTitle}
 		/>

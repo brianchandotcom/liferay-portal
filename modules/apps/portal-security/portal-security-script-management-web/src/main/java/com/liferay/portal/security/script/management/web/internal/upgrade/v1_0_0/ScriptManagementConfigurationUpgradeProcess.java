@@ -11,7 +11,6 @@ import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.security.script.management.configuration.ScriptManagementConfiguration;
-import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -67,11 +66,11 @@ public class ScriptManagementConfigurationUpgradeProcess
 			}
 
 			while (resultSet1.next()) {
-				String content = WorkflowDefinitionContentUtil.toXML(
-					resultSet1.getString(1));
+				String content = resultSet1.getString(1);
 
 				if (content.contains(
-						"<script-language>groovy</script-language>")) {
+						"{\"#tag-name\":\"script-language\",\"#value\":" +
+							"\"groovy\"}")) {
 
 					return true;
 				}

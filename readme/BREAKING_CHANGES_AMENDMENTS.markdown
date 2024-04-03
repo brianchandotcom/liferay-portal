@@ -114,6 +114,7 @@ Code from portal-kernel is moving to portal-impl to reduce code complexity.
 ## Alternatives
 
 Add portal-impl as a build dependency and fix the import statements to continue using the refactored classes.
+
 ----
 
 # breaking_change_report
@@ -149,6 +150,7 @@ The ThreadLocalDistributor class is removed.
 ## Why
 
 ThreadLocalDistributor has no current usage.
+
 ----
 
 # breaking_change_report
@@ -204,6 +206,7 @@ The ModelSearchRegistrarHelper class is removed.
 ## Why
 
 The self-bootstrapping style *SearchRegistrar has changed so this class is no longer used.
+
 ----
 
 # breaking_change_report
@@ -239,6 +242,7 @@ The logic from AuditMessageFactoryUtil and AuditMessageFactoryImpl is now in the
 ## Why
 
 The logic being split between multiple classes did not provide any value. They are merged into a single class to simplify the code.
+
 ----
 
 # breaking_change_report

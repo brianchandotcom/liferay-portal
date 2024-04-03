@@ -8,10 +8,12 @@ import {expect, mergeTests} from '@playwright/test';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
+import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
+	fdsFragmentPageTest,
 	visualizationModesPageTest,
 	loginTest()
 );
@@ -233,5 +235,124 @@ test('Configure list visualization mode @LPD-10735', async ({
 			});
 
 		expect(assignedFieldLocator).toHaveText(newFieldName);
+	});
+});
+
+test('Configure table visualization mode @LPD-11049', async ({
+	visualizationModesPage,
+}) => {
+	const SAMPLE_SCALAR_FIELD = 'id';
+	const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
+	const SAMPLE_OBJECT_CHILD_FIELD = 'id';
+	const SORTABLE_COLUMN_INDEX = 5;
+
+	await test.step('Navigate to table visualization mode page', async () => {
+		await visualizationModesPage.goto({
+			dataSetLabel,
+			viewLabel,
+		});
+
+		await visualizationModesPage.selectTab('Table');
+
+		await expect(
+			visualizationModesPage.page.getByPlaceholder('Search')
+		).toBeVisible();
+	});
+
+	await test.step('Add fields', async () => {
+		await visualizationModesPage.openAddFieldsModal();
+
+		await visualizationModesPage.addRootField(SAMPLE_SCALAR_FIELD);
+		await visualizationModesPage.addRootField(SAMPLE_OBJECT_FIELD);
+		await visualizationModesPage.addChildField(
+			[SAMPLE_OBJECT_FIELD],
+			SAMPLE_OBJECT_CHILD_FIELD
+		);
+
+		await visualizationModesPage.saveAddFieldsModal();
+	});
+
+	await test.step('Check if field defaults are correct', async () => {
+		await expect(
+			visualizationModesPage
+				.getRowByText(SAMPLE_SCALAR_FIELD)
+				.locator('td')
+				.nth(SORTABLE_COLUMN_INDEX)
+		).toHaveText('true');
+
+		await expect(
+			visualizationModesPage
+				.getRowByText(`${SAMPLE_OBJECT_FIELD}.*`)
+				.locator('td')
+				.nth(SORTABLE_COLUMN_INDEX)
+		).toHaveText('false');
+
+		await expect(
+			visualizationModesPage
+				.getRowByText(
+					`${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`
+				)
+				.locator('td')
+				.nth(SORTABLE_COLUMN_INDEX)
+		).toHaveText('true');
+	});
+
+	await test.step('Edit a field', async () => {
+		await visualizationModesPage
+			.getRowByText(SAMPLE_SCALAR_FIELD)
+			.locator('.actions-cell button')
+			.click();
+
+		const editButton = visualizationModesPage.page.getByRole('menuitem', {
+			name: 'Edit',
+		});
+
+		await expect(editButton).toBeInViewport();
+
+		await editButton.click();
+
+		const sortableInput =
+			visualizationModesPage.page.getByLabel('Sortable');
+
+		await expect(sortableInput).toBeInViewport();
+		await expect(sortableInput).toBeEnabled();
+		await expect(sortableInput).toBeChecked();
+
+		sortableInput.click();
+
+		await expect(sortableInput).not.toBeChecked();
+
+		await visualizationModesPage.saveAddFieldsModal();
+
+		await expect(
+			visualizationModesPage
+				.getRowByText(SAMPLE_SCALAR_FIELD)
+				.locator('td')
+				.nth(SORTABLE_COLUMN_INDEX)
+		).toHaveText('false');
+	});
+
+	await test.step('Check if object field has disabled sortable option', async () => {
+		await visualizationModesPage
+			.getRowByText(`${SAMPLE_OBJECT_FIELD}.*`)
+			.locator('.actions-cell button')
+			.click();
+
+		const editButton = visualizationModesPage.page.getByRole('menuitem', {
+			name: 'Edit',
+		});
+
+		await expect(editButton).toBeInViewport();
+
+		await editButton.click();
+
+		const sortableLabel =
+			visualizationModesPage.page.getByLabel('Sortable');
+
+		await expect(sortableLabel).toBeInViewport();
+
+		await expect(sortableLabel).toBeDisabled();
+
+		await visualizationModesPage.cancelAddFieldsModal();
 	});
 });

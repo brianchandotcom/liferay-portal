@@ -231,7 +231,7 @@ export default {
 		segmentsExperienceId,
 	}: {
 		fragmentEntryLinkId: string;
-		itemClassName: string;
+		itemClassName?: string | null;
 		itemClassPK?: string | null;
 		itemExternalReferenceCode?: string | null;
 		languageId: Liferay.Language.Locale;
@@ -239,17 +239,20 @@ export default {
 	}) {
 		const body: {
 			fragmentEntryLinkId: string;
-			itemClassName: string;
+			itemClassName?: string;
 			itemClassPK?: string;
 			itemExternalReferenceCode?: string;
 			languageId: Liferay.Language.Locale;
 			segmentsExperienceId: string;
 		} = {
 			fragmentEntryLinkId,
-			itemClassName,
 			languageId,
 			segmentsExperienceId,
 		};
+
+		if (itemClassName) {
+			body.itemClassName = itemClassName;
+		}
 
 		if (itemClassPK) {
 			body.itemClassPK = itemClassPK;

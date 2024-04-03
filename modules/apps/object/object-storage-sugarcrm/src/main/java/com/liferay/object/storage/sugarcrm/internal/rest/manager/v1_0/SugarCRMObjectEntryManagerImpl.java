@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
@@ -186,9 +187,9 @@ public class SugarCRMObjectEntryManagerImpl
 		StringBuilder sb, ObjectDefinition objectDefinition,
 		String filterString) {
 
-		if (!filterString.trim(
-			).isEmpty()) {
+		filterString = StringUtil.trim(filterString);
 
+		if (!filterString.isEmpty()) {
 			sb.append(StringPool.AMPERSAND);
 			sb.append("filter");
 			sb.append(StringPool.EQUAL);

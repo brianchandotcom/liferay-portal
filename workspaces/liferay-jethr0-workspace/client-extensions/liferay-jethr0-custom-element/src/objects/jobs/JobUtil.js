@@ -25,7 +25,7 @@ export function createJob({data, redirect}) {
 			liferayRequest({
 				headers,
 				method: 'PUT',
-				urlPath: `/o/c/jobs/${parentResultJSON.id}/object-actions/jethr0EtcSpringBootJobAdd`,
+				urlPath: `/o/c/jobs/${parentResultJSON.id}/object-actions/Jethr0EtcSpringBootJobAdd`,
 			})
 				.then((request) => request.text())
 				.then(() => {

@@ -945,6 +945,9 @@
 					"active": true,
 					"conditionExpression": "",
 					"description": "",
+					"errorMessage": {
+						"en_US": "Unable to trigger Jethr0EtcSpringBootJobAdd"
+					},
 					"label": {
 						"en_US": "Jethr0 Etc Spring Boot Job Add"
 					},

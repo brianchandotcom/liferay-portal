@@ -4,10 +4,9 @@
  */
 
 import {FDSViewType} from './FDSViews';
-import {IFDSField, IField, IPickList} from './utils/types';
+import {IField, IPickList} from './utils/types';
 export declare function getFields(fdsView: FDSViewType): Promise<IField[]>;
 export declare function getAllPicklists(
 	page?: number,
 	items?: IPickList[]
 ): Promise<IPickList[]>;
-export declare function isSortable(field: IFDSField | IField): boolean;

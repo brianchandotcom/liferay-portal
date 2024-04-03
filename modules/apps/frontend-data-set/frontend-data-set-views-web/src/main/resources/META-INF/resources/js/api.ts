@@ -12,13 +12,7 @@ import {fetch} from 'frontend-js-web';
 import {FDSViewType} from './FDSViews';
 import {OBJECT_RELATIONSHIP} from './utils/constants';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
-import {
-	EFieldFormat,
-	EFieldType,
-	IFDSField,
-	IField,
-	IPickList,
-} from './utils/types';
+import {EFieldFormat, EFieldType, IField, IPickList} from './utils/types';
 
 const INVALID_FIELDS = ['actions', 'scopeKey', 'x-class-name', 'x-schema-name'];
 
@@ -152,10 +146,4 @@ export async function getAllPicklists(
 	}
 
 	return items;
-}
-
-export function isSortable(field: IFDSField | IField): boolean {
-	return !(
-		field.type === EFieldType.OBJECT || field.type === EFieldType.ARRAY
-	);
 }

@@ -16,6 +16,7 @@ import isMappedToLayout from '../utils/editable_value/isMappedToLayout';
 import isMappedToStructure from '../utils/editable_value/isMappedToStructure';
 import getPortletId from '../utils/getPortletId';
 import {useDisplayPagePreviewItem} from './DisplayPagePreviewItemContext';
+import {useAddPendingItem} from './PortletContentContext';
 import {useDispatch} from './StoreContext';
 
 const defaultFromControlsId = (itemId) => itemId;
@@ -85,6 +86,8 @@ const useGetContent = (
 	const toControlsId = useToControlsId();
 
 	const collectionContentId = toControlsId(fragmentEntryLinkId);
+
+	const addPendingItem = useAddPendingItem();
 
 	const {
 		className: collectionItemClassName,
@@ -191,38 +194,13 @@ const useGetContent = (
 				return;
 			}
 
-			FragmentService.renderFragmentEntryLinkContent({
-				fragmentEntryLinkId,
-				itemClassName,
-				itemClassPK,
-				itemExternalReferenceCode,
-				languageId,
-				segmentsExperienceId,
-			}).then(({content}) => {
-				dispatch(
-					updateFragmentEntryLinkContent({
-						collectionContentId,
-						content,
-						fragmentEntryLinkId,
-					})
-				);
-			});
+			addPendingItem(fragmentEntryLinkId);
 		};
 
 		Liferay.on('refreshPortlet', onRefreshPortlet);
 
 		return () => Liferay.detach('refreshPortlet', onRefreshPortlet);
-	}, [
-		collectionContentId,
-		dispatch,
-		editableValues,
-		fragmentEntryLinkId,
-		itemClassName,
-		itemClassPK,
-		itemExternalReferenceCode,
-		languageId,
-		segmentsExperienceId,
-	]);
+	}, [addPendingItem, editableValues, fragmentEntryLinkId]);
 
 	return (
 		(!isNullOrUndefined(collectionItemIndex)

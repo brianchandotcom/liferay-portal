@@ -38,6 +38,7 @@ boolean priceOnApplication = BeanParamUtil.getBoolean(commercePriceEntry, reques
 		<liferay-ui:error exception="<%= CommercePriceListMaxPriceValueException.class %>">
 			<liferay-ui:message arguments="<%= CommercePriceConstants.PRICE_VALUE_MAX %>" key="price-max-value-is-x" />
 		</liferay-ui:error>
+
 		<liferay-ui:error exception="<%= CommercePriceListMinPriceValueException.class %>">
 			<liferay-ui:message arguments="<%= CommercePriceConstants.PRICE_VALUE_MIN %>" key="price-min-value-is-x" />
 		</liferay-ui:error>

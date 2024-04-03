@@ -138,14 +138,12 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (
-				exception instanceof
-					CommercePriceListMaxPriceValueException ||
-				exception instanceof
-					CommercePriceListMinPriceValueException ||
-				exception instanceof
-					DuplicateCommercePriceEntryException) {
-
+			else if (exception instanceof
+						CommercePriceListMaxPriceValueException ||
+					 exception instanceof
+						 CommercePriceListMinPriceValueException ||
+					 exception instanceof
+						 DuplicateCommercePriceEntryException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);

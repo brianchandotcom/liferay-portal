@@ -159,7 +159,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(
 					actionRequest, exception.getClass(), exception);
 			}
-			else if (exception instanceof CompanyMaxUsersException ||
+
+			if (exception instanceof CompanyMaxUsersException ||
 					 exception instanceof CookieNotSupportedException ||
 					 exception instanceof NoSuchUserException ||
 					 exception instanceof PasswordExpiredException ||

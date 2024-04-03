@@ -417,6 +417,36 @@
 			}
 		},
 		{
+			"externalReferenceCode": "JobQueueOrder",
+			"label": {
+				"en_US": "Job Queue Order"
+			},
+			"name": "JobQueueOrder",
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"indexed": false,
+					"label": {
+						"en_US": "Job Ids"
+					},
+					"name": "jobIds",
+					"type": "Clob"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Job Queue Orders"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
 			"externalReferenceCode": "TaskRun",
 			"label": {
 				"en_US": "Task Run"

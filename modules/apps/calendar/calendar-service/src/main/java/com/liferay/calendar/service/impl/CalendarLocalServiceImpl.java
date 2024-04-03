@@ -98,13 +98,13 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 		calendar.setCreateDate(serviceContext.getCreateDate(date));
 		calendar.setModifiedDate(serviceContext.getModifiedDate(date));
 		calendar.setCalendarResourceId(calendarResourceId);
-		calendar.setNameMap(nameMap);
-		calendar.setDescriptionMap(descriptionMap);
 		calendar.setTimeZoneId(timeZoneId);
 		calendar.setColor(color);
 		calendar.setDefaultCalendar(defaultCalendar);
 		calendar.setEnableComments(enableComments);
 		calendar.setEnableRatings(enableRatings);
+		calendar.setNameMap(nameMap);
+		calendar.setDescriptionMap(descriptionMap);
 
 		calendar = calendarPersistence.update(calendar);
 
@@ -357,13 +357,13 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 		_validate(nameMap);
 
 		calendar.setModifiedDate(serviceContext.getModifiedDate(null));
-		calendar.setNameMap(nameMap);
-		calendar.setDescriptionMap(descriptionMap);
 		calendar.setTimeZoneId(timeZoneId);
 		calendar.setColor(color);
 		calendar.setDefaultCalendar(defaultCalendar);
 		calendar.setEnableComments(enableComments);
 		calendar.setEnableRatings(enableRatings);
+		calendar.setNameMap(nameMap);
+		calendar.setDescriptionMap(descriptionMap);
 
 		calendar = calendarPersistence.update(calendar);
 

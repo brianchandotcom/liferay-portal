@@ -106,9 +106,9 @@ public class CalendarResourceLocalServiceImpl
 		calendarResource.setClassPK(classPK);
 		calendarResource.setClassUuid(classUuid);
 		calendarResource.setCode(code);
+		calendarResource.setActive(active);
 		calendarResource.setNameMap(nameMap);
 		calendarResource.setDescriptionMap(descriptionMap);
-		calendarResource.setActive(active);
 
 		calendarResource = calendarResourcePersistence.update(calendarResource);
 
@@ -299,9 +299,9 @@ public class CalendarResourceLocalServiceImpl
 			calendarResourcePersistence.findByPrimaryKey(calendarResourceId);
 
 		calendarResource.setModifiedDate(serviceContext.getModifiedDate(null));
+		calendarResource.setActive(active);
 		calendarResource.setNameMap(nameMap);
 		calendarResource.setDescriptionMap(descriptionMap);
-		calendarResource.setActive(active);
 
 		calendarResource = calendarResourcePersistence.update(calendarResource);
 

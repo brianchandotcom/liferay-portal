@@ -11,9 +11,17 @@
 			"title": "The external reference code Schema",
 			"type": "string"
 		},
+		"friendlyURL": {
+			"title": "The friendly URL Schema",
+			"type": "string"
+		},
 		"name": {
 			"title": "The name Schema",
 			"type": "string"
+		},
+		"privateLayout": {
+			"title": "The privateLayout Schema",
+			"type": "boolean"
 		},
 		"type": {
 			"enum": [

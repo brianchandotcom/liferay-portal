@@ -30,7 +30,6 @@ import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -1096,9 +1095,6 @@ public class TemplateInfoItemFieldSetProviderTest {
 	private Group _group;
 
 	private JournalArticle _journalArticle;
-
-	@Inject
-	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private JournalConverter _journalConverter;

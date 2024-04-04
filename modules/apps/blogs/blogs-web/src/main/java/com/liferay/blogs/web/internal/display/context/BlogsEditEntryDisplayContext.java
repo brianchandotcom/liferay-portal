@@ -6,20 +6,29 @@
 package com.liferay.blogs.web.internal.display.context;
 
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.settings.BlogsGroupServiceSettings;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -31,6 +40,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
@@ -64,6 +74,48 @@ public class BlogsEditEntryDisplayContext {
 		_blogsGroupServiceSettings = blogsGroupServiceSettings;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+
+		_assetVocabularyLocalService =
+			(AssetVocabularyLocalService)httpServletRequest.getAttribute(
+				AssetVocabularyLocalService.class.getName());
+		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
+			ItemSelector.class.getName());
+		_siteConnectedGroupGroupProvider =
+			(SiteConnectedGroupGroupProvider)httpServletRequest.getAttribute(
+				SiteConnectedGroupGroupProvider.class.getName());
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	}
+
+	public String getAssetCategorySelectorURL() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
+
+		InfoItemItemSelectorCriterion itemSelectorCriterion =
+			new InfoItemItemSelectorCriterion();
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoItemItemSelectorReturnType());
+		itemSelectorCriterion.setItemType(AssetCategory.class.getName());
+		itemSelectorCriterion.setMultiSelection(true);
+
+		return PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, _themeDisplay.getScopeGroup(),
+				_themeDisplay.getScopeGroupId(),
+				_liferayPortletResponse.getNamespace() +
+					"selectedAssetCategory",
+				itemSelectorCriterion)
+		).setParameter(
+			"selectedCategoryIds",
+			StringUtil.merge(_getAssetCategoryIds(), StringPool.COMMA)
+		).setParameter(
+			"vocabularyIds",
+			() -> ListUtil.toString(
+				_assetVocabularyLocalService.getGroupsVocabularies(
+					_getGroupIds()),
+				AssetVocabulary.VOCABULARY_ID_ACCESSOR)
+		).buildString();
 	}
 
 	public BlogsEntry getBlogsEntry() {
@@ -423,6 +475,35 @@ public class BlogsEditEntryDisplayContext {
 		return _assetAutoTaggerConfiguration.isUpdateAutoTags();
 	}
 
+	private long[] _getAssetCategoryIds() {
+		if (_assetCategoryIds == null) {
+			_assetCategoryIds = ParamUtil.getLongValues(
+				_httpServletRequest, "assetCategoryId");
+		}
+
+		return _assetCategoryIds;
+	}
+
+	private long[] _getGroupIds() {
+		if (_groupIds != null) {
+			return _groupIds;
+		}
+
+		try {
+			_groupIds =
+				_siteConnectedGroupGroupProvider.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						_themeDisplay.getScopeGroupId());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return _groupIds;
+	}
+
 	private String _getItemSelectorURL(
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 		String itemSelectedEventName) {
@@ -451,6 +532,9 @@ public class BlogsEditEntryDisplayContext {
 				blogsItemSelectorCriterion, imageItemSelectorCriterion));
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		BlogsEditEntryDisplayContext.class);
+
 	private static final Snapshot<ItemSelector> _itemSelectorSnapshot =
 		new Snapshot<>(
 			BlogsEditEntryDisplayContext.class, ItemSelector.class, null, true);
@@ -458,6 +542,8 @@ public class BlogsEditEntryDisplayContext {
 	private Boolean _allowPingbacks;
 	private Boolean _allowTrackbacks;
 	private final AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;
+	private long[] _assetCategoryIds;
+	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final BlogsEntry _blogsEntry;
 	private final BlogsFileUploadsConfiguration _blogsFileUploadsConfiguration;
 	private final BlogsGroupServiceSettings _blogsGroupServiceSettings;
@@ -468,10 +554,15 @@ public class BlogsEditEntryDisplayContext {
 	private String _description;
 	private Boolean _emailEntryUpdatedEnabled;
 	private Long _entryId;
+	private long[] _groupIds;
 	private final HttpServletRequest _httpServletRequest;
+	private final ItemSelector _itemSelector;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
+	private final SiteConnectedGroupGroupProvider
+		_siteConnectedGroupGroupProvider;
 	private Long _smallImageFileEntryId;
+	private final ThemeDisplay _themeDisplay;
 	private String _title;
 	private String _urlTitle;
 

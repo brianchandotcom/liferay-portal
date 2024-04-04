@@ -307,11 +307,11 @@ public class ExportImportTaskResourcePerformanceTest {
 		return classNamePartsMap;
 	}
 
-	private Closeable _startTimer(Log log) {
-		return _startTimer(log, null);
+	private Closeable _startTimer() {
+		return _startTimer(null);
 	}
 
-	private Closeable _startTimer(Log log, String message) {
+	private Closeable _startTimer(String message) {
 		Thread thread = Thread.currentThread();
 
 		StackTraceElement stackTraceElement = thread.getStackTrace()[3];
@@ -323,14 +323,14 @@ public class ExportImportTaskResourcePerformanceTest {
 		long startTime = System.currentTimeMillis();
 
 		return () -> {
-			if (log.isInfoEnabled()) {
+			if (_log.isInfoEnabled()) {
 				long totalTimeMillis = System.currentTimeMillis() - startTime;
 
 				double speed = (totalTimeMillis > 0) ?
 					(double)(_recordsCount * 1000) / (double)totalTimeMillis :
 						Double.NaN;
 
-				log.info(
+				_log.info(
 					StringBundler.concat(
 						invokerName,
 						Validator.isNotNull(message) ? (" (" + message + ") ") :
@@ -353,7 +353,7 @@ public class ExportImportTaskResourcePerformanceTest {
 
 		Map<String, String> classNamePartsMap = _splitClassName(className);
 
-		try (Closeable closeable = _startTimer(_log, "export_items")) {
+		try (Closeable closeable = _startTimer("export_items")) {
 			httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.header(
@@ -403,7 +403,7 @@ public class ExportImportTaskResourcePerformanceTest {
 			}
 		}
 
-		try (Closeable closeable = _startTimer(_log, "download")) {
+		try (Closeable closeable = _startTimer("download")) {
 			httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.header(
@@ -441,7 +441,7 @@ public class ExportImportTaskResourcePerformanceTest {
 		String json = _createBatchJSON(
 			classNamePartsMap.get("className"), _recordsCount);
 
-		try (Closeable closeable = _startTimer(_log)) {
+		try (Closeable closeable = _startTimer()) {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(json, "application/json");

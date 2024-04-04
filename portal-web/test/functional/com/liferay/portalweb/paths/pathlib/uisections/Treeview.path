@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>SEARCH_RESULT_ITEM</td>
-	<td>//ul[contains(@class,'treeview')]//button[contains(@class,'search-result-button')][normalize-space(text())='${key_nodeName}']</td>
+	<td>//ul[contains(@class,'treeview')]//button[contains(@class,'search-result-button')]//*[normalize-space(text())='${key_nodeName}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -8,6 +8,7 @@ package com.liferay.jethr0.job.prioritizer;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.job.comparator.JobComparatorEntity;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -31,5 +32,9 @@ public interface JobPrioritizerEntity extends Entity {
 		JobComparatorEntity jobComparatorEntity);
 
 	public void setName(String name);
+
+	public List<Long> getPrioritizedJobIds();
+
+	public void setPrioritizedJobIds(List<Long> prioritizedJobIDs);
 
 }

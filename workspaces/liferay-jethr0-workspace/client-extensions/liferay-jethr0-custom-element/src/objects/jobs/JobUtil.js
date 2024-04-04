@@ -78,7 +78,7 @@ export function getJobById({id, setJob}) {
 
 export function getJobQueueOrderedJobs({setJobs}) {
 	liferayRequest({
-		urlPath: '/o/c/jobqueueorders',
+		urlPath: '/o/c/jobprioritizers',
 		urlSearchParams: new URLSearchParams({
 			pageSize: 1,
 			sort: "dateCreated:desc",
@@ -88,7 +88,7 @@ export function getJobQueueOrderedJobs({setJobs}) {
 		.then((result) => {
 			const resultJSON = JSON.parse(result);
 
-			getJobs({orderedJobIds: JSON.parse(resultJSON.items[0].jobIds), setJobs});
+			getJobs({orderedJobIds: JSON.parse(resultJSON.items[0].prioritizedJobIds), setJobs});
 		})
 		.catch((error) => {
 			// eslint-disable-next-line no-console

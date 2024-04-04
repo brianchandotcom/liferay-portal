@@ -553,15 +553,22 @@ function SearchResult({filter, layout, multiSelection, onSelect, selection}) {
 		const matchLayoutName = new RegExp(filter, 'i').exec(layout.name);
 
 		return matchLayoutName ? (
-			<span className="search-results-mark-layout-name">
-				{matchLayoutName.input.substring(0, matchLayoutName.index)}
+			<>
+				<span className="sr-only">{layout.name}</span>
 
-				<mark className="px-0">{matchLayoutName[0]}</mark>
+				<span
+					aria-hidden={true}
+					className="search-results-mark-layout-name"
+				>
+					{matchLayoutName.input.substring(0, matchLayoutName.index)}
 
-				{matchLayoutName.input.substring(
-					matchLayoutName.index + matchLayoutName[0].length
-				)}
-			</span>
+					<mark className="px-0">{matchLayoutName[0]}</mark>
+
+					{matchLayoutName.input.substring(
+						matchLayoutName.index + matchLayoutName[0].length
+					)}
+				</span>
+			</>
 		) : (
 			layout.name
 		);

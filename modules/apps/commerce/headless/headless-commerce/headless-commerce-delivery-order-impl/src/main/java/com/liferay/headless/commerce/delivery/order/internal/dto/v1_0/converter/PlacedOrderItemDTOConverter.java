@@ -233,7 +233,7 @@ public class PlacedOrderItemDTOConverter
 		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
 		CommerceOrderItemPrice commerceOrderItemPrice =
-			_commerceOrderPriceCalculation.getCommerceOrderItemPricePerUnit(
+			_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
 				commerceCurrency, commerceOrderItem);
 
 		CommerceMoney unitPriceCommerceMoney =

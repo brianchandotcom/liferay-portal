@@ -1,0 +1,84 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": true,
+					"label": "use-mappable-url",
+					"name": "useMappableUrl",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": "",
+					"label": "URL (Only use if not mapping the URL)",
+					"name": "url",
+					"type": "text"
+				},
+				{
+					"defaultValue": false,
+					"label": "autoplay",
+					"name": "autoPlay",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": false,
+					"label": "loop",
+					"name": "loop",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": true,
+					"label": "mute",
+					"name": "mute",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": false,
+					"label": "hide-controls",
+					"name": "hideControls",
+					"type": "checkbox"
+				}
+			]
+		},
+		{
+			"configurationRole": "style",
+			"fields": [
+				{
+					"defaultValue": "",
+					"label": "width",
+					"name": "videoWidth",
+					"type": "text"
+				},
+				{
+					"defaultValue": "",
+					"label": "height",
+					"name": "videoHeight",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "flex-start",
+					"label": "align",
+					"name": "align",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "left",
+								"value": "flex-start"
+							},
+							{
+								"label": "center",
+								"value": "center"
+							},
+							{
+								"label": "right",
+								"value": "flex-end"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

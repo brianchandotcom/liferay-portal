@@ -1,0 +1,10 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
+	"fragmentEntryKey": "mappable-video",
+	"htmlPath": "index.html",
+	"icon": "video",
+	"jsPath": "index.js",
+	"name": "mappable-video",
+	"type": "component"
+}

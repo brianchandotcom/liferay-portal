@@ -120,10 +120,10 @@ public class KoroneikiRestController extends BaseRestController {
 				continue;
 			}
 
-			String endDate = null;
+			String endDateString = null;
 
 			if (!productPurchase.getPerpetual()) {
-				endDate = ZonedDateTime.ofInstant(
+				endDateString = ZonedDateTime.ofInstant(
 					productPurchase.getEndDate(
 					).toInstant(),
 					ZoneOffset.UTC
@@ -143,14 +143,13 @@ public class KoroneikiRestController extends BaseRestController {
 			for (ProductConsumption productConsumption :
 					productPurchaseView.getProductConsumptions()) {
 
+				Date endDate = productConsumption.getEndDate();
+
 				if (Objects.equals(
 						productConsumption.getProductPurchaseKey(),
 						productPurchase.getKey()) &&
-					(productPurchase.getPerpetual() ||
-					 productConsumption.getEndDate(
-					 ).after(
-						 new Date()
-					 ))) {
+					(endDate.after(new Date()) ||
+					 productPurchase.getPerpetual())) {
 
 					provisionedCount++;
 				}
@@ -165,7 +164,7 @@ public class KoroneikiRestController extends BaseRestController {
 			jsonArray.put(
 				new JSONObject(
 				).put(
-					"endDate", endDate
+					"endDate", endDateString
 				).put(
 					"name", name
 				).put(

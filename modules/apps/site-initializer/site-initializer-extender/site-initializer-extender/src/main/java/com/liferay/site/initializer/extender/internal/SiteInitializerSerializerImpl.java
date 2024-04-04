@@ -7,6 +7,8 @@ package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -95,11 +98,12 @@ public class SiteInitializerSerializerImpl
 		try {
 			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
+			_serializeAssetListEntries(groupId, zipWriter);
+			_serializeDDMStructures(groupId, zipWriter);
+			_serializeDDMTemplates(groupId, zipWriter);
 			_serializeDocuments(
 				groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				"documents/group", zipWriter);
-			_serializeDDMStructures(groupId, zipWriter);
-			_serializeDDMTemplates(groupId, zipWriter);
 			_serializeJournalArticles(
 				groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				"journal-articles", zipWriter);
@@ -157,6 +161,40 @@ public class SiteInitializerSerializerImpl
 		string = StringUtil.toLowerCase(string);
 
 		return StringUtil.replace(string, CharPool.SPACE, CharPool.DASH);
+	}
+
+	private void _serializeAssetListEntries(long groupId, ZipWriter zipWriter)
+		throws Exception {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		for (AssetListEntry assetListEntry :
+				_assetListEntryLocalService.getAssetListEntries(groupId)) {
+
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.getDDMStructure(
+					GetterUtil.getLong(
+						UnicodePropertiesBuilder.create(
+							true
+						).fastLoad(
+							assetListEntry.getTypeSettings(0)
+						).build(
+						).get(
+							""
+						)));
+
+			jsonArray.put(
+				JSONUtil.put(
+					"ddmStructureKey", ddmStructure.getStructureKey()
+				).put(
+					"title", assetListEntry.getTitle()
+				).put(
+					"unicodeProperties",
+					JSONUtil.put("classNameIds", ddmStructure.getClassName())
+				));
+		}
+
+		_addZipEntry("asset-list-entries.json", jsonArray, zipWriter);
 	}
 
 	private void _serializeDDMStructure(
@@ -691,6 +729,9 @@ public class SiteInitializerSerializerImpl
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

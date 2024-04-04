@@ -5,6 +5,7 @@ import moment from 'moment';
 import {buildOrderByFields} from 'shared/util/pagination';
 import {DEFAULT_DATE_FORMAT} from 'shared/util/date';
 import {INDIVIDUALS} from 'shared/util/router';
+import {isJapaneseLang} from 'shared/util/lang';
 import {TransformedContainer} from './DownloadPDFReport';
 import {useParams} from 'react-router-dom';
 
@@ -30,7 +31,7 @@ export const fontMapper: {
 	[LanguageIds.Japanese]: {
 		path: `${pathThemeRoot}/fonts/noto-sans-jp-bold.ttf`,
 		style: ['NotoSansJP', 'bold'],
-		test: value => /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(value)
+		test: isJapaneseLang
 	}
 };
 

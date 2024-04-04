@@ -146,3 +146,6 @@ const LABELS_MAP = {
 
 export const getDeviceLabel = (deviceType: string): string =>
 	LABELS_MAP[deviceType.toLowerCase()] || deviceType;
+
+export const isJapaneseLang = value =>
+	/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(value);

@@ -68,6 +68,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.service.TemplateEntryLocalService;
 import com.liferay.template.test.util.TemplateTestUtil;
 
 import java.text.DateFormat;
@@ -145,6 +146,12 @@ public class TemplateInfoItemFieldSetProviderTest {
 		ServiceContextThreadLocal.pushServiceContext(_originalServiceContext);
 		LocaleThreadLocal.setSiteDefaultLocale(_originalSiteDefaultLocale);
 		LocaleThreadLocal.setThemeDisplayLocale(_originalThemeDisplayLocale);
+
+		if (_globalTemplateEntry != null) {
+			_templateEntryLocalService.deleteTemplateEntry(
+				_globalTemplateEntry);
+			_globalTemplateEntry = null;
+		}
 	}
 
 	@Test
@@ -200,9 +207,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		_serviceContext.setScopeGroupId(_company.getGroupId());
 
-		TemplateEntry blogsEntryTemplateEntry =
-			TemplateTestUtil.addTemplateEntry(
-				BlogsEntry.class.getName(), StringPool.BLANK, _serviceContext);
+		_globalTemplateEntry = TemplateTestUtil.addTemplateEntry(
+			BlogsEntry.class.getName(), StringPool.BLANK, _serviceContext);
 
 		_serviceContext.setScopeGroupId(groupId);
 
@@ -224,7 +230,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 		Assert.assertEquals(
 			infoFields.toString(),
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-				blogsEntryTemplateEntry.getTemplateEntryId(),
+				_globalTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
 	}
 
@@ -1091,6 +1097,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 	@Inject
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
+	private TemplateEntry _globalTemplateEntry;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -1111,6 +1119,9 @@ public class TemplateInfoItemFieldSetProviderTest {
 	private Portal _portal;
 
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private TemplateEntryLocalService _templateEntryLocalService;
 
 	@Inject
 	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;

@@ -313,7 +313,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 
 		release.setServletContextName(_symbolicName);
 		release.setSchemaVersion("0.0.1");
-		release.setVerified(true);
+		release.setVerified(false);
 
 		_releaseLocalService.updateRelease(release);
 

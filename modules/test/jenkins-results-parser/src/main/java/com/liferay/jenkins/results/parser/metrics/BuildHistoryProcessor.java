@@ -40,6 +40,10 @@ import org.json.JSONArray;
  */
 public class BuildHistoryProcessor {
 
+	public static ExecutorService getExecutorService() {
+		return _executorService;
+	}
+
 	public static BuildHistory mergeBuildHistories(
 		Collection<BuildHistory> buildHistories, String name) {
 

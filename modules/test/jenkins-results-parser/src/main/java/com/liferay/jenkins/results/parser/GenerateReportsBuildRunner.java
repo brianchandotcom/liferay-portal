@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.metrics.BuildHistoryProcessor;
 import com.liferay.jenkins.results.parser.metrics.BuildHistoryReport;
 
 import java.io.File;
@@ -20,11 +21,13 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.io.FileUtils;
@@ -122,17 +125,44 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		File baseDir = new File(
 			_buildProperties.getProperty("archive.ci.build.data.archive.dir"));
 
-		for (String dateString : dateStrings) {
-			File archiveFile = new File(baseDir, dateString + ".tar.gz");
+		List<Callable<Void>> callables = new ArrayList<>();
 
-			File unarchivedDir = new File(_TMP_ARCHIVE_DIR_PATH, dateString);
+		for (final String dateString : dateStrings) {
+			callables.add(
+				new Callable<Void>() {
 
-			if (archiveFile.exists() && !unarchivedDir.exists()) {
-				System.out.println(
-					"Extracting " + archiveFile + " to " + unarchivedDir);
+					@Override
+					public Void call() {
+						File archiveFile = new File(
+							baseDir, dateString + ".tar.gz");
 
-				JenkinsResultsParserUtil.unTarGzip(archiveFile, unarchivedDir);
-			}
+						File unarchivedDir = new File(
+							_TMP_ARCHIVE_DIR_PATH, dateString);
+
+						if (archiveFile.exists() && !unarchivedDir.exists()) {
+							System.out.println(
+								"Extracting " + archiveFile + " to " +
+									unarchivedDir);
+
+							JenkinsResultsParserUtil.unTarGzip(
+								archiveFile, unarchivedDir);
+						}
+
+						return null;
+					}
+
+				});
+		}
+
+		ParallelExecutor<Void> parallelExecutor = new ParallelExecutor<>(
+			callables, BuildHistoryProcessor.getExecutorService(),
+			"_copyArchivedBuildData");
+
+		try {
+			parallelExecutor.execute();
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
 		}
 	}
 

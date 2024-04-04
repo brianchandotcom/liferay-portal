@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -656,7 +655,6 @@ public abstract class BaseTierPriceResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTierPriceByExternalReferenceCode()
 		throws Exception {
@@ -716,7 +714,6 @@ public abstract class BaseTierPriceResourceTestCase {
 						"Object/tierPriceByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTierPriceByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -798,7 +795,6 @@ public abstract class BaseTierPriceResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteTierPrice() throws Exception {
 
@@ -891,7 +887,6 @@ public abstract class BaseTierPriceResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTierPrice() throws Exception {
 		TierPrice tierPrice = testGraphQLGetTierPrice_addTierPrice();
@@ -937,7 +932,6 @@ public abstract class BaseTierPriceResourceTestCase {
 						"Object/tierPrice"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTierPriceNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

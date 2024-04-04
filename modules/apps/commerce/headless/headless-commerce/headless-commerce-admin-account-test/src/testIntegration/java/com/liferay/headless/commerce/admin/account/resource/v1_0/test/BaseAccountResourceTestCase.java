@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -542,7 +541,6 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -673,7 +671,6 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountByExternalReferenceCode()
 		throws Exception {
@@ -733,7 +730,6 @@ public abstract class BaseAccountResourceTestCase {
 						"Object/accountByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -818,7 +814,6 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteAccount() throws Exception {
 
@@ -908,7 +903,6 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccount() throws Exception {
 		Account account = testGraphQLGetAccount_addAccount();
@@ -954,7 +948,6 @@ public abstract class BaseAccountResourceTestCase {
 						"Object/account"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -530,7 +529,6 @@ public abstract class BaseOrderItemResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderItemsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -654,7 +652,6 @@ public abstract class BaseOrderItemResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderItemByExternalReferenceCode()
 		throws Exception {
@@ -714,7 +711,6 @@ public abstract class BaseOrderItemResourceTestCase {
 						"Object/orderItemByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderItemByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -850,7 +846,6 @@ public abstract class BaseOrderItemResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteOrderItem() throws Exception {
 
@@ -942,7 +937,6 @@ public abstract class BaseOrderItemResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderItem() throws Exception {
 		OrderItem orderItem = testGraphQLGetOrderItem_addOrderItem();
@@ -988,7 +982,6 @@ public abstract class BaseOrderItemResourceTestCase {
 						"Object/orderItem"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderItemNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

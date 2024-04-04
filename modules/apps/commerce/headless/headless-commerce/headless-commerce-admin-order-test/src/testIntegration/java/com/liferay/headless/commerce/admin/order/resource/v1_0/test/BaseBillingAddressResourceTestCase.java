@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -235,7 +234,6 @@ public abstract class BaseBillingAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderByExternalReferenceCodeBillingAddress()
 		throws Exception {
@@ -301,7 +299,6 @@ public abstract class BaseBillingAddressResourceTestCase {
 		return billingAddress.getExternalReferenceCode();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderByExternalReferenceCodeBillingAddressNotFound()
 		throws Exception {
@@ -391,7 +388,6 @@ public abstract class BaseBillingAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderIdBillingAddress() throws Exception {
 		BillingAddress billingAddress =
@@ -451,7 +447,6 @@ public abstract class BaseBillingAddressResourceTestCase {
 		return billingAddress.getId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderIdBillingAddressNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

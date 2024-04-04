@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -224,7 +223,6 @@ public abstract class BaseProcessResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteProcess() throws Exception {
 
@@ -313,7 +311,6 @@ public abstract class BaseProcessResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProcess() throws Exception {
 		Process process = testGraphQLGetProcess_addProcess();
@@ -359,7 +356,6 @@ public abstract class BaseProcessResourceTestCase {
 						"Object/process"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProcessNotFound() throws Exception {
 		Long irrelevantProcessId = RandomTestUtil.randomLong();

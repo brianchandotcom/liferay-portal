@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -540,7 +539,6 @@ public abstract class BaseAccountGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountGroupsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -750,7 +748,6 @@ public abstract class BaseAccountGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountGroupByExternalReferenceCode()
 		throws Exception {
@@ -809,7 +806,6 @@ public abstract class BaseAccountGroupResourceTestCase {
 						"Object/accountGroupByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountGroupByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -985,7 +981,6 @@ public abstract class BaseAccountGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteAccountGroup() throws Exception {
 
@@ -1083,7 +1078,6 @@ public abstract class BaseAccountGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountGroup() throws Exception {
 		AccountGroup accountGroup =
@@ -1133,7 +1127,6 @@ public abstract class BaseAccountGroupResourceTestCase {
 						"Object/accountGroup"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountGroupNotFound() throws Exception {
 		Long irrelevantAccountGroupId = RandomTestUtil.randomLong();

@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -833,7 +832,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testGroup.getGroupId(), randomStructuredContentFolder());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode()
 		throws Exception {
@@ -912,7 +910,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -1617,7 +1614,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentFoldersPage()
 		throws Exception {
@@ -1822,7 +1818,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testGroup.getGroupId(), randomStructuredContentFolder());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentFolderByExternalReferenceCode()
 		throws Exception {
@@ -1903,7 +1898,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		return structuredContentFolder.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentFolderByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -2759,7 +2753,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testGroup.getGroupId(), randomStructuredContentFolder());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteStructuredContentFolder() throws Exception {
 
@@ -2867,7 +2860,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testGroup.getGroupId(), randomStructuredContentFolder());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetStructuredContentFolder() throws Exception {
 		StructuredContentFolder structuredContentFolder =
@@ -2918,7 +2910,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 						"Object/structuredContentFolder"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetStructuredContentFolderNotFound()
 		throws Exception {

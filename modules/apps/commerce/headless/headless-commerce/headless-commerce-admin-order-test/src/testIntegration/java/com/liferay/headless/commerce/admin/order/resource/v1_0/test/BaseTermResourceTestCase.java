@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -497,7 +496,6 @@ public abstract class BaseTermResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTermsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -625,7 +623,6 @@ public abstract class BaseTermResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTermByExternalReferenceCode() throws Exception {
 		Term term = testGraphQLGetTermByExternalReferenceCode_addTerm();
@@ -682,7 +679,6 @@ public abstract class BaseTermResourceTestCase {
 						"Object/termByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTermByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -785,7 +781,6 @@ public abstract class BaseTermResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteTerm() throws Exception {
 
@@ -874,7 +869,6 @@ public abstract class BaseTermResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTerm() throws Exception {
 		Term term = testGraphQLGetTerm_addTerm();
@@ -920,7 +914,6 @@ public abstract class BaseTermResourceTestCase {
 						"Object/term"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTermNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

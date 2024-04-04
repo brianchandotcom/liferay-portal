@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -225,7 +224,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testGroup.getGroupId(), randomMessageBoardSection());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteMessageBoardSection() throws Exception {
 
@@ -333,7 +331,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testGroup.getGroupId(), randomMessageBoardSection());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMessageBoardSection() throws Exception {
 		MessageBoardSection messageBoardSection =
@@ -383,7 +380,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 						"Object/messageBoardSection"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMessageBoardSectionNotFound() throws Exception {
 		Long irrelevantMessageBoardSectionId = RandomTestUtil.randomLong();
@@ -1175,7 +1171,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testGroup.getGroupId(), randomMessageBoardSection());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteMessageBoardSectionByFriendlyUrlPath()
 		throws Exception {
@@ -1256,7 +1251,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		return messageBoardSection.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteMessageBoardSectionByFriendlyUrlPathNotFound()
 		throws Exception {
@@ -1788,7 +1782,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteMessageBoardSectionsPage() throws Exception {
 		Long siteId = testGetSiteMessageBoardSectionsPage_getSiteId();

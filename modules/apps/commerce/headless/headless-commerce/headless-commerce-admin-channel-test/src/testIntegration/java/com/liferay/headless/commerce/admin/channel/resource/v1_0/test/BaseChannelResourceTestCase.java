@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -217,7 +216,6 @@ public abstract class BaseChannelResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountAddressChannelChannel() throws Exception {
 		Channel channel =
@@ -277,7 +275,6 @@ public abstract class BaseChannelResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountAddressChannelChannelNotFound()
 		throws Exception {
@@ -643,7 +640,6 @@ public abstract class BaseChannelResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetChannelsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -774,7 +770,6 @@ public abstract class BaseChannelResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetChannelByExternalReferenceCode()
 		throws Exception {
@@ -834,7 +829,6 @@ public abstract class BaseChannelResourceTestCase {
 						"Object/channelByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetChannelByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -990,7 +984,6 @@ public abstract class BaseChannelResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteChannel() throws Exception {
 
@@ -1080,7 +1073,6 @@ public abstract class BaseChannelResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetChannel() throws Exception {
 		Channel channel = testGraphQLGetChannel_addChannel();
@@ -1126,7 +1118,6 @@ public abstract class BaseChannelResourceTestCase {
 						"Object/channel"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetChannelNotFound() throws Exception {
 		Long irrelevantChannelId = RandomTestUtil.randomLong();

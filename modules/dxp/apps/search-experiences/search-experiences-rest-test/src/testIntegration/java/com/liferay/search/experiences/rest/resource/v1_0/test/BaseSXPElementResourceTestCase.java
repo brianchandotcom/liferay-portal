@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -570,7 +569,6 @@ public abstract class BaseSXPElementResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSXPElementByExternalReferenceCode()
 		throws Exception {
@@ -629,7 +627,6 @@ public abstract class BaseSXPElementResourceTestCase {
 						"Object/sXPElementByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSXPElementByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -801,7 +798,6 @@ public abstract class BaseSXPElementResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteSXPElement() throws Exception {
 
@@ -893,7 +889,6 @@ public abstract class BaseSXPElementResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSXPElement() throws Exception {
 		SXPElement sxpElement = testGraphQLGetSXPElement_addSXPElement();
@@ -940,7 +935,6 @@ public abstract class BaseSXPElementResourceTestCase {
 						"Object/sXPElement"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSXPElementNotFound() throws Exception {
 		Long irrelevantSxpElementId = RandomTestUtil.randomLong();

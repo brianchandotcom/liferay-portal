@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -210,7 +209,6 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderRuleAccountAccount() throws Exception {
 		Account account = testGraphQLGetOrderRuleAccountAccount_addAccount();
@@ -267,7 +265,6 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderRuleAccountAccountNotFound()
 		throws Exception {
@@ -350,7 +347,6 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderByExternalReferenceCodeAccount()
 		throws Exception {
@@ -416,7 +412,6 @@ public abstract class BaseAccountResourceTestCase {
 		return account.getExternalReferenceCode();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderByExternalReferenceCodeAccountNotFound()
 		throws Exception {
@@ -494,7 +489,6 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderIdAccount() throws Exception {
 		Account account = testGraphQLGetOrderIdAccount_addAccount();
@@ -552,7 +546,6 @@ public abstract class BaseAccountResourceTestCase {
 		return account.getId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderIdAccountNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

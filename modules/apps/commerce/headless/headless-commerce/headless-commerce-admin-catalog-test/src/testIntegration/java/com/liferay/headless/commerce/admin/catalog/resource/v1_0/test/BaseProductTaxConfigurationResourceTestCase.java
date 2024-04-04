@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -219,7 +218,6 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCodeTaxConfiguration()
 		throws Exception {
@@ -285,7 +283,6 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCodeTaxConfigurationNotFound()
 		throws Exception {
@@ -377,7 +374,6 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductIdTaxConfiguration() throws Exception {
 		ProductTaxConfiguration productTaxConfiguration =
@@ -438,7 +434,6 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 		return productTaxConfiguration.getId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductIdTaxConfigurationNotFound()
 		throws Exception {

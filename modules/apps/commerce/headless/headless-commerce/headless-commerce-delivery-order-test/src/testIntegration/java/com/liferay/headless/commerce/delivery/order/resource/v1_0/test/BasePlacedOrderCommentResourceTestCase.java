@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -206,7 +205,6 @@ public abstract class BasePlacedOrderCommentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPlacedOrderComment() throws Exception {
 		PlacedOrderComment placedOrderComment =
@@ -257,7 +255,6 @@ public abstract class BasePlacedOrderCommentResourceTestCase {
 						"Object/placedOrderComment"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPlacedOrderCommentNotFound() throws Exception {
 		Long irrelevantPlacedOrderCommentId = RandomTestUtil.randomLong();

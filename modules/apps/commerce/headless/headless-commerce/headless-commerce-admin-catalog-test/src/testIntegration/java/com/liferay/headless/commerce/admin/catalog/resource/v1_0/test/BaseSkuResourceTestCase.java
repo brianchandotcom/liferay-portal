@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -847,7 +846,6 @@ public abstract class BaseSkuResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSkusPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -954,7 +952,6 @@ public abstract class BaseSkuResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSkuByExternalReferenceCode() throws Exception {
 		Sku sku = testGraphQLGetSkuByExternalReferenceCode_addSku();
@@ -1010,7 +1007,6 @@ public abstract class BaseSkuResourceTestCase {
 						"Object/skuByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSkuByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -1113,7 +1109,6 @@ public abstract class BaseSkuResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteSku() throws Exception {
 
@@ -1203,7 +1198,6 @@ public abstract class BaseSkuResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSku() throws Exception {
 		Sku sku = testGraphQLGetSku_addSku();
@@ -1249,7 +1243,6 @@ public abstract class BaseSkuResourceTestCase {
 						"Object/sku"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSkuNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

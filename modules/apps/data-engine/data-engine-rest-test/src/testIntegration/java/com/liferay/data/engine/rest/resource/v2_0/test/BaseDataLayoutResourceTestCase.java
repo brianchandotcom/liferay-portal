@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -599,7 +598,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteDataLayout() throws Exception {
 
@@ -691,7 +689,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDataLayout() throws Exception {
 		DataLayout dataLayout = testGraphQLGetDataLayout_addDataLayout();
@@ -738,7 +735,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 						"Object/dataLayout"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDataLayoutNotFound() throws Exception {
 		Long irrelevantDataLayoutId = RandomTestUtil.randomLong();
@@ -848,7 +844,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDataLayoutByContentTypeByDataLayoutKey()
 		throws Exception {
@@ -938,7 +933,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 		return dataLayout.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDataLayoutByContentTypeByDataLayoutKeyNotFound()
 		throws Exception {

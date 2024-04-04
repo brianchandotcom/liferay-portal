@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -208,7 +207,6 @@ public abstract class BaseCategoryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDiscountCategoryCategory() throws Exception {
 		Category category =
@@ -268,7 +266,6 @@ public abstract class BaseCategoryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDiscountCategoryCategoryNotFound()
 		throws Exception {
@@ -350,7 +347,6 @@ public abstract class BaseCategoryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceModifierCategoryCategory() throws Exception {
 		Category category =
@@ -410,7 +406,6 @@ public abstract class BaseCategoryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceModifierCategoryCategoryNotFound()
 		throws Exception {

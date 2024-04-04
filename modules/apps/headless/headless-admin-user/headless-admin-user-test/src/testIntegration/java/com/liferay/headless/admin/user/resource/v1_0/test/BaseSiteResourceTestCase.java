@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -310,7 +309,6 @@ public abstract class BaseSiteResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteByFriendlyUrlPath() throws Exception {
 		Site site = testGraphQLGetSiteByFriendlyUrlPath_addSite();
@@ -362,7 +360,6 @@ public abstract class BaseSiteResourceTestCase {
 						"Object/byFriendlyUrlPath"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteByFriendlyUrlPathNotFound() throws Exception {
 		String irrelevantFriendlyUrlPath =
@@ -430,7 +427,6 @@ public abstract class BaseSiteResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSite() throws Exception {
 		Site site = testGraphQLGetSite_addSite();
@@ -475,7 +471,6 @@ public abstract class BaseSiteResourceTestCase {
 						"Object/site"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteNotFound() throws Exception {
 

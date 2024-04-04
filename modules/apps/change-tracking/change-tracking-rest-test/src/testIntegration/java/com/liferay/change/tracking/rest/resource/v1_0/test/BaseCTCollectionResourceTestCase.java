@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -535,7 +534,6 @@ public abstract class BaseCTCollectionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCTCollectionByExternalReferenceCode()
 		throws Exception {
@@ -594,7 +592,6 @@ public abstract class BaseCTCollectionResourceTestCase {
 						"Object/cTCollectionByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCTCollectionByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -827,7 +824,6 @@ public abstract class BaseCTCollectionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteCTCollection() throws Exception {
 
@@ -925,7 +921,6 @@ public abstract class BaseCTCollectionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCTCollection() throws Exception {
 		CTCollection ctCollection =
@@ -975,7 +970,6 @@ public abstract class BaseCTCollectionResourceTestCase {
 						"Object/cTCollection"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCTCollectionNotFound() throws Exception {
 		Long irrelevantCtCollectionId = RandomTestUtil.randomLong();

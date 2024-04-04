@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -244,7 +243,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelBillingAddressId()
 		throws Exception {
@@ -296,7 +294,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 						"Object/accountChannelBillingAddressId"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelBillingAddressIdNotFound()
 		throws Exception {
@@ -435,7 +432,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelCurrencyId() throws Exception {
 		AccountChannelEntry accountChannelEntry =
@@ -485,7 +481,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 						"Object/accountChannelCurrencyId"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelCurrencyIdNotFound()
 		throws Exception {
@@ -626,7 +621,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelDeliveryTermId() throws Exception {
 		AccountChannelEntry accountChannelEntry =
@@ -676,7 +670,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 						"Object/accountChannelDeliveryTermId"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelDeliveryTermIdNotFound()
 		throws Exception {
@@ -815,7 +808,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelDiscountId() throws Exception {
 		AccountChannelEntry accountChannelEntry =
@@ -865,7 +857,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 						"Object/accountChannelDiscountId"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelDiscountIdNotFound()
 		throws Exception {
@@ -1006,7 +997,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelPaymentMethodId() throws Exception {
 		AccountChannelEntry accountChannelEntry =
@@ -1056,7 +1046,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 						"Object/accountChannelPaymentMethodId"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelPaymentMethodIdNotFound()
 		throws Exception {
@@ -1197,7 +1186,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelPaymentTermId() throws Exception {
 		AccountChannelEntry accountChannelEntry =
@@ -1247,7 +1235,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 						"Object/accountChannelPaymentTermId"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelPaymentTermIdNotFound()
 		throws Exception {
@@ -1388,7 +1375,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelPriceListId() throws Exception {
 		AccountChannelEntry accountChannelEntry =
@@ -1438,7 +1424,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 						"Object/accountChannelPriceListId"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelPriceListIdNotFound()
 		throws Exception {
@@ -1579,7 +1564,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelShippingAddressId()
 		throws Exception {
@@ -1631,7 +1615,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 						"Object/accountChannelShippingAddressId"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelShippingAddressIdNotFound()
 		throws Exception {
@@ -1769,7 +1752,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelUserId() throws Exception {
 		AccountChannelEntry accountChannelEntry =
@@ -1818,7 +1800,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 						"Object/accountChannelUserId"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountChannelUserIdNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

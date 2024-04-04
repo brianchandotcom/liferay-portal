@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -621,7 +620,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetNotificationTemplatesPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -745,7 +743,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetNotificationTemplateByExternalReferenceCode()
 		throws Exception {
@@ -804,7 +801,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 						"Object/notificationTemplateByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetNotificationTemplateByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -956,7 +952,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteNotificationTemplate() throws Exception {
 
@@ -1064,7 +1059,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetNotificationTemplate() throws Exception {
 		NotificationTemplate notificationTemplate =
@@ -1114,7 +1108,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 						"Object/notificationTemplate"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetNotificationTemplateNotFound() throws Exception {
 		Long irrelevantNotificationTemplateId = RandomTestUtil.randomLong();

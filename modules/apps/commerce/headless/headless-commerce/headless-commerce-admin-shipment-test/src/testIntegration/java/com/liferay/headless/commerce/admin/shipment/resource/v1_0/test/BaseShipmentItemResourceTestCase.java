@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -234,7 +233,6 @@ public abstract class BaseShipmentItemResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetShipmentByExternalReferenceCodeItem()
 		throws Exception {
@@ -294,7 +292,6 @@ public abstract class BaseShipmentItemResourceTestCase {
 						"Object/shipmentByExternalReferenceCodeItem"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetShipmentByExternalReferenceCodeItemNotFound()
 		throws Exception {
@@ -383,7 +380,6 @@ public abstract class BaseShipmentItemResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteShipmentItem() throws Exception {
 
@@ -482,7 +478,6 @@ public abstract class BaseShipmentItemResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetShipmentItem() throws Exception {
 		ShipmentItem shipmentItem =
@@ -533,7 +528,6 @@ public abstract class BaseShipmentItemResourceTestCase {
 						"Object/shipmentItem"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetShipmentItemNotFound() throws Exception {
 		Long irrelevantShipmentItemId = RandomTestUtil.randomLong();
@@ -1017,7 +1011,6 @@ public abstract class BaseShipmentItemResourceTestCase {
 		return null;
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetShipmentItemsPage() throws Exception {
 		Long shipmentId = testGetShipmentItemsPage_getShipmentId();

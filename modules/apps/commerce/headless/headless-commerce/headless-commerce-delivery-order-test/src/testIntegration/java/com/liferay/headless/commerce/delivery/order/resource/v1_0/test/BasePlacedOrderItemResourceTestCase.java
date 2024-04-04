@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -217,7 +216,6 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPlacedOrderItem() throws Exception {
 		PlacedOrderItem placedOrderItem =
@@ -268,7 +266,6 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 						"Object/placedOrderItem"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPlacedOrderItemNotFound() throws Exception {
 		Long irrelevantPlacedOrderItemId = RandomTestUtil.randomLong();

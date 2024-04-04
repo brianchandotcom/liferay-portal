@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -214,7 +213,6 @@ public abstract class BaseFormDocumentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteFormDocument() throws Exception {
 
@@ -312,7 +310,6 @@ public abstract class BaseFormDocumentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetFormDocument() throws Exception {
 		FormDocument formDocument =
@@ -362,7 +359,6 @@ public abstract class BaseFormDocumentResourceTestCase {
 						"Object/formDocument"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetFormDocumentNotFound() throws Exception {
 		Long irrelevantFormDocumentId = RandomTestUtil.randomLong();

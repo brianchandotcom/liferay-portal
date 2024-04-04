@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -210,7 +209,6 @@ public abstract class BaseChannelResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDiscountChannelChannel() throws Exception {
 		Channel channel = testGraphQLGetDiscountChannelChannel_addChannel();
@@ -267,7 +265,6 @@ public abstract class BaseChannelResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDiscountChannelChannelNotFound()
 		throws Exception {
@@ -346,7 +343,6 @@ public abstract class BaseChannelResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceListChannelChannel() throws Exception {
 		Channel channel = testGraphQLGetPriceListChannelChannel_addChannel();
@@ -403,7 +399,6 @@ public abstract class BaseChannelResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceListChannelChannelNotFound()
 		throws Exception {

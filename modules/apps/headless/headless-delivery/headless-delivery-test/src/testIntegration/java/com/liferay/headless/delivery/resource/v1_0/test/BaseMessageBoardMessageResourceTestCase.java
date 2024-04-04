@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -232,7 +231,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteMessageBoardMessage() throws Exception {
 
@@ -340,7 +338,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMessageBoardMessage() throws Exception {
 		MessageBoardMessage messageBoardMessage =
@@ -390,7 +387,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 						"Object/messageBoardMessage"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMessageBoardMessageNotFound() throws Exception {
 		Long irrelevantMessageBoardMessageId = RandomTestUtil.randomLong();
@@ -2226,7 +2222,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteMessageBoardMessagesPage() throws Exception {
 		Long siteId = testGetSiteMessageBoardMessagesPage_getSiteId();
@@ -2391,7 +2386,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteMessageBoardMessageByExternalReferenceCode()
 		throws Exception {
@@ -2472,7 +2466,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		return messageBoardMessage.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteMessageBoardMessageByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -2650,7 +2643,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteMessageBoardMessageByFriendlyUrlPath()
 		throws Exception {
@@ -2731,7 +2723,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		return messageBoardMessage.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteMessageBoardMessageByFriendlyUrlPathNotFound()
 		throws Exception {

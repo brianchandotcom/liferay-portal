@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -620,7 +619,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteDataDefinition() throws Exception {
 
@@ -724,7 +722,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDataDefinition() throws Exception {
 		DataDefinition dataDefinition =
@@ -774,7 +771,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 						"Object/dataDefinition"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDataDefinitionNotFound() throws Exception {
 		Long irrelevantDataDefinitionId = RandomTestUtil.randomLong();
@@ -1421,7 +1417,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKey()
 		throws Exception {
@@ -1513,7 +1508,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		return dataDefinition.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKeyNotFound()
 		throws Exception {

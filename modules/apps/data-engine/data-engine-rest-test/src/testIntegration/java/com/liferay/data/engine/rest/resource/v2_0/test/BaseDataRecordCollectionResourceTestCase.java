@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -221,7 +220,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDataDefinitionDataRecordCollection()
 		throws Exception {
@@ -284,7 +282,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		return dataRecordCollection.getDataDefinitionId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDataDefinitionDataRecordCollectionNotFound()
 		throws Exception {
@@ -627,7 +624,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteDataRecordCollection() throws Exception {
 
@@ -735,7 +731,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDataRecordCollection() throws Exception {
 		DataRecordCollection dataRecordCollection =
@@ -785,7 +780,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 						"Object/dataRecordCollection"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDataRecordCollectionNotFound() throws Exception {
 		Long irrelevantDataRecordCollectionId = RandomTestUtil.randomLong();
@@ -977,7 +971,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDataRecordCollectionByDataRecordCollectionKey()
 		throws Exception {
@@ -1058,7 +1051,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		return dataRecordCollection.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDataRecordCollectionByDataRecordCollectionKeyNotFound()
 		throws Exception {

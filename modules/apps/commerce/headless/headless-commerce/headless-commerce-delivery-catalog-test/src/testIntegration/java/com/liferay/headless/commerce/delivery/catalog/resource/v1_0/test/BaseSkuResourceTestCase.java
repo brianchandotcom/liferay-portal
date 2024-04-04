@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -424,7 +423,6 @@ public abstract class BaseSkuResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetChannelProductSku() throws Exception {
 		Sku sku = testGraphQLGetChannelProductSku_addSku();
@@ -501,7 +499,6 @@ public abstract class BaseSkuResourceTestCase {
 		return sku.getProductId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetChannelProductSkuNotFound() throws Exception {
 		Long irrelevantChannelId = RandomTestUtil.randomLong();

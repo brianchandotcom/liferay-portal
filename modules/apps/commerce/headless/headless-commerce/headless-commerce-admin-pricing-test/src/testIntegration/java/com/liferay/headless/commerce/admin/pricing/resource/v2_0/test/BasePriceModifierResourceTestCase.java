@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -939,7 +938,6 @@ public abstract class BasePriceModifierResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceModifierByExternalReferenceCode()
 		throws Exception {
@@ -999,7 +997,6 @@ public abstract class BasePriceModifierResourceTestCase {
 						"Object/priceModifierByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceModifierByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -1091,7 +1088,6 @@ public abstract class BasePriceModifierResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeletePriceModifier() throws Exception {
 
@@ -1189,7 +1185,6 @@ public abstract class BasePriceModifierResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceModifier() throws Exception {
 		PriceModifier priceModifier =
@@ -1236,7 +1231,6 @@ public abstract class BasePriceModifierResourceTestCase {
 						"Object/priceModifier"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceModifierNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -569,7 +568,6 @@ public abstract class BaseSitePageResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteSitePagesPage() throws Exception {
 		Long siteId = testGetSiteSitePagesPage_getSiteId();
@@ -691,7 +689,6 @@ public abstract class BaseSitePageResourceTestCase {
 			testGroup.getGroupId(), randomSitePage());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteSitePage() throws Exception {
 		SitePage sitePage = testGraphQLGetSiteSitePage_addSitePage();
@@ -763,7 +760,6 @@ public abstract class BaseSitePageResourceTestCase {
 		return sitePage.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteSitePageNotFound() throws Exception {
 		String irrelevantFriendlyUrlPath =
@@ -957,7 +953,6 @@ public abstract class BaseSitePageResourceTestCase {
 			testGroup.getGroupId(), randomSitePage());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteSitePageExperienceExperienceKey()
 		throws Exception {
@@ -1054,7 +1049,6 @@ public abstract class BaseSitePageResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteSitePageExperienceExperienceKeyNotFound()
 		throws Exception {

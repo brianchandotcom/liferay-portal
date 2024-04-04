@@ -5,10 +5,22 @@
 
 package com.liferay.commerce.order.content.web.internal.portlet;
 
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.order.content.web.internal.display.context.CommerceReturnContentDisplayContext;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
+import com.liferay.commerce.service.CommerceOrderItemService;
+import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
+import com.liferay.list.type.service.ListTypeDefinitionService;
+import com.liferay.list.type.service.ListTypeEntryService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -19,6 +31,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gianmarco Brunialti Masera
@@ -60,7 +73,15 @@ public class CommerceReturnContentPortlet extends MVCPortlet {
 			try {
 				CommerceReturnContentDisplayContext
 					commerceReturnContentDisplayContext =
-						new CommerceReturnContentDisplayContext(renderRequest);
+						new CommerceReturnContentDisplayContext(
+							_accountEntryLocalService,
+							_commerceOrderItemService, _commerceOrderService,
+							_commercePaymentMethodGroupRelLocalService,
+							_commercePriceFormatter, _commerceQuantityFormatter,
+							_language, _listTypeDefinitionService,
+							_listTypeEntryService, _objectEntryLocalService,
+							_objectRelationshipLocalService,
+							_portal.getHttpServletRequest(renderRequest));
 
 				renderRequest.setAttribute(
 					WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -73,5 +94,42 @@ public class CommerceReturnContentPortlet extends MVCPortlet {
 			}
 		}
 	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private CommerceOrderItemService _commerceOrderItemService;
+
+	@Reference
+	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommercePaymentMethodGroupRelLocalService
+		_commercePaymentMethodGroupRelLocalService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private ListTypeDefinitionService _listTypeDefinitionService;
+
+	@Reference
+	private ListTypeEntryService _listTypeEntryService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

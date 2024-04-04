@@ -21,6 +21,7 @@ import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -91,6 +92,10 @@ public abstract class BaseEventHandler implements EventHandler {
 
 	protected JobEntityRepository getJobEntityRepository() {
 		return _eventHandlerContext.getJobEntityRepository();
+	}
+
+	protected JobQueue getJobQueue() {
+		return _eventHandlerContext.getJobQueue();
 	}
 
 	protected JRPEventProcessor getJRPEventProcessor() {

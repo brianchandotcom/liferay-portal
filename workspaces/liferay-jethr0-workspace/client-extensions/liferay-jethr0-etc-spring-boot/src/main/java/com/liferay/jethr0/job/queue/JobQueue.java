@@ -19,7 +19,14 @@ import com.liferay.jethr0.job.repository.JobPrioritizerEntityRepository;
 import com.liferay.jethr0.job.repository.JobQueueOrderEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -104,6 +111,10 @@ public class JobQueue {
 		_jobEntities.removeAll(jobEntities);
 
 		_createJobQueueOrderEntity();
+	}
+
+	public void removeJobEntity(JobEntity jobEntity) {
+		removeJobEntities(Collections.singleton(jobEntity));
 	}
 
 	@Scheduled(cron = "${liferay.jethr0.job.queue.update.cron}")

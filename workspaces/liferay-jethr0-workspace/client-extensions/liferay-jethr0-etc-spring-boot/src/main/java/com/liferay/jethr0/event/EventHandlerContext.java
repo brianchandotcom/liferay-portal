@@ -18,6 +18,7 @@ import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
+import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,10 @@ public class EventHandlerContext {
 
 	public JobEntityRepository getJobEntityRepository() {
 		return _jobEntityRepository;
+	}
+
+	public JobQueue getJobQueue() {
+		return _jobQueue;
 	}
 
 	public JRPEventProcessor getJRPEventProcessor() {
@@ -137,6 +142,9 @@ public class EventHandlerContext {
 
 	@Autowired
 	private JobEntityRepository _jobEntityRepository;
+
+	@Autowired
+	private JobQueue _jobQueue;
 
 	private JRPEventProcessor _jrpEventProcessor;
 

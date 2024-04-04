@@ -108,6 +108,10 @@ export default class Blogs {
 			`input[name=${this._config.namespace}automaticURL]:checked`
 		);
 
+		if (Liferay.FeatureFlags['LPD-11147']) {
+			return automaticURLInput.value === '0';
+		}
+
 		return automaticURLInput.value === 'true';
 	}
 
@@ -178,21 +182,25 @@ export default class Blogs {
 		);
 
 		if (urlOptions.length) {
-			urlOptions.forEach((option) => {
-				this._addEventListener(
-					option,
-					STR_CHANGE,
-					this._onChangeURLOptions.bind(this)
-				);
-			});
+			if (!Liferay.FeatureFlags['LPD-11147']) {
+				urlOptions.forEach((option) => {
+					this._addEventListener(
+						option,
+						STR_CHANGE,
+						this._onChangeURLOptions.bind(this)
+					);
+				});
+			}
 		}
 
-		const titleInput = this._getElementById('title');
+		if (!Liferay.FeatureFlags['LPD-11147']) {
+			const titleInput = this._getElementById('title');
 
-		if (titleInput) {
-			this._addEventListener(titleInput, STR_CHANGE, (event) => {
-				this.updateFriendlyURL(event.target.value);
-			});
+			if (titleInput) {
+				this._addEventListener(titleInput, STR_CHANGE, (event) => {
+					this.updateFriendlyURL(event.target.value);
+				});
+			}
 		}
 
 		const descriptionInput = this._getElementById('description');
@@ -349,9 +357,18 @@ export default class Blogs {
 		const subtitle = this._getElementById('subtitle').value;
 		const title = this._getElementById('title').value;
 
-		const urlTitle = this._automaticURL()
-			? ''
-			: this._getElementById('urlTitle').value;
+		let urlTitle = '';
+
+		if (Liferay.FeatureFlags['LPD-11147']) {
+			urlTitle = this._automaticURL()
+				? ''
+				: this._getElementById('friendly_url').value;
+		}
+		else {
+			urlTitle = this._automaticURL()
+				? ''
+				: this._getElementById('urlTitle').value;
+		}
 
 		if (draft && ajax) {
 			const hasData =
@@ -408,6 +425,9 @@ export default class Blogs {
 						displayDateYear: this._getElementById('displayDateYear')
 							.value,
 						entryId: this._getElementById('entryId').value,
+						friendlyUrlCategories: this._getValuesByName(
+							'friendly_url_category_ids'
+						),
 						inputPermissionsViewRole,
 						referringPortletResource: this._getElementById(
 							'referringPortletResource'

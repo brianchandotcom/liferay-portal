@@ -485,7 +485,7 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 				preparedStatement2.setLong(1, parentStructureId);
 
 				try (ResultSet resultSet2 = preparedStatement2.executeQuery()) {
-					if (resultSet2.next()) {
+					while (resultSet2.next()) {
 						DDMForm parentDDMForm = _getFullHierarchyDDMForm(
 							parentStructureId,
 							resultSet2.getLong("structureVersionId"));

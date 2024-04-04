@@ -24,36 +24,9 @@ import java.util.regex.Pattern;
 /**
  * @author Alan Huang
  */
-public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
-	extends BaseFileCheck {
+public class JavaUpgradeAlterColumnCallsOrderCheck extends BaseFileCheck {
 
-	@Override
-	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws IOException {
-
-		if (!absolutePath.contains("/upgrade/v")) {
-			return content;
-		}
-
-		String packagePath = "";
-
-		if (absolutePath.contains("/portal-impl/")) {
-			packagePath = "portal-impl";
-		}
-		else {
-			BNDSettings bndSettings = getBNDSettings(fileName);
-
-			if (bndSettings == null) {
-				return content;
-			}
-
-			String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
-				bndSettings.getContent(), "Bundle-SymbolicName");
-
-			packagePath = StringUtil.removeLast(bundleSymbolicName, ".service");
-		}
-
+	private String _sortMethodCallsByColumnName() {
 		Matcher matcher = _alterTableAddColumnCallPattern.matcher(content);
 
 		while (matcher.find()) {
@@ -137,6 +110,37 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 					content, methodCall1, methodCall2, matcher.start());
 			}
 		}
+	}
+	@Override
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
+		throws IOException {
+
+		if (!absolutePath.contains("/upgrade/v")) {
+			return content;
+		}
+
+		String packagePath = "";
+
+		if (absolutePath.contains("/portal-impl/")) {
+			packagePath = "portal-impl";
+		}
+		else {
+			BNDSettings bndSettings = getBNDSettings(fileName);
+
+			if (bndSettings == null) {
+				return content;
+			}
+
+			String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
+				bndSettings.getContent(), "Bundle-SymbolicName");
+
+			packagePath = StringUtil.removeLast(bundleSymbolicName, ".service");
+		}
+
+		
+		_sortMethodCallsByColumnName() ;
+
 
 		return content;
 	}

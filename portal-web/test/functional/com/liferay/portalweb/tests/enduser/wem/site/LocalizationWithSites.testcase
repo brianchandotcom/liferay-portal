@@ -102,9 +102,10 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 
 			PortalSettings.configureCurrentLanguagesCP(
-				currentPortalLanguages = "Arabic (Saudi Arabia),Czech (Czechia),French (France)",
+				currentPortalLanguages = "ar_SA,cs_CZ,fr_FR",
 				errorMessage = "Error: You cannot remove a language that is the current default language.",
-				failExpected = "true");
+				failExpected = "true",
+				useLanguageKey = "true");
 		}
 	}
 

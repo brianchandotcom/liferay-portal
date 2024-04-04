@@ -6,6 +6,7 @@
 package com.liferay.company.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.db.DBPartitionDB;
@@ -16,12 +17,14 @@ import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
@@ -108,10 +111,11 @@ public class CompanyLocalServiceDBPartitionTest
 	public void testAddCompany() throws Exception {
 		int dbPartitionsCount = _getDBPartitionsCount();
 
-		_company = CompanyTestUtil.addCompany();
+		_company1 = CompanyTestUtil.addCompany();
 
 		Assert.assertTrue(
-			ArrayUtil.contains(_getCompanyIdsBySQL(), _company.getCompanyId()));
+			ArrayUtil.contains(
+				_getCompanyIdsBySQL(), _company1.getCompanyId()));
 
 		Assert.assertEquals(dbPartitionsCount + 1, _getDBPartitionsCount());
 	}
@@ -359,6 +363,38 @@ public class CompanyLocalServiceDBPartitionTest
 	}
 
 	@Test
+	public void testAddMultipleCompanies() throws Exception {
+		int dbPartitionsCount = _getDBPartitionsCount();
+		long counter = _counterLocalService.increment();
+
+		_company1 = CompanyTestUtil.addCompany();
+
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				_getCompanyIdsBySQL(), _company1.getCompanyId()));
+
+		VirtualHost virtualHost = _virtualHostLocalService.getVirtualHost(
+			_company1.getVirtualHostname());
+
+		Assert.assertEquals(counter + 1, virtualHost.getVirtualHostId());
+
+		Assert.assertEquals(dbPartitionsCount + 1, _getDBPartitionsCount());
+
+		_company2 = CompanyTestUtil.addCompany();
+
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				_getCompanyIdsBySQL(), _company2.getCompanyId()));
+
+		virtualHost = _virtualHostLocalService.getVirtualHost(
+			_company2.getVirtualHostname());
+
+		Assert.assertEquals(counter + 2, virtualHost.getVirtualHostId());
+
+		Assert.assertEquals(dbPartitionsCount + 2, _getDBPartitionsCount());
+	}
+
+	@Test
 	public void testDeleteCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
@@ -378,9 +414,9 @@ public class CompanyLocalServiceDBPartitionTest
 
 	@Test
 	public void testDeleteCompanyWhenDBPartitionUtilFails() throws Exception {
-		_company = CompanyTestUtil.addCompany();
+		_company1 = CompanyTestUtil.addCompany();
 
-		_scheduleJob(_company.getCompanyId(), _JOB_NAME);
+		_scheduleJob(_company1.getCompanyId(), _JOB_NAME);
 
 		Assert.assertEquals(_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 
@@ -400,14 +436,14 @@ public class CompanyLocalServiceDBPartitionTest
 							return method.invoke(dbPartitionDB, args);
 						}))) {
 
-			companyLocalService.deleteCompany(_company);
+			companyLocalService.deleteCompany(_company1);
 
 			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertTrue(
 				ArrayUtil.contains(
-					_getCompanyIdsBySQL(), _company.getCompanyId()));
+					_getCompanyIdsBySQL(), _company1.getCompanyId()));
 			Assert.assertEquals(
 				_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 		}
@@ -635,6 +671,9 @@ public class CompanyLocalServiceDBPartitionTest
 
 	private static final int _JOBS_COUNT = 2;
 
+	@Inject
+	private static CounterLocalService _counterLocalService;
+
 	private static long _defaultCompanyId;
 
 	@Inject
@@ -652,7 +691,13 @@ public class CompanyLocalServiceDBPartitionTest
 	)
 	private static TriggerFactory _triggerFactory;
 
+	@Inject
+	private static VirtualHostLocalService _virtualHostLocalService;
+
 	@DeleteAfterTestRun
-	private Company _company;
+	private Company _company1;
+
+	@DeleteAfterTestRun
+	private Company _company2;
 
 }

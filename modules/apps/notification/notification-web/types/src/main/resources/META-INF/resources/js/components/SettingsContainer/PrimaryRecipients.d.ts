@@ -6,10 +6,12 @@
 /// <reference types="react" />
 
 import {FormError} from '@liferay/object-js-components-web';
+import {ILearnResourceContext} from 'frontend-js-components-web';
 import {NotificationTemplateError} from '../EditNotificationTemplate';
 interface PrimaryRecipientProps {
 	baseResourceURL: string;
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
+	learnResources: ILearnResourceContext;
 	recipientOptions: LabelValueObject[];
 	selectedLocale: Locale;
 	setValues: (values: Partial<NotificationTemplate>) => void;
@@ -18,6 +20,7 @@ interface PrimaryRecipientProps {
 export declare function PrimaryRecipient({
 	baseResourceURL,
 	errors,
+	learnResources,
 	recipientOptions,
 	selectedLocale,
 	setValues,

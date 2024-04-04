@@ -42,6 +42,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "notification-template"));
 		).put(
 			"externalReferenceCode", externalReferenceCode
 		).put(
+			"learnResources", LearnMessageUtil.getReactDataJSONObject("notification-web")
+		).put(
 			"notificationTemplateId", notificationTemplateId
 		).put(
 			"notificationTemplateType", viewNotificationTemplatesDisplayContext.getNotificationTemplateType()

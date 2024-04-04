@@ -5,14 +5,17 @@
 
 /// <reference types="react" />
 
+import {ILearnResourceContext} from 'frontend-js-components-web';
 interface SecondaryRecipientsProps {
 	baseResourceURL: string;
+	learnResources: ILearnResourceContext;
 	recipientOptions: LabelValueObject[];
 	setValues: (values: Partial<NotificationTemplate>) => void;
 	values: NotificationTemplate;
 }
 export declare function SecondaryRecipient({
 	baseResourceURL,
+	learnResources,
 	recipientOptions,
 	setValues,
 	values,

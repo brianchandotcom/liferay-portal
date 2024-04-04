@@ -4,6 +4,29 @@
 		margin-bottom: 1.5rem;
 	}
 
+	&-multiple-select {
+		.form-group {
+			margin-bottom: 0.25rem !important;
+		}
+		&-help-text,
+		.alert-link {
+			color: $secondary;
+			font-size: 14px;
+			margin-bottom: 1.5rem;
+		}
+	}
+
+	&-primary-recipient {
+		&-input-localized {
+			.form-group {
+				margin-bottom: 0 !important;
+			}
+			.form-feedback-group {
+				margin-bottom: 1.5rem;
+			}
+		}
+	}
+
 	.panel-header {
 		color: $secondary;
 	}

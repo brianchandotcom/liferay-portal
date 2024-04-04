@@ -12,7 +12,12 @@ import {
 	MultipleSelect,
 	SingleSelect,
 } from '@liferay/object-js-components-web';
-import {InputLocalized} from 'frontend-js-components-web';
+import {
+	ILearnResourceContext,
+	InputLocalized,
+	LearnMessage,
+	LearnResourcesContext,
+} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {NotificationTemplateError} from '../EditNotificationTemplate';
@@ -21,6 +26,7 @@ import {getCheckedChildren, getRoles} from './rolesUtils';
 interface PrimaryRecipientProps {
 	baseResourceURL: string;
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
+	learnResources: ILearnResourceContext;
 	recipientOptions: LabelValueObject[];
 	selectedLocale: Locale;
 	setValues: (values: Partial<NotificationTemplate>) => void;
@@ -30,6 +36,7 @@ interface PrimaryRecipientProps {
 export function PrimaryRecipient({
 	baseResourceURL,
 	errors,
+	learnResources,
 	recipientOptions,
 	selectedLocale,
 	setValues,
@@ -112,10 +119,13 @@ export function PrimaryRecipient({
 			/>
 
 			{primaryRecipient.toType === 'email' && (
-				<>
+				<div className="lfr__notification-template-email-notification-settings-primary-recipient-input-localized">
 					<InputLocalized
 						disabled={values.system}
 						error={errors.to}
+						helpMessage={Liferay.Language.get(
+							'you-can-use-a-comma-to-enter-multiple-users'
+						)}
 						label={Liferay.Language.get('recipients')}
 						name="recipients"
 						onChange={(translation) => {
@@ -129,7 +139,7 @@ export function PrimaryRecipient({
 								],
 							});
 						}}
-						placeholder={Liferay.Language.get('type-email-adress')}
+						placeholder={Liferay.Language.get('type-email-address')}
 						required
 						selectedLocale={selectedLocale}
 						translations={
@@ -137,64 +147,86 @@ export function PrimaryRecipient({
 								.to as LocalizedValue<string>
 						}
 					/>
-				</>
+				</div>
 			)}
 
 			{primaryRecipient.toType === 'role' && (
-				<MultipleSelect
-					disabled={values.system}
-					label={Liferay.Language.get('role')}
-					options={toRolesList}
-					placeholder={Liferay.Language.get('select-role')}
-					required
-					search
-					searchPlaceholder={Liferay.Language.get(
-						'search-for-a-role'
-					)}
-					selectAllOption
-					setOptions={(items) => {
-						handleMultiSelectItemsChange(items);
-						setToRolesList(items);
-					}}
-				/>
-			)}
-
-			<ClayForm.Group className="ml-1 row">
-				<div className="mr-2">
-					<ClayCheckbox
-						checked={
-							(values.recipients[0] as EmailRecipients)
-								.singleRecipient
-						}
+				<div className="lfr__notification-template-email-notification-settings-multiple-select">
+					<MultipleSelect
 						disabled={values.system}
-						label={Liferay.Language.get('send-emails-separately')}
-						onChange={({target: {checked}}) => {
-							setValues({
-								...values,
-								recipients: [
-									{
-										...values.recipients[0],
-										singleRecipient: checked,
-									},
-								],
-							});
+						label={Liferay.Language.get('role')}
+						options={toRolesList}
+						placeholder={Liferay.Language.get('select-role')}
+						required
+						search
+						searchPlaceholder={Liferay.Language.get(
+							'search-for-a-role'
+						)}
+						selectAllOption
+						setOptions={(items) => {
+							handleMultiSelectItemsChange(items);
+							setToRolesList(items);
 						}}
 					/>
-				</div>
 
-				<ClayTooltipProvider>
-					<span
-						title={Liferay.Language.get(
-							'each-to-primaryRecipient-will-receive-separate-emails'
-						)}
-					>
-						<ClayIcon
-							className="lfr__notification-template-email-notification-settings-tooltip-icon"
-							symbol="question-circle-full"
+					<LearnResourcesContext.Provider value={learnResources}>
+						<div className="lfr__notification-template-email-notification-settings-multiple-select-help-text">
+							<span>
+								{Liferay.Language.get(
+									'account-roles-are-subject-to-account-restriction'
+								)}
+							</span>
+							&nbsp;
+							<LearnMessage
+								className="alert-link"
+								resource="notification-web"
+								resourceKey="general"
+							/>
+						</div>
+					</LearnResourcesContext.Provider>
+				</div>
+			)}
+
+			<>
+				<ClayForm.Group className="ml-1 row">
+					<div className="mr-2">
+						<ClayCheckbox
+							checked={
+								(values.recipients[0] as EmailRecipients)
+									.singleRecipient
+							}
+							disabled={values.system}
+							label={Liferay.Language.get(
+								'send-emails-separately'
+							)}
+							onChange={({target: {checked}}) => {
+								setValues({
+									...values,
+									recipients: [
+										{
+											...values.recipients[0],
+											singleRecipient: checked,
+										},
+									],
+								});
+							}}
 						/>
-					</span>
-				</ClayTooltipProvider>
-			</ClayForm.Group>
+					</div>
+
+					<ClayTooltipProvider>
+						<span
+							title={Liferay.Language.get(
+								'each-to-recipient-will-receive-separate-emails'
+							)}
+						>
+							<ClayIcon
+								className="lfr__notification-template-email-notification-settings-tooltip-icon"
+								symbol="question-circle-full"
+							/>
+						</span>
+					</ClayTooltipProvider>
+				</ClayForm.Group>
+			</>
 		</>
 	);
 }

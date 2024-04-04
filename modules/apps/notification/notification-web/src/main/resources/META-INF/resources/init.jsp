@@ -13,7 +13,8 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.notification.model.NotificationTemplate" %><%@
+<%@ page import="com.liferay.learn.LearnMessageUtil" %><%@
+page import="com.liferay.notification.model.NotificationTemplate" %><%@
 page import="com.liferay.notification.web.internal.constants.NotificationFDSNames" %><%@
 page import="com.liferay.notification.web.internal.display.context.ViewNotificationQueueEntriesDisplayContext" %><%@
 page import="com.liferay.notification.web.internal.display.context.ViewNotificationTemplatesDisplayContext" %><%@

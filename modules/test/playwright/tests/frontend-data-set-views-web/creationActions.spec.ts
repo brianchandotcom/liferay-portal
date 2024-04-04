@@ -301,9 +301,11 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 				'Check that the Creation Action button is present',
 				async () => {
 					await expect(
-						fdsFragmentPage.page.getByRole('button', {
-							name: actionLabel,
-						})
+						fdsFragmentPage.page
+							.getByRole('button', {
+								name: actionLabel,
+							})
+							.first()
 					).toBeVisible();
 				}
 			);
@@ -315,6 +317,7 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 						.getByRole('button', {
 							name: actionLabel,
 						})
+						.first()
 						.click();
 
 					await expect(
@@ -379,9 +382,12 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 			const actionDropdownMenuId = await fragmentTest.step(
 				'Check that the Creation Action menu is present',
 				async () => {
-					await fdsFragmentPage.creationMenuButton.isVisible();
+					await fdsFragmentPage.creationMenuButton
+						.first()
+						.isVisible();
 
-					const button = await fdsFragmentPage.creationMenuButton;
+					const button =
+						await fdsFragmentPage.creationMenuButton.first();
 
 					const dropdownId = await button.evaluate((node) =>
 						node.getAttribute('aria-controls')
@@ -425,7 +431,7 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 			);
 
 			await test.step('Creation Action of type "modal" opens a modal', async () => {
-				await fdsFragmentPage.creationMenuButton.click();
+				await fdsFragmentPage.creationMenuButton.first().click();
 
 				await fdsFragmentPage.page
 					.locator(`#${actionDropdownMenuId}`)
@@ -447,7 +453,7 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 			});
 
 			await test.step('Creation Action of type "link" is actionable', async () => {
-				await fdsFragmentPage.creationMenuButton.click();
+				await fdsFragmentPage.creationMenuButton.first().click();
 
 				await fdsFragmentPage.page
 					.locator(`#${actionDropdownMenuId}`)

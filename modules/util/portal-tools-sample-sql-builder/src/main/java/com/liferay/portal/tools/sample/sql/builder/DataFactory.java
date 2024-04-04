@@ -22,9 +22,12 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
 import com.liferay.blogs.model.impl.BlogsEntryModelImpl;
 import com.liferay.blogs.social.BlogsActivityKeys;
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollectionModel;
+import com.liferay.change.tracking.model.CTEntryModel;
 import com.liferay.change.tracking.model.CTSchemaVersionModel;
 import com.liferay.change.tracking.model.impl.CTCollectionModelImpl;
+import com.liferay.change.tracking.model.impl.CTEntryModelImpl;
 import com.liferay.change.tracking.model.impl.CTSchemaVersionModelImpl;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
@@ -250,6 +253,7 @@ import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.model.UserPersonalSite;
 import com.liferay.portal.kernel.model.VirtualHostModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
@@ -586,6 +590,18 @@ public class DataFactory {
 
 	public long getCProductClassNameId() {
 		return getClassNameId(CProduct.class);
+	}
+
+	public int getCtChangeTypeAddition() {
+		return CTConstants.CT_CHANGE_TYPE_ADDITION;
+	}
+
+	public int getCtChangeTypeDeletion() {
+		return CTConstants.CT_CHANGE_TYPE_DELETION;
+	}
+
+	public int getCtChangeTypeModification() {
+		return CTConstants.CT_CHANGE_TYPE_MODIFICATION;
 	}
 
 	public long getDefaultDLDDMStructureId() {
@@ -3196,6 +3212,25 @@ public class DataFactory {
 		}
 
 		return ctCollectionModels;
+	}
+
+	public CTEntryModel newCTEntryModel(
+		long ctCollectionId, CTModel<?> ctModel, int changeType) {
+
+		CTEntryModel ctEntryModel = new CTEntryModelImpl();
+
+		ctEntryModel.setCtEntryId(_counter.get());
+		ctEntryModel.setExternalReferenceCode(SequentialUUID.generate());
+		ctEntryModel.setCompanyId(_companyId);
+		ctEntryModel.setUserId(_sampleUserId);
+		ctEntryModel.setCtCollectionId(ctCollectionId);
+		ctEntryModel.setModelClassNameId(
+			getClassNameId(ctModel.getModelClass()));
+		ctEntryModel.setModelClassPK(ctModel.getPrimaryKey());
+		ctEntryModel.setModelMvccVersion(ctModel.getMvccVersion());
+		ctEntryModel.setChangeType(changeType);
+
+		return ctEntryModel;
 	}
 
 	public CTSchemaVersionModel newCTSchemaVersionModel() throws Exception {

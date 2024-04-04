@@ -35,8 +35,6 @@ test('Add the frontend data set sample widget', async ({
 	let layout: Layout;
 
 	await test.step('Create a content site and the frontend data set sample widget', async () => {
-		await page.goto('/');
-
 		const widgetDefinition = getWidgetDefinition({
 			id: getRandomString(),
 			widgetName:

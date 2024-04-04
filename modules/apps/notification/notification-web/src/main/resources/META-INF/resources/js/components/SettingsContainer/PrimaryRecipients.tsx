@@ -6,13 +6,20 @@
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {FormError, SingleSelect} from '@liferay/object-js-components-web';
+import {
+	FormError,
+	MultiSelectItem,
+	MultipleSelect,
+	SingleSelect,
+} from '@liferay/object-js-components-web';
 import {InputLocalized} from 'frontend-js-components-web';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {NotificationTemplateError} from '../EditNotificationTemplate';
+import {getCheckedChildren, getRoles} from './rolesUtils';
 
 interface PrimaryRecipientProps {
+	baseResourceURL: string;
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	recipientOptions: LabelValueObject[];
 	selectedLocale: Locale;
@@ -21,23 +28,90 @@ interface PrimaryRecipientProps {
 }
 
 export function PrimaryRecipient({
+	baseResourceURL,
 	errors,
 	recipientOptions,
 	selectedLocale,
 	setValues,
 	values,
 }: PrimaryRecipientProps) {
+	const [primaryRecipient] = values.recipients as EmailRecipients[];
+	const [toRolesList, setToRolesList] = useState<MultiSelectItem[]>([]);
+
+	const handleMultiSelectItemsChange = (items: MultiSelectItem[]) => {
+		const newRecipients: EmailNotificationRecipients[] = [];
+
+		if (items.length) {
+			const [itemsGroup] = items as MultiSelectItem[];
+
+			itemsGroup.children.forEach((child) => {
+				if (child.checked) {
+					newRecipients.push({['roleName']: child.value});
+				}
+			});
+		}
+
+		setValues({
+			...values,
+			recipients: [
+				{
+					...values.recipients[0],
+					to: newRecipients,
+				},
+			],
+		});
+	};
+
+	useEffect(() => {
+		const makeFetch = async () => {
+			const [roles] = await getRoles(baseResourceURL);
+			if (
+				Array.isArray(primaryRecipient.to) &&
+				!!primaryRecipient.to.length
+			) {
+				setToRolesList([
+					{
+						...roles,
+						children: getCheckedChildren(
+							primaryRecipient.to,
+							roles.children
+						),
+					},
+				]);
+
+				return;
+			}
+
+			setToRolesList([roles]);
+		};
+
+		makeFetch();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [primaryRecipient.to]);
+
 	return (
 		<>
 			<SingleSelect<LabelValueObject>
 				disabled={values.system}
 				items={recipientOptions}
 				label={Liferay.Language.get('type')}
+				onSelectionChange={(value) => {
+					setValues({
+						...values,
+						recipients: [
+							{
+								...primaryRecipient,
+								to: [],
+								toType: value as string,
+							},
+						],
+					});
+				}}
 				required
-				selectedKey={values.recipientType}
+				selectedKey={primaryRecipient.toType}
 			/>
 
-			{values.recipientType === 'email' && (
+			{primaryRecipient.toType === 'email' && (
 				<>
 					<InputLocalized
 						disabled={values.system}
@@ -59,10 +133,30 @@ export function PrimaryRecipient({
 						required
 						selectedLocale={selectedLocale}
 						translations={
-							(values.recipients[0] as EmailRecipients).to
+							(values.recipients[0] as EmailRecipients)
+								.to as LocalizedValue<string>
 						}
 					/>
 				</>
+			)}
+
+			{primaryRecipient.toType === 'role' && (
+				<MultipleSelect
+					disabled={values.system}
+					label={Liferay.Language.get('role')}
+					options={toRolesList}
+					placeholder={Liferay.Language.get('select-role')}
+					required
+					search
+					searchPlaceholder={Liferay.Language.get(
+						'search-for-a-role'
+					)}
+					selectAllOption
+					setOptions={(items) => {
+						handleMultiSelectItemsChange(items);
+						setToRolesList(items);
+					}}
+				/>
 			)}
 
 			<ClayForm.Group className="ml-1 row">
@@ -91,7 +185,7 @@ export function PrimaryRecipient({
 				<ClayTooltipProvider>
 					<span
 						title={Liferay.Language.get(
-							'each-to-recipient-will-receive-separate-emails'
+							'each-to-primaryRecipient-will-receive-separate-emails'
 						)}
 					>
 						<ClayIcon

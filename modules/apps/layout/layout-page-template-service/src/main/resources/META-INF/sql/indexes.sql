@@ -3,6 +3,7 @@ create index IX_5A1F4BFC on LayoutPageTemplateCollection (groupId, parentLPTColl
 create unique index IX_F074765 on LayoutPageTemplateCollection (groupId, type_, ctCollectionId, lptCollectionKey[$COLUMN_LENGTH:75$]);
 create unique index IX_E6EE511F on LayoutPageTemplateCollection (groupId, type_, ctCollectionId, name[$COLUMN_LENGTH:75$]);
 create index IX_D2A97D41 on LayoutPageTemplateCollection (groupId, type_, name[$COLUMN_LENGTH:75$]);
+create index IX_A27EFF8D on LayoutPageTemplateCollection (groupId, type_, parentLPTCollectionId);
 create index IX_A17F0EBD on LayoutPageTemplateCollection (uuid_[$COLUMN_LENGTH:75$]);
 
 create unique index IX_E4BCB00E on LayoutPageTemplateEntry (ctCollectionId, plid);

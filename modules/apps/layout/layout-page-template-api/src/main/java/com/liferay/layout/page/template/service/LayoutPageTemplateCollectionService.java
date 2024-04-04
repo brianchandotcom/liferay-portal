@@ -51,6 +51,12 @@ public interface LayoutPageTemplateCollectionService extends BaseService {
 			String description, int type, ServiceContext serviceContext)
 		throws PortalException;
 
+	public LayoutPageTemplateCollection copyLayoutPageTemplateCollection(
+			long groupId, long layoutPageTemplateCollectionId,
+			long layoutParentPageTemplateCollectionId, boolean copyPermissions,
+			ServiceContext serviceContext)
+		throws Exception;
+
 	public LayoutPageTemplateCollection deleteLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId)
 		throws PortalException;

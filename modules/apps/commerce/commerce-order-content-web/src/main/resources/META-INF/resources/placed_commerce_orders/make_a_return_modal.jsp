@@ -7,17 +7,47 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:form action="" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="" />
+<%
+long commerceReturnId = ParamUtil.getLong(request, "commerceReturnId");
+%>
 
-	<frontend-data-set:headless-display
-		additionalProps="<%= commerceOrderContentDisplayContext.getReturnableOrderItemsContextParams() %>"
-		apiURL="<%= commerceOrderContentDisplayContext.getCommerceReturnableItemsAPIURL() %>"
-		bulkActionDropdownItems="<%= commerceOrderContentDisplayContext.getCommerceReturnableItemsBulkActionDropdownItems() %>"
-		id="<%= CommerceOrderFDSNames.RETURNABLE_ORDER_ITEMS %>"
-		propsTransformer="js/returnableOrderItemsPropsTransformer"
-		selectedItemsKey="id"
-		selectionType="multiple"
-		style="fluid"
-	/>
-</aui:form>
+<c:choose>
+	<c:when test="<%= commerceReturnId > 0 %>">
+		<commerce-ui:modal-content
+			title='<%= LanguageUtil.get(request, "select-returnable-items") %>'
+		>
+			<aui:form method="post" name="fm">
+				<aui:input name="redirect" type="hidden" value="" />
+
+				<frontend-data-set:headless-display
+					additionalProps="<%= commerceOrderContentDisplayContext.getReturnableOrderItemsContextParams() %>"
+					apiURL="<%= commerceOrderContentDisplayContext.getCommerceReturnableItemsAPIURL() %>"
+					bulkActionDropdownItems="<%= commerceOrderContentDisplayContext.getCommerceReturnableItemsBulkActionDropdownItems() %>"
+					id="<%= CommerceOrderFDSNames.RETURNABLE_ORDER_ITEMS %>"
+					propsTransformer="js/returnableOrderItemsPropsTransformer"
+					selectedItems="<%= commerceOrderContentDisplayContext.getReturnableSelectedItems() %>"
+					selectedItemsKey="id"
+					selectionType="multiple"
+					style="fluid"
+				/>
+			</aui:form>
+		</commerce-ui:modal-content>
+	</c:when>
+	<c:otherwise>
+		<aui:form method="post" name="fm">
+			<aui:input name="redirect" type="hidden" value="" />
+
+			<frontend-data-set:headless-display
+				additionalProps="<%= commerceOrderContentDisplayContext.getReturnableOrderItemsContextParams() %>"
+				apiURL="<%= commerceOrderContentDisplayContext.getCommerceReturnableItemsAPIURL() %>"
+				bulkActionDropdownItems="<%= commerceOrderContentDisplayContext.getCommerceReturnableItemsBulkActionDropdownItems() %>"
+				id="<%= CommerceOrderFDSNames.RETURNABLE_ORDER_ITEMS %>"
+				propsTransformer="js/returnableOrderItemsPropsTransformer"
+				selectedItems="<%= commerceOrderContentDisplayContext.getReturnableSelectedItems() %>"
+				selectedItemsKey="id"
+				selectionType="multiple"
+				style="fluid"
+			/>
+		</aui:form>
+	</c:otherwise>
+</c:choose>

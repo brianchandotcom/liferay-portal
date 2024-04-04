@@ -129,7 +129,6 @@ Import-Package:\
 	!org.apache.catalina.*,\
 	!org.apache.commons.cli.*,\
 	!org.apache.commons.dbcp2.*,\
-	!org.apache.commons.io.*,\
 	!org.apache.commons.lang.*,\
 	!org.apache.coyote.*,\
 	!org.apache.hc.*,\

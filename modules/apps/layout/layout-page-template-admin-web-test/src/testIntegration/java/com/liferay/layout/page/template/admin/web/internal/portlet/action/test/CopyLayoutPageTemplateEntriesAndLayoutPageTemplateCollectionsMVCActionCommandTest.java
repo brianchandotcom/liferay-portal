@@ -58,7 +58,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class CopyLayoutPageTemplateEntryMVCActionCommandTest {
+public class
+	CopyLayoutPageTemplateEntriesAndLayoutPageTemplateCollectionsMVCActionCommandTest {
 
 	@ClassRule
 	@Rule
@@ -191,9 +192,15 @@ public class CopyLayoutPageTemplateEntryMVCActionCommandTest {
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 		mockLiferayPortletActionRequest.setParameter(
-			"layoutPageTemplateEntryId",
+			"copyPermissions", Boolean.TRUE.toString());
+		mockLiferayPortletActionRequest.setParameter(
+			"layoutPageTemplateEntriesIds",
 			String.valueOf(
 				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+		mockLiferayPortletActionRequest.setParameter(
+			"layoutParentPageTemplateCollectionId",
+			String.valueOf(
+				_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
 
 		return mockLiferayPortletActionRequest;
 	}
@@ -256,7 +263,7 @@ public class CopyLayoutPageTemplateEntryMVCActionCommandTest {
 		_layoutPageTemplateEntryLocalService;
 
 	@Inject(
-		filter = "mvc.command.name=/layout_page_template_admin/copy_layout_page_template_entry"
+		filter = "mvc.command.name=/layout_page_template_admin/copy_layout_page_template_entries_and_layout_page_template_collections"
 	)
 	private MVCActionCommand _mvcActionCommand;
 

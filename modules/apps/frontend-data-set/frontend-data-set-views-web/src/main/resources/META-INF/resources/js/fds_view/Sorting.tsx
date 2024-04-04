@@ -6,7 +6,6 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
@@ -86,7 +85,7 @@ const AddFDSSortModalContent = ({
 	const [selectedOrderType, setSelectedOrderType] = useState<string>(
 		ORDER_TYPE.ASCENDING.value
 	);
-	const [useAsDefault, setUseAsDefault] = useState(false);
+	const [useAsDefaultSorting, setUseAsDefaultSorting] = useState(false);
 
 	const handleSave = async () => {
 		setSaveButtonDisabled(true);
@@ -104,7 +103,7 @@ const AddFDSSortModalContent = ({
 		const response = await fetch(API_URL.FDS_SORTS, {
 			body: JSON.stringify({
 				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_SORT_ID]: fdsView.id,
-				default: useAsDefault,
+				default: useAsDefaultSorting,
 				fieldName: selectedFieldName,
 				label_i18n: labelI18n,
 				orderType: selectedOrderType,
@@ -190,35 +189,20 @@ const AddFDSSortModalContent = ({
 				</ClayForm.Group>
 
 				<ClayForm.Group>
-					<div className="autofit-row autofit-row-center">
-						<div className="autofit-col">
-							<ClayCheckbox
-								aria-label={Liferay.Language.get(
-									'use-as-default'
-								)}
-								checked={useAsDefault}
-								inline
-								label={Liferay.Language.get('use-as-default')}
-								onChange={() =>
-									setUseAsDefault((value: boolean) => !value)
-								}
-							/>
-						</div>
-
-						<div className="autofit-col">
-							<span
-								className="label-icon lfr-portal-tooltip ml-2"
-								title={Liferay.Language.get(
-									'use-as-default-help'
-								)}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</span>
-						</div>
-					</div>
+					<ClayCheckbox
+						aria-label={Liferay.Language.get(
+							'use-as-default-sorting'
+						)}
+						checked={useAsDefaultSorting}
+						inline
+						label={Liferay.Language.get('use-as-default-sorting')}
+						onChange={() =>
+							setUseAsDefaultSorting((value: boolean) => !value)
+						}
+					/>
 				</ClayForm.Group>
 
-				{useAsDefault && (
+				{useAsDefaultSorting && (
 					<ClayForm.Group>
 						<label htmlFor={fdsSortOrderTypeInputId}>
 							{Liferay.Language.get('order-type')}
@@ -292,7 +276,9 @@ const EditFDSSortModalContent = ({
 	const [selectedOrderType, setSelectedOrderType] = useState(
 		fdsSort.orderType
 	);
-	const [useAsDefault, setUseAsDefault] = useState(fdsSort.default);
+	const [useAsDefaultSorting, setUseAsDefaultSorting] = useState(
+		fdsSort.default
+	);
 
 	const handleSave = async () => {
 		setSaveButtonDisabled(true);
@@ -301,7 +287,7 @@ const EditFDSSortModalContent = ({
 			`${API_URL.FDS_SORTS}/by-external-reference-code/${fdsSort.externalReferenceCode}`,
 			{
 				body: JSON.stringify({
-					default: useAsDefault,
+					default: useAsDefaultSorting,
 					fieldName: selectedFieldName,
 					label_i18n: labelI18n,
 					orderType: selectedOrderType,
@@ -391,35 +377,20 @@ const EditFDSSortModalContent = ({
 				</ClayForm.Group>
 
 				<ClayForm.Group>
-					<div className="autofit-row autofit-row-center">
-						<div className="autofit-col">
-							<ClayCheckbox
-								aria-label={Liferay.Language.get(
-									'use-as-default'
-								)}
-								checked={useAsDefault}
-								inline
-								label={Liferay.Language.get('use-as-default')}
-								onChange={() =>
-									setUseAsDefault((value: boolean) => !value)
-								}
-							/>
-						</div>
-
-						<div className="autofit-col">
-							<span
-								className="label-icon lfr-portal-tooltip ml-2"
-								title={Liferay.Language.get(
-									'use-as-default-help'
-								)}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</span>
-						</div>
-					</div>
+					<ClayCheckbox
+						aria-label={Liferay.Language.get(
+							'use-as-default-sorting'
+						)}
+						checked={useAsDefaultSorting}
+						inline
+						label={Liferay.Language.get('use-as-default-sorting')}
+						onChange={() =>
+							setUseAsDefaultSorting((value: boolean) => !value)
+						}
+					/>
 				</ClayForm.Group>
 
-				{useAsDefault && (
+				{useAsDefaultSorting && (
 					<ClayForm.Group>
 						<label htmlFor={fdsSortOrderTypeInputId}>
 							{Liferay.Language.get('order-type')}

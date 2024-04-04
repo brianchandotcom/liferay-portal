@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>METRIC_VALUE_BY_METRIC_TITLE</td>
-	<td>//span[@class='title'and text()='${key_metricTitle}']/..//div[text()]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NO_RESULTS_CONTENT_MESSAGE</td>
 	<td>//*//div[contains(@class,'no-results-content')]//h4[text()='${key_noResultMessage}']</td>
 	<td></td>

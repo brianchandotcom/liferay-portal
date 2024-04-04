@@ -117,6 +117,23 @@ definition {
 			value1 = ${rightText});
 	}
 
+	@summary = "Check that the metric number is between the correct range for cases where the exact metric number is not necessary"
+	macro viewIfVisitorsBehaviorMetricIsBetweenCorrectRange(maxMetricValue, metricTitle, minMetricValue) {
+		var key_metricTitle = ${metricTitle};
+
+		WaitForElementPresent(locator1 = "ACCards#METRIC_VALUE_BY_METRIC_TITLE");
+
+		var actualMetricValue = selenium.getText("ACCards#METRIC_VALUE_BY_METRIC_TITLE");
+
+		TestUtils.isLessThan(
+			actual = ${minMetricValue},
+			expected = ${actualMetricValue});
+
+		TestUtils.isGreaterThan(
+			actual = ${maxMetricValue},
+			expected = ${actualMetricValue});
+	}
+
 	@summary = "Default summary"
 	macro viewMetricBarStyle(backgroundColor = null, entryName = null, style = null, cardTitle = null) {
 		AssertAttributeValue(

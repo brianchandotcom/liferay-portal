@@ -636,7 +636,7 @@ definition {
 		}
 
 		task ("Confirm that web content events appear in AC") {
-			ACAssets.viewIfVisitorsBehaviorMetricIsBetweenCorrectRange(
+			ACCards.viewIfVisitorsBehaviorMetricIsBetweenCorrectRange(
 				maxMetricValue = 4,
 				metricTitle = "Views",
 				minMetricValue = 1);

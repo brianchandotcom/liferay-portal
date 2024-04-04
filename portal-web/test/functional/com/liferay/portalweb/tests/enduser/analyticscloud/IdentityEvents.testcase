@@ -181,7 +181,7 @@ definition {
 		}
 
 		task ("Check the number of downloads made by the anonymous user") {
-			ACAssets.viewIfVisitorsBehaviorMetricIsBetweenCorrectRange(
+			ACCards.viewIfVisitorsBehaviorMetricIsBetweenCorrectRange(
 				maxMetricValue = 5,
 				metricTitle = "Downloads",
 				minMetricValue = 0);

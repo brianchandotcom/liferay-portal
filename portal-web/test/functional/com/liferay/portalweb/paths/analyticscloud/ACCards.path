@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRIC_VALUE_BY_METRIC_TITLE</td>
+	<td>//span[@class='title'and text()='${key_metricTitle}']/..//div[text()]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NO_RESULTS_TITLE</td>
 	<td>//h4[@class='no-results-title' and contains(.,'${key_cardTitle}')]</td>
 	<td></td>

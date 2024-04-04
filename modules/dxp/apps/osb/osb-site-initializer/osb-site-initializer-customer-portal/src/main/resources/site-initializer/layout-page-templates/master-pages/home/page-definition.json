@@ -21,7 +21,7 @@
 						"definition": {
 							"fragment": {
 								"key": "public-sites-navigation",
-								"siteKey": "CP"
+								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
 								"accountMenuId": 0,
@@ -152,7 +152,7 @@
 												"definition": {
 													"fragment": {
 														"key": "navigation-menu-item",
-														"siteKey": "CP"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"iconBackgroundColor": "#558FFF",
@@ -184,7 +184,7 @@
 												"definition": {
 													"fragment": {
 														"key": "navigation-menu-item",
-														"siteKey": "CP"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"iconBackgroundColor": "#5FC584",
@@ -216,7 +216,7 @@
 												"definition": {
 													"fragment": {
 														"key": "navigation-menu-item",
-														"siteKey": "CP"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"iconBackgroundColor": "#ED8F9F",
@@ -248,7 +248,7 @@
 												"definition": {
 													"fragment": {
 														"key": "navigation-menu-item",
-														"siteKey": "CP"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"iconBackgroundColor": "#7BD3D5",
@@ -280,7 +280,7 @@
 												"definition": {
 													"fragment": {
 														"key": "navigation-menu-item",
-														"siteKey": "CP"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"iconBackgroundColor": "#8573B2",
@@ -312,7 +312,7 @@
 												"definition": {
 													"fragment": {
 														"key": "navigation-menu-item",
-														"siteKey": "CP"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"iconBackgroundColor": "#FEDC81",
@@ -344,7 +344,7 @@
 												"definition": {
 													"fragment": {
 														"key": "navigation-menu-item",
-														"siteKey": "CP"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"iconBackgroundColor": "#5FBDEF",
@@ -409,7 +409,7 @@
 												"definition": {
 													"fragment": {
 														"key": "navigation-menu-item",
-														"siteKey": "CP"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"iconBackgroundColor": "#FFFFFF",
@@ -441,7 +441,7 @@
 												"definition": {
 													"fragment": {
 														"key": "navigation-menu-item",
-														"siteKey": "CP"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"iconBackgroundColor": "#FFFFFF",
@@ -473,7 +473,7 @@
 												"definition": {
 													"fragment": {
 														"key": "navigation-menu-item",
-														"siteKey": "CP"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"iconBackgroundColor": "#FFFFFF",
@@ -508,6 +508,22 @@
 								"type": "FragmentDropZone"
 							}
 						],
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "information-banner",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {
+								"dismissible": true,
+								"expirationDate": "06/26/2024"
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
 						"type": "Fragment"
 					},
 					{
@@ -564,7 +580,7 @@
 								"definition": {
 									"fragment": {
 										"key": "footer",
-										"siteKey": "CP"
+										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
 									},
@@ -603,7 +619,7 @@
 																		},
 																		{
 																			"fieldName": "siteKey",
-																			"fieldValue": "CP"
+																			"fieldValue": "[$GROUP_KEY$]"
 																		}
 																	]
 																}

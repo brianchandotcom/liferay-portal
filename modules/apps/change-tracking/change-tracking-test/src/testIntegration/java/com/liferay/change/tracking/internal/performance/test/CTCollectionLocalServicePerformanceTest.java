@@ -14,6 +14,8 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.performance.PerformanceTimer;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -89,7 +92,7 @@ public class CTCollectionLocalServicePerformanceTest {
 
 			SiteInitializer siteInitializer =
 				_siteInitializerRegistry.getSiteInitializer(
-					"com.liferay.site.initializer.masterclass");
+					"com.liferay.site.initializer.welcome");
 
 			siteInitializer.initialize(group.getGroupId());
 		}
@@ -107,7 +110,7 @@ public class CTCollectionLocalServicePerformanceTest {
 
 			SiteInitializer siteInitializer =
 				_siteInitializerRegistry.getSiteInitializer(
-					"com.liferay.site.initializer.masterclass");
+					"com.liferay.site.initializer.welcome");
 
 			siteInitializer.initialize(group.getGroupId());
 		}
@@ -152,6 +155,42 @@ public class CTCollectionLocalServicePerformanceTest {
 		}
 	}
 
+	@Test
+	public void testDiscardCTEntryLayout() throws Exception {
+		Layout layout = null;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection1.getCtCollectionId())) {
+
+			SiteInitializer siteInitializer =
+				_siteInitializerRegistry.getSiteInitializer(
+					"com.liferay.site.initializer.welcome");
+
+			siteInitializer.initialize(_group.getGroupId());
+
+			layout = _layoutLocalService.fetchDefaultLayout(
+				_group.getGroupId(), false);
+		}
+
+		try (PerformanceTimer performanceTimer = new PerformanceTimer(10000)) {
+			_ctCollectionLocalService.getRelatedCTEntriesMap(
+				_ctCollection1.getCtCollectionId(),
+				_portal.getClassNameId(Layout.class.getName()),
+				layout.getPlid());
+		}
+
+		try (PerformanceTimer performanceTimer = new PerformanceTimer(10000)) {
+			_ctCollectionLocalService.discardCTEntry(
+				_ctCollection1.getCtCollectionId(),
+				_portal.getClassNameId(Layout.class.getName()),
+				layout.getPlid(), false);
+		}
+	}
+
+	@Inject
+	private static LayoutLocalService _layoutLocalService;
+
 	private CTCollection _ctCollection1;
 	private CTCollection _ctCollection2;
 
@@ -162,6 +201,9 @@ public class CTCollectionLocalServicePerformanceTest {
 	private CTProcessLocalService _ctProcessLocalService;
 
 	private Group _group;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private SiteInitializerRegistry _siteInitializerRegistry;

@@ -121,33 +121,6 @@ public class LargeDatasetCTTest {
 	}
 
 	@Test
-	public void testDiscardCTEntry() throws Exception {
-		CTCollection ctCollection = _ctCollectionService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection.getCtCollectionId())) {
-
-			SiteInitializer siteInitializer =
-				_siteInitializerRegistry.getSiteInitializer(
-					"com.liferay.site.initializer.welcome");
-
-			siteInitializer.initialize(_group.getGroupId());
-
-			Layout layout = _layoutLocalService.fetchDefaultLayout(
-				_group.getGroupId(), false);
-
-			_ctCollectionLocalService.discardCTEntry(
-				ctCollection.getCtCollectionId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				layout.getPlid(), false);
-		}
-	}
-
-	@Test
 	public void testDiscardCTEntryWithOver1000Entries() throws Exception {
 		CTCollection ctCollection = _ctCollectionService.addCTCollection(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
@@ -181,33 +154,6 @@ public class LargeDatasetCTTest {
 			0,
 			_ctEntryLocalService.getCTCollectionCTEntriesCount(
 				ctCollection.getCtCollectionId()));
-	}
-
-	@Test
-	public void testGetRelatedCTEntries() throws Exception {
-		CTCollection ctCollection = _ctCollectionService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection.getCtCollectionId())) {
-
-			SiteInitializer siteInitializer =
-				_siteInitializerRegistry.getSiteInitializer(
-					"com.liferay.site.initializer.welcome");
-
-			siteInitializer.initialize(_group.getGroupId());
-
-			Layout layout = _layoutLocalService.fetchDefaultLayout(
-				_group.getGroupId(), false);
-
-			_ctCollectionLocalService.getRelatedCTEntriesMap(
-				ctCollection.getCtCollectionId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				layout.getPlid());
-		}
 	}
 
 	@Ignore

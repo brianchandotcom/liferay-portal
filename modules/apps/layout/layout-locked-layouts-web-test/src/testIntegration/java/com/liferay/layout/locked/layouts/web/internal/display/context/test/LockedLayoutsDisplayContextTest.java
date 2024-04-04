@@ -182,7 +182,7 @@ public class LockedLayoutsDisplayContextTest {
 		_assertSearchContainerLayoutPlids(
 			1, new long[] {draftLayout.getPlid()},
 			_getSearchContainer(
-				_getMockLiferayPortletRenderRequest("utility-page")));
+				_getMockLiferayPortletRenderRequest("utility")));
 	}
 
 	@Test
@@ -370,7 +370,7 @@ public class LockedLayoutsDisplayContextTest {
 	}
 
 	private Layout _getDraftLayoutUtilityPageEntry() throws Exception {
-		Layout draftLayout = _getDraftLayout();
+		Layout draftLayout = _getDraftLayout(LayoutConstants.TYPE_UTILITY);
 
 		_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 			null, _serviceContext.getUserId(),

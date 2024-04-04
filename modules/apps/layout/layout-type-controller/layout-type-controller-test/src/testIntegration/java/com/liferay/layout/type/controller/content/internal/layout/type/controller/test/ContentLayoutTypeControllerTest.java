@@ -396,7 +396,7 @@ public class ContentLayoutTypeControllerTest {
 
 		LayoutTypeController layoutTypeController =
 			LayoutTypeControllerTracker.getLayoutTypeController(
-				LayoutConstants.TYPE_CONTENT);
+				layout.getType());
 
 		return layoutTypeController.includeLayoutContent(
 			_getHttpServletRequest(layoutMode, _getUser(actionId)),

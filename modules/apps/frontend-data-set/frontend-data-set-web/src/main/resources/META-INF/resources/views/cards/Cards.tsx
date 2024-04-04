@@ -66,20 +66,20 @@ const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 				...action,
 				href: isLink(action.target, null) ? action.href : null,
 				onClick: (event: Event) => {
-						handleActionClick({
-							action,
-							event,
-							executeAsyncItemAction,
-							highlightItems,
-							itemData: item,
-							itemId: selectedItemKey,
-							loadData,
-							onActionDropdownItemClick,
-							openModal,
-							openSidePanel,
-							toggleItemInlineEdit,
-						});
-				}
+					handleActionClick({
+						action,
+						event,
+						executeAsyncItemAction,
+						highlightItems,
+						itemData: item,
+						itemId: selectedItemKey,
+						loadData,
+						onActionDropdownItemClick,
+						openModal,
+						openSidePanel,
+						toggleItemInlineEdit,
+					});
+				},
 			}))}
 			description={localizedDescription}
 			href={(schema.link && item[schema.link]) || null}

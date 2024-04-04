@@ -199,7 +199,6 @@ function Table({items, itemsActions, schema, style}) {
 					</DndTable.Body>
 				</DndTable.Table>
 			)}
-
 		</DndTable.ContextProvider>
 	);
 }

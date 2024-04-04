@@ -92,6 +92,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
@@ -698,15 +699,32 @@ public class ObjectEntryDTOConverter
 				continue;
 			}
 
-			if (objectField.isLocalized()) {
-				map.put(
-					objectField.getI18nObjectFieldName(),
-					values.get(objectField.getI18nObjectFieldName()));
-			}
-
 			String objectFieldName = objectField.getName();
 
 			Serializable serializable = values.get(objectFieldName);
+
+			if (objectField.isLocalized()) {
+				String i18nObjectFieldName =
+					objectField.getI18nObjectFieldName();
+
+				map.put(i18nObjectFieldName, values.get(i18nObjectFieldName));
+
+				Locale dtoConverterContextLocale =
+					dtoConverterContext.getLocale();
+
+				if (dtoConverterContextLocale != null) {
+					Map<String, Serializable> objectField_i18n =
+						(Map<String, Serializable>)map.get(i18nObjectFieldName);
+
+					Serializable localizedObjectFieldName =
+						objectField_i18n.get(
+							dtoConverterContextLocale.toString());
+
+					if (localizedObjectFieldName != null) {
+						serializable = localizedObjectFieldName;
+					}
+				}
+			}
 
 			if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {

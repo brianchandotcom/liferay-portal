@@ -69,6 +69,24 @@ public class DisplayPageManagementToolbarDisplayContext
 					DropdownItemListBuilder.add(
 						dropdownItem -> {
 							dropdownItem.putData(
+								"action", "copySelectedEntries");
+							dropdownItem.putData(
+								"copySelectedEntriesURL",
+								_getCopySelectedEntriesURL());
+							dropdownItem.setIcon("copy");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "copy"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData(
 								"action", "exportDisplayPages");
 							dropdownItem.putData(
 								"exportDisplayPageURL",
@@ -136,6 +154,7 @@ public class DisplayPageManagementToolbarDisplayContext
 				_themeDisplay.getPermissionChecker(),
 				layoutPageTemplateCollection, ActionKeys.UPDATE)) {
 
+			availableActions.add("copySelectedEntries");
 			availableActions.add("moveSelectedEntries");
 		}
 
@@ -165,6 +184,7 @@ public class DisplayPageManagementToolbarDisplayContext
 				_themeDisplay.getPermissionChecker(), layoutPageTemplateEntry,
 				ActionKeys.UPDATE)) {
 
+			availableActions.add("copySelectedEntries");
 			availableActions.add("moveSelectedEntries");
 		}
 
@@ -280,6 +300,23 @@ public class DisplayPageManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"create-date", "modified-date", "name"};
+	}
+
+	private String _getCopySelectedEntriesURL() {
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/layout_page_template_admin/copy_layout_page_template_entries_" +
+				"and_layout_page_template_collections"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"copyPermissions", false
+		).setParameter(
+			"layoutParentPageTemplateCollectionId",
+			ParamUtil.getLong(
+				httpServletRequest, "layoutPageTemplateCollectionId")
+		).buildString();
 	}
 
 	private String _getDeleteSelectedEntriesURL() {

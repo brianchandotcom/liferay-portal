@@ -129,7 +129,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureCurrentLanguagesCP(failExpected = null, errorMessage = null, currentPortalLanguages = null) {
+	macro configureCurrentLanguagesCP(failExpected = null, errorMessage = null, currentPortalLanguages = null, useLanguageKey = null) {
 		if (isSet(currentPortalLanguages)) {
 			while (IsElementPresent(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT")) {
 				AddSelection(
@@ -142,15 +142,25 @@ definition {
 			for (var currentPortalLanguage : list ${currentPortalLanguages}) {
 				var currentPortalLanguage = ${currentPortalLanguage};
 
-				AddSelection(
-					locator1 = "LanguageConfiguration#LANGUAGES_AVAILABLE",
-					value1 = ${currentPortalLanguage});
+				if (${useLanguageKey} == "true") {
+					Click.clickNoMouseOver(locator1 = "//select[contains(@id,'availableLanguageIds')]/option[@value='${currentPortalLanguage}']");
+				}
+				else {
+					AddSelection(
+						locator1 = "LanguageConfiguration#LANGUAGES_AVAILABLE",
+						value1 = ${currentPortalLanguage});
+				}
 
 				Click(locator1 = "Button#MOVE_AVAILABLE_TO_CURRENT");
 
-				AssertTextEquals.assertPartialText(
-					locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
-					value1 = ${currentPortalLanguage});
+				if (${useLanguageKey} == "true") {
+					AssertElementPresent(locator1 = "//select[contains(@id,'currentLanguageIds')]/option[@value='${currentPortalLanguage}']");
+				}
+				else {
+					AssertTextEquals.assertPartialText(
+						locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
+						value1 = ${currentPortalLanguage});
+				}
 			}
 		}
 

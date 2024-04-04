@@ -364,6 +364,13 @@ public class PredicateExpressionVisitorImpl
 		_serviceTrackerMap = serviceTrackerMap;
 	}
 
+	private Predicate _contains(
+		Column<?, ?> column,
+		com.liferay.petra.sql.dsl.expression.Expression<String> expression) {
+
+		return column.like(expression);
+	}
+
 	private Predicate _contains(Column<?, ?> column, Object value) {
 		return column.like(StringPool.PERCENT + value + StringPool.PERCENT);
 	}
@@ -378,6 +385,25 @@ public class PredicateExpressionVisitorImpl
 		if (fieldPredicateProvider != null) {
 			return fieldPredicateProvider.getContainsPredicate(
 				name -> _getColumn(name, objectDefinition), fieldValue);
+		}
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinition.getObjectDefinitionId(),
+			String.valueOf(fieldName));
+
+		if ((objectField != null) &&
+			StringUtil.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+			Object value = _getValue(fieldName, objectDefinition, fieldValue);
+
+			return _contains(
+				_getColumn(fieldName, objectDefinition),
+				DSLFunctionFactoryUtil.concat(
+					new Scalar<>(StringPool.PERCENT),
+					new Scalar<>(value.toString()),
+					new Scalar<>(StringPool.PERCENT)));
 		}
 
 		return _contains(

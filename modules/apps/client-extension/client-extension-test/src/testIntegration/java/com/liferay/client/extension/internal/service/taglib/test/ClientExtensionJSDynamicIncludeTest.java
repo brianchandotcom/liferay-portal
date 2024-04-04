@@ -73,7 +73,7 @@ public class ClientExtensionJSDynamicIncludeTest {
 		throws Exception {
 
 		_testGlobalJSClientExtensionEntriesAreAdded(
-			_clientExtensionBottomJSPDynamicInclude, "bottom");
+			_clientExtensionBottomDynamicInclude, "bottom");
 	}
 
 	@Test
@@ -81,7 +81,7 @@ public class ClientExtensionJSDynamicIncludeTest {
 		throws Exception {
 
 		_testGlobalJSClientExtensionEntriesAreAdded(
-			_clientExtensionTopJSDynamicInclude, "head");
+			_clientExtensionTopDynamicInclude, "head");
 	}
 
 	private ClientExtensionEntry _addGlobalJSClientExtension(String url)
@@ -234,9 +234,9 @@ public class ClientExtensionJSDynamicIncludeTest {
 	}
 
 	@Inject(
-		filter = "component.name=com.liferay.client.extension.internal.service.taglib.ClientExtensionBottomJSPDynamicInclude"
+		filter = "component.name=com.liferay.client.extension.internal.service.taglib.ClientExtensionBottomDynamicInclude"
 	)
-	private DynamicInclude _clientExtensionBottomJSPDynamicInclude;
+	private DynamicInclude _clientExtensionBottomDynamicInclude;
 
 	@DeleteAfterTestRun
 	private final List<ClientExtensionEntry> _clientExtensionEntries =
@@ -250,9 +250,9 @@ public class ClientExtensionJSDynamicIncludeTest {
 		_clientExtensionEntryRelLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.client.extension.internal.service.taglib.ClientExtensionTopJSDynamicInclude"
+		filter = "component.name=com.liferay.client.extension.internal.service.taglib.ClientExtensionTopDynamicInclude"
 	)
-	private DynamicInclude _clientExtensionTopJSDynamicInclude;
+	private DynamicInclude _clientExtensionTopDynamicInclude;
 
 	@DeleteAfterTestRun
 	private Group _group;

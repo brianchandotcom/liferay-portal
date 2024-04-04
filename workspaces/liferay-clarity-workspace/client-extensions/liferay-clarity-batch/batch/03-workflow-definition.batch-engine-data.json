@@ -4,7 +4,7 @@
 		"parameters": {
 			"containsHeaders": "true",
 			"createStrategy": "INSERT",
-			"importStrategy": "ON_ERROR_FAIL",
+			"onErrorFail": "false",
 			"updateStrategy": "UPDATE"
 		},
 		"taskItemDelegateName": "DEFAULT"
@@ -16,11 +16,11 @@
 				"#child-nodes": [
 					{
 						"#tag-name": "name",
-						"#value": "D4B8 Hybrid Approver"
+						"#value": "D4B8 Distribution Manager Approval"
 					},
 					{
 						"#tag-name": "description",
-						"#value": "An automated approval process that requires human review when specified."
+						"#value": "An automated approval process that requires manager review when specified."
 					},
 					{
 						"#tag-name": "version",
@@ -266,11 +266,20 @@
 									{
 										"#child-nodes": [
 											{
-												"#tag-name": "email-address",
-												"#value": "test@liferay.com"
+												"#child-nodes": [
+													{
+														"#tag-name": "role-type",
+														"#value": "regular"
+													},
+													{
+														"#tag-name": "name",
+														"#value": "D4B8 Business Development Manager"
+													}
+												],
+												"#tag-name": "role"
 											}
 										],
-										"#tag-name": "user"
+										"#tag-name": "roles"
 									}
 								],
 								"#tag-name": "assignments"
@@ -350,14 +359,8 @@
 												"#value": "Machine Action"
 											},
 											{
-												"#tag-name": "description"
-											},
-											{
-												"#tag-name": "script"
-											},
-											{
-												"#tag-name": "script-language",
-												"#value": "function#liferay-clarity-etc-spring-boot-workflow-action-application"
+												"#tag-name": "status",
+												"#value": "0"
 											},
 											{
 												"#tag-name": "priority",
@@ -375,9 +378,6 @@
 											{
 												"#tag-name": "name",
 												"#value": "Review Notification"
-											},
-											{
-												"#tag-name": "description"
 											},
 											{
 												"#cdata-value": [
@@ -417,11 +417,20 @@
 									{
 										"#child-nodes": [
 											{
-												"#tag-name": "email-address",
-												"#value": "test@liferay.com"
+												"#child-nodes": [
+													{
+														"#tag-name": "role-type",
+														"#value": "regular"
+													},
+													{
+														"#tag-name": "name",
+														"#value": "D4B8 Business Development Manager"
+													}
+												],
+												"#tag-name": "role"
 											}
 										],
-										"#tag-name": "user"
+										"#tag-name": "roles"
 									}
 								],
 								"#tag-name": "assignments"
@@ -528,9 +537,6 @@
 												"#value": "Review Notification"
 											},
 											{
-												"#tag-name": "description"
-											},
-											{
 												"#cdata-value": [
 													"${userName} sent you a ${entryType} for review in the workflow."
 												],
@@ -575,7 +581,7 @@
 													},
 													{
 														"#tag-name": "name",
-														"#value": "Business Development Manager"
+														"#value": "D4B8 Business Development Manager"
 													}
 												],
 												"#tag-name": "role"
@@ -664,8 +670,8 @@
 				"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
 				"xsi:schemaLocation": "urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 			},
-			"description": "An automated approval process that requires human review when specified.",
-			"name": "D4B8 Hybrid Approver",
+			"description": "An automated approval process that requires manager review when specified.",
+			"name": "D4B8 Distribution Manager Approval",
 			"nodes": [
 				{
 					"label": "Approved",
@@ -693,9 +699,9 @@
 					"type": "TASK"
 				}
 			],
-			"title": "D4B8 Hybrid Approver",
+			"title": "D4B8 Distribution Manager Approval",
 			"title_i18n": {
-				"en_US": "D4B8 Hybrid Approver"
+				"en_US": "D4B8 Distribution Manager Approval"
 			},
 			"transitions": [
 				{

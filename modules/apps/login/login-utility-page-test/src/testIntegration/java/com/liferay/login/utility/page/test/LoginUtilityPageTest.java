@@ -53,6 +53,18 @@ public class LoginUtilityPageTest {
 	}
 
 	@Test
+	public void testAddCreateAccountUtilityPageEntry() throws PortalException {
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				null, _serviceContext.getUserId(), _group.getGroupId(), 0, 0,
+				true, RandomTestUtil.randomString(),
+				LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT, 0,
+				_serviceContext);
+
+		Assert.assertNotNull(layoutUtilityPageEntry);
+	}
+
+	@Test
 	public void testAddLoginUtilityPageEntry() throws PortalException {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
@@ -61,6 +73,14 @@ public class LoginUtilityPageTest {
 				LayoutUtilityPageEntryConstants.TYPE_LOGIN, 0, _serviceContext);
 
 		Assert.assertNotNull(layoutUtilityPageEntry);
+	}
+
+	@Test
+	public void testCreateAccountUtilityPageTypeHasBeenRegistered() {
+		Assert.assertNotNull(
+			LayoutUtilityPageEntryViewRendererRegistryUtil.
+				getLayoutUtilityPageEntryViewRenderer(
+					LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT));
 	}
 
 	@Test

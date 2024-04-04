@@ -20,6 +20,7 @@ import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.admin.rest.client.problem.Problem;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectDefinitionSerDes;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
@@ -56,6 +57,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -316,7 +318,8 @@ public class ObjectDefinitionResourceTest
 				new ObjectField() {
 					{
 						businessType = BusinessType.PICKLIST;
-						DBType = ObjectField.DBType.create("String");
+						DBType = ObjectField.DBType.create(
+							ObjectFieldConstants.DB_TYPE_STRING);
 						externalReferenceCode = RandomTestUtil.randomString();
 						indexed = false;
 						indexedAsKeyword = false;
@@ -392,6 +395,44 @@ public class ObjectDefinitionResourceTest
 
 		assertEquals(postObjectDefinition, randomObjectDefinition);
 		assertValid(postObjectDefinition);
+
+		// Add object definition with a label in a language different from the
+		// site language
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		randomObjectDefinition.setDefaultLanguageId("de_DE");
+		randomObjectDefinition.setObjectFields(
+			new ObjectField[] {
+				new ObjectField() {
+					{
+						businessType = BusinessType.TEXT;
+						DBType = ObjectField.DBType.create(
+							ObjectFieldConstants.DB_TYPE_STRING);
+						indexed = false;
+						indexedAsKeyword = false;
+						label = Collections.singletonMap(
+							"de_DE", RandomTestUtil.randomString());
+						localized = false;
+						name = StringUtil.randomId();
+						readOnly = ReadOnly.FALSE;
+						required = false;
+						system = false;
+					}
+				}
+			});
+
+		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
+			randomObjectDefinition);
+
+		ObjectField[] objectFields = postObjectDefinition.getObjectFields();
+
+		ObjectField objectField = objectFields[objectFields.length - 1];
+
+		Map<String, String> labelMap = objectField.getLabel();
+
+		Assert.assertTrue(labelMap.containsKey("de_DE"));
+		Assert.assertTrue(labelMap.containsKey("en_US"));
 	}
 
 	@Override
@@ -700,7 +741,8 @@ public class ObjectDefinitionResourceTest
 				new ObjectField() {
 					{
 						businessType = BusinessType.TEXT;
-						DBType = ObjectField.DBType.create("String");
+						DBType = ObjectField.DBType.create(
+							ObjectFieldConstants.DB_TYPE_STRING);
 						indexed = false;
 						indexedAsKeyword = false;
 						label = Collections.singletonMap("en_US", "Column");
@@ -968,7 +1010,8 @@ public class ObjectDefinitionResourceTest
 				new ObjectField() {
 					{
 						businessType = BusinessType.TEXT;
-						DBType = ObjectField.DBType.create("String");
+						DBType = ObjectField.DBType.create(
+							ObjectFieldConstants.DB_TYPE_STRING);
 						externalReferenceCode = "customObjectFieldERC";
 						indexed = false;
 						indexedAsKeyword = false;
@@ -984,7 +1027,8 @@ public class ObjectDefinitionResourceTest
 				new ObjectField() {
 					{
 						businessType = BusinessType.TEXT;
-						DBType = ObjectField.DBType.create("String");
+						DBType = ObjectField.DBType.create(
+							ObjectFieldConstants.DB_TYPE_STRING);
 						externalReferenceCode = RandomTestUtil.randomString();
 						indexed = false;
 						indexedAsKeyword = false;

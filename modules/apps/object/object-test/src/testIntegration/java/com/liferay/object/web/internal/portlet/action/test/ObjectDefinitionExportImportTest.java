@@ -58,8 +58,13 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 			objectDefinition.getExternalReferenceCode(), "AccountEntry");
 
 		testExportImport(
-			"test-object-definition.json", "test-object-definition.json", null,
-			"TestObjectDefinition");
+			"test-object-definition-1.json", "test-object-definition-1.json",
+			null, "TestObjectDefinition1");
+
+		testExportImport(
+			"test-object-definition-2.json",
+			"test-object-definition-2.site-default-locale.json", null,
+			"TestObjectDefinition2");
 	}
 
 	@Override

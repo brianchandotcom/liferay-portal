@@ -17,9 +17,9 @@
 	"enableCategorization": true,
 	"enableComments": false,
 	"label": {
-		"en_US": "Test Object Definition"
+		"en_US": "Test Object Definition 1"
 	},
-	"name": "TestObjectDefinition",
+	"name": "TestObjectDefinition1",
 	"objectActions": [
 		{
 			"active": true,

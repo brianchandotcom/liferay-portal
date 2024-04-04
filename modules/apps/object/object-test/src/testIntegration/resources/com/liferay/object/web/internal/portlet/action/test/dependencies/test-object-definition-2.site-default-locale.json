@@ -1,0 +1,213 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldName": "",
+	"actions": {
+		"delete": {
+		},
+		"exportObjectDefinition": {
+		},
+		"get": {
+		},
+		"permissions": {
+		},
+		"update": {
+		}
+	},
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": true,
+	"enableComments": false,
+	"enableLocalization": false,
+	"enableObjectEntryDraft": false,
+	"enableObjectEntryHistory": false,
+	"externalReferenceCode": "TESTOBJECTDEFINITION2",
+	"label": {
+		"de_DE": "Test Objekt Definition 2",
+		"en_US": "Test Object Definition 2"
+	},
+	"modifiable": true,
+	"name": "TestObjectDefinition2",
+	"objectActions": [
+	],
+	"objectFields": [
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"de_DE": "Erstellt am",
+				"en_US": "Create Date"
+			},
+			"localized": false,
+			"name": "createDate",
+			"objectFieldSettings": [
+			],
+			"readOnly": "true",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date",
+			"unique": false
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"de_DE": "Änderungsdatum",
+				"en_US": "Modified Date"
+			},
+			"localized": false,
+			"name": "modifiedDate",
+			"objectFieldSettings": [
+			],
+			"readOnly": "true",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date",
+			"unique": false
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"indexedLanguageId": "",
+			"label": {
+				"de_DE": "ID",
+				"en_US": "ID"
+			},
+			"localized": false,
+			"name": "id",
+			"objectFieldSettings": [
+			],
+			"readOnly": "true",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Long",
+			"unique": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"de_DE": "Autor",
+				"en_US": "Author"
+			},
+			"localized": false,
+			"name": "creator",
+			"objectFieldSettings": [
+			],
+			"readOnly": "true",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"de_DE": "Externer Referenzcode",
+				"en_US": "External Reference Code"
+			},
+			"localized": false,
+			"name": "externalReferenceCode",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"de_DE": "Status",
+				"en_US": "Status"
+			},
+			"localized": false,
+			"name": "status",
+			"objectFieldSettings": [
+			],
+			"readOnly": "true",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"de_DE": "Test feld",
+				"en_US": "Test field"
+			},
+			"localized": false,
+			"name": "testField",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String",
+			"unique": false
+		}
+	],
+	"objectFolderExternalReferenceCode": "default",
+	"objectLayouts": [
+	],
+	"objectRelationships": [
+	],
+	"objectValidationRules": [
+	],
+	"objectViews": [
+	],
+	"panelCategoryKey": "",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"de_DE": "Test Objekt Definitions",
+		"en_US": "Test Object Definitions"
+	},
+	"portlet": true,
+	"restContextPath": "/o/c/testobjectdefinition2s",
+	"scope": "company",
+	"status": {
+		"code": 0,
+		"label": "approved",
+		"label_i18n": "Approved"
+	},
+	"system": false,
+	"titleObjectFieldName": "id"
+}

@@ -651,7 +651,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                       class="criteria-group-root my-2 p-2 w-100 color--first-test-values-group criteria-group-item-root"
                     >
                       <div
-                        class="drop-zone-root position-relative drop-zone-first-test-values-group-group_01-0-top"
+                        class="drop-zone-root position-relative drop-zone-first-test-values-group drop-zone-first-test-values-group-group_01-0-top"
                       >
                         <div
                           class="drop-zone-target"
@@ -661,7 +661,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                         class="criterion position-relative"
                       >
                         <div
-                          class="criterion-row-root drop-zone-first-test-values-group-group_01-0-middle"
+                          class="criterion-row-root drop-zone-first-test-values-group drop-zone-first-test-values-group-group_01-0-middle"
                         >
                           <div
                             class="edit-container"
@@ -754,7 +754,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                           </div>
                         </div>
                         <div
-                          class="drop-zone-root position-relative drop-zone-first-test-values-group-group_01-0-bottom"
+                          class="drop-zone-root position-relative drop-zone-first-test-values-group drop-zone-first-test-values-group-group_01-0-bottom"
                         >
                           <div
                             class="drop-zone-target"

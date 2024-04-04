@@ -3,7 +3,7 @@
 exports[`CriteriaRow renders 1`] = `
 <DocumentFragment>
   <div
-    class="criterion-row-root drop-zone-user-group_01-0-middle"
+    class="criterion-row-root drop-zone-user drop-zone-user-group_01-0-middle"
   >
     <div
       class="edit-container"
@@ -101,7 +101,7 @@ exports[`CriteriaRow renders 1`] = `
 exports[`CriteriaRow renders and inform there is an unknown property 1`] = `
 <DocumentFragment>
   <div
-    class="criterion-row-root drop-zone-user-group_01-0-middle criterion-row-root-error"
+    class="criterion-row-root drop-zone-user drop-zone-user-group_01-0-middle criterion-row-root-error"
   >
     <div
       class="edit-container"

@@ -16,7 +16,6 @@ import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
 import com.liferay.jethr0.job.repository.JobComparatorEntityRepository;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.job.repository.JobPrioritizerEntityRepository;
-import com.liferay.jethr0.job.repository.JobQueueOrderEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.util.ArrayList;
@@ -222,19 +221,18 @@ public class JobQueue {
 				jobIds.add(jobEntity.getId());
 			}
 
-			if (_jobQueueOrderEntity == null) {
-				_jobQueueOrderEntity = _jobQueueOrderEntityRepository.create(
-					jobIds);
+			JobPrioritizerEntity jobPrioritizerEntity =
+				getJobPrioritizerEntity();
+
+			if (Objects.equals(
+					jobIds, jobPrioritizerEntity.getPrioritizedJobIds())) {
 
 				return;
 			}
 
-			if (Objects.equals(jobIds, _jobQueueOrderEntity.getJobIds())) {
-				return;
-			}
+			jobPrioritizerEntity.setPrioritizedJobIds(jobIds);
 
-			_jobQueueOrderEntity = _jobQueueOrderEntityRepository.create(
-				jobIds);
+			_jobPrioritizerEntityRepository.update(jobPrioritizerEntity);
 		}
 	}
 
@@ -283,11 +281,6 @@ public class JobQueue {
 
 	@Autowired
 	private JobPrioritizerEntityRepository _jobPrioritizerEntityRepository;
-
-	private JobQueueOrderEntity _jobQueueOrderEntity;
-
-	@Autowired
-	private JobQueueOrderEntityRepository _jobQueueOrderEntityRepository;
 
 	@Value("${liferay.jethr0.job.prioritizer}")
 	private String _liferayJobPrioritizer;

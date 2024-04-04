@@ -474,6 +474,7 @@ type DeliverySKU = {
 	purchasable: boolean;
 	sku: string;
 	skuOptions: DeliverySKUOption[];
+	tierPrices?: TierPrice[];
 };
 
 type DeliverySKUOption = {skuOptionKey: string; skuOptionValueKey: string};
@@ -568,6 +569,13 @@ type ProductSpecification = {
 	specificationId?: number;
 	specificationKey: string;
 	value: {[key: string]: string};
+};
+
+type TierPrice = {
+	currency: string;
+	price: number;
+	priceFormatted: string;
+	quantity: number;
 };
 
 type UserAccount = {

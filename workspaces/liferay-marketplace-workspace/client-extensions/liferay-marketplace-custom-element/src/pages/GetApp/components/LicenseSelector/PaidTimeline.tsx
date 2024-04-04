@@ -20,7 +20,9 @@ type PaidTimelineProps = {
 export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 	const {channel} = useMarketplaceContext();
 	const [skuInfo, setSkuInfo] = useState({});
-	const [tierPrices, setTierPrices] = useState<any[]>([]);
+	const [tierPrices, setTierPrices] = useState<
+		{skuId: number; tierPrice: TierPrice[]}[]
+	>([]);
 
 	const {id: productId, skus} = product || {};
 	const accountId = Liferay.CommerceContext.account?.accountId;
@@ -37,9 +39,13 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 		})();
 	}, [accountId, channel.id, product?.productId]);
 
-	const purchasebleSkus = (skus || []).filter(
-		(sku) => sku.purchasable && !isTrialSKU((sku as unknown) as SKU)
-	);
+	const purchasebleSkus = (skus || []).filter((sku) => {
+		return (
+			sku?.price?.price &&
+			sku.purchasable &&
+			!isTrialSKU((sku as unknown) as SKU)
+		);
+	});
 
 	return (
 		<div className="paid-timeline">
@@ -49,8 +55,8 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 				{purchasebleSkus
 					.map((sku, index) => {
 						const tierPricesFiltered = tierPrices?.filter(
-							(tier: any) =>
-								tier?.tierPrice.length && tier.skuId === sku.id
+							({skuId, tierPrice}) =>
+								!!tierPrice.length && skuId === sku.id
 						);
 
 						const skuOption = sku.skuOptions.find(

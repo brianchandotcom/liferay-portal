@@ -52,19 +52,13 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
-			width: 190px;
+			width: 164px;
 		}
 
 		&-apps {
 			color: #54555f;
 			font-size: 0.813rem;
 			line-height: 1rem;
-		}
-
-		&-arrow-down {
-			display: none;
-			height: 1rem;
-			width: 1rem;
 		}
 
 		&:hover,

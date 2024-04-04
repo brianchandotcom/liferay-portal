@@ -89,7 +89,6 @@ const AccountSearchDropdown: React.FC<AccountSearchDropdownProps> = ({
 							draggable={false}
 							src={getAccountImage(accountIcon)}
 						/>
-
 						<div className="dashboard-navigation-header-text-container">
 							<span
 								className="dashboard-navigation-header-title"
@@ -104,12 +103,8 @@ const AccountSearchDropdown: React.FC<AccountSearchDropdownProps> = ({
 								</span>
 							)}
 						</div>
+						<ClayIcon symbol="caret-bottom" />
 					</div>
-
-					<ClayIcon
-						className="dashboard-navigation-header-arrow-down"
-						symbol="caret-bottom"
-					/>
 				</div>
 			}
 		>

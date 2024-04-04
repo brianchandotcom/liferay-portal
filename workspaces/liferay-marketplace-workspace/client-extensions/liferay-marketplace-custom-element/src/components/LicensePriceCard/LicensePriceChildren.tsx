@@ -12,12 +12,7 @@ import {isTrialSKU} from '../../utils/productUtils';
 
 export type TierPrices = {
 	skuId: number;
-	tierPrice: {
-		currency: string;
-		price: number;
-		priceFormatted: string;
-		quantity: number;
-	}[];
+	tierPrice: TierPrice[];
 };
 
 type LicensePriceChildrenType = {
@@ -39,19 +34,18 @@ const LicensePriceChildren = ({
 				sku: skus.find(({id}) => id === sku.skuId) as SKU,
 				tierPrices: sku.tierPrice,
 			}))
-			.filter(({sku}) => !isTrialSKU(sku)) || [];
+			.filter((sku) => sku.tierPrices.length && !isTrialSKU(sku.sku)) ||
+		[];
 
 	return (
-		<div className="align-items-start d-flex flex-column justify-content-between license-container mt-6 text-nowrap">
+		<div className="align-items-start d-flex flex-column justify-content-between license-container text-nowrap">
 			{productSkus.map(({sku, tierPrices}, index) => (
-				<div className="align-items-baseline d-flex mb-6" key={index}>
-					<div className="font-weight-bold license-type p-0">
-						<span className="text-capitalize">
-							{` ${
-								isCloud ? 'Standard' : sku.skuOptions[0].value
-							} Licenses`}
-						</span>
-					</div>
+				<div className="align-items-baseline d-flex mt-4" key={index}>
+					<span className="font-weight-bold license-type p-0 text-capitalize">
+						{` ${
+							isCloud ? 'Standard' : sku.skuOptions[0].value
+						} Licenses`}
+					</span>
 					<div className="align-items-start d-flex flex-column">
 						{tierPrices.map((tierPrice, indexTP) => {
 							const {

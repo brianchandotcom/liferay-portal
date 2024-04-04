@@ -255,7 +255,7 @@ export function CardSectionsBody({
 								/>
 							)
 						)}
-					</CardSection>{' '}
+					</CardSection>
 				</>
 			)}
 		</>

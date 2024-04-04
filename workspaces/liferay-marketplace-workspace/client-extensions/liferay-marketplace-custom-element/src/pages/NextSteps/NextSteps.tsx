@@ -99,12 +99,11 @@ export function NextSteps({
 								Your Order ID is: <strong>{orderId}</strong>
 							</p>
 							<p>
-								To license your app, you can click Continue
-								Configuration below. Find your Order ID and
-								choose Create License Key. To create a license,
-								you must have at least one of your instance
-								details available - IP address, MAC address or
-								hostname.
+								To license your app, you can click Go to
+								Dashboard below. Find your Order ID and choose
+								Create License Key. To create a license, you
+								must have at least one of your instance details
+								available - IP address, MAC address or hostname.
 							</p>
 						</p>
 					) : (
@@ -140,12 +139,11 @@ export function NextSteps({
 								Your Order ID is: <strong>{orderId}</strong>
 							</p>
 							<p>
-								To license your app, you can click Continue
-								Configuration below. Find your Order ID and
-								choose Create License Key. To create a license,
-								you must have at least one of your instance
-								details available - IP address, MAC address or
-								hostname.
+								To license your app, you can click Go to
+								Dashboard below. Find your Order ID and choose
+								Create License Key. To create a license, you
+								must have at least one of your instance details
+								available - IP address, MAC address or hostname.
 							</p>
 						</>
 					) : (

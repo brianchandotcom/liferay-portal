@@ -66,9 +66,9 @@ test('Product specification fragment only shows correct specifications', async (
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('LPD-10856', true);
 
-	const site = await apiHelpers.headlessSite.createSite(
-		'Specification Fragment Site'
-	);
+	const site = await apiHelpers.headlessSite.createSite({
+		name: 'Specification Fragment Site',
+	});
 
 	data.push({id: site.id, type: 'site'});
 

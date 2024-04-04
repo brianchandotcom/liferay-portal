@@ -35,7 +35,9 @@ test('mini cart bundle with UOM', async ({
 	commerceMiniCartPage,
 	page,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite(getRandomString());
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
 
 	apiHelpers.data.push({id: site.id, type: 'site'});
 
@@ -309,7 +311,9 @@ test('LPD-3496 mini cart bundle without enough quantity', async ({
 	commerceMiniCartPage,
 	page,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite(getRandomString());
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
 
 	apiHelpers.data.push({id: site.id, type: 'site'});
 

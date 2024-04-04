@@ -88,7 +88,9 @@ test('can view payments list admin page', async ({
 		['test@liferay.com']
 	);
 
-	const site = await apiHelpers.headlessSite.createSite('Payment Site');
+	const site = await apiHelpers.headlessSite.createSite({
+		name: 'Payment Site',
+	});
 
 	data.push({id: site.id, type: 'site'});
 

@@ -729,7 +729,9 @@ scheduleTest(
 		workflowPage,
 		workflowTasksPage,
 	}) => {
-		const site = await apiHelpers.headlessSite.createSite('papite');
+		const site = await apiHelpers.headlessSite.createSite({
+			name: 'papite',
+		});
 
 		await workflowPage.goto(site.friendlyUrlPath);
 

@@ -24,9 +24,9 @@ const isolatedSiteFixture = test.extend<{
 
 				// Create site and go Site Settings
 
-				site = await apiHelpers.headlessSite.createSite(
-					getRandomString()
-				);
+				site = await apiHelpers.headlessSite.createSite({
+					name: getRandomString(),
+				});
 
 				await use(site);
 			}

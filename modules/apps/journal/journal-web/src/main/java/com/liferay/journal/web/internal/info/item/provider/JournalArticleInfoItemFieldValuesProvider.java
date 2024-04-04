@@ -32,8 +32,6 @@ import com.liferay.journal.web.internal.info.item.JournalArticleInfoItemFields;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -100,8 +98,6 @@ public class JournalArticleInfoItemFieldValuesProvider
 			).infoFieldValues(
 				_getDDMStructureInfoFieldValues(journalArticle)
 			).infoFieldValues(
-				_getDefaultDDMStructureInfoFieldValues(journalArticle)
-			).infoFieldValues(
 				_getDDMTemplateInfoFieldValues(journalArticle)
 			).infoFieldValues(
 				_templateInfoItemFieldSetProvider.getInfoFieldValues(
@@ -126,38 +122,8 @@ public class JournalArticleInfoItemFieldValuesProvider
 	private List<InfoFieldValue<Object>> _getDDMStructureInfoFieldValues(
 		JournalArticle article) {
 
-		DDMStructure ddmStructure = article.getDDMStructure();
-
-		JournalArticle ddmStructureArticle = null;
-
-		try {
-			ddmStructureArticle = _journalArticleLocalService.getArticle(
-				ddmStructure.getGroupId(), DDMStructure.class.getName(),
-				ddmStructure.getStructureId());
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
-		if (ddmStructureArticle == null) {
-			return _ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
-				article, article.getDDMFormValues());
-		}
-
-		List<InfoFieldValue<Object>> journalArticleFieldValues =
-			new ArrayList<>();
-
-		journalArticleFieldValues.addAll(
-			_ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
-				article, article.getDDMFormValues(false)));
-
-		journalArticleFieldValues.addAll(
-			_ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
-				ddmStructureArticle, ddmStructureArticle.getDDMFormValues()));
-
-		return journalArticleFieldValues;
+		return _ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
+			article, article.getDDMFormValues());
 	}
 
 	private List<InfoFieldValue<Object>> _getDDMTemplateInfoFieldValues(
@@ -179,32 +145,6 @@ public class JournalArticleInfoItemFieldValuesProvider
 			});
 
 		return infoFieldValues;
-	}
-
-	private List<InfoFieldValue<Object>> _getDefaultDDMStructureInfoFieldValues(
-		JournalArticle article) {
-
-		DDMStructure ddmStructure = article.getDDMStructure();
-
-		JournalArticle ddmStructureArticle = null;
-
-		try {
-			ddmStructureArticle = _journalArticleLocalService.getArticle(
-				ddmStructure.getGroupId(), DDMStructure.class.getName(),
-				ddmStructure.getStructureId());
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
-		if (ddmStructureArticle != null) {
-			return _ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
-				ddmStructureArticle, ddmStructureArticle.getDDMFormValues());
-		}
-
-		return new ArrayList<>();
 	}
 
 	private String _getInfoItemFormVariationKey(JournalArticle journalArticle) {
@@ -434,9 +374,6 @@ public class JournalArticleInfoItemFieldValuesProvider
 
 		return null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleInfoItemFieldValuesProvider.class);
 
 	@Reference
 	private AssetEntryInfoItemFieldSetProvider

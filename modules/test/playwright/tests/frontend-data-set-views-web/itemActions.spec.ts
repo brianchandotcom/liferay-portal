@@ -13,6 +13,7 @@ import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {actionsPageTest} from './fixtures/actionsPageTest';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
+import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 
 const LINK_ITEM_ACTION_NAME = 'Link item action';
@@ -28,7 +29,8 @@ export const test = mergeTests(
 		'LPS-178052': true,
 		'LPS-186871': true,
 	}),
-	loginTest()
+	loginTest(),
+	dataSetManagerSetupTest
 );
 
 let actionsDataSetERC: string;

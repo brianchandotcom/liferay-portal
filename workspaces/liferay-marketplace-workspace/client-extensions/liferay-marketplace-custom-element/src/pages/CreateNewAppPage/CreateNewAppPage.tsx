@@ -26,7 +26,7 @@ export function CreateNewAppPage({
 		<div className="create-new-app-container">
 			<div className="create-new-app-header">
 				<Header
-					description="Review and accept the legal agreement between Acme Co. (publisher), you, and Liferay before proceeding, You are about to create a new app submission."
+					description="Review and accept the legal agreement between you and Liferay before proceeding, You are about to create a new app submission."
 					title="Create new app"
 				/>
 			</div>

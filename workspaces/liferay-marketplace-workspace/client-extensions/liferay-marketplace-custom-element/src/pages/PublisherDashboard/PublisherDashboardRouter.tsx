@@ -23,7 +23,7 @@ import Solutions from './pages/Solutions';
 import NewSolution from './pages/Solutions/NewSolutionFlow/NewSolutionFlow';
 import SolutionCompanyProfile from './pages/Solutions/NewSolutionFlow/pages/SolutionCompanyProfile';
 import SolutionContactUs from './pages/Solutions/NewSolutionFlow/pages/SolutionContactUs';
-import Solution from './pages/Solutions/NewSolutionFlow/pages/SolutionCreate';
+import SolutionCreate from './pages/Solutions/NewSolutionFlow/pages/SolutionCreate';
 import SolutionDetails from './pages/Solutions/NewSolutionFlow/pages/SolutionDetails';
 import SolutionHeader from './pages/Solutions/NewSolutionFlow/pages/SolutionHeader';
 import SolutionProfile from './pages/Solutions/NewSolutionFlow/pages/SolutionProfile';
@@ -65,8 +65,8 @@ const PublisherDashboardRouter = () => {
 					path="app/create"
 				/>
 
-				<Route element={<NewSolution />} path="solution/publisher">
-					<Route element={<Solution />} path="index" />
+				<Route element={<NewSolution />} path="solution">
+					<Route element={<SolutionCreate />} path="publisher" />
 					<Route element={<SolutionHeader />} path="header" />
 					<Route element={<SolutionDetails />} path="details" />
 					<Route element={<SolutionProfile />} path="profile" />

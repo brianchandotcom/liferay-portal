@@ -3,20 +3,23 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Outlet, useLocation} from 'react-router-dom';
+import ClayButton from '@clayui/button';
+import {Outlet, useLocation, useNavigate} from 'react-router-dom';
 
 import {AppFlowList} from '../../../../../components/NewAppFlowList/AppFlowList';
 import {NewAppToolBar} from '../../../../../components/NewAppToolBar/NewAppToolBar';
 import {useAccount} from '../../../../../hooks/data/useAccounts';
 
+import './NewSolutionFlow.scss';
+
 const solutionFlowItems = [
 	{
 		checked: false,
 		description:
-			'Review and accept the legal agreement between El Toro Co. (publisher), you, and Liferay before proceeding, You are about to create a new solution submission.',
+			'Review and accept the legal agreement between you and Liferay before proceeding, You are about to create a new solution submission.',
 		label: 'Create',
 		path: 'publisher',
-		selected: false,
+		selected: true,
 		title: 'Create template',
 	},
 	{
@@ -78,6 +81,7 @@ const solutionFlowItems = [
 const NewSolution = () => {
 	const {data: account} = useAccount();
 	const location = useLocation();
+	const navigate = useNavigate();
 	const lastPath = location.pathname.split('/').at(-1);
 
 	const activeIndex = solutionFlowItems.findIndex(
@@ -86,21 +90,38 @@ const NewSolution = () => {
 
 	const activeRoute = solutionFlowItems[activeIndex];
 
-	solutionFlowItems.map((_, index) => {
-		if (index === activeIndex) {
-			solutionFlowItems[index].selected = true;
-			solutionFlowItems[index].checked = false;
+	const button = {
+		back: 'Back',
+		continue: 'Continue',
+	};
 
-			if (activeIndex > 0) {
-				solutionFlowItems[index - 1].checked = true;
+	const onClickButton = (buttonName: string) => {
+		const isContinue = buttonName === button.continue;
+
+		solutionFlowItems.map((_, index) => {
+			if (index === activeIndex) {
+				solutionFlowItems[index].selected = false;
+
+				solutionFlowItems[
+					isContinue ? index + 1 : index - 1
+				].selected = true;
+
+				isContinue
+					? (solutionFlowItems[index].checked = true)
+					: (solutionFlowItems[index - 1].checked = false);
+
+				return solutionFlowItems;
 			}
+		});
 
-			return solutionFlowItems;
-		}
-	});
+		return navigate(
+			solutionFlowItems[isContinue ? activeIndex + 1 : activeIndex - 1]
+				.path
+		);
+	};
 
 	return (
-		<div>
+		<div className="">
 			<NewAppToolBar
 				accountImage={account?.logoURL}
 				accountName={account?.name as string}
@@ -109,15 +130,36 @@ const NewSolution = () => {
 			<div className="d-flex justify-content-start mt-8">
 				<AppFlowList appFlowListItems={solutionFlowItems as any} />
 
-				<div className="mx-6">
-					<span className="header-title">{activeRoute.title}</span>
+				<div className="ml-8 solutions-body-container">
+					<h1 className="header-title mb-4">{activeRoute.title}</h1>
 
 					<div className="header-description">
 						{activeRoute.description}
 					</div>
-				</div>
 
-				<Outlet></Outlet>
+					<div className="mt-6">
+						<Outlet></Outlet>
+					</div>
+				</div>
+			</div>
+
+			<div className="d-flex justify-content-end">
+				<div className="">
+					{activeIndex !== 0 && (
+						<ClayButton
+							displayType="secondary"
+							onClick={() => onClickButton(button.back)}
+						>
+							Back
+						</ClayButton>
+					)}
+					<ClayButton
+						displayType="primary"
+						onClick={() => onClickButton(button.continue)}
+					>
+						Continue
+					</ClayButton>
+				</div>
 			</div>
 		</div>
 	);

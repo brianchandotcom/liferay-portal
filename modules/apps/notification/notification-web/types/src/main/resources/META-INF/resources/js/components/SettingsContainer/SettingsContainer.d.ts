@@ -8,12 +8,14 @@
 import {FormError} from '@liferay/object-js-components-web';
 import {NotificationTemplateError} from '../EditNotificationTemplate';
 interface SettingsContainerProps {
+	baseResourceURL: string;
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	selectedLocale: Locale;
 	setValues: (values: Partial<NotificationTemplate>) => void;
 	values: NotificationTemplate;
 }
 export declare function SettingsContainer({
+	baseResourceURL,
 	errors,
 	selectedLocale,
 	setValues,

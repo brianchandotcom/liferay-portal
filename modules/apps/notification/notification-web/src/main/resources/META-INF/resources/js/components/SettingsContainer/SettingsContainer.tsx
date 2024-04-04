@@ -12,6 +12,7 @@ import {EmailNotificationSettings} from './EmailNotificationSettings';
 import {UserNotificationSettings} from './UserNotificationSettings';
 
 interface SettingsContainerProps {
+	baseResourceURL: string;
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	selectedLocale: Locale;
 	setValues: (values: Partial<NotificationTemplate>) => void;
@@ -19,6 +20,7 @@ interface SettingsContainerProps {
 }
 
 export function SettingsContainer({
+	baseResourceURL,
 	errors,
 	selectedLocale,
 	setValues,
@@ -39,6 +41,7 @@ export function SettingsContainer({
 				/>
 			) : (
 				<EmailNotificationSettings
+					baseResourceURL={baseResourceURL}
 					errors={errors}
 					selectedLocale={selectedLocale}
 					setValues={setValues}

@@ -683,7 +683,7 @@ public class SiteInitializerSerializerImpl
 								return null;
 							}
 
-							return role;
+							return roleName;
 						})
 				)),
 			zipWriter);

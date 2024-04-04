@@ -660,14 +660,17 @@ const filterSchema = {
 			}),
 			overrides(baseFilters.team, {
 				name: 'testrayTeamId',
-				resource: ({runA, runB}) =>
-					`/teams?sort=name:asc&pageSize=100&filter=${SearchBuilder.eq(
+				resource: ({runA, runB}) => {
+					const filter = `${SearchBuilder.eq(
 						'teamToComponents/componentToCaseResult/r_runToCaseResult_c_runId',
 						runA as string
 					)} or ${SearchBuilder.eq(
 						'teamToComponents/componentToCaseResult/r_runToCaseResult_c_runId',
 						runB as string
-					)}`,
+					)}`;
+
+					return `/teams?filter=${filter}&pageSize=100&sort=name:asc`;
+				},
 
 				type: 'select',
 			}),

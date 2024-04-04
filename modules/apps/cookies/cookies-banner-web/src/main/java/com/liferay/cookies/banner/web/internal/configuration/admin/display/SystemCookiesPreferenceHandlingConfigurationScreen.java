@@ -14,7 +14,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Rachael Koestartyo
  */
 @Component(service = ConfigurationScreen.class)
-public class CookiesPreferenceHandlingSystemConfigurationScreen
+public class SystemCookiesPreferenceHandlingConfigurationScreen
 	extends BaseCookiesPreferenceHandlingConfigurationScreen {
 
 	@Override

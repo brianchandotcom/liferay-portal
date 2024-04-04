@@ -394,23 +394,28 @@ public class ObjectEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
-	@JsonAnyGetter
 	@Schema
 	@Valid
 	public Map<String, Object> getProperties() {
-		if (_propertiesSupplier != null) {
-			properties = _propertiesSupplier.get();
+		properties.replaceAll(
+			(key, value) -> {
+				if (!(value instanceof UnsafeSupplier<?, ?>)) {
+					return value;
+				}
 
-			_propertiesSupplier = null;
-		}
+				try {
+					return ((UnsafeSupplier<?, ?>)value).get();
+				}
+				catch (Throwable throwable) {
+					throw new RuntimeException(throwable);
+				}
+			});
 
 		return properties;
 	}
 
 	public void setProperties(Map<String, Object> properties) {
 		this.properties = properties;
-
-		_propertiesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -430,12 +435,10 @@ public class ObjectEntry implements Serializable {
 	}
 
 	@GraphQLField
+	@JsonAnyGetter
 	@JsonAnySetter
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> properties = new HashMap<>();
-
-	@JsonIgnore
-	private Supplier<Map<String, Object>> _propertiesSupplier;
 
 	@Schema
 	public String getScopeKey() {
@@ -665,10 +668,20 @@ public class ObjectEntry implements Serializable {
 			return getTaxonomyCategoryIds();
 		}
 		else {
-			Map<String, Object> properties = getProperties();
-
 			if (properties.containsKey(propertyName)) {
-				return properties.get(propertyName);
+				Object object = properties.get(propertyName);
+
+				if (object instanceof UnsafeSupplier<?, ?>) {
+					try {
+						object = ((UnsafeSupplier<?, ?>)object).get();
+						properties.put(propertyName, object);
+					}
+					catch (Throwable e) {
+						throw new RuntimeException(e);
+					}
+				}
+
+				return object;
 			}
 		}
 

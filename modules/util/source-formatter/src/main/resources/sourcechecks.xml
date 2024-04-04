@@ -845,7 +845,7 @@
 		</check>
 		<check name="JavaUpgradeAlterColumnCallsOrderCheck">
 			<category name="Styling" />
-			<description name="Sorts method calls for altering table column, the order should follow the order in `tables.sql`." />
+			<description name="Sorts method calls for altering table columns." />
 		</check>
 		<check name="JavaUpgradeClassCheck">
 			<category name="Bug Prevention" />
@@ -868,10 +868,6 @@
 			<category name="Bug Prevention" />
 			<description name="Finds cases where the service builder indexes are updated manually in Upgrade classes. This is not needed because Liferay takes care of it." />
 			<property name="enabled" value="false" />
-		</check>
-		<check name="JavaUpgradeProcessFactoryCheck">
-			<category name="Styling" />
-			<description name="Sorts and groups method calls." />
 		</check>
 		<check name="JavaUpgradeVersionCheck">
 			<category name="Bug Prevention" />

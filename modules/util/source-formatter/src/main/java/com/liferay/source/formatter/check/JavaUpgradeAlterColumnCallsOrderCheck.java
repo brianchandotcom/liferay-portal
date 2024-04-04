@@ -21,13 +21,73 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.dom4j.Element;
+
 /**
  * @author Alan Huang
  */
 public class JavaUpgradeAlterColumnCallsOrderCheck extends BaseFileCheck {
 
-	private String _sortMethodCallsByColumnName() {
-		Matcher matcher = _alterTableAddColumnCallPattern.matcher(content);
+	@Override
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
+		throws IOException {
+
+		if (!absolutePath.contains("/upgrade/")) {
+			return content;
+		}
+
+		String packagePath = "";
+
+		if (absolutePath.contains("/portal-impl/")) {
+			packagePath = "portal-impl";
+		}
+		else {
+			BNDSettings bndSettings = getBNDSettings(fileName);
+
+			if (bndSettings == null) {
+				return content;
+			}
+
+			String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
+				bndSettings.getContent(), "Bundle-SymbolicName");
+
+			packagePath = StringUtil.removeLast(bundleSymbolicName, ".service");
+		}
+
+		content = _sortMethodCallsByTableAndColumnName(
+			content, "alterTableAddColumn", packagePath);
+		content = _sortMethodCallsByTableAndColumnName(
+			content, "UpgradeProcessFactory.alterColumnName", packagePath);
+		content = _sortMethodCallsByTableAndColumnName(
+			content, "UpgradeProcessFactory.alterColumnType", packagePath);
+
+		return content;
+	}
+
+	private int _getTableIndex(Element serviceXMLElement, String tableName) {
+		int i = 0;
+
+		for (Element entityElement :
+				(List<Element>)serviceXMLElement.elements("entity")) {
+
+			if (tableName.equals(entityElement.attributeValue("name"))) {
+				return i;
+			}
+
+			i++;
+		}
+
+		return -1;
+	}
+
+	private String _sortMethodCallsByTableAndColumnName(
+			String content, String methodName, String packagePath)
+		throws IOException {
+
+		Pattern pattern = Pattern.compile("\n(\t+" + methodName + "\\()");
+
+		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
 			String methodCall1 = JavaSourceUtil.getMethodCall(
@@ -46,7 +106,9 @@ public class JavaUpgradeAlterColumnCallsOrderCheck extends BaseFileCheck {
 
 			String followingContent = content.substring(x);
 
-			if (!followingContent.startsWith(";\n")) {
+			if (!followingContent.startsWith(",\n") &&
+				!followingContent.startsWith(";\n")) {
+
 				continue;
 			}
 
@@ -93,59 +155,42 @@ public class JavaUpgradeAlterColumnCallsOrderCheck extends BaseFileCheck {
 				continue;
 			}
 
-			String tableName = StringUtil.unquote(parameterNames1.get(0));
+			String tableName1 = StringUtil.unquote(parameterNames1.get(0));
+			String tableName2 = StringUtil.unquote(parameterNames2.get(0));
 
-			int index1 = SourceUtil.getColumnIndex(
-				tablesSQLContent, tableName,
-				StringUtil.unquote(parameterNames1.get(1)));
-			int index2 = SourceUtil.getColumnIndex(
-				tablesSQLContent, tableName,
-				StringUtil.unquote(parameterNames2.get(1)));
+			if (tableName1.equals(tableName2)) {
+				int index1 = SourceUtil.getColumnIndex(
+					tablesSQLContent, tableName1,
+					StringUtil.unquote(parameterNames1.get(1)));
+				int index2 = SourceUtil.getColumnIndex(
+					tablesSQLContent, tableName1,
+					StringUtil.unquote(parameterNames2.get(1)));
 
-			if ((index2 != -1) && ((index1 > index2) || (index1 == -1))) {
-				content = StringUtil.replaceFirst(
-					content, methodCall2, methodCall1, matcher.start());
+				if ((index2 != -1) && ((index1 > index2) || (index1 == -1))) {
+					content = StringUtil.replaceFirst(
+						content, methodCall2, methodCall1, matcher.start());
 
-				return StringUtil.replaceFirst(
-					content, methodCall1, methodCall2, matcher.start());
+					return StringUtil.replaceFirst(
+						content, methodCall1, methodCall2, matcher.start());
+				}
+			}
+			else {
+				int index1 = _getTableIndex(
+					(Element)modelInformation[0], tableName1);
+				int index2 = _getTableIndex(
+					(Element)modelInformation[0], tableName2);
+
+				if ((index2 != -1) && (index1 > index2)) {
+					content = StringUtil.replaceFirst(
+						content, methodCall2, methodCall1, matcher.start());
+
+					return StringUtil.replaceFirst(
+						content, methodCall1, methodCall2, matcher.start());
+				}
 			}
 		}
-	}
-	@Override
-	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws IOException {
-
-		if (!absolutePath.contains("/upgrade/v")) {
-			return content;
-		}
-
-		String packagePath = "";
-
-		if (absolutePath.contains("/portal-impl/")) {
-			packagePath = "portal-impl";
-		}
-		else {
-			BNDSettings bndSettings = getBNDSettings(fileName);
-
-			if (bndSettings == null) {
-				return content;
-			}
-
-			String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
-				bndSettings.getContent(), "Bundle-SymbolicName");
-
-			packagePath = StringUtil.removeLast(bundleSymbolicName, ".service");
-		}
-
-		
-		_sortMethodCallsByColumnName() ;
-
 
 		return content;
 	}
-
-	private static final Pattern _alterTableAddColumnCallPattern =
-		Pattern.compile("\n(\t+alterTableAddColumn\\()");
 
 }

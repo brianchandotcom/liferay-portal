@@ -6,11 +6,13 @@
 /// <reference types="react" />
 
 interface SecondaryRecipientsProps {
+	baseResourceURL: string;
 	recipientOptions: LabelValueObject[];
 	setValues: (values: Partial<NotificationTemplate>) => void;
 	values: NotificationTemplate;
 }
 export declare function SecondaryRecipient({
+	baseResourceURL,
 	recipientOptions,
 	setValues,
 	values,

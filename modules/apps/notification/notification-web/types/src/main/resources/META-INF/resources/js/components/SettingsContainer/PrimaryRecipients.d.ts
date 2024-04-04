@@ -8,6 +8,7 @@
 import {FormError} from '@liferay/object-js-components-web';
 import {NotificationTemplateError} from '../EditNotificationTemplate';
 interface PrimaryRecipientProps {
+	baseResourceURL: string;
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	recipientOptions: LabelValueObject[];
 	selectedLocale: Locale;
@@ -15,6 +16,7 @@ interface PrimaryRecipientProps {
 	values: NotificationTemplate;
 }
 export declare function PrimaryRecipient({
+	baseResourceURL,
 	errors,
 	recipientOptions,
 	selectedLocale,

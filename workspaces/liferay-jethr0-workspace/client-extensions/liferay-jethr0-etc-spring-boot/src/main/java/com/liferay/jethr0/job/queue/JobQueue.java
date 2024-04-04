@@ -16,15 +16,10 @@ import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
 import com.liferay.jethr0.job.repository.JobComparatorEntityRepository;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.job.repository.JobPrioritizerEntityRepository;
+import com.liferay.jethr0.job.repository.JobQueueOrderEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -107,6 +102,8 @@ public class JobQueue {
 		}
 
 		_jobEntities.removeAll(jobEntities);
+
+		_createJobQueueOrderEntity();
 	}
 
 	@Scheduled(cron = "${liferay.jethr0.job.queue.update.cron}")
@@ -161,6 +158,8 @@ public class JobQueue {
 				Comparator.comparingInt(JobComparatorEntity::getPosition));
 
 			_jobEntities.sort(new PrioritizedJobComparator());
+
+			_createJobQueueOrderEntity();
 		}
 	}
 
@@ -201,6 +200,30 @@ public class JobQueue {
 			}
 
 			removeJobEntities(completedJobEntities);
+		}
+	}
+
+	private void _createJobQueueOrderEntity() {
+		synchronized (_jobEntities) {
+			List<Long> jobIds = new ArrayList<>();
+
+			for (JobEntity jobEntity : _jobEntities) {
+				jobIds.add(jobEntity.getId());
+			}
+
+			if (_jobQueueOrderEntity == null) {
+				_jobQueueOrderEntity = _jobQueueOrderEntityRepository.create(
+					jobIds);
+
+				return;
+			}
+
+			if (Objects.equals(jobIds, _jobQueueOrderEntity.getJobIds())) {
+				return;
+			}
+
+			_jobQueueOrderEntity = _jobQueueOrderEntityRepository.create(
+				jobIds);
 		}
 	}
 
@@ -249,6 +272,11 @@ public class JobQueue {
 
 	@Autowired
 	private JobPrioritizerEntityRepository _jobPrioritizerEntityRepository;
+
+	private JobQueueOrderEntity _jobQueueOrderEntity;
+
+	@Autowired
+	private JobQueueOrderEntityRepository _jobQueueOrderEntityRepository;
 
 	@Value("${liferay.jethr0.job.prioritizer}")
 	private String _liferayJobPrioritizer;

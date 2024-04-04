@@ -45,20 +45,38 @@ public class ObjectEntryFieldSortDSLQueryVisitor
 	public DSLQuery visit(DSLQuery dslQuery, Sort sort) throws PortalException {
 		ObjectDefinition objectDefinition = sort.getObjectDefinition();
 
-		ObjectField objectField = objectFieldLocalService.getObjectField(
-			objectDefinition.getObjectDefinitionId(), sort.getFieldName());
+		ObjectField objectField = objectFieldLocalService.fetchObjectField(
+			objectDefinition.getObjectDefinitionId(),sort.getFieldName());
 
-		Table fieldTable = getAliasedTable(
-			objectField.getName(), objectDefinition, _getSuffix(sort));
+		Table fieldTable;
+		Column<?, Object> column = null;
+
+		if (objectField == null) {
+			column = (Column<?, Object>) objectFieldLocalService.getColumn(
+				objectDefinition.getObjectDefinitionId(), sort.getFieldName());
+			fieldTable = column.getTable();
+		} else {
+			// Retrieve table with alias for sorting on a related field
+			fieldTable = getAliasedTable(
+				objectField.getName(), objectDefinition, _getSuffix(sort));
+		}
 
 		if (!contains(dslQuery, fieldTable)) {
 			dslQuery = addLeftJoin(
 				getPrimaryKeyColumn(fieldTable), dslQuery, fieldTable);
 		}
 
-		OrderByExpression orderByExpression = _getOrderByExpression(
-			_isParentComplexField(sort),
-			_getColumnExpression(objectField, fieldTable), sort.isReverse());
+		OrderByExpression orderByExpression;
+		if (objectField != null) {
+			orderByExpression = _getOrderByExpression(
+				_isParentComplexField(sort),
+				_getColumnExpression(objectField, fieldTable), sort.isReverse());
+		} else {
+			orderByExpression = _getOrderByExpression(
+				_isParentComplexField(sort),
+				column, sort.isReverse());
+		}
+
 
 		Stack<BaseASTNode> allBaseASTNodes = getAllBaseASTNodes(
 			OrderByStep.class, dslQuery);

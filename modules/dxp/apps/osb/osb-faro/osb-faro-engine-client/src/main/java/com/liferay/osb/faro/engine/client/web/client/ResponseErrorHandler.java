@@ -38,9 +38,11 @@ public class ResponseErrorHandler extends DefaultResponseErrorHandler {
 		}
 
 		try (InputStream inputStream = clientHttpResponse.getBody()) {
-			String input;
+			String input = null;
+
 			BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(inputStream));
+
 			StringBuilder responseCreate = new StringBuilder();
 
 			while ((input = bufferedReader.readLine()) != null) {

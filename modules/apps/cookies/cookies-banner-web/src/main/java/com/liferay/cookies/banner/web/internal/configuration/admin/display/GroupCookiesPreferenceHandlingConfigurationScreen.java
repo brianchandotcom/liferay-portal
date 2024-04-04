@@ -14,12 +14,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Rachael Koestartyo
  */
 @Component(service = ConfigurationScreen.class)
-public class CookiesPreferenceHandlingCompanyConfigurationScreen
+public class GroupCookiesPreferenceHandlingConfigurationScreen
 	extends BaseCookiesPreferenceHandlingConfigurationScreen {
 
 	@Override
 	public String getScope() {
-		return ExtendedObjectClassDefinition.Scope.COMPANY.getValue();
+		return ExtendedObjectClassDefinition.Scope.GROUP.getValue();
 	}
 
 }

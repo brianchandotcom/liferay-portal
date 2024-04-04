@@ -1,0 +1,10 @@
+{
+	"contentSubtype": {
+		"subtypeKey": "LEARNING-PATH-VIDEO-DEMO"
+	},
+	"contentType": {
+		"className": "com.liferay.portal.kernel.repository.model.FileEntry"
+	},
+	"defaultTemplate": true,
+	"name": "Learning Path Video - Demo"
+}

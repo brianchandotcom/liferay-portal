@@ -20,6 +20,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_ORDER_CONTENT,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_RETURN_CONTENT,
 		"mvc.command.name=/commerce_order_content/view_returnable_commerce_order_items"
 	},
 	service = MVCRenderCommand.class

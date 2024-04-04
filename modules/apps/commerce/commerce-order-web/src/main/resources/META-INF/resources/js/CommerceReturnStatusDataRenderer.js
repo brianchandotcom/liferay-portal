@@ -10,7 +10,7 @@ export function CommerceReturnStatusDataRenderer(props) {
 	const getLabelType = (label) => {
 		switch (label) {
 			case 'approved':
-			case 'complete':
+			case 'completed':
 				return 'label-success';
 			case 'denied':
 				return 'label-danger';

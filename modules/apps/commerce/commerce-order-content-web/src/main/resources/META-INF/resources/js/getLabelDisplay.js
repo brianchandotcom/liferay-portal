@@ -15,7 +15,7 @@ export function getLabelDisplay(value) {
 
 	switch (label.label) {
 		case 'approved':
-		case 'complete':
+		case 'completed':
 			label.displayType = 'success';
 			break;
 		case 'denied':

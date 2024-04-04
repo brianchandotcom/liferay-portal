@@ -6,14 +6,15 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {setNestedObjectValues, useFormikContext} from 'formik';
-import {useCallback, useEffect, useState} from 'react';
+import {useFormikContext} from 'formik';
+import {useCallback} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import InputMultipleFilesListing from '../../../../common/components/PRMForm/components/fields/InputMultipleFilesListing/InputMultipleFilesListing';
 import PRMFormik from '../../../../common/components/PRMFormik';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import ResumeCard from '../../../../common/components/ResumeCard';
+import useSetTouchedOnForms from '../../../../common/hooks/useSetTouchedOnForms';
 import MDFRequestDTO from '../../../../common/interfaces/dto/mdfRequestDTO';
 import LiferayFile from '../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../common/interfaces/mdfClaim';
@@ -38,7 +39,6 @@ const MDFClaimPage = ({
 	onSaveAsDraft,
 }: PRMFormikPageProps & MDFClaimProps & IProps) => {
 	const {
-		errors,
 		isSubmitting,
 		isValid,
 		setFieldValue,
@@ -46,6 +46,8 @@ const MDFClaimPage = ({
 		values,
 		...formikHelpers
 	} = useFormikContext<MDFClaim>();
+
+	const errors = formikHelpers.errors;
 
 	useActivitiesAmount(
 		values.activities,
@@ -61,15 +63,10 @@ const MDFClaimPage = ({
 
 	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
 
-	const [isButtonClicked, setIsButtonClicked] = useState(false);
-
-	useEffect(() => {
-		if (isButtonClicked || !!values.id) {
-			formikHelpers.setTouched(setNestedObjectValues(errors, true));
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [errors, isButtonClicked, values.id]);
+	const {isButtonClicked, setIsButtonClicked} = useSetTouchedOnForms(
+		useCallback(() => Boolean(values.id), [values.id]),
+		formikHelpers
+	);
 
 	const claimsFiltered = mdfRequest.mdfReqToMDFClms?.filter(
 		(mdfRequestToMdfClaim) => {

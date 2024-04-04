@@ -5,14 +5,15 @@
 
 import Button from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {setNestedObjectValues, useFormikContext} from 'formik';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useFormikContext} from 'formik';
+import {useCallback, useEffect, useMemo} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName';
 import useCompanyOptions from '../../../../common/hooks/useCompanyOptions';
+import useSetTouchedOnForms from '../../../../common/hooks/useSetTouchedOnForms';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import getPicklistOptions from '../../../../common/utils/getPicklistOptions';
 import isObjectEmpty from '../../../../common/utils/isObjectEmpty';
@@ -27,7 +28,6 @@ const Goals = ({
 	onSaveAsDraft,
 }: PRMFormikPageProps & MDFRequestStepProps) => {
 	const {
-		errors,
 		isSubmitting,
 		isValid,
 		setFieldValue,
@@ -39,7 +39,7 @@ const Goals = ({
 		disableCompany
 	);
 
-	const [isButtonClicked, setIsButtonClicked] = useState(false);
+	const errors = formikHelpers.errors;
 
 	const {companyOptions, onCompanySelected} = useCompanyOptions(
 		useCallback(
@@ -86,12 +86,10 @@ const Goals = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values.liferayBusinessSalesGoals]);
 
-	useEffect(() => {
-		if (values.id) {
-			formikHelpers.setTouched(setNestedObjectValues(errors, true));
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values.id, errors]);
+	const {isButtonClicked, setIsButtonClicked} = useSetTouchedOnForms(
+		useCallback(() => Boolean(values.id), [values.id]),
+		formikHelpers
+	);
 
 	const getRequestPage = () => {
 		if (!fieldEntries) {

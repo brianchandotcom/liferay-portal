@@ -77,15 +77,17 @@ const ActivityClaimPanel = ({
 	const [expanded, setExpanded] = useState<boolean>(!activity.selected);
 
 	const isBudgetSelected = Array.isArray(errors?.activities)
-		? errors.activities
-				.map((activity, index) => ({activity, index}))
-				.filter(
-					({activity}) =>
-						activity &&
-						'budgets' in activity &&
-						typeof activity.budgets !== 'string'
-				)
-				.map(({index}) => index)
+		? errors.activities.reduce((accumulator, activity, index) => {
+				if (
+					activity &&
+					'budgets' in activity &&
+					typeof activity.budgets !== 'string'
+				) {
+					accumulator.push(index);
+				}
+
+				return accumulator;
+		  }, [])
 		: undefined;
 
 	const siteURL = Liferay.ThemeDisplay.getLayoutRelativeControlPanelURL().split(

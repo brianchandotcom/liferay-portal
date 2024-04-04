@@ -6,11 +6,12 @@
 import Button from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import {ArrayHelpers, setNestedObjectValues, useFormikContext} from 'formik';
+import {ArrayHelpers, useFormikContext} from 'formik';
 import {useCallback, useEffect, useState} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
+import useSetTouchedOnForms from '../../../../common/hooks/useSetTouchedOnForms';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import isObjectEmpty from '../../../../common/utils/isObjectEmpty';
 import {StepType} from '../../enums/stepType';
@@ -32,7 +33,6 @@ const Activities = ({
 	onSaveAsDraft,
 }: PRMFormikPageProps & MDFRequestStepProps & IProps) => {
 	const {
-		errors,
 		isSubmitting,
 		isValid,
 		setFieldValue,
@@ -41,14 +41,14 @@ const Activities = ({
 		...formikHelpers
 	} = useFormikContext<MDFRequest>();
 
+	const errors = formikHelpers.errors;
+
 	const [currentActivityIndex, setCurrentActivityIndex] = useState<
 		number | undefined
 	>();
 	const [currentActivityIndexEdit, setCurrentActivityIndexEdit] = useState<
 		number
 	>();
-
-	const [isButtonClicked, setIsButtonClicked] = useState(false);
 
 	const [isDraft, setIsDraft] = useState(false);
 
@@ -92,6 +92,17 @@ const Activities = ({
 		totalMDFRequestAmount,
 	]);
 
+	const {isButtonClicked, setIsButtonClicked} = useSetTouchedOnForms(
+		useCallback(
+			(currentIsButtonClicked) =>
+				(!isObjectEmpty(activityErrors) && currentIsButtonClicked) ||
+				(!isObjectEmpty(activityErrors) &&
+					currentActivityIndexEdit !== undefined),
+			[activityErrors, currentActivityIndexEdit]
+		),
+		formikHelpers
+	);
+
 	const onEdit = (index: number) => {
 		arrayHelpers.push(values.activities[index]);
 
@@ -109,7 +120,7 @@ const Activities = ({
 		}
 
 		setCurrentActivityIndexEdit(undefined);
-	}, [arrayHelpers, currentActivityIndex]);
+	}, [arrayHelpers, currentActivityIndex, setIsButtonClicked]);
 
 	const onContinueForm = () => {
 		if (currentActivityIndex === undefined) {
@@ -142,23 +153,6 @@ const Activities = ({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isDraft]);
-
-	useEffect(() => {
-		if (
-			(isButtonClicked && !isObjectEmpty(activityErrors as Object)) ||
-			(!isObjectEmpty(activityErrors as Object) &&
-				currentActivityIndexEdit !== undefined)
-		) {
-			formikHelpers.setTouched(setNestedObjectValues(errors, true));
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [
-		errors,
-		isButtonClicked,
-		activityErrors,
-		currentActivityIndex,
-		currentActivityIndexEdit,
-	]);
 
 	return (
 		<PRMForm

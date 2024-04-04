@@ -183,8 +183,25 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 			page,
 			site,
 		}) => {
-			fragmentTest.step('Create Item Action', async () => {
-				dataSetManagerApiHelpers.createDataSetViewItemAction({
+			await fragmentTest.step('Populate Data Set', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewFields({
+					label: 'Id',
+					name: 'id',
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'string',
+				});
+				await dataSetManagerApiHelpers.createDataSetViewFields({
+					label: 'Name',
+					name: 'name',
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'string',
+				});
+			});
+
+			await fragmentTest.step('Create Item Action', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewItemAction({
 					confirmationMessage_i18n: {
 						en_US: LINK_ITEM_ACTION_CONFIRMATION_MESSAGE,
 					},
@@ -275,15 +292,32 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 			const SIDE_PANEL_ITEM_ACTION_URL =
 				liferayConfig.environment.baseUrl;
 
-			fragmentTest.step('Create Item Actions', async () => {
-				dataSetManagerApiHelpers.createDataSetViewItemAction({
+			await fragmentTest.step('Populate Data Set', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewFields({
+					label: 'Id',
+					name: 'id',
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'string',
+				});
+				await dataSetManagerApiHelpers.createDataSetViewFields({
+					label: 'Name',
+					name: 'name',
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'string',
+				});
+			});
+
+			await fragmentTest.step('Create Item Actions', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewItemAction({
 					label_i18n: {en_US: LINK_ITEM_ACTION_NAME},
 					r_fdsViewFDSItemActionRelationship_c_fdsViewERC:
 						actionsDataSetViewERC,
 					type: 'link',
 				});
 
-				dataSetManagerApiHelpers.createDataSetViewItemAction({
+				await dataSetManagerApiHelpers.createDataSetViewItemAction({
 					label_i18n: {en_US: MODAL_ITEM_ACTION_NAME},
 					modalSize: 'sm',
 					r_fdsViewFDSItemActionRelationship_c_fdsViewERC:
@@ -293,7 +327,7 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 					url: liferayConfig.environment.baseUrl,
 				});
 
-				dataSetManagerApiHelpers.createDataSetViewItemAction({
+				await dataSetManagerApiHelpers.createDataSetViewItemAction({
 					label_i18n: {en_US: SIDE_PANEL_ITEM_ACTION_NAME},
 					modalSize: 'sm',
 					r_fdsViewFDSItemActionRelationship_c_fdsViewERC:
@@ -473,8 +507,25 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 			const NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME =
 				'Useless Headless Item Action';
 
-			fragmentTest.step('Create Item Actions', async () => {
-				dataSetManagerApiHelpers.createDataSetViewItemAction({
+			await fragmentTest.step('Populate Data Set', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewFields({
+					label: 'Id',
+					name: 'id',
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'string',
+				});
+				await dataSetManagerApiHelpers.createDataSetViewFields({
+					label: 'Name',
+					name: 'name',
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'string',
+				});
+			});
+
+			await fragmentTest.step('Create Item Actions', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewItemAction({
 					label_i18n: {en_US: HEADLESS_ITEM_ACTION_NAME},
 					permissionKey: HEADLESS_ITEM_ACTION_PERMISSION_KEY,
 					r_fdsViewFDSItemActionRelationship_c_fdsViewERC:
@@ -482,7 +533,7 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 					type: 'headless',
 				});
 
-				dataSetManagerApiHelpers.createDataSetViewItemAction({
+				await dataSetManagerApiHelpers.createDataSetViewItemAction({
 					label_i18n: {en_US: ASYNC_ITEM_ACTION_NAME},
 					method: ASYNC_ITEM_ACTION_METHOD,
 					r_fdsViewFDSItemActionRelationship_c_fdsViewERC:
@@ -491,7 +542,7 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 					url: ASYNC_ITEM_ACTION_URL,
 				});
 
-				dataSetManagerApiHelpers.createDataSetViewItemAction({
+				await dataSetManagerApiHelpers.createDataSetViewItemAction({
 					label_i18n: {
 						en_US: NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME,
 					},
@@ -665,8 +716,25 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 			const ASYNC_ITEM_ACTION_WRONG_URL =
 				'/o/data-set-manager/fields/{foo}';
 
-			fragmentTest.step('Create Item Actions', async () => {
-				dataSetManagerApiHelpers.createDataSetViewItemAction({
+			await fragmentTest.step('Populate Data Set', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewFields({
+					label: 'Id',
+					name: 'id',
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'string',
+				});
+				await dataSetManagerApiHelpers.createDataSetViewFields({
+					label: 'Name',
+					name: 'name',
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'string',
+				});
+			});
+
+			await fragmentTest.step('Create Item Actions', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewItemAction({
 					label_i18n: {en_US: ASYNC_ITEM_ACTION_NAME},
 					method: ASYNC_ITEM_ACTION_METHOD,
 					r_fdsViewFDSItemActionRelationship_c_fdsViewERC:

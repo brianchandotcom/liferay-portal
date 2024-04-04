@@ -134,10 +134,12 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	async createDataSetViewFields({
 		label = 'Title',
 		name = 'title',
+		r_fdsViewFDSFieldRelationship_c_fdsViewERC = DEFAULT_DATA_SET_ERC,
 		type = 'string',
 	}: {
 		label?: string;
 		name?: string;
+		r_fdsViewFDSFieldRelationship_c_fdsViewERC?: string;
 		type?: string;
 	}) {
 		const url = `${this.baseUrl}data-set-manager/fields`;
@@ -145,6 +147,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		const data = {
 			label,
 			name,
+			r_fdsViewFDSFieldRelationship_c_fdsViewERC,
 			type,
 		};
 

@@ -76,7 +76,8 @@ public class ExportImportTaskResourcePerformanceTest {
 
 		Properties properties = PropertiesUtil.load(
 			clazz.getResourceAsStream(
-				"dependencies/batch-export-import-performance.properties"),
+				"dependencies/export-import-task-resource-performance." +
+					"properties"),
 			"UTF-8");
 
 		recordsCount = GetterUtil.getInteger(

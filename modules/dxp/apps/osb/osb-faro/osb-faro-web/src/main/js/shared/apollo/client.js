@@ -34,6 +34,7 @@ const fetchWithGroupId = (uri, options) => {
 const client = new ApolloClient({
 	addTypename: true,
 	cache,
+	connectToDevTools: FARO_DEV_MODE,
 	defaultOptions: {
 		watchQuery: {
 			notifyOnNetworkStatusChange: true

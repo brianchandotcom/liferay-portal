@@ -1,0 +1,450 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"definitionSchemaVersion": "2.0",
+	"fields": [
+		{
+			"collapsible": false,
+			"ddmStructureId": "",
+			"ddmStructureKey": "",
+			"ddmStructureLayoutId": "",
+			"fieldReference": "Fieldset1",
+			"label": {
+				"en_US": "Fields Group 1"
+			},
+			"labelAtStructureLevel": true,
+			"localizable": false,
+			"name": "Fieldset1",
+			"nestedFields": [
+				{
+					"confirmationErrorMessage": {
+						"en_US": ""
+					},
+					"confirmationLabel": {
+						"en_US": ""
+					},
+					"dataType": "string",
+					"direction": [
+						"vertical"
+					],
+					"displayStyle": "singleline",
+					"fieldNamespace": "",
+					"fieldReference": "Text1",
+					"hideField": false,
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Text 1"
+					},
+					"labelAtStructureLevel": true,
+					"localizable": true,
+					"name": "Text1",
+					"nativeField": false,
+					"objectFieldName": "",
+					"placeholder": {
+						"en_US": ""
+					},
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"requireConfirmation": false,
+					"required": false,
+					"requiredErrorMessage": {
+						"en_US": ""
+					},
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"tooltip": {
+						"en_US": ""
+					},
+					"type": "text",
+					"visibilityExpression": ""
+				},
+				{
+					"confirmationErrorMessage": {
+						"en_US": ""
+					},
+					"confirmationLabel": {
+						"en_US": ""
+					},
+					"dataType": "string",
+					"direction": [
+						"vertical"
+					],
+					"displayStyle": "singleline",
+					"fieldNamespace": "",
+					"fieldReference": "Text2",
+					"hideField": false,
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Text 2"
+					},
+					"labelAtStructureLevel": true,
+					"localizable": true,
+					"name": "Text2",
+					"nativeField": false,
+					"objectFieldName": "",
+					"placeholder": {
+						"en_US": ""
+					},
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"requireConfirmation": false,
+					"required": false,
+					"requiredErrorMessage": {
+						"en_US": ""
+					},
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"tooltip": {
+						"en_US": ""
+					},
+					"type": "text",
+					"visibilityExpression": ""
+				},
+				{
+					"collapsible": false,
+					"ddmStructureId": "",
+					"ddmStructureKey": "",
+					"ddmStructureLayoutId": "",
+					"fieldReference": "Fieldset2",
+					"label": {
+						"en_US": "Fields Group 2"
+					},
+					"labelAtStructureLevel": true,
+					"localizable": false,
+					"name": "Fieldset2",
+					"nestedFields": [
+						{
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"direction": [
+								"vertical"
+							],
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "Text3",
+							"hideField": false,
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Text 3"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "Text3",
+							"nativeField": false,
+							"objectFieldName": "",
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"direction": [
+								"vertical"
+							],
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "Text4",
+							"hideField": false,
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Text 4"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "Text4",
+							"nativeField": false,
+							"objectFieldName": "",
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"collapsible": false,
+							"ddmStructureId": "",
+							"ddmStructureKey": "",
+							"ddmStructureLayoutId": "",
+							"fieldReference": "Fieldset3",
+							"label": {
+								"en_US": "Fields Group 3"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": false,
+							"name": "Fieldset3",
+							"nestedFields": [
+								{
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataType": "string",
+									"direction": [
+										"vertical"
+									],
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "Text5",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Text 5"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "Text5",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								},
+								{
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataType": "string",
+									"direction": [
+										"vertical"
+									],
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "Text6",
+									"hideField": false,
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Text 6"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "Text6",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								}
+							],
+							"normalizedStructure": false,
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"rows": [
+								{
+									"columns": [
+										{
+											"fields": [
+												"Text5"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fields": [
+												"Text6"
+											],
+											"size": 12
+										}
+									]
+								}
+							],
+							"showLabel": true,
+							"type": "fieldset",
+							"upgradedStructure": false
+						}
+					],
+					"normalizedStructure": false,
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"rows": [
+						{
+							"columns": [
+								{
+									"fields": [
+										"Text3"
+									],
+									"size": 12
+								}
+							]
+						},
+						{
+							"columns": [
+								{
+									"fields": [
+										"Text4"
+									],
+									"size": 12
+								}
+							]
+						},
+						{
+							"columns": [
+								{
+									"fields": [
+										"Fieldset3"
+									],
+									"size": 12
+								}
+							]
+						}
+					],
+					"showLabel": true,
+					"type": "fieldset",
+					"upgradedStructure": false
+				}
+			],
+			"normalizedStructure": false,
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"rows": [
+				{
+					"columns": [
+						{
+							"fields": [
+								"Text1"
+							],
+							"size": 12
+						}
+					]
+				},
+				{
+					"columns": [
+						{
+							"fields": [
+								"Text2"
+							],
+							"size": 12
+						}
+					]
+				},
+				{
+					"columns": [
+						{
+							"fields": [
+								"Fieldset2"
+							],
+							"size": 12
+						}
+					]
+				}
+			],
+			"showLabel": true,
+			"type": "fieldset",
+			"upgradedStructure": false
+		}
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
+}

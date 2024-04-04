@@ -6,32 +6,47 @@
 package com.liferay.dynamic.data.mapping.info.item.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMFormValuesInfoFieldValuesProvider;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.service.test.BaseDDMServiceTestCase;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
+import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.KeyLocalizedLabelPair;
+import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -50,7 +65,8 @@ import org.junit.runner.RunWith;
  * @author Lourdes Fernández Besada
  */
 @RunWith(Arquillian.class)
-public class DDMFormValuesInfoFieldValuesProviderTest {
+public class DDMFormValuesInfoFieldValuesProviderTest
+	extends BaseDDMServiceTestCase {
 
 	@ClassRule
 	@Rule
@@ -95,7 +111,7 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 			_group.getGroupId(), _journalConverter);
 
 		_assertGetInfoFieldValues(
-			ddmFormField.getName(), journalArticle,
+			Collections.singletonList(ddmFormField), journalArticle,
 			value -> _assertExpectedKeyLocalizedLabelPairs(
 				value,
 				HashMapBuilder.put(
@@ -103,6 +119,56 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 				).put(
 					expectedKey2, expectedLabel2
 				).build()));
+	}
+
+	@Test
+	public void testGetInfoFieldValuesFieldSetDDMFormFieldType()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		JournalFolder folder = _journalFolderLocalService.addFolder(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(DataDefinitionContentType.class),
+				_group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(DataDefinitionContentType.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			read("test-ddm-structure-definition-with-nested-fields.json"),
+			StorageType.DEFAULT.getValue());
+
+		folder = _journalFolderLocalService.updateFolder(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			folder.getFolderId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new long[] {ddmStructure.getStructureId()}, 1, false,
+			serviceContext);
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class));
+
+		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			folder.getFolderId(), RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			read("ddm-structure-fieldset-field.xsd"),
+			ddmStructure.getStructureId(), ddmTemplate.getTemplateKey(),
+			serviceContext);
+
+		_assertGetInfoFieldValues(
+			ddmStructure.getDDMFormFields(false), journalArticle,
+			Assert::assertNull);
 	}
 
 	@Test
@@ -125,7 +191,7 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 			_journalConverter);
 
 		_assertGetInfoFieldValues(
-			ddmFormField.getName(), journalArticle,
+			Collections.singletonList(ddmFormField), journalArticle,
 			value -> _assertExpectedKeyLocalizedLabelPairs(
 				value,
 				HashMapBuilder.put(
@@ -152,7 +218,7 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 			_group.getGroupId(), _journalConverter);
 
 		_assertGetInfoFieldValues(
-			ddmFormField.getName(), journalArticle,
+			Collections.singletonList(ddmFormField), journalArticle,
 			value -> Assert.assertNull(value));
 	}
 
@@ -181,7 +247,7 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 			_group.getGroupId(), _journalConverter);
 
 		_assertGetInfoFieldValues(
-			ddmFormField.getName(), journalArticle,
+			Collections.singletonList(ddmFormField), journalArticle,
 			value -> _assertExpectedKeyLocalizedLabelPairs(
 				value,
 				HashMapBuilder.put(
@@ -208,7 +274,7 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 			_group.getGroupId(), _journalConverter);
 
 		_assertGetInfoFieldValues(
-			ddmFormField.getName(), journalArticle,
+			Collections.singletonList(ddmFormField), journalArticle,
 			value -> _assertExpectedKeyLocalizedLabelPairs(
 				value, Collections.emptyMap()));
 	}
@@ -238,7 +304,7 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 	}
 
 	private void _assertGetInfoFieldValues(
-			String ddmFormFieldName, JournalArticle journalArticle,
+			List<DDMFormField> ddmFormFields, JournalArticle journalArticle,
 			UnsafeConsumer<Object, Exception> assertValueUnsafeConsumer)
 		throws Exception {
 
@@ -247,17 +313,22 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 				journalArticle, journalArticle.getDDMFormValues());
 
 		Assert.assertEquals(
-			infoFieldValues.toString(), 1, infoFieldValues.size());
+			infoFieldValues.toString(), ddmFormFields.size(),
+			infoFieldValues.size());
 
-		InfoFieldValue<InfoLocalizedValue<Object>> infoFieldValue =
-			infoFieldValues.get(0);
+		for (int i = 0; i < ddmFormFields.size(); i++) {
+			DDMFormField ddmFormField = ddmFormFields.get(i);
 
-		InfoField infoField = infoFieldValue.getInfoField();
+			InfoFieldValue<InfoLocalizedValue<Object>> infoFieldValue =
+				infoFieldValues.get(i);
 
-		Assert.assertEquals(ddmFormFieldName, infoField.getName());
+			InfoField infoField = infoFieldValue.getInfoField();
 
-		assertValueUnsafeConsumer.accept(
-			infoFieldValue.getValue(LocaleUtil.US));
+			Assert.assertEquals(ddmFormField.getName(), infoField.getName());
+
+			assertValueUnsafeConsumer.accept(
+				infoFieldValue.getValue(LocaleUtil.US));
+		}
 	}
 
 	private DDMFormField _createDDMFormField(
@@ -309,5 +380,8 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 
 	@Inject
 	private JournalConverter _journalConverter;
+
+	@Inject
+	private JournalFolderLocalService _journalFolderLocalService;
 
 }

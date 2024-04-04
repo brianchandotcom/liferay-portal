@@ -21,6 +21,8 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -284,8 +286,16 @@ public abstract class BaseDDMServiceTestCase {
 	protected String read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
-		return StringUtil.read(
+		String file = StringUtil.read(
 			clazz.getClassLoader(), getBasePath() + fileName);
+
+		if (fileName.contains("xsd")) {
+			return file;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(file);
+
+		return jsonObject.toString();
 	}
 
 	protected DDMForm toDDMForm(String definition) throws Exception {

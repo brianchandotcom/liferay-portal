@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="Fieldset1" index-type="" instance-id="BR9MWidt" name="Fieldset1" type="fieldset">
+		<dynamic-element field-reference="Text1" index-type="keyword" instance-id="ymSXuXnS" name="Text1" type="text">
+		</dynamic-element>
+		<dynamic-element field-reference="Text2" index-type="keyword" instance-id="1HZuqipz" name="Text2" type="text">
+		</dynamic-element>
+		<dynamic-element field-reference="Fieldset2" index-type="" instance-id="MlA1EDut" name="Fieldset2" type="fieldset">
+			<dynamic-element field-reference="Text3" index-type="keyword" instance-id="DSf7n1Jl" name="Text3" type="text">
+			</dynamic-element>
+			<dynamic-element field-reference="Text4" index-type="keyword" instance-id="LsqszJWt" name="Text4" type="text">
+			</dynamic-element>
+			<dynamic-element field-reference="Fieldset3" index-type="" instance-id="V6BzwzmQ" name="Fieldset3" type="fieldset">
+				<dynamic-element field-reference="Text5" index-type="keyword" instance-id="10QADnNF" name="Text5" type="text">
+				</dynamic-element>
+				<dynamic-element field-reference="Text6" index-type="keyword" instance-id="c8nCTK6N" name="Text6" type="text">
+				</dynamic-element>
+			</dynamic-element>
+		</dynamic-element>
+	</dynamic-element>
+</root>

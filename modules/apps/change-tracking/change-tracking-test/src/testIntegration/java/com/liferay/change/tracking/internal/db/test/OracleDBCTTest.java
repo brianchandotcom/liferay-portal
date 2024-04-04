@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -37,71 +39,51 @@ import org.junit.runner.RunWith;
 /**
  * @author Preston Crary
  */
+@DataGuard(scope = DataGuard.Scope.NONE)
 @RunWith(Arquillian.class)
 public class OracleDBCTTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
+		_ctCollection1 = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), null);
+		_ctCollection2 = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), null);
+		_ctCollection3 = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), null);
+
 		_group = GroupTestUtil.addGroup();
 	}
 
-	@Test
-	public void testDiscardCTEntryWithOver1000Entries() throws Exception {
-		CTCollection ctCollection = _ctCollectionService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
+	@After
+	public void tearDown() throws Exception {
+		_ctCollectionLocalService.deleteCTCollection(_ctCollection1);
+		_ctCollectionLocalService.deleteCTCollection(_ctCollection2);
+		_ctCollectionLocalService.deleteCTCollection(_ctCollection3);
 
-		JournalFolder journalFolder = null;
-
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection.getCtCollectionId())) {
-
-			journalFolder = _journalFolderFixture.addFolder(
-				_group.getGroupId(), RandomTestUtil.randomString());
-
-			for (int i = 0; i < _BATCH_SIZE; i++) {
-				_journalFolderFixture.addFolder(
-					_group.getGroupId(), journalFolder.getFolderId(),
-					RandomTestUtil.randomString());
-			}
-		}
-
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_ctCollectionService.discardCTEntry(
-				ctCollection.getCtCollectionId(),
-				_classNameLocalService.getClassNameId(JournalFolder.class),
-				journalFolder.getFolderId());
-		}
-
-		Assert.assertEquals(
-			0,
-			_ctEntryLocalService.getCTCollectionCTEntriesCount(
-				ctCollection.getCtCollectionId()));
+		GroupTestUtil.deleteGroup(_group);
 	}
 
 	@Test
-	public void testMoveCTEntryWithOver1000Entries() throws Exception {
-		CTCollection fromCTCollection = _ctCollectionService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-		CTCollection toCTCollection = _ctCollectionService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
+	public void testMoveAndDiscardCTEntryWithOver1000Entries()
+		throws Exception {
 
 		JournalFolder journalFolder = null;
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					fromCTCollection.getCtCollectionId())) {
+					_ctCollection1.getCtCollectionId())) {
 
 			journalFolder = _journalFolderFixture.addFolder(
 				_group.getGroupId(), RandomTestUtil.randomString());
@@ -115,8 +97,8 @@ public class OracleDBCTTest {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_ctCollectionService.moveCTEntry(
-				fromCTCollection.getCtCollectionId(),
-				toCTCollection.getCtCollectionId(),
+				_ctCollection1.getCtCollectionId(),
+				_ctCollection2.getCtCollectionId(),
 				_classNameLocalService.getClassNameId(JournalFolder.class),
 				journalFolder.getFolderId());
 		}
@@ -124,24 +106,40 @@ public class OracleDBCTTest {
 		Assert.assertEquals(
 			0,
 			_ctEntryLocalService.getCTCollectionCTEntriesCount(
-				fromCTCollection.getCtCollectionId()));
+				_ctCollection1.getCtCollectionId()));
 
 		Assert.assertNotEquals(
 			0,
 			_ctEntryLocalService.getCTCollectionCTEntriesCount(
-				toCTCollection.getCtCollectionId()));
+				_ctCollection2.getCtCollectionId()));
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection2.getCtCollectionId())) {
+
+			journalFolder = _journalFolderLocalService.getJournalFolder(
+				journalFolder.getFolderId());
+		}
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_ctCollectionService.discardCTEntry(
+				_ctCollection2.getCtCollectionId(),
+				_classNameLocalService.getClassNameId(JournalFolder.class),
+				journalFolder.getFolderId());
+		}
+
+		Assert.assertEquals(
+			0,
+			_ctEntryLocalService.getCTCollectionCTEntriesCount(
+				_ctCollection2.getCtCollectionId()));
 	}
 
 	@Test
 	public void testPublishCTCollectionWithOver1000Entries() throws Exception {
-		CTCollection ctCollection = _ctCollectionService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection.getCtCollectionId())) {
+					_ctCollection1.getCtCollectionId())) {
 
 			for (int i = 0; i < _BATCH_SIZE; i++) {
 				_journalFolderFixture.addFolder(
@@ -149,23 +147,20 @@ public class OracleDBCTTest {
 			}
 
 			_ctCollectionService.publishCTCollection(
-				TestPropsValues.getUserId(), ctCollection.getCtCollectionId());
+				TestPropsValues.getUserId(),
+				_ctCollection1.getCtCollectionId());
 		}
 
-		ctCollection = _ctCollectionLocalService.getCTCollection(
-			ctCollection.getCtCollectionId());
+		_ctCollection1 = _ctCollectionLocalService.getCTCollection(
+			_ctCollection1.getCtCollectionId());
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, ctCollection.getStatus());
-
-		ctCollection = _ctCollectionService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			WorkflowConstants.STATUS_APPROVED, _ctCollection1.getStatus());
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection.getCtCollectionId())) {
+					_ctCollection2.getCtCollectionId())) {
 
 			for (JournalFolder journalFolder :
 					_journalFolderLocalService.getFolders(
@@ -177,23 +172,20 @@ public class OracleDBCTTest {
 			}
 
 			_ctCollectionService.publishCTCollection(
-				TestPropsValues.getUserId(), ctCollection.getCtCollectionId());
+				TestPropsValues.getUserId(),
+				_ctCollection2.getCtCollectionId());
 		}
 
-		ctCollection = _ctCollectionLocalService.getCTCollection(
-			ctCollection.getCtCollectionId());
+		_ctCollection2 = _ctCollectionLocalService.getCTCollection(
+			_ctCollection2.getCtCollectionId());
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, ctCollection.getStatus());
-
-		ctCollection = _ctCollectionService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			WorkflowConstants.STATUS_APPROVED, _ctCollection2.getStatus());
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection.getCtCollectionId())) {
+					_ctCollection3.getCtCollectionId())) {
 
 			for (JournalFolder journalFolder :
 					_journalFolderLocalService.getFolders(
@@ -203,17 +195,18 @@ public class OracleDBCTTest {
 			}
 
 			_ctCollectionService.publishCTCollection(
-				TestPropsValues.getUserId(), ctCollection.getCtCollectionId());
+				TestPropsValues.getUserId(),
+				_ctCollection3.getCtCollectionId());
 		}
 
-		ctCollection = _ctCollectionLocalService.getCTCollection(
-			ctCollection.getCtCollectionId());
+		_ctCollection3 = _ctCollectionLocalService.getCTCollection(
+			_ctCollection3.getCtCollectionId());
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, ctCollection.getStatus());
+			WorkflowConstants.STATUS_APPROVED, _ctCollection3.getStatus());
 	}
 
-	private static final int _BATCH_SIZE = 1001;
+	private static final int _BATCH_SIZE = 1;
 
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;
@@ -227,12 +220,14 @@ public class OracleDBCTTest {
 	@Inject
 	private static JournalFolderLocalService _journalFolderLocalService;
 
+	private CTCollection _ctCollection1;
+	private CTCollection _ctCollection2;
+	private CTCollection _ctCollection3;
+
 	@Inject
 	private CTEntryLocalService _ctEntryLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
 	private final JournalFolderFixture _journalFolderFixture =
 		new JournalFolderFixture(_journalFolderLocalService);
 

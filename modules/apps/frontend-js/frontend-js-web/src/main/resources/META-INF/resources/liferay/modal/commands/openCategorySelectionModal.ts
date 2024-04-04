@@ -27,11 +27,13 @@ interface Category {
 }
 
 export default function openCategorySelectionModal({
+	onSelect,
 	portletNamespace,
 	redirectURL,
 	selectCategoryURL,
 	title,
 }: {
+	onSelect?: (selectedItems: Record<string, Category>) => void;
 	portletNamespace: string;
 	redirectURL: string;
 	selectCategoryURL: string;
@@ -46,23 +48,29 @@ export default function openCategorySelectionModal({
 			if (!Object.keys(selectedItems).length) {
 				return;
 			}
+			if (onSelect) {
+				onSelect(selectedItems);
+			}
+			else {
+				let url = new URL(redirectURL);
 
-			let url = new URL(redirectURL);
+				const resetCurParam = `_${url.searchParams.get(
+					'p_p_id'
+				)}_resetCur`;
 
-			const resetCurParam = `_${url.searchParams.get('p_p_id')}_resetCur`;
+				url.searchParams.set(resetCurParam, 'true');
 
-			url.searchParams.set(resetCurParam, 'true');
+				const assetCategories = Object.keys(selectedItems);
 
-			const assetCategories = Object.keys(selectedItems);
+				assetCategories.forEach((assetCategory) => {
+					url = addParams(
+						`${portletNamespace}assetCategoryId=${selectedItems[assetCategory].categoryId}`,
+						url.href
+					);
+				});
 
-			assetCategories.forEach((assetCategory) => {
-				url = addParams(
-					`${portletNamespace}assetCategoryId=${selectedItems[assetCategory].categoryId}`,
-					url.href
-				);
-			});
-
-			navigate(url);
+				navigate(url);
+			}
 		},
 		selectEventName: `${portletNamespace}selectedAssetCategory`,
 		size: 'md',

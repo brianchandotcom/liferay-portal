@@ -251,70 +251,13 @@
 												"pageElements": [
 													{
 														"definition": {
-															"fragment": {
-																"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
-															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-															],
-															"indexed": true
-														},
-														"id": "41113f0e-9ad9-b4da-ec12-5fca5f793a77",
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"collectionConfig": {
-																"collectionReference": {
-																	"className": "com.liferay.object.web.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_64994512087683_CookieEntry"
+															"widgetInstance": {
+																"widgetConfig": {
 																},
-																"collectionType": "CollectionProvider"
-															},
-															"collectionViewports": [
-																{
-																	"collectionViewportDefinition": {
-																		"numberOfColumns": 1
-																	},
-																	"id": "landscapeMobile"
-																},
-																{
-																	"collectionViewportDefinition": {
-																		"numberOfColumns": 1
-																	},
-																	"id": "portraitMobile"
-																},
-																{
-																	"collectionViewportDefinition": {
-																		"numberOfColumns": 1
-																	},
-																	"id": "tablet"
-																}
-															],
-															"displayAllItems": false,
-															"displayAllPages": true,
-															"listItemStyle": "",
-															"listStyle": "com.liferay.object.web.internal.info.list.renderer.ObjectEntryTableInfoListRenderer_64994512087683_CookieEntry",
-															"numberOfColumns": 1,
-															"numberOfItems": 5,
-															"numberOfItemsPerPage": 20,
-															"numberOfPages": 5,
-															"paginationType": "Numeric",
-															"showAllItems": false,
-															"templateKey": ""
-														},
-														"id": "eee974e0-08ee-838c-2c2c-686dd3a2d2ab",
-														"pageElements": [
-															{
-																"definition": {
-																	"collectionItemConfig": {
-																	}
-																},
-																"id": "ad0a0143-d8cf-6602-9629-6bcf6194f67a",
-																"type": "CollectionItem"
+																"widgetName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:NecessaryCookieEntry$]"
 															}
-														],
-														"type": "Collection"
+														},
+														"type": "Widget"
 													}
 												],
 												"type": "Section"
@@ -426,70 +369,13 @@
 												"pageElements": [
 													{
 														"definition": {
-															"fragment": {
-																"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
-															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-															],
-															"indexed": true
-														},
-														"id": "e2c1544b-8899-9066-0984-4f41fc9253f4",
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"collectionConfig": {
-																"collectionReference": {
-																	"className": "com.liferay.object.web.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_64994512087683_CookieEntry"
+															"widgetInstance": {
+																"widgetConfig": {
 																},
-																"collectionType": "CollectionProvider"
-															},
-															"collectionViewports": [
-																{
-																	"collectionViewportDefinition": {
-																		"numberOfColumns": 1
-																	},
-																	"id": "landscapeMobile"
-																},
-																{
-																	"collectionViewportDefinition": {
-																		"numberOfColumns": 1
-																	},
-																	"id": "portraitMobile"
-																},
-																{
-																	"collectionViewportDefinition": {
-																		"numberOfColumns": 1
-																	},
-																	"id": "tablet"
-																}
-															],
-															"displayAllItems": false,
-															"displayAllPages": true,
-															"listItemStyle": "",
-															"listStyle": "com.liferay.object.web.internal.info.list.renderer.ObjectEntryTableInfoListRenderer_64994512087683_CookieEntry",
-															"numberOfColumns": 1,
-															"numberOfItems": 5,
-															"numberOfItemsPerPage": 20,
-															"numberOfPages": 5,
-															"paginationType": "Numeric",
-															"showAllItems": false,
-															"templateKey": ""
-														},
-														"id": "1e9ffffb-8dc1-5ee5-793e-f2359846f5b9",
-														"pageElements": [
-															{
-																"definition": {
-																	"collectionItemConfig": {
-																	}
-																},
-																"id": "5f6b1646-5aa2-7afc-f3d3-836ea428a4a1",
-																"type": "CollectionItem"
+																"widgetName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:FunctionalCookieEntry$]"
 															}
-														],
-														"type": "Collection"
+														},
+														"type": "Widget"
 													}
 												],
 												"type": "Section"
@@ -601,70 +487,13 @@
 												"pageElements": [
 													{
 														"definition": {
-															"fragment": {
-																"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
-															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-															],
-															"indexed": true
-														},
-														"id": "04332c9a-b916-f453-6a22-f64ded12ccb4",
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"collectionConfig": {
-																"collectionReference": {
-																	"className": "com.liferay.object.web.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_64994512087683_CookieEntry"
+															"widgetInstance": {
+																"widgetConfig": {
 																},
-																"collectionType": "CollectionProvider"
-															},
-															"collectionViewports": [
-																{
-																	"collectionViewportDefinition": {
-																		"numberOfColumns": 1
-																	},
-																	"id": "landscapeMobile"
-																},
-																{
-																	"collectionViewportDefinition": {
-																		"numberOfColumns": 1
-																	},
-																	"id": "portraitMobile"
-																},
-																{
-																	"collectionViewportDefinition": {
-																		"numberOfColumns": 1
-																	},
-																	"id": "tablet"
-																}
-															],
-															"displayAllItems": false,
-															"displayAllPages": true,
-															"listItemStyle": "",
-															"listStyle": "com.liferay.object.web.internal.info.list.renderer.ObjectEntryTableInfoListRenderer_64994512087683_CookieEntry",
-															"numberOfColumns": 1,
-															"numberOfItems": 5,
-															"numberOfItemsPerPage": 20,
-															"numberOfPages": 5,
-															"paginationType": "Numeric",
-															"showAllItems": false,
-															"templateKey": ""
-														},
-														"id": "a25655b9-6754-cadc-f9ed-e88ae7e27e61",
-														"pageElements": [
-															{
-																"definition": {
-																	"collectionItemConfig": {
-																	}
-																},
-																"id": "f245df56-e02a-11b6-d7ca-daa07040a0b3",
-																"type": "CollectionItem"
+																"widgetName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:PerformanceCookieEntry$]"
 															}
-														],
-														"type": "Collection"
+														},
+														"type": "Widget"
 													}
 												],
 												"type": "Section"
@@ -777,70 +606,13 @@
 												"pageElements": [
 													{
 														"definition": {
-															"fragment": {
-																"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
-															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-															],
-															"indexed": true
-														},
-														"id": "c30c8497-9d3b-a156-aed1-1935bea2f413",
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"collectionConfig": {
-																"collectionReference": {
-																	"className": "com.liferay.object.web.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_64994512087683_CookieEntry"
+															"widgetInstance": {
+																"widgetConfig": {
 																},
-																"collectionType": "CollectionProvider"
-															},
-															"collectionViewports": [
-																{
-																	"collectionViewportDefinition": {
-																		"numberOfColumns": 1
-																	},
-																	"id": "landscapeMobile"
-																},
-																{
-																	"collectionViewportDefinition": {
-																		"numberOfColumns": 1
-																	},
-																	"id": "portraitMobile"
-																},
-																{
-																	"collectionViewportDefinition": {
-																		"numberOfColumns": 1
-																	},
-																	"id": "tablet"
-																}
-															],
-															"displayAllItems": false,
-															"displayAllPages": true,
-															"listItemStyle": "",
-															"listStyle": "com.liferay.object.web.internal.info.list.renderer.ObjectEntryTableInfoListRenderer_64994512087683_CookieEntry",
-															"numberOfColumns": 1,
-															"numberOfItems": 5,
-															"numberOfItemsPerPage": 20,
-															"numberOfPages": 5,
-															"paginationType": "Numeric",
-															"showAllItems": false,
-															"templateKey": ""
-														},
-														"id": "8ffb58c9-a9cc-942b-2926-7e5fcd1fb5ec",
-														"pageElements": [
-															{
-																"definition": {
-																	"collectionItemConfig": {
-																	}
-																},
-																"id": "e084bb6e-801f-3e7b-d9a6-86ac52b28d6b",
-																"type": "CollectionItem"
+																"widgetName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:PersonalizationCookieEntry$]"
 															}
-														],
-														"type": "Collection"
+														},
+														"type": "Widget"
 													}
 												],
 												"type": "Section"

@@ -36,7 +36,7 @@ dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"
 	compileOnly group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-json-provider", version: "2.9.8"
 	compileOnly group: "com.google.guava", name: "guava", version: "32.0.1-jre"
-	compileOnly group: "com.liferay", name: "org.springframework.tx", version: "5.2.24.LIFERAY-PATCHED-1"
+	compileOnly group: "com.liferay", name: "org.springframework.tx", version: "5.3.33.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "commons-codec", name: "commons-codec", version: "1.15"

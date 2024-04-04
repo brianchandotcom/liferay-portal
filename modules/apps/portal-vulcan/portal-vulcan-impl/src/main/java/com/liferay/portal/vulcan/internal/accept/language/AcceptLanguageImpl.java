@@ -25,6 +25,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotAcceptableException;
@@ -62,6 +63,10 @@ public class AcceptLanguageImpl implements AcceptLanguage {
 		}
 
 		try {
+			if (acceptLanguage.isEmpty()) {
+				throw new BadRequestException("Locale not defined");
+			}
+
 			Company company = _portal.getCompany(_httpServletRequest);
 
 			Set<Locale> companyAvailableLocales =

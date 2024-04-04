@@ -1,6 +1,3 @@
-dependencies:
-    - liferay-ticket-custom-element
-    - liferay-tryitnow-batch
 liferay-tryitnow-site-initializer:
     name: Liferay Try It Now Site Initializer
     oAuthApplicationHeadlessServer: liferay-tryitnow-site-initializer-oauth-application-headless-server

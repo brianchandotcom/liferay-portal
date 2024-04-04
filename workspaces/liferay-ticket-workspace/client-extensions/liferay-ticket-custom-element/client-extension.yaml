@@ -1,8 +1,6 @@
 assemble:
     - from: build/vite
       into: static
-dependencies:
-    - liferay-ticket-batch
 liferay-ticket-custom-element:
     friendlyURLMapping: liferay-ticket-custom-element
     htmlElementName: liferay-ticket-custom-element

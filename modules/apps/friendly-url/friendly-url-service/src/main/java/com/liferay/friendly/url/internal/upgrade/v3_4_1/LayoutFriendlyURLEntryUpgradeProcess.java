@@ -70,7 +70,9 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 				"LayoutFriendlyURL.groupId and ",
 				"FriendlyURLEntryLocalization.classNameId = classNameId and ",
 				"FriendlyURLEntryLocalization.classPK = ",
-				"LayoutFriendlyURL.plid) where ",
+				"LayoutFriendlyURL.plid and ",
+				"FriendlyURLEntryLocalization.ctCollectionId = ",
+				"LayoutFriendlyURL.ctCollectionId) where ",
 				"FriendlyURLEntryLocalization.friendlyURLEntryLocalizationId ",
 				"is null");
 

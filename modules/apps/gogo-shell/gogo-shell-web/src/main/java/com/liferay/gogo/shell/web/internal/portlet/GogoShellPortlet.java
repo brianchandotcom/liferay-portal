@@ -91,6 +91,13 @@ public class GogoShellPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		try {
+			CaptchaUtil.check(actionRequest);
+		}
+		catch (CaptchaException captchaException) {
+			throw new PortletException(captchaException);
+		}
+
 		String command = ParamUtil.getString(actionRequest, "command");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -153,13 +160,6 @@ public class GogoShellPortlet extends MVCPortlet {
 	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
-
-		try {
-			CaptchaUtil.check(actionRequest);
-		}
-		catch (CaptchaException captchaException) {
-			throw new PortletException(captchaException);
-		}
 
 		_checkOmniadmin();
 

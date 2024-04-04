@@ -282,7 +282,7 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
-		AssetCategorization.removeTag(tagName = "dxp");
+		AssetCategorization.removeTag(tagName = "DXP");
 
 		PortletEntry.publish();
 
@@ -338,12 +338,12 @@ definition {
 
 		BlogsEntry.viewAutoTag(
 			entryTitle = "Alice Adventures in Wonderland",
-			tagName = "adventures");
+			tagName = "Adventures");
 
 		BlogsEntry.viewNoTag(
 			duplicate = "true",
 			entryTitle = "Alice Adventures in Wonderland",
-			tagName = "adventures");
+			tagName = "Adventures");
 	}
 
 	@description = "This test asserts that tags are not updated if user unchecked Update Auto Tags when updating a blog entry."
@@ -381,9 +381,9 @@ definition {
 
 		BlogsEntry.viewAutoTag(
 			entryTitle = "Alice Adventures in Wonderland",
-			tagName = "adventures");
+			tagName = "Adventures");
 
-		for (var tagName : list "dxp,herbert") {
+		for (var tagName : list "DXP,Herbert") {
 			BlogsEntry.viewNoTag(
 				entryTitle = "Alice Adventures in Wonderland",
 				tagName = ${tagName});
@@ -419,7 +419,7 @@ definition {
 			layoutName = "blogs-page",
 			siteURLKey = "site-name");
 
-		for (var tagName : list "adventures,dxp,herbert") {
+		for (var tagName : list "Adventures,DXP,Herbert") {
 			BlogsEntry.viewAutoTag(
 				entryTitle = "Alice Adventures in Wonderland",
 				tagName = ${tagName});

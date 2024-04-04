@@ -81,7 +81,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document ODT");
 
-		DMDocument.viewTagInfo(tagName = "alice");
+		DMDocument.viewTagInfo(tagName = "Alice");
 	}
 
 	@description = "This test asserts that auto-tags added to an image uploaded on a staged site gets published to Live."
@@ -254,7 +254,7 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
-		for (var tagName : list "alice,adventures") {
+		for (var tagName : list "Alice,Adventures") {
 			AssetCategorization.removeTag(tagName = ${tagName});
 		}
 
@@ -267,7 +267,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document DOCX");
 
-		for (var tagName : list "alice,adventures") {
+		for (var tagName : list "Alice,Adventures") {
 			DMDocument.viewNoTagInfo(tagName = ${tagName});
 		}
 	}
@@ -302,9 +302,9 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		DMDocument.viewTagInfo(tagName = "carton");
+		DMDocument.viewTagInfo(tagName = "Carton");
 
-		DMDocument.viewNoTagInfo(tagName = "jersey");
+		DMDocument.viewNoTagInfo(tagName = "Jersey");
 	}
 
 	@description = "This test asserts that tags are not updated if user unchecked Update Auto Tags when updating a text document."
@@ -351,7 +351,7 @@ definition {
 
 		DMDocument.viewTagInfo(tagName = "herbert");
 
-		DMDocument.viewNoTagInfo(tagName = "adventures,alice");
+		DMDocument.viewNoTagInfo(tagName = "Adventures,Alice");
 	}
 
 	@description = "This test asserts that new tags detected are added if user checked Update Auto Tags when updating an image."
@@ -390,7 +390,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		DMDocument.viewTagInfo(tagName = "carton,jersey");
+		DMDocument.viewTagInfo(tagName = "Carton,Jersey");
 	}
 
 	@description = "This test asserts that new tags detected are added if user checked Update Auto Tags when updating a text document."
@@ -426,7 +426,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document TXT");
 
-		DMDocument.viewTagInfo(tagName = "adventures,alice,herbert");
+		DMDocument.viewTagInfo(tagName = "Adventures,Alice,herbert");
 	}
 
 }

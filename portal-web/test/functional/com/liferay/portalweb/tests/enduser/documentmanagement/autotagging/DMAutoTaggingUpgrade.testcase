@@ -46,31 +46,31 @@ definition {
 		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			dmDocumentFile = "Commerce_Blue.jpg",
 			dmDocumentTitle = "DM New Document JPG",
-			tagName = "jersey");
+			tagName = "Jersey");
 
 		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
 			dmDocumentTitle = "DM New Document PDF",
-			tagName = "alice");
+			tagName = "Alice");
 
 		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			dmDocumentFile = "Commerce_White.jpg",
 			dmDocumentTitle = "Document New Google Image AutoTagging",
-			tagName = "pattern");
+			tagName = "Pattern");
 
 		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			dmDocumentFile = "Document_3.docx",
 			dmDocumentTitle = "Document New Google Text AutoTagging",
-			tagName = "computers");
+			tagName = "Computers");
 
 		ValidateAutoTaggingUpgrade.addAutoTagViaGogoShell(
 			blogEntryTitle = "Blogs Without Autotagging",
-			blogTagName = "dxp,business services",
+			blogTagName = "DXP,Business Services",
 			blogTagNum = 5,
 			dmDocumentTitle = "DM Without Autotagging",
-			dmTagName = "jersey,t-shirt",
+			dmTagName = "Jersey,T-Shirt",
 			dmTagNum = 11,
-			wcTagName = "herbert,industrial",
+			wcTagName = "Herbert,Industrial",
 			wcTagNum = 5,
 			webContentTitle = "WC Without Autotagging",
 			webContentTitleXml = '''<?xml version='1.0' encoding='UTF-8'?><root available-locales="en_US" default-locale="en_US"><Title language-id="en_US">WC Without Autotagging</Title></root>''');
@@ -101,31 +101,31 @@ definition {
 		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			dmDocumentFile = "Commerce_Blue.jpg",
 			dmDocumentTitle = "DM New Document JPG",
-			tagName = "jersey");
+			tagName = "Jersey");
 
 		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
 			dmDocumentTitle = "DM New Document PDF",
-			tagName = "alice");
+			tagName = "Alice");
 
 		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			dmDocumentFile = "Commerce_White.jpg",
 			dmDocumentTitle = "Document New Google Image AutoTagging",
-			tagName = "pattern");
+			tagName = "Pattern");
 
 		ValidateAutoTaggingUpgrade.addAutoTaggedDM(
 			dmDocumentFile = "Document_3.docx",
 			dmDocumentTitle = "Document New Google Text AutoTagging",
-			tagName = "computers");
+			tagName = "Computers");
 
 		ValidateAutoTaggingUpgrade.addAutoTagViaGogoShell(
 			blogEntryTitle = "Blogs Without Autotagging",
-			blogTagName = "dxp,business services",
+			blogTagName = "DXP,Business Services",
 			blogTagNum = 5,
 			dmDocumentTitle = "DM Without Autotagging",
-			dmTagName = "jersey,t-shirt",
+			dmTagName = "Jersey,T-Shirt",
 			dmTagNum = 11,
-			wcTagName = "herbert,industrial",
+			wcTagName = "Herbert,Industrial",
 			wcTagNum = 5,
 			webContentTitle = "WC Without Autotagging",
 			webContentTitleXml = '''<?xml version='1.0' encoding='UTF-8'?><root available-locales="en_US" default-locale="en_US"><Title language-id="en_US">WC Without Autotagging</Title></root>''');

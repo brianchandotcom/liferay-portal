@@ -42,12 +42,12 @@ definition {
 		ValidateAutoTaggingUpgrade.addAutoTaggedBlogsEntry(
 			entryContent = "Alice's Adventures in Wonderland",
 			entryTitle = "Blogs New OpenNLP AutoTagging",
-			tagName = "adventures");
+			tagName = "Adventures");
 
 		ValidateAutoTaggingUpgrade.addAutoTaggedBlogsEntry(
 			entryContent = "Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
 			entryTitle = "Blogs New Google AutoTagging",
-			tagName = "value people");
+			tagName = "Value People");
 	}
 
 	@priority = 5
@@ -71,12 +71,12 @@ definition {
 		ValidateAutoTaggingUpgrade.addAutoTaggedBlogsEntry(
 			entryContent = "Alice's Adventures in Wonderland",
 			entryTitle = "Blogs New OpenNLP AutoTagging",
-			tagName = "adventures");
+			tagName = "Adventures");
 
 		ValidateAutoTaggingUpgrade.addAutoTaggedBlogsEntry(
 			entryContent = "Serving a wide range of enterprises, we strive to stay true to our core values: Produce Excellence, Lead by Serving, Value People, Grow and Get Better.",
 			entryTitle = "Blogs New Google AutoTagging",
-			tagName = "value people");
+			tagName = "Value People");
 	}
 
 }

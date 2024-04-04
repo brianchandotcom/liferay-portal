@@ -58,7 +58,7 @@ definition {
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewTagInfo(tagName = "computers");
+		DMDocument.viewTagInfo(tagName = "Computers");
 	}
 
 	@description = "This test ensures that an Image in a depot can be auto-tagged after enabling GCV."
@@ -108,7 +108,7 @@ definition {
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContent.viewTagFromInfoPanel(
-			tagName = "computers",
+			tagName = "Computers",
 			webContentTitle = "Liferay");
 	}
 
@@ -148,7 +148,7 @@ definition {
 
 		BlogsEntry.viewNoTag(
 			entryTitle = "Digital Transformation or Digital Experience?",
-			tagName = "COMPUTERS");
+			tagName = "Computers");
 	}
 
 	@description = "This test ensures that a document with a tag added by manual can not be auto-tagged after publishing."
@@ -179,7 +179,7 @@ definition {
 
 		DMDocument.viewTagInfo(tagName = "manualtag");
 
-		DMDocument.viewNoTagInfo(tagName = "computers");
+		DMDocument.viewNoTagInfo(tagName = "Computers");
 	}
 
 	@description = "This test ensures that an image with a tag added by manual can not be auto-tagged after publishing."
@@ -275,7 +275,7 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
-		AssetCategorization.removeTag(tagName = "computers");
+		AssetCategorization.removeTag(tagName = "Computers");
 
 		PortletEntry.publish();
 
@@ -286,7 +286,7 @@ definition {
 
 		BlogsEntry.viewNoTag(
 			entryTitle = "Liferay",
-			tagName = "COMPUTERS");
+			tagName = "Computers");
 	}
 
 	@description = "This test ensures that a tag added in a document through GCNL can be removed."
@@ -315,7 +315,7 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
-		for (var tagName : list "computers,electronics") {
+		for (var tagName : list "Computers,Electronics") {
 			AssetCategorization.removeTag(tagName = ${tagName});
 		}
 
@@ -328,7 +328,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_1");
 
-		DMDocument.viewNoTagInfo(tagName = "computers,electronics");
+		DMDocument.viewNoTagInfo(tagName = "Computers,Electronics");
 	}
 
 	@description = "This test ensures that a tag added in an image through GCVI can be removed."
@@ -354,7 +354,7 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
-		for (var tagName : list "pattern,carmine") {
+		for (var tagName : list "Pattern,Carmine") {
 			AssetCategorization.removeTag(tagName = ${tagName});
 		}
 
@@ -367,7 +367,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "Commerce_Black");
 
-		DMDocument.viewNoTagInfo(tagName = "pattern,carmine");
+		DMDocument.viewNoTagInfo(tagName = "Pattern,Carmine");
 	}
 
 	@description = "This test ensures that a tag added in a WC article through GCNL can be removed."
@@ -399,7 +399,7 @@ definition {
 			key_panel = "Schedule",
 			locator1 = "Panel#PANEL");
 
-		for (var tagName : list "electronics,programming") {
+		for (var tagName : list "Electronics,Programming") {
 			AssetCategorization.removeTag(tagName = ${tagName});
 		}
 
@@ -408,7 +408,7 @@ definition {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.viewNoTagsFromInfoPanel(
-			tagNameList = "electronics,programming",
+			tagNameList = "Electronics,Programming",
 			webContentTitle = "Liferay");
 	}
 
@@ -454,7 +454,7 @@ definition {
 
 		BlogsEntry.viewAutoTag(
 			entryTitle = "Liferay",
-			tagName = "COMPUTERS");
+			tagName = "Computers");
 	}
 
 	@description = "This test ensures that auto tags can be published to live with the document entry."
@@ -491,7 +491,7 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
-		DMDocument.viewTagInfo(tagName = "computers");
+		DMDocument.viewTagInfo(tagName = "Computers");
 	}
 
 	@description = "This test ensures that auto tags can be published to live with the Image."
@@ -562,7 +562,7 @@ definition {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.viewTagFromInfoPanel(
-			tagName = "programming",
+			tagName = "Programming",
 			webContentTitle = "Liferay");
 	}
 

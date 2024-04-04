@@ -61,11 +61,11 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewTagInfo(tagName = "adventures,alice");
+		DMDocument.viewTagInfo(tagName = "Adventures,Alice");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		DMDocument.removeTag(removeTag = "alice");
+		DMDocument.removeTag(removeTag = "Alice");
 
 		AssetCategorization.addTag(tagName = "newtag");
 
@@ -77,7 +77,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewTagInfo(tagName = "adventures,newtag");
+		DMDocument.viewTagInfo(tagName = "Adventures,newtag");
 	}
 
 	@description = "This test asserts that an auto-tagged web content can be deleted in a depot when OpenNLP Auto-Tagging is enabled."
@@ -107,7 +107,7 @@ definition {
 			key_panel = "Schedule",
 			locator1 = "Panel#PANEL");
 
-		AssetCategorization.viewTag(tagName = "dxp");
+		AssetCategorization.viewTag(tagName = "DXP");
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
@@ -251,7 +251,7 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
-		DMDocument.viewNoTagInfo(tagName = "dxp");
+		DMDocument.viewNoTagInfo(tagName = "DXP");
 	}
 
 	@description = "This test asserts that an image is auto-tagged in a depot."
@@ -344,7 +344,7 @@ definition {
 			key_panel = "Schedule",
 			locator1 = "Panel#PANEL");
 
-		AssetCategorization.viewTag(tagName = "dxp");
+		AssetCategorization.viewTag(tagName = "DXP");
 	}
 
 }

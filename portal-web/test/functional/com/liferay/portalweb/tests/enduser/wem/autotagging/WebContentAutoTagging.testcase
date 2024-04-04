@@ -59,7 +59,7 @@ definition {
 			key_panel = "Schedule",
 			locator1 = "Panel#PANEL");
 
-		AssetCategorization.viewTag(tagName = "dxp");
+		AssetCategorization.viewTag(tagName = "DXP");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/web-content-page");
 
@@ -70,7 +70,7 @@ definition {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTagFromInfoPanel(
-			tagName = "dxp",
+			tagName = "DXP",
 			webContentTitle = "Digital Transformation or Digital Experience");
 	}
 
@@ -106,7 +106,7 @@ definition {
 			key_panel = "Schedule",
 			locator1 = "Panel#PANEL");
 
-		AssetCategorization.viewTag(tagName = "dxp");
+		AssetCategorization.viewTag(tagName = "DXP");
 	}
 
 	@description = "This test asserts that an auto-tagged web content can be deleted when OpenNLP Auto-Tagging is enabled."
@@ -132,7 +132,7 @@ definition {
 			key_panel = "Schedule",
 			locator1 = "Panel#PANEL");
 
-		AssetCategorization.viewTag(tagName = "dxp");
+		AssetCategorization.viewTag(tagName = "DXP");
 
 		JSONWebcontent.deleteWebContent(
 			groupName = "Test Site Name",
@@ -171,7 +171,7 @@ definition {
 
 		AssetCategorization.viewTag(tagName = "liferay");
 
-		AssetCategorization.viewNoTag(tagName = "dxp");
+		AssetCategorization.viewNoTag(tagName = "DXP");
 	}
 
 	@description = "This test asserts that a webcontent is auto tagged when it is published from draft status. "
@@ -212,7 +212,7 @@ definition {
 			key_panel = "Schedule",
 			locator1 = "Panel#PANEL");
 
-		AssetCategorization.viewTag(tagName = "dxp");
+		AssetCategorization.viewTag(tagName = "DXP");
 	}
 
 	@description = "This test asserts that tags are not updated if user unchecked Update Auto Tags when updating a web content."
@@ -254,7 +254,7 @@ definition {
 			key_panel = "Schedule",
 			locator1 = "Panel#PANEL");
 
-		for (var tagName : list "dxp,herbert") {
+		for (var tagName : list "DXP,Herbert") {
 			AssetCategorization.viewTag(tagName = ${tagName});
 		}
 
@@ -296,7 +296,7 @@ definition {
 			key_panel = "Schedule",
 			locator1 = "Panel#PANEL");
 
-		for (var tagName : list "adventures,alice,dxp,herbert") {
+		for (var tagName : list "Adventures,Alice,DXP,Herbert") {
 			AssetCategorization.viewTag(tagName = ${tagName});
 		}
 	}

@@ -95,17 +95,17 @@ definition {
 
 		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedWebContent(
 			depotName = "Test Depot Name",
-			tagName = "dxp",
+			tagName = "DXP",
 			webContentTitle = "Digital Transformation or Digital Experience?");
 
 		ValidateAutoTaggingUpgrade.editTagsAndDeleteAutoTaggedWebContent(
 			depotName = "Test Depot Name",
-			tagName = "computers",
+			tagName = "Computers",
 			webContentTitle = "WC Google Text AutoTagging");
 
 		ValidateAutoTaggingUpgrade.addAutoTaggedWebContent(
 			depotName = "Test Depot Name",
-			tagName = "adventures",
+			tagName = "Adventures",
 			webContentContent = "Alice's Adventures in Wonderland",
 			webContentTitle = "WC New OpenNLP AutoTagging");
 

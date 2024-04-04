@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>BUTTON_LAUNCH_ANY</td>
-	<td>//button[@title='Relaunch' or @title='Launch Page Audit']</td>
+	<td>//button[@title='Relaunch' or @title='Launch Page Audit' or contains(text(),'Launch')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>LOCALE_BUTTON</td>
-	<td>//div[contains(@class,'sidebar-body')] //button[*[name()='svg'][contains(@class,'lexicon-icon')]]</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-en-us')]]</td>
 	<td></td>
 </tr>
 <tr>

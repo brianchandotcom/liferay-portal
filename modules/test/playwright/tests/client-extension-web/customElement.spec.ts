@@ -50,6 +50,12 @@ const SAMPLES = [
 		name: 'Liferay Sample Custom Element 5',
 		renderTestLocator: (page: Page) => page.getByText('Success!'),
 	},
+	{
+		erc: 'LXC:liferay-sample-etc-frontend-3-custom-element',
+		htmlElementName: 'liferay-sample-etc-frontend-3-custom-element',
+		name: 'Liferay Sample Etc Frontend 3 Custom Element',
+		renderTestLocator: (page: Page) => page.getByText('Greetings in:'),
+	},
 ];
 
 for (const sample of SAMPLES) {

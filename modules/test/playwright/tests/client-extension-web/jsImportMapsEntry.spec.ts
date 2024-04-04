@@ -10,36 +10,51 @@ import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
 
 export const test = mergeTests(loginTest());
 
-const SAMPLE = {
-	erc: 'LXC:liferay-sample-js-import-maps-entry-1',
-	name: 'Liferay Sample JS Import Maps Entry 1',
-	url: '/o/liferay-sample-js-import-maps-entry-1/jquery.db7c7063a8b5d1298dbc.js',
-};
+const SAMPLES = [
+	{
+		bareSpecifier: 'jquery',
+		erc: 'LXC:liferay-sample-js-import-maps-entry-1',
+		name: 'Liferay Sample JS Import Maps Entry 1',
+		url: '/o/liferay-sample-js-import-maps-entry-1/jquery.db7c7063a8b5d1298dbc.js',
+	},
+	{
+		bareSpecifier: 'my-utils',
+		erc: 'LXC:liferay-sample-etc-frontend-3-js-import-maps-entry',
+		name: 'Liferay Sample Etc Frontend 3 JS Import Maps Entry',
+		url: '/o/liferay-sample-etc-frontend-3/my-utils.2db3acbc64ea700ac5b4.js',
+	},
+];
 
-test(`${SAMPLE.name} is registered`, async ({page}) => {
-	const viewClientExtensionPage = new ViewClientExtensionPage(
-		page,
-		SAMPLE.erc
-	);
+for (const sample of SAMPLES) {
+	test(`${sample.name} is registered`, async ({page}) => {
+		const viewClientExtensionPage = new ViewClientExtensionPage(
+			page,
+			sample.erc
+		);
 
-	await viewClientExtensionPage.goto();
+		await viewClientExtensionPage.goto();
 
-	expect(viewClientExtensionPage.nameLocator).toHaveValue(SAMPLE.name);
-	expect(viewClientExtensionPage.fieldLocator('URL')).toHaveValue(SAMPLE.url);
-});
+		expect(viewClientExtensionPage.nameLocator).toHaveValue(sample.name);
+		expect(viewClientExtensionPage.fieldLocator('URL')).toHaveValue(
+			sample.url
+		);
+	});
 
-test(`${SAMPLE.name}'s .js file can be downloaded`, async ({page}) => {
-	const response = await page.goto(SAMPLE.url);
+	test(`${sample.name}'s .js file can be downloaded`, async ({page}) => {
+		const response = await page.goto(sample.url);
 
-	expect(response.status()).toBe(200);
-});
+		expect(response.status()).toBe(200);
+	});
 
-test(`${SAMPLE.name} appears in import maps`, async ({page}) => {
-	await page.goto('/');
+	test(`${sample.name} appears in import maps`, async ({page}) => {
+		await page.goto('/');
 
-	const importMap = await page
-		.locator('script[type="importmap"]')
-		.evaluate((node: HTMLScriptElement) => node.innerText);
+		const importMap = await page
+			.locator('script[type="importmap"]')
+			.evaluate((node: HTMLScriptElement) => node.innerText);
 
-	expect(importMap).toContain(`"jquery":"${SAMPLE.url}"`);
-});
+		expect(importMap).toContain(
+			`"${sample.bareSpecifier}":"${sample.url}"`
+		);
+	});
+}

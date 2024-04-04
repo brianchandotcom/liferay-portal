@@ -121,7 +121,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChangesInRelationships(changeTitle = "Team & User Group (1 Added)");
+		PublicationsChanges.viewChangesInRelationships(changeTitle = "User Group & Team (1 Added)");
 
 		Publications.publishPublication(publicationName = "Publication Name");
 

@@ -727,6 +727,17 @@ public class ObjectDefinitionResourceImpl
 		}
 
 		if (Validator.isNotNull(rootObjectDefinitionExternalReferenceCode)) {
+			if (serviceBuilderObjectDefinition.isRootNode() &&
+				!Objects.equals(
+					serviceBuilderObjectDefinition.
+						getRootObjectDefinitionExternalReferenceCode(),
+					rootObjectDefinitionExternalReferenceCode)) {
+
+				rootObjectDefinitionExternalReferenceCode =
+					serviceBuilderObjectDefinition.
+						getRootObjectDefinitionExternalReferenceCode();
+			}
+
 			serviceBuilderObjectDefinition =
 				_bindObjectDefinitionToRootObjectDefinition(
 					rootObjectDefinitionExternalReferenceCode,

@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -69,7 +70,8 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcess
 							classTypeId, key -> new ConcurrentHashMap<>());
 
 					List<Long> entryIds = entryIdsMap.computeIfAbsent(
-						ddmStructureId, key -> new ArrayList<>());
+						ddmStructureId,
+						key -> Collections.synchronizedList(new ArrayList<>()));
 
 					entryIds.add(entryId);
 				},

@@ -328,30 +328,26 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 	@Override
 	public String getUniqueLayoutPageTemplateCollectionName(
-		long groupId, String name, int type) {
+		long groupId, String sourceName, int type) {
 
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			layoutPageTemplateCollectionPersistence.fetchByG_N_T(
-				groupId, name, type);
+		String copy = _language.get(LocaleUtil.getSiteDefault(), "copy");
 
-		if (layoutPageTemplateCollection == null) {
-			return name;
-		}
+		String name = StringUtil.appendParentheticalSuffix(sourceName, copy);
 
-		int count = 1;
-
-		while (true) {
-			String newName = StringUtil.appendParentheticalSuffix(
-				name, count++);
-
-			layoutPageTemplateCollection =
+		for (int i = 1;; i++) {
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
 				layoutPageTemplateCollectionPersistence.fetchByG_N_T(
-					groupId, newName, type);
+					groupId, name, type);
 
 			if (layoutPageTemplateCollection == null) {
-				return newName;
+				break;
 			}
+
+			name = StringUtil.appendParentheticalSuffix(
+				sourceName, copy + StringPool.SPACE + i);
 		}
+
+		return name;
 	}
 
 	@Override

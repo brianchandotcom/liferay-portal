@@ -148,8 +148,8 @@ public class KoroneikiRestController extends BaseRestController {
 				if (Objects.equals(
 						productConsumption.getProductPurchaseKey(),
 						productPurchase.getKey()) &&
-					(endDate.after(new Date()) ||
-					 productPurchase.getPerpetual())) {
+					(productPurchase.getPerpetual() ||
+					 endDate.after(new Date()))) {
 
 					provisionedCount++;
 				}

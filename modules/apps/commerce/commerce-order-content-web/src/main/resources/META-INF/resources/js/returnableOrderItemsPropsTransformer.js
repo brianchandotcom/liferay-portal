@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {createPortletURL, fetch, openToast} from 'frontend-js-web';
+import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
+import {createPortletURL, openToast} from 'frontend-js-web';
 
 function returnableOrderItemsPropsTransformer({
 	additionalProps: context,
@@ -12,22 +13,21 @@ function returnableOrderItemsPropsTransformer({
 	return {
 		...props,
 		onBulkActionItemClick: async ({
-			action: {
-				data: {method},
-				href: createReturnAPIEndpoint,
-			},
 			selectedData: {items: commerceOrderItems},
 		}) => {
+			const CommerceReturnResource = ServiceProvider.ReturnAPI();
+
 			const {
 				accountEntryId,
 				channelGroupId,
 				channelId,
 				channelName,
 				commerceOrderId,
+				commerceReturnId,
 				redirect,
 			} = context;
 
-			const commerceReturn = JSON.stringify({
+			const commerceReturn = {
 				channelGroupId: parseInt(channelGroupId, 10),
 				channelId: parseInt(channelId, 10),
 				channelName,
@@ -38,8 +38,12 @@ function returnableOrderItemsPropsTransformer({
 						quantity,
 					}) => ({
 						amount,
-						commerceOrderItemId,
 						quantity,
+						r_accountToCommerceReturnItems_accountEntryId: parseInt(
+							accountEntryId,
+							10
+						),
+						r_commerceOrderItemToCommerceReturnItems_commerceOrderItemId: commerceOrderItemId,
 					})
 				),
 				r_accountToCommerceReturns_accountEntryId: parseInt(
@@ -50,26 +54,57 @@ function returnableOrderItemsPropsTransformer({
 					commerceOrderId,
 					10
 				),
-			});
+			};
 
-			fetch(createReturnAPIEndpoint, {
-				body: commerceReturn,
-				headers: {
-					'content-type': 'application/json',
-				},
-				method,
-			})
-				.then((response) => response.json())
+			if (parseInt(commerceReturnId, 10)) {
+				return CommerceReturnResource.updateItemById(
+					commerceReturnId,
+					commerceReturn
+				)
+					.then((response) => {
+						window.top.location.href = createPortletURL(redirect, {
+							commerceReturnId: response.id,
+						});
+
+						openToast({
+							message: Liferay.Language.get(
+								'your-request-completed-successfully'
+							),
+							type: 'success',
+						});
+					})
+					.catch((error) => {
+						openToast({
+							message:
+								error.message ||
+								Liferay.Language.get(
+									'an-unexpected-error-occurred'
+								),
+							type: 'danger',
+						});
+					});
+			}
+
+			return CommerceReturnResource.createItem(commerceReturn)
 				.then((response) => {
 					window.top.location.href = createPortletURL(redirect, {
 						commerceReturnId: response.id,
 					});
-				})
-				.catch(() => {
+
 					openToast({
 						message: Liferay.Language.get(
-							'an-unexpected-error-occurred'
+							'your-request-completed-successfully'
 						),
+						type: 'success',
+					});
+				})
+				.catch((error) => {
+					openToast({
+						message:
+							error.message ||
+							Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
 						type: 'danger',
 					});
 				});

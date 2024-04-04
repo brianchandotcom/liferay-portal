@@ -19,8 +19,11 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -38,8 +41,10 @@ import com.liferay.template.transformer.TemplateNodeFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -127,7 +132,19 @@ public class TemplateInfoItemFieldSetProviderImpl
 			return Collections.emptyList();
 		}
 
-		List<Long> groupIds = new ArrayList<>();
+		Set<Long> groupIds = new HashSet<>();
+
+		Company company = _companyLocalService.fetchCompany(
+			serviceContext.getCompanyId());
+
+		if (company != null) {
+			try {
+				groupIds.add(company.getGroupId());
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
+		}
 
 		long ddmStructureKey = GetterUtil.getLong(infoItemFormVariationKey);
 
@@ -220,6 +237,9 @@ public class TemplateInfoItemFieldSetProviderImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TemplateInfoItemFieldSetProviderImpl.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

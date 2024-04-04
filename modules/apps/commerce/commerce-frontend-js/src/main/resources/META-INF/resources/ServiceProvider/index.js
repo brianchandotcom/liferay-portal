@@ -11,6 +11,8 @@ import AdminOrderAPI from './commerce-admin-order/index';
 import AdminPricingAPI from './commerce-admin-pricing/index';
 import DeliveryCartAPI from './commerce-delivery-cart/index';
 import DeliveryCatalogAPI from './commerce-delivery-catalog/index';
+import ReturnItemAPI from './commerce-return-items/ReturnItem';
+import ReturnAPI from './commerce-returns/Return';
 
 const ServiceProvider = {
 	AdminAccountAPI,
@@ -21,6 +23,8 @@ const ServiceProvider = {
 	AdminPricingAPI,
 	DeliveryCartAPI,
 	DeliveryCatalogAPI,
+	ReturnAPI,
+	ReturnItemAPI,
 };
 
 export default ServiceProvider;

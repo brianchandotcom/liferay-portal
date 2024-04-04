@@ -78,7 +78,7 @@ public class DateDDMFormFieldValueRendererTest {
 				).setExtension(
 					Locale.UNICODE_LOCALE_EXTENSION, "nu-arab"
 				).build(),
-				"٢٥‏/٠١‏/٢٠١٥"
+				"٢٥\u200F/٠١\u200F/٢٠١٥"
 			).put(
 				LocaleUtil.BRAZIL, "25/01/2015"
 			).put(
@@ -115,13 +115,13 @@ public class DateDDMFormFieldValueRendererTest {
 				).setExtension(
 					Locale.UNICODE_LOCALE_EXTENSION, "nu-arab"
 				).build(),
-				"٢٥‏/٠١‏/٢٠١٥ ٠١:٠٠ ص"
+				"٢٥\u200F/٠١\u200F/٢٠١٥ ٠١:٠٠ ص"
 			).put(
 				LocaleUtil.BRAZIL, "25/01/2015 01:00"
 			).put(
 				new Locale("ca", "ES"), "25/01/2015 01:00"
 			).put(
-				new Locale("fi", "FI"), "25.01.2015 01:00"
+				new Locale("fi", "FI"), "25.01.2015 01.00"
 			).put(
 				LocaleUtil.FRANCE, "25/01/2015 01:00"
 			).put(

@@ -24,9 +24,11 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultPredicate;
 import com.liferay.petra.sql.dsl.spi.expression.Operand;
+import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -383,6 +385,26 @@ public class PredicateExpressionVisitorImpl
 			_getValue(fieldName, objectDefinition, fieldValue));
 	}
 
+	private Predicate _eq(
+		Object fieldName, Object fieldValue,
+		ObjectDefinition objectDefinition) {
+
+		Object value = _getValue(fieldName, objectDefinition, fieldValue);
+
+		com.liferay.petra.sql.dsl.expression.Expression<String> rightValue =
+			DSLFunctionFactoryUtil.concat(
+				new Scalar<>("%, "), new Scalar<>(value.toString()),
+				new Scalar<>(", %"));
+
+		com.liferay.petra.sql.dsl.expression.Expression<String> leftValue =
+			DSLFunctionFactoryUtil.concat(
+				new Scalar<>(", "),
+				_getDSLExpression(fieldName, objectDefinition),
+				new Scalar<>(", "));
+
+		return leftValue.like(rightValue);
+	}
+
 	private ObjectRelationship _fetchObjectRelationship(
 		ObjectDefinition objectDefinition, String objectRelationshipName) {
 
@@ -409,6 +431,17 @@ public class PredicateExpressionVisitorImpl
 		return (Column<?, Object>)_objectFieldLocalService.getColumn(
 			objectDefinition.getObjectDefinitionId(),
 			entityField.getFilterableName(null));
+	}
+
+	private com.liferay.petra.sql.dsl.expression.Expression<String>
+		_getDSLExpression(Object fieldName, ObjectDefinition objectDefinition) {
+
+		EntityField entityField = _getEntityField(fieldName, objectDefinition);
+
+		return (com.liferay.petra.sql.dsl.expression.Expression<String>)
+			_objectFieldLocalService.getColumn(
+				objectDefinition.getObjectDefinitionId(),
+				entityField.getFilterableName(null));
 	}
 
 	private EntityField _getEntityField(
@@ -606,7 +639,12 @@ public class PredicateExpressionVisitorImpl
 						ObjectFieldConstants.
 							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
-				predicate = _contains(left, right, objectDefinition);
+				if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
+					predicate = _eq(left, right, objectDefinition);
+				}
+				else {
+					predicate = _contains(left, right, objectDefinition);
+				}
 			}
 		}
 

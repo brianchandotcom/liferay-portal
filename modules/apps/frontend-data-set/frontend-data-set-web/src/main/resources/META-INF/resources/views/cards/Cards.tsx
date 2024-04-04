@@ -67,16 +67,6 @@ const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 				...action,
 				href: isLink(action.target, null) ? action.href : null,
 				onClick: (event: Event) => {
-					if (onActionDropdownItemClick) {
-						onActionDropdownItemClick({
-							action,
-							event,
-							itemData: item,
-							loadData,
-							openSidePanel,
-						});
-					}
-					else {
 						handleActionClick({
 							action,
 							event,
@@ -90,8 +80,7 @@ const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 							openSidePanel,
 							toggleItemInlineEdit,
 						});
-					}
-				},
+				}
 			}))}
 			description={localizedDescription}
 			href={(schema.link && item[schema.link]) || null}

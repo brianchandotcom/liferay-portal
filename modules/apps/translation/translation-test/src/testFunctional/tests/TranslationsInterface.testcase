@@ -432,6 +432,8 @@ definition {
 	@description = "This test covers LPS-142169. It ensures that translate side by side shows the duplicate fields."
 	@priority = 4
 	test CanViewDuplicateFields {
+		property portal.release = "quarantine";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();

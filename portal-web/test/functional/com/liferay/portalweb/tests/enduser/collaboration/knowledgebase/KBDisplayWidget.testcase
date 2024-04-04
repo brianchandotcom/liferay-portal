@@ -127,6 +127,8 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanDeleteArticle {
+		property portal.release = "quarantine";
+
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",

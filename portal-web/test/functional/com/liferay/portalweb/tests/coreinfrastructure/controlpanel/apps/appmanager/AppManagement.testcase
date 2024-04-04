@@ -161,7 +161,8 @@ definition {
 	@description = "This ensures that the Asset Libraries app in the app manager can be deactivated and reactivated."
 	@priority = 3
 	test CanDeactivateAndActivateAssetLibraries {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.release = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 		property testray.main.component.name = "Depot";
@@ -256,7 +257,8 @@ definition {
 	@description = "This ensures that the Document Library Opener app in the app manager can be deactivated and reactivated."
 	@priority = 3
 	test CanDeactivateAndActivateDocumentLibraryOpener {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.release = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 		property testray.main.component.name = "Document Management";

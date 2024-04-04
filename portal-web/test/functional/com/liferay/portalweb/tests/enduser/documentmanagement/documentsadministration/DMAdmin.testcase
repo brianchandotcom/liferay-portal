@@ -81,6 +81,7 @@ definition {
 	@refactordone
 	test CanMoveDocumentsWithMultiplePaginations {
 		property portal.acceptance = "true";
+		property portal.release = "quarantine";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 

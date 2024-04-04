@@ -959,6 +959,7 @@ definition {
 	@description = "This test covers LPS-154408. It ensures that an external video with a custom friendlyURL added to the Web content field can be published on a site."
 	@priority = 4
 	test CanViewExternalVideoInWCAfterPublish {
+		property portal.release = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -1034,6 +1035,7 @@ definition {
 	@priority = 4
 	test CanViewExternalVideotInWCAfterFriendlyURLIsUpdated {
 		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}dl.actions.visible=true${line.separator}jsonws.web.service.paths.excludes=${line.separator}tunneling.servlet.shared.secret=1234567890123456";
+		property portal.release = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

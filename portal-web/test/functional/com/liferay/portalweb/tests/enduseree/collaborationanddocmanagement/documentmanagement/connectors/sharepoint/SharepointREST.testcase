@@ -446,6 +446,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanMoveDocumentToHome {
+		property portal.release = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

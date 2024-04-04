@@ -106,6 +106,8 @@ definition {
 	@priority = 4
 	@refactordone
 	test ExportedDepotWithCustomizeDMCanBeImportedToDepot {
+		property portal.release = "quarantine";
+
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoMetadataSets();

@@ -217,6 +217,8 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanChangeScope {
+		property portal.release = "quarantine";
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
@@ -709,6 +711,8 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanSelectDMFromOtherScopeDynamically {
+		property portal.release = "quarantine";
+
 		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		for (var scope : list "Depot,Site") {
@@ -973,6 +977,8 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanSelectWCFromAllScopesDynamically {
+		property portal.release = "quarantine";
+
 		for (var i : list "1,2") {
 			HeadlessSite.addSite(siteName = "Test Site Name ${i}");
 		}

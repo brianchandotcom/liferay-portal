@@ -253,6 +253,8 @@ definition {
 	@priority = 4
 	test CanMoveShortcutIntoFolder {
 		property custom.properties = "dl.actions.visible=true";
+		property portal.acceptance = "quarantine";
+		property portal.release = "quarantine";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

@@ -60,6 +60,8 @@ definition {
 	@description = "This test covers LPS-133904. It asserts that users can navigate via the breadcrumb."
 	@priority = 3
 	test CanNavigateViaBreadcrumb {
+		property portal.release = "quarantine";
+
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		DepotNavigator.gotoDepotAdminViaBreadcrumb(

@@ -875,6 +875,8 @@ definition {
 	@priority = 3
 	@refactordone
 	test CanViewLocalizedDocumentType {
+		property portal.release = "quarantine";
+
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(

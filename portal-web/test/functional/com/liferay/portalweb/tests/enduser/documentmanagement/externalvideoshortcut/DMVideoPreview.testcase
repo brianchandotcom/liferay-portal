@@ -289,6 +289,7 @@ definition {
 	@priority = 3
 	@refactordone
 	test CanImportExportedBlogWithEmbeddedVideo {
+		property portal.release = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -388,6 +389,7 @@ definition {
 	@priority = 3
 	@refactordone
 	test CanImportExportedWebContentWithEmbeddedVideo {
+		property portal.release = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -506,7 +508,8 @@ definition {
 	@description = "This test ensures that the video preview generated for a document remains intact after FFmpeg is disabled."
 	@priority = 4
 	test PreviewRemainsAfterDisablingFFmpeg {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.release = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

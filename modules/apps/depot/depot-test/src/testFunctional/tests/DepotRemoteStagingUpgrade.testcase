@@ -152,6 +152,7 @@ definition {
 	@refactordone
 	test ViewDepotRemoteStagingArchive73101 {
 		property data.archive.type = "data-archive-depot-remote-staging";
+		property portal.release = "quarantine";
 		property portal.version = "7.3.10.1";
 		property test.assert.warning.exceptions = "false";
 

@@ -30,6 +30,7 @@ export class ApplicationsMenuPage {
 	private readonly paymentsMenuItem: Locator;
 	private readonly processBuilderItem: Locator;
 	private readonly productsMenuItem: Locator;
+	private readonly queueMenuItem: Locator;
 	private readonly serviceAccountsItem: Locator;
 	private readonly sitesItem: Locator;
 	private readonly systemSettingsItem: Locator;
@@ -115,6 +116,10 @@ export class ApplicationsMenuPage {
 		this.productsMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Products',
+		});
+		this.queueMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Queue',
 		});
 		this.serviceAccountsItem = page.getByRole('menuitem', {
 			exact: true,
@@ -253,6 +258,11 @@ export class ApplicationsMenuPage {
 	async goToProducts() {
 		await this.goToCommercePanel();
 		await this.productsMenuItem.click();
+	}
+
+	async goToQueue() {
+		await this.goToControlPanel();
+		await this.queueMenuItem.click();
 	}
 
 	async goToSite(name: string = 'Liferay DXP') {

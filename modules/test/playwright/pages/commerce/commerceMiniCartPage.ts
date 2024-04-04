@@ -21,6 +21,7 @@ export class CommerceMiniCartPage {
 	readonly quickAddToCartSku: (sku: string) => Locator;
 	readonly searchProductsInput: Locator;
 	readonly showOptionsButton: Locator;
+	readonly submitButton: Locator;
 	readonly unitOfMeasureTableLabel: Locator;
 
 	constructor(page: Page) {
@@ -54,6 +55,7 @@ export class CommerceMiniCartPage {
 			exact: true,
 			name: 'Show Options',
 		});
+		this.submitButton = page.getByRole('button', {name: 'Submit'});
 		this.unitOfMeasureTableLabel = page.getByText('Unit of Measure Table', {
 			exact: true,
 		});

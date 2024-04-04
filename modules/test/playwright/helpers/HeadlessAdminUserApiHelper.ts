@@ -61,9 +61,30 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
+	async deleteRoleUserAccountAssociation(
+		roleId: number,
+		userAccountId: number
+	) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/roles/${roleId}/association/user-account/${userAccountId}`
+		);
+	}
+
 	async getSiteByFriendlyUrlPath(friendlyUrlPath: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/by-friendly-url-path/${friendlyUrlPath}`
+		);
+	}
+
+	async getRoles(search: string) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/roles?search=${search}`
+		);
+	}
+
+	async getUserAccountByEmailAddress(emailAddress: string) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/user-accounts/by-email-address/${emailAddress}`
 		);
 	}
 
@@ -71,6 +92,16 @@ export class HeadlessAdminUserApiHelper {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/accounts`,
 			{name: 'Account' + getRandomInt(), ...(account || {})}
+		);
+	}
+
+	async postRoleUserAccountAssociation(
+		roleId: number,
+		userAccountId: number
+	) {
+		return this.apiHelpers.postResponse(
+			`${this.apiHelpers.baseUrl}${this.basePath}/roles/${roleId}/association/user-account/${userAccountId}`,
+			{}
 		);
 	}
 

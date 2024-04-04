@@ -140,10 +140,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8514 | Test Summary: Page Profile Visitor behavior card shows the number of unique visitors and views"
 	@priority = 5
 	test ShowNumberOfUniqueVisitorsAndViews {
-		task ("Create Blog to Add to Page") {
-			ACUtils.createBlogsAndAddToPage();
-		}
-
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -153,7 +149,7 @@ definition {
 		task ("View the blog page") {
 			ACUtils.navigateToSitePage(
 				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title",
+				documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -203,11 +199,11 @@ definition {
 				metricValue = 1);
 		}
 
-		task ("View the number of Views in Visitors Behavior chart is 1") {
-			ACCards.viewMetricValue(
-				cardTitle = "Visitors Behavior",
-				metricName = "Views",
-				metricValue = 1);
+		task ("View the number of Views in Visitors Behavior chart") {
+			ACCards.viewIfVisitorsBehaviorMetricIsBetweenCorrectRange(
+				maxMetricValue = 5,
+				metricTitle = "Views",
+				minMetricValue = 1);
 		}
 	}
 

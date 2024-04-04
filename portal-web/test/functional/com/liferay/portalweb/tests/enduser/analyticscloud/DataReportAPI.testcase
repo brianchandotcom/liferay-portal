@@ -155,7 +155,7 @@ definition {
 	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13504 | Test Summary: Check that you can access data from all existing Documents and Media"
 	@priority = 4
 	test RequestToAccessDataForAllDocumentsAndMedia {
-		var documentsMediaTitleList = "DM AC Title 1,DM AC Title 2";
+		var documentsMediaTitleList = "DM AC Title 1,DM AC Title 1,DM AC Title 1,DM AC Title 1,DM AC Title 2,DM AC Title 2,DM AC Title 2,DM AC Title 2";
 		var type = "documents-and-media";
 		var range = "rangeKey";
 		var rangeValue = 0;

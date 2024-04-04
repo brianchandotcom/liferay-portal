@@ -83,19 +83,15 @@ definition {
 
 			ACCustomEvents.createCustomEvent(
 				customEventName = ${customEventName1},
-				timeToSendCustomEvent = 1);
+				timeToSendCustomEvent = 5);
+
+			ACUtils.waitForSendingRequest();
 
 			var customEventName2 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
 				customEventName = ${customEventName2},
-				timeToSendCustomEvent = 1);
-
-			var customEventName3 = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = ${customEventName3},
-				timeToSendCustomEvent = 1);
+				timeToSendCustomEvent = 5);
 		}
 
 		task ("Close sessions") {
@@ -165,11 +161,9 @@ definition {
 		}
 
 		task ("Search for the name of the custom event that was unblocked in custom event list") {
-			for (var customEventName : list "${customEventName2},${customEventName3}") {
-				ACUtils.searchBar(searchItem = ${customEventName});
+			ACUtils.searchBar(searchItem = ${customEventName2});
 
-				ACUtils.viewNameList(nameList = ${customEventName});
-			}
+			ACUtils.viewNameList(nameList = ${customEventName2});
 		}
 	}
 

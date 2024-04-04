@@ -76,7 +76,7 @@ definition {
 		task ("View the blogs page as different users") {
 			ACUtils.navigateToSitePageWithUser(
 				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title",
+				documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
 				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");

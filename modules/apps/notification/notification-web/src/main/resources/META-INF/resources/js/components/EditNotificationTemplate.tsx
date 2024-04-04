@@ -12,19 +12,17 @@ import {
 	openToast,
 	useForm,
 } from '@liferay/object-js-components-web';
+import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {defaultLanguageId} from '../util/constants';
-
-import './EditNotificationTemplate.scss';
-
-import classNames from 'classnames';
-
 import {BasicInfoContainer} from './BasicInfoContainer/BasicInfoContainer';
 import ContentContainer from './ContentContainer/ContentContainer';
 import DefinitionOfTermsContainer from './DefinitionOfTermsContainer/DefinitionOfTermsContainer';
 import {SettingsContainer} from './SettingsContainer/SettingsContainer';
+
+import './EditNotificationTemplate.scss';
 
 const HEADERS = new Headers({
 	'Accept': 'application/json',
@@ -97,7 +95,10 @@ export default function EditNotificationTemplate({
 				errors.fromName = constantsUtils.REQUIRED_MSG;
 			}
 
-			if (!values.recipients[0].to[defaultLanguageId]) {
+			if (
+				!Array.isArray(values.recipients[0].to) &&
+				!values.recipients[0].to[defaultLanguageId]
+			) {
 				errors.to = constantsUtils.REQUIRED_MSG;
 			}
 		}
@@ -160,7 +161,9 @@ export default function EditNotificationTemplate({
 		recipientInitialValue = [
 			{
 				bcc: '',
+				bccType: 'email',
 				cc: '',
+				ccType: 'email',
 				from: '',
 				fromName: {
 					[defaultLanguageId]: '',
@@ -169,6 +172,7 @@ export default function EditNotificationTemplate({
 				to: {
 					[defaultLanguageId]: '',
 				},
+				toType: 'email',
 			} as EmailRecipients,
 		];
 	}
@@ -339,6 +343,7 @@ export default function EditNotificationTemplate({
 							})}
 						>
 							<SettingsContainer
+								baseResourceURL={baseResourceURL}
 								errors={errors}
 								selectedLocale={selectedLocale}
 								setValues={setValues}

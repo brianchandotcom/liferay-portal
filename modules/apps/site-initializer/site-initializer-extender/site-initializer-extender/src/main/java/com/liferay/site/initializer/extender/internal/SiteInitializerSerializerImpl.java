@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -68,7 +69,9 @@ import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
@@ -539,6 +542,7 @@ public class SiteInitializerSerializerImpl
 	private void _serializeUserAccounts(long groupId, ZipWriter zipWriter)
 		throws Exception {
 
+		Map<String, String[]> usersEmailAddressToRoles = new HashMap<>();
 		Set<AccountEntry> accountEntries = new TreeSet<>();
 		Set<Organization> organizations = new TreeSet<>();
 		Set<Role> roles = new TreeSet<>();
@@ -561,6 +565,9 @@ public class SiteInitializerSerializerImpl
 					}
 
 					roles.addAll(userRoles);
+					usersEmailAddressToRoles.put(
+						user.getEmailAddress(),
+						ListUtil.toArray(userRoles, Role.NAME_ACCESSOR));
 
 					List<AccountEntry> userAccountEntries =
 						_accountEntryLocalService.getUserAccountEntries(
@@ -646,6 +653,38 @@ public class SiteInitializerSerializerImpl
 					);
 				}),
 			zipWriter);
+		_addZipEntry(
+			"user-groups.json",
+			JSONUtil.toJSONArray(
+				_userGroupLocalService.getGroupUserGroups(groupId),
+				userGroup -> JSONUtil.put(
+					"description", userGroup.getDescription()
+				).put(
+					"externalReferenceCode",
+					userGroup.getExternalReferenceCode()
+				).put(
+					"name", userGroup.getName()
+				)),
+			zipWriter);
+		_addZipEntry(
+			"user-roles.json",
+			JSONUtil.toJSONArray(
+				usersEmailAddressToRoles.keySet(),
+				userEmailAddress -> JSONUtil.put(
+					"emailAddress", userEmailAddress
+				).put(
+					"roles",
+					JSONUtil.toJSONArray(
+						usersEmailAddressToRoles.get(userEmailAddress),
+						role -> {
+							if (StringUtil.equals(role, RoleConstants.USER)) {
+								return null;
+							}
+
+							return role;
+						})
+				)),
+			zipWriter);
 	}
 
 	@Reference
@@ -700,6 +739,9 @@ public class SiteInitializerSerializerImpl
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

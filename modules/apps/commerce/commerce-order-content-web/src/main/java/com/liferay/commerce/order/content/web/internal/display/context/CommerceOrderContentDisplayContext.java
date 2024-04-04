@@ -458,8 +458,8 @@ public class CommerceOrderContentDisplayContext {
 
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
-				"/o/commerce-returns/", "pencil", "createCommerceReturn",
-				LanguageUtil.get(_httpServletRequest, "select"), "post", null,
+				null, "pencil", "createCommerceReturn",
+				LanguageUtil.get(_httpServletRequest, "select"), null, null,
 				"headless"));
 	}
 
@@ -1011,13 +1011,20 @@ public class CommerceOrderContentDisplayContext {
 			).put(
 				"commerceOrderId", commerceOrder.getCommerceOrderId()
 			).put(
+				"commerceOrderItemIds",
+				ParamUtil.getLongValues(
+					_httpServletRequest, "commerceOrderItemIds")
+			).put(
+				"commerceReturnId",
+				ParamUtil.getLong(_httpServletRequest, "commerceReturnId")
+			).put(
 				"redirect",
 				PortletURLBuilder.create(
 					PortletProviderUtil.getPortletURL(
 						_httpServletRequest, CommerceReturn.class.getName(),
 						PortletProvider.Action.EDIT)
 				).setMVCRenderCommandName(
-					"/commerce_return/view_commerce_return"
+					"/commerce_return_content/view_commerce_return"
 				).setParameter(
 					"commerceReturnId", ""
 				).buildString()
@@ -1028,6 +1035,19 @@ public class CommerceOrderContentDisplayContext {
 
 			return new HashMap<>();
 		}
+	}
+
+	public List<Object> getReturnableSelectedItems() {
+		List<Object> returnableSelectedItems = new ArrayList<>();
+
+		long[] commerceOrderItemIds = ParamUtil.getLongValues(
+			_httpServletRequest, "commerceOrderItemIds");
+
+		for (long commerceOrderItemId : commerceOrderItemIds) {
+			returnableSelectedItems.add(Math.toIntExact(commerceOrderItemId));
+		}
+
+		return returnableSelectedItems;
 	}
 
 	public SearchContainer<CommerceOrder> getSearchContainer()

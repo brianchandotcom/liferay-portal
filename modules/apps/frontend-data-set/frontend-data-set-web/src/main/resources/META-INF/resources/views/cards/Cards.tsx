@@ -11,8 +11,9 @@ import React, {useContext, useRef} from 'react';
 import FrontendDataSetContext, {
 	IFrontendDataSetContext,
 } from '../../FrontendDataSetContext';
-import handleActionClick from '../../utils/actionItems/handleActionClick';
 import {IItemsActions} from '../../index';
+import filterItemActions from '../../utils/actionItems/filterItemActions';
+import handleActionClick from '../../utils/actionItems/handleActionClick';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
 import getRandomId from '../../utils/getRandomId';
 import isLink from '../../utils/isLink';
@@ -58,10 +59,11 @@ const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 		?.value;
 	const localizedTitle = getLocalizedValue(item, schema.title)?.value || '';
 	const selectedItemKey = selectedItemsKey && item[selectedItemsKey];
+	const formattedActions = filterItemActions(actionsRef.current, item) as any;
 
 	return (
 		<ClayCardWithInfo
-			actions={actionsRef.current?.map((action: IItemsActions) => ({
+			actions={formattedActions?.map((action: IItemsActions) => ({
 				...action,
 				href: isLink(action.target, null) ? action.href : null,
 				onClick: (event: Event) => {
@@ -102,7 +104,7 @@ const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 					: undefined
 			}
 			selected={cardSelected}
-			stickerProps={schema.sticker && item[schema.sticker] || null}
+			stickerProps={(schema.sticker && item[schema.sticker]) || null}
 			symbol={schema.symbol && item[schema.symbol]}
 			title={localizedTitle}
 		/>

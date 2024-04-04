@@ -545,17 +545,11 @@ definition {
 		}
 
 		task ("Check that the chart appears for the total tab") {
-			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				columnInformationValue = "ac page - site name - ${dataSource}",
-				totalEventsValue = 6);
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
 
-			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				columnInformationValue = "custom 2 - site name - ${dataSource}",
-				totalEventsValue = 3);
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "custom 2 - site name - ${dataSource}");
 
-			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				columnInformationValue = "custom 1 - site name - ${dataSource}",
-				totalEventsValue = 1);
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "custom 1 - site name - ${dataSource}");
 		}
 
 		task ("Switch tab to unique") {
@@ -563,17 +557,11 @@ definition {
 		}
 
 		task ("Check that the chart appears for the unique tab") {
-			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				columnInformationValue = "ac page - site name - ${dataSource}",
-				totalEventsValue = 1);
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
 
-			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				columnInformationValue = "custom 2 - site name - ${dataSource}",
-				totalEventsValue = 1);
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "custom 2 - site name - ${dataSource}");
 
-			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				columnInformationValue = "custom 1 - site name - ${dataSource}",
-				totalEventsValue = 1);
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "custom 1 - site name - ${dataSource}");
 		}
 
 		task ("Switch tab to average") {
@@ -581,17 +569,11 @@ definition {
 		}
 
 		task ("Check that the chart appears for the average tab") {
-			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				columnInformationValue = "ac page - site name - ${dataSource}",
-				totalEventsValue = 6);
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSource}");
 
-			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				columnInformationValue = "custom 2 - site name - ${dataSource}",
-				totalEventsValue = 3);
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "custom 2 - site name - ${dataSource}");
 
-			ACEventAnalysis.viewTotalNumberRelatedToColumnInformation(
-				columnInformationValue = "custom 1 - site name - ${dataSource}",
-				totalEventsValue = 1);
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "custom 1 - site name - ${dataSource}");
 		}
 	}
 

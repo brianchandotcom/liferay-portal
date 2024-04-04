@@ -1,0 +1,27 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.user.dto.v1_0.Role",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"availableLanguages": [
+				"en-US"
+			],
+			"description_i18n": {
+				"en-US": "Business Development Managers are responsible for the final review and approval of distributor applications."
+			},
+			"externalReferenceCode": "D4B8_BUSINESS_DEVELOPMENT_MANAGER",
+			"name": "D4B8 Business Development Manager",
+			"name_i18n": {
+				"en-US": "D4B8 Business Development Manager"
+			},
+			"roleType": "regular"
+		}
+	]
+}

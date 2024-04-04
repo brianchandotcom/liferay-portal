@@ -11,6 +11,7 @@ liferay-clarity-batch-oauth-application-headless-server:
     name: Liferay Clarity Batch OAuth Application Headless Server
     scopes:
         - Liferay.Headless.Admin.List.Type.everything
+        - Liferay.Headless.Admin.User.everything
         - Liferay.Headless.Admin.Workflow.everything
         - Liferay.Headless.Batch.Engine.everything
     type: oAuthApplicationHeadlessServer

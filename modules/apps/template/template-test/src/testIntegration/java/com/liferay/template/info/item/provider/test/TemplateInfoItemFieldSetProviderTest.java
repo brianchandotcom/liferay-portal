@@ -11,6 +11,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -189,6 +190,42 @@ public class TemplateInfoItemFieldSetProviderTest {
 			infoFields.toString(),
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
 				journalArticleTemplateEntry.getTemplateEntryId(),
+			infoField.getName());
+	}
+
+	@Test
+	public void testGetInfoFieldSetByClassNameFromGlobalGroupWhenTemplateEntryExists()
+		throws PortalException {
+
+		long groupId = _serviceContext.getScopeGroupId();
+
+		_serviceContext.setScopeGroupId(_company.getGroupId());
+
+		TemplateEntry blogsEntryTemplateEntry =
+			TemplateTestUtil.addTemplateEntry(
+				BlogsEntry.class.getName(), StringPool.BLANK, _serviceContext);
+
+		_serviceContext.setScopeGroupId(groupId);
+
+		TemplateTestUtil.addTemplateEntry(
+			AssetCategory.class.getName(), StringPool.BLANK, _serviceContext);
+
+		InfoFieldSet infoFieldSet =
+			_templateInfoItemFieldSetProvider.getInfoFieldSet(
+				BlogsEntry.class.getName(), StringPool.BLANK);
+
+		List<InfoField<?>> infoFields = infoFieldSet.getAllInfoFields();
+
+		Assert.assertEquals(infoFields.toString(), 1, infoFields.size());
+
+		InfoField infoField = infoFields.get(0);
+
+		Assert.assertTrue(
+			infoField.getInfoFieldType() instanceof HTMLInfoFieldType);
+		Assert.assertEquals(
+			infoFields.toString(),
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				blogsEntryTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
 	}
 

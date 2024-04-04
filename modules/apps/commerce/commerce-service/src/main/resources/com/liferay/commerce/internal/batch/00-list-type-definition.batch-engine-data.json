@@ -62,11 +62,11 @@
 			"externalReferenceCode": "L_COMMERCE_RETURN_STATUSES",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "COMPLETE",
-					"key": "complete",
-					"name": "complete",
+					"externalReferenceCode": "COMPLETED",
+					"key": "completed",
+					"name": "completed",
 					"name_i18n": {
-						"en-US": "Complete"
+						"en-US": "Completed"
 					}
 				},
 				{

@@ -1134,6 +1134,25 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {roleByExternalReferenceCode(externalReferenceCode: ___){actions, availableLanguages, creator, dateCreated, dateModified, description, description_i18n, externalReferenceCode, id, name, name_i18n, rolePermissions, roleType}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the role by its external reference code."
+	)
+	public Role roleByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource -> roleResource.getRoleByExternalReferenceCode(
+				externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {role(roleId: ___){actions, availableLanguages, creator, dateCreated, dateModified, description, description_i18n, externalReferenceCode, id, name, name_i18n, rolePermissions, roleType}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the role.")
@@ -2722,6 +2741,28 @@ public class Query {
 					emailAddressResource.
 						getOrganizationByExternalReferenceCodeEmailAddressesPage(
 							_account.getExternalReferenceCode())));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class GetRoleByExternalReferenceCodeTypeExtension {
+
+		public GetRoleByExternalReferenceCodeTypeExtension(Account account) {
+			_account = account;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the role by its external reference code."
+		)
+		public Role roleByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_roleResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				roleResource -> roleResource.getRoleByExternalReferenceCode(
+					_account.getExternalReferenceCode()));
 		}
 
 		private Account _account;

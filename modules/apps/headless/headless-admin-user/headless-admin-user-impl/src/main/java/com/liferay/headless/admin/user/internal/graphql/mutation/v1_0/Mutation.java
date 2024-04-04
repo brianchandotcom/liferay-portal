@@ -1474,6 +1474,44 @@ public class Mutation {
 				externalReferenceCode, role));
 	}
 
+	@GraphQLField(
+		description = "Unassociates a role by external reference code with a user account"
+	)
+	public boolean deleteRoleByExternalReferenceCodeUserAccountAssociation(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("userAccountId") Long userAccountId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource ->
+				roleResource.
+					deleteRoleByExternalReferenceCodeUserAccountAssociation(
+						externalReferenceCode, userAccountId));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Associates a role by external reference code with a user account"
+	)
+	public boolean createRoleByExternalReferenceCodeUserAccountAssociation(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("userAccountId") Long userAccountId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource ->
+				roleResource.
+					postRoleByExternalReferenceCodeUserAccountAssociation(
+						externalReferenceCode, userAccountId));
+
+		return true;
+	}
+
 	@GraphQLField(description = "Unassociates a role with a user account")
 	public boolean deleteRoleUserAccountAssociation(
 			@GraphQLName("roleId") Long roleId,

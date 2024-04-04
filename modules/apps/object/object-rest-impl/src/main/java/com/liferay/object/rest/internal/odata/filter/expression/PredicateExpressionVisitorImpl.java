@@ -791,6 +791,30 @@ public class PredicateExpressionVisitorImpl
 				name -> _getColumn(name, objectDefinition), fieldValue);
 		}
 
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinition.getObjectDefinitionId(),
+			String.valueOf(fieldName));
+
+		if ((objectField != null) &&
+			StringUtil.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+			Object value = _getValue(fieldName, objectDefinition, fieldValue);
+
+			com.liferay.petra.sql.dsl.expression.Expression<String> rightValue =
+				DSLFunctionFactoryUtil.concat(
+					new Scalar<>("%, " + value + "%, %"));
+
+			com.liferay.petra.sql.dsl.expression.Expression<String> leftValue =
+				DSLFunctionFactoryUtil.concat(
+					new Scalar<>(", "),
+					_getDSLExpression(fieldName, objectDefinition),
+					new Scalar<>(", "));
+
+			return leftValue.like(rightValue);
+		}
+
 		return _startsWith(
 			_getColumn(fieldName, objectDefinition),
 			_getValue(fieldName, objectDefinition, fieldValue));

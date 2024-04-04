@@ -60,7 +60,6 @@ import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PrecisionDecimalObjectFieldBuilder;
 import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
-import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -1189,25 +1188,16 @@ public class BatchEngineBrokerTest {
 							"testAutoIncrementField"
 						).objectFieldSettings(
 							Arrays.asList(
-								new ObjectFieldSettingBuilder(
-								).name(
+								_createObjectFieldSetting(
 									ObjectFieldSettingConstants.
-										NAME_INITIAL_VALUE
-								).value(
-									"1"
-								).build(),
-								new ObjectFieldSettingBuilder(
-								).name(
-									ObjectFieldSettingConstants.NAME_PREFIX
-								).value(
-									"prefix-"
-								).build(),
-								new ObjectFieldSettingBuilder(
-								).name(
-									ObjectFieldSettingConstants.NAME_SUFFIX
-								).value(
-									"-suffix"
-								).build())
+										NAME_INITIAL_VALUE,
+									"1"),
+								_createObjectFieldSetting(
+									ObjectFieldSettingConstants.NAME_PREFIX,
+									"prefix-"),
+								_createObjectFieldSetting(
+									ObjectFieldSettingConstants.NAME_SUFFIX,
+									"-suffix"))
 						).build(),
 						new BooleanObjectFieldBuilder(
 						).labelMap(

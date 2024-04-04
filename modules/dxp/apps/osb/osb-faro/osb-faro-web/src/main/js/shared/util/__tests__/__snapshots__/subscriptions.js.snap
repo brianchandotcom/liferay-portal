@@ -15,7 +15,7 @@ Immutable.Record {
       "limit": 0,
       "status": 0,
     },
-    "usersCount": undefined,
+    "syncedIndividualsCount": undefined,
   },
   "name": undefined,
   "startDate": undefined,

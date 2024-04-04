@@ -87,7 +87,7 @@ public class ObjectDefinitionUtil {
 	}
 
 	private static final String[] _ALLOWED_INVOKER_BUNDLE_SYMBOLIC_NAMES = {
-		"com.liferay.commerce.service",
+		"com.liferay.commerce.service", "com.liferay.cookies.impl",
 		"com.liferay.frontend.data.set.views.web",
 		"com.liferay.headless.builder.impl", "com.liferay.list.type.service",
 		"com.liferay.notification.service", "com.liferay.object.service"
@@ -133,6 +133,14 @@ public class ObjectDefinitionUtil {
 			"FDSSort", "/data-set-manager/sorts"
 		).put(
 			"FDSView", "/data-set-manager/views"
+		).put(
+			"FunctionalCookieEntry", "/functional-cookies-entries"
+		).put(
+			"NecessaryCookieEntry", "/necessary-cookies-entries"
+		).put(
+			"PerformanceCookieEntry", "/performance-cookies-entries"
+		).put(
+			"PersonalizationCookieEntry", "/personalization-cookies-entries"
 		).build();
 	private static final Map<String, String>
 		_allowedUnmodifiableSystemObjectDefinitionNames = HashMapBuilder.put(

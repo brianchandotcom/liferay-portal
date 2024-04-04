@@ -33,6 +33,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Ivica Cardic
@@ -146,18 +148,8 @@ public class BatchEngineImportTaskItemReaderUtil {
 					fieldNameParts[0]);
 
 				if (Validator.isNotNull(targetFieldName)) {
-					if (fieldNameParts[1].matches(
-							_MULTISELECT_PICKLIST_KEY_REGEX)) {
-
-						List<Object> list =
-							(List<Object>)
-								targetFieldNameValueMap.computeIfAbsent(
-									targetFieldName, key -> new ArrayList<>());
-
-						list.add(entry.getValue());
-					}
-					else if (Objects.equals(fieldNameParts[1], "key") ||
-							 Objects.equals(fieldNameParts[1], "name")) {
+					if (Objects.equals(fieldNameParts[1], "key") ||
+						Objects.equals(fieldNameParts[1], "name")) {
 
 						Map<String, Object> map =
 							(Map<String, Object>)
@@ -165,6 +157,21 @@ public class BatchEngineImportTaskItemReaderUtil {
 									targetFieldName, key -> new HashMap<>());
 
 						map.put(fieldNameParts[1], entry.getValue());
+
+						continue;
+					}
+
+					Matcher multiselectPicklistKeyMatcher =
+						_multiselectPicklistKeyPattern.matcher(
+							fieldNameParts[1]);
+
+					if (multiselectPicklistKeyMatcher.matches()) {
+						List<Object> list =
+							(List<Object>)
+								targetFieldNameValueMap.computeIfAbsent(
+									targetFieldName, key -> new ArrayList<>());
+
+						list.add(entry.getValue());
 					}
 				}
 			}
@@ -199,10 +206,11 @@ public class BatchEngineImportTaskItemReaderUtil {
 		};
 	}
 
-	private static final String _MULTISELECT_PICKLIST_KEY_REGEX = "key_\\d+";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineImportTaskItemReaderUtil.class);
+
+	private static final Pattern _multiselectPicklistKeyPattern =
+		Pattern.compile("key_\\d+");
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{

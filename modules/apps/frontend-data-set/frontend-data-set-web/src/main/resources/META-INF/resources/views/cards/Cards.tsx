@@ -4,7 +4,6 @@
  */
 
 import {ClayCardWithInfo} from '@clayui/card';
-import ClayEmptyState from '@clayui/empty-state';
 import classNames from 'classnames';
 import React, {useContext, useRef} from 'react';
 
@@ -105,7 +104,7 @@ const Cards = ({items, schema}: {items: Array<any>; schema: ICardSchema}) => {
 		FrontendDataSetContext
 	);
 
-	return items?.length ? (
+	return (
 		<div
 			className={classNames(
 				'cards-container mb-n4',
@@ -129,12 +128,6 @@ const Cards = ({items, schema}: {items: Array<any>; schema: ICardSchema}) => {
 				})}
 			</div>
 		</div>
-	) : (
-		<ClayEmptyState
-			description={Liferay.Language.get('sorry,-no-results-were-found')}
-			imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.gif`}
-			title={Liferay.Language.get('no-results-found')}
-		/>
 	);
 };
 

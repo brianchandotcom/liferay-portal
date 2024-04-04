@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
@@ -21,7 +20,7 @@ import {getLocalizedValue} from '../../utils/getLocalizedValue';
 const List = ({header, items, schema}) => {
 	const {selectedItemsKey} = useContext(FrontendDataSetContext);
 
-	return items?.length ? (
+	return (
 		<ClayLayout.Sheet
 			className={classNames('list-sheet', {
 				'no-header': !header?.title,
@@ -43,12 +42,6 @@ const List = ({header, items, schema}) => {
 				))}
 			</ClayList>
 		</ClayLayout.Sheet>
-	) : (
-		<ClayEmptyState
-			description={Liferay.Language.get('sorry,-no-results-were-found')}
-			imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
-			title={Liferay.Language.get('no-results-found')}
-		/>
 	);
 };
 

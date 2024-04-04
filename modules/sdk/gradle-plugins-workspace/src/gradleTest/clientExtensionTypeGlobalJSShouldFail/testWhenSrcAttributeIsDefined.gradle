@@ -1,4 +1,4 @@
 ext.expectedErrorMessage = "The key 'src' is not allowed as a script element attribute"
 ext.taskPath = ":with-src-global-js-client-extension:validateClientExtensions"
 
-apply from: "./_baseShouldFailTestCase.gradle"
+apply from: project.property("commonScript.shouldFailTestCase.gradle")

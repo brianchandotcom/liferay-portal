@@ -85,7 +85,7 @@ const baseFilters: Filter = {
 	caseType: {
 		label: i18n.translate('case-type'),
 		name: 'caseType',
-		resource: '/casetypes?fields=id,name&sort=name:asc&pageSize=100',
+		resource: '/casetypes?fields=id,name&pageSize=100&sort=name:asc',
 		transformData(item) {
 			return dataToOptions(transformData<TestrayCaseType>(item));
 		},
@@ -94,11 +94,15 @@ const baseFilters: Filter = {
 	component: {
 		label: i18n.translate('component'),
 		name: 'componentId',
-		resource: ({projectId}) =>
-			`/components?fields=id,name&sort=name:asc&pageSize=200&filter=${SearchBuilder.eq(
+		resource: ({projectId}) => {
+			const filter = `${SearchBuilder.eq(
 				'projectId',
 				projectId as string
-			)}`,
+			)}`;
+
+			return `/components?fields=id,name&filter=${filter}&pageSize=200&sort=name:asc`;
+		},
+
 		transformData(item) {
 			return dataToOptions(transformData<TestrayComponent>(item));
 		},
@@ -146,11 +150,14 @@ const baseFilters: Filter = {
 	productVersion: {
 		label: i18n.translate('product-version'),
 		name: 'productVersion',
-		resource: ({projectId}) =>
-			`/productversions?fields=id,name&sort=name:asc&pageSize=100&filter=${SearchBuilder.eq(
+		resource: ({projectId}) => {
+			const filter = `${SearchBuilder.eq(
 				'projectId',
 				projectId as string
-			)}`,
+			)}`;
+
+			return `/productversions?fields=id,name&filter=${filter}&pageSize=100&sort=name:asc`;
+		},
 		transformData(item) {
 			return dataToOptions(transformData<TestrayProductVersion>(item));
 		},
@@ -168,11 +175,14 @@ const baseFilters: Filter = {
 	routine: {
 		label: i18n.translate('routines'),
 		name: 'routines',
-		resource: ({projectId}) =>
-			`/routines?fields=id,name&pageSize=100&filter=${SearchBuilder.eq(
+		resource: ({projectId}) => {
+			const filter = `${SearchBuilder.eq(
 				'projectId',
 				projectId as string
-			)}`,
+			)}`;
+
+			return `/routines?fields=id,name&filter=${filter}&pageSize=100`;
+		},
 		transformData(item) {
 			return dataToOptions(transformData<TestrayRoutine>(item));
 		},
@@ -204,11 +214,14 @@ const baseFilters: Filter = {
 	team: {
 		label: i18n.translate('team'),
 		name: 'teamId',
-		resource: ({projectId}) =>
-			`/teams?fields=id,name&sort=name:asc&pageSize=100&filter=${SearchBuilder.eq(
+		resource: ({projectId}) => {
+			const filter = `${SearchBuilder.eq(
 				'projectId',
 				projectId as string
-			)}`,
+			)}`;
+
+			return `/teams?fields=id,name&filter=${filter}&pageSize=100&sort=name:asc`;
+		},
 		transformData(item) {
 			return dataToOptions(transformData<TestrayTeam>(item));
 		},
@@ -848,7 +861,7 @@ const filterSchema = {
 				label: i18n.translate('routine-name'),
 				name: 'buildToTasks/r_routineToBuilds_c_routineId',
 				resource:
-					'/routines?fields=id,name,routineToProjects.name&nestedFields=routineToProjects&sort=name:asc&pageSize=100',
+					'/routines?fields=id,name,routineToProjects.name&nestedFields=routineToProjects&pageSize=100&sort=name:asc',
 				transformData(item) {
 					const transformRoutineData = (routine: TestrayRoutine) => ({
 						label: `${routine.routineToProjects?.name} / ${routine.name}`,

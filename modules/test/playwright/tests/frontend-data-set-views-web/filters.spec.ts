@@ -92,6 +92,7 @@ test('Add the frontend data set sample widget', async ({
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: clientExtensionMenuItem,
+			timeout: 500,
 			trigger: filterButton,
 		});
 

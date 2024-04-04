@@ -65,6 +65,18 @@ public class LoginUtilityPageTest {
 	}
 
 	@Test
+	public void testAddForgotPasswordUtilityPageEntry() throws PortalException {
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				null, _serviceContext.getUserId(), _group.getGroupId(), 0, 0,
+				true, RandomTestUtil.randomString(),
+				LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD, 0,
+				_serviceContext);
+
+		Assert.assertNotNull(layoutUtilityPageEntry);
+	}
+
+	@Test
 	public void testAddLoginUtilityPageEntry() throws PortalException {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
@@ -85,6 +97,14 @@ public class LoginUtilityPageTest {
 
 	@Test
 	public void testDefaultUtilityPagesAfterSiteInitialization() {
+	}
+
+	@Test
+	public void testForgotPasswordUtilityPageTypeHasBeenRegistered() {
+		Assert.assertNotNull(
+			LayoutUtilityPageEntryViewRendererRegistryUtil.
+				getLayoutUtilityPageEntryViewRenderer(
+					LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD));
 	}
 
 	@Test

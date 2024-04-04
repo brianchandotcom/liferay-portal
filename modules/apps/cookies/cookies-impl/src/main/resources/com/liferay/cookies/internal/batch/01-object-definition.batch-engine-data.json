@@ -1,0 +1,690 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-10588",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT",
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"enableCategorization": true,
+			"externalReferenceCode": "L_FUNCTIONAL_COOKIE_ENTRY",
+			"label": {
+				"en_US": "Functional Cookie Entry"
+			},
+			"name": "FunctionalCookieEntry",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "COLLECTED_DATA",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Collected Data"
+					},
+					"name": "collectedData",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "EXPIRATION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Expiration"
+					},
+					"name": "expiration",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "HOST",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Host"
+					},
+					"name": "host",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
+					"state": true,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "PURPOSE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Purpose"
+					},
+					"name": "purpose",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Type"
+					},
+					"name": "type",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectViews": [
+				{
+					"defaultObjectView": true,
+					"name": {
+						"en_US": "Main"
+					},
+					"objectDefinitionExternalReferenceCode": "L_FUNCTIONAL_COOKIE_ENTRY",
+					"objectViewColumns": [
+						{
+							"label": {
+								"en_US": "Host"
+							},
+							"objectFieldName": "host",
+							"priority": 0
+						},
+						{
+							"label": {
+								"en_US": "Cookie Name"
+							},
+							"objectFieldName": "name",
+							"priority": 1
+						},
+						{
+							"label": {
+								"en_US": "Purpose"
+							},
+							"objectFieldName": "purpose",
+							"priority": 2
+						},
+						{
+							"label": {
+								"en_US": "Collected Data"
+							},
+							"objectFieldName": "collectedData",
+							"priority": 3
+						},
+						{
+							"label": {
+								"en_US": "Type"
+							},
+							"objectFieldName": "type",
+							"priority": 4
+						},
+						{
+							"label": {
+								"en_US": "Expiration"
+							},
+							"objectFieldName": "expiration",
+							"priority": 5
+						}
+					],
+					"objectViewFilterColumns": [
+					],
+					"objectViewSortColumns": [
+					]
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Functional Cookie Entries"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true
+		},
+		{
+			"enableCategorization": true,
+			"externalReferenceCode": "L_NECESSARY_COOKIE_ENTRY",
+			"label": {
+				"en_US": "Necessary Cookie Entry"
+			},
+			"name": "NecessaryCookieEntry",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "COLLECTED_DATA",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Collected Data"
+					},
+					"name": "collectedData",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "EXPIRATION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Expiration"
+					},
+					"name": "expiration",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "HOST",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Host"
+					},
+					"name": "host",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
+					"state": true,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "PURPOSE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Purpose"
+					},
+					"name": "purpose",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Type"
+					},
+					"name": "type",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectViews": [
+				{
+					"defaultObjectView": true,
+					"name": {
+						"en_US": "Main"
+					},
+					"objectDefinitionExternalReferenceCode": "L_NECESSARY_COOKIE_ENTRY",
+					"objectViewColumns": [
+						{
+							"label": {
+								"en_US": "Host"
+							},
+							"objectFieldName": "host",
+							"priority": 0
+						},
+						{
+							"label": {
+								"en_US": "Cookie Name"
+							},
+							"objectFieldName": "name",
+							"priority": 1
+						},
+						{
+							"label": {
+								"en_US": "Purpose"
+							},
+							"objectFieldName": "purpose",
+							"priority": 2
+						},
+						{
+							"label": {
+								"en_US": "Collected Data"
+							},
+							"objectFieldName": "collectedData",
+							"priority": 3
+						},
+						{
+							"label": {
+								"en_US": "Type"
+							},
+							"objectFieldName": "type",
+							"priority": 4
+						},
+						{
+							"label": {
+								"en_US": "Expiration"
+							},
+							"objectFieldName": "expiration",
+							"priority": 5
+						}
+					],
+					"objectViewFilterColumns": [
+					],
+					"objectViewSortColumns": [
+					]
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Necessary Cookie Entries"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true
+		},
+		{
+			"enableCategorization": true,
+			"externalReferenceCode": "L_PERFORMANCE_COOKIE_ENTRY",
+			"label": {
+				"en_US": "Performance Cookie Entry"
+			},
+			"name": "PerformanceCookieEntry",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "COLLECTED_DATA",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Collected Data"
+					},
+					"name": "collectedData",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "EXPIRATION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Expiration"
+					},
+					"name": "expiration",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "HOST",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Host"
+					},
+					"name": "host",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
+					"state": true,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "PURPOSE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Purpose"
+					},
+					"name": "purpose",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Type"
+					},
+					"name": "type",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectViews": [
+				{
+					"defaultObjectView": true,
+					"name": {
+						"en_US": "Main"
+					},
+					"objectDefinitionExternalReferenceCode": "L_PERFORMANCE_COOKIE_ENTRY",
+					"objectViewColumns": [
+						{
+							"label": {
+								"en_US": "Host"
+							},
+							"objectFieldName": "host",
+							"priority": 0
+						},
+						{
+							"label": {
+								"en_US": "Cookie Name"
+							},
+							"objectFieldName": "name",
+							"priority": 1
+						},
+						{
+							"label": {
+								"en_US": "Purpose"
+							},
+							"objectFieldName": "purpose",
+							"priority": 2
+						},
+						{
+							"label": {
+								"en_US": "Collected Data"
+							},
+							"objectFieldName": "collectedData",
+							"priority": 3
+						},
+						{
+							"label": {
+								"en_US": "Type"
+							},
+							"objectFieldName": "type",
+							"priority": 4
+						},
+						{
+							"label": {
+								"en_US": "Expiration"
+							},
+							"objectFieldName": "expiration",
+							"priority": 5
+						}
+					],
+					"objectViewFilterColumns": [
+					],
+					"objectViewSortColumns": [
+					]
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Performance Cookie Entries"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true
+		},
+		{
+			"enableCategorization": true,
+			"externalReferenceCode": "L_PERSONALIZATION_COOKIE_ENTRY",
+			"label": {
+				"en_US": "Personalization Cookie Entry"
+			},
+			"name": "PersonalizationCookieEntry",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "COLLECTED_DATA",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Collected Data"
+					},
+					"name": "collectedData",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "EXPIRATION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Expiration"
+					},
+					"name": "expiration",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "HOST",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Host"
+					},
+					"name": "host",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
+					"state": true,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "PURPOSE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Purpose"
+					},
+					"name": "purpose",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Type"
+					},
+					"name": "type",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectViews": [
+				{
+					"defaultObjectView": true,
+					"name": {
+						"en_US": "Main"
+					},
+					"objectDefinitionExternalReferenceCode": "L_PERSONALIZATION_COOKIE_ENTRY",
+					"objectViewColumns": [
+						{
+							"label": {
+								"en_US": "Host"
+							},
+							"objectFieldName": "host",
+							"priority": 0
+						},
+						{
+							"label": {
+								"en_US": "Cookie Name"
+							},
+							"objectFieldName": "name",
+							"priority": 1
+						},
+						{
+							"label": {
+								"en_US": "Purpose"
+							},
+							"objectFieldName": "purpose",
+							"priority": 2
+						},
+						{
+							"label": {
+								"en_US": "Collected Data"
+							},
+							"objectFieldName": "collectedData",
+							"priority": 3
+						},
+						{
+							"label": {
+								"en_US": "Type"
+							},
+							"objectFieldName": "type",
+							"priority": 4
+						},
+						{
+							"label": {
+								"en_US": "Expiration"
+							},
+							"objectFieldName": "expiration",
+							"priority": 5
+						}
+					],
+					"objectViewFilterColumns": [
+					],
+					"objectViewSortColumns": [
+					]
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Personalization Cookie Entries"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true
+		}
+	]
+}

@@ -42,7 +42,7 @@ const SelectReassignment = ({
 	setSubSections,
 }) => {
 	const {
-		allowScriptContentBeExecutedOrIncluded,
+		allowScriptContentToBeExecutedOrIncluded,
 		hadGroovyScriptBefore,
 	} = useContext(DefinitionBuilderContext);
 
@@ -56,7 +56,7 @@ const SelectReassignment = ({
 	const getReassignmentTypeOptions = () => {
 		if (
 			Liferay.FeatureFlags['LPD-11179'] &&
-			!allowScriptContentBeExecutedOrIncluded &&
+			!allowScriptContentToBeExecutedOrIncluded &&
 			!hadGroovyScriptBefore
 		) {
 			return options.filter(

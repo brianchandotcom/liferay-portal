@@ -49,7 +49,7 @@ const deserializeUtil = new DeserializeUtil();
 export default function DiagramBuilder() {
 	const {
 		accountEntryId,
-		allowScriptContentBeExecutedOrIncluded,
+		allowScriptContentToBeExecutedOrIncluded,
 		currentEditor,
 		definitionName,
 		deserialize,
@@ -348,7 +348,7 @@ export default function DiagramBuilder() {
 
 			if (
 				Liferay.FeatureFlags['LPD-11179'] &&
-				!allowScriptContentBeExecutedOrIncluded
+				!allowScriptContentToBeExecutedOrIncluded
 			) {
 				const hasGroovyScript = detectGroovyScript(
 					elements,
@@ -410,7 +410,7 @@ export default function DiagramBuilder() {
 
 						if (
 							Liferay.FeatureFlags['LPD-11179'] &&
-							!allowScriptContentBeExecutedOrIncluded
+							!allowScriptContentToBeExecutedOrIncluded
 						) {
 							const hasGroovyScript = detectGroovyScript(
 								elements,

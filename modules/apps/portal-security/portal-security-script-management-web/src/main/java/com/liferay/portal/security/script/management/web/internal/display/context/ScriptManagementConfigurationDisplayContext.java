@@ -21,9 +21,9 @@ public class ScriptManagementConfigurationDisplayContext {
 			scriptManagementConfigurationHelper;
 	}
 
-	public boolean isAllowScriptContentBeExecutedOrIncluded() {
+	public boolean isAllowScriptContentToBeExecutedOrIncluded() {
 		return _scriptManagementConfigurationHelper.
-			isAllowScriptContentBeExecutedOrIncluded();
+			isAllowScriptContentToBeExecutedOrIncluded();
 	}
 
 	public boolean isScriptManagementConfigurationDefined()

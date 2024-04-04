@@ -46,8 +46,8 @@ export default function DefinitionBuilder(props) {
 		active,
 		alertMessage,
 		alertType,
-		allowScriptContentBeExecutedOrIncluded:
-			props.allowScriptContentBeExecutedOrIncluded,
+		allowScriptContentToBeExecutedOrIncluded:
+			props.allowScriptContentToBeExecutedOrIncluded,
 		blockingErrors,
 		currentEditor,
 		definitionDescription,

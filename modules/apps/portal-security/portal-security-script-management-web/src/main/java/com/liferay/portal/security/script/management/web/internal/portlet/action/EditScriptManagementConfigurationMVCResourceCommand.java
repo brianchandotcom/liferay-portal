@@ -40,9 +40,9 @@ public class EditScriptManagementConfigurationMVCResourceCommand
 		_configurationProvider.saveSystemConfiguration(
 			ScriptManagementConfiguration.class,
 			HashMapDictionaryBuilder.<String, Object>put(
-				"allowScriptContentBeExecutedOrIncluded",
+				"allowScriptContentToBeExecutedOrIncluded",
 				ParamUtil.getBoolean(
-					resourceRequest, "allowScriptContentBeExecutedOrIncluded")
+					resourceRequest, "allowScriptContentToBeExecutedOrIncluded")
 			).build());
 	}
 

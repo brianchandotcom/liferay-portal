@@ -20,7 +20,7 @@ ObjectDefinitionsActionsDisplayContext objectDefinitionsActionsDisplayContext = 
 	module="{AddObjectAction} from object-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"allowScriptContentBeExecutedOrIncluded", objectDefinitionsActionsDisplayContext.isAllowScriptContentBeExecutedOrIncluded()
+			"allowScriptContentToBeExecutedOrIncluded", objectDefinitionsActionsDisplayContext.isAllowScriptContentToBeExecutedOrIncluded()
 		).put(
 			"apiURL", objectDefinitionsActionsDisplayContext.getAPIURL()
 		).put(

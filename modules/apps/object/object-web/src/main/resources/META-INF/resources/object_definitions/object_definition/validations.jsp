@@ -25,7 +25,7 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 		module="{Validations} from object-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"allowScriptContentBeExecutedOrIncluded", objectDefinitionsValidationsDisplayContext.isAllowScriptContentBeExecutedOrIncluded()
+				"allowScriptContentToBeExecutedOrIncluded", objectDefinitionsValidationsDisplayContext.isAllowScriptContentToBeExecutedOrIncluded()
 			).put(
 				"apiURL", objectDefinitionsValidationsDisplayContext.getAPIURL()
 			).put(

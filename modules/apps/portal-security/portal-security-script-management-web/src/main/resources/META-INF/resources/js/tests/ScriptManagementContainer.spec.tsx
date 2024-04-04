@@ -30,7 +30,7 @@ describe('ScriptManagementContainer component', () => {
 	it('check if checkbox label renders correctly', () => {
 		const {getByLabelText} = render(
 			<ScriptManagementContainer
-				allowScriptContentBeExecutedOrIncluded={false}
+				allowScriptContentToBeExecutedOrIncluded={false}
 				baseResourceURL=""
 			/>
 		);
@@ -45,7 +45,7 @@ describe('ScriptManagementContainer component', () => {
 	it('check if Script Management title renders correctly', () => {
 		const {getByText} = render(
 			<ScriptManagementContainer
-				allowScriptContentBeExecutedOrIncluded={false}
+				allowScriptContentToBeExecutedOrIncluded={false}
 				baseResourceURL=""
 			/>
 		);
@@ -58,7 +58,7 @@ describe('ScriptManagementContainer component', () => {
 	it('check if checkbox description renders correctly', () => {
 		const {getByText} = render(
 			<ScriptManagementContainer
-				allowScriptContentBeExecutedOrIncluded={false}
+				allowScriptContentToBeExecutedOrIncluded={false}
 				baseResourceURL=""
 			/>
 		);
@@ -70,10 +70,10 @@ describe('ScriptManagementContainer component', () => {
 		expect(checkboxDescription).toBeInTheDocument();
 	});
 
-	it('check if checkbox will be checked if allowScriptContentBeExecutedOrIncluded is true', () => {
+	it('check if checkbox will be checked if allowScriptContentToBeExecutedOrIncluded is true', () => {
 		const {getByRole} = render(
 			<ScriptManagementContainer
-				allowScriptContentBeExecutedOrIncluded={true}
+				allowScriptContentToBeExecutedOrIncluded={true}
 				baseResourceURL=""
 			/>
 		);
@@ -83,10 +83,10 @@ describe('ScriptManagementContainer component', () => {
 		expect(checkboxInput).toBeChecked();
 	});
 
-	it('check if checkbox will be not checked if allowScriptContentBeExecutedOrIncluded is false', () => {
+	it('check if checkbox will be not checked if allowScriptContentToBeExecutedOrIncluded is false', () => {
 		const {getByRole} = render(
 			<ScriptManagementContainer
-				allowScriptContentBeExecutedOrIncluded={false}
+				allowScriptContentToBeExecutedOrIncluded={false}
 				baseResourceURL=""
 			/>
 		);

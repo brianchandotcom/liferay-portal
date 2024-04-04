@@ -22,16 +22,16 @@ export type GroovyScriptUseItem = {
 };
 
 interface ScriptManagementContainerProps {
-	allowScriptContentBeExecutedOrIncluded: boolean;
+	allowScriptContentToBeExecutedOrIncluded: boolean;
 	baseResourceURL: string;
 }
 
 export default function ScriptManagementContainer({
-	allowScriptContentBeExecutedOrIncluded,
+	allowScriptContentToBeExecutedOrIncluded,
 	baseResourceURL,
 }: ScriptManagementContainerProps) {
 	const [allowScriptContent, setAllowScriptContent] = useState(
-		allowScriptContentBeExecutedOrIncluded
+		allowScriptContentToBeExecutedOrIncluded
 	);
 	const [groovyScriptUses, setGroovyScriptUses] = useState<
 		GroovyScriptUseItem[]
@@ -59,7 +59,7 @@ export default function ScriptManagementContainer({
 		if (!groovyScriptUsesResponse.length) {
 			const editScriptManagementConfigurationResponse = await fetch(
 				createResourceURL(baseResourceURL, {
-					allowScriptContentBeExecutedOrIncluded: allowScriptContent,
+					allowScriptContentToBeExecutedOrIncluded: allowScriptContent,
 					p_p_resource_id:
 						'/system_settings/edit_script_management_configuration',
 				}).toString()
@@ -132,7 +132,7 @@ export default function ScriptManagementContainer({
 					displayType="secondary"
 					onClick={() =>
 						setAllowScriptContent(
-							allowScriptContentBeExecutedOrIncluded
+							allowScriptContentToBeExecutedOrIncluded
 						)
 					}
 				>

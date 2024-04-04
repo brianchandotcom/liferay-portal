@@ -494,9 +494,9 @@ public class KaleoDesignerDisplayContext {
 		return userName;
 	}
 
-	public boolean isAllowScriptContentBeExecutedOrIncluded() {
+	public boolean isAllowScriptContentToBeExecutedOrIncluded() {
 		return _scriptManagementConfigurationHelper.
-			isAllowScriptContentBeExecutedOrIncluded();
+			isAllowScriptContentToBeExecutedOrIncluded();
 	}
 
 	public boolean isDefinitionInputDisabled(

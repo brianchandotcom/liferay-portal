@@ -17,7 +17,7 @@ ScriptManagementConfigurationDisplayContext scriptManagementConfigurationDisplay
 	module="{ScriptManagementContainer} from portal-security-script-management-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"allowScriptContentBeExecutedOrIncluded", scriptManagementConfigurationDisplayContext.isAllowScriptContentBeExecutedOrIncluded()
+			"allowScriptContentToBeExecutedOrIncluded", scriptManagementConfigurationDisplayContext.isAllowScriptContentToBeExecutedOrIncluded()
 		).put(
 			"baseResourceURL", String.valueOf(baseResourceURL)
 		).build()

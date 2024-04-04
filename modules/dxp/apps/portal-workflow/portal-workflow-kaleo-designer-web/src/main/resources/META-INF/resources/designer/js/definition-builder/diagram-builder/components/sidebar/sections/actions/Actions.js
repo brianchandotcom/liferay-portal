@@ -13,7 +13,7 @@ import ActionsInfo from './ActionsInfo';
 const Actions = (props) => {
 	const {selectedItem} = useContext(DiagramBuilderContext);
 	const {
-		allowScriptContentBeExecutedOrIncluded,
+		allowScriptContentToBeExecutedOrIncluded,
 		hasGroovyScript,
 		scriptManagementConfigurationPortletURL,
 	} = useContext(DefinitionBuilderContext);
@@ -47,7 +47,7 @@ const Actions = (props) => {
 	return (
 		<>
 			{Liferay.FeatureFlags['LPD-11179'] &&
-				!allowScriptContentBeExecutedOrIncluded &&
+				!allowScriptContentToBeExecutedOrIncluded &&
 				hasGroovyScript && (
 					<DisabledGroovyScriptAlert
 						scriptManagementConfigurationPortletURL={

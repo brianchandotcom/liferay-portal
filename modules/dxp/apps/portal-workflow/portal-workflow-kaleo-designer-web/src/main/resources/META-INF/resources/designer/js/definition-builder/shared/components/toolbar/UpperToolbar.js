@@ -39,7 +39,7 @@ export default function UpperToolbar({
 		active,
 		alertMessage,
 		alertType,
-		allowScriptContentBeExecutedOrIncluded,
+		allowScriptContentToBeExecutedOrIncluded,
 		blockingErrors,
 		currentEditor,
 		definitionDescription,
@@ -192,7 +192,7 @@ export default function UpperToolbar({
 	const publishDefinition = () => {
 		if (
 			Liferay.FeatureFlags['LPD-11179'] &&
-			!allowScriptContentBeExecutedOrIncluded &&
+			!allowScriptContentToBeExecutedOrIncluded &&
 			detectGroovyScript(elements, setHasGroovyScript)
 		) {
 			setShowGroovyScriptWarningModal(true);
@@ -235,7 +235,7 @@ export default function UpperToolbar({
 				if (response.ok) {
 					if (
 						Liferay.FeatureFlags['LPD-11179'] &&
-						!allowScriptContentBeExecutedOrIncluded
+						!allowScriptContentToBeExecutedOrIncluded
 					) {
 						setHadGroovyScriptBefore(false);
 					}
@@ -268,7 +268,7 @@ export default function UpperToolbar({
 	const saveDefinition = () => {
 		if (
 			Liferay.FeatureFlags['LPD-11179'] &&
-			!allowScriptContentBeExecutedOrIncluded &&
+			!allowScriptContentToBeExecutedOrIncluded &&
 			detectGroovyScript(elements, setHasGroovyScript)
 		) {
 			setShowGroovyScriptWarningModal(true);
@@ -291,7 +291,7 @@ export default function UpperToolbar({
 				if (response.ok) {
 					if (
 						Liferay.FeatureFlags['LPD-11179'] &&
-						!allowScriptContentBeExecutedOrIncluded
+						!allowScriptContentToBeExecutedOrIncluded
 					) {
 						setHadGroovyScriptBefore(false);
 					}

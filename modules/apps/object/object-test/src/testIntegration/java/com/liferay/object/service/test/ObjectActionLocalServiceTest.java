@@ -212,7 +212,7 @@ public class ObjectActionLocalServiceTest {
 				ObjectActionTriggerConstants.KEY_STANDALONE, false));
 
 		try (Closeable closeable =
-				_disableAllowScriptContentBeExecutedOrIncluded()) {
+				_disableAllowScriptContentToBeExecutedOrIncluded()) {
 
 			AssertUtils.assertFailure(
 				ObjectActionExecutorKeyException.class,
@@ -2043,13 +2043,13 @@ public class ObjectActionLocalServiceTest {
 		}
 	}
 
-	private Closeable _disableAllowScriptContentBeExecutedOrIncluded()
+	private Closeable _disableAllowScriptContentToBeExecutedOrIncluded()
 		throws ConfigurationException {
 
 		_configurationProvider.saveSystemConfiguration(
 			ScriptManagementConfiguration.class,
 			HashMapDictionaryBuilder.<String, Object>put(
-				"allowScriptContentBeExecutedOrIncluded", false
+				"allowScriptContentToBeExecutedOrIncluded", false
 			).build());
 
 		return () -> {
@@ -2057,7 +2057,7 @@ public class ObjectActionLocalServiceTest {
 				_configurationProvider.saveSystemConfiguration(
 					ScriptManagementConfiguration.class,
 					HashMapDictionaryBuilder.<String, Object>put(
-						"allowScriptContentBeExecutedOrIncluded", true
+						"allowScriptContentToBeExecutedOrIncluded", true
 					).build());
 			}
 			catch (ConfigurationException configurationException) {

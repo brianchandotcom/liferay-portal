@@ -9,7 +9,7 @@ import React from 'react';
 import {ObjectActionContainer} from './ObjectActionContainer';
 
 interface EditObjectActionProps {
-	allowScriptContentBeExecutedOrIncluded: boolean;
+	allowScriptContentToBeExecutedOrIncluded: boolean;
 	isApproved: boolean;
 	objectAction: ObjectAction;
 	objectActionCodeEditorElements: SidebarCategory[];
@@ -25,7 +25,7 @@ interface EditObjectActionProps {
 }
 
 export default function EditObjectAction({
-	allowScriptContentBeExecutedOrIncluded,
+	allowScriptContentToBeExecutedOrIncluded,
 	isApproved,
 	objectAction: {id, ...values},
 	objectActionCodeEditorElements,
@@ -41,8 +41,8 @@ export default function EditObjectAction({
 }: EditObjectActionProps) {
 	return (
 		<ObjectActionContainer
-			allowScriptContentBeExecutedOrIncluded={
-				allowScriptContentBeExecutedOrIncluded
+			allowScriptContentToBeExecutedOrIncluded={
+				allowScriptContentToBeExecutedOrIncluded
 			}
 			editingObjectAction
 			isApproved={isApproved}

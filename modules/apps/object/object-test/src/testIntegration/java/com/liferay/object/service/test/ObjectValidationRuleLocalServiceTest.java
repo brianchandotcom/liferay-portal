@@ -117,7 +117,7 @@ public class ObjectValidationRuleLocalServiceTest {
 				"abcdefghijklmnopqrstuvwxyz", _VALID_DDM_SCRIPT));
 
 		try (Closeable closeable =
-				_disableAllowScriptContentBeExecutedOrIncluded()) {
+				_disableAllowScriptContentToBeExecutedOrIncluded()) {
 
 			AssertUtils.assertFailure(
 				ObjectValidationRuleEngineException.NotAllowedEngine.class,
@@ -763,13 +763,13 @@ public class ObjectValidationRuleLocalServiceTest {
 		}
 	}
 
-	private Closeable _disableAllowScriptContentBeExecutedOrIncluded()
+	private Closeable _disableAllowScriptContentToBeExecutedOrIncluded()
 		throws ConfigurationException {
 
 		_configurationProvider.saveSystemConfiguration(
 			ScriptManagementConfiguration.class,
 			HashMapDictionaryBuilder.<String, Object>put(
-				"allowScriptContentBeExecutedOrIncluded", false
+				"allowScriptContentToBeExecutedOrIncluded", false
 			).build());
 
 		return () -> {
@@ -777,7 +777,7 @@ public class ObjectValidationRuleLocalServiceTest {
 				_configurationProvider.saveSystemConfiguration(
 					ScriptManagementConfiguration.class,
 					HashMapDictionaryBuilder.<String, Object>put(
-						"allowScriptContentBeExecutedOrIncluded", true
+						"allowScriptContentToBeExecutedOrIncluded", true
 					).build());
 			}
 			catch (ConfigurationException configurationException) {

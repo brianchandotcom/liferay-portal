@@ -16,7 +16,7 @@ public interface ScriptManagementConfigurationHelper {
 	public String getScriptManagementConfigurationPortletURL()
 		throws PortalException;
 
-	public boolean isAllowScriptContentBeExecutedOrIncluded();
+	public boolean isAllowScriptContentToBeExecutedOrIncluded();
 
 	public boolean isScriptManagementConfigurationDefined()
 		throws ConfigurationException;

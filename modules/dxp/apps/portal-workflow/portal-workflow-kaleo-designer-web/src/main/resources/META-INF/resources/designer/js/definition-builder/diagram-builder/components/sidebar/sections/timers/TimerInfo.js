@@ -19,7 +19,7 @@ const TimerInfo = ({
 	timersIndex,
 }) => {
 	const {
-		allowScriptContentBeExecutedOrIncluded,
+		allowScriptContentToBeExecutedOrIncluded,
 		hasGroovyScript,
 		scriptManagementConfigurationPortletURL,
 	} = useContext(DefinitionBuilderContext);
@@ -47,7 +47,7 @@ const TimerInfo = ({
 	return (
 		<>
 			{Liferay.FeatureFlags['LPD-11179'] &&
-				!allowScriptContentBeExecutedOrIncluded &&
+				!allowScriptContentToBeExecutedOrIncluded &&
 				hasGroovyScript && (
 					<DisabledGroovyScriptAlert
 						scriptManagementConfigurationPortletURL={

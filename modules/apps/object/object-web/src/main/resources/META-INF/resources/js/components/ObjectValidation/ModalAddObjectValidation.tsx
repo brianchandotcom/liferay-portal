@@ -21,7 +21,7 @@ import React, {useState} from 'react';
 import {defaultLanguageId} from '../../utils/constants';
 
 interface ModalAddObjectValidationProps {
-	allowScriptContentBeExecutedOrIncluded: boolean;
+	allowScriptContentToBeExecutedOrIncluded: boolean;
 	apiURL: string;
 	objectValidationRuleEngines: LabelValueObject[];
 	setShowAddObjectRelationshipModal: (value: boolean) => void;
@@ -35,7 +35,7 @@ const initialValues: Partial<ObjectValidation> = {
 };
 
 export function ModalAddObjectValidation({
-	allowScriptContentBeExecutedOrIncluded,
+	allowScriptContentToBeExecutedOrIncluded,
 	apiURL,
 	objectValidationRuleEngines,
 	setShowAddObjectRelationshipModal,
@@ -49,7 +49,7 @@ export function ModalAddObjectValidation({
 
 	if (
 		Liferay.FeatureFlags['LPD-11179'] &&
-		!allowScriptContentBeExecutedOrIncluded
+		!allowScriptContentToBeExecutedOrIncluded
 	) {
 		newObjectValidationRuleEngines = objectValidationRuleEngines.filter(
 			(objectValidationRuleEngine) =>

@@ -115,8 +115,8 @@ public class ObjectDefinitionsValidationsDisplayContext
 		return HashMapBuilder.<String, Object>put(
 			"creationLanguageId", objectDefinition.getDefaultLanguageId()
 		).put(
-			"isAllowScriptContentBeExecutedOrIncluded",
-			isAllowScriptContentBeExecutedOrIncluded()
+			"isAllowScriptContentToBeExecutedOrIncluded",
+			isAllowScriptContentToBeExecutedOrIncluded()
 		).put(
 			"learnResources",
 			LearnMessageUtil.getReactDataJSONObject("object-web")
@@ -146,9 +146,9 @@ public class ObjectDefinitionsValidationsDisplayContext
 			getScriptManagementConfigurationPortletURL();
 	}
 
-	public boolean isAllowScriptContentBeExecutedOrIncluded() {
+	public boolean isAllowScriptContentToBeExecutedOrIncluded() {
 		return _scriptManagementConfigurationHelper.
-			isAllowScriptContentBeExecutedOrIncluded();
+			isAllowScriptContentToBeExecutedOrIncluded();
 	}
 
 	@Override

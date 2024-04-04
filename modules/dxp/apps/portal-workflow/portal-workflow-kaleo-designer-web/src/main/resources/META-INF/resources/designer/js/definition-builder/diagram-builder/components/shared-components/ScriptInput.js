@@ -29,7 +29,7 @@ const ScriptInput = ({
 	updateSelectedItem,
 }) => {
 	const {
-		allowScriptContentBeExecutedOrIncluded,
+		allowScriptContentToBeExecutedOrIncluded,
 		hadGroovyScriptBefore,
 	} = useContext(DefinitionBuilderContext);
 	const [script, setScript] = useState(inputValue);
@@ -38,7 +38,7 @@ const ScriptInput = ({
 	);
 
 	const filteredScriptLanguageOptions = filterGroovyOption(
-		allowScriptContentBeExecutedOrIncluded,
+		allowScriptContentToBeExecutedOrIncluded,
 		hadGroovyScriptBefore,
 		scriptLanguageOptions
 	);

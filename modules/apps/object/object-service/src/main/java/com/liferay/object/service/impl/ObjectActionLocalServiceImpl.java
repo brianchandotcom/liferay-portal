@@ -510,7 +510,7 @@ public class ObjectActionLocalServiceImpl
 				ObjectActionExecutorConstants.KEY_GROOVY,
 				objectActionExecutorKey) &&
 			!_scriptManagementConfigurationHelper.
-				isAllowScriptContentBeExecutedOrIncluded()) {
+				isAllowScriptContentToBeExecutedOrIncluded()) {
 
 			throw new ObjectActionExecutorKeyException(
 				"Groovy script based object actions are not allowed");

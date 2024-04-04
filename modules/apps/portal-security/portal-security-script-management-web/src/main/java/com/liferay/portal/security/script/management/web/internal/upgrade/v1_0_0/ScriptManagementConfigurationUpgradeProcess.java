@@ -45,7 +45,7 @@ public class ScriptManagementConfigurationUpgradeProcess
 		_configurationProvider.saveSystemConfiguration(
 			ScriptManagementConfiguration.class,
 			HashMapDictionaryBuilder.<String, Object>put(
-				"allowScriptContentBeExecutedOrIncluded", false
+				"allowScriptContentToBeExecutedOrIncluded", false
 			).build());
 	}
 

@@ -24,6 +24,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface ScriptManagementConfiguration {
 
 	@Meta.AD(deflt = "true", required = false)
-	public boolean allowScriptContentBeExecutedOrIncluded();
+	public boolean allowScriptContentToBeExecutedOrIncluded();
 
 }

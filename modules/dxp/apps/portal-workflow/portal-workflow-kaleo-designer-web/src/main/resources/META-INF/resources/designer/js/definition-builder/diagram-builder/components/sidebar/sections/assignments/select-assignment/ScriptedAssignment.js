@@ -28,7 +28,7 @@ const scriptLanguageOptions = [
 const ScriptedAssignment = ({setContentName}) => {
 	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
 	const {
-		allowScriptContentBeExecutedOrIncluded,
+		allowScriptContentToBeExecutedOrIncluded,
 		hadGroovyScriptBefore,
 	} = useContext(DefinitionBuilderContext);
 
@@ -54,7 +54,7 @@ const ScriptedAssignment = ({setContentName}) => {
 	};
 
 	const filteredScriptLanguageOptions = filterGroovyOption(
-		allowScriptContentBeExecutedOrIncluded,
+		allowScriptContentToBeExecutedOrIncluded,
 		hadGroovyScriptBefore,
 		scriptLanguageOptions
 	);

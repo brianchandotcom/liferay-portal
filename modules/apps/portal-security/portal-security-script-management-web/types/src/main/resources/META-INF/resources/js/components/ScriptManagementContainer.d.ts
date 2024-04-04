@@ -12,11 +12,11 @@ export declare type GroovyScriptUseItem = {
 	sourceURL: string;
 };
 interface ScriptManagementContainerProps {
-	allowScriptContentBeExecutedOrIncluded: boolean;
+	allowScriptContentToBeExecutedOrIncluded: boolean;
 	baseResourceURL: string;
 }
 export default function ScriptManagementContainer({
-	allowScriptContentBeExecutedOrIncluded,
+	allowScriptContentToBeExecutedOrIncluded,
 	baseResourceURL,
 }: ScriptManagementContainerProps): JSX.Element;
 export {};

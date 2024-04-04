@@ -8,7 +8,7 @@
 import {SidebarCategory} from '@liferay/object-js-components-web';
 import {ILearnResourceContext} from 'frontend-js-components-web';
 interface EditObjectValidationProps {
-	allowScriptContentBeExecutedOrIncluded: boolean;
+	allowScriptContentToBeExecutedOrIncluded: boolean;
 	baseResourceURL: string;
 	creationLanguageId: Liferay.Language.Locale;
 	learnResources: ILearnResourceContext;
@@ -26,7 +26,7 @@ export interface PartialValidationFields {
 	value: string;
 }
 export default function EditObjectValidation({
-	allowScriptContentBeExecutedOrIncluded,
+	allowScriptContentToBeExecutedOrIncluded,
 	baseResourceURL,
 	creationLanguageId,
 	learnResources,

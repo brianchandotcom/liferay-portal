@@ -294,9 +294,9 @@ public class ObjectDefinitionsActionsDisplayContext
 		).buildString();
 	}
 
-	public boolean isAllowScriptContentBeExecutedOrIncluded() {
+	public boolean isAllowScriptContentToBeExecutedOrIncluded() {
 		return _scriptManagementConfigurationHelper.
-			isAllowScriptContentBeExecutedOrIncluded();
+			isAllowScriptContentToBeExecutedOrIncluded();
 	}
 
 	@Override

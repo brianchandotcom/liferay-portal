@@ -18,7 +18,7 @@ import {checkIdErrors, checkLabelErrors, getUpdatedLabelItem} from './utils';
 
 export default function NodeInformation({errors, setErrors}) {
 	const {
-		allowScriptContentBeExecutedOrIncluded,
+		allowScriptContentToBeExecutedOrIncluded,
 		elements,
 		hasGroovyScript,
 		scriptManagementConfigurationPortletURL,
@@ -34,7 +34,7 @@ export default function NodeInformation({errors, setErrors}) {
 	return (
 		<>
 			{Liferay.FeatureFlags['LPD-11179'] &&
-				!allowScriptContentBeExecutedOrIncluded &&
+				!allowScriptContentToBeExecutedOrIncluded &&
 				hasGroovyScript &&
 				selectedItem &&
 				selectedItem.type === 'condition' && (

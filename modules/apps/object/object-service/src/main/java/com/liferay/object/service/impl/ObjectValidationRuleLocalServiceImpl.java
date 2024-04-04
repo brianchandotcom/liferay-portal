@@ -600,7 +600,7 @@ public class ObjectValidationRuleLocalServiceImpl
 		if (Objects.equals(
 				engine, ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY) &&
 			!_scriptManagementConfigurationHelper.
-				isAllowScriptContentBeExecutedOrIncluded()) {
+				isAllowScriptContentToBeExecutedOrIncluded()) {
 
 			throw new ObjectValidationRuleEngineException.NotAllowedEngine(
 				ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY);

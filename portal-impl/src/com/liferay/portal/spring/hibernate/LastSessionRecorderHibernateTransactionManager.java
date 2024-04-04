@@ -14,7 +14,6 @@ import org.apache.commons.logging.Log;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.SessionFactoryUtils;
 import org.springframework.orm.hibernate5.SessionHolder;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 /**
  * @author Shuyang Zhou
@@ -121,11 +120,6 @@ public class LastSessionRecorderHibernateTransactionManager
 			};
 
 			Field loggerField = ReflectionUtil.getDeclaredField(
-				TransactionSynchronizationManager.class, "logger");
-
-			loggerField.set(null, dummyLog);
-
-			loggerField = ReflectionUtil.getDeclaredField(
 				SessionFactoryUtils.class, "logger");
 
 			loggerField.set(null, dummyLog);

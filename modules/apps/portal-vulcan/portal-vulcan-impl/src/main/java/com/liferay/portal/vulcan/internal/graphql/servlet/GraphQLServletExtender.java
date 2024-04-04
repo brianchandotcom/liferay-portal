@@ -22,7 +22,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -917,8 +916,8 @@ public class GraphQLServletExtender {
 					for (Method method : methodsTreeSet) {
 						GraphQLFieldDefinition field =
 							_liferayGraphQLFieldRetriever.getField(
-								FeatureFlagManagerUtil.isEnabled("LPD-10789"),
-								method, mutation, processingElementsContainer);
+								true, method, mutation,
+								processingElementsContainer);
 
 						if (firstMethod == method) {
 							graphQLObjectTypeBuilder.field(field);
@@ -1698,12 +1697,10 @@ public class GraphQLServletExtender {
 		for (ServletData servletData : servletDatas) {
 			Set<String> servletDataGraphQLNamespaces = new HashSet<>();
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-10789")) {
-				String graphQLNamespace = _getGraphQLNamespace(servletData);
+			String namespace = _getGraphQLNamespace(servletData);
 
-				if (graphQLNamespace != null) {
-					servletDataGraphQLNamespaces.add(graphQLNamespace);
-				}
+			if (namespace != null) {
+				servletDataGraphQLNamespaces.add(namespace);
 			}
 
 			if (servletData.getGraphQLNamespace() != null) {
@@ -1756,8 +1753,7 @@ public class GraphQLServletExtender {
 				boolean deprecated = false;
 
 				if (StringUtil.equals(
-						graphQLNamespace, servletData.getGraphQLNamespace()) &&
-					FeatureFlagManagerUtil.isEnabled("LPD-10789")) {
+						graphQLNamespace, servletData.getGraphQLNamespace())) {
 
 					deprecated = true;
 				}

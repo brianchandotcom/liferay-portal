@@ -1,7 +1,7 @@
 {
 	"description": "Protect users, data, and solutions with a platform designed with security in mind.",
 	"description_i18n": {
-		"en_US": "Protect users, data, and solutions with a platform designed with security in mind."
+		"en_US": "<p>Liferay DXP is built with security in mind. A variety of standards based authentication methods and integrations can be used to ensure secure access to a site and its resources. Robust role-based access control with permissions gives you fine grained control over what authenticated and unauthenticated users can access, share, or edit. Liferay DXP’s web services also have a multi-layered and configurable approach to security and authorization.<div>Check these articles for an introduction:<ul><li><a href=/w/dxp/users-and-permissions/users/understanding-users#understanding-users>Understanding Users</a><li><a href=/w/dxp/users-and-permissions/roles-and-permissions/understanding-roles-and-permissions#understanding-roles-and-permissions>Understanding Roles and Permissions</a><li><a href=/w/dxp/installation-and-upgrades/securing-liferay#securing-liferay>Securing Liferay</a><li><a href=/w/dxp/installation-and-upgrades/securing-liferay/authentication-basics#authentication-basics>Authentication Basics</a></ul></div>"
 	},
 	"name": "Security",
 	"name_i18n": {

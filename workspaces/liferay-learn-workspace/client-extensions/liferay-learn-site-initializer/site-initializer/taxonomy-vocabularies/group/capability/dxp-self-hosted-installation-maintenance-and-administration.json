@@ -1,7 +1,7 @@
 {
 	"description": "Deploy, configure, and maintain Liferay DXP on your own infrastructure.",
 	"description_i18n": {
-		"en_US": "Deploy, configure, and maintain Liferay DXP on your own infrastructure."
+		"en_US": "<p>In addition to SaaS and PaaS deployment approaches for Liferay DXP, you can also opt to self-host Liferay DXP. Self-hosting gives you flexibility to deploy Liferay DXP on-premises or to a cloud computing provider of your choice, giving you complete control over deployment, infrastructure, and maintenance.<div>Check these articles for an introduction:<ul><li><a href=/w/dxp/getting-started/starting-with-a-docker-image#starting-with-a-docker-image>Starting with a Docker Image</a><li><a href=/w/dxp/installation-and-upgrades/installing-liferay#installing-liferay>Installing Liferay</a><li><a href=/w/dxp/installation-and-upgrades/installing-liferay/installing-a-liferay-tomcat-bundle#installing-a-liferay-tomcat-bundle>Installing a Liferay-Tomcat Bundle</a><li><a href=/w/dxp/installation-and-upgrades/installing-liferay/configuring-a-database#configuring-a-database>Configuring a Database</a><li><a href=/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time#running-liferay-for-the-first-time>Running Liferay for the First Time</a></ul></div>"
 	},
 	"name": "DXP Self-Hosted Installation, Maintenance, and Administration",
 	"name_i18n": {

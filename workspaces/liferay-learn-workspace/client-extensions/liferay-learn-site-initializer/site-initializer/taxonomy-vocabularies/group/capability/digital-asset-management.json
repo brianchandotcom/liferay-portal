@@ -1,7 +1,7 @@
 {
 	"description": "Deliver assets to any channel by managing, organizing, and publishing them in one place.",
 	"description_i18n": {
-		"en_US": "Deliver assets to any channel by managing, organizing, and publishing them in one place."
+		"en_US": "<p>Liferay’s Digital Asset Management (DAM) tools simplify the organization and management of digital assets. Assets include images, videos, presentations, documents, and much more. Additionally, the Asset Library feature enables you to manage and publish assets in one central repository for use across multiple distinct sites.<div>Check these articles for an introduction:<ul><li><a href=/w/dxp/content-authoring-and-management/asset-libraries#asset-libraries>Asset Libraries</a><li><a href=/w/dxp/content-authoring-and-management/documents-and-media#documents-and-media>Documents and Media</a><li><a href=/w/dxp/content-authoring-and-management/documents-and-media/uploading-and-managing/uploading-files#uploading-files>Uploading Files</a><li><a href=/w/dxp/system-administration/file-storage#file-storage>File Storage</a><li><a href=/w/dxp/content-authoring-and-management/documents-and-media/publishing-and-sharing/using-adaptive-media#using-adaptive-media>Using Adaptive Media</a><li><a href=/web/guest/w/dxp/content-authoring-and-management/documents-and-media/uploading-and-managing/managing-metadata/defining-document-types#defining-document-types>Defining Document Types</a></ul></div>"
 	},
 	"name": "Digital Asset Management",
 	"name_i18n": {

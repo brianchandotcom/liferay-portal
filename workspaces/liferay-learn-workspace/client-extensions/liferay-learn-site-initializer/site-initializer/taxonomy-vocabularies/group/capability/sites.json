@@ -1,7 +1,7 @@
 {
 	"description": "Deliver customized pages and sites on any device or channel.",
 	"description_i18n": {
-		"en_US": "Deliver customized pages and sites on any device or channel."
+		"en_US": "<p>Liferay sites are customizable spaces for building personalized digital experiences. Each site includes applications for creating content, designing pages, and more. With these features, you can bring your custom solutions to life, whether intranets, public sites, customer portals, or e-commerce storefronts. In fact, you can leverage Liferay's multi-site capabilities to create multiple such sites in the same Liferay instance.<div>Check these articles for an introduction:<ul><li><a href=/w/dxp/site-building/getting-started-with-site-building>Getting Started with Site Building</a><li><a href=/w/dxp/site-building/sites>Sites</a><li><a href=/w/dxp/site-building/creating-pages/understanding-pages/understanding-pages#understanding-pages>Understanding Pages</a><li><a href=/w/dxp/site-building/creating-pages/page-fragments-and-widgets#page-fragments-and-widgets>Page Fragments and Widgets</a><li><a href=/w/dxp/site-building/site-appearance/site-appearance#site-appearance>Site Appearance</a></ul></div>"
 	},
 	"name": "Sites",
 	"name_i18n": {

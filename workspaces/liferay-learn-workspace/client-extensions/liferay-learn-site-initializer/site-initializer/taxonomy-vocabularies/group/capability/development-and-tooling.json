@@ -1,7 +1,7 @@
 {
 	"description": "Use out-of-the-box features and development tools to deliver solutions to users faster.",
 	"description_i18n": {
-		"en_US": "Use out-of-the-box features and development tools to deliver solutions to users faster."
+		"en_US": "<p>Liferay offers a comprehensive toolkit to extend or customize your digital experience. Build applications quickly with low-code/no-code features like Objects, or leverage developer tools like Liferay Workspace and Blade CLI for further customizations.<p>For users on PaaS or running Self-Hosted, Liferay also offers tools deploying customizations.<div>Check these articles for an introduction:<ul><li><a href=/w/dxp/liferay-development/objects#objects>Objects</a><li><a href=/w/dxp/liferay-development/client-extensions#client-extensions>Client Extensions</a><li><a href=/w/dxp/process-automation/workflow#workflow>Workflow</a><li><a href=/w/dxp/liferay-development/tooling/developer-tools-overview#developer-tools-overview>Developer Tools Overview</a><li><a href=/w/dxp/liferay-development/tooling/liferay-workspace/what-is-liferay-workspace#what-is-liferay-workspace>What is Liferay Workspace?</a></ul></div>"
 	},
 	"name": "Development and Tooling",
 	"name_i18n": {

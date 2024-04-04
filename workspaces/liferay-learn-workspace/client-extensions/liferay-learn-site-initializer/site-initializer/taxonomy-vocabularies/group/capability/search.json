@@ -1,7 +1,7 @@
 {
 	"description": "Save users time with personalized, integrated, and organized search results.",
 	"description_i18n": {
-		"en_US": "Save users time with personalized, integrated, and organized search results."
+		"en_US": "<p>Liferay Search is a fundamental component of Liferay DXP. Search obviously powers search results for your sites, but can also be tailored and configured to do much more! Use Search to build dynamic navigation menus based on categories, boost search results for important content, or use it to present a dynamic content experience for users.<p>Search features include Full-text Search, Indexing of all content types, Search Pages and Widgets, Search Results, and more.<div>Check these articles for an introduction:<ul><li><a href=/w/dxp/using-search/getting-started/search-overview#search-overview>Search Overview</a><li><a href=/w/dxp/using-search/getting-started/searching-for-content#searching-for-content>Searching for Content</a><li><a href=/w/dxp/using-search/search-pages-and-widgets/search-results/search-results#search-results>Search Results</a><li><a href=/w/dxp/using-search/search-pages-and-widgets#search-pages-and-widgets>Search Pages and Widgets</a><li><a href=/w/dxp/using-search/installing-and-upgrading-a-search-engine/elasticsearch#elasticsearch>Elasticsearch</a></ul></div>"
 	},
 	"name": "Search",
 	"name_i18n": {

@@ -1,7 +1,7 @@
 {
 	"description": "Create, publish, and manage content, pages, and multimedia across different channels faster.",
 	"description_i18n": {
-		"en_US": "Create, publish, and manage content, pages, and multimedia across different channels faster."
+		"en_US": "<p>Liferay’s Content Management System (CMS) offers user-friendly applications for creating, editing, publishing, and managing your site’s content.<p>Liferay empowers you to create and manage web content effectively. Easily create web content, upload documents, and leverage a suite of tools to administer and optimize your content. These tools include a user-friendly Content Dashboard UI, built-in Translation capabilities, and Content Performance insights.<div>Check these articles for an introduction:<ul><li><a href=/w/dxp/content-authoring-and-management/web-content#web-content>Web Content</a><li><a href=/w/dxp/content-authoring-and-management/blogs/getting-started-with-blogs#getting-started-with-blogs>Getting Started with Blogs</a><li><a href=/w/dxp/content-authoring-and-management/content-dashboard/about-the-content-dashboard#about-the-content-dashboard>About the Content Dashboard</a><li><a href=/w/dxp/content-authoring-and-management/page-performance-and-accessibility/about-the-content-performance-tool#about-the-content-performance-tool>About the Content Performance Tool</a></ul></div>"
 	},
 	"name": "Content Management System",
 	"name_i18n": {

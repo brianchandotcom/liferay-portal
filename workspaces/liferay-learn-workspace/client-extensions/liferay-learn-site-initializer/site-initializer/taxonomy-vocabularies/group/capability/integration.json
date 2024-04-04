@@ -1,7 +1,7 @@
 {
 	"description": "Unify systems, applications, and data with a single platform.",
 	"description_i18n": {
-		"en_US": "Unify systems, applications, and data with a single platform."
+		"en_US": "<p>Liferay is designed to be standards-compliant and highly interoperable. Connect Liferay DXP with external systems using SOAP, REST, GraphQL, and more  to unite third-party software, legacy systems, and data.<p>Headless APIs, Remote Apps (Client Extensions), API Builder, and integrations with SSO platforms are some of the examples of the features in this area.<div>Check these articles for an introduction:<ul><li><a href=/w/dxp/headless-delivery/using-liferay-as-a-headless-platform#using-liferay-as-a-headless-platform>Using Liferay as a Headless Platform</a><li><a href=/w/dxp/liferay-development/integrating-external-applications#integrating-external-applications>Integrating External Applications</a><li><a href=/w/dxp/headless-delivery/api-builder#api-builder>API Builder</a><li><a href=/w/dxp/installation-and-upgrades/securing-liferay/configuring-sso>Configuring Single Sign-On</a></ul></div>"
 	},
 	"name": "Integration",
 	"name_i18n": {

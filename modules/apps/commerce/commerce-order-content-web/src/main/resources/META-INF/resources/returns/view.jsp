@@ -23,6 +23,7 @@ long commerceChannelId = commerceReturnContentDisplayContext.getCommerceChannelI
 		<div id="<portlet:namespace />return-content-container">
 			<frontend-data-set:headless-display
 				apiURL="<%= commerceReturnContentDisplayContext.getAPIURL() %>"
+				fdsActionDropdownItems="<%= commerceReturnContentDisplayContext.getFDSActionDropdownItems() %>"
 				formName="fm"
 				id="<%= CommerceOrderFDSNames.RETURNS %>"
 				itemsPerPage="<%= 10 %>"

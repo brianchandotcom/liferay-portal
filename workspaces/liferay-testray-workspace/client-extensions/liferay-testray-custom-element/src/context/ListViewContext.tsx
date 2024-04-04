@@ -17,8 +17,6 @@ import isDeepEqual from '~/util/object';
 
 const testrayStorage = TestrayStorage.getInstance().getStorage('persisted');
 
-type Option = {label: string; value: string};
-
 export type Entry = {
 	label: string;
 	name: string;
@@ -284,6 +282,8 @@ const reducer = (state: InitialState, action: AppActions) => {
 };
 
 export type ListViewContextProviderProps = Partial<InitialState>;
+
+type Option = {label: string; value: string};
 
 const ListViewContextProvider: React.FC<
 	ListViewContextProviderProps & {children: ReactNode; id: string}

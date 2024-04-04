@@ -65,7 +65,7 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 			getResourceInputStream("single-approver-workflow-definition.xml"));
 
 		try (Closeable closeable =
-				_disableScriptContentBeExecutedOrIncluded()) {
+				_disableScriptContentToBeExecutedOrIncluded()) {
 
 			AssertUtils.assertFailure(
 				KaleoDefinitionValidationException.NotAllowedScriptLanguage.
@@ -528,13 +528,13 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 			FileUtil.getBytes(inputStream));
 	}
 
-	private Closeable _disableScriptContentBeExecutedOrIncluded()
+	private Closeable _disableScriptContentToBeExecutedOrIncluded()
 		throws ConfigurationException {
 
 		_configurationProvider.saveSystemConfiguration(
 			ScriptManagementConfiguration.class,
 			HashMapDictionaryBuilder.<String, Object>put(
-				"allowScriptContentBeExecutedOrIncluded", false
+				"allowScriptContentToBeExecutedOrIncluded", false
 			).build());
 
 		return () -> {
@@ -542,7 +542,7 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 				_configurationProvider.saveSystemConfiguration(
 					ScriptManagementConfiguration.class,
 					HashMapDictionaryBuilder.<String, Object>put(
-						"allowScriptContentBeExecutedOrIncluded", true
+						"allowScriptContentToBeExecutedOrIncluded", true
 					).build());
 			}
 			catch (ConfigurationException configurationException) {

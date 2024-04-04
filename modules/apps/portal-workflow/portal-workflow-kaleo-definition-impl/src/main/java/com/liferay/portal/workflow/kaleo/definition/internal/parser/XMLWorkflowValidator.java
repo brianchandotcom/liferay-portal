@@ -53,7 +53,7 @@ public class XMLWorkflowValidator implements WorkflowValidator {
 		String content = definition.getContent();
 
 		if (!_scriptManagementConfigurationHelper.
-				isAllowScriptContentBeExecutedOrIncluded() &&
+				isAllowScriptContentToBeExecutedOrIncluded() &&
 			content.contains("<script-language>groovy</script-language>")) {
 
 			throw new KaleoDefinitionValidationException.

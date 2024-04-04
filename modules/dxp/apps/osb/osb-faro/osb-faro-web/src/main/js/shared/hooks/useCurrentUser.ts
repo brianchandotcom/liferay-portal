@@ -19,7 +19,11 @@ export const useFetchCurrentUser = (initialGroupId: string = '0') => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const groupId = !isNaN(Number(initialGroupId)) ? initialGroupId : 0;
+		let groupId = '0';
+
+		if (initialGroupId && initialGroupId !== 'add') {
+			groupId = initialGroupId;
+		}
 
 		dispatch(fetchCurrentUser(groupId));
 	}, [initialGroupId]);

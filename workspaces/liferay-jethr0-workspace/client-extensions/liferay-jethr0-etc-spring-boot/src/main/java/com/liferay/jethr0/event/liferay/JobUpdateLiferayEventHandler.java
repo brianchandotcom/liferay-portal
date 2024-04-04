@@ -6,6 +6,9 @@
 package com.liferay.jethr0.event.liferay;
 
 import com.liferay.jethr0.event.EventHandlerContext;
+import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.queue.JobQueue;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
 
 import org.json.JSONObject;
 
@@ -16,7 +19,22 @@ public class JobUpdateLiferayEventHandler extends BaseLiferayEventHandler {
 
 	@Override
 	public String process() {
-		return String.valueOf(getJobJSONObject());
+		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+
+		JSONObject jobJSONObject = getJobJSONObject();
+
+		JobEntity jobEntity = jobEntityRepository.getById(
+			jobJSONObject.getLong("id"));
+
+		if (jobEntity != null) {
+			jobEntity.setJSONObject(jobJSONObject);
+
+			JobQueue jobQueue = getJobQueue();
+
+			jobQueue.sort();
+		}
+
+		return String.valueOf(jobEntity);
 	}
 
 	protected JobUpdateLiferayEventHandler(

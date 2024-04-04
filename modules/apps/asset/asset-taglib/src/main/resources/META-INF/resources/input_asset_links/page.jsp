@@ -7,10 +7,6 @@
 
 <%@ include file="/input_asset_links/init.jsp" %>
 
-<%
-List<DropdownItem> dropdownItems = inputAssetLinksDisplayContext.getActionDropdownItems();
-%>
-
 <liferay-util:buffer
 	var="removeLinkIcon"
 >
@@ -18,6 +14,10 @@ List<DropdownItem> dropdownItems = inputAssetLinksDisplayContext.getActionDropdo
 		symbol="times-circle"
 	/>
 </liferay-util:buffer>
+
+<%
+List<DropdownItem> dropdownItems = inputAssetLinksDisplayContext.getActionDropdownItems();
+%>
 
 <clay:dropdown-menu
 	additionalProps='<%=

@@ -5,6 +5,7 @@
 
 package com.liferay.layout.page.template.item.selector.web.internal.display.context;
 
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
@@ -53,7 +54,8 @@ public class LayoutPageTemplateCollectionsTreeNodeDisplayContext {
 		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
 			LayoutPageTemplateCollectionLocalServiceUtil.
 				getLayoutPageTemplateCollections(
-					groupId, layoutPageTemplateCollectionId);
+					groupId, layoutPageTemplateCollectionId,
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE);
 
 		for (LayoutPageTemplateCollection layoutPageTemplateCollection :
 				layoutPageTemplateCollections) {

@@ -174,44 +174,66 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 						/>
 					</aui:fieldset>
 
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
+					<%
+					Portlet portlet = PortletLocalServiceUtil.getPortletById(BlogsPortletKeys.BLOGS);
+					%>
 
-						<%
-						Portlet portlet = PortletLocalServiceUtil.getPortletById(BlogsPortletKeys.BLOGS);
-						%>
-
-						<div class="clearfix form-group">
-
-							<%
-							boolean automaticURL;
-
-							if (entry == null) {
-								automaticURL = Validator.isNull(blogsEditEntryDisplayContext.getURLTitle());
-							}
-							else {
-								String uniqueUrlTitle = BlogsEntryLocalServiceUtil.getUniqueUrlTitle(entry);
-
-								automaticURL = uniqueUrlTitle.equals(blogsEditEntryDisplayContext.getURLTitle());
-							}
-							%>
-
-							<label><liferay-ui:message key="url" /></label>
-
-							<div class="form-group" id="<portlet:namespace />urlOptions">
-								<aui:input checked="<%= automaticURL %>" helpMessage="the-url-will-be-based-on-the-entry-title" label="automatic" name="automaticURL" type="radio" value="<%= true %>" />
-
-								<aui:input checked="<%= !automaticURL %>" label="custom" name="automaticURL" type="radio" value="<%= false %>" />
+					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11147") %>'>
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="friendly-url">
+							<div class="clearfix form-group">
+								<react:component
+									module="{AssetCategoriesFriendlyUrlSelector} from blogs-web"
+									props='<%=
+										HashMapBuilder.<String, Object>put(
+											"id", liferayPortletResponse.getNamespace() + "friendly_url_category_selector"
+										).put(
+											"inputAddon", StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping()) + StringPool.SLASH
+										).put(
+											"namespace", liferayPortletResponse.getNamespace()
+										).put(
+											"selectCategoryURL", blogsEditEntryDisplayContext.getAssetCategorySelectorURL()
+										).build()
+									%>'
+								/>
 							</div>
+						</aui:fieldset>
+					</c:if>
 
-							<liferay-friendly-url:input
-								className="<%= BlogsEntry.class.getName() %>"
-								classPK="<%= blogsEditEntryDisplayContext.getEntryId() %>"
-								disabled="<%= automaticURL %>"
-								inputAddon='<%= StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping(), 40) + StringPool.SLASH %>'
-								localizable="<%= false %>"
-								name="urlTitle"
-							/>
-						</div>
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
+						<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-11147") %>'>
+							<div class="clearfix form-group">
+
+								<%
+								boolean automaticURL;
+
+								if (entry == null) {
+									automaticURL = Validator.isNull(blogsEditEntryDisplayContext.getURLTitle());
+								}
+								else {
+									String uniqueUrlTitle = BlogsEntryLocalServiceUtil.getUniqueUrlTitle(entry);
+
+									automaticURL = uniqueUrlTitle.equals(blogsEditEntryDisplayContext.getURLTitle());
+								}
+								%>
+
+								<label><liferay-ui:message key="url" /></label>
+
+								<div class="form-group" id="<portlet:namespace />urlOptions">
+									<aui:input checked="<%= automaticURL %>" helpMessage="the-url-will-be-based-on-the-entry-title" label="automatic" name="automaticURL" type="radio" value="<%= true %>" />
+
+									<aui:input checked="<%= !automaticURL %>" label="custom" name="automaticURL" type="radio" value="<%= false %>" />
+								</div>
+
+								<liferay-friendly-url:input
+									className="<%= BlogsEntry.class.getName() %>"
+									classPK="<%= blogsEditEntryDisplayContext.getEntryId() %>"
+									disabled="<%= automaticURL %>"
+									inputAddon='<%= StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping(), 40) + StringPool.SLASH %>'
+									localizable="<%= false %>"
+									name="urlTitle"
+								/>
+							</div>
+						</c:if>
 
 						<div class="clearfix form-group">
 							<label><liferay-ui:message key="abstract" /> <liferay-ui:icon-help message="an-abstract-is-a-brief-summary-of-a-blog-entry" /></label>

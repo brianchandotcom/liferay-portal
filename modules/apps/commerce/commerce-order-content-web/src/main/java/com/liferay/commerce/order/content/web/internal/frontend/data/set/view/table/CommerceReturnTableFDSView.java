@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + CommerceOrderFDSNames.RETURNS,
 	service = FDSView.class
 )
-public class CommerceReturnContentTableFDSView extends BaseTableFDSView {
+public class CommerceReturnTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {

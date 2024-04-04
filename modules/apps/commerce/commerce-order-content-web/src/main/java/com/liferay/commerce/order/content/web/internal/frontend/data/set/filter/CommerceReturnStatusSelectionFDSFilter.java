@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + CommerceOrderFDSNames.RETURNS,
 	service = FDSFilter.class
 )
-public class CommerceReturnContentStatusSelectionFDSFilter
+public class CommerceReturnStatusSelectionFDSFilter
 	extends BaseSelectionFDSFilter {
 
 	@Override
@@ -87,7 +87,7 @@ public class CommerceReturnContentStatusSelectionFDSFilter
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceReturnContentStatusSelectionFDSFilter.class);
+		CommerceReturnStatusSelectionFDSFilter.class);
 
 	@Reference
 	private ListTypeDefinitionService _listTypeDefinitionService;

@@ -30,6 +30,11 @@ public abstract class BaseFailureMessageGenerator
 
 	@Override
 	public String getMessage(Build build) {
+		return getMessage(build.getConsoleText());
+	}
+
+	@Override
+	public String getMessage(String consoleText) {
 		return null;
 	}
 

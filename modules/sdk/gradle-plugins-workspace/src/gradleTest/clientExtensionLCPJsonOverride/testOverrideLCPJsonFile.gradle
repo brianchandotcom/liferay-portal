@@ -1,0 +1,34 @@
+task runGradleTest
+
+String expectedFilePath = "LCP.json"
+String[] expectedContentStrings = [
+	'"foo" : "bar"',
+	'"dependencies" : [ "foo", "bar" ]',
+	'"memory" : 500',
+	'"LIFERAY_ROUTES_DXP" : "/etc/liferay/lxc/dxp-metadata"'
+]
+String[] unexpectedContentStrings = [
+	'"memory" : 300',
+]
+
+runGradleTest {
+	dependsOn ":client-extension-override-lcp-json:createClientExtensionConfig"
+
+	doLast {
+		Project clientExtensionOverrideLCPJsonProject = project(":client-extension-override-lcp-json")
+
+		File cxBuildDir = clientExtensionOverrideLCPJsonProject.file("${clientExtensionOverrideLCPJsonProject.buildDir}/liferay-client-extension-build")
+
+		File file = clientExtensionOverrideLCPJsonProject.file("${cxBuildDir}/${expectedFilePath}")
+
+		assert file.exists()
+
+		expectedContentStrings.each {
+			assert file.text.contains(it)
+		}
+
+		unexpectedContentStrings.each {
+			assert !file.text.contains(it)
+		}
+	}
+}

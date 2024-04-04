@@ -1,0 +1,11 @@
+{
+	"dependencies": [
+		"foo",
+		"bar"
+	],
+	"env": {
+		"FOO": "BAR"
+	},
+	"foo": "bar",
+	"memory": 500
+}

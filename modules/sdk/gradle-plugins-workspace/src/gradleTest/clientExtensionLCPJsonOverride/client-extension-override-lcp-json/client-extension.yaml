@@ -1,0 +1,11 @@
+client-extension-override-lcp-json-batch:
+    name: Batch
+    oAuthApplicationHeadlessServer: client-extension-override-lcp-json-oauth
+    type: batch
+client-extension-override-lcp-json-oauth:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Oauth
+    scopes:
+        - Liferay.Headless.Batch.Engine.everything
+    type: oAuthApplicationHeadlessServer

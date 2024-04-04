@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -70,7 +71,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		CI_SYSTEM_STATUS("CI System Status"),
 		PULL_REQUEST_HISTORY("Pull Request History"),
 		RELEASE_HISTORY("Release History"),
-		UPSTREAM_HISTORY("Upstream History");
+		UPSTREAM_HISTORY("Upstream History"), UTILIZATION("Utilization");
 
 		public String getDirName() {
 			return _reportDirNames.get(_string);
@@ -273,6 +274,10 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 				if (reportName.equals(Report.UPSTREAM_HISTORY.toString())) {
 					_generateUpstreamReport(reportFilePath);
 				}
+
+				if (reportName.equals(Report.UTILIZATION.toString())) {
+					_generateUtilizationReport(reportName);
+				}
 			}
 			catch (IOException ioException) {
 				System.out.println(
@@ -313,8 +318,60 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		_archiveReport(filePath);
 	}
 
+	private void _generateUtilizationReport(String reportName)
+		throws IOException {
+
+		String startDateString = _getStartDateString(reportName);
+
+		LocalDate localDate = LocalDate.parse(
+			startDateString, _dateTimeFormatter);
+
+		DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+
+		while (dayOfWeek.getValue() != 1) {
+			localDate = localDate.minusDays(1);
+
+			dayOfWeek = localDate.getDayOfWeek();
+		}
+
+		startDateString = localDate.format(_dateTimeFormatter);
+
+		long reportDurationDays = _getReportDurationDays(reportName);
+
+		_copyArchivedBuildData(reportDurationDays, startDateString);
+
+		String filePath = _getReportFilePath(reportName);
+
+		BuildHistoryReport utilizationReport =
+			BuildHistoryReport.newUtilizationReport(
+				reportDurationDays, new File(filePath), startDateString);
+
+		utilizationReport.write();
+
+		_updateReport(filePath);
+
+		_archiveReport(filePath);
+	}
+
 	private String _getReportDirName(String reportName) {
 		return _reportDirNames.get(reportName);
+	}
+
+	private long _getReportDurationDays(String reportName) {
+		String reportDurationDays = _buildProperties.getProperty(
+			JenkinsResultsParserUtil.combine(
+				"report.duration.days[", reportName, "]"));
+
+		if (reportDurationDays == null) {
+			reportDurationDays = _buildProperties.getProperty(
+				"report.duration.days");
+		}
+
+		return Long.parseLong(reportDurationDays);
+	}
+
+	private String _getReportFilePath(String reportName) {
+		return _TMP_REPORT_DIR_PATH + _getReportDirName(reportName);
 	}
 
 	private String[] _getReportNames() {
@@ -325,6 +382,15 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		}
 
 		return buildParameter.split("\\s*,\\s*");
+	}
+
+	private String _getStartDateString(String reportName) {
+		LocalDate localDate = LocalDate.parse(
+			_CURRENT_DATE_STRING, _dateTimeFormatter);
+
+		localDate = localDate.minusDays(_getReportDurationDays(reportName));
+
+		return localDate.format(_dateTimeFormatter);
 	}
 
 	private void _updateNodeDataFile(String filePath) throws IOException {
@@ -404,13 +470,15 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 					"pull-request-report");
 				put(Report.RELEASE_HISTORY.toString(), "release-report");
 				put(Report.UPSTREAM_HISTORY.toString(), "upstream-report");
+				put(Report.UTILIZATION.toString(), "utilization-report");
 			}
 		};
 	private static final List<String> _validReportNames = Arrays.asList(
 		Report.BUILD_HISTORY.toString(), Report.CI_SYSTEM_HISTORY.toString(),
 		Report.CI_SYSTEM_STATUS.toString(),
 		Report.PULL_REQUEST_HISTORY.toString(),
-		Report.RELEASE_HISTORY.toString(), Report.UPSTREAM_HISTORY.toString());
+		Report.RELEASE_HISTORY.toString(), Report.UPSTREAM_HISTORY.toString(),
+		Report.UTILIZATION.toString());
 
 	static {
 		_buildProperties = new Properties() {

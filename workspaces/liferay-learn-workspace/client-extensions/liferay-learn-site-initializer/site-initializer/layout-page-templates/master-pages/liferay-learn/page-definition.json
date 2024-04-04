@@ -209,9 +209,11 @@
 										"siteKey": "Liferay Learn"
 									},
 									"fragmentConfig": {
+										"defaultShowPanel": false,
 										"iconAlignment": "none",
 										"iconName": "check-circle",
 										"numberOfTabs": 3,
+										"offClickHidePanel": true,
 										"tabActiveBarPosition": "",
 										"tabDirection": "",
 										"tabStyle": "underline"

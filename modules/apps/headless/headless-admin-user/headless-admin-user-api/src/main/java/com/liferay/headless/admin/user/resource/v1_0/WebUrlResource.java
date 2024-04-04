@@ -58,12 +58,20 @@ public interface WebUrlResource {
 			String fieldNames)
 		throws Exception;
 
+	public Page<WebUrl> getOrganizationByExternalReferenceCodeWebUrlsPage(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<WebUrl> getOrganizationWebUrlsPage(String organizationId)
 		throws Exception;
 
 	public Response postOrganizationWebUrlsPageExportBatch(
 			String organizationId, String callbackURL, String contentType,
 			String fieldNames)
+		throws Exception;
+
+	public Page<WebUrl> getUserAccountByExternalReferenceCodeWebUrlsPage(
+			String externalReferenceCode)
 		throws Exception;
 
 	public Page<WebUrl> getUserAccountWebUrlsPage(Long userAccountId)

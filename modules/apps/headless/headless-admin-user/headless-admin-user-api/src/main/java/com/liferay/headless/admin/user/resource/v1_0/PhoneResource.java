@@ -58,6 +58,10 @@ public interface PhoneResource {
 			String fieldNames)
 		throws Exception;
 
+	public Page<Phone> getOrganizationByExternalReferenceCodePhonesPage(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<Phone> getOrganizationPhonesPage(String organizationId)
 		throws Exception;
 
@@ -67,6 +71,10 @@ public interface PhoneResource {
 		throws Exception;
 
 	public Phone getPhone(Long phoneId) throws Exception;
+
+	public Page<Phone> getUserAccountByExternalReferenceCodePhonesPage(
+			String externalReferenceCode)
+		throws Exception;
 
 	public Page<Phone> getUserAccountPhonesPage(Long userAccountId)
 		throws Exception;

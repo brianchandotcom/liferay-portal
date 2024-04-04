@@ -47,6 +47,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PostalAddressResource {
 
+	public Page<PostalAddress>
+			getAccountByExternalReferenceCodePostalAddressesPage(
+				String externalReferenceCode)
+		throws Exception;
+
 	public Page<PostalAddress> getAccountPostalAddressesPage(Long accountId)
 		throws Exception;
 
@@ -61,6 +66,11 @@ public interface PostalAddressResource {
 
 	public Response postAccountPostalAddressBatch(
 			Long accountId, String callbackURL, Object object)
+		throws Exception;
+
+	public Page<PostalAddress>
+			getOrganizationByExternalReferenceCodePostalAddressesPage(
+				String externalReferenceCode)
 		throws Exception;
 
 	public Page<PostalAddress> getOrganizationPostalAddressesPage(
@@ -89,6 +99,11 @@ public interface PostalAddressResource {
 		throws Exception;
 
 	public Response putPostalAddressBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Page<PostalAddress>
+			getUserAccountByExternalReferenceCodePostalAddressesPage(
+				String externalReferenceCode)
 		throws Exception;
 
 	public Page<PostalAddress> getUserAccountPostalAddressesPage(

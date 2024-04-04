@@ -204,9 +204,7 @@ definition {
 		}
 
 		var key_endDate = ${endDate};
-		var key_endDateTime = "${endDateTimeHour}:${endDateTimeMinute} ${endDateTimeAMPM}";
 		var key_startDate = ${startDate};
-		var key_startDateTime = "${startDateTimeHour}:${startDateTimeMinute} ${startDateTimeAMPM}";
 
 		if (${reminders} == "true") {
 			if (!(IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_ALL_DAY_WITH_REMINDER"))) {

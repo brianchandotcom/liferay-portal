@@ -108,6 +108,27 @@ public class CompanyLocalServiceDBPartitionTest
 	}
 
 	@Test
+	public void testAddCompaniesUseVirtualHostDefaultCounter()
+		throws Exception {
+
+		long counter = _counterLocalService.increment();
+
+		_company1 = CompanyTestUtil.addCompany();
+
+		VirtualHost virtualHost = _virtualHostLocalService.getVirtualHost(
+			_company1.getVirtualHostname());
+
+		Assert.assertEquals(counter + 1, virtualHost.getVirtualHostId());
+
+		_company2 = CompanyTestUtil.addCompany();
+
+		virtualHost = _virtualHostLocalService.getVirtualHost(
+			_company2.getVirtualHostname());
+
+		Assert.assertEquals(counter + 2, virtualHost.getVirtualHostId());
+	}
+
+	@Test
 	public void testAddCompany() throws Exception {
 		int dbPartitionsCount = _getDBPartitionsCount();
 
@@ -360,38 +381,6 @@ public class CompanyLocalServiceDBPartitionTest
 				companyLocalService.deleteCompany(company);
 			}
 		}
-	}
-
-	@Test
-	public void testAddMultipleCompanies() throws Exception {
-		int dbPartitionsCount = _getDBPartitionsCount();
-		long counter = _counterLocalService.increment();
-
-		_company1 = CompanyTestUtil.addCompany();
-
-		Assert.assertTrue(
-			ArrayUtil.contains(
-				_getCompanyIdsBySQL(), _company1.getCompanyId()));
-
-		VirtualHost virtualHost = _virtualHostLocalService.getVirtualHost(
-			_company1.getVirtualHostname());
-
-		Assert.assertEquals(counter + 1, virtualHost.getVirtualHostId());
-
-		Assert.assertEquals(dbPartitionsCount + 1, _getDBPartitionsCount());
-
-		_company2 = CompanyTestUtil.addCompany();
-
-		Assert.assertTrue(
-			ArrayUtil.contains(
-				_getCompanyIdsBySQL(), _company2.getCompanyId()));
-
-		virtualHost = _virtualHostLocalService.getVirtualHost(
-			_company2.getVirtualHostname());
-
-		Assert.assertEquals(counter + 2, virtualHost.getVirtualHostId());
-
-		Assert.assertEquals(dbPartitionsCount + 2, _getDBPartitionsCount());
 	}
 
 	@Test

@@ -212,7 +212,7 @@ definition {
 		}
 
 		task ("Type keyword in search bar") {
-			for (var keyword : list "${keyword1},${keyword2}") {
+			for (var keyword : list "${keyword1},${keyword1},${keyword1},${keyword2},${keyword2},${keyword2}") {
 				SearchPage.searchEmbedded(searchTerm = ${keyword});
 
 				ACUtils.waitForSendingRequest();

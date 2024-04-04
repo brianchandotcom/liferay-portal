@@ -62,6 +62,11 @@ public interface EmailAddressResource {
 
 	public EmailAddress getEmailAddress(Long emailAddressId) throws Exception;
 
+	public Page<EmailAddress>
+			getOrganizationByExternalReferenceCodeEmailAddressesPage(
+				String externalReferenceCode)
+		throws Exception;
+
 	public Page<EmailAddress> getOrganizationEmailAddressesPage(
 			String organizationId)
 		throws Exception;
@@ -69,6 +74,11 @@ public interface EmailAddressResource {
 	public Response postOrganizationEmailAddressesPageExportBatch(
 			String organizationId, String callbackURL, String contentType,
 			String fieldNames)
+		throws Exception;
+
+	public Page<EmailAddress>
+			getUserAccountByExternalReferenceCodeEmailAddressesPage(
+				String externalReferenceCode)
 		throws Exception;
 
 	public Page<EmailAddress> getUserAccountEmailAddressesPage(

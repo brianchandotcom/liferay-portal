@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.util.ArrayList;
@@ -22,43 +23,42 @@ public class UpgradeRelease extends UpgradeProcess {
 		StringBundler sb = new StringBundler(
 			"update Release_ set verified=0 where servletContextName not in (");
 
-		for (int i = 0; i < _modulesWithVerifiers.size(); i++) {
-			sb.append("'");
-			sb.append(_modulesWithVerifiers.get(i));
-
-			if (i == (_modulesWithVerifiers.size() - 1)) {
-				sb.append("')");
-			}
-			else {
-				sb.append("', ");
-			}
+		for (String verifiedServletContextName : _verifiedServletContextNames) {
+			sb.append(StringPool.APOSTROPHE);
+			sb.append(verifiedServletContextName);
+			sb.append(StringPool.APOSTROPHE + StringPool.COMMA);
 		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		runSQL(sb.toString());
 	}
 
-	private static final List<String> _modulesWithVerifiers = new ArrayList<>(
-		Arrays.asList(
-			"com.liferay.adaptive.media.document.library.thumbnails",
-			"com.liferay.blogs.service", "com.liferay.bookmarks.service",
-			"com.liferay.commerce.price.list.service",
-			"com.liferay.commerce.product.service",
-			"com.liferay.commerce.service", "com.liferay.depot.service",
-			"com.liferay.document.library.google.docs",
-			"com.liferay.document.library.service",
-			"com.liferay.document.library.video",
-			"com.liferay.dynamic.data.mapping.service",
-			"com.liferay.frontend.js.a11y.web",
-			"com.liferay.message.boards.service",
-			"com.liferay.organizations.service",
-			"com.liferay.portal.lock.service",
-			"com.liferay.portal.search.tuning.rankings.web",
-			"com.liferay.portal.search.tuning.synonyms.web",
-			"com.liferay.portal.security.service.access.policy.service",
-			"com.liferay.portal.security.sso.facebook.connect",
-			"com.liferay.portal.security.sso.opensso",
-			"com.liferay.portal.workflow.kaleo.designer.web",
-			"com.liferay.search.experiences.service",
-			"com.liferay.wiki.service", "portal"));
+	private static final List<String> _verifiedServletContextNames =
+		new ArrayList<>(
+			Arrays.asList(
+				"com.liferay.adaptive.media.document.library.thumbnails",
+				"com.liferay.blogs.service", "com.liferay.bookmarks.service",
+				"com.liferay.commerce.price.list.service",
+				"com.liferay.commerce.product.service",
+				"com.liferay.commerce.service", "com.liferay.depot.service",
+				"com.liferay.document.library.google.docs",
+				"com.liferay.document.library.service",
+				"com.liferay.document.library.video",
+				"com.liferay.dynamic.data.mapping.service",
+				"com.liferay.frontend.js.a11y.web",
+				"com.liferay.message.boards.service",
+				"com.liferay.organizations.service",
+				"com.liferay.portal.lock.service",
+				"com.liferay.portal.search.tuning.rankings.web",
+				"com.liferay.portal.search.tuning.synonyms.web",
+				"com.liferay.portal.security.service.access.policy.service",
+				"com.liferay.portal.security.sso.facebook.connect",
+				"com.liferay.portal.security.sso.opensso",
+				"com.liferay.portal.workflow.kaleo.designer.web",
+				"com.liferay.search.experiences.service",
+				"com.liferay.wiki.service", "portal"));
 
 }

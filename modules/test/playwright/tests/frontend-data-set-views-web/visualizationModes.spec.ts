@@ -5,15 +5,18 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
-	fdsFragmentPageTest,
+	featureFlagsTest({
+		'LPS-164563': true,
+		'LPS-186871': true,
+	}),
 	visualizationModesPageTest,
 	loginTest()
 );
@@ -318,7 +321,7 @@ test('Configure table visualization mode @LPD-11049', async ({
 		await expect(sortableInput).toBeEnabled();
 		await expect(sortableInput).toBeChecked();
 
-		sortableInput.click();
+		await sortableInput.click();
 
 		await expect(sortableInput).not.toBeChecked();
 

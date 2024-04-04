@@ -109,6 +109,22 @@
 							}
 						]
 					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Default Show Panel",
+					"label": "Default Show Panel",
+					"name": "defaultShowPanel",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Off Click Hide Panel",
+					"label": "Off Click Hide Panel",
+					"name": "offClickHidePanel",
+					"type": "checkbox"
 				}
 			],
 			"label": "tabs-options"

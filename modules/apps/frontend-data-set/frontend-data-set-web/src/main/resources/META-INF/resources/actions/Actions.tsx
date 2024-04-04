@@ -10,6 +10,7 @@ import FrontendDataSetContext, {
 	IFrontendDataSetContext,
 } from '../FrontendDataSetContext';
 import filterItemActions from '../utils/actionItems/filterItemActions';
+import handleActionClick from '../utils/actionItems/handleActionClick';
 
 // @ts-ignore
 
@@ -18,7 +19,6 @@ import ViewsContext from '../views/ViewsContext';
 // @ts-ignore
 
 import ActionsDropdown from './ActionsDropdown';
-import handleActionClick from './handleActionClick';
 import QuickActions from './QuickActions';
 
 const QUICK_ACTIONS_MAX_NUMBER = 3;

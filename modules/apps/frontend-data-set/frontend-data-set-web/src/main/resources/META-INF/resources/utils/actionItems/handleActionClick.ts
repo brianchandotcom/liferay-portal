@@ -5,11 +5,11 @@
 
 import {navigate, openConfirmModal} from 'frontend-js-web';
 
-import {IItemsActions} from '../index';
-import {ACTION_ITEM_TARGETS} from '../utils/actionItems/constants';
-import formatActionURL from '../utils/actionItems/formatActionURL';
-import {openPermissionsModal} from '../utils/modals/openPermissionsModal';
-import {resolveModalSize} from '../utils/modals/resolveModalSize';
+import {IItemsActions} from '../../index';
+import {openPermissionsModal} from '../modals/openPermissionsModal';
+import {resolveModalSize} from '../modals/resolveModalSize';
+import {ACTION_ITEM_TARGETS} from './constants';
+import formatActionURL from './formatActionURL';
 
 const {MODAL_PERMISSIONS} = ACTION_ITEM_TARGETS;
 

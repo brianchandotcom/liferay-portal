@@ -11,7 +11,7 @@ import React, {useContext, useRef} from 'react';
 import FrontendDataSetContext, {
 	IFrontendDataSetContext,
 } from '../../FrontendDataSetContext';
-import handleActionClick from '../../actions/handleActionClick';
+import handleActionClick from '../../utils/actionItems/handleActionClick';
 import {IItemsActions} from '../../index';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
 import getRandomId from '../../utils/getRandomId';

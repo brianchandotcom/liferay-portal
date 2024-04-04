@@ -7,6 +7,7 @@
 	taxonomyCategoryBriefs = restClient.get("/headless-delivery/v1.0/sites/${groupId}/structured-contents/by-key/${journalArticleId}?nestedFields=embeddedTaxonomyCategory").taxonomyCategoryBriefs
 	taxonomyVocabularies = []
 
+	childrenJSONArray = navigationJSONObject.getJSONArray("children")
 	breadcrumbJSONArray = navigationJSONObject.getJSONArray("breadcrumb")
 	showChildrenCards = showChildrenCards.getData()?boolean
 />
@@ -87,8 +88,10 @@
 					${content.getData()}
 				</#if>
 
-				<#if showChildrenCards>
-					Render cards
+				<#if showChildrenCards && childrenJSONArray.length() gt 0>
+					<#list childrenJSONArray.length()-1..0 as i>
+						<a href='${childrenJSONArray.getJSONObject(i).getString("url")}'>${childrenJSONArray.getJSONObject(i).getString("title")}</a>
+					</#list>
 				</#if>
 
 				<#list taxonomyVocabularies as vocabulary>

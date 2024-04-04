@@ -269,7 +269,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNoTag() {
+	macro viewNoTag(tagName = null) {
 		AssertElementNotPresent(
 			key_tagName = ${tagName},
 			locator1 = "AssetCategorization#TAG",
@@ -286,7 +286,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTag() {
+	macro viewTag(tagName = null) {
 		AssertTextEquals(
 			key_tagName = ${tagName},
 			locator1 = "AssetCategorization#TAG",

@@ -20,6 +20,14 @@ import {AppCreationFlow} from './pages/Apps/AppCreationFlow/AppCreationFlow';
 import Members from './pages/Members';
 import Projects from './pages/Projects';
 import Solutions from './pages/Solutions';
+import NewSolution from './pages/Solutions/NewSolutionFlow/NewSolutionFlow';
+import SolutionCompanyProfile from './pages/Solutions/NewSolutionFlow/pages/SolutionCompanyProfile';
+import SolutionContactUs from './pages/Solutions/NewSolutionFlow/pages/SolutionContactUs';
+import Solution from './pages/Solutions/NewSolutionFlow/pages/SolutionCreate';
+import SolutionDetails from './pages/Solutions/NewSolutionFlow/pages/SolutionDetails';
+import SolutionHeader from './pages/Solutions/NewSolutionFlow/pages/SolutionHeader';
+import SolutionProfile from './pages/Solutions/NewSolutionFlow/pages/SolutionProfile';
+import SolutionSubmit from './pages/Solutions/NewSolutionFlow/pages/SolutionSubmit';
 
 const PublisherDashboardRouter = () => {
 	const {accountId} = Liferay.CommerceContext.account || {};
@@ -56,6 +64,19 @@ const PublisherDashboardRouter = () => {
 					element={<AppCreationFlow catalogId={String(catalogId)} />}
 					path="app/create"
 				/>
+
+				<Route element={<NewSolution />} path="solution/publisher">
+					<Route element={<Solution />} path="index" />
+					<Route element={<SolutionHeader />} path="header" />
+					<Route element={<SolutionDetails />} path="details" />
+					<Route element={<SolutionProfile />} path="profile" />
+					<Route element={<SolutionContactUs />} path="contact" />
+					<Route
+						element={<SolutionCompanyProfile />}
+						path="company"
+					/>
+					<Route element={<SolutionSubmit />} path="submit" />
+				</Route>
 
 				<Route
 					element={

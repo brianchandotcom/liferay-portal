@@ -45,7 +45,7 @@ public class DDMFormValuesToFieldsConverterImpl
 			DDMStructure ddmStructure, DDMFormValues ddmFormValues)
 		throws PortalException {
 
-		DDMForm ddmForm = ddmStructure.getDDMForm();
+		DDMForm ddmForm = ddmStructure.getFullHierarchyDDMForm();
 
 		ddmFormValues.setDDMFormFieldValues(
 			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(

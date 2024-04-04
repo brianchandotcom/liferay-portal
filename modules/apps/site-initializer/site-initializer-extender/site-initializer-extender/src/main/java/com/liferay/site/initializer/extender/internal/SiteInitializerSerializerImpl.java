@@ -542,8 +542,8 @@ public class SiteInitializerSerializerImpl
 	private void _serializeUserAccounts(long groupId, ZipWriter zipWriter)
 		throws Exception {
 
-		Map<String, String[]> usersEmailAddressToRoles = new HashMap<>();
 		Set<AccountEntry> accountEntries = new TreeSet<>();
+		Map<String, String[]> emailAddressToRoles = new HashMap<>();
 		Set<Organization> organizations = new TreeSet<>();
 		Set<Role> roles = new TreeSet<>();
 
@@ -564,10 +564,10 @@ public class SiteInitializerSerializerImpl
 						}
 					}
 
-					roles.addAll(userRoles);
-					usersEmailAddressToRoles.put(
+					emailAddressToRoles.put(
 						user.getEmailAddress(),
 						ListUtil.toArray(userRoles, Role.NAME_ACCESSOR));
+					roles.addAll(userRoles);
 
 					List<AccountEntry> userAccountEntries =
 						_accountEntryLocalService.getUserAccountEntries(
@@ -669,13 +669,13 @@ public class SiteInitializerSerializerImpl
 		_addZipEntry(
 			"user-roles.json",
 			JSONUtil.toJSONArray(
-				usersEmailAddressToRoles.keySet(),
-				userEmailAddress -> JSONUtil.put(
-					"emailAddress", userEmailAddress
+				emailAddressToRoles.keySet(),
+				emailAddress -> JSONUtil.put(
+					"emailAddress", emailAddress
 				).put(
 					"roles",
 					JSONUtil.toJSONArray(
-						usersEmailAddressToRoles.get(userEmailAddress),
+						emailAddressToRoles.get(emailAddress),
 						role -> {
 							if (StringUtil.equals(role, RoleConstants.USER)) {
 								return null;

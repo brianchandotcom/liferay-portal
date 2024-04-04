@@ -59,6 +59,10 @@ public abstract class BaseJobPrioritizerEntity
 		return _name;
 	}
 
+	public List<Long> getPrioritizedJobIds() {
+		return _prioritizedJobIds;
+	}
+
 	@Override
 	public void removeJobComparatorEntities(
 		Set<JobComparatorEntity> jobComparatorEntities) {
@@ -86,19 +90,13 @@ public abstract class BaseJobPrioritizerEntity
 		_prioritizedJobIds = new ArrayList<>();
 
 		while (matcher.find()) {
-			_prioritizedJobIds.add(Long.parseLong(matcher.group()));
+			_prioritizedJobIds.add(Long.valueOf(matcher.group()));
 		}
 	}
-
-	private static final Pattern _jobIdsPattern = Pattern.compile("\\d+");
 
 	@Override
 	public void setName(String name) {
 		_name = name;
-	}
-
-	public List<Long> getPrioritizedJobIds() {
-		return _prioritizedJobIds;
 	}
 
 	public void setPrioritizedJobIds(List<Long> prioritizedJobIDs) {
@@ -108,6 +106,8 @@ public abstract class BaseJobPrioritizerEntity
 	protected BaseJobPrioritizerEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
+
+	private static final Pattern _jobIdsPattern = Pattern.compile("\\d+");
 
 	private String _name;
 	private List<Long> _prioritizedJobIds;

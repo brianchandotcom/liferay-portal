@@ -25,6 +25,8 @@ public interface JobPrioritizerEntity extends Entity {
 
 	public String getName();
 
+	public List<Long> getPrioritizedJobIds();
+
 	public void removeJobComparatorEntities(
 		Set<JobComparatorEntity> jobComparatorEntities);
 
@@ -32,8 +34,6 @@ public interface JobPrioritizerEntity extends Entity {
 		JobComparatorEntity jobComparatorEntity);
 
 	public void setName(String name);
-
-	public List<Long> getPrioritizedJobIds();
 
 	public void setPrioritizedJobIds(List<Long> prioritizedJobIDs);
 

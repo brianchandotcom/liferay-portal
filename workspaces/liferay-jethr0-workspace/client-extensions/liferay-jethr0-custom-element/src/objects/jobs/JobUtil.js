@@ -81,14 +81,19 @@ export function getJobQueueOrderedJobs({setJobs}) {
 		urlPath: '/o/c/jobprioritizers',
 		urlSearchParams: new URLSearchParams({
 			pageSize: 1,
-			sort: "dateCreated:desc",
-		})
+			sort: 'dateCreated:desc',
+		}),
 	})
 		.then((request) => request.text())
 		.then((result) => {
 			const resultJSON = JSON.parse(result);
 
-			getJobs({orderedJobIds: JSON.parse(resultJSON.items[0].prioritizedJobIds), setJobs});
+			getJobs({
+				orderedJobIds: JSON.parse(
+					resultJSON.items[0].prioritizedJobIds
+				),
+				setJobs,
+			});
 		})
 		.catch((error) => {
 			// eslint-disable-next-line no-console
@@ -97,12 +102,12 @@ export function getJobQueueOrderedJobs({setJobs}) {
 }
 
 export function getJobs({orderedJobIds, setJobs}) {
-	let filter = "";
+	let filter = '';
 
 	if (orderedJobIds) {
 		for (let i = 0; i < orderedJobIds.length; i++) {
 			if (i > 0) {
-				filter += " or ";
+				filter += ' or ';
 			}
 
 			filter += `id eq '${orderedJobIds[i]}'`;
@@ -111,7 +116,7 @@ export function getJobs({orderedJobIds, setJobs}) {
 
 	liferayRequest({
 		urlPath: '/o/c/jobs',
-		urlSearchParams: new URLSearchParams({filter})
+		urlSearchParams: new URLSearchParams({filter}),
 	})
 		.then((request) => request.text())
 		.then((result) => {

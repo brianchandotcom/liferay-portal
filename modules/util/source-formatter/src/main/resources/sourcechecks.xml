@@ -843,9 +843,9 @@
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on `alter` calls in Upgrade classes." />
 		</check>
-		<check name="JavaUpgradeAlterTableAddColumnCallsOrderCheck">
+		<check name="JavaUpgradeAlterColumnCallsOrderCheck">
 			<category name="Styling" />
-			<description name="Sorts calls to alterTableAddColumn, the order should follow the order in `tables.sql`." />
+			<description name="Sorts method calls for altering table column, the order should follow the order in `tables.sql`." />
 		</check>
 		<check name="JavaUpgradeClassCheck">
 			<category name="Bug Prevention" />

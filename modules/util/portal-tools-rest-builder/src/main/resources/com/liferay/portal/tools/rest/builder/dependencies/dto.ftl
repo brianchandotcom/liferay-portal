@@ -140,7 +140,24 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)
 			propertyType = properties[propertyName]
 			sizeParameters = []
+			capitalizedPropertyName = propertyName?cap_first
 		/>
+
+		<#if propertySchema.jsonMap>
+			<#assign jsonMapPropertyNames = jsonMapPropertyNames + [propertyName] />
+
+			@JsonAnyGetter
+			public Map<String, UnsafeSupplier<Object, Exception>> getLazy${capitalizedPropertyName}() {
+				return _lazy${capitalizedPropertyName};
+			}
+
+			@JsonIgnore
+			public void setLazy${capitalizedPropertyName}(Map<String, UnsafeSupplier<Object, Exception>> lazy${capitalizedPropertyName}) {
+				this._lazy${capitalizedPropertyName} = lazy${capitalizedPropertyName};
+			}
+
+			private Map<String, UnsafeSupplier<Object, Exception>> _lazy${capitalizedPropertyName};
+		</#if>
 
 		<#if propertySchema.maximum??>
 			@DecimalMax("${propertySchema.maximum}")
@@ -148,12 +165,6 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 		<#if propertySchema.minimum??>
 			@DecimalMin("${propertySchema.minimum}")
-		</#if>
-
-		<#if propertySchema.jsonMap>
-			@JsonAnyGetter
-
-			<#assign jsonMapPropertyNames = jsonMapPropertyNames + [propertyName] />
 		</#if>
 
 		<#if propertySchema.maxLength??>
@@ -193,8 +204,6 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			@Valid
 		</#if>
 
-		<#assign capitalizedPropertyName = propertyName?cap_first />
-
 		<#if enumSchemas?keys?seq_contains(propertyType)>
 			<#assign capitalizedPropertyName = propertyType />
 
@@ -216,6 +225,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 						});
 
 					_${propertyName}Supplier = null;
+					_lazy${capitalizedPropertyName} = null;
 
 					return ${propertyName};
 				}
@@ -232,17 +242,6 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 				return ${propertyName};
 			}
-
-			public Map<String, UnsafeSupplier<Object, Exception>> getLazy${capitalizedPropertyName}() {
-				return _lazy${capitalizedPropertyName};
-			}
-
-			@JsonIgnore
-			public void setLazy${capitalizedPropertyName}(Map<String, UnsafeSupplier<Object, Exception>> lazy${capitalizedPropertyName}) {
-				this._lazy${capitalizedPropertyName} = lazy${capitalizedPropertyName};
-			}
-
-			private Map<String, UnsafeSupplier<Object, Exception>> _lazy${capitalizedPropertyName};
 
 		<#else>
 			public ${propertyType} get${capitalizedPropertyName}() {
@@ -273,6 +272,9 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			this.${propertyName} = ${propertyName};
 
 			_${propertyName}Supplier = null;
+			<#if propertySchema.isJsonMap()>
+				_lazy${capitalizedPropertyName} = null;
+			</#if>
 		}
 
 		@JsonIgnore

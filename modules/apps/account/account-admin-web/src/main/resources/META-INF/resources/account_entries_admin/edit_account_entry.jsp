@@ -16,7 +16,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 	containerWrapperCssClass="container-fluid container-fluid-max-xl"
 	context="<%= accountEntryDisplay %>"
 	key="<%= AccountScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY %>"
-	menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
+	menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg mt-5"
 	navCssClass="col-lg-3"
 	portletURL='<%=
 		PortletURLBuilder.createRenderURL(

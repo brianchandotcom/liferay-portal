@@ -97,16 +97,23 @@ export async function syncSite(page) {
 
 	await page.getByRole('tab', {name: 'Sites'}).click();
 
-	await page.getByTestId('1').getByTestId('Liferay').getByLabel('').check();
+	await page.waitForTimeout(3000);
 
-	await page
-		.getByLabel('Assign to Liferay')
-		.getByRole('button', {name: 'Assign'})
-		.click();
+	const checkbox = await page.$(
+		'.modal table.table tbody tr:first-child input[type="checkbox"]'
+	);
 
-	await expect(page.getByLabel('Assign to Liferay')).toBeHidden({
-		timeout: 100 * 1000,
-	});
+	await checkbox.check();
+
+	const submitButton = await page.$(
+		'.modal .modal-item-last button.btn-primary'
+	);
+
+	await submitButton.click();
+
+	await expect(
+		page.getByText('Success:Properties settings have been saved.')
+	).toBeVisible();
 
 	await page.getByRole('button', {exact: true, name: 'Next'}).click();
 }

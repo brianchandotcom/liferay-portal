@@ -113,10 +113,10 @@ public class ObjectDefinitionsValidationsDisplayContext
 		ObjectDefinition objectDefinition = getObjectDefinition();
 
 		return HashMapBuilder.<String, Object>put(
-			"creationLanguageId", objectDefinition.getDefaultLanguageId()
-		).put(
-			"isAllowScriptContentToBeExecutedOrIncluded",
+			"allowScriptContentToBeExecutedOrIncluded",
 			isAllowScriptContentToBeExecutedOrIncluded()
+		).put(
+			"creationLanguageId", objectDefinition.getDefaultLanguageId()
 		).put(
 			"learnResources",
 			LearnMessageUtil.getReactDataJSONObject("object-web")

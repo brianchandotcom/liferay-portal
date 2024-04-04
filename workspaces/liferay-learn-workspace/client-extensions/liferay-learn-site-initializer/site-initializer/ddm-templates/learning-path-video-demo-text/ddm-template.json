@@ -1,0 +1,7 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "LEARNING_PATH_VIDEO_DEMO_TEXT",
+	"infoItemClassName": "com.liferay.portal.kernel.repository.model.FileEntry",
+	"name": "Learning Path Video Demo Text",
+	"resourceClassName": "com.liferay.template.model.TemplateEntry"
+}

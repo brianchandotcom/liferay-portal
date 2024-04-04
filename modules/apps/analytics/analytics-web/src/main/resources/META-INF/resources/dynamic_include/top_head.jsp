@@ -23,7 +23,7 @@
 	var cookieManagers = {
 		'cookie.onetrust': {
 			enabled: () => {
-				if (!window.OneTrustStub) {
+				if (!window.OneTrustStub && !window.OneTrust) {
 					return Promise.resolve(false);
 				}
 
@@ -128,19 +128,27 @@
 				},
 			},
 			checkConsent: ({navigation}) => {
-				if (navigation === 'normal' && window.Analytics) {
-					return false;
-				}
-
 				var performanceCookieEnabled = Liferay.Util.Cookie.get(
 					Liferay.Util.Cookie.TYPES.PERFORMANCE
 				);
+
+				if (performanceCookieEnabled === 'false') {
+					if (window.Analytics) {
+						Analytics.dispose();
+					}
+
+					return false;
+				}
 
 				if (
 					!analyticsCookiesConsentMode &&
 					typeof performanceCookieEnabled === 'undefined'
 				) {
 					return true;
+				}
+
+				if (navigation === 'normal' && window.Analytics) {
+					return false;
 				}
 
 				return performanceCookieEnabled === 'true';

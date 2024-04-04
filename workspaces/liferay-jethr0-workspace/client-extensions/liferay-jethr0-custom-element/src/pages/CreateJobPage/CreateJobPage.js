@@ -79,7 +79,7 @@ function CreateJobPage() {
 	}
 
 	if (!jobParameters && jobDefinitionParameters) {
-		const defaultJobParameters = [];
+		const defaultJobParameters = {};
 
 		jobDefinitionParameters.forEach((jobDefinitionParameter) => {
 			defaultJobParameters[jobDefinitionParameter.key] =

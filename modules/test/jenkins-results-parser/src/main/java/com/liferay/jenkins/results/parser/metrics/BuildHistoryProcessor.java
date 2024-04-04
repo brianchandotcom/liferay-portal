@@ -97,6 +97,9 @@ public class BuildHistoryProcessor {
 	public static Collection<BuildHistory> newTestSuiteJobHistories(
 		long duration, Pattern jobNamePattern, long startTime) {
 
+		Function<BuildJSONObject, String> groupByTopLevelTestSuite =
+			new GroupByTopLevelTestSuite();
+
 		BiConsumer<Set<BuildJSONObject>, Map<String, BuildHistory>> biConsumer =
 			new BiConsumer<Set<BuildJSONObject>, Map<String, BuildHistory>>() {
 
@@ -118,9 +121,6 @@ public class BuildHistoryProcessor {
 							downstreamBuildJSONObjects.add(buildJSONObject);
 						}
 					}
-
-					Function<BuildJSONObject, String> groupByTopLevelTestSuite =
-						new GroupByTopLevelTestSuite();
 
 					_addToBuildHistoriesMap(
 						topLevelBuildJSONObjects, buildHistories, duration,

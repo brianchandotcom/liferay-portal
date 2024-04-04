@@ -1,0 +1,36 @@
+task jarManifest
+task jarPatched(type: Zip)
+
+dependencies {
+	compileOnly group: "org.springframework", name: "spring-web", transitive: false, version: "4.3.30.RELEASE"
+}
+
+jar {
+	setActions([])
+
+	dependsOn jarPatched
+	finalizedBy jarManifest
+}
+
+jarManifest {
+	doLast {
+		ant.jar(destfile: jar.archivePath, update: true)
+	}
+}
+
+jarPatched {
+	mustRunAfter compileJava
+	mustRunAfter processResources
+
+	archiveFileName = jar.archiveFileName
+	destinationDirectory = jar.destinationDirectory
+	duplicatesStrategy = "exclude"
+
+	exclude "org/springframework/web/util/UriComponentsBuilder*.class"
+
+	from sourceSets.main.output
+
+	from {
+		zipTree(configurations.compileOnly.singleFile)
+	}
+}

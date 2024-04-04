@@ -42,7 +42,7 @@ public class GitBranchEntityDALO extends BaseEntityDALO<GitBranchEntity> {
 
 		List<GitBranchEntity.Type> typesList = Arrays.asList(types);
 
-		for (GitBranchEntity gitBranchEntity : getAll(filter, null)) {
+		for (GitBranchEntity gitBranchEntity : getAll(filter, null, null)) {
 			if (!typesList.contains(gitBranchEntity.getType())) {
 				continue;
 			}

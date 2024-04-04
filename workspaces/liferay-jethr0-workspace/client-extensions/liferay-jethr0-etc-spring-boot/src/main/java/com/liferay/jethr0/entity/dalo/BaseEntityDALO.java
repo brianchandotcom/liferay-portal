@@ -78,19 +78,19 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 	@Override
 	public Set<T> getAll() {
-		return getAll(null, null);
+		return getAll(null, null, null);
 	}
 
 	@Override
 	public Set<T> getAllAfterCreatedDate(Date createdDate) {
 		return getAll(
-			"dateCreated gt " + StringUtil.toString(createdDate), null);
+			"dateCreated gt " + StringUtil.toString(createdDate), null, null);
 	}
 
 	@Override
 	public Set<T> getAllAfterModifiedDate(Date modifiedDate) {
 		return getAll(
-			"dateModified gt " + StringUtil.toString(modifiedDate), null);
+			"dateModified gt " + StringUtil.toString(modifiedDate), null, null);
 	}
 
 	@Override
@@ -110,10 +110,10 @@ public abstract class BaseEntityDALO<T extends Entity>
 		return entity;
 	}
 
-	protected Set<T> getAll(String filter, String search) {
+	protected Set<T> getAll(String filter, String search, String sort) {
 		Set<T> entities = new HashSet<>();
 
-		for (JSONObject jsonObject : _get(filter, search)) {
+		for (JSONObject jsonObject : _get(filter, search, sort)) {
 			T entity = newEntity(jsonObject);
 
 			entities.add(entity);
@@ -301,7 +301,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 		return retryable.executeWithRetries();
 	}
 
-	private Set<JSONObject> _get(String filter, String search) {
+	private Set<JSONObject> _get(String filter, String search, String sort) {
 		Set<JSONObject> jsonObjects = new HashSet<>();
 
 		int currentPage = 1;
@@ -334,6 +334,10 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 									if (search != null) {
 										uriBuilder.queryParam("search", search);
+									}
+
+									if (sort != null) {
+										uriBuilder.queryParam("sort", sort);
 									}
 
 									return uriBuilder.build();

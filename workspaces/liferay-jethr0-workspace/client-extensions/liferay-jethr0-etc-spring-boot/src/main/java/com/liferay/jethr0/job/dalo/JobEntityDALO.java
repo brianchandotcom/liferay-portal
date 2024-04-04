@@ -47,7 +47,7 @@ public class JobEntityDALO extends BaseEntityDALO<JobEntity> {
 
 		List<JobEntity.State> statesList = Arrays.asList(states);
 
-		for (JobEntity jobEntity : getAll(filter, null)) {
+		for (JobEntity jobEntity : getAll(filter, null, null)) {
 			if (!statesList.contains(jobEntity.getState())) {
 				continue;
 			}

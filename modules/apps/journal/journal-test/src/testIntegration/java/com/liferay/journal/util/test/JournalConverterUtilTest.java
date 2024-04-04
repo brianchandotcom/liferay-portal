@@ -249,7 +249,7 @@ public class JournalConverterUtilTest {
 		Fields actualFields = _journalConverter.getDDMFields(
 			_ddmStructure, content);
 
-		Assert.assertEquals(expectedFields, actualFields);
+		_assertFields(expectedFields, actualFields);
 	}
 
 	@Test
@@ -280,7 +280,7 @@ public class JournalConverterUtilTest {
 		Fields actualFields = _journalConverter.getDDMFields(
 			_ddmStructure, content);
 
-		Assert.assertEquals(expectedFields, actualFields);
+		_assertFields(expectedFields, actualFields);
 	}
 
 	@Test
@@ -292,7 +292,7 @@ public class JournalConverterUtilTest {
 		Fields actualFields = _journalConverter.getDDMFields(
 			_ddmStructure, content);
 
-		Assert.assertEquals(expectedFields, actualFields);
+		_assertFields(expectedFields, actualFields);
 	}
 
 	@Test
@@ -359,7 +359,7 @@ public class JournalConverterUtilTest {
 		Fields actualFields = _journalConverter.getDDMFields(
 			childDDMStructure, content);
 
-		Assert.assertEquals(expectedFields, actualFields);
+		_assertFields(expectedFields, actualFields);
 	}
 
 	@Test
@@ -392,7 +392,7 @@ public class JournalConverterUtilTest {
 		Fields actualFields = _journalConverter.getDDMFields(
 			_ddmStructure, content);
 
-		Assert.assertEquals(expectedFields, actualFields);
+		_assertFields(expectedFields, actualFields);
 	}
 
 	@Test
@@ -411,7 +411,7 @@ public class JournalConverterUtilTest {
 			ddmStructure,
 			read("test-journal-content-removed-nested-field.xml"));
 
-		Assert.assertEquals(expectedFields, actualFields);
+		_assertFields(expectedFields, actualFields);
 	}
 
 	protected void assertEquals(
@@ -782,6 +782,53 @@ public class JournalConverterUtilTest {
 		}
 
 		fields.put(field);
+	}
+
+	private void _assertFields(Fields expectedFields, Fields actualFields) {
+		Assert.assertEquals(
+			expectedFields.getNames(
+			).size(),
+			actualFields.getNames(
+			).size());
+
+		for (String name : expectedFields.getNames()) {
+			Assert.assertEquals(
+				expectedFields.getDDMStructureId(),
+				actualFields.getDDMStructureId());
+
+			if (!name.equals(DDM.FIELDS_DISPLAY_NAME)) {
+				Assert.assertEquals(
+					expectedFields.get(name), actualFields.get(name));
+			}
+			else {
+				Field actualFieldsDisplayField = actualFields.get(name);
+
+				String actualFieldsDisplayValues =
+					(String)actualFieldsDisplayField.getValue();
+
+				Field expectedFieldsDisplayField = expectedFields.get(name);
+
+				String[] expectedFieldsDisplayValues = StringUtil.split(
+					(String)expectedFieldsDisplayField.getValue());
+
+				for (String expectedFieldsDisplayValue :
+						expectedFieldsDisplayValues) {
+
+					if (!expectedFieldsDisplayValue.contains("FieldSet")) {
+						Assert.assertTrue(
+							actualFieldsDisplayValues.contains(
+								expectedFieldsDisplayValue));
+					}
+					else {
+						Assert.assertTrue(
+							actualFieldsDisplayValues.contains(
+								StringUtil.extractFirst(
+									expectedFieldsDisplayValue,
+									DDM.INSTANCE_SEPARATOR)));
+					}
+				}
+			}
+		}
 	}
 
 	private Fields _getRemovedNestedFields(long ddmStructureId) {

@@ -8,3 +8,4 @@ export {default as blogs} from './blogs/blogs';
 export {default as BlogEntriesManagementToolbarPropsTransformer} from './blogs_admin/BlogEntriesManagementToolbarPropsTransformer';
 export {default as ElementsDefaultEventHandler} from './blogs_admin/ElementsDefaultEventHandler';
 export {default as ElementsPropsTransformer} from './blogs_admin/ElementsPropsTransformer';
+export {default as AssetCategoriesFriendlyUrlSelector} from './asset_categories_selector/AssetCategoriesFriendlyUrlSelector';

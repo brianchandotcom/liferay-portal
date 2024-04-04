@@ -145,7 +145,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= moveEntriesURL %>" name="moveEntriesFm">
+<aui:form action="<%= moveEntriesURL %>" name="actionEntriesFm">
 	<aui:input name="layoutPageTemplateCollectionsIds" type="hidden" />
 	<aui:input name="layoutPageTemplateEntriesIds" type="hidden" />
 	<aui:input name="targetLayoutPageTemplateCollectionId" type="hidden" />

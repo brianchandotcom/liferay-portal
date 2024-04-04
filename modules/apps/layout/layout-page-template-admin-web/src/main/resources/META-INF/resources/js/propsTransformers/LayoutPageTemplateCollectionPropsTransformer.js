@@ -41,7 +41,7 @@ const ACTIONS = {
 			height: '70vh',
 			onSelect: (selectedItem) => {
 				const form = document.getElementById(
-					`${portletNamespace}moveEntriesFm`
+					`${portletNamespace}actionEntriesFm`
 				);
 
 				setFormValues(form, {

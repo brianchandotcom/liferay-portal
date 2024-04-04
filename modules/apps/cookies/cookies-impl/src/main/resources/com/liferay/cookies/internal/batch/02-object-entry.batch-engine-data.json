@@ -1,0 +1,180 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-10588",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "FunctionalCookieEntry",
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"collectedData": "User Login",
+			"expiration": "365 days",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_1",
+			"host": "Liferay",
+			"name": "LOGIN",
+			"purpose": "Used for 'Remember Me' login.",
+			"type": "First Party"
+		},
+		{
+			"collectedData": "User Password (encrypted)",
+			"expiration": "365 days",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_2",
+			"host": "Liferay",
+			"name": "PASSWORD",
+			"purpose": "Stores encrypted password for 'Remember Me' login.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_3",
+			"host": "Liferay",
+			"name": "REMEMBER_ME",
+			"purpose": "Skips login for users previously authenticated on the device.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session time",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_4",
+			"host": "Liferay",
+			"name": "SAML_SP_SESSION_KEY",
+			"purpose": "Enables SAML SP Single Log Out (SLO).",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session time",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_5",
+			"host": "Liferay",
+			"name": "SAML_SSO_SESSION_ID",
+			"purpose": "Extends SAML IDP SSO session lifetime.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_6",
+			"host": "Liferay",
+			"name": "com.liferay.commerce.wish.list.model.CommerceWishList#groupId",
+			"purpose": "Enables guests to create temporary wishlists that become permanent wishlists upon account creation.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session time",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_7",
+			"host": "Liferay",
+			"name": "COMMERCE_COMPARE_cpDefinitionIds_commerceChannelGroupId",
+			"purpose": "Enables product comparison.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_8",
+			"host": "Liferay",
+			"name": "sidebar",
+			"purpose": "Stores sidebar state (open/closed) for future sessions.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_9",
+			"host": "Liferay",
+			"name": "maintenanceSeen",
+			"purpose": "Determines visibility of server maintenance messages.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_10",
+			"host": "Liferay",
+			"name": "_com_liferay_portal_search_admin_web_portlet_SearchAdminPortlet_userID_hideReindexConfirmationModal",
+			"purpose": "Determines visibility of confirmation modal during reindex.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_11",
+			"host": "Liferay",
+			"name": "com.liferay.search.experiences.web_addSXPElementSidebar",
+			"purpose": "Stores Add Query Elements sidebar state (open/close) when switching tabs on the Edit Blueprint page.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_12",
+			"host": "Liferay",
+			"name": "liferay.cookie.consent",
+			"purpose": "Stores user consent to cookie usage via page fragment.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_13",
+			"host": "Liferay",
+			"name": "GUEST_LANGUAGE_ID",
+			"purpose": "Sets the language ID when the user's language ID is unavailable.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "20 seconds",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_14",
+			"host": "Liferay",
+			"name": "SELECTED_CATEGORIES_COOKIE_",
+			"purpose": "Used when opening the categories selector popup and lasts 20 seconds.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Forever(local storage)",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_15",
+			"host": "Liferay",
+			"name": "ACCESSIBILITY_SETTING_EXPANDED_TEXT",
+			"purpose": "Store accessibility settings for unauthenticated users in the browser's local storage.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Forever(local storage)",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_16",
+			"host": "Liferay",
+			"name": "ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING",
+			"purpose": "Store accessibility settings for unauthenticated users in the browser's local storage.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Forever(local storage)",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_17",
+			"host": "Liferay",
+			"name": "ACCESSIBILITY_SETTING_REDUCED_MOTION",
+			"purpose": "Store accessibility settings for unauthenticated users in the browser's local storage.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Forever(local storage)",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_18",
+			"host": "Liferay",
+			"name": "ACCESSIBILITY_SETTING_UNDERLINED_LINKS1",
+			"purpose": "Store accessibility settings for unauthenticated users in the browser's local storage.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_19",
+			"host": "Liferay",
+			"name": "OAUTH2_REMEMBER_DEVICE_",
+			"purpose": "Enables users to bypass OAuth 2 authorization flow on previously authorized devices.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_20",
+			"host": "Liferay",
+			"name": "userTokenName",
+			"purpose": "Stores a token to enable persistent login for token-based SSO.            ",
+			"type": "First Party"
+		}
+	]
+}

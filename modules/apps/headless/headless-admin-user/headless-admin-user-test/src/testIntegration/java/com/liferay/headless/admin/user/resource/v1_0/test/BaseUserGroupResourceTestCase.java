@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -589,7 +588,6 @@ public abstract class BaseUserGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserGroupsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -730,7 +728,6 @@ public abstract class BaseUserGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserGroupByExternalReferenceCode()
 		throws Exception {
@@ -789,7 +786,6 @@ public abstract class BaseUserGroupResourceTestCase {
 						"Object/userGroupByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserGroupByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -952,7 +948,6 @@ public abstract class BaseUserGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteUserGroup() throws Exception {
 
@@ -1044,7 +1039,6 @@ public abstract class BaseUserGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserGroup() throws Exception {
 		UserGroup userGroup = testGraphQLGetUserGroup_addUserGroup();
@@ -1091,7 +1085,6 @@ public abstract class BaseUserGroupResourceTestCase {
 						"Object/userGroup"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserGroupNotFound() throws Exception {
 		Long irrelevantUserGroupId = RandomTestUtil.randomLong();

@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -807,7 +806,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGroup.getGroupId(), randomTaxonomyVocabulary());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode()
 		throws Exception {
@@ -887,7 +885,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAssetLibraryTaxonomyVocabularyByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -1568,7 +1565,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteTaxonomyVocabulariesPage() throws Exception {
 		Long siteId = testGetSiteTaxonomyVocabulariesPage_getSiteId();
@@ -1768,7 +1764,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGroup.getGroupId(), randomTaxonomyVocabulary());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteTaxonomyVocabularyByExternalReferenceCode()
 		throws Exception {
@@ -1849,7 +1844,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		return taxonomyVocabulary.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteTaxonomyVocabularyByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -2091,7 +2085,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGroup.getGroupId(), randomTaxonomyVocabulary());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteTaxonomyVocabulary() throws Exception {
 
@@ -2199,7 +2192,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGroup.getGroupId(), randomTaxonomyVocabulary());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTaxonomyVocabulary() throws Exception {
 		TaxonomyVocabulary taxonomyVocabulary =
@@ -2250,7 +2242,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 						"Object/taxonomyVocabulary"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTaxonomyVocabularyNotFound() throws Exception {
 		Long irrelevantTaxonomyVocabularyId = RandomTestUtil.randomLong();

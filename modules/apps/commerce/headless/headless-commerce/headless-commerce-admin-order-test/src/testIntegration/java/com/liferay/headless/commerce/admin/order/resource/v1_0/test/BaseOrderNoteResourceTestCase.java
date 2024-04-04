@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -239,7 +238,6 @@ public abstract class BaseOrderNoteResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderNoteByExternalReferenceCode()
 		throws Exception {
@@ -299,7 +297,6 @@ public abstract class BaseOrderNoteResourceTestCase {
 						"Object/orderNoteByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderNoteByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -381,7 +378,6 @@ public abstract class BaseOrderNoteResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteOrderNote() throws Exception {
 
@@ -473,7 +469,6 @@ public abstract class BaseOrderNoteResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderNote() throws Exception {
 		OrderNote orderNote = testGraphQLGetOrderNote_addOrderNote();
@@ -519,7 +514,6 @@ public abstract class BaseOrderNoteResourceTestCase {
 						"Object/orderNote"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderNoteNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

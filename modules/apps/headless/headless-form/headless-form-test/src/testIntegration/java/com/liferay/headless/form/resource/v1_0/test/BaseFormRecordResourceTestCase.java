@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -194,7 +193,6 @@ public abstract class BaseFormRecordResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetFormRecord() throws Exception {
 		FormRecord formRecord = testGraphQLGetFormRecord_addFormRecord();
@@ -241,7 +239,6 @@ public abstract class BaseFormRecordResourceTestCase {
 						"Object/formRecord"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetFormRecordNotFound() throws Exception {
 		Long irrelevantFormRecordId = RandomTestUtil.randomLong();
@@ -518,7 +515,6 @@ public abstract class BaseFormRecordResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetFormFormRecordByLatestDraft() throws Exception {
 		FormRecord formRecord =
@@ -578,7 +574,6 @@ public abstract class BaseFormRecordResourceTestCase {
 		return formRecord.getFormId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetFormFormRecordByLatestDraftNotFound()
 		throws Exception {

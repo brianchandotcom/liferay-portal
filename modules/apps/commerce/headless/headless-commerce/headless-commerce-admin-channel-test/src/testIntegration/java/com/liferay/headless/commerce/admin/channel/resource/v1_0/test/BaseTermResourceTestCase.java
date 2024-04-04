@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -205,7 +204,6 @@ public abstract class BaseTermResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPaymentMethodGroupRelTermTerm() throws Exception {
 		Term term = testGraphQLGetPaymentMethodGroupRelTermTerm_addTerm();
@@ -264,7 +262,6 @@ public abstract class BaseTermResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPaymentMethodGroupRelTermTermNotFound()
 		throws Exception {
@@ -345,7 +342,6 @@ public abstract class BaseTermResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetShippingFixedOptionTermTerm() throws Exception {
 		Term term = testGraphQLGetShippingFixedOptionTermTerm_addTerm();
@@ -404,7 +400,6 @@ public abstract class BaseTermResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetShippingFixedOptionTermTermNotFound()
 		throws Exception {

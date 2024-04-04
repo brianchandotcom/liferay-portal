@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -1081,7 +1080,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testGroup.getGroupId(), randomMessageBoardThread());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteMessageBoardThread() throws Exception {
 
@@ -1189,7 +1187,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testGroup.getGroupId(), randomMessageBoardThread());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMessageBoardThread() throws Exception {
 		MessageBoardThread messageBoardThread =
@@ -1239,7 +1236,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 						"Object/messageBoardThread"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMessageBoardThreadNotFound() throws Exception {
 		Long irrelevantMessageBoardThreadId = RandomTestUtil.randomLong();
@@ -1977,7 +1973,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteMessageBoardThreadsPage() throws Exception {
 		Long siteId = testGetSiteMessageBoardThreadsPage_getSiteId();
@@ -2126,7 +2121,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testGroup.getGroupId(), randomMessageBoardThread());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath()
 		throws Exception {
@@ -2206,7 +2200,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		return messageBoardThread.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPathNotFound()
 		throws Exception {

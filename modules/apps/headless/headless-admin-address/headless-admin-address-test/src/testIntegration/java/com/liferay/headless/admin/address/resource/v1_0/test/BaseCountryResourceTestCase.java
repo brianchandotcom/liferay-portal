@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -428,7 +427,6 @@ public abstract class BaseCountryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCountriesPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -529,7 +527,6 @@ public abstract class BaseCountryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCountryByA2() throws Exception {
 		Country country = testGraphQLGetCountryByA2_addCountry();
@@ -579,7 +576,6 @@ public abstract class BaseCountryResourceTestCase {
 						"Object/countryByA2"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCountryByA2NotFound() throws Exception {
 		String irrelevantA2 = "\"" + RandomTestUtil.randomString() + "\"";
@@ -641,7 +637,6 @@ public abstract class BaseCountryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCountryByA3() throws Exception {
 		Country country = testGraphQLGetCountryByA3_addCountry();
@@ -691,7 +686,6 @@ public abstract class BaseCountryResourceTestCase {
 						"Object/countryByA3"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCountryByA3NotFound() throws Exception {
 		String irrelevantA3 = "\"" + RandomTestUtil.randomString() + "\"";
@@ -753,7 +747,6 @@ public abstract class BaseCountryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCountryByName() throws Exception {
 		Country country = testGraphQLGetCountryByName_addCountry();
@@ -804,7 +797,6 @@ public abstract class BaseCountryResourceTestCase {
 						"Object/countryByName"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCountryByNameNotFound() throws Exception {
 		String irrelevantName = "\"" + RandomTestUtil.randomString() + "\"";
@@ -868,7 +860,6 @@ public abstract class BaseCountryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCountryByNumber() throws Exception {
 		Country country = testGraphQLGetCountryByNumber_addCountry();
@@ -914,7 +905,6 @@ public abstract class BaseCountryResourceTestCase {
 						"Object/countryByNumber"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCountryByNumberNotFound() throws Exception {
 		Integer irrelevantNumber = RandomTestUtil.randomInt();
@@ -982,7 +972,6 @@ public abstract class BaseCountryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteCountry() throws Exception {
 
@@ -1071,7 +1060,6 @@ public abstract class BaseCountryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCountry() throws Exception {
 		Country country = testGraphQLGetCountry_addCountry();
@@ -1117,7 +1105,6 @@ public abstract class BaseCountryResourceTestCase {
 						"Object/country"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCountryNotFound() throws Exception {
 		Long irrelevantCountryId = RandomTestUtil.randomLong();

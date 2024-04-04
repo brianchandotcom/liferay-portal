@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -272,7 +271,6 @@ public abstract class BaseWikiPageResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteWikiPageByExternalReferenceCode()
 		throws Exception {
@@ -350,7 +348,6 @@ public abstract class BaseWikiPageResourceTestCase {
 		return wikiPage.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteWikiPageByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -1011,7 +1008,6 @@ public abstract class BaseWikiPageResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteWikiPage() throws Exception {
 
@@ -1103,7 +1099,6 @@ public abstract class BaseWikiPageResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWikiPage() throws Exception {
 		WikiPage wikiPage = testGraphQLGetWikiPage_addWikiPage();
@@ -1148,7 +1143,6 @@ public abstract class BaseWikiPageResourceTestCase {
 						"Object/wikiPage"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWikiPageNotFound() throws Exception {
 		Long irrelevantWikiPageId = RandomTestUtil.randomLong();

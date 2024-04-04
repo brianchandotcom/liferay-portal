@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -237,7 +236,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGroup.getGroupId(), randomKnowledgeBaseArticle());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteKnowledgeBaseArticle() throws Exception {
 
@@ -345,7 +343,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGroup.getGroupId(), randomKnowledgeBaseArticle());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetKnowledgeBaseArticle() throws Exception {
 		KnowledgeBaseArticle knowledgeBaseArticle =
@@ -395,7 +392,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 						"Object/knowledgeBaseArticle"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetKnowledgeBaseArticleNotFound() throws Exception {
 		Long irrelevantKnowledgeBaseArticleId = RandomTestUtil.randomLong();
@@ -2202,7 +2198,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteKnowledgeBaseArticlesPage() throws Exception {
 		Long siteId = testGetSiteKnowledgeBaseArticlesPage_getSiteId();
@@ -2403,7 +2398,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGroup.getGroupId(), randomKnowledgeBaseArticle());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteKnowledgeBaseArticleByExternalReferenceCode()
 		throws Exception {
@@ -2484,7 +2478,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		return knowledgeBaseArticle.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteKnowledgeBaseArticleByExternalReferenceCodeNotFound()
 		throws Exception {

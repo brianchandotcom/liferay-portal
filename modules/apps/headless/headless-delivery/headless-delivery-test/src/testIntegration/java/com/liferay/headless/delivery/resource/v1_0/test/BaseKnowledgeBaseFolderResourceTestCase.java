@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -224,7 +223,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGroup.getGroupId(), randomKnowledgeBaseFolder());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteKnowledgeBaseFolder() throws Exception {
 
@@ -332,7 +330,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGroup.getGroupId(), randomKnowledgeBaseFolder());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetKnowledgeBaseFolder() throws Exception {
 		KnowledgeBaseFolder knowledgeBaseFolder =
@@ -382,7 +379,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 						"Object/knowledgeBaseFolder"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetKnowledgeBaseFolderNotFound() throws Exception {
 		Long irrelevantKnowledgeBaseFolderId = RandomTestUtil.randomLong();
@@ -1022,7 +1018,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteKnowledgeBaseFoldersPage() throws Exception {
 		Long siteId = testGetSiteKnowledgeBaseFoldersPage_getSiteId();
@@ -1223,7 +1218,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGroup.getGroupId(), randomKnowledgeBaseFolder());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteKnowledgeBaseFolderByExternalReferenceCode()
 		throws Exception {
@@ -1304,7 +1298,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		return knowledgeBaseFolder.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteKnowledgeBaseFolderByExternalReferenceCodeNotFound()
 		throws Exception {

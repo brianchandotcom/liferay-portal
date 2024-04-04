@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -216,7 +215,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			testGroup.getGroupId(), randomNavigationMenu());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteNavigationMenu() throws Exception {
 
@@ -320,7 +318,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			testGroup.getGroupId(), randomNavigationMenu());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetNavigationMenu() throws Exception {
 		NavigationMenu navigationMenu =
@@ -370,7 +367,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 						"Object/navigationMenu"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetNavigationMenuNotFound() throws Exception {
 		Long irrelevantNavigationMenuId = RandomTestUtil.randomLong();
@@ -703,7 +699,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteNavigationMenusPage() throws Exception {
 		Long siteId = testGetSiteNavigationMenusPage_getSiteId();

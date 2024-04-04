@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -238,7 +237,6 @@ public abstract class BaseCatalogResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCatalogByExternalReferenceCode()
 		throws Exception {
@@ -298,7 +296,6 @@ public abstract class BaseCatalogResourceTestCase {
 						"Object/catalogByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCatalogByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -378,7 +375,6 @@ public abstract class BaseCatalogResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteCatalog() throws Exception {
 
@@ -468,7 +464,6 @@ public abstract class BaseCatalogResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCatalog() throws Exception {
 		Catalog catalog = testGraphQLGetCatalog_addCatalog();
@@ -514,7 +509,6 @@ public abstract class BaseCatalogResourceTestCase {
 						"Object/catalog"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCatalogNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
@@ -877,7 +871,6 @@ public abstract class BaseCatalogResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCatalogsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -993,7 +986,6 @@ public abstract class BaseCatalogResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCodeCatalog()
 		throws Exception {
@@ -1059,7 +1051,6 @@ public abstract class BaseCatalogResourceTestCase {
 		return catalog.getExternalReferenceCode();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCodeCatalogNotFound()
 		throws Exception {
@@ -1137,7 +1128,6 @@ public abstract class BaseCatalogResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductIdCatalog() throws Exception {
 		Catalog catalog = testGraphQLGetProductIdCatalog_addCatalog();
@@ -1195,7 +1185,6 @@ public abstract class BaseCatalogResourceTestCase {
 		return catalog.getId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductIdCatalogNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

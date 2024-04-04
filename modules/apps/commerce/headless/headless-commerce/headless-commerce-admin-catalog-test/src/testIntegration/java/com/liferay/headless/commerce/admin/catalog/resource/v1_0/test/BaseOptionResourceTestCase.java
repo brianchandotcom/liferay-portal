@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -499,7 +498,6 @@ public abstract class BaseOptionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOptionsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -627,7 +625,6 @@ public abstract class BaseOptionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOptionByExternalReferenceCode() throws Exception {
 		Option option = testGraphQLGetOptionByExternalReferenceCode_addOption();
@@ -684,7 +681,6 @@ public abstract class BaseOptionResourceTestCase {
 						"Object/optionByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOptionByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -764,7 +760,6 @@ public abstract class BaseOptionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteOption() throws Exception {
 
@@ -854,7 +849,6 @@ public abstract class BaseOptionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOption() throws Exception {
 		Option option = testGraphQLGetOption_addOption();
@@ -900,7 +894,6 @@ public abstract class BaseOptionResourceTestCase {
 						"Object/option"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOptionNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

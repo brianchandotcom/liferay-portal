@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -424,7 +423,6 @@ public abstract class BasePostalAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeletePostalAddress() throws Exception {
 
@@ -523,7 +521,6 @@ public abstract class BasePostalAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPostalAddress() throws Exception {
 		PostalAddress postalAddress =
@@ -573,7 +570,6 @@ public abstract class BasePostalAddressResourceTestCase {
 						"Object/postalAddress"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPostalAddressNotFound() throws Exception {
 		Long irrelevantPostalAddressId = RandomTestUtil.randomLong();

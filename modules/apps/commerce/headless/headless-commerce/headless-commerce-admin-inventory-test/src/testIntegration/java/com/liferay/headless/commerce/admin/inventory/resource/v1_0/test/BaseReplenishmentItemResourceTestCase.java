@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -249,7 +248,6 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetReplenishmentItemByExternalReferenceCode()
 		throws Exception {
@@ -309,7 +307,6 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 						"Object/replenishmentItemByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetReplenishmentItemByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -434,7 +431,6 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteReplenishmentItem() throws Exception {
 
@@ -542,7 +538,6 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetReplenishmentItem() throws Exception {
 		ReplenishmentItem replenishmentItem =
@@ -593,7 +588,6 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 						"Object/replenishmentItem"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetReplenishmentItemNotFound() throws Exception {
 		Long irrelevantReplenishmentItemId = RandomTestUtil.randomLong();
@@ -863,7 +857,6 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		return null;
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetReplenishmentItemsPage() throws Exception {
 		String sku = testGetReplenishmentItemsPage_getSku();

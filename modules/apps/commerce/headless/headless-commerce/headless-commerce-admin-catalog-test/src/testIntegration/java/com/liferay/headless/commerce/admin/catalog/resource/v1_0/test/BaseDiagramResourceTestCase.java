@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -220,7 +219,6 @@ public abstract class BaseDiagramResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCodeDiagram()
 		throws Exception {
@@ -286,7 +284,6 @@ public abstract class BaseDiagramResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCodeDiagramNotFound()
 		throws Exception {
@@ -386,7 +383,6 @@ public abstract class BaseDiagramResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductIdDiagram() throws Exception {
 		Diagram diagram = testGraphQLGetProductIdDiagram_addDiagram();
@@ -444,7 +440,6 @@ public abstract class BaseDiagramResourceTestCase {
 		return diagram.getId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductIdDiagramNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

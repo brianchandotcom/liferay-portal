@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -203,7 +202,6 @@ public abstract class BaseFormResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetForm() throws Exception {
 		Form form = testGraphQLGetForm_addForm();
@@ -248,7 +246,6 @@ public abstract class BaseFormResourceTestCase {
 						"Object/form"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetFormNotFound() throws Exception {
 		Long irrelevantFormId = RandomTestUtil.randomLong();
@@ -428,7 +425,6 @@ public abstract class BaseFormResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteFormsPage() throws Exception {
 		Long siteId = testGetSiteFormsPage_getSiteId();

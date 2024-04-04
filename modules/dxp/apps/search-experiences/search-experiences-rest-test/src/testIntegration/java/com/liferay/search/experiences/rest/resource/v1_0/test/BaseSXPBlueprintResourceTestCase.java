@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -587,7 +586,6 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSXPBlueprintByExternalReferenceCode()
 		throws Exception {
@@ -646,7 +644,6 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 						"Object/sXPBlueprintByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSXPBlueprintByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -805,7 +802,6 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteSXPBlueprint() throws Exception {
 
@@ -903,7 +899,6 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSXPBlueprint() throws Exception {
 		SXPBlueprint sxpBlueprint =
@@ -953,7 +948,6 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 						"Object/sXPBlueprint"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSXPBlueprintNotFound() throws Exception {
 		Long irrelevantSxpBlueprintId = RandomTestUtil.randomLong();

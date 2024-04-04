@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -261,7 +260,6 @@ public abstract class BaseAccountAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountAddressByExternalReferenceCode()
 		throws Exception {
@@ -321,7 +319,6 @@ public abstract class BaseAccountAddressResourceTestCase {
 						"Object/accountAddressByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountAddressByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -413,7 +410,6 @@ public abstract class BaseAccountAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteAccountAddress() throws Exception {
 
@@ -512,7 +508,6 @@ public abstract class BaseAccountAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountAddress() throws Exception {
 		AccountAddress accountAddress =
@@ -559,7 +554,6 @@ public abstract class BaseAccountAddressResourceTestCase {
 						"Object/accountAddress"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountAddressNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -212,7 +211,6 @@ public abstract class BaseOrderTypeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderRuleOrderTypeOrderType() throws Exception {
 		OrderType orderType =
@@ -272,7 +270,6 @@ public abstract class BaseOrderTypeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderRuleOrderTypeOrderTypeNotFound()
 		throws Exception {
@@ -651,7 +648,6 @@ public abstract class BaseOrderTypeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderTypesPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -793,7 +789,6 @@ public abstract class BaseOrderTypeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderTypeByExternalReferenceCode()
 		throws Exception {
@@ -853,7 +848,6 @@ public abstract class BaseOrderTypeResourceTestCase {
 						"Object/orderTypeByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderTypeByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -962,7 +956,6 @@ public abstract class BaseOrderTypeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteOrderType() throws Exception {
 
@@ -1054,7 +1047,6 @@ public abstract class BaseOrderTypeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderType() throws Exception {
 		OrderType orderType = testGraphQLGetOrderType_addOrderType();
@@ -1100,7 +1092,6 @@ public abstract class BaseOrderTypeResourceTestCase {
 						"Object/orderType"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderTypeNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
@@ -1200,7 +1191,6 @@ public abstract class BaseOrderTypeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTermOrderTypeOrderType() throws Exception {
 		OrderType orderType =
@@ -1258,7 +1248,6 @@ public abstract class BaseOrderTypeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTermOrderTypeOrderTypeNotFound()
 		throws Exception {

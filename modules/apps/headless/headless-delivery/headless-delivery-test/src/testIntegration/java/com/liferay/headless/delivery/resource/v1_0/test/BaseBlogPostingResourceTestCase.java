@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -229,7 +228,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			testGroup.getGroupId(), randomBlogPosting());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteBlogPosting() throws Exception {
 
@@ -323,7 +321,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			testGroup.getGroupId(), randomBlogPosting());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetBlogPosting() throws Exception {
 		BlogPosting blogPosting = testGraphQLGetBlogPosting_addBlogPosting();
@@ -372,7 +369,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 						"Object/blogPosting"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetBlogPostingNotFound() throws Exception {
 		Long irrelevantBlogPostingId = RandomTestUtil.randomLong();
@@ -981,7 +977,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteBlogPostingsPage() throws Exception {
 		Long siteId = testGetSiteBlogPostingsPage_getSiteId();
@@ -1168,7 +1163,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			testGroup.getGroupId(), randomBlogPosting());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteBlogPostingByExternalReferenceCode()
 		throws Exception {
@@ -1247,7 +1241,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 		return blogPosting.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteBlogPostingByExternalReferenceCodeNotFound()
 		throws Exception {

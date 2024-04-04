@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -597,7 +596,6 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetObjectDefinitionsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -715,7 +713,6 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetObjectDefinitionByExternalReferenceCode()
 		throws Exception {
@@ -774,7 +771,6 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 						"Object/objectDefinitionByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetObjectDefinitionByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -918,7 +914,6 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteObjectDefinition() throws Exception {
 
@@ -1025,7 +1020,6 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
@@ -1075,7 +1069,6 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 						"Object/objectDefinition"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetObjectDefinitionNotFound() throws Exception {
 		Long irrelevantObjectDefinitionId = RandomTestUtil.randomLong();

@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -599,7 +598,6 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetListTypeDefinitionsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -723,7 +721,6 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetListTypeDefinitionByExternalReferenceCode()
 		throws Exception {
@@ -783,7 +780,6 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 						"Object/listTypeDefinitionByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetListTypeDefinitionByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -934,7 +930,6 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteListTypeDefinition() throws Exception {
 
@@ -1042,7 +1037,6 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetListTypeDefinition() throws Exception {
 		ListTypeDefinition listTypeDefinition =
@@ -1093,7 +1087,6 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 						"Object/listTypeDefinition"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetListTypeDefinitionNotFound() throws Exception {
 		Long irrelevantListTypeDefinitionId = RandomTestUtil.randomLong();

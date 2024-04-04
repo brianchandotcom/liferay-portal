@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -521,7 +520,6 @@ public abstract class BaseWarehouseResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWarehousesPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -663,7 +661,6 @@ public abstract class BaseWarehouseResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWarehouseByExternalReferenceCode()
 		throws Exception {
@@ -723,7 +720,6 @@ public abstract class BaseWarehouseResourceTestCase {
 						"Object/warehouseByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWarehouseByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -823,7 +819,6 @@ public abstract class BaseWarehouseResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWarehouseId() throws Exception {
 		Warehouse warehouse = testGraphQLGetWarehouseId_addWarehouse();
@@ -869,7 +864,6 @@ public abstract class BaseWarehouseResourceTestCase {
 						"Object/warehouseId"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWarehouseIdNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

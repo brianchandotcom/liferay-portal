@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -831,7 +830,6 @@ public abstract class BaseKeywordResourceTestCase {
 			testGroup.getGroupId(), randomKeyword());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteKeyword() throws Exception {
 
@@ -920,7 +918,6 @@ public abstract class BaseKeywordResourceTestCase {
 			testGroup.getGroupId(), randomKeyword());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetKeyword() throws Exception {
 		Keyword keyword = testGraphQLGetKeyword_addKeyword();
@@ -966,7 +963,6 @@ public abstract class BaseKeywordResourceTestCase {
 						"Object/keyword"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetKeywordNotFound() throws Exception {
 		Long irrelevantKeywordId = RandomTestUtil.randomLong();
@@ -1452,7 +1448,6 @@ public abstract class BaseKeywordResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteKeywordsPage() throws Exception {
 		Long siteId = testGetSiteKeywordsPage_getSiteId();

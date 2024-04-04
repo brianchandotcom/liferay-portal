@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -331,7 +330,6 @@ public abstract class BaseTaskResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProcessTask() throws Exception {
 		Task task = testGraphQLGetProcessTask_addTask();
@@ -393,7 +391,6 @@ public abstract class BaseTaskResourceTestCase {
 		return task.getProcessId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProcessTaskNotFound() throws Exception {
 		Long irrelevantProcessId = RandomTestUtil.randomLong();

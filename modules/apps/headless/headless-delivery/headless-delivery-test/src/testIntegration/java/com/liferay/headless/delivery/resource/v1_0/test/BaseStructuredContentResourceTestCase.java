@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -793,7 +792,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGroup.getGroupId(), randomStructuredContent());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAssetLibraryStructuredContentByExternalReferenceCode()
 		throws Exception {
@@ -872,7 +870,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAssetLibraryStructuredContentByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -2024,7 +2021,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentsPage() throws Exception {
 		Long siteId = testGetSiteStructuredContentsPage_getSiteId();
@@ -2218,7 +2214,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGroup.getGroupId(), randomStructuredContent());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentByExternalReferenceCode()
 		throws Exception {
@@ -2298,7 +2293,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return structuredContent.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -2472,7 +2466,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGroup.getGroupId(), randomStructuredContent());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentByKey() throws Exception {
 		StructuredContent structuredContent =
@@ -2545,7 +2538,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return structuredContent.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentByKeyNotFound()
 		throws Exception {
@@ -2633,7 +2625,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGroup.getGroupId(), randomStructuredContent());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentByUuid() throws Exception {
 		StructuredContent structuredContent =
@@ -2706,7 +2697,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return structuredContent.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentByUuidNotFound()
 		throws Exception {
@@ -3383,7 +3373,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGroup.getGroupId(), randomStructuredContent());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteStructuredContent() throws Exception {
 
@@ -3490,7 +3479,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGroup.getGroupId(), randomStructuredContent());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetStructuredContent() throws Exception {
 		StructuredContent structuredContent =
@@ -3540,7 +3528,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 						"Object/structuredContent"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetStructuredContentNotFound() throws Exception {
 		Long irrelevantStructuredContentId = RandomTestUtil.randomLong();

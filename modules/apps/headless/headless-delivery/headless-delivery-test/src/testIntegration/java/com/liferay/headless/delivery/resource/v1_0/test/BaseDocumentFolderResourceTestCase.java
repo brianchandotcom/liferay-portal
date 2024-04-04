@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -993,7 +992,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGroup.getGroupId(), randomDocumentFolder());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteDocumentFolder() throws Exception {
 
@@ -1097,7 +1095,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGroup.getGroupId(), randomDocumentFolder());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDocumentFolder() throws Exception {
 		DocumentFolder documentFolder =
@@ -1147,7 +1144,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 						"Object/documentFolder"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDocumentFolderNotFound() throws Exception {
 		Long irrelevantDocumentFolderId = RandomTestUtil.randomLong();
@@ -2322,7 +2318,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDocumentFoldersPage() throws Exception {
 		Long siteId = testGetSiteDocumentFoldersPage_getSiteId();
@@ -2761,7 +2756,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGroup.getGroupId(), randomDocumentFolder());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDocumentsFolderByExternalReferenceCode()
 		throws Exception {
@@ -2840,7 +2834,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		return documentFolder.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDocumentsFolderByExternalReferenceCodeNotFound()
 		throws Exception {

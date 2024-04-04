@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -750,7 +749,6 @@ public abstract class BaseDocumentResourceTestCase {
 			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAssetLibraryDocumentByExternalReferenceCode()
 		throws Exception {
@@ -829,7 +827,6 @@ public abstract class BaseDocumentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAssetLibraryDocumentByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -1681,7 +1678,6 @@ public abstract class BaseDocumentResourceTestCase {
 			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteDocument() throws Exception {
 
@@ -1773,7 +1769,6 @@ public abstract class BaseDocumentResourceTestCase {
 			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDocument() throws Exception {
 		Document document = testGraphQLGetDocument_addDocument();
@@ -1818,7 +1813,6 @@ public abstract class BaseDocumentResourceTestCase {
 						"Object/document"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDocumentNotFound() throws Exception {
 		Long irrelevantDocumentId = RandomTestUtil.randomLong();
@@ -2396,7 +2390,6 @@ public abstract class BaseDocumentResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDocumentsPage() throws Exception {
 		Long siteId = testGetSiteDocumentsPage_getSiteId();
@@ -2566,7 +2559,6 @@ public abstract class BaseDocumentResourceTestCase {
 			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDocumentByExternalReferenceCode()
 		throws Exception {
@@ -2644,7 +2636,6 @@ public abstract class BaseDocumentResourceTestCase {
 		return document.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDocumentByExternalReferenceCodeNotFound()
 		throws Exception {

@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -507,7 +506,6 @@ public abstract class BaseProductResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -638,7 +636,6 @@ public abstract class BaseProductResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCode()
 		throws Exception {
@@ -698,7 +695,6 @@ public abstract class BaseProductResourceTestCase {
 						"Object/productByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -817,7 +813,6 @@ public abstract class BaseProductResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCodeByVersion()
 		throws Exception {
@@ -883,7 +878,6 @@ public abstract class BaseProductResourceTestCase {
 						"Object/productByExternalReferenceCodeByVersion"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCodeByVersionNotFound()
 		throws Exception {
@@ -982,7 +976,6 @@ public abstract class BaseProductResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteProduct() throws Exception {
 
@@ -1072,7 +1065,6 @@ public abstract class BaseProductResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProduct() throws Exception {
 		Product product = testGraphQLGetProduct_addProduct();
@@ -1118,7 +1110,6 @@ public abstract class BaseProductResourceTestCase {
 						"Object/product"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
@@ -1211,7 +1202,6 @@ public abstract class BaseProductResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductByVersion() throws Exception {
 		Product product = testGraphQLGetProductByVersion_addProduct();
@@ -1263,7 +1253,6 @@ public abstract class BaseProductResourceTestCase {
 						"Object/productByVersion"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductByVersionNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

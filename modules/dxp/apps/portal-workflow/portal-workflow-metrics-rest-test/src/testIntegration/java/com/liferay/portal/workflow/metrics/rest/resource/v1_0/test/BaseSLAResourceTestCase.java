@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -373,7 +372,6 @@ public abstract class BaseSLAResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteSLA() throws Exception {
 
@@ -462,7 +460,6 @@ public abstract class BaseSLAResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSLA() throws Exception {
 		SLA sla = testGraphQLGetSLA_addSLA();
@@ -508,7 +505,6 @@ public abstract class BaseSLAResourceTestCase {
 						"Object/sLA"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSLANotFound() throws Exception {
 		Long irrelevantSlaId = RandomTestUtil.randomLong();

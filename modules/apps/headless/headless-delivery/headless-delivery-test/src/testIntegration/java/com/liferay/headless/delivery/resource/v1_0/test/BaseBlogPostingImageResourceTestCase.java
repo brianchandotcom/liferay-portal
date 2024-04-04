@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -226,7 +225,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			getMultipartFiles());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteBlogPostingImage() throws Exception {
 
@@ -334,7 +332,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			getMultipartFiles());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetBlogPostingImage() throws Exception {
 		BlogPostingImage blogPostingImage =
@@ -384,7 +381,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 						"Object/blogPostingImage"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetBlogPostingImageNotFound() throws Exception {
 		Long irrelevantBlogPostingImageId = RandomTestUtil.randomLong();
@@ -892,7 +888,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteBlogPostingImagesPage() throws Exception {
 		Long siteId = testGetSiteBlogPostingImagesPage_getSiteId();

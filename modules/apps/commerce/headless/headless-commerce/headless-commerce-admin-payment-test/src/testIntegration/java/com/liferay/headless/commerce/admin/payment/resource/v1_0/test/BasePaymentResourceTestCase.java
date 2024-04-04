@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -525,7 +524,6 @@ public abstract class BasePaymentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPaymentsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -656,7 +654,6 @@ public abstract class BasePaymentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPaymentByExternalReferenceCode()
 		throws Exception {
@@ -716,7 +713,6 @@ public abstract class BasePaymentResourceTestCase {
 						"Object/paymentByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPaymentByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -843,7 +839,6 @@ public abstract class BasePaymentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeletePayment() throws Exception {
 
@@ -933,7 +928,6 @@ public abstract class BasePaymentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPayment() throws Exception {
 		Payment payment = testGraphQLGetPayment_addPayment();
@@ -979,7 +973,6 @@ public abstract class BasePaymentResourceTestCase {
 						"Object/payment"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPaymentNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

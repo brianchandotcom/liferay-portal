@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -575,7 +574,6 @@ public abstract class BaseWikiNodeResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteWikiNodesPage() throws Exception {
 		Long siteId = testGetSiteWikiNodesPage_getSiteId();
@@ -749,7 +747,6 @@ public abstract class BaseWikiNodeResourceTestCase {
 			testGroup.getGroupId(), randomWikiNode());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteWikiNodeByExternalReferenceCode()
 		throws Exception {
@@ -827,7 +824,6 @@ public abstract class BaseWikiNodeResourceTestCase {
 		return wikiNode.getSiteId();
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteWikiNodeByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -1034,7 +1030,6 @@ public abstract class BaseWikiNodeResourceTestCase {
 			testGroup.getGroupId(), randomWikiNode());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteWikiNode() throws Exception {
 
@@ -1126,7 +1121,6 @@ public abstract class BaseWikiNodeResourceTestCase {
 			testGroup.getGroupId(), randomWikiNode());
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWikiNode() throws Exception {
 		WikiNode wikiNode = testGraphQLGetWikiNode_addWikiNode();
@@ -1171,7 +1165,6 @@ public abstract class BaseWikiNodeResourceTestCase {
 						"Object/wikiNode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWikiNodeNotFound() throws Exception {
 		Long irrelevantWikiNodeId = RandomTestUtil.randomLong();

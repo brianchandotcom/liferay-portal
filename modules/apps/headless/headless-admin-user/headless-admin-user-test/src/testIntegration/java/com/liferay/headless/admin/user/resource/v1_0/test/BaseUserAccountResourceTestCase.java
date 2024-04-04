@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -296,7 +295,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCode()
 		throws Exception {
@@ -375,7 +373,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -1677,7 +1674,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountUserAccount() throws Exception {
 		UserAccount userAccount =
@@ -1742,7 +1738,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAccountUserAccountNotFound() throws Exception {
 		Long irrelevantAccountId = RandomTestUtil.randomLong();
@@ -1812,7 +1807,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMyUserAccount() throws Exception {
 		UserAccount userAccount = testGraphQLGetMyUserAccount_addUserAccount();
@@ -1855,7 +1849,6 @@ public abstract class BaseUserAccountResourceTestCase {
 						"Object/myUserAccount"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMyUserAccountNotFound() throws Exception {
 		Assert.assertTrue(true);
@@ -3041,7 +3034,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserAccountsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -3154,7 +3146,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserAccountByEmailAddress() throws Exception {
 		UserAccount userAccount =
@@ -3210,7 +3201,6 @@ public abstract class BaseUserAccountResourceTestCase {
 						"Object/userAccountByEmailAddress"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserAccountByEmailAddressNotFound()
 		throws Exception {
@@ -3318,7 +3308,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserAccountByExternalReferenceCode()
 		throws Exception {
@@ -3377,7 +3366,6 @@ public abstract class BaseUserAccountResourceTestCase {
 						"Object/userAccountByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserAccountByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -3940,7 +3928,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteUserAccount() throws Exception {
 
@@ -4034,7 +4021,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserAccount() throws Exception {
 		UserAccount userAccount = testGraphQLGetUserAccount_addUserAccount();
@@ -4083,7 +4069,6 @@ public abstract class BaseUserAccountResourceTestCase {
 						"Object/userAccount"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserAccountNotFound() throws Exception {
 		Long irrelevantUserAccountId = RandomTestUtil.randomLong();

@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -564,7 +563,6 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMeasurementUnitsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -718,7 +716,6 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMeasurementUnitByExternalReferenceCode()
 		throws Exception {
@@ -778,7 +775,6 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 						"Object/measurementUnitByExternalReferenceCode"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMeasurementUnitByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -891,7 +887,6 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMeasurementUnitByKey() throws Exception {
 		MeasurementUnit measurementUnit =
@@ -945,7 +940,6 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 						"Object/measurementUnitByKey"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMeasurementUnitByKeyNotFound() throws Exception {
 		String irrelevantKey = "\"" + RandomTestUtil.randomString() + "\"";
@@ -1374,7 +1368,6 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteMeasurementUnit() throws Exception {
 
@@ -1474,7 +1467,6 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMeasurementUnit() throws Exception {
 		MeasurementUnit measurementUnit =
@@ -1521,7 +1513,6 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 						"Object/measurementUnit"))));
 	}
 
-	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMeasurementUnitNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();

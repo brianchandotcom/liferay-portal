@@ -104,7 +104,7 @@ describe('ScriptManagementContainer component', () => {
 	it('check if configuration information alert will render correctly when scriptManagementConfigurationDefined is false', () => {
 		const {getByRole, getByText} = render(
 			<ScriptManagementContainer
-				allowScriptContentBeExecutedOrIncluded={false}
+				allowScriptContentToBeExecutedOrIncluded={false}
 				baseResourceURL=""
 				scriptManagementConfigurationDefined={false}
 			/>
@@ -124,7 +124,7 @@ describe('ScriptManagementContainer component', () => {
 	it('check if configuration information alert will not render when scriptManagementConfigurationDefined is true', () => {
 		const {queryByRole, queryByText} = render(
 			<ScriptManagementContainer
-				allowScriptContentBeExecutedOrIncluded={false}
+				allowScriptContentToBeExecutedOrIncluded={false}
 				baseResourceURL=""
 				scriptManagementConfigurationDefined={true}
 			/>

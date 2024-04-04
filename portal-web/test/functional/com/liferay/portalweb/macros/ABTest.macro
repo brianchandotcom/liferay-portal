@@ -1,6 +1,17 @@
 definition {
 
 	@summary = "Default summary"
+	macro accessABTestInAC(itemName = null) {
+		var key_itemName = ${itemName};
+
+		while ((IsElementNotPresent(locator1 = "ABTest#OPEN_ITEM")) && (maxIterations = "50")) {
+			TestUtils.hardRefresh();
+		}
+
+		Click(locator1 = "ABTest#OPEN_ITEM");
+	}
+
+	@summary = "Default summary"
 	macro assertDXPABTestEmptyState() {
 		AssertVisible(
 			key_title = "No active tests were found for the selected experience.",

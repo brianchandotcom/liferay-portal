@@ -73,7 +73,7 @@ definition {
 
 			ACNavigation.goToTests();
 
-			ACNavigation.openItem(itemName = ${nameABTest});
+			ABTest.accessABTestInAC(itemName = ${nameABTest});
 		}
 
 		task ("Click on the delete button on the top") {
@@ -121,7 +121,7 @@ definition {
 
 			ACNavigation.goToTests();
 
-			ACNavigation.openItem(itemName = ${nameABTest});
+			ABTest.accessABTestInAC(itemName = ${nameABTest});
 		}
 
 		task ("Click on the review button on the top") {
@@ -157,7 +157,7 @@ definition {
 
 			ACNavigation.goToTests();
 
-			ACNavigation.openItem(itemName = ${nameABTest});
+			ABTest.accessABTestInAC(itemName = ${nameABTest});
 		}
 
 		task ("Click on the terminate button on the top") {

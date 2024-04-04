@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPEN_ITEM</td>
+	<td>//a[normalize-space(),'${key_itemName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PENCIL_BUTTON</td>
 	<td>//button[contains(@class,'btn-outline-secondary') and *[name()='svg'][contains(@class,'lexicon-icon-pencil')]]</td>
 	<td></td>

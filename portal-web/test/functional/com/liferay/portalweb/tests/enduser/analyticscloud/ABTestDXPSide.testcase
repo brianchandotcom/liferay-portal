@@ -289,7 +289,7 @@ definition {
 
 			ACNavigation.goToTests();
 
-			ACNavigation.openItem(itemName = ${nameABTest});
+			ABTest.accessABTestInAC(itemName = ${nameABTest});
 		}
 
 		task ("Assert the AB Test") {
@@ -373,7 +373,7 @@ definition {
 		}
 
 		task ("Open the AB test") {
-			ACNavigation.openItem(itemName = ${nameABTest});
+			ABTest.accessABTestInAC(itemName = ${nameABTest});
 		}
 
 		task ("Delete the test in AC") {
@@ -459,7 +459,7 @@ definition {
 		}
 
 		task ("Select the first created test") {
-			ACNavigation.openItem(itemName = ${nameABTest});
+			ABTest.accessABTestInAC(itemName = ${nameABTest});
 		}
 
 		task ("Assert the publish button is no longer shown") {

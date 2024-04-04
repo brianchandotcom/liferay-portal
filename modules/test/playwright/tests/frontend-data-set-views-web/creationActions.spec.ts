@@ -265,8 +265,8 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 		}) => {
 			const actionLabel = 'Custom Creation Action';
 
-			fragmentTest.step('Create Creation Action', async () => {
-				dataSetManagerApiHelpers.createDataSetViewCreationAction({
+			await fragmentTest.step('Create Creation Action', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewCreationAction({
 					label_i18n: {en_US: actionLabel},
 					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
 						actionsDataSetViewERC,
@@ -336,8 +336,8 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 			const firstActionLabel = 'Custom Creation Action';
 			const secondActionLabel = 'Another Creation Action';
 
-			fragmentTest.step('Create Creation Actions', async () => {
-				dataSetManagerApiHelpers.createDataSetViewCreationAction({
+			await fragmentTest.step('Create Creation Actions', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewCreationAction({
 					label_i18n: {en_US: firstActionLabel},
 					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
 						actionsDataSetViewERC,
@@ -345,7 +345,7 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 					type: 'modal',
 				});
 
-				dataSetManagerApiHelpers.createDataSetViewCreationAction({
+				await dataSetManagerApiHelpers.createDataSetViewCreationAction({
 					label_i18n: {en_US: secondActionLabel},
 					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
 						actionsDataSetViewERC,

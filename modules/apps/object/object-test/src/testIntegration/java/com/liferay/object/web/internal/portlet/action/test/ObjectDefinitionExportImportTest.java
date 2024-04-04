@@ -11,6 +11,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -27,6 +28,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Gabriel Albuquerque
  */
+@FeatureFlags("LPS-187142")
 @RunWith(Arquillian.class)
 public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 

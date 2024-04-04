@@ -4,7 +4,9 @@
  */
 
 import ClayButton from '@clayui/button';
-import {useContext, useState} from 'react';
+import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
+import {useContext, useRef, useState} from 'react';
 
 import {ListViewContext, ListViewTypes} from '../../context/ListViewContext';
 import i18n from '../../i18n';
@@ -13,7 +15,6 @@ import {Column} from '../Table';
 
 type ManagementToolbarColumnsProps = {
 	columns?: Column[];
-	onClose: () => void;
 };
 
 type ColumnsState = {
@@ -22,8 +23,18 @@ type ColumnsState = {
 
 const ManagementToolbarColumns: React.FC<ManagementToolbarColumnsProps> = ({
 	columns,
-	onClose,
 }) => {
+	const buttonRef = useRef<HTMLButtonElement | null>(null);
+
+	const [isVisible, setIsVisible] = useState(false);
+
+	const handleExpand = (
+		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+	) => {
+		buttonRef.current = event.target as HTMLButtonElement;
+
+		setIsVisible((isVisible) => !isVisible);
+	};
 	const [{columns: contextColumns, columnsFixed}, dispatch] = useContext(
 		ListViewContext
 	);
@@ -47,58 +58,79 @@ const ManagementToolbarColumns: React.FC<ManagementToolbarColumnsProps> = ({
 	);
 
 	return (
-		<div className="align-content-between d-flex flex-column">
-			<div className="dropdown-header">
-				<p className="font-weight-bold my-2">
-					{i18n.translate('columns')}
-				</p>
-			</div>
+		<>
+			<ClayButton
+				className="management-toolbar-buttons nav-link"
+				displayType="unstyled"
+				onClick={handleExpand}
+			>
+				<span>
+					<ClayIcon
+						className="inline-item inline-item-after inline-item-before"
+						symbol="columns"
+					/>
+				</span>
+			</ClayButton>
 
-			<div className="management-toolbar-body">
-				<div className="popover-columns-content">
-					{columnsNotFixed?.map((column, index) => (
-						<Form.Checkbox
-							checked={selectedColumns[column.key]}
-							key={index}
-							label={column.value}
-							onChange={(event) =>
-								setSelectedColumns({
-									...selectedColumns,
-									[column.key]: event.target.checked,
-								})
-							}
-							value={
-								(selectedColumns[
-									column.key
-								] as unknown) as string
-							}
-						/>
-					))}
+			<ClayDropDown.Menu
+				active={isVisible}
+				alignElementRef={buttonRef}
+				alignmentPosition={3}
+				className="dropdown-management-toolbar"
+				closeOnClickOutside
+				onActiveChange={() => setIsVisible((isVisible) => !isVisible)}
+			>
+				<div className="align-content-between d-flex flex-column">
+					<ClayDropDown.Section className="dropdown-header">
+						<p className="font-weight-bold my-2">
+							{i18n.translate('columns')}
+						</p>
+					</ClayDropDown.Section>
+
+					<div className="dropdown-columns-content">
+						{columnsNotFixed?.map((column, index) => (
+							<Form.Checkbox
+								checked={selectedColumns[column.key]}
+								key={index}
+								label={column.value}
+								onChange={(event) =>
+									setSelectedColumns({
+										...selectedColumns,
+										[column.key]: event.target.checked,
+									})
+								}
+								value={
+									(selectedColumns[
+										column.key
+									] as unknown) as string
+								}
+							/>
+						))}
+					</div>
+
+					<ClayDropDown.Section className="dropdown-footer">
+						<ClayButton
+							className="mt-2"
+							disabled={disabled}
+							onClick={() => {
+								dispatch({
+									payload: {
+										columns: {
+											...selectedColumns,
+										},
+									},
+									type: ListViewTypes.SET_COLUMNS,
+								});
+
+								setIsVisible(false);
+							}}
+						>
+							{i18n.translate('apply')}
+						</ClayButton>
+					</ClayDropDown.Section>
 				</div>
-			</div>
-
-			<div className="mt-5 popover-footer">
-				<Form.Divider />
-
-				<ClayButton
-					disabled={disabled}
-					onClick={() => {
-						dispatch({
-							payload: {
-								columns: {
-									...selectedColumns,
-								},
-							},
-							type: ListViewTypes.SET_COLUMNS,
-						});
-
-						onClose();
-					}}
-				>
-					{i18n.translate('apply')}
-				</ClayButton>
-			</div>
-		</div>
+			</ClayDropDown.Menu>
+		</>
 	);
 };
 

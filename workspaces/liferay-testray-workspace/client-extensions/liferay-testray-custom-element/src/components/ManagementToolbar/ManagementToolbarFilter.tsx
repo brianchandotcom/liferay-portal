@@ -239,12 +239,11 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 			</div>
 
 			<ClayDropDown.Section className="dropdown-footer">
-				<Form.Divider />
-				<ClayButton onClick={onApply}>
+				<ClayButton className="mt-2" onClick={onApply}>
 					{i18n.translate('apply')}
 				</ClayButton>
 				<ClayButton
-					className="ml-3"
+					className="ml-3 mt-2"
 					disabled={clearDisabled}
 					displayType="secondary"
 					onClick={onClear}

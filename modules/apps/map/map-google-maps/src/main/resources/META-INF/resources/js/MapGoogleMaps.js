@@ -50,7 +50,7 @@ class MapGoogleMaps extends MapBase {
 			Object.assign(mapConfig, controlsConfig)
 		);
 
-		if (this.data && this.data.features) {
+		if (this.data?.features?.length) {
 			const bounds = new google.maps.LatLngBounds();
 
 			this.data.features.forEach((feature) =>

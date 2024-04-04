@@ -24,6 +24,8 @@ import {SettingsContainer} from './SettingsContainer/SettingsContainer';
 
 import './EditNotificationTemplate.scss';
 
+import {ILearnResourceContext} from 'frontend-js-components-web';
+
 const HEADERS = new Headers({
 	'Accept': 'application/json',
 	'Content-Type': 'application/json',
@@ -47,6 +49,7 @@ interface EditNotificationTemplateProps {
 	baseResourceURL: string;
 	editorConfig: object;
 	externalReferenceCode: string;
+	learnResources: ILearnResourceContext;
 	notificationTemplateId: number;
 	notificationTemplateType: string;
 	portletNamespace: string;
@@ -57,6 +60,7 @@ export default function EditNotificationTemplate({
 	baseResourceURL,
 	editorConfig,
 	externalReferenceCode,
+	learnResources,
 	notificationTemplateId = 0,
 	notificationTemplateType,
 	portletNamespace,
@@ -345,6 +349,7 @@ export default function EditNotificationTemplate({
 							<SettingsContainer
 								baseResourceURL={baseResourceURL}
 								errors={errors}
+								learnResources={learnResources}
 								selectedLocale={selectedLocale}
 								setValues={setValues}
 								values={values}

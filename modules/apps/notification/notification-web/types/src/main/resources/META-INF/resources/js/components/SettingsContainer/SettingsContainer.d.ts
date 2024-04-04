@@ -6,10 +6,12 @@
 /// <reference types="react" />
 
 import {FormError} from '@liferay/object-js-components-web';
+import {ILearnResourceContext} from 'frontend-js-components-web';
 import {NotificationTemplateError} from '../EditNotificationTemplate';
 interface SettingsContainerProps {
 	baseResourceURL: string;
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
+	learnResources: ILearnResourceContext;
 	selectedLocale: Locale;
 	setValues: (values: Partial<NotificationTemplate>) => void;
 	values: NotificationTemplate;
@@ -17,6 +19,7 @@ interface SettingsContainerProps {
 export declare function SettingsContainer({
 	baseResourceURL,
 	errors,
+	learnResources,
 	selectedLocale,
 	setValues,
 	values,

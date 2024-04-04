@@ -8,7 +8,10 @@ import ClayIcon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {FormError, Input} from '@liferay/object-js-components-web';
-import {InputLocalized} from 'frontend-js-components-web';
+import {
+	ILearnResourceContext,
+	InputLocalized,
+} from 'frontend-js-components-web';
 import React from 'react';
 
 import {NotificationTemplateError} from '../EditNotificationTemplate';
@@ -20,6 +23,7 @@ import './EmailNotificationSettings.scss';
 interface EmailNotificationSettingsProps {
 	baseResourceURL: string;
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
+	learnResources: ILearnResourceContext;
 	selectedLocale: Locale;
 	setValues: (values: Partial<NotificationTemplate>) => void;
 	values: NotificationTemplate;
@@ -39,6 +43,7 @@ const RECIPIENT_OPTIONS = [
 export function EmailNotificationSettings({
 	baseResourceURL,
 	errors,
+	learnResources,
 	selectedLocale,
 	setValues,
 	values,
@@ -71,6 +76,7 @@ export function EmailNotificationSettings({
 							<PrimaryRecipient
 								baseResourceURL={baseResourceURL}
 								errors={errors}
+								learnResources={learnResources}
 								recipientOptions={RECIPIENT_OPTIONS}
 								selectedLocale={selectedLocale}
 								setValues={setValues}
@@ -88,6 +94,7 @@ export function EmailNotificationSettings({
 						<ClayPanel.Body>
 							<SecondaryRecipient
 								baseResourceURL={baseResourceURL}
+								learnResources={learnResources}
 								recipientOptions={RECIPIENT_OPTIONS}
 								setValues={setValues}
 								values={values}

@@ -10,12 +10,18 @@ import {
 	MultipleSelect,
 	SingleSelect,
 } from '@liferay/object-js-components-web';
+import {
+	ILearnResourceContext,
+	LearnMessage,
+	LearnResourcesContext,
+} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {getCheckedChildren, getRoles} from './rolesUtils';
 
 interface SecondaryRecipientsProps {
 	baseResourceURL: string;
+	learnResources: ILearnResourceContext;
 	recipientOptions: LabelValueObject[];
 	setValues: (values: Partial<NotificationTemplate>) => void;
 	values: NotificationTemplate;
@@ -23,6 +29,7 @@ interface SecondaryRecipientsProps {
 
 export function SecondaryRecipient({
 	baseResourceURL,
+	learnResources,
 	recipientOptions,
 	setValues,
 	values,
@@ -136,6 +143,9 @@ export function SecondaryRecipient({
 							{secondaryRecipient.ccType === 'email' && (
 								<Input
 									disabled={values.system}
+									feedbackMessage={Liferay.Language.get(
+										'you-can-use-a-comma-to-enter-multiple-users'
+									)}
 									label={Liferay.Language.get('recipients')}
 									name="cc"
 									onChange={({target}) =>
@@ -150,7 +160,7 @@ export function SecondaryRecipient({
 										})
 									}
 									placeholder={Liferay.Language.get(
-										'type-email-adress'
+										'type-email-address'
 									)}
 									value={
 										(values
@@ -161,34 +171,54 @@ export function SecondaryRecipient({
 							)}
 
 							{secondaryRecipient.ccType === 'role' && (
-								<MultipleSelect
-									disabled={values.system}
-									label={Liferay.Language.get('role')}
-									options={ccRolesList}
-									placeholder={Liferay.Language.get(
-										'select-role'
-									)}
-									search
-									searchPlaceholder={Liferay.Language.get(
-										'search-for-a-role'
-									)}
-									selectAllOption
-									setOptions={(items) => {
-										const newRecipients = handleMultiSelectItemsChange(
-											items
-										);
-										setValues({
-											...values,
-											recipients: [
-												{
-													...values.recipients[0],
-													cc: newRecipients,
-												},
-											],
-										});
-										setCCRolesList(items);
-									}}
-								/>
+								<div className="lfr__notification-template-email-notification-settings-multiple-select">
+									<MultipleSelect
+										disabled={values.system}
+										label={Liferay.Language.get('role')}
+										options={ccRolesList}
+										placeholder={Liferay.Language.get(
+											'select-role'
+										)}
+										search
+										searchPlaceholder={Liferay.Language.get(
+											'search-for-a-role'
+										)}
+										selectAllOption
+										setOptions={(items) => {
+											const newRecipients = handleMultiSelectItemsChange(
+												items
+											);
+											setValues({
+												...values,
+												recipients: [
+													{
+														...values.recipients[0],
+														cc: newRecipients,
+													},
+												],
+											});
+											setCCRolesList(items);
+										}}
+									/>
+
+									<LearnResourcesContext.Provider
+										value={learnResources}
+									>
+										<div className="lfr__notification-template-email-notification-settings-multiple-select-help-text">
+											<span>
+												{Liferay.Language.get(
+													'account-roles-are-subject-to-account-restrictions'
+												)}
+											</span>
+											&nbsp;
+											<LearnMessage
+												className="alert-link"
+												resource="notification-web"
+												resourceKey="general"
+											/>
+										</div>
+									</LearnResourcesContext.Provider>
+								</div>
 							)}
 						</div>
 					</div>
@@ -226,6 +256,9 @@ export function SecondaryRecipient({
 							{secondaryRecipient.bccType === 'email' && (
 								<Input
 									disabled={values.system}
+									feedbackMessage={Liferay.Language.get(
+										'you-can-use-a-comma-to-enter-multiple-users'
+									)}
 									label={Liferay.Language.get('recipients')}
 									name="bcc"
 									onChange={({target}) =>
@@ -240,7 +273,7 @@ export function SecondaryRecipient({
 										})
 									}
 									placeholder={Liferay.Language.get(
-										'type-email-adress'
+										'type-email-address'
 									)}
 									value={
 										(values
@@ -251,34 +284,54 @@ export function SecondaryRecipient({
 							)}
 
 							{secondaryRecipient.bccType === 'role' && (
-								<MultipleSelect
-									disabled={values.system}
-									label={Liferay.Language.get('role')}
-									options={bccRolesList}
-									placeholder={Liferay.Language.get(
-										'select-role'
-									)}
-									search
-									searchPlaceholder={Liferay.Language.get(
-										'search-for-a-role'
-									)}
-									selectAllOption
-									setOptions={(items) => {
-										const newRecipients = handleMultiSelectItemsChange(
-											items
-										);
-										setValues({
-											...values,
-											recipients: [
-												{
-													...values.recipients[0],
-													bcc: newRecipients,
-												},
-											],
-										});
-										setBCCRolesList(items);
-									}}
-								/>
+								<div className="lfr__notification-template-email-notification-settings-multiple-select">
+									<MultipleSelect
+										disabled={values.system}
+										label={Liferay.Language.get('role')}
+										options={bccRolesList}
+										placeholder={Liferay.Language.get(
+											'select-role'
+										)}
+										search
+										searchPlaceholder={Liferay.Language.get(
+											'search-for-a-role'
+										)}
+										selectAllOption
+										setOptions={(items) => {
+											const newRecipients = handleMultiSelectItemsChange(
+												items
+											);
+											setValues({
+												...values,
+												recipients: [
+													{
+														...values.recipients[0],
+														bcc: newRecipients,
+													},
+												],
+											});
+											setBCCRolesList(items);
+										}}
+									/>
+
+									<LearnResourcesContext.Provider
+										value={learnResources}
+									>
+										<div className="lfr__notification-template-email-notification-settings-multiple-select-help-text">
+											<span>
+												{Liferay.Language.get(
+													'account-roles-are-subject-to-account-restrictions'
+												)}
+											</span>
+											&nbsp;
+											<LearnMessage
+												className="alert-link"
+												resource="notification-web"
+												resourceKey="general"
+											/>
+										</div>
+									</LearnResourcesContext.Provider>
+								</div>
 							)}
 						</div>
 					</div>

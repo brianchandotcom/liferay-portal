@@ -80,7 +80,7 @@ public class ExportImportTaskResourcePerformanceTest {
 					"properties"),
 			"UTF-8");
 
-		recordsCount = GetterUtil.getInteger(
+		_recordsCount = GetterUtil.getInteger(
 			properties.getProperty("records.count"));
 
 		_jsonTemplates = LinkedHashMapBuilder.put(
@@ -105,7 +105,7 @@ public class ExportImportTaskResourcePerformanceTest {
 							"dummy-entity-performance-test");
 
 		userAccountPerformanceTestBatchEngineTaskItemDelegate.generateTestData(
-			recordsCount);
+			_recordsCount);
 
 		_testPostExportTask(
 			"com.liferay.headless.batch.engine.resource.v1_0.test." +
@@ -114,7 +114,7 @@ public class ExportImportTaskResourcePerformanceTest {
 
 	@Test
 	public void testPostExportTaskWithUserAccount() throws Exception {
-		_generateTestUserAccounts(recordsCount);
+		_generateTestUserAccounts(_recordsCount);
 
 		_testPostExportTask(
 			"com.liferay.headless.admin.user.dto.v1_0.UserAccount");
@@ -132,73 +132,6 @@ public class ExportImportTaskResourcePerformanceTest {
 		_testPostImportTask(
 			"com.liferay.headless.admin.user.dto.v1_0.UserAccount");
 	}
-
-	protected String getHttpResponseContent(String url) throws IOException {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-		httpInvoker.path(url);
-
-		HttpInvoker.HttpResponse response = httpInvoker.invoke();
-
-		Assert.assertEquals(200, response.getStatusCode());
-
-		return response.getContent();
-	}
-
-	protected Map<String, String> splitClassName(String className) {
-		Map<String, String> classNamePartsMap = new HashMap<>();
-
-		if (className.contains("#")) {
-			String[] classNameParts = className.split("#");
-
-			classNamePartsMap.put("className", classNameParts[0]);
-			classNamePartsMap.put("taskItemDelegateName", classNameParts[1]);
-		}
-		else {
-			classNamePartsMap.put("className", className);
-		}
-
-		return classNamePartsMap;
-	}
-
-	protected Closeable startTimer(Log log) {
-		return startTimer(log, null);
-	}
-
-	protected Closeable startTimer(Log log, String message) {
-		Thread thread = Thread.currentThread();
-
-		StackTraceElement stackTraceElement = thread.getStackTrace()[3];
-
-		String invokerName = StringBundler.concat(
-			stackTraceElement.getClassName(), StringPool.POUND,
-			stackTraceElement.getMethodName());
-
-		long startTime = System.currentTimeMillis();
-
-		return () -> {
-			if (log.isInfoEnabled()) {
-				long totalTimeMillis = System.currentTimeMillis() - startTime;
-
-				double speed = (totalTimeMillis > 0) ?
-					(double)(recordsCount * 1000) / (double)totalTimeMillis :
-						Double.NaN;
-
-				log.info(
-					StringBundler.concat(
-						invokerName,
-						Validator.isNotNull(message) ? (" (" + message + ") ") :
-							"",
-						" used ", totalTimeMillis, " ms, for ", recordsCount,
-						" records, speed: ", String.format("%.2f", speed),
-						" records/s"));
-			}
-		};
-	}
-
-	protected static int recordsCount;
 
 	private static String _createDummyEntityJSONTemplate() throws Exception {
 		return JSONUtil.put(
@@ -344,6 +277,71 @@ public class ExportImportTaskResourcePerformanceTest {
 		}
 	}
 
+	private String _getHttpResponseContent(String url) throws IOException {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+		httpInvoker.path(url);
+
+		HttpInvoker.HttpResponse response = httpInvoker.invoke();
+
+		Assert.assertEquals(200, response.getStatusCode());
+
+		return response.getContent();
+	}
+
+	private Map<String, String> _splitClassName(String className) {
+		Map<String, String> classNamePartsMap = new HashMap<>();
+
+		if (className.contains("#")) {
+			String[] classNameParts = className.split("#");
+
+			classNamePartsMap.put("className", classNameParts[0]);
+			classNamePartsMap.put("taskItemDelegateName", classNameParts[1]);
+		}
+		else {
+			classNamePartsMap.put("className", className);
+		}
+
+		return classNamePartsMap;
+	}
+
+	private Closeable _startTimer(Log log) {
+		return _startTimer(log, null);
+	}
+
+	private Closeable _startTimer(Log log, String message) {
+		Thread thread = Thread.currentThread();
+
+		StackTraceElement stackTraceElement = thread.getStackTrace()[3];
+
+		String invokerName = StringBundler.concat(
+			stackTraceElement.getClassName(), StringPool.POUND,
+			stackTraceElement.getMethodName());
+
+		long startTime = System.currentTimeMillis();
+
+		return () -> {
+			if (log.isInfoEnabled()) {
+				long totalTimeMillis = System.currentTimeMillis() - startTime;
+
+				double speed = (totalTimeMillis > 0) ?
+					(double)(_recordsCount * 1000) / (double)totalTimeMillis :
+						Double.NaN;
+
+				log.info(
+					StringBundler.concat(
+						invokerName,
+						Validator.isNotNull(message) ? (" (" + message + ") ") :
+							"",
+						" used ", totalTimeMillis, " ms, for ", _recordsCount,
+						" records, speed: ", String.format("%.2f", speed),
+						" records/s"));
+			}
+		};
+	}
+
 	private void _testPostExportTask(String className) throws Exception {
 		if (_log.isInfoEnabled()) {
 			_log.info("ClassName: " + className);
@@ -353,9 +351,9 @@ public class ExportImportTaskResourcePerformanceTest {
 
 		String externalReferenceCode = null;
 
-		Map<String, String> classNamePartsMap = splitClassName(className);
+		Map<String, String> classNamePartsMap = _splitClassName(className);
 
-		try (Closeable closeable = startTimer(_log, "export_items")) {
+		try (Closeable closeable = _startTimer(_log, "export_items")) {
 			httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.header(
@@ -387,7 +385,7 @@ public class ExportImportTaskResourcePerformanceTest {
 
 			while (true) {
 				exportTask = ExportTaskSerDes.toDTO(
-					getHttpResponseContent(
+					_getHttpResponseContent(
 						"http://localhost:8080/o/headless-batch-engine/v1.0" +
 							"/export-task/by-external-reference-code/" +
 								externalReferenceCode));
@@ -405,7 +403,7 @@ public class ExportImportTaskResourcePerformanceTest {
 			}
 		}
 
-		try (Closeable closeable = startTimer(_log, "download")) {
+		try (Closeable closeable = _startTimer(_log, "download")) {
 			httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.header(
@@ -438,12 +436,12 @@ public class ExportImportTaskResourcePerformanceTest {
 			_log.info("ClassName: " + className);
 		}
 
-		Map<String, String> classNamePartsMap = splitClassName(className);
+		Map<String, String> classNamePartsMap = _splitClassName(className);
 
 		String json = _createBatchJSON(
-			classNamePartsMap.get("className"), recordsCount);
+			classNamePartsMap.get("className"), _recordsCount);
 
-		try (Closeable closeable = startTimer(_log)) {
+		try (Closeable closeable = _startTimer(_log)) {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(json, "application/json");
@@ -475,7 +473,7 @@ public class ExportImportTaskResourcePerformanceTest {
 
 			while (true) {
 				importTask = ImportTaskSerDes.toDTO(
-					getHttpResponseContent(
+					_getHttpResponseContent(
 						"http://localhost:8080/o/headless-batch-engine/v1.0" +
 							"/import-task/by-external-reference-code/" +
 								externalReferenceCode));
@@ -505,6 +503,7 @@ public class ExportImportTaskResourcePerformanceTest {
 		ExportImportTaskResourcePerformanceTest.class);
 
 	private static Map<String, String> _jsonTemplates;
+	private static int _recordsCount;
 
 	@Inject
 	private BatchEngineTaskItemDelegateRegistry

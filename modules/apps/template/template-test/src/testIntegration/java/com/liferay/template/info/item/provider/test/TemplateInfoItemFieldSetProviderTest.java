@@ -77,6 +77,8 @@ import java.time.chrono.IsoChronology;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.FormatStyle;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -197,6 +199,60 @@ public class TemplateInfoItemFieldSetProviderTest {
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
 				journalArticleTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
+	}
+
+	@Test
+	public void testGetInfoFieldSetByClassNameFromGlobalGroupAndScopeGroup()
+		throws PortalException {
+
+		long groupId = _serviceContext.getScopeGroupId();
+
+		_serviceContext.setScopeGroupId(_company.getGroupId());
+
+		_globalTemplateEntry = TemplateTestUtil.addTemplateEntry(
+			BlogsEntry.class.getName(), StringPool.BLANK, _serviceContext);
+
+		_serviceContext.setScopeGroupId(groupId);
+
+		TemplateEntry groupBlogsEntryTemplateEntry =
+			TemplateTestUtil.addTemplateEntry(
+				BlogsEntry.class.getName(), StringPool.BLANK, _serviceContext);
+
+		TemplateTestUtil.addTemplateEntry(
+			AssetCategory.class.getName(), StringPool.BLANK, _serviceContext);
+
+		InfoFieldSet infoFieldSet =
+			_templateInfoItemFieldSetProvider.getInfoFieldSet(
+				BlogsEntry.class.getName(), StringPool.BLANK);
+
+		List<InfoField<?>> infoFields = infoFieldSet.getAllInfoFields();
+
+		Assert.assertEquals(infoFields.toString(), 2, infoFields.size());
+
+		List<String> infoFieldNames = new ArrayList<>();
+
+		InfoField<?> infoField1 = infoFields.get(0);
+
+		Assert.assertTrue(
+			infoField1.getInfoFieldType() instanceof HTMLInfoFieldType);
+
+		infoFieldNames.add(infoField1.getName());
+
+		InfoField<?> infoField2 = infoFields.get(1);
+
+		Assert.assertTrue(
+			infoField2.getInfoFieldType() instanceof HTMLInfoFieldType);
+
+		infoFieldNames.add(infoField2.getName());
+
+		Assert.assertTrue(
+			infoFieldNames.toString(),
+			infoFieldNames.containsAll(
+				Arrays.asList(
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+						_globalTemplateEntry.getTemplateEntryId(),
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+						groupBlogsEntryTemplateEntry.getTemplateEntryId())));
 	}
 
 	@Test

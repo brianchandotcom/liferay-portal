@@ -5,6 +5,7 @@ import {
 	RangeKeyTimeRanges
 } from 'shared/util/constants';
 import {flow, get, isFinite, isNil, isString, toLower, trim} from 'lodash';
+import {isJapaneseLang} from './lang';
 import {
 	RangeSelectors,
 	RawRangeSelectors,
@@ -84,8 +85,19 @@ export const getSafeDisplayValue = (
 	defaultValue: string | number = '-'
 ): string | number => (isBlank(value) ? defaultValue : value);
 
-export const getSafeTouchpoint = (touchpoint: string) =>
-	touchpoint !== 'Any' ? decodeURIComponent(touchpoint) : null;
+export const getSafeTouchpoint = (touchpoint: string) => {
+	const decodedTouchpoint = decodeURIComponent(touchpoint);
+
+	if (isJapaneseLang(decodedTouchpoint)) {
+		const values = decodedTouchpoint.split('/');
+		const path = values.slice(3).join('/');
+		const pathEncoded = encodeURIComponent(path);
+
+		return `${values.slice(0, 3).join('/')}/${pathEncoded}`;
+	}
+
+	return touchpoint !== 'Any' ? decodedTouchpoint : null;
+};
 
 /**
  * Create a Blob object from data string and temporarily attach

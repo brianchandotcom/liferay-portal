@@ -543,7 +543,7 @@ public class SiteInitializerSerializerImpl
 		throws Exception {
 
 		Set<AccountEntry> accountEntries = new TreeSet<>();
-		Map<String, String[]> emailAddressToRoles = new HashMap<>();
+		Map<String, String[]> roleNamesMap = new HashMap<>();
 		Set<Organization> organizations = new TreeSet<>();
 		Set<Role> roles = new TreeSet<>();
 
@@ -564,7 +564,7 @@ public class SiteInitializerSerializerImpl
 						}
 					}
 
-					emailAddressToRoles.put(
+					roleNamesMap.put(
 						user.getEmailAddress(),
 						ListUtil.toArray(userRoles, Role.NAME_ACCESSOR));
 					roles.addAll(userRoles);
@@ -669,13 +669,13 @@ public class SiteInitializerSerializerImpl
 		_addZipEntry(
 			"user-roles.json",
 			JSONUtil.toJSONArray(
-				emailAddressToRoles.keySet(),
+				roleNamesMap.keySet(),
 				emailAddress -> JSONUtil.put(
 					"emailAddress", emailAddress
 				).put(
 					"roles",
 					JSONUtil.toJSONArray(
-						emailAddressToRoles.get(emailAddress),
+						roleNamesMap.get(emailAddress),
 						role -> {
 							if (StringUtil.equals(role, RoleConstants.USER)) {
 								return null;

@@ -21,8 +21,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "frontend.data.set.name=" + CommerceOrderFDSNames.RETURNS,
 	service = FDSFilter.class
 )
-public class CommerceReturnContentDateRangeFDSFilter
-	extends BaseDateRangeFDSFilter {
+public class CommerceReturnDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
 	@Override
 	public String getId() {

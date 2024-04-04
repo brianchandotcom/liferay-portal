@@ -250,11 +250,13 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 	private void _assertVerify(boolean verifyProcessRun) {
 		Assert.assertEquals(verifyProcessRun, _verifyProcessRun);
 
+		Release release = _releaseLocalService.fetchRelease(_symbolicName);
+
 		if (!verifyProcessRun) {
+			Assert.assertFalse(release.isVerified());
+
 			return;
 		}
-
-		Release release = _releaseLocalService.fetchRelease(_symbolicName);
 
 		Assert.assertNotNull(release);
 

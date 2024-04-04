@@ -7,6 +7,8 @@ package com.liferay.portal.workflow.web.internal.groovy.script.uses.factory;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Portal;
@@ -16,8 +18,12 @@ import com.liferay.portal.workflow.definition.groovy.script.use.WorkflowDefiniti
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTabRegistry;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Queue;
 
 import javax.portlet.ResourceRequest;
 
@@ -39,11 +45,7 @@ public class WorkflowDefinitionGroovyScriptUsesFactory
 			_workflowDefinitionManager.getActiveWorkflowDefinitions(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 			workflowDefinition -> {
-				String content = workflowDefinition.getContentAsXML();
-
-				if (!content.contains(
-						"<script-language>groovy</script-language>")) {
-
+				if (!_hasGroovy(workflowDefinition.getContent())) {
 					return null;
 				}
 
@@ -62,8 +64,43 @@ public class WorkflowDefinitionGroovyScriptUsesFactory
 			});
 	}
 
+	private boolean _hasGroovy(String content) throws Exception {
+		Queue<Map<String, Object>> queue = new LinkedList<>();
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(content);
+
+		queue.add(jsonObject.toMap());
+
+		while (!queue.isEmpty()) {
+			Map<String, Object> map = queue.poll();
+
+			for (Map.Entry<String, Object> entry : map.entrySet()) {
+				if (entry.getValue() instanceof List) {
+					if (Objects.equals(entry.getKey(), "#cdata-value")) {
+						continue;
+					}
+
+					queue.addAll((List<Map<String, Object>>)entry.getValue());
+				}
+				else if (map.size() == 2) {
+					if (Objects.equals(
+							map.get("#tag-name"), "script-language") &&
+						Objects.equals(map.get("#value"), "groovy")) {
+
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

@@ -1,0 +1,53 @@
+<div class="d-flex flex-column justify-content-start mappable-video" style="align-items: ${configuration.align};">
+	<div class="video">
+		<div class="alert alert-info error-message" hidden role="alert">
+			<p>Please enter a valid video URL or map the video field.</p>
+			<p>The URL can point to any video file or a Youtube video.</p>
+			<p>In order to map the video field, select the 'mappableUrl' field under the 'Mappable Field' fragment. Then switch from the 'Link' tab to the 'Mapping' tab. Select the field that contains your video URL.</p>
+		</div>
+
+		<div aria-hidden="true" class="loading-animation"></div>
+		<div aria-hidden="true" class="video-container"></div>
+		<div aria-hidden="true" class="video-mask"></div>
+
+		<div class="dropdown hide playback-rate-dropdown">
+			<button class="btn btn-monospaced dropdown-toggle text-white" data-toggle="liferay-dropdown">
+				[@clay["icon"] symbol="cog" /]
+			</button>
+
+			<ul class="dropdown-menu list-unstyled">
+				<li class="dropdown-subheader" role="presentation">Playback Speed</li>
+				<li>
+					<button class="dropdown-item" data-playback-rate="0.25">0.25</button>
+				</li>
+				<li>
+					<button class="dropdown-item" data-playback-rate="0.5" href="javascript:;">0.5</button>
+				</li>
+				<li>
+					<button class="dropdown-item" data-playback-rate="0.75" href="javascript:;">0.75</button>
+				</li>
+				<li>
+					<button class="active dropdown-item" data-playback-rate="1" href="javascript:;">[@liferay.language key="normal" /]</button>
+				</li>
+				<li>
+					<button class="dropdown-item" data-playback-rate="1.25" href="javascript:;">1.25</button>
+				</li>
+				<li>
+					<button class="dropdown-item" data-playback-rate="1.5" href="javascript:;">1.5</button>
+				</li>
+				<li>
+					<button class="dropdown-item" data-playback-rate="1.75" href="javascript:;">1.75</button>
+				</li>
+				<li>
+					<button class="dropdown-item" data-playback-rate="2" href="javascript:;">2</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	[#if configuration.useMappableUrl]
+		<div class="hide label label-secondary mappable-url mt-2 text-truncate">
+			<lfr-editable id="mappableUrl" type="text">Click here to map your video.</lfr-editable>
+		</div>
+	[/#if]
+</div>

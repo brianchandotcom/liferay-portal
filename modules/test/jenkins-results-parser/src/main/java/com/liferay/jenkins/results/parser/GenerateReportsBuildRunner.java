@@ -112,14 +112,11 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			null, filePath);
 	}
 
-	private void _copyArchivedBuildData() {
-		if (_archivedBuildDataCopied) {
-			return;
-		}
+	private void _copyArchivedBuildData(
+		long durationDays, String startDateString) {
 
 		String[] dateStrings = JenkinsResultsParserUtil.getDateStrings(
-			_REPORT_DURATION_DAYS,
-			LocalDate.parse(_START_DATE_STRING, _dateTimeFormatter));
+			durationDays, LocalDate.parse(startDateString, _dateTimeFormatter));
 
 		File baseDir = new File(
 			_buildProperties.getProperty("archive.ci.build.data.archive.dir"));
@@ -127,19 +124,21 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		for (String dateString : dateStrings) {
 			File archiveFile = new File(baseDir, dateString + ".tar.gz");
 
-			if (archiveFile.exists()) {
-				JenkinsResultsParserUtil.unTarGzip(
-					archiveFile, new File(_TMP_ARCHIVE_DIR_PATH, dateString));
+			File unarchivedDir = new File(_TMP_ARCHIVE_DIR_PATH, dateString);
+
+			if (archiveFile.exists() && !unarchivedDir.exists()) {
+				System.out.println(
+					"Extracting " + archiveFile + " to " + unarchivedDir);
+
+				JenkinsResultsParserUtil.unTarGzip(archiveFile, unarchivedDir);
 			}
 		}
-
-		_archivedBuildDataCopied = true;
 	}
 
 	private void _generateBuildHistoryReport(String filePath)
 		throws IOException {
 
-		_copyArchivedBuildData();
+		_copyArchivedBuildData(_REPORT_DURATION_DAYS, _START_DATE_STRING);
 
 		BuildHistoryReport aggregateBuildHistoryReport =
 			BuildHistoryReport.newAggregateReport(
@@ -210,7 +209,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	private void _generatePullRequestReport(String filePath)
 		throws IOException {
 
-		_copyArchivedBuildData();
+		_copyArchivedBuildData(_REPORT_DURATION_DAYS, _START_DATE_STRING);
 
 		BuildHistoryReport testSuiteBuildHistoryReport =
 			BuildHistoryReport.newPullRequestTestSuiteReport(
@@ -224,7 +223,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	}
 
 	private void _generateReleaseReport(String filePath) throws IOException {
-		_copyArchivedBuildData();
+		_copyArchivedBuildData(_REPORT_DURATION_DAYS, _START_DATE_STRING);
 
 		BuildHistoryReport testSuiteBuildHistoryReport =
 			BuildHistoryReport.newReleaseTestSuiteReport(
@@ -301,7 +300,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	}
 
 	private void _generateUpstreamReport(String filePath) throws IOException {
-		_copyArchivedBuildData();
+		_copyArchivedBuildData(_REPORT_DURATION_DAYS, _START_DATE_STRING);
 
 		BuildHistoryReport testSuiteBuildHistoryReport =
 			BuildHistoryReport.newUpstreamTestSuiteReport(
@@ -436,7 +435,6 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		_START_DATE_STRING = zonedDateTime.format(_dateTimeFormatter);
 	}
 
-	private boolean _archivedBuildDataCopied;
 	private Workspace _workspace;
 
 }

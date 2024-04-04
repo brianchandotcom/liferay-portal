@@ -69,18 +69,16 @@ function getValidFields({
 		}
 
 		if (propertyValue.$ref) {
-			if (Liferay.FeatureFlags['LPS-186871']) {
-				fields.push({
-					children: getValidFields({
-						contextPath: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_DELIMITER}`,
-						schemaName: propertyValue.$ref.replace(/^.*\//, ''),
-						schemas,
-					}),
-					label: propertyKey,
-					name: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_PARENT_SUFFIX}`,
-					type: type ? type : 'object',
-				});
-			}
+			fields.push({
+				children: getValidFields({
+					contextPath: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_DELIMITER}`,
+					schemaName: propertyValue.$ref.replace(/^.*\//, ''),
+					schemas,
+				}),
+				label: propertyKey,
+				name: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_PARENT_SUFFIX}`,
+				type: type ? type : 'object',
+			});
 
 			return;
 		}

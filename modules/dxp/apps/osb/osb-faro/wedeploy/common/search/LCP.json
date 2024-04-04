@@ -5,7 +5,7 @@
 	},
 	"environments": {
 		"infra": {
-	  		"deploy": false
+			"deploy": false
 		}
 	},
 	"id": "search",

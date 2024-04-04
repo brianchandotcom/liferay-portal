@@ -20,6 +20,7 @@ import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTabRegistry;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.ResourceRequest;
 
@@ -42,7 +43,10 @@ public class WorkflowDefinitionGroovyScriptUsesFactory
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 			workflowDefinition -> {
 				if (!WorkflowDefinitionGroovyScriptUseDetector.detect(
-						workflowDefinition.getContent(), _jsonFactory)) {
+						workflowDefinition.getContent(), _jsonFactory) ||
+					Objects.equals(
+						workflowDefinition.getName(),
+						"message-boards-user-stats-moderation")) {
 
 					return null;
 				}

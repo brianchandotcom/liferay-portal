@@ -20,6 +20,7 @@ import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowValidator;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -53,11 +54,21 @@ public class XMLWorkflowValidator implements WorkflowValidator {
 		String content = definition.getContent();
 
 		if (!_scriptManagementConfigurationHelper.
-				isAllowScriptContentToBeExecutedOrIncluded() &&
-			content.contains("<script-language>groovy</script-language>")) {
+				isAllowScriptContentToBeExecutedOrIncluded()) {
 
-			throw new KaleoDefinitionValidationException.
-				NotAllowedScriptLanguage("Groovy is not allowed");
+			if (content.contains("<script-language>groovy</script-language>")) {
+				throw new KaleoDefinitionValidationException.
+					NotAllowedScriptLanguage("Groovy is not allowed");
+			}
+			else if (content.contains(
+						"<script-language>java</script-language>") &&
+					 !Objects.equals(
+						 definition.getName(),
+						 "message-boards-user-stats-moderation")) {
+
+				throw new KaleoDefinitionValidationException.
+					NotAllowedScriptLanguage("Java is not allowed");
+			}
 		}
 
 		if (definition.getForksCount() != definition.getJoinsCount()) {

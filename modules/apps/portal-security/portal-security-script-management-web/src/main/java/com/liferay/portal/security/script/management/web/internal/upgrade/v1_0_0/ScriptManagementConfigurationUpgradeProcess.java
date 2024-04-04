@@ -46,8 +46,11 @@ public class ScriptManagementConfigurationUpgradeProcess
 	private boolean _hasGroovyScriptUses() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				SQLTransformer.transform(
-					"select KaleoDefinition.content from KaleoDefinition " +
-						"where KaleoDefinition.active_ = [$TRUE$]"));
+					StringBundler.concat(
+						"select KaleoDefinition.content from KaleoDefinition ",
+						"where KaleoDefinition.name != ",
+						"'message-boards-user-stats-moderation' and ",
+						"KaleoDefinition.active_ = [$TRUE$]")));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				SQLTransformer.transform(
 					StringBundler.concat(

@@ -92,16 +92,10 @@ public class SimpleCaptchaImpl implements Captcha {
 	public boolean isEnabled(HttpServletRequest httpServletRequest) {
 		HttpSession httpSession = _getHttpSession(httpServletRequest);
 
-		String key = _CAPTCHA_MAX_CHALLENGES;
-
-		String portletId = portal.getPortletId(httpServletRequest);
-
-		if (Validator.isNotNull(portletId)) {
-			key = portal.getPortletNamespace(portletId) + key;
-		}
-
 		int curMaxChallenges = GetterUtil.getInteger(
-			httpSession.getAttribute(key),
+			httpSession.getAttribute(
+				_getHttpSessionKey(
+					_CAPTCHA_MAX_CHALLENGES, httpServletRequest)),
 			_captchaConfiguration.maxChallenges());
 
 		if (curMaxChallenges == 0) {
@@ -194,15 +188,9 @@ public class SimpleCaptchaImpl implements Captcha {
 
 		HttpSession httpSession = _getHttpSession(httpServletRequest);
 
-		String key = _CAPTCHA_MAX_CHALLENGES;
-
-		String portletId = portal.getPortletId(httpServletRequest);
-
-		if (Validator.isNotNull(portletId)) {
-			key = portal.getPortletNamespace(portletId) + key;
-		}
-
-		httpSession.setAttribute(key, maxChallenges);
+		httpSession.setAttribute(
+			_getHttpSessionKey(_CAPTCHA_MAX_CHALLENGES, httpServletRequest),
+			maxChallenges);
 	}
 
 	@Override

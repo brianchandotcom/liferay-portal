@@ -126,6 +126,21 @@ public abstract class BaseEnvironmentEntity
 	}
 
 	@Override
+	public void setJSONObject(JSONObject jsonObject) {
+		super.setJSONObject(jsonObject);
+
+		_appServer = jsonObject.getString("appServer");
+		_batchName = jsonObject.getString("batchName");
+		_browser = jsonObject.getString("browser");
+		_database = jsonObject.getString("database");
+		_javaVersion = jsonObject.getString("operatingSystem");
+		_liferayBundle = LiferayBundle.get(jsonObject.get("liferayBundle"));
+		_liferayPortalBranch = LiferayPortalBranch.get(
+			jsonObject.get("liferayPortalBranch"));
+		_operatingSystem = jsonObject.getString("operatingSystem");
+	}
+
+	@Override
 	public void setLiferayBundle(LiferayBundle liferayBundle) {
 		_liferayBundle = liferayBundle;
 	}
@@ -149,16 +164,6 @@ public abstract class BaseEnvironmentEntity
 
 	protected BaseEnvironmentEntity(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_appServer = jsonObject.getString("appServer");
-		_batchName = jsonObject.getString("batchName");
-		_browser = jsonObject.getString("browser");
-		_database = jsonObject.getString("database");
-		_javaVersion = jsonObject.getString("operatingSystem");
-		_liferayBundle = LiferayBundle.get(jsonObject.get("liferayBundle"));
-		_liferayPortalBranch = LiferayPortalBranch.get(
-			jsonObject.get("liferayPortalBranch"));
-		_operatingSystem = jsonObject.getString("operatingSystem");
 	}
 
 	private String _appServer;

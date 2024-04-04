@@ -38,16 +38,23 @@ public abstract class BaseJobQueueOrderEntity
 		_jobIds = jobIds;
 	}
 
-	protected BaseJobQueueOrderEntity(JSONObject jsonObject) {
-		super(jsonObject);
+	@Override
+	public void setJSONObject(JSONObject jsonObject) {
+		super.setJSONObject(jsonObject);
 
 		String jobIds = jsonObject.getString("jobIds");
 
 		JSONArray jobIdsJSONArray = new JSONArray(jobIds);
 
+		_jobIds = new ArrayList<>();
+
 		for (int i = 0; i < jobIdsJSONArray.length(); i++) {
 			_jobIds.add(jobIdsJSONArray.getLong(i));
 		}
+	}
+
+	protected BaseJobQueueOrderEntity(JSONObject jsonObject) {
+		super(jsonObject);
 	}
 
 	private List<Long> _jobIds = new ArrayList<>();

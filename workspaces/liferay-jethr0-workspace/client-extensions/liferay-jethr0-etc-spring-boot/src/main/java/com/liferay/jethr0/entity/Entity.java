@@ -29,6 +29,8 @@ public interface Entity {
 
 	public void setId(long id);
 
+	public void setJSONObject(JSONObject jsonObject);
+
 	public void setModifiedDate(Date modifiedDate);
 
 }

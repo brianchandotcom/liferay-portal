@@ -208,6 +208,19 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 	}
 
 	@Override
+	public void setJSONObject(JSONObject jsonObject) {
+		super.setJSONObject(jsonObject);
+
+		_branchSHA = jsonObject.getString("branchSHA");
+		_branchURL = StringUtil.toURL(jsonObject.getString("branchURL"));
+		_rebased = jsonObject.getBoolean("rebased");
+		_type = Type.get(jsonObject.getJSONObject("type"));
+		_upstreamBranchSHA = jsonObject.getString("upstreamBranchSHA");
+		_upstreamBranchURL = StringUtil.toURL(
+			jsonObject.getString("upstreamBranchURL"));
+	}
+
+	@Override
 	public void setRebased(boolean rebased) {
 		_rebased = rebased;
 	}
@@ -228,14 +241,6 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 
 	protected BaseGitBranchEntity(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_branchSHA = jsonObject.getString("branchSHA");
-		_branchURL = StringUtil.toURL(jsonObject.getString("branchURL"));
-		_rebased = jsonObject.getBoolean("rebased");
-		_type = Type.get(jsonObject.getJSONObject("type"));
-		_upstreamBranchSHA = jsonObject.getString("upstreamBranchSHA");
-		_upstreamBranchURL = StringUtil.toURL(
-			jsonObject.getString("upstreamBranchURL"));
 	}
 
 	private String _getURLGroupValue(URL url, String groupName) {
@@ -262,7 +267,7 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 	private final Set<JobEntity> _jobEntities = new HashSet<>();
 	private final Map<String, Properties> _propertiesFiles = new HashMap<>();
 	private boolean _rebased;
-	private final Type _type;
+	private Type _type;
 	private String _upstreamBranchSHA;
 	private URL _upstreamBranchURL;
 

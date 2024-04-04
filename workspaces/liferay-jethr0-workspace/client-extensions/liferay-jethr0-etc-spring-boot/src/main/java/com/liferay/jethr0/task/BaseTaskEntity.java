@@ -123,14 +123,19 @@ public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 	}
 
 	@Override
+	public void setJSONObject(JSONObject jsonObject) {
+		super.setJSONObject(jsonObject);
+
+		_name = jsonObject.getString("name");
+	}
+
+	@Override
 	public void setName(String name) {
 		_name = name;
 	}
 
 	protected BaseTaskEntity(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_name = jsonObject.getString("name");
 	}
 
 	private BuildEntity _buildEntity;

@@ -105,6 +105,13 @@ public abstract class BaseEntity implements Entity {
 	}
 
 	@Override
+	public void setJSONObject(JSONObject jsonObject) {
+		_createdDate = _getDateFromJSON(jsonObject, "dateCreated");
+		_id = jsonObject.optLong("id");
+		_modifiedDate = _getDateFromJSON(jsonObject, "dateModified");
+	}
+
+	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
 	}
@@ -115,9 +122,7 @@ public abstract class BaseEntity implements Entity {
 	}
 
 	protected BaseEntity(JSONObject jsonObject) {
-		_createdDate = _getDateFromJSON(jsonObject, "dateCreated");
-		_id = jsonObject.optLong("id");
-		_modifiedDate = _getDateFromJSON(jsonObject, "dateModified");
+		setJSONObject(jsonObject);
 	}
 
 	protected void addRelatedEntities(Collection<? extends Entity> entities) {

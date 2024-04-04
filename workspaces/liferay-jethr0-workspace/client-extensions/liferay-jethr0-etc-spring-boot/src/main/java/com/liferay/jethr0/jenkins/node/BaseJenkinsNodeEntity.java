@@ -168,6 +168,21 @@ public class BaseJenkinsNodeEntity
 	}
 
 	@Override
+	public void setJSONObject(JSONObject jsonObject) {
+		super.setJSONObject(jsonObject);
+
+		_jenkinsServerId = jsonObject.optLong(
+			"r_jenkinsServerToJenkinsNodes_c_jenkinsServerId");
+		_goodBattery = jsonObject.getBoolean("goodBattery");
+		_primaryLabel = jsonObject.getString("primaryLabel");
+		_name = jsonObject.getString("name");
+		_nodeCount = jsonObject.getInt("nodeCount");
+		_nodeRAM = jsonObject.getInt("nodeRAM");
+		_type = Type.get(jsonObject.getJSONObject("type"));
+		_url = StringUtil.toURL(jsonObject.getString("url"));
+	}
+
+	@Override
 	public void setName(String name) {
 		_name = name;
 	}
@@ -205,16 +220,6 @@ public class BaseJenkinsNodeEntity
 
 	protected BaseJenkinsNodeEntity(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_jenkinsServerId = jsonObject.optLong(
-			"r_jenkinsServerToJenkinsNodes_c_jenkinsServerId");
-		_goodBattery = jsonObject.getBoolean("goodBattery");
-		_primaryLabel = jsonObject.getString("primaryLabel");
-		_name = jsonObject.getString("name");
-		_nodeCount = jsonObject.getInt("nodeCount");
-		_nodeRAM = jsonObject.getInt("nodeRAM");
-		_type = Type.get(jsonObject.getJSONObject("type"));
-		_url = StringUtil.toURL(jsonObject.getString("url"));
 	}
 
 	private JSONObject _getComputerJSONObject() {
@@ -299,7 +304,7 @@ public class BaseJenkinsNodeEntity
 	private int _nodeRAM;
 	private boolean _offline;
 	private String _primaryLabel;
-	private final Type _type;
+	private Type _type;
 	private URL _url;
 
 }

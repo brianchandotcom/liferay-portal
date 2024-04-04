@@ -278,6 +278,36 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	}
 
 	@Override
+	public void setJSONObject(JSONObject jsonObject) {
+		super.setJSONObject(jsonObject);
+
+		_name = jsonObject.getString("name");
+		_priority = jsonObject.optInt("priority");
+		_startDate = StringUtil.toDate(jsonObject.optString("startDate"));
+		_state = State.get(jsonObject.get("state"));
+		_type = Type.get(jsonObject.get("type"));
+
+		String parameters = jsonObject.getString("parameters");
+
+		if (StringUtil.isNullOrEmpty(parameters)) {
+			return;
+		}
+
+		try {
+			JSONObject parametersJSONObject = new JSONObject(parameters);
+
+			for (String key : parametersJSONObject.keySet()) {
+				_parameters.put(key, parametersJSONObject.getString(key));
+			}
+		}
+		catch (JSONException jsonException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(jsonException);
+			}
+		}
+	}
+
+	@Override
 	public void setName(String name) {
 		_name = name;
 	}
@@ -304,31 +334,6 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 
 	protected BaseJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_name = jsonObject.getString("name");
-		_priority = jsonObject.optInt("priority");
-		_startDate = StringUtil.toDate(jsonObject.optString("startDate"));
-		_state = State.get(jsonObject.get("state"));
-		_type = Type.get(jsonObject.get("type"));
-
-		String parameters = jsonObject.getString("parameters");
-
-		if (StringUtil.isNullOrEmpty(parameters)) {
-			return;
-		}
-
-		try {
-			JSONObject parametersJSONObject = new JSONObject(parameters);
-
-			for (String key : parametersJSONObject.keySet()) {
-				_parameters.put(key, parametersJSONObject.getString(key));
-			}
-		}
-		catch (JSONException jsonException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(jsonException);
-			}
-		}
 	}
 
 	protected String getBranchURLGroupValue(URL branchURL, String groupName) {
@@ -510,6 +515,6 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	private int _priority;
 	private Date _startDate;
 	private State _state;
-	private final Type _type;
+	private Type _type;
 
 }

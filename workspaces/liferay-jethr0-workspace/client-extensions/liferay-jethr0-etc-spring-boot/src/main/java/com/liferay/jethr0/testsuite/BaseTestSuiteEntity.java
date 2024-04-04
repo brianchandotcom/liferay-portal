@@ -59,14 +59,19 @@ public class BaseTestSuiteEntity extends BaseEntity implements TestSuiteEntity {
 	}
 
 	@Override
+	public void setJSONObject(JSONObject jsonObject) {
+		super.setJSONObject(jsonObject);
+
+		_name = jsonObject.getString("name");
+	}
+
+	@Override
 	public void setName(String name) {
 		_name = name;
 	}
 
 	protected BaseTestSuiteEntity(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_name = jsonObject.getString("name");
 	}
 
 	private final Set<JobEntity> _jobEntities = new HashSet<>();

@@ -54,6 +54,14 @@ public class BaseTaskRunEntity extends BaseEntity implements TaskRunEntity {
 	}
 
 	@Override
+	public void setJSONObject(JSONObject jsonObject) {
+		super.setJSONObject(jsonObject);
+
+		_duration = jsonObject.getLong("duration");
+		_result = Result.get(jsonObject.get("result"));
+	}
+
+	@Override
 	public void setResult(Result result) {
 		_result = result;
 	}
@@ -65,9 +73,6 @@ public class BaseTaskRunEntity extends BaseEntity implements TaskRunEntity {
 
 	protected BaseTaskRunEntity(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_duration = jsonObject.getLong("duration");
-		_result = Result.get(jsonObject.get("result"));
 	}
 
 	private long _duration;

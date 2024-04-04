@@ -312,12 +312,8 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
-	public void setState(State state) {
-		_state = state;
-	}
-
-	protected BaseBuildEntity(JSONObject jsonObject) {
-		super(jsonObject);
+	public void setJSONObject(JSONObject jsonObject) {
+		super.setJSONObject(jsonObject);
 
 		_initialBuild = jsonObject.optBoolean("initialBuild");
 		_jenkinsJobName = jsonObject.getString("jenkinsJobName");
@@ -325,14 +321,16 @@ public abstract class BaseBuildEntity
 		_name = jsonObject.getString("name");
 		_state = State.get(jsonObject.get("state"));
 
-		String paramaters = jsonObject.getString("parameters");
+		String parameters = jsonObject.getString("parameters");
 
-		if (StringUtil.isNullOrEmpty(paramaters)) {
+		if (StringUtil.isNullOrEmpty(parameters)) {
 			return;
 		}
 
+		_parameters = new HashMap<>();
+
 		try {
-			JSONArray parametersJSONArray = new JSONArray(paramaters);
+			JSONArray parametersJSONArray = new JSONArray(parameters);
 
 			for (int i = 0; i < parametersJSONArray.length(); i++) {
 				JSONObject parameterJSONObject =
@@ -348,6 +346,15 @@ public abstract class BaseBuildEntity
 				_log.warn(jsonException);
 			}
 		}
+	}
+
+	@Override
+	public void setState(State state) {
+		_state = state;
+	}
+
+	protected BaseBuildEntity(JSONObject jsonObject) {
+		super(jsonObject);
 	}
 
 	private Set<BuildEntity> _getAllChildBuildEntities() {
@@ -414,12 +421,12 @@ public abstract class BaseBuildEntity
 	private static final Log _log = LogFactory.getLog(BaseBuildEntity.class);
 
 	private final Set<BuildEntity> _childBuildEntities = new HashSet<>();
-	private final boolean _initialBuild;
+	private boolean _initialBuild;
 	private String _jenkinsJobName;
 	private JobEntity _jobEntity;
 	private long _jobEntityId;
-	private final String _name;
-	private final Map<String, String> _parameters = new HashMap<>();
+	private String _name;
+	private Map<String, String> _parameters;
 	private final Set<BuildEntity> _parentBuildEntities = new HashSet<>();
 	private State _state;
 

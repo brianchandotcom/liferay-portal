@@ -66,14 +66,19 @@ public abstract class BaseJobPrioritizerEntity
 	}
 
 	@Override
+	public void setJSONObject(JSONObject jsonObject) {
+		super.setJSONObject(jsonObject);
+
+		_name = jsonObject.getString("name");
+	}
+
+	@Override
 	public void setName(String name) {
 		_name = name;
 	}
 
 	protected BaseJobPrioritizerEntity(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_name = jsonObject.getString("name");
 	}
 
 	private String _name;

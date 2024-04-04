@@ -153,6 +153,18 @@ public abstract class BaseJenkinsServerEntity
 	}
 
 	@Override
+	public void setJSONObject(JSONObject jsonObject) {
+		super.setJSONObject(jsonObject);
+
+		_jenkinsCohortEntityId = jsonObject.optLong(
+			"r_jenkinsCohortToJenkinsServers_c_jenkinsCohortId");
+		_jenkinsUserName = jsonObject.getString("jenkinsUserName");
+		_jenkinsUserPassword = jsonObject.getString("jenkinsUserPassword");
+		_name = jsonObject.optString("name");
+		_url = StringUtil.toURL(jsonObject.getString("url"));
+	}
+
+	@Override
 	public void setName(String name) {
 		_name = name;
 	}
@@ -190,13 +202,6 @@ public abstract class BaseJenkinsServerEntity
 
 	protected BaseJenkinsServerEntity(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_jenkinsCohortEntityId = jsonObject.optLong(
-			"r_jenkinsCohortToJenkinsServers_c_jenkinsCohortId");
-		_jenkinsUserName = jsonObject.getString("jenkinsUserName");
-		_jenkinsUserPassword = jsonObject.getString("jenkinsUserPassword");
-		_name = jsonObject.optString("name");
-		_url = StringUtil.toURL(jsonObject.getString("url"));
 	}
 
 	private JenkinsCohortEntity _jenkinsCohortEntity;

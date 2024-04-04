@@ -92,14 +92,19 @@ public abstract class BaseJenkinsCohortEntity
 	}
 
 	@Override
+	public void setJSONObject(JSONObject jsonObject) {
+		super.setJSONObject(jsonObject);
+
+		_name = jsonObject.getString("name");
+	}
+
+	@Override
 	public void setName(String name) {
 		_name = name;
 	}
 
 	protected BaseJenkinsCohortEntity(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_name = jsonObject.optString("name");
 	}
 
 	private String _name;

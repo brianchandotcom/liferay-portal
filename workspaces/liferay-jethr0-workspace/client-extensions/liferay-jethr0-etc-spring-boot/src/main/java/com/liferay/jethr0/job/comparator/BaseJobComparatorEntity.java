@@ -79,6 +79,17 @@ public abstract class BaseJobComparatorEntity
 	}
 
 	@Override
+	public void setJSONObject(JSONObject jsonObject) {
+		super.setJSONObject(jsonObject);
+
+		_position = jsonObject.getInt("position");
+		_jobPrioritizerEntityId = jsonObject.optLong(
+			"r_jobPrioritizerToJobComparators_c_jobPrioritizerId");
+		_type = Type.get(jsonObject.getJSONObject("type"));
+		_value = jsonObject.optString("value");
+	}
+
+	@Override
 	public void setPosition(int position) {
 		_position = position;
 	}
@@ -94,26 +105,16 @@ public abstract class BaseJobComparatorEntity
 		super(jsonObject);
 
 		setJobPrioritizerEntity(jobPrioritizerEntity);
-
-		_position = jsonObject.getInt("position");
-		_type = Type.get(jsonObject.getJSONObject("type"));
-		_value = jsonObject.optString("value");
 	}
 
 	protected BaseJobComparatorEntity(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_position = jsonObject.getInt("position");
-		_jobPrioritizerEntityId = jsonObject.optLong(
-			"r_jobPrioritizerToJobComparators_c_jobPrioritizerId");
-		_type = Type.get(jsonObject.getJSONObject("type"));
-		_value = jsonObject.optString("value");
 	}
 
 	private JobPrioritizerEntity _jobPrioritizerEntity;
 	private long _jobPrioritizerEntityId;
 	private int _position;
-	private final Type _type;
+	private Type _type;
 	private String _value;
 
 }

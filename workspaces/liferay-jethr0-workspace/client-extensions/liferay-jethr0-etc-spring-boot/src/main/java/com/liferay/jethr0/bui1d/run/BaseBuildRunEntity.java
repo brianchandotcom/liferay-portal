@@ -167,17 +167,8 @@ public abstract class BaseBuildRunEntity
 	}
 
 	@Override
-	public void setResult(Result result) {
-		_result = result;
-	}
-
-	@Override
-	public void setState(State state) {
-		_state = state;
-	}
-
-	protected BaseBuildRunEntity(JSONObject jsonObject) {
-		super(jsonObject);
+	public void setJSONObject(JSONObject jsonObject) {
+		super.setJSONObject(jsonObject);
 
 		_buildEntityId = jsonObject.optLong("r_buildToBuildRuns_c_buildId");
 
@@ -192,6 +183,20 @@ public abstract class BaseBuildRunEntity
 
 		_result = Result.get(jsonObject.opt("result"));
 		_state = State.get(jsonObject.get("state"));
+	}
+
+	@Override
+	public void setResult(Result result) {
+		_result = result;
+	}
+
+	@Override
+	public void setState(State state) {
+		_state = state;
+	}
+
+	protected BaseBuildRunEntity(JSONObject jsonObject) {
+		super(jsonObject);
 	}
 
 	private static final long _MAX_DURATION_IN_QUEUE = 1000 * 60 * 2;

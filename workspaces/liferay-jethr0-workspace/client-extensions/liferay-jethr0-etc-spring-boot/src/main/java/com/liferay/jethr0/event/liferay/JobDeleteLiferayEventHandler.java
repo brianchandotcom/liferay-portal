@@ -5,7 +5,6 @@
 
 package com.liferay.jethr0.event.liferay;
 
-import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.queue.JobQueue;

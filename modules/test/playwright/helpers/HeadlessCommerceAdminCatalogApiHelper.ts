@@ -118,6 +118,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
+	async getCatalogsPage(search: string) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/catalogs?search=${search}`
+		);
+	}
+
 	async getOptionCategory(optionCategoryId: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/optionCategories/${optionCategoryId}`
@@ -127,6 +133,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 	async getProduct(productId: number) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}?nestedFields=skus`
+		);
+	}
+
+	async getProductsPage(pageSize: number, search: string) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/products?pageSize=${pageSize}&search=${search}`
 		);
 	}
 

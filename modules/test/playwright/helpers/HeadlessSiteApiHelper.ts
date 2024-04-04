@@ -5,6 +5,13 @@
 
 import {ApiHelpers} from './ApiHelpers';
 
+type TSite = {
+	id?: number;
+	name: string;
+	templateKey?: string;
+	templateType?: string;
+};
+
 export class HeadlessSiteApiHelper {
 	apiHelpers: ApiHelpers;
 	basePath: string;
@@ -14,10 +21,10 @@ export class HeadlessSiteApiHelper {
 		this.basePath = 'headless-site/v1.0';
 	}
 
-	async createSite(name: string): Promise<Site> {
+	async createSite(site: TSite): Promise<Site> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites`,
-			{name}
+			site
 		);
 	}
 

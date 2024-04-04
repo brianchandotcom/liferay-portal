@@ -7,6 +7,7 @@
 
 import {test} from '@playwright/test';
 
+import {CheckoutPage} from '../pages/commerce/commerce-checkout-web/checkoutPage';
 import {PendingOrdersPage} from '../pages/commerce/commerce-order-content-web/pendingOrdersPage';
 import {SpecificationFacetsPage} from '../pages/commerce/commerce-product-content-search-web/specificationFacetsPage';
 import {AttachmentsPage} from '../pages/commerce/commerce-product-definitions-web/attachmentsPage';
@@ -25,6 +26,7 @@ import {CommercePaymentsPage} from '../pages/commerce/commercePaymentsPage';
 
 const commercePagesTest = test.extend<{
 	attachmentsPage: AttachmentsPage;
+	checkoutPage: CheckoutPage;
 	commerceAdminChannelDetailsCountriesPage: CommerceAdminChannelDetailsCountriesPage;
 	commerceAdminChannelDetailsPage: CommerceAdminChannelDetailsPage;
 	commerceAdminChannelsPage: CommerceAdminChannelsPage;
@@ -42,6 +44,9 @@ const commercePagesTest = test.extend<{
 }>({
 	attachmentsPage: async ({page}, use) => {
 		await use(new AttachmentsPage(page));
+	},
+	checkoutPage: async ({page}, use) => {
+		await use(new CheckoutPage(page));
 	},
 	commerceAdminChannelDetailsCountriesPage: async ({page}, use) => {
 		await use(new CommerceAdminChannelDetailsCountriesPage(page));

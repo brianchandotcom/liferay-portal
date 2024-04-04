@@ -35,6 +35,12 @@ export class HeadlessCommerceAdminChannelApiHelper {
 		);
 	}
 
+	async getChannelsPage(search: string) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/channels?search=${search}`
+		);
+	}
+
 	async postChannel(channel: TChannel): Promise<TChannel> {
 		channel = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/channels`,

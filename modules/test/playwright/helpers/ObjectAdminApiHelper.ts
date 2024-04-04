@@ -6,6 +6,20 @@
 import {getRandomInt} from '../utils/getRandomInt';
 import {ApiHelpers} from './ApiHelpers';
 
+type TObjectAction = {
+	active?: boolean;
+	id?: number;
+	label: {
+		[key: string]: string;
+	};
+	name: string;
+	objectActionExecutorKey: string;
+	objectActionTriggerKey: string;
+	parameters: {
+		[key: string]: number;
+	};
+};
+
 export class ObjectAdminApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -13,6 +27,12 @@ export class ObjectAdminApiHelper {
 	constructor(apiHelpers: ApiHelpers) {
 		this.apiHelpers = apiHelpers;
 		this.basePath = 'object-admin/v1.0';
+	}
+
+	async deleteObjectAction(objectActionId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/object-actions/${objectActionId}`
+		);
 	}
 
 	async deleteObjectDefinition(objectDefinitionId: number) {
@@ -37,6 +57,16 @@ export class ObjectAdminApiHelper {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions`,
 			data
+		);
+	}
+
+	async postObjectDefinitionByExternalRefernceCodeObjectAction(
+		externalReferenceCode: string,
+		objectAction?: TObjectAction
+	): Promise<TObjectAction> {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${externalReferenceCode}/object-actions`,
+			objectAction
 		);
 	}
 

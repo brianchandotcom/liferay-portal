@@ -169,6 +169,25 @@ gradleTest {
 
 	exclude "**/*_base*"
 
+	fileTree("common_test_scripts") {
+		if (!isEmpty()) {
+			println "Including common scripts as project properties:"
+		}
+
+		files.each {
+			String propertyName = "commonScript.${it.name}"
+
+			gradleArguments "--project-prop", "${propertyName}=${it}"
+
+			println ""
+			println "Script path: ${it}"
+			println "Property name: ${propertyName}"
+			println "Usage: 'apply from: project.property(\"${propertyName}\")'"
+		}
+
+		include "*.gradle"
+	}
+
 	gradleArguments "--project-prop", "app.server.parent.dir=" + FileUtil.getAbsolutePath(copyBundle.destinationDir)
 	gradleArguments "--project-prop", "pluginClasspathDir=${uri(gradleTestDependenciesDir)}"
 	gradleArguments "--system-prop", "org.gradle.jvmargs=-Xmx8g"

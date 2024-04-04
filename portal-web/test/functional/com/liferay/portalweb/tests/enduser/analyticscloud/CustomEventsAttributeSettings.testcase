@@ -105,7 +105,7 @@ definition {
 
 			ACSettings.goToEventAttributes();
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Edit the new attribute") {
@@ -121,7 +121,7 @@ definition {
 		task ("Back to Event Attributes and Navigation to attributes tab") {
 			ACNavigation.backNavigation(pageName = "Event Attributes");
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Check if the description has been changed") {
@@ -141,7 +141,7 @@ definition {
 		task ("Back to Event Attributes and Navigation to attributes tab") {
 			ACNavigation.backNavigation(pageName = "Event Attributes");
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Check if the description is deleted") {
@@ -179,7 +179,7 @@ definition {
 
 			ACSettings.goToEventAttributes();
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Edit the new attribute") {
@@ -225,7 +225,7 @@ definition {
 
 			ACSettings.goToEventAttributes();
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Select an attribute") {
@@ -243,7 +243,7 @@ definition {
 		task ("Back to Event Attributes and Navigation to attributes tab") {
 			ACNavigation.backNavigation(pageName = "Event Attributes");
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Select an attribute") {
@@ -261,7 +261,7 @@ definition {
 		task ("Back to Event Attributes and Navigation to attributes tab") {
 			ACNavigation.backNavigation(pageName = "Event Attributes");
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Select an attribute") {
@@ -279,7 +279,7 @@ definition {
 		task ("Back to Event Attributes and Navigation to attributes tab") {
 			ACNavigation.backNavigation(pageName = "Event Attributes");
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Select an attribute") {
@@ -297,7 +297,7 @@ definition {
 		task ("Back to Event Attributes and Navigation to attributes tab") {
 			ACNavigation.backNavigation(pageName = "Event Attributes");
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Select an attribute") {
@@ -346,7 +346,7 @@ definition {
 
 			ACSettings.goToEventAttributes();
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Edit the new attribute") {
@@ -364,7 +364,7 @@ definition {
 		task ("Back to Event Attributes and Navigation to attributes tab") {
 			ACNavigation.backNavigation(pageName = "Event Attributes");
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Check if the display name has been changed") {
@@ -411,7 +411,7 @@ definition {
 
 			ACSettings.goToEventAttributes();
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Edit the new attribute") {
@@ -427,7 +427,7 @@ definition {
 		task ("Back to Event Attributes and Navigation to attributes tab") {
 			ACNavigation.backNavigation(pageName = "Event Attributes");
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Edit the new attribute") {
@@ -483,7 +483,7 @@ definition {
 
 			ACSettings.goToEventAttributes();
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Search for the name of the attributes and verify that it was found") {
@@ -534,7 +534,7 @@ definition {
 
 			ACSettings.goToEventAttributes();
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Edit the new attribute") {
@@ -550,7 +550,7 @@ definition {
 		task ("Back to Event Attributes and Navigation to attributes tab") {
 			ACNavigation.backNavigation(pageName = "Event Attributes");
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Check if the type has been changed") {
@@ -590,7 +590,7 @@ definition {
 
 			ACSettings.goToEventAttributes();
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Edit the new attribute") {
@@ -606,7 +606,7 @@ definition {
 		task ("Back to Event Attributes and Navigation to attributes tab") {
 			ACNavigation.backNavigation(pageName = "Event Attributes");
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		task ("Check if the description has been changed") {

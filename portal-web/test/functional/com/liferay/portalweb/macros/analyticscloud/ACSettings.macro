@@ -834,6 +834,11 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro goToAttributes() {
+		ACSettings.goToDefinitionsOptions(definitionsOptions = "local");
+	}
+
+	@summary = "Default summary"
 	macro goToBehaviors() {
 		ACSettings.goToDefinitionsOptions(definitionsOptions = "behaviors");
 	}
@@ -868,6 +873,11 @@ definition {
 	@summary = "Default summary"
 	macro goToEvents() {
 		ACSettings.goToDefinitionsOptions(definitionsOptions = "events");
+	}
+
+	@summary = "Default summary"
+	macro goToGlobalAttributes() {
+		ACSettings.goToDefinitionsOptions(definitionsOptions = "global");
 	}
 
 	@summary = "Default summary"

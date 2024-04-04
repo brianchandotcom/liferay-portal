@@ -105,7 +105,7 @@ definition {
 
 			ACSettings.goToEventAttributes();
 
-			ACNavigation.openItem(itemName = "Global Attributes");
+			ACSettings.goToGlobalAttributes();
 
 			ACNavigation.viewActiveSwitchTab(tabName = "Global Attributes");
 		}
@@ -146,7 +146,7 @@ definition {
 
 			ACSettings.goToEventAttributes();
 
-			ACNavigation.openItem(itemName = "Global Attributes");
+			ACSettings.goToGlobalAttributes();
 		}
 
 		task ("Select a global attribute") {
@@ -196,7 +196,7 @@ definition {
 
 			ACSettings.goToEventAttributes();
 
-			ACNavigation.openItem(itemName = "Global Attributes");
+			ACSettings.goToGlobalAttributes();
 		}
 
 		task ("Edit the global attribute") {
@@ -212,7 +212,7 @@ definition {
 		task ("Back to Event Attributes and Navigation to global attributes tab") {
 			ACNavigation.backNavigation(pageName = "Event Attributes");
 
-			ACNavigation.openItem(itemName = "Global Attributes");
+			ACSettings.goToGlobalAttributes();
 		}
 
 		task ("Check if the description has been changed") {
@@ -250,7 +250,7 @@ definition {
 
 			ACSettings.goToEventAttributes();
 
-			ACNavigation.openItem(itemName = "Global Attributes");
+			ACSettings.goToGlobalAttributes();
 		}
 
 		task ("Edit the global attribute") {
@@ -266,7 +266,7 @@ definition {
 		task ("Back to Event Attributes and Navigation to global attributes tab") {
 			ACNavigation.backNavigation(pageName = "Event Attributes");
 
-			ACNavigation.openItem(itemName = "Global Attributes");
+			ACSettings.goToGlobalAttributes();
 		}
 
 		task ("Check if the display name has been changed") {
@@ -306,7 +306,7 @@ definition {
 
 			ACSettings.goToEventAttributes();
 
-			ACNavigation.openItem(itemName = "Global Attributes");
+			ACSettings.goToGlobalAttributes();
 		}
 
 		task ("Edit the global attribute") {
@@ -322,7 +322,7 @@ definition {
 		task ("Back to Event Attributes and Navigation to global attributes tab") {
 			ACNavigation.backNavigation(pageName = "Event Attributes");
 
-			ACNavigation.openItem(itemName = "Global Attributes");
+			ACSettings.goToGlobalAttributes();
 		}
 
 		task ("Edit the global attribute") {
@@ -379,7 +379,7 @@ definition {
 
 			ACSettings.goToEventAttributes();
 
-			ACNavigation.openItem(itemName = "Global Attributes");
+			ACSettings.goToGlobalAttributes();
 		}
 
 		task ("Search for the name of the global attributes and verify that it was found") {

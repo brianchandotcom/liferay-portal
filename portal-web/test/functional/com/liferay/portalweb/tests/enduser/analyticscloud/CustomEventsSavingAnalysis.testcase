@@ -196,7 +196,7 @@ definition {
 
 			ACSettings.goToEventAttributes();
 
-			ACNavigation.openItem(itemName = "Attributes");
+			ACSettings.goToAttributes();
 		}
 
 		while (${i} != ${size}) {
@@ -218,7 +218,7 @@ definition {
 			task ("Back to Event Attributes and Navigation to attributes tab") {
 				ACNavigation.backNavigation(pageName = "Event Attributes");
 
-				ACNavigation.openItem(itemName = "Attributes");
+				ACSettings.goToAttributes();
 			}
 
 			task ("Check if the type has been changed") {

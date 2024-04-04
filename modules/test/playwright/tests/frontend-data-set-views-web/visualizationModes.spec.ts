@@ -19,7 +19,6 @@ export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
 		'LPS-164563': true,
-		'LPS-186871': true,
 	}),
 	visualizationModesPageTest,
 	loginTest(),

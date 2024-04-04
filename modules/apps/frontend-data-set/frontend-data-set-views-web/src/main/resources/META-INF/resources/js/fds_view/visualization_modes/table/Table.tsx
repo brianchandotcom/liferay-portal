@@ -9,24 +9,19 @@ import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {ClayResultsBar} from '@clayui/management-toolbar';
 import ClayModal from '@clayui/modal';
 import {
 	FDS_INTERNAL_CELL_RENDERERS,
 	IClientExtensionRenderer,
 	IInternalRenderer,
 } from '@liferay/frontend-data-set-web';
-import {InputLocalized, ManagementToolbar} from 'frontend-js-components-web';
-import {fetch, openModal, sub} from 'frontend-js-web';
+import {InputLocalized} from 'frontend-js-components-web';
+import {fetch, openModal} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
 import {IFDSViewSectionProps} from '../../../FDSView';
-import {FDSViewType} from '../../../FDSViews';
-import {getFields} from '../../../api';
-import AutoSearch from '../../../components/AutoSearch';
 import OrderableTable from '../../../components/OrderableTable';
-import SearchResultsMessage from '../../../components/SearchResultsMessage';
 import {
 	API_URL,
 	FUZZY_OPTIONS,
@@ -40,25 +35,10 @@ import '../../../../css/TableVisualizationMode.scss';
 import ClayAlert from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 
-import {EFieldType, IFDSField, IField} from '../../../utils/types';
+import {EFieldType, IFDSField} from '../../../utils/types';
 import AddFieldsModalContent from './modal_content/AddFieldsModalContent';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-
-interface ISaveFDSFieldsModalContentProps {
-	closeModal: Function;
-	fdsFields: Array<IFDSField>;
-	fdsView: FDSViewType;
-	namespace: string;
-	onSave: ({
-		createdFDSFields,
-		deletedFDSFieldsIds,
-	}: {
-		createdFDSFields: Array<IFDSField>;
-		deletedFDSFieldsIds: Array<number>;
-	}) => void;
-	saveFDSFieldsURL: string;
-}
 
 const getRendererLabel = ({
 	cetRenderers = [],
@@ -125,298 +105,6 @@ const RendererLabelCellRendererComponent = ({
 		</span>
 	);
 };
-
-const SaveFDSFieldsModalContent = ({
-	closeModal,
-	fdsFields,
-	fdsView,
-	namespace,
-	onSave,
-	saveFDSFieldsURL,
-}: ISaveFDSFieldsModalContentProps) => {
-	const [fields, setFields] = useState<Array<IField> | null>(null);
-	const [query, setQuery] = useState('');
-	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(
-		false
-	);
-
-	const onSearch = (query: string) => {
-		setQuery(query);
-
-		if (!fields) {
-			return;
-		}
-
-		const regexp = new RegExp(query, 'i');
-
-		setFields(
-			fields.map((field) => ({
-				...field,
-				visible: Boolean(field.name.match(regexp)),
-			}))
-		);
-	};
-
-	const saveFDSFields = async () => {
-		setSaveButtonDisabled(true);
-
-		const creationData: Array<{
-			name: string;
-			type: string;
-		}> = [];
-		const deletionIds: Array<number> = [];
-
-		fields?.forEach((field) => {
-			if (field.selected && !field.id) {
-				creationData.push({
-					name: field.name,
-					type: field.type || EFieldType.STRING,
-				});
-			}
-
-			if (!field.selected && field.id) {
-				deletionIds.push(Number(field.id));
-			}
-		});
-
-		const formData = new FormData();
-
-		formData.append(
-			`${namespace}creationData`,
-			JSON.stringify(creationData)
-		);
-
-		deletionIds.forEach((id) => {
-			formData.append(`${namespace}deletionIds`, String(id));
-		});
-
-		formData.append(`${namespace}fdsViewId`, fdsView.id);
-
-		const response = await fetch(saveFDSFieldsURL, {
-			body: formData,
-			method: 'POST',
-		});
-
-		if (!response.ok) {
-			openDefaultFailureToast();
-
-			setSaveButtonDisabled(false);
-
-			return;
-		}
-
-		const createdFDSFields: Array<IFDSField> = await response.json();
-
-		closeModal();
-
-		openDefaultSuccessToast();
-
-		onSave({
-			createdFDSFields: createdFDSFields.map((fdsField) => ({
-				...fdsField,
-				id: Number(fdsField.id),
-			})),
-			deletedFDSFieldsIds: deletionIds,
-		});
-	};
-
-	useEffect(() => {
-		getFields(fdsView).then((newFields) => {
-			if (!newFields) {
-				return;
-			}
-
-			setFields(
-				newFields.map((field) => {
-					const fdsField = fdsFields.find(
-						(fdsField) => fdsField.name === field.name
-					);
-
-					return {
-						id: fdsField ? String(fdsField.id) : undefined,
-						name: field.name,
-						selected: Boolean(fdsField),
-						type: field.type,
-						visible: true,
-					};
-				})
-			);
-		});
-	}, [fdsFields, fdsView]);
-
-	const getSelectedFieldsCount = () => {
-		if (!fields) {
-			return 0;
-		}
-
-		const selectedFields = fields.filter((field) => field.selected);
-
-		return selectedFields?.length || 0;
-	};
-
-	const isSelectAllChecked = () => {
-		if (!fields) {
-			return false;
-		}
-
-		return getSelectedFieldsCount() === fields.length;
-	};
-
-	const isSelectAllIndeterminate = () => {
-		if (!fields) {
-			return false;
-		}
-
-		const selectedFieldsCount =
-			fields.filter((field) => field.selected)?.length || 0;
-
-		return selectedFieldsCount > 0 && selectedFieldsCount < fields.length;
-	};
-
-	const visibleFields = fields?.filter((field) => field.visible) ?? [];
-
-	const selectedFieldsCount = getSelectedFieldsCount();
-
-	return (
-		<>
-			<ClayModal.Header>
-				{Liferay.Language.get('add-fields')}
-			</ClayModal.Header>
-
-			<ClayModal.Body>
-				{fields === null ? (
-					<ClayLoadingIndicator />
-				) : (
-					<>
-						<ManagementToolbar.Container>
-							<ManagementToolbar.ItemList expand>
-								<ManagementToolbar.Item className="pr-2">
-									<ClayCheckbox
-										checked={isSelectAllChecked()}
-										indeterminate={isSelectAllIndeterminate()}
-										onChange={({target: {checked}}) =>
-											setFields(
-												fields.map((field) => ({
-													...field,
-													selected: checked,
-												}))
-											)
-										}
-									/>
-								</ManagementToolbar.Item>
-
-								<ManagementToolbar.Item className="nav-item-expand">
-									<SearchResultsMessage
-										numberOfResults={visibleFields.length}
-									/>
-
-									<AutoSearch
-										onSearch={onSearch}
-										query={query}
-									/>
-								</ManagementToolbar.Item>
-							</ManagementToolbar.ItemList>
-						</ManagementToolbar.Container>
-
-						{selectedFieldsCount > 0 && (
-							<ClayResultsBar>
-								<ClayResultsBar.Item expand>
-									<span className="component-text text-truncate-inline">
-										<span className="text-truncate">
-											{selectedFieldsCount > 1
-												? sub(
-														Liferay.Language.get(
-															'x-items-selected'
-														),
-														selectedFieldsCount
-												  )
-												: sub(
-														Liferay.Language.get(
-															'x-item-selected'
-														),
-														selectedFieldsCount
-												  )}
-										</span>
-									</span>
-								</ClayResultsBar.Item>
-
-								<ClayResultsBar.Item>
-									<ClayButton
-										className="component-link tbar-link"
-										displayType="unstyled"
-										onClick={() =>
-											setFields(
-												fields.map((field) => ({
-													...field,
-													selected: false,
-												}))
-											)
-										}
-									>
-										{Liferay.Language.get('deselect-all')}
-									</ClayButton>
-								</ClayResultsBar.Item>
-							</ClayResultsBar>
-						)}
-
-						<div className="bg-light fields mt-3 pb-2 pt-2 py-2">
-							{visibleFields.length ? (
-								visibleFields.map(({name, selected}) => (
-									<div
-										className="pb-2 pl-3 pr-3 pt-2"
-										key={name}
-									>
-										<ClayCheckbox
-											checked={selected ?? false}
-											label={name}
-											onChange={({target: {checked}}) => {
-												setFields(
-													fields.map((field) =>
-														field.name === name
-															? {
-																	...field,
-																	selected: checked,
-															  }
-															: field
-													)
-												);
-											}}
-										/>
-									</div>
-								))
-							) : (
-								<div className="pb-2 pl-3 pr-3 pt-2 text-3">
-									{Liferay.Language.get('no-results-found')}
-								</div>
-							)}
-						</div>
-					</>
-				)}
-			</ClayModal.Body>
-
-			<ClayModal.Footer
-				last={
-					<ClayButton.Group spaced>
-						<ClayButton
-							disabled={saveButtonDisabled}
-							onClick={() => saveFDSFields()}
-						>
-							{Liferay.Language.get('save')}
-						</ClayButton>
-
-						<ClayButton
-							displayType="secondary"
-							onClick={() => closeModal()}
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-					</ClayButton.Group>
-				}
-			/>
-		</>
-	);
-};
-
 interface IEditFDSFieldModalContentProps {
 	closeModal: Function;
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
@@ -844,80 +532,39 @@ function Table({
 	}, []);
 
 	const onCreationButtonClick = () => {
-		if (Liferay.FeatureFlags['LPS-186871']) {
-			openModal({
-				contentComponent: ({closeModal}: {closeModal: Function}) => (
-					<AddFieldsModalContent
-						closeModal={closeModal}
-						fdsView={fdsView}
-						namespace={namespace}
-						onSave={({
-							createdFDSFields,
-							deletedFDSFieldsIds,
-						}: {
-							createdFDSFields: Array<IFDSField>;
-							deletedFDSFieldsIds: Array<number>;
-						}) => {
-							const newFDSFields: Array<IFDSField> = [];
+		openModal({
+			contentComponent: ({closeModal}: {closeModal: Function}) => (
+				<AddFieldsModalContent
+					closeModal={closeModal}
+					fdsView={fdsView}
+					namespace={namespace}
+					onSave={({
+						createdFDSFields,
+						deletedFDSFieldsIds,
+					}: {
+						createdFDSFields: Array<IFDSField>;
+						deletedFDSFieldsIds: Array<number>;
+					}) => {
+						const newFDSFields: Array<IFDSField> = [];
 
-							fdsFields?.forEach((fdsField) => {
-								if (
-									!deletedFDSFieldsIds.includes(fdsField.id)
-								) {
-									newFDSFields.push(fdsField);
-								}
-							});
-
-							createdFDSFields.forEach((fdsField) => {
+						fdsFields?.forEach((fdsField) => {
+							if (!deletedFDSFieldsIds.includes(fdsField.id)) {
 								newFDSFields.push(fdsField);
-							});
+							}
+						});
 
-							setFDSFields(newFDSFields);
-						}}
-						saveFDSFieldsURL={saveFDSFieldsURL}
-						savedFDSFields={fdsFields || []}
-					/>
-				),
-				size: 'full-screen',
-			});
-		}
-		else {
-			openModal({
-				className: 'overflow-auto',
-				contentComponent: ({closeModal}: {closeModal: Function}) => (
-					<SaveFDSFieldsModalContent
-						closeModal={closeModal}
-						fdsFields={fdsFields || []}
-						fdsView={fdsView}
-						namespace={namespace}
-						onSave={({
-							createdFDSFields,
-							deletedFDSFieldsIds,
-						}: {
-							createdFDSFields: Array<IFDSField>;
-							deletedFDSFieldsIds: Array<number>;
-						}) => {
-							const newFDSFields: Array<IFDSField> = [];
+						createdFDSFields.forEach((fdsField) => {
+							newFDSFields.push(fdsField);
+						});
 
-							fdsFields?.forEach((fdsField) => {
-								if (
-									!deletedFDSFieldsIds.includes(fdsField.id)
-								) {
-									newFDSFields.push(fdsField);
-								}
-							});
-
-							createdFDSFields.forEach((fdsField) => {
-								newFDSFields.push(fdsField);
-							});
-
-							setFDSFields(newFDSFields);
-						}}
-						saveFDSFieldsURL={saveFDSFieldsURL}
-					/>
-				),
-			});
-		}
+						setFDSFields(newFDSFields);
+					}}
+					saveFDSFieldsURL={saveFDSFieldsURL}
+					savedFDSFields={fdsFields || []}
+				/>
+			),
+			size: 'full-screen',
+		});
 	};
 
 	const onEditFDSField = ({editedFDSField}: {editedFDSField: IFDSField}) => {

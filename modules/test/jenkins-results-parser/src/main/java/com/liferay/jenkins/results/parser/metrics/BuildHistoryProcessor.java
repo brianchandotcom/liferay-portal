@@ -11,6 +11,10 @@ import com.liferay.jenkins.results.parser.ParallelExecutor;
 import java.io.File;
 import java.io.IOException;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -151,6 +155,27 @@ public class BuildHistoryProcessor {
 
 		return _getBuildHistories(
 			duration, null, jobNamePattern, biConsumer, startTime);
+	}
+
+	public static Collection<BuildHistory> newUtilizationJobHistories(
+		long duration, long startTime) {
+
+		BiConsumer<Set<BuildJSONObject>, Map<String, BuildHistory>> biConsumer =
+			new BiConsumer<Set<BuildJSONObject>, Map<String, BuildHistory>>() {
+
+				@Override
+				public void accept(
+					Set<BuildJSONObject> buildJSONObjects,
+					Map<String, BuildHistory> buildHistories) {
+
+					_addToBuildHistoriesMap(
+						buildJSONObjects, buildHistories, duration,
+						new GroupByWeeklyUtilization(), startTime);
+				}
+
+			};
+
+		return _getBuildHistories(duration, null, null, biConsumer, startTime);
 	}
 
 	private static void _addToBuildHistoriesMap(
@@ -485,6 +510,74 @@ public class BuildHistoryProcessor {
 
 		private final Map<String, String> _topLevelBuildTestSuiteMap =
 			new HashMap<>();
+
+	}
+
+	private static class GroupByWeeklyUtilization
+		implements Function<BuildJSONObject, String> {
+
+		public String apply(BuildJSONObject buildJSONObject) {
+			String jobName = buildJSONObject.getJobName();
+
+			LocalDate localDate = LocalDate.parse(
+				buildJSONObject.getStartDateString(),
+				DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+			DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+
+			boolean weekday = false;
+
+			if (dayOfWeek.getValue() <= 5) {
+				weekday = true;
+			}
+
+			if (jobName.contains("test-portal-acceptance-pullrequest")) {
+				if (weekday) {
+					return Category.PORTAL_PULLREQUEST_WEEKDAYS.toString();
+				}
+
+				return Category.PORTAL_PULLREQUEST_WEEKENDS.toString();
+			}
+
+			if (jobName.contains("release") || jobName.contains("upstream")) {
+				if (weekday) {
+					return Category.PORTAL_RELEASE_AND_UPSTREAM_WEEKDAYS.
+						toString();
+				}
+
+				return Category.PORTAL_RELEASE_AND_UPSTREAM_WEEKENDS.toString();
+			}
+
+			if (weekday) {
+				return Category.OTHER_WEEKDAYS.toString();
+			}
+
+			return Category.OTHER_WEEKENDS.toString();
+		}
+
+		private enum Category {
+
+			OTHER_WEEKDAYS("Other (Weekdays)"),
+			OTHER_WEEKENDS("Other (Weekends)"),
+			PORTAL_PULLREQUEST_WEEKDAYS("Portal Pull Requests (Weekdays)"),
+			PORTAL_PULLREQUEST_WEEKENDS("Portal Pull Requests (Weekends)"),
+			PORTAL_RELEASE_AND_UPSTREAM_WEEKDAYS(
+				"Portal Release & Upstream (Weekdays)"),
+			PORTAL_RELEASE_AND_UPSTREAM_WEEKENDS(
+				"Portal Release & Upstream (Weekends)");
+
+			@Override
+			public String toString() {
+				return _string;
+			}
+
+			private Category(String string) {
+				_string = string;
+			}
+
+			private final String _string;
+
+		}
 
 	}
 

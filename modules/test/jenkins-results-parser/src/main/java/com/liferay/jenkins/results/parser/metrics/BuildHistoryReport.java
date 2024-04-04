@@ -81,6 +81,32 @@ public class BuildHistoryReport {
 			"liferay-portal/master Upstream History Report", startDateString);
 	}
 
+	public static BuildHistoryReport newUtilizationReport(
+		long durationDays, File outputDir, String startDateString) {
+
+		BuildHistoryReport buildHistoryReport = new BuildHistoryReport(
+			outputDir);
+
+		buildHistoryReport.addFilesFromResource(
+			"dependencies/metrics/utilization-report", "/index.html");
+
+		Collection<BuildHistory> buildHistories =
+			BuildHistoryProcessor.newUtilizationJobHistories(
+				TimeUnit.DAYS.toMillis(durationDays),
+				_getStartTime(startDateString));
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(
+			_getTableDataJSFileContent(buildHistories, "Category", 7, "All"));
+
+		sb.append("\nvar reportName = \"Utilization Report\";");
+
+		buildHistoryReport.addFile("js/table-data.js", sb.toString());
+
+		return buildHistoryReport;
+	}
+
 	public BuildHistoryReport(File outputDir) {
 		_outputDir = outputDir;
 	}

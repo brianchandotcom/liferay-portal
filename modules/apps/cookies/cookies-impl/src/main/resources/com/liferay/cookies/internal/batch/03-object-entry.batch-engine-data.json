@@ -1,0 +1,164 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-10588",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "NecessaryCookieEntry",
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"collectedData": "User ID (encrypted)",
+			"expiration": "365 days",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_1",
+			"host": "Liferay",
+			"name": "ID",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session time",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_2",
+			"host": "Liferay",
+			"name": "JSESSIONID",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_3",
+			"host": "Liferay",
+			"name": "COOKIE_SUPPORT",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_4",
+			"host": "Liferay",
+			"name": "CONSENT_TYPE_FUNCTIONAL",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_5",
+			"host": "Liferay",
+			"name": "CONSENT_TYPE_NECESSARY",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_6",
+			"host": "Liferay",
+			"name": "CONSENT_TYPE_PERFORMANCE",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_7",
+			"host": "Liferay",
+			"name": "CONSENT_TYPE_PERSONALIZATION",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_8",
+			"host": "Liferay",
+			"name": "COMMERCE_CONTINUE_AS_GUEST",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_9",
+			"host": "Liferay",
+			"name": "com.liferay.commerce.model.CommerceOrder#groupId",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session time",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_10",
+			"host": "Liferay",
+			"name": "com.liferay.commerce.model.CommerceOrder#groupId",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"collectedData": "User ID",
+			"expiration": "Session time",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_11",
+			"host": "Liferay",
+			"name": "LFR_SESSION_STATE_userID",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_12",
+			"host": "Liferay",
+			"name": "com.liferay.search.experiences.web_successMessage",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session time",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_13",
+			"host": "Liferay",
+			"name": "access_token",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session time",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_14",
+			"host": "Liferay",
+			"name": "connect.sid",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_15",
+			"host": "Liferay",
+			"name": "SERVER_ID",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_16",
+			"host": "Liferay",
+			"name": "COMPANY_ID",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_17",
+			"host": "Liferay",
+			"name": "HIGHLIGHTED_COMMENT_ID_KEY",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "NECESSARY_COOKIE_ENTRY_18",
+			"host": "Liferay",
+			"name": "modalExperienceState",
+			"purpose": "",
+			"type": "First Party"
+		}
+	]
+}

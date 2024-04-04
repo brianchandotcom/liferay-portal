@@ -1,0 +1,180 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-10588",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "FunctionalCookieEntry",
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"collectedData": "User Login",
+			"expiration": "365 days",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_1",
+			"host": "Liferay",
+			"name": "LOGIN",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"collectedData": "User Password (encrypted)",
+			"expiration": "365 days",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_2",
+			"host": "Liferay",
+			"name": "PASSWORD",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_3",
+			"host": "Liferay",
+			"name": "REMEMBER_ME",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session time",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_4",
+			"host": "Liferay",
+			"name": "SAML_SP_SESSION_KEY",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session time",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_5",
+			"host": "Liferay",
+			"name": "SAML_SSO_SESSION_ID",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_6",
+			"host": "Liferay",
+			"name": "com.liferay.commerce.wish.list.model.CommerceWishList#groupId",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session time",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_7",
+			"host": "Liferay",
+			"name": "COMMERCE_COMPARE_cpDefinitionIds_commerceChannelGroupId",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_8",
+			"host": "Liferay",
+			"name": "sidebar",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_9",
+			"host": "Liferay",
+			"name": "maintenanceSeen",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_10",
+			"host": "Liferay",
+			"name": "_com_liferay_portal_search_admin_web_portlet_SearchAdminPortlet_userID_hideReindexConfirmationModal",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_11",
+			"host": "Liferay",
+			"name": "com.liferay.search.experiences.web_addSXPElementSidebar",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_12",
+			"host": "Liferay",
+			"name": "liferay.cookie.consent",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_13",
+			"host": "Liferay",
+			"name": "GUEST_LANGUAGE_ID",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "20 seconds",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_14",
+			"host": "Liferay",
+			"name": "SELECTED_CATEGORIES_COOKIE_",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Forever(local storage)",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_15",
+			"host": "Liferay",
+			"name": "ACCESSIBILITY_SETTING_EXPANDED_TEXT",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Forever(local storage)",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_16",
+			"host": "Liferay",
+			"name": "ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Forever(local storage)",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_17",
+			"host": "Liferay",
+			"name": "ACCESSIBILITY_SETTING_REDUCED_MOTION",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Forever(local storage)",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_18",
+			"host": "Liferay",
+			"name": "ACCESSIBILITY_SETTING_UNDERLINED_LINKS1",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_19",
+			"host": "Liferay",
+			"name": "OAUTH2_REMEMBER_DEVICE_",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "FUNCTIONAL_COOKIE_ENTRY_20",
+			"host": "Liferay",
+			"name": "userTokenName",
+			"purpose": "",
+			"type": "First Party"
+		}
+	]
+}

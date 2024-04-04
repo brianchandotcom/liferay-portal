@@ -1,0 +1,98 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-10588",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "PersonalizationCookieEntry",
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"expiration": "365 days",
+			"externalReferenceCode": "PERSONALIZATION_COOKIE_ENTRY_1",
+			"host": "Liferay",
+			"name": "ab_test_variant_id",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "PERSONALIZATION_COOKIE_ENTRY_2",
+			"host": "Liferay",
+			"name": "_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet_scrollPosition",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "PERSONALIZATION_COOKIE_ENTRY_3",
+			"host": "Liferay",
+			"name": "_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet_sidebar-width",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "PERSONALIZATION_COOKIE_ENTRY_4",
+			"host": "Liferay",
+			"name": "_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet__fragments-sidebar_active-tab-id",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "PERSONALIZATION_COOKIE_ENTRY_5",
+			"host": "Liferay",
+			"name": "FRAGMENTS_DISPLAY_STYLE_KEY",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "PERSONALIZATION_COOKIE_ENTRY_6",
+			"host": "Liferay",
+			"name": "_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet__fragment-collection_collectionId_open",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "PERSONALIZATION_COOKIE_ENTRY_7",
+			"host": "Liferay",
+			"name": "_com_liferay_product_navigation_control_menu_web_portlet_ProductNavigationControlMenuPortlet_active-tab-id",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "PERSONALIZATION_COOKIE_ENTRY_8",
+			"host": "Liferay",
+			"name": "portlet_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet___selectedMenuItemId",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "PERSONALIZATION_COOKIE_ENTRY_9",
+			"host": "Liferay",
+			"name": "portlet_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet___itemAdded",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "PERSONALIZATION_COOKIE_ENTRY_10",
+			"host": "Liferay",
+			"name": "portlet_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet___scrollPosition",
+			"purpose": "",
+			"type": "First Party"
+		}
+	]
+}

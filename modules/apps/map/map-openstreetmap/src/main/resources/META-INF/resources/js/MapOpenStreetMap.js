@@ -70,7 +70,7 @@ class MapOpenStreetMap extends MapBase {
 			Object.assign(mapConfig, controlsConfig)
 		);
 
-		if (this.data && this.data.features) {
+		if (this.data?.features?.length) {
 			const bounds = new L.LatLngBounds();
 
 			this.data.features.forEach((feature) =>

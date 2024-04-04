@@ -257,7 +257,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 						.first()
 						.locator('.dnd-td')
 						.allInnerTexts()
-				).toEqual(['']);
+				).toEqual([]);
 			});
 		}
 	);

@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayTable from '@clayui/table';
@@ -54,18 +53,6 @@ function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
 
 	if (dataLoading) {
 		return <ClayLoadingIndicator className="mt-7" />;
-	}
-
-	if (!items || items?.length === 0) {
-		return (
-			<ClayEmptyState
-				description={Liferay.Language.get(
-					'sorry,-no-results-were-found'
-				)}
-				imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
-				title={Liferay.Language.get('no-results-found')}
-			/>
-		);
 	}
 
 	return (

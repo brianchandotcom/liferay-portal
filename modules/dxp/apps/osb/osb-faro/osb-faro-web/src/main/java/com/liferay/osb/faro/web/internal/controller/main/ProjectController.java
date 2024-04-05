@@ -378,7 +378,11 @@ public class ProjectController extends BaseFaroController {
 
 		long now = System.currentTimeMillis();
 
-		if (forceUpdate) {
+		if (forceUpdate ||
+			Objects.equals(
+				faroProject.getState(),
+				FaroProjectConstants.STATE_UNAVAILABLE)) {
+
 			faroProject.setModifiedTime(now);
 
 			FaroSubscriptionDisplay faroSubscriptionDisplay =
@@ -390,11 +394,25 @@ public class ProjectController extends BaseFaroController {
 				faroProject.setSubscriptionModifiedTime(now);
 			}
 
-			faroSubscriptionDisplay.setCounts(
-				faroProject, cerebroEngineClient, contactsEngineClient);
+			try {
+				if (Objects.equals(
+						faroProject.getState(),
+						FaroProjectConstants.STATE_UNAVAILABLE)) {
 
-			faroProject.setSubscription(
-				JSONUtil.writeValueAsString(faroSubscriptionDisplay));
+					faroProject.setState(FaroProjectConstants.STATE_READY);
+				}
+
+				faroSubscriptionDisplay.setCounts(
+					faroProject, cerebroEngineClient, contactsEngineClient);
+
+				faroProject.setSubscription(
+					JSONUtil.writeValueAsString(faroSubscriptionDisplay));
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+
+				faroProject.setState(FaroProjectConstants.STATE_UNAVAILABLE);
+			}
 
 			faroProject = _faroProjectLocalService.updateFaroProject(
 				faroProject);

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -133,6 +134,15 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 				new FaroSubscriptionDisplay(osbAccountEntry);
 
 			try {
+				if (Objects.equals(
+						faroProject.getState(),
+						FaroProjectConstants.STATE_UNAVAILABLE)) {
+
+					faroProject = _faroProjectLocalService.updateState(
+						faroProject.getFaroProjectId(),
+						FaroProjectConstants.STATE_READY);
+				}
+
 				faroSubscriptionDisplay.setCounts(
 					faroProject, _cerebroEngineClient, _contactsEngineClient);
 

@@ -17,10 +17,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -90,17 +86,8 @@ public class ObjectEntryItemSelectorView
 		InfoItemItemSelectorCriterion itemSelectorCriterion,
 		ThemeDisplay themeDisplay) {
 
-		try {
-			return _infoPermissionProvider.hasViewPermission(
-				GuestOrUserUtil.getPermissionChecker());
-		}
-		catch (PrincipalException principalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(principalException);
-			}
-		}
-
-		return false;
+		return _infoPermissionProvider.hasViewPermission(
+			themeDisplay.getPermissionChecker());
 	}
 
 	@Override
@@ -119,9 +106,6 @@ public class ObjectEntryItemSelectorView
 				_objectEntryManager, _objectRelatedModelsProviderRegistry,
 				_portal, portletURL));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectEntryItemSelectorView.class);
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Arrays.asList(

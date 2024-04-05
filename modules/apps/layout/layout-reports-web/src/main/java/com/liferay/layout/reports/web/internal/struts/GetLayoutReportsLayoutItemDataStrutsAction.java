@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
@@ -85,8 +84,12 @@ public class GetLayoutReportsLayoutItemDataStrutsAction
 			return null;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		LayoutPermissionUtil.checkLayoutUpdatePermission(
-			GuestOrUserUtil.getPermissionChecker(), layout);
+			themeDisplay.getPermissionChecker(), layout);
 
 		LayoutStructure layoutStructure =
 			_layoutStructureProvider.getLayoutStructure(
@@ -119,10 +122,6 @@ public class GetLayoutReportsLayoutItemDataStrutsAction
 
 			return null;
 		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		for (LayoutStructureRenderer.LayoutStructureItemRenderTime
 				layoutStructureItemRenderTime :

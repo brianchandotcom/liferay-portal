@@ -11,7 +11,7 @@ import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
 import com.liferay.batch.engine.ItemClassRegistry;
 import com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration;
-import com.liferay.batch.engine.csv.ObjectFieldColumnDescriptors;
+import com.liferay.batch.engine.csv.ColumnDescriptorProvider;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutor;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutorFactory;
 import com.liferay.batch.engine.internal.writer.BatchEngineExportTaskItemWriter;
@@ -211,6 +211,8 @@ public class BatchEngineExportTaskExecutorImpl
 		return batchEngineExportTaskItemWriterBuilder.
 			batchEngineTaskContentType(
 				batchEngineTaskContentType
+			).columnDescriptorProvider(
+				_columnDescriptorProvider
 			).companyId(
 				batchEngineExportTask.getCompanyId()
 			).csvFileColumnDelimiter(
@@ -223,8 +225,6 @@ public class BatchEngineExportTaskExecutorImpl
 			).itemClass(
 				_itemClassRegistry.getItemClass(
 					batchEngineExportTask.getClassName())
-			).objectFieldColumnDescriptors(
-				_objectFieldColumnDescriptors
 			).outputStream(
 				_getZipOutputStream(
 					batchEngineTaskContentType, unsyncByteArrayOutputStream)
@@ -320,6 +320,9 @@ public class BatchEngineExportTaskExecutorImpl
 		_batchEngineTaskItemDelegateRegistry;
 
 	@Reference
+	private ColumnDescriptorProvider _columnDescriptorProvider;
+
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
@@ -335,9 +338,6 @@ public class BatchEngineExportTaskExecutorImpl
 
 	@Reference
 	private ItemClassRegistry _itemClassRegistry;
-
-	@Reference
-	private ObjectFieldColumnDescriptors _objectFieldColumnDescriptors;
 
 	@Reference
 	private SortParserProvider _sortParserProvider;

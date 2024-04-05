@@ -14,12 +14,12 @@ import java.lang.reflect.Method;
 /**
  * @author Matija Petanjek
  */
-public interface ObjectFieldColumnDescriptors {
+public interface ColumnDescriptorProvider {
 
 	public ColumnDescriptor[] getColumnDescriptors(
-			long companyId, int index, String objectDefinitionName,
-			String objectFieldName,
-			ObjectValuePair<Field, Method> propertiesObjectValuePair)
+			long companyId, String fieldName, int index,
+			ObjectValuePair<Field, Method> propertiesObjectValuePair,
+			String taskItemDelegateName)
 		throws PortalException;
 
 }

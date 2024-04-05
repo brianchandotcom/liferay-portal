@@ -36,6 +36,23 @@ import reactor.netty.resources.ConnectionProvider;
  */
 public abstract class BaseRestController {
 
+	protected void delete(String path) {
+		getWebClient(
+		).delete(
+		).uri(
+			uriBuilder -> uriBuilder.path(
+				path
+			).build()
+		).accept(
+			MediaType.APPLICATION_JSON
+		).header(
+			HttpHeaders.AUTHORIZATION, getAuthorization()
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
+	}
+
 	protected JSONObject get(Function<UriBuilder, URI> uriFunction) {
 		String response = getWebClient(
 		).get(
@@ -119,6 +136,49 @@ public abstract class BaseRestController {
 		).bodyToMono(
 			String.class
 		).block();
+	}
+
+	protected void post(String bodyValue, String path) {
+		getWebClient(
+		).post(
+		).uri(
+			uriBuilder -> uriBuilder.path(
+				path
+			).build()
+		).accept(
+			MediaType.APPLICATION_JSON
+		).contentType(
+			MediaType.APPLICATION_JSON
+		).header(
+			HttpHeaders.AUTHORIZATION, getAuthorization()
+		).bodyValue(
+			bodyValue
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
+	}
+
+	protected JSONObject put(String bodyValue, String path) {
+		return new JSONObject(
+			getWebClient(
+			).put(
+			).uri(
+				uriBuilder -> uriBuilder.path(
+					path
+				).build()
+			).accept(
+				MediaType.APPLICATION_JSON
+			).contentType(
+				MediaType.APPLICATION_JSON
+			).header(
+				HttpHeaders.AUTHORIZATION, getAuthorization()
+			).bodyValue(
+				bodyValue
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block());
 	}
 
 	private static final Log _log = LogFactory.getLog(QueueListener.class);

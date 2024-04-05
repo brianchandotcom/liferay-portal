@@ -12,7 +12,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,19 +47,20 @@ public class TestrayRunComparisonResourceImpl
 			String testrayCasePriorities, Long testrayTeamId)
 		throws Exception {
 
+		TestrayRunComparison testrayRunComparison = new TestrayRunComparison();
+
+		testrayRunComparison.setTestrayCasePriorities(testrayCasePriorities);
+		testrayRunComparison.setTestrayTeamId(testrayTeamId);
+
 		Set<Map<String, Serializable>> set = new HashSet<>();
 
 		Map<String, Map<String, Serializable>> testrayCaseResultsMap1 =
 			_getObjectEntriesMap(
-				_getCaseResultFilterString(
-					testrayCasePriorities, testrayRunId1,
-					GetterUtil.getLong(testrayTeamId)),
+				_getCaseResultFilterString(testrayRunComparison, testrayRunId1),
 				"r_caseToCaseResult_c_caseId", "C_CaseResult");
 		Map<String, Map<String, Serializable>> testrayCaseResultsMap2 =
 			_getObjectEntriesMap(
-				_getCaseResultFilterString(
-					testrayCasePriorities, testrayRunId2,
-					GetterUtil.getLong(testrayTeamId)),
+				_getCaseResultFilterString(testrayRunComparison, testrayRunId2),
 				"r_caseToCaseResult_c_caseId", "C_CaseResult");
 
 		for (Map.Entry<String, Map<String, Serializable>> entry :
@@ -82,8 +82,6 @@ public class TestrayRunComparisonResourceImpl
 			_getObjectEntriesMap(
 				_getComponentFilterString("", testrayRunId1, testrayRunId2),
 				"c_componentId", "C_Component");
-
-		TestrayRunComparison testrayRunComparison = new TestrayRunComparison();
 
 		testrayRunComparison.setResults(
 			ListUtil.fromArray(
@@ -137,18 +135,21 @@ public class TestrayRunComparisonResourceImpl
 	}
 
 	private String _getCaseResultFilterString(
-		String testrayCasePriorities, long testrayRunId, long testrayTeamId) {
+		TestrayRunComparison testrayRunComparison, long testrayRunId) {
 
 		StringBundler sb = new StringBundler("runId eq '" + testrayRunId + "'");
 
-		if (Validator.isNotNull(testrayCasePriorities)) {
+		if (Validator.isNotNull(
+				testrayRunComparison.getTestrayCasePriorities())) {
+
 			sb.append(" and (");
 
-			String[] filterByPriority = StringUtil.split(testrayCasePriorities);
+			String[] testrayCasePriorities = StringUtil.split(
+				testrayRunComparison.getTestrayCasePriorities());
 
-			for (int i = 0; i <= (filterByPriority.length - 1); i++) {
+			for (int i = 0; i <= (testrayCasePriorities.length - 1); i++) {
 				sb.append("caseToCaseResult/priority eq ");
-				sb.append(filterByPriority[i]);
+				sb.append(testrayCasePriorities[i]);
 				sb.append(" or ");
 			}
 
@@ -156,9 +157,9 @@ public class TestrayRunComparisonResourceImpl
 			sb.append(")");
 		}
 
-		if (testrayTeamId != 0) {
+		if (testrayRunComparison.getTestrayTeamId() != 0) {
 			sb.append(" and componentToCaseResult/teamId eq '");
-			sb.append(testrayTeamId);
+			sb.append(testrayRunComparison.getTestrayTeamId());
 			sb.append("'");
 		}
 

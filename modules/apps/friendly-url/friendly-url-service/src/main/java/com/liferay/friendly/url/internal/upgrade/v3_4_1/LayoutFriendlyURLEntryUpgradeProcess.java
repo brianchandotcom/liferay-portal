@@ -105,11 +105,7 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 								classNameId, plid, companyId, ctCollectionId,
 								defaultLanguageIds, groupId);
 
-						if ((friendlyURLEntryId == 0) ||
-							!_addFriendlyURLEntryMappingIfAbsent(
-								classNameId, plid, ctCollectionId, companyId,
-								friendlyURLEntryId)) {
-
+						if (friendlyURLEntryId == 0) {
 							return;
 						}
 
@@ -158,6 +154,13 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 			Map<Long, String> defaultLanguageIds, long groupId)
 		throws Exception {
 
+		long friendlyURLEntryId = _getMappedFriendlyURLEntryId(
+			classNameId, classPK, ctCollectionId);
+
+		if (friendlyURLEntryId > 0) {
+			return friendlyURLEntryId;
+		}
+
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select friendlyURLEntryId from FriendlyURLEntry where ",
@@ -172,9 +175,18 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					return resultSet.getLong("friendlyURLEntryId");
+					friendlyURLEntryId = resultSet.getLong(
+						"friendlyURLEntryId");
 				}
 			}
+		}
+
+		if (friendlyURLEntryId > 0) {
+			_addFriendlyURLEntryMapping(
+				classNameId, classPK, ctCollectionId, companyId,
+				friendlyURLEntryId);
+
+			return friendlyURLEntryId;
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -194,8 +206,7 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 
 			preparedStatement.setString(4, defaultLanguageId);
 
-			long friendlyURLEntryId = increment(
-				FriendlyURLEntry.class.getName());
+			friendlyURLEntryId = increment(FriendlyURLEntry.class.getName());
 
 			preparedStatement.setLong(5, friendlyURLEntryId);
 
@@ -212,6 +223,10 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 
 			preparedStatement.executeUpdate();
 
+			_addFriendlyURLEntryMapping(
+				classNameId, classPK, ctCollectionId, companyId,
+				friendlyURLEntryId);
+
 			return friendlyURLEntryId;
 		}
 		catch (Exception exception) {
@@ -223,25 +238,10 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 		return 0;
 	}
 
-	private boolean _addFriendlyURLEntryMappingIfAbsent(
+	private void _addFriendlyURLEntryMapping(
 			long classNameId, long classPK, long ctCollectionId, long companyId,
 			long friendlyURLEntryId)
 		throws Exception {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select 1 from FriendlyURLEntryMapping where ctCollectionId " +
-					"= ? and classNameId = ? and classPK = ?")) {
-
-			preparedStatement.setLong(1, ctCollectionId);
-			preparedStatement.setLong(2, classNameId);
-			preparedStatement.setLong(3, classPK);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return true;
-				}
-			}
-		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
@@ -260,8 +260,6 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setLong(7, friendlyURLEntryId);
 
 			preparedStatement.executeUpdate();
-
-			return true;
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -269,8 +267,6 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 					"Unable to add friendly URL Entry Mapping", exception);
 			}
 		}
-
-		return false;
 	}
 
 	private Map<String, String> _getFriendlyURLMap(
@@ -320,6 +316,29 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 		}
 
 		return friendlyURLMap;
+	}
+
+	private long _getMappedFriendlyURLEntryId(
+			long classNameId, long classPK, long ctCollectionId)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select friendlyURLEntryId from FriendlyURLEntryMapping " +
+					"where ctCollectionId = ? and classNameId = ? and " +
+						"classPK = ?")) {
+
+			preparedStatement.setLong(1, ctCollectionId);
+			preparedStatement.setLong(2, classNameId);
+			preparedStatement.setLong(3, classPK);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getLong("friendlyURLEntryId");
+				}
+			}
+		}
+
+		return 0;
 	}
 
 	private String _getSiteDefaultLocale(long groupId) {

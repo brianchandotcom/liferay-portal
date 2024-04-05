@@ -1159,11 +1159,11 @@ definition {
 
 			AssertTextMatches(
 				locator1 = "Sidebar#CREATED",
-				value1 = "^\w\w\w\s[0-9]{1,2},\s\d\d\d\d\s[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\s\w\w\sby\sTest\sTest$");
+				value1 = "^\w\w\w\s[0-9]{1,2},\s(\d{2}|\d{4})\s[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\s\w\w\sby\sTest\sTest$");
 
 			AssertTextMatches(
 				locator1 = "Sidebar#MODIFIED",
-				value1 = "^\w\w\w\s[0-9]{1,2},\s\d\d\d\d\s[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\s\w\w\sby\sTest\sTest$");
+				value1 = "^\w\w\w\s[0-9]{1,2},\s(\d{2}|\d{4})\s[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\s\w\w\sby\sTest\sTest$");
 		}
 	}
 

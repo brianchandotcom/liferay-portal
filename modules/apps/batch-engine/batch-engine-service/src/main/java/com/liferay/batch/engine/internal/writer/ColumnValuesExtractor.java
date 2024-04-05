@@ -8,7 +8,7 @@ package com.liferay.batch.engine.internal.writer;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.batch.engine.csv.ColumnDescriptor;
-import com.liferay.batch.engine.csv.ObjectFieldColumnDescriptors;
+import com.liferay.batch.engine.csv.ColumnDescriptorProvider;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -41,17 +41,15 @@ import java.util.Set;
 public class ColumnValuesExtractor {
 
 	public ColumnValuesExtractor(
-			long companyId,
+			ColumnDescriptorProvider columnDescriptorProvider, long companyId,
 			Map<String, ObjectValuePair<Field, Method>>
 				fieldNameObjectValuePairs,
-			List<String> fieldNames,
-			ObjectFieldColumnDescriptors objectFieldColumnDescriptors,
-			String taskItemDelegateName)
+			List<String> fieldNames, String taskItemDelegateName)
 		throws PortalException {
 
 		_columnDescriptors = _getColumnDescriptors(
-			companyId, fieldNameObjectValuePairs, fieldNames, 0,
-			objectFieldColumnDescriptors, null, taskItemDelegateName);
+			columnDescriptorProvider, companyId, fieldNameObjectValuePairs,
+			fieldNames, 0, null, taskItemDelegateName);
 	}
 
 	public List<Object[]> extractValues(Object item)
@@ -127,11 +125,10 @@ public class ColumnValuesExtractor {
 	}
 
 	private ColumnDescriptor[] _getColumnDescriptors(
-			long companyId,
+			ColumnDescriptorProvider columnDescriptorProvider, long companyId,
 			Map<String, ObjectValuePair<Field, Method>>
 				fieldNameObjectValuePairs,
 			Collection<String> fieldNames, int masterIndex,
-			ObjectFieldColumnDescriptors objectFieldColumnDescriptors,
 			ColumnDescriptor parentColumnDescriptor,
 			String taskItemDelegateName)
 		throws PortalException {
@@ -146,9 +143,10 @@ public class ColumnValuesExtractor {
 
 			if (objectValuePair == null) {
 				ColumnDescriptor[] fieldColumnDescriptors =
-					objectFieldColumnDescriptors.getColumnDescriptors(
-						companyId, masterIndex, taskItemDelegateName, fieldName,
-						fieldNameObjectValuePairs.get("properties"));
+					columnDescriptorProvider.getColumnDescriptors(
+						companyId, fieldName, masterIndex,
+						fieldNameObjectValuePairs.get("properties"),
+						taskItemDelegateName);
 
 				columnDescriptors = _combine(
 					columnDescriptors, fieldColumnDescriptors, localIndex);
@@ -198,10 +196,10 @@ public class ColumnValuesExtractor {
 
 			ColumnDescriptor[] childFieldColumnDescriptors =
 				_getColumnDescriptors(
-					companyId, childFieldMethodPairsMap,
+					columnDescriptorProvider, companyId,
+					childFieldMethodPairsMap,
 					_sort(childFieldMethodPairsMap.keySet()), localIndex,
-					objectFieldColumnDescriptors, columnDescriptors[localIndex],
-					taskItemDelegateName);
+					columnDescriptors[localIndex], taskItemDelegateName);
 
 			columnDescriptors = _combine(
 				columnDescriptors, childFieldColumnDescriptors, localIndex);

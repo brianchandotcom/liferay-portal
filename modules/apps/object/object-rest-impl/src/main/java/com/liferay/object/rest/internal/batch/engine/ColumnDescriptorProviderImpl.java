@@ -6,7 +6,7 @@
 package com.liferay.object.rest.internal.batch.engine;
 
 import com.liferay.batch.engine.csv.ColumnDescriptor;
-import com.liferay.batch.engine.csv.ObjectFieldColumnDescriptors;
+import com.liferay.batch.engine.csv.ColumnDescriptorProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -35,30 +35,29 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matija Petanjek
  */
-@Component(service = ObjectFieldColumnDescriptors.class)
-public class ObjectFieldColumnDescriptorsImpl
-	implements ObjectFieldColumnDescriptors {
+@Component(service = ColumnDescriptorProvider.class)
+public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 
 	@Override
 	public ColumnDescriptor[] getColumnDescriptors(
-			long companyId, int index, String objectDefinitionName,
-			String objectFieldName,
-			ObjectValuePair<Field, Method> propertiesObjectValuePair)
+			long companyId, String fieldName, int index,
+			ObjectValuePair<Field, Method> propertiesObjectValuePair,
+			String taskItemDelegateName)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
-				companyId, objectDefinitionName);
+				companyId, taskItemDelegateName);
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectDefinition.getObjectDefinitionId(), objectFieldName);
+			objectDefinition.getObjectDefinitionId(), fieldName);
 
 		if (Objects.equals(
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
 			return _getMultiselectPickListColumnDescriptors(
-				objectFieldName, index, objectField.getListTypeDefinitionId(),
+				fieldName, index, objectField.getListTypeDefinitionId(),
 				objectField.getBusinessType(), propertiesObjectValuePair);
 		}
 
@@ -67,16 +66,16 @@ public class ObjectFieldColumnDescriptorsImpl
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 			return _getPickListColumnDescriptors(
-				objectFieldName, index, objectField.getBusinessType(),
+				fieldName, index, objectField.getBusinessType(),
 				propertiesObjectValuePair);
 		}
 
 		return new ColumnDescriptor[] {
 			ColumnDescriptor.from(
-				objectFieldName, index,
+				fieldName, index,
 				_getObjectEntryCustomFieldUnsafeFunction(
 					objectField.getBusinessType(), propertiesObjectValuePair,
-					objectFieldName))
+					fieldName))
 		};
 	}
 

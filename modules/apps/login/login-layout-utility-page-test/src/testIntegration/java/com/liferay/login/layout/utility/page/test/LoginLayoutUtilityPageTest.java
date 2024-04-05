@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.login.utility.page.test;
+package com.liferay.login.layout.utility.page.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRendererRegistryUtil;
@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlags("LPD-6378")
 @RunWith(Arquillian.class)
-public class LoginUtilityPageTest {
+public class LoginLayoutUtilityPageTest {
 
 	@ClassRule
 	@Rule
@@ -93,10 +93,6 @@ public class LoginUtilityPageTest {
 			LayoutUtilityPageEntryViewRendererRegistryUtil.
 				getLayoutUtilityPageEntryViewRenderer(
 					LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT));
-	}
-
-	@Test
-	public void testDefaultUtilityPagesAfterSiteInitialization() {
 	}
 
 	@Test

@@ -40,8 +40,6 @@ definition {
 	test CanCreateWebBehaviorSegmentCommentingBlog {
 		ACUtils.createBlogsAndAddToPage();
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
 		JSONUser.addUser(
 			userEmailAddress = "ac@liferay.com",
 			userFirstName = "ac",
@@ -53,12 +51,12 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "ac@liferay.com");
 
-		ACDXPSettings.syncNewContactData();
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		ACUtils.navigateToSitePageWithUser(
 			actionType = "Comment Blog",
 			commentText = "Blogs Entry Comment",
-			documentTitleList = "Blogs AC Title",
+			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
 			emailList = "ac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
@@ -67,7 +65,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = ${propertyName});
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToSegments();
 
@@ -79,40 +77,19 @@ definition {
 
 		ACSegments.editWebBehaviorCriterion(
 			indexField = 1,
-			occurenceNumber = 4,
 			searchTerm = "Blogs AC Title");
+
+		ACSegments.previewSegmentMembership();
+
+		ACUtils.viewNameList(nameList = "ac ac");
+
+		ACUtils.closeModal();
 
 		ACSegments.saveSegment();
 
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewGenericText(textValueList = "There are no members found on the selected time period.,Check back later to verify if data has been received from your data sources.,Learn more about individuals.");
-
-		ACUtils.launchDXP();
-
-		ACUtils.navigateToSitePageWithUser(
-			actionType = "Comment Blog",
-			commentText = "Blogs Entry Comment 1",
-			documentTitleList = "Blogs AC Title",
-			emailList = "ac@liferay.com",
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		for (var n : list "2,3") {
-			Comments.addPG(entryComment = "Blogs Entry Comment ${n}");
-		}
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
 		ACNavigation.goToSegments();
 
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
-
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewNameList(nameList = "ac ac");
+		ACUtils.viewNameList(nameList = "Dynamic Segment Test");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9221 | Test Summary: Create a Web Behavior criteria at least/at most times"

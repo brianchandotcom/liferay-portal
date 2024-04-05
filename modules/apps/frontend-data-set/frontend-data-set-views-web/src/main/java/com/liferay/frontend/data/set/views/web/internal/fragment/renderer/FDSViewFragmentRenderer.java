@@ -266,17 +266,14 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		Set<ObjectEntry> fdsFieldObjectEntries = _getFDSFieldObjectEntries(
 			fdsViewObjectDefinition, fdsViewObjectEntry);
 
-		Collection<ObjectEntry> fdsCardsSectionObjectEntries = null;
-		Collection<ObjectEntry> fdsListSectionObjectEntries = null;
-
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10735")) {
-			fdsCardsSectionObjectEntries = _getRelatedObjectEntries(
+		Collection<ObjectEntry> fdsCardsSectionObjectEntries =
+			_getRelatedObjectEntries(
 				fdsViewObjectDefinition, fdsViewObjectEntry,
 				"fdsViewFDSCardsSectionRelationship");
-			fdsListSectionObjectEntries = _getRelatedObjectEntries(
+		Collection<ObjectEntry> fdsListSectionObjectEntries =
+			_getRelatedObjectEntries(
 				fdsViewObjectDefinition, fdsViewObjectEntry,
 				"fdsViewFDSListSectionRelationship");
-		}
 
 		_reactRenderer.renderReact(
 			componentDescriptor,
@@ -519,34 +516,21 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 		JSONArray viewsJSONArray = _jsonFactory.createJSONArray();
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10735")) {
-			if (!fdsCardsSectionObjectEntries.isEmpty()) {
-				viewsJSONArray.put(
-					_getFDSCardsViewJSONObject(
-						fdsCardsSectionObjectEntries,
-						fdsDefaultVisualizationMode, httpServletRequest));
-			}
-
-			if (!fdsListSectionObjectEntries.isEmpty()) {
-				viewsJSONArray.put(
-					_getFDSListViewJSONObject(
-						fdsDefaultVisualizationMode,
-						fdsListSectionObjectEntries, httpServletRequest));
-			}
-
-			if (!fdsFieldObjectEntries.isEmpty()) {
-				viewsJSONArray.put(
-					_getFDSTableViewJSONObject(
-						companyId, fdsDefaultVisualizationMode,
-						fdsFieldObjectEntries, httpServletRequest));
-			}
+		if (!fdsCardsSectionObjectEntries.isEmpty()) {
+			viewsJSONArray.put(
+				_getFDSCardsViewJSONObject(
+					fdsCardsSectionObjectEntries, fdsDefaultVisualizationMode,
+					httpServletRequest));
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-10735") ||
-			(fdsCardsSectionObjectEntries.isEmpty() &&
-			 fdsFieldObjectEntries.isEmpty() &&
-			 fdsListSectionObjectEntries.isEmpty())) {
+		if (!fdsListSectionObjectEntries.isEmpty()) {
+			viewsJSONArray.put(
+				_getFDSListViewJSONObject(
+					fdsDefaultVisualizationMode, fdsListSectionObjectEntries,
+					httpServletRequest));
+		}
 
+		if (!fdsFieldObjectEntries.isEmpty()) {
 			viewsJSONArray.put(
 				_getFDSTableViewJSONObject(
 					companyId, fdsDefaultVisualizationMode,

@@ -19,7 +19,6 @@ import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest'
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
-		'LPD-10735': true,
 		'LPS-164563': true,
 	}),
 	loginTest(),
@@ -200,7 +199,6 @@ export const fragmentTest = mergeTests(
 	apiHelpersTest,
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
-		'LPD-10735': true,
 		'LPS-164563': true,
 		'LPS-178052': true,
 	}),

@@ -22,7 +22,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -680,42 +679,12 @@ public class FDSViewsPortlet extends MVCPortlet {
 						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
 						_language.get(locale, "sorts-order"), "fdsSortsOrder",
-						false)));
-
-		ObjectField labelObjectField = _objectFieldLocalService.getObjectField(
-			fdsViewObjectDefinition.getObjectDefinitionId(), "label");
-
-		_objectDefinitionLocalService.updateTitleObjectFieldId(
-			fdsViewObjectDefinition.getObjectDefinitionId(),
-			labelObjectField.getObjectFieldId());
-
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10735")) {
-			ObjectField defaultVisualizationModeObjectField =
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-					_language.get(locale, "default-visualization-mode"),
-					"defaultVisualizationMode", false);
-
-			_objectFieldLocalService.addCustomObjectField(
-				defaultVisualizationModeObjectField.getExternalReferenceCode(),
-				userId,
-				defaultVisualizationModeObjectField.getListTypeDefinitionId(),
-				fdsViewObjectDefinition.getObjectDefinitionId(),
-				defaultVisualizationModeObjectField.getBusinessType(),
-				defaultVisualizationModeObjectField.getDBType(),
-				defaultVisualizationModeObjectField.isIndexed(),
-				defaultVisualizationModeObjectField.isIndexedAsKeyword(),
-				defaultVisualizationModeObjectField.getIndexedLanguageId(),
-				defaultVisualizationModeObjectField.getLabelMap(), false,
-				defaultVisualizationModeObjectField.getName(),
-				defaultVisualizationModeObjectField.getReadOnly(),
-				defaultVisualizationModeObjectField.
-					getReadOnlyConditionExpression(),
-				defaultVisualizationModeObjectField.isRequired(),
-				defaultVisualizationModeObjectField.isState(),
-				defaultVisualizationModeObjectField.getObjectFieldSettings());
-		}
+						false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "default-visualization-mode"),
+						"defaultVisualizationMode", false)));
 
 		_objectDefinitionLocalService.publishSystemObjectDefinition(
 			userId, fdsViewObjectDefinition.getObjectDefinitionId());
@@ -768,12 +737,10 @@ public class FDSViewsPortlet extends MVCPortlet {
 			fdsViewObjectDefinition, locale, userId);
 		_createFDSSortObjectDefinition(fdsViewObjectDefinition, locale, userId);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10735")) {
-			_createFDSCardsSectionObjectDefinition(
-				fdsViewObjectDefinition, locale, userId);
-			_createFDSListSectionObjectDefinition(
-				fdsViewObjectDefinition, locale, userId);
-		}
+		_createFDSCardsSectionObjectDefinition(
+			fdsViewObjectDefinition, locale, userId);
+		_createFDSListSectionObjectDefinition(
+			fdsViewObjectDefinition, locale, userId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

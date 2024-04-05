@@ -511,3 +511,30 @@ Added the Experiment type parameter to the runSegmentsExpeirment
 
 To support additional Experiment types
 ```
+
+----
+
+# 0132519ea6ba7d70f64253f85a97ef1bd8f55136
+
+The commit message is missing a breaking change. The correct message is:
+
+```
+LPS-199540 portal-impl: Remove portal property and add obsolete portal key to VerifyProperties
+
+# breaking
+
+## What portal-impl/src/portal.properties
+
+Removed "index.permission.filter.search.amplification.factor"
+
+## Why
+
+"index.permission.filter.search.amplification.factor" was not an effective way to improve permission filtering and was only applied on the first search.
+
+## Alternative
+
+The search amplification has in place a better algorithm to speed permission filtering.
+
+If the total amount of time spent searching is still a concern, it can be regulated with the new Permission Filtering Time Limit under Control Panel > System Settings > Search > Default Search Result Permission Filter.
+
+```

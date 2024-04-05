@@ -14,6 +14,7 @@ import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
 
 import java.util.List;
@@ -34,7 +35,13 @@ public class MultiselectPicklistFieldPredicateProvider
 	@Override
 	public Predicate getBinaryExpressionPredicate(
 		Expression<?> objectDefinitionColumnSupplierExpression,
-		Object fieldValue) {
+		BinaryExpression.Operation operation, Object fieldValue) {
+
+		if (!Objects.equals(operation, BinaryExpression.Operation.EQ)) {
+			throw new UnsupportedOperationException(
+				operation +
+					" is not supported in MultiselectPicklist Object Fields");
+		}
 
 		Expression<String> columnFieldExpression = _getFormatedColumnExpression(
 			(Expression<String>)objectDefinitionColumnSupplierExpression);
@@ -67,12 +74,14 @@ public class MultiselectPicklistFieldPredicateProvider
 		for (Object right : rights) {
 			if (predicate == null) {
 				predicate = getBinaryExpressionPredicate(
-					objectDefinitionColumnSupplierExpression, right);
+					objectDefinitionColumnSupplierExpression,
+					BinaryExpression.Operation.EQ, right);
 			}
 			else {
 				predicate = predicate.or(
 					getBinaryExpressionPredicate(
-						objectDefinitionColumnSupplierExpression, right));
+						objectDefinitionColumnSupplierExpression,
+						BinaryExpression.Operation.EQ, right));
 			}
 		}
 

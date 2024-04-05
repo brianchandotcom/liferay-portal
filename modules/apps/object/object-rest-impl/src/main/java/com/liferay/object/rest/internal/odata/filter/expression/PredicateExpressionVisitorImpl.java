@@ -382,11 +382,7 @@ public class PredicateExpressionVisitorImpl
 			objectDefinition.getObjectDefinitionId(),
 			String.valueOf(fieldName));
 
-		if ((objectField != null) &&
-			StringUtil.equals(
-				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
-
+		if (objectField != null) {
 			fieldPredicateProvider = _serviceTrackerMap.getService(
 				objectField.getBusinessType());
 
@@ -475,11 +471,7 @@ public class PredicateExpressionVisitorImpl
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			objectDefinition.getObjectDefinitionId(), String.valueOf(left));
 
-		if ((objectField != null) &&
-			StringUtil.equals(
-				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
-
+		if (objectField != null) {
 			fieldPredicateProvider = _serviceTrackerMap.getService(
 				objectField.getBusinessType());
 
@@ -652,27 +644,22 @@ public class PredicateExpressionVisitorImpl
 							right);
 				}
 			}
-			else if (StringUtil.equals(
-						objectField.getBusinessType(),
-						ObjectFieldConstants.
-							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
-
+			else {
 				fieldPredicateProvider = _serviceTrackerMap.getService(
 					objectField.getBusinessType());
 
 				if (fieldPredicateProvider != null) {
-					if (Objects.equals(
-							BinaryExpression.Operation.EQ, operation)) {
+					Object object = _getValue(left, objectDefinition, right);
 
+					if (operation instanceof BinaryExpression.Operation) {
 						predicate =
 							fieldPredicateProvider.getBinaryExpressionPredicate(
 								_getDSLExpression(left, objectDefinition),
-								_getValue(left, objectDefinition, right));
+								operation, object);
 					}
 					else {
 						predicate = fieldPredicateProvider.getContainsPredicate(
-							_getColumn(left, objectDefinition),
-							_getValue(left, objectDefinition, right));
+							_getColumn(left, objectDefinition), object);
 					}
 				}
 			}

@@ -147,7 +147,7 @@
 								},
 								{
 									"#cdata-value": [
-										"System.out.println(\",Action 1\",);"
+										"System.out.println(\"Action 1\");"
 									],
 									"#tag-name": "script"
 								},

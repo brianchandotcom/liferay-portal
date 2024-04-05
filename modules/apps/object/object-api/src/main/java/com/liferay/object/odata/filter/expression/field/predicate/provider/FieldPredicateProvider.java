@@ -6,6 +6,7 @@
 package com.liferay.object.odata.filter.expression.field.predicate.provider;
 
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 
@@ -17,21 +18,61 @@ import java.util.function.Function;
  */
 public interface FieldPredicateProvider {
 
-	public Predicate getBinaryExpressionPredicate(
+	public default Predicate getBinaryExpressionPredicate(
+		Expression<?> objectDefinitionColumnSupplierExpression,
+		BinaryExpression.Operation operation, Object fieldValue) {
+
+		return null;
+	}
+
+	public default Predicate getBinaryExpressionPredicate(
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
 		Object left, long objectDefinitionId,
-		BinaryExpression.Operation operation, Object right);
+		BinaryExpression.Operation operation, Object right) {
 
-	public Predicate getContainsPredicate(
-		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
-		Object fieldValue);
+		return null;
+	}
 
-	public Predicate getInPredicate(
-		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
-		List<Object> rights);
+	public default Predicate getContainsPredicate(
+		Expression<?> objectDefinitionColumnSupplierExpression,
+		Object fieldValue) {
 
-	public Predicate getStartsWithPredicate(
+		return null;
+	}
+
+	public default Predicate getContainsPredicate(
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
-		Object fieldValue);
+		Object fieldValue) {
+
+		return null;
+	}
+
+	public default Predicate getInPredicate(
+		Expression<?> objectDefinitionColumnSupplierExpression,
+		List<Object> rights) {
+
+		return null;
+	}
+
+	public default Predicate getInPredicate(
+		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
+		List<Object> rights) {
+
+		return null;
+	}
+
+	public default Predicate getStartsWithPredicate(
+		Expression<?> objectDefinitionColumnSupplierExpression,
+		Object fieldValue) {
+
+		return null;
+	}
+
+	public default Predicate getStartsWithPredicate(
+		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
+		Object fieldValue) {
+
+		return null;
+	}
 
 }

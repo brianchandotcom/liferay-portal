@@ -28,10 +28,6 @@ public class CalendarBookingInfoItemCapabilitiesProvider
 
 	@Override
 	public List<InfoItemCapability> getInfoItemCapabilities() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-10945")) {
-			return Collections.emptyList();
-		}
-
 		return ListUtil.fromArray(
 			_displayPageInfoItemCapability, _templateInfoItemCapability);
 	}

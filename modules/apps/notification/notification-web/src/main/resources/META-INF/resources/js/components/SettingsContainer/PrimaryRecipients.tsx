@@ -147,8 +147,8 @@ export function PrimaryRecipient({
 			{recipient.toType === 'role' && (
 				<div className="lfr__notification-template-email-notification-settings-multiple-select">
 					<MultipleSelect
-						error={errors.to}
 						disabled={values.system}
+						error={errors.to}
 						label={Liferay.Language.get('role')}
 						options={toRolesList}
 						placeholder={Liferay.Language.get('select-role')}

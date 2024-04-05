@@ -479,3 +479,25 @@ The method getBatchEngineTaskItemDelegate(String itemClassName, String taskItemD
 
 To get the BatchEngineTaskItemDelegate based on the company too, it must be scoped by the company, because it depends on the company that a taskItemDelegateName exists or not (an Object Definition given its name)
 ```
+
+----
+
+# 0132519ea6ba7d70f64253f85a97ef1bd8f55136
+
+Missing breaking change
+
+Correct message should be:
+```
+LPS-199540 portal-impl: Remove portal property and add obsolete portal key to VerifyProperties
+    
+# breaking
+## What portal-impl/src/portal.properties
+Removed "index.permission.filter.search.amplification.factor"
+## Why
+"index.permission.filter.search.amplification.factor" was not an effective way to improve permission filtering and was only applied on the first search.
+## Alternative
+The search amplification has in place a better algorithm to speed permission filtering.
+If the total amount of time spent searching is still a concern, it can be regulated with the new Permission Filtering Time Limit under Control Panel > System Settings > Search > Default Search Result Permission Filter.
+----
+
+```

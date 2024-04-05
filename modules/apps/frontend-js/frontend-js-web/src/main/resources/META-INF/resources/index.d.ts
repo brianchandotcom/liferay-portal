@@ -319,7 +319,10 @@ export function suggestAlignBestRegion(
  * arguments and context are used, replacing those of any previously pending
  * calls.
  */
-export function throttle(fn: () => void, interval: number): () => void;
+export function throttle(
+	fn: (event: any) => void,
+	interval: number
+): () => void;
 
 export function toggleBoxes(
 	checkBoxId: string,

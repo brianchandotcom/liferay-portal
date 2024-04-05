@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.vulcan.internal.resource.test;
+package com.liferay.portal.vulcan.internal.jaxrs.lifecycle.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
@@ -48,7 +48,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class PrototypeResourceTest {
+public class SafeReleaseInstanceResourceProviderTest {
 
 	@ClassRule
 	@Rule
@@ -57,7 +57,8 @@ public class PrototypeResourceTest {
 
 	@Before
 	public void setUp() {
-		Bundle bundle = FrameworkUtil.getBundle(PrototypeResourceTest.class);
+		Bundle bundle = FrameworkUtil.getBundle(
+			SafeReleaseInstanceResourceProviderTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 

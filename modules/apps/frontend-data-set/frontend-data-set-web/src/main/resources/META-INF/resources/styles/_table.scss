@@ -34,6 +34,10 @@
 
 	&.item-actions {
 		min-height: 58px;
+
+		& > * {
+			margin: auto;
+		}
 	}
 
 	&.item-actions,

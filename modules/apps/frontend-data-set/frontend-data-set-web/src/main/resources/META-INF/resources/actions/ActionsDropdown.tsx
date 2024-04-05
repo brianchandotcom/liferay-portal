@@ -221,12 +221,7 @@ function ActionsDropdown({
 				onActiveChange={() => onMenuActiveChange(!menuActive)}
 				trigger={
 					<ClayButton
-						className={classnames(
-							'component-action dropdown-toggle',
-							{
-								'ml-1': !Liferay.FeatureFlags['LPS-193005'],
-							}
-						)}
+						className="component-action dropdown-toggle"
 						disabled={loading}
 						displayType="unstyled"
 					>

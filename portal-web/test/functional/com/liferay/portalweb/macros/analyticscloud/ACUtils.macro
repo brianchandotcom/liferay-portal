@@ -911,26 +911,36 @@ definition {
 
 			if (${actionType} == "View Blog") {
 				BlogsNavigator.gotoPG(entryTitle = ${documentTitle});
+
+				ACUtils.waitForSendingRequest();
 			}
 
 			if (${actionType} == "Comment Blog") {
 				BlogsNavigator.gotoPG(entryTitle = ${documentTitle});
 
 				Comments.addPG(entryComment = ${commentText});
+
+				ACUtils.waitForSendingRequest();
 			}
 
 			if (${actionType} == "View DM") {
 				DMNavigator.gotoDocumentPG(dmDocumentTitle = ${documentTitle});
+
+				ACUtils.waitForSendingRequest();
 			}
 
 			if (${actionType} == "Download DM") {
 				DMDocument.downloadPG(dmDocumentTitle = ${documentTitle});
+
+				ACUtils.waitForSendingRequest();
 			}
 
 			if (${actionType} == "Comment DM") {
 				DMNavigator.gotoDocumentPG(dmDocumentTitle = ${documentTitle});
 
 				Comments.addPG(entryComment = ${commentText});
+
+				ACUtils.waitForSendingRequest();
 			}
 
 			if (${actionType} == "View Form") {
@@ -951,6 +961,8 @@ definition {
 					fieldValue = ${submitText});
 
 				FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+				ACUtils.waitForSendingRequest();
 			}
 		}
 	}

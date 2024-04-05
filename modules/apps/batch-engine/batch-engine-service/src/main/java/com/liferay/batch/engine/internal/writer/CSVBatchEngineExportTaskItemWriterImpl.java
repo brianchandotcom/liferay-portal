@@ -5,7 +5,7 @@
 
 package com.liferay.batch.engine.internal.writer;
 
-import com.liferay.batch.engine.csv.ObjectFieldColumnDescriptors;
+import com.liferay.batch.engine.csv.ColumnDescriptorProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -36,13 +36,12 @@ public class CSVBatchEngineExportTaskItemWriterImpl
 	implements BatchEngineExportTaskItemWriter {
 
 	public CSVBatchEngineExportTaskItemWriterImpl(
-			long companyId, String delimiter,
+			ColumnDescriptorProvider columnDescriptorProvider, long companyId,
+			String delimiter,
 			Map<String, ObjectValuePair<Field, Method>>
 				fieldNameObjectValuePairs,
-			List<String> fieldNames,
-			ObjectFieldColumnDescriptors objectFieldColumnDescriptors,
-			OutputStream outputStream, Map<String, Serializable> parameters,
-			String taskItemDelegateName)
+			List<String> fieldNames, OutputStream outputStream,
+			Map<String, Serializable> parameters, String taskItemDelegateName)
 		throws IOException, PortalException {
 
 		if (fieldNames.isEmpty()) {
@@ -57,8 +56,8 @@ public class CSVBatchEngineExportTaskItemWriterImpl
 			fieldNames, (value1, value2) -> value1.compareToIgnoreCase(value2));
 
 		_columnValuesExtractor = new ColumnValuesExtractor(
-			companyId, fieldNameObjectValuePairs, fieldNames,
-			objectFieldColumnDescriptors, taskItemDelegateName);
+			columnDescriptorProvider, companyId, fieldNameObjectValuePairs,
+			fieldNames, taskItemDelegateName);
 
 		if (Boolean.valueOf(
 				(String)parameters.getOrDefault(

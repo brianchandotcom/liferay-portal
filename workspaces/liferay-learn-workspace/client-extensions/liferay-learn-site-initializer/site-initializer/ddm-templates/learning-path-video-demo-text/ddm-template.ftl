@@ -5,6 +5,7 @@
 	/>
 
 	<#setting locale = localeUtil.getDefault() />
+
 	<#assign
 		recordedDate = recordedDateString?date("MM/dd/yy")
 		locale = originalLocale

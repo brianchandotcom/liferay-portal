@@ -5,6 +5,7 @@
 	/>
 
 	<#setting locale = localeUtil.getDefault() />
+
 	<#assign
 		workshopDate = workshopDateString?date("MM/dd/yy")
 		locale = originalLocale
@@ -26,6 +27,7 @@
 			/>
 
 			<#setting locale = localeUtil.getDefault() />
+
 			<#assign
 				retireDate = retireDateString?date("MM/dd/yy")
 				locale = originalLocale
@@ -51,19 +53,23 @@
 
 		<#assign nowDate =.now?date />
 
-		<span><span>
-		<#if retireDate gt nowDate>
-			${lastSession}
-			${expiryText}
-			<#if nextSessionBoolean>
-				${nextSession}
-			</#if>
-		</#if>
+		<span>
+			<span>
+				<#if retireDate gt nowDate>
+					${lastSession}
+					${expiryText}
 
-		<#if retireDate <= nowDate>
-			<div class='mb-3'>The recording from this live session is no longer available.</div>
-			${nextSession}
-		</#if>
-		</span></span>
+					<#if nextSessionBoolean>
+						${nextSession}
+					</#if>
+				</#if>
+
+				<#if retireDate <= nowDate>
+					<div class='mb-3'>The recording from this live session is no longer available.</div>
+
+					${nextSession}
+				</#if>
+			</span>
+		</span>
 	</#if>
 </#if>

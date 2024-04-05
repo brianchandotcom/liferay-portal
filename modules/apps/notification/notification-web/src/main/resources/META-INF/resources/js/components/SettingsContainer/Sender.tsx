@@ -22,6 +22,8 @@ export function Sender({
 	setValues,
 	values,
 }: SenderProps) {
+	const [recipient] = values.recipients as EmailRecipients[];
+
 	return (
 		<div className="row">
 			<div className="col-lg-6">
@@ -35,14 +37,14 @@ export function Sender({
 							...values,
 							recipients: [
 								{
-									...values.recipients[0],
+									...recipient,
 									from: target.value,
 								},
 							],
 						})
 					}
 					required
-					value={(values.recipients[0] as EmailRecipients).from}
+					value={recipient.from}
 				/>
 			</div>
 
@@ -57,7 +59,7 @@ export function Sender({
 							...values,
 							recipients: [
 								{
-									...values.recipients[0],
+									...recipient,
 									fromName: translation,
 								},
 							],
@@ -66,9 +68,7 @@ export function Sender({
 					placeholder=""
 					required
 					selectedLocale={selectedLocale}
-					translations={
-						(values.recipients[0] as EmailRecipients).fromName
-					}
+					translations={recipient.fromName}
 				/>
 			</div>
 		</div>

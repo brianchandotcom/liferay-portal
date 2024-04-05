@@ -95,6 +95,13 @@ public class PaymentMethodResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testGetCartByExternalReferenceCodePaymentMethodsPage()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGetCartPaymentMethodsPage() throws Exception {
 	}
 
@@ -112,6 +119,44 @@ public class PaymentMethodResourceTest
 				name = RandomTestUtil.randomString();
 			}
 		};
+	}
+
+	@Override
+	protected PaymentMethod
+			testGetCartByExternalReferenceCodePaymentMethodsPage_addPaymentMethod(
+				String externalReferenceCode, PaymentMethod paymentMethod)
+		throws Exception {
+
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			CommercePaymentMethodGroupRelLocalServiceUtil.
+				addCommercePaymentMethodGroupRel(
+					_user.getUserId(), _commerceChannel.getGroupId(),
+					Collections.singletonMap(
+						LocaleUtil.US, paymentMethod.getName()),
+					Collections.singletonMap(
+						LocaleUtil.US, paymentMethod.getDescription()),
+					true, null, paymentMethod.getKey(), 1, null);
+
+		_commercePaymentMethodGroupRels.add(commercePaymentMethodGroupRel);
+
+		return new PaymentMethod() {
+			{
+				description = commercePaymentMethodGroupRel.getDescription(
+					LocaleUtil.US);
+				key = commercePaymentMethodGroupRel.getPaymentIntegrationKey();
+				name = commercePaymentMethodGroupRel.getName(LocaleUtil.US);
+			}
+		};
+	}
+
+	@Override
+	protected String
+			testGetCartByExternalReferenceCodePaymentMethodsPage_getExternalReferenceCode()
+		throws Exception {
+
+		CommerceOrder commerceOrder = _addCommerceOrder();
+
+		return commerceOrder.getExternalReferenceCode();
 	}
 
 	@Override

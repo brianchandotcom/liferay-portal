@@ -7,6 +7,7 @@ package com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0;
 
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
+import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -75,6 +76,41 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 	}
 
 	@Override
+	public Page<CartItem> getCartByExternalReferenceCodeItemsPage(
+			String externalReferenceCode, Long skuId, Pagination pagination)
+		throws Exception {
+
+		CommerceOrder commerceOrder =
+			_commerceOrderService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrder == null) {
+			throw new NoSuchOrderException(
+				"Unable to find order with external reference code " +
+					externalReferenceCode);
+		}
+
+		return Page.of(
+			_filterCartItems(
+				transform(
+					_commerceOrderItemService.getCommerceOrderItems(
+						commerceOrder.getCommerceOrderId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS),
+					commerceOrderItem -> {
+						if ((skuId != null) &&
+							!Objects.equals(
+								commerceOrderItem.getCPInstanceId(), skuId)) {
+
+							return null;
+						}
+
+						return _toCartItem(
+							commerceOrder.getCommerceAccountId(),
+							commerceOrderItem);
+					})));
+	}
+
+	@Override
 	public CartItem getCartItem(Long cartItemId) throws Exception {
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemService.getCommerceOrderItem(cartItemId);
@@ -122,6 +158,44 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 		throws Exception {
 
 		return super.patchCartItem(cartItemId, cartItem);
+	}
+
+	@Override
+	public CartItem postCartByExternalReferenceCodeItem(
+			String externalReferenceCode, CartItem cartItem)
+		throws Exception {
+
+		CommerceOrder commerceOrder =
+			_commerceOrderService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrder == null) {
+			throw new NoSuchOrderException(
+				"Unable to find order with external reference code " +
+					externalReferenceCode);
+		}
+
+		SkuUnitOfMeasure skuUnitOfMeasure = cartItem.getSkuUnitOfMeasure();
+		String skuUnitOfMeasureKey = StringPool.BLANK;
+
+		if (skuUnitOfMeasure != null) {
+			skuUnitOfMeasureKey = skuUnitOfMeasure.getKey();
+		}
+
+		return _toCartItem(
+			commerceOrder.getCommerceAccountId(),
+			_commerceOrderItemService.addOrUpdateCommerceOrderItem(
+				commerceOrder.getCommerceOrderId(), cartItem.getSkuId(),
+				cartItem.getOptions(),
+				BigDecimal.valueOf(GetterUtil.get(cartItem.getQuantity(), 1)),
+				GetterUtil.getLong(cartItem.getReplacedSkuId()),
+				BigDecimal.ZERO, skuUnitOfMeasureKey,
+				_commerceContextFactory.create(
+					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
+					contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
+					commerceOrder.getCommerceAccountId()),
+				_serviceContextHelper.getServiceContext(
+					commerceOrder.getGroupId())));
 	}
 
 	@Override

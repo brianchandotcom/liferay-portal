@@ -7,5 +7,6 @@ ext.expectedContentStrings = [
 	'"templateType" : "site-initializer"',
 ]
 ext.expectedFilePath = "site-initializer/site-initializer.json"
+ext.taskPath = ":site-initializer:createClientExtensionConfig"
 
-apply from: "./_baseFileContentTestCase.gradle"
+apply from: project.property("commonScript.testClientExtensionBuildFileContentsTestCase.gradle")

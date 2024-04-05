@@ -1,4 +1,5 @@
 ext.expectedContentStrings = ["COPY /site-initializer /opt/liferay/site-initializer"]
 ext.expectedFilePath = "Dockerfile"
+ext.taskPath = ":site-initializer:createClientExtensionConfig"
 
-apply from: "./_baseFileContentTestCase.gradle"
+apply from: project.property("commonScript.testClientExtensionBuildFileContentsTestCase.gradle")

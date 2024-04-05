@@ -3,5 +3,6 @@ ext.expectedContentStrings = [
 	'"id": "siteinitializer"',
 ]
 ext.expectedFilePath = "LCP.json"
+ext.taskPath = ":site-initializer:createClientExtensionConfig"
 
-apply from: "./_baseFileContentTestCase.gradle"
+apply from: project.property("commonScript.testClientExtensionBuildFileContentsTestCase.gradle")

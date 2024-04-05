@@ -1,34 +1,13 @@
-task runGradleTest
-
-String expectedFilePath = "LCP.json"
-String[] expectedContentStrings = [
+ext.expectedFilePath = "LCP.json"
+ext.expectedContentStrings = [
 	'"foo" : "bar"',
 	'"dependencies" : [ "foo", "bar" ]',
 	'"memory" : 500',
 	'"LIFERAY_ROUTES_DXP" : "/etc/liferay/lxc/dxp-metadata"'
 ]
-String[] unexpectedContentStrings = [
+ext.unexpectedContentStrings = [
 	'"memory" : 300',
 ]
+ext.taskPath = ":client-extension-override-lcp-json:createClientExtensionConfig"
 
-runGradleTest {
-	dependsOn ":client-extension-override-lcp-json:createClientExtensionConfig"
-
-	doLast {
-		Project clientExtensionOverrideLCPJsonProject = project(":client-extension-override-lcp-json")
-
-		File cxBuildDir = clientExtensionOverrideLCPJsonProject.file("${clientExtensionOverrideLCPJsonProject.buildDir}/liferay-client-extension-build")
-
-		File file = clientExtensionOverrideLCPJsonProject.file("${cxBuildDir}/${expectedFilePath}")
-
-		assert file.exists()
-
-		expectedContentStrings.each {
-			assert file.text.contains(it)
-		}
-
-		unexpectedContentStrings.each {
-			assert !file.text.contains(it)
-		}
-	}
-}
+apply from: project.property("commonScript.testClientExtensionBuildFileContentsTestCase.gradle")

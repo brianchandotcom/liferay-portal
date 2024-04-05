@@ -1,4 +1,5 @@
 ext.expectedContentStrings = ["Liferay-Client-Extension-Site-Initializer=site-initializer/"]
 ext.expectedFilePath = "WEB-INF/liferay-plugin-package.properties"
+ext.taskPath = ":site-initializer:createClientExtensionConfig"
 
-apply from: "./_baseFileContentTestCase.gradle"
+apply from: project.property("commonScript.testClientExtensionBuildFileContentsTestCase.gradle")

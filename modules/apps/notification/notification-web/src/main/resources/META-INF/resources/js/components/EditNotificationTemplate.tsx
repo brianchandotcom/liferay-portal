@@ -117,7 +117,7 @@ export default function EditNotificationTemplate({
 		let notificationValue = {...notification};
 
 		if (
-			!Liferay.FeatureFlags['LPD-6604'] &&
+			!Liferay.FeatureFlags['LPD-11165'] &&
 			notification.type === 'email'
 		) {
 			const recipients = notification.recipients[0] as EmailRecipients;
@@ -331,13 +331,13 @@ export default function EditNotificationTemplate({
 						className={classNames(
 							{
 								row: !(
-									Liferay.FeatureFlags['LPD-6604'] &&
+									Liferay.FeatureFlags['LPD-11165'] &&
 									values.type === 'email'
 								),
 							},
 							{
 								'lfr__notification-template-basic-info':
-									Liferay.FeatureFlags['LPD-6604'] &&
+									Liferay.FeatureFlags['LPD-11165'] &&
 									values.type === 'email',
 							}
 						)}
@@ -346,7 +346,7 @@ export default function EditNotificationTemplate({
 							className={classNames(
 								{
 									'col-lg-6': !(
-										Liferay.FeatureFlags['LPD-6604'] &&
+										Liferay.FeatureFlags['LPD-11165'] &&
 										values.type === 'email'
 									),
 								},
@@ -363,7 +363,7 @@ export default function EditNotificationTemplate({
 						<div
 							className={classNames({
 								'col-lg-6 lfr__notification-template-card': !(
-									Liferay.FeatureFlags['LPD-6604'] &&
+									Liferay.FeatureFlags['LPD-11165'] &&
 									values.type === 'email'
 								),
 							})}

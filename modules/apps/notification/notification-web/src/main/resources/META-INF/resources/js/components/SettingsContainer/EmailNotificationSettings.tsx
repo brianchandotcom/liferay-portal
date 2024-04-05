@@ -50,7 +50,7 @@ export function EmailNotificationSettings({
 }: EmailNotificationSettingsProps) {
 	return (
 		<>
-			{Liferay.FeatureFlags['LPD-6604'] ? (
+			{Liferay.FeatureFlags['LPD-11165'] ? (
 				<div className="lfr__notification-template-email-notification-settings">
 					<ClayPanel
 						displayTitle={Liferay.Language.get('sender')}

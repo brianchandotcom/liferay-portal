@@ -65,6 +65,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
@@ -153,7 +154,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
+
+import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.core.Feature;
 
 import org.hamcrest.CoreMatchers;
 
@@ -5007,6 +5012,150 @@ public class ObjectEntryResourceTest {
 					jsonObject.getString("status"));
 			}
 		);
+	}
+
+	@Test
+	public void testGetObjectEntryUnsafeSuppliers() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(ObjectEntryResourceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		AtomicBoolean property1Computed = new AtomicBoolean();
+		AtomicBoolean property2Computed = new AtomicBoolean();
+
+		ServiceRegistration<Feature> serviceRegistration =
+			bundleContext.registerService(
+				Feature.class,
+				featureContext -> {
+					featureContext.register(
+						(ContainerResponseFilter)
+							(containerRequestContext,
+							 containerResponseContext) -> {
+
+								com.liferay.object.rest.dto.v1_0.ObjectEntry
+									objectEntry =
+										(com.liferay.object.rest.dto.v1_0.
+											ObjectEntry)
+												containerResponseContext.
+													getEntity();
+
+								Map<String, UnsafeSupplier<Object, Exception>>
+									lazyProperties =
+										objectEntry.getLazyProperties();
+
+								UnsafeSupplier<Object, Exception>
+									unsafeSupplier1 = lazyProperties.get(
+										_OBJECT_FIELD_NAME_BOOLEAN);
+
+								lazyProperties.put(
+									_OBJECT_FIELD_NAME_BOOLEAN,
+									() -> {
+										property1Computed.set(true);
+
+										return unsafeSupplier1.get();
+									});
+
+								UnsafeSupplier<Object, Exception>
+									unsafeSupplier2 = lazyProperties.get(
+										_OBJECT_FIELD_NAME_DATE);
+
+								lazyProperties.put(
+									_OBJECT_FIELD_NAME_DATE,
+									() -> {
+										property2Computed.set(true);
+
+										return unsafeSupplier2.get();
+									});
+							});
+
+					return false;
+				},
+				HashMapDictionaryBuilder.<String, Object>put(
+					"osgi.jaxrs.application.select",
+					"(osgi.jaxrs.extension.select=\\(osgi.jaxrs.name=Liferay." +
+						"Vulcan\\))"
+				).put(
+					"osgi.jaxrs.extension", true
+				).put(
+					"osgi.jaxrs.name", "Liferay.Vulcan)"
+				).build());
+
+		try {
+			_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+				_objectDefinition1,
+				HashMapBuilder.<String, Serializable>put(
+					_OBJECT_FIELD_NAME_BOOLEAN, RandomTestUtil.randomBoolean()
+				).put(
+					_OBJECT_FIELD_NAME_DATE,
+					_dateFormat.format(RandomTestUtil.nextDate())
+				).build(),
+				_TAG_1);
+
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/",
+					_objectEntry1.getExternalReferenceCode(), "?fields=",
+					_OBJECT_FIELD_NAME_BOOLEAN),
+				Http.Method.GET);
+
+			Assert.assertTrue(
+				"property1 should have been computed", property1Computed.get());
+			Assert.assertFalse(
+				"property2 should not have been computed",
+				property2Computed.get());
+
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				_objectDefinition1.getRESTContextPath() +
+					"/by-external-reference-code/" +
+						_objectEntry1.getExternalReferenceCode(),
+				Http.Method.GET);
+
+			Assert.assertTrue(
+				"property1 should have been computed", property1Computed.get());
+			Assert.assertTrue(
+				"property2 should have been computed", property2Computed.get());
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+	}
+
+	@Test
+	public void testGetObjectEntryWithActions() throws Exception {
+		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(), true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_STANDALONE,
+			new UnicodeProperties(), false);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, "value"
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
+
+		JSONObject actionJSONObject = actionsJSONObject.getJSONObject(
+			objectAction.getName());
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"http://localhost:8080/o",
+				_objectDefinition1.getRESTContextPath(),
+				"/by-external-reference-code/",
+				jsonObject.getString("externalReferenceCode"),
+				"/object-actions/", objectAction.getName()),
+			actionJSONObject.getString("href"));
+		Assert.assertEquals("PUT", actionJSONObject.getString("method"));
 	}
 
 	@FeatureFlags("LPS-174455")

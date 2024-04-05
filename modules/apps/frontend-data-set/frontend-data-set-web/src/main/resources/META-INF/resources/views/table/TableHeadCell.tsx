@@ -7,28 +7,37 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import ViewsContext from '../ViewsContext';
+
+// @ts-ignore
+
 import {VIEWS_ACTION_TYPES} from '../viewsReducer';
 import Cell from './dnd_table/Cell';
 
-function TableHeadCell({
+const TableHeadCell = ({
 	contentRenderer,
 	fieldName,
 	hideColumnLabel,
 	label,
 	sortable,
 	sortingKey: sortingKeyProp,
-}) {
+}: {
+	contentRenderer?: string;
+	fieldName: string | Array<string>;
+	hideColumnLabel?: boolean;
+	label: string;
+	sortable?: boolean;
+	sortingKey?: string;
+}) => {
 	const [{sorts}, viewsDispatch] = useContext(ViewsContext);
 
-	const [sortingKey, setSortingKey] = useState(null);
-	const [sortingMatch, setSortingMatch] = useState(null);
+	const [sortingKey, setSortingKey] = useState<string | null>(null);
+	const [sortingMatch, setSortingMatch] = useState<any>(null);
 
 	useEffect(() => {
-		const newSortingKey =
+		const newSortingKey: string =
 			sortingKeyProp ||
 			(Array.isArray(fieldName) ? fieldName[0] : fieldName);
 
@@ -36,7 +45,7 @@ function TableHeadCell({
 		setSortingMatch(sorts.find((element) => element.key === newSortingKey));
 	}, [fieldName, sorts, sortingKeyProp]);
 
-	function handleSortingCellClick(event) {
+	function handleSortingCellClick(event: any) {
 		event.preventDefault();
 
 		const updatedSortedElements = sortingMatch
@@ -76,7 +85,6 @@ function TableHeadCell({
 			{sortingMatch && (
 				<span className="inline-item inline-item-after">
 					<ClayIcon
-						draggable
 						symbol={
 							sortingMatch?.direction === 'asc'
 								? 'order-arrow-up'
@@ -101,7 +109,6 @@ function TableHeadCell({
 						'sorting-icon',
 						sortingMatch?.direction === 'asc' && 'active'
 					)}
-					draggable
 					symbol="order-arrow-up"
 				/>
 
@@ -110,7 +117,6 @@ function TableHeadCell({
 						'sorting-icon',
 						sortingMatch?.direction === 'desc' && 'active'
 					)}
-					draggable
 					symbol="order-arrow-down"
 				/>
 			</span>
@@ -129,18 +135,5 @@ function TableHeadCell({
 			{sortable ? content : !hideColumnLabel && label}
 		</Cell>
 	);
-}
-
-TableHeadCell.proptypes = {
-	contentRenderer: PropTypes.string,
-	fieldName: PropTypes.oneOfType([
-		PropTypes.string,
-		PropTypes.arrayOf(PropTypes.string),
-	]),
-	hideColumnLabel: PropTypes.bool,
-	label: PropTypes.string,
-	sortable: PropTypes.bool,
-	sortingKey: PropTypes.string,
 };
-
 export default TableHeadCell;

@@ -3,18 +3,34 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import PropTypes from 'prop-types';
 import React, {useContext, useMemo, useState} from 'react';
 
-import ViewsContext from '../../ViewsContext';
+import ViewsContext, {
+	IViewsContext,
+	TViewsContextDispatch,
+} from '../../ViewsContext';
+
+// @ts-ignore
+
 import {VIEWS_ACTION_TYPES} from '../../viewsReducer';
-import Context from './TableContext';
+import TableContext from './TableContext';
 
-function ContextProvider({children, columnNames}) {
-	const [{modifiedFields}, viewsDispatch] = useContext(ViewsContext);
+function TableContextProvider({
+	children,
+	columnNames,
+}: {
+	children: React.ReactNode;
+	columnNames: Array<string>;
+}) {
+	const [{modifiedFields}, viewsDispatch]: [
+		IViewsContext,
+		TViewsContextDispatch
+	] = useContext(ViewsContext);
 
-	const [tableWidth, setTableWidth] = useState(null);
-	const [draggingColumnName, setDraggingColumnName] = useState(null);
+	const [tableWidth, setTableWidth] = useState<number>(0);
+	const [draggingColumnName, setDraggingColumnName] = useState<null | string>(
+		null
+	);
 	const [draggingAllowed, setDraggingAllowed] = useState(true);
 
 	const isFixed = useMemo(() => {
@@ -25,7 +41,7 @@ function ContextProvider({children, columnNames}) {
 		return allRegistered;
 	}, [modifiedFields, columnNames]);
 
-	const resizeColumn = (name, width) => {
+	const resizeColumn = (name: string, width: number) => {
 		if (!isFixed) {
 			return;
 		}
@@ -36,8 +52,8 @@ function ContextProvider({children, columnNames}) {
 
 		let totalWidth = 0;
 
-		Object.values(modifiedFields).forEach((fieldAttributes) => {
-			totalWidth += fieldAttributes.width;
+		Object.values(modifiedFields).forEach((modifiedField: any) => {
+			totalWidth += modifiedField.width;
 		});
 
 		const nextColumnName = columnNames[columnNames.indexOf(name) + 1];
@@ -79,7 +95,7 @@ function ContextProvider({children, columnNames}) {
 	};
 
 	return (
-		<Context.Provider
+		<TableContext.Provider
 			value={{
 				columnNames,
 				draggingAllowed,
@@ -93,16 +109,8 @@ function ContextProvider({children, columnNames}) {
 			}}
 		>
 			{children}
-		</Context.Provider>
+		</TableContext.Provider>
 	);
 }
 
-ContextProvider.defaultProps = {
-	columnNames: [],
-};
-
-ContextProvider.propTypes = {
-	columnNames: PropTypes.arrayOf(PropTypes.string),
-};
-
-export default ContextProvider;
+export default TableContextProvider;

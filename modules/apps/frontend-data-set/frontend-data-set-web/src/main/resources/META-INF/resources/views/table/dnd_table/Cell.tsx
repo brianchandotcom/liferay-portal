@@ -6,21 +6,34 @@
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {throttle} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useRef} from 'react';
 
-import ViewsContext from '../../ViewsContext';
-import {VIEWS_ACTION_TYPES} from '../../viewsReducer';
-import Context from './TableContext';
+import ViewsContext, {
+	IViewsContext,
+	TViewsContextDispatch,
+} from '../../ViewsContext';
 
-function Cell({
+// @ts-ignore
+
+import {VIEWS_ACTION_TYPES} from '../../viewsReducer';
+import TableContext from './TableContext';
+
+const Cell = ({
 	children,
 	className,
 	columnName,
 	defaultWidth = 'auto',
-	heading,
-	resizable,
-}) {
+	heading = false,
+	resizable = false,
+	...otherProps
+}: {
+	children?: React.ReactNode;
+	className?: string;
+	columnName: string;
+	defaultWidth?: string | number;
+	heading?: boolean;
+	resizable?: boolean;
+}) => {
 	const {
 		draggingAllowed,
 		draggingColumnName,
@@ -28,14 +41,18 @@ function Cell({
 		resizeColumn,
 		updateDraggingAllowed,
 		updateDraggingColumnName,
-	} = useContext(Context);
-	const [{modifiedFields}, viewsDispatch] = useContext(ViewsContext);
+	} = useContext(TableContext);
 
-	const cellRef = useRef();
+	const [{modifiedFields}, viewsDispatch]: [
+		IViewsContext,
+		TViewsContextDispatch
+	] = useContext(ViewsContext);
+
+	const cellRef = useRef<HTMLTableCellElement>(null);
 	const clientXRef = useRef({current: null});
 
 	useEffect(() => {
-		if (columnName && heading && !isFixed) {
+		if (columnName && heading && !isFixed && cellRef.current) {
 			const boundingClientRect = cellRef.current.getBoundingClientRect();
 
 			viewsDispatch({
@@ -107,6 +124,7 @@ function Cell({
 				className={className}
 				headingCell={heading}
 				ref={cellRef}
+				{...otherProps}
 				style={{
 					width: width ?? defaultWidth,
 				}}
@@ -121,24 +139,12 @@ function Cell({
 			className={classNames(heading ? 'dnd-th' : 'dnd-td', className)}
 			ref={cellRef}
 			style={{
-				width,
+				width: width ?? defaultWidth,
 			}}
 		>
 			{content}
 		</div>
 	);
-}
-
-Cell.defaultProps = {
-	heading: false,
-	resizable: false,
-};
-
-Cell.propTypes = {
-	className: PropTypes.string,
-	columnName: PropTypes.string,
-	heading: PropTypes.bool,
-	resizable: PropTypes.bool,
 };
 
 export default Cell;

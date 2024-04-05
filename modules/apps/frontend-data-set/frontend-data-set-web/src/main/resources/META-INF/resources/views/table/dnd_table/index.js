@@ -8,9 +8,9 @@ import classNames from 'classnames';
 import React from 'react';
 
 import Cell from './Cell';
-import ContextProvider from './ContextProvider';
 import Row from './Row';
 import Table from './Table';
+import TableContextProvider from './TableContextProvider';
 
 function Body({children, className}) {
 	const Component = Liferay.FeatureFlags['LPS-193005']
@@ -53,8 +53,8 @@ function Head({children, className}) {
 export default Object.assign(Table, {
 	Body,
 	Cell,
-	ContextProvider,
 	Head,
 	Row,
 	Table,
+	TableContextProvider,
 });

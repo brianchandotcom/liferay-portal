@@ -7,7 +7,7 @@ import {
 	FDS_NESTED_FIELD_NAME_DELIMITER,
 	FDS_NESTED_FIELD_NAME_PARENT_SUFFIX,
 } from '../constants';
-interface ILocalizedItemDetails {
+export interface ILocalizedItemDetails {
 	rootPropertyName: string;
 	value: string;
 	valuePath: Array<string>;

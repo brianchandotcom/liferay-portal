@@ -72,20 +72,6 @@ public class MiniCartTag extends IncludeTag {
 				_accountEntryId = accountEntry.getAccountEntryId();
 			}
 
-			_checkoutURL = StringPool.BLANK;
-
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				httpServletRequest, CommercePortletKeys.COMMERCE_CHECKOUT,
-				PortletProvider.Action.VIEW);
-
-			if (portletURL != null) {
-				_checkoutURL = PortletURLBuilder.create(
-					portletURL
-				).setMVCRenderCommandName(
-					"/commerce_checkout/checkout_redirect"
-				).buildString();
-			}
-
 			_commerceChannelId = 0;
 
 			if (commerceContext != null) {
@@ -100,6 +86,20 @@ public class MiniCartTag extends IncludeTag {
 				_orderId = 0;
 
 				return super.doStartTag();
+			}
+
+			_checkoutURL = StringPool.BLANK;
+
+			PortletURL portletURL = PortletProviderUtil.getPortletURL(
+				httpServletRequest, CommercePortletKeys.COMMERCE_CHECKOUT,
+				PortletProvider.Action.VIEW);
+
+			if (portletURL != null) {
+				_checkoutURL = PortletURLBuilder.create(
+					portletURL
+				).setMVCRenderCommandName(
+					"/commerce_checkout/checkout_redirect"
+				).buildString();
 			}
 
 			_commerceChannelGroupId =

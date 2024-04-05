@@ -5,12 +5,13 @@
 
 /// <reference types="react" />
 
-import {FormError} from '@liferay/object-js-components-web';
+import {FormError, MultiSelectItem} from '@liferay/object-js-components-web';
 import {ILearnResourceContext} from 'frontend-js-components-web';
 import {NotificationTemplateError} from '../EditNotificationTemplate';
 import './EmailNotificationSettings.scss';
 interface EmailNotificationSettingsProps {
 	baseResourceURL: string;
+	emailNotificationRoles: MultiSelectItem[];
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	learnResources: ILearnResourceContext;
 	selectedLocale: Locale;
@@ -19,6 +20,7 @@ interface EmailNotificationSettingsProps {
 }
 export declare function EmailNotificationSettings({
 	baseResourceURL,
+	emailNotificationRoles,
 	errors,
 	learnResources,
 	selectedLocale,

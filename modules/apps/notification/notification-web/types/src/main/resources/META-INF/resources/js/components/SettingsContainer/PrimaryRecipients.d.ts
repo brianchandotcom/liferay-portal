@@ -5,11 +5,11 @@
 
 /// <reference types="react" />
 
-import {FormError} from '@liferay/object-js-components-web';
+import {FormError, MultiSelectItem} from '@liferay/object-js-components-web';
 import {ILearnResourceContext} from 'frontend-js-components-web';
 import {NotificationTemplateError} from '../EditNotificationTemplate';
 interface PrimaryRecipientProps {
-	baseResourceURL: string;
+	emailNotificationRoles: MultiSelectItem[];
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	learnResources: ILearnResourceContext;
 	recipientOptions: LabelValueObject[];
@@ -18,7 +18,7 @@ interface PrimaryRecipientProps {
 	values: NotificationTemplate;
 }
 export declare function PrimaryRecipient({
-	baseResourceURL,
+	emailNotificationRoles,
 	errors,
 	learnResources,
 	recipientOptions,

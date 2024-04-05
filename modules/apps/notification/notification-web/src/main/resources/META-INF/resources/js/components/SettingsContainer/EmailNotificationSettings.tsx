@@ -7,7 +7,11 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {FormError, Input} from '@liferay/object-js-components-web';
+import {
+	FormError,
+	Input,
+	MultiSelectItem,
+} from '@liferay/object-js-components-web';
 import {
 	ILearnResourceContext,
 	InputLocalized,
@@ -22,6 +26,7 @@ import {Sender} from './Sender';
 import './EmailNotificationSettings.scss';
 interface EmailNotificationSettingsProps {
 	baseResourceURL: string;
+	emailNotificationRoles: MultiSelectItem[];
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	learnResources: ILearnResourceContext;
 	selectedLocale: Locale;
@@ -42,6 +47,7 @@ const RECIPIENT_OPTIONS = [
 
 export function EmailNotificationSettings({
 	baseResourceURL,
+	emailNotificationRoles,
 	errors,
 	learnResources,
 	selectedLocale,
@@ -74,7 +80,7 @@ export function EmailNotificationSettings({
 					>
 						<ClayPanel.Body>
 							<PrimaryRecipient
-								baseResourceURL={baseResourceURL}
+								emailNotificationRoles={emailNotificationRoles}
 								errors={errors}
 								learnResources={learnResources}
 								recipientOptions={RECIPIENT_OPTIONS}

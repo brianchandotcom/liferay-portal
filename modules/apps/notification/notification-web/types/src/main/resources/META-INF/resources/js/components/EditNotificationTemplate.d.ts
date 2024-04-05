@@ -26,7 +26,7 @@ interface EditNotificationTemplateProps {
 	externalReferenceCode: string;
 	learnResources: ILearnResourceContext;
 	notificationTemplateId: number;
-	notificationTemplateType: string;
+	notificationTemplateType: 'email' | 'userNotification' | '';
 	portletNamespace: string;
 }
 export default function EditNotificationTemplate({

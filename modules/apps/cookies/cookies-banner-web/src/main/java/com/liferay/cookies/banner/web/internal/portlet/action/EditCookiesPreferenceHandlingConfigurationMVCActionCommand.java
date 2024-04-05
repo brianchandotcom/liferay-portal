@@ -43,12 +43,20 @@ public class EditCookiesPreferenceHandlingConfigurationMVCActionCommand
 
 		ExtendedObjectClassDefinition.Scope scope = _getScope(actionRequest);
 
+		boolean enabled = ParamUtil.getBoolean(actionRequest, "enabled");
+
+		boolean explicitConsentMode = ParamUtil.getBoolean(
+			actionRequest, "explicitConsentMode");
+
+		if (!enabled) {
+			explicitConsentMode = true;
+		}
+
 		try {
 			_cookiesConfigurationProvider.
 				updateCookiesPreferenceHandlingConfiguration(
-					ParamUtil.getBoolean(actionRequest, "enabled"),
-					ParamUtil.getBoolean(actionRequest, "explicitConsentMode"),
-					scope, _getScopePK(actionRequest, scope));
+					enabled, explicitConsentMode, scope,
+					_getScopePK(actionRequest, scope));
 		}
 		catch (Exception exception) {
 			SessionErrors.add(actionRequest, exception.getClass(), exception);

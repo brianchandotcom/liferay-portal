@@ -1,5 +1,0 @@
-dependencies {
-	testIntegrationImplementation project(":apps:client-extension:client-extension-api")
-	testIntegrationImplementation project(":apps:client-extension:client-extension-type-api")
-	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
-}

@@ -4,10 +4,6 @@ definition {
 	macro accessABTestInAC(itemName = null) {
 		var key_itemName = ${itemName};
 
-		while ((IsElementNotPresent(locator1 = "ABTest#OPEN_ITEM")) && (maxIterations = "50")) {
-			TestUtils.hardRefresh();
-		}
-
 		Click(locator1 = "ABTest#OPEN_ITEM");
 	}
 

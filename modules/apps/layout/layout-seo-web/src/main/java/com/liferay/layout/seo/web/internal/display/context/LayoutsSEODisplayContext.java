@@ -644,14 +644,6 @@ public class LayoutsSEODisplayContext {
 			return _privateLayout;
 		}
 
-		Group selGroup = getSelGroup();
-
-		if (selGroup.isLayoutSetPrototype()) {
-			_privateLayout = true;
-
-			return _privateLayout;
-		}
-
 		if (getSelLayout() != null) {
 			Layout selLayout = getSelLayout();
 

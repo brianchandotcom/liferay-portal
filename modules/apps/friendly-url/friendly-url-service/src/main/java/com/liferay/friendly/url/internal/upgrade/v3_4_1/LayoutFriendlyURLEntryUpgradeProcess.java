@@ -114,8 +114,8 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 						}
 
 						Map<String, String> friendlyURLMap = _getFriendlyURLMap(
-							companyId, ctCollectionId, groupId, plid,
-							privateLayout);
+							companyId, classNameId, ctCollectionId, groupId,
+							plid, privateLayout);
 
 						for (Map.Entry<String, String> entry :
 								friendlyURLMap.entrySet()) {
@@ -274,23 +274,41 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 	}
 
 	private Map<String, String> _getFriendlyURLMap(
-			long companyId, long ctCollectionId, long groupId, long plid,
-			boolean privateLayout)
+			long companyId, long classNameId, long ctCollectionId, long groupId,
+			long plid, boolean privateLayout)
 		throws Exception {
 
 		Map<String, String> friendlyURLMap = new HashMap<>();
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select friendlyURL, languageId from LayoutFriendlyURL ",
-					"where ctCollectionId = ? and groupId = ? and companyId = ",
-					"? and plid = ? and privateLayout = ? "))) {
+		String sql = StringBundler.concat(
+			"select LayoutFriendlyURL.friendlyURL, ",
+			"LayoutFriendlyURL.languageId from LayoutFriendlyURL left join ",
+			"FriendlyURLEntryLocalization on ",
+			"(FriendlyURLEntryLocalization.ctCollectionId = ",
+			"LayoutFriendlyURL.ctCollectionId and ",
+			"FriendlyURLEntryLocalization.languageId = ",
+			"LayoutFriendlyURL.languageId and ",
+			"FriendlyURLEntryLocalization.urlTitle = ",
+			"LayoutFriendlyURL.friendlyURL and ",
+			"FriendlyURLEntryLocalization.groupId = LayoutFriendlyURL.groupId ",
+			"and FriendlyURLEntryLocalization.classNameId = ? and ",
+			"FriendlyURLEntryLocalization.classPK = LayoutFriendlyURL.plid) ",
+			"where LayoutFriendlyURL.ctCollectionId = ? and ",
+			"LayoutFriendlyURL.groupId = ? and LayoutFriendlyURL.companyId = ",
+			"? and LayoutFriendlyURL.plid = ? and ",
+			"LayoutFriendlyURL.privateLayout = ? and ",
+			"FriendlyURLEntryLocalization.friendlyURLEntryLocalizationId is ",
+			"null");
 
-			preparedStatement.setLong(1, ctCollectionId);
-			preparedStatement.setLong(2, groupId);
-			preparedStatement.setLong(3, companyId);
-			preparedStatement.setLong(4, plid);
-			preparedStatement.setBoolean(5, privateLayout);
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				SQLTransformer.transform(sql))) {
+
+			preparedStatement.setLong(1, classNameId);
+			preparedStatement.setLong(2, ctCollectionId);
+			preparedStatement.setLong(3, groupId);
+			preparedStatement.setLong(4, companyId);
+			preparedStatement.setLong(5, plid);
+			preparedStatement.setBoolean(6, privateLayout);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {

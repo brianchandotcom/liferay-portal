@@ -57,11 +57,11 @@ public class TestrayRunComparisonResourceImpl
 		Map<String, Map<String, Serializable>> testrayCaseResultsMap1 =
 			_getObjectEntriesMap(
 				_getCaseResultFilterString(testrayRunComparison, testrayRunId1),
-				"r_caseToCaseResult_c_caseId", "C_CaseResult");
+				"r_caseToCaseResult_c_caseId", "CaseResult");
 		Map<String, Map<String, Serializable>> testrayCaseResultsMap2 =
 			_getObjectEntriesMap(
 				_getCaseResultFilterString(testrayRunComparison, testrayRunId2),
-				"r_caseToCaseResult_c_caseId", "C_CaseResult");
+				"r_caseToCaseResult_c_caseId", "CaseResult");
 
 		for (Map.Entry<String, Map<String, Serializable>> entry :
 				testrayCaseResultsMap1.entrySet()) {
@@ -81,7 +81,7 @@ public class TestrayRunComparisonResourceImpl
 		Map<String, Map<String, Serializable>> testrayComponentsMap =
 			_getObjectEntriesMap(
 				_getComponentFilterString("", testrayRunId1, testrayRunId2),
-				"c_componentId", "C_Component");
+				"c_componentId", "Component");
 
 		testrayRunComparison.setResults(
 			ListUtil.fromArray(
@@ -98,7 +98,7 @@ public class TestrayRunComparisonResourceImpl
 							_getComponentFilterString(
 								"teamToComponents/", testrayRunId1,
 								testrayRunId2),
-							"c_teamId", "C_Team"),
+							"c_teamId", "Team"),
 						set)
 				).build()
 			).toArray());
@@ -184,14 +184,15 @@ public class TestrayRunComparisonResourceImpl
 	}
 
 	private Map<String, Map<String, Serializable>> _getObjectEntriesMap(
-			String filterString, String key, String tableName)
+			String filterString, String key, String objectDefinitionShortName)
 		throws Exception {
 
 		Map<String, Map<String, Serializable>> map = new HashMap<>();
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
-				contextCompany.getCompanyId(), tableName);
+				contextCompany.getCompanyId(),
+				"C_" + objectDefinitionShortName);
 
 		_objectEntryLocalService.getValuesList(
 			0, contextCompany.getCompanyId(), contextUser.getUserId(),

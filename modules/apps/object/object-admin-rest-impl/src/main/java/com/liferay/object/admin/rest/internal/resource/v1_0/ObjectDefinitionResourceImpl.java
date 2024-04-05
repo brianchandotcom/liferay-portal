@@ -200,11 +200,7 @@ public class ObjectDefinitionResourceImpl
 		String rootObjectDefinitionExternalReferenceCode =
 			objectDefinition.getRootObjectDefinitionExternalReferenceCode();
 
-		if (Validator.isNotNull(rootObjectDefinitionExternalReferenceCode) &&
-			!Objects.equals(
-				rootObjectDefinitionExternalReferenceCode,
-				objectDefinition.getExternalReferenceCode())) {
-
+		if (Validator.isNotNull(rootObjectDefinitionExternalReferenceCode)) {
 			objectDefinition.setStatus((Status)null);
 
 			_validateRootObjectDefinition(

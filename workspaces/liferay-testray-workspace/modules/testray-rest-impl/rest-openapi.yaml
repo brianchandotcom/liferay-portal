@@ -6,6 +6,11 @@ components:
                     items:
                         type: object
                     type: array
+                testrayCasePriorities:
+                    type: string
+                testrayTeamId:
+                    format: int64
+                    type: integer
             type: object
 info:
     license:

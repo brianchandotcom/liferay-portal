@@ -826,7 +826,7 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "wetsuit,1");
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "wetsuit");
 		}
 
 		task ("Save the newly created analysis") {
@@ -862,7 +862,7 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "${defaultEventName},1");
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = ${defaultEventName});
 		}
 
 		task ("Save the newly created analysis") {
@@ -881,7 +881,7 @@ definition {
 		}
 
 		task ("Check the analysis result appears") {
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "wetsuit,1");
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "wetsuit");
 		}
 
 		task ("Go to event analysis") {
@@ -897,7 +897,7 @@ definition {
 		}
 
 		task ("Check the analysis result appears") {
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "${defaultEventName},1");
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = ${defaultEventName});
 		}
 	}
 

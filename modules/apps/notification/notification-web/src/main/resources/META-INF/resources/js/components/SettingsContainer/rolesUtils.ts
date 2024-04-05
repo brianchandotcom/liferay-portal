@@ -13,7 +13,7 @@ interface Role {
 	name: string;
 }
 
-export async function getRoles(baseResourceURL: string) {
+export async function getEmailNotificationRoles(baseResourceURL: string) {
 	const response = await fetch(
 		createResourceURL(baseResourceURL, {
 			p_p_resource_id:

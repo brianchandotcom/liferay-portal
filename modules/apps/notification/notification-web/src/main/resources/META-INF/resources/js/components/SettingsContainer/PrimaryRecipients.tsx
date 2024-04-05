@@ -21,10 +21,10 @@ import {
 import React, {useEffect, useState} from 'react';
 
 import {NotificationTemplateError} from '../EditNotificationTemplate';
-import {getCheckedChildren, getRoles} from './rolesUtils';
+import {getCheckedChildren} from './rolesUtils';
 
 interface PrimaryRecipientProps {
-	baseResourceURL: string;
+	emailNotificationRoles: MultiSelectItem[];
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	learnResources: ILearnResourceContext;
 	recipientOptions: LabelValueObject[];
@@ -34,7 +34,7 @@ interface PrimaryRecipientProps {
 }
 
 export function PrimaryRecipient({
-	baseResourceURL,
+	emailNotificationRoles,
 	errors,
 	learnResources,
 	recipientOptions,
@@ -70,28 +70,34 @@ export function PrimaryRecipient({
 	};
 
 	useEffect(() => {
-		const makeFetch = async () => {
-			const [roles] = await getRoles(baseResourceURL);
-			if (Array.isArray(recipient.to) && !!recipient.to.length) {
-				setToRolesList([
-					{
-						...roles,
-						children: getCheckedChildren(
-							recipient.to,
-							roles.children
-						),
-					},
-				]);
+		if (emailNotificationRoles.length && !toRolesList.length) {
+			setToRolesList(emailNotificationRoles);
+		}
 
-				return;
-			}
+		if (
+			recipient.toType === 'role' &&
+			Array.isArray(recipient.to) &&
+			!!recipient.to.length &&
+			(!!toRolesList.length || !!emailNotificationRoles.length)
+		) {
+			const baseRoleList = toRolesList.length
+				? toRolesList[0]
+				: emailNotificationRoles[0];
 
-			setToRolesList([roles]);
-		};
+			setToRolesList([
+				{
+					...baseRoleList,
+					children: getCheckedChildren(
+						recipient.to,
+						baseRoleList.children
+					),
+				},
+			]);
 
-		makeFetch();
+			return;
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [recipient.to]);
+	}, [emailNotificationRoles, recipient.to]);
 
 	return (
 		<>

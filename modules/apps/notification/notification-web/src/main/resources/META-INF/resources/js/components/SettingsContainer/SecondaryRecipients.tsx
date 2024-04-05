@@ -17,7 +17,7 @@ import {
 } from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {getCheckedChildren, getRoles} from './rolesUtils';
+import {getCheckedChildren, getEmailNotificationRoles} from './rolesUtils';
 
 interface SecondaryRecipientsProps {
 	baseResourceURL: string;
@@ -56,7 +56,7 @@ export function SecondaryRecipient({
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const [roles] = await getRoles(baseResourceURL);
+			const [roles] = await getEmailNotificationRoles(baseResourceURL);
 
 			if (
 				Array.isArray(secondaryRecipient.cc) &&
@@ -84,7 +84,7 @@ export function SecondaryRecipient({
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const [roles] = await getRoles(baseResourceURL);
+			const [roles] = await getEmailNotificationRoles(baseResourceURL);
 
 			if (
 				Array.isArray(secondaryRecipient.bcc) &&

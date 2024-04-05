@@ -5,8 +5,8 @@
 
 /// <reference types="react" />
 
-import './EditNotificationTemplate.scss';
 import {ILearnResourceContext} from 'frontend-js-components-web';
+import './EditNotificationTemplate.scss';
 export declare type NotificationTemplateError = {
 	bcc?: string;
 	body?: string;

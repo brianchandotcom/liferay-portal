@@ -13,6 +13,7 @@ import {
 	useForm,
 } from '@liferay/object-js-components-web';
 import classNames from 'classnames';
+import {ILearnResourceContext} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -23,8 +24,6 @@ import DefinitionOfTermsContainer from './DefinitionOfTermsContainer/DefinitionO
 import {SettingsContainer} from './SettingsContainer/SettingsContainer';
 
 import './EditNotificationTemplate.scss';
-
-import {ILearnResourceContext} from 'frontend-js-components-web';
 
 const HEADERS = new Headers({
 	'Accept': 'application/json',
@@ -115,6 +114,29 @@ export default function EditNotificationTemplate({
 			return;
 		}
 
+		let notificationValue = {...notification};
+
+		if (
+			!Liferay.FeatureFlags['LPD-6604'] &&
+			notification.type === 'email'
+		) {
+			const recipients = notification.recipients[0] as EmailRecipients;
+
+			notificationValue = {
+				...notification,
+				recipients: [
+					{
+						bcc: recipients.bcc,
+						cc: recipients.cc,
+						from: recipients.from,
+						fromName: recipients.fromName,
+						singleRecipient: recipients.singleRecipient,
+						to: recipients.to,
+					},
+				],
+			};
+		}
+
 		setIsSubmitted(true);
 
 		const response = await fetch(
@@ -122,7 +144,7 @@ export default function EditNotificationTemplate({
 				? `/o/notification/v1.0/notification-templates/${notificationTemplateId}`
 				: '/o/notification/v1.0/notification-templates',
 			{
-				body: JSON.stringify(notification),
+				body: JSON.stringify(notificationValue),
 				headers: HEADERS,
 				method: notificationTemplateId !== 0 ? 'PUT' : 'POST',
 			}

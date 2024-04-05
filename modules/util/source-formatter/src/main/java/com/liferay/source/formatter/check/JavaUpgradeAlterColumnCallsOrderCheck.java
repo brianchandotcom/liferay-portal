@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.dom4j.Element;
-
 /**
  * @author Alan Huang
  */
@@ -63,22 +61,6 @@ public class JavaUpgradeAlterColumnCallsOrderCheck extends BaseFileCheck {
 			content, "UpgradeProcessFactory.alterColumnType", packagePath);
 
 		return content;
-	}
-
-	private int _getTableIndex(Element serviceXMLElement, String tableName) {
-		int i = 0;
-
-		for (Element entityElement :
-				(List<Element>)serviceXMLElement.elements("entity")) {
-
-			if (tableName.equals(entityElement.attributeValue("name"))) {
-				return i;
-			}
-
-			i++;
-		}
-
-		return -1;
 	}
 
 	private String _sortMethodCallsByTableAndColumnName(
@@ -158,35 +140,23 @@ public class JavaUpgradeAlterColumnCallsOrderCheck extends BaseFileCheck {
 			String tableName1 = StringUtil.unquote(parameterNames1.get(0));
 			String tableName2 = StringUtil.unquote(parameterNames2.get(0));
 
-			if (tableName1.equals(tableName2)) {
-				int index1 = SourceUtil.getColumnIndex(
-					tablesSQLContent, tableName1,
-					StringUtil.unquote(parameterNames1.get(1)));
-				int index2 = SourceUtil.getColumnIndex(
-					tablesSQLContent, tableName1,
-					StringUtil.unquote(parameterNames2.get(1)));
-
-				if ((index2 != -1) && ((index1 > index2) || (index1 == -1))) {
-					content = StringUtil.replaceFirst(
-						content, methodCall2, methodCall1, matcher.start());
-
-					return StringUtil.replaceFirst(
-						content, methodCall1, methodCall2, matcher.start());
-				}
+			if (!tableName1.equals(tableName2)) {
+				continue;
 			}
-			else {
-				int index1 = _getTableIndex(
-					(Element)modelInformation[0], tableName1);
-				int index2 = _getTableIndex(
-					(Element)modelInformation[0], tableName2);
 
-				if ((index2 != -1) && (index1 > index2)) {
-					content = StringUtil.replaceFirst(
-						content, methodCall2, methodCall1, matcher.start());
+			int index1 = SourceUtil.getColumnIndex(
+				tablesSQLContent, tableName1,
+				StringUtil.unquote(parameterNames1.get(1)));
+			int index2 = SourceUtil.getColumnIndex(
+				tablesSQLContent, tableName1,
+				StringUtil.unquote(parameterNames2.get(1)));
 
-					return StringUtil.replaceFirst(
-						content, methodCall1, methodCall2, matcher.start());
-				}
+			if ((index2 != -1) && ((index1 > index2) || (index1 == -1))) {
+				content = StringUtil.replaceFirst(
+					content, methodCall2, methodCall1, matcher.start());
+
+				return StringUtil.replaceFirst(
+					content, methodCall1, methodCall2, matcher.start());
 			}
 		}
 

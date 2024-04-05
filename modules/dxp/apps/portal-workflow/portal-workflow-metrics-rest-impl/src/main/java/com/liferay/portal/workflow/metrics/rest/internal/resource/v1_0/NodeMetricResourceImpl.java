@@ -345,16 +345,6 @@ public class NodeMetricResourceImpl extends BaseNodeMetricResourceImpl {
 			_queries.term("deleted", Boolean.FALSE));
 	}
 
-	private double _getAvgAggregationResultValue(
-		AvgAggregationResult avgAggregationResult) {
-
-		if (Double.isInfinite(avgAggregationResult.getValue())) {
-			return 0D;
-		}
-
-		return avgAggregationResult.getValue();
-	}
-
 	private Collection<NodeMetric> _getNodeMetrics(
 		boolean completed, Date dateEnd, Date dateStart, FieldSort fieldSort,
 		Map<String, NodeMetric> nodeMetrics, Pagination pagination,
@@ -512,16 +502,6 @@ public class NodeMetricResourceImpl extends BaseNodeMetricResourceImpl {
 		return nodeMetricsMap;
 	}
 
-	private Sort _getSort(String fieldName, boolean reverse, Sort[] sorts) {
-		Sort sort = new Sort(fieldName, reverse);
-
-		if (sorts != null) {
-			sort = sorts[0];
-		}
-
-		return sort;
-	}
-
 	private Map<String, Bucket> _getTaskBuckets(
 		boolean completed, String key, String latestProcessVersion,
 		long processId, String processVersion) {
@@ -651,8 +631,15 @@ public class NodeMetricResourceImpl extends BaseNodeMetricResourceImpl {
 					"durationAvg");
 
 		nodeMetric.setDurationAvg(
-			() -> GetterUtil.getLong(
-				_getAvgAggregationResultValue(avgAggregationResult)));
+			() -> {
+				double value = avgAggregationResult.getValue();
+
+				if (Double.isInfinite(value)) {
+					value = 0D;
+				}
+
+				return GetterUtil.getLong(value);
+			});
 	}
 
 	private void _setInstanceCount(Bucket bucket, NodeMetric nodeMetric) {
@@ -694,7 +681,11 @@ public class NodeMetricResourceImpl extends BaseNodeMetricResourceImpl {
 	}
 
 	private FieldSort _toFieldSort(Sort[] sorts) {
-		Sort sort = _getSort("instanceCount", false, sorts);
+		Sort sort = new Sort("instanceCount", false);
+
+		if (sorts != null) {
+			sort = sorts[0];
+		}
 
 		String fieldName = sort.getFieldName();
 

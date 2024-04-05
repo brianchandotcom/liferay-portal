@@ -9,11 +9,9 @@ import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.info.item.capability.InfoItemCapability;
 import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.template.info.item.capability.TemplateInfoItemCapability;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;

@@ -740,6 +740,11 @@ pre[class*='language-'] {
 	}
 }
 
+.learn-banner {
+	color: var(--color-neutral-0);
+	background: linear-gradient(180deg, #00256C 0%, #6399FF 100%);
+}
+
 .learn-search {
 	.input-group-item {
 		.input-group {
@@ -931,6 +936,17 @@ pre[class*='language-'] {
 		line-height: 16px;
 		margin-top: 1px;
 	}
+}
+
+.search-bar-suggestions
+	> .input-group-item
+	> .input-group
+	> .input-group-inset-item
+	> .btn-unstyled
+	> .lexicon-icon-search {
+	color: var(--color-brand-primary, #0b5fff);
+	height: 2rem;
+	width: 2rem;
 }
 
 .search-results {

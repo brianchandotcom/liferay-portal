@@ -1,22 +1,42 @@
 {
 	"pageElement": {
+		"id": "1bf9b454-9671-aaee-2638-8111b5a256ff",
 		"pageElements": [
 			{
 				"definition": {
-					"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground: linear-gradient(180deg, #00256C 0%, #6399FF 100%);\n}"
+					"cssClasses": [
+						"learn-banner"
+					],
+					"fragmentStyle": {
+						"paddingBottom": "3"
+					},
+					"indexed": true,
+					"layout": {
+						"paddingBottom": 1
+					}
 				},
+				"id": "50e5cbf7-592e-9031-1548-ef245ce8ce89",
 				"pageElements": [
 					{
 						"definition": {
 							"fragmentStyle": {
 								"maxWidth": "var(--container-max-md)",
-								"textAlign": "center",
-								"textColor": "colorNeutral0"
+								"paddingBottom": "4",
+								"paddingLeft": "4",
+								"paddingRight": "4",
+								"paddingTop": "5",
+								"textAlign": "center"
 							},
+							"indexed": true,
 							"layout": {
+								"paddingBottom": 2,
+								"paddingLeft": 2,
+								"paddingRight": 2,
+								"paddingTop": 4,
 								"widthType": "Fixed"
 							}
 						},
+						"id": "9326d5f3-f798-b333-c9ed-209bcf0a53c8",
 						"pageElements": [
 							{
 								"definition": {
@@ -32,6 +52,8 @@
 										{
 											"id": "element-text",
 											"value": {
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Welcome to Liferay Learn"
@@ -41,9 +63,11 @@
 										}
 									],
 									"fragmentStyle": {
-										"backgroundColor": ""
-									}
+										"marginBottom": "4"
+									},
+									"indexed": true
 								},
+								"id": "b324bbca-4911-d8a7-2b0f-f32903a800e5",
 								"type": "Fragment"
 							},
 							{
@@ -60,6 +84,8 @@
 										{
 											"id": "element-text",
 											"value": {
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Practical resources for learning Liferay"
@@ -69,17 +95,30 @@
 										}
 									],
 									"fragmentStyle": {
-										"backgroundColor": ""
-									}
+										"marginBottom": "4"
+									},
+									"indexed": true
 								},
+								"id": "f8233e91-dffb-dc0d-1a03-6ada321a4059",
 								"type": "Fragment"
 							},
 							{
 								"definition": {
+									"cssClasses": [
+										"learn-search"
+									],
+									"fragmentStyle": {
+										"marginLeft": "auto",
+										"marginRight": "auto",
+										"maxWidth": "700px"
+									},
 									"widgetInstance": {
+										"widgetConfig": {
+										},
 										"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
 									}
 								},
+								"id": "91fbf8f0-7954-988d-8b5f-94fcb36a8a0d",
 								"type": "Widget"
 							}
 						],
@@ -91,13 +130,22 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"maxWidth": "var(--container-max-lg)",
-						"textAlign": "center"
+						"maxWidth": "var(--container-max-xl)",
+						"paddingBottom": "4",
+						"paddingLeft": "4",
+						"paddingRight": "4",
+						"paddingTop": "4"
 					},
+					"indexed": true,
 					"layout": {
+						"paddingBottom": 2,
+						"paddingLeft": 2,
+						"paddingRight": 2,
+						"paddingTop": 2,
 						"widthType": "Fixed"
 					}
 				},
+				"id": "7b588cec-ca55-bb11-fda2-fe3d5feb0cef",
 				"pageElements": [
 					{
 						"definition": {
@@ -110,9 +158,11 @@
 								"siteKey": "Liferay Learn"
 							},
 							"fragmentConfig": {
+								"defaultShowPanel": true,
 								"iconAlignment": "none",
 								"iconName": "check-circle",
 								"numberOfTabs": 2,
+								"offClickHidePanel": false,
 								"tabActiveBarPosition": "nav-active-bar-top",
 								"tabDirection": "",
 								"tabStyle": "segment"
@@ -143,9 +193,6 @@
 									}
 								}
 							],
-							"fragmentStyle": {
-								"textAlign": "center"
-							},
 							"fragmentViewports": [
 								{
 									"fragmentViewportStyle": {
@@ -157,37 +204,37 @@
 							],
 							"indexed": true
 						},
+						"id": "d4859006-c52c-516e-4337-83af8babf00f",
 						"pageElements": [
 							{
 								"definition": {
 									"fragmentDropZoneId": "1"
 								},
+								"id": "0930595e-d727-eb0c-3d18-121200c37875",
 								"pageElements": [
 									{
 										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] {\ntext-align: left !important;\n}",
+											"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: var(--spacer-4);\n}",
 											"fragmentStyle": {
-												"marginTop": "4",
-												"textAlign": "center"
+												"marginTop": "4"
 											},
 											"indexed": true,
 											"layout": {
 												"contentDisplay": "FlexRow",
 												"flexWrap": "Wrap",
-												"justify": "SpaceBetween",
+												"justify": "Center",
 												"marginTop": 2
 											}
 										},
+										"id": "bd1b30a5-59a7-3f8d-d664-96f6c696c305",
 										"pageElements": [
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
-														"marginBottom": "2",
-														"marginTop": "3",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -196,13 +243,13 @@
 													"indexed": true,
 													"layout": {
 														"contentDisplay": "FlexRow",
-														"marginTop": 1,
 														"paddingBottom": 1,
 														"paddingLeft": 1,
 														"paddingRight": 1,
 														"paddingTop": 1
 													}
 												},
+												"id": "579a84e1-4d6a-77fc-f9b2-8e5188fd3917",
 												"pageElements": [
 													{
 														"definition": {
@@ -238,6 +285,7 @@
 															},
 															"indexed": true
 														},
+														"id": "858de174-60f8-d53c-dd4c-a8484d7d9240",
 														"type": "Fragment"
 													},
 													{
@@ -248,6 +296,7 @@
 																"contentDisplay": "FlexColumn"
 															}
 														},
+														"id": "5eb4d819-2608-8088-4e5b-8474d29d2b02",
 														"pageElements": [
 															{
 																"definition": {
@@ -279,6 +328,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "9642daad-5c5f-b88b-9dab-8549f8d51b55",
 																"type": "Fragment"
 															},
 															{
@@ -313,6 +363,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "625df7a0-92bb-1cdd-ed09-c5a87de3be48",
 																"type": "Fragment"
 															}
 														],
@@ -323,13 +374,11 @@
 											},
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
-														"marginBottom": "2",
-														"marginTop": "3",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -338,13 +387,13 @@
 													"indexed": true,
 													"layout": {
 														"contentDisplay": "FlexRow",
-														"marginTop": 1,
 														"paddingBottom": 1,
 														"paddingLeft": 1,
 														"paddingRight": 1,
 														"paddingTop": 1
 													}
 												},
+												"id": "430c187a-d6c9-0658-a63b-e35f0b69b567",
 												"pageElements": [
 													{
 														"definition": {
@@ -375,6 +424,7 @@
 															},
 															"indexed": true
 														},
+														"id": "99859d14-e990-d7d5-3a55-39f3667d10f5",
 														"type": "Fragment"
 													},
 													{
@@ -385,6 +435,7 @@
 																"contentDisplay": "FlexColumn"
 															}
 														},
+														"id": "3a98446c-25b8-1500-d8af-6cfeb802ada2",
 														"pageElements": [
 															{
 																"definition": {
@@ -416,6 +467,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "de07b73e-6256-f2a9-6b2b-9a1bd32fe915",
 																"type": "Fragment"
 															},
 															{
@@ -450,6 +502,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "ad5d592e-55c0-085b-a6cb-5d5bb81cecee",
 																"type": "Fragment"
 															}
 														],
@@ -460,13 +513,11 @@
 											},
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 													"fragmentStyle": {
 														"backgroundColor": "#fff",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
-														"marginBottom": "2",
-														"marginTop": "3",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -475,13 +526,13 @@
 													"indexed": true,
 													"layout": {
 														"contentDisplay": "FlexRow",
-														"marginTop": 1,
 														"paddingBottom": 1,
 														"paddingLeft": 1,
 														"paddingRight": 1,
 														"paddingTop": 1
 													}
 												},
+												"id": "f106f3e3-f689-fd0a-3011-09349509ddb8",
 												"pageElements": [
 													{
 														"definition": {
@@ -512,6 +563,7 @@
 															},
 															"indexed": true
 														},
+														"id": "ca8eec15-16c1-47af-0ffc-6f27e8d57821",
 														"type": "Fragment"
 													},
 													{
@@ -522,6 +574,7 @@
 																"contentDisplay": "FlexColumn"
 															}
 														},
+														"id": "0472af66-85cb-9589-87ee-d18dce265ab2",
 														"pageElements": [
 															{
 																"definition": {
@@ -553,6 +606,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "28bb5fb7-f615-aa8b-60a8-3b1ab3a6fb37",
 																"type": "Fragment"
 															},
 															{
@@ -587,6 +641,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "9b24ff40-3730-6e99-d2ae-ffb494905cfe",
 																"type": "Fragment"
 															}
 														],
@@ -597,13 +652,11 @@
 											},
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
-														"marginBottom": "2",
-														"marginTop": "2",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -618,6 +671,7 @@
 														"paddingTop": 1
 													}
 												},
+												"id": "4552ebfd-e25c-d1d4-84f0-91ba001dec43",
 												"pageElements": [
 													{
 														"definition": {
@@ -648,6 +702,7 @@
 															},
 															"indexed": true
 														},
+														"id": "dfba8dc0-b533-839b-d262-68d25f2ff274",
 														"type": "Fragment"
 													},
 													{
@@ -658,6 +713,7 @@
 																"contentDisplay": "FlexColumn"
 															}
 														},
+														"id": "7bc68643-bf59-a15a-4910-d74dac3db8cf",
 														"pageElements": [
 															{
 																"definition": {
@@ -689,6 +745,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "fa786d92-0723-844f-de21-7dfdc03d9692",
 																"type": "Fragment"
 															},
 															{
@@ -723,6 +780,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "52d0fd76-99da-748b-5512-1911a0af58f6",
 																"type": "Fragment"
 															}
 														],
@@ -733,13 +791,11 @@
 											},
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
-														"marginBottom": "2",
-														"marginTop": "2",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -754,6 +810,7 @@
 														"paddingTop": 1
 													}
 												},
+												"id": "c7058a96-e84e-9f52-673a-606118a4cb23",
 												"pageElements": [
 													{
 														"definition": {
@@ -784,6 +841,7 @@
 															},
 															"indexed": true
 														},
+														"id": "df9fcaf9-4314-5bd8-11d3-b07516eefeb7",
 														"type": "Fragment"
 													},
 													{
@@ -794,6 +852,7 @@
 																"contentDisplay": "FlexColumn"
 															}
 														},
+														"id": "f8fbcf0a-c39b-80bb-85fd-b51651659e61",
 														"pageElements": [
 															{
 																"definition": {
@@ -825,6 +884,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "c594d1b0-2fd7-8ba7-bd28-33f9a1c0a560",
 																"type": "Fragment"
 															},
 															{
@@ -859,6 +919,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "9061a5c7-2ced-6ee6-bfee-92bbb543ec18",
 																"type": "Fragment"
 															}
 														],
@@ -869,13 +930,11 @@
 											},
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
-														"marginBottom": "2",
-														"marginTop": "2",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -890,6 +949,7 @@
 														"paddingTop": 1
 													}
 												},
+												"id": "2093769b-99d5-d538-1bbc-46b059a3e6df",
 												"pageElements": [
 													{
 														"definition": {
@@ -901,6 +961,7 @@
 															},
 															"fragmentFields": [
 																{
+																	"id": "image-square",
 																	"value": {
 																		"fragmentImage": {
 																			"url": {
@@ -910,8 +971,7 @@
 																			}
 																		},
 																		"fragmentLink": {
-																		},
-																		"id": "image-square"
+																		}
 																	}
 																}
 															],
@@ -920,6 +980,7 @@
 															},
 															"indexed": true
 														},
+														"id": "772c4a08-303d-87c9-a712-e5ec53be3188",
 														"type": "Fragment"
 													},
 													{
@@ -930,6 +991,7 @@
 																"contentDisplay": "FlexColumn"
 															}
 														},
+														"id": "779184c9-ad17-b7c7-fdd3-869715d8c87e",
 														"pageElements": [
 															{
 																"definition": {
@@ -961,6 +1023,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "13001e3b-a190-c6d0-3108-42333caa6a96",
 																"type": "Fragment"
 															},
 															{
@@ -995,6 +1058,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "42141b44-6076-f6e8-2db5-16f13142c655",
 																"type": "Fragment"
 															}
 														],
@@ -1005,13 +1069,11 @@
 											},
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
-														"marginBottom": "2",
-														"marginTop": "2",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -1026,6 +1088,7 @@
 														"paddingTop": 1
 													}
 												},
+												"id": "51b0935c-8397-04c0-8a11-814ff524c925",
 												"pageElements": [
 													{
 														"definition": {
@@ -1056,6 +1119,7 @@
 															},
 															"indexed": true
 														},
+														"id": "15662938-ba2a-3ca7-0c43-b138be52d071",
 														"type": "Fragment"
 													},
 													{
@@ -1066,6 +1130,7 @@
 																"contentDisplay": "FlexColumn"
 															}
 														},
+														"id": "291309a6-2ac6-975b-b21e-c018ca153bca",
 														"pageElements": [
 															{
 																"definition": {
@@ -1097,6 +1162,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "3cc5ff38-984d-21fb-e7b2-1d2bec7582ce",
 																"type": "Fragment"
 															},
 															{
@@ -1131,6 +1197,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "2f66045b-7dc7-1a68-9b9e-8fe1a47437b2",
 																"type": "Fragment"
 															}
 														],
@@ -1141,13 +1208,11 @@
 											},
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
-														"marginBottom": "2",
-														"marginTop": "2",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -1162,6 +1227,7 @@
 														"paddingTop": 1
 													}
 												},
+												"id": "06095969-1ecd-555e-e043-592583896f6c",
 												"pageElements": [
 													{
 														"definition": {
@@ -1192,6 +1258,7 @@
 															},
 															"indexed": true
 														},
+														"id": "25afef95-8628-50fb-0970-cc8f6794c3bf",
 														"type": "Fragment"
 													},
 													{
@@ -1202,6 +1269,7 @@
 																"contentDisplay": "FlexColumn"
 															}
 														},
+														"id": "5c6d4cb6-4fc3-3b73-96d2-bc009328bde4",
 														"pageElements": [
 															{
 																"definition": {
@@ -1233,6 +1301,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "df38d517-d442-7a21-af4d-1141cc1b0dbf",
 																"type": "Fragment"
 															},
 															{
@@ -1267,6 +1336,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "d4680c0d-f0c3-62b3-fb9d-234731473c03",
 																"type": "Fragment"
 															}
 														],
@@ -1277,13 +1347,11 @@
 											},
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
-														"marginBottom": "2",
-														"marginTop": "2",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -1298,6 +1366,7 @@
 														"paddingTop": 1
 													}
 												},
+												"id": "107166bd-ad62-a25d-4946-7ae8ec829c0d",
 												"pageElements": [
 													{
 														"definition": {
@@ -1328,6 +1397,7 @@
 															},
 															"indexed": true
 														},
+														"id": "d956336e-51ee-b747-da14-d564b1f711a5",
 														"type": "Fragment"
 													},
 													{
@@ -1338,6 +1408,7 @@
 																"contentDisplay": "FlexColumn"
 															}
 														},
+														"id": "fdc308bf-f91f-41d7-9ddf-12fb036260b6",
 														"pageElements": [
 															{
 																"definition": {
@@ -1369,6 +1440,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "af321b4c-a1ba-8efe-ce18-57fe0938a6ca",
 																"type": "Fragment"
 															},
 															{
@@ -1403,6 +1475,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "2ce34b0e-ca52-5066-2918-7f6bf0d95471",
 																"type": "Fragment"
 															}
 														],
@@ -1413,13 +1486,11 @@
 											},
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
-														"marginBottom": "2",
-														"marginTop": "2",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -1434,6 +1505,7 @@
 														"paddingTop": 1
 													}
 												},
+												"id": "61d5789c-7721-6330-d139-bc4a5ed7137c",
 												"pageElements": [
 													{
 														"definition": {
@@ -1464,6 +1536,7 @@
 															},
 															"indexed": true
 														},
+														"id": "e4480eae-56aa-8e07-2ac1-9bb0f6280b79",
 														"type": "Fragment"
 													},
 													{
@@ -1474,6 +1547,7 @@
 																"contentDisplay": "FlexColumn"
 															}
 														},
+														"id": "228becc1-6850-b39f-c27d-5f0ec7a3bbb9",
 														"pageElements": [
 															{
 																"definition": {
@@ -1505,6 +1579,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "433ea943-ec3f-6cbe-5fc5-5d6767ae1b64",
 																"type": "Fragment"
 															},
 															{
@@ -1539,6 +1614,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "a0513b7e-8af6-9c8d-5304-a87466517c7a",
 																"type": "Fragment"
 															}
 														],
@@ -1549,13 +1625,11 @@
 											},
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
-														"marginBottom": "2",
-														"marginTop": "2",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -1570,6 +1644,7 @@
 														"paddingTop": 1
 													}
 												},
+												"id": "03051b8f-1685-c1b0-0b98-a016394eef6c",
 												"pageElements": [
 													{
 														"definition": {
@@ -1600,6 +1675,7 @@
 															},
 															"indexed": true
 														},
+														"id": "f12297d9-221d-b3c1-22e0-b2b29ec2173a",
 														"type": "Fragment"
 													},
 													{
@@ -1610,6 +1686,7 @@
 																"contentDisplay": "FlexColumn"
 															}
 														},
+														"id": "00307af8-8b8e-ec08-4256-95fd53f22311",
 														"pageElements": [
 															{
 																"definition": {
@@ -1641,6 +1718,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "2977e7bd-6f2e-b0fa-620e-cec75e73efea",
 																"type": "Fragment"
 															},
 															{
@@ -1675,6 +1753,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "21940ae8-e8ac-6570-550e-15ddfbb409eb",
 																"type": "Fragment"
 															}
 														],
@@ -1685,13 +1764,11 @@
 											},
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
-														"marginBottom": "2",
-														"marginTop": "2",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -1706,6 +1783,7 @@
 														"paddingTop": 1
 													}
 												},
+												"id": "7ac87bd3-4916-6e8c-79c3-0aeefb1331cb",
 												"pageElements": [
 													{
 														"definition": {
@@ -1736,6 +1814,7 @@
 															},
 															"indexed": true
 														},
+														"id": "0a7de372-9420-9e6d-da86-22390e256fe0",
 														"type": "Fragment"
 													},
 													{
@@ -1746,6 +1825,7 @@
 																"contentDisplay": "FlexColumn"
 															}
 														},
+														"id": "6a5ca157-ebec-8f4d-f611-af5523d3b693",
 														"pageElements": [
 															{
 																"definition": {
@@ -1777,6 +1857,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "d3284250-fe76-ef29-1e2c-352f8661ed33",
 																"type": "Fragment"
 															},
 															{
@@ -1811,6 +1892,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "87d4334c-1c36-ebe7-4971-1caf1de4ff22",
 																"type": "Fragment"
 															}
 														],
@@ -1829,6 +1911,7 @@
 								"definition": {
 									"fragmentDropZoneId": "2"
 								},
+								"id": "01cccb4a-a586-f1bc-ef50-9d08c9370544",
 								"pageElements": [
 									{
 										"definition": {
@@ -1841,31 +1924,32 @@
 											"layout": {
 												"contentDisplay": "FlexRow",
 												"flexWrap": "Wrap",
-												"justify": "SpaceBetween",
+												"justify": "Center",
 												"marginTop": 2
 											}
 										},
+										"id": "87b0f76c-fb65-c208-3d7d-9d6647e576e9",
 										"pageElements": [
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: 1rem;\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: var(--spacer-4);\n}",
 													"indexed": true,
 													"layout": {
 														"contentDisplay": "FlexRow",
+														"flexWrap": "Wrap",
 														"justify": "Center",
 														"widthType": "Fixed"
 													}
 												},
+												"id": "c8e04399-677f-4b42-d2a0-3e0ac65283bb",
 												"pageElements": [
 													{
 														"definition": {
-															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 															"fragmentStyle": {
 																"backgroundColor": "colorNeutral0",
 																"borderRadius": "borderRadiusLg",
 																"borderWidth": "1px",
-																"marginBottom": "2",
-																"marginTop": "2",
 																"paddingBottom": "3",
 																"paddingLeft": "3",
 																"paddingRight": "3",
@@ -1880,6 +1964,7 @@
 																"paddingTop": 1
 															}
 														},
+														"id": "77bbb484-d557-e6dd-76e5-5991aa3f286b",
 														"pageElements": [
 															{
 																"definition": {
@@ -1910,6 +1995,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "aaa522bd-8585-6d61-e02b-89807d134400",
 																"type": "Fragment"
 															},
 															{
@@ -1920,6 +2006,7 @@
 																		"contentDisplay": "FlexColumn"
 																	}
 																},
+																"id": "94e94974-2bc0-2a7e-efca-07b15bb89cb5",
 																"pageElements": [
 																	{
 																		"definition": {
@@ -1951,6 +2038,7 @@
 																			},
 																			"indexed": true
 																		},
+																		"id": "76b47711-2407-65b1-e00a-8d75b469541d",
 																		"type": "Fragment"
 																	},
 																	{
@@ -1985,6 +2073,7 @@
 																			},
 																			"indexed": true
 																		},
+																		"id": "41711e2a-e81c-05b2-34c9-92e03a13555c",
 																		"type": "Fragment"
 																	}
 																],
@@ -1995,13 +2084,11 @@
 													},
 													{
 														"definition": {
-															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 															"fragmentStyle": {
 																"backgroundColor": "colorNeutral0",
 																"borderRadius": "borderRadiusLg",
 																"borderWidth": "1px",
-																"marginBottom": "2",
-																"marginTop": "2",
 																"paddingBottom": "3",
 																"paddingLeft": "3",
 																"paddingRight": "3",
@@ -2016,6 +2103,7 @@
 																"paddingTop": 1
 															}
 														},
+														"id": "256130fb-49e8-20d4-1f57-351f9e6b4362",
 														"pageElements": [
 															{
 																"definition": {
@@ -2046,6 +2134,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "6590320a-d733-86f7-ca04-e0124d1b98d0",
 																"type": "Fragment"
 															},
 															{
@@ -2056,6 +2145,7 @@
 																		"contentDisplay": "FlexColumn"
 																	}
 																},
+																"id": "00b27926-3647-b5a0-4964-b9b1f13d01e3",
 																"pageElements": [
 																	{
 																		"definition": {
@@ -2087,6 +2177,7 @@
 																			},
 																			"indexed": true
 																		},
+																		"id": "2ad34376-cef6-c612-fccb-677e2d3f7699",
 																		"type": "Fragment"
 																	},
 																	{
@@ -2121,6 +2212,7 @@
 																			},
 																			"indexed": true
 																		},
+																		"id": "65320917-900d-55c7-dcdd-31e95488536b",
 																		"type": "Fragment"
 																	}
 																],
@@ -2131,13 +2223,11 @@
 													},
 													{
 														"definition": {
-															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 															"fragmentStyle": {
 																"backgroundColor": "colorNeutral0",
 																"borderRadius": "borderRadiusLg",
 																"borderWidth": "1px",
-																"marginBottom": "2",
-																"marginTop": "2",
 																"paddingBottom": "3",
 																"paddingLeft": "3",
 																"paddingRight": "3",
@@ -2152,6 +2242,7 @@
 																"paddingTop": 1
 															}
 														},
+														"id": "288fb158-367f-c48c-0cb5-3c249d62baa9",
 														"pageElements": [
 															{
 																"definition": {
@@ -2182,6 +2273,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "ce084554-fb16-18e9-6f41-4cc5e7a7a187",
 																"type": "Fragment"
 															},
 															{
@@ -2192,6 +2284,7 @@
 																		"contentDisplay": "FlexColumn"
 																	}
 																},
+																"id": "0c48c330-d658-cba0-b95f-c8e894ec0814",
 																"pageElements": [
 																	{
 																		"definition": {
@@ -2223,6 +2316,7 @@
 																			},
 																			"indexed": true
 																		},
+																		"id": "dba0ec05-72c3-7e38-49e4-7a2d2aa05bd2",
 																		"type": "Fragment"
 																	},
 																	{
@@ -2257,6 +2351,7 @@
 																			},
 																			"indexed": true
 																		},
+																		"id": "2d37729c-2b1a-0d71-f70f-1c1c18c6bfaa",
 																		"type": "Fragment"
 																	}
 																],
@@ -2264,30 +2359,14 @@
 															}
 														],
 														"type": "Section"
-													}
-												],
-												"type": "Section"
-											},
-											{
-												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: 1rem;\n}",
-													"indexed": true,
-													"layout": {
-														"contentDisplay": "FlexRow",
-														"justify": "Center",
-														"widthType": "Fixed"
-													}
-												},
-												"pageElements": [
+													},
 													{
 														"definition": {
-															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 															"fragmentStyle": {
 																"backgroundColor": "colorNeutral0",
 																"borderRadius": "borderRadiusLg",
 																"borderWidth": "1px",
-																"marginBottom": "2",
-																"marginTop": "2",
 																"paddingBottom": "3",
 																"paddingLeft": "3",
 																"paddingRight": "3",
@@ -2302,6 +2381,7 @@
 																"paddingTop": 1
 															}
 														},
+														"id": "94df1a77-2f5b-b7a9-c3e1-b2626a361d52",
 														"pageElements": [
 															{
 																"definition": {
@@ -2332,6 +2412,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "ee6c3fa2-f1c2-d92e-ca47-dbf094e9ee2b",
 																"type": "Fragment"
 															},
 															{
@@ -2342,6 +2423,7 @@
 																		"contentDisplay": "FlexColumn"
 																	}
 																},
+																"id": "2e333388-a103-23f1-6144-f4ce0689d23e",
 																"pageElements": [
 																	{
 																		"definition": {
@@ -2373,6 +2455,7 @@
 																			},
 																			"indexed": true
 																		},
+																		"id": "def2246d-5909-067b-9267-79428000c2f6",
 																		"type": "Fragment"
 																	},
 																	{
@@ -2407,6 +2490,7 @@
 																			},
 																			"indexed": true
 																		},
+																		"id": "b72165de-aae4-5699-b231-fcf9cc7c7ace",
 																		"type": "Fragment"
 																	}
 																],
@@ -2417,13 +2501,11 @@
 													},
 													{
 														"definition": {
-															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\nborder-color: var(--color-brand-primary-lighten-5, #E7EFFF) !important;\n    border-radius: 10px !important;\n    border-width: 1px !important;\n}",
+															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
 															"fragmentStyle": {
 																"backgroundColor": "colorNeutral0",
 																"borderRadius": "borderRadiusLg",
 																"borderWidth": "1px",
-																"marginBottom": "2",
-																"marginTop": "2",
 																"paddingBottom": "3",
 																"paddingLeft": "3",
 																"paddingRight": "3",
@@ -2438,6 +2520,7 @@
 																"paddingTop": 1
 															}
 														},
+														"id": "30df3ecd-dd84-305d-78bc-a893edae24da",
 														"pageElements": [
 															{
 																"definition": {
@@ -2468,6 +2551,7 @@
 																	},
 																	"indexed": true
 																},
+																"id": "54c9fc89-cae2-03d7-4173-3914444ec8bb",
 																"type": "Fragment"
 															},
 															{
@@ -2478,6 +2562,7 @@
 																		"contentDisplay": "FlexColumn"
 																	}
 																},
+																"id": "0c0079d2-0e7b-cd7a-2a7b-14efd4defb55",
 																"pageElements": [
 																	{
 																		"definition": {
@@ -2509,6 +2594,7 @@
 																			},
 																			"indexed": true
 																		},
+																		"id": "fad2e5e3-91f3-9b12-b916-5fc5e629e553",
 																		"type": "Fragment"
 																	},
 																	{
@@ -2543,6 +2629,7 @@
 																			},
 																			"indexed": true
 																		},
+																		"id": "3ee8306b-4e55-39fe-8d51-7a0f267da3a8",
 																		"type": "Fragment"
 																	}
 																],

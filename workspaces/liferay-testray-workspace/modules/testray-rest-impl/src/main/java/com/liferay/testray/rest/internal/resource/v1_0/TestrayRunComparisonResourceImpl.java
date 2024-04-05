@@ -107,30 +107,32 @@ public class TestrayRunComparisonResourceImpl
 	}
 
 	private void _compareTestrayCaseResultStatus(
-		Map<String, Map<String, Integer>> entityComparison,
-		Map<String, Serializable> testrayCaseResult) {
+		Map<String, Map<String, Integer>> entityComparisonsMap,
+		Map<String, Serializable> testrayCaseResultsMap) {
 
-		Map<String, Integer> map = entityComparison.get(
-			testrayCaseResult.get("testrayCaseResultStatus1"));
+		Map<String, Integer> map = entityComparisonsMap.get(
+			testrayCaseResultsMap.get("testrayCaseResultStatus1"));
 
 		if (map == null) {
 			map = new HashMap<>();
 
-			entityComparison.put(
+			entityComparisonsMap.put(
 				String.valueOf(
-					testrayCaseResult.get("testrayCaseResultStatus1")),
+					testrayCaseResultsMap.get("testrayCaseResultStatus1")),
 				map);
 		}
 
 		Integer count = map.get(
-			String.valueOf(testrayCaseResult.get("testrayCaseResultStatus2")));
+			String.valueOf(
+				testrayCaseResultsMap.get("testrayCaseResultStatus2")));
 
 		if (count == null) {
 			count = 0;
 		}
 
 		map.put(
-			String.valueOf(testrayCaseResult.get("testrayCaseResultStatus2")),
+			String.valueOf(
+				testrayCaseResultsMap.get("testrayCaseResultStatus2")),
 			count + 1);
 	}
 
@@ -214,27 +216,27 @@ public class TestrayRunComparisonResourceImpl
 		Map<String, Map<String, Map<String, Integer>>>
 			testrayComponentComparisonsMap = new HashMap<>();
 
-		for (Map<String, Serializable> testrayCaseResult : set) {
+		for (Map<String, Serializable> testrayCaseResultsMap : set) {
 			Map<String, Serializable> testrayComponent =
 				testrayComponentsMap.get(
 					String.valueOf(
-						testrayCaseResult.get(
+						testrayCaseResultsMap.get(
 							"r_componentToCaseResult_c_componentId")));
 
-			Map<String, Map<String, Integer>> testrayComponentComparison =
+			Map<String, Map<String, Integer>> entityComparisonsMap =
 				testrayComponentComparisonsMap.get(
 					testrayComponent.get("name"));
 
-			if (testrayComponentComparison == null) {
-				testrayComponentComparison = new HashMap<>();
+			if (entityComparisonsMap == null) {
+				entityComparisonsMap = new HashMap<>();
 
 				testrayComponentComparisonsMap.put(
 					String.valueOf(testrayComponent.get("name")),
-					testrayComponentComparison);
+					entityComparisonsMap);
 			}
 
 			_compareTestrayCaseResultStatus(
-				testrayComponentComparison, testrayCaseResult);
+				entityComparisonsMap, testrayCaseResultsMap);
 		}
 
 		return testrayComponentComparisonsMap;

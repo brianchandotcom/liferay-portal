@@ -107,7 +107,7 @@ public class PortalInstancesConfigurationFactory {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference

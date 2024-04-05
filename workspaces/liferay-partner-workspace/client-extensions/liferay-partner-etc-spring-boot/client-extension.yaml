@@ -1,10 +1,5 @@
 assemble:
     - fromTask: bootJar
-liferay-partner-etc-spring-boot:
-    name: Liferay Partner Etc Spring Boot Status Management
-    oAuth2ApplicationExternalReferenceCode: liferay-partner-etc-spring-boot-oauth-application-headless-server
-    resourcePath: /statusManagement
-    type: objectAction
 liferay-partner-etc-spring-boot-oauth-application-headless-server:
     .serviceAddress: localhost:18080
     .serviceScheme: http
@@ -12,5 +7,13 @@ liferay-partner-etc-spring-boot-oauth-application-headless-server:
     scopes:
         - Liferay.Headless.Admin.User.everything
         - C_MDFClaim.everything.read
+        - C_MDFClaim.everything.write
+        - C_MDFRequest.everything.read
+        - C_MDFRequest.everything.write
         - c_proxyaccount.everything.read
     type: oAuthApplicationHeadlessServer
+liferay-partner-etc-spring-boot-status-management:
+    name: Liferay Partner Etc Spring Boot Status Management
+    oAuth2ApplicationExternalReferenceCode: liferay-partner-etc-spring-boot-oauth-application-headless-server
+    resourcePath: /statusManagement
+    type: objectAction

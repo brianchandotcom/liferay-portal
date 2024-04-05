@@ -78,7 +78,7 @@ export default function EditNotificationTemplate({
 
 	const [templateTitle, setTemplateTitle] = useState<string>('');
 
-	const validate = (values: any) => {
+	const validate = (values: NotificationTemplate) => {
 		const errors: NotificationTemplateError = {};
 
 		if (!values.name) {
@@ -90,17 +90,27 @@ export default function EditNotificationTemplate({
 		}
 
 		if (notificationTemplateType === 'email' || values.type === 'email') {
-			if (!values.recipients[0].from) {
+			const [recipient] = values.recipients as EmailRecipients[];
+
+			if (!recipient.from) {
 				errors.from = constantsUtils.REQUIRED_MSG;
 			}
 
-			if (!values.recipients[0].fromName[defaultLanguageId]) {
+			if (!recipient.fromName[defaultLanguageId]) {
 				errors.fromName = constantsUtils.REQUIRED_MSG;
 			}
 
 			if (
-				!Array.isArray(values.recipients[0].to) &&
-				!values.recipients[0].to[defaultLanguageId]
+				!Array.isArray(recipient.to) &&
+				!recipient.to[defaultLanguageId]
+			) {
+				errors.to = constantsUtils.REQUIRED_MSG;
+			}
+
+			if (
+				Liferay.FeatureFlags['LPD-11165'] &&
+				Array.isArray(recipient.to) &&
+				!recipient.to.length
 			) {
 				errors.to = constantsUtils.REQUIRED_MSG;
 			}

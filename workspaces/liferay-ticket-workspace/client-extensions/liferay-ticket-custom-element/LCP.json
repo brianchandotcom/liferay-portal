@@ -1,3 +1,5 @@
 {
-	"dependencies" : ["liferayticketbatch"]
+	"dependencies": [
+		"liferayticketbatch"
+	]
 }

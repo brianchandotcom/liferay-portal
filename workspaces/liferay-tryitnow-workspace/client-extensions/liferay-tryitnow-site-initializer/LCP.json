@@ -1,3 +1,6 @@
 {
-	"dependencies": ["liferayticketcustomelement", "liferaytryitnowbatch"]
+	"dependencies": [
+		"liferayticketcustomelement",
+		"liferaytryitnowbatch"
+	]
 }

@@ -395,7 +395,6 @@ export default function EditNotificationTemplate({
 							})}
 						>
 							<SettingsContainer
-								baseResourceURL={baseResourceURL}
 								emailNotificationRoles={emailNotificationRoles}
 								errors={errors}
 								learnResources={learnResources}

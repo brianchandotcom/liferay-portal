@@ -17,10 +17,10 @@ import {
 } from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {getCheckedChildren, getEmailNotificationRoles} from './rolesUtils';
+import {getCheckedChildren} from './rolesUtils';
 
 interface SecondaryRecipientsProps {
-	baseResourceURL: string;
+	emailNotificationRoles: MultiSelectItem[];
 	learnResources: ILearnResourceContext;
 	recipientOptions: LabelValueObject[];
 	setValues: (values: Partial<NotificationTemplate>) => void;
@@ -28,7 +28,7 @@ interface SecondaryRecipientsProps {
 }
 
 export function SecondaryRecipient({
-	baseResourceURL,
+	emailNotificationRoles,
 	learnResources,
 	recipientOptions,
 	setValues,
@@ -36,7 +36,7 @@ export function SecondaryRecipient({
 }: SecondaryRecipientsProps) {
 	const [bccRolesList, setBCCRolesList] = useState<MultiSelectItem[]>([]);
 	const [ccRolesList, setCCRolesList] = useState<MultiSelectItem[]>([]);
-	const [secondaryRecipient] = values.recipients as EmailRecipients[];
+	const [recipient] = values.recipients as EmailRecipients[];
 
 	const handleMultiSelectItemsChange = (items: MultiSelectItem[]) => {
 		const newRecipients: EmailNotificationRecipients[] = [];
@@ -55,60 +55,66 @@ export function SecondaryRecipient({
 	};
 
 	useEffect(() => {
-		const makeFetch = async () => {
-			const [roles] = await getEmailNotificationRoles(baseResourceURL);
+		if (emailNotificationRoles.length && !ccRolesList.length) {
+			setCCRolesList(emailNotificationRoles);
+		}
 
-			if (
-				Array.isArray(secondaryRecipient.cc) &&
-				!!secondaryRecipient.cc.length
-			) {
-				setCCRolesList([
-					{
-						...roles,
-						children: getCheckedChildren(
-							secondaryRecipient.cc,
-							roles.children
-						),
-					},
-				]);
+		if (
+			recipient.ccType === 'role' &&
+			Array.isArray(recipient.cc) &&
+			!!recipient.cc.length &&
+			(!!ccRolesList.length || !!emailNotificationRoles.length)
+		) {
+			const baseRoleList = ccRolesList.length
+				? ccRolesList[0]
+				: emailNotificationRoles[0];
 
-				return;
-			}
+			setCCRolesList([
+				{
+					...baseRoleList,
+					children: getCheckedChildren(
+						recipient.cc,
+						baseRoleList.children
+					),
+				},
+			]);
 
-			setCCRolesList([roles]);
-		};
+			return;
+		}
 
-		makeFetch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [secondaryRecipient.cc]);
+	}, [emailNotificationRoles, recipient.cc]);
 
 	useEffect(() => {
-		const makeFetch = async () => {
-			const [roles] = await getEmailNotificationRoles(baseResourceURL);
+		if (emailNotificationRoles.length && !bccRolesList.length) {
+			setBCCRolesList(emailNotificationRoles);
+		}
 
-			if (
-				Array.isArray(secondaryRecipient.bcc) &&
-				!!secondaryRecipient.bcc.length
-			) {
-				setBCCRolesList([
-					{
-						...roles,
-						children: getCheckedChildren(
-							secondaryRecipient.bcc,
-							roles.children
-						),
-					},
-				]);
+		if (
+			recipient.bccType === 'role' &&
+			Array.isArray(recipient.bcc) &&
+			!!recipient.bcc.length &&
+			(!!bccRolesList.length || !!emailNotificationRoles.length)
+		) {
+			const baseRoleList = bccRolesList.length
+				? bccRolesList[0]
+				: emailNotificationRoles[0];
 
-				return;
-			}
+			setBCCRolesList([
+				{
+					...baseRoleList,
+					children: getCheckedChildren(
+						recipient.bcc,
+						baseRoleList.children
+					),
+				},
+			]);
 
-			setBCCRolesList([roles]);
-		};
+			return;
+		}
 
-		makeFetch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [secondaryRecipient.bcc]);
+	}, [emailNotificationRoles, recipient.bcc]);
 
 	return (
 		<>
@@ -128,19 +134,19 @@ export function SecondaryRecipient({
 										...values,
 										recipients: [
 											{
-												...secondaryRecipient,
+												...recipient,
 												cc: [],
 												ccType: value as string,
 											},
 										],
 									});
 								}}
-								selectedKey={secondaryRecipient.ccType}
+								selectedKey={recipient.ccType}
 							/>
 						</div>
 
 						<div className="col-lg-6">
-							{secondaryRecipient.ccType === 'email' && (
+							{recipient.ccType === 'email' && (
 								<Input
 									disabled={values.system}
 									feedbackMessage={Liferay.Language.get(
@@ -170,7 +176,7 @@ export function SecondaryRecipient({
 								/>
 							)}
 
-							{secondaryRecipient.ccType === 'role' && (
+							{recipient.ccType === 'role' && (
 								<div className="lfr__notification-template-email-notification-settings-multiple-select">
 									<MultipleSelect
 										disabled={values.system}
@@ -241,19 +247,19 @@ export function SecondaryRecipient({
 										...values,
 										recipients: [
 											{
-												...secondaryRecipient,
+												...recipient,
 												bcc: [],
 												bccType: value as string,
 											},
 										],
 									});
 								}}
-								selectedKey={secondaryRecipient.bccType}
+								selectedKey={recipient.bccType}
 							/>
 						</div>
 
 						<div className="col-lg-6">
-							{secondaryRecipient.bccType === 'email' && (
+							{recipient.bccType === 'email' && (
 								<Input
 									disabled={values.system}
 									feedbackMessage={Liferay.Language.get(
@@ -283,7 +289,7 @@ export function SecondaryRecipient({
 								/>
 							)}
 
-							{secondaryRecipient.bccType === 'role' && (
+							{recipient.bccType === 'role' && (
 								<div className="lfr__notification-template-email-notification-settings-multiple-select">
 									<MultipleSelect
 										disabled={values.system}

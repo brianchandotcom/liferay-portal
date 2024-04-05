@@ -46,19 +46,29 @@ public class ObjectEntryFieldSortDSLQueryVisitor
 		ObjectDefinition objectDefinition = sort.getObjectDefinition();
 
 		ObjectField objectField = objectFieldLocalService.fetchObjectField(
-			objectDefinition.getObjectDefinitionId(),sort.getFieldName());
+			objectDefinition.getObjectDefinitionId(), sort.getFieldName());
 
+		Expression<?> columnExpression;
 		Table fieldTable;
-		Column<?, Object> column = null;
 
 		if (objectField == null) {
-			column = (Column<?, Object>) objectFieldLocalService.getColumn(
-				objectDefinition.getObjectDefinitionId(), sort.getFieldName());
-			fieldTable = column.getTable();
-		} else {
-			// Retrieve table with alias for sorting on a related field
+			Column<?, Object> column =
+				(Column<?, Object>)objectFieldLocalService.getColumn(
+					objectDefinition.getObjectDefinitionId(),
+					sort.getFieldName());
+
+			fieldTable = getAliasedTable(_getSuffix(sort), column.getTable());
+
+			columnExpression = fieldTable.getColumn(sort.getFieldName());
+		}
+		else {
 			fieldTable = getAliasedTable(
-				objectField.getName(), objectDefinition, _getSuffix(sort));
+				_getSuffix(sort),
+				objectFieldLocalService.getTable(
+					objectDefinition.getObjectDefinitionId(),
+					objectField.getName()));
+
+			columnExpression = _getColumnExpression(objectField, fieldTable);
 		}
 
 		if (!contains(dslQuery, fieldTable)) {
@@ -66,17 +76,8 @@ public class ObjectEntryFieldSortDSLQueryVisitor
 				getPrimaryKeyColumn(fieldTable), dslQuery, fieldTable);
 		}
 
-		OrderByExpression orderByExpression;
-		if (objectField != null) {
-			orderByExpression = _getOrderByExpression(
-				_isParentComplexField(sort),
-				_getColumnExpression(objectField, fieldTable), sort.isReverse());
-		} else {
-			orderByExpression = _getOrderByExpression(
-				_isParentComplexField(sort),
-				column, sort.isReverse());
-		}
-
+		OrderByExpression orderByExpression = _getOrderByExpression(
+			_isParentComplexField(sort), columnExpression, sort.isReverse());
 
 		Stack<BaseASTNode> allBaseASTNodes = getAllBaseASTNodes(
 			OrderByStep.class, dslQuery);

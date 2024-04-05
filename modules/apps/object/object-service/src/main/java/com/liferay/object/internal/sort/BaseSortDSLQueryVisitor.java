@@ -5,7 +5,6 @@
 
 package com.liferay.object.internal.sort;
 
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
@@ -75,13 +74,7 @@ public abstract class BaseSortDSLQueryVisitor {
 		return false;
 	}
 
-	protected Table getAliasedTable(
-			String name, ObjectDefinition objectDefinition, String prefix)
-		throws PortalException {
-
-		Table table = objectFieldLocalService.getTable(
-			objectDefinition.getObjectDefinitionId(), name);
-
+	protected Table getAliasedTable(String prefix, Table table) {
 		if (Validator.isBlank(prefix)) {
 			return table;
 		}

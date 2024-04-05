@@ -1,0 +1,32 @@
+task runGradleTest
+
+String expectedFilePath = "LCP.json"
+String[] expectedContentStrings = [
+	'"foo": "bar"',
+	'"kind": "Deployment"',
+]
+String[] unexpectedContentStrings = [
+	'"kind" : "Job"',
+]
+
+runGradleTest {
+	dependsOn ":client-extension-no-classification:createClientExtensionConfig"
+
+	doLast {
+		Project clientExtensionOverrideLCPJsonProject = project(":client-extension-no-classification")
+
+		File cxBuildDir = clientExtensionOverrideLCPJsonProject.file("${clientExtensionOverrideLCPJsonProject.buildDir}/liferay-client-extension-build")
+
+		File file = clientExtensionOverrideLCPJsonProject.file("${cxBuildDir}/${expectedFilePath}")
+
+		assert file.exists()
+
+		expectedContentStrings.each {
+			assert file.text.contains(it)
+		}
+
+		unexpectedContentStrings.each {
+			assert !file.text.contains(it)
+		}
+	}
+}

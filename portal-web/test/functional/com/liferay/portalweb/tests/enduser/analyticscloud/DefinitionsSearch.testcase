@@ -40,6 +40,8 @@ definition {
 	test CanAddSearchQueryParameters {
 		ACDefinitions.addSearchQuerySuccessfully(query = "Test Query");
 
+		ACSettings.goToDefinitions();
+
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
 
 		ACDefinitions.viewSearchQuery(query = "Test Query");
@@ -50,9 +52,13 @@ definition {
 	test CanDeleteSearchQueryParameters {
 		ACDefinitions.addSearchQuerySuccessfully(query = "Test Query");
 
+		ACSettings.goToDefinitions();
+
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
 
 		ACDefinitions.deleteSearchQuerySuccessfully(query = "Test Query");
+
+		ACSettings.goToDefinitions();
 
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
 
@@ -64,9 +70,13 @@ definition {
 	test CanEditSearchQueryParameters {
 		ACDefinitions.addSearchQuerySuccessfully(query = "Test Query");
 
+		ACSettings.goToDefinitions();
+
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
 
 		ACDefinitions.editSearchQuerySuccessfully(query = "Test Edit");
+
+		ACSettings.goToDefinitions();
 
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
 
@@ -80,6 +90,8 @@ definition {
 
 		ACDefinitions.addMultipleSearchQuerySuccessfully(queryStringList = ${queryStringList});
 
+		ACSettings.goToDefinitions();
+
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
 
 		ACDefinitions.noViewAddSearchQueryButton(query = "Test Query 5");
@@ -90,6 +102,8 @@ definition {
 	test ViewKeywordSearchedNewStringParameter {
 		task ("Create a new query string parameter") {
 			ACDefinitions.addSearchQuerySuccessfully(query = "query");
+
+			ACSettings.goToDefinitions();
 
 			ACDefinitions.goToDefinitionType(definitionType = "Search");
 

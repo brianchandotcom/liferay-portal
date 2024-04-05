@@ -94,6 +94,7 @@ definition {
 	@summary = "Default summary"
 	macro exportOverriddenTranslations() {
 		Portlet.gotoPortletOptions(portletOption = "Export Overridden Translations");
+		DownloadTempFile();
 
 		var tempFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "*.zip");
 		var tempFileDirectory = selenium.getOutputDirName();

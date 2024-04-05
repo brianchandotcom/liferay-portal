@@ -5,12 +5,21 @@
 
 package com.liferay.batch.engine.internal.writer;
 
+import com.liferay.batch.engine.csv.ColumnDescriptor;
+import com.liferay.batch.engine.csv.ColumnDescriptorProvider;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.StringReader;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -38,8 +47,8 @@ public class ColumnValuesExtractorTest {
 			new String[] {"A,BC", "D\"EF", "GHI", "J'KL", "``NO,P"});
 
 		ColumnValuesExtractor columnValuesExtractor = new ColumnValuesExtractor(
-			ItemClassIndexUtil.index(arraysAggregator.getClass()),
-			Arrays.asList("doubles", "length", "strings"));
+			null, 0, ItemClassIndexUtil.index(arraysAggregator.getClass()),
+			Arrays.asList("doubles", "length", "strings"), null);
 
 		_assertHeaders(
 			new String[] {"doubles", "length", "strings"},
@@ -84,8 +93,10 @@ public class ColumnValuesExtractorTest {
 			new NestedObjectsAggregator(arraysAggregator, arraysAggregator);
 
 		ColumnValuesExtractor columnValuesExtractor = new ColumnValuesExtractor(
+			null, 0,
 			ItemClassIndexUtil.index(nestedObjectsAggregator.getClass()),
-			Arrays.asList("arraysAggregator1", "arraysAggregator2", "length"));
+			Arrays.asList("arraysAggregator1", "arraysAggregator2", "length"),
+			null);
 
 		_assertHeaders(
 			new String[] {
@@ -126,6 +137,43 @@ public class ColumnValuesExtractorTest {
 		}
 	}
 
+	@Test
+	public void testExtractValuesWithObjectEntry() throws Exception {
+		TestObjectEntry testObjectEntry = new TestObjectEntry(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
+
+		testObjectEntry._putProperty(
+			"propertyString", RandomTestUtil.randomString());
+		testObjectEntry._putProperty(
+			"propertyLong", RandomTestUtil.randomLong());
+
+		ColumnValuesExtractor columnValuesExtractor = new ColumnValuesExtractor(
+			new ColumnDescriptorProviderImpl(), 0,
+			ItemClassIndexUtil.index(testObjectEntry.getClass()),
+			Arrays.asList("id", "name", "propertyString", "propertyLong"),
+			null);
+
+		_assertHeaders(
+			new String[] {"id", "name", "propertyString", "propertyLong"},
+			columnValuesExtractor.getHeaders());
+
+		List<Object[]> valuesList = columnValuesExtractor.extractValues(
+			testObjectEntry);
+
+		Assert.assertFalse(valuesList.isEmpty());
+
+		Object[] values = valuesList.get(0);
+
+		Assert.assertEquals(values.toString(), 4, values.length);
+
+		Assert.assertEquals(testObjectEntry._id, values[0]);
+		Assert.assertEquals(testObjectEntry._name, values[1]);
+		Assert.assertEquals(
+			testObjectEntry._properties.get("propertyString"), values[2]);
+		Assert.assertEquals(
+			testObjectEntry._properties.get("propertyLong"), values[3]);
+	}
+
 	private void _assertHeaders(String[] expected, String[] actual) {
 		Assert.assertEquals(
 			Arrays.toString(actual), expected.length, actual.length);
@@ -164,6 +212,31 @@ public class ColumnValuesExtractorTest {
 
 	}
 
+	private class ColumnDescriptorProviderImpl
+		implements ColumnDescriptorProvider {
+
+		@Override
+		public ColumnDescriptor[] getColumnDescriptors(
+			long companyId, String fieldName, int index,
+			ObjectValuePair<Field, Method> propertiesObjectValuePair,
+			String taskItemDelegateName) {
+
+			return new ColumnDescriptor[] {
+				ColumnDescriptor.from(
+					fieldName, index,
+					object -> {
+						Method method = propertiesObjectValuePair.getValue();
+
+						Map<String, Object> map =
+							(Map<String, Object>)method.invoke(object);
+
+						return map.get(fieldName);
+					})
+			};
+		}
+
+	}
+
 	private class NestedObjectsAggregator {
 
 		public ArraysAggregator arraysAggregator1;
@@ -179,6 +252,27 @@ public class ColumnValuesExtractorTest {
 
 			length = 2;
 		}
+
+	}
+
+	private class TestObjectEntry {
+
+		public Map<String, Object> getProperties() {
+			return _properties;
+		}
+
+		private TestObjectEntry(long id, String name) {
+			_id = id;
+			_name = name;
+		}
+
+		private Object _putProperty(String name, Object value) {
+			return _properties.put(name, value);
+		}
+
+		private final long _id;
+		private final String _name;
+		private Map<String, Object> _properties = new HashMap<>();
 
 	}
 

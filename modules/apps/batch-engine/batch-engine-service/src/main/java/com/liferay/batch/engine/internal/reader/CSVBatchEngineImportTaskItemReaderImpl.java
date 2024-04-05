@@ -14,8 +14,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,7 +72,7 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 			return null;
 		}
 
-		Map<String, Object> fieldNameValueMap = new HashMap<>();
+		Map<String, Object> fieldNameValueMap = new LinkedHashMap<>();
 
 		CSVRecord csvRecord = _iterator.next();
 

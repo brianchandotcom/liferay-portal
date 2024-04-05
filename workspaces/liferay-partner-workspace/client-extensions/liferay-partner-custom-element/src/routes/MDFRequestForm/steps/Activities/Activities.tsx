@@ -6,15 +6,15 @@
 import Button from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import { ArrayHelpers, useFormikContext } from 'formik';
-import { useCallback, useEffect, useState } from 'react';
+import {ArrayHelpers, useFormikContext} from 'formik';
+import {useCallback, useEffect, useState} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import useSetTouchedOnForms from '../../../../common/hooks/useSetTouchedOnForms';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import isObjectEmpty from '../../../../common/utils/isObjectEmpty';
-import { StepType } from '../../enums/stepType';
+import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import Form from './components/Form';
 import Listing from './components/Listing';
@@ -92,7 +92,7 @@ const Activities = ({
 		totalMDFRequestAmount,
 	]);
 
-	const { isButtonClicked, setIsButtonClicked } = useSetTouchedOnForms(
+	const {isButtonClicked, setIsButtonClicked} = useSetTouchedOnForms(
 		useCallback(
 			(currentIsButtonClicked) =>
 				(!isObjectEmpty(activityErrors) && currentIsButtonClicked) ||

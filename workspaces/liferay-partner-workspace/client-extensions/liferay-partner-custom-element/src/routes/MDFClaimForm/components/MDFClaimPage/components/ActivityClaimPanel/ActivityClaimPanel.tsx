@@ -7,16 +7,16 @@ import ClayAlert from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 import Link from '@clayui/link';
 import ClayPanel from '@clayui/panel';
-import { FormikContextType, FormikErrors } from 'formik';
-import { useCallback, useState } from 'react';
+import {FormikContextType, FormikErrors} from 'formik';
+import {useCallback, useState} from 'react';
 
 import PRMForm from '../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../common/components/PRMFormik';
-import { TypeActivityKey } from '../../../../../../common/enums/TypeActivityKey';
+import {TypeActivityKey} from '../../../../../../common/enums/TypeActivityKey';
 import LiferayFile from '../../../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../../../common/interfaces/mdfClaim';
 import MDFClaimActivity from '../../../../../../common/interfaces/mdfClaimActivity';
-import { Liferay } from '../../../../../../common/services/liferay';
+import {Liferay} from '../../../../../../common/services/liferay';
 import deleteDocument from '../../../../../../common/services/liferay/headless-delivery/deleteDocument';
 import getIntlNumberFormat from '../../../../../../common/utils/getIntlNumberFormat';
 import checkRequiredListOfQualifiedLeads from '../../../../utils/checkRequiredListOfQualifiedLeads';
@@ -35,7 +35,7 @@ interface IProps {
 	errors: FormikErrors<MDFClaim>;
 	hasPermissionEditClaimActivity: boolean;
 	isButtonClicked: boolean;
-	isDraft: boolean;
+	isEdit: boolean;
 	overallCampaignDescription: string;
 }
 
@@ -70,7 +70,7 @@ const ActivityClaimPanel = ({
 	errors,
 	hasPermissionEditClaimActivity,
 	isButtonClicked,
-	isDraft,
+	isEdit,
 	overallCampaignDescription,
 	setFieldValue,
 }: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
@@ -78,16 +78,16 @@ const ActivityClaimPanel = ({
 
 	const isBudgetSelected = Array.isArray(errors?.activities)
 		? errors.activities.reduce((accumulator, activity, index) => {
-			if (
-				activity &&
-				'budgets' in activity &&
-				typeof activity.budgets !== 'string'
-			) {
-				accumulator.push(index);
-			}
+				if (
+					activity &&
+					'budgets' in activity &&
+					typeof activity.budgets !== 'string'
+				) {
+					accumulator.push(index);
+				}
 
-			return accumulator;
-		}, [])
+				return accumulator;
+		  }, [])
 		: undefined;
 
 	const siteURL = Liferay.ThemeDisplay.getLayoutRelativeControlPanelURL().split(
@@ -187,9 +187,9 @@ const ActivityClaimPanel = ({
 								<div
 									className={
 										activityClaimStatusClassName[
-										activity.claimed
-											? 'claimed'
-											: 'unclaimed'
+											activity.claimed
+												? 'claimed'
+												: 'unclaimed'
 										]
 									}
 								>
@@ -204,8 +204,8 @@ const ActivityClaimPanel = ({
 								<div
 									className={
 										activityStatusClassName[
-										activity.activityStatus
-											?.key as string
+											activity.activityStatus
+												?.key as string
 										]
 									}
 								>
@@ -248,13 +248,18 @@ const ActivityClaimPanel = ({
 						))}
 
 						{isBudgetSelected &&
+							errors?.activities &&
 							!isBudgetSelected.includes(activityIndex) &&
-							(isButtonClicked || isDraft) && (
+							(isButtonClicked || isEdit) && (
 								<ClayAlert
 									displayType="danger"
 									hideCloseIcon={true}
 								>
-									Need at least one budget selected
+									{
+										(errors?.activities[activityIndex] as {
+											budgets?: string;
+										})?.budgets
+									}
 								</ClayAlert>
 							)}
 
@@ -308,7 +313,7 @@ const ActivityClaimPanel = ({
 
 						{
 							typeActivityComponents[
-							String(activity.typeActivity?.key) || ''
+								String(activity.typeActivity?.key) || ''
 							]
 						}
 					</ClayPanel.Body>

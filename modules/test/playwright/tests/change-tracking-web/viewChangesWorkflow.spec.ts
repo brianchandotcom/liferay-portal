@@ -5,80 +5,41 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginTest} from '../../fixtures/loginTest';
 import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
 import getRandomString from '../../utils/getRandomString';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 
 export const test = mergeTests(
-	apiHelpersTest,
 	featureFlagsTest({
 		'LPD-10703': true,
 	}),
 	journalPagesTest,
 	changeTrackingPagesTest,
-	workflowPagesTest,
-	loginTest()
+	workflowPagesTest
 );
 
-let ctCollection;
 let journalName;
-let publicationName;
 
-test.beforeEach(
-	async ({
-		apiHelpers,
-		changeTrackingPage,
-		journalEditArticlePage,
-		workflowPage,
-	}) => {
-		await workflowPage.goto();
-
-		await workflowPage.changeWorkflow(
-			'Web Content Article',
-			'Single Approver'
-		);
-
-		await changeTrackingPage.enablePublications();
-
-		publicationName = getRandomString();
-
-		ctCollection =
-			await apiHelpers.headlessChangeTracking.createCTCollection(
-				publicationName
-			);
-
-		await apiHelpers.headlessChangeTracking.checkoutCTCollection(
-			ctCollection.id
-		);
-
-		journalName = getRandomString();
-
-		await journalEditArticlePage.goto();
-		await journalEditArticlePage.submitArticleForWorkflow(journalName);
-	}
-);
-
-test.afterEach(async ({apiHelpers, changeTrackingPage, workflowPage}) => {
-	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.id);
-
-	await changeTrackingPage.disablePublications();
-
+test.beforeEach(async ({journalEditArticlePage, workflowPage}) => {
 	await workflowPage.goto();
 
-	await workflowPage.changeWorkflow('Web Content Article', 'No Workflow', {
-		disable: true,
-	});
+	await workflowPage.changeWorkflow('Web Content Article', 'Single Approver');
+
+	journalName = getRandomString();
+
+	await journalEditArticlePage.goto();
+
+	await journalEditArticlePage.submitArticleForWorkflow(journalName);
 });
 
 test('LPD-19748 Add workflow info to the View Change screen', async ({
 	changeTrackingPage,
+	ctCollection,
 	page,
 }) => {
-	await changeTrackingPage.goToReviewChanges(publicationName);
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
 
 	await changeTrackingPage.reviewChange(journalName);
 
@@ -89,6 +50,7 @@ test('LPD-19748 Add workflow info to the View Change screen', async ({
 
 test('LPD-19748 Workflow data is displayed in tab', async ({
 	changeTrackingPage,
+	ctCollection,
 	page,
 }) => {
 	const displayData = [
@@ -99,7 +61,7 @@ test('LPD-19748 Workflow data is displayed in tab', async ({
 		'Due Date',
 	];
 
-	await changeTrackingPage.goToReviewChanges(publicationName);
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
 
 	await changeTrackingPage.reviewChange(journalName);
 
@@ -112,6 +74,7 @@ test('LPD-19748 Workflow data is displayed in tab', async ({
 
 test('LPD-19748 Only workflow status is displayed when workflow is disabled', async ({
 	changeTrackingPage,
+	ctCollection,
 	page,
 	workflowPage,
 }) => {
@@ -121,7 +84,7 @@ test('LPD-19748 Only workflow status is displayed when workflow is disabled', as
 		disable: true,
 	});
 
-	await changeTrackingPage.goToReviewChanges(publicationName);
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
 
 	await changeTrackingPage.reviewChange(journalName);
 

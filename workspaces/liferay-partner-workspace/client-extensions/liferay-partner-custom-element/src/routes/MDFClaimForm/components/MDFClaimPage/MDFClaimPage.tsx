@@ -6,8 +6,8 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useFormikContext} from 'formik';
-import {useCallback} from 'react';
+import { useFormikContext } from 'formik';
+import { useCallback } from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import InputMultipleFilesListing from '../../../../common/components/PRMForm/components/fields/InputMultipleFilesListing/InputMultipleFilesListing';
@@ -20,8 +20,8 @@ import LiferayFile from '../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../common/interfaces/mdfClaim';
 import MDFClaimActivity from '../../../../common/interfaces/mdfClaimActivity';
 import MDFClaimProps from '../../../../common/interfaces/mdfClaimProps';
-import {ResourceName} from '../../../../common/services/liferay/object/enum/resourceName';
-import {Status} from '../../../../common/utils/constants/status';
+import { ResourceName } from '../../../../common/services/liferay/object/enum/resourceName';
+import { Status } from '../../../../common/utils/constants/status';
 import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
 import useDynamicFieldEntries from '../../../MDFClaimList/hooks/useDynamicFieldEntries';
 import ActivityClaimPanel from './components/ActivityClaimPanel';
@@ -61,9 +61,9 @@ const MDFClaimPage = ({
 		)
 	);
 
-	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
+	const { companiesEntries, fieldEntries } = useDynamicFieldEntries();
 
-	const {isButtonClicked, setIsButtonClicked} = useSetTouchedOnForms(
+	const { isButtonClicked, setIsButtonClicked } = useSetTouchedOnForms(
 		useCallback(() => Boolean(values.id), [values.id]),
 		formikHelpers
 	);
@@ -149,6 +149,18 @@ const MDFClaimPage = ({
 			);
 		}
 
+		const handleOnClick = () => {
+			setIsButtonClicked(true);
+			window.scrollTo({
+				behavior: (isValid ? 'instant' : 'smooth') as ScrollBehavior,
+				top: 0,
+			});
+		};
+
+		const isDisabledButton =
+			((!isValid || isSubmitting || submitted) && isButtonClicked) ||
+			(Boolean(values.id) && !isValid);
+
 		return (
 			<PRMForm name="New" title="Reimbursement Claim">
 				<PRMForm.Section
@@ -182,15 +194,15 @@ const MDFClaimPage = ({
 					)}
 
 					{errors?.activities &&
-											errors.activities ===
-												'Need at least one activity selected' &&
-											(setIsButtonClicked || !!values.id) && (
-												<ClayAlert
-													displayType="danger"
-													hideCloseIcon={true}
-												>
-													Need at least one activity selected
-												</ClayAlert>
+						errors.activities ===
+						'Need at least one activity selected' &&
+						(isButtonClicked || !!values.id) && (
+							<ClayAlert
+								displayType="danger"
+								hideCloseIcon={true}
+							>
+								Need at least one activity selected
+							</ClayAlert>
 						)}
 				</PRMForm.Section>
 
@@ -208,8 +220,8 @@ const MDFClaimPage = ({
 								`reimbursementInvoices`,
 								values.reimbursementInvoices
 									? values.reimbursementInvoices.concat(
-											liferayFiles as LiferayFile[]
-									  )
+										liferayFiles as LiferayFile[]
+									)
 									: liferayFiles
 							)
 						}
@@ -265,19 +277,9 @@ const MDFClaimPage = ({
 
 						<ClayButton
 							className="inline-item inline-item-after"
-							disabled={
-								((!isValid || isSubmitting || submitted) &&
-									isButtonClicked) ||
-								(!!values.id && !isValid)
-							}
+							disabled={isDisabledButton}
 							onClick={() => {
-								setIsButtonClicked(true);
-								window.scrollTo({
-									behavior: (isValid
-										? 'instant'
-										: 'smooth') as ScrollBehavior,
-									top: 0,
-								});
+								handleOnClick();
 							}}
 							type="submit"
 						>

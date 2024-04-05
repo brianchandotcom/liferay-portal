@@ -6,15 +6,15 @@
 import Button from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import {ArrayHelpers, useFormikContext} from 'formik';
-import {useCallback, useEffect, useState} from 'react';
+import { ArrayHelpers, useFormikContext } from 'formik';
+import { useCallback, useEffect, useState } from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import useSetTouchedOnForms from '../../../../common/hooks/useSetTouchedOnForms';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import isObjectEmpty from '../../../../common/utils/isObjectEmpty';
-import {StepType} from '../../enums/stepType';
+import { StepType } from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import Form from './components/Form';
 import Listing from './components/Listing';
@@ -92,7 +92,7 @@ const Activities = ({
 		totalMDFRequestAmount,
 	]);
 
-	const {isButtonClicked, setIsButtonClicked} = useSetTouchedOnForms(
+	const { isButtonClicked, setIsButtonClicked } = useSetTouchedOnForms(
 		useCallback(
 			(currentIsButtonClicked) =>
 				(!isObjectEmpty(activityErrors) && currentIsButtonClicked) ||
@@ -153,6 +153,33 @@ const Activities = ({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isDraft]);
+
+	const handleOnClick = () => {
+		setIsButtonClicked(true);
+		window.scrollTo({
+			behavior: (isValid ? 'instant' : 'smooth') as ScrollBehavior,
+			top: 0,
+		});
+		if (
+			(isObjectEmpty(activityErrors as Object) && isButtonClicked) ||
+			isObjectEmpty(activityErrors as Object)
+		) {
+			setIsButtonClicked(false);
+			onContinueForm();
+		}
+	};
+
+	const isEditFormWithError =
+		!isObjectEmpty(activityErrors as Object) &&
+		currentActivityIndexEdit !== undefined;
+
+	const isNewFormWithError =
+		!isObjectEmpty(activityErrors as Object) && isButtonClicked;
+
+	const isDisabledSubmittedButton =
+		currentActivityIndex !== undefined
+			? isNewFormWithError || isEditFormWithError
+			: !isValid;
 
 	return (
 		<PRMForm
@@ -225,31 +252,8 @@ const Activities = ({
 
 					<Button
 						className="inline-item inline-item-after"
-						disabled={
-							currentActivityIndex !== undefined
-								? (!isObjectEmpty(activityErrors as Object) &&
-										isButtonClicked) ||
-								  (!isObjectEmpty(activityErrors as Object) &&
-										currentActivityIndexEdit !== undefined)
-								: !isValid
-						}
-						onClick={() => {
-							setIsButtonClicked(true);
-							window.scrollTo({
-								behavior: (isValid
-									? 'instant'
-									: 'smooth') as ScrollBehavior,
-								top: 0,
-							});
-							if (
-								(isObjectEmpty(activityErrors as Object) &&
-									isButtonClicked) ||
-								isObjectEmpty(activityErrors as Object)
-							) {
-								setIsButtonClicked(false);
-								onContinueForm();
-							}
-						}}
+						disabled={isDisabledSubmittedButton}
+						onClick={() => handleOnClick()}
 					>
 						Continue
 						{isSubmitting && (

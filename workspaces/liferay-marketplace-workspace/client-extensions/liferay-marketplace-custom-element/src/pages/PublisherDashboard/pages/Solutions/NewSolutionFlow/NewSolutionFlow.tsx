@@ -141,10 +141,8 @@ const NewSolution = () => {
 						<Outlet></Outlet>
 					</div>
 				</div>
-			</div>
 
-			<div className="d-flex justify-content-end">
-				<div className="">
+				<div className="align-items-end d-flex">
 					{activeIndex !== 0 && (
 						<ClayButton
 							displayType="secondary"

@@ -354,10 +354,10 @@ public class KoroneikiRestController extends BaseRestController {
 				"KOR-"
 			)) {
 
-			account.setExternalReferenceCode(
-				() -> _postKoroneikiAccount(
-					account, jwt
-				).getKey());
+			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+				postAccount = _postKoroneikiAccount(account, jwt);
+
+			account.setExternalReferenceCode(postAccount::getKey);
 
 			_accountResource.patchAccount(account.getId(), account);
 		}

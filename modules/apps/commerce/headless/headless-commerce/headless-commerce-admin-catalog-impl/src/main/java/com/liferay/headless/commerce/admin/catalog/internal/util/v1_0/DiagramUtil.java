@@ -140,22 +140,16 @@ public class DiagramUtil {
 			return diagram;
 		}
 
-		diagram.setImageId(
-			() -> {
-				CPAttachmentFileEntry cpAttachmentFileEntry =
-					AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
-						cpAttachmentFileEntryService,
-						cpDefinitionOptionRelService,
-						cpDefinitionOptionValueRelService, cpOptionService,
-						uniqueFileNameProvider, diagram.getAttachmentBase64(),
-						classNameId, classPK,
-						CSDiagramSettingsConstants.TYPE_DIAGRAM,
-						_getDiagramServiceContext(
-							companyId, diagram, groupId, locale,
-							serviceContextHelper));
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
+				cpAttachmentFileEntryService, cpDefinitionOptionRelService,
+				cpDefinitionOptionValueRelService, cpOptionService,
+				uniqueFileNameProvider, diagram.getAttachmentBase64(),
+				classNameId, classPK, CSDiagramSettingsConstants.TYPE_DIAGRAM,
+				_getDiagramServiceContext(
+					companyId, diagram, groupId, locale, serviceContextHelper));
 
-				return cpAttachmentFileEntry.getCPAttachmentFileEntryId();
-			});
+		diagram.setImageId(cpAttachmentFileEntry::getCPAttachmentFileEntryId);
 
 		return diagram;
 	}

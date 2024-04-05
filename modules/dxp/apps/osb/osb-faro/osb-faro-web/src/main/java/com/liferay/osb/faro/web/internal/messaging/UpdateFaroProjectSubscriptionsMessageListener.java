@@ -109,6 +109,8 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 			OSBAccountEntry osbAccountEntry = null;
 
 			if (Validator.isNull(faroProject.getCorpProjectUuid())) {
+				Date createDate = new Date(faroProject.getCreateTime());
+
 				osbAccountEntry = new OSBAccountEntry() {
 					{
 						OSBOfferingEntry osbOfferingEntry =
@@ -117,8 +119,7 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 						osbOfferingEntry.setProductEntryId(
 							ProductConstants.BASIC_PRODUCT_ENTRY_ID);
 						osbOfferingEntry.setQuantity(1);
-						osbOfferingEntry.setStartDate(
-							new Date(faroProject.getCreateTime()));
+						osbOfferingEntry.setStartDate(createDate);
 
 						setOfferingEntries(
 							Collections.singletonList(osbOfferingEntry));

@@ -57,7 +57,7 @@ export function UserNotificationSettings({
 	const [toTerms, setToTerms] = useState<string>('');
 	const [userList, setUserList] = useState<MultiSelectItem[]>([]);
 
-	const getRoles = async () => {
+	const getUserNotificationRoles = async () => {
 		const query = `/o/headless-admin-user/v1.0/roles?page=-1&restrictFields=rolePermissions`;
 
 		const response = await fetch(query, {
@@ -153,7 +153,7 @@ export function UserNotificationSettings({
 	useEffect(() => {
 		const makeFetch = async () => {
 			if (values.recipientType === 'role') {
-				await getRoles();
+				await getUserNotificationRoles();
 
 				return;
 			}
@@ -213,7 +213,7 @@ export function UserNotificationSettings({
 					});
 
 					if (value === 'role') {
-						getRoles();
+						getUserNotificationRoles();
 					}
 				}}
 				selectedKey={values.recipientType}

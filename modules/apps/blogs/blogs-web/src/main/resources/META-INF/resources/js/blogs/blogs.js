@@ -434,6 +434,22 @@ export default class Blogs {
 
 				const body = new URLSearchParams(bodyData);
 
+				const groupPermissions = document.querySelectorAll(
+					`input[name=${namespace}groupPermissions]:checked`
+				);
+
+				groupPermissions.forEach((item) => {
+					body.append(`${namespace}groupPermissions`, item.value);
+				});
+
+				const guestPermissions = document.querySelectorAll(
+					`input[name=${namespace}guestPermissions]:checked`
+				);
+
+				guestPermissions.forEach((item) => {
+					body.append(`${namespace}guestPermissions`, item.value);
+				});
+
 				fetch(this._config.editEntryURL, {
 					body,
 					method: 'POST',

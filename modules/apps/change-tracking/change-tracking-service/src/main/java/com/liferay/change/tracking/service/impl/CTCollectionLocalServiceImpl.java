@@ -594,6 +594,8 @@ public class CTCollectionLocalServiceImpl
 					ctEntries, ctEntry -> _uidFactory.getUID(ctEntry)),
 				indexer.isCommitImmediately());
 		}
+
+		_ctClosureFactory.clearCache(ctCollection.getCtCollectionId());
 	}
 
 	@Override
@@ -894,6 +896,9 @@ public class CTCollectionLocalServiceImpl
 		if (!conflictInfoMap.isEmpty()) {
 			throw new CTPublishConflictException("Conflict detected");
 		}
+
+		_ctClosureFactory.clearCache(fromCTCollectionId);
+		_ctClosureFactory.clearCache(toCTCollectionId);
 	}
 
 	@Override

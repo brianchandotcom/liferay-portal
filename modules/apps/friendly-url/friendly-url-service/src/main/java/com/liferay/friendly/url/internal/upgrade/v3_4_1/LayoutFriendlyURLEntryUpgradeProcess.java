@@ -62,7 +62,9 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 				_privateLayoutClassNameId, " ELSE ", _publicLayoutClassNameId,
 				" END as classNameId from LayoutFriendlyURL left join ",
 				"FriendlyURLEntryLocalization on ",
-				"(FriendlyURLEntryLocalization.languageId = ",
+				"(FriendlyURLEntryLocalization.ctCollectionId = ",
+				"LayoutFriendlyURL.ctCollectionId and ",
+				"FriendlyURLEntryLocalization.languageId = ",
 				"LayoutFriendlyURL.languageId and ",
 				"FriendlyURLEntryLocalization.urlTitle = ",
 				"LayoutFriendlyURL.friendlyURL and ",
@@ -70,9 +72,7 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 				"LayoutFriendlyURL.groupId and ",
 				"FriendlyURLEntryLocalization.classNameId = classNameId and ",
 				"FriendlyURLEntryLocalization.classPK = ",
-				"LayoutFriendlyURL.plid and ",
-				"FriendlyURLEntryLocalization.ctCollectionId = ",
-				"LayoutFriendlyURL.ctCollectionId) where ",
+				"LayoutFriendlyURL.plid) where ",
 				"FriendlyURLEntryLocalization.friendlyURLEntryLocalizationId ",
 				"is null");
 

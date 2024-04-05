@@ -24,11 +24,9 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
-import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultPredicate;
 import com.liferay.petra.sql.dsl.spi.expression.Operand;
-import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -364,13 +362,6 @@ public class PredicateExpressionVisitorImpl
 		_serviceTrackerMap = serviceTrackerMap;
 	}
 
-	private Predicate _contains(
-		Column<?, ?> column,
-		com.liferay.petra.sql.dsl.expression.Expression<String> expression) {
-
-		return column.like(expression);
-	}
-
 	private Predicate _contains(Column<?, ?> column, Object value) {
 		return column.like(StringPool.PERCENT + value + StringPool.PERCENT);
 	}
@@ -396,39 +387,21 @@ public class PredicateExpressionVisitorImpl
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
-			Object value = _getValue(fieldName, objectDefinition, fieldValue);
+			fieldPredicateProvider = _serviceTrackerMap.getService(
+				objectField.getBusinessType());
 
-			return _contains(
-				_getColumn(fieldName, objectDefinition),
-				DSLFunctionFactoryUtil.concat(
-					new Scalar<>(StringPool.PERCENT),
-					new Scalar<>(value.toString()),
-					new Scalar<>(StringPool.PERCENT)));
+			if (fieldPredicateProvider != null) {
+				Object value = _getValue(
+					fieldName, objectDefinition, fieldValue);
+
+				return fieldPredicateProvider.getContainsPredicate(
+					_getColumn(fieldName, objectDefinition), value);
+			}
 		}
 
 		return _contains(
 			_getColumn(fieldName, objectDefinition),
 			_getValue(fieldName, objectDefinition, fieldValue));
-	}
-
-	private Predicate _eq(
-		Object fieldName, Object fieldValue,
-		ObjectDefinition objectDefinition) {
-
-		Object value = _getValue(fieldName, objectDefinition, fieldValue);
-
-		com.liferay.petra.sql.dsl.expression.Expression<String> rightValue =
-			DSLFunctionFactoryUtil.concat(
-				new Scalar<>("%, "), new Scalar<>(value.toString()),
-				new Scalar<>(", %"));
-
-		com.liferay.petra.sql.dsl.expression.Expression<String> leftValue =
-			DSLFunctionFactoryUtil.concat(
-				new Scalar<>(", "),
-				_getDSLExpression(fieldName, objectDefinition),
-				new Scalar<>(", "));
-
-		return leftValue.like(rightValue);
 	}
 
 	private ObjectRelationship _fetchObjectRelationship(
@@ -497,6 +470,23 @@ public class PredicateExpressionVisitorImpl
 		if (fieldPredicateProvider != null) {
 			return fieldPredicateProvider.getInPredicate(
 				name -> _getColumn(name, objectDefinition), rights);
+		}
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinition.getObjectDefinitionId(), String.valueOf(left));
+
+		if ((objectField != null) &&
+			StringUtil.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+			fieldPredicateProvider = _serviceTrackerMap.getService(
+				objectField.getBusinessType());
+
+			if (fieldPredicateProvider != null) {
+				return fieldPredicateProvider.getInPredicate(
+					_getDSLExpression(left, objectDefinition), rights);
+			}
 		}
 
 		return _getColumn(
@@ -645,12 +635,14 @@ public class PredicateExpressionVisitorImpl
 				Predicate.withParentheses((Predicate)right));
 		}
 		else {
+			FieldPredicateProvider fieldPredicateProvider = null;
+
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 				objectDefinition.getObjectDefinitionId(), String.valueOf(left));
 
 			if (objectField == null) {
-				FieldPredicateProvider fieldPredicateProvider =
-					_serviceTrackerMap.getService(String.valueOf(left));
+				fieldPredicateProvider = _serviceTrackerMap.getService(
+					String.valueOf(left));
 
 				if (fieldPredicateProvider != null) {
 					predicate =
@@ -665,11 +657,23 @@ public class PredicateExpressionVisitorImpl
 						ObjectFieldConstants.
 							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
-				if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
-					predicate = _eq(left, right, objectDefinition);
-				}
-				else {
-					predicate = _contains(left, right, objectDefinition);
+				fieldPredicateProvider = _serviceTrackerMap.getService(
+					objectField.getBusinessType());
+
+				if (fieldPredicateProvider != null) {
+					if (Objects.equals(
+							BinaryExpression.Operation.EQ, operation)) {
+
+						predicate =
+							fieldPredicateProvider.getBinaryExpressionPredicate(
+								_getDSLExpression(left, objectDefinition),
+								_getValue(left, objectDefinition, right));
+					}
+					else {
+						predicate = fieldPredicateProvider.getContainsPredicate(
+							_getColumn(left, objectDefinition),
+							_getValue(left, objectDefinition, right));
+					}
 				}
 			}
 		}
@@ -821,24 +825,13 @@ public class PredicateExpressionVisitorImpl
 			objectDefinition.getObjectDefinitionId(),
 			String.valueOf(fieldName));
 
-		if ((objectField != null) &&
-			StringUtil.equals(
-				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+		fieldPredicateProvider = _serviceTrackerMap.getService(
+			objectField.getBusinessType());
 
-			Object value = _getValue(fieldName, objectDefinition, fieldValue);
-
-			com.liferay.petra.sql.dsl.expression.Expression<String> rightValue =
-				DSLFunctionFactoryUtil.concat(
-					new Scalar<>("%, " + value + "%, %"));
-
-			com.liferay.petra.sql.dsl.expression.Expression<String> leftValue =
-				DSLFunctionFactoryUtil.concat(
-					new Scalar<>(", "),
-					_getDSLExpression(fieldName, objectDefinition),
-					new Scalar<>(", "));
-
-			return leftValue.like(rightValue);
+		if (fieldPredicateProvider != null) {
+			return fieldPredicateProvider.getStartsWithPredicate(
+				_getDSLExpression(fieldName, objectDefinition),
+				_getValue(fieldName, objectDefinition, fieldValue));
 		}
 
 		return _startsWith(

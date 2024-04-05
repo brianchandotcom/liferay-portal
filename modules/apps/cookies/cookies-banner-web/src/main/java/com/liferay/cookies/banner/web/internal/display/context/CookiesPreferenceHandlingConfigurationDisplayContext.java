@@ -54,6 +54,8 @@ public class CookiesPreferenceHandlingConfigurationDisplayContext {
 		).setActionName(
 			"/instance_settings" +
 				"/delete_cookies_preference_handling_configuration"
+		).setRedirect(
+			PortalUtil.getCurrentURL(_httpServletRequest)
 		).setParameter(
 			"scope", _scope
 		).setParameter(

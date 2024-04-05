@@ -36,21 +36,15 @@ import reactor.netty.resources.ConnectionProvider;
  */
 public abstract class BaseRestController {
 
-	protected String _getAuthorization() {
-		return _liferayOAuth2AccessTokenManager.getAuthorization(
-			"liferay-partner-etc-spring-boot-oauth-application-headless-" +
-				"server");
-	}
-
-	JSONObject get(Function<UriBuilder, URI> uriFunction) {
-		String response = _getWebClient(
+	protected JSONObject get(Function<UriBuilder, URI> uriFunction) {
+		String response = getWebClient(
 		).get(
 		).uri(
 			uriBuilder -> uriFunction.apply(uriBuilder)
 		).accept(
 			MediaType.APPLICATION_JSON
 		).header(
-			HttpHeaders.AUTHORIZATION, _getAuthorization()
+			HttpHeaders.AUTHORIZATION, getAuthorization()
 		).retrieve(
 		).bodyToMono(
 			String.class
@@ -66,7 +60,13 @@ public abstract class BaseRestController {
 		}
 	}
 
-	protected WebClient _getWebClient() {
+	protected String getAuthorization() {
+		return _liferayOAuth2AccessTokenManager.getAuthorization(
+			"liferay-partner-etc-spring-boot-oauth-application-headless-" +
+				"server");
+	}
+
+	protected WebClient getWebClient() {
 		return WebClient.builder(
 		).clientConnector(
 			new ReactorClientHttpConnector(
@@ -101,7 +101,7 @@ public abstract class BaseRestController {
 	}
 
 	protected void patch(String bodyValue, String path) {
-		_getWebClient(
+		getWebClient(
 		).patch(
 		).uri(
 			uriBuilder -> uriBuilder.path(
@@ -112,7 +112,7 @@ public abstract class BaseRestController {
 		).contentType(
 			MediaType.APPLICATION_JSON
 		).header(
-			HttpHeaders.AUTHORIZATION, _getAuthorization()
+			HttpHeaders.AUTHORIZATION, getAuthorization()
 		).bodyValue(
 			bodyValue
 		).retrieve(

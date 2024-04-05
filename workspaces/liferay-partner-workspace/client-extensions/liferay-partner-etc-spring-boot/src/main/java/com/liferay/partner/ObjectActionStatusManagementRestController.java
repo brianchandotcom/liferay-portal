@@ -5,10 +5,12 @@
 
 package com.liferay.partner;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,74 +22,91 @@ import org.springframework.web.bind.annotation.RestController;
 public class ObjectActionStatusManagementRestController
 	extends BaseRestController {
 
-	@GetMapping
-	public void closeCompleteRequest() {
-		JSONObject mdfClaimsJSONObject = get(
-			uriBuilder -> uriBuilder.path(
-				"/o/c/mdfclaims/"
-			).queryParam(
-				"page", "1"
-			).queryParam(
-				"pageSize", "-1"
-			).build());
+	@PostMapping
+	public ResponseEntity<String> post(@RequestBody String json) {
+		JSONObject jsonObject = new JSONObject(json);
 
-		JSONArray mdfClaimsJSONArray = mdfClaimsJSONObject.getJSONArray(
-			"items");
+		JSONObject objectEntryDTOMDFClaimJSONObject = jsonObject.getJSONObject(
+			"originalObjectEntryDTOMDFClaim");
 
-		Double claimPaidTotal = 0.0;
+		String mdfClaimStatus = objectEntryDTOMDFClaimJSONObject.getJSONObject(
+			"properties"
+		).getJSONObject(
+			"mdfClaimStatus"
+		).getString(
+			"key"
+		);
 
-		for (int i = 0; i < mdfClaimsJSONArray.length(); i++) {
-			JSONObject mdfClaimJSONObject = mdfClaimsJSONArray.getJSONObject(i);
-
-			Double claimPaid = mdfClaimJSONObject.getDouble("claimPaid");
-			Double totalMDFRequestedAmount = mdfClaimJSONObject.getDouble(
-				"totalMDFRequestedAmount");
-			String mdfClaimStatus = mdfClaimJSONObject.getJSONObject(
-				"mdfClaimStatus"
-			).getString(
-				"key"
+		if (mdfClaimStatus.equals("claimPaid")) {
+			Double claimPaid = objectEntryDTOMDFClaimJSONObject.getJSONObject(
+				"properties"
+			).getDouble(
+				"claimPaid"
 			);
 
-			if (mdfClaimStatus.equals("claimPaid")) {
-				if ((claimPaid >= totalMDFRequestedAmount) &&
-					(claimPaidTotal >= totalMDFRequestedAmount)) {
+			Double totalMDFRequestedAmount =
+				objectEntryDTOMDFClaimJSONObject.getJSONObject(
+					"properties"
+				).getDouble(
+					"totalMDFRequestedAmount"
+				);
 
-					String mdfRequestExternalReferenceCode =
-						mdfClaimJSONObject.getString(
-							"r_mdfReqToMDFClms_c_mdfRequestERC");
+			if (claimPaid >= totalMDFRequestedAmount) {
+				_updateMdfRequestStatus(
+					objectEntryDTOMDFClaimJSONObject.getJSONObject(
+						"properties"
+					).getString(
+						"mdfReqToMDFClmsERC"
+					));
+			}
+			else {
+				String mdfRequestExternalReferenceCode =
+					objectEntryDTOMDFClaimJSONObject.getJSONObject(
+						"properties"
+					).getString(
+						"mdfReqToMDFClmsERC"
+					);
 
-					updateMdfRequestStatus(mdfRequestExternalReferenceCode);
+				JSONObject responseJSONObject = get(
+					uriBuilder -> uriBuilder.path(
+						"/o/c/mdfrequests/by-external-reference-code/" +
+							mdfRequestExternalReferenceCode
+					).build());
 
-					break;
-				}
+				Double totalMDFRequestAmount = responseJSONObject.getDouble(
+					"totalMDFRequestAmount");
 
-				claimPaidTotal += claimPaid;
+				Double totalPaidAmount = responseJSONObject.getDouble(
+					"totalPaidAmount");
 
-				if (claimPaidTotal >= totalMDFRequestedAmount) {
-					String mdfRequestExternalReferenceCode =
-						mdfClaimJSONObject.getString(
-							"r_mdfReqToMDFClms_c_mdfRequestERC");
-
-					updateMdfRequestStatus(mdfRequestExternalReferenceCode);
+				if (totalPaidAmount >= totalMDFRequestAmount) {
+					_updateMdfRequestStatus(
+						responseJSONObject.getString("externalReferenceCode"));
 				}
 			}
 		}
+
+		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
 
-	private void updateMdfRequestStatus(
+	private void _updateMdfRequestStatus(
 		String mdfRequestExternalReferenceCode) {
 
-		JSONObject newMdfRequestStatus = new JSONObject();
+		JSONObject newMdfRequestStatusJSONObject = new JSONObject();
 
-		newMdfRequestStatus.put("key", "completed");
-		newMdfRequestStatus.put("name", "Completed");
+		newMdfRequestStatusJSONObject.put(
+			"key", "completed"
+		).put(
+			"name", "Completed"
+		);
 
-		JSONObject mdfRequestStatusWrapper = new JSONObject();
+		JSONObject mdfRequestStatusJSONObject = new JSONObject();
 
-		mdfRequestStatusWrapper.put("mdfRequestStatus", newMdfRequestStatus);
+		mdfRequestStatusJSONObject.put(
+			"mdfRequestStatus", newMdfRequestStatusJSONObject);
 
 		patch(
-			mdfRequestStatusWrapper.toString(),
+			mdfRequestStatusJSONObject.toString(),
 			"/o/c/mdfrequests/by-external-reference-code/" +
 				mdfRequestExternalReferenceCode);
 	}

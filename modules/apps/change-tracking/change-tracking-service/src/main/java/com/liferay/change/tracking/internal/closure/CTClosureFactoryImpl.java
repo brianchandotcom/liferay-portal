@@ -82,8 +82,8 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 	@Override
 	public CTClosure create(long ctCollectionId, Set<Long> classNameIds) {
-		Map<Set<Long>, CTClosure> ctClosures = _ctClosuresMap.getOrDefault(
-			ctCollectionId, new LRUMap<>(5));
+		Map<Set<Long>, CTClosure> ctClosures = _ctClosuresMap.computeIfAbsent(
+			ctCollectionId, key -> new LRUMap<>(5));
 
 		CTClosure ctClosure = ctClosures.get(classNameIds);
 
@@ -110,8 +110,6 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 				ctCollectionId, classNameIds, combinedTableReferenceInfos));
 
 		ctClosures.put(classNameIds, ctClosure);
-
-		_ctClosuresMap.putIfAbsent(ctCollectionId, ctClosures);
 
 		return ctClosure;
 	}

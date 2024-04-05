@@ -42,7 +42,7 @@ export function PrimaryRecipient({
 	setValues,
 	values,
 }: PrimaryRecipientProps) {
-	const [primaryRecipient] = values.recipients as EmailRecipients[];
+	const [recipient] = values.recipients as EmailRecipients[];
 	const [toRolesList, setToRolesList] = useState<MultiSelectItem[]>([]);
 
 	const handleMultiSelectItemsChange = (items: MultiSelectItem[]) => {
@@ -62,7 +62,7 @@ export function PrimaryRecipient({
 			...values,
 			recipients: [
 				{
-					...values.recipients[0],
+					...recipient,
 					to: newRecipients,
 				},
 			],
@@ -72,15 +72,12 @@ export function PrimaryRecipient({
 	useEffect(() => {
 		const makeFetch = async () => {
 			const [roles] = await getRoles(baseResourceURL);
-			if (
-				Array.isArray(primaryRecipient.to) &&
-				!!primaryRecipient.to.length
-			) {
+			if (Array.isArray(recipient.to) && !!recipient.to.length) {
 				setToRolesList([
 					{
 						...roles,
 						children: getCheckedChildren(
-							primaryRecipient.to,
+							recipient.to,
 							roles.children
 						),
 					},
@@ -94,7 +91,7 @@ export function PrimaryRecipient({
 
 		makeFetch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [primaryRecipient.to]);
+	}, [recipient.to]);
 
 	return (
 		<>
@@ -107,7 +104,7 @@ export function PrimaryRecipient({
 						...values,
 						recipients: [
 							{
-								...primaryRecipient,
+								...recipient,
 								to: [],
 								toType: value as string,
 							},
@@ -115,10 +112,10 @@ export function PrimaryRecipient({
 					});
 				}}
 				required
-				selectedKey={primaryRecipient.toType}
+				selectedKey={recipient.toType}
 			/>
 
-			{primaryRecipient.toType === 'email' && (
+			{recipient.toType === 'email' && (
 				<div className="lfr__notification-template-email-notification-settings-primary-recipient-input-localized">
 					<InputLocalized
 						disabled={values.system}
@@ -133,7 +130,7 @@ export function PrimaryRecipient({
 								...values,
 								recipients: [
 									{
-										...values.recipients[0],
+										...recipient,
 										to: translation,
 									},
 								],
@@ -142,17 +139,15 @@ export function PrimaryRecipient({
 						placeholder={Liferay.Language.get('type-email-address')}
 						required
 						selectedLocale={selectedLocale}
-						translations={
-							(values.recipients[0] as EmailRecipients)
-								.to as LocalizedValue<string>
-						}
+						translations={recipient.to as LocalizedValue<string>}
 					/>
 				</div>
 			)}
 
-			{primaryRecipient.toType === 'role' && (
+			{recipient.toType === 'role' && (
 				<div className="lfr__notification-template-email-notification-settings-multiple-select">
 					<MultipleSelect
+						error={errors.to}
 						disabled={values.system}
 						label={Liferay.Language.get('role')}
 						options={toRolesList}
@@ -191,10 +186,7 @@ export function PrimaryRecipient({
 				<ClayForm.Group className="ml-1 row">
 					<div className="mr-2">
 						<ClayCheckbox
-							checked={
-								(values.recipients[0] as EmailRecipients)
-									.singleRecipient
-							}
+							checked={recipient.singleRecipient}
 							disabled={values.system}
 							label={Liferay.Language.get(
 								'send-emails-separately'
@@ -204,7 +196,7 @@ export function PrimaryRecipient({
 									...values,
 									recipients: [
 										{
-											...values.recipients[0],
+											...recipient,
 											singleRecipient: checked,
 										},
 									],

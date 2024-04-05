@@ -211,9 +211,6 @@ public class SegmentsExperienceLocalServiceImpl
 			segmentsExperiencePersistence.findByPrimaryKey(
 				segmentsExperienceId);
 
-		_checkUnlockedLayout(
-			segmentsExperience.getPlid(), GuestOrUserUtil.getUserId());
-
 		return segmentsExperienceLocalService.deleteSegmentsExperience(
 			segmentsExperience);
 	}

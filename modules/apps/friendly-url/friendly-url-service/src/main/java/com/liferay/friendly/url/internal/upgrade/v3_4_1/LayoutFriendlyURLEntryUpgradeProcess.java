@@ -261,12 +261,6 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 
 			preparedStatement.executeUpdate();
 		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to add friendly URL Entry Mapping", exception);
-			}
-		}
 	}
 
 	private Map<String, String> _getFriendlyURLMap(

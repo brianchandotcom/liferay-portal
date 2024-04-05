@@ -233,6 +233,10 @@ html#{$cadmin-selector} body {
 	@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
 		--toolbar-height: #{$desktopToolbarHeight};
 	}
+
+	@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
+		overflow: hidden;
+	}
 }
 
 html#{$cadmin-selector} .page-editor__small-resolution .page-editor__wrapper {

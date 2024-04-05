@@ -41,11 +41,11 @@ test('Add the frontend data set sample widget', async ({
 				'com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet',
 		});
 
-		layout = await apiHelpers.headlessDelivery.createSitePage(
-			site.id,
-			getRandomString(),
-			getPageDefinition([widgetDefinition])
-		);
+		layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([widgetDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
 	});
 
 	await test.step('Assert that the filter client extension is added', async () => {

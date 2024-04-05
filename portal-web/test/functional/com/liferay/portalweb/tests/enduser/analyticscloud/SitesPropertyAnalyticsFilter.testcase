@@ -143,6 +143,8 @@ definition {
 		task ("Checks if only property 2 and property 3 are present") {
 			ACProperties.assertPropertyNotPresent(propertyName = "Property Name 1");
 
+			ACUtils.searchBar(searchItem = "Property Name");
+
 			ACProperties.assertPropertyTitleList(propertyName = "Property Name 2");
 
 			ACProperties.assertPropertyTitleList(propertyName = "Property Name 3");

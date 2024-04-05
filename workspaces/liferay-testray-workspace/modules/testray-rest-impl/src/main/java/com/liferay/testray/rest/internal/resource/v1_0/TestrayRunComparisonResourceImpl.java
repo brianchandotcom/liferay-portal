@@ -87,7 +87,7 @@ public class TestrayRunComparisonResourceImpl
 			ListUtil.fromArray(
 				HashMapBuilder.<String, Object>put(
 					"Components",
-					_getTestrayComponentComparisons(testrayComponentsMap, set)
+					_getTestrayComponentComparisons(set, testrayComponentsMap)
 				).put(
 					"Runs", _getTestrayRunComparisons(set)
 				).put(
@@ -208,8 +208,8 @@ public class TestrayRunComparisonResourceImpl
 
 	private Map<String, Map<String, Map<String, Integer>>>
 		_getTestrayComponentComparisons(
-			Map<String, Map<String, Serializable>> testrayComponentsMap,
-			Set<Map<String, Serializable>> set) {
+			Set<Map<String, Serializable>> set,
+			Map<String, Map<String, Serializable>> testrayComponentsMap) {
 
 		Map<String, Map<String, Map<String, Integer>>>
 			testrayComponentComparisonsMap = new HashMap<>();

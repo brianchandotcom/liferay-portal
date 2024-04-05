@@ -153,6 +153,18 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 				)
 			).put(
 				JSONUtil.put(
+					"companyWebId", "company1.com"
+				).put(
+					"sourceName", "company1PublishedJavaWorkflowDefinition"
+				).put(
+					"sourceURL",
+					WorkflowDefinitionGroovyScriptUseSourceURLFactory.create(
+						company1, _portal,
+						"company1PublishedJavaWorkflowDefinition", 1,
+						_workflowPortletTabRegistry)
+				)
+			).put(
+				JSONUtil.put(
 					"companyWebId", "liferay.com"
 				).put(
 					"sourceName", "liferayActiveGroovyObjectAction"
@@ -183,6 +195,18 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 					WorkflowDefinitionGroovyScriptUseSourceURLFactory.create(
 						company2, _portal,
 						"liferayPublishedGroovyWorkflowDefinition", 1,
+						_workflowPortletTabRegistry)
+				)
+			).put(
+				JSONUtil.put(
+					"companyWebId", "liferay.com"
+				).put(
+					"sourceName", "liferayPublishedJavaWorkflowDefinition"
+				).put(
+					"sourceURL",
+					WorkflowDefinitionGroovyScriptUseSourceURLFactory.create(
+						company2, _portal,
+						"liferayPublishedJavaWorkflowDefinition", 1,
 						_workflowPortletTabRegistry)
 				)
 			).toString(),
@@ -306,6 +330,10 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 			companyName + "PublishedGroovyWorkflowDefinition",
 			_getContentBytes("workflow-definition-2.json"));
 		_workflowDefinitionManager.deployWorkflowDefinition(
+			companyId, userId, companyName + "PublishedJavaWorkflowDefinition",
+			companyName + "PublishedJavaWorkflowDefinition",
+			_getContentBytes("workflow-definition-3.json"));
+		_workflowDefinitionManager.deployWorkflowDefinition(
 			companyId, userId, companyName + "PublishedWorkflowDefinition",
 			StringUtil.randomId(),
 			_getContentBytes("workflow-definition-1.json"));
@@ -314,7 +342,12 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 			companyId, userId,
 			companyName + "UnpublishedGroovyWorkflowDefinition",
 			StringUtil.randomId(),
-			_getContentBytes("workflow-definition-1.json"));
+			_getContentBytes("workflow-definition-2.json"));
+		_workflowDefinitionManager.saveWorkflowDefinition(
+			companyId, userId,
+			companyName + "UnpublishedJavaWorkflowDefinition",
+			StringUtil.randomId(),
+			_getContentBytes("workflow-definition-3.json"));
 	}
 
 	private byte[] _getContentBytes(String fileName) throws Exception {

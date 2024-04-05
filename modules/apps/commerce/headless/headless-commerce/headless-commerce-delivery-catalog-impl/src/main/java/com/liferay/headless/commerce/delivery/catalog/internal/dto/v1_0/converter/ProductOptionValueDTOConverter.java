@@ -199,49 +199,46 @@ public class ProductOptionValueDTOConverter
 				setKey(cpDefinitionOptionValueRel::getKey);
 				setName(
 					() -> {
-						if (Objects.equals(
+						if (!Objects.equals(
 								CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
 								cpDefinitionOptionRel.
 									getCommerceOptionTypeKey())) {
 
-							String cpDefinitionOptionValueRelKey =
-								cpDefinitionOptionValueRel.getKey();
-
-							String[] splits =
-								cpDefinitionOptionValueRelKey.split(
-									StringPool.DASH);
-
-							TimeZone timeZone = TimeZoneUtil.getTimeZone(
-								_getTimeZone(splits));
-
-							Calendar calendar = CalendarFactoryUtil.getCalendar(
-								Integer.valueOf(splits[2]),
-								Integer.valueOf(splits[0]) - 1,
-								Integer.valueOf(splits[1]),
-								Integer.valueOf(splits[3]),
-								Integer.valueOf(splits[4]));
-
-							DateFormat dateFormat =
-								DateFormat.getDateTimeInstance(
-									DateFormat.LONG, DateFormat.SHORT,
-									dtoConverterContext.getLocale());
-
-							return StringBundler.concat(
-								dateFormat.format(calendar.getTime()),
-								StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
-								timeZone.getDisplayName(
-									dtoConverterContext.getLocale()),
-								StringPool.CLOSE_PARENTHESIS,
-								StringPool.COMMA_AND_SPACE, splits[5],
-								StringPool.SPACE,
-								_language.get(
-									dtoConverterContext.getLocale(),
-									splits[6]));
+							return cpDefinitionOptionValueRel.getName(
+								_language.getLanguageId(
+									dtoConverterContext.getLocale()));
 						}
 
-						return cpDefinitionOptionValueRel.getName(
-							_language.getLanguageId(
-								dtoConverterContext.getLocale()));
+						String cpDefinitionOptionValueRelKey =
+							cpDefinitionOptionValueRel.getKey();
+
+						String[] splits = cpDefinitionOptionValueRelKey.split(
+							StringPool.DASH);
+
+						TimeZone timeZone = TimeZoneUtil.getTimeZone(
+							_getTimeZone(splits));
+
+						Calendar calendar = CalendarFactoryUtil.getCalendar(
+							Integer.valueOf(splits[2]),
+							Integer.valueOf(splits[0]) - 1,
+							Integer.valueOf(splits[1]),
+							Integer.valueOf(splits[3]),
+							Integer.valueOf(splits[4]));
+
+						DateFormat dateFormat = DateFormat.getDateTimeInstance(
+							DateFormat.LONG, DateFormat.SHORT,
+							dtoConverterContext.getLocale());
+
+						return StringBundler.concat(
+							dateFormat.format(calendar.getTime()),
+							StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
+							timeZone.getDisplayName(
+								dtoConverterContext.getLocale()),
+							StringPool.CLOSE_PARENTHESIS,
+							StringPool.COMMA_AND_SPACE, splits[5],
+							StringPool.SPACE,
+							_language.get(
+								dtoConverterContext.getLocale(), splits[6]));
 					});
 				setPreselected(cpDefinitionOptionValueRel::isPreselected);
 				setPrice(

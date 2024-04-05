@@ -1612,6 +1612,8 @@
 		"emailAddress": {
 			"fields": {
 				"text": {
+					"analyzer": "keyword_lowercase",
+					"search_analyzer": "email_lowercase",
 					"type": "text"
 				}
 			},

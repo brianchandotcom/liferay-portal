@@ -59,6 +59,8 @@ public class ObjectEntryLazyPropertiesTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"liferay.auth.verifier", false
 			).put(
+				"liferay.jackson", false
+			).put(
 				"liferay.oauth2", false
 			).put(
 				"osgi.jaxrs.application.base", "/object-rest-test/"

@@ -13,6 +13,7 @@ import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalization
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPersistence;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -24,8 +25,11 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -88,6 +92,27 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 		_deleteFriendlyURLEntries(draftLayout2, layout2);
 
 		_assertUpgrade(draftLayout1, draftLayout2, layout1, layout2);
+	}
+
+	@Test
+	public void testUpgradeProcessFriendlyURLEntryLocalizationMissingForSomeLanguage()
+		throws Exception {
+
+		Layout privateLayout1 = _addTypePortletLayout(true);
+		Layout publicLayout1 = _addTypePortletLayout(false);
+
+		_assertFriendlyURLEntries(privateLayout1, publicLayout1);
+
+		Layout privateLayout2 = _addTypePortletLayout(true);
+		Layout publicLayout2 = _addTypePortletLayout(false);
+
+		_deleteFriendlyURLEntryLocalization(
+			privateLayout2, LocaleUtil.toLanguageId(LocaleUtil.US));
+		_deleteFriendlyURLEntryLocalization(
+			publicLayout2, LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
+
+		_assertUpgrade(
+			privateLayout1, publicLayout1, privateLayout2, publicLayout2);
 	}
 
 	@Test
@@ -170,6 +195,27 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 		_assertUpgrade(draftLayout1, draftLayout2, layout1, layout2);
 	}
 
+	private Layout _addTypePortletLayout(boolean privateLayout)
+		throws Exception {
+
+		return LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(), privateLayout,
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN,
+				_friendlyURLNormalizer.normalizeWithEncoding(
+					StringPool.SLASH + RandomTestUtil.randomString())
+			).put(
+				LocaleUtil.US,
+				_friendlyURLNormalizer.normalizeWithEncoding(
+					StringPool.SLASH + RandomTestUtil.randomString())
+			).build());
+	}
+
 	private void _assertFriendlyURLEntries(Layout... layouts) throws Exception {
 		for (Layout layout : layouts) {
 			_assertFriendlyURLEntry(layout, _getFriendlyURLEntry(layout));
@@ -180,9 +226,13 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 			Layout layout, FriendlyURLEntry friendlyURLEntry)
 		throws Exception {
 
-		Assert.assertEquals(
-			layout.getAvailableLanguageIds(),
-			friendlyURLEntry.getAvailableLanguageIds());
+		String[] availableLanguageIds =
+			friendlyURLEntry.getAvailableLanguageIds();
+
+		Assert.assertTrue(
+			availableLanguageIds.toString(),
+			ArrayUtil.containsAll(
+				availableLanguageIds, layout.getAvailableLanguageIds()));
 
 		for (String languageId : layout.getAvailableLanguageIds()) {
 			FriendlyURLEntryLocalization friendlyURLEntryLocalization =
@@ -253,6 +303,39 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 					friendlyURLEntryLocalization.
 						getFriendlyURLEntryLocalizationId()));
 		}
+	}
+
+	private void _deleteFriendlyURLEntryLocalization(
+			Layout layout, String languageId)
+		throws Exception {
+
+		FriendlyURLEntry friendlyURLEntry = _getFriendlyURLEntry(layout);
+
+		String[] availableLanguageIds =
+			friendlyURLEntry.getAvailableLanguageIds();
+
+		Assert.assertTrue(ArrayUtil.isNotEmpty(availableLanguageIds));
+
+		Assert.assertTrue(ArrayUtil.contains(availableLanguageIds, languageId));
+
+		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations =
+			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
+				friendlyURLEntry.getFriendlyURLEntryId());
+
+		Assert.assertEquals(
+			friendlyURLEntryLocalizations.toString(),
+			availableLanguageIds.length, friendlyURLEntryLocalizations.size());
+
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalization(
+				friendlyURLEntry.getFriendlyURLEntryId(), languageId);
+
+		_runSQL(
+			StringBundler.concat(
+				"delete from FriendlyURLEntryLocalization where ",
+				"friendlyURLEntryLocalizationId = ",
+				friendlyURLEntryLocalization.
+					getFriendlyURLEntryLocalizationId()));
 	}
 
 	private void _deleteFriendlyURLEntryLocalizations(Layout... layouts)
@@ -364,6 +447,9 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 	@Inject
 	private FriendlyURLEntryMappingPersistence
 		_friendlyURLEntryMappingPersistence;
+
+	@Inject
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@DeleteAfterTestRun
 	private Group _group;

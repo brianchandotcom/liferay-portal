@@ -5,16 +5,17 @@
 
 /// <reference types="react" />
 
+import {MultiSelectItem} from '@liferay/object-js-components-web';
 import {ILearnResourceContext} from 'frontend-js-components-web';
 interface SecondaryRecipientsProps {
-	baseResourceURL: string;
+	emailNotificationRoles: MultiSelectItem[];
 	learnResources: ILearnResourceContext;
 	recipientOptions: LabelValueObject[];
 	setValues: (values: Partial<NotificationTemplate>) => void;
 	values: NotificationTemplate;
 }
 export declare function SecondaryRecipient({
-	baseResourceURL,
+	emailNotificationRoles,
 	learnResources,
 	recipientOptions,
 	setValues,

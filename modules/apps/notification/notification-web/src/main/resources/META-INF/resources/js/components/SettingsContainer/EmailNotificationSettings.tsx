@@ -24,8 +24,8 @@ import {SecondaryRecipient} from './SecondaryRecipients';
 import {Sender} from './Sender';
 
 import './EmailNotificationSettings.scss';
+
 interface EmailNotificationSettingsProps {
-	baseResourceURL: string;
 	emailNotificationRoles: MultiSelectItem[];
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	learnResources: ILearnResourceContext;
@@ -46,7 +46,6 @@ const RECIPIENT_OPTIONS = [
 ] as LabelValueObject[];
 
 export function EmailNotificationSettings({
-	baseResourceURL,
 	emailNotificationRoles,
 	errors,
 	learnResources,
@@ -99,7 +98,7 @@ export function EmailNotificationSettings({
 					>
 						<ClayPanel.Body>
 							<SecondaryRecipient
-								baseResourceURL={baseResourceURL}
+								emailNotificationRoles={emailNotificationRoles}
 								learnResources={learnResources}
 								recipientOptions={RECIPIENT_OPTIONS}
 								setValues={setValues}

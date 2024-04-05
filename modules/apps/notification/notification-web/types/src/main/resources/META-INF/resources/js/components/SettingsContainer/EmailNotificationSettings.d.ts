@@ -10,7 +10,6 @@ import {ILearnResourceContext} from 'frontend-js-components-web';
 import {NotificationTemplateError} from '../EditNotificationTemplate';
 import './EmailNotificationSettings.scss';
 interface EmailNotificationSettingsProps {
-	baseResourceURL: string;
 	emailNotificationRoles: MultiSelectItem[];
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	learnResources: ILearnResourceContext;
@@ -19,7 +18,6 @@ interface EmailNotificationSettingsProps {
 	values: NotificationTemplate;
 }
 export declare function EmailNotificationSettings({
-	baseResourceURL,
 	emailNotificationRoles,
 	errors,
 	learnResources,

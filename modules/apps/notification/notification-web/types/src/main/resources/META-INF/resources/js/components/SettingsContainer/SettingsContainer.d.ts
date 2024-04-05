@@ -9,7 +9,6 @@ import {FormError, MultiSelectItem} from '@liferay/object-js-components-web';
 import {ILearnResourceContext} from 'frontend-js-components-web';
 import {NotificationTemplateError} from '../EditNotificationTemplate';
 interface SettingsContainerProps {
-	baseResourceURL: string;
 	emailNotificationRoles: MultiSelectItem[];
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	learnResources: ILearnResourceContext;
@@ -18,7 +17,6 @@ interface SettingsContainerProps {
 	values: NotificationTemplate;
 }
 export declare function SettingsContainer({
-	baseResourceURL,
 	emailNotificationRoles,
 	errors,
 	learnResources,

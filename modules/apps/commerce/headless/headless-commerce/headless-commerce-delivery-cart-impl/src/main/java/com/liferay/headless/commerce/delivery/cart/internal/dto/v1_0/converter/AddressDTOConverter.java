@@ -52,6 +52,8 @@ public class AddressDTOConverter
 						dtoConverterContext.getLocale()));
 				setCountryISOCode(addressCountry::getA2);
 				setDescription(commerceAddress::getDescription);
+				setExternalReferenceCode(
+					commerceAddress::getExternalReferenceCode);
 				setId(commerceAddress::getCommerceAddressId);
 				setLatitude(commerceAddress::getLatitude);
 				setLongitude(commerceAddress::getLongitude);

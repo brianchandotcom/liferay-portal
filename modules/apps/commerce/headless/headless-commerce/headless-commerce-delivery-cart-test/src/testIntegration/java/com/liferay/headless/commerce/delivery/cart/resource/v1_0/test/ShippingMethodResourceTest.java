@@ -110,6 +110,44 @@ public class ShippingMethodResourceTest
 	}
 
 	@Override
+	protected ShippingMethod
+			testGetCartByExternalReferenceCodeShippingMethodsPage_addShippingMethod(
+				String externalReferenceCode, ShippingMethod shippingMethod)
+		throws Exception {
+
+		CommerceShippingMethod commerceShippingMethod =
+			CommerceShippingMethodLocalServiceUtil.addCommerceShippingMethod(
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				Collections.singletonMap(
+					LocaleUtil.US, shippingMethod.getName()),
+				Collections.singletonMap(
+					LocaleUtil.US, shippingMethod.getDescription()),
+				true, _getRandomEngineKey(), null, 1,
+				RandomTestUtil.randomString());
+
+		_commerceShippingMethods.add(commerceShippingMethod);
+
+		return new ShippingMethod() {
+			{
+				description = commerceShippingMethod.getDescription(
+					LocaleUtil.US);
+				id = commerceShippingMethod.getCommerceShippingMethodId();
+				name = commerceShippingMethod.getName(LocaleUtil.US);
+			}
+		};
+	}
+
+	@Override
+	protected String
+			testGetCartByExternalReferenceCodeShippingMethodsPage_getExternalReferenceCode()
+		throws Exception {
+
+		CommerceOrder commerceOrder = _addCommerceOrder();
+
+		return commerceOrder.getExternalReferenceCode();
+	}
+
+	@Override
 	protected ShippingMethod testGetCartShippingMethodsPage_addShippingMethod(
 			Long cartId, ShippingMethod shippingMethod)
 		throws Exception {

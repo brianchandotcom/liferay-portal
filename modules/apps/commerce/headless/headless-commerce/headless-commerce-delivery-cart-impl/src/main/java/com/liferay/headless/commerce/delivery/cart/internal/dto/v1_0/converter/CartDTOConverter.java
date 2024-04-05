@@ -83,6 +83,8 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 
 						return expandoBridge.getAttributes();
 					});
+				setExternalReferenceCode(
+					commerceOrder::getExternalReferenceCode);
 				setId(commerceOrder::getCommerceOrderId);
 				setLastPriceUpdateDate(commerceOrder::getLastPriceUpdateDate);
 				setModifiedDate(commerceOrder::getModifiedDate);

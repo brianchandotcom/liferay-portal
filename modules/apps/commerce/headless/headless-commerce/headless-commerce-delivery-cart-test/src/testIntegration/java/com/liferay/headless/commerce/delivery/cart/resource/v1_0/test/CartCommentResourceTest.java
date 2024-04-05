@@ -109,6 +109,26 @@ public class CartCommentResourceTest extends BaseCartCommentResourceTestCase {
 	}
 
 	@Override
+	protected CartComment
+			testGetCartByExternalReferenceCodeCommentsPage_addCartComment(
+				String externalReferenceCode, CartComment cartComment)
+		throws Exception {
+
+		return cartCommentResource.postCartByExternalReferenceCodeComment(
+			externalReferenceCode, cartComment);
+	}
+
+	@Override
+	protected String
+			testGetCartByExternalReferenceCodeCommentsPage_getExternalReferenceCode()
+		throws Exception {
+
+		CommerceOrder commerceOrder = _getCommerceOrder();
+
+		return commerceOrder.getExternalReferenceCode();
+	}
+
+	@Override
 	protected CartComment testGetCartComment_addCartComment() throws Exception {
 		return _addCartComment();
 	}
@@ -140,6 +160,16 @@ public class CartCommentResourceTest extends BaseCartCommentResourceTestCase {
 		throws Exception {
 
 		return _addCartComment();
+	}
+
+	@Override
+	protected CartComment
+			testPostCartByExternalReferenceCodeComment_addCartComment(
+				CartComment cartComment)
+		throws Exception {
+
+		return cartCommentResource.postCartByExternalReferenceCodeComment(
+			_commerceOrder.getExternalReferenceCode(), cartComment);
 	}
 
 	@Override

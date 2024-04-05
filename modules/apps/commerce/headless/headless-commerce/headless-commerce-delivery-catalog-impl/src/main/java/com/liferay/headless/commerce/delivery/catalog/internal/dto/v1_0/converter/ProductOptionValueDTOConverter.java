@@ -216,7 +216,7 @@ public class ProductOptionValueDTOConverter
 							StringPool.DASH);
 
 						TimeZone timeZone = TimeZoneUtil.getTimeZone(
-							_getTimeZone(splits));
+							_getTimeZoneId(splits));
 
 						Calendar calendar = CalendarFactoryUtil.getCalendar(
 							Integer.valueOf(splits[2]),
@@ -756,7 +756,7 @@ public class ProductOptionValueDTOConverter
 		return jsonArray;
 	}
 
-	private String _getTimeZone(String[] splits) {
+	private String _getTimeZoneId(String[] splits) {
 		if (splits.length <= 8) {
 			return splits[7].toUpperCase();
 		}

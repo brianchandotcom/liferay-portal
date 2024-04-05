@@ -9,6 +9,10 @@
 				"tokenizer": "keyword",
 				"type": "custom"
 			},
+			"email_lowercase": {
+				"filter": "lowercase",
+				"tokenizer": "uax_url_email"
+			},
 			"keyword_lowercase": {
 				"filter": "lowercase",
 				"tokenizer": "keyword"

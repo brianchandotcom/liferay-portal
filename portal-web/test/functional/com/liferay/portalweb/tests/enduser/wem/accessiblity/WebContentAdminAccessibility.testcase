@@ -133,7 +133,7 @@ definition {
 
 			ManagementBar.setFilterAndOrder(filterBy = "Tags");
 
-			AssetCategorization.selectTags(tagNameList = "echo");
+			AssetCategorization.selectTags(tagNameList = "Echo");
 
 			WaitForElementPresent(locator1 = "Search#SEARCH_INFO");
 		}

@@ -768,7 +768,7 @@ definition {
 
 			ManagementBar.setFilterAndOrder(filterBy = "Tags");
 
-			AssetCategorization.selectTags(tagNameList = "echo");
+			AssetCategorization.selectTags(tagNameList = "Echo");
 
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
@@ -776,7 +776,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "ContentDashboard#FILTER_TEXT",
-				value1 = "Tags: echo");
+				value1 = "Tags: Echo");
 
 			WebContentAdmin.viewEntryTitle(entry = "Liferay LXC");
 
@@ -788,7 +788,7 @@ definition {
 
 			ManagementBar.setFilterAndOrder(filterBy = "Tags");
 
-			AssetCategorization.selectTags(tagNameList = "lima");
+			AssetCategorization.selectTags(tagNameList = "Lima");
 
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
@@ -796,7 +796,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "ContentDashboard#FILTER_TEXT",
-				value1 = "Tags: lima");
+				value1 = "Tags: Lima");
 
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",

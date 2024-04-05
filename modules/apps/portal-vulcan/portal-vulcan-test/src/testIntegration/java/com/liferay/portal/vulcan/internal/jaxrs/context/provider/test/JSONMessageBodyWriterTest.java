@@ -8,9 +8,13 @@ package com.liferay.portal.vulcan.internal.jaxrs.context.provider.test;
 import com.fasterxml.jackson.annotation.JsonFilter;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.vulcan.internal.test.util.URLConnectionUtil;
 
 import java.util.Collections;
@@ -60,6 +64,9 @@ public class JSONMessageBodyWriterTest {
 				"osgi.jaxrs.extension.select",
 				"(osgi.jaxrs.name=Liferay.Vulcan)"
 			).build());
+
+		_property1UnsafeSupplierComputed = false;
+		_property2UnsafeSupplierComputed = false;
 	}
 
 	@After
@@ -108,6 +115,30 @@ public class JSONMessageBodyWriterTest {
 		Assert.assertTrue(testClassJSONObject.isNull("testClass"));
 	}
 
+	@Test
+	public void testUnsafeSupplierFieldsJSONObject() throws Exception {
+		HTTPTestUtil.invokeToJSONObject(
+			null, "test-vulcan/test-class?fields=property1UnsafeSupplier",
+			Http.Method.GET);
+
+		Assert.assertTrue(
+			"property1UnsafeSupplier should have been computed",
+			_property1UnsafeSupplierComputed);
+		Assert.assertFalse(
+			"property1UnsafeSupplier should not have been computed",
+			_property2UnsafeSupplierComputed);
+
+		HTTPTestUtil.invokeToJSONObject(
+			null, "test-vulcan/test-class", Http.Method.GET);
+
+		Assert.assertTrue(
+			"property1UnsafeSupplier should have been computed",
+			_property1UnsafeSupplierComputed);
+		Assert.assertTrue(
+			"property1UnsafeSupplier should have been computed",
+			_property2UnsafeSupplierComputed);
+	}
+
 	public static class TestApplication extends Application {
 
 		@Override
@@ -138,6 +169,21 @@ public class JSONMessageBodyWriterTest {
 			}
 
 			public final Long number;
+
+			public UnsafeSupplier<String, Exception> property1UnsafeSupplier =
+				() -> {
+					_property1UnsafeSupplierComputed = true;
+
+					return RandomTestUtil.randomString();
+				};
+
+			public UnsafeSupplier<String, Exception> property2UnsafeSupplier =
+				() -> {
+					_property2UnsafeSupplierComputed = true;
+
+					return RandomTestUtil.randomString();
+				};
+
 			public final String string;
 			public final TestClass testClass;
 
@@ -149,6 +195,9 @@ public class JSONMessageBodyWriterTest {
 		return JSONFactoryUtil.createJSONObject(
 			URLConnectionUtil.read(urlString));
 	}
+
+	private static boolean _property1UnsafeSupplierComputed;
+	private static boolean _property2UnsafeSupplierComputed;
 
 	private ServiceRegistration<Application> _serviceRegistration;
 

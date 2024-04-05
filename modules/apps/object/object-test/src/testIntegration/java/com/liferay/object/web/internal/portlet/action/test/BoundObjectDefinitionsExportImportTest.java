@@ -57,6 +57,11 @@ public class BoundObjectDefinitionsExportImportTest
 			"test-bound-object-definitions.json", null,
 			"TestObjectDefinition1");
 
+		testExportImport(
+			"test-bound-object-definitions.published.json",
+			"test-bound-object-definitions.json", null,
+			"TestObjectDefinition1");
+
 		testFailedImport(
 			"test-invalid-bound-object-definitions.json",
 			"test-invalid-bound-object-definitions.error-message.json", null,

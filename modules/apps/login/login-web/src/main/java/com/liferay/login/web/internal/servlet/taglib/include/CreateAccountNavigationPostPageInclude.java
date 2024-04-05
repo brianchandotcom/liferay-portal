@@ -5,6 +5,8 @@
 
 package com.liferay.login.web.internal.servlet.taglib.include;
 
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
@@ -92,18 +94,30 @@ public class CreateAccountNavigationPostPageInclude implements PageInclude {
 		iconTag.setMessage("create-account");
 
 		try {
-			String createAccountURL = null;
+			String url = StringPool.BLANK;
 
 			if (_featureFlagManager.isEnabled("LPD-6378")) {
-				createAccountURL = _getCreateAccountURL(
-					httpServletRequest, themeDisplay);
+				Layout layout =
+					_layoutUtilityPageEntryLayoutProvider.
+						getDefaultLayoutUtilityPageEntryLayout(
+							themeDisplay.getScopeGroupId(),
+							LayoutUtilityPageEntryConstants.
+								TYPE_CREATE_ACCOUNT);
+
+				if (layout != null) {
+					url = _portal.getLayoutURL(layout, themeDisplay);
+				}
+				else {
+					url = _getCreateAccountURL(
+						httpServletRequest, themeDisplay);
+				}
 			}
 			else {
-				createAccountURL = _portal.getCreateAccountURL(
+				url = _portal.getCreateAccountURL(
 					httpServletRequest, themeDisplay);
 			}
 
-			iconTag.setUrl(createAccountURL);
+			iconTag.setUrl(url);
 		}
 		catch (Exception exception) {
 			throw new JspException(exception);
@@ -172,6 +186,10 @@ public class CreateAccountNavigationPostPageInclude implements PageInclude {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutUtilityPageEntryLayoutProvider
+		_layoutUtilityPageEntryLayoutProvider;
 
 	@Reference
 	private Portal _portal;

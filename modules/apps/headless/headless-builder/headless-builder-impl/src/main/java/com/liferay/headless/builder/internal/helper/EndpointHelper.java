@@ -132,14 +132,19 @@ public class EndpointHelper {
 
 		ObjectEntry objectEntry = new ObjectEntry();
 
-		Map<String, Object> objectEntryProperties = new HashMap<>();
+		objectEntry.setProperties(
+			() -> {
+				Map<String, Object> objectEntryProperties = new HashMap<>();
 
-		for (APIApplication.Property property : requestSchema.getProperties()) {
-			_populateObjectEntryProperties(
-				objectEntryProperties, properties, property);
-		}
+				for (APIApplication.Property property :
+						requestSchema.getProperties()) {
 
-		objectEntry.setProperties(() -> objectEntryProperties);
+					_populateObjectEntryProperties(
+						objectEntryProperties, properties, property);
+				}
+
+				return objectEntryProperties;
+			});
 
 		return _getResponseEntityMap(
 			_objectEntryHelper.addObjectEntry(

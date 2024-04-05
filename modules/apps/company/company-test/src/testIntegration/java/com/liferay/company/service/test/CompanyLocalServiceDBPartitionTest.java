@@ -108,9 +108,7 @@ public class CompanyLocalServiceDBPartitionTest
 	}
 
 	@Test
-	public void testAddCompaniesUseVirtualHostDefaultCounter()
-		throws Exception {
-
+	public void testAddCompanyUsesVirtualHostCounter() throws Exception {
 		long counter = _counterLocalService.increment();
 
 		_company1 = CompanyTestUtil.addCompany();

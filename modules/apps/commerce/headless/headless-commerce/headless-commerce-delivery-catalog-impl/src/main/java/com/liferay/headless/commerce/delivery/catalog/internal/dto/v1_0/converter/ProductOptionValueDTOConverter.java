@@ -761,7 +761,7 @@ public class ProductOptionValueDTOConverter
 			return parts[7].toUpperCase();
 		}
 
-		String timeZone = StringBundler.concat(
+		String timeZoneId = StringBundler.concat(
 			com.liferay.portal.kernel.util.StringUtil.upperCaseFirstLetter(
 				parts[7]),
 			StringPool.FORWARD_SLASH,
@@ -770,12 +770,12 @@ public class ProductOptionValueDTOConverter
 
 		if ((parts.length > 9) && Validator.isNotNull(parts[9])) {
 			return StringBundler.concat(
-				timeZone, StringPool.UNDERLINE,
+				timeZoneId, StringPool.UNDERLINE,
 				com.liferay.portal.kernel.util.StringUtil.upperCaseFirstLetter(
 					parts[9]));
 		}
 
-		return timeZone;
+		return timeZoneId;
 	}
 
 	private boolean _updateJSONArray(

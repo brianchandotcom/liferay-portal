@@ -42,7 +42,7 @@ const getInitialFormValues = (
 					}
 
 					return {
-						expenseName: budget.expense.name,
+						expenseName: budget.expense?.name,
 						invoiceAmount: budget.cost,
 						r_bgtToMDFClmBgts_c_budgetId: budget.id,
 						requestAmount: budget.cost,
@@ -68,7 +68,7 @@ const getInitialFormValues = (
 			activityStatus: activity.activityStatus,
 			budgets: activity?.actToBgts?.map((budget) => {
 				return {
-					expenseName: budget.expense.name,
+					expenseName: budget.expense?.name,
 					invoiceAmount: budget.cost,
 					r_bgtToMDFClmBgts_c_budgetId: budget.id,
 					requestAmount: budget.cost,

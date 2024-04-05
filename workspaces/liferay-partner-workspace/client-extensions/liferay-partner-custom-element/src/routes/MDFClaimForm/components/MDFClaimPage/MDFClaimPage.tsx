@@ -6,8 +6,8 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import { useFormikContext } from 'formik';
-import { useCallback } from 'react';
+import {useFormikContext} from 'formik';
+import {useCallback} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import InputMultipleFilesListing from '../../../../common/components/PRMForm/components/fields/InputMultipleFilesListing/InputMultipleFilesListing';
@@ -20,8 +20,8 @@ import LiferayFile from '../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../common/interfaces/mdfClaim';
 import MDFClaimActivity from '../../../../common/interfaces/mdfClaimActivity';
 import MDFClaimProps from '../../../../common/interfaces/mdfClaimProps';
-import { ResourceName } from '../../../../common/services/liferay/object/enum/resourceName';
-import { Status } from '../../../../common/utils/constants/status';
+import {ResourceName} from '../../../../common/services/liferay/object/enum/resourceName';
+import {Status} from '../../../../common/utils/constants/status';
 import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
 import useDynamicFieldEntries from '../../../MDFClaimList/hooks/useDynamicFieldEntries';
 import ActivityClaimPanel from './components/ActivityClaimPanel';
@@ -61,9 +61,9 @@ const MDFClaimPage = ({
 		)
 	);
 
-	const { companiesEntries, fieldEntries } = useDynamicFieldEntries();
+	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
 
-	const { isButtonClicked, setIsButtonClicked } = useSetTouchedOnForms(
+	const {isButtonClicked, setIsButtonClicked} = useSetTouchedOnForms(
 		useCallback(() => Boolean(values.id), [values.id]),
 		formikHelpers
 	);
@@ -183,7 +183,7 @@ const MDFClaimPage = ({
 										hasPermissionShowForm
 									}
 									isButtonClicked={isButtonClicked}
-									isDraft={!!values.id}
+									isEdit={!!values.id}
 									key={`${activity.id}-${index}`}
 									overallCampaignDescription={
 										mdfRequest.overallCampaignDescription
@@ -194,14 +194,13 @@ const MDFClaimPage = ({
 					)}
 
 					{errors?.activities &&
-						errors.activities ===
-						'Need at least one activity selected' &&
-						(isButtonClicked || !!values.id) && (
+						typeof errors.activities === 'string' &&
+						(isButtonClicked || Boolean(values.id)) && (
 							<ClayAlert
 								displayType="danger"
 								hideCloseIcon={true}
 							>
-								Need at least one activity selected
+								{errors.activities}
 							</ClayAlert>
 						)}
 				</PRMForm.Section>
@@ -220,8 +219,8 @@ const MDFClaimPage = ({
 								`reimbursementInvoices`,
 								values.reimbursementInvoices
 									? values.reimbursementInvoices.concat(
-										liferayFiles as LiferayFile[]
-									)
+											liferayFiles as LiferayFile[]
+									  )
 									: liferayFiles
 							)
 						}

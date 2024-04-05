@@ -5,19 +5,19 @@
 
 import Button from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import { useFormikContext } from 'formik';
-import { useCallback, useEffect, useMemo } from 'react';
+import {useFormikContext} from 'formik';
+import {useCallback, useEffect, useMemo} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
-import { LiferayPicklistName } from '../../../../common/enums/liferayPicklistName';
+import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName';
 import useCompanyOptions from '../../../../common/hooks/useCompanyOptions';
 import useSetTouchedOnForms from '../../../../common/hooks/useSetTouchedOnForms';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import getPicklistOptions from '../../../../common/utils/getPicklistOptions';
 import isObjectEmpty from '../../../../common/utils/isObjectEmpty';
-import { StepType } from '../../enums/stepType';
+import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 
@@ -35,13 +35,13 @@ const Goals = ({
 		values,
 		...formikHelpers
 	} = useFormikContext<MDFRequest>();
-	const { companiesEntries, fieldEntries } = useDynamicFieldEntries(
+	const {companiesEntries, fieldEntries} = useDynamicFieldEntries(
 		disableCompany
 	);
 
 	const errors = formikHelpers.errors;
 
-	const { companyOptions, onCompanySelected } = useCompanyOptions(
+	const {companyOptions, onCompanySelected} = useCompanyOptions(
 		useCallback(
 			(partnerCountry, company, currency, claimPercent) => {
 				setFieldValue('company', company);
@@ -86,7 +86,7 @@ const Goals = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values.liferayBusinessSalesGoals]);
 
-	const { isButtonClicked, setIsButtonClicked } = useSetTouchedOnForms(
+	const {isButtonClicked, setIsButtonClicked} = useSetTouchedOnForms(
 		useCallback(() => Boolean(values.id), [values.id]),
 		formikHelpers
 	);
@@ -95,28 +95,21 @@ const Goals = ({
 		setIsButtonClicked(true);
 
 		window.scrollTo({
-			behavior: (!isValid
-				? 'instant'
-				: 'smooth') as ScrollBehavior,
+			behavior: (!isValid ? 'instant' : 'smooth') as ScrollBehavior,
 			top: 0,
 		});
 
-		onContinue?.(
-			formikHelpers,
-			StepType.ACTIVITIES
-		);
+		onContinue?.(formikHelpers, StepType.ACTIVITIES);
+	};
 
-	}
+	const hasError = !isValid && !isObjectEmpty(goalsErrors);
 
-	const hasError = !isValid &&
-		!isObjectEmpty(goalsErrors)
+	const isEditForm = Boolean(values.id);
 
-	const isEdiForm = Boolean(values.id);
-
-	const isDisabledContinueButton = hasError &&
-		(isButtonClicked || isEdiForm) ||
+	const isDisabledContinueButton =
+		(hasError && (isButtonClicked || isEditForm)) ||
 		isSubmitting ||
-		submitted
+		submitted;
 
 	const getRequestPage = () => {
 		if (!fieldEntries) {
@@ -158,7 +151,7 @@ const Goals = ({
 						component={PRMForm.CheckboxGroup}
 						items={
 							fieldEntries[
-							LiferayPicklistName.LIFERAY_BUSINESS_SALES_GOALS
+								LiferayPicklistName.LIFERAY_BUSINESS_SALES_GOALS
 							]
 						}
 						label="Select Liferay business/sales goals this Campaign serves (choose up to three)"
@@ -168,12 +161,12 @@ const Goals = ({
 						{values.liferayBusinessSalesGoals?.includes(
 							'Other - Please describe'
 						) && (
-								<PRMFormik.Field
-									component={PRMForm.InputText}
-									name="liferayBusinessSalesGoalsOther"
-									required
-								/>
-							)}
+							<PRMFormik.Field
+								component={PRMForm.InputText}
+								name="liferayBusinessSalesGoalsOther"
+								required
+							/>
+						)}
 					</PRMFormik.Field>
 				</PRMForm.Section>
 
@@ -198,7 +191,7 @@ const Goals = ({
 						component={PRMForm.CheckboxGroup}
 						items={
 							fieldEntries[
-							LiferayPicklistName.TARGET_AUDIENCE_ROLES
+								LiferayPicklistName.TARGET_AUDIENCE_ROLES
 							]
 						}
 						label="Choose your target audience/role (Select all that apply)"

@@ -126,12 +126,22 @@ public class NotificationTemplateObjectActionExecutorImpl
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 					"yyyy-MM-dd");
 
-				Timestamp timestamp = (Timestamp)termValues.get(
-					objectField.getName());
+				Object object = termValues.get(objectField.getName());
 
-				termValues.put(
-					objectField.getName(),
-					simpleDateFormat.format(new Date(timestamp.getTime())));
+				if (object instanceof Timestamp) {
+					Timestamp timestamp = (Timestamp)object;
+
+					termValues.put(
+						objectField.getName(),
+						simpleDateFormat.format(new Date(timestamp.getTime())));
+				}
+				else {
+					Timestamp timestamp = new Timestamp((Long)object);
+
+					termValues.put(
+						objectField.getName(),
+						simpleDateFormat.format(new Date(timestamp.getTime())));
+				}
 			}
 			else if (Objects.equals(
 						objectField.getBusinessType(),

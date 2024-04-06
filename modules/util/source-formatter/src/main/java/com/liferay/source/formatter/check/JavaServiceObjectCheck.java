@@ -173,13 +173,30 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 					variableTypeName = variableTypeName.substring(x + 1);
 				}
 
-				String tableName = _getTableName(
-					variableTypeName, serviceXMLElement);
+				String[] parts = StringUtil.split(
+					_getTableAndColumName(
+						variableTypeName, previousSetterObjectName,
+						serviceXMLElement),
+					":");
 
-				int index1 = SourceUtil.getColumnIndex(
-					tablesSQLContent, tableName, previousSetterObjectName);
-				int index2 = SourceUtil.getColumnIndex(
-					tablesSQLContent, tableName, setterObjectName);
+				int index1 = -1;
+
+				if (parts.length == 2) {
+					index1 = SourceUtil.getColumnIndex(
+						tablesSQLContent, parts[0], parts[1]);
+				}
+
+				parts = StringUtil.split(
+					_getTableAndColumName(
+						variableTypeName, setterObjectName, serviceXMLElement),
+					":");
+
+				int index2 = -1;
+
+				if (parts.length == 2) {
+					index2 = SourceUtil.getColumnIndex(
+						tablesSQLContent, parts[0], parts[1]);
+				}
 
 				if ((index2 != -1) && ((index1 > index2) || (index1 == -1))) {
 					x = matcher2.start();
@@ -237,26 +254,42 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		return StringPool.BLANK;
 	}
 
-	private String _getTableName(
-		String variableTypeName, Element serviceXMLElement) {
+	private String _getTableAndColumName(
+		String variableTypeName, String setterObjectName,
+		Element serviceXMLElement) {
+
+		String tableName = variableTypeName;
 
 		for (Element entityElement :
 				(List<Element>)serviceXMLElement.elements("entity")) {
 
-			if (!variableTypeName.equals(
-					entityElement.attributeValue("name"))) {
-
+			if (!tableName.equals(entityElement.attributeValue("name"))) {
 				continue;
 			}
 
-			String tableName = entityElement.attributeValue("table");
+			if (Validator.isNotNull(entityElement.attributeValue("table"))) {
+				tableName = entityElement.attributeValue("table");
+			}
 
-			if (Validator.isNotNull(tableName)) {
-				return tableName;
+			for (Element columnElement :
+					(List<Element>)entityElement.elements("column")) {
+
+				if (!setterObjectName.equals(
+						columnElement.attributeValue("name"))) {
+
+					continue;
+				}
+
+				if (Validator.isNotNull(
+						columnElement.attributeValue("db-name"))) {
+
+					return tableName + ":" +
+						columnElement.attributeValue("db-name");
+				}
 			}
 		}
 
-		return variableTypeName;
+		return tableName + ":" + setterObjectName;
 	}
 
 	private boolean _isBooleanColumn(

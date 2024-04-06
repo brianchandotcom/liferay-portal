@@ -175,7 +175,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 
 				String trimmedSetterObjectName =
 					previousSetterObjectName.replaceFirst(
-						"(.+?)(List|Map)$", "$1");
+						"(.+?)(List|Map|UnicodeProperties)$", "$1");
 
 				String[] parts = StringUtil.split(
 					_getTableAndColumName(
@@ -191,7 +191,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 				}
 
 				trimmedSetterObjectName = setterObjectName.replaceFirst(
-					"(.+?)(List|Map)$", "$1");
+					"(.+?)(List|Map|UnicodeProperties)$", "$1");
 
 				parts = StringUtil.split(
 					_getTableAndColumName(

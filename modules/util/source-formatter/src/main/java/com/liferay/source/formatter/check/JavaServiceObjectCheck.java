@@ -258,10 +258,10 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		String variableTypeName, String setterObjectName,
 		Element serviceXMLElement) {
 
-		String tableName = variableTypeName;
-
 		for (Element entityElement :
 				(List<Element>)serviceXMLElement.elements("entity")) {
+
+			String tableName = variableTypeName;
 
 			if (!tableName.equals(entityElement.attributeValue("name"))) {
 				continue;
@@ -289,7 +289,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 			}
 		}
 
-		return tableName + ":" + setterObjectName;
+		return variableTypeName + ":" + setterObjectName;
 	}
 
 	private boolean _isBooleanColumn(

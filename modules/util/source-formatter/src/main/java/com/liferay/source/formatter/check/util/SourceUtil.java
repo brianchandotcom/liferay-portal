@@ -120,7 +120,7 @@ public class SourceUtil {
 	public static int getColumnIndex(
 		String tablesSQLContent, String tableName, String columnName) {
 
-		String tableSQL = getTableSQL(tablesSQLContent, tableName);
+		String tableSQL = _getTableSQL(tablesSQLContent, tableName);
 
 		if (tableSQL == null) {
 			return -1;
@@ -227,26 +227,6 @@ public class SourceUtil {
 				return absolutePath;
 			}
 		}
-	}
-
-	public static String getTableSQL(
-		String tablesSQLContent, String tableName) {
-
-		Pattern pattern = Pattern.compile("create table " + tableName + "_? ");
-
-		Matcher matcher = pattern.matcher(tablesSQLContent);
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		int x = tablesSQLContent.indexOf(");", matcher.start());
-
-		if (x == -1) {
-			return null;
-		}
-
-		return tablesSQLContent.substring(matcher.start(), x + 1);
 	}
 
 	public static boolean hasTypo(String s1, String s2) {
@@ -405,6 +385,26 @@ public class SourceUtil {
 		}
 
 		return annotations;
+	}
+
+	private static String _getTableSQL(
+		String tablesSQLContent, String tableName) {
+
+		Pattern pattern = Pattern.compile("create table " + tableName + "_? ");
+
+		Matcher matcher = pattern.matcher(tablesSQLContent);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		int x = tablesSQLContent.indexOf(");", matcher.start());
+
+		if (x == -1) {
+			return null;
+		}
+
+		return tablesSQLContent.substring(matcher.start(), x + 1);
 	}
 
 	private static final Pattern _annotationMemberValuePairPattern =

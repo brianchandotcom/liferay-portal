@@ -13,6 +13,12 @@
 		<fieldType class="solr.BoolField" name="boolean" omitNorms="true" sortMissingLast="true" />
 		<fieldType class="solr.DatePointField" name="date" omitNorms="true" positionIncrementGap="0" />
 		<fieldType class="solr.DoublePointField" name="double" omitNorms="true" positionIncrementGap="0" />
+		<fieldType class="solr.TextField" name="email_lowercase" omitNorms="true" sortMissingLast="true">
+			<analyzer>
+				<tokenizer class="solr.UAX29URLEmailTokenizerFactory" />
+				<filter class="solr.LowerCaseFilterFactory" />
+			</analyzer>
+		</fieldType>
 		<fieldType class="solr.FloatPointField" name="float" omitNorms="true" positionIncrementGap="0" />
 		<fieldType class="solr.StrField" indexed="false" name="ignored" stored="false" />
 		<fieldType class="solr.IntPointField" name="integer" omitNorms="true" positionIncrementGap="0" />
@@ -660,7 +666,7 @@
 		<copyField dest="all" source="type" />
 		<copyField dest="all" source="userName" />
 		<copyField dest="assetTagNames.raw" source="assetTagNames" />
-		<copyField dest="emailAddress.text" source="userName" />
+		<copyField dest="emailAddress.text" source="emailAddress" />
 		<copyField dest="screenName.text" source="screenName" />
 		<copyField dest="userName.text" source="userName" />
 		<field indexed="true" multiValued="false" name="_version_" stored="true" type="long" />
@@ -698,7 +704,7 @@
 		<field indexed="true" name="discussion" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="displayDate" stored="true" type="string" />
 		<field indexed="true" name="emailAddress" stored="true" type="string" />
-		<field indexed="true" name="emailAddress.text" stored="false" type="text_lowercase" />
+		<field indexed="true" name="emailAddress.text" stored="false" type="email_lowercase" />
 		<field indexed="true" name="emailAddressDomain" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="endTime" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="entryClassName" stored="true" type="string" />

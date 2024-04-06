@@ -12,6 +12,8 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -19,9 +21,15 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.initializer.SiteInitializerRegistry;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -96,6 +104,23 @@ public class LoginLayoutUtilityPageTest {
 	}
 
 	@Test
+	public void testDefaultLayoutUtilityPagesAfterSiteInitialization()
+		throws PortalException {
+
+		UserTestUtil.setUser(TestPropsValues.getUser());
+
+		SiteInitializer siteInitializer =
+			_siteInitializerRegistry.getSiteInitializer(
+				"com.liferay.site.initializer.welcome");
+
+		siteInitializer.initialize(_group.getGroupId());
+
+		_checkDefaultLayoutUtilityPageEntries(
+			LayoutUtilityPageEntryConstants.TYPE_LOGIN, "Sign In",
+			"com_liferay_login_web_portlet_LoginPortlet");
+	}
+
+	@Test
 	public void testForgotPasswordUtilityPageTypeHasBeenRegistered() {
 		Assert.assertNotNull(
 			LayoutUtilityPageEntryViewRendererRegistryUtil.
@@ -111,6 +136,38 @@ public class LoginLayoutUtilityPageTest {
 					LayoutUtilityPageEntryConstants.TYPE_LOGIN));
 	}
 
+	private void _checkDefaultLayoutUtilityPageEntries(
+		String layoutUtilityPageEntryType,
+		String expectedLayoutUtilityPageEntryName, String expectedPortletId) {
+
+		LayoutUtilityPageEntry defaultLayoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				fetchDefaultLayoutUtilityPageEntry(
+					_group.getGroupId(), layoutUtilityPageEntryType);
+
+		Assert.assertNotNull(defaultLayoutUtilityPageEntry);
+
+		Assert.assertEquals(
+			expectedLayoutUtilityPageEntryName,
+			defaultLayoutUtilityPageEntry.getName());
+
+		long defaultLayoutUtilityPageEntryPlid =
+			defaultLayoutUtilityPageEntry.getPlid();
+
+		List<PortletPreferences> portletPreferencesByPlid =
+			_portletPreferencesLocalService.getPortletPreferencesByPlid(
+				defaultLayoutUtilityPageEntryPlid);
+
+		Assert.assertEquals(
+			portletPreferencesByPlid.toString(), 1,
+			portletPreferencesByPlid.size());
+
+		PortletPreferences portletPreferences = portletPreferencesByPlid.get(0);
+
+		Assert.assertEquals(
+			expectedPortletId, portletPreferences.getPortletId());
+	}
+
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -118,6 +175,12 @@ public class LoginLayoutUtilityPageTest {
 	private LayoutUtilityPageEntryLocalService
 		_layoutUtilityPageEntryLocalService;
 
+	@Inject
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private SiteInitializerRegistry _siteInitializerRegistry;
 
 }

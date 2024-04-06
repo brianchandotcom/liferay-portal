@@ -39,6 +39,8 @@
 
 		<for list="${app.names}" param="app.name">
 			<sequential>
+				<echo>App: @{app.name}</echo>
+
 				<antcall inheritall="false" target="build-app">
 					<param name="app.name" value="@{app.name}" />
 				</antcall>
@@ -539,7 +541,7 @@
 			property="app.major.minor.version.previous.release"
 		>
 			<filterchain>
-				<replaceregex pattern="(\d{1,2}\.\d{1,2})\.\d{1,2}" replace="\1" />
+				<replaceregex pattern="(\d{1,7}\.\d{1,7})\.\d{1,7}" replace="\1" />
 
 				<striplinebreaks />
 			</filterchain>
@@ -550,7 +552,7 @@
 			property="app.bug.fix.version.previous.release"
 		>
 			<filterchain>
-				<replaceregex pattern="\d{1,2}\.\d{1,2}\.(\d{1,2})" replace="\1" />
+				<replaceregex pattern="\d{1,7}\.\d{1,7}\.(\d{1,7})" replace="\1" />
 			</filterchain>
 			<propertyresource name="app.version.previous.release" />
 		</loadfile>

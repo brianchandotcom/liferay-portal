@@ -8,3 +8,14 @@ app.artifacts-1.0.0=\
 app.change.log-1.0.0=LPD-15901
 
 app.git.id-1.0.0=87f5fdec782485f8c902db100192d5cefafb5ad0
+
+#
+# Liferay App Version 1.0.1
+#
+
+app.artifacts-1.0.1=\
+	
+
+app.change.log-1.0.1=LPD-15901
+
+app.git.id-1.0.1=3d101ac8eb5b4eb8f912451f44d445ec4ed351b8

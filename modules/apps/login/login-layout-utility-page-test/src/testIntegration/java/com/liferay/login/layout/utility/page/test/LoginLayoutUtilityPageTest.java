@@ -118,6 +118,10 @@ public class LoginLayoutUtilityPageTest {
 		_checkDefaultLayoutUtilityPageEntries(
 			LayoutUtilityPageEntryConstants.TYPE_LOGIN, "Sign In",
 			"com_liferay_login_web_portlet_LoginPortlet");
+		_checkDefaultLayoutUtilityPageEntries(
+			LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT,
+			"Create Account",
+			"com_liferay_login_web_portlet_CreateAccountPortlet");
 	}
 
 	@Test

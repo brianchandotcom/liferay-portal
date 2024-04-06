@@ -173,9 +173,13 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 					variableTypeName = variableTypeName.substring(x + 1);
 				}
 
+				String trimmedSetterObjectName =
+					previousSetterObjectName.replaceFirst(
+						"(.+?)(List|Map)", "$1");
+
 				String[] parts = StringUtil.split(
 					_getTableAndColumName(
-						variableTypeName, previousSetterObjectName,
+						variableTypeName, trimmedSetterObjectName,
 						serviceXMLElement),
 					":");
 
@@ -186,9 +190,13 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 						tablesSQLContent, parts[0], parts[1]);
 				}
 
+				trimmedSetterObjectName = setterObjectName.replaceFirst(
+					"(.+?)(List|Map)", "$1");
+
 				parts = StringUtil.split(
 					_getTableAndColumName(
-						variableTypeName, setterObjectName, serviceXMLElement),
+						variableTypeName, trimmedSetterObjectName,
+						serviceXMLElement),
 					":");
 
 				int index2 = -1;

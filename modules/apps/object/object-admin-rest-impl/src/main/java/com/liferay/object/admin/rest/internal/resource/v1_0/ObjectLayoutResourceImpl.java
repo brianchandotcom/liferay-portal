@@ -282,13 +282,13 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 		com.liferay.object.model.ObjectLayoutRow serviceBuilderObjectLayoutRow =
 			_objectLayoutRowPersistence.create(0L);
 
+		serviceBuilderObjectLayoutRow.setPriority(
+			objectLayoutRow.getPriority());
 		serviceBuilderObjectLayoutRow.setObjectLayoutColumns(
 			transformToList(
 				objectLayoutRow.getObjectLayoutColumns(),
 				objectLayoutColumn -> _toObjectLayoutColumn(
 					objectDefinitionId, objectLayoutColumn)));
-		serviceBuilderObjectLayoutRow.setPriority(
-			objectLayoutRow.getPriority());
 
 		return serviceBuilderObjectLayoutRow;
 	}

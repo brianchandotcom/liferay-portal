@@ -292,9 +292,9 @@ public class ObjectDefinitionLocalServiceImpl
 			return objectDefinition;
 		}
 
+		objectDefinition.setObjectFolderId(objectFolderId);
 		objectDefinition.setLabelMap(
 			systemObjectDefinitionManager.getLabelMap());
-		objectDefinition.setObjectFolderId(objectFolderId);
 		objectDefinition.setPluralLabelMap(
 			systemObjectDefinitionManager.getPluralLabelMap());
 		objectDefinition.setVersion(systemObjectDefinitionManager.getVersion());
@@ -710,9 +710,9 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		objectDefinition.setAccountEntryRestricted(true);
 		objectDefinition.setAccountEntryRestrictedObjectFieldId(
 			objectField.getObjectFieldId());
+		objectDefinition.setAccountEntryRestricted(true);
 
 		return objectDefinitionPersistence.update(objectDefinition);
 	}
@@ -1409,6 +1409,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setActive(
 			_isUnmodifiableSystemObject(modifiable, system));
 		objectDefinition.setDBTableName(dbTableName);
+		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setClassName(
 			_getClassName(
 				objectDefinition.getObjectDefinitionId(), className, modifiable,
@@ -1420,7 +1421,6 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setEnableComments(enableComments);
 		objectDefinition.setEnableLocalization(enableLocalization);
 		objectDefinition.setEnableObjectEntryDraft(enableObjectEntryDraft);
-		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setModifiable(modifiable);
 		objectDefinition.setName(name);
 		objectDefinition.setPanelAppOrder(panelAppOrder);
@@ -1948,6 +1948,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setTitleObjectFieldId(titleObjectFieldId);
 		objectDefinition.setAccountEntryRestricted(accountEntryRestricted);
 		objectDefinition.setActive(active);
+		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setClassName(
 			_getClassName(
 				objectDefinition.getObjectDefinitionId(),
@@ -1957,11 +1958,10 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setEnableComments(enableComments);
 		objectDefinition.setEnableObjectEntryDraft(enableObjectEntryDraft);
 		objectDefinition.setEnableObjectEntryHistory(enableObjectEntryHistory);
-		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setPanelAppOrder(panelAppOrder);
 		objectDefinition.setPanelCategoryKey(panelCategoryKey);
-		objectDefinition.setPortlet(portlet);
 		objectDefinition.setPluralLabelMap(pluralLabelMap);
+		objectDefinition.setPortlet(portlet);
 
 		if (objectDefinition.isApproved()) {
 			if (!active && oldActive) {

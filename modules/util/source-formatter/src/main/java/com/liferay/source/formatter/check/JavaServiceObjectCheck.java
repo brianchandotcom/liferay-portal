@@ -277,24 +277,23 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 			for (Element columnElement :
 					(List<Element>)entityElement.elements("column")) {
 
-				if (!StringUtil.equalsIgnoreCase(
-						setterObjectName,
-						columnElement.attributeValue("name")) &&
-					!StringUtil.equalsIgnoreCase(
-						trimmedSetterObjectName,
-						columnElement.attributeValue("name"))) {
+				String columnName = columnElement.attributeValue("name");
 
-					continue;
+				if (StringUtil.equalsIgnoreCase(setterObjectName, columnName) ||
+					StringUtil.equalsIgnoreCase(
+						trimmedSetterObjectName, columnName) ||
+					(setterObjectName.equals("className") &&
+					 columnName.equals("classNameId"))) {
+
+					if (Validator.isNotNull(
+							columnElement.attributeValue("db-name"))) {
+
+						return tableName + ":" +
+							columnElement.attributeValue("db-name");
+					}
+
+					return tableName + ":" + columnName;
 				}
-
-				if (Validator.isNotNull(
-						columnElement.attributeValue("db-name"))) {
-
-					return tableName + ":" +
-						columnElement.attributeValue("db-name");
-				}
-
-				return tableName + ":" + columnElement.attributeValue("name");
 			}
 		}
 

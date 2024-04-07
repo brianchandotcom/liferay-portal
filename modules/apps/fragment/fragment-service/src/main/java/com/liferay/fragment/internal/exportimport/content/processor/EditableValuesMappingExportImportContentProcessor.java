@@ -223,13 +223,22 @@ public class EditableValuesMappingExportImportContentProcessor
 
 		long classNameId = editableJSONObject.getLong("classNameId");
 		long classPK = editableJSONObject.getLong("classPK");
+		String mappedField = editableJSONObject.getString("mappedField");
 
-		if ((classNameId == 0) || (classPK == 0)) {
+		if (((classNameId == 0) || (classPK == 0)) &&
+			Validator.isNull(mappedField)) {
+
 			return;
 		}
 
 		_exportDDMTemplateReference(
 			portletDataContext, stagedModel, editableJSONObject);
+		_exportTemplateReference(
+			portletDataContext, stagedModel, editableJSONObject);
+
+		if ((classNameId == 0) || (classPK == 0)) {
+			return;
+		}
 
 		String className = _portal.getClassName(classNameId);
 

@@ -173,13 +173,9 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 					variableTypeName = variableTypeName.substring(x + 1);
 				}
 
-				String trimmedSetterObjectName =
-					previousSetterObjectName.replaceFirst(
-						"(.+?)(List|Map|UnicodeProperties)$", "$1");
-
 				String[] parts = StringUtil.split(
 					_getTableAndColumName(
-						variableTypeName, trimmedSetterObjectName,
+						variableTypeName, previousSetterObjectName,
 						serviceXMLElement),
 					":");
 
@@ -190,13 +186,9 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 						tablesSQLContent, parts[0], parts[1]);
 				}
 
-				trimmedSetterObjectName = setterObjectName.replaceFirst(
-					"(.+?)(List|Map|UnicodeProperties)$", "$1");
-
 				parts = StringUtil.split(
 					_getTableAndColumName(
-						variableTypeName, trimmedSetterObjectName,
-						serviceXMLElement),
+						variableTypeName, setterObjectName, serviceXMLElement),
 					":");
 
 				int index2 = -1;
@@ -284,6 +276,16 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 
 				if (!StringUtil.equalsIgnoreCase(
 						setterObjectName,
+						columnElement.attributeValue("name"))) {
+
+					continue;
+				}
+
+				String trimmedSetterObjectName = setterObjectName.replaceFirst(
+					"(.+?)(List|Map|UnicodeProperties)$", "$1");
+
+				if (!StringUtil.equalsIgnoreCase(
+						trimmedSetterObjectName,
 						columnElement.attributeValue("name"))) {
 
 					continue;

@@ -428,6 +428,7 @@ public class DDMFormValuesExportImportContentProcessorTest {
 			JournalArticle.class);
 
 		structure.setClassNameId(classNameId);
+
 		structure.setDDMForm(_formInstance.getDDMForm());
 
 		structure = _ddmStructureLocalService.updateDDMStructure(structure);

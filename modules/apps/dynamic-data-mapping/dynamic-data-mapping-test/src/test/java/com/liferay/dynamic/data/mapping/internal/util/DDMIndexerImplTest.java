@@ -310,9 +310,9 @@ public class DDMIndexerImplTest {
 		ddmStructure.setDefinition(
 			ddmFormSerializerSerializeResponse.getContent());
 
-		ddmStructure.setDDMForm(ddmForm);
 		ddmStructure.setStructureId(RandomTestUtil.randomLong());
 		ddmStructure.setName(RandomTestUtil.randomString());
+		ddmStructure.setDDMForm(ddmForm);
 
 		_ddmFixture.whenDDMStructureLocalServiceFetchStructure(ddmStructure);
 

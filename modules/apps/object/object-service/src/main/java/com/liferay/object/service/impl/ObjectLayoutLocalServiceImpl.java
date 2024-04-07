@@ -246,10 +246,10 @@ public class ObjectLayoutLocalServiceImpl
 		newObjectLayoutBox.setObjectLayoutTabId(objectLayoutTabId);
 		newObjectLayoutBox.setCollapsable(objectLayoutBox.isCollapsable());
 		newObjectLayoutBox.setNameMap(objectLayoutBox.getNameMap());
-		newObjectLayoutBox.setObjectLayoutRows(
-			objectLayoutBox.getObjectLayoutRows());
 		newObjectLayoutBox.setPriority(objectLayoutBox.getPriority());
 		newObjectLayoutBox.setType(objectLayoutBox.getType());
+		newObjectLayoutBox.setObjectLayoutRows(
+			objectLayoutBox.getObjectLayoutRows());
 
 		newObjectLayoutBox = _objectLayoutBoxPersistence.update(
 			newObjectLayoutBox);

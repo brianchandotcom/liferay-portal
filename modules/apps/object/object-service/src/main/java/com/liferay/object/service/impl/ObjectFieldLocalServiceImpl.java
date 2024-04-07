@@ -855,8 +855,8 @@ public class ObjectFieldLocalServiceImpl
 			_getIndexedLanguageId(
 				businessType, dbType, indexed, indexedAsKeyword,
 				indexedLanguageId));
-		objectField.setLocalized(localized);
 		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
+		objectField.setLocalized(localized);
 		objectField.setName(name);
 		objectField.setReadOnly(
 			_getReadOnly(

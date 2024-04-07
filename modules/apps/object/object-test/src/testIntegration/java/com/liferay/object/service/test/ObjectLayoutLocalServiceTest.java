@@ -170,12 +170,12 @@ public class ObjectLayoutLocalServiceTest {
 				objectLayoutTab.setNameMap(
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()));
+				objectLayoutTab.setPriority(0);
 				objectLayoutTab.setObjectLayoutBoxes(
 					Arrays.asList(
 						_addObjectLayoutBox(),
 						_addObjectLayoutBox(
 							ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)));
-				objectLayoutTab.setPriority(0);
 
 				_objectLayoutLocalService.addObjectLayout(
 					TestPropsValues.getUserId(),

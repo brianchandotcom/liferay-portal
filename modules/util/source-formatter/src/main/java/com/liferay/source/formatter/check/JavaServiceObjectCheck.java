@@ -271,20 +271,16 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 				tableName = entityElement.attributeValue("table");
 			}
 
+			String trimmedSetterObjectName = setterObjectName.replaceFirst(
+				"(.+?)(List|Map|UnicodeProperties)$", "$1");
+
 			for (Element columnElement :
 					(List<Element>)entityElement.elements("column")) {
 
 				if (!StringUtil.equalsIgnoreCase(
 						setterObjectName,
-						columnElement.attributeValue("name"))) {
-
-					continue;
-				}
-
-				String trimmedSetterObjectName = setterObjectName.replaceFirst(
-					"(.+?)(List|Map|UnicodeProperties)$", "$1");
-
-				if (!StringUtil.equalsIgnoreCase(
+						columnElement.attributeValue("name")) &&
+					!StringUtil.equalsIgnoreCase(
 						trimmedSetterObjectName,
 						columnElement.attributeValue("name"))) {
 
@@ -297,6 +293,8 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 					return tableName + ":" +
 						columnElement.attributeValue("db-name");
 				}
+
+				return tableName + ":" + columnElement.attributeValue("name");
 			}
 		}
 

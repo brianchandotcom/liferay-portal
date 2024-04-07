@@ -25,12 +25,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
+import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.service.TemplateEntryLocalService;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -128,6 +131,31 @@ public class EditableValuesMappingExportImportContentProcessor
 		if (ddmTemplate != null) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, stagedModel, ddmTemplate,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+	}
+
+	private void _exportTemplateReference(
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			JSONObject editableJSONObject)
+		throws Exception {
+
+		String mappedField = editableJSONObject.getString(
+			"mappedField", editableJSONObject.getString("fieldId"));
+
+		if (!mappedField.startsWith(_TEMPLATE)) {
+			return;
+		}
+
+		String templateEntryId = mappedField.substring(_TEMPLATE.length());
+
+		TemplateEntry templateEntry =
+			_templateEntryLocalService.fetchTemplateEntry(
+				GetterUtil.getLong(templateEntryId));
+
+		if (templateEntry != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, stagedModel, templateEntry,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 	}
@@ -346,6 +374,8 @@ public class EditableValuesMappingExportImportContentProcessor
 
 	private static final String _DDM_TEMPLATE = "ddmTemplate_";
 
+	private static final String _TEMPLATE = "ddmTemplate__ddmTemplate_";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditableValuesMappingExportImportContentProcessor.class);
 
@@ -360,5 +390,8 @@ public class EditableValuesMappingExportImportContentProcessor
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TemplateEntryLocalService _templateEntryLocalService;
 
 }

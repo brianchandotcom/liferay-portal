@@ -346,9 +346,9 @@ public class DispatchTriggerLocalServiceImpl
 			dispatchTriggerId, dispatchTrigger.getCompanyId(), null,
 			dispatchTrigger.getDispatchTaskExecutorType(), name);
 
-		dispatchTrigger.setName(name);
 		dispatchTrigger.setDispatchTaskSettingsUnicodeProperties(
 			taskSettingsUnicodeProperties);
+		dispatchTrigger.setName(name);
 
 		return dispatchTriggerPersistence.update(dispatchTrigger);
 	}

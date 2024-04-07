@@ -182,7 +182,6 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setDiscountLevel3(discountLevel3);
 		commercePriceEntry.setDiscountLevel4(discountLevel4);
 		commercePriceEntry.setDisplayDate(displayDate);
-		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 		commercePriceEntry.setExpirationDate(expirationDate);
 		commercePriceEntry.setPrice(price);
 		commercePriceEntry.setPriceOnApplication(priceOnApplication);
@@ -191,6 +190,7 @@ public class CommercePriceEntryLocalServiceImpl
 			_getQuantity(cpInstanceId, unitOfMeasureKey));
 		commercePriceEntry.setUnitOfMeasureKey(
 			_getUnitOfMeasureKey(cpInstanceId, unitOfMeasureKey));
+		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
 			commercePriceEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -717,7 +717,6 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setDiscountLevel4(discountLevel4);
 		commercePriceEntry.setDisplayDate(displayDate);
 		commercePriceEntry.setExpirationDate(expirationDate);
-		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 		commercePriceEntry.setPrice(price);
 		commercePriceEntry.setPriceOnApplication(priceOnApplication);
 		commercePriceEntry.setPromoPrice(promoPrice);
@@ -725,6 +724,7 @@ public class CommercePriceEntryLocalServiceImpl
 			_getQuantity(cpInstanceId, unitOfMeasureKey));
 		commercePriceEntry.setUnitOfMeasureKey(
 			_getUnitOfMeasureKey(cpInstanceId, unitOfMeasureKey));
+		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
 			commercePriceEntry.setStatus(WorkflowConstants.STATUS_DRAFT);

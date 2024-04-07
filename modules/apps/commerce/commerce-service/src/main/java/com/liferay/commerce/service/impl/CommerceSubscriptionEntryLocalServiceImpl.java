@@ -133,6 +133,11 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			_cpSubscriptionTypeRegistry.getCPSubscriptionType(subscriptionType);
 
 		if (cpSubscriptionType != null) {
+			commerceSubscriptionEntry.
+				setSubscriptionTypeSettingsUnicodeProperties(
+					cpSubscriptionType.
+						getSubscriptionTypeSettingsUnicodeProperties(
+							subscriptionTypeSettingsUnicodeProperties));
 			commerceSubscriptionEntry.setSubscriptionStatus(
 				CommerceSubscriptionEntryConstants.SUBSCRIPTION_STATUS_ACTIVE);
 			commerceSubscriptionEntry.setNextIterationDate(
@@ -143,19 +148,14 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				cpSubscriptionType.getSubscriptionStartDate(
 					user.getTimeZone(),
 					subscriptionTypeSettingsUnicodeProperties));
-			commerceSubscriptionEntry.
-				setSubscriptionTypeSettingsUnicodeProperties(
-					cpSubscriptionType.
-						getSubscriptionTypeSettingsUnicodeProperties(
-							subscriptionTypeSettingsUnicodeProperties));
 		}
 		else {
-			commerceSubscriptionEntry.setSubscriptionStatus(
-				CommerceSubscriptionEntryConstants.
-					SUBSCRIPTION_STATUS_INACTIVE);
 			commerceSubscriptionEntry.
 				setSubscriptionTypeSettingsUnicodeProperties(
 					subscriptionTypeSettingsUnicodeProperties);
+			commerceSubscriptionEntry.setSubscriptionStatus(
+				CommerceSubscriptionEntryConstants.
+					SUBSCRIPTION_STATUS_INACTIVE);
 		}
 
 		CPSubscriptionType deliveryCPSubscriptionType =
@@ -163,6 +163,11 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				deliverySubscriptionType);
 
 		if (deliveryCPSubscriptionType != null) {
+			commerceSubscriptionEntry.
+				setDeliverySubscriptionTypeSettingsUnicodeProperties(
+					deliveryCPSubscriptionType.
+						getDeliverySubscriptionTypeSettingsUnicodeProperties(
+							deliverySubscriptionTypeSettingsUnicodeProperties));
 			commerceSubscriptionEntry.setDeliverySubscriptionStatus(
 				CommerceSubscriptionEntryConstants.SUBSCRIPTION_STATUS_ACTIVE);
 			commerceSubscriptionEntry.setDeliveryNextIterationDate(
@@ -173,19 +178,14 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				deliveryCPSubscriptionType.getSubscriptionStartDate(
 					user.getTimeZone(),
 					deliverySubscriptionTypeSettingsUnicodeProperties));
-			commerceSubscriptionEntry.
-				setDeliverySubscriptionTypeSettingsUnicodeProperties(
-					deliveryCPSubscriptionType.
-						getDeliverySubscriptionTypeSettingsUnicodeProperties(
-							deliverySubscriptionTypeSettingsUnicodeProperties));
 		}
 		else {
-			commerceSubscriptionEntry.setDeliverySubscriptionStatus(
-				CommerceSubscriptionEntryConstants.
-					SUBSCRIPTION_STATUS_INACTIVE);
 			commerceSubscriptionEntry.
 				setDeliverySubscriptionTypeSettingsUnicodeProperties(
 					deliverySubscriptionTypeSettingsUnicodeProperties);
+			commerceSubscriptionEntry.setDeliverySubscriptionStatus(
+				CommerceSubscriptionEntryConstants.
+					SUBSCRIPTION_STATUS_INACTIVE);
 		}
 
 		return commerceSubscriptionEntryPersistence.update(

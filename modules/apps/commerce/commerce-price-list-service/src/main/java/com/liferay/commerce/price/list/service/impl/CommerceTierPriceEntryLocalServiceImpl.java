@@ -179,8 +179,8 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		commerceTierPriceEntry.setDiscountLevel4(discountLevel4);
 		commerceTierPriceEntry.setMinQuantity(
 			_normalizeMinQuantity(commercePriceEntry, minQuantity));
-		commerceTierPriceEntry.setExpandoBridgeAttributes(serviceContext);
 		commerceTierPriceEntry.setDisplayDate(displayDate);
+		commerceTierPriceEntry.setExpandoBridgeAttributes(serviceContext);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
 			commerceTierPriceEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -685,15 +685,15 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		commerceTierPriceEntry.setPrice(price);
 		commerceTierPriceEntry.setPromoPrice(promoPrice);
-		commerceTierPriceEntry.setMinQuantity(
-			_normalizeMinQuantity(commercePriceEntry, minQuantity));
-		commerceTierPriceEntry.setExpandoBridgeAttributes(serviceContext);
 		commerceTierPriceEntry.setDiscountDiscovery(discountDiscovery);
 		commerceTierPriceEntry.setDiscountLevel1(discountLevel1);
 		commerceTierPriceEntry.setDiscountLevel2(discountLevel2);
 		commerceTierPriceEntry.setDiscountLevel3(discountLevel3);
 		commerceTierPriceEntry.setDiscountLevel4(discountLevel4);
+		commerceTierPriceEntry.setMinQuantity(
+			_normalizeMinQuantity(commercePriceEntry, minQuantity));
 		commerceTierPriceEntry.setDisplayDate(displayDate);
+		commerceTierPriceEntry.setExpandoBridgeAttributes(serviceContext);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
 			commerceTierPriceEntry.setStatus(WorkflowConstants.STATUS_DRAFT);

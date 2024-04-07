@@ -77,9 +77,9 @@ public class CommerceInventoryWarehouseUpgradeProcess extends UpgradeProcess {
 	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.alterColumnType(
-				"CIWarehouse", "description", "STRING null"),
+				"CIWarehouse", "name", "STRING null"),
 			UpgradeProcessFactory.alterColumnType(
-				"CIWarehouse", "name", "STRING null")
+				"CIWarehouse", "description", "STRING null")
 		};
 	}
 

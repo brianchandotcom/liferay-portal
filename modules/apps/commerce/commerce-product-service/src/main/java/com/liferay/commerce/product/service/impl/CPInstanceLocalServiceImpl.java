@@ -228,9 +228,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstance.setStatus(WorkflowConstants.STATUS_EXPIRED);
 		}
 
-		cpInstance.setStatusByUserId(user.getUserId());
-		cpInstance.setStatusDate(serviceContext.getModifiedDate(date));
-		cpInstance.setExpandoBridgeAttributes(serviceContext);
 		cpInstance.setUnspsc(unspsc);
 		cpInstance.setDiscontinued(discontinued);
 		cpInstance.setDiscontinuedDate(
@@ -239,6 +236,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				discontinuedDateYear));
 		cpInstance.setReplacementCPInstanceUuid(replacementCPInstanceUuid);
 		cpInstance.setReplacementCProductId(replacementCProductId);
+		cpInstance.setStatusByUserId(user.getUserId());
+		cpInstance.setStatusDate(serviceContext.getModifiedDate(date));
+		cpInstance.setExpandoBridgeAttributes(serviceContext);
 
 		cpInstance = cpInstancePersistence.update(cpInstance);
 
@@ -1140,9 +1140,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstance.setStatus(WorkflowConstants.STATUS_EXPIRED);
 		}
 
-		cpInstance.setStatusByUserId(user.getUserId());
-		cpInstance.setStatusDate(serviceContext.getModifiedDate(date));
-		cpInstance.setExpandoBridgeAttributes(serviceContext);
 		cpInstance.setUnspsc(unspsc);
 		cpInstance.setDiscontinued(discontinued);
 		cpInstance.setDiscontinuedDate(
@@ -1151,6 +1148,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				discontinuedDateYear));
 		cpInstance.setReplacementCPInstanceUuid(replacementCPInstanceUuid);
 		cpInstance.setReplacementCProductId(replacementCProductId);
+		cpInstance.setStatusByUserId(user.getUserId());
+		cpInstance.setStatusDate(serviceContext.getModifiedDate(date));
+		cpInstance.setExpandoBridgeAttributes(serviceContext);
 
 		cpInstance = cpInstancePersistence.update(cpInstance);
 

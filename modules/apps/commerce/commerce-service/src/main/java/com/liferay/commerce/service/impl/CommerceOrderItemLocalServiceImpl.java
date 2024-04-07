@@ -1401,7 +1401,6 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItem.setCProductId(cpDefinition.getCProductId());
 		commerceOrderItem.setParentCommerceOrderItemId(
 			parentCommerceOrderItemId);
-		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
 		commerceOrderItem.setFreeShipping(cpDefinition.isFreeShipping());
 		commerceOrderItem.setJson(json);
 		commerceOrderItem.setManuallyAdjusted(false);
@@ -1417,6 +1416,7 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItem.setUnitOfMeasureIncrementalOrderQuantity(
 			unitOfMeasureIncrementalOrderQuantity);
 		commerceOrderItem.setUnitOfMeasureKey(unitOfMeasureKey);
+		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
 
 		_setDimensions(commerceOrderItem, cpInstance);
 		_setSubscriptionInfo(commerceOrderItem, cpInstance);
@@ -2320,7 +2320,6 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrder.getCommerceOrderId());
 		commerceOrderItem.setCPInstanceId(cpInstance.getCPInstanceId());
 		commerceOrderItem.setCProductId(cpDefinition.getCProductId());
-		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
 		commerceOrderItem.setFreeShipping(cpDefinition.isFreeShipping());
 		commerceOrderItem.setManuallyAdjusted(false);
 		commerceOrderItem.setNameMap(cpDefinition.getNameMap());
@@ -2335,6 +2334,7 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItem.setUnitOfMeasureIncrementalOrderQuantity(
 			unitOfMeasureIncrementalOrderQuantity);
 		commerceOrderItem.setUnitOfMeasureKey(unitOfMeasureKey);
+		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
 
 		_setDimensions(commerceOrderItem, cpInstance);
 		_setSubscriptionInfo(commerceOrderItem, cpInstance);

@@ -231,8 +231,10 @@ public class SegmentsExperienceLocalServiceImpl
 					segmentsExperience.getSegmentsExperienceId());
 		}
 
-		_checkUnlockedLayout(
-			segmentsExperience.getPlid(), GuestOrUserUtil.getUserId());
+		if (!GroupThreadLocal.isDeleteInProcess()) {
+			_checkUnlockedLayout(
+				segmentsExperience.getPlid(), GuestOrUserUtil.getUserId());
+		}
 
 		segmentsExperiencePersistence.remove(segmentsExperience);
 

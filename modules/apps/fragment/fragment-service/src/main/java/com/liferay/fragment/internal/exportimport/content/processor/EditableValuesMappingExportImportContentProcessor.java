@@ -315,16 +315,30 @@ public class EditableValuesMappingExportImportContentProcessor
 	private void _replaceMappedFieldImportContentReferences(
 		PortletDataContext portletDataContext, JSONObject editableJSONObject) {
 
-		String className = editableJSONObject.getString("className");
-
-		if (Validator.isNull(className)) {
-			return;
-		}
-
 		String mappedField = editableJSONObject.getString(
 			"mappedField", editableJSONObject.getString("fieldId"));
 
-		if (mappedField.startsWith(_DDM_TEMPLATE)) {
+		if (mappedField.startsWith(_TEMPLATE)) {
+			long templateEntryId = GetterUtil.getLong(
+				mappedField.substring(_TEMPLATE.length()));
+
+			Map<Long, Long> templateEntryIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					TemplateEntry.class);
+
+			long importedTemplateEntryId = MapUtil.getLong(
+				templateEntryIds, templateEntryId, templateEntryId);
+
+			if (editableJSONObject.has("mappedField")) {
+				editableJSONObject.put(
+					"mappedField", _TEMPLATE + importedTemplateEntryId);
+			}
+			else {
+				editableJSONObject.put(
+					"fieldId", _TEMPLATE + importedTemplateEntryId);
+			}
+		}
+		else if (mappedField.startsWith(_DDM_TEMPLATE)) {
 			String ddmTemplateKey = mappedField.substring(
 				_DDM_TEMPLATE.length());
 
@@ -343,6 +357,12 @@ public class EditableValuesMappingExportImportContentProcessor
 				editableJSONObject.put(
 					"fieldId", _DDM_TEMPLATE + importedDDMTemplateKey);
 			}
+		}
+
+		String className = editableJSONObject.getString("className");
+
+		if (Validator.isNull(className)) {
+			return;
 		}
 
 		AssetRendererFactory<?> assetRendererFactory =

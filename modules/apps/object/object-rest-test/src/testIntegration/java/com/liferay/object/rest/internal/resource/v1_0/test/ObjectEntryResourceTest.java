@@ -587,7 +587,7 @@ public class ObjectEntryResourceTest {
 			_objectDefinition4, _OBJECT_FIELD_NAME_4, _OBJECT_FIELD_VALUE_4);
 
 		_objectDefinition5 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			ObjectDefinitionTestUtil.getRandomName(), true,
+			true, ObjectDefinitionTestUtil.getRandomName(),
 			Arrays.asList(
 				new TextObjectFieldBuilder(
 				).labelMap(

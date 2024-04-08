@@ -146,6 +146,24 @@ public class ObjectDefinitionTestUtil {
 	}
 
 	public static ObjectDefinition publishObjectDefinition(
+			boolean localized, String name, List<ObjectField> objectFields,
+			String scope, long userId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+				userId, 0, false, localized, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				name, null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				objectFields);
+
+		return ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
+			userId, objectDefinition.getObjectDefinitionId());
+	}
+
+	public static ObjectDefinition publishObjectDefinition(
 			List<ObjectField> objectFields)
 		throws Exception {
 
@@ -171,24 +189,6 @@ public class ObjectDefinitionTestUtil {
 	}
 
 	public static ObjectDefinition publishObjectDefinition(
-			String name, boolean localized, List<ObjectField> objectFields,
-			String scope, long userId)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				userId, 0, false, localized, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				name, null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				objectFields);
-
-		return ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
-			userId, objectDefinition.getObjectDefinitionId());
-	}
-
-	public static ObjectDefinition publishObjectDefinition(
 			String name, List<ObjectField> objectFields, String scope)
 		throws Exception {
 
@@ -202,7 +202,7 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return publishObjectDefinition(
-			name, false, objectFields, scope, userId);
+			false, name, objectFields, scope, userId);
 	}
 
 }

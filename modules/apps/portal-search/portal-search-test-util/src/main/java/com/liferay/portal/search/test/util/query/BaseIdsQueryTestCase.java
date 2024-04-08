@@ -115,7 +115,7 @@ public abstract class BaseIdsQueryTestCase extends BaseIndexingTestCase {
 	protected SearchSearchRequest getSearchSearchRequest(Query query) {
 		return new SearchSearchRequest() {
 			{
-				setIndexNames("_all");
+				setIndexNames(String.valueOf(getCompanyId()));
 				setQuery(query);
 			}
 		};

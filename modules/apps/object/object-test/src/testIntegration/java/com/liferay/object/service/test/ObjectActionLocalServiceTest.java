@@ -55,7 +55,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -66,7 +65,6 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -90,7 +88,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -101,7 +98,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.security.script.management.configuration.ScriptManagementConfiguration;
+import com.liferay.portal.security.script.management.test.util.ScriptManagementConfigurationTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -212,7 +209,7 @@ public class ObjectActionLocalServiceTest {
 				ObjectActionTriggerConstants.KEY_STANDALONE, false));
 
 		try (Closeable closeable =
-				_disableAllowScriptContentToBeExecutedOrIncluded()) {
+				ScriptManagementConfigurationTestUtil.disable()) {
 
 			AssertUtils.assertFailure(
 				ObjectActionExecutorKeyException.class,
@@ -2043,29 +2040,6 @@ public class ObjectActionLocalServiceTest {
 		}
 	}
 
-	private Closeable _disableAllowScriptContentToBeExecutedOrIncluded()
-		throws ConfigurationException {
-
-		_configurationProvider.saveSystemConfiguration(
-			ScriptManagementConfiguration.class,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"allowScriptContentToBeExecutedOrIncluded", false
-			).build());
-
-		return () -> {
-			try {
-				_configurationProvider.saveSystemConfiguration(
-					ScriptManagementConfiguration.class,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"allowScriptContentToBeExecutedOrIncluded", true
-					).build());
-			}
-			catch (ConfigurationException configurationException) {
-				throw new RuntimeException(configurationException);
-			}
-		};
-	}
-
 	private Object _getAndSetFieldValue(
 		Class<?> clazz, String fieldName, String objectActionExecutorKey) {
 
@@ -2192,9 +2166,6 @@ public class ObjectActionLocalServiceTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private ConfigurationProvider _configurationProvider;
 
 	@Inject
 	private JSONFactory _jsonFactory;

@@ -7,18 +7,15 @@ package com.liferay.portal.workflow.kaleo.internal.runtime.integration.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.security.script.management.configuration.ScriptManagementConfiguration;
+import com.liferay.portal.security.script.management.test.util.ScriptManagementConfigurationTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
@@ -65,12 +62,12 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 			getResourceInputStream("single-approver-workflow-definition.xml"));
 
 		try (Closeable closeable =
-				_disableScriptContentToBeExecutedOrIncluded()) {
+				ScriptManagementConfigurationTestUtil.disable()) {
 
 			AssertUtils.assertFailure(
 				KaleoDefinitionValidationException.NotAllowedScriptLanguage.
 					class,
-				"Ggroovy is not allowed",
+				"Groovy is not allowed",
 				() -> _workflowDefinitionManager.deployWorkflowDefinition(
 					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 					StringPool.BLANK, "Single Approver", content.getBytes()));
@@ -528,29 +525,6 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 			FileUtil.getBytes(inputStream));
 	}
 
-	private Closeable _disableScriptContentToBeExecutedOrIncluded()
-		throws ConfigurationException {
-
-		_configurationProvider.saveSystemConfiguration(
-			ScriptManagementConfiguration.class,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"allowScriptContentToBeExecutedOrIncluded", false
-			).build());
-
-		return () -> {
-			try {
-				_configurationProvider.saveSystemConfiguration(
-					ScriptManagementConfiguration.class,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"allowScriptContentToBeExecutedOrIncluded", true
-					).build());
-			}
-			catch (ConfigurationException configurationException) {
-				throw new RuntimeException(configurationException);
-			}
-		};
-	}
-
 	private WorkflowDefinition _saveWorkflowDefinition() throws Exception {
 		InputStream inputStream = getResourceInputStream(
 			"single-approver-workflow-definition.xml");
@@ -568,9 +542,6 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), title,
 			StringUtil.randomId(), bytes);
 	}
-
-	@Inject
-	private ConfigurationProvider _configurationProvider;
 
 	@Inject
 	private WorkflowDefinitionManager _workflowDefinitionManager;

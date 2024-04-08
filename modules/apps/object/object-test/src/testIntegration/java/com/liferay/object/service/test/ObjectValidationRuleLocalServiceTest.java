@@ -30,8 +30,6 @@ import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.validation.rule.setting.builder.ObjectValidationRuleSettingBuilder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -39,11 +37,10 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.script.management.configuration.ScriptManagementConfiguration;
+import com.liferay.portal.security.script.management.test.util.ScriptManagementConfigurationTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -117,7 +114,7 @@ public class ObjectValidationRuleLocalServiceTest {
 				"abcdefghijklmnopqrstuvwxyz", _VALID_DDM_SCRIPT));
 
 		try (Closeable closeable =
-				_disableAllowScriptContentToBeExecutedOrIncluded()) {
+				ScriptManagementConfigurationTestUtil.disable()) {
 
 			AssertUtils.assertFailure(
 				ObjectValidationRuleEngineException.NotAllowedEngine.class,
@@ -763,29 +760,6 @@ public class ObjectValidationRuleLocalServiceTest {
 		}
 	}
 
-	private Closeable _disableAllowScriptContentToBeExecutedOrIncluded()
-		throws ConfigurationException {
-
-		_configurationProvider.saveSystemConfiguration(
-			ScriptManagementConfiguration.class,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"allowScriptContentToBeExecutedOrIncluded", false
-			).build());
-
-		return () -> {
-			try {
-				_configurationProvider.saveSystemConfiguration(
-					ScriptManagementConfiguration.class,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"allowScriptContentToBeExecutedOrIncluded", true
-					).build());
-			}
-			catch (ConfigurationException configurationException) {
-				throw new RuntimeException(configurationException);
-			}
-		};
-	}
-
 	private void _testDeleteObjectValidationRule(long objectValidationRuleId)
 		throws Exception {
 
@@ -803,9 +777,6 @@ public class ObjectValidationRuleLocalServiceTest {
 
 	private static final String _VALID_DDM_SCRIPT =
 		"isEmailAddress(textObjectField)";
-
-	@Inject
-	private ConfigurationProvider _configurationProvider;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;

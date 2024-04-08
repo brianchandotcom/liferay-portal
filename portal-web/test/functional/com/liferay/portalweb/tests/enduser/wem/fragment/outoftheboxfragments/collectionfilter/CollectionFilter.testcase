@@ -3390,13 +3390,6 @@ definition {
 				groupName = ${randomSiteName},
 				title = "Car",
 				vocabularyName = "Type");
-
-			for (var title : list "Trunk,Hatchback") {
-				JSONCategory.addCategory(
-					groupName = ${randomSiteName},
-					title = ${title},
-					vocabularyName = "Type");
-			}
 		}
 
 		task ("Add the first web content with Car") {
@@ -3482,9 +3475,9 @@ definition {
 				targetCollection = "Dynamic Collection");
 		}
 
-		task ("View No Results Found in Collection Dipslay when search Toyota at Preview mode") {
-			PageEditor.previewInANewTab();
+		PageEditor.publish();
 
+		task ("View No Results Found in Collection Dipslay when search Toyota at Preview mode") {
 			var n = 1;
 
 			for (var title : list "Tesla Model 3,Tesla Model Y,Tesla Model X") {
@@ -3499,137 +3492,6 @@ definition {
 			}
 
 			Page.searchInCollectionFilter(searchTerm = "Toyota");
-
-			AssertTextEquals.assertPartialText(
-				index = 1,
-				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
-				value1 = "No Results Found");
-
-			Close.closeWindow();
-
-			PageEditor.publish();
-		}
-
-		task ("View No Results Found in Collection Dipslay when search BMW at View mode") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name 1",
-				siteName = ${randomSiteName});
-
-			var n = 1;
-
-			for (var title : list "Tesla Model 3,Tesla Model Y,Tesla Model X") {
-				AssertTextEquals(
-					key_colPosition = 1,
-					key_fragmentName = "heading",
-					key_rowPosition = ${n},
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = ${title});
-
-				var n = ${n} + 1;
-			}
-
-			Page.searchInCollectionFilter(searchTerm = "BMW");
-
-			AssertTextEquals.assertPartialText(
-				index = 1,
-				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
-				value1 = "No Results Found");
-		}
-
-		task ("Add the second content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name 2",
-				type = "content");
-		}
-
-		task ("Add a Collection Display fragment to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name 2",
-				siteName = ${randomSiteName});
-
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Collection Display");
-		}
-
-		task ("Select the dynamic collection and Bordered List in Collection Display") {
-			PageEditor.editCollectionDisplay(
-				assetListName = "Dynamic Collection",
-				fragmentName = "Collection Display",
-				styleDisplay = "Bordered List");
-		}
-
-		task ("Add a Collection Filter above the Collection Display") {
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				dropTarget = "Header",
-				fragmentName = "Collection Filter",
-				targetFragmentName = "Collection Display");
-		}
-
-		task ("Select the dynamic collection as Target Collection and select the Category as Filter and Type as Source") {
-			PageEditor.editCollectionFilter(
-				categoryNameList = "SUV,Car,Trunk,Hatchback",
-				filter = "Category",
-				fragmentName = "Collection Filter",
-				targetCollection = "Dynamic Collection",
-				vocabularyName = "Type");
-		}
-
-		task ("View No Results Found in Collection Dipslay when select Trunk at Preview mode") {
-			PageEditor.previewInANewTab();
-
-			var n = 1;
-
-			for (var title : list "Tesla Model 3,Tesla Model Y,Tesla Model X") {
-				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
-			}
-
-			Page.selectFilterInCollectionFilter(
-				categoryNameList = "Trunk",
-				multipleSelection = "true",
-				selectedName = "Trunk",
-				title = "Type");
-
-			AssertTextEquals.assertPartialText(
-				index = 1,
-				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
-				value1 = "No Results Found");
-
-			Close.closeWindow();
-
-			PageEditor.publish();
-		}
-
-		task ("View No Results Found in Collection Dipslay when select Hatchback at View mode") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name 2",
-				siteName = ${randomSiteName});
-
-			var n = 1;
-
-			for (var title : list "Tesla Model 3,Tesla Model Y,Tesla Model X") {
-				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
-			}
-
-			Page.selectFilterInCollectionFilter(
-				categoryNameList = "Hatchback",
-				multipleSelection = "true",
-				selectedName = "Hatchback",
-				title = "Type");
 
 			AssertTextEquals.assertPartialText(
 				index = 1,

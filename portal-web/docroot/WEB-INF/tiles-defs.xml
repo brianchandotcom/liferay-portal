@@ -76,7 +76,7 @@
 		<put name="content" value="/portal/update_password.jsp" />
 	</definition>
 
-	<definition extends="portal" name="portal.update_password_uc">
+	<definition extends="portal" name="portal.update_password_up">
 		<put name="title" value="new-password" />
 		<put name="content" value="/portal/forgot_password.jsp" />
 	</definition>

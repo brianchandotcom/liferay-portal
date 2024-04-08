@@ -794,6 +794,7 @@ public class LayoutServiceContextHelperImpl
 
 			themeDisplay.setRealUser(user);
 			themeDisplay.setScopeGroupId(_group.getGroupId());
+			themeDisplay.setServerName(company.getVirtualHostname());
 			themeDisplay.setServerPort(portalServerPort);
 			themeDisplay.setSiteGroupId(_group.getGroupId());
 			themeDisplay.setTimeZone(user.getTimeZone());

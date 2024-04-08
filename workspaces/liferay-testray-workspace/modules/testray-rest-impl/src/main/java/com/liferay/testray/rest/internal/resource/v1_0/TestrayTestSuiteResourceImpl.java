@@ -13,6 +13,7 @@ import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -159,14 +160,55 @@ public class TestrayTestSuiteResourceImpl
 		return objectEntry.getObjectEntryId();
 	}
 
+	private long _getTestrayRoutineId(
+			long companyId, long testrayProjectId, String testrayRoutineName)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				companyId, "C_Routine");
+
+		List<Map<String, Serializable>> valuesList =
+			_objectEntryLocalService.getValuesList(
+				0, companyId, contextUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				_filterFactory.create(
+					StringBundler.concat(
+						"projectId eq '", testrayProjectId, "' and name eq '",
+						testrayRoutineName, "'"),
+					objectDefinition),
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (ListUtil.isNotEmpty(valuesList)) {
+			Map<String, Serializable> values = valuesList.get(0);
+
+			return GetterUtil.getLong(values.get("objectEntryId"));
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			contextUser.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", testrayRoutineName
+			).put(
+				"r_routineToProjects_c_projectId", testrayProjectId
+			).build(),
+			_serviceContextHelper.getServiceContext());
+
+		return objectEntry.getObjectEntryId();
+	}
+
 	private void _processDocument(Document document) throws Exception {
 		Element element = document.getDocumentElement();
 
 		Map<String, String> propertiesMap = _getPropertiesMap(element);
 
-		_getTestrayProjectId(
+		_getTestrayRoutineId(
 			contextCompany.getCompanyId(),
-			propertiesMap.get("testray.project.name"));
+			_getTestrayProjectId(
+				contextCompany.getCompanyId(),
+				propertiesMap.get("testray.project.name")),
+			propertiesMap.get("testray.build.type"));
 	}
 
 	@Reference(

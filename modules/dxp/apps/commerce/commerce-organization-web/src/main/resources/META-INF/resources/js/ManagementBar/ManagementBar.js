@@ -6,7 +6,7 @@
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import {Autocomplete} from 'commerce-frontend-js';
+import {AutocompleteComponent as Autocomplete} from 'commerce-frontend-js';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useRef} from 'react';

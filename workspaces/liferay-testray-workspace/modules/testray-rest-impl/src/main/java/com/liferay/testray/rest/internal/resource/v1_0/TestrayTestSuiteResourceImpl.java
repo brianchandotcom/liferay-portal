@@ -5,15 +5,19 @@
 
 package com.liferay.testray.rest.internal.resource.v1_0;
 
+import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestSuite;
@@ -42,21 +46,27 @@ import org.w3c.dom.NodeList;
 /**
  * @author Nilton Vieira
  */
-@Component(properties = "OSGI-INF/liferay/rest/v1_0/testray-test-suite.properties", scope = ServiceScope.PROTOTYPE, service = TestrayTestSuiteResource.class)
+@Component(
+	properties = "OSGI-INF/liferay/rest/v1_0/testray-test-suite.properties",
+	scope = ServiceScope.PROTOTYPE, service = TestrayTestSuiteResource.class
+)
 public class TestrayTestSuiteResourceImpl
-		extends BaseTestrayTestSuiteResourceImpl {
+	extends BaseTestrayTestSuiteResourceImpl {
 
 	@Override
 	public TestrayTestSuite postTestrayTestSuite(MultipartBody multipartBody)
-			throws Exception {
+		throws Exception {
+
 		long startTime = System.currentTimeMillis();
 
-		DocumentBuilderFactory documentBuilderFactory = SecureXMLFactoryProviderUtil.newDocumentBuilderFactory();
+		DocumentBuilderFactory documentBuilderFactory =
+			SecureXMLFactoryProviderUtil.newDocumentBuilderFactory();
 
-		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+		DocumentBuilder documentBuilder =
+			documentBuilderFactory.newDocumentBuilder();
 
 		File tempFile = FileUtil.createTempFile(
-				multipartBody.getBinaryFileAsBytes("file"));
+			multipartBody.getBinaryFileAsBytes("file"));
 
 		Document document = documentBuilder.parse(tempFile);
 
@@ -65,7 +75,10 @@ public class TestrayTestSuiteResourceImpl
 		TestrayTestSuite testrayTestSuite = new TestrayTestSuite();
 
 		testrayTestSuite.setRuntime(System.currentTimeMillis() - startTime);
-		testrayTestSuite.setXmlFileName(multipartBody.getBinaryFile("file").getFileName());
+		testrayTestSuite.setXmlFileName(
+			multipartBody.getBinaryFile(
+				"file"
+			).getFileName());
 
 		return testrayTestSuite;
 	}
@@ -90,14 +103,14 @@ public class TestrayTestSuiteResourceImpl
 		Map<String, String> map = new HashMap<>();
 
 		NodeList propertiesNodeList = element.getElementsByTagName(
-				"properties");
+			"properties");
 
 		Node propertiesNode = propertiesNodeList.item(0);
 
-		Element propertiesElement = (Element) propertiesNode;
+		Element propertiesElement = (Element)propertiesNode;
 
 		NodeList propertyNodeList = propertiesElement.getElementsByTagName(
-				"property");
+			"property");
 
 		for (int i = 0; i < propertyNodeList.getLength(); i++) {
 			Node propertyNode = propertyNodeList.item(i);
@@ -107,35 +120,43 @@ public class TestrayTestSuiteResourceImpl
 			}
 
 			map.put(
-					_getAttributeValue("name", propertyNode),
-					_getAttributeValue("value", propertyNode));
+				_getAttributeValue("name", propertyNode),
+				_getAttributeValue("value", propertyNode));
 		}
 
 		return map;
 	}
 
 	private long _getTestrayProjectId(long companyId, String testrayProjectName)
-			throws Exception {
+		throws Exception {
 
-		ObjectDefinition objectDefinition = _objectDefinitionLocalService.getObjectDefinition(
-				companyId, "Project");
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				companyId, "C_Project");
 
-		String filterString = "name eq '" + testrayProjectName + "'";
+		List<Map<String, Serializable>> valuesList =
+			_objectEntryLocalService.getValuesList(
+				0, companyId, contextUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				_filterFactory.create(
+					"name eq '" + testrayProjectName + "'", objectDefinition),
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Predicate predicate = _filterFactory.create(
-				filterString, objectDefinition);
-
-		List<Map<String, Serializable>> objectEntries = TestrayUtil.getObjectEntries(
-				companyId, objectDefinition.getObjectDefinitionId(),
-				_objectEntryLocalService, predicate, contextUser.getUserId());
-
-		if (ListUtil.isNotEmpty(objectEntries)) {
-			Map<String, Serializable> values = objectEntries.get(0);
+		if (ListUtil.isNotEmpty(valuesList)) {
+			Map<String, Serializable> values = valuesList.get(0);
 
 			return GetterUtil.getLong(values.get("objectEntryId"));
 		}
 
-		return 0;
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			contextUser.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", testrayProjectName
+			).build(),
+			_serviceContextHelper.getServiceContext());
+
+		return objectEntry.getObjectEntryId();
 	}
 
 	private void _processDocument(Document document) throws Exception {
@@ -143,14 +164,14 @@ public class TestrayTestSuiteResourceImpl
 
 		Map<String, String> propertiesMap = _getPropertiesMap(element);
 
-		long testrayProjectId = _getTestrayProjectId(
-				contextCompany.getCompanyId(),
-				propertiesMap.get("testray.project.name"));
-
-		System.out.println("testrayProjectId: " + testrayProjectId);
+		_getTestrayProjectId(
+			contextCompany.getCompanyId(),
+			propertiesMap.get("testray.project.name"));
 	}
 
-	@Reference(target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")")
+	@Reference(
+		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
+	)
 	private FilterFactory<Predicate> _filterFactory;
 
 	@Reference
@@ -158,5 +179,8 @@ public class TestrayTestSuiteResourceImpl
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ServiceContextHelper _serviceContextHelper;
 
 }

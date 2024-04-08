@@ -76,6 +76,8 @@ const NewSolution = () => {
 						<Outlet></Outlet>
 					</div>
 
+					<hr className="my-6"></hr>
+
 					<div className="d-flex justify-content-end">
 						{activeIndex !== 0 && (
 							<ClayButton

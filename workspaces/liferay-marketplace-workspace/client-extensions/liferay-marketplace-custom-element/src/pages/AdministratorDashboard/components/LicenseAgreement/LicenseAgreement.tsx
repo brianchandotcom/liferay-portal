@@ -50,13 +50,11 @@ const LicenseAgreement = () => (
 
 		<small>
 			By clicking on the button &quot;continue&quot; below, I confirm that
-			I have read and agree to be bound by the{' '}
+			I have read and agree to be bound by the&nbsp;
 			<a href="#">Liferay Publisher Program License Agreement.</a> I also
 			confirm that I am of the legal age of majority in the jurisdiction
 			where I reside (at least 18 years of age in many countries).
 		</small>
-
-		<hr className="mt-6"></hr>
 	</>
 );
 

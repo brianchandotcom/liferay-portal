@@ -3,42 +3,48 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import i18n from '../../../../../i18n';
+
 export const SOLUTION_FLOW_ITEMS = [
 	{
 		checked: false,
-		description:
-			'Review and accept the legal agreement between you and Liferay before proceeding, You are about to create a new solution submission.',
+		description: i18n.translate(
+			'review-and-accept-the-legal-agreement-between-you-and-liferay-before-proceeding-you-are-about-to-create-a-new-solution-submission'
+		),
 		label: 'Create',
 		path: 'publisher',
 		selected: true,
-		title: 'Create template',
+		title: i18n.translate('create-template'),
 	},
 	{
 		checked: false,
-		description:
-			'Enter your solution details. This information will be used for submission, presentation, customer support, and search capabilities.',
+		description: i18n.translate(
+			'enter-your-solution-details-this-information-will-be-used-for-submission-presentation-customer-support-and-search-capabilities'
+		),
 		label: 'Profile',
 		path: 'profile',
 		selected: false,
-		title: 'Define the solution profile',
+		title: i18n.translate('define-the-solution-profile'),
 	},
 	{
 		checked: false,
-		description:
-			'Design the storefront for your solution. This will set the information displayed on the solution’s page. This section is dedicated to creating the solution’s header.',
+		description: i18n.translate(
+			'design-the-storefront-for-your-solution-this-will-set-the-information-displayed-on-the-solutions-page-this-section-is-dedicated-to-creating-the-solutions-header'
+		),
 		label: 'Solution Header',
 		path: 'header',
 		selected: false,
-		title: 'Customize solution header',
+		title: i18n.translate('customize-solution-header'),
 	},
 	{
 		checked: false,
-		description:
-			'Design the storefront for your solution. This will set the information displayed on the solution’s page. This section is dedicated to creating the solution’s detail content.',
+		description: i18n.translate(
+			'design-the-storefront-for-your-solution-this-will-set-the-information-displayed-on-the-solutions-page-this-section-is-dedicated-to-creating-the-solutions-detail-content'
+		),
 		label: 'Solution Details',
 		path: 'details',
 		selected: false,
-		title: 'Customize storefront solutions details',
+		title: i18n.translate('customize-storefront-solutions-details'),
 	},
 	{
 		checked: false,

@@ -45,6 +45,7 @@ export default {
 		'By requesting a Publisher account, you agree to the',
 	'cancel': 'Cancel',
 	'cash': 'Cash',
+	'categories': 'Categories',
 	'click-on-add-apps-to-start': "Click on 'Add Apps' to start.",
 	'client-extensions': 'Client Extensions',
 	'cloud-apps-must-state-resource-requirements-if-your-app-has-no-additional-cpu-or-ram-requirements-please-enter-0':
@@ -70,15 +71,24 @@ export default {
 	'create-license-key': 'Create License Key',
 	'create-new-licenses-and-they-will-show-up-here':
 		'Create new licenses and they will show up here.',
+	'create-template': 'Create template',
 	'created-at': 'Created At',
 	'customer-account': 'Customer Account',
 	'customer-dashboard': 'Customer Dashboard',
 	'customer-roject': 'Customer Project',
+	'customize-solution-header': 'Customize solution header',
+	'customize-storefront-solutions-details':
+		'Customize storefront solutions details',
 	'dashboard': 'Dashboard',
 	'deactivate': 'Deactivate',
 	'decline': 'Decline',
+	'define-the-solution-profile': 'Define the solution profile',
 	'delete': 'Delete',
 	'description': 'Description',
+	'design-the-storefront-for-your-solution-this-will-set-the-information-displayed-on-the-solutions-page-this-section-is-dedicated-to-creating-the-solutions-detail-content':
+		'Design the storefront for your solution. This will set the information displayed on the solution’s page. This section is dedicated to creating the solution’s detail content.',
+	'design-the-storefront-for-your-solution-this-will-set-the-information-displayed-on-the-solutions-page-this-section-is-dedicated-to-creating-the-solutions-header':
+		'Design the storefront for your solution. This will set the information displayed on the solution’s page. This section is dedicated to creating the solution’s header.',
 	'details': 'Details',
 	'discover-and-customize': 'Discover and customize',
 	'download-app': 'Download App',
@@ -104,6 +114,8 @@ export default {
 		'Enter the required RAM (0 is a valid value)',
 	'enter-your-contact-details-in-the-fields-below-in-the-request-description-enter-the-name-and-a-brief-description-of-the-app-you-would-like-to-submit-we-will-be-in-contact-regarding-your-request':
 		'Enter your contact details in the fields below. In the Request Description, enter the name and a brief description of the app you would like to submit. We will be in contact regarding your request.',
+	'enter-your-solution-details-this-information-will-be-used-for-submission-presentation-customer-support-and-search-capabilities':
+		'Enter your solution details. This information will be used for submission, presentation, customer support, and search capabilities.',
 	'environment': 'Environment',
 	'environment-type': 'Environment Type',
 	'expiration-date': 'Expiration Date',
@@ -219,6 +231,8 @@ export default {
 	'requester': 'Requester',
 	'resource-requirements': 'Resource Requirements',
 	'return-to-marketplace': 'Return to Marketplace',
+	'review-and-accept-the-legal-agreement-between-you-and-liferay-before-proceeding-you-are-about-to-create-a-new-solution-submission':
+		'Review and accept the legal agreement between you and Liferay before proceeding, You are about to create a new solution submission.',
 	'review-the-new-publisher-info-and-the-liferay-marketplace-terms-before-proceeding':
 		'Review the new publisher info and the Liferay Marketplace terms before proceeding',
 	'search': 'Search',
@@ -234,6 +248,7 @@ export default {
 	'send-request': 'Send Request',
 	'sign-in-with-a-different-account': 'Sign in with a different Account',
 	'solutions': 'Solutions',
+	'solutions-info': 'Solutions Info',
 	'sorry-there-are-no-results-found': 'Sorry, there are no results found',
 	'start-date': 'Start Date',
 	'start-trial': 'Start Trial',
@@ -242,6 +257,7 @@ export default {
 	'subtotal-discount': 'Subtotal Discount',
 	'success': 'success',
 	'summary': 'Summary',
+	'tags': 'Tags',
 	'tax-vat': 'Tax/VAT',
 	'terms-of-service': 'Terms of Service',
 	'thank-you-for-your': 'Thank you for your',
@@ -278,6 +294,7 @@ export default {
 	'type': 'Type',
 	'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard':
 		'Unable to download your license file.  Please try again and/or contact support via the manage menu on the dashboard.',
+	'upload-image': 'Upload image',
 	'upload-liferay-plugin-packages': 'Upload Liferay Plugin Packages',
 	'upload-zip-files': 'Upload ZIP Files',
 	'use-any-build-from-any-available-liferay-experience-cloud-account-requires-lxc-account':

@@ -161,7 +161,7 @@ public class ImportMVCResourceCommandTest {
 		Assert.assertNotNull(
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollection(
-					_group.getGroupId(), "imported-(1)",
+					_group.getGroupId(), "imported-(copy)",
 					LayoutPageTemplateEntryTypeConstants.BASIC));
 	}
 

@@ -15,6 +15,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -122,9 +123,19 @@ public class ExportTaskResourceTest {
 		Map<ServiceReference<Object>, String> map =
 			_serviceTracker.getTracked();
 
-		_testableClassNames = map.values();
+		_testableClassNames = TransformUtil.transform(
+			map.values(),
+			className -> {
+				if (_untestableDTOClassNames.contains(className) ||
+					StringUtil.startsWith(
+						className,
+						"com.liferay.object.rest.dto.v1_0.ObjectEntry#C_")) {
 
-		_testableClassNames.removeAll(_untestableDTOClassNames);
+					return null;
+				}
+
+				return className;
+			});
 	}
 
 	@AfterClass

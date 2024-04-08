@@ -438,5 +438,5 @@ if (commerceOrder != null) {
 			"viewReturnableCommerceOrderItemsURL", viewReturnableCommerceOrderItemsURL
 		).build()
 	%>'
-	module="js/viewCommerceOrderDetailsCTAs"
+	module="{viewCommerceOrderDetailsCTAs} from commerce-order-content-web"
 />

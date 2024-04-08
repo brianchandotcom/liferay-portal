@@ -54,5 +54,5 @@ CommerceReturnItem commerceReturnItem = commerceReturnContentDisplayContext.getC
 			"dataSetId", CommerceOrderFDSNames.RETURN_ITEMS
 		).build()
 	%>'
-	module="js/edit_commerce_return_item"
+	module="{editCommerceReturnItem} from commerce-order-content-web"
 />

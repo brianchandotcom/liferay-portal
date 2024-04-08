@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
-import renderAutocomplete from 'commerce-frontend-js/components/autocomplete/entry';
+import {
+	Autocomplete as renderAutocomplete,
+	CommerceServiceProvider,
+} from 'commerce-frontend-js';
 import {openToast} from 'frontend-js-web';
 
 export default function ({
@@ -26,7 +28,7 @@ export default function ({
 		itemsLabel: 'name',
 	});
 
-	const CommerceReturnItemResource = ServiceProvider.ReturnItemAPI();
+	const CommerceReturnItemResource = CommerceServiceProvider.ReturnItemAPI();
 
 	const form = document.getElementById(`${namespace}commerceReturnItemsFm`);
 

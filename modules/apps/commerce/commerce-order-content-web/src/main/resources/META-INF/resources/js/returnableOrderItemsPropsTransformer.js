@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
+import {CommerceServiceProvider} from 'commerce-frontend-js';
 import {createPortletURL, openToast} from 'frontend-js-web';
 
 function returnableOrderItemsPropsTransformer({
@@ -15,7 +15,7 @@ function returnableOrderItemsPropsTransformer({
 		onBulkActionItemClick: async ({
 			selectedData: {items: commerceOrderItems},
 		}) => {
-			const CommerceReturnResource = ServiceProvider.ReturnAPI();
+			const CommerceReturnResource = CommerceServiceProvider.ReturnAPI();
 
 			const {
 				accountEntryId,

@@ -5,7 +5,7 @@
 
 import CommerceStatusDataRenderer from './CommerceStatusDataRenderer';
 
-function propsTransformer({...props}) {
+function commerceReturnPropsTransformer({...props}) {
 	return {
 		...props,
 		customDataRenderers: {
@@ -14,4 +14,4 @@ function propsTransformer({...props}) {
 	};
 }
 
-export default propsTransformer;
+export default commerceReturnPropsTransformer;

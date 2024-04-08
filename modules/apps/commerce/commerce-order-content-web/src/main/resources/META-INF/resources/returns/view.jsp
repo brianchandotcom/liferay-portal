@@ -27,7 +27,7 @@ long commerceChannelId = commerceReturnContentDisplayContext.getCommerceChannelI
 				formName="fm"
 				id="<%= CommerceOrderFDSNames.RETURNS %>"
 				itemsPerPage="<%= 10 %>"
-				propsTransformer="js/propsTransformer"
+				propsTransformer="{commerceReturnPropsTransformer} from commerce-order-content-web"
 				style="stacked"
 			/>
 		</div>

@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
+import {CommerceServiceProvider} from 'commerce-frontend-js';
 import {openToast} from 'frontend-js-web';
 
 function handleEvent(
 	{commerceReturnId, fieldName, namespace, redirectURL, returnStatus},
 	form
 ) {
-	const CommerceReturnResource = ServiceProvider.ReturnAPI();
+	const CommerceReturnResource = CommerceServiceProvider.ReturnAPI();
 
 	const field = form.querySelector(`#${namespace}${fieldName}`);
 

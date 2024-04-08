@@ -175,7 +175,7 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 							formName="fm"
 							id="<%= CommerceOrderFDSNames.RETURN_ITEMS %>"
 							itemsPerPage="<%= 10 %>"
-							propsTransformer="js/commerceReturnItemsPropsTransformer"
+							propsTransformer="{commerceReturnItemsPropsTransformer} from commerce-order-content-web"
 							style="stacked"
 						/>
 					</div>
@@ -240,5 +240,5 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 			"returnStatus", "completed"
 		).build()
 	%>'
-	module="js/edit_commerce_return"
+	module="{editCommerceReturn} from commerce-order-content-web"
 />

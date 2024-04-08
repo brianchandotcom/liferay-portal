@@ -32,5 +32,5 @@ CommerceReturn commerceReturn = commerceReturnContentDisplayContext.getCommerceR
 			"redirectURL", ParamUtil.getString(request, "redirect", currentURL)
 		).build()
 	%>'
-	module="js/edit_commerce_return"
+	module="{editCommerceReturn} from commerce-order-content-web"
 />

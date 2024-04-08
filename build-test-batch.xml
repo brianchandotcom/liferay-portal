@@ -8896,6 +8896,8 @@ junit.jvm.override.version=21</echo>
 			<test-action>
 				<local name="workspace.names" />
 
+				<propertycopy from="workspaces.names[workspaces-compile-jdk8][${env.CI_TEST_SUITE}]" name="workspace.names" silent="true" />
+
 				<property name="workspace.names" value="${workspaces.names[workspaces-compile-jdk8]}" />
 
 				<for list="${workspace.names}" param="workspace.name">

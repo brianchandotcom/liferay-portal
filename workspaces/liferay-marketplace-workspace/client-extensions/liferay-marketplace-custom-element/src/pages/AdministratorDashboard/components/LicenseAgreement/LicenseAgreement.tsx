@@ -8,7 +8,7 @@ import ClayIcon from '@clayui/icon';
 import './LicenseAgreement.scss';
 
 const LicenseAgreement = () => (
-	<div className="license-agreement-container">
+	<>
 		<div className="border-details mb-4">
 			<div className="align-items-baseline d-flex justify-content-start p-5">
 				<div className="align-items-center d-flex icon-background justify-content-center mx-3">
@@ -57,7 +57,7 @@ const LicenseAgreement = () => (
 		</small>
 
 		<hr className="mt-6"></hr>
-	</div>
+	</>
 );
 
 export default LicenseAgreement;

@@ -20,6 +20,11 @@ interface createCategoryProps {
 	vocabularyId: number;
 }
 
+interface createTagProps {
+	name: string;
+	siteId: string;
+}
+
 export class HeadlessAdminTaxonomyApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -61,6 +66,20 @@ export class HeadlessAdminTaxonomyApiHelper {
 	}: createCategoryProps): Promise<{id: number}> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories`,
+			{name}
+		);
+	}
+
+	/**
+	 * It allows creating a tag inside a site.
+	 *
+	 * @param name the name of the tag
+	 * @param siteId the id of the site in which the tag will be created
+	 */
+
+	async createTag({name, siteId}: createTagProps): Promise<{id: number}> {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/keywords`,
 			{name}
 		);
 	}

@@ -105,27 +105,27 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 		_searchEngineAdapter =
 			openSearchEngineAdapterFixture.getSearchEngineAdapter();
 
-		IndexNameBuilder indexNameBuilder = String::valueOf;
-
 		Localization localization = new LocalizationImpl();
 
+		_indexNameBuilder = _createIndexNameBuilder();
+
 		_indexSearcher = _createIndexSearcher(
-			indexNameBuilder, localization, _testOpenSearchConnectionManager,
+			_indexNameBuilder, localization, _testOpenSearchConnectionManager,
 			_searchEngineAdapter);
 
 		_indexWriter = _createIndexWriter(
-			indexNameBuilder, localization, _testOpenSearchConnectionManager,
+			_indexNameBuilder, localization, _testOpenSearchConnectionManager,
 			_searchEngineAdapter);
 
 		if (_useLiferayMappings) {
-			_createIndex(indexNameBuilder);
+			_createIndex(_indexNameBuilder);
 		}
 	}
 
 	@Override
 	public void tearDown() throws Exception {
 		if (_useLiferayMappings) {
-			_deleteIndex(String::valueOf);
+			_deleteIndex();
 		}
 	}
 
@@ -185,6 +185,19 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 
 		indexCreator.createIndex(
 			new IndexName(indexNameBuilder.getIndexName(_companyId)));
+	}
+
+	private IndexNameBuilder _createIndexNameBuilder() {
+		IndexNameBuilder indexNameBuilder = Mockito.mock(
+			IndexNameBuilder.class);
+
+		Mockito.when(
+			indexNameBuilder.getIndexName(Mockito.anyLong())
+		).then(
+			invocation -> String.valueOf(invocation.getArgument(0, Long.class))
+		);
+
+		return indexNameBuilder;
 	}
 
 	private OpenSearchIndexSearcher _createIndexSearcher(
@@ -318,7 +331,7 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 		return props;
 	}
 
-	private void _deleteIndex(IndexNameBuilder indexNameBuilder) {
+	private void _deleteIndex() {
 		OpenSearchClient openSearchClient =
 			_testOpenSearchConnectionManager.getOpenSearchClient();
 
@@ -329,7 +342,7 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 			openSearchIndicesClient.delete(
 				DeleteIndexRequest.of(
 					deleteIndexRequest -> deleteIndexRequest.index(
-						indexNameBuilder.getIndexName(_companyId))));
+						_indexNameBuilder.getIndexName(_companyId))));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -339,6 +352,7 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 	private final long _companyId;
 	private FacetProcessor<SearchRequest.Builder> _facetProcessor;
 	private IndexCreationHelper _indexCreationHelper;
+	private IndexNameBuilder _indexNameBuilder;
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;
 	private boolean _liferayMappingsAddedToIndex;

@@ -78,7 +78,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 
 	async createDataSetViewCardsSection({
 		fieldName = 'name',
-		name = 'Title',
+		name = 'title',
 		r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC = DEFAULT_DATA_SET_ERC,
 	}: {
 		fieldName?: string;
@@ -132,12 +132,12 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async createDataSetViewFields({
-		label = 'Title',
+		label_i18n = {en_US: 'Title'},
 		name = 'title',
 		r_fdsViewFDSFieldRelationship_c_fdsViewERC = DEFAULT_DATA_SET_ERC,
 		type = 'string',
 	}: {
-		label?: string;
+		label_i18n?: {[key: string]: string};
 		name?: string;
 		r_fdsViewFDSFieldRelationship_c_fdsViewERC?: string;
 		type?: string;
@@ -145,7 +145,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		const url = `${this.baseUrl}data-set-manager/fields`;
 
 		const data = {
-			label,
+			label_i18n,
 			name,
 			r_fdsViewFDSFieldRelationship_c_fdsViewERC,
 			type,
@@ -206,7 +206,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 
 	async createDataSetViewListSection({
 		fieldName = 'name',
-		name = 'Title',
+		name = 'title',
 		r_fdsViewFDSListSectionRelationship_c_fdsViewERC = DEFAULT_DATA_SET_ERC,
 	}: {
 		fieldName?: string;

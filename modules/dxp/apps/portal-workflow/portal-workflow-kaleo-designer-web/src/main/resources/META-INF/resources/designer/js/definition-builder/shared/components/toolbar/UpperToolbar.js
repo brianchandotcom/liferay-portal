@@ -427,12 +427,18 @@ export default function UpperToolbar({
 		if (blockingError.errorType === 'assignment') {
 			setAlert(blockingError.errorMessage, 'warning', true);
 		}
+		else if (blockingError.errorType === 'invalidXML') {
+			setAlert(blockingError.errorMessage, 'danger', true);
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [blockingError]);
 
 	const resetAlert = () => {
 		setShowAlert(false);
-		if (blockingError.errorType === 'assignment') {
+		if (
+			blockingError.errorType === 'assignment' ||
+			blockingError.errorType === 'invalidXML'
+		) {
 			setBlockingError({errorType: ''});
 		}
 	};

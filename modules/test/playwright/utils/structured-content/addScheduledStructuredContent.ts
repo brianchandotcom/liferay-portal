@@ -19,10 +19,10 @@ export default function addScheduledStructuredContent(
 		nowDate.getDate()
 	);
 
-	return apiHelpers.headlessDelivery.postStructuredContent(
-		siteId,
+	return apiHelpers.headlessDelivery.postStructuredContent({
 		contentStructureId,
-		oneYearFromNowDate.toISOString(),
-		title
-	);
+		datePublished: oneYearFromNowDate.toISOString(),
+		siteId,
+		title,
+	});
 }

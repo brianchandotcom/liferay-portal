@@ -39,12 +39,12 @@ test('LPD-15256 Approved and scheduled web contents should be displayed in the "
 			apiHelpers
 		);
 
-		await addApprovedStructuredContent(
+		await addApprovedStructuredContent({
 			apiHelpers,
-			site.id,
 			contentStructureId,
-			approvedWebContentTitle
-		);
+			siteId: site.id,
+			title: approvedWebContentTitle,
+		});
 
 		await addDraftStructuredContent({
 			apiHelpers,

@@ -12,12 +12,12 @@ export default async function addExpiredStructuredContent(
 	title: string
 ): Promise<StructuredContent> {
 	const structuredContent =
-		await apiHelpers.headlessDelivery.postStructuredContent(
-			siteId,
+		await apiHelpers.headlessDelivery.postStructuredContent({
 			contentStructureId,
-			null,
-			title
-		);
+			datePublished: null,
+			siteId,
+			title,
+		});
 
 	await apiHelpers.jsonWebServicesJournal.expireArticle(
 		siteId,

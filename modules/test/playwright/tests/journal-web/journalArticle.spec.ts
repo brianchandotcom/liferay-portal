@@ -106,12 +106,12 @@ keepTitlesUntranslated(
 
 		const title = 'add-web-content';
 
-		await addApprovedStructuredContent(
+		await addApprovedStructuredContent({
 			apiHelpers,
-			site.id,
 			contentStructureId,
-			title
-		);
+			siteId: site.id,
+			title,
+		});
 
 		await journalPage.goto(site.friendlyUrlPath);
 
@@ -144,12 +144,12 @@ privateContentIconTest(
 
 		const title = getRandomString();
 
-		await addApprovedStructuredContent(
+		await addApprovedStructuredContent({
 			apiHelpers,
-			site.id,
 			contentStructureId,
-			title
-		);
+			siteId: site.id,
+			title,
+		});
 
 		await journalPage.goto(site.friendlyUrlPath);
 
@@ -174,21 +174,21 @@ privateContentIconTest(
 			apiHelpers
 		);
 
-		await addApprovedStructuredContent(
+		await addApprovedStructuredContent({
 			apiHelpers,
-			site.id,
 			contentStructureId,
-			getRandomString()
-		);
+			siteId: site.id,
+			title: getRandomString(),
+		});
 
 		const title = getRandomString();
 
-		await addApprovedStructuredContent(
+		await addApprovedStructuredContent({
 			apiHelpers,
-			site.id,
 			contentStructureId,
-			title
-		);
+			siteId: site.id,
+			title,
+		});
 
 		await journalPage.goto(site.friendlyUrlPath);
 
@@ -226,12 +226,12 @@ prefixUrlTest(
 			apiHelpers
 		);
 
-		await addApprovedStructuredContent(
+		await addApprovedStructuredContent({
 			apiHelpers,
-			site.id,
 			contentStructureId,
-			articleTitle
-		);
+			siteId: site.id,
+			title: articleTitle,
+		});
 
 		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
@@ -349,12 +349,12 @@ translationTest(
 
 		const title = getRandomString();
 
-		await addApprovedStructuredContent(
+		await addApprovedStructuredContent({
 			apiHelpers,
-			site.id,
 			contentStructureId,
-			title
-		);
+			siteId: site.id,
+			title,
+		});
 
 		await journalPage.goto(site.friendlyUrlPath);
 
@@ -387,19 +387,19 @@ bulkTest(
 		const title1 = getRandomString();
 		const title2 = getRandomString();
 
-		await addApprovedStructuredContent(
+		await addApprovedStructuredContent({
 			apiHelpers,
-			site.id,
 			contentStructureId,
-			title1
-		);
+			siteId: site.id,
+			title: title1,
+		});
 
-		await addApprovedStructuredContent(
+		await addApprovedStructuredContent({
 			apiHelpers,
-			site.id,
 			contentStructureId,
-			title2
-		);
+			siteId: site.id,
+			title: title2,
+		});
 
 		await journalPage.goto(site.friendlyUrlPath);
 

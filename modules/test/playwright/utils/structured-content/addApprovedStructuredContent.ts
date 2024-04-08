@@ -5,16 +5,21 @@
 
 import {ApiHelpers} from '../../helpers/ApiHelpers';
 
-export default function addApprovedStructuredContent(
-	apiHelpers: ApiHelpers,
-	siteId: string,
-	contentStructureId: number,
-	title: string
-): Promise<StructuredContent> {
-	return apiHelpers.headlessDelivery.postStructuredContent(
-		siteId,
+export default function addApprovedStructuredContent({
+	apiHelpers,
+	contentStructureId,
+	siteId,
+	title,
+}: {
+	apiHelpers: ApiHelpers;
+	contentStructureId: number;
+	siteId: string;
+	title: string;
+}): Promise<StructuredContent> {
+	return apiHelpers.headlessDelivery.postStructuredContent({
 		contentStructureId,
-		null,
-		title
-	);
+		datePublished: null,
+		siteId,
+		title,
+	});
 }

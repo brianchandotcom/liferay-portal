@@ -625,19 +625,7 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 		List<DDMFormFieldValue> newDDMFormFieldValues = new ArrayList<>();
 
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-			String type = null;
-
-			try {
-				type = ddmFormFieldValue.getType();
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to get dynamic data mapping form field value " +
-							"type for content ID " + contentId,
-						exception);
-				}
-			}
+			String type = ddmFormFieldValue.getType();
 
 			if (ListUtil.isNotEmpty(
 					ddmFormFieldValue.getNestedDDMFormFieldValues()) &&

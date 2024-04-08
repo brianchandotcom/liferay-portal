@@ -8,6 +8,7 @@ package com.liferay.document.library.webserver.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.test.util.BaseWebServerTestCase;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -77,7 +78,9 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 
 		Assert.assertTrue(contentType.startsWith(_BOUNDARY_PREFACE));
 
-		String boundary = contentType.substring(_BOUNDARY_PREFACE.length());
+		String boundary = contentType.substring(
+			_BOUNDARY_PREFACE.length(),
+			contentType.lastIndexOf(CharPool.SEMICOLON));
 
 		String responseBody = mockHttpServletResponse.getContentAsString();
 

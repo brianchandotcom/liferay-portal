@@ -120,6 +120,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -5632,8 +5633,9 @@ public class ObjectEntryResourceTest {
 				JSONUtil.put(
 					"c",
 					JSONUtil.put(
-						StringUtil.lowerCaseFirstLetter(
-							_objectDefinition5.getShortName()) + "s",
+						TextFormatter.formatPlural(
+							StringUtil.lowerCaseFirstLetter(
+								_objectDefinition5.getShortName())),
 						JSONUtil.put(
 							"items",
 							JSONUtil.putAll(
@@ -5651,9 +5653,10 @@ public class ObjectEntryResourceTest {
 					"query",
 					StringBundler.concat(
 						"{ c { ",
-						StringUtil.lowerCaseFirstLetter(
-							_objectDefinition5.getShortName()),
-						"s { items { ", _OBJECT_FIELD_NAME_LONG_TEXT,
+						TextFormatter.formatPlural(
+							StringUtil.lowerCaseFirstLetter(
+								_objectDefinition5.getShortName())),
+						" { items { ", _OBJECT_FIELD_NAME_LONG_TEXT,
 						StringPool.SPACE, _OBJECT_FIELD_NAME_RICH_TEXT,
 						StringPool.SPACE, _OBJECT_FIELD_NAME_TEXT, " }}}}")
 				).toString(),
@@ -5675,8 +5678,9 @@ public class ObjectEntryResourceTest {
 				JSONUtil.put(
 					"c",
 					JSONUtil.put(
-						StringUtil.lowerCaseFirstLetter(
-							_objectDefinition5.getShortName()) + "s",
+						TextFormatter.formatPlural(
+							StringUtil.lowerCaseFirstLetter(
+								_objectDefinition5.getShortName())),
 						JSONUtil.put(
 							"items",
 							JSONUtil.putAll(
@@ -5694,9 +5698,10 @@ public class ObjectEntryResourceTest {
 					"query",
 					StringBundler.concat(
 						"{ c { ",
-						StringUtil.lowerCaseFirstLetter(
-							_objectDefinition5.getShortName()),
-						"s { items { ", _OBJECT_FIELD_NAME_LONG_TEXT,
+						TextFormatter.formatPlural(
+							StringUtil.lowerCaseFirstLetter(
+								_objectDefinition5.getShortName())),
+						" { items { ", _OBJECT_FIELD_NAME_LONG_TEXT,
 						StringPool.SPACE, _OBJECT_FIELD_NAME_RICH_TEXT,
 						StringPool.SPACE, _OBJECT_FIELD_NAME_TEXT, " }}}}")
 				).toString(),
@@ -5718,8 +5723,9 @@ public class ObjectEntryResourceTest {
 				JSONUtil.put(
 					"c",
 					JSONUtil.put(
-						StringUtil.lowerCaseFirstLetter(
-							_objectDefinition5.getShortName()) + "s",
+						TextFormatter.formatPlural(
+							StringUtil.lowerCaseFirstLetter(
+								_objectDefinition5.getShortName())),
 						JSONUtil.put(
 							"items",
 							JSONUtil.putAll(
@@ -5737,9 +5743,10 @@ public class ObjectEntryResourceTest {
 					"query",
 					StringBundler.concat(
 						"{ c { ",
-						StringUtil.lowerCaseFirstLetter(
-							_objectDefinition5.getShortName()),
-						"s { items { ", _OBJECT_FIELD_NAME_LONG_TEXT,
+						TextFormatter.formatPlural(
+							StringUtil.lowerCaseFirstLetter(
+								_objectDefinition5.getShortName())),
+						" { items { ", _OBJECT_FIELD_NAME_LONG_TEXT,
 						StringPool.SPACE, _OBJECT_FIELD_NAME_RICH_TEXT,
 						StringPool.SPACE, _OBJECT_FIELD_NAME_TEXT, " }}}}")
 				).toString(),
@@ -5761,8 +5768,9 @@ public class ObjectEntryResourceTest {
 				JSONUtil.put(
 					"c",
 					JSONUtil.put(
-						StringUtil.lowerCaseFirstLetter(
-							_objectDefinition5.getShortName()) + "s",
+						TextFormatter.formatPlural(
+							StringUtil.lowerCaseFirstLetter(
+								_objectDefinition5.getShortName())),
 						JSONUtil.put(
 							"items",
 							JSONUtil.putAll(
@@ -5780,9 +5788,10 @@ public class ObjectEntryResourceTest {
 					"query",
 					StringBundler.concat(
 						"{ c { ",
-						StringUtil.lowerCaseFirstLetter(
-							_objectDefinition5.getShortName()),
-						"s { items { ", _OBJECT_FIELD_NAME_LONG_TEXT,
+						TextFormatter.formatPlural(
+							StringUtil.lowerCaseFirstLetter(
+								_objectDefinition5.getShortName())),
+						" { items { ", _OBJECT_FIELD_NAME_LONG_TEXT,
 						StringPool.SPACE, _OBJECT_FIELD_NAME_RICH_TEXT,
 						StringPool.SPACE, _OBJECT_FIELD_NAME_TEXT, " }}}}")
 				).toString(),

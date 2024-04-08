@@ -570,6 +570,34 @@ public class ObjectEntryDTOConverter
 		return null;
 	}
 
+	private Serializable _getSerializable(
+		DTOConverterContext dtoConverterContext, ObjectField objectField,
+		Map<String, Serializable> values, String objectFieldName,
+		Map<String, Object> map) {
+
+		if (objectField.isLocalized()) {
+			String i18nObjectFieldName = objectField.getI18nObjectFieldName();
+
+			map.put(i18nObjectFieldName, values.get(i18nObjectFieldName));
+
+			Locale dtoConverterContextLocale = dtoConverterContext.getLocale();
+
+			if (dtoConverterContextLocale != null) {
+				Map<String, Serializable> objectField_i18n =
+					(Map<String, Serializable>)map.get(i18nObjectFieldName);
+
+				Serializable serializable = objectField_i18n.get(
+					dtoConverterContextLocale.toString());
+
+				if (serializable != null) {
+					return serializable;
+				}
+			}
+		}
+
+		return values.get(objectFieldName);
+	}
+
 	private AuditEvent[] _toAuditEvents(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
@@ -701,29 +729,8 @@ public class ObjectEntryDTOConverter
 
 			String objectFieldName = objectField.getName();
 
-			Serializable serializable = values.get(objectFieldName);
-
-			if (objectField.isLocalized()) {
-				String i18nObjectFieldName =
-					objectField.getI18nObjectFieldName();
-
-				map.put(i18nObjectFieldName, values.get(i18nObjectFieldName));
-
-				Locale dtoConverterContextLocale =
-					dtoConverterContext.getLocale();
-
-				if (dtoConverterContextLocale != null) {
-					Map<String, Serializable> objectField_i18n =
-						(Map<String, Serializable>)map.get(i18nObjectFieldName);
-
-					Serializable localizedSerializable = objectField_i18n.get(
-						dtoConverterContextLocale.toString());
-
-					if (localizedSerializable != null) {
-						serializable = localizedSerializable;
-					}
-				}
-			}
+			Serializable serializable = _getSerializable(
+				dtoConverterContext, objectField, values, objectFieldName, map);
 
 			if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {

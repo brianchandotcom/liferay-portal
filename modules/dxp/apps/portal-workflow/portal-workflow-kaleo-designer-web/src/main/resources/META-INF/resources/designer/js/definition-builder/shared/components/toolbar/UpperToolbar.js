@@ -233,19 +233,6 @@ export default function UpperToolbar({
 			return;
 		}
 
-		let alertMessage;
-
-		if (definitionNotPublished) {
-			alertMessage = Liferay.Language.get(
-				'workflow-published-successfully'
-			);
-		}
-		else {
-			alertMessage = Liferay.Language.get(
-				'workflow-updated-successfully'
-			);
-		}
-
 		publishDefinitionRequest({
 			active,
 			content: getXMLContent(true),
@@ -274,7 +261,17 @@ export default function UpperToolbar({
 						redirectToSavedDefinition(name, version);
 					}
 					else {
-						setAlert(alertMessage, 'success', true);
+						setAlert(
+							definitionNotPublished
+								? Liferay.Language.get(
+										'workflow-published-successfully'
+								  )
+								: Liferay.Language.get(
+										'workflow-updated-successfully'
+								  ),
+							'success',
+							true
+						);
 					}
 				});
 			}

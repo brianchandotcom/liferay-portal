@@ -60,14 +60,15 @@ public class ObjectDefinitionServiceUtil {
 			String externalReferenceCode, long userId, long objectFolderId,
 			boolean enableComments, Map<java.util.Locale, String> labelMap,
 			String name, String panelAppOrder, String panelCategoryKey,
-			Map<java.util.Locale, String> pluralLabelMap, String scope,
+			Map<java.util.Locale, String> pluralLabelMap, boolean portlet,
+			String scope,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {
 
 		return getService().addSystemObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, enableComments,
 			labelMap, name, panelAppOrder, panelCategoryKey, pluralLabelMap,
-			scope, objectFields);
+			portlet, scope, objectFields);
 	}
 
 	public static ObjectDefinition deleteObjectDefinition(

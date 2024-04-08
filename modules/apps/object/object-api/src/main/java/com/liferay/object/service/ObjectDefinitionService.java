@@ -63,7 +63,7 @@ public interface ObjectDefinitionService extends BaseService {
 			String externalReferenceCode, long userId, long objectFolderId,
 			boolean enableComments, Map<Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey,
-			Map<Locale, String> pluralLabelMap, String scope,
+			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
 			List<ObjectField> objectFields)
 		throws PortalException;
 

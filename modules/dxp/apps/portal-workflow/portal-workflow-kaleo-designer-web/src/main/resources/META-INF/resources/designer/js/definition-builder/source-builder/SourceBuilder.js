@@ -9,7 +9,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayToolbar from '@clayui/toolbar';
-import {Editor} from 'frontend-editor-ckeditor-web';
+import {ClassicEditor} from 'frontend-editor-ckeditor-web';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {isEdge, isNode} from 'react-flow-renderer';
 
@@ -193,8 +193,9 @@ export default function SourceBuilder() {
 				/>
 			)}
 
-			<Editor
+			<ClassicEditor
 				config={editorConfig}
+				name="sourceBuilderEditor"
 				onInstanceReady={({editor}) => {
 					editor.setMode('source');
 

@@ -17,6 +17,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -25,7 +26,11 @@ import org.junit.ClassRule;
 import org.junit.Test;
 
 import org.opensearch.client.opensearch.OpenSearchClient;
+import org.opensearch.client.opensearch.cat.OpenSearchCatClient;
+import org.opensearch.client.opensearch.cat.RepositoriesResponse;
+import org.opensearch.client.opensearch.cat.repositories.RepositoriesRecord;
 import org.opensearch.client.opensearch.snapshot.CreateSnapshotRequest;
+import org.opensearch.client.opensearch.snapshot.DeleteRepositoryRequest;
 import org.opensearch.client.opensearch.snapshot.DeleteSnapshotRequest;
 import org.opensearch.client.opensearch.snapshot.GetSnapshotRequest;
 import org.opensearch.client.opensearch.snapshot.GetSnapshotResponse;
@@ -53,6 +58,10 @@ public class OpenSearchSearchEngineBackupTest extends BaseOpenSearchTestCase {
 		openSearchSearchEngineFixture.setUp();
 
 		_openSearchSearchEngineFixture = openSearchSearchEngineFixture;
+
+		if (_hasBackupRepository()) {
+			_deleteBackupRepository();
+		}
 	}
 
 	@AfterClass
@@ -75,13 +84,13 @@ public class OpenSearchSearchEngineBackupTest extends BaseOpenSearchTestCase {
 		openSearchSearchEngine.backup(companyId, snapshotName);
 
 		GetSnapshotResponse getSnapshotResponse = _getGetSnapshotResponse(
-			true, "liferay_backup", new String[] {snapshotName});
+			true, _BACKUP_REPOSITORY_NAME, new String[] {snapshotName});
 
 		List<SnapshotInfo> snapshotInfos = getSnapshotResponse.snapshots();
 
 		Assert.assertTrue(snapshotInfos.size() == 1);
 
-		_deleteSnapshot("liferay_backup", snapshotName);
+		_deleteSnapshot(_BACKUP_REPOSITORY_NAME, snapshotName);
 	}
 
 	@Test
@@ -96,11 +105,12 @@ public class OpenSearchSearchEngineBackupTest extends BaseOpenSearchTestCase {
 		openSearchSearchEngine.createBackupRepository();
 
 		_createSnapshot(
-			"liferay_backup", "restore_test", true, String.valueOf(companyId));
+			_BACKUP_REPOSITORY_NAME, "restore_test", true,
+			String.valueOf(companyId));
 
 		openSearchSearchEngine.restore(companyId, "restore_test");
 
-		_deleteSnapshot("liferay_backup", "restore_test");
+		_deleteSnapshot(_BACKUP_REPOSITORY_NAME, "restore_test");
 	}
 
 	protected OpenSearchSnapshotClient getOpenSearchSnapshotClient() {
@@ -108,6 +118,47 @@ public class OpenSearchSearchEngineBackupTest extends BaseOpenSearchTestCase {
 			openSearchConnectionManager.getOpenSearchClient();
 
 		return openSearchClient.snapshot();
+	}
+
+	private static void _deleteBackupRepository() throws Exception {
+		OpenSearchClient openSearchClient =
+			openSearchConnectionManager.getOpenSearchClient();
+
+		OpenSearchSnapshotClient openSearchSnapshotClient =
+			openSearchClient.snapshot();
+
+		openSearchSnapshotClient.deleteRepository(
+			DeleteRepositoryRequest.of(
+				deleteRepositoryRequest -> deleteRepositoryRequest.name(
+					_BACKUP_REPOSITORY_NAME)));
+	}
+
+	private static boolean _hasBackupRepository() {
+		OpenSearchClient openSearchClient =
+			openSearchConnectionManager.getOpenSearchClient();
+
+		OpenSearchCatClient openSearchCatClient = openSearchClient.cat();
+
+		try {
+			RepositoriesResponse repositoriesResponse =
+				openSearchCatClient.repositories();
+
+			List<RepositoriesRecord> repositoriesRecords =
+				repositoriesResponse.valueBody();
+
+			for (RepositoriesRecord repositoriesRecord : repositoriesRecords) {
+				if (Objects.equals(
+						repositoriesRecord.id(), _BACKUP_REPOSITORY_NAME)) {
+
+					return true;
+				}
+			}
+
+			return false;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private void _createSnapshot(
@@ -169,6 +220,8 @@ public class OpenSearchSearchEngineBackupTest extends BaseOpenSearchTestCase {
 			throw new RuntimeException(ioException);
 		}
 	}
+
+	private static final String _BACKUP_REPOSITORY_NAME = "liferay_backup";
 
 	private static OpenSearchSearchEngineFixture _openSearchSearchEngineFixture;
 

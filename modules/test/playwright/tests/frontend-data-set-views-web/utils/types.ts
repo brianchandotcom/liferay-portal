@@ -11,7 +11,7 @@ export type ItemActionTypes =
 	| 'modal'
 	| 'sidePanel';
 export type ModalVariantTypes = 'full-screen' | 'lg' | 'sm';
-
+export type VisualizationMode = 'Cards' | 'List' | 'Table';
 interface IBaseAction {
 	icon: string;
 	name: string;

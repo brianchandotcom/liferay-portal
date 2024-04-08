@@ -180,7 +180,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 				"FDSAction", userId, 0, "FDSAction", null, false,
 				LocalizedMapUtil.getLocalizedMap("FDS Action"), true,
 				"FDSAction", null, null, null, null,
-				LocalizedMapUtil.getLocalizedMap("FDS Actions"),
+				LocalizedMapUtil.getLocalizedMap("FDS Actions"), false,
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				WorkflowConstants.STATUS_DRAFT,
 				Arrays.asList(
@@ -265,7 +265,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 				"FDSCardsSection", userId, 0, "FDSCardsSection", null, false,
 				LocalizedMapUtil.getLocalizedMap("FDS Cards Section"), true,
 				"FDSCardsSection", null, null, null, null,
-				LocalizedMapUtil.getLocalizedMap("FDS Cards Sections"),
+				LocalizedMapUtil.getLocalizedMap("FDS Cards Sections"), false,
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				WorkflowConstants.STATUS_DRAFT,
 				Arrays.asList(
@@ -309,7 +309,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 				true, "FDSClientExtensionFilter", null, null, null, null,
 				LocalizedMapUtil.getLocalizedMap(
 					"FDS Client Extension Filters"),
-				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				false, ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				WorkflowConstants.STATUS_DRAFT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
@@ -353,7 +353,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 				"FDSDateFilter", userId, 0, "FDSDateFilter", null, false,
 				LocalizedMapUtil.getLocalizedMap("FDS Date Filter"), true,
 				"FDSDateFilter", null, null, null, null,
-				LocalizedMapUtil.getLocalizedMap("FDS Date Filters"),
+				LocalizedMapUtil.getLocalizedMap("FDS Date Filters"), false,
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				WorkflowConstants.STATUS_DRAFT,
 				Arrays.asList(
@@ -403,7 +403,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 				"FDSDynamicFilter", userId, 0, "FDSDynamicFilter", null, false,
 				LocalizedMapUtil.getLocalizedMap("FDS Dynamic Filter"), true,
 				"FDSDynamicFilter", null, null, null, null,
-				LocalizedMapUtil.getLocalizedMap("FDS Dynamic Filters"),
+				LocalizedMapUtil.getLocalizedMap("FDS Dynamic Filters"), false,
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				WorkflowConstants.STATUS_DRAFT,
 				Arrays.asList(
@@ -458,7 +458,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 				"FDSEntry", userId, 0, "FDSEntry", null, false,
 				LocalizedMapUtil.getLocalizedMap("FDS Entry"), true, "FDSEntry",
 				null, null, null, null,
-				LocalizedMapUtil.getLocalizedMap("FDS Entries"),
+				LocalizedMapUtil.getLocalizedMap("FDS Entries"), false,
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				WorkflowConstants.STATUS_DRAFT,
 				Arrays.asList(
@@ -498,7 +498,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 				"FDSField", userId, 0, "FDSField", null, false,
 				LocalizedMapUtil.getLocalizedMap("FDS Field"), true, "FDSField",
 				null, null, null, null,
-				LocalizedMapUtil.getLocalizedMap("FDS Fields"),
+				LocalizedMapUtil.getLocalizedMap("FDS Fields"), false,
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				WorkflowConstants.STATUS_DRAFT,
 				Arrays.asList(
@@ -552,7 +552,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 				"FDSListSection", userId, 0, "FDSListSection", null, false,
 				LocalizedMapUtil.getLocalizedMap("FDS List Section"), true,
 				"FDSListSection", null, null, null, null,
-				LocalizedMapUtil.getLocalizedMap("FDS List Sections"),
+				LocalizedMapUtil.getLocalizedMap("FDS List Sections"), false,
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				WorkflowConstants.STATUS_DRAFT,
 				Arrays.asList(
@@ -593,7 +593,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 				"FDSSort", userId, 0, "FDSSort", null, false,
 				LocalizedMapUtil.getLocalizedMap("FDS Sort"), true, "FDSSort",
 				"300", null, null, null,
-				LocalizedMapUtil.getLocalizedMap("FDS Sorts"),
+				LocalizedMapUtil.getLocalizedMap("FDS Sorts"), false,
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				WorkflowConstants.STATUS_DRAFT,
 				Arrays.asList(
@@ -629,7 +629,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 				"FDSView", userId, 0, "FDSView", null, false,
 				LocalizedMapUtil.getLocalizedMap("FDS View"), true, "FDSView",
 				null, null, null, null,
-				LocalizedMapUtil.getLocalizedMap("FDS Views"),
+				LocalizedMapUtil.getLocalizedMap("FDS Views"), false,
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				WorkflowConstants.STATUS_DRAFT,
 				Arrays.asList(

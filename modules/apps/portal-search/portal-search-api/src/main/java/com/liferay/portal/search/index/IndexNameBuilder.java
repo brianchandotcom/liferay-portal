@@ -12,4 +12,6 @@ public interface IndexNameBuilder {
 
 	public String getIndexName(long companyId);
 
+	public String getIndexNamePrefix();
+
 }

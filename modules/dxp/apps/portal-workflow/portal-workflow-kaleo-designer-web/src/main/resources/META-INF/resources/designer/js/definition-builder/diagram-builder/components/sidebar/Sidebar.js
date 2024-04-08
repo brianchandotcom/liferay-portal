@@ -143,7 +143,7 @@ const errorsDefaultValues = {
 };
 
 export default function Sidebar() {
-	const {definitionTitle, setBlockingErrors, showDefinitionInfo} = useContext(
+	const {definitionTitle, setBlockingError, showDefinitionInfo} = useContext(
 		DefinitionBuilderContext
 	);
 
@@ -164,7 +164,7 @@ export default function Sidebar() {
 	};
 
 	useEffect(() => {
-		setBlockingErrors(() => {
+		setBlockingError(() => {
 			if (errors?.label === true || errors?.id?.empty === true) {
 				return {
 					errorMessage: Liferay.Language.get(

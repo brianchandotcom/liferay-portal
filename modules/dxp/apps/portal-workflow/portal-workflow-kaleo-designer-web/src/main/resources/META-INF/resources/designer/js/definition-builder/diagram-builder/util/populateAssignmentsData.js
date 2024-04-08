@@ -14,7 +14,7 @@ import {getAssignmentType} from '../components/sidebar/sections/assignments/util
 const verifySectionsData = (
 	initialElements,
 	sectionsData,
-	setBlockingErrors,
+	setBlockingError,
 	setElements,
 	taskNode
 ) => {
@@ -35,7 +35,7 @@ const verifySectionsData = (
 		if (taskNode.data.assignments.emailAddress) {
 			delete taskNode.data.assignments.emailAddress;
 
-			setBlockingErrors(() => ({
+			setBlockingError(() => ({
 				errorMessage: Liferay.Language.get(
 					'please-enter-a-valid-email-address'
 				),
@@ -45,7 +45,7 @@ const verifySectionsData = (
 		else if (taskNode.data.assignments.screenName) {
 			delete taskNode.data.assignments.screenName;
 
-			setBlockingErrors(() => ({
+			setBlockingError(() => ({
 				errorMessage: Liferay.Language.get(
 					'please-enter-a-valid-screen-name'
 				),
@@ -55,7 +55,7 @@ const verifySectionsData = (
 		else if (taskNode.data.assignments.userId) {
 			delete taskNode.data.assignments.userId;
 
-			setBlockingErrors(() => ({
+			setBlockingError(() => ({
 				errorMessage: Liferay.Language.get(
 					'please-enter-a-valid-user-id'
 				),
@@ -69,7 +69,7 @@ const populateAssignmentsData = (
 	accountEntryId,
 	initialElements,
 	setElements,
-	setBlockingErrors
+	setBlockingError
 ) => {
 	const taskNodes = initialElements.filter((item) => item.type === 'task');
 
@@ -167,7 +167,7 @@ const populateAssignmentsData = (
 					verifySectionsData(
 						initialElements,
 						sectionsData,
-						setBlockingErrors,
+						setBlockingError,
 						setElements,
 						taskNode
 					)

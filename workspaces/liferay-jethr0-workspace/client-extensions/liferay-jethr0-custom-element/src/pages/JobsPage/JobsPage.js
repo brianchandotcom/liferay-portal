@@ -43,25 +43,24 @@ function Jobs() {
 				</tr>
 			</thead>
 			<tbody>
-				{jobs &&
-					jobs.map((job) => {
-						return (
-							<tr key={job.id}>
-								<th className="font-weight-semi-bold">
-									<Link title={job.id} to={'/jobs/' + job.id}>
-										{job.id}
-									</Link>
-								</th>
-								<td>{job.name}</td>
-								<td>{job.priority}</td>
-								<td>{toLocaleString(job.dateCreated)}</td>
-								<td>{toLocaleString(job.dateModified)}</td>
-								<td>{toLocaleString(job.startDate)}</td>
-								<td>{job.state.name}</td>
-								<td>{job.type.name}</td>
-							</tr>
-						);
-					})}
+				{jobs?.map((job) => {
+					return (
+						<tr key={job.id}>
+							<th className="font-weight-semi-bold">
+								<Link title={job.id} to={'/jobs/' + job.id}>
+									{job.id}
+								</Link>
+							</th>
+							<td>{job.name}</td>
+							<td>{job.priority}</td>
+							<td>{toLocaleString(job.dateCreated)}</td>
+							<td>{toLocaleString(job.dateModified)}</td>
+							<td>{toLocaleString(job.startDate)}</td>
+							<td>{job.state.name}</td>
+							<td>{job.type.name}</td>
+						</tr>
+					);
+				})}
 			</tbody>
 		</Jethr0Table>
 	);

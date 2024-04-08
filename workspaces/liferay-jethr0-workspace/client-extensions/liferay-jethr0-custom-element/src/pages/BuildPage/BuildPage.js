@@ -172,48 +172,39 @@ function BuildRuns({buildId}) {
 						</tr>
 					</thead>
 					<tbody>
-						{buildRuns &&
-							buildRuns.map((buildRun) => {
-								return (
-									<tr key={buildRun.id}>
-										<th
-											className="font-weight-semi-bold"
-											title={buildRun.id}
-										>
-											{buildRun.id}
-										</th>
-										<td>
-											{toLocaleString(
-												buildRun.dateCreated
-											)}
-										</td>
-										<td>{buildRun.state.name}</td>
-										<td>
-											{buildRun.result
-												? buildRun.result.name
-												: '-'}
-										</td>
-										<td>
-											{toDurationString(
-												buildRun.duration
-											)}
-										</td>
-										<td>
-											{buildRun.jenkinsBuildURL ? (
-												<a
-													href={
-														buildRun.jenkinsBuildURL
-													}
-												>
-													Jenkins Build
-												</a>
-											) : (
-												<div>-</div>
-											)}
-										</td>
-									</tr>
-								);
-							})}
+						{buildRuns?.map((buildRun) => {
+							return (
+								<tr key={buildRun.id}>
+									<th
+										className="font-weight-semi-bold"
+										title={buildRun.id}
+									>
+										{buildRun.id}
+									</th>
+									<td>
+										{toLocaleString(buildRun.dateCreated)}
+									</td>
+									<td>{buildRun.state.name}</td>
+									<td>
+										{buildRun.result
+											? buildRun.result.name
+											: '-'}
+									</td>
+									<td>
+										{toDurationString(buildRun.duration)}
+									</td>
+									<td>
+										{buildRun.jenkinsBuildURL ? (
+											<a href={buildRun.jenkinsBuildURL}>
+												Jenkins Build
+											</a>
+										) : (
+											<div>-</div>
+										)}
+									</td>
+								</tr>
+							);
+						})}
 					</tbody>
 				</Jethr0Table>
 			</ClayPanel.Body>

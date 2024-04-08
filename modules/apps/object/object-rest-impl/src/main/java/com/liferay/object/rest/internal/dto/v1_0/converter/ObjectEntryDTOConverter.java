@@ -92,7 +92,6 @@ import java.text.SimpleDateFormat;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
@@ -570,34 +569,6 @@ public class ObjectEntryDTOConverter
 		return null;
 	}
 
-	private Serializable _getSerializable(
-		DTOConverterContext dtoConverterContext, ObjectField objectField,
-		Map<String, Serializable> values, String objectFieldName,
-		Map<String, Object> map) {
-
-		if (objectField.isLocalized()) {
-			String i18nObjectFieldName = objectField.getI18nObjectFieldName();
-
-			map.put(i18nObjectFieldName, values.get(i18nObjectFieldName));
-
-			Locale dtoConverterContextLocale = dtoConverterContext.getLocale();
-
-			if (dtoConverterContextLocale != null) {
-				Map<String, Serializable> objectField_i18n =
-					(Map<String, Serializable>)map.get(i18nObjectFieldName);
-
-				Serializable serializable = objectField_i18n.get(
-					dtoConverterContextLocale.toString());
-
-				if (serializable != null) {
-					return serializable;
-				}
-			}
-		}
-
-		return values.get(objectFieldName);
-	}
-
 	private AuditEvent[] _toAuditEvents(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
@@ -729,8 +700,26 @@ public class ObjectEntryDTOConverter
 
 			String objectFieldName = objectField.getName();
 
-			Serializable serializable = _getSerializable(
-				dtoConverterContext, objectField, values, objectFieldName, map);
+			Serializable serializable = values.get(objectFieldName);
+
+			if (objectField.isLocalized()) {
+				String i18nObjectFieldName =
+					objectField.getI18nObjectFieldName();
+
+				map.put(i18nObjectFieldName, values.get(i18nObjectFieldName));
+
+				if (dtoConverterContext.getLocale() != null) {
+					Map<String, Serializable> objectField_i18n =
+						(Map<String, Serializable>)map.get(i18nObjectFieldName);
+
+					Serializable localizedValue = objectField_i18n.get(
+						String.valueOf(dtoConverterContext.getLocale()));
+
+					if (localizedValue != null) {
+						serializable = localizedValue;
+					}
+				}
+			}
 
 			if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {

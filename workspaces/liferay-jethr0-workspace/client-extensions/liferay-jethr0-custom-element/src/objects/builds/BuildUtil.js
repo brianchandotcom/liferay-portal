@@ -23,7 +23,10 @@ export async function getBuildsByJob({job, setBuilds}) {
 		filter: "r_jobToBuilds_c_jobId eq '" + job.id + "'",
 	});
 
-	const response = await liferayRequest({urlPath: '/o/c/builds', urlSearchParams});
+	const response = await liferayRequest({
+		urlPath: '/o/c/builds',
+		urlSearchParams,
+	});
 
 	const result = JSON.parse(await response.text());
 

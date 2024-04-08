@@ -751,15 +751,24 @@ public class LayoutServiceContextHelperImpl
 				themeDisplay.setLocale(
 					LocaleUtil.fromLanguageId(_layout.getDefaultLanguageId()));
 
-				Theme theme = _themeLocalService.fetchTheme(
-					company.getCompanyId(), layoutSet.getThemeId());
+				Theme theme = _layout.getTheme();
+
+				if (theme == null) {
+					theme = _themeLocalService.fetchTheme(
+						company.getCompanyId(), layoutSet.getThemeId());
+				}
+				else if (_log.isDebugEnabled()) {
+					_log.debug(_layout.getThemeId() + " is not registered");
+				}
 
 				if (theme != null) {
 					themeDisplay.setLookAndFeel(
 						layoutSet.getTheme(), layoutSet.getColorScheme());
 				}
 				else if (_log.isDebugEnabled()) {
-					_log.debug(layoutSet.getThemeId() + " is not registered");
+					_log.debug(
+						"Unable to get theme for layout PLID " +
+							_layout.getPlid());
 				}
 
 				themeDisplay.setPlid(_layout.getPlid());

@@ -31,7 +31,7 @@ public class UpgradeRelease extends UpgradeProcess {
 
 		sb.setIndex(sb.index() - 1);
 
-		sb.append(StringPool.CLOSE_PARENTHESIS);
+		sb.append(StringPool.APOSTROPHE + StringPool.CLOSE_PARENTHESIS);
 
 		runSQL(sb.toString());
 	}

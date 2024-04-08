@@ -7,6 +7,7 @@ const {REACT_APP_LIFERAY_HOST = window.location.origin} = process.env;
 
 const liferayRequest = async ({
 	body,
+	graphqlQuery,
 	headers = {},
 	method = 'GET',
 	options = {},
@@ -14,6 +15,12 @@ const liferayRequest = async ({
 	urlSearchParams = new URLSearchParams(),
 }) => {
 	headers['x-csrf-token'] = Liferay.authToken;
+
+	if (!body && graphqlQuery) {
+		graphqlQuery = graphqlQuery.replace(/\s+/g, ' ');
+
+		body = `{"query": "query ${graphqlQuery}"}`;
+	}
 
 	return fetch(REACT_APP_LIFERAY_HOST + urlPath + '?' + urlSearchParams, {
 		body,

@@ -164,8 +164,10 @@ public class AgentPortalK8sConfigMapModifier
 
 		Result result = _modifyConfigMap(configMapModelConsumer, configMapName);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Modify config map result: " + result);
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Config map ", configMapName, " ", result));
 		}
 
 		return result;
@@ -350,11 +352,29 @@ public class AgentPortalK8sConfigMapModifier
 			configMapModelConsumer,
 		String configMapName) {
 
-		if (_clusterMasterExecutor.isEnabled() &&
-			!_clusterMasterExecutor.isMaster() &&
-			!AgentPortalK8sThreadLocal.isExecuteOnCurrentNode()) {
+		if (_clusterMasterExecutor.isEnabled()) {
+			if (_log.isDebugEnabled()) {
+				ClusterNode localClusterNode =
+					_clusterExecutor.getLocalClusterNode();
 
-			return Result.UNCHANGED;
+				_log.debug(
+					StringBundler.concat(
+						"Current Node: ", localClusterNode.getClusterNodeId(),
+						" Master: ", _clusterMasterExecutor.isMaster()));
+			}
+
+			if (AgentPortalK8sThreadLocal.isExecuteOnCurrentNode()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Execute on current node");
+				}
+			}
+			else if (!_clusterMasterExecutor.isMaster()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Execute on master only");
+				}
+
+				return Result.UNCHANGED;
+			}
 		}
 
 		Objects.requireNonNull(

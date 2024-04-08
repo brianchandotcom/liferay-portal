@@ -40,7 +40,7 @@ export default function UpperToolbar({
 		alertMessage,
 		alertType,
 		allowScriptContentToBeExecutedOrIncluded,
-		blockingErrors,
+		blockingError,
 		currentEditor,
 		definitionDescription,
 		definitionName,
@@ -51,7 +51,7 @@ export default function UpperToolbar({
 		selectedLanguageId,
 		setAlertMessage,
 		setAlertType,
-		setBlockingErrors,
+		setBlockingError,
 		setDefinitionDescription,
 		setDefinitionName,
 		setDefinitionTitle,
@@ -100,18 +100,18 @@ export default function UpperToolbar({
 	);
 
 	const errorTitle = () => {
-		if (blockingErrors.errorType === 'duplicated') {
+		if (blockingError.errorType === 'duplicated') {
 			return Liferay.Language.get(
 				'you-have-the-same-name-in-two-nodes'
 			).slice(0, -1);
 		}
-		else if (blockingErrors.errorType === 'emptyField') {
+		else if (blockingError.errorType === 'emptyField') {
 			return Liferay.Language.get('some-fields-need-to-be-filled').slice(
 				0,
 				-1
 			);
 		}
-		else if (blockingErrors.errorType === 'assignment') {
+		else if (blockingError.errorType === 'assignment') {
 			return Liferay.Language.get('warning');
 		}
 		else {
@@ -210,8 +210,8 @@ export default function UpperToolbar({
 			return;
 		}
 
-		if (blockingErrors.errorType !== '') {
-			setAlert(blockingErrors.errorMessage, 'danger', true);
+		if (blockingError.errorType !== '') {
+			setAlert(blockingError.errorMessage, 'danger', true);
 
 			return;
 		}
@@ -280,8 +280,8 @@ export default function UpperToolbar({
 			return;
 		}
 
-		if (blockingErrors.errorType !== '') {
-			setAlert(blockingErrors.errorMessage, 'danger', true);
+		if (blockingError.errorType !== '') {
+			setAlert(blockingError.errorMessage, 'danger', true);
 
 			return;
 		}
@@ -396,16 +396,16 @@ export default function UpperToolbar({
 	}, []);
 
 	useEffect(() => {
-		if (blockingErrors.errorType === 'assignment') {
-			setAlert(blockingErrors.errorMessage, 'warning', true);
+		if (blockingError.errorType === 'assignment') {
+			setAlert(blockingError.errorMessage, 'warning', true);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [blockingErrors]);
+	}, [blockingError]);
 
 	const resetAlert = () => {
 		setShowAlert(false);
-		if (blockingErrors.errorType === 'assignment') {
-			setBlockingErrors({errorType: ''});
+		if (blockingError.errorType === 'assignment') {
+			setBlockingError({errorType: ''});
 		}
 	};
 

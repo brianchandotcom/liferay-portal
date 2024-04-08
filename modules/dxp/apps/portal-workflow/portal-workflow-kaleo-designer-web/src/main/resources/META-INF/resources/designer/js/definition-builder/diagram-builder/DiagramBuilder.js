@@ -58,7 +58,7 @@ export default function DiagramBuilder() {
 		hadGroovyScriptBefore,
 		selectedLanguageId,
 		setActive,
-		setBlockingErrors,
+		setBlockingError,
 		setDefinitionDescription,
 		setDefinitionInfo,
 		setDefinitionName,
@@ -364,7 +364,7 @@ export default function DiagramBuilder() {
 				accountEntryId,
 				elements,
 				setElements,
-				setBlockingErrors
+				setBlockingError
 			);
 			populateNotificationsData(accountEntryId, elements, setElements);
 

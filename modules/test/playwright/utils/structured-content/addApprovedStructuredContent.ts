@@ -7,19 +7,25 @@ import {ApiHelpers} from '../../helpers/ApiHelpers';
 
 export default function addApprovedStructuredContent({
 	apiHelpers,
+	categoryIds,
 	contentStructureId,
 	siteId,
+	tags,
 	title,
 }: {
 	apiHelpers: ApiHelpers;
+	categoryIds?: number[];
 	contentStructureId: number;
 	siteId: string;
+	tags?: string[];
 	title: string;
 }): Promise<StructuredContent> {
 	return apiHelpers.headlessDelivery.postStructuredContent({
+		categoryIds,
 		contentStructureId,
 		datePublished: null,
 		siteId,
+		tags,
 		title,
 	});
 }

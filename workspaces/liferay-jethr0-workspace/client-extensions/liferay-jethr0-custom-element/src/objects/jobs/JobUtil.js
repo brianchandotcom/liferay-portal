@@ -4,6 +4,7 @@
  */
 
 import liferayRequest from '../../services/liferayRequest';
+import Build from '../builds/Build';
 import Job from './Job';
 
 export async function createJob({data, redirect}) {
@@ -48,14 +49,65 @@ export async function deleteJobById({id, redirect}) {
 }
 
 export async function getJobById({id, setJob}) {
-	const response = await liferayRequest({urlPath: '/o/c/jobs/' + id});
+	const response = await liferayRequest({
+		graphqlQuery: `{
+			c {
+				builds(filter: \\"r_jobToBuilds_c_jobId eq '${id}'\\") {
+					items {
+						id
+						initialBuild
+						name
+						parameters
+						state {
+							key
+							name
+						}
+					}
+				}
+				jobs(filter: \\"id eq '${id}'\\") {
+					items {
+						id
+						name
+						parameters
+						priority
+						startDate
+						state {
+							key
+							name
+						}
+						type {
+							key
+							name
+						}
+					}
+				}
+			}
+		}`,
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+		urlPath: '/o/graphql',
+	});
 
 	const result = JSON.parse(await response.text());
 
-	const job = new Job(result);
+	const builds = [];
 
-	if (job && setJob) {
-		setJob(job);
+	for (const buildJSON of result.data.c.builds.items) {
+		builds.push(new Build(buildJSON));
+	}
+
+	for (const jobJSON of result.data.c.jobs.items) {
+		const job = new Job(jobJSON);
+
+		job.builds = builds;
+
+		if (job && setJob) {
+			setJob(job);
+
+			break;
+		}
 	}
 }
 

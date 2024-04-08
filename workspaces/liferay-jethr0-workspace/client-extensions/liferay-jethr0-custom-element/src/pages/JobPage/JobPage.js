@@ -15,19 +15,12 @@ import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0ContainerFluid';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
-import {getBuildsByJob} from '../../objects/builds/BuildUtil';
 import {deleteJobById, getJobById} from '../../objects/jobs/JobUtil';
 import {toLocaleString} from '../../services/DateUtil';
 import {toDurationString} from '../../services/DurationUtil';
 
-function JobBuilds({jobId}) {
-	const [jobBuilds, setJobBuilds] = useState(null);
-
-	if (!jobBuilds) {
-		getBuildsByJob({jobId, setBuilds: setJobBuilds});
-	}
-
-	if (!jobBuilds) {
+function JobBuilds({job}) {
+	if (!job.builds) {
 		return <div>Loading...</div>;
 	}
 
@@ -53,7 +46,7 @@ function JobBuilds({jobId}) {
 						</tr>
 					</thead>
 					<tbody>
-						{jobBuilds?.map((jobBuild) => {
+						{job.builds?.map((jobBuild) => {
 							return (
 								<tr key={jobBuild.id}>
 									<th className="font-weight-semi-bold">
@@ -269,7 +262,7 @@ function JobPage() {
 					</ClayLayout.Row>
 				</Jethr0ContainerFluid>
 				<JobInformation job={job} />
-				<JobBuilds jobId={id} />
+				<JobBuilds job={job} />
 			</Jethr0Card>
 		</ClayLayout.Container>
 	);

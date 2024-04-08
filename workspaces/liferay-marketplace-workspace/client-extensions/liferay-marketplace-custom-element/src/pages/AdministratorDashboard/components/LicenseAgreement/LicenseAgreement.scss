@@ -1,22 +1,19 @@
 .license-agreement-container {
-	height: 25rem;
-	width: 38rem;
-
 	.border-details {
 		border: 1px solid #e2e2e4;
 		border-radius: 12px;
+
+		.icon-background {
+			background-color: #e2e2e4;
+			border-radius: 50%;
+			height: 40px;
+			width: 40px;
+		}
 
 		.text-agreement {
 			border-top: 1px solid #e2e2e4;
 			font-size: 13px;
 			mask-image: linear-gradient(black 40%, rgba(255, 255, 255, 0) 100%);
 		}
-	}
-
-	.icon-background {
-		background-color: #e2e2e4;
-		border-radius: 50%;
-		height: 40px;
-		width: 40px;
 	}
 }

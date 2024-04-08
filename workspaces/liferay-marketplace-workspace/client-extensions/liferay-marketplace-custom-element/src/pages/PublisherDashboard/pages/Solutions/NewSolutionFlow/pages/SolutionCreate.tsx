@@ -7,7 +7,7 @@ import LicenseAgreement from '../../../../../AdministratorDashboard/components/L
 
 const SolutionCreate = () => {
 	return (
-		<div>
+		<div className="license-agreement-container">
 			<LicenseAgreement />
 		</div>
 	);

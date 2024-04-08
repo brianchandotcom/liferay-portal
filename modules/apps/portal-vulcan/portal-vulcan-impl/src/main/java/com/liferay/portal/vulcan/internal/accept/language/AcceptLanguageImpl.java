@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.util.Collections;
@@ -50,7 +51,7 @@ public class AcceptLanguageImpl implements AcceptLanguage {
 		String acceptLanguage = _httpServletRequest.getHeader(
 			HttpHeaders.ACCEPT_LANGUAGE);
 
-		if (acceptLanguage == null) {
+		if (Validator.isNull(acceptLanguage)) {
 			return Collections.emptyList();
 		}
 
@@ -62,11 +63,6 @@ public class AcceptLanguageImpl implements AcceptLanguage {
 		}
 
 		try {
-			if (acceptLanguage.isEmpty()) {
-				acceptLanguage = LocaleUtil.getDefault(
-				).toLanguageTag();
-			}
-
 			Company company = _portal.getCompany(_httpServletRequest);
 
 			Set<Locale> companyAvailableLocales =

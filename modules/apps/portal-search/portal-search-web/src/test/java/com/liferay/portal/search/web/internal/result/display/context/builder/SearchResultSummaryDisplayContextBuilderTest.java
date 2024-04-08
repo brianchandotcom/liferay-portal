@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -106,6 +107,8 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 			portletURL, searchResultSummaryDisplayContext.getPortletURL());
 	}
 
+	@NewEnv(type = NewEnv.Type.JVM)
+	@NewEnv.JVMArgsLine("-Djava.locale.providers=CLDR")
 	@Test
 	public void testCreationDate() throws Exception {
 		String entryClassName = RandomTestUtil.randomString();

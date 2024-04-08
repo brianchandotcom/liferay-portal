@@ -45,39 +45,38 @@ function JobQueue() {
 				</tr>
 			</thead>
 			<tbody>
-				{jobs &&
-					jobs.map((job, index) => {
-						return (
-							<tr key={job.id}>
-								<td>{index + 1}</td>
-								<th className="font-weight-semi-bold">
-									<Link title={job.id} to={'/jobs/' + job.id}>
-										{job.id}
-									</Link>
-								</th>
-								<td>{job.name}</td>
-								<td>{job.priority}</td>
-								<td>{toLocaleString(job.dateCreated)}</td>
-								<td>{toLocaleString(job.startDate)}</td>
-								<td>{job.state.name}</td>
-								<td>
-									<span className="text-muted">
-										{job.queuedBuilds || 0}
-									</span>
-									<span> / </span>
-									<span className="text-warning">
-										{job.runningBuilds || 0}
-									</span>
-									<span> / </span>
-									<span className="text-success">
-										{job.completedBuilds || 0}
-									</span>
-									<span> / </span>
-									<span>{job.totalBuilds || 0}</span>
-								</td>
-							</tr>
-						);
-					})}
+				{jobs?.map((job, index) => {
+					return (
+						<tr key={job.id}>
+							<td>{index + 1}</td>
+							<th className="font-weight-semi-bold">
+								<Link title={job.id} to={'/jobs/' + job.id}>
+									{job.id}
+								</Link>
+							</th>
+							<td>{job.name}</td>
+							<td>{job.priority}</td>
+							<td>{toLocaleString(job.dateCreated)}</td>
+							<td>{toLocaleString(job.startDate)}</td>
+							<td>{job.state.name}</td>
+							<td>
+								<span className="text-muted">
+									{job.queuedBuilds || 0}
+								</span>
+								<span> / </span>
+								<span className="text-warning">
+									{job.runningBuilds || 0}
+								</span>
+								<span> / </span>
+								<span className="text-success">
+									{job.completedBuilds || 0}
+								</span>
+								<span> / </span>
+								<span>{job.totalBuilds || 0}</span>
+							</td>
+						</tr>
+					);
+				})}
 			</tbody>
 		</Jethr0Table>
 	);

@@ -53,49 +53,44 @@ function JobBuilds({jobId}) {
 						</tr>
 					</thead>
 					<tbody>
-						{jobBuilds &&
-							jobBuilds.map((jobBuild) => {
-								return (
-									<tr key={jobBuild.id}>
-										<th className="font-weight-semi-bold">
-											<Link
-												title={jobBuild.id}
-												to={'/builds/' + jobBuild.id}
+						{jobBuilds?.map((jobBuild) => {
+							return (
+								<tr key={jobBuild.id}>
+									<th className="font-weight-semi-bold">
+										<Link
+											title={jobBuild.id}
+											to={'/builds/' + jobBuild.id}
+										>
+											{jobBuild.id}
+										</Link>
+									</th>
+									<td>{jobBuild.name}</td>
+									<td>
+										{toLocaleString(jobBuild.dateCreated)}
+									</td>
+									<td>{jobBuild.state.name}</td>
+									<td>{jobBuild.initialBuild.toString()}</td>
+									<td>
+										{toDurationString(
+											jobBuild.latestDuration
+										)}
+									</td>
+									<td>
+										{jobBuild.latestJenkinsBuildURL ? (
+											<a
+												href={
+													jobBuild.latestJenkinsBuildURL
+												}
 											>
-												{jobBuild.id}
-											</Link>
-										</th>
-										<td>{jobBuild.name}</td>
-										<td>
-											{toLocaleString(
-												jobBuild.dateCreated
-											)}
-										</td>
-										<td>{jobBuild.state.name}</td>
-										<td>
-											{jobBuild.initialBuild.toString()}
-										</td>
-										<td>
-											{toDurationString(
-												jobBuild.latestDuration
-											)}
-										</td>
-										<td>
-											{jobBuild.latestJenkinsBuildURL ? (
-												<a
-													href={
-														jobBuild.latestJenkinsBuildURL
-													}
-												>
-													Latest Jenkins Build
-												</a>
-											) : (
-												<div>-</div>
-											)}
-										</td>
-									</tr>
-								);
-							})}
+												Latest Jenkins Build
+											</a>
+										) : (
+											<div>-</div>
+										)}
+									</td>
+								</tr>
+							);
+						})}
 					</tbody>
 				</Jethr0Table>
 			</ClayPanel.Body>
@@ -173,8 +168,7 @@ function JobInformation({job}) {
 					fieldValue={job.startDate}
 				/>
 				{jobParameters &&
-					jobParameterDefinitions &&
-					jobParameterDefinitions.map((jobParameterDefinition) => {
+					jobParameterDefinitions?.map((jobParameterDefinition) => {
 						return (
 							<JobInformationField
 								fieldLabel={jobParameterDefinition.label}

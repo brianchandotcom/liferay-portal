@@ -7,6 +7,30 @@
 		"en_US": "MDF Claim"
 	},
 	"name": "MDFClaim",
+	"objectActions": [
+		{
+			"active": true,
+			"conditionExpression": "",
+			"description": "",
+			"errorMessage": {
+			},
+			"externalReferenceCode": "22b29830-fa58-cbc5-7b7a-751a5603d5ea",
+			"label": {
+				"en_US": "Automation To Complete Request"
+			},
+			"name": "automationToCompleteRequest",
+			"objectActionExecutorKey": "",
+			"objectActionTriggerKey": "onAfterUpdate",
+			"parameters": {
+			},
+			"status": {
+				"code": 1,
+				"label": "success",
+				"label_i18n": "Success"
+			},
+			"system": false
+		}
+	],
 	"objectFields": [
 		{
 			"DBType": "String",

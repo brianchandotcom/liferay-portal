@@ -1,0 +1,14 @@
+[
+	{
+		"active": true,
+		"conditionExpression": "mdfRequestStatus == \"completed\"",
+		"externalReferenceCode": "MDF-REQUEST-COMPLETED-NOTIFICATION-1",
+		"label": {
+			"en_US": "Notification MDF Request On Completed"
+		},
+		"name": "notificationMDFRequestOnCompleted",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterUpdate",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFRequest$]"
+	}
+]

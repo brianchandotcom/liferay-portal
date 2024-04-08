@@ -1,0 +1,24 @@
+{
+	"description": "",
+	"editorType": "richText",
+	"externalReferenceCode": "MDF-REQUEST-COMPLETED-TEMPLATE",
+	"name": "MDF Request Completed Notification Template",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"bcc": "",
+			"cc": "",
+			"from": "partner-portal-admin@liferay.com",
+			"fromName": {
+				"en-US": "Partner Portal"
+			},
+			"to": {
+				"en-US": "[%MDFREQUEST_AUTHOR_EMAIL_ADDRESS%]"
+			}
+		}
+	],
+	"subject": {
+		"en_US": "[Liferay Partner Portal] MDF Request Completed"
+	},
+	"type": "email"
+}

@@ -6,102 +6,77 @@
 import liferayRequest from '../../services/liferayRequest';
 import Job from './Job';
 
-export function createJob({data, redirect}) {
+export async function createJob({data, redirect}) {
 	const headers = {
 		'Content-Type': 'application/json',
 		'accept': 'application/json',
 	};
 
-	liferayRequest({
+	const jobsResponse = await liferayRequest({
 		body: JSON.stringify(data),
 		headers,
 		method: 'POST',
 		urlPath: '/o/c/jobs',
-	})
-		.then((parentRequest) => parentRequest.text())
-		.then((parentResult) => {
-			const parentResultJSON = JSON.parse(parentResult);
+	});
 
-			liferayRequest({
-				headers,
-				method: 'PUT',
-				urlPath: `/o/c/jobs/${parentResultJSON.id}/object-actions/Jethr0EtcSpringBootJobAdd`,
-			})
-				.then((request) => request.text())
-				.then(() => {
-					if (redirect !== null) {
-						redirect(parentResult);
-					}
-				})
-				.catch((error) => {
-					// eslint-disable-next-line no-console
-					console.log(error);
-				});
-		})
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
+	const jobsResult = JSON.parse(await jobsResponse.text());
+
+	const createJobResponse = await liferayRequest({
+		headers,
+		method: 'PUT',
+		urlPath: `/o/c/jobs/${jobsResult.id}/object-actions/Jethr0EtcSpringBootJobAdd`,
+	});
+
+	const createJobResult = JSON.parse(await createJobResponse.text());
+
+	if (createJobResult && redirect) {
+		redirect(createJobResult);
+	}
 }
 
-export function deleteJobById({id, redirect}) {
-	liferayRequest({method: 'DELETE', urlPath: '/o/c/jobs/' + id})
-		.then((request) => request.text())
-		.then((result) => {
-			if (redirect !== null) {
-				redirect(result);
-			}
-		})
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
+export async function deleteJobById({id, redirect}) {
+	const response = await liferayRequest({
+		method: 'DELETE',
+		urlPath: '/o/c/jobs/' + id,
+	});
+
+	const result = JSON.parse(await response.text());
+
+	if (redirect && result) {
+		redirect(result);
+	}
 }
 
-export function getJobById({id, setJob}) {
-	liferayRequest({urlPath: '/o/c/jobs/' + id})
-		.then((request) => request.text())
-		.then((result) => {
-			const resultJSON = JSON.parse(result);
+export async function getJobById({id, setJob}) {
+	const response = await liferayRequest({urlPath: '/o/c/jobs/' + id});
 
-			const job = new Job(resultJSON);
+	const result = JSON.parse(await response.text());
 
-			if (job && setJob) {
-				setJob(job);
-			}
-		})
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
+	const job = new Job(result);
+
+	if (job && setJob) {
+		setJob(job);
+	}
 }
 
-export function getJobQueueOrderedJobs({setJobs}) {
-	liferayRequest({
+export async function getJobQueueOrderedJobs({setJobs}) {
+	const response = await liferayRequest({
 		urlPath: '/o/c/jobprioritizers',
 		urlSearchParams: new URLSearchParams({
 			pageSize: 1,
 			sort: 'dateCreated:desc',
 		}),
-	})
-		.then((request) => request.text())
-		.then((result) => {
-			const resultJSON = JSON.parse(result);
+	});
 
-			getJobs({
-				orderedJobIds: JSON.parse(
-					resultJSON.items[0].prioritizedJobIds
-				),
-				setJobs,
-			});
-		})
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
+	const result = JSON.parse(await response.text());
+
+	getJobs({
+		orderedJobIds: JSON.parse(result.items[0].prioritizedJobIds),
+		setJobs,
+	});
 }
 
-export function getJobs({orderedJobIds, setJobs}) {
+export async function getJobs({orderedJobIds, setJobs}) {
 	let filter = '';
 
 	if (orderedJobIds) {
@@ -114,44 +89,38 @@ export function getJobs({orderedJobIds, setJobs}) {
 		}
 	}
 
-	liferayRequest({
+	const response = await liferayRequest({
 		urlPath: '/o/c/jobs',
 		urlSearchParams: new URLSearchParams({filter}),
-	})
-		.then((request) => request.text())
-		.then((result) => {
-			const resultJSON = JSON.parse(result);
+	});
 
-			const jobsMap = new Map();
+	const result = JSON.parse(await response.text());
 
-			let jobs = [];
+	const jobsMap = new Map();
 
-			resultJSON.items.forEach((item) => {
-				const job = new Job(item);
+	let jobs = [];
 
-				jobs.push(job);
+	result.items.forEach((item) => {
+		const job = new Job(item);
 
-				jobsMap.set(job.id, job);
-			});
+		jobs.push(job);
 
-			if (orderedJobIds) {
-				jobs = [];
+		jobsMap.set(job.id, job);
+	});
 
-				for (const jobId of orderedJobIds) {
-					const job = jobsMap.get(jobId);
+	if (orderedJobIds) {
+		jobs = [];
 
-					if (job) {
-						jobs.push(jobsMap.get(jobId));
-					}
-				}
+		for (const jobId of orderedJobIds) {
+			const job = jobsMap.get(jobId);
+
+			if (job) {
+				jobs.push(jobsMap.get(jobId));
 			}
+		}
+	}
 
-			if (setJobs) {
-				setJobs(jobs);
-			}
-		})
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
+	if (setJobs) {
+		setJobs(jobs);
+	}
 }

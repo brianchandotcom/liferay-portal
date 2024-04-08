@@ -6,70 +6,52 @@
 import liferayRequest from '../../services/liferayRequest';
 import JobDefinition from './JobDefinition';
 
-export function getJobDefinitionById({id, setJobDefinition}) {
-	liferayRequest({urlPath: '/o/c/jobdefinitions/' + id})
-		.then((request) => request.text())
-		.then((result) => {
-			const resultJSON = JSON.parse(result);
+export async function getJobDefinitionById({id, setJobDefinition}) {
+	const response = await liferayRequest({urlPath: '/o/c/jobdefinitions/' + id});
 
-			const jobDefinition = new JobDefinition(resultJSON);
+	const result = JSON.parse(await response.text());
 
-			if (jobDefinition && setJobDefinition) {
-				setJobDefinition(jobDefinition);
-			}
-		})
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
+	const jobDefinition = new JobDefinition(result);
+
+	if (jobDefinition && setJobDefinition) {
+		setJobDefinition(jobDefinition);
+	}
 }
 
-export function getJobDefinitionByKey({key, setJobDefinition}) {
+export async function getJobDefinitionByKey({key, setJobDefinition}) {
 	const urlSearchParams = new URLSearchParams({
 		filter: "key eq '" + key + "'",
 	});
 
-	liferayRequest({urlPath: '/o/c/jobdefinitions', urlSearchParams})
-		.then((request) => request.text())
-		.then((result) => {
-			const resultJSON = JSON.parse(result);
+	const response = await liferayRequest({urlPath: '/o/c/jobdefinitions', urlSearchParams});
 
-			if (!resultJSON.items || !resultJSON.items.length) {
-				setJobDefinition(null);
+	const result = JSON.parse(await response.text());
 
-				return;
-			}
+	if (!result.items || !result.items.length) {
+		setJobDefinition(null);
 
-			const jobDefinition = new JobDefinition(resultJSON.items[0]);
+		return;
+	}
 
-			if (jobDefinition && setJobDefinition) {
-				setJobDefinition(jobDefinition);
-			}
-		})
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
+	const jobDefinition = new JobDefinition(result.items[0]);
+
+	if (jobDefinition && setJobDefinition) {
+		setJobDefinition(jobDefinition);
+	}
 }
 
-export function getJobDefinitions({setJobDefinitions}) {
-	liferayRequest({urlPath: '/o/c/jobdefinitions'})
-		.then((request) => request.text())
-		.then((result) => {
-			const resultJSON = JSON.parse(result);
+export async function getJobDefinitions({setJobDefinitions}) {
+	const response = await liferayRequest({urlPath: '/o/c/jobdefinitions'});
 
-			const jobDefinitions = [];
+	const result = JSON.parse(await response.text());
 
-			resultJSON.items.forEach((item) => {
-				jobDefinitions.push(new JobDefinition(item));
-			});
+	const jobDefinitions = [];
 
-			if (jobDefinitions && setJobDefinitions) {
-				setJobDefinitions(jobDefinitions);
-			}
-		})
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
+	result.items.forEach((item) => {
+		jobDefinitions.push(new JobDefinition(item));
+	});
+
+	if (jobDefinitions && setJobDefinitions) {
+		setJobDefinitions(jobDefinitions);
+	}
 }

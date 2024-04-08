@@ -128,6 +128,10 @@ public class DDMFormFieldValue implements Serializable {
 	public String getType() {
 		DDMFormField ddmFormField = getDDMFormField();
 
+		if (ddmFormField == null) {
+			return null;
+		}
+
 		return ddmFormField.getType();
 	}
 

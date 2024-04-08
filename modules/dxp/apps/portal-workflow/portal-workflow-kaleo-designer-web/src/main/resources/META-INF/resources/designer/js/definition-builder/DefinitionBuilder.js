@@ -34,9 +34,6 @@ export default function DefinitionBuilder(props) {
 	const [hasGroovyScript, setHasGroovyScript] = useState(false);
 	const [selectedLanguageId, setSelectedLanguageId] = useState('');
 	const [showDefinitionInfo, setShowDefinitionInfo] = useState(false);
-	const [showInvalidContentMessage, setShowInvalidContentMessage] = useState(
-		false
-	);
 	const [sourceView, setSourceView] = useState(false);
 	const [showAlert, setShowAlert] = useState(false);
 	const [version, setVersion] = useState(parseInt(props.version, 10));
@@ -81,12 +78,10 @@ export default function DefinitionBuilder(props) {
 		setSelectedLanguageId,
 		setShowAlert,
 		setShowDefinitionInfo,
-		setShowInvalidContentMessage,
 		setSourceView,
 		setVersion,
 		showAlert,
 		showDefinitionInfo,
-		showInvalidContentMessage,
 		sourceView,
 		statuses: props.statuses,
 		version,

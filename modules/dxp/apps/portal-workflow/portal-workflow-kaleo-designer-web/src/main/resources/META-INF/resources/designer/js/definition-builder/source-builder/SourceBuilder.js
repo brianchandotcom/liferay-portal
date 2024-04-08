@@ -22,19 +22,18 @@ const REGEX_ALERT = /alert\((.*?)\)/;
 
 export default function SourceBuilder() {
 	const {
+		blockingError,
 		currentEditor,
 		definitionDescription,
 		definitionName,
 		elements,
+		setBlockingError,
 		setCurrentEditor,
 		version,
 	} = useContext(DefinitionBuilderContext);
 	const editorRef = useRef();
 	const [loading, setLoading] = useState(true);
 	const [showImportSuccessMessage, setShowImportSuccessMessage] = useState(
-		false
-	);
-	const [showInvalidContentMessage, setShowInvalidContentMessage] = useState(
 		false
 	);
 
@@ -96,18 +95,18 @@ export default function SourceBuilder() {
 	}, [currentEditor, definitionName, elements, version]);
 
 	useEffect(() => {
-		if (showInvalidContentMessage) {
+		if (blockingError.errorType === 'invalidXML') {
 			document.addEventListener('keydown', () => {
-				setShowInvalidContentMessage(false);
+				setBlockingError({errorType: ''});
 			});
 
 			return () => {
 				document.removeEventListener('keydown', () => {
-					setShowInvalidContentMessage(false);
+					setBlockingError({errorType: ''});
 				});
 			};
 		}
-	}, [setShowInvalidContentMessage, showInvalidContentMessage]);
+	}, [blockingError, setBlockingError]);
 
 	const writeDefinitionMessage = Liferay.Language.get(
 		'write-your-definition-or-x'
@@ -118,7 +117,7 @@ export default function SourceBuilder() {
 	).toLowerCase();
 
 	function loadFile(event) {
-		setShowInvalidContentMessage(false);
+		setBlockingError({errorType: ''});
 
 		const files = event.target.files;
 
@@ -145,7 +144,12 @@ export default function SourceBuilder() {
 			reader.readAsText(files[0]);
 		}
 		else if (files[0].type !== 'text/xml') {
-			setShowInvalidContentMessage(true);
+			setBlockingError(() => ({
+				errorMessage: Liferay.Language.get(
+					'please-select-a-valid-xml-file'
+				),
+				errorType: 'invalidXML',
+			}));
 		}
 	}
 
@@ -214,12 +218,12 @@ export default function SourceBuilder() {
 				</ClayAlert.ToastContainer>
 			)}
 
-			{showInvalidContentMessage && (
+			{blockingError.errorType === 'invalidXML' && (
 				<ClayAlert.ToastContainer>
 					<ClayAlert
 						autoClose={5000}
 						displayType="danger"
-						onClose={() => showInvalidContentMessage(false)}
+						onClose={() => setBlockingError({errorType: ''})}
 						title={`${Liferay.Language.get('error')}:`}
 					>
 						{Liferay.Language.get('please-select-a-valid-xml-file')}

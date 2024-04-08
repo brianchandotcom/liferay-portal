@@ -116,6 +116,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -730,19 +731,55 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
-			addAction(
-				"UPDATE", cpDefinition.getCPDefinitionId(), "deleteProduct",
-				_cpDefinitionModelResourcePermission)
+			() -> {
+				Map<String, String> action = addAction(
+					"UPDATE", cpDefinition.getCPDefinitionId(), "deleteProduct",
+					_cpDefinitionModelResourcePermission);
+
+				String href = action.get("href");
+
+				action.put(
+					"href",
+					StringUtil.replace(
+						href, String.valueOf(cpDefinition.getCPDefinitionId()),
+						String.valueOf(cpDefinition.getCProductId())));
+
+				return action;
+			}
 		).put(
 			"get",
-			addAction(
-				"VIEW", cpDefinition.getCPDefinitionId(), "getProduct",
-				_cpDefinitionModelResourcePermission)
+			() -> {
+				Map<String, String> action = addAction(
+					"VIEW", cpDefinition.getCPDefinitionId(), "getProduct",
+					_cpDefinitionModelResourcePermission);
+
+				String href = action.get("href");
+
+				action.put(
+					"href",
+					StringUtil.replace(
+						href, String.valueOf(cpDefinition.getCPDefinitionId()),
+						String.valueOf(cpDefinition.getCProductId())));
+
+				return action;
+			}
 		).put(
 			"update",
-			addAction(
-				"UPDATE", cpDefinition.getCPDefinitionId(), "patchProduct",
-				_cpDefinitionModelResourcePermission)
+			() -> {
+				Map<String, String> action = addAction(
+					"UPDATE", cpDefinition.getCPDefinitionId(), "patchProduct",
+					_cpDefinitionModelResourcePermission);
+
+				String href = action.get("href");
+
+				action.put(
+					"href",
+					StringUtil.replace(
+						href, String.valueOf(cpDefinition.getCPDefinitionId()),
+						String.valueOf(cpDefinition.getCProductId())));
+
+				return action;
+			}
 		).build();
 	}
 

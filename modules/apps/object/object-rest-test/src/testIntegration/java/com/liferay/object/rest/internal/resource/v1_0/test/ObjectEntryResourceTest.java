@@ -8316,6 +8316,9 @@ public class ObjectEntryResourceTest {
 					"%s/%s/creator", _objectRelationship1.getName(),
 					_objectRelationship2.getName()));
 			_testSortByFieldName(
+				endpoint1, jsonObject2, jsonObject1,
+				String.format("%s/creatorId", _objectRelationship1.getName()));
+			_testSortByFieldName(
 				endpoint1, jsonObject1, jsonObject2,
 				String.format(
 					"%s/%s/dateCreated", _objectRelationship1.getName(),
@@ -8336,6 +8339,9 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/%s/id", _objectRelationship1.getName(),
 					_objectRelationship2.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject2, jsonObject1,
+				String.format("%s/userId", _objectRelationship1.getName()));
 
 			// Sort by several fields
 
@@ -8352,12 +8358,17 @@ public class ObjectEntryResourceTest {
 			_testSortByFieldName(
 				endpoint1, jsonObject2, jsonObject1,
 				String.format("%s/creator", _objectRelationship1.getName()),
+				String.format("%s/creatorId", _objectRelationship1.getName()),
 				String.format(
 					"%s/dateModified", _objectRelationship1.getName()),
 				String.format(
 					"%s/externalReferenceCode", _objectRelationship1.getName()),
+				String.format("%s/userId", _objectRelationship1.getName()),
 				String.format(
 					"%s/%s/creator", _objectRelationship1.getName(),
+					_objectRelationship2.getName()),
+				String.format(
+					"%s/%s/creatorId", _objectRelationship1.getName(),
 					_objectRelationship2.getName()),
 				String.format(
 					"%s/%s/dateModified", _objectRelationship1.getName(),
@@ -8365,36 +8376,10 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/%s/externalReferenceCode",
 					_objectRelationship1.getName(),
+					_objectRelationship2.getName()),
+				String.format(
+					"%s/%s/userId", _objectRelationship1.getName(),
 					_objectRelationship2.getName()));
-
-			// TODO LPD-20288
-
-			_assertFailure(
-				ComparisonFailure.class,
-				() -> _testSortByFieldName(
-					endpoint1, jsonObject2, jsonObject1,
-					String.format(
-						"%s/creatorId", _objectRelationship1.getName())));
-			_assertFailure(
-				ComparisonFailure.class,
-				() -> _testSortByFieldName(
-					endpoint1, jsonObject2, jsonObject1,
-					String.format(
-						"%s/userId", _objectRelationship1.getName())));
-			_assertFailure(
-				ComparisonFailure.class,
-				() -> _testSortByFieldName(
-					endpoint1, jsonObject2, jsonObject1,
-					String.format(
-						"%s/%s/creatorId", _objectRelationship1.getName(),
-						_objectRelationship2.getName())));
-			_assertFailure(
-				ComparisonFailure.class,
-				() -> _testSortByFieldName(
-					endpoint1, jsonObject2, jsonObject1,
-					String.format(
-						"%s/%s/userId", _objectRelationship1.getName(),
-						_objectRelationship2.getName())));
 
 			// TODO LPD-20530
 
@@ -8552,6 +8537,8 @@ public class ObjectEntryResourceTest {
 			_testSortByFieldName(
 				endpoint, jsonObjects[1], jsonObjects[0], "creator");
 			_testSortByFieldName(
+				endpoint, jsonObjects[1], jsonObjects[0], "creatorId");
+			_testSortByFieldName(
 				endpoint, jsonObjects[0], jsonObjects[1], "dateCreated");
 			_testSortByFieldName(
 				endpoint, jsonObjects[1], jsonObjects[0], "dateModified");
@@ -8562,6 +8549,8 @@ public class ObjectEntryResourceTest {
 				endpoint, jsonObjects[0], jsonObjects[1], "id");
 			_testSortByFieldName(
 				endpoint, jsonObjects[1], jsonObjects[0], "status");
+			_testSortByFieldName(
+				endpoint, jsonObjects[1], jsonObjects[0], "userId");
 
 			// Sort by several fields
 
@@ -8570,17 +8559,6 @@ public class ObjectEntryResourceTest {
 			_testSortByFieldName(
 				endpoint, jsonObjects[1], jsonObjects[0], "creator",
 				"dateModified", "externalReferenceCode");
-
-			// TODO LPD-20288
-
-			_assertFailure(
-				ComparisonFailure.class,
-				() -> _testSortByFieldName(
-					endpoint, jsonObjects[1], jsonObjects[0], "creatorId"));
-			_assertFailure(
-				ComparisonFailure.class,
-				() -> _testSortByFieldName(
-					endpoint, jsonObjects[1], jsonObjects[0], "userId"));
 		}
 		finally {
 			for (JSONObject jsonObject : jsonObjects) {

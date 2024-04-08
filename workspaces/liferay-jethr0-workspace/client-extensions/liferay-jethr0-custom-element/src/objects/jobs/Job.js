@@ -25,4 +25,6 @@ export default class Job {
 		this.state = state;
 		this.type = type;
 	}
+
+	builds = [];
 }

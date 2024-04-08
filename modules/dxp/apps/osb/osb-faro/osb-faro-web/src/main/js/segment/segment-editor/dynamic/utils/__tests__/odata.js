@@ -521,7 +521,7 @@ describe('odata', () => {
 			testConversionToAndFrom(testQuery);
 		});
 
-		fit('should be able to translate a query string with "accounts.filter" to map and back to string', () => {
+		it('should be able to translate a query string with "accounts.filter" to map and back to string', () => {
 			const testQuery =
 				"(accounts.filter(filter='(id eq ''48853654381438580'')'))";
 
@@ -602,34 +602,46 @@ describe('odata', () => {
 			testConversionToAndFrom(testQuery);
 		});
 
-		xit('should be able to translate a collection type query string with "contains" to map and back to string', () => {
+		it('should be able to translate a query string with brackets characters', () => {
+			const testQuery = "(value eq '[A, B]')";
+
+			testConversionToAndFrom(testQuery);
+		});
+
+		it('should be able to translate a query string with greater than / less than characters', () => {
+			const testQuery = "(value eq '<A>, <B>')";
+
+			testConversionToAndFrom(testQuery);
+		});
+
+		it.skip('should be able to translate a collection type query string with "contains" to map and back to string', () => {
 			const testQuery =
 				"(cookies/any(c:contains(c, 'keyTest=valueTest')))";
 
 			testConversionToAndFrom(testQuery);
 		});
 
-		xit('should be able to translate a collection type query string with "not contains" to map and back to string', () => {
+		it.skip('should be able to translate a collection type query string with "not contains" to map and back to string', () => {
 			const testQuery =
 				"((not (cookies/any(c:contains(c, 'keyTest=valueTest')))))";
 
 			testConversionToAndFrom(testQuery);
 		});
 
-		xit('should be able to translate a collection type query string with "eq" to map and back to string', () => {
+		it.skip('should be able to translate a collection type query string with "eq" to map and back to string', () => {
 			const testQuery = "(cookies/any(c:c eq 'keyTest=valueTest'))";
 
 			testConversionToAndFrom(testQuery);
 		});
 
-		xit('should be able to translate a collection type query string with "not" to map and back to string', () => {
+		it.skip('should be able to translate a collection type query string with "not" to map and back to string', () => {
 			const testQuery =
 				"((not (cookies/any(c:c eq 'keyTest=valueTest'))))";
 
 			testConversionToAndFrom(testQuery);
 		});
 
-		xit('should be able to translate a nested and complex collection type query string to map and back to string', () => {
+		it.skip('should be able to translate a nested and complex collection type query string to map and back to string', () => {
 			const testQuery =
 				"((not (cookies/any(c:c eq 'keyTest1=valueTest1'))) and ((not (cookies/any(c:c eq 'keyTest2=valueTest2'))) or (cookies/any(c:c eq 'keyTest3=valueTest3') and cookies/any(c:c eq 'keyTest4=valueTest4'))) and name eq 'test')";
 

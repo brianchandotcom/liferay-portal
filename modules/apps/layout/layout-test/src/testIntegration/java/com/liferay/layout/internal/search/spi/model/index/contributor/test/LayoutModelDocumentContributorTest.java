@@ -133,15 +133,7 @@ public class LayoutModelDocumentContributorTest {
 
 	@Test
 	public void testReindexPublishedLayout() throws Exception {
-		String elementText = RandomTestUtil.randomString();
-
-		Layout layout = _addTypeContentLayout(elementText, true);
-
-		List<LogEntry> logEntries = _reindexLogEntries(layout);
-
-		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
-
-		_assertSearch(elementText, layout.getPlid());
+		_assertReindexPublishedLayout(null);
 	}
 
 	@Test
@@ -203,15 +195,7 @@ public class LayoutModelDocumentContributorTest {
 			"not_available_theme_id", layoutSet.getColorSchemeId(),
 			layoutSet.getCss());
 
-		String elementText = RandomTestUtil.randomString();
-
-		Layout layout = _addTypeContentLayout(elementText, true);
-
-		List<LogEntry> logEntries = _reindexLogEntries(layout);
-
-		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
-
-		_assertSearch(elementText, layout.getPlid());
+		_assertReindexPublishedLayout(null);
 	}
 
 	@Test
@@ -225,32 +209,14 @@ public class LayoutModelDocumentContributorTest {
 			"not_available_theme_id", layoutSet.getColorSchemeId(),
 			layoutSet.getCss());
 
-		String elementText = RandomTestUtil.randomString();
-
-		Layout layout = _addTypeContentLayout(
-			elementText, true,
+		_assertReindexPublishedLayout(
 			ThemeFactoryUtil.getDefaultRegularThemeId(
 				TestPropsValues.getCompanyId()));
-
-		List<LogEntry> logEntries = _reindexLogEntries(layout);
-
-		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
-
-		_assertSearch(elementText, layout.getPlid());
 	}
 
 	@Test
 	public void testReindexPublishedLayoutThemeNotAvailable() throws Exception {
-		String elementText = RandomTestUtil.randomString();
-
-		Layout layout = _addTypeContentLayout(
-			elementText, true, "not_available_theme_id");
-
-		List<LogEntry> logEntries = _reindexLogEntries(layout);
-
-		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
-
-		_assertSearch(elementText, layout.getPlid());
+		_assertReindexPublishedLayout("not_available_theme_id");
 	}
 
 	@Test
@@ -537,6 +503,20 @@ public class LayoutModelDocumentContributorTest {
 		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
 
 		_layoutIndexerFixture.searchNoOne(keywords);
+	}
+
+	private void _assertReindexPublishedLayout(String themeId)
+		throws Exception {
+
+		String elementText = RandomTestUtil.randomString();
+
+		Layout layout = _addTypeContentLayout(elementText, true, themeId);
+
+		List<LogEntry> logEntries = _reindexLogEntries(layout);
+
+		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+
+		_assertSearch(elementText, layout.getPlid());
 	}
 
 	private void _assertSearch(String keywords, long plid) {

@@ -7,6 +7,7 @@ import {Locator, Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {DEFAULT_LABEL} from '../utils/constants';
+import {VisualizationMode} from '../utils/types';
 
 export class FDSFragmentPage {
 	readonly apiHelpers: ApiHelpers;
@@ -38,6 +39,18 @@ export class FDSFragmentPage {
 
 	async goto() {
 		await this.page.goto('/');
+	}
+
+	async changeVisualizationMode(visualizationMode: VisualizationMode) {
+		await this.fdsActiveViewSelector.waitFor({
+			state: 'visible',
+		});
+		await this.fdsActiveViewSelector.click();
+
+		await this.page
+			.getByRole('listbox')
+			.getByRole('option', {name: visualizationMode})
+			.click();
 	}
 
 	async configureDataSetFragment({

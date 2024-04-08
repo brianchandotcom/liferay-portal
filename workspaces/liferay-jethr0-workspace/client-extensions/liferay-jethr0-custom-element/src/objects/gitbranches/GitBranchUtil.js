@@ -6,46 +6,34 @@
 import liferayRequest from '../../services/liferayRequest';
 import GitBranch from './GitBranch';
 
-export function getUpstreamGitBranch({id, setUpstreamGitBranch}) {
-	liferayRequest({urlPath: '/o/c/gitbranches/' + id})
-		.then((request) => request.text())
-		.then((result) => {
-			const resultJSON = JSON.parse(result);
+export async function getUpstreamGitBranch({id, setUpstreamGitBranch}) {
+	const response = await liferayRequest({urlPath: '/o/c/gitbranches/' + id});
 
-			const gitBranch = new GitBranch(resultJSON);
+	const result = JSON.parse(await response.text());
 
-			if (gitBranch && setUpstreamGitBranch) {
-				setUpstreamGitBranch(gitBranch);
-			}
-		})
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
+	const gitBranch = new GitBranch(result);
+
+	if (gitBranch && setUpstreamGitBranch) {
+		setUpstreamGitBranch(gitBranch);
+	}
 }
 
-export function getUpstreamGitBranches({setUpstreamGitBranches}) {
+export async function getUpstreamGitBranches({setUpstreamGitBranches}) {
 	const urlSearchParams = new URLSearchParams({
 		filter: "type eq 'upstream'",
 	});
 
-	liferayRequest({urlPath: '/o/c/gitbranches', urlSearchParams})
-		.then((request) => request.text())
-		.then((result) => {
-			const resultJSON = JSON.parse(result);
+	const response = await liferayRequest({urlPath: '/o/c/gitbranches', urlSearchParams});
 
-			const upstreamGitBranches = [];
+	const result = JSON.parse(await response.text());
 
-			resultJSON.items.forEach((item) => {
-				upstreamGitBranches.push(new GitBranch(item));
-			});
+	const upstreamGitBranches = [];
 
-			if (upstreamGitBranches && setUpstreamGitBranches) {
-				setUpstreamGitBranches(upstreamGitBranches);
-			}
-		})
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
+	result.items.forEach((item) => {
+		upstreamGitBranches.push(new GitBranch(item));
+	});
+
+	if (upstreamGitBranches && setUpstreamGitBranches) {
+		setUpstreamGitBranches(upstreamGitBranches);
+	}
 }

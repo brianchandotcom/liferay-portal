@@ -6,32 +6,26 @@
 import liferayRequest from '../../services/liferayRequest';
 import JobDefinitionParameter from './JobDefinitionParameter';
 
-export function getJobDefinitionParametersByJobDefinition({
+export async function getJobDefinitionParametersByJobDefinition({
 	jobDefintionId,
 	setJobDefinitionParameters,
 }) {
-	liferayRequest({
+	const response = await liferayRequest({
 		urlPath:
 			'/o/c/jobdefinitions/' +
 			jobDefintionId +
 			'/jobDefinitionsToJobDefinitionParameters',
-	})
-		.then((request) => request.text())
-		.then((result) => {
-			const resultJSON = JSON.parse(result);
+	});
 
-			const jobDefinitionParameters = [];
+	const result = JSON.parse(await response.text());
 
-			resultJSON.items.forEach((item) => {
-				jobDefinitionParameters.push(new JobDefinitionParameter(item));
-			});
+	const jobDefinitionParameters = [];
 
-			if (jobDefinitionParameters && setJobDefinitionParameters) {
-				setJobDefinitionParameters(jobDefinitionParameters);
-			}
-		})
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
+	result.items.forEach((item) => {
+		jobDefinitionParameters.push(new JobDefinitionParameter(item));
+	});
+
+	if (jobDefinitionParameters && setJobDefinitionParameters) {
+		setJobDefinitionParameters(jobDefinitionParameters);
+	}
 }

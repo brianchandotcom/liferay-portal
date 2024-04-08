@@ -6,46 +6,34 @@
 import liferayRequest from '../../services/liferayRequest';
 import BuildRun from './BuildRun';
 
-export function getBuildRunById({id, setBuildRun}) {
-	liferayRequest({urlPath: '/o/c/buildruns/' + id})
-		.then((request) => request.text())
-		.then((result) => {
-			const resultJSON = JSON.parse(result);
+export async function getBuildRunById({id, setBuildRun}) {
+	const response = await liferayRequest({urlPath: '/o/c/buildruns/' + id});
 
-			const buildRun = new BuildRun(resultJSON);
+	const result = JSON.parse(await response.text());
 
-			if (buildRun && setBuildRun) {
-				setBuildRun(buildRun);
-			}
-		})
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
+	const buildRun = new BuildRun(result);
+
+	if (buildRun && setBuildRun) {
+		setBuildRun(buildRun);
+	}
 }
 
-export function getBuildRunsByBuildId({buildId, setBuildRuns}) {
+export async function getBuildRunsByBuildId({buildId, setBuildRuns}) {
 	const urlSearchParams = new URLSearchParams({
 		filter: "r_buildToBuildRuns_c_buildId eq '" + buildId + "'",
 	});
 
-	liferayRequest({urlPath: '/o/c/buildruns', urlSearchParams})
-		.then((request) => request.text())
-		.then((result) => {
-			const resultJSON = JSON.parse(result);
+	const response = await liferayRequest({urlPath: '/o/c/buildruns', urlSearchParams});
 
-			const buildRuns = [];
+	const result = JSON.parse(await response.text());
 
-			resultJSON.items.forEach((item) => {
-				buildRuns.push(new BuildRun(item));
-			});
+	const buildRuns = [];
 
-			if (buildRuns && setBuildRuns) {
-				setBuildRuns(buildRuns);
-			}
-		})
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
+	result.items.forEach((item) => {
+		buildRuns.push(new BuildRun(item));
+	});
+
+	if (buildRuns && setBuildRuns) {
+		setBuildRuns(buildRuns);
+	}
 }

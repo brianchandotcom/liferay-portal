@@ -132,9 +132,7 @@ public class HTTPTestUtil {
 			"Authorization", "Basic " + Base64.encode(_credentials.getBytes()));
 
 		if (MapUtil.isNotEmpty(headers)) {
-			for (HashMap.Entry<String, String> header : headers.entrySet()) {
-				options.addHeader(header.getKey(), header.getValue());
-			}
+			headers.forEach(options::addHeader);
 		}
 
 		options.setLocation(_baseURL + "/o/" + endpoint);

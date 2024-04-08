@@ -164,10 +164,9 @@ export default function Sidebar() {
 	};
 
 	useEffect(() => {
-		setBlockingErrors((prev) => {
+		setBlockingErrors(() => {
 			if (errors?.label === true || errors?.id?.empty === true) {
 				return {
-					...prev,
 					errorMessage: Liferay.Language.get(
 						'please-fill-out-the-fields-before-saving-or-publishing'
 					),
@@ -176,7 +175,6 @@ export default function Sidebar() {
 			}
 			else if (errors?.id?.duplicated === true) {
 				return {
-					...prev,
 					errorMessage: Liferay.Language.get(
 						'please-rename-this-with-another-words'
 					),
@@ -184,7 +182,7 @@ export default function Sidebar() {
 				};
 			}
 			else {
-				return {...prev, errorType: ''};
+				return {errorType: ''};
 			}
 		});
 

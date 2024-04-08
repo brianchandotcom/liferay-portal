@@ -35,41 +35,32 @@ const verifySectionsData = (
 		if (taskNode.data.assignments.emailAddress) {
 			delete taskNode.data.assignments.emailAddress;
 
-			setBlockingErrors((prev) => {
-				return {
-					...prev,
-					errorMessage: Liferay.Language.get(
-						'please-enter-a-valid-email-address'
-					),
-					errorType: 'assignment',
-				};
-			});
+			setBlockingErrors(() => ({
+				errorMessage: Liferay.Language.get(
+					'please-enter-a-valid-email-address'
+				),
+				errorType: 'assignment',
+			}));
 		}
 		else if (taskNode.data.assignments.screenName) {
 			delete taskNode.data.assignments.screenName;
 
-			setBlockingErrors((prev) => {
-				return {
-					...prev,
-					errorMessage: Liferay.Language.get(
-						'please-enter-a-valid-screen-name'
-					),
-					errorType: 'assignment',
-				};
-			});
+			setBlockingErrors(() => ({
+				errorMessage: Liferay.Language.get(
+					'please-enter-a-valid-screen-name'
+				),
+				errorType: 'assignment',
+			}));
 		}
 		else if (taskNode.data.assignments.userId) {
 			delete taskNode.data.assignments.userId;
 
-			setBlockingErrors((prev) => {
-				return {
-					...prev,
-					errorMessage: Liferay.Language.get(
-						'please-enter-a-valid-user-id'
-					),
-					errorType: 'assignment',
-				};
-			});
+			setBlockingErrors(() => ({
+				errorMessage: Liferay.Language.get(
+					'please-enter-a-valid-user-id'
+				),
+				errorType: 'assignment',
+			}));
 		}
 	}
 };

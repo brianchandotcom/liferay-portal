@@ -168,6 +168,14 @@ definition {
 			DBPartition.insertDBPartition(partitionCompanyId = 44913);
 		}
 
+		task ("Ensure that portal main functionalities work correctly") {
+			SignIn.signInTestSetup();
+
+			Smoke.runSmoke();
+
+			SignOut.signOut();
+		}
+
 		task ("Ensure that both www.able.com and www.baker.com are accessible") {
 			User.loginPG(
 				nodePort = 8080,

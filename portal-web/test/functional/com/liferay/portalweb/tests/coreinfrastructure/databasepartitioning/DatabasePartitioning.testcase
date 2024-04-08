@@ -574,6 +574,14 @@ definition {
 			DBPartition.insertDBPartition(partitionCompanyId = ${partitionCompanyId});
 		}
 
+		task ("Ensure that portal main functionalities work correctly") {
+			SignIn.signInTestSetup();
+
+			Smoke.runSmoke();
+
+			SignOut.signOut();
+		}
+
 		task ("Ensure that www.able.com is accessible and its assets visible") {
 			User.firstLoginUI(
 				password = "test",

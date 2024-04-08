@@ -171,7 +171,7 @@ CommerceOrder commerceOrder = commerceReturnEditDisplayContext.getCommerceReturn
 				%>'
 				apiURL='<%= "/o/commerce-return-items?filter=r_commerceReturnToCommerceReturnItems_c_commerceReturnId eq '" + commerceReturn.getId() + "'&nestedFields=commerceOrderItem" %>'
 				id="<%= CommerceReturnFDSNames.RETURN_ITEMS %>"
-				propsTransformer="js/commerceReturnItemsPropsTransformer"
+				propsTransformer="{commerceReturnItemsPropsTransformer} from commerce-order-web"
 				style="fluid"
 			/>
 		</commerce-ui:panel>

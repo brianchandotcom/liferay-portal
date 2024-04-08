@@ -336,27 +336,17 @@ definition {
 				title = "LeBron VIII");
 		}
 
-		task ("Add a manual collection with All Types") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = ${randomSiteName},
+			itemSubtype = "Basic Web Content",
+			itemType = "Web Content Article",
+			title = "Dynamic Collection");
 
-			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
-
-			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
-		}
-
-		task ("Select all assets as collection items") {
-			for (var assetName : list "Air Max 1,Air Jordan 1,Air Force 1,LeBron VIII") {
-				AssetListsAdmin.selectAsset(
-					assetName = ${assetName},
-					assetType = "Basic Web Content");
-			}
-		}
-
-		task ("Add a collection page based on manual collection") {
+		task ("Add a collection page based on dynamic collection") {
 			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
-				collectionName = "Manual Collection",
+				collectionName = "Dynamic Collection",
 				pageName = "Collection Page Name",
 				tabName = "Collections");
 		}
@@ -365,7 +355,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
-				selectedName = "Manual Collection",
+				selectedName = "Dynamic Collection",
 				styleDisplay = "Bordered List");
 		}
 
@@ -400,7 +390,7 @@ definition {
 				filter = "Category",
 				fragmentName = "Collection Filter",
 				includeSearchField = "true",
-				targetCollection = "Manual Collection",
+				targetCollection = "Dynamic Collection",
 				vocabularyName = "Size");
 		}
 
@@ -412,7 +402,7 @@ definition {
 				fragmentName = "Collection Filter",
 				includeSearchField = "true",
 				singleSelection = "true",
-				targetCollection = "Manual Collection",
+				targetCollection = "Dynamic Collection",
 				vocabularyName = "Warehouse");
 		}
 
@@ -757,26 +747,10 @@ definition {
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 
-			JSONAssetlist.addManualAssetListEntryWithItemType(
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = ${randomSiteName},
 				itemType = "All Types",
-				title = "Manual Collection");
-
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
-
-			AssetListsAdmin.selectAsset(
-				assetName = "Wenjie M5",
-				assetType = "Basic Web Content");
-
-			AssetListsAdmin.selectAsset(
-				assetName = "GA8 Intelligent System",
-				assetType = "Blogs Entry");
-
-			AssetListsAdmin.selectAsset(
-				assetName = "GA8 Interior",
-				assetType = "Basic Document");
+				title = "Dynamic Collection");
 
 			JSONLayout.addPublicLayout(
 				groupName = ${randomSiteName},
@@ -792,7 +766,7 @@ definition {
 				fragmentName = "Collection Display");
 
 			PageEditor.editCollectionDisplay(
-				assetListName = "Manual Collection",
+				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display");
 
 			PageEditor.addFragment(
@@ -822,13 +796,13 @@ definition {
 			PageEditor.editCollectionFilter(
 				filter = "Tags",
 				fragmentName = "Collection Filter",
-				targetCollection = "Manual Collection");
+				targetCollection = "Dynamic Collection");
 
 			PageEditor.editCollectionFilter(
 				filter = "Tags",
 				fragmentName = "Collection Filter",
 				index = 2,
-				targetCollection = "Manual Collection");
+				targetCollection = "Dynamic Collection");
 
 			PageEditor.publish();
 		}

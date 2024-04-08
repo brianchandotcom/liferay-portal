@@ -441,31 +441,6 @@ definition {
 				title = "Dynamic Collection");
 		}
 
-		task ("Add a manual collection for All Types") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = ${randomSiteName},
-				itemType = "All Types",
-				title = "Manual Collection");
-		}
-
-		task ("Select all assets in manual collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
-
-			AssetListsAdmin.selectAsset(
-				assetName = "Web Content Title",
-				assetType = "Basic Web Content");
-
-			AssetListsAdmin.selectAsset(
-				assetName = "Blogs Entry Title",
-				assetType = "Blogs Entry");
-
-			AssetListsAdmin.selectAsset(
-				assetName = "Document Title",
-				assetType = "Basic Document");
-		}
-
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -548,13 +523,6 @@ definition {
 				targetFragmentName = "Collection Display");
 		}
 
-		task ("Select the manual collection in the first Collection Display") {
-			PageEditor.editCollectionDisplay(
-				assetListName = "Manual Collection",
-				fragmentName = "Collection Display",
-				index = 2);
-		}
-
 		task ("Filter the displayed assets by category in Page Content panel") {
 			PageEditor.gotoTab(tabName = "Page Content");
 
@@ -568,7 +536,7 @@ definition {
 				key_itemName = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
-			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Dynamic Collection,Manual Collection") {
+			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Dynamic Collection") {
 				AssertElementNotPresent(
 					key_itemName = ${itemName},
 					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
@@ -580,7 +548,7 @@ definition {
 				key_itemName = "Blogs Entry Title",
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
-			for (var itemName : list "Heading Example,Web Content Title,Document Title,Dynamic Collection,Manual Collection") {
+			for (var itemName : list "Heading Example,Web Content Title,Document Title,Dynamic Collection") {
 				AssertElementNotPresent(
 					key_itemName = ${itemName},
 					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
@@ -596,7 +564,7 @@ definition {
 				key_itemName = "Document Title",
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
-			for (var itemName : list "Web Content Title,Blogs Entry Title,Heading Example,Dynamic Collection,Manual Collection") {
+			for (var itemName : list "Web Content Title,Blogs Entry Title,Heading Example,Dynamic Collection") {
 				AssertElementNotPresent(
 					key_itemName = ${itemName},
 					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
@@ -608,7 +576,7 @@ definition {
 
 			PageEditor.selectContentFilter(filter = "Collection");
 
-			for (var itemName : list "Dynamic Collection,Manual Collection") {
+			for (var itemName : list "Dynamic Collection") {
 				AssertVisible(
 					key_itemName = ${itemName},
 					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
@@ -626,7 +594,7 @@ definition {
 
 			PageEditor.selectContentFilter(filter = "All Content");
 
-			for (var itemName : list "Heading Example,Web Content Title,Blogs Entry Title,Document Title,Dynamic Collection,Manual Collection") {
+			for (var itemName : list "Heading Example,Web Content Title,Blogs Entry Title,Document Title,Dynamic Collection") {
 				AssertVisible(
 					key_itemName = ${itemName},
 					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
@@ -840,31 +808,6 @@ definition {
 				title = "Dynamic Collection");
 		}
 
-		task ("Add a manual collection for All Types") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = ${randomSiteName},
-				itemType = "All Types",
-				title = "Manual Collection");
-		}
-
-		task ("Select all assets in manual collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
-
-			AssetListsAdmin.selectAsset(
-				assetName = "Web Content Title",
-				assetType = "Basic Web Content");
-
-			AssetListsAdmin.selectAsset(
-				assetName = "Blogs Entry Title",
-				assetType = "Blogs Entry");
-
-			AssetListsAdmin.selectAsset(
-				assetName = "Document Title",
-				assetType = "Basic Document");
-		}
-
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -947,13 +890,6 @@ definition {
 				targetFragmentName = "Collection Display");
 		}
 
-		task ("Select the manual collection in the first Collection Display") {
-			PageEditor.editCollectionDisplay(
-				assetListName = "Manual Collection",
-				fragmentName = "Collection Display",
-				index = 2);
-		}
-
 		task ("Search the displayed assets by keyword when the content filter is All Content") {
 			PageEditor.gotoTab(tabName = "Page Content");
 
@@ -967,7 +903,7 @@ definition {
 				key_itemName = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
-			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Dynamic Collection,Manual Collection") {
+			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Dynamic Collection") {
 				AssertElementNotPresent(
 					key_itemName = ${itemName},
 					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
@@ -979,7 +915,7 @@ definition {
 				key_itemName = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
-			for (var itemName : list "Heading Example,Web Content Title,Blogs Entry Title,Document Title,Dynamic Collection,Manual Collection") {
+			for (var itemName : list "Heading Example,Web Content Title,Blogs Entry Title,Document Title,Dynamic Collection") {
 				AssertElementNotPresent(
 					key_itemName = ${itemName},
 					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
@@ -991,7 +927,7 @@ definition {
 				key_itemName = "Document Title",
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
-			for (var itemName : list "Web Content Title,Blogs Entry Title,Heading Example,Dynamic Collection,Manual Collection") {
+			for (var itemName : list "Web Content Title,Blogs Entry Title,Heading Example,Dynamic Collection") {
 				AssertElementNotPresent(
 					key_itemName = ${itemName},
 					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
@@ -1007,7 +943,7 @@ definition {
 				key_itemName = "Blogs Entry Title",
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
-			for (var itemName : list "Web Content Title,Document Title,Heading Example,Dynamic Collection,Manual Collection") {
+			for (var itemName : list "Web Content Title,Document Title,Heading Example,Dynamic Collection") {
 				AssertElementNotPresent(
 					key_itemName = ${itemName},
 					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
@@ -1023,7 +959,7 @@ definition {
 				key_itemName = "Web Content Title",
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
-			for (var itemName : list "Document Title,Blogs Entry Title,Heading Example,Dynamic Collection,Manual Collection") {
+			for (var itemName : list "Document Title,Blogs Entry Title,Heading Example,Dynamic Collection") {
 				AssertElementNotPresent(
 					key_itemName = ${itemName},
 					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
@@ -1039,7 +975,7 @@ definition {
 				key_itemName = "Dynamic Collection",
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
-			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Heading Example,Manual Collection") {
+			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Heading Example") {
 				AssertElementNotPresent(
 					key_itemName = ${itemName},
 					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
@@ -1047,12 +983,6 @@ definition {
 
 			AssertElementNotPresent(
 				key_itemName = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
-				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
-
-			PageEditor.searchInPageContentPanel(searchTerm = "Manual Collection");
-
-			AssertVisible(
-				key_itemName = "Manual Collection",
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
 			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Heading Example,Dynamic Collection") {
@@ -1073,16 +1003,6 @@ definition {
 
 			AssertVisible(
 				key_itemName = "Dynamic Collection",
-				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
-
-			AssertElementNotPresent(
-				key_itemName = "Manual Collection",
-				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
-
-			PageEditor.searchInPageContentPanel(searchTerm = "Manual Collection");
-
-			AssertVisible(
-				key_itemName = "Manual Collection",
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
 			AssertElementNotPresent(

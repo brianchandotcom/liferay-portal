@@ -90,6 +90,14 @@ const FARO_SPECIAL_CHARS = {
 		encoded: '_FARO_AT_',
 		raw: '@'
 	},
+	bracketLeft: {
+		encoded: '_FARO_LEFT_BRACKET_',
+		raw: '['
+	},
+	bracketRight: {
+		encoded: '_FARO_RIGHT_BRACKET_',
+		raw: ']'
+	},
 	dash: {
 		encoded: '_FARO_DASH_',
 		raw: '-'
@@ -98,9 +106,17 @@ const FARO_SPECIAL_CHARS = {
 		encoded: '_FARO_DOLLAR_',
 		raw: '$'
 	},
+	greaterThan: {
+		encoded: '_FARO_GREATER_THAN_',
+		raw: '>'
+	},
 	hash: {
 		encoded: '_FARO_HASH_',
 		raw: '#'
+	},
+	lessThan: {
+		encoded: '_FARO_LESS_THAN_',
+		raw: '<'
 	},
 	percent: {
 		encoded: '_FARO_PERCENT_',
@@ -265,50 +281,24 @@ const buildQueryString = (
  * Converts custom encodings back to original characters.
  */
 const decodeSpecialCharacters = (queryString: string): string => {
-	const {
-		ampersand,
-		at,
-		dash,
-		dollar,
-		hash,
-		percent,
-		plus,
-		question,
-		slash,
-		underscore
-	} = FARO_SPECIAL_CHARS;
+	const specialCharactersArr = Object.values(FARO_SPECIAL_CHARS);
 
-	const specialCharsEncoded = Object.values(FARO_SPECIAL_CHARS)
+	const specialCharsEncoded = specialCharactersArr
 		.map(({encoded}) => encoded)
 		.join('|');
 
 	const pattern = new RegExp(specialCharsEncoded, 'g');
 
 	return queryString.replace(pattern, match => {
-		switch (match) {
-			case ampersand.encoded:
-				return ampersand.raw;
-			case at.encoded:
-				return at.raw;
-			case dollar.encoded:
-				return dollar.raw;
-			case dash.encoded:
-				return dash.raw;
-			case hash.encoded:
-				return hash.raw;
-			case percent.encoded:
-				return percent.raw;
-			case plus.encoded:
-				return plus.raw;
-			case question.encoded:
-				return question.raw;
-			case slash.encoded:
-				return slash.raw;
-			case underscore.encoded:
-				return underscore.raw;
-			default:
-				return match;
+		const specialCharacter = specialCharactersArr.find(
+			({encoded}) => encoded === match
+		);
+
+		if (specialCharacter) {
+			return specialCharacter.raw;
 		}
+
+		return match;
 	});
 };
 
@@ -318,52 +308,25 @@ const encodeQuotes = (text: string): string => text.replace(/'/g, '%27');
  * Encode certain special characters with our own encoding.
  */
 const encodeSpecialCharacters = (queryString: string): string => {
-	const {
-		ampersand,
-		at,
-		dash,
-		dollar,
-		hash,
-		percent,
-		plus,
-		question,
-		slash,
-		underscore
-	} = FARO_SPECIAL_CHARS;
+	const charsNeedEscaped = ['+', '?', '$', '[', ']'];
+	const specialCharactersArr = Object.values(FARO_SPECIAL_CHARS);
 
-	const charsNeedEscaped = ['+', '?', '$'];
-
-	const specialCharsPattern = Object.values(FARO_SPECIAL_CHARS)
+	const specialCharsPattern = specialCharactersArr
 		.map(({raw}) => (charsNeedEscaped.includes(raw) ? `\\${raw}` : raw))
 		.join('|');
 
 	const pattern = new RegExp(specialCharsPattern, 'g');
 
 	return queryString.replace(pattern, match => {
-		switch (match) {
-			case ampersand.raw:
-				return ampersand.encoded;
-			case at.raw:
-				return at.encoded;
-			case dash.raw:
-				return dash.encoded;
-			case dollar.raw:
-				return dollar.encoded;
-			case hash.raw:
-				return hash.encoded;
-			case percent.raw:
-				return percent.encoded;
-			case plus.raw:
-				return plus.encoded;
-			case question.raw:
-				return question.encoded;
-			case slash.raw:
-				return slash.encoded;
-			case underscore.raw:
-				return underscore.encoded;
-			default:
-				return match;
+		const specialCharacter = specialCharactersArr.find(
+			({raw}) => raw === match
+		);
+
+		if (specialCharacter) {
+			return specialCharacter.encoded;
 		}
+
+		return match;
 	});
 };
 
@@ -560,24 +523,16 @@ const skipGroup = ({oDataASTNode, prevConjunction}: Context): Context => ({
  * oDataV4Parser can't handle between.
  */
 export const convertBetweenToSubstring = (queryString: string): string =>
-	queryString.replace(
-		/between(?=\([\w-:]+,('[\w-:]+',?){2}\))/g,
-		'substring'
-	);
+	queryString
+		.replace(/between(?=\([\w-:]+,('[\w-:]+',?){2}\))/g, 'substring')
+		.replaceAll('"', '');
 
 /**
  * Converts an OData filter query string to an object that can be used by the
  * criteria builder
  */
-const translateQueryToCriteria = (initialQueryString: string): Criteria => {
+const translateQueryToCriteria = (queryString: string): Criteria => {
 	let criteria;
-
-	const regex = new RegExp(/\[*\]|\[*\[/);
-	const queryStringWithBrackets = regex.test(initialQueryString);
-
-	const queryString = queryStringWithBrackets
-		? initialQueryString.replaceAll('[', '').replaceAll(']', '')
-		: initialQueryString;
 
 	try {
 		if (queryString === '()') {
@@ -597,7 +552,6 @@ const translateQueryToCriteria = (initialQueryString: string): Criteria => {
 				)
 			)
 		);
-
 		const criteriaArray = toCriteria({oDataASTNode});
 
 		criteria = isCriterionGroup(criteriaArray[0])
@@ -605,17 +559,6 @@ const translateQueryToCriteria = (initialQueryString: string): Criteria => {
 			: wrapInCriteriaGroup(criteriaArray);
 	} catch (e) {
 		criteria = null;
-	}
-
-	if (queryStringWithBrackets) {
-		const initialValueList = initialQueryString.match(/'([^']*)'/g);
-
-		const items = criteria.items.map((item, index) => ({
-			...item,
-			value: initialValueList[index].slice(1, -1)
-		}));
-
-		return {...criteria, items};
 	}
 
 	return criteria;

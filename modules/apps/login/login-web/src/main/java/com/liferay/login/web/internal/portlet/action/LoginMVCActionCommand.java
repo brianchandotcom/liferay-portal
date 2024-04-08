@@ -6,7 +6,7 @@
 package com.liferay.login.web.internal.portlet.action;
 
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
-import com.liferay.layout.utility.page.kernel.provider.util.LayoutUtilityPageEntryLayoutProviderUtil;
+import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.AuthException;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
@@ -259,14 +258,13 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		Layout loginUtilityPage =
-			LayoutUtilityPageEntryLayoutProviderUtil.
+			_layoutUtilityPageEntryLayoutProvider.
 				getDefaultLayoutUtilityPageEntryLayout(
 					themeDisplay.getScopeGroupId(),
 					LayoutUtilityPageEntryConstants.TYPE_LOGIN);
 
 		if (loginUtilityPage != null) {
-			layout = _layoutLocalService.fetchLayout(
-				loginUtilityPage.getPlid());
+			layout = loginUtilityPage;
 		}
 
 		PortletURL portletURL = PortletURLBuilder.create(
@@ -308,7 +306,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		LoginMVCActionCommand.class);
 
 	@Reference
-	private LayoutLocalService _layoutLocalService;
+	private LayoutUtilityPageEntryLayoutProvider
+		_layoutUtilityPageEntryLayoutProvider;
 
 	@Reference
 	private Portal _portal;

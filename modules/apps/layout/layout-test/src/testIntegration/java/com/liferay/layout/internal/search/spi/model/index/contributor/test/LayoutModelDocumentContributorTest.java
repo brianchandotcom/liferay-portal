@@ -140,48 +140,7 @@ public class LayoutModelDocumentContributorTest {
 	public void testReindexPublishedLayoutFragmentEntryLinkWithPortlet()
 		throws Exception {
 
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		String html = "<lfr-widget-web-content>";
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		Assert.assertNotNull(draftLayout);
-
-		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLinkToLayout(
-			"{}", html, draftLayout,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		String portletId = PortletIdCodec.encode(
-			JournalContentPortletKeys.JOURNAL_CONTENT,
-			fragmentEntryLink.getNamespace());
-
-		String content = RandomTestUtil.randomString();
-
-		DDMFormField ddmFormField = _createDDMFormField(
-			DDMFormFieldTypeConstants.TEXT);
-
-		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
-			_dataDefinitionResourceFactory, ddmFormField,
-			_ddmFormValuesToFieldsConverter, content, _group.getGroupId(),
-			_journalConverter);
-
-		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
-
-		_setUpPortletPreferences(
-			assetEntry, journalArticle, draftLayout, portletId);
-
-		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
-
-		_assertPortletPreferences(
-			assetEntry, journalArticle, layout, portletId);
-
-		_assertReindex(content, layout);
+		_assertReindexPublishedLayoutFragmentEntryLinkWithPortlet();
 	}
 
 	@Test
@@ -517,6 +476,53 @@ public class LayoutModelDocumentContributorTest {
 		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
 
 		_assertSearch(elementText, layout.getPlid());
+	}
+
+	private void _assertReindexPublishedLayoutFragmentEntryLinkWithPortlet()
+		throws Exception {
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		String html = "<lfr-widget-web-content>";
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLinkToLayout(
+			"{}", html, draftLayout,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		String portletId = PortletIdCodec.encode(
+			JournalContentPortletKeys.JOURNAL_CONTENT,
+			fragmentEntryLink.getNamespace());
+
+		String content = RandomTestUtil.randomString();
+
+		DDMFormField ddmFormField = _createDDMFormField(
+			DDMFormFieldTypeConstants.TEXT);
+
+		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
+			_dataDefinitionResourceFactory, ddmFormField,
+			_ddmFormValuesToFieldsConverter, content, _group.getGroupId(),
+			_journalConverter);
+
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		_setUpPortletPreferences(
+			assetEntry, journalArticle, draftLayout, portletId);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_assertPortletPreferences(
+			assetEntry, journalArticle, layout, portletId);
+
+		_assertReindex(content, layout);
 	}
 
 	private void _assertSearch(String keywords, long plid) {

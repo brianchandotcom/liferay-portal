@@ -206,63 +206,67 @@ export default function UpperToolbar({
 				'danger',
 				true
 			);
+
+			return;
 		}
-		else if (blockingErrors.errorType !== '') {
+
+		if (blockingErrors.errorType !== '') {
 			setAlert(blockingErrors.errorMessage, 'danger', true);
+
+			return;
+		}
+
+		let alertMessage;
+
+		if (definitionNotPublished) {
+			alertMessage = Liferay.Language.get(
+				'workflow-published-successfully'
+			);
 		}
 		else {
-			let alertMessage;
+			alertMessage = Liferay.Language.get(
+				'workflow-updated-successfully'
+			);
+		}
 
-			if (definitionNotPublished) {
-				alertMessage = Liferay.Language.get(
-					'workflow-published-successfully'
-				);
+		publishDefinitionRequest({
+			active,
+			content: getXMLContent(true),
+			name: definitionName,
+			title: definitionTitle,
+			title_i18n: definitionTitleTranslations,
+			version,
+		}).then((response) => {
+			if (response.ok) {
+				if (
+					Liferay.FeatureFlags['LPD-11179'] &&
+					!allowScriptContentToBeExecutedOrIncluded
+				) {
+					setHadGroovyScriptBefore(false);
+				}
+
+				response.json().then(({name, version}) => {
+					setDefinitionName(name);
+					setVersion(parseInt(version, 10));
+					if (version === '1') {
+						localStorage.setItem(
+							'firstPublished',
+							true,
+							localStorage.TYPES.FUNCTIONAL
+						);
+						redirectToSavedDefinition(name, version);
+					}
+					else {
+						setAlert(alertMessage, 'success', true);
+					}
+				});
 			}
 			else {
-				alertMessage = Liferay.Language.get(
-					'workflow-updated-successfully'
-				);
+				response.json().then(({title}) => {
+					setAlert(title, 'danger', true);
+				});
 			}
-
-			publishDefinitionRequest({
-				active,
-				content: getXMLContent(true),
-				name: definitionName,
-				title: definitionTitle,
-				title_i18n: definitionTitleTranslations,
-				version,
-			}).then((response) => {
-				if (response.ok) {
-					if (
-						Liferay.FeatureFlags['LPD-11179'] &&
-						!allowScriptContentToBeExecutedOrIncluded
-					) {
-						setHadGroovyScriptBefore(false);
-					}
-
-					response.json().then(({name, version}) => {
-						setDefinitionName(name);
-						setVersion(parseInt(version, 10));
-						if (version === '1') {
-							localStorage.setItem(
-								'firstPublished',
-								true,
-								localStorage.TYPES.FUNCTIONAL
-							);
-							redirectToSavedDefinition(name, version);
-						}
-						else {
-							setAlert(alertMessage, 'success', true);
-						}
-					});
-				}
-				else {
-					response.json().then(({title}) => {
-						setAlert(title, 'danger', true);
-					});
-				}
-			});
-		}
+		});
 	};
 
 	const saveDefinition = () => {
@@ -278,46 +282,47 @@ export default function UpperToolbar({
 
 		if (blockingErrors.errorType !== '') {
 			setAlert(blockingErrors.errorMessage, 'danger', true);
-		}
-		else {
-			saveDefinitionRequest({
-				active,
-				content: getXMLContent(true),
-				name: definitionName,
-				title: definitionTitle,
-				title_i18n: definitionTitleTranslations,
-				version,
-			}).then((response) => {
-				if (response.ok) {
-					if (
-						Liferay.FeatureFlags['LPD-11179'] &&
-						!allowScriptContentToBeExecutedOrIncluded
-					) {
-						setHadGroovyScriptBefore(false);
-					}
 
-					response.json().then(({name, version}) => {
-						setDefinitionName(name);
-						setVersion(parseInt(version, 10));
-						if (version === '1') {
-							localStorage.setItem(
-								'firstSaved',
-								true,
-								localStorage.TYPES.FUNCTIONAL
-							);
-							redirectToSavedDefinition(name, version);
-						}
-						else {
-							setAlert(
-								Liferay.Language.get('workflow-saved'),
-								'success',
-								true
-							);
-						}
-					});
-				}
-			});
+			return;
 		}
+
+		saveDefinitionRequest({
+			active,
+			content: getXMLContent(true),
+			name: definitionName,
+			title: definitionTitle,
+			title_i18n: definitionTitleTranslations,
+			version,
+		}).then((response) => {
+			if (response.ok) {
+				if (
+					Liferay.FeatureFlags['LPD-11179'] &&
+					!allowScriptContentToBeExecutedOrIncluded
+				) {
+					setHadGroovyScriptBefore(false);
+				}
+
+				response.json().then(({name, version}) => {
+					setDefinitionName(name);
+					setVersion(parseInt(version, 10));
+					if (version === '1') {
+						localStorage.setItem(
+							'firstSaved',
+							true,
+							localStorage.TYPES.FUNCTIONAL
+						);
+						redirectToSavedDefinition(name, version);
+					}
+					else {
+						setAlert(
+							Liferay.Language.get('workflow-saved'),
+							'success',
+							true
+						);
+					}
+				});
+			}
+		});
 	};
 
 	useEffect(() => {

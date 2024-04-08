@@ -11,7 +11,7 @@ import {NewAppToolBar} from '../../../../../components/NewAppToolBar/NewAppToolB
 import {useAccount} from '../../../../../hooks/data/useAccounts';
 
 import './NewSolutionFlow.scss';
-import {solutionFlowItems} from '../constants';
+import {SOLUTION_FLOW_ITEMS} from '../constants';
 
 const NewSolution = () => {
 	const {data: account} = useAccount();
@@ -19,11 +19,11 @@ const NewSolution = () => {
 	const navigate = useNavigate();
 	const lastPath = location.pathname.split('/').at(-1);
 
-	const activeIndex = solutionFlowItems.findIndex(
+	const activeIndex = SOLUTION_FLOW_ITEMS.findIndex(
 		({path}) => path === lastPath
 	);
 
-	const activeRoute = solutionFlowItems[activeIndex];
+	const activeRoute = SOLUTION_FLOW_ITEMS[activeIndex];
 
 	const button = {
 		back: 'Back',
@@ -33,37 +33,37 @@ const NewSolution = () => {
 	const onClickButton = (buttonName: string) => {
 		const isContinue = buttonName === button.continue;
 
-		solutionFlowItems.map((_, index) => {
+		SOLUTION_FLOW_ITEMS.map((_, index) => {
 			if (index === activeIndex) {
-				solutionFlowItems[index].selected = false;
+				SOLUTION_FLOW_ITEMS[index].selected = false;
 
-				solutionFlowItems[
+				SOLUTION_FLOW_ITEMS[
 					isContinue ? index + 1 : index - 1
 				].selected = true;
 
 				isContinue
-					? (solutionFlowItems[index].checked = true)
-					: (solutionFlowItems[index - 1].checked = false);
+					? (SOLUTION_FLOW_ITEMS[index].checked = true)
+					: (SOLUTION_FLOW_ITEMS[index - 1].checked = false);
 
-				return solutionFlowItems;
+				return SOLUTION_FLOW_ITEMS;
 			}
 		});
 
 		return navigate(
-			solutionFlowItems[isContinue ? activeIndex + 1 : activeIndex - 1]
+			SOLUTION_FLOW_ITEMS[isContinue ? activeIndex + 1 : activeIndex - 1]
 				.path
 		);
 	};
 
 	return (
-		<div className="">
+		<>
 			<NewAppToolBar
 				accountImage={account?.logoURL}
 				accountName={account?.name as string}
 			/>
 
 			<div className="d-flex justify-content-center mt-8">
-				<AppFlowList appFlowListItems={solutionFlowItems as any} />
+				<AppFlowList appFlowListItems={SOLUTION_FLOW_ITEMS as any} />
 
 				<div className="ml-8 solutions-body-container">
 					<h1 className="header-title mb-4">{activeRoute.title}</h1>
@@ -95,7 +95,7 @@ const NewSolution = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

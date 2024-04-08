@@ -16,6 +16,8 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -83,6 +85,254 @@ public class TestrayTestSuiteResourceImpl
 			).getFileName());
 
 		return testrayTestSuite;
+	}
+
+	private JSONArray _addTestrayAttachments(Node testcaseNode)
+		throws Exception {
+
+		JSONArray jsonArray = null;
+
+		Element testcaseElement = (Element)testcaseNode;
+
+		NodeList attachmentsNodeList = testcaseElement.getElementsByTagName(
+			"attachments");
+
+		for (int i = 0; i < attachmentsNodeList.getLength(); i++) {
+			Node attachmentsNode = attachmentsNodeList.item(i);
+
+			if (attachmentsNode.getNodeType() != Node.ELEMENT_NODE) {
+				continue;
+			}
+
+			Element attachmentsElement = (Element)attachmentsNode;
+
+			NodeList fileNodeList = attachmentsElement.getElementsByTagName(
+				"file");
+
+			for (int j = 0; j < fileNodeList.getLength(); j++) {
+				Node fileNode = fileNodeList.item(j);
+
+				if (fileNode.getNodeType() != Node.ELEMENT_NODE) {
+					continue;
+				}
+
+				Element fileElement = (Element)fileNode;
+
+				jsonArray = JSONUtil.put(
+					JSONUtil.put(
+						"name", fileElement.getAttribute("name")
+					).put(
+						"url", fileElement.getAttribute("url")
+					).put(
+						"value", fileElement.getAttribute("value")
+					));
+			}
+		}
+
+		return jsonArray;
+	}
+
+	private void _addTestrayCase(
+			long companyId, Node testcaseNode, long testrayBuildId,
+			String testrayBuildTime,
+			Map<String, Serializable> testrayCasePropertiesMap,
+			long testrayProjectId, long testrayRunId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				companyId, "C_Case");
+
+		String testrayCaseName = (String)testrayCasePropertiesMap.get(
+			"testray.testcase.name");
+
+		List<Map<String, Serializable>> valuesList =
+			_objectEntryLocalService.getValuesList(
+				0, companyId, contextUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				_filterFactory.create(
+					StringBundler.concat(
+						"projectId eq '", testrayProjectId, "' and name eq '",
+						testrayCaseName, "'"),
+					objectDefinition),
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		long testrayCaseId = 0;
+
+		if (ListUtil.isNotEmpty(valuesList)) {
+			Map<String, Serializable> values = valuesList.get(0);
+
+			testrayCaseId = GetterUtil.getLong(values.get("objectEntryId"));
+		}
+
+		long testrayTeamId = _getTestrayTeamId(
+			companyId, testrayProjectId,
+			(String)testrayCasePropertiesMap.get("testray.team.name"));
+
+		long testrayComponentId = _getTestrayComponentId(
+			companyId,
+			(String)testrayCasePropertiesMap.get("testray.main.component.name"),
+			testrayProjectId, testrayTeamId);
+
+		if (testrayCaseId == 0) {
+			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+				contextUser.getUserId(), 0,
+				objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"description",
+					testrayCasePropertiesMap.get("testray.testcase.description")
+				).put(
+					"name",
+					testrayCasePropertiesMap.get("testray.testcase.name")
+				).put(
+					"number", 0
+				).put(
+					"priority",
+					testrayCasePropertiesMap.get("testray.testcase.priority")
+				).put(
+					"r_caseTypeToCases_c_caseTypeId",
+					_getTestrayCaseTypeId(
+						companyId,
+						(String)testrayCasePropertiesMap.get(
+							"testray.case.type.name"))
+				).put(
+					"r_componentToCases_c_componentId", testrayComponentId
+				).put(
+					"r_projectToCases_c_projectId", testrayProjectId
+				).build(),
+				_serviceContextHelper.getServiceContext());
+
+			testrayCaseId = objectEntry.getObjectEntryId();
+		}
+
+		objectDefinition = _objectDefinitionLocalService.getObjectDefinition(
+			companyId, "C_BuildsCases");
+
+		valuesList = _objectEntryLocalService.getValuesList(
+			0, companyId, contextUser.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			_filterFactory.create(
+				StringBundler.concat(
+					"buildId eq '", testrayBuildId, "' and caseId eq '",
+					testrayCaseId, "'"),
+				objectDefinition),
+			null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (ListUtil.isNotEmpty(valuesList)) {
+			_objectEntryLocalService.addObjectEntry(
+				contextUser.getUserId(), 0,
+				objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"r_buildToBuildsCases_c_buildId", testrayBuildId
+				).put(
+					"r_caseToBuildsCases_c_caseId", testrayCaseId
+				).build(),
+				_serviceContextHelper.getServiceContext());
+		}
+
+		_addTestrayCaseResult(
+			companyId, testcaseNode, testrayBuildId, testrayBuildTime,
+			testrayCaseId, testrayCasePropertiesMap, testrayComponentId,
+			testrayRunId);
+	}
+
+	private void _addTestrayCaseResult(
+			long companyId, Node testcaseNode, long testrayBuildId,
+			String testrayBuildTime, long testrayCaseId,
+			Map<String, Serializable> testrayCasePropertiesMap,
+			long testrayComponentId, long testrayRunId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				companyId, "C_CaseResult");
+
+		Map<String, Serializable> properties =
+			HashMapBuilder.<String, Serializable>put(
+				"attachments", _addTestrayAttachments(testcaseNode)
+			).put(
+				"closedDate", testrayBuildTime
+			).put(
+				"dueStatus",
+				() -> {
+					String testrayTestcaseStatus =
+						(String)testrayCasePropertiesMap.get(
+							"testray.testcase.status");
+
+					if (testrayTestcaseStatus.equals("blocked")) {
+						return "BLOCKED";
+					}
+					else if (testrayTestcaseStatus.equals("dnr")) {
+						return "DIDNOTRUN";
+					}
+					else if (testrayTestcaseStatus.equals("failed")) {
+						return "FAILED";
+					}
+					else if (testrayTestcaseStatus.equals("in-progress")) {
+						return "INPROGRESS";
+					}
+					else if (testrayTestcaseStatus.equals("passed")) {
+						return "PASSED";
+					}
+					else if (testrayTestcaseStatus.equals("test-fix")) {
+						return "TESTFIX";
+					}
+
+					return "UNTESTED";
+				}
+			).put(
+				"r_buildToCaseResult_c_buildId", testrayBuildId
+			).put(
+				"r_caseToCaseResult_c_caseId", testrayCaseId
+			).put(
+				"r_componentToCaseResult_c_componentId", testrayComponentId
+			).put(
+				"r_runToCaseResult_c_runId", testrayRunId
+			).put(
+				"startDate", testrayBuildTime
+			).put(
+				"warnings",
+				GetterUtil.getInteger(
+					testrayCasePropertiesMap.get("testray.testcase.warnings"))
+			).build();
+
+		Element element = (Element)testcaseNode;
+
+		NodeList nodeList = element.getElementsByTagName("failure");
+
+		Node failureNode = nodeList.item(0);
+
+		if (failureNode != null) {
+			String message = _getAttributeValue("message", failureNode);
+
+			if (!message.isEmpty()) {
+				properties.put("errors", message);
+			}
+		}
+
+		_objectEntryLocalService.addObjectEntry(
+			contextUser.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(), properties,
+			_serviceContextHelper.getServiceContext());
+	}
+
+	private void _addTestrayCases(
+			long companyId, Element element, long testrayBuildId,
+			String testrayBuildTime, long testrayProjectId, long testrayRunId)
+		throws Exception {
+
+		NodeList testCaseNodeList = element.getElementsByTagName("testcase");
+
+		for (int i = 0; i < testCaseNodeList.getLength(); i++) {
+			Node testcaseNode = testCaseNodeList.item(i);
+
+			Map<String, Serializable> testrayCasePropertiesMap =
+				_getTestrayCaseProperties((Element)testcaseNode);
+
+			_addTestrayCase(
+				companyId, testcaseNode, testrayBuildId, testrayBuildTime,
+				testrayCasePropertiesMap, testrayProjectId, testrayRunId);
+		}
 	}
 
 	private void _addTestrayFactor(
@@ -246,6 +496,110 @@ public class TestrayTestSuiteResourceImpl
 				"r_projectToBuilds_c_projectId", testrayProjectId
 			).put(
 				"r_routineToBuilds_c_routineId", testrayRoutineId
+			).build(),
+			_serviceContextHelper.getServiceContext());
+
+		return objectEntry.getObjectEntryId();
+	}
+
+	private Map<String, Serializable> _getTestrayCaseProperties(
+		Element element) {
+
+		Map<String, Serializable> map = new HashMap<>();
+
+		NodeList propertiesNodeList = element.getElementsByTagName(
+			"properties");
+
+		Node propertiesNode = propertiesNodeList.item(0);
+
+		Element propertiesElement = (Element)propertiesNode;
+
+		NodeList propertyNodeList = propertiesElement.getElementsByTagName(
+			"property");
+
+		for (int i = 0; i < propertyNodeList.getLength(); i++) {
+			Node propertyNode = propertyNodeList.item(i);
+
+			if (!propertyNode.hasAttributes()) {
+				continue;
+			}
+
+			map.put(
+				_getAttributeValue("name", propertyNode),
+				_getAttributeValue("value", propertyNode));
+		}
+
+		return map;
+	}
+
+	private long _getTestrayCaseTypeId(
+			long companyId, String testrayCaseTypeName)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				companyId, "C_CaseType");
+
+		List<Map<String, Serializable>> valuesList =
+			_objectEntryLocalService.getValuesList(
+				0, companyId, contextUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				_filterFactory.create(
+					"name eq '" + testrayCaseTypeName + "'", objectDefinition),
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (ListUtil.isNotEmpty(valuesList)) {
+			Map<String, Serializable> values = valuesList.get(0);
+
+			return GetterUtil.getLong(values.get("objectEntryId"));
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			contextUser.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", testrayCaseTypeName
+			).build(),
+			_serviceContextHelper.getServiceContext());
+
+		return objectEntry.getObjectEntryId();
+	}
+
+	private long _getTestrayComponentId(
+			long companyId, String testrayComponentName, long testrayProjectId,
+			long testrayTeamId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				companyId, "C_Component");
+
+		List<Map<String, Serializable>> valuesList =
+			_objectEntryLocalService.getValuesList(
+				0, companyId, contextUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				_filterFactory.create(
+					StringBundler.concat(
+						"projectId eq '", testrayProjectId, "' and name eq '",
+						testrayComponentName, "'"),
+					objectDefinition),
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (ListUtil.isNotEmpty(valuesList)) {
+			Map<String, Serializable> values = valuesList.get(0);
+
+			return GetterUtil.getLong(values.get("objectEntryId"));
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			contextUser.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", testrayComponentName
+			).put(
+				"r_projectToComponents_c_projectId", testrayProjectId
+			).put(
+				"r_teamToComponents_c_teamId", testrayTeamId
 			).build(),
 			_serviceContextHelper.getServiceContext());
 
@@ -533,6 +887,44 @@ public class TestrayTestSuiteResourceImpl
 		return objectEntry.getObjectEntryId();
 	}
 
+	private long _getTestrayTeamId(
+			long companyId, long testrayProjectId, String testrayTeamName)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				companyId, "C_Team");
+
+		List<Map<String, Serializable>> valuesList =
+			_objectEntryLocalService.getValuesList(
+				0, companyId, contextUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				_filterFactory.create(
+					StringBundler.concat(
+						"projectId eq '", testrayProjectId, "' and name eq '",
+						testrayTeamName, "'"),
+					objectDefinition),
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (ListUtil.isNotEmpty(valuesList)) {
+			Map<String, Serializable> values = valuesList.get(0);
+
+			return GetterUtil.getLong(values.get("objectEntryId"));
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			contextUser.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", testrayTeamName
+			).put(
+				"r_projectToTeams_c_projectId", testrayProjectId
+			).build(),
+			_serviceContextHelper.getServiceContext());
+
+		return objectEntry.getObjectEntryId();
+	}
+
 	private void _processDocument(Document document) throws Exception {
 		Element element = document.getDocumentElement();
 
@@ -551,9 +943,14 @@ public class TestrayTestSuiteResourceImpl
 			propertiesMap.get("testray.build.name"), testrayProjectId,
 			testrayRoutineId);
 
-		_getTestrayRunId(
+		long testrayRunId = _getTestrayRunId(
 			contextCompany.getCompanyId(), element, propertiesMap,
 			testrayBuildId, propertiesMap.get("testray.run.id"));
+
+		_addTestrayCases(
+			contextCompany.getCompanyId(), element, testrayBuildId,
+			propertiesMap.get("testray.build.time"), testrayProjectId,
+			testrayRunId);
 	}
 
 	@Reference(

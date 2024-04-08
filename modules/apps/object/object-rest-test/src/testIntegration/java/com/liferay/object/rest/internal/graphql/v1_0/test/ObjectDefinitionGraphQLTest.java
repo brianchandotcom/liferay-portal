@@ -11,12 +11,15 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalServiceUtil;
 import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
+import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
@@ -36,7 +39,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
@@ -64,7 +69,9 @@ public class ObjectDefinitionGraphQLTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -123,12 +130,12 @@ public class ObjectDefinitionGraphQLTest {
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
 		_parentObjectDefinition =
-			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				_parentObjectDefinition.getObjectDefinitionId());
 
 		childObjectDefinition =
-			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				childObjectDefinition.getObjectDefinitionId());
 
@@ -394,6 +401,166 @@ public class ObjectDefinitionGraphQLTest {
 	}
 
 	@Test
+	public void testGetObjectEntryWithLocalizedObjectField() throws Exception {
+		ObjectDefinition objectDefinition = null;
+
+		try {
+			objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
+				true, ObjectDefinitionTestUtil.getRandomName(),
+				Arrays.asList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).localized(
+						true
+					).name(
+						_OBJECT_FIELD_NAME_TEXT
+					).build(),
+					new LongTextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).localized(
+						true
+					).name(
+						_OBJECT_FIELD_NAME_LONG_TEXT
+					).build(),
+					new RichTextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).localized(
+						true
+					).name(
+						_OBJECT_FIELD_NAME_RICH_TEXT
+					).build()),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				TestPropsValues.getUserId());
+
+			ObjectEntryTestUtil.addObjectEntry(
+				objectDefinition,
+				HashMapBuilder.<String, Serializable>put(
+					_OBJECT_FIELD_NAME_LONG_TEXT, "name2_text_english"
+				).put(
+					_OBJECT_FIELD_NAME_LONG_TEXT + "_i18n",
+					HashMapBuilder.<String, Serializable>put(
+						"en_US", "longTextEng"
+					).put(
+						"es_ES", "longTextEsp"
+					).build()
+				).put(
+					_OBJECT_FIELD_NAME_RICH_TEXT, "<p>c</p>\\n"
+				).put(
+					_OBJECT_FIELD_NAME_RICH_TEXT + "_i18n",
+					HashMapBuilder.<String, Serializable>put(
+						"en_US", "<p>richTextEng</p>"
+					).put(
+						"es_ES", "<p>richTextEsp</p>"
+					).build()
+				).put(
+					_OBJECT_FIELD_NAME_TEXT, "name1_text_english"
+				).put(
+					_OBJECT_FIELD_NAME_TEXT + "_i18n",
+					HashMapBuilder.<String, Serializable>put(
+						"en_US", "textEng"
+					).put(
+						"es_ES", "textEsp"
+					).build()
+				).build());
+
+			String pluralName = TextFormatter.formatPlural(
+				StringUtil.lowerCaseFirstLetter(
+					objectDefinition.getShortName()));
+
+			GraphQLField graphQLField = new GraphQLField(
+				"query",
+				new GraphQLField(
+					"c",
+					new GraphQLField(
+						pluralName,
+						new GraphQLField(
+							"items",
+							new GraphQLField(_OBJECT_FIELD_NAME_LONG_TEXT),
+							new GraphQLField(_OBJECT_FIELD_NAME_RICH_TEXT),
+							new GraphQLField(_OBJECT_FIELD_NAME_TEXT)))));
+
+			// Accept-Language header
+
+			Assert.assertEquals(
+				JSONUtil.putAll(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEsp"
+					).put(
+						_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEsp</p>"
+					).put(
+						_OBJECT_FIELD_NAME_TEXT, "textEsp"
+					)
+				).toString(),
+				JSONUtil.getValueAsString(
+					_invoke("es-ES", graphQLField), "JSONObject/data",
+					"JSONObject/c", "JSONObject/" + pluralName,
+					"JSONArray/items"));
+
+			// Empty Accept-Language header
+
+			Assert.assertEquals(
+				JSONUtil.putAll(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
+					).put(
+						_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
+					).put(
+						_OBJECT_FIELD_NAME_TEXT, "textEng"
+					)
+				).toString(),
+				JSONUtil.getValueAsString(
+					_invoke("", graphQLField), "JSONObject/data",
+					"JSONObject/c", "JSONObject/" + pluralName,
+					"JSONArray/items"));
+
+			// Nonexistent Accept-Language header
+
+			Assert.assertEquals(
+				JSONUtil.putAll(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
+					).put(
+						_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
+					).put(
+						_OBJECT_FIELD_NAME_TEXT, "textEng"
+					)
+				).toString(),
+				JSONUtil.getValueAsString(
+					_invoke("de-DE", graphQLField), "JSONObject/data",
+					"JSONObject/c", "JSONObject/" + pluralName,
+					"JSONArray/items"));
+
+			// Without Accept-Language header
+
+			Assert.assertEquals(
+				JSONUtil.putAll(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
+					).put(
+						_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
+					).put(
+						_OBJECT_FIELD_NAME_TEXT, "textEng"
+					)
+				).toString(),
+				JSONUtil.getValueAsString(
+					_invoke(graphQLField), "JSONObject/data", "JSONObject/c",
+					"JSONObject/" + pluralName, "JSONArray/items"));
+		}
+		finally {
+			if (objectDefinition != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition.getObjectDefinitionId());
+			}
+		}
+	}
+
+	@Test
 	public void testUpdateObjectEntry() throws Exception {
 		String value = RandomTestUtil.randomString();
 
@@ -469,7 +636,7 @@ public class ObjectDefinitionGraphQLTest {
 
 	private ObjectDefinition _addObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
-			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, false, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
@@ -507,12 +674,39 @@ public class ObjectDefinitionGraphQLTest {
 			"graphql", Http.Method.POST);
 	}
 
+	private JSONObject _invoke(String acceptLanguage, GraphQLField graphQLField)
+		throws Exception {
+
+		return HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"query", graphQLField.toString()
+			).toString(),
+			"graphql",
+			HashMapBuilder.put(
+				"Accept-Language", acceptLanguage
+			).build(),
+			Http.Method.POST);
+	}
+
+	private static final String _OBJECT_FIELD_NAME_LONG_TEXT =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_NAME_RICH_TEXT =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_NAME_TEXT =
+		"x" + RandomTestUtil.randomString();
+
 	private static final String _RELATIONSHIP_NAME = "parent";
 
 	private String _childObjectDefinitionName;
 	private ObjectEntry _childObjectEntry;
 	private String _listFieldName;
 	private String _listFieldValueKey;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
 	private String _objectFieldName;
 
 	@DeleteAfterTestRun

@@ -34,9 +34,6 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
-import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
-import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectAction;
@@ -120,7 +117,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -569,7 +565,6 @@ public class ObjectEntryResourceTest {
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_3,
 					false)),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
-
 		_objectDefinition4 = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
@@ -582,73 +577,6 @@ public class ObjectEntryResourceTest {
 					null, ObjectFieldConstants.DB_TYPE_STRING, true, false,
 					null, RandomTestUtil.randomString(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, false, false)));
-
-		_objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition4, _OBJECT_FIELD_NAME_4, _OBJECT_FIELD_VALUE_4);
-
-		_objectDefinition5 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			true, ObjectDefinitionTestUtil.getRandomName(),
-			Arrays.asList(
-				new TextObjectFieldBuilder(
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).localized(
-					true
-				).name(
-					_OBJECT_FIELD_NAME_TEXT
-				).build(),
-				new LongTextObjectFieldBuilder(
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).localized(
-					true
-				).name(
-					_OBJECT_FIELD_NAME_LONG_TEXT
-				).build(),
-				new RichTextObjectFieldBuilder(
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).localized(
-					true
-				).name(
-					_OBJECT_FIELD_NAME_RICH_TEXT
-				).build()),
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			TestPropsValues.getUserId());
-
-		_objectEntry5 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition5,
-			HashMapBuilder.<String, Serializable>put(
-				_OBJECT_FIELD_NAME_LONG_TEXT, "name2_text_english"
-			).put(
-				_OBJECT_FIELD_NAME_LONG_TEXT + "_i18n",
-				HashMapBuilder.<String, Serializable>put(
-					"en_US", "longTextEng"
-				).put(
-					"es_ES", "longTextEsp"
-				).build()
-			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT, "<p>c</p>\\n"
-			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT + "_i18n",
-				HashMapBuilder.<String, Serializable>put(
-					"en_US", "<p>richTextEng</p>"
-				).put(
-					"es_ES", "<p>richTextEsp</p>"
-				).build()
-			).put(
-				_OBJECT_FIELD_NAME_TEXT, "name1_text_english"
-			).put(
-				_OBJECT_FIELD_NAME_TEXT + "_i18n",
-				HashMapBuilder.<String, Serializable>put(
-					"en_US", "textEng"
-				).put(
-					"es_ES", "textEsp"
-				).build()
-			).build());
 
 		objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
 
@@ -825,8 +753,6 @@ public class ObjectEntryResourceTest {
 			_objectDefinition3);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition4);
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition5);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_siteScopedObjectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(
@@ -5621,182 +5547,6 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals(
 			itemJSONObject.getLong("id"),
 			_siteScopedObjectEntry1.getObjectEntryId());
-	}
-
-	@Test
-	public void testGraphQLLocalizedObjectFieldWithAcceptLanguage()
-		throws Exception {
-
-		Assert.assertEquals(
-			JSONUtil.put(
-				"data",
-				JSONUtil.put(
-					"c",
-					JSONUtil.put(
-						TextFormatter.formatPlural(
-							StringUtil.lowerCaseFirstLetter(
-								_objectDefinition5.getShortName())),
-						JSONUtil.put(
-							"items",
-							JSONUtil.putAll(
-								JSONUtil.put(
-									_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEsp"
-								).put(
-									_OBJECT_FIELD_NAME_RICH_TEXT,
-									"<p>richTextEsp</p>"
-								).put(
-									_OBJECT_FIELD_NAME_TEXT, "textEsp"
-								)))))
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"query",
-					StringBundler.concat(
-						"{ c { ",
-						TextFormatter.formatPlural(
-							StringUtil.lowerCaseFirstLetter(
-								_objectDefinition5.getShortName())),
-						" { items { ", _OBJECT_FIELD_NAME_LONG_TEXT,
-						StringPool.SPACE, _OBJECT_FIELD_NAME_RICH_TEXT,
-						StringPool.SPACE, _OBJECT_FIELD_NAME_TEXT, " }}}}")
-				).toString(),
-				"graphql",
-				HashMapBuilder.put(
-					"Accept-Language", "es-ES"
-				).build(),
-				Http.Method.POST
-			).toString());
-	}
-
-	@Test
-	public void testGraphQLLocalizedObjectFieldWithEmptyAcceptLanguage()
-		throws Exception {
-
-		Assert.assertEquals(
-			JSONUtil.put(
-				"data",
-				JSONUtil.put(
-					"c",
-					JSONUtil.put(
-						TextFormatter.formatPlural(
-							StringUtil.lowerCaseFirstLetter(
-								_objectDefinition5.getShortName())),
-						JSONUtil.put(
-							"items",
-							JSONUtil.putAll(
-								JSONUtil.put(
-									_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
-								).put(
-									_OBJECT_FIELD_NAME_RICH_TEXT,
-									"<p>richTextEng</p>"
-								).put(
-									_OBJECT_FIELD_NAME_TEXT, "textEng"
-								)))))
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"query",
-					StringBundler.concat(
-						"{ c { ",
-						TextFormatter.formatPlural(
-							StringUtil.lowerCaseFirstLetter(
-								_objectDefinition5.getShortName())),
-						" { items { ", _OBJECT_FIELD_NAME_LONG_TEXT,
-						StringPool.SPACE, _OBJECT_FIELD_NAME_RICH_TEXT,
-						StringPool.SPACE, _OBJECT_FIELD_NAME_TEXT, " }}}}")
-				).toString(),
-				"graphql",
-				HashMapBuilder.put(
-					"Accept-Language", ""
-				).build(),
-				Http.Method.POST
-			).toString());
-	}
-
-	@Test
-	public void testGraphQLLocalizedObjectFieldWithNonexistingAcceptLanguage()
-		throws Exception {
-
-		Assert.assertEquals(
-			JSONUtil.put(
-				"data",
-				JSONUtil.put(
-					"c",
-					JSONUtil.put(
-						TextFormatter.formatPlural(
-							StringUtil.lowerCaseFirstLetter(
-								_objectDefinition5.getShortName())),
-						JSONUtil.put(
-							"items",
-							JSONUtil.putAll(
-								JSONUtil.put(
-									_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
-								).put(
-									_OBJECT_FIELD_NAME_RICH_TEXT,
-									"<p>richTextEng</p>"
-								).put(
-									_OBJECT_FIELD_NAME_TEXT, "textEng"
-								)))))
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"query",
-					StringBundler.concat(
-						"{ c { ",
-						TextFormatter.formatPlural(
-							StringUtil.lowerCaseFirstLetter(
-								_objectDefinition5.getShortName())),
-						" { items { ", _OBJECT_FIELD_NAME_LONG_TEXT,
-						StringPool.SPACE, _OBJECT_FIELD_NAME_RICH_TEXT,
-						StringPool.SPACE, _OBJECT_FIELD_NAME_TEXT, " }}}}")
-				).toString(),
-				"graphql",
-				HashMapBuilder.put(
-					"Accept-Language", "de-DE"
-				).build(),
-				Http.Method.POST
-			).toString());
-	}
-
-	@Test
-	public void testGraphQLLocalizedObjectFieldWithoutAcceptLanguage()
-		throws Exception {
-
-		Assert.assertEquals(
-			JSONUtil.put(
-				"data",
-				JSONUtil.put(
-					"c",
-					JSONUtil.put(
-						TextFormatter.formatPlural(
-							StringUtil.lowerCaseFirstLetter(
-								_objectDefinition5.getShortName())),
-						JSONUtil.put(
-							"items",
-							JSONUtil.putAll(
-								JSONUtil.put(
-									_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
-								).put(
-									_OBJECT_FIELD_NAME_RICH_TEXT,
-									"<p>richTextEng</p>"
-								).put(
-									_OBJECT_FIELD_NAME_TEXT, "textEng"
-								)))))
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"query",
-					StringBundler.concat(
-						"{ c { ",
-						TextFormatter.formatPlural(
-							StringUtil.lowerCaseFirstLetter(
-								_objectDefinition5.getShortName())),
-						" { items { ", _OBJECT_FIELD_NAME_LONG_TEXT,
-						StringPool.SPACE, _OBJECT_FIELD_NAME_RICH_TEXT,
-						StringPool.SPACE, _OBJECT_FIELD_NAME_TEXT, " }}}}")
-				).toString(),
-				"graphql", Http.Method.POST
-			).toString());
 	}
 
 	@Test
@@ -11378,9 +11128,6 @@ public class ObjectEntryResourceTest {
 	private static final String _OBJECT_FIELD_NAME_PRECISION_DECIMAL =
 		"x" + RandomTestUtil.randomString();
 
-	private static final String _OBJECT_FIELD_NAME_RICH_TEXT =
-		"x" + RandomTestUtil.randomString();
-
 	private static final String _OBJECT_FIELD_NAME_TEXT =
 		"x" + RandomTestUtil.randomString();
 
@@ -11434,7 +11181,6 @@ public class ObjectEntryResourceTest {
 	private ObjectDefinition _objectDefinition2;
 	private ObjectDefinition _objectDefinition3;
 	private ObjectDefinition _objectDefinition4;
-	private ObjectDefinition _objectDefinition5;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
@@ -11443,7 +11189,6 @@ public class ObjectEntryResourceTest {
 	private ObjectEntry _objectEntry2;
 	private ObjectEntry _objectEntry3;
 	private ObjectEntry _objectEntry4;
-	private ObjectEntry _objectEntry5;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

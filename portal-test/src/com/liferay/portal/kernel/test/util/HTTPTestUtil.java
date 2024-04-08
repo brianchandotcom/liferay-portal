@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.nio.charset.StandardCharsets;
 
@@ -130,7 +131,7 @@ public class HTTPTestUtil {
 		options.addHeader(
 			"Authorization", "Basic " + Base64.encode(_credentials.getBytes()));
 
-		if (headers != null) {
+		if (MapUtil.isNotEmpty(headers)) {
 			for (HashMap.Entry<String, String> header : headers.entrySet()) {
 				options.addHeader(header.getKey(), header.getValue());
 			}

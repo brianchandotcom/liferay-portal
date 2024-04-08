@@ -20,13 +20,16 @@ import {
 } from './constants';
 
 const XMLUtil = {
+	REGEX_ADD_EVENT_LISTENER: /.addEventListener/gi,
+	REGEX_ASP_CODE: /<%[\s\S]*?%>/g,
+	REGEX_ASP_NET_CODE: /(<asp:[^]+>[\s|\S]*?<\/asp:[^]+>)|(<asp:[^]+\/>)/gi,
 	REGEX_INNER_HTML: /innerHTML\s*=\s*.*?/,
-	REGEX_ON_ERROR: /onerror\s*=\s*.*?/,
-	REGEX_SRC: /src\s*=\s*.*?/,
+	REGEX_ON_ATTRIBUTE: /(\s+\bon\w+=(?:'[^']*'|"[^"]*"|[^'"\s>]+))/gi,
+	REGEX_PHP_CODE: /<\?(?!xml)[\s\S]*?\?>/g,
+	REGEX_SCRIPT_TAG_INSIDE_CDATA: /<!\[CDATA\[(.*?<script>.*|.*<\/script>.*)\]\]>/gi,
 	REGEX_TOKEN_1: /.+<\/\w[^>]*>$/,
 	REGEX_TOKEN_2: /^<\/\w/,
 	REGEX_TOKEN_3: /^<\w[^>]*[^/]>.*$/,
-	REGEX_URL: /url\s*=\s*.*?/,
 
 	create(name, content, attrs) {
 		const instance = this;
@@ -170,10 +173,13 @@ const XMLUtil = {
 		let valid = true;
 
 		const maliciousContent = [
+			this.REGEX_ADD_EVENT_LISTENER,
+			this.REGEX_ASP_CODE,
+			this.REGEX_ASP_NET_CODE,
 			this.REGEX_INNER_HTML,
-			this.REGEX_ON_ERROR,
-			this.REGEX_SRC,
-			this.REGEX_URL,
+			this.REGEX_ON_ATTRIBUTE,
+			this.REGEX_PHP_CODE,
+			this.REGEX_SCRIPT_TAG_INSIDE_CDATA,
 		];
 
 		const maliciousContentValidation = maliciousContent.some((item) =>

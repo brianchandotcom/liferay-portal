@@ -2239,6 +2239,167 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testFilterByLambdaOperatorsObjectEntriesByMultiselectPicklistField()
+		throws Exception {
+
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1,
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
+			).put(
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, _LIST_TYPE_ENTRY_KEY_1
+			).build(),
+			_TAG_1);
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1,
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2
+			).put(
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				(Serializable)Arrays.asList(
+					_LIST_TYPE_ENTRY_KEY_1, _LIST_TYPE_ENTRY_KEY_2)
+			).build(),
+			_TAG_1);
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1,
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2
+			).put(
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				(Serializable)Arrays.asList(
+					_LIST_TYPE_ENTRY_KEY_1, _LIST_TYPE_ENTRY_KEY_2,
+					_LIST_TYPE_ENTRY_KEY_3)
+			).build(),
+			_TAG_1);
+
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"%s/any(k:k eq '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_1));
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"%s/any(k:k eq '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_2));
+		_assertFilteredObjectEntries(
+			1,
+			String.format(
+				"%s/any(k:k eq '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_3));
+		_assertFilteredObjectEntries(
+			0,
+			String.format(
+				"%s/any(k:k eq '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				RandomTestUtil.randomString()));
+
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"%s/any(k:k ne '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_1));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"%s/any(k:k ne '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_2));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"%s/any(k:k ne '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_3));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"%s/any(k:k ne '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				RandomTestUtil.randomString()));
+
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"%s/any(k:startswith(k,'%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, "a"));
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"%s/any(k:startswith(k,'%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, "b"));
+		_assertFilteredObjectEntries(
+			1,
+			String.format(
+				"%s/any(k:startswith(k,'%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, "c"));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"%s/any(k:startswith(k,'%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_1));
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"%s/any(k:startswith(k,'%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_2));
+		_assertFilteredObjectEntries(
+			1,
+			String.format(
+				"%s/any(k:startswith(k,'%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_3));
+		_assertFilteredObjectEntries(
+			0,
+			String.format(
+				"%s/any(k:startswith(k,'%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				RandomTestUtil.randomString()));
+
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"%s/any(k:contains(k,'%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_1.substring(1)));
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"%s/any(k:contains(k,'%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_2.substring(1)));
+		_assertFilteredObjectEntries(
+			1,
+			String.format(
+				"%s/any(k:contains(k,'%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_3.substring(1)));
+		_assertFilteredObjectEntries(
+			0,
+			String.format(
+				"%s/any(k:contains(k,'%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				RandomTestUtil.randomString()));
+
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"%s/any(k:k in ('%s','%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, _LIST_TYPE_ENTRY_KEY_1,
+				_LIST_TYPE_ENTRY_KEY_2));
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"%s/any(k:k in ('%s','%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, _LIST_TYPE_ENTRY_KEY_2,
+				_LIST_TYPE_ENTRY_KEY_3));
+		_assertFilteredObjectEntries(
+			0,
+			String.format(
+				"%s/any(k:k in ('%s','%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
+	}
+
+	@Test
 	public void testFilterByLambdaOperatorsObjectEntriesByRelatedObjectEntriesFields()
 		throws Exception {
 

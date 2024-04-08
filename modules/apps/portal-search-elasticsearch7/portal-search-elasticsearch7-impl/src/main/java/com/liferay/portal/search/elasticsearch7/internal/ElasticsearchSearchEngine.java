@@ -64,12 +64,17 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.elasticsearch.action.admin.cluster.settings.ClusterGetSettingsRequest;
+import org.elasticsearch.action.admin.cluster.settings.ClusterGetSettingsResponse;
+import org.elasticsearch.action.admin.cluster.settings.ClusterUpdateSettingsRequest;
 import org.elasticsearch.action.ingest.PutPipelineRequest;
+import org.elasticsearch.client.ClusterClient;
 import org.elasticsearch.client.IngestClient;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.bytes.BytesArray;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.xcontent.XContentType;
 
 import org.osgi.service.component.annotations.Activate;
@@ -269,6 +274,35 @@ public class ElasticsearchSearchEngine
 		_waitForYellowStatus();
 	}
 
+	public void setAutoCreateIndex(boolean enable) {
+		if (Validator.isBlank(_indexNameBuilder.getIndexNamePrefix())) {
+			return;
+		}
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchConnectionManager.getRestHighLevelClient();
+
+		ClusterClient clusterClient = restHighLevelClient.cluster();
+
+		ClusterUpdateSettingsRequest clusterUpdateSettingsRequest =
+			new ClusterUpdateSettingsRequest();
+
+		clusterUpdateSettingsRequest.persistentSettings(
+			Settings.builder(
+			).put(
+				"action.auto_create_index",
+				_createAutoCreateIndexSetting(enable)
+			));
+
+		try {
+			clusterClient.putSettings(
+				clusterUpdateSettingsRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_elasticsearchConfigurationWrapper.register(this);
@@ -277,6 +311,8 @@ public class ElasticsearchSearchEngine
 				ElasticsearchSearchEngine.class.getClassLoader())) {
 
 			_checkNodeVersions();
+
+			setAutoCreateIndex(false);
 
 			if (StartupHelperUtil.isDBNew()) {
 				for (long companyId : _getIndexedCompanyIds()) {
@@ -330,6 +366,86 @@ public class ElasticsearchSearchEngine
 					System.exit(1);
 				}
 			}
+		}
+	}
+
+	private String _createAutoCreateIndexSetting(boolean enable) {
+		String currentValue = _getAutoCreateIndexSetting();
+
+		String enableAutoCreateLiferayIndexPattern = StringBundler.concat(
+			StringPool.PLUS, _indexNameBuilder.getIndexNamePrefix(),
+			StringPool.STAR);
+
+		String disableAutoCreateLiferayIndexPattern = StringBundler.concat(
+			StringPool.MINUS, _indexNameBuilder.getIndexNamePrefix(),
+			StringPool.STAR);
+
+		if (enable) {
+			if (Validator.isBlank(currentValue) ||
+				currentValue.equals(StringPool.STAR) ||
+				StringUtil.equalsIgnoreCase(currentValue, "true") ||
+				currentValue.contains(enableAutoCreateLiferayIndexPattern)) {
+
+				return currentValue;
+			}
+			else if (StringUtil.equalsIgnoreCase(currentValue, "false")) {
+				return enableAutoCreateLiferayIndexPattern;
+			}
+			else if (currentValue.contains(
+						disableAutoCreateLiferayIndexPattern)) {
+
+				return StringUtil.replace(
+					currentValue, disableAutoCreateLiferayIndexPattern,
+					enableAutoCreateLiferayIndexPattern);
+			}
+
+			return StringBundler.concat(
+				enableAutoCreateLiferayIndexPattern, StringPool.COMMA_AND_SPACE,
+				currentValue);
+		}
+
+		if (Validator.isBlank(currentValue) ||
+			currentValue.equals(StringPool.STAR) ||
+			StringUtil.equalsIgnoreCase(currentValue, "true")) {
+
+			return StringBundler.concat(
+				disableAutoCreateLiferayIndexPattern,
+				StringPool.COMMA_AND_SPACE, StringPool.STAR);
+		}
+		else if (StringUtil.equalsIgnoreCase(currentValue, "false") ||
+				 currentValue.contains(disableAutoCreateLiferayIndexPattern)) {
+
+			return currentValue;
+		}
+		else if (currentValue.contains(enableAutoCreateLiferayIndexPattern)) {
+			return StringUtil.replace(
+				currentValue, enableAutoCreateLiferayIndexPattern,
+				disableAutoCreateLiferayIndexPattern);
+		}
+
+		return StringBundler.concat(
+			disableAutoCreateLiferayIndexPattern, StringPool.COMMA_AND_SPACE,
+			currentValue);
+	}
+
+	private String _getAutoCreateIndexSetting() {
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchConnectionManager.getRestHighLevelClient();
+
+		ClusterClient clusterClient = restHighLevelClient.cluster();
+
+		try {
+			ClusterGetSettingsResponse clusterGetSettingsResponse =
+				clusterClient.getSettings(
+					new ClusterGetSettingsRequest(), RequestOptions.DEFAULT);
+
+			Settings settings =
+				clusterGetSettingsResponse.getPersistentSettings();
+
+			return settings.get("action.auto_create_index");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

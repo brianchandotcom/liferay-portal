@@ -1,3 +1,25 @@
+-fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=warning
 Bundle-Name: Liferay Testray REST Implementation
 Bundle-SymbolicName: com.liferay.testray.rest.impl
 Bundle-Version: 1.0.0
+Import-Package:\
+	!com.github.luben.zstd.*,\
+	\
+	!com.google.api.client.json.gson.*,\
+	!com.google.appengine.api.datastore,\
+	!com.google.appengine.api.memcache,\
+	!com.google.appengine.api.urlfetch,\
+	!com.google.errorprone.annotations.*,\
+	\
+	!org.apache.avalon.framework.logger,\
+	!org.apache.log,\
+	\
+	!org.brotli.dec.*,\
+	\
+	!org.checkerframework.checker.*,\
+	\
+	!org.joda.convert,\
+	\
+	!org.tukaani.xz.*,\
+	\
+	*

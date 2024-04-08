@@ -1,4 +1,0 @@
-ext.expectedErrorMessage = 'LCP.json: "kind" must be "Job"'
-ext.taskPath = ":client-extension-change-immutable-value:createClientExtensionConfig"
-
-apply from: project.property("commonScript.shouldFailTestCase.gradle")

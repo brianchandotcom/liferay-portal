@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.log.LogCapture;
@@ -139,6 +140,19 @@ public class LayoutModelDocumentContributorTest {
 	@Test
 	public void testReindexPublishedLayoutFragmentEntryLinkWithPortlet()
 		throws Exception {
+
+		_assertReindexPublishedLayoutFragmentEntryLinkWithPortlet();
+	}
+
+	@Test
+	public void testReindexPublishedLayoutFragmentEntryLinkWithPortletVirtualHostSite()
+		throws Exception {
+
+		_layoutSetLocalService.updateVirtualHosts(
+			_group.getGroupId(), false,
+			TreeMapBuilder.put(
+				"myvirtualhost", LocaleUtil.toLanguageId(_locale)
+			).build());
 
 		_assertReindexPublishedLayoutFragmentEntryLinkWithPortlet();
 	}

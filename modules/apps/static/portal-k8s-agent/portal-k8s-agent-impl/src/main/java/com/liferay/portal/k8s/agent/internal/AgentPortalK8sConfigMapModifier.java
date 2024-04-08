@@ -216,6 +216,10 @@ public class AgentPortalK8sConfigMapModifier
 		}
 	}
 
+	private Map<String, String> _copy(Map<String, String> annotations) {
+		return new TreeMap<>(_nonnull(annotations));
+	}
+
 	private void _delete(ConfigMap configMap) {
 		if (_log.isInfoEnabled()) {
 			_log.info("Deleting config map " + configMap);
@@ -257,28 +261,6 @@ public class AgentPortalK8sConfigMapModifier
 		}
 	}
 
-	private Map<String, String> _getAnnotations(ConfigMap configMap) {
-		Map<String, String> annotations = _getMapImpl();
-
-		ObjectMeta objectMeta = configMap.getMetadata();
-
-		if (objectMeta != null) {
-			annotations = objectMeta.getAnnotations();
-		}
-
-		return annotations;
-	}
-
-	private Map<String, String> _getBinaryData(ConfigMap configMap) {
-		Map<String, String> binaryData = configMap.getBinaryData();
-
-		if (binaryData == null) {
-			binaryData = _getMapImpl();
-		}
-
-		return binaryData;
-	}
-
 	private Configuration _getConfiguration(String pid) throws Exception {
 		if (pid.endsWith(_FILE_EXTENSION)) {
 			pid = pid.substring(0, pid.length() - _FILE_EXTENSION.length());
@@ -304,28 +286,6 @@ public class AgentPortalK8sConfigMapModifier
 		}
 
 		return _configurationAdmin.getConfiguration(pid, StringPool.QUESTION);
-	}
-
-	private Map<String, String> _getData(ConfigMap configMap) {
-		Map<String, String> data = configMap.getData();
-
-		if (data == null) {
-			data = _getMapImpl();
-		}
-
-		return data;
-	}
-
-	private Map<String, String> _getLabels(ConfigMap configMap) {
-		Map<String, String> labels = _getMapImpl();
-
-		ObjectMeta objectMeta = configMap.getMetadata();
-
-		if (objectMeta != null) {
-			labels = objectMeta.getLabels();
-		}
-
-		return labels;
 	}
 
 	private Map<String, String> _getMapImpl() {
@@ -390,14 +350,22 @@ public class AgentPortalK8sConfigMapModifier
 		).get();
 
 		if (configMap != null) {
-			Map<String, String> annotations = _getAnnotations(configMap);
-			Map<String, String> binaryData = _getBinaryData(configMap);
-			Map<String, String> data = _getData(configMap);
-			Map<String, String> labels = _getLabels(configMap);
+			ObjectMeta objectMeta = configMap.getMetadata();
 
-			ConfigMap originalConfigMap = new ConfigMapBuilder(
-				configMap
-			).build();
+			Map<String, String> originalAnnotations = _nonnull(
+				objectMeta.getAnnotations());
+
+			Map<String, String> originalBinaryData = _nonnull(
+				configMap.getBinaryData());
+
+			Map<String, String> originalData = _nonnull(configMap.getData());
+			Map<String, String> originalLabels = _nonnull(
+				objectMeta.getLabels());
+
+			Map<String, String> annotations = _copy(originalAnnotations);
+			Map<String, String> binaryData = _copy(originalBinaryData);
+			Map<String, String> data = _copy(originalData);
+			Map<String, String> labels = _copy(originalLabels);
 
 			configMapModelConsumer.accept(
 				new ConfigMapModel() {
@@ -436,11 +404,18 @@ public class AgentPortalK8sConfigMapModifier
 
 				return Result.DELETED;
 			}
-			else if (!Objects.equals(
-						binaryData, originalConfigMap.getBinaryData()) ||
-					 !Objects.equals(data, originalConfigMap.getData())) {
+			else if (!Objects.equals(annotations, originalAnnotations) ||
+					 !Objects.equals(binaryData, originalBinaryData) ||
+					 !Objects.equals(data, originalData) ||
+					 !Objects.equals(labels, originalLabels)) {
 
 				_validateLabels(configMapName, labels);
+
+				configMap.setData(binaryData);
+				configMap.setData(data);
+
+				objectMeta.setAnnotations(annotations);
+				objectMeta.setLabels(labels);
 
 				configMap = _kubernetesClient.configMaps(
 				).withName(
@@ -536,6 +511,14 @@ public class AgentPortalK8sConfigMapModifier
 		}
 
 		return Result.CREATED;
+	}
+
+	private Map<String, String> _nonnull(Map<String, String> map) {
+		if (map == null) {
+			map = _getMapImpl();
+		}
+
+		return map;
 	}
 
 	private void _processConfiguration(

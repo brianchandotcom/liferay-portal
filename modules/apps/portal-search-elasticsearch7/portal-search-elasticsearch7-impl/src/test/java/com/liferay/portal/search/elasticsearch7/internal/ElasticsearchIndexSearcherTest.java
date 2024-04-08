@@ -48,8 +48,11 @@ public class ElasticsearchIndexSearcherTest {
 		SearchRequestBuilderFactory searchRequestBuilderFactory =
 			new SearchRequestBuilderFactoryImpl();
 
+		_indexNameBuilder = _createIndexNameBuilder();
+
 		_elasticsearchIndexSearcher = _createElasticsearchIndexSearcher(
-			searchRequestBuilderFactory);
+			_indexNameBuilder, searchRequestBuilderFactory);
+
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 	}
 
@@ -120,6 +123,7 @@ public class ElasticsearchIndexSearcherTest {
 	}
 
 	private ElasticsearchIndexSearcher _createElasticsearchIndexSearcher(
+		IndexNameBuilder indexNameBuilder,
 		SearchRequestBuilderFactory searchRequestBuilderFactory) {
 
 		ElasticsearchIndexSearcher elasticsearchIndexSearcher =
@@ -129,8 +133,7 @@ public class ElasticsearchIndexSearcherTest {
 			elasticsearchIndexSearcher, "_elasticsearchConfigurationWrapper",
 			_elasticsearchConfigurationWrapper);
 		ReflectionTestUtil.setFieldValue(
-			elasticsearchIndexSearcher, "_indexNameBuilder",
-			(IndexNameBuilder)String::valueOf);
+			elasticsearchIndexSearcher, "_indexNameBuilder", indexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchIndexSearcher, "_searchEngineAdapter",
 			_searchEngineAdapter);
@@ -144,11 +147,25 @@ public class ElasticsearchIndexSearcherTest {
 		return elasticsearchIndexSearcher;
 	}
 
+	private IndexNameBuilder _createIndexNameBuilder() {
+		IndexNameBuilder indexNameBuilder = Mockito.mock(
+			IndexNameBuilder.class);
+
+		Mockito.when(
+			indexNameBuilder.getIndexName(Mockito.anyLong())
+		).then(
+			invocation -> String.valueOf(invocation.getArgument(0, Long.class))
+		);
+
+		return indexNameBuilder;
+	}
+
 	private final DocumentFixture _documentFixture = new DocumentFixture();
 	private final ElasticsearchConfigurationWrapper
 		_elasticsearchConfigurationWrapper = Mockito.mock(
 			ElasticsearchConfigurationWrapper.class);
 	private ElasticsearchIndexSearcher _elasticsearchIndexSearcher;
+	private IndexNameBuilder _indexNameBuilder;
 	private final SearchEngineAdapter _searchEngineAdapter = Mockito.mock(
 		SearchEngineAdapter.class);
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;

@@ -29,6 +29,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
+import org.mockito.Mockito;
+
 /**
  * @author Adam Brandizzi
  */
@@ -61,8 +63,10 @@ public class ElasticsearchIndexInformationTest {
 		_companyIndexFactoryFixture = _createCompanyIndexFactoryFixture(
 			_elasticsearchConnectionFixture);
 
+		_indexNameBuilder = _createIndexNameBuilder();
+
 		_elasticsearchIndexInformation = _createElasticsearchIndexInformation(
-			_elasticsearchConnectionFixture);
+			_elasticsearchConnectionFixture, _indexNameBuilder);
 	}
 
 	@After
@@ -77,7 +81,7 @@ public class ElasticsearchIndexInformationTest {
 		long companyId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
-			_getIndexNameBuilder(companyId),
+			_indexNameBuilder.getIndexName(companyId),
 			_elasticsearchIndexInformation.getCompanyIndexName(companyId));
 	}
 
@@ -112,7 +116,8 @@ public class ElasticsearchIndexInformationTest {
 	}
 
 	private ElasticsearchIndexInformation _createElasticsearchIndexInformation(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
+		ElasticsearchClientResolver elasticsearchClientResolver,
+		IndexNameBuilder indexNameBuilder) {
 
 		ElasticsearchIndexInformation elasticsearchIndexInformation =
 			new ElasticsearchIndexInformation();
@@ -122,13 +127,23 @@ public class ElasticsearchIndexInformationTest {
 			elasticsearchClientResolver);
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchIndexInformation, "_indexNameBuilder",
-			(IndexNameBuilder)companyId -> _getIndexNameBuilder(companyId));
+			indexNameBuilder);
 
 		return elasticsearchIndexInformation;
 	}
 
-	private String _getIndexNameBuilder(long companyId) {
-		return "test-" + companyId;
+	private IndexNameBuilder _createIndexNameBuilder() {
+		IndexNameBuilder indexNameBuilder = Mockito.mock(
+			IndexNameBuilder.class);
+
+		Mockito.when(
+			indexNameBuilder.getIndexName(Mockito.anyLong())
+		).then(
+			invocation ->
+				"test-" + String.valueOf(invocation.getArgument(0, Long.class))
+		);
+
+		return indexNameBuilder;
 	}
 
 	private JSONObject _loadJSONObject(String suffix) throws Exception {
@@ -144,6 +159,7 @@ public class ElasticsearchIndexInformationTest {
 
 	private CompanyIndexFactoryFixture _companyIndexFactoryFixture;
 	private ElasticsearchIndexInformation _elasticsearchIndexInformation;
+	private IndexNameBuilder _indexNameBuilder;
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

@@ -10,6 +10,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchSearchEngine;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
@@ -17,7 +18,6 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
-import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIdIndexNameBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexFactory;
 import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexFactoryHelper;
 import com.liferay.portal.search.elasticsearch7.internal.index.IndexConfigurationDynamicUpdatesExecutor;
@@ -69,22 +69,27 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		ElasticsearchConnectionFixture elasticsearchConnectionFixture =
 			Objects.requireNonNull(_elasticsearchConnectionFixture);
 
-		CompanyIdIndexNameBuilder indexNameBuilder = _createIndexNameBuilder();
-
-		_frameworkUtilMockedStatic = _createFrameworkUtil();
+		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper =
+			_createElasticsearchConfigurationWrapper(
+				elasticsearchConnectionFixture.
+					getElasticsearchConfigurationProperties());
 
 		ElasticsearchConnectionManager elasticsearchConnectionManager =
 			_createElasticsearchConnectionManager(
+				elasticsearchConfigurationWrapper,
 				elasticsearchConnectionFixture);
 
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-		_elasticsearchSearchEngine = _createElasticsearchSearchEngine(
-			elasticsearchConnectionFixture, elasticsearchConnectionManager,
-			Mockito.mock(IndexConfigurationDynamicUpdatesExecutor.class),
-			indexNameBuilder,
+		IndexNameBuilder indexNameBuilder = _createIndexNameBuilder(
 			elasticsearchConnectionFixture.
 				getElasticsearchConfigurationProperties());
 
+		_elasticsearchConnectionManager = elasticsearchConnectionManager;
+		_elasticsearchSearchEngine = _createElasticsearchSearchEngine(
+			elasticsearchConnectionFixture, elasticsearchConfigurationWrapper,
+			elasticsearchConnectionManager,
+			Mockito.mock(IndexConfigurationDynamicUpdatesExecutor.class),
+			indexNameBuilder);
+		_frameworkUtilMockedStatic = _createFrameworkUtil();
 		_indexNameBuilder = indexNameBuilder;
 	}
 
@@ -115,21 +120,9 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		}
 	}
 
-	protected static ElasticsearchConfigurationWrapper
-		createElasticsearchConfigurationWrapper(
-			Map<String, Object> properties) {
-
-		return new ElasticsearchConfigurationWrapper() {
-			{
-				setElasticsearchConfiguration(
-					ConfigurableUtil.createConfigurable(
-						ElasticsearchConfiguration.class, properties));
-			}
-		};
-	}
-
 	private CompanyIndexFactory _createCompanyIndexFactory(
-		IndexNameBuilder indexNameBuilder, Map<String, Object> properites) {
+		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper,
+		IndexNameBuilder indexNameBuilder) {
 
 		_companyIndexFactory = new CompanyIndexFactory();
 
@@ -137,7 +130,7 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 
 		ReflectionTestUtil.setFieldValue(
 			_companyIndexFactoryHelper, "_elasticsearchConfigurationWrapper",
-			createElasticsearchConfigurationWrapper(properites));
+			elasticsearchConfigurationWrapper);
 		ReflectionTestUtil.setFieldValue(
 			_companyIndexFactoryHelper, "_indexNameBuilder", indexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
@@ -154,7 +147,7 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 
 		ReflectionTestUtil.setFieldValue(
 			_companyIndexFactory, "_elasticsearchConfigurationWrapper",
-			createElasticsearchConfigurationWrapper(properites));
+			elasticsearchConfigurationWrapper);
 
 		ReflectionTestUtil.invoke(
 			_companyIndexFactory, "activate",
@@ -164,16 +157,30 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		return _companyIndexFactory;
 	}
 
+	private ElasticsearchConfigurationWrapper
+		_createElasticsearchConfigurationWrapper(
+			Map<String, Object> configurationProperties) {
+
+		return new ElasticsearchConfigurationWrapper() {
+			{
+				setElasticsearchConfiguration(
+					ConfigurableUtil.createConfigurable(
+						ElasticsearchConfiguration.class,
+						configurationProperties));
+			}
+		};
+	}
+
 	private ElasticsearchConnectionManager
 		_createElasticsearchConnectionManager(
+			ElasticsearchConfigurationWrapper
+				elasticsearchConfigurationWrapper1,
 			ElasticsearchConnectionFixture elasticsearchConnectionFixture) {
 
 		return new ElasticsearchConnectionManager() {
 			{
 				elasticsearchConfigurationWrapper =
-					createElasticsearchConfigurationWrapper(
-						elasticsearchConnectionFixture.
-							getElasticsearchConfigurationProperties());
+					elasticsearchConfigurationWrapper1;
 
 				ElasticsearchConnection elasticsearchConnection =
 					elasticsearchConnectionFixture.
@@ -189,10 +196,11 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 
 	private ElasticsearchSearchEngine _createElasticsearchSearchEngine(
 		ElasticsearchClientResolver elasticsearchClientResolver,
+		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper,
 		ElasticsearchConnectionManager elasticsearchConnectionManager,
 		IndexConfigurationDynamicUpdatesExecutor
 			indexConfigurationDynamicUpdatesExecutor,
-		IndexNameBuilder indexNameBuilder, Map<String, Object> properites) {
+		IndexNameBuilder indexNameBuilder) {
 
 		ElasticsearchSearchEngine elasticsearchSearchEngine =
 			new ElasticsearchSearchEngine();
@@ -206,10 +214,10 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 			indexConfigurationDynamicUpdatesExecutor);
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchEngine, "_indexFactory",
-			_createCompanyIndexFactory(indexNameBuilder, properites));
+			_createCompanyIndexFactory(
+				elasticsearchConfigurationWrapper, indexNameBuilder));
 		ReflectionTestUtil.setFieldValue(
-			elasticsearchSearchEngine, "_indexNameBuilder",
-			(IndexNameBuilder)String::valueOf);
+			elasticsearchSearchEngine, "_indexNameBuilder", indexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchEngine, "_searchEngineAdapter",
 			_createSearchEngineAdapter(elasticsearchClientResolver));
@@ -232,12 +240,32 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		return frameworkUtilMockedStatic;
 	}
 
-	private CompanyIdIndexNameBuilder _createIndexNameBuilder() {
-		return new CompanyIdIndexNameBuilder() {
-			{
-				setIndexNamePrefix(null);
-			}
-		};
+	private IndexNameBuilder _createIndexNameBuilder(
+		Map<String, Object> configurationProperties) {
+
+		String indexNamePrefix = null;
+
+		if (MapUtil.isNotEmpty(configurationProperties)) {
+			indexNamePrefix = MapUtil.getString(
+				configurationProperties, "indexNamePrefix");
+		}
+
+		IndexNameBuilder indexNameBuilder = Mockito.mock(
+			IndexNameBuilder.class);
+
+		Mockito.when(
+			indexNameBuilder.getIndexName(Mockito.anyLong())
+		).then(
+			invocation -> String.valueOf(invocation.getArgument(0, Long.class))
+		);
+
+		Mockito.when(
+			indexNameBuilder.getIndexNamePrefix()
+		).thenReturn(
+			indexNamePrefix
+		);
+
+		return indexNameBuilder;
 	}
 
 	private SearchEngineAdapter _createSearchEngineAdapter(

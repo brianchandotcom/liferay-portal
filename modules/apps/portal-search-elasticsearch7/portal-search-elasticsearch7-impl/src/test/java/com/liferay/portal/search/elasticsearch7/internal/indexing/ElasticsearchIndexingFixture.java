@@ -99,18 +99,18 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		SearchEngineAdapter searchEngineAdapter =
 			elasticsearchEngineAdapterFixture.getSearchEngineAdapter();
 
-		IndexNameBuilder indexNameBuilder = String::valueOf;
+		IndexNameBuilder indexNameBuilder = _createIndexNameBuilder();
 
 		Localization localization = new LocalizationImpl();
 
 		ElasticsearchIndexSearcher elasticsearchIndexSearcher =
 			_createIndexSearcher(
-				_elasticsearchFixture, searchEngineAdapter, indexNameBuilder,
-				localization);
+				_elasticsearchFixture, indexNameBuilder, localization,
+				searchEngineAdapter);
 
 		IndexWriter indexWriter = _createIndexWriter(
-			_elasticsearchFixture, searchEngineAdapter, indexNameBuilder,
-			localization);
+			_elasticsearchFixture, indexNameBuilder, localization,
+			searchEngineAdapter);
 
 		_indexSearcher = elasticsearchIndexSearcher;
 		_indexWriter = indexWriter;
@@ -169,8 +169,8 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 	}
 
 	private QuerySuggester _createElasticsearchQuerySuggester(
-		SearchEngineAdapter searchEngineAdapter,
-		IndexNameBuilder indexNameBuilder, Localization localization) {
+		IndexNameBuilder indexNameBuilder, Localization localization,
+		SearchEngineAdapter searchEngineAdapter) {
 
 		ElasticsearchQuerySuggester elasticsearchQuerySuggester =
 			new ElasticsearchQuerySuggester() {
@@ -190,8 +190,8 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 
 	private ElasticsearchSpellCheckIndexWriter
 		_createElasticsearchSpellCheckIndexWriter(
-			SearchEngineAdapter searchEngineAdapter,
-			IndexNameBuilder indexNameBuilder, Localization localization) {
+			IndexNameBuilder indexNameBuilder, Localization localization,
+			SearchEngineAdapter searchEngineAdapter) {
 
 		ElasticsearchSpellCheckIndexWriter elasticsearchSpellCheckIndexWriter =
 			new ElasticsearchSpellCheckIndexWriter() {
@@ -225,10 +225,23 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 			new IndexName(indexNameBuilder.getIndexName(_companyId)));
 	}
 
+	private IndexNameBuilder _createIndexNameBuilder() {
+		IndexNameBuilder indexNameBuilder = Mockito.mock(
+			IndexNameBuilder.class);
+
+		Mockito.when(
+			indexNameBuilder.getIndexName(Mockito.anyLong())
+		).then(
+			invocation -> String.valueOf(invocation.getArgument(0, Long.class))
+		);
+
+		return indexNameBuilder;
+	}
+
 	private ElasticsearchIndexSearcher _createIndexSearcher(
 		ElasticsearchFixture elasticsearchFixture,
-		SearchEngineAdapter searchEngineAdapter,
-		IndexNameBuilder indexNameBuilder, Localization localization) {
+		IndexNameBuilder indexNameBuilder, Localization localization,
+		SearchEngineAdapter searchEngineAdapter) {
 
 		ElasticsearchIndexSearcher elasticsearchIndexSearcher =
 			new ElasticsearchIndexSearcher();
@@ -245,7 +258,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchIndexSearcher, "_querySuggester",
 			_createElasticsearchQuerySuggester(
-				searchEngineAdapter, indexNameBuilder, localization));
+				indexNameBuilder, localization, searchEngineAdapter));
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchIndexSearcher, "_searchEngineAdapter",
 			searchEngineAdapter);
@@ -261,8 +274,8 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 
 	private IndexWriter _createIndexWriter(
 		ElasticsearchFixture elasticsearchFixture,
-		SearchEngineAdapter searchEngineAdapter,
-		IndexNameBuilder indexNameBuilder, Localization localization) {
+		IndexNameBuilder indexNameBuilder, Localization localization,
+		SearchEngineAdapter searchEngineAdapter) {
 
 		ElasticsearchIndexWriter elasticsearchIndexWriter =
 			new ElasticsearchIndexWriter();
@@ -283,7 +296,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchIndexWriter, "_spellCheckIndexWriter",
 			_createElasticsearchSpellCheckIndexWriter(
-				searchEngineAdapter, indexNameBuilder, localization));
+				indexNameBuilder, localization, searchEngineAdapter));
 
 		return elasticsearchIndexWriter;
 	}

@@ -754,7 +754,7 @@ public class LayoutServiceContextHelperImpl
 				Theme theme = _layout.getTheme();
 
 				if (theme == null) {
-					theme = _themeLocalService.fetchTheme(
+					theme = _themeLocalService.getTheme(
 						company.getCompanyId(), layoutSet.getThemeId());
 				}
 				else if (_log.isDebugEnabled()) {

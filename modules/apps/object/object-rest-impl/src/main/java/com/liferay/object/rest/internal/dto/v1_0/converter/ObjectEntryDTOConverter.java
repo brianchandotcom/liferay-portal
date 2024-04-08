@@ -716,12 +716,11 @@ public class ObjectEntryDTOConverter
 					Map<String, Serializable> objectField_i18n =
 						(Map<String, Serializable>)map.get(i18nObjectFieldName);
 
-					Serializable localizedObjectFieldName =
-						objectField_i18n.get(
-							dtoConverterContextLocale.toString());
+					Serializable localizedSerializable = objectField_i18n.get(
+						dtoConverterContextLocale.toString());
 
-					if (localizedObjectFieldName != null) {
-						serializable = localizedObjectFieldName;
+					if (localizedSerializable != null) {
+						serializable = localizedSerializable;
 					}
 				}
 			}

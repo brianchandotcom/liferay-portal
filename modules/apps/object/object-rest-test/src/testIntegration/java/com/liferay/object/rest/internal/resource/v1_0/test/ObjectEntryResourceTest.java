@@ -5667,32 +5667,43 @@ public class ObjectEntryResourceTest {
 	public void testLocalizedObjectFieldWithEmptyAcceptLanguage()
 		throws Exception {
 
-		String pluralObjectName = StringUtil.lowerCaseFirstLetter(
-			_objectDefinition5.getShortName());
-
-		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"query",
-				StringBundler.concat(
-					"{ c { ", pluralObjectName, "s { items { ",
-					_OBJECT_FIELD_NAME_TEXT, StringPool.SPACE,
-					_OBJECT_FIELD_NAME_LONG_TEXT, StringPool.SPACE,
-					_OBJECT_FIELD_NAME_RICH_TEXT, " }}}}")
-			).toString(),
-			"graphql",
-			HashMapBuilder.put(
-				"Accept-Language", ""
-			).build(),
-			Http.Method.POST);
-
-		JSONArray jsonArray = jsonObject1.getJSONArray("errors");
-
-		JSONObject jsonObject2 = jsonArray.getJSONObject(0);
-
 		Assert.assertEquals(
-			"Exception while fetching data (/c/" + pluralObjectName +
-				"s) : Locale not defined",
-			jsonObject2.getString("message"));
+			JSONUtil.put(
+				"data",
+				JSONUtil.put(
+					"c",
+					JSONUtil.put(
+						StringUtil.lowerCaseFirstLetter(
+							_objectDefinition5.getShortName()) + "s",
+						JSONUtil.put(
+							"items",
+							JSONUtil.putAll(
+								JSONUtil.put(
+									_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
+								).put(
+									_OBJECT_FIELD_NAME_RICH_TEXT,
+									"<p>richTextEng</p>"
+								).put(
+									_OBJECT_FIELD_NAME_TEXT, "textEng"
+								)))))
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"query",
+					StringBundler.concat(
+						"{ c { ",
+						StringUtil.lowerCaseFirstLetter(
+							_objectDefinition5.getShortName()),
+						"s { items { ", _OBJECT_FIELD_NAME_LONG_TEXT,
+						StringPool.SPACE, _OBJECT_FIELD_NAME_RICH_TEXT,
+						StringPool.SPACE, _OBJECT_FIELD_NAME_TEXT, " }}}}")
+				).toString(),
+				"graphql",
+				HashMapBuilder.put(
+					"Accept-Language", ""
+				).build(),
+				Http.Method.POST
+			).toString());
 	}
 
 	@Test

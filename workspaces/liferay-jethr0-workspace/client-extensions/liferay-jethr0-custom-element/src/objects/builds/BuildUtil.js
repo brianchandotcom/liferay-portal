@@ -6,46 +6,34 @@
 import liferayRequest from '../../services/liferayRequest';
 import Build from './Build';
 
-export function getBuildById({id, setBuild}) {
-	liferayRequest({urlPath: '/o/c/builds/' + id})
-		.then((request) => request.text())
-		.then((result) => {
-			const resultJSON = JSON.parse(result);
+export async function getBuildById({id, setBuild}) {
+	const response = await liferayRequest({urlPath: '/o/c/builds/' + id});
 
-			const build = new Build(resultJSON);
+	const results = JSON.stringify(await response.text());
 
-			if (build && setBuild) {
-				setBuild(build);
-			}
-		})
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
+	const build = new Build(results);
+
+	if (build && setBuild) {
+		setBuild(build);
+	}
 }
 
-export function getBuildsByJob({jobId, setBuilds}) {
+export async function getBuildsByJob({job, setBuilds}) {
 	const urlSearchParams = new URLSearchParams({
-		filter: "r_jobToBuilds_c_jobId eq '" + jobId + "'",
+		filter: "r_jobToBuilds_c_jobId eq '" + job.id + "'",
 	});
 
-	liferayRequest({urlPath: '/o/c/builds', urlSearchParams})
-		.then((request) => request.text())
-		.then((result) => {
-			const resultJSON = JSON.parse(result);
+	const response = await liferayRequest({urlPath: '/o/c/builds', urlSearchParams});
 
-			const builds = [];
+	const result = JSON.parse(await response.text());
 
-			resultJSON.items.forEach((item) => {
-				builds.push(new Build(item));
-			});
+	const builds = [];
 
-			if (builds && setBuilds) {
-				setBuilds(builds);
-			}
-		})
-		.catch((error) => {
-			// eslint-disable-next-line no-console
-			console.log(error);
-		});
+	result.items.forEach((item) => {
+		builds.push(new Build(item));
+	});
+
+	if (builds && setBuilds) {
+		setBuilds(builds);
+	}
 }

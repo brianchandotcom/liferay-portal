@@ -469,23 +469,8 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 			JsonNode templateJsonNode = _objectMapper.readTree(
 				templateLCPJsonContent);
 
-			JsonNode kindNodeJsonNode = templateJsonNode.get("kind");
-
-			String oldKind = kindNodeJsonNode.asText();
-
 			JsonNodeUtil.overrideJsonNodeValues(
 				templateJsonNode, _objectMapper.readTree(lcpJsonContent));
-
-			kindNodeJsonNode = templateJsonNode.get("kind");
-
-			String newKind = kindNodeJsonNode.asText();
-
-			if (!Objects.equals(oldKind, newKind)) {
-				throw new GradleException(
-					String.format(
-						"LCP.json: %s must be %s", StringUtil.quote("kind"),
-						StringUtil.quote(oldKind)));
-			}
 
 			ObjectWriter objectWriter =
 				_objectMapper.writerWithDefaultPrettyPrinter();

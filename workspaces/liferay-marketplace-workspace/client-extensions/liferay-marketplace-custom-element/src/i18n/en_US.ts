@@ -53,6 +53,7 @@ export default {
 	'cloud-compatible': 'Cloud Compatible?',
 	'cloud-upload': 'Cloud Upload',
 	'comments': 'Comments',
+	'company-profile': 'Company Profile',
 	'compatible-offering': 'Compatible Offering',
 	'complete-publisher-account-request': 'Complete Publisher Account Request',
 	'confirm': 'Confirm',
@@ -61,9 +62,11 @@ export default {
 	'contact-publisher': 'Contact Publisher',
 	'contact-sales': 'Contact Sales',
 	'contact-support': 'Contact Support',
+	'contact-us': 'Contact Us',
 	'content-policy': 'Content policy',
 	'continue': 'Continue',
 	'coupon-code': 'Coupon Code',
+	'create': 'Create',
 	'create-a-cloud-app-to-be-delivered-as-a-live-service':
 		'Create a Cloud App to be delivered as a Live Service',
 	'create-a-dxp-app-to-be-delivered-as-a-download':
@@ -82,6 +85,10 @@ export default {
 	'dashboard': 'Dashboard',
 	'deactivate': 'Deactivate',
 	'decline': 'Decline',
+	'define-contact-us-information-for-your-solution-this-will-inform-users-about-this-versions-updates-on-the-storefront':
+		'Define contact us information for your solution. This will inform users about this version’s updates on the storefront.',
+	'define-profile-company-information-for-your-solution-this-will-inform-users-about-this-versions-updates-on-the-storefront':
+		'Define profile company information for your solution. This will inform users about this version’s updates on the storefront.',
 	'define-the-solution-profile': 'Define the solution profile',
 	'delete': 'Delete',
 	'description': 'Description',
@@ -203,8 +210,13 @@ export default {
 	'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin':
 		'Please be sure to specify Liferay compatibility through the appropriate properties or XML files in your plugin.',
 	'please-fill-in-a-valid-email': 'Please fill in a valid email',
+	'please-review-before-submitting-once-sent-you-will-not-be-able-to-edit-any-information-until-this-submission-is-completely-reviewed-by-liferay':
+		'Please, review before submitting. Once sent, you will not be able to edit any information until this submission is completely reviewed by Liferay.',
 	'privacy-policy': 'Privacy Policy',
+	'profile': 'Profile',
 	'provide-app-build': 'Provide app build',
+	'provide-company-profile-details': 'Provide company profile details',
+	'provide-contact-us-details': 'Provide contact us details',
 	'publish-apps-and-they-will-show-up-here':
 		'Publish apps and they will show up here',
 	'publish-apps-to-the-liferay-marketplace':
@@ -233,6 +245,7 @@ export default {
 	'return-to-marketplace': 'Return to Marketplace',
 	'review-and-accept-the-legal-agreement-between-you-and-liferay-before-proceeding-you-are-about-to-create-a-new-solution-submission':
 		'Review and accept the legal agreement between you and Liferay before proceeding, You are about to create a new solution submission.',
+	'review-and-submit-solution': 'Review and submit solution',
 	'review-the-new-publisher-info-and-the-liferay-marketplace-terms-before-proceeding':
 		'Review the new publisher info and the Liferay Marketplace terms before proceeding',
 	'search': 'Search',
@@ -247,12 +260,15 @@ export default {
 	'self-managed': 'Self-Managed',
 	'send-request': 'Send Request',
 	'sign-in-with-a-different-account': 'Sign in with a different Account',
+	'solution-details': 'Solution Details',
+	'solution-header': 'Solution Header',
 	'solutions': 'Solutions',
 	'solutions-info': 'Solutions Info',
 	'sorry-there-are-no-results-found': 'Sorry, there are no results found',
 	'start-date': 'Start Date',
 	'start-trial': 'Start Trial',
 	'status': 'Status',
+	'submit': 'Submit',
 	'subtotal': 'Subtotal',
 	'subtotal-discount': 'Subtotal Discount',
 	'success': 'success',

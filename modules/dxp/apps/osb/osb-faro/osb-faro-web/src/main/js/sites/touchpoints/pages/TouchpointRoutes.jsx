@@ -92,7 +92,9 @@ function TouchpointRoutes({className, router}) {
 					subtitle={
 						<TextTruncate title={decodedTouchpoint}>
 							<ClayLink href={decodedTouchpoint} target='_blank'>
-								{decodedTouchpoint}
+								{/* It should have double decode for cases when there are special characters */}
+
+								{decodeURIComponent(decodedTouchpoint)}
 							</ClayLink>
 						</TextTruncate>
 					}

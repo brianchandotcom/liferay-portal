@@ -810,7 +810,7 @@ export const sitePagesListColumns = {
 					toRoute(route, {
 						channelId,
 						groupId,
-						touchpoint: assetId,
+						touchpoint: encodeURIComponent(assetId),
 						...(assetTitle && {
 							title: assetTitle
 						})

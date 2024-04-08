@@ -1,5 +1,8 @@
 apply plugin: "com.gradle.plugin-publish"
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 String gradleVersion = "8.5"
 
 if (Boolean.getBoolean("gradle.test.enabled")) {

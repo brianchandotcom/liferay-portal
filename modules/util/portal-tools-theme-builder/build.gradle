@@ -3,6 +3,9 @@ apply plugin: "com.liferay.maven.plugin.builder"
 task writeParentThemeDependencies
 task writeTestThemeDependencies
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 buildPluginDescriptor {
 	configurationScopeMapping "mavenCompile", "compile"
 

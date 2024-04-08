@@ -2,6 +2,9 @@ import com.liferay.gradle.util.FileUtil
 
 task processSanitizerConfiguration(type: Copy)
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 File sanitizerConfigurationFile = new File("src/main/resources/sanitizer-configuration.xml")
 
 dependencies {

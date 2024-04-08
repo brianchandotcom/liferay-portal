@@ -1,5 +1,8 @@
 apply plugin: "com.liferay.maven.plugin.builder"
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 String h2Version = "2.1.212"
 
 buildPluginDescriptor {

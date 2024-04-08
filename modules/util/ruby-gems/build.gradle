@@ -3,6 +3,9 @@ import com.liferay.gradle.util.OSDetector
 
 task downloadGems
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 String sassVersion = "3.5.5"
 
 String compassUrl = "https://rubygems.org/gems/sass-${sassVersion}.gem"

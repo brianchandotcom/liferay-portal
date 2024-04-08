@@ -6,6 +6,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
@@ -146,10 +147,37 @@ public class PublishLayoutMVCActionCommand
 
 			LayoutSet layoutSet = layout.getLayoutSet();
 
-			if (layoutSet.isLayoutSetPrototypeLinkActive()) {
-				UnicodeProperties updatedTypeSettingsUnicodeProperties =
-					layout.getTypeSettingsProperties();
+			UnicodeProperties updatedTypeSettingsUnicodeProperties =
+				layout.getTypeSettingsProperties();
 
+			if (originalTypeSettingsUnicodeProperties.containsKey(
+					LayoutTypePortletConstants.SITEMAP_CHANGEFREQ)) {
+
+				updatedTypeSettingsUnicodeProperties.put(
+					LayoutTypePortletConstants.SITEMAP_CHANGEFREQ,
+					originalTypeSettingsUnicodeProperties.get(
+						LayoutTypePortletConstants.SITEMAP_CHANGEFREQ));
+			}
+
+			if (originalTypeSettingsUnicodeProperties.containsKey(
+					LayoutTypePortletConstants.SITEMAP_INCLUDE)) {
+
+				updatedTypeSettingsUnicodeProperties.put(
+					LayoutTypePortletConstants.SITEMAP_INCLUDE,
+					originalTypeSettingsUnicodeProperties.get(
+						LayoutTypePortletConstants.SITEMAP_INCLUDE));
+			}
+
+			if (originalTypeSettingsUnicodeProperties.containsKey(
+					LayoutTypePortletConstants.SITEMAP_PRIORITY)) {
+
+				updatedTypeSettingsUnicodeProperties.put(
+					LayoutTypePortletConstants.SITEMAP_PRIORITY,
+					originalTypeSettingsUnicodeProperties.get(
+						LayoutTypePortletConstants.SITEMAP_PRIORITY));
+			}
+
+			if (layoutSet.isLayoutSetPrototypeLinkActive()) {
 				if (originalTypeSettingsUnicodeProperties.containsKey(
 						Sites.LAST_MERGE_LAYOUT_MODIFIED_TIME)) {
 

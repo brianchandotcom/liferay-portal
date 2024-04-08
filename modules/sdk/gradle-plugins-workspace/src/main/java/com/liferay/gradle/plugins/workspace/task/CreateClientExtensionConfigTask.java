@@ -804,10 +804,6 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	private String _validateAndGetClassificationGrouping(
 		Set<ClientExtension> clientExtensions) {
 
-		if (clientExtensions.isEmpty()) {
-			return "unclassified";
-		}
-
 		Set<String> classifications = new HashSet<>();
 
 		clientExtensions.forEach(

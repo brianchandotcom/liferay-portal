@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.search.Document;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -58,6 +60,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.ThemeFactoryUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
@@ -187,6 +190,67 @@ public class LayoutModelDocumentContributorTest {
 			assetEntry, journalArticle, layout, portletId);
 
 		_assertReindex(content, layout);
+	}
+
+	@Test
+	public void testReindexPublishedLayoutLayoutSetThemeNotAvailable()
+		throws Exception {
+
+		LayoutSet layoutSet = _group.getPublicLayoutSet();
+
+		_layoutSetLocalService.updateLookAndFeel(
+			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+			"not_available_theme_id", layoutSet.getColorSchemeId(),
+			layoutSet.getCss());
+
+		String elementText = RandomTestUtil.randomString();
+
+		Layout layout = _addTypeContentLayout(elementText, true);
+
+		List<LogEntry> logEntries = _reindexLogEntries(layout);
+
+		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+
+		_assertSearch(elementText, layout.getPlid());
+	}
+
+	@Test
+	public void testReindexPublishedLayoutSpecificThemeAndLayoutSetThemeNotAvailable()
+		throws Exception {
+
+		LayoutSet layoutSet = _group.getPublicLayoutSet();
+
+		_layoutSetLocalService.updateLookAndFeel(
+			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+			"not_available_theme_id", layoutSet.getColorSchemeId(),
+			layoutSet.getCss());
+
+		String elementText = RandomTestUtil.randomString();
+
+		Layout layout = _addTypeContentLayout(
+			elementText, true,
+			ThemeFactoryUtil.getDefaultRegularThemeId(
+				TestPropsValues.getCompanyId()));
+
+		List<LogEntry> logEntries = _reindexLogEntries(layout);
+
+		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+
+		_assertSearch(elementText, layout.getPlid());
+	}
+
+	@Test
+	public void testReindexPublishedLayoutThemeNotAvailable() throws Exception {
+		String elementText = RandomTestUtil.randomString();
+
+		Layout layout = _addTypeContentLayout(
+			elementText, true, "not_available_theme_id");
+
+		List<LogEntry> logEntries = _reindexLogEntries(layout);
+
+		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+
+		_assertSearch(elementText, layout.getPlid());
 	}
 
 	@Test
@@ -393,12 +457,26 @@ public class LayoutModelDocumentContributorTest {
 	private Layout _addTypeContentLayout(String elementText, boolean publish)
 		throws Exception {
 
+		return _addTypeContentLayout(elementText, publish, null);
+	}
+
+	private Layout _addTypeContentLayout(
+			String elementText, boolean publish, String themeId)
+		throws Exception {
+
 		String html =
 			"<h1 data-lfr-editable-id=\"element-text\" " +
 				"data-lfr-editable-type=\"text\">Heading Example</h1>";
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		Layout draftLayout = _addFragmentToLayout(elementText, html, layout);
+
+		if (themeId != null) {
+			draftLayout = _layoutLocalService.updateLookAndFeel(
+				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
+				draftLayout.getLayoutId(), themeId,
+				draftLayout.getColorSchemeId(), draftLayout.getCss());
+		}
 
 		if (publish) {
 			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
@@ -579,6 +657,9 @@ public class LayoutModelDocumentContributorTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	private Locale _locale;
 

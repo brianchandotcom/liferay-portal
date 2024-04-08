@@ -6,6 +6,7 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
 <liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
 <liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
 <liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />

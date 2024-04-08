@@ -88,7 +88,7 @@ public class ObjectDefinitionServiceImpl
 			String externalReferenceCode, long userId, long objectFolderId,
 			boolean enableComments, Map<Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey,
-			Map<Locale, String> pluralLabelMap, String scope,
+			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
 			List<ObjectField> objectFields)
 		throws PortalException {
 
@@ -103,8 +103,8 @@ public class ObjectDefinitionServiceImpl
 		return objectDefinitionLocalService.addSystemObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, null, null,
 			enableComments, labelMap, true, name, panelAppOrder,
-			panelCategoryKey, null, null, pluralLabelMap, scope, null, 1,
-			WorkflowConstants.STATUS_DRAFT, objectFields);
+			panelCategoryKey, null, null, pluralLabelMap, portlet, scope, null,
+			1, WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
 	@Override

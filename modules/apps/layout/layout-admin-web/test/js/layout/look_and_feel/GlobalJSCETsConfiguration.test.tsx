@@ -63,6 +63,40 @@ describe('GlobalJSCETsConfiguration', () => {
 		await screen.findByText('Nice Global JS');
 	});
 
+	it('renders a dropdown with default, async and defer options for js global extensions', async () => {
+		render(
+			<GlobalJSCETsConfiguration
+				globalJSCETSelectorURL=""
+				globalJSCETs={[
+					{
+						cetExternalReferenceCode: 'niceId',
+						inherited: false,
+						inheritedLabel: '',
+						name: 'Nice Global JS',
+					},
+				]}
+				portletNamespace=""
+				selectGlobalJSCETsEventName=""
+			/>
+		);
+
+		const selectElement = document.querySelector('.load-type-select');
+
+		expect(selectElement.value).toBe('default');
+
+		fireEvent.change(selectElement, {
+			target: {value: 'async'},
+		});
+
+		expect(selectElement.value).toBe('async');
+
+		fireEvent.change(selectElement, {
+			target: {value: 'defer'},
+		});
+
+		expect(selectElement.value).toBe('defer');
+	});
+
 	it('renders a hidden input with the list of selected extensions', async () => {
 		render(
 			<GlobalJSCETsConfiguration

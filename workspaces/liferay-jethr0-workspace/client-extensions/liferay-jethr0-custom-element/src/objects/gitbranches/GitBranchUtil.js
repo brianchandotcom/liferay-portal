@@ -23,7 +23,10 @@ export async function getUpstreamGitBranches({setUpstreamGitBranches}) {
 		filter: "type eq 'upstream'",
 	});
 
-	const response = await liferayRequest({urlPath: '/o/c/gitbranches', urlSearchParams});
+	const response = await liferayRequest({
+		urlPath: '/o/c/gitbranches',
+		urlSearchParams,
+	});
 
 	const result = JSON.parse(await response.text());
 

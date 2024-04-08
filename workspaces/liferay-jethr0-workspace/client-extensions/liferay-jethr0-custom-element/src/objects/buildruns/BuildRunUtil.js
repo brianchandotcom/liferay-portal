@@ -23,7 +23,10 @@ export async function getBuildRunsByBuildId({buildId, setBuildRuns}) {
 		filter: "r_buildToBuildRuns_c_buildId eq '" + buildId + "'",
 	});
 
-	const response = await liferayRequest({urlPath: '/o/c/buildruns', urlSearchParams});
+	const response = await liferayRequest({
+		urlPath: '/o/c/buildruns',
+		urlSearchParams,
+	});
 
 	const result = JSON.parse(await response.text());
 

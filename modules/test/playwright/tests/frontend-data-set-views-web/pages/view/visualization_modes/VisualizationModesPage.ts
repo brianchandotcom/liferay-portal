@@ -20,6 +20,7 @@ export class VisualizationModesPage {
 	readonly fieldSelectModalContainer: Locator;
 	readonly listVisualizationModeContainer: Locator;
 	readonly page: Page;
+	private tableVisualizationModeContainer: Locator;
 	private readonly toastContainer: Locator;
 	private readonly viewPage: ViewPage;
 
@@ -40,6 +41,9 @@ export class VisualizationModesPage {
 		);
 		this.fieldSelectModalContainer = page.locator('.field-select-modal');
 		this.page = page;
+		this.tableVisualizationModeContainer = page.locator(
+			'.orderable-table-sheet'
+		);
 		this.toastContainer = page.locator('.alert-container');
 		this.viewPage = new ViewPage(page);
 	}

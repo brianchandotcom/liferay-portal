@@ -1,19 +1,14 @@
 {
 	"pageElement": {
-		"id": "1bf9b454-9671-aaee-2638-8111b5a256ff",
+		"id": "e80d27fd-f68e-d1a0-50c7-98fcb27a8867",
 		"pageElements": [
 			{
 				"definition": {
-					"cssClasses": [
-						"learn-banner"
-					],
-					"fragmentStyle": {
-						"paddingBottom": "3"
-					},
+					"cssClasses": ["learn-banner"],
+					"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+					"fragmentStyle": {"paddingBottom": "3"},
 					"indexed": true,
-					"layout": {
-						"paddingBottom": 1
-					}
+					"layout": {"paddingBottom": 1}
 				},
 				"id": "50e5cbf7-592e-9031-1548-ef245ce8ce89",
 				"pageElements": [
@@ -52,8 +47,7 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-												},
+												"fragmentLink": {},
 												"text": {
 													"value_i18n": {
 														"en_US": "Welcome to Liferay Learn"
@@ -62,9 +56,7 @@
 											}
 										}
 									],
-									"fragmentStyle": {
-										"marginBottom": "4"
-									},
+									"fragmentStyle": {"marginBottom": "4"},
 									"indexed": true
 								},
 								"id": "b324bbca-4911-d8a7-2b0f-f32903a800e5",
@@ -84,8 +76,7 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-												},
+												"fragmentLink": {},
 												"text": {
 													"value_i18n": {
 														"en_US": "Practical resources for learning Liferay"
@@ -94,9 +85,7 @@
 											}
 										}
 									],
-									"fragmentStyle": {
-										"marginBottom": "4"
-									},
+									"fragmentStyle": {"marginBottom": "4"},
 									"indexed": true
 								},
 								"id": "f8233e91-dffb-dc0d-1a03-6ada321a4059",
@@ -104,17 +93,14 @@
 							},
 							{
 								"definition": {
-									"cssClasses": [
-										"learn-search"
-									],
+									"cssClasses": ["learn-search"],
 									"fragmentStyle": {
 										"marginLeft": "auto",
 										"marginRight": "auto",
 										"maxWidth": "700px"
 									},
 									"widgetInstance": {
-										"widgetConfig": {
-										},
+										"widgetConfig": {},
 										"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
 									}
 								},
@@ -149,30 +135,43 @@
 				"pageElements": [
 					{
 						"definition": {
-							"cssClasses": [
-								"tab"
-							],
-							"customCSS": ".[$FRAGMENT_CLASS$] {\n.navbar-collapse{\njustify-content: center;\n}\n}",
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n.navbar-collapse{\njustify-content: center;\n}\n.show {\nz-index: 2 !important;\n}\n}",
 							"fragment": {
 								"key": "dialect-tabs",
 								"siteKey": "Liferay Learn"
 							},
 							"fragmentConfig": {
-								"defaultShowPanel": true,
 								"iconAlignment": "none",
-								"iconName": "check-circle",
-								"numberOfTabs": 2,
+								"defaultShowPanel": true,
 								"offClickHidePanel": false,
+								"iconName": "check-circle",
 								"tabActiveBarPosition": "nav-active-bar-top",
+								"tabStyle": "segment",
 								"tabDirection": "",
-								"tabStyle": "segment"
+								"numberOfTabs": 2
 							},
 							"fragmentFields": [
 								{
+									"id": "mobile-title",
+									"value": {
+										"fragmentLink": {},
+										"text": {
+											"value_i18n": {"en_US": "Browse By"}
+										}
+									}
+								},
+								{
+									"id": "mobile-title-afcw",
+									"value": {"fragmentLink": {}}
+								},
+								{
+									"id": "mobile-text",
+									"value": {"fragmentLink": {}}
+								},
+								{
 									"id": "title1",
 									"value": {
-										"fragmentLink": {
-										},
+										"fragmentLink": {},
 										"text": {
 											"value_i18n": {
 												"en_US": "Browse By Capability"
@@ -181,10 +180,18 @@
 									}
 								},
 								{
+									"id": "mobile-tab",
+									"value": {
+										"fragmentLink": {},
+										"text": {
+											"value_i18n": {"en_US": "Browse By"}
+										}
+									}
+								},
+								{
 									"id": "title2",
 									"value": {
-										"fragmentLink": {
-										},
+										"fragmentLink": {},
 										"text": {
 											"value_i18n": {
 												"en_US": "Browse By Product"
@@ -207,17 +214,13 @@
 						"id": "d4859006-c52c-516e-4337-83af8babf00f",
 						"pageElements": [
 							{
-								"definition": {
-									"fragmentDropZoneId": "1"
-								},
+								"definition": {"fragmentDropZoneId": "1"},
 								"id": "0930595e-d727-eb0c-3d18-121200c37875",
 								"pageElements": [
 									{
 										"definition": {
 											"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: var(--spacer-4);\n}",
-											"fragmentStyle": {
-												"marginTop": "4"
-											},
+											"fragmentStyle": {"marginTop": "4"},
 											"indexed": true,
 											"layout": {
 												"contentDisplay": "FlexRow",
@@ -275,8 +278,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -312,8 +314,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Cloud"
@@ -346,8 +347,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Use Liferay's Cloud infrastructure to launch your solutions more quickly and securely."
@@ -414,8 +414,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -451,8 +450,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Commerce"
@@ -485,8 +483,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Increase orders with enriching product information, easy ordering tools, and product recommendations."
@@ -553,8 +550,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -590,8 +586,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Content Management System"
@@ -624,8 +619,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Create, publish, and manage content, pages, and multimedia across different channels faster."
@@ -692,8 +686,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -729,8 +722,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Development and Tooling"
@@ -763,8 +755,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Use out-of-the-box features and development tools to deliver solutions to users faster."
@@ -831,8 +822,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -868,8 +858,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Digital Asset Management"
@@ -902,8 +891,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Use Liferay's Cloud infrastructure to launch your solutions more quickly and securely."
@@ -970,8 +958,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -1007,8 +994,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "DXP Self-Hosted Installation, Maintenance, and Administration"
@@ -1041,8 +1027,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Deploy, configure, and maintain Liferay DXP on your own infrastructure."
@@ -1109,8 +1094,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -1146,8 +1130,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Integration"
@@ -1180,8 +1163,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Unify systems, applications, and data with a single platform."
@@ -1248,8 +1230,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -1285,8 +1266,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Personalization"
@@ -1319,8 +1299,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Deliver more personalized and relevant content through enhanced segmentation, AI-generated recommendations, and A/B testing."
@@ -1387,8 +1366,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -1424,8 +1402,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Platform"
@@ -1458,8 +1435,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Send email notifications, test content updates, deliver solutions across multiple channels, and more with out-of-the-box platform features."
@@ -1526,8 +1502,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -1563,8 +1538,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Search"
@@ -1597,8 +1571,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Save users time with personalized, integrated, and organized search results."
@@ -1665,8 +1638,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -1702,8 +1674,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Security"
@@ -1736,8 +1707,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Protect users, data, and solutions with a platform designed with security in mind."
@@ -1804,8 +1774,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -1841,8 +1810,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Sites"
@@ -1875,8 +1843,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Deliver customized pages and sites on any device or channel."
@@ -1908,9 +1875,7 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {
-									"fragmentDropZoneId": "2"
-								},
+								"definition": {"fragmentDropZoneId": "2"},
 								"id": "01cccb4a-a586-f1bc-ef50-9d08c9370544",
 								"pageElements": [
 									{
@@ -1946,6 +1911,13 @@
 													{
 														"definition": {
 															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+															"fragmentLink": {
+																"href": {
+																	"value_i18n": {
+																		"en_US": "/w/analytics-cloud/index"
+																	}
+																}
+															},
 															"fragmentStyle": {
 																"backgroundColor": "colorNeutral0",
 																"borderRadius": "borderRadiusLg",
@@ -1985,8 +1957,7 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {
-																				}
+																				"fragmentLink": {}
 																			}
 																		}
 																	],
@@ -2022,8 +1993,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Analytics Cloud"
@@ -2056,8 +2026,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Understand your audience with integrated analytics for Liferay DXP."
@@ -2085,6 +2054,13 @@
 													{
 														"definition": {
 															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+															"fragmentLink": {
+																"href": {
+																	"value_i18n": {
+																		"en_US": "/w/commerce/index"
+																	}
+																}
+															},
 															"fragmentStyle": {
 																"backgroundColor": "colorNeutral0",
 																"borderRadius": "borderRadiusLg",
@@ -2124,8 +2100,7 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {
-																				}
+																				"fragmentLink": {}
 																			}
 																		}
 																	],
@@ -2161,8 +2136,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Commerce"
@@ -2195,8 +2169,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Launch modern B2B commerce experiences on Liferay DXP."
@@ -2224,6 +2197,13 @@
 													{
 														"definition": {
 															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+															"fragmentLink": {
+																"href": {
+																	"value_i18n": {
+																		"en_US": "/w/dxp/index"
+																	}
+																}
+															},
 															"fragmentStyle": {
 																"backgroundColor": "colorNeutral0",
 																"borderRadius": "borderRadiusLg",
@@ -2263,8 +2243,7 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {
-																				}
+																				"fragmentLink": {}
 																			}
 																		}
 																	],
@@ -2300,8 +2279,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "DXP"
@@ -2334,8 +2312,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Transition from legacy systems and build digital experiences on a single powerful platform."
@@ -2363,6 +2340,13 @@
 													{
 														"definition": {
 															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+															"fragmentLink": {
+																"href": {
+																	"value_i18n": {
+																		"en_US": "/w/liferay-cloud/index"
+																	}
+																}
+															},
 															"fragmentStyle": {
 																"backgroundColor": "colorNeutral0",
 																"borderRadius": "borderRadiusLg",
@@ -2402,8 +2386,7 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {
-																				}
+																				"fragmentLink": {}
 																			}
 																		}
 																	],
@@ -2439,8 +2422,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Liferay Cloud"
@@ -2473,8 +2455,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Enterprise PaaS tailored for Liferay Digital Experience Platform."
@@ -2502,6 +2483,13 @@
 													{
 														"definition": {
 															"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+															"fragmentLink": {
+																"href": {
+																	"value_i18n": {
+																		"en_US": "/w/reference/index"
+																	}
+																}
+															},
 															"fragmentStyle": {
 																"backgroundColor": "colorNeutral0",
 																"borderRadius": "borderRadiusLg",
@@ -2541,8 +2529,7 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {
-																				}
+																				"fragmentLink": {}
 																			}
 																		}
 																	],
@@ -2578,8 +2565,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Reference"
@@ -2612,8 +2598,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Documents and resources to further help implementation."
@@ -2657,9 +2642,9 @@
 		"type": "Root"
 	},
 	"settings": {
-		"masterPage": {
-			"key": "liferay-learn"
-		}
+		"colorSchemeName": "01",
+		"masterPage": {"key": "liferay-learn"},
+		"themeName": "Dialect"
 	},
-	"version": 1.0
+	"version": 1.1
 }

@@ -105,21 +105,21 @@ public class SimpleCaptchaImpl implements Captcha {
 	public boolean isEnabled(HttpServletRequest httpServletRequest) {
 		HttpSession httpSession = _getHttpSession(httpServletRequest);
 
-		int curMaxChallenges = GetterUtil.getInteger(
+		int maxChallenges = GetterUtil.getInteger(
 			httpSession.getAttribute(
 				_getHttpSessionKey(
 					_CAPTCHA_MAX_CHALLENGES, httpServletRequest)),
 			_captchaConfiguration.maxChallenges());
 
-		if (curMaxChallenges == 0) {
+		if (maxChallenges == 0) {
 			return true;
 		}
 
-		if (curMaxChallenges > 0) {
+		if (maxChallenges > 0) {
 			Integer count = (Integer)httpSession.getAttribute(
 				_getHttpSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest));
 
-			if ((count != null) && (count >= curMaxChallenges)) {
+			if ((count != null) && (count >= maxChallenges)) {
 				return false;
 			}
 
@@ -485,7 +485,7 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	private static final String _CAPTCHA_MAX_CHALLENGES =
-		"CAPTCHA_MAX_CHALLENGES";
+		SimpleCaptchaImpl.class.getName() + "#CAPTCHA_MAX_CHALLENGES";
 
 	private static final String _TAGLIB_PATH = "/captcha/simplecaptcha.jsp";
 

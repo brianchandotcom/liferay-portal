@@ -159,7 +159,7 @@ public class TestrayRunComparisonResourceImpl
 			sb.append(")");
 		}
 
-		if (testrayRunComparison.getTestrayTeamId() != 0) {
+		if (testrayRunComparison.getTestrayTeamId() != null) {
 			sb.append(" and componentToCaseResult/teamId eq '");
 			sb.append(testrayRunComparison.getTestrayTeamId());
 			sb.append("'");

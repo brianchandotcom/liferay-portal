@@ -14,6 +14,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -128,6 +129,139 @@ public class TestrayTestSuiteResourceImpl
 		return map;
 	}
 
+	private String _getTestrayBuildDescription(
+		Map<String, String> propertiesMap) {
+
+		StringBundler sb = new StringBundler(15);
+
+		if (propertiesMap.get("liferay.portal.bundle") != null) {
+			sb.append("Bundle: ");
+			sb.append(propertiesMap.get("liferay.portal.bundle"));
+			sb.append(StringPool.SEMICOLON);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		if (propertiesMap.get("liferay.plugins.git.id") != null) {
+			sb.append("Plugins hash: ");
+			sb.append(propertiesMap.get("liferay.plugins.git.id"));
+			sb.append(StringPool.SEMICOLON);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		if (propertiesMap.get("liferay.portal.branch") != null) {
+			sb.append("Portal branch: ");
+			sb.append(propertiesMap.get("liferay.portal.branch"));
+			sb.append(StringPool.SEMICOLON);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		if (propertiesMap.get("liferay.portal.git.id") != null) {
+			sb.append("Portal hash: ");
+			sb.append(propertiesMap.get("liferay.portal.git.id"));
+			sb.append(StringPool.SEMICOLON);
+		}
+
+		return sb.toString();
+	}
+
+	private long _getTestrayBuildId(
+			long companyId, Map<String, String> propertiesMap,
+			String testrayBuildName, long testrayProjectId,
+			long testrayRoutineId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				companyId, "C_Build");
+
+		List<Map<String, Serializable>> valuesList =
+			_objectEntryLocalService.getValuesList(
+				0, companyId, contextUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				_filterFactory.create(
+					StringBundler.concat(
+						"projectId eq '", testrayProjectId, "' and name eq '",
+						testrayBuildName, "'"),
+					objectDefinition),
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (ListUtil.isNotEmpty(valuesList)) {
+			Map<String, Serializable> values = valuesList.get(0);
+
+			return GetterUtil.getLong(values.get("objectEntryId"));
+		}
+
+		long testrayProductVersionId = _getTestrayProductVersionId(
+			companyId, propertiesMap.get("testray.product.version"),
+			testrayProjectId);
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			contextUser.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"description", _getTestrayBuildDescription(propertiesMap)
+			).put(
+				"dueDate", propertiesMap.get("testray.build.time")
+			).put(
+				"dueStatus", "ACTIVATED"
+			).put(
+				"gitHash", propertiesMap.get("git.id")
+			).put(
+				"githubCompareURLs", propertiesMap.get("liferay.compare.urls")
+			).put(
+				"name", testrayBuildName
+			).put(
+				"r_productVersionToBuilds_c_productVersionId",
+				testrayProductVersionId
+			).put(
+				"r_projectToBuilds_c_projectId", testrayProjectId
+			).put(
+				"r_routineToBuilds_c_routineId", testrayRoutineId
+			).build(),
+			_serviceContextHelper.getServiceContext());
+
+		return objectEntry.getObjectEntryId();
+	}
+
+	private long _getTestrayProductVersionId(
+			long companyId, String testrayProductVersionName,
+			long testrayProjectId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				companyId, "C_ProductVersion");
+
+		List<Map<String, Serializable>> valuesList =
+			_objectEntryLocalService.getValuesList(
+				0, companyId, contextUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				_filterFactory.create(
+					StringBundler.concat(
+						"projectId eq '", testrayProjectId, "' and name eq '",
+						testrayProductVersionName, "'"),
+					objectDefinition),
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (ListUtil.isNotEmpty(valuesList)) {
+			Map<String, Serializable> values = valuesList.get(0);
+
+			return GetterUtil.getLong(values.get("objectEntryId"));
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			contextUser.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", testrayProductVersionName
+			).put(
+				"r_projectToProductVersions_c_projectId", testrayProjectId
+			).build(),
+			_serviceContextHelper.getServiceContext());
+
+		return objectEntry.getObjectEntryId();
+	}
+
 	private long _getTestrayProjectId(long companyId, String testrayProjectName)
 		throws Exception {
 
@@ -203,12 +337,18 @@ public class TestrayTestSuiteResourceImpl
 
 		Map<String, String> propertiesMap = _getPropertiesMap(element);
 
-		_getTestrayRoutineId(
+		long testrayProjectId = _getTestrayProjectId(
 			contextCompany.getCompanyId(),
-			_getTestrayProjectId(
-				contextCompany.getCompanyId(),
-				propertiesMap.get("testray.project.name")),
+			propertiesMap.get("testray.project.name"));
+
+		long testrayRoutineId = _getTestrayRoutineId(
+			contextCompany.getCompanyId(), testrayProjectId,
 			propertiesMap.get("testray.build.type"));
+
+		_getTestrayBuildId(
+			contextCompany.getCompanyId(), propertiesMap,
+			propertiesMap.get("testray.build.name"), testrayProjectId,
+			testrayRoutineId);
 	}
 
 	@Reference(

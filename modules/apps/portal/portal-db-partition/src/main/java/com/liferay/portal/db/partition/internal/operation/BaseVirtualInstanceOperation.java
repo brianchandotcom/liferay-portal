@@ -28,8 +28,6 @@ public abstract class BaseVirtualInstanceOperation {
 	public void onVirtualInstance(
 		Callable<Company> callable, Map<String, Object> properties) {
 
-		String servicePid = (String)properties.get("service.pid");
-
 		try {
 			Company company = callable.call();
 
@@ -49,7 +47,7 @@ public abstract class BaseVirtualInstanceOperation {
 				"Unable to perform operation on virtual instance", exception);
 		}
 		finally {
-			_deleteConfiguration(servicePid);
+			_deleteConfiguration((String)properties.get("service.pid"));
 		}
 	}
 

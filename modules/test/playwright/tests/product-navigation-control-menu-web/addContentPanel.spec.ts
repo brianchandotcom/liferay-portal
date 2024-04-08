@@ -45,12 +45,13 @@ test('LPD-15256 Approved and scheduled web contents should be displayed in the "
 			contentStructureId,
 			approvedWebContentTitle
 		);
-		await addDraftStructuredContent(
+
+		await addDraftStructuredContent({
 			apiHelpers,
-			site.id,
 			contentStructureId,
-			draftWebContentTitle
-		);
+			siteId: site.id,
+			title: draftWebContentTitle,
+		});
 		await addExpiredStructuredContent(
 			apiHelpers,
 			site.id,

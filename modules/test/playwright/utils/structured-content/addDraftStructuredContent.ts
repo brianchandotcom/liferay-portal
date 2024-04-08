@@ -5,16 +5,21 @@
 
 import {ApiHelpers} from '../../helpers/ApiHelpers';
 
-export default function addDraftStructuredContent(
-	apiHelpers: ApiHelpers,
-	siteId: string,
-	contentStructureId: number,
-	title: string
-): Promise<StructuredContent> {
-	return apiHelpers.headlessAdminContent.postStructuredContentDraft(
-		siteId,
+export default function addDraftStructuredContent({
+	apiHelpers,
+	contentStructureId,
+	siteId,
+	title,
+}: {
+	apiHelpers: ApiHelpers;
+	contentStructureId: number;
+	siteId: string;
+	title: string;
+}): Promise<StructuredContent> {
+	return apiHelpers.headlessAdminContent.postStructuredContentDraft({
 		contentStructureId,
-		null,
-		title
-	);
+		datePublished: null,
+		siteId,
+		title,
+	});
 }

@@ -119,18 +119,34 @@ export default function UpperToolbar({
 	};
 
 	const getXMLContent = () => {
-		let currentDescription;
-		let currentElements;
-		let currentName;
-		let xmlContent;
+		if (!sourceView) {
+			const xmlDefinition = serializeDefinition(
+				xmlNamespace,
+				{
+					description: definitionDescription,
+					name: definitionName,
+					version,
+				},
+				elements.filter(isNode),
+				elements.filter(isEdge)
+			);
 
-		if (currentEditor) {
-			xmlContent = currentEditor.getData();
+			return (
+				XMLUtil.validateDefinition(xmlDefinition) && {
+					metadata: {
+						description: definitionDescription,
+						name: definitionName,
+						version,
+					},
+					xmlDefinition,
+				}
+			);
 		}
 		else {
-			if (sourceView) {
+			const xmlDefinition = currentEditor.getData();
+
+			if (XMLUtil.validateDefinition(xmlDefinition)) {
 				const deserializeUtil = new DeserializeUtil();
-				const xmlDefinition = currentEditor.getData();
 
 				deserializeUtil.updateXMLDefinition(
 					encodeURIComponent(xmlDefinition)
@@ -138,33 +154,15 @@ export default function UpperToolbar({
 
 				const metadata = deserializeUtil.getMetadata();
 
-				currentName = metadata.name;
-				setDefinitionName(currentName);
+				setDefinitionName(metadata.name);
+				setDefinitionDescription(metadata.description);
+				setElements(deserializeUtil.getElements());
 
-				currentDescription = metadata.description;
-				setDefinitionDescription(currentDescription);
-
-				currentElements = deserializeUtil.getElements();
-				setElements(currentElements);
+				return {metadata, xmlDefinition};
 			}
-			else {
-				currentDescription = definitionDescription;
-				currentElements = elements;
-			}
-
-			xmlContent = serializeDefinition(
-				xmlNamespace,
-				{
-					description: currentDescription,
-					name: currentName,
-					version,
-				},
-				currentElements.filter(isNode),
-				currentElements.filter(isEdge)
-			);
 		}
 
-		return xmlContent;
+		return false;
 	};
 
 	const handleInvalidXMLBlockingError = () => {
@@ -223,19 +221,23 @@ export default function UpperToolbar({
 			return;
 		}
 
-		if (
-			sourceView &&
-			!XMLUtil.validateDefinition(currentEditor.getData())
-		) {
+		const validXMLDefinition = getXMLContent();
+
+		if (!validXMLDefinition) {
 			handleInvalidXMLBlockingError();
 
 			return;
 		}
 
+		const {
+			metadata: {name, version},
+			xmlDefinition,
+		} = validXMLDefinition;
+
 		publishDefinitionRequest({
 			active,
-			content: getXMLContent(),
-			name: definitionName,
+			content: xmlDefinition,
+			name,
 			title: definitionTitle,
 			title_i18n: definitionTitleTranslations,
 			version,
@@ -299,19 +301,23 @@ export default function UpperToolbar({
 			return;
 		}
 
-		if (
-			sourceView &&
-			!XMLUtil.validateDefinition(currentEditor.getData())
-		) {
+		const validXMLDefinition = getXMLContent();
+
+		if (!validXMLDefinition) {
 			handleInvalidXMLBlockingError();
 
 			return;
 		}
 
+		const {
+			metadata: {name, version},
+			xmlDefinition,
+		} = validXMLDefinition;
+
 		saveDefinitionRequest({
 			active,
-			content: getXMLContent(),
-			name: definitionName,
+			content: xmlDefinition,
+			name,
 			title: definitionTitle,
 			title_i18n: definitionTitleTranslations,
 			version,

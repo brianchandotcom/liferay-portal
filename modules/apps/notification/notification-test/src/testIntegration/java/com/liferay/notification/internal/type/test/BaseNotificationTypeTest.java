@@ -192,7 +192,7 @@ public class BaseNotificationTypeTest {
 
 		role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		user2 = _userLocalService.addUser(
+		user2 = userLocalService.addUser(
 			user1.getUserId(), user1.getCompanyId(), true, null, null, true,
 			null, RandomTestUtil.randomString() + "@liferay.com",
 			user1.getLocale(), RandomTestUtil.randomString(),
@@ -582,6 +582,9 @@ public class BaseNotificationTypeTest {
 	protected static User user1;
 	protected static User user2;
 
+	@Inject
+	protected static UserLocalService userLocalService;
+
 	@DeleteAfterTestRun
 	protected NotificationQueueEntry notificationQueueEntry;
 
@@ -640,9 +643,6 @@ public class BaseNotificationTypeTest {
 
 	@Inject
 	private static ListTypeLocalService _listTypeLocalService;
-
-	@Inject
-	private static UserLocalService _userLocalService;
 
 	private Map<String, Object> _childAuthorTermValues;
 	private Map<String, Object> _generalTermValues;

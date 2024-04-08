@@ -183,18 +183,12 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		if (cmd.equals("cacheDb") || cmd.equals("cacheMulti") ||
-			cmd.equals("cacheServlet") || cmd.equals("cacheSingle") ||
-			cmd.equals("cleanUpAddToPagePermissions") ||
-			cmd.equals("cleanUpOrphanedPortletPreferences") ||
-			cmd.equals("cleanUpLayoutRevisionPortletPreferences") ||
-			cmd.startsWith("convertProcess.") ||
-			cmd.equals("dlDeletePreviews") ||
-			cmd.equals("dlGeneratePDFPreviews") || cmd.equals("gc") ||
-			cmd.equals("runScript") || cmd.equals("shutdown") ||
-			cmd.equals("threadDump") || cmd.equals("updateExternalServices") ||
-			cmd.equals("updateMail") ||
-			cmd.equals("verifyMembershipPolicies")) {
+		if (!cmd.equals("addLogLevel") ||
+			!cmd.equals("dlGenerateAudioPreviews") ||
+			!cmd.equals("dlGenerateOpenOfficePreviews") ||
+			!cmd.equals("dlGenerateVideoPreviews") ||
+			!cmd.equals("updateLogLevels") ||
+			!cmd.equals("updatePortalProperties")) {
 
 			CaptchaUtil.check(actionRequest);
 		}

@@ -2946,6 +2946,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.search.rest.api.jar!jackson-dataformat-xml.jar</file-name>
+				<version>2.9.8</version>
+				<project-name>Jackson-dataformat-XML</project-name>
+				<project-url>http://wiki.fasterxml.com/JacksonExtensionXmlDataBinding</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.search.rest.impl.jar!jackson-dataformat-xml.jar</file-name>
 				<version>2.9.8</version>
 				<project-name>Jackson-dataformat-XML</project-name>
@@ -3819,7 +3831,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.tika.jar!jmatio.jar</file-name>
-				<version>1.2</version>
+				<version>1.5</version>
 				<project-name>JMatIO</project-name>
 				<project-url>https://github.com/tballison/jmatio</project-url>
 				<licenses>

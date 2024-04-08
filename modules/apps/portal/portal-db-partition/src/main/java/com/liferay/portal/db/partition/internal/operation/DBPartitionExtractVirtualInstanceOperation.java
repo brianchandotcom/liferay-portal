@@ -7,6 +7,8 @@ package com.liferay.portal.db.partition.internal.operation;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.partition.internal.configuration.DBPartitionExtractVirtualInstanceConfiguration;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import java.util.Map;
@@ -49,6 +51,10 @@ public class DBPartitionExtractVirtualInstanceOperation
 						partitionCompanyId();
 
 				if (_companyLocalService.fetchCompany(companyId) == null) {
+					_log.error(
+						"Virtual Instance with company ID " + companyId +
+							" will not be extracted because it does not exist");
+
 					return null;
 				}
 
@@ -57,6 +63,9 @@ public class DBPartitionExtractVirtualInstanceOperation
 			},
 			properties);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DBPartitionExtractVirtualInstanceOperation.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

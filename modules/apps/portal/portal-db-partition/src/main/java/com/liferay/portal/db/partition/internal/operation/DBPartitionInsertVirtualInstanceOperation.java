@@ -5,9 +5,12 @@
 
 package com.liferay.portal.db.partition.internal.operation;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.partition.internal.configuration.DBPartitionInsertVirtualInstanceConfiguration;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 
@@ -50,6 +53,12 @@ public class DBPartitionInsertVirtualInstanceOperation
 						partitionCompanyId();
 
 				if (_companyLocalService.fetchCompany(companyId) != null) {
+					_log.error(
+						StringBundler.concat(
+							"Virtual Instance with company ID ", companyId,
+							" will not be imported because a company with ",
+							"same ID exists already"));
+
 					return null;
 				}
 
@@ -66,6 +75,9 @@ public class DBPartitionInsertVirtualInstanceOperation
 			},
 			properties);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DBPartitionInsertVirtualInstanceOperation.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

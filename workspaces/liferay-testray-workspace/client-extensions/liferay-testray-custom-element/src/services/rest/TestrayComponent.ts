@@ -35,7 +35,7 @@ class TestrayComponentImpl extends Rest<Component, TestrayComponent> {
 				),
 				project: testrayComponent?.r_projectToComponents_c_project,
 				team: testrayComponent?.r_teamToComponents_c_team,
-				teamId: testrayComponent.r_teamToComponents_c_teamId,
+				teamId: testrayComponent?.r_teamToComponents_c_teamId,
 			}),
 			uri: 'components',
 		});

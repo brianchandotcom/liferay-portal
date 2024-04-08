@@ -15,14 +15,29 @@ export class HeadlessAdminContentApiHelper {
 	}
 
 	async postStructuredContentDraft({
+		categoryIds,
 		contentStructureId,
 		datePublished,
 		siteId,
+		tags,
 		title,
+	}: {
+		categoryIds?: number[];
+		contentStructureId: number;
+		datePublished: string;
+		siteId: string;
+		tags?: string[];
+		title: string;
 	}): Promise<StructuredContent> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/structured-contents/draft`,
-			{contentStructureId, datePublished, title},
+			{
+				contentStructureId,
+				datePublished,
+				keywords: tags,
+				taxonomyCategoryIds: categoryIds,
+				title,
+			},
 			true
 		);
 	}

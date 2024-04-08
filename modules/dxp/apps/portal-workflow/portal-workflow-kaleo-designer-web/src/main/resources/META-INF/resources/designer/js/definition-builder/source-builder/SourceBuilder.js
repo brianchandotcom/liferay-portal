@@ -17,6 +17,7 @@ import XMLUtil from '../../../js/definition-builder/source-builder/xmlUtil';
 import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
 import {editorConfig} from '../constants';
 import {xmlNamespace} from './constants';
+import DeserializeUtil from './deserializeUtil';
 import {serializeDefinition} from './serializeUtil';
 
 export default function SourceBuilder() {
@@ -45,11 +46,27 @@ export default function SourceBuilder() {
 					version,
 				};
 
+				const currentData = currentEditor.getData();
+				let currentElements;
+
+				if (currentData) {
+					const deserializeUtil = new DeserializeUtil();
+
+					deserializeUtil.updateXMLDefinition(
+						encodeURIComponent(currentData)
+					);
+
+					currentElements = deserializeUtil.getElements();
+				}
+				else {
+					currentElements = elements;
+				}
+
 				const xmlContent = serializeDefinition(
 					xmlNamespace,
 					metadata,
-					elements.filter(isNode),
-					elements.filter(isEdge)
+					currentElements.filter(isNode),
+					currentElements.filter(isEdge)
 				);
 
 				if (xmlContent) {

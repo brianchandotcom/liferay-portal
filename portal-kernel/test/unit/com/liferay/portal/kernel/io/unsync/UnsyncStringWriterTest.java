@@ -119,7 +119,7 @@ public class UnsyncStringWriterTest {
 
 		Assert.assertNull(unsyncStringWriter.stringBuilder);
 		Assert.assertNotNull(unsyncStringWriter.stringBundler);
-		Assert.assertEquals(16, unsyncStringWriter.stringBundler.capacity());
+		Assert.assertEquals(0, unsyncStringWriter.stringBundler.capacity());
 
 		unsyncStringWriter = new UnsyncStringWriter(true, 32);
 

@@ -558,7 +558,7 @@ public class BufferCacheServletResponseTest {
 
 		sb = bufferCacheServletResponse.getStringBundler();
 
-		Assert.assertEquals(16, sb.capacity());
+		Assert.assertEquals(10, sb.capacity());
 		Assert.assertEquals(1, sb.index());
 		Assert.assertEquals(_TEST_STRING, sb.toString());
 

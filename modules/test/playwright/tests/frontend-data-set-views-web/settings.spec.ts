@@ -12,7 +12,6 @@ import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
-import {fieldsPageTest} from './fixtures/fieldsPageTest';
 import {settingsPageTest} from './fixtures/settingsPageTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
 
@@ -22,7 +21,6 @@ export const test = mergeTests(
 		'LPD-10735': true,
 		'LPS-164563': true,
 	}),
-	fieldsPageTest,
 	loginTest(),
 	settingsPageTest,
 	visualizationModesPageTest
@@ -377,20 +375,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 			await fragmentTest.step(
 				'Change Data Set Visualization option',
 				async () => {
-					await fdsFragmentPage.fdsActiveViewSelector.waitFor({
-						state: 'visible',
-					});
-					await fdsFragmentPage.fdsActiveViewSelector.click();
-
-					await page
-						.getByRole('listbox', {name: 'View Options'})
-						.getByRole('option', {name: 'Cards', selected: true})
-						.isVisible();
-
-					await page
-						.getByRole('listbox')
-						.getByRole('option', {name: 'List'})
-						.click();
+					await fdsFragmentPage.changeVisualizationMode('List');
 				}
 			);
 

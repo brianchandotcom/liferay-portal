@@ -402,9 +402,14 @@ definition {
 			key_checkboxOption = "Never Expire",
 			locator1 = "Form#CHECKBOX_SUBMISSIONS");
 
-		FormViewBuilder.editDate(
+		FormFields.editDateCalendar(
 			fieldName = "Date",
-			fieldValue = "01/01/2001");
+			fieldValue = "01/01/2024",
+			valueDay = 1,
+			valueMonth = "January",
+			valueYear = 2024);
+
+		Click(locator1 = "FormFields#DATE_CALENDAR");
 
 		AssertElementPresent(
 			key_feedbackMessage = "Please enter a valid expiration date. Only future dates are accepted.",
@@ -413,8 +418,6 @@ definition {
 		FormViewBuilder.editDate(
 			fieldName = "Date",
 			fieldValue = "01/01/2100");
-
-		Click(locator1 = "FormFields#DATE_CALENDAR");
 
 		Form.save();
 

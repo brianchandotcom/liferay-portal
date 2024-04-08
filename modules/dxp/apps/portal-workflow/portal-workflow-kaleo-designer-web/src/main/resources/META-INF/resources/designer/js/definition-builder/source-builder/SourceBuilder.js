@@ -13,12 +13,11 @@ import {ClassicEditor} from 'frontend-editor-ckeditor-web';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {isEdge, isNode} from 'react-flow-renderer';
 
+import XMLUtil from '../../../js/definition-builder/source-builder/xmlUtil';
 import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
 import {editorConfig} from '../constants';
 import {xmlNamespace} from './constants';
 import {serializeDefinition} from './serializeUtil';
-
-const REGEX_ALERT = /alert\((.*?)\)/;
 
 export default function SourceBuilder() {
 	const {
@@ -54,22 +53,6 @@ export default function SourceBuilder() {
 				);
 
 				if (xmlContent) {
-					const codeEditor = document.querySelector(
-						'div.cke_contents'
-					);
-
-					codeEditor.addEventListener('keyup', () => {
-						if (currentEditor.getData() !== xmlContent) {
-							const newXmlContent = currentEditor.getData();
-							const sanitizedXmlContent = newXmlContent.replace(
-								REGEX_ALERT,
-								''
-							);
-
-							currentEditor.setData(sanitizedXmlContent);
-						}
-					});
-
 					currentEditor.setData(xmlContent);
 
 					setLoading(false);
@@ -126,12 +109,7 @@ export default function SourceBuilder() {
 
 			reader.onloadend = (event) => {
 				if (event.target.readyState === FileReader.DONE) {
-					const sanitizedData = event.target.result.replace(
-						REGEX_ALERT,
-						''
-					);
-
-					currentEditor.setData(sanitizedData);
+					currentEditor.setData(event.target.result);
 
 					const fileInput = document.querySelector('#fileInput');
 
@@ -196,6 +174,14 @@ export default function SourceBuilder() {
 			<ClassicEditor
 				config={editorConfig}
 				name="sourceBuilderEditor"
+				onBeforeDestroy={({editor}) => {
+					if (
+						editor.checkDirty() &&
+						!XMLUtil.validateDefinition(editor.getData())
+					) {
+						editor.setData('');
+					}
+				}}
 				onInstanceReady={({editor}) => {
 					editor.setMode('source');
 

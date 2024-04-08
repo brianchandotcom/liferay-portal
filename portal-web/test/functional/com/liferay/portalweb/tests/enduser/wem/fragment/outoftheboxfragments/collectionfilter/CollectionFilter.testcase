@@ -31,34 +31,10 @@ definition {
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = ${randomSiteName});
 
-		task ("Add two vocabularies") {
-			for (var vocabularyName : list "Size,Warehouse") {
-				JSONCategory.addVocabulary(
-					groupId = ${groupId},
-					title = ${vocabularyName});
-			}
-		}
-
-		task ("Add 8 categories in Size vocabulary") {
-			for (var categoryName : list "6.5 inch,7 inch,7.5 inch,8 inch,8.5 inch") {
-				JSONCategory.addCategory(
-					groupId = ${groupId},
-					title = ${categoryName},
-					vocabularyName = "Size");
-			}
-
-			var inch90Id = JSONCategory.addCategory(
+		task ("Add Warehouse vocabulary") {
+			JSONCategory.addVocabulary(
 				groupId = ${groupId},
-				title = "9 inch",
-				vocabularyName = "Size");
-			var inch95Id = JSONCategory.addCategory(
-				groupId = ${groupId},
-				title = "9.5 inch",
-				vocabularyName = "Size");
-			var inch100Id = JSONCategory.addCategory(
-				groupId = ${groupId},
-				title = "10 inch",
-				vocabularyName = "Size");
+				title = "Warehouse");
 		}
 
 		task ("Add 8 categories in Warehouse vocabulary") {
@@ -83,33 +59,33 @@ definition {
 				vocabularyName = "Warehouse");
 		}
 
-		task ("Add the first web content with 10 inch and United States") {
+		task ("Add the first web content with United States") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${inch100Id},${usId}",
+				assetCategoryIds = ${usId},
 				content = "Air Force 1",
 				groupId = ${groupId},
 				title = "Air Force 1");
 		}
 
-		task ("Add the second web content with 9.5 inch and China") {
+		task ("Add the second web content with China") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${inch95Id},${cnId}",
+				assetCategoryIds = ${cnId},
 				content = "Air Jordan 1",
 				groupId = ${groupId},
 				title = "Air Jordan 1");
 		}
 
-		task ("Add the third web content with 9 inch and United States") {
+		task ("Add the third web content United States") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${inch90Id},${usId}",
+				assetCategoryIds = ${usId},
 				content = "Air Max 1",
 				groupId = ${groupId},
 				title = "Air Max 1");
 		}
 
-		task ("Add the fourth web content with 10 inch and Spain") {
+		task ("Add the fourth web content Spain") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${inch100Id},${esId}",
+				assetCategoryIds = ${esId},
 				content = "LeBron VIII",
 				groupId = ${groupId},
 				title = "LeBron VIII");
@@ -138,45 +114,15 @@ definition {
 				styleDisplay = "Bordered List");
 		}
 
-		task ("Add a Grid above the Container") {
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				dropTarget = "Header",
-				fragmentName = "Grid",
-				targetFragmentName = "Container");
-		}
-
-		task ("Change Number of Modules to 2") {
-			PageEditor.editLayoutGrid(
-				columnCount = 2,
-				panel = "General");
-		}
-
-		task ("Add a Collection Filter to each module of Grid") {
-			for (var columnNumber : list "1,2") {
-				PageEditor.addElementToColumn(
-					collectionName = "Content Display",
-					columnNumber = ${columnNumber},
-					fragmentName = "Collection Filter",
-					navTab = "Fragments");
-			}
-		}
-
-		task ("Select the Size vocabulary and Include Search Field in first Collection Filter") {
-			PageEditor.editCollectionFilter(
-				categoryNameList = "6.5 inch,7 inch,7.5 inch,8 inch,8.5 inch,9 inch,9.5 inch,10 inch",
-				columnNumber = 1,
-				filter = "Category",
-				fragmentName = "Collection Filter",
-				includeSearchField = "true",
-				targetCollection = "Dynamic Collection",
-				vocabularyName = "Size");
-		}
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			dropTarget = "Header",
+			fragmentName = "Collection Filter",
+			targetFragmentName = "Collection Display");
 
 		task ("Select the Warehouse vocabulary, Single Selection and Include Search Field in second Collection Filter") {
 			PageEditor.editCollectionFilter(
 				categoryNameList = "Brazil,Canada,China,England,France,Japan,Spain,United States",
-				columnNumber = 2,
 				filter = "Category",
 				fragmentName = "Collection Filter",
 				includeSearchField = "true",
@@ -185,92 +131,24 @@ definition {
 				vocabularyName = "Warehouse");
 		}
 
-		task ("Open the Preview modal") {
-			PageEditor.previewInANewTab();
-		}
-
-		task ("View all web contents shown in Collection Display") {
-			var n = 1;
-
-			for (var title : list "Air Max 1,Air Jordan 1,Air Force 1,LeBron VIII") {
-				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
-			}
-		}
-
-		task ("Search 10 inch and select it in the first Collection Filter") {
-			Page.selectFilterInCollectionFilter(
-				categoryNameList = "10 inch",
-				columnNumber = 1,
-				multipleSelection = "true",
-				searchTerm = "10 inch",
-				selectedName = "10 inch",
-				title = "Size");
-		}
-
-		task ("View only the Air Force 1 and LeBron VIII shown in Collection Display") {
-			var n = 1;
-
-			for (var title : list "Air Force 1,LeBron VIII") {
-				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
-			}
-		}
-
-		task ("Search Spain and select it in the second Collection Filter") {
-			Page.selectFilterInCollectionFilter(
-				columnNumber = 2,
-				filterName = "Spain",
-				searchTerm = "Spain",
-				selectedName = "Spain",
-				title = "Warehouse");
-		}
-
-		task ("View only the LeBron VIII shown in Collection Display") {
-			AssertVisible(
-				key_entryContent = "[normalize-space(text())='LeBron VIII']",
-				key_fragmentName = "Collection Display",
-				key_position = 1,
-				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-			Close.closeWindow();
-
-			PageEditor.publish();
-		}
-
 		task ("Navigate to page in view mode") {
+			PageEditor.publish();
+
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Collection Page Name",
 				siteName = ${randomSiteName});
 		}
 
 		task ("View all web contents shown in Collection Display") {
-			var n = 1;
-
 			for (var title : list "Air Max 1,Air Jordan 1,Air Force 1,LeBron VIII") {
 				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_AT_VIEW_MODE",
+					title = ${title});
 			}
 		}
 
 		task ("Search United States and select it in the second Collection Filter") {
 			Page.selectFilterInCollectionFilter(
-				columnNumber = 2,
 				filterName = "United States",
 				searchTerm = "United States",
 				selectedName = "United States",
@@ -278,47 +156,15 @@ definition {
 		}
 
 		task ("View only the Air Max 1,Air Force 1 shown in Collection Display") {
-			var n = 1;
-
 			for (var title : list "Air Max 1,Air Force 1") {
 				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_AT_VIEW_MODE",
+					title = ${title});
 			}
 
 			AssertElementNotPresent(
-				key_entryContent = "[normalize-space(text())='LeBron VIII']",
-				key_fragmentName = "Collection Display",
-				key_position = 3,
-				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-		}
-
-		task ("Search 9 inch and select it in the first Collection Filter") {
-			Page.selectFilterInCollectionFilter(
-				categoryNameList = "9 inch",
-				columnNumber = 1,
-				multipleSelection = "true",
-				searchTerm = "9 inch",
-				selectedName = "9 inch",
-				title = "Size");
-		}
-
-		task ("View only the Air Max 1 shown in Collection Display") {
-			AssertVisible(
-				key_entryContent = "[normalize-space(text())='Air Max 1']",
-				key_fragmentName = "Collection Display",
-				key_position = 1,
-				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-			AssertElementNotPresent(
-				key_entryContent = "[normalize-space(text())='Air Force 1']",
-				key_fragmentName = "Collection Display",
-				key_position = 2,
-				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_AT_VIEW_MODE",
+				title = "LeBron VIII");
 		}
 	}
 

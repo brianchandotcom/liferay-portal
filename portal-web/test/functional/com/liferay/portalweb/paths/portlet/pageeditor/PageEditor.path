@@ -155,6 +155,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLLECTION_ITEM_CONTENT_AT_VIEW_MODE</td>
+	<td>//div[contains(@class,'layout-content')]//div[contains(text(), '${title}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COLLECTION_ITEM_FALSE_ENTRY</td>
 	<td>//span[contains(@class,'text-truncate')][contains(text(),'false')]</td>
 	<td></td>

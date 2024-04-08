@@ -27,6 +27,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
+import org.mockito.Mockito;
+
 /**
  * @author Adam Brandizzi
  * @author Petteri Karttunen
@@ -46,8 +48,10 @@ public class OpenSearchIndexInformationTest extends BaseOpenSearchTestCase {
 		_companyIndexFactoryFixture = _createCompanyIndexFactoryFixture(
 			openSearchConnectionManager);
 
+		_indexNameBuilder = _createIndexNameBuilder();
+
 		_openSearchIndexInformation = _createOpenSearchIndexInformation(
-			openSearchConnectionManager);
+			_indexNameBuilder, openSearchConnectionManager);
 	}
 
 	@After
@@ -63,7 +67,7 @@ public class OpenSearchIndexInformationTest extends BaseOpenSearchTestCase {
 		long companyId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
-			_getIndexNameBuilder(companyId),
+			_indexNameBuilder.getIndexName(companyId),
 			_openSearchIndexInformation.getCompanyIndexName(companyId));
 	}
 
@@ -100,15 +104,29 @@ public class OpenSearchIndexInformationTest extends BaseOpenSearchTestCase {
 			testName.getMethodName(), openSearchConnectionManager);
 	}
 
+	private IndexNameBuilder _createIndexNameBuilder() {
+		IndexNameBuilder indexNameBuilder = Mockito.mock(
+			IndexNameBuilder.class);
+
+		Mockito.when(
+			indexNameBuilder.getIndexName(Mockito.anyLong())
+		).then(
+			invocation ->
+				"test-" + String.valueOf(invocation.getArgument(0, Long.class))
+		);
+
+		return indexNameBuilder;
+	}
+
 	private OpenSearchIndexInformation _createOpenSearchIndexInformation(
+		IndexNameBuilder indexNameBuilder,
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		OpenSearchIndexInformation openSearchIndexInformation =
 			new OpenSearchIndexInformation();
 
 		ReflectionTestUtil.setFieldValue(
-			openSearchIndexInformation, "_indexNameBuilder",
-			(IndexNameBuilder)companyId -> _getIndexNameBuilder(companyId));
+			openSearchIndexInformation, "_indexNameBuilder", indexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
 			openSearchIndexInformation, "_jsonFactory", new JSONFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
@@ -116,10 +134,6 @@ public class OpenSearchIndexInformationTest extends BaseOpenSearchTestCase {
 			openSearchConnectionManager);
 
 		return openSearchIndexInformation;
-	}
-
-	private String _getIndexNameBuilder(long companyId) {
-		return "test-" + companyId;
 	}
 
 	private JSONObject _loadJSONObject(String suffix) throws Exception {
@@ -130,6 +144,7 @@ public class OpenSearchIndexInformationTest extends BaseOpenSearchTestCase {
 	}
 
 	private CompanyIndexFactoryFixture _companyIndexFactoryFixture;
+	private IndexNameBuilder _indexNameBuilder;
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 	private OpenSearchIndexInformation _openSearchIndexInformation;
 

@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration;
@@ -19,7 +20,6 @@ import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchCo
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapperImpl;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.connection.TestOpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.index.CompanyIdIndexNameBuilder;
 import com.liferay.portal.search.opensearch2.internal.index.CompanyIndexFactory;
 import com.liferay.portal.search.opensearch2.internal.index.IndexConfigurationDynamicUpdatesExecutor;
 import com.liferay.portal.search.opensearch2.internal.index.IndexHelper;
@@ -68,14 +68,23 @@ public class OpenSearchSearchEngineFixture implements SearchEngineFixture {
 
 	@Override
 	public void setUp() throws Exception {
-		CompanyIdIndexNameBuilder indexNameBuilder = _createIndexNameBuilder();
+		TestOpenSearchConnectionManager testOpenSearchConnectionManager =
+			(TestOpenSearchConnectionManager)_openSearchConnectionManager;
+
+		OpenSearchConfigurationWrapper openSearchConfigurationWrapper =
+			_createOpenSearchConfigurationWrapper(
+				testOpenSearchConnectionManager.
+					getOpenSearchConfigurationProperties());
+
+		IndexNameBuilder indexNameBuilder = _createIndexNameBuilder(
+			testOpenSearchConnectionManager.
+				getOpenSearchConfigurationProperties());
 
 		_frameworkUtilMockedStatic = _createFrameworkUtil();
 		_indexNameBuilder = indexNameBuilder;
-
 		_openSearchSearchEngine = _createOpenSearchSearchEngine(
 			Mockito.mock(IndexConfigurationDynamicUpdatesExecutor.class),
-			indexNameBuilder);
+			indexNameBuilder, openSearchConfigurationWrapper);
 	}
 
 	@Override
@@ -101,28 +110,6 @@ public class OpenSearchSearchEngineFixture implements SearchEngineFixture {
 
 			_frameworkUtilMockedStatic = null;
 		}
-	}
-
-	protected static OpenSearchConfigurationWrapper
-		createOpenSearchConfigurationWrapper(
-			Map<String, Object> configurationProperties) {
-
-		return new OpenSearchConfigurationWrapperImpl() {
-			{
-				if (configurationProperties == null) {
-					setOpenSearchConfiguration(
-						ConfigurableUtil.createConfigurable(
-							OpenSearchConfiguration.class,
-							Collections.emptyMap()));
-				}
-				else {
-					setOpenSearchConfiguration(
-						ConfigurableUtil.createConfigurable(
-							OpenSearchConfiguration.class,
-							configurationProperties));
-				}
-			}
-		};
 	}
 
 	private CompanyIndexFactory _createCompanyIndexFactory(
@@ -194,10 +181,52 @@ public class OpenSearchSearchEngineFixture implements SearchEngineFixture {
 		return indexHelper;
 	}
 
-	private CompanyIdIndexNameBuilder _createIndexNameBuilder() {
-		return new CompanyIdIndexNameBuilder() {
+	private IndexNameBuilder _createIndexNameBuilder(
+		Map<String, Object> configurationProperties) {
+
+		String indexNamePrefix = null;
+
+		if (MapUtil.isNotEmpty(configurationProperties)) {
+			indexNamePrefix = MapUtil.getString(
+				configurationProperties, "indexNamePrefix");
+		}
+
+		IndexNameBuilder indexNameBuilder = Mockito.mock(
+			IndexNameBuilder.class);
+
+		Mockito.when(
+			indexNameBuilder.getIndexName(Mockito.anyLong())
+		).then(
+			invocation -> String.valueOf(invocation.getArgument(0, Long.class))
+		);
+
+		Mockito.when(
+			indexNameBuilder.getIndexNamePrefix()
+		).thenReturn(
+			indexNamePrefix
+		);
+
+		return indexNameBuilder;
+	}
+
+	private OpenSearchConfigurationWrapper
+		_createOpenSearchConfigurationWrapper(
+			Map<String, Object> configurationProperties) {
+
+		return new OpenSearchConfigurationWrapperImpl() {
 			{
-				setIndexNamePrefix(null);
+				if (configurationProperties == null) {
+					setOpenSearchConfiguration(
+						ConfigurableUtil.createConfigurable(
+							OpenSearchConfiguration.class,
+							Collections.emptyMap()));
+				}
+				else {
+					setOpenSearchConfiguration(
+						ConfigurableUtil.createConfigurable(
+							OpenSearchConfiguration.class,
+							configurationProperties));
+				}
 			}
 		};
 	}
@@ -205,15 +234,8 @@ public class OpenSearchSearchEngineFixture implements SearchEngineFixture {
 	private OpenSearchSearchEngine _createOpenSearchSearchEngine(
 		IndexConfigurationDynamicUpdatesExecutor
 			indexConfigurationDynamicUpdatesExecutor,
-		IndexNameBuilder indexNameBuilder) {
-
-		TestOpenSearchConnectionManager testOpenSearchConnectionManager =
-			(TestOpenSearchConnectionManager)_openSearchConnectionManager;
-
-		OpenSearchConfigurationWrapper openSearchConfigurationWrapper =
-			createOpenSearchConfigurationWrapper(
-				testOpenSearchConnectionManager.
-					getOpenSearchConfigurationProperties());
+		IndexNameBuilder indexNameBuilder,
+		OpenSearchConfigurationWrapper openSearchConfigurationWrapper) {
 
 		SearchEngineAdapter searchEngineAdapter = _createSearchEngineAdapter();
 
@@ -233,8 +255,7 @@ public class OpenSearchSearchEngineFixture implements SearchEngineFixture {
 		ReflectionTestUtil.setFieldValue(
 			openSearchSearchEngine, "_indexFactory", _companyIndexFactory);
 		ReflectionTestUtil.setFieldValue(
-			openSearchSearchEngine, "_indexNameBuilder",
-			(IndexNameBuilder)String::valueOf);
+			openSearchSearchEngine, "_indexNameBuilder", indexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
 			openSearchSearchEngine, "_openSearchConnectionManager",
 			_openSearchConnectionManager);

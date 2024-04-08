@@ -160,6 +160,11 @@ public class CompanyIndexFactoryFixture {
 			return CompanyIndexFactoryFixture.this.getIndexName();
 		}
 
+		@Override
+		public String getIndexNamePrefix() {
+			return null;
+		}
+
 	}
 
 	private MockedStatic<FrameworkUtil> _createFrameworkUtil() {

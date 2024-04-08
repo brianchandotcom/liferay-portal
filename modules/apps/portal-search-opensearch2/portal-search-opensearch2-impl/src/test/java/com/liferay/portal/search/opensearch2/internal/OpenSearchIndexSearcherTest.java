@@ -48,8 +48,11 @@ public class OpenSearchIndexSearcherTest {
 		SearchRequestBuilderFactory searchRequestBuilderFactory =
 			new SearchRequestBuilderFactoryImpl();
 
+		_indexNameBuilder = _createIndexNameBuilder();
+
 		_openSearchIndexSearcher = _createOpenSearchIndexSearcher(
-			searchRequestBuilderFactory);
+			_indexNameBuilder, searchRequestBuilderFactory);
+
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 	}
 
@@ -94,15 +97,28 @@ public class OpenSearchIndexSearcherTest {
 		Assert.assertEquals("testValue", searchSearchRequest.getPreference());
 	}
 
+	private IndexNameBuilder _createIndexNameBuilder() {
+		IndexNameBuilder indexNameBuilder = Mockito.mock(
+			IndexNameBuilder.class);
+
+		Mockito.when(
+			indexNameBuilder.getIndexName(Mockito.anyLong())
+		).then(
+			invocation -> String.valueOf(invocation.getArgument(0, Long.class))
+		);
+
+		return indexNameBuilder;
+	}
+
 	private OpenSearchIndexSearcher _createOpenSearchIndexSearcher(
+		IndexNameBuilder indexNameBuilder,
 		SearchRequestBuilderFactory searchRequestBuilderFactory) {
 
 		OpenSearchIndexSearcher openSearchIndexSearcher =
 			new OpenSearchIndexSearcher();
 
 		ReflectionTestUtil.setFieldValue(
-			openSearchIndexSearcher, "_indexNameBuilder",
-			(IndexNameBuilder)String::valueOf);
+			openSearchIndexSearcher, "_indexNameBuilder", indexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
 			openSearchIndexSearcher, "_openSearchConfigurationWrapper",
 			Mockito.mock(OpenSearchConfigurationWrapperImpl.class));
@@ -114,6 +130,7 @@ public class OpenSearchIndexSearcherTest {
 	}
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();
+	private IndexNameBuilder _indexNameBuilder;
 	private OpenSearchIndexSearcher _openSearchIndexSearcher;
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 

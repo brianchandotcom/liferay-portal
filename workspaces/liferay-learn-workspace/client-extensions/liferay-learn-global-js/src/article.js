@@ -7,7 +7,7 @@ function initArticle() {
 
 	// Table of contents reading indicator
 
-	const headings = document.querySelectorAll('.article-body h2');
+	const headings = document.querySelectorAll('.learn-article-content h2');
 
 	let activeIndex;
 	const targets = [];
@@ -24,8 +24,8 @@ function initArticle() {
 
 			if (articleTOC) {
 				articleTOC.innerHTML += `
-				<li class="nav-item">
-					<a class="nav-link" data-senna-off="true" href="#${id}" id="toc-${id}">
+				<li class="learn-article-nav-item">
+					<a href="#${id}" id="toc-${id}">
 						${heading.innerText}
 					</a>
 				</li>`;
@@ -84,21 +84,6 @@ function initArticle() {
 			observer.observe(node);
 		}
 	});
-
-	// Left Nav mobile interaction
-
-	const docNavWrapper = document.querySelector('.doc-nav-wrapper');
-	const mobileDocNavToggler = document.getElementById('mobileDocNavToggler');
-
-	if (docNavWrapper && mobileDocNavToggler) {
-		const togglers = mobileDocNavToggler.querySelectorAll('button');
-
-		togglers.forEach((toggler) =>
-			toggler.addEventListener('click', () => {
-				docNavWrapper.classList.toggle('mobile-nav-hide');
-			})
-		);
-	}
 }
 
 document.addEventListener('DOMContentLoaded', initArticle);

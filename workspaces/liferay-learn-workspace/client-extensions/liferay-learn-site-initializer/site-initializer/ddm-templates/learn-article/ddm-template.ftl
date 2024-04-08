@@ -1,6 +1,4 @@
 <#assign
-	groupFriendlyURL = themeDisplay.getScopeGroup().getFriendlyURL()
-	groupPathFriendlyURLPublic = themeDisplay.getPathFriendlyURLPublic() + groupFriendlyURL
 	journalArticleId = .vars["reserved-article-id"].data
 	navigationJSONObject = jsonFactoryUtil.createJSONObject(navigation.getData())
 	taxonomyCategoriesMap = {}
@@ -42,48 +40,48 @@
 	</#if>
 </#list>
 
-<div class="documentation">
-	<div class="doc-body">
-		<div class="border-bottom-0 h-auto p-0">
-			<div>
-				<div class="align-items-baseline d-flex justify-content-between">
-					<ul
-						aria-label="breadcrumb navigation"
-						class="article-breadcrumb"
-						role="navigation"
-					>
-						<li>
-							<a href="${groupPathFriendlyURLPublic}"><@clay["icon"] symbol="home-full" /></a>
-						</li>
-
-						<#if breadcrumbJSONArray?has_content>
-							<#list breadcrumbJSONArray.length()-1..0 as i>
-								<li>
-									<a href='${breadcrumbJSONArray.getJSONObject(i).getString("url")}'>${breadcrumbJSONArray.getJSONObject(i).getString("title")}</a>
-								</li>
-							</#list>
-						</#if>
-
-						<li>
-							${navigationJSONObject.getJSONObject("self").getString("title")}
-						</li>
-					</ul>
-
-					<div id="submit-feedback">
-						<a
-							class="text-decoration-none"
-							href="https://liferay.dev/c/portal/login?redirect=https://liferay.dev/ask/questions/liferay-learn-feedback/new"
+<article class="learn-article">
+	<div class="d-flex">
+		<div class="learn-article-wrapper">
+			<div class="learn-article-breadcrumbs">
+				<div>
+					<div class="align-items-baseline d-flex justify-content-between">
+						<ul
+							aria-label="breadcrumb navigation"
+							class="article-breadcrumb"
+							role="navigation"
 						>
-							${languageUtil.get(locale, "submit-feedback", "Submit Feedback")}
-							<@clay["icon"] symbol="message-boards" />
-						</a>
+							<li>
+								<a href="/"><@clay["icon"] symbol="home-full" /></a>
+							</li>
+
+							<#if breadcrumbJSONArray?has_content>
+								<#list breadcrumbJSONArray.length()-1..0 as i>
+									<li>
+										<a href='${breadcrumbJSONArray.getJSONObject(i).getString("url")}'>${breadcrumbJSONArray.getJSONObject(i).getString("title")}</a>
+									</li>
+								</#list>
+							</#if>
+
+							<li>
+								${navigationJSONObject.getJSONObject("self").getString("title")}
+							</li>
+						</ul>
+
+						<div class="submit-feedback">
+							<a
+								class="text-decoration-none"
+								href="https://liferay.dev/c/portal/login?redirect=https://liferay.dev/ask/questions/liferay-learn-feedback/new"
+							>
+								${languageUtil.get(locale, "submit-feedback", "Submit Feedback")}
+								<@clay["icon"] symbol="message-boards" />
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="doc-content d-flex mt-0 p-0 ${showChildrenCards?then('landing-page-container', '')}" id="docContent">
-			<div class="article-body language-log p-0">
+			<div class="learn-article-content">
 				<#if (content.getData())??>
 					${content.getData()}
 				</#if>
@@ -115,10 +113,10 @@
 					</div>
 				</#list>
 			</div>
+		</div>
 
-			<div class="article-page-nav d-none d-sm-block">
-				<ul class="nav nav-stacked toc" id="articleTOC"></ul>
-			</div>
+		<div class="learn-article-page-nav">
+			<ul class="nav nav-stacked toc" id="articleTOC"></ul>
 		</div>
 	</div>
-</div>
+</article>

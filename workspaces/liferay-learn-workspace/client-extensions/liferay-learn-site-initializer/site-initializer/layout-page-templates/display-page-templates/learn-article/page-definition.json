@@ -61,6 +61,7 @@
 							"indexed": true,
 							"layout": {
 								"contentDisplay": "FlexRow",
+								"justifyContent": "Center",
 								"widthType": "Fixed"
 							}
 						},

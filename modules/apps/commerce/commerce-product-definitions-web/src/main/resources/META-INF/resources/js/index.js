@@ -11,6 +11,7 @@ export {default as definitionOptionRels} from './definitionOptionRels';
 export {default as detailsItemFinder} from './detailsItemFinder';
 export {default as duplicateCpDefinitionAutocomplete} from './duplicateCpDefinitionAutocomplete';
 export {default as editCpDefinition} from './edit_cp_definition';
+export {default as editCpDefinitionOptionValueRel} from './editCpDefinitionOptionValueRel';
 export {default as editCpDefinitionOptionValueAutocomplete} from './editCpDefinitionOptionValueAutocomplete';
 export {default as editCpInstanceUnitOfMeasure} from './edit_cp_instance_unit_of_measure';
 export {default as EditDisplayLayout} from './EditDisplayLayout';

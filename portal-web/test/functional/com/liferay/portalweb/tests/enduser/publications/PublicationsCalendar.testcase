@@ -221,7 +221,7 @@ definition {
 			pageName = "Calendar Page",
 			siteName = "Site Name");
 
-		CalendarEvent.delete();
+		CalendarEvent.deleteSpecific(eventTitle = "Publication Calendar Event Title");
 
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name 2");
 

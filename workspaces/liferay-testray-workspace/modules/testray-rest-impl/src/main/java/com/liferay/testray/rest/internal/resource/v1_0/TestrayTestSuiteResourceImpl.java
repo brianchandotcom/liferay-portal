@@ -85,6 +85,35 @@ public class TestrayTestSuiteResourceImpl
 		return testrayTestSuite;
 	}
 
+	private void _addTestrayFactor(
+			long companyId, long testrayFactorCategoryId,
+			String testrayFactorCategoryName, long testrayFactorOptionId,
+			String testrayFactorOptionName, long testrayRunId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				companyId, "C_Factor");
+
+		_objectEntryLocalService.addObjectEntry(
+			contextUser.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"r_factorCategoryToFactors_c_factorCategoryId",
+				testrayFactorCategoryId
+			).put(
+				"r_factorOptionToFactors_c_factorOptionId",
+				testrayFactorOptionId
+			).put(
+				"r_runToFactors_c_runId", testrayRunId
+			).put(
+				"testrayFactorCategoryName", testrayFactorCategoryName
+			).put(
+				"testrayFactorOptionName", testrayFactorOptionName
+			).build(),
+			_serviceContextHelper.getServiceContext());
+	}
+
 	private String _getAttributeValue(String attributeName, Node node) {
 		NamedNodeMap namedNodeMap = node.getAttributes();
 
@@ -223,6 +252,80 @@ public class TestrayTestSuiteResourceImpl
 		return objectEntry.getObjectEntryId();
 	}
 
+	private long _getTestrayFactorCategoryId(
+			long companyId, String testrayFactorCategoryName)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				companyId, "C_FactorCategory");
+
+		List<Map<String, Serializable>> valuesList =
+			_objectEntryLocalService.getValuesList(
+				0, companyId, contextUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				_filterFactory.create(
+					"name eq '" + testrayFactorCategoryName + "'",
+					objectDefinition),
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (ListUtil.isNotEmpty(valuesList)) {
+			Map<String, Serializable> values = valuesList.get(0);
+
+			return GetterUtil.getLong(values.get("objectEntryId"));
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			contextUser.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", testrayFactorCategoryName
+			).build(),
+			_serviceContextHelper.getServiceContext());
+
+		return objectEntry.getObjectEntryId();
+	}
+
+	private long _getTestrayFactorOptionId(
+			long companyId, long testrayFactorCategoryId,
+			String testrayFactorOptionName)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				companyId, "C_FactorOption");
+
+		List<Map<String, Serializable>> valuesList =
+			_objectEntryLocalService.getValuesList(
+				0, companyId, contextUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				_filterFactory.create(
+					StringBundler.concat(
+						"factorCategoryId eq '", testrayFactorCategoryId,
+						"' and name eq '", testrayFactorOptionName, "'"),
+					objectDefinition),
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (ListUtil.isNotEmpty(valuesList)) {
+			Map<String, Serializable> values = valuesList.get(0);
+
+			return GetterUtil.getLong(values.get("objectEntryId"));
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			contextUser.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", testrayFactorOptionName
+			).put(
+				"r_factorCategoryToOptions_c_factorCategoryId",
+				testrayFactorCategoryId
+			).build(),
+			_serviceContextHelper.getServiceContext());
+
+		return objectEntry.getObjectEntryId();
+	}
+
 	private long _getTestrayProductVersionId(
 			long companyId, String testrayProductVersionName,
 			long testrayProjectId)
@@ -332,6 +435,104 @@ public class TestrayTestSuiteResourceImpl
 		return objectEntry.getObjectEntryId();
 	}
 
+	private String _getTestrayRunEnvironmentHash(
+			long companyId, Element element, long testrayRunId)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		NodeList environmentNodeList = element.getElementsByTagName(
+			"environment");
+
+		for (int i = 0; i < environmentNodeList.getLength(); i++) {
+			Node node = environmentNodeList.item(i);
+
+			if (!node.hasAttributes()) {
+				continue;
+			}
+
+			String testrayFactorCategoryName = _getAttributeValue("type", node);
+
+			long testrayFactorCategoryId = _getTestrayFactorCategoryId(
+				companyId, testrayFactorCategoryName);
+
+			String testrayFactorOptionName = _getAttributeValue("option", node);
+
+			long testrayFactorOptionId = _getTestrayFactorOptionId(
+				companyId, testrayFactorCategoryId, testrayFactorOptionName);
+
+			_addTestrayFactor(
+				companyId, testrayFactorCategoryId, testrayFactorCategoryName,
+				testrayFactorOptionId, testrayFactorOptionName, testrayRunId);
+
+			sb.append(testrayFactorCategoryId);
+			sb.append(testrayFactorOptionId);
+		}
+
+		String testrayFactorsString = sb.toString();
+
+		return String.valueOf(testrayFactorsString.hashCode());
+	}
+
+	private long _getTestrayRunId(
+			long companyId, Element element, Map<String, String> propertiesMap,
+			long testrayBuildId, String testrayRunName)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				companyId, "C_Run");
+
+		List<Map<String, Serializable>> valuesList =
+			_objectEntryLocalService.getValuesList(
+				0, companyId, contextUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				_filterFactory.create(
+					StringBundler.concat(
+						"buildId eq '", testrayBuildId, "' and name eq '",
+						testrayRunName, "'"),
+					objectDefinition),
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (ListUtil.isNotEmpty(valuesList)) {
+			Map<String, Serializable> values = valuesList.get(0);
+
+			return GetterUtil.getLong(values.get("objectEntryId"));
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			contextUser.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"externalReferencePK", propertiesMap.get("testray.run.id")
+			).put(
+				"externalReferenceType", 1
+			).put(
+				"jenkinsJobKey",
+				GetterUtil.getLong(propertiesMap.get("jenkins.job.id"))
+			).put(
+				"name", testrayRunName
+			).put(
+				"number", 0
+			).put(
+				"r_buildToRuns_c_buildId", testrayBuildId
+			).build(),
+			_serviceContextHelper.getServiceContext());
+
+		objectEntry.getValues(
+		).put(
+			"environmentHash",
+			_getTestrayRunEnvironmentHash(
+				companyId, element, objectEntry.getObjectEntryId())
+		);
+
+		_objectEntryLocalService.updateObjectEntry(
+			contextUser.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getValues(), _serviceContextHelper.getServiceContext());
+
+		return objectEntry.getObjectEntryId();
+	}
+
 	private void _processDocument(Document document) throws Exception {
 		Element element = document.getDocumentElement();
 
@@ -345,10 +546,14 @@ public class TestrayTestSuiteResourceImpl
 			contextCompany.getCompanyId(), testrayProjectId,
 			propertiesMap.get("testray.build.type"));
 
-		_getTestrayBuildId(
+		long testrayBuildId = _getTestrayBuildId(
 			contextCompany.getCompanyId(), propertiesMap,
 			propertiesMap.get("testray.build.name"), testrayProjectId,
 			testrayRoutineId);
+
+		_getTestrayRunId(
+			contextCompany.getCompanyId(), element, propertiesMap,
+			testrayBuildId, propertiesMap.get("testray.run.id"));
 	}
 
 	@Reference(

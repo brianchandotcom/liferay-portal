@@ -8894,28 +8894,90 @@ junit.jvm.override.version=21</echo>
 	<target name="workspaces-compile-jdk8">
 		<run-batch-test>
 			<test-action>
-				<for list="${workspaces.names[workspaces-compile-jdk8]}" param="workspace.name">
+				<local name="workspace.names" />
+
+				<property name="workspace.names" value="${workspaces.names[workspaces-compile-jdk8]}" />
+
+				<for list="${workspace.names}" param="workspace.name">
 					<sequential>
-						<local name="workspace.dir" />
+						<trycatch property="workspace.exception">
+							<try>
+								<local name="workspace.dir" />
 
-						<property name="workspace.dir" value="${project.dir}/workspaces/@{workspace.name}" />
+								<property name="workspace.dir" value="${project.dir}/workspaces/@{workspace.name}" />
 
-						<if>
-							<available file="${workspace.dir}" />
-							<then>
-								<echo></echo>
-								<echo>##</echo>
-								<echo>## @{workspace.name}</echo>
-								<echo>##</echo>
-								<echo></echo>
+								<if>
+									<available file="${workspace.dir}" />
+									<then>
+										<echo></echo>
+										<echo>##</echo>
+										<echo>## @{workspace.name}</echo>
+										<echo>##</echo>
+										<echo></echo>
 
-								<execute dir="${workspace.dir}">
-									./gradlew build
-								</execute>
-							</then>
-						</if>
+										<execute dir="${workspace.dir}">
+											./gradlew build
+										</execute>
+									</then>
+								</if>
+							</try>
+							<catch>
+								<echo>${workspace.exception}</echo>
+
+								<echo append="true" file="workspaces-failure">@{workspace.name},</echo>
+							</catch>
+						</trycatch>
 					</sequential>
 				</for>
+
+				<if>
+					<available file="workspaces-failure" />
+					<then>
+						<loadfile
+							property="failed.workspaces"
+							srcFile="workspaces-failure"
+						/>
+
+						<beanshell>
+							<![CDATA[
+								StringBuilder sb = new StringBuilder();
+
+								sb.append("\n");
+
+								String failedWorkspacesString = project.getProperty("failed.workspaces");
+
+								String[] failedWorkspaces = failedWorkspacesString.split(",");
+
+								sb.append(failedWorkspaces.length);
+
+								sb.append(" of ");
+
+								String workspaceNamesString = project.getProperty("workspace.names");
+
+								String[] workspaceNames = workspaceNamesString.split(",");
+
+								sb.append(workspaceNames.length);
+
+								sb.append(" workspace");
+
+								if (workspaceNames.length != 1) {
+									sb.append("s");
+								}
+
+								sb.append(" failed to compile:\n");
+
+								for (String failedWorkspace : failedWorkspaces) {
+									sb.append(failedWorkspace);
+									sb.append("\n");
+								}
+
+								project.setProperty("workspaces.failure.message", sb.toString());
+							]]>
+						</beanshell>
+
+						<fail message="${workspaces.failure.message}" />
+					</then>
+				</if>
 			</test-action>
 		</run-batch-test>
 	</target>

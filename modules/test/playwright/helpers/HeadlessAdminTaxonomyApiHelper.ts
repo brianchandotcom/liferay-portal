@@ -15,6 +15,11 @@ interface createVocabularyProps {
 	siteId: string;
 }
 
+interface createCategoryProps {
+	name: string;
+	vocabularyId: number;
+}
+
 export class HeadlessAdminTaxonomyApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -40,6 +45,23 @@ export class HeadlessAdminTaxonomyApiHelper {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/taxonomy-vocabularies`,
 			{assetTypes, name}
+		);
+	}
+
+	/**
+	 * It allows creating a category inside a vocabulary.
+	 *
+	 * @param name the name of the category
+	 * @param vocabularyId the parent vocabulary id
+	 */
+
+	async createCategory({
+		name,
+		vocabularyId,
+	}: createCategoryProps): Promise<{id: number}> {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories`,
+			{name}
 		);
 	}
 }

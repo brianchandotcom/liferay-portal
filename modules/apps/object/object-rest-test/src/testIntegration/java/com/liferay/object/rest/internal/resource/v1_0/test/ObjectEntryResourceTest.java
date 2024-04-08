@@ -7281,6 +7281,13 @@ public class ObjectEntryResourceTest {
 			String.format(
 				"%s/%s:asc", _objectRelationship2.getName(),
 				_OBJECT_FIELD_NAME_TEXT));
+
+		_testSortByNotSupportedObjectField(
+			"Unable to sort by property: objectDefinitionId",
+			_objectDefinition1, "objectDefinitionId");
+		_testSortByNotSupportedObjectField(
+			"Unable to sort by property: siteId", _siteScopedObjectDefinition1,
+			"siteId");
 	}
 
 	@FeatureFlags("LPD-18730")
@@ -8328,19 +8335,6 @@ public class ObjectEntryResourceTest {
 			_assertFailure(
 				ComparisonFailure.class,
 				() -> _testSortByFieldName(
-					endpoint1, jsonObject1, jsonObject2,
-					String.format(
-						"%s/objectDefinitionId",
-						_objectRelationship1.getName())));
-			_assertFailure(
-				ComparisonFailure.class,
-				() -> _testSortByFieldName(
-					endpoint1, jsonObject1, jsonObject2,
-					String.format(
-						"%s/siteId", _objectRelationship1.getName())));
-			_assertFailure(
-				ComparisonFailure.class,
-				() -> _testSortByFieldName(
 					endpoint1, jsonObject2, jsonObject1,
 					String.format(
 						"%s/userId", _objectRelationship1.getName())));
@@ -8350,21 +8344,6 @@ public class ObjectEntryResourceTest {
 					endpoint1, jsonObject2, jsonObject1,
 					String.format(
 						"%s/%s/creatorId", _objectRelationship1.getName(),
-						_objectRelationship2.getName())));
-			_assertFailure(
-				ComparisonFailure.class,
-				() -> _testSortByFieldName(
-					endpoint1, jsonObject1, jsonObject2,
-					String.format(
-						"%s/%s/objectDefinitionId",
-						_objectRelationship1.getName(),
-						_objectRelationship2.getName())));
-			_assertFailure(
-				ComparisonFailure.class,
-				() -> _testSortByFieldName(
-					endpoint1, jsonObject1, jsonObject2,
-					String.format(
-						"%s/%s/siteId", _objectRelationship1.getName(),
 						_objectRelationship2.getName())));
 			_assertFailure(
 				ComparisonFailure.class,
@@ -8555,15 +8534,6 @@ public class ObjectEntryResourceTest {
 				ComparisonFailure.class,
 				() -> _testSortByFieldName(
 					endpoint, jsonObjects[1], jsonObjects[0], "creatorId"));
-			_assertFailure(
-				ComparisonFailure.class,
-				() -> _testSortByFieldName(
-					endpoint, jsonObjects[0], jsonObjects[1],
-					"objectDefinitionId"));
-			_assertFailure(
-				ComparisonFailure.class,
-				() -> _testSortByFieldName(
-					endpoint, jsonObjects[0], jsonObjects[1], "siteId"));
 			_assertFailure(
 				ComparisonFailure.class,
 				() -> _testSortByFieldName(

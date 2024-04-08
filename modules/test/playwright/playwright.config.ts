@@ -10,6 +10,7 @@ import {config as analyticsSettingsWebConfig} from './tests/analytics-settings-w
 import {config as analyticsWebConfig} from './tests/analytics-web/config';
 import {config as announcementsWebConfig} from './tests/announcements-web/config';
 import {config as batchPlannerConfig} from './tests/batch-planner/config';
+import {config as blogsWebConfig} from './tests/blogs-web/config';
 import {config as clientExtensionWebConfig} from './tests/client-extension-web/config';
 import {config as commerceConfig} from './tests/commerce/config';
 import {config as dispatchWebConfig} from './tests/dispatch-web/config';
@@ -47,6 +48,7 @@ export default defineConfig({
 		analyticsSettingsWebConfig,
 		announcementsWebConfig,
 		batchPlannerConfig,
+		blogsWebConfig,
 		clientExtensionWebConfig,
 		commerceConfig,
 		dispatchWebConfig,

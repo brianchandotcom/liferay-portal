@@ -37,6 +37,11 @@ public class CompanyIdIndexNameBuilder
 	}
 
 	@Override
+	public String getIndexNamePrefix() {
+		return _indexNamePrefix;
+	}
+
+	@Override
 	public int getPriority() {
 		return 0;
 	}

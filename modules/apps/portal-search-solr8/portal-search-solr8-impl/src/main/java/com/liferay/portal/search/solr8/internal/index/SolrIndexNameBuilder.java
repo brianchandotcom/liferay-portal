@@ -20,4 +20,9 @@ public class SolrIndexNameBuilder implements IndexNameBuilder {
 		return "liferay";
 	}
 
+	@Override
+	public String getIndexNamePrefix() {
+		return null;
+	}
+
 }

@@ -5623,7 +5623,9 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testLocalizedObjectFieldWithAcceptLanguage() throws Exception {
+	public void testGraphQLLocalizedObjectFieldWithAcceptLanguage()
+		throws Exception {
+
 		Assert.assertEquals(
 			JSONUtil.put(
 				"data",
@@ -5664,7 +5666,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testLocalizedObjectFieldWithEmptyAcceptLanguage()
+	public void testGraphQLLocalizedObjectFieldWithEmptyAcceptLanguage()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -5707,7 +5709,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testLocalizedObjectFieldWithNonexistingAcceptLanguage()
+	public void testGraphQLLocalizedObjectFieldWithNonexistingAcceptLanguage()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -5750,7 +5752,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testLocalizedObjectFieldWithoutAcceptLanguage()
+	public void testGraphQLLocalizedObjectFieldWithoutAcceptLanguage()
 		throws Exception {
 
 		Assert.assertEquals(

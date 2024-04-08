@@ -161,7 +161,7 @@ if (cpOptionValue != null) {
 						"isCPOptionSelectDate", cpOptionValueDisplayContext.isCPOptionSelectDateType()
 					).build()
 				%>'
-				module="js/edit_cp_option_and_value"
+				module="{editCpOptionAndValue} from commerce-product-options-web"
 			/>
 		</commerce-ui:panel>
 

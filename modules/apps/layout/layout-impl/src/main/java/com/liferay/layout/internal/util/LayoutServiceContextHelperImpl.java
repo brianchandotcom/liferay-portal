@@ -861,6 +861,8 @@ public class LayoutServiceContextHelperImpl
 			_httpServletRequest.setAttribute(
 				WebKeys.LAYOUT, themeDisplay.getLayout());
 			_httpServletRequest.setAttribute(
+				WebKeys.LOCALE, themeDisplay.getLocale());
+			_httpServletRequest.setAttribute(
 				WebKeys.THEME_DISPLAY, themeDisplay);
 
 			_httpServletRequest.setAttribute(WebKeys.USER, user);

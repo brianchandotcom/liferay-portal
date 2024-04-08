@@ -2279,19 +2279,36 @@ definition {
 				objectName = "CustomObject165994",
 				pluralLabelName = "Custom Objects 165994");
 
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Date",
+				fieldLabelName = "Custom Field Date Invalid",
+				fieldName = "date",
+				fieldType = "Date",
+				isRequired = "false",
+				objectName = "CustomObject165994");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "DateTime",
+				fieldLabelName = "Custom Field Date and Time Valid",
+				fieldName = "dateTime",
+				fieldType = "DateTime",
+				isRequired = "false",
+				objectName = "CustomObject165994",
+				timeStorageOption = "useInputAsEntered");
+
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 165994");
 
 			ObjectAdmin.goToFieldsTab();
 
-			ObjectAdmin.addObjectFieldViaUI(
-				fieldLabel = "Custom Field",
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Field Date Invalid",
 				fieldType = "Date");
 
 			ObjectAdmin.assertObjectField(
-				fieldLabel = "Custom Field",
-				fieldType = "Date");
+				fieldLabel = "Custom Field Date and Time Valid",
+				fieldType = "Date and Time");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject165994");
 		}
@@ -2306,6 +2323,10 @@ definition {
 			Type(
 				locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
 				value1 = "23/01/2020");
+
+			Type(
+				locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_TIME_ENTRY",
+				value1 = "01/01/2024 02:00 AM");
 
 			PortletEntry.save();
 		}

@@ -77,6 +77,8 @@ definition {
 			fieldName = "Date Field",
 			fieldValue = ${displayFutureDate});
 
+		Click(locator1 = "FormPortlet#FORM_CONTAINER");
+
 		FormPortlet.submitSuccessfully();
 
 		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
@@ -1439,6 +1441,8 @@ definition {
 			fieldName = "Date",
 			fieldValue = "01/01/${futureYear}");
 
+		Click(locator1 = "FormPortlet#FORM_CONTAINER");
+
 		FormPortlet.submitSuccessfully();
 
 		Refresh();
@@ -1449,11 +1453,15 @@ definition {
 			fieldName = "Date",
 			fieldValue = "01/01/${pastYear}");
 
+		Click(locator1 = "FormPortlet#FORM_CONTAINER");
+
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Esse campo e invalido.");
 
 		FormFields.editDate(
 			fieldName = "Date",
 			fieldValue = "01/01/${futureYear}");
+
+		Click(locator1 = "FormPortlet#FORM_CONTAINER");
 
 		FormPortlet.submitSuccessfully();
 	}
@@ -1494,6 +1502,8 @@ definition {
 		FormFields.editDate(
 			fieldName = "Date",
 			fieldValue = "01/01/2030");
+
+		Click(locator1 = "FormPortlet#FORM_CONTAINER");
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}

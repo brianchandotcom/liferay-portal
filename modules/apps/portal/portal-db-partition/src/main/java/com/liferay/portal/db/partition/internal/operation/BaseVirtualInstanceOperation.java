@@ -23,6 +23,8 @@ import java.util.concurrent.Callable;
  */
 public abstract class BaseVirtualInstanceOperation {
 
+	public abstract String getOperationCompletedMessage(long companyId);
+
 	public void onVirtualInstance(
 		Callable<Company> callable, Map<String, Object> properties) {
 
@@ -36,18 +38,9 @@ public abstract class BaseVirtualInstanceOperation {
 					"com.liferay.portal.instances.internal.configuration." +
 						"PortalInstancesConfiguration~" + company.getWebId());
 
-				if (servicePid.contains("Extract")) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Virtual Instance with company ID " +
-								company.getCompanyId() +
-									" extracted successfully");
-					}
-				}
-				else if (_log.isInfoEnabled()) {
+				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Virtual Instance with company ID " +
-							company.getCompanyId() + " imported successfully");
+						getOperationCompletedMessage(company.getCompanyId()));
 				}
 			}
 		}

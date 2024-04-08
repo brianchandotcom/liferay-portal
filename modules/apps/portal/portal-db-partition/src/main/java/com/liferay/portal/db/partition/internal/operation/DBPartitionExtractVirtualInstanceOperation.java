@@ -27,6 +27,12 @@ import org.osgi.service.component.annotations.Reference;
 public class DBPartitionExtractVirtualInstanceOperation
 	extends BaseVirtualInstanceOperation {
 
+	@Override
+	public String getOperationCompletedMessage(long companyId) {
+		return "Virtual Instance with company ID " + companyId +
+			" extracted successfully";
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		onVirtualInstance(

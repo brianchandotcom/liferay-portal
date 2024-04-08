@@ -115,7 +115,7 @@ public class UpdatePasswordAction implements Action {
 
 			if (createAccountUtilityPage != null) {
 				return actionMapping.getActionForward(
-					"portal.update_password_uc");
+					"portal.update_password_up");
 			}
 
 			return actionMapping.getActionForward("portal.update_password");

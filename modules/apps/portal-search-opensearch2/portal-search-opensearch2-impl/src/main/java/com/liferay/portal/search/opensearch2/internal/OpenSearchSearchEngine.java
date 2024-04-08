@@ -53,6 +53,9 @@ import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConne
 import com.liferay.portal.search.opensearch2.internal.index.IndexConfigurationDynamicUpdatesExecutor;
 import com.liferay.portal.search.opensearch2.internal.index.IndexFactory;
 
+import jakarta.json.JsonObject;
+import jakarta.json.JsonValue;
+
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -65,6 +68,9 @@ import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.opensearch.cat.OpenSearchCatClient;
 import org.opensearch.client.opensearch.cat.RepositoriesResponse;
 import org.opensearch.client.opensearch.cat.repositories.RepositoriesRecord;
+import org.opensearch.client.opensearch.cluster.GetClusterSettingsResponse;
+import org.opensearch.client.opensearch.cluster.OpenSearchClusterClient;
+import org.opensearch.client.opensearch.cluster.PutClusterSettingsRequest;
 import org.opensearch.client.opensearch.ingest.OpenSearchIngestClient;
 import org.opensearch.client.opensearch.ingest.Processor;
 import org.opensearch.client.opensearch.ingest.PutPipelineRequest;
@@ -266,6 +272,31 @@ public class OpenSearchSearchEngine
 		_waitForYellowStatus();
 	}
 
+	public void setAutoCreateIndex(boolean enable) {
+		if (Validator.isBlank(_indexNameBuilder.getIndexNamePrefix())) {
+			return;
+		}
+
+		OpenSearchClient openSearchClient =
+			_openSearchConnectionManager.getOpenSearchClient();
+
+		OpenSearchClusterClient openSearchClusterClient =
+			openSearchClient.cluster();
+
+		try {
+			openSearchClusterClient.putSettings(
+				PutClusterSettingsRequest.of(
+					putClusterSettingsRequest ->
+						putClusterSettingsRequest.persistent(
+							"action.auto_create_index",
+							JsonData.of(
+								_createAutoCreateIndexSetting(enable)))));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_checkNodeVersions();
@@ -276,6 +307,8 @@ public class OpenSearchSearchEngine
 				OpenSearchSearchEngine.class.getClassLoader())) {
 
 			_checkNodeVersions();
+
+			setAutoCreateIndex(false);
 
 			if (StartupHelperUtil.isDBNew()) {
 				_companyLocalService.forEachCompanyId(
@@ -325,6 +358,96 @@ public class OpenSearchSearchEngine
 					System.exit(1);
 				}
 			}
+		}
+	}
+
+	private String _createAutoCreateIndexSetting(boolean enable) {
+		String currentValue = _getAutoCreateIndexSetting();
+
+		String enableAutoCreateLiferayIndexPattern = StringBundler.concat(
+			StringPool.PLUS, _indexNameBuilder.getIndexNamePrefix(),
+			StringPool.STAR);
+
+		String disableAutoCreateLiferayIndexPattern = StringBundler.concat(
+			StringPool.MINUS, _indexNameBuilder.getIndexNamePrefix(),
+			StringPool.STAR);
+
+		if (enable) {
+			if (Validator.isBlank(currentValue) ||
+				currentValue.equals(StringPool.STAR) ||
+				StringUtil.equalsIgnoreCase(currentValue, "true") ||
+				currentValue.contains(enableAutoCreateLiferayIndexPattern)) {
+
+				return currentValue;
+			}
+			else if (StringUtil.equalsIgnoreCase(currentValue, "false")) {
+				return enableAutoCreateLiferayIndexPattern;
+			}
+			else if (currentValue.contains(
+						disableAutoCreateLiferayIndexPattern)) {
+
+				return StringUtil.replace(
+					currentValue, disableAutoCreateLiferayIndexPattern,
+					enableAutoCreateLiferayIndexPattern);
+			}
+
+			return StringBundler.concat(
+				enableAutoCreateLiferayIndexPattern, StringPool.COMMA_AND_SPACE,
+				currentValue);
+		}
+
+		if (Validator.isBlank(currentValue) ||
+			currentValue.equals(StringPool.STAR) ||
+			StringUtil.equalsIgnoreCase(currentValue, "true")) {
+
+			return StringBundler.concat(
+				disableAutoCreateLiferayIndexPattern,
+				StringPool.COMMA_AND_SPACE, StringPool.STAR);
+		}
+		else if (StringUtil.equalsIgnoreCase(currentValue, "false") ||
+				 currentValue.contains(disableAutoCreateLiferayIndexPattern)) {
+
+			return currentValue;
+		}
+		else if (currentValue.contains(enableAutoCreateLiferayIndexPattern)) {
+			return StringUtil.replace(
+				currentValue, enableAutoCreateLiferayIndexPattern,
+				disableAutoCreateLiferayIndexPattern);
+		}
+
+		return StringBundler.concat(
+			disableAutoCreateLiferayIndexPattern, StringPool.COMMA_AND_SPACE,
+			currentValue);
+	}
+
+	private String _getAutoCreateIndexSetting() {
+		OpenSearchClient openSearchClient =
+			_openSearchConnectionManager.getOpenSearchClient();
+
+		OpenSearchClusterClient openSearchClusterClient =
+			openSearchClient.cluster();
+
+		try {
+			GetClusterSettingsResponse getClusterSettingsResponse =
+				openSearchClusterClient.getSettings();
+
+			Map<String, JsonData> persistentSettings =
+				getClusterSettingsResponse.persistent();
+
+			JsonData jsonData = persistentSettings.get("action");
+
+			if (jsonData == null) {
+				return null;
+			}
+
+			JsonValue jsonValue = jsonData.toJson();
+
+			JsonObject jsonObject = jsonValue.asJsonObject();
+
+			return jsonObject.getString("auto_create_index");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

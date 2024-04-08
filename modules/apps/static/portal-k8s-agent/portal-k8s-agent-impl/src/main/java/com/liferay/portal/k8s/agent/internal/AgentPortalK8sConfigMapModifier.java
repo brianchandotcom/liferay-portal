@@ -171,179 +171,6 @@ public class AgentPortalK8sConfigMapModifier
 		return result;
 	}
 
-	private Result _modifyConfigMap(
-		Consumer<PortalK8sConfigMapModifier.ConfigMapModel>
-			configMapModelConsumer,
-		String configMapName) {
-
-		if (_clusterMasterExecutor.isEnabled() &&
-			!_clusterMasterExecutor.isMaster() &&
-			!AgentPortalK8sThreadLocal.isExecuteOnCurrentNode()) {
-
-			return Result.UNCHANGED;
-		}
-
-		Objects.requireNonNull(
-			configMapModelConsumer, "Config map model consumer is null");
-
-		_validateConfigMapName(configMapName);
-
-		ConfigMap configMap = _kubernetesClient.configMaps(
-		).inNamespace(
-			_portalK8sAgentConfiguration.namespace()
-		).withName(
-			configMapName
-		).get();
-
-		if (configMap != null) {
-			Map<String, String> annotations = _getAnnotations(configMap);
-			Map<String, String> binaryData = _getBinaryData(configMap);
-			Map<String, String> data = _getData(configMap);
-			Map<String, String> labels = _getLabels(configMap);
-
-			ConfigMap originalConfigMap = new ConfigMapBuilder(
-				configMap
-			).build();
-
-			configMapModelConsumer.accept(
-				new ConfigMapModel() {
-
-					@Override
-					public Map<String, String> annotations() {
-						return annotations;
-					}
-
-					@Override
-					public Map<String, String> binaryData() {
-						return binaryData;
-					}
-
-					@Override
-					public Map<String, String> data() {
-						return data;
-					}
-
-					@Override
-					public Map<String, String> labels() {
-						return labels;
-					}
-
-				});
-
-			if (binaryData.isEmpty() && data.isEmpty()) {
-				_kubernetesClient.configMaps(
-				).delete(
-					configMap
-				);
-
-				if (_log.isInfoEnabled()) {
-					_log.info("Deleted " + configMap);
-				}
-
-				return Result.DELETED;
-			}
-			else if (!Objects.equals(
-						binaryData, originalConfigMap.getBinaryData()) ||
-					 !Objects.equals(data, originalConfigMap.getData())) {
-
-				_validateLabels(configMapName, labels);
-
-				configMap = _kubernetesClient.configMaps(
-				).withName(
-					configMapName
-				).createOrReplace(
-					configMap
-				);
-
-				if (_log.isInfoEnabled()) {
-					_log.info("Updated " + configMap);
-				}
-
-				return Result.UPDATED;
-			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Unchanged " + configMap);
-			}
-
-			return Result.UNCHANGED;
-		}
-
-		Map<String, String> annotations = _getMapImpl();
-		Map<String, String> binaryData = _getMapImpl();
-		Map<String, String> data = _getMapImpl();
-		Map<String, String> labels = _getMapImpl();
-
-		configMapModelConsumer.accept(
-			new ConfigMapModel() {
-
-				@Override
-				public Map<String, String> annotations() {
-					return annotations;
-				}
-
-				@Override
-				public Map<String, String> binaryData() {
-					return binaryData;
-				}
-
-				@Override
-				public Map<String, String> data() {
-					return data;
-				}
-
-				@Override
-				public Map<String, String> labels() {
-					return labels;
-				}
-
-			});
-
-		if (binaryData.isEmpty() && data.isEmpty()) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Config map does not exist and no data was supplied ",
-						"for ", configMapName, " resulting in no change"));
-			}
-
-			return Result.UNCHANGED;
-		}
-
-		_validateLabels(configMapName, labels);
-
-		ConfigMapBuilder configMapBuilder = new ConfigMapBuilder();
-
-		configMap = configMapBuilder.withNewMetadata(
-		).withNamespace(
-			_portalK8sAgentConfiguration.namespace()
-		).withName(
-			configMapName
-		).addToAnnotations(
-			annotations
-		).addToLabels(
-			labels
-		).endMetadata(
-		).addToBinaryData(
-			binaryData
-		).addToData(
-			data
-		).build();
-
-		configMap = _kubernetesClient.configMaps(
-		).withName(
-			configMapName
-		).createOrReplace(
-			configMap
-		);
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Created " + configMap);
-		}
-
-		return Result.CREATED;
-	}
-
 	@Deactivate
 	protected void deactivate() {
 		if (_log.isInfoEnabled()) {
@@ -516,6 +343,179 @@ public class AgentPortalK8sConfigMapModifier
 		}
 
 		return StringBundler.concat(pid, "/", virtualInstanceId);
+	}
+
+	private Result _modifyConfigMap(
+		Consumer<PortalK8sConfigMapModifier.ConfigMapModel>
+			configMapModelConsumer,
+		String configMapName) {
+
+		if (_clusterMasterExecutor.isEnabled() &&
+			!_clusterMasterExecutor.isMaster() &&
+			!AgentPortalK8sThreadLocal.isExecuteOnCurrentNode()) {
+
+			return Result.UNCHANGED;
+		}
+
+		Objects.requireNonNull(
+			configMapModelConsumer, "Config map model consumer is null");
+
+		_validateConfigMapName(configMapName);
+
+		ConfigMap configMap = _kubernetesClient.configMaps(
+		).inNamespace(
+			_portalK8sAgentConfiguration.namespace()
+		).withName(
+			configMapName
+		).get();
+
+		if (configMap != null) {
+			Map<String, String> annotations = _getAnnotations(configMap);
+			Map<String, String> binaryData = _getBinaryData(configMap);
+			Map<String, String> data = _getData(configMap);
+			Map<String, String> labels = _getLabels(configMap);
+
+			ConfigMap originalConfigMap = new ConfigMapBuilder(
+				configMap
+			).build();
+
+			configMapModelConsumer.accept(
+				new ConfigMapModel() {
+
+					@Override
+					public Map<String, String> annotations() {
+						return annotations;
+					}
+
+					@Override
+					public Map<String, String> binaryData() {
+						return binaryData;
+					}
+
+					@Override
+					public Map<String, String> data() {
+						return data;
+					}
+
+					@Override
+					public Map<String, String> labels() {
+						return labels;
+					}
+
+				});
+
+			if (binaryData.isEmpty() && data.isEmpty()) {
+				_kubernetesClient.configMaps(
+				).delete(
+					configMap
+				);
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Deleted " + configMap);
+				}
+
+				return Result.DELETED;
+			}
+			else if (!Objects.equals(
+						binaryData, originalConfigMap.getBinaryData()) ||
+					 !Objects.equals(data, originalConfigMap.getData())) {
+
+				_validateLabels(configMapName, labels);
+
+				configMap = _kubernetesClient.configMaps(
+				).withName(
+					configMapName
+				).createOrReplace(
+					configMap
+				);
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Updated " + configMap);
+				}
+
+				return Result.UPDATED;
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Unchanged " + configMap);
+			}
+
+			return Result.UNCHANGED;
+		}
+
+		Map<String, String> annotations = _getMapImpl();
+		Map<String, String> binaryData = _getMapImpl();
+		Map<String, String> data = _getMapImpl();
+		Map<String, String> labels = _getMapImpl();
+
+		configMapModelConsumer.accept(
+			new ConfigMapModel() {
+
+				@Override
+				public Map<String, String> annotations() {
+					return annotations;
+				}
+
+				@Override
+				public Map<String, String> binaryData() {
+					return binaryData;
+				}
+
+				@Override
+				public Map<String, String> data() {
+					return data;
+				}
+
+				@Override
+				public Map<String, String> labels() {
+					return labels;
+				}
+
+			});
+
+		if (binaryData.isEmpty() && data.isEmpty()) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Config map does not exist and no data was supplied ",
+						"for ", configMapName, " resulting in no change"));
+			}
+
+			return Result.UNCHANGED;
+		}
+
+		_validateLabels(configMapName, labels);
+
+		ConfigMapBuilder configMapBuilder = new ConfigMapBuilder();
+
+		configMap = configMapBuilder.withNewMetadata(
+		).withNamespace(
+			_portalK8sAgentConfiguration.namespace()
+		).withName(
+			configMapName
+		).addToAnnotations(
+			annotations
+		).addToLabels(
+			labels
+		).endMetadata(
+		).addToBinaryData(
+			binaryData
+		).addToData(
+			data
+		).build();
+
+		configMap = _kubernetesClient.configMaps(
+		).withName(
+			configMapName
+		).createOrReplace(
+			configMap
+		);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Created " + configMap);
+		}
+
+		return Result.CREATED;
 	}
 
 	private void _processConfiguration(

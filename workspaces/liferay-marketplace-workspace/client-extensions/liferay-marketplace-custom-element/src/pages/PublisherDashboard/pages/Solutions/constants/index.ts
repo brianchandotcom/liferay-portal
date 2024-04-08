@@ -11,7 +11,7 @@ export const SOLUTION_FLOW_ITEMS = [
 		description: i18n.translate(
 			'review-and-accept-the-legal-agreement-between-you-and-liferay-before-proceeding-you-are-about-to-create-a-new-solution-submission'
 		),
-		label: 'Create',
+		label: i18n.translate('create'),
 		path: 'publisher',
 		selected: true,
 		title: i18n.translate('create-template'),
@@ -21,7 +21,7 @@ export const SOLUTION_FLOW_ITEMS = [
 		description: i18n.translate(
 			'enter-your-solution-details-this-information-will-be-used-for-submission-presentation-customer-support-and-search-capabilities'
 		),
-		label: 'Profile',
+		label: i18n.translate('profile'),
 		path: 'profile',
 		selected: false,
 		title: i18n.translate('define-the-solution-profile'),
@@ -31,7 +31,7 @@ export const SOLUTION_FLOW_ITEMS = [
 		description: i18n.translate(
 			'design-the-storefront-for-your-solution-this-will-set-the-information-displayed-on-the-solutions-page-this-section-is-dedicated-to-creating-the-solutions-header'
 		),
-		label: 'Solution Header',
+		label: i18n.translate('solution-header'),
 		path: 'header',
 		selected: false,
 		title: i18n.translate('customize-solution-header'),
@@ -41,34 +41,37 @@ export const SOLUTION_FLOW_ITEMS = [
 		description: i18n.translate(
 			'design-the-storefront-for-your-solution-this-will-set-the-information-displayed-on-the-solutions-page-this-section-is-dedicated-to-creating-the-solutions-detail-content'
 		),
-		label: 'Solution Details',
+		label: i18n.translate('solution-details'),
 		path: 'details',
 		selected: false,
 		title: i18n.translate('customize-storefront-solutions-details'),
 	},
 	{
 		checked: false,
-		description:
-			'Define profile company information for your solution. This will inform users about this version’s updates on the storefront.',
-		label: 'Company Profile',
+		description: i18n.translate(
+			'define-profile-company-information-for-your-solution-this-will-inform-users-about-this-versions-updates-on-the-storefront'
+		),
+		label: i18n.translate('company-profile'),
 		path: 'company',
 		selected: false,
-		title: 'Provide company profile details',
+		title: i18n.translate('provide-company-profile-details'),
 	},
 	{
 		checked: false,
-		description:
-			'Define contact us information for your solution. This will inform users about this version’s updates on the storefront.',
-		label: 'Contact Us',
+		description: i18n.translate(
+			'define-contact-us-information-for-your-solution-this-will-inform-users-about-this-versions-updates-on-the-storefront'
+		),
+		label: i18n.translate('contact-us'),
 		path: 'contact',
 		selected: false,
-		title: 'Provide contact us details',
+		title: i18n.translate('provide-contact-us-details'),
 	},
 	{
 		checked: false,
-		description:
-			'Please, review before submitting. Once sent, you will not be able to edit any information until this submission is completely reviewed by Liferay.',
-		label: 'Submit',
+		description: i18n.translate(
+			'please-review-before-submitting-once-sent-you-will-not-be-able-to-edit-any-information-until-this-submission-is-completely-reviewed-by-liferay'
+		),
+		label: i18n.translate('submit'),
 		path: 'submit',
 		selected: false,
 		title: 'Review and submit solution',

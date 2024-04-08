@@ -6,12 +6,11 @@
 import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
 
-import Form from '../../../../../../components/MarketplaceForm';
-
 import './index.scss';
 
 import {useState} from 'react';
 
+import Form from '../../../../../../components/MarketplaceForm';
 import i18n from '../../../../../../i18n';
 import {getIconSpriteMap} from '../../../../../../liferay/constants';
 

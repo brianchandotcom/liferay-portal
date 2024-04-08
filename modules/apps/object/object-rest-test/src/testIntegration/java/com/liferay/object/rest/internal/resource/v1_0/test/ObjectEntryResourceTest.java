@@ -2408,7 +2408,9 @@ public class ObjectEntryResourceTest {
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
 			).put(
-				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, _LIST_TYPE_ENTRY_KEY_1
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				(Serializable)Arrays.asList(
+					_LIST_TYPE_ENTRY_KEY_1, _LIST_TYPE_ENTRY_KEY_2)
 			).build(),
 			_TAG_1);
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
@@ -2416,9 +2418,11 @@ public class ObjectEntryResourceTest {
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
 			).put(
-				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, _LIST_TYPE_ENTRY_KEY_1
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				(Serializable)Arrays.asList(
+					_LIST_TYPE_ENTRY_KEY_1, _LIST_TYPE_ENTRY_KEY_2)
 			).build(),
-			_TAG_1);
+			_TAG_2);
 
 		// Many to many relationship, custom object field
 
@@ -2457,6 +2461,14 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			_escape(
 				String.format(
+					"%s/%s/any(k:k ne '%s')", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+					_LIST_TYPE_ENTRY_KEY_1)),
+			_objectDefinition1);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
 					"%s/%s/any(k:startswith(k,'%s'))",
 					_objectRelationship1.getName(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
@@ -2470,29 +2482,36 @@ public class ObjectEntryResourceTest {
 			_escape(
 				String.format(
 					"%s/keywords/any(k:contains(k,'%s'))",
-					_objectRelationship1.getName(), _TAG_1.substring(1))),
+					_objectRelationship1.getName(), _TAG_2.substring(1))),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			_escape(
 				String.format(
 					"%s/keywords/any(k:k eq '%s')",
-					_objectRelationship1.getName(), _TAG_1)),
+					_objectRelationship1.getName(), _TAG_2)),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			_escape(
 				String.format(
 					"%s/keywords/any(k:k in ('%s', '%s'))",
-					_objectRelationship1.getName(), _TAG_1,
+					_objectRelationship1.getName(), _TAG_2,
 					RandomTestUtil.randomString())),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			_escape(
 				String.format(
+					"%s/keywords/any(k:k ne '%s')",
+					_objectRelationship1.getName(), _TAG_1)),
+			_objectDefinition1);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
 					"%s/keywords/any(k:startswith(k,'%s'))",
-					_objectRelationship1.getName(), _TAG_1.substring(0, 2))),
+					_objectRelationship1.getName(), _TAG_2.substring(0, 2))),
 			_objectDefinition1);
 
 		// Many to many relationship (other side), custom object field
@@ -2527,6 +2546,14 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
 			_escape(
 				String.format(
+					"%s/%s/any(k:k ne '%s')", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+					_LIST_TYPE_ENTRY_KEY_1)),
+			_objectDefinition2);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
 					"%s/%s/any(k:startswith(k,'%s'))",
 					_objectRelationship1.getName(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
@@ -2556,6 +2583,13 @@ public class ObjectEntryResourceTest {
 					"%s/keywords/any(k:k in ('%s', '%s'))",
 					_objectRelationship1.getName(), _TAG_1,
 					RandomTestUtil.randomString())),
+			_objectDefinition2);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"%s/keywords/any(k:k ne '%s')",
+					_objectRelationship1.getName(), _TAG_2)),
 			_objectDefinition2);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
@@ -2634,6 +2668,23 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			_escape(
 				String.format(
+					"%s/%s/any(k:k ne '%s')", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+					_LIST_TYPE_ENTRY_KEY_1)),
+			_objectDefinition1);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:k ne '%s')", _objectRelationship1.getName(),
+					_objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+					_LIST_TYPE_ENTRY_KEY_1)),
+			_objectDefinition1);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
 					"%s/%s/any(k:startswith(k,'%s'))",
 					_objectRelationship1.getName(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
@@ -2690,6 +2741,14 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			_escape(
 				String.format(
+					"%s/%s/any(k:k ne '%s')", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+					_LIST_TYPE_ENTRY_KEY_1)),
+			_objectDefinition1);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
 					"%s/%s/any(k:startswith(k,'%s'))",
 					_objectRelationship1.getName(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
@@ -2703,29 +2762,36 @@ public class ObjectEntryResourceTest {
 			_escape(
 				String.format(
 					"%s/keywords/any(k:contains(k,'%s'))",
-					_objectRelationship1.getName(), _TAG_1.substring(1))),
+					_objectRelationship1.getName(), _TAG_2.substring(1))),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			_escape(
 				String.format(
 					"%s/keywords/any(k:k eq '%s')",
-					_objectRelationship1.getName(), _TAG_1)),
+					_objectRelationship1.getName(), _TAG_2)),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			_escape(
 				String.format(
 					"%s/keywords/any(k:k in ('%s', '%s'))",
-					_objectRelationship1.getName(), _TAG_1,
+					_objectRelationship1.getName(), _TAG_2,
 					RandomTestUtil.randomString())),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			_escape(
 				String.format(
+					"%s/keywords/any(k:k ne '%s')",
+					_objectRelationship1.getName(), _TAG_1)),
+			_objectDefinition1);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
 					"%s/keywords/any(k:startswith(k,'%s'))",
-					_objectRelationship1.getName(), _TAG_1.substring(0, 2))),
+					_objectRelationship1.getName(), _TAG_2.substring(0, 2))),
 			_objectDefinition1);
 
 		// One to many relationship (other side), custom object field
@@ -2760,6 +2826,14 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
 			_escape(
 				String.format(
+					"%s/%s/any(k:k ne '%s')", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+					_LIST_TYPE_ENTRY_KEY_1)),
+			_objectDefinition2);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
 					"%s/%s/any(k:startswith(k,'%s'))",
 					_objectRelationship1.getName(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
@@ -2789,6 +2863,13 @@ public class ObjectEntryResourceTest {
 					"%s/keywords/any(k:k in ('%s', '%s'))",
 					_objectRelationship1.getName(), _TAG_1,
 					RandomTestUtil.randomString())),
+			_objectDefinition2);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
+			_escape(
+				String.format(
+					"%s/keywords/any(k:k ne '%s')",
+					_objectRelationship1.getName(), _TAG_2)),
 			_objectDefinition2);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
@@ -2867,6 +2948,23 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			_escape(
 				String.format(
+					"%s/%s/any(k:k ne '%s')", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+					_LIST_TYPE_ENTRY_KEY_1)),
+			_objectDefinition1);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:k ne '%s')", _objectRelationship1.getName(),
+					_objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+					_LIST_TYPE_ENTRY_KEY_1)),
+			_objectDefinition1);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
 					"%s/%s/any(k:startswith(k,'%s'))",
 					_objectRelationship1.getName(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
@@ -2901,17 +2999,17 @@ public class ObjectEntryResourceTest {
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
 			).put(
-				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, _LIST_TYPE_ENTRY_KEY_1
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, _LIST_TYPE_ENTRY_KEY_2
 			).build(),
-			_TAG_1);
+			_TAG_2);
 		_objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition3,
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3
 			).put(
-				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, _LIST_TYPE_ENTRY_KEY_1
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, _LIST_TYPE_ENTRY_KEY_3
 			).build(),
-			_TAG_1);
+			_TAG_3);
 
 		// Many to many relationship, custom object field
 
@@ -2931,7 +3029,7 @@ public class ObjectEntryResourceTest {
 					"%s/%s/%s/any(k:k eq '%s')", _objectRelationship1.getName(),
 					_objectRelationship2.getName(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-					_LIST_TYPE_ENTRY_KEY_1)),
+					_LIST_TYPE_ENTRY_KEY_3)),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -2941,7 +3039,16 @@ public class ObjectEntryResourceTest {
 					_objectRelationship1.getName(),
 					_objectRelationship2.getName(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-					_LIST_TYPE_ENTRY_KEY_1)),
+					_LIST_TYPE_ENTRY_KEY_3)),
+			_objectDefinition1);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:k ne '%s')", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+					_LIST_TYPE_ENTRY_KEY_2)),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -2951,7 +3058,7 @@ public class ObjectEntryResourceTest {
 					_objectRelationship1.getName(),
 					_objectRelationship2.getName(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-					_LIST_TYPE_ENTRY_KEY_1)),
+					_LIST_TYPE_ENTRY_KEY_3)),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -2961,7 +3068,7 @@ public class ObjectEntryResourceTest {
 					_objectRelationship1.getName(),
 					_objectRelationship2.getName(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-					_LIST_TYPE_ENTRY_KEY_1, RandomTestUtil.randomString())),
+					_LIST_TYPE_ENTRY_KEY_3, RandomTestUtil.randomString())),
 			_objectDefinition1);
 
 		// Many to many relationship, system object field
@@ -2972,7 +3079,7 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/%s/keywords/any(k:k eq '%s')",
 					_objectRelationship1.getName(),
-					_objectRelationship2.getName(), _TAG_1)),
+					_objectRelationship2.getName(), _TAG_3)),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -2980,7 +3087,15 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/%s/keywords/any(k:contains(k,'%s'))",
 					_objectRelationship1.getName(),
-					_objectRelationship2.getName(), _TAG_1.substring(1))),
+					_objectRelationship2.getName(), _TAG_3.substring(1))),
+			_objectDefinition1);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:k ne '%s')",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(), _TAG_1)),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -2988,7 +3103,7 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/%s/keywords/any(k:startswith(k,'%s'))",
 					_objectRelationship1.getName(),
-					_objectRelationship2.getName(), _TAG_1.substring(0, 2))),
+					_objectRelationship2.getName(), _TAG_3.substring(0, 2))),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -2996,7 +3111,7 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/%s/keywords/any(k:k in ('%s', '%s'))",
 					_objectRelationship1.getName(),
-					_objectRelationship2.getName(), _TAG_1,
+					_objectRelationship2.getName(), _TAG_3,
 					RandomTestUtil.randomString())),
 			_objectDefinition1);
 
@@ -3020,6 +3135,15 @@ public class ObjectEntryResourceTest {
 					_objectRelationship1.getName(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
 					_LIST_TYPE_ENTRY_KEY_1)),
+			_objectDefinition3);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:k ne '%s')", _objectRelationship2.getName(),
+					_objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+					_LIST_TYPE_ENTRY_KEY_3)),
 			_objectDefinition3);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
@@ -3064,6 +3188,14 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
 			_escape(
 				String.format(
+					"%s/%s/keywords/any(k:k ne '%s')",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(), _TAG_3)),
+			_objectDefinition3);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
 					"%s/%s/keywords/any(k:startswith(k,'%s'))",
 					_objectRelationship2.getName(),
 					_objectRelationship1.getName(), _TAG_1.substring(0, 2))),
@@ -3101,7 +3233,7 @@ public class ObjectEntryResourceTest {
 					"%s/%s/%s/any(k:k eq '%s')", _objectRelationship1.getName(),
 					_objectRelationship2.getName(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-					_LIST_TYPE_ENTRY_KEY_1)),
+					_LIST_TYPE_ENTRY_KEY_3)),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -3109,6 +3241,15 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/%s/%s/any(k:contains(k,'%s'))",
 					_objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+					_LIST_TYPE_ENTRY_KEY_3)),
+			_objectDefinition1);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:k ne '%s')", _objectRelationship1.getName(),
 					_objectRelationship2.getName(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
 					_LIST_TYPE_ENTRY_KEY_1)),
@@ -3121,7 +3262,7 @@ public class ObjectEntryResourceTest {
 					_objectRelationship1.getName(),
 					_objectRelationship2.getName(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-					_LIST_TYPE_ENTRY_KEY_1)),
+					_LIST_TYPE_ENTRY_KEY_3)),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -3131,7 +3272,7 @@ public class ObjectEntryResourceTest {
 					_objectRelationship1.getName(),
 					_objectRelationship2.getName(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-					_LIST_TYPE_ENTRY_KEY_1, RandomTestUtil.randomString())),
+					_LIST_TYPE_ENTRY_KEY_3, RandomTestUtil.randomString())),
 			_objectDefinition1);
 
 		// One to many relationship, system object field
@@ -3142,7 +3283,7 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/%s/keywords/any(k:k eq '%s')",
 					_objectRelationship1.getName(),
-					_objectRelationship2.getName(), _TAG_1)),
+					_objectRelationship2.getName(), _TAG_3)),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -3150,7 +3291,15 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/%s/keywords/any(k:contains(k,'%s'))",
 					_objectRelationship1.getName(),
-					_objectRelationship2.getName(), _TAG_1.substring(1))),
+					_objectRelationship2.getName(), _TAG_3.substring(1))),
+			_objectDefinition1);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:k ne '%s')",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName(), _TAG_1)),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -3158,7 +3307,7 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/%s/keywords/any(k:startswith(k,'%s'))",
 					_objectRelationship1.getName(),
-					_objectRelationship2.getName(), _TAG_1.substring(0, 2))),
+					_objectRelationship2.getName(), _TAG_3.substring(0, 2))),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -3166,7 +3315,7 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/%s/keywords/any(k:k in ('%s', '%s'))",
 					_objectRelationship1.getName(),
-					_objectRelationship2.getName(), _TAG_1,
+					_objectRelationship2.getName(), _TAG_3,
 					RandomTestUtil.randomString())),
 			_objectDefinition1);
 
@@ -3190,6 +3339,15 @@ public class ObjectEntryResourceTest {
 					_objectRelationship1.getName(),
 					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
 					_LIST_TYPE_ENTRY_KEY_1)),
+			_objectDefinition3);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/%s/any(k:k ne '%s')", _objectRelationship2.getName(),
+					_objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+					_LIST_TYPE_ENTRY_KEY_3)),
 			_objectDefinition3);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
@@ -3229,6 +3387,14 @@ public class ObjectEntryResourceTest {
 					"%s/%s/keywords/any(k:contains(k,'%s'))",
 					_objectRelationship2.getName(),
 					_objectRelationship1.getName(), _TAG_1.substring(1))),
+			_objectDefinition3);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
+			_escape(
+				String.format(
+					"%s/%s/keywords/any(k:k ne '%s')",
+					_objectRelationship2.getName(),
+					_objectRelationship1.getName(), _TAG_3)),
 			_objectDefinition3);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
@@ -11517,6 +11683,12 @@ public class ObjectEntryResourceTest {
 	private static final int _OBJECT_FIELD_VALUE_4 = RandomTestUtil.randomInt();
 
 	private static final String _TAG_1 = StringUtil.toLowerCase(
+		RandomTestUtil.randomString());
+
+	private static final String _TAG_2 = StringUtil.toLowerCase(
+		RandomTestUtil.randomString());
+
+	private static final String _TAG_3 = StringUtil.toLowerCase(
 		RandomTestUtil.randomString());
 
 	private static AssetVocabulary _assetVocabulary;

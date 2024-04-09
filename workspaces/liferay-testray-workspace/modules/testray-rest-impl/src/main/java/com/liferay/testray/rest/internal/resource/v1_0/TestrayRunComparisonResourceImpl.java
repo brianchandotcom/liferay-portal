@@ -12,9 +12,10 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.testray.rest.dto.v1_0.TestrayRunComparison;
 import com.liferay.testray.rest.resource.v1_0.TestrayRunComparisonResource;
@@ -43,45 +44,19 @@ public class TestrayRunComparisonResourceImpl
 
 	@Override
 	public TestrayRunComparison getTestrayRunComparison(
-			Long testrayRunId1, Long testrayRunId2,
-			String testrayCasePriorities, Long testrayTeamId)
+			Long testrayRunId1, Long testrayRunId2, Filter filter)
 		throws Exception {
 
-		TestrayRunComparison testrayRunComparison = new TestrayRunComparison();
-
-		testrayRunComparison.setTestrayCasePriorities(testrayCasePriorities);
-		testrayRunComparison.setTestrayTeamId(testrayTeamId);
-
-		Set<Map<String, Serializable>> set = new HashSet<>();
-
-		Map<String, Map<String, Serializable>> testrayCaseResultsMap1 =
-			_getObjectEntriesMap(
-				_getCaseResultFilterString(testrayRunComparison, testrayRunId1),
-				"r_caseToCaseResult_c_caseId", "CaseResult");
-		Map<String, Map<String, Serializable>> testrayCaseResultsMap2 =
-			_getObjectEntriesMap(
-				_getCaseResultFilterString(testrayRunComparison, testrayRunId2),
-				"r_caseToCaseResult_c_caseId", "CaseResult");
-
-		for (Map.Entry<String, Map<String, Serializable>> entry :
-				testrayCaseResultsMap1.entrySet()) {
-
-			set.add(
-				_mergeTestrayCaseResults(
-					entry.getValue(),
-					testrayCaseResultsMap2.remove(entry.getKey())));
-		}
-
-		for (Map.Entry<String, Map<String, Serializable>> entry :
-				testrayCaseResultsMap2.entrySet()) {
-
-			set.add(_mergeTestrayCaseResults(null, entry.getValue()));
-		}
+		Set<Map<String, Serializable>> set = _getMergedTestrayCaseResults(
+			ParamUtil.getString(contextHttpServletRequest, "filter"),
+			testrayRunId1, testrayRunId2);
 
 		Map<String, Map<String, Serializable>> testrayComponentsMap =
 			_getObjectEntriesMap(
 				_getComponentFilterString("", testrayRunId1, testrayRunId2),
 				"c_componentId", "Component");
+
+		TestrayRunComparison testrayRunComparison = new TestrayRunComparison();
 
 		testrayRunComparison.setResults(
 			ListUtil.fromArray(
@@ -137,33 +112,16 @@ public class TestrayRunComparisonResourceImpl
 	}
 
 	private String _getCaseResultFilterString(
-		TestrayRunComparison testrayRunComparison, long testrayRunId) {
+		String filter, long testrayRunId) {
 
 		StringBundler sb = new StringBundler("runId eq '" + testrayRunId + "'");
 
-		if (Validator.isNotNull(
-				testrayRunComparison.getTestrayCasePriorities())) {
-
-			sb.append(" and (");
-
-			String[] testrayCasePriorities = StringUtil.split(
-				testrayRunComparison.getTestrayCasePriorities());
-
-			for (int i = 0; i <= (testrayCasePriorities.length - 1); i++) {
-				sb.append("caseToCaseResult/priority eq ");
-				sb.append(testrayCasePriorities[i]);
-				sb.append(" or ");
-			}
-
-			sb.setIndex(sb.index() - 1);
-			sb.append(")");
+		if (Validator.isNull(filter)) {
+			return sb.toString();
 		}
 
-		if (testrayRunComparison.getTestrayTeamId() != null) {
-			sb.append(" and componentToCaseResult/teamId eq '");
-			sb.append(testrayRunComparison.getTestrayTeamId());
-			sb.append("'");
-		}
+		sb.append(" and ");
+		sb.append(filter);
 
 		return sb.toString();
 	}
@@ -183,6 +141,39 @@ public class TestrayRunComparisonResourceImpl
 		sb.append("'");
 
 		return sb.toString();
+	}
+
+	private Set<Map<String, Serializable>> _getMergedTestrayCaseResults(
+			String filter, long testrayRunId1, long testrayRunId2)
+		throws Exception {
+
+		Set<Map<String, Serializable>> set = new HashSet<>();
+
+		Map<String, Map<String, Serializable>> testrayCaseResultsMap1 =
+			_getObjectEntriesMap(
+				_getCaseResultFilterString(filter, testrayRunId1),
+				"r_caseToCaseResult_c_caseId", "CaseResult");
+		Map<String, Map<String, Serializable>> testrayCaseResultsMap2 =
+			_getObjectEntriesMap(
+				_getCaseResultFilterString(filter, testrayRunId2),
+				"r_caseToCaseResult_c_caseId", "CaseResult");
+
+		for (Map.Entry<String, Map<String, Serializable>> entry :
+				testrayCaseResultsMap1.entrySet()) {
+
+			set.add(
+				_mergeTestrayCaseResults(
+					entry.getValue(),
+					testrayCaseResultsMap2.remove(entry.getKey())));
+		}
+
+		for (Map.Entry<String, Map<String, Serializable>> entry :
+				testrayCaseResultsMap2.entrySet()) {
+
+			set.add(_mergeTestrayCaseResults(null, entry.getValue()));
+		}
+
+		return set;
 	}
 
 	private Map<String, Map<String, Serializable>> _getObjectEntriesMap(

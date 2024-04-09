@@ -72,17 +72,6 @@ public class ExportImportTaskResourcePerformanceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		Class<?> clazz = ExportImportTaskResourcePerformanceTest.class;
-
-		Properties properties = PropertiesUtil.load(
-			clazz.getResourceAsStream(
-				"dependencies/export-import-task-resource-performance." +
-					"properties"),
-			"UTF-8");
-
-		_recordsCount = GetterUtil.getInteger(
-			properties.getProperty("records.count"));
-
 		_jsons = LinkedHashMapBuilder.put(
 			"com.liferay.headless.admin.user.dto.v1_0.UserAccount",
 			JSONUtil.put(
@@ -165,6 +154,17 @@ public class ExportImportTaskResourcePerformanceTest {
 				"textValue", "[$TEXT_VALUE$]"
 			).toString()
 		).build();
+
+		Class<?> clazz = ExportImportTaskResourcePerformanceTest.class;
+
+		Properties properties = PropertiesUtil.load(
+			clazz.getResourceAsStream(
+				"dependencies/export-import-task-resource-performance." +
+					"properties"),
+			"UTF-8");
+
+		_recordsCount = GetterUtil.getInteger(
+			properties.getProperty("records.count"));
 	}
 
 	@Test

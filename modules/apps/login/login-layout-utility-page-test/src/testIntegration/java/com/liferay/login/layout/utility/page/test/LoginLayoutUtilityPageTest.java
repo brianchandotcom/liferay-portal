@@ -67,38 +67,27 @@ public class LoginLayoutUtilityPageTest {
 	}
 
 	@Test
-	public void testAddCreateAccountUtilityPageEntry() throws PortalException {
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
+	public void testAddLayoutUtilityPageEntries() throws PortalException {
+		Assert.assertNotNull(
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, _serviceContext.getUserId(), _group.getGroupId(), 0, 0,
 				true, RandomTestUtil.randomString(),
 				LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT, 0,
-				_serviceContext);
+				_serviceContext));
 
-		Assert.assertNotNull(layoutUtilityPageEntry);
-	}
-
-	@Test
-	public void testAddForgotPasswordUtilityPageEntry() throws PortalException {
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
+		Assert.assertNotNull(
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, _serviceContext.getUserId(), _group.getGroupId(), 0, 0,
 				true, RandomTestUtil.randomString(),
 				LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD, 0,
-				_serviceContext);
+				_serviceContext));
 
-		Assert.assertNotNull(layoutUtilityPageEntry);
-	}
-
-	@Test
-	public void testAddLoginUtilityPageEntry() throws PortalException {
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
+		Assert.assertNotNull(
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, _serviceContext.getUserId(), _group.getGroupId(), 0, 0,
 				true, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_LOGIN, 0, _serviceContext);
-
-		Assert.assertNotNull(layoutUtilityPageEntry);
+				LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT, 0,
+				_serviceContext));
 	}
 
 	@Test

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -207,9 +208,11 @@ public class TextDDMFormFieldTypeReportProcessorTest {
 			ddmFormInstanceRecord
 		);
 
+		int maxLength = RandomTestUtil.randomInt(1, _VALUES_MAX_LENGTH);
+
 		List<DDMFormInstanceRecord> ddmFormInstanceRecords = new ArrayList<>();
 
-		for (int i = _VALUES_MAX_LENGTH; i > 0; i--) {
+		for (int i = maxLength; i > 0; i--) {
 			ddmFormInstanceRecords.add(_createFormInstanceRecord("text " + i));
 		}
 
@@ -239,7 +242,7 @@ public class TextDDMFormFieldTypeReportProcessorTest {
 
 		JSONObject jsonObject = valuesJSONArray.getJSONObject(0);
 
-		Assert.assertEquals("text 5", jsonObject.getString("value"));
+		Assert.assertEquals("text " + maxLength, jsonObject.getString("value"));
 	}
 
 	@Test

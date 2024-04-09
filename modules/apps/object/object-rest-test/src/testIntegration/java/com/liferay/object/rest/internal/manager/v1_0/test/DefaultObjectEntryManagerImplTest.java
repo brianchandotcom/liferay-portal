@@ -3813,21 +3813,46 @@ public class DefaultObjectEntryManagerImplTest
 			long objectEntryId)
 		throws Exception {
 
-		_user.setLanguageId(languageId);
-
-		_user = _userLocalService.updateUser(_user);
+		// Locale in the DTOConverterContext
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntry(
 				new DefaultDTOConverterContext(
 					false, Collections.emptyMap(), dtoConverterRegistry, null,
-					LocaleUtil.getDefault(), null, _user),
+					LocaleUtil.fromLanguageId(languageId), null, _user),
 				_objectDefinition2, objectEntryId),
 			new ObjectEntry() {
 				{
 					properties = expectedLocalizedValues;
 				}
 			});
+
+		// Without Locale in the DTOConverterContext but languageId in the User
+
+		String originalLanguageId = _user.getLanguageId();
+
+		try {
+			_user.setLanguageId(languageId);
+
+			_user = _userLocalService.updateUser(_user);
+
+			assertEquals(
+				_defaultObjectEntryManager.getObjectEntry(
+					new DefaultDTOConverterContext(
+						false, Collections.emptyMap(), dtoConverterRegistry,
+						null, null, null, _user),
+					_objectDefinition2, objectEntryId),
+				new ObjectEntry() {
+					{
+						properties = expectedLocalizedValues;
+					}
+				});
+		}
+		finally {
+			_user.setLanguageId(originalLanguageId);
+
+			_user = _userLocalService.updateUser(_user);
+		}
 	}
 
 	private void _assertObjectEntriesSize1(long size) throws Exception {

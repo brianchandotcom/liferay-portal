@@ -1,3 +1,7 @@
 Bundle-Name: Liferay Commerce Punch Out OAuth2 Provider REST
 Bundle-SymbolicName: com.liferay.commerce.punchout.oauth2.provider.rest
 Bundle-Version: 4.0.15
+Import-Package:\
+	com.liferay.portal.kernel.util;version="[74.0.0,9999.0.0)",\
+	\
+	*

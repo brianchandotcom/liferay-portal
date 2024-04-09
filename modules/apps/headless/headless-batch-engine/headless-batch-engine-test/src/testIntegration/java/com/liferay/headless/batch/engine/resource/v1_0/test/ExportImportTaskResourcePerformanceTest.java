@@ -147,7 +147,7 @@ public class ExportImportTaskResourcePerformanceTest {
 				)
 			).toString()
 		).put(
-			"com.liferay.headless.batch.engine.resource.v1_0.test.DummyEntity",
+			"com.liferay.headless.batch.engine.resource.v1_0.test.TestEntity",
 			JSONUtil.put(
 				"intValue", "[$INT_VALUE$]"
 			).put(
@@ -168,23 +168,22 @@ public class ExportImportTaskResourcePerformanceTest {
 	}
 
 	@Test
-	public void testPostExportTaskWithDummyEntityDelegate() throws Exception {
-		DummyEntityPerformanceTestBatchEngineTaskItemDelegate
-			userAccountPerformanceTestBatchEngineTaskItemDelegate =
-				(DummyEntityPerformanceTestBatchEngineTaskItemDelegate)
+	public void testPostExportTaskWithTestEntityDelegate() throws Exception {
+		TestEntityBatchEngineTaskItemDelegate
+			testEntityBatchEngineTaskItemDelegate =
+				(TestEntityBatchEngineTaskItemDelegate)
 					_batchEngineTaskItemDelegateRegistry.
 						getBatchEngineTaskItemDelegate(
 							0,
 							"com.liferay.headless.batch.engine.resource.v1_0." +
-								"test.DummyEntity",
+								"test.TestEntity",
 							"dummy-entity-performance-test");
 
-		userAccountPerformanceTestBatchEngineTaskItemDelegate.generateTestData(
-			_recordsCount);
+		testEntityBatchEngineTaskItemDelegate.generateTestData(_recordsCount);
 
 		_testPostExportTask(
 			"com.liferay.headless.batch.engine.resource.v1_0.test." +
-				"DummyEntity#dummy-entity-performance-test");
+				"TestEntity#dummy-entity-performance-test");
 	}
 
 	@Test
@@ -196,10 +195,10 @@ public class ExportImportTaskResourcePerformanceTest {
 	}
 
 	@Test
-	public void testPostImportTaskWithDummyEntityDelegate() throws Exception {
+	public void testPostImportTaskWithTestEntityDelegate() throws Exception {
 		_testPostImportTask(
 			"com.liferay.headless.batch.engine.resource.v1_0.test." +
-				"DummyEntity#dummy-entity-performance-test");
+				"TestEntity#dummy-entity-performance-test");
 	}
 
 	@Test

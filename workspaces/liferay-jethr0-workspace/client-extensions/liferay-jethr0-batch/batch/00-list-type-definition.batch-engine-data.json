@@ -708,6 +708,23 @@
 			}
 		},
 		{
+			"externalReferenceCode": "routineType",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "manual",
+					"key": "manual",
+					"name": "Manual",
+					"name_i18n": {
+						"en-US": "Manual"
+					}
+				}
+			],
+			"name": "routineType",
+			"name_i18n": {
+				"en-US": "Routine Type"
+			}
+		},
+		{
 			"externalReferenceCode": "state",
 			"listTypeEntries": [
 				{

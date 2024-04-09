@@ -23,6 +23,7 @@ liferay-jethr0-etc-spring-boot-oauth-application-headless-server:
         - C_JobDefinitionParameter.everything
         - C_JobPrioritizer.everything
         - C_JobQueueOrder.everything
+        - C_Routine.everything
         - C_Task.everything
         - C_TaskRun.everything
         - C_TestSuite.everything

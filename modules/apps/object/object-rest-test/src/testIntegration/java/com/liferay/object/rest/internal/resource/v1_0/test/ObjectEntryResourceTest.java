@@ -5727,7 +5727,6 @@ public class ObjectEntryResourceTest {
 			_siteScopedObjectDefinition1);
 	}
 
-	@FeatureFlags("LPS-196724")
 	@Test
 	public void testPostCustomObjectEntryWithAutoIncrementField()
 		throws Exception {

@@ -113,7 +113,7 @@ import org.junit.runner.RunWith;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@FeatureFlags({"LPS-187142", "LPS-196724"})
+@FeatureFlags("LPS-187142")
 @RunWith(Arquillian.class)
 public class ObjectFieldLocalServiceTest {
 

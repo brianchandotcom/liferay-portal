@@ -895,7 +895,6 @@ public class ObjectEntryLocalServiceTest {
 			() -> _dlAppLocalService.getFileEntry(persistedFileEntryId2));
 	}
 
-	@FeatureFlags("LPS-196724")
 	@Test
 	public void testAddObjectEntryWithAutoIncrementObjectField()
 		throws Exception {

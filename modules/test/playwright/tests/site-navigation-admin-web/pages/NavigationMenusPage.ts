@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
@@ -28,7 +28,7 @@ export class NavigationMenusPage {
 		);
 	}
 
-	async openAddPageModal(): Promise<FrameLocator> {
+	async openAddPageModal() {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: 'Page'}),
@@ -40,8 +40,6 @@ export class NavigationMenusPage {
 		);
 
 		await modal.getByPlaceholder('Search').waitFor();
-
-		return modal;
 	}
 
 	async createNavigationMenu(name: string) {

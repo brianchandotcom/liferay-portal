@@ -11,6 +11,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {navigationMenusPagesTest} from '../site-navigation-admin-web/fixtures/navigationMenusPagesTest';
+import {pageSelectorPagesTest} from './fixtures/pageSelectorPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -20,12 +21,14 @@ export const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
-	navigationMenusPagesTest
+	navigationMenusPagesTest,
+	pageSelectorPagesTest
 );
 
 test('load more works properly in search results', async ({
 	apiHelpers,
 	navigationMenusPage,
+	pageSelectorPage,
 	site,
 }) => {
 
@@ -53,68 +56,51 @@ test('load more works properly in search results', async ({
 
 	await navigationMenusPage.createNavigationMenu(getRandomString());
 
-	const modal = await navigationMenusPage.openAddPageModal();
+	await navigationMenusPage.openAddPageModal();
 
-	const loadMoreButton = modal.locator('.load-more-btn');
+	// Store modal instance in variable so we can search for things inside it
+
+	const modal = await pageSelectorPage.getModal();
 
 	// Search for another string and check empty state
 
-	await modal.getByPlaceholder('Search').fill('Orange');
+	await pageSelectorPage.search('Orange');
 
 	await expect(modal.getByText('No Results Found')).toBeVisible();
 
 	// Search for Lemon pages, check it shows all results and does not show Load More button
 
-	await modal.getByPlaceholder('Search').fill('Lem');
+	await pageSelectorPage.search('Lem');
 
-	await modal.locator('.loading-animation').waitFor();
-	await modal.locator('.loading-animation').waitFor({state: 'hidden'});
+	await expect(modal.locator('.search-result')).toHaveCount(15);
 
-	await expect(
-		modal.locator('.search-result').getByText('Lemon')
-	).toHaveCount(15);
-
-	await expect(loadMoreButton).not.toBeVisible();
+	await expect(modal.getByText('Load More Results')).not.toBeVisible();
 
 	// Check only Lem substring is marked
 
-	const firstResult = await modal
-		.locator('.search-result')
-		.getByText('Lemon')
-		.first();
+	const firstResult = await modal.locator('.search-result').first();
 
 	await expect(firstResult.locator('mark')).toHaveText('Lem');
 
 	// Search for Apple pages, check it initially shows 20 items
 
-	await modal.getByPlaceholder('Search').fill('App');
+	await pageSelectorPage.search('App');
 
-	await modal.locator('.loading-animation').waitFor();
-	await modal.locator('.loading-animation').waitFor({state: 'hidden'});
-
-	await expect(
-		modal.locator('.search-result').getByText('Apple')
-	).toHaveCount(20);
+	await expect(modal.locator('.search-result')).toHaveCount(20);
 
 	// Load more items and check it loads all results and button disappears
 
-	await loadMoreButton.click();
+	await pageSelectorPage.loadMore();
 
-	await loadMoreButton.locator('.loading-animation').waitFor();
-	await loadMoreButton
-		.locator('.loading-animation')
-		.waitFor({state: 'hidden'});
+	await expect(modal.locator('.search-result')).toHaveCount(30);
 
-	await expect(
-		modal.locator('.search-result').getByText('Apple')
-	).toHaveCount(30);
-
-	await expect(loadMoreButton).not.toBeVisible();
+	await expect(modal.getByText('Load More Results')).not.toBeVisible();
 });
 
 test('checks the correct label for restricted page in the layout tree', async ({
 	apiHelpers,
 	navigationMenusPage,
+	pageSelectorPage,
 	site,
 }) => {
 
@@ -139,7 +125,9 @@ test('checks the correct label for restricted page in the layout tree', async ({
 
 	await navigationMenusPage.createNavigationMenu(getRandomString());
 
-	const modal = await navigationMenusPage.openAddPageModal();
+	await navigationMenusPage.openAddPageModal();
+
+	const modal = await pageSelectorPage.getModal();
 
 	// Check the correct label for restricted page
 

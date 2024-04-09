@@ -3,6 +3,11 @@ Bundle-SymbolicName: com.liferay.commerce.punchout.service
 Bundle-Version: 4.0.20
 Import-Package:\
 	com.liferay.account.model;version="[5.6.0,9999.0.0)",\
-	com.liferay.portal.kernel.service;version="[4.0.0,9999.0.0)",\
+	com.liferay.account.service;version="[11.2.0,9999.0.0)",\
+	com.liferay.commerce.product.model;version="[23.2.0,9999.0.0)",\
+	com.liferay.commerce.product.service;version="[40.1.0,9999.0.0)",\
+	com.liferay.portal.kernel.model;version="[31.4.0,9999.0.0)",\
+	com.liferay.portal.kernel.service;version="[30.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.util;version="[74.0.0,9999.0.0)",\
 	\
 	*

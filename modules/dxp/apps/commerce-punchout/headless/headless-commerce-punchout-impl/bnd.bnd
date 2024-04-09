@@ -3,7 +3,15 @@ Bundle-SymbolicName: com.liferay.headless.commerce.punchout.impl
 Bundle-Version: 4.0.51
 Import-Package:\
 	com.liferay.account.model;version="[5.6.0,9999.0.0)",\
-	com.liferay.portal.kernel.security.auth;version="[2.0.0,9999.0.0)",\
-	com.liferay.portal.kernel.service;version="[4.0.0,9999.0.0)",\
+	com.liferay.account.service;version="[11.2.0,9999.0.0)",\
+	com.liferay.commerce.product.model;version="[23.2.0,9999.0.0)",\
+	com.liferay.commerce.product.service;version="[40.1.0,9999.0.0)",\
+	com.liferay.portal.odata.sort;version="[1.2.0,9999.0.0)",\
+	com.liferay.portal.kernel.model;version="[31.4.0,9999.0.0)",\
+	com.liferay.portal.kernel.search;version="[20.4.0,9999.0.0)",\
+	com.liferay.portal.kernel.security.auth;version="[8.2.0,9999.0.0)",\
+	com.liferay.portal.kernel.security.permission;version="[9.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.service;version="[30.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.util;version="[74.0.0,9999.0.0)",\
 	\
 	*

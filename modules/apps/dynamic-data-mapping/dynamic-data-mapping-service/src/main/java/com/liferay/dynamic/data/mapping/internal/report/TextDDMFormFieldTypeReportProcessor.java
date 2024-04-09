@@ -130,7 +130,10 @@ public class TextDDMFormFieldTypeReportProcessor
 						return ddmFormInstanceRecordId != formInstanceRecordId;
 					});
 
-			for (int i = 0; i < _VALUES_MAX_LENGTH; i++) {
+			int length = Math.min(
+				ddmFormInstanceRecords.size(), _VALUES_MAX_LENGTH);
+
+			for (int i = 0; i < length; i++) {
 				DDMFormInstanceRecord currentDDMFormInstanceRecord =
 					ddmFormInstanceRecords.get(i);
 

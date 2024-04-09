@@ -113,18 +113,55 @@ public final class AstIdentifier extends SimpleNode {
             }
         }
         ctx.setPropertyResolved(false);
-        Object ret = ctx.getELResolver().getValue(ctx, null, this.image);
-        if (! ctx.isPropertyResolved()) {
-            // Check if this is an imported static field
-            if (ctx.getImportHandler() != null) {
-                Class<?> c = ctx.getImportHandler().resolveStatic(this.image);
-                if (c != null) {
-                    return ctx.getELResolver().getValue(ctx, new ELClass(c),
-                                this.image);
-                }
+
+        Thread currentThread = Thread.currentThread();
+
+        ClassLoader originalContextClassLoader =
+            currentThread.getContextClassLoader();
+
+        Object ret = null;
+
+        try {
+            if (!(parent instanceof AstValue)) {
+                String property = this.image;
+
+                currentThread.setContextClassLoader(
+                    new ClassLoader(originalContextClassLoader) {
+
+                        @Override
+                        public Class<?> loadClass(String name)
+                            throws ClassNotFoundException {
+
+                            if (name.endsWith("." + property)) {
+                                throw new ClassNotFoundException();
+                            }
+
+                            return originalContextClassLoader.loadClass(name);
+                        }
+
+                    });
             }
-            ELSupport.throwUnhandled(null, this.image);
+
+            ret = ctx.getELResolver().getValue(ctx, null, this.image);
+            if (!ctx.isPropertyResolved()) {
+                // Check if this is an imported static field
+                if (ctx.getImportHandler() != null) {
+                    Class<?> c =
+                        ctx.getImportHandler().resolveStatic(this.image);
+                    if (c != null) {
+                        return ctx.getELResolver().getValue(ctx, new ELClass(c),
+                            this.image);
+                    }
+                }
+                ELSupport.throwUnhandled(null, this.image);
+            }
         }
+        finally {
+            if (!(parent instanceof AstValue)) {
+                currentThread.setContextClassLoader(originalContextClassLoader);
+            }
+        }
+
         return ret;
     }
 
@@ -193,7 +230,7 @@ public final class AstIdentifier extends SimpleNode {
             Object[] paramValues) throws ELException {
         return this.getMethodExpression(ctx).invoke(ctx.getELContext(), paramValues);
     }
-
+    
 
     public MethodInfo getMethodInfo(EvaluationContext ctx, Class[] paramTypes)
             throws ELException {
@@ -237,3 +274,4 @@ public final class AstIdentifier extends SimpleNode {
         }
     }
 }
+/* @generated */

@@ -5,7 +5,9 @@ import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.testray.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.testray.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayRunComparisonResourceImpl;
+import com.liferay.testray.rest.internal.resource.v1_0.TestrayTestSuiteResourceImpl;
 import com.liferay.testray.rest.resource.v1_0.TestrayRunComparisonResource;
+import com.liferay.testray.rest.resource.v1_0.TestrayTestSuiteResource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +31,9 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setTestrayTestSuiteResourceComponentServiceObjects(
+			_testrayTestSuiteResourceComponentServiceObjects);
+
 		Query.setTestrayRunComparisonResourceComponentServiceObjects(
 			_testrayRunComparisonResourceComponentServiceObjects);
 	}
@@ -68,12 +73,27 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#createTestrayTestSuite",
+						new ObjectValuePair<>(
+							TestrayTestSuiteResourceImpl.class,
+							"postTestrayTestSuite"));
+					put(
+						"mutation#createTestrayTestSuiteBatch",
+						new ObjectValuePair<>(
+							TestrayTestSuiteResourceImpl.class,
+							"postTestrayTestSuiteBatch"));
+
+					put(
 						"query#testrayRunComparison",
 						new ObjectValuePair<>(
 							TestrayRunComparisonResourceImpl.class,
 							"getTestrayRunComparison"));
 				}
 			};
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<TestrayTestSuiteResource>
+		_testrayTestSuiteResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TestrayRunComparisonResource>

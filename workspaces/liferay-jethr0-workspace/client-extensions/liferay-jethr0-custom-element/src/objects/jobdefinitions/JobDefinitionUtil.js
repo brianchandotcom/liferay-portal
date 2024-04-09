@@ -4,8 +4,8 @@
  */
 
 import liferayRequest from '../../services/liferayRequest';
-import JobDefinitionParameter from './JobDefinitionParameter';
 import JobDefinition from './JobDefinition';
+import JobDefinitionParameter from './JobDefinitionParameter';
 
 export async function getJobDefinitionById({id, setJobDefinition}) {
 	const response = await liferayRequest({
@@ -90,15 +90,19 @@ export async function getJobDefinitions({setJobDefinitions}) {
 			method: 'POST',
 			urlPath: '/o/graphql',
 		});
-	
+
 		const result = JSON.parse(await response.text());
 
 		for (const item of result.data.c.jobDefinitions.items) {
 			const jobDefinition = new JobDefinition(item);
 
-			item.jobDefinitionsToJobDefinitionParameters.forEach(jobDefinitionParameter => {
-				jobDefinition.jobDefinitionParameters.push(new JobDefinitionParameter(jobDefinitionParameter));
-			});
+			item.jobDefinitionsToJobDefinitionParameters.forEach(
+				(jobDefinitionParameter) => {
+					jobDefinition.jobDefinitionParameters.push(
+						new JobDefinitionParameter(jobDefinitionParameter)
+					);
+				}
+			);
 
 			jobDefinitions.push(jobDefinition);
 		}

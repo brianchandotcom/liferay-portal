@@ -1,6 +1,5 @@
 import Card from 'shared/components/Card';
 import ClayLink from '@clayui/link';
-import EmptySankey from './EmptySankey';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import PagePathQuery from 'shared/queries/PagePathQuery';
@@ -8,6 +7,7 @@ import React, {useRef} from 'react';
 import Sankey from './Sankey';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
+import {EmptySankey} from './EmptySankey';
 import {getSafeRangeSelectors} from 'shared/util/util';
 import {RangeSelectors} from 'shared/types';
 import {SANKEY_WIDTH, SECONDARY_NODE_COLOR} from './utils';
@@ -146,6 +146,7 @@ const PagePathCard: React.FC<IPagePathCardProps> = ({
 						<StatesRenderer.Success>
 							<Sankey
 								data={formattedData}
+								rangeSelectors={rangeSelectors}
 								width={
 									sankeyWidth > 0 ? sankeyWidth : SANKEY_WIDTH
 								}
@@ -157,6 +158,7 @@ const PagePathCard: React.FC<IPagePathCardProps> = ({
 								<EmptySankey
 									data={formattedData}
 									emptyState={emptyState}
+									rangeSelectors={rangeSelectors}
 								/>
 
 								<NoResultsDisplay

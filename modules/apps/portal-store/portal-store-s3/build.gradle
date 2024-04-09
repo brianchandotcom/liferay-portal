@@ -72,6 +72,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "commons-codec", name: "commons-codec", version: "1.15"
+	compileOnly group: "javax.annotation", name: "javax.annotation-api", version: "1.3.2"
 	compileOnly group: "joda-time", name: "joda-time", version: "2.12.1"
 	compileOnly group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileOnly group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"

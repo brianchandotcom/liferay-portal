@@ -147,7 +147,7 @@
 								},
 								{
 									"#cdata-value": [
-										"actionExecutorClassPath"
+										"\"actionExecutorClassPath\""
 									],
 									"#tag-name": "script"
 								},

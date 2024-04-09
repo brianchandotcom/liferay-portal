@@ -409,8 +409,8 @@ pre[class*='language-'] {
 }
 
 .learn-banner {
+	background: linear-gradient(180deg, #00256c 0%, #6399ff 100%);
 	color: var(--color-neutral-0);
-	background: linear-gradient(180deg, #00256C 0%, #6399FF 100%);
 }
 
 .learn-search {

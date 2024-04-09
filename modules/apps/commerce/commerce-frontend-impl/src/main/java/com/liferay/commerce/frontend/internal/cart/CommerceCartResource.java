@@ -217,15 +217,13 @@ public class CommerceCartResource {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				CommerceOrderItem.class.getName(), httpServletRequest);
 
-			BigDecimal formattedQuantity =
-				_commerceOrderItemQuantityFormatter.parse(
-					quantity, LocaleUtil.fromLanguageId(languageId));
-
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(), cpInstanceId, options,
-					formattedQuantity, 0, BigDecimal.ZERO, unitOfMeasureKey,
-					commerceContext, serviceContext);
+					_commerceOrderItemQuantityFormatter.parse(
+						quantity, LocaleUtil.fromLanguageId(languageId)),
+					0, BigDecimal.ZERO, unitOfMeasureKey, commerceContext,
+					serviceContext);
 
 			cart = _getCart(
 				commerceOrderItem.getCommerceOrderId(),

@@ -1,6 +1,6 @@
 [#if themeDisplay.isSignedIn() && !themeDisplay.getLayout().isTypeControlPanel() && !themeDisplay.getLayout().isSystem() && layoutMode != "edit"]
 	[#assign currentURL = (themeDisplay.getURLCurrent()?keep_before("/guest"))! /]
-	[#assign layoutPath = currentURL?ends_with("/")?then("home", "/home") /]
+	[#assign layoutPath = currentURL + "/home"]
 
 	<script>
 		window.location.pathname = "${layoutPath}";

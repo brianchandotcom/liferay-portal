@@ -1,0 +1,75 @@
+diff --git a/com/sun/el/parser/AstIdentifier.java b/com/sun/el/parser/AstIdentifier.java
+index 87059d3cee247..7dada7615b2a3 100644
+--- a/com/sun/el/parser/AstIdentifier.java
++++ b/com/sun/el/parser/AstIdentifier.java
+@@ -113,18 +113,55 @@ public final class AstIdentifier extends SimpleNode {
+             }
+         }
+         ctx.setPropertyResolved(false);
+-        Object ret = ctx.getELResolver().getValue(ctx, null, this.image);
+-        if (! ctx.isPropertyResolved()) {
+-            // Check if this is an imported static field
+-            if (ctx.getImportHandler() != null) {
+-                Class<?> c = ctx.getImportHandler().resolveStatic(this.image);
+-                if (c != null) {
+-                    return ctx.getELResolver().getValue(ctx, new ELClass(c),
+-                                this.image);
++
++        Thread currentThread = Thread.currentThread();
++
++        ClassLoader originalContextClassLoader =
++            currentThread.getContextClassLoader();
++
++        Object ret = null;
++
++        try {
++            if (!(parent instanceof AstValue)) {
++                String property = this.image;
++
++                currentThread.setContextClassLoader(
++                    new ClassLoader(originalContextClassLoader) {
++
++                        @Override
++                        public Class<?> loadClass(String name)
++                            throws ClassNotFoundException {
++
++                            if (name.endsWith("." + property)) {
++                                throw new ClassNotFoundException();
++                            }
++
++                            return originalContextClassLoader.loadClass(name);
++                        }
++
++                    });
++            }
++
++            ret = ctx.getELResolver().getValue(ctx, null, this.image);
++            if (!ctx.isPropertyResolved()) {
++                // Check if this is an imported static field
++                if (ctx.getImportHandler() != null) {
++                    Class<?> c =
++                        ctx.getImportHandler().resolveStatic(this.image);
++                    if (c != null) {
++                        return ctx.getELResolver().getValue(ctx, new ELClass(c),
++                            this.image);
++                    }
+                 }
++                ELSupport.throwUnhandled(null, this.image);
++            }
++        }
++        finally {
++            if (!(parent instanceof AstValue)) {
++                currentThread.setContextClassLoader(originalContextClassLoader);
+             }
+-            ELSupport.throwUnhandled(null, this.image);
+         }
++
+         return ret;
+     }
+ 
+@@ -237,3 +274,4 @@ public final class AstIdentifier extends SimpleNode {
+         }
+     }
+ }
++/* @generated */
+\ No newline at end of file

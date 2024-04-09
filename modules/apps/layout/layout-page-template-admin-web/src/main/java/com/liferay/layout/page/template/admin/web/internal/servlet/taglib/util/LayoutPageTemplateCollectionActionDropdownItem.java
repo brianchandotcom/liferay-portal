@@ -133,8 +133,7 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 									DISPLAY_PAGE) &&
 							LayoutPageTemplateCollectionPermission.contains(
 								_themeDisplay.getPermissionChecker(),
-								layoutPageTemplateCollection,
-								ActionKeys.UPDATE),
+								layoutPageTemplateCollection, ActionKeys.VIEW),
 						dropdownItem -> {
 							dropdownItem.setHref(
 								_getExportLayoutPageTemplateCollectionURL(

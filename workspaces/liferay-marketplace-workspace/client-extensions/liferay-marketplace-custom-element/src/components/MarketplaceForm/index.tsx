@@ -6,6 +6,7 @@
 import {FormHTMLAttributes, ReactNode} from 'react';
 import {FormProvider} from 'react-hook-form';
 
+import {HelpMessage} from './HelpMessage';
 import {Input} from './Input';
 import {Label} from './Label';
 
@@ -15,6 +16,7 @@ type FormProps = {
 } & FormHTMLAttributes<HTMLFormElement>;
 
 type FormChildrens = {
+	HelpMessage: typeof HelpMessage;
 	Input: typeof Input;
 	Label: typeof Label;
 };
@@ -31,6 +33,7 @@ const Form: React.FC<FormProps> & FormChildrens = ({
 	</FormProvider>
 );
 
+Form.HelpMessage = HelpMessage;
 Form.Input = Input;
 Form.Label = Label;
 

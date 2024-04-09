@@ -6,6 +6,7 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -30,32 +31,36 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
 	public void onBeforeRemove(Group group) {
-		try {
-			RankingIndexName rankingIndexName =
-				_rankingIndexNameBuilder.getRankingIndexName(
-					group.getCompanyId());
+		if (FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-6368")) {
 
-			List<Ranking> rankings =
-				_rankingIndexReader.fetchByGroupExternalReferenceCode(
-					group.getExternalReferenceCode(), rankingIndexName);
+			try {
+				RankingIndexName rankingIndexName =
+					_rankingIndexNameBuilder.getRankingIndexName(
+						group.getCompanyId());
 
-			if (rankings == null) {
-				return;
+				List<Ranking> rankings =
+					_rankingIndexReader.fetchByGroupExternalReferenceCode(
+						group.getExternalReferenceCode(), rankingIndexName);
+
+				if (rankings == null) {
+					return;
+				}
+
+				for (Ranking ranking : rankings) {
+					Ranking.Builder rankingBuilder =
+						_rankingBuilderFactory.builder(ranking);
+
+					rankingBuilder.status(
+						ResultRankingsConstants.STATUS_NOT_APPLICABLE);
+
+					_rankingStorageAdapter.update(
+						rankingBuilder.build(), rankingIndexName);
+				}
 			}
-
-			for (Ranking ranking : rankings) {
-				Ranking.Builder rankingBuilder = _rankingBuilderFactory.builder(
-					ranking);
-
-				rankingBuilder.status(
-					ResultRankingsConstants.STATUS_NOT_APPLICABLE);
-
-				_rankingStorageAdapter.update(
-					rankingBuilder.build(), rankingIndexName);
+			catch (PortalException portalException) {
+				throw new RuntimeException(portalException);
 			}
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
 		}
 	}
 

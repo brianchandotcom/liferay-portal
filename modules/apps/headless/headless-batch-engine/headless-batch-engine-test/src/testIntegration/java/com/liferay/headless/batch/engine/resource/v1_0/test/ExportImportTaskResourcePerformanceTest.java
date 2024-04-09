@@ -83,12 +83,87 @@ public class ExportImportTaskResourcePerformanceTest {
 		_recordsCount = GetterUtil.getInteger(
 			properties.getProperty("records.count"));
 
-		_jsonTemplates = LinkedHashMapBuilder.put(
+		_jsons = LinkedHashMapBuilder.put(
 			"com.liferay.headless.admin.user.dto.v1_0.UserAccount",
-			_createUserAccountJSONTemplate()
+			JSONUtil.put(
+				"additionalName", ""
+			).put(
+				"alternateName", "[$ALTERNATE_NAME$]"
+			).put(
+				"birthDate", "1977-01-01T00:00:00Z"
+			).put(
+				"customFields", JSONFactoryUtil.createJSONArray()
+			).put(
+				"dashboardURL", ""
+			).put(
+				"dateCreated", "2021-05-19T16:04:46Z"
+			).put(
+				"dateModified", "2021-05-19T16:04:46Z"
+			).put(
+				"emailAddress", "[$EMAIL_ADDRESS$]"
+			).put(
+				"familyName", "[$FAMILY_NAME$]"
+			).put(
+				"givenName", "[$GIVEN_NAME$]"
+			).put(
+				"jobTitle", ""
+			).put(
+				"keywords", JSONFactoryUtil.createJSONArray()
+			).put(
+				"name", "[$GIVEN_NAME$] [$FAMILY_NAME$]"
+			).put(
+				"organizationBriefs", JSONFactoryUtil.createJSONArray()
+			).put(
+				"profileURL", ""
+			).put(
+				"roleBriefs",
+				JSONUtil.put(
+					JSONUtil.put(
+						"id", 20113
+					).put(
+						"name", "User"
+					))
+			).put(
+				"siteBriefs",
+				JSONUtil.put(
+					JSONUtil.merge(
+						JSONUtil.put(
+							"id", 20127
+						).put(
+							"name", "Global"
+						),
+						JSONUtil.put(
+							"id", 20125
+						).put(
+							"name", "Guest"
+						)))
+			).put(
+				"userAccountContactInformation",
+				JSONUtil.put(
+					"emailAddresses", JSONFactoryUtil.createJSONArray()
+				).put(
+					"facebook", ""
+				).put(
+					"postalAddresses", JSONFactoryUtil.createJSONArray()
+				).put(
+					"skype", ""
+				).put(
+					"sms", ""
+				).put(
+					"telephones", JSONFactoryUtil.createJSONArray()
+				).put(
+					"twitter", ""
+				).put(
+					"webUrls", JSONFactoryUtil.createJSONArray()
+				)
+			).toString()
 		).put(
 			"com.liferay.headless.batch.engine.resource.v1_0.test.DummyEntity",
-			_createDummyEntityJSONTemplate()
+			JSONUtil.put(
+				"intValue", "[$INT_VALUE$]"
+			).put(
+				"textValue", "[$TEXT_VALUE$]"
+			).toString()
 		).build();
 	}
 
@@ -133,89 +208,6 @@ public class ExportImportTaskResourcePerformanceTest {
 			"com.liferay.headless.admin.user.dto.v1_0.UserAccount");
 	}
 
-	private static String _createDummyEntityJSONTemplate() throws Exception {
-		return JSONUtil.put(
-			"intValue", "[$INT_VALUE$]"
-		).put(
-			"textValue", "[$TEXT_VALUE$]"
-		).toString();
-	}
-
-	private static String _createUserAccountJSONTemplate() throws Exception {
-		return JSONUtil.put(
-			"additionalName", ""
-		).put(
-			"alternateName", "[$ALTERNATE_NAME$]"
-		).put(
-			"birthDate", "1977-01-01T00:00:00Z"
-		).put(
-			"customFields", JSONFactoryUtil.createJSONArray()
-		).put(
-			"dashboardURL", ""
-		).put(
-			"dateCreated", "2021-05-19T16:04:46Z"
-		).put(
-			"dateModified", "2021-05-19T16:04:46Z"
-		).put(
-			"emailAddress", "[$EMAIL_ADDRESS$]"
-		).put(
-			"familyName", "[$FAMILY_NAME$]"
-		).put(
-			"givenName", "[$GIVEN_NAME$]"
-		).put(
-			"jobTitle", ""
-		).put(
-			"keywords", JSONFactoryUtil.createJSONArray()
-		).put(
-			"name", "[$GIVEN_NAME$] [$FAMILY_NAME$]"
-		).put(
-			"organizationBriefs", JSONFactoryUtil.createJSONArray()
-		).put(
-			"profileURL", ""
-		).put(
-			"roleBriefs",
-			JSONUtil.put(
-				JSONUtil.put(
-					"id", 20113
-				).put(
-					"name", "User"
-				))
-		).put(
-			"siteBriefs",
-			JSONUtil.put(
-				JSONUtil.merge(
-					JSONUtil.put(
-						"id", 20127
-					).put(
-						"name", "Global"
-					),
-					JSONUtil.put(
-						"id", 20125
-					).put(
-						"name", "Guest"
-					)))
-		).put(
-			"userAccountContactInformation",
-			JSONUtil.put(
-				"emailAddresses", JSONFactoryUtil.createJSONArray()
-			).put(
-				"facebook", ""
-			).put(
-				"postalAddresses", JSONFactoryUtil.createJSONArray()
-			).put(
-				"skype", ""
-			).put(
-				"sms", ""
-			).put(
-				"telephones", JSONFactoryUtil.createJSONArray()
-			).put(
-				"twitter", ""
-			).put(
-				"webUrls", JSONFactoryUtil.createJSONArray()
-			)
-		).toString();
-	}
-
 	private String _createBatchJSON(String className, int recordsCount) {
 		StringBundler batchJsonSB = new StringBundler();
 
@@ -226,8 +218,7 @@ public class ExportImportTaskResourcePerformanceTest {
 				8, UniqueStringRandomizerBumper.INSTANCE);
 
 			String json = StringUtil.replace(
-				_jsonTemplates.get(className), "[$ALTERNATE_NAME$]",
-				alternateName);
+				_jsons.get(className), "[$ALTERNATE_NAME$]", alternateName);
 
 			json = StringUtil.replace(
 				json, "[$FAMILY_NAME$]",
@@ -502,7 +493,7 @@ public class ExportImportTaskResourcePerformanceTest {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportImportTaskResourcePerformanceTest.class);
 
-	private static Map<String, String> _jsonTemplates;
+	private static Map<String, String> _jsons;
 	private static int _recordsCount;
 
 	@Inject

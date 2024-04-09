@@ -161,35 +161,47 @@ public class LayoutModelDocumentContributorTest {
 	public void testReindexPublishedLayoutLayoutSetThemeNotAvailable()
 		throws Exception {
 
-		LayoutSet layoutSet = _group.getPublicLayoutSet();
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_THEME_LOCAL_SERVICE_IMPL, LoggerTestUtil.INFO)) {
 
-		_layoutSetLocalService.updateLookAndFeel(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-			"not_available_theme_id", layoutSet.getColorSchemeId(),
-			layoutSet.getCss());
+			LayoutSet layoutSet = _group.getPublicLayoutSet();
 
-		_assertReindexPublishedLayout(null);
+			_layoutSetLocalService.updateLookAndFeel(
+				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+				"not_available_theme_id", layoutSet.getColorSchemeId(),
+				layoutSet.getCss());
+
+			_assertReindexPublishedLayout(null);
+		}
 	}
 
 	@Test
 	public void testReindexPublishedLayoutSpecificThemeAndLayoutSetThemeNotAvailable()
 		throws Exception {
 
-		LayoutSet layoutSet = _group.getPublicLayoutSet();
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_THEME_LOCAL_SERVICE_IMPL, LoggerTestUtil.INFO)) {
 
-		_layoutSetLocalService.updateLookAndFeel(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-			"not_available_theme_id", layoutSet.getColorSchemeId(),
-			layoutSet.getCss());
+			LayoutSet layoutSet = _group.getPublicLayoutSet();
 
-		_assertReindexPublishedLayout(
-			ThemeFactoryUtil.getDefaultRegularThemeId(
-				TestPropsValues.getCompanyId()));
+			_layoutSetLocalService.updateLookAndFeel(
+				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+				"not_available_theme_id", layoutSet.getColorSchemeId(),
+				layoutSet.getCss());
+
+			_assertReindexPublishedLayout(
+				ThemeFactoryUtil.getDefaultRegularThemeId(
+					TestPropsValues.getCompanyId()));
+		}
 	}
 
 	@Test
 	public void testReindexPublishedLayoutThemeNotAvailable() throws Exception {
-		_assertReindexPublishedLayout("not_available_theme_id");
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_THEME_LOCAL_SERVICE_IMPL, LoggerTestUtil.INFO)) {
+
+			_assertReindexPublishedLayout("not_available_theme_id");
+		}
 	}
 
 	@Test
@@ -627,6 +639,9 @@ public class LayoutModelDocumentContributorTest {
 	private static final String _CLASS_NAME_LAYOUT_MODEL_DOCUMENT_CONTRIBUTOR =
 		"com.liferay.layout.internal.search.spi.model.index.contributor." +
 			"LayoutModelDocumentContributor";
+
+	private static final String _CLASS_NAME_THEME_LOCAL_SERVICE_IMPL =
+		"com.liferay.portal.service.impl.ThemeLocalServiceImpl";
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;

@@ -5,16 +5,51 @@
 
 import liferayRequest from '../../services/liferayRequest';
 import Build from './Build';
+import Job from '../jobs/Job';
 
 export async function getBuildById({id, setBuild}) {
-	const response = await liferayRequest({urlPath: '/o/c/builds/' + id});
+	const response = await liferayRequest({
+		graphqlQuery: `{
+			c {
+				builds(filter: \\"id eq '${id}'\\") {
+					items {
+						dateCreated
+						dateModified
+						id
+						initialBuild
+						jenkinsJobName
+						jobToBuilds
+						name
+						parameters
+						state {
+							key
+							name
+						}
+					}
+				}
+			}
+		}`,
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+		urlPath: '/o/graphql',
+	});
 
-	const results = JSON.stringify(await response.text());
+	const result = JSON.parse(await response.text());
 
-	const build = new Build(results);
+	for (const buildJSON of result.data.c.builds.items) {
+		const build = new Build(buildJSON);
 
-	if (build && setBuild) {
-		setBuild(build);
+		build.job = new Job(buildJSON.jobToBuilds);
+
+		if (build) {
+			if (setBuild) {
+				setBuild(build);
+			}
+
+			return build;
+		}
 	}
 }
 

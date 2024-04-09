@@ -310,8 +310,7 @@ public class SalesforceObjectEntryManagerImplTest
 			"completed", new Date(date.getTime() + Time.DAY), false, title3);
 		ObjectEntry objectEntry4 = _addObjectEntry(
 			"queued", date, true, title4);
-		ObjectEntry objectEntry5 = _addObjectEntry(
-			"queued", date, false, null);
+		ObjectEntry objectEntry5 = _addObjectEntry("queued", date, false, null);
 
 		// And/or with equals/not equals expression
 

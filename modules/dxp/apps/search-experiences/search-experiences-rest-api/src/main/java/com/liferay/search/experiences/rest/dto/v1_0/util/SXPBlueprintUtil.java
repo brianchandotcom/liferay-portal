@@ -20,10 +20,12 @@ public class SXPBlueprintUtil {
 	}
 
 	public static SXPBlueprint toSXPBlueprint(
-		SXPBlueprint sxpBlueprint1, String configuration) {
+		SXPBlueprint sxpBlueprint1, String configurationJSON) {
 
-		SXPBlueprint sxpBlueprint2 = new SXPBlueprint() {
+		return new SXPBlueprint() {
 			{
+				setConfiguration(
+					() -> ConfigurationUtil.toConfiguration(configurationJSON));
 				setDescription(sxpBlueprint1::getDescription);
 				setDescription_i18n(sxpBlueprint1::getDescription_i18n);
 				setElementInstances(sxpBlueprint1::getElementInstances);
@@ -34,11 +36,6 @@ public class SXPBlueprintUtil {
 				setTitle_i18n(sxpBlueprint1::getTitle_i18n);
 			}
 		};
-
-		sxpBlueprint2.setConfiguration(
-			() -> ConfigurationUtil.toConfiguration(configuration));
-
-		return sxpBlueprint2;
 	}
 
 	public static SXPBlueprint unpack(SXPBlueprint sxpBlueprint) {

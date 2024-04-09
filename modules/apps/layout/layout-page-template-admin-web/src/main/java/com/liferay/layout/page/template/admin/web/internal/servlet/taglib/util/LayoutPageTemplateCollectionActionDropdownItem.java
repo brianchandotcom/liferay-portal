@@ -309,10 +309,11 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 		return ResourceURLBuilder.createResourceURL(
 			_renderResponse
 		).setParameter(
-			"layoutPageTemplateCollectionId",
+			"layoutPageTemplateCollectionsIds",
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
 		).setResourceID(
-			"/layout_page_template_admin/export_layout_page_template_collection"
+			"/layout_page_template_admin/export_layout_page_template_" +
+				"entries_and_layout_page_template_collections"
 		).buildString();
 	}
 

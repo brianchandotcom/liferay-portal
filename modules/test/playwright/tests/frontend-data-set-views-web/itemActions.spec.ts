@@ -187,14 +187,14 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 		}) => {
 			await fragmentTest.step('Populate Data Set', async () => {
 				await dataSetManagerApiHelpers.createDataSetViewFields({
-					label: 'Id',
+					label_i18n: {en_US: 'Id'},
 					name: 'id',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
 						actionsDataSetViewERC,
 					type: 'string',
 				});
 				await dataSetManagerApiHelpers.createDataSetViewFields({
-					label: 'Name',
+					label_i18n: {en_US: 'Name'},
 					name: 'name',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
 						actionsDataSetViewERC,
@@ -296,14 +296,14 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 
 			await fragmentTest.step('Populate Data Set', async () => {
 				await dataSetManagerApiHelpers.createDataSetViewFields({
-					label: 'Id',
+					label_i18n: {en_US: 'Id'},
 					name: 'id',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
 						actionsDataSetViewERC,
 					type: 'string',
 				});
 				await dataSetManagerApiHelpers.createDataSetViewFields({
-					label: 'Name',
+					label_i18n: {en_US: 'Name'},
 					name: 'name',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
 						actionsDataSetViewERC,
@@ -511,14 +511,14 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 
 			await fragmentTest.step('Populate Data Set', async () => {
 				await dataSetManagerApiHelpers.createDataSetViewFields({
-					label: 'Id',
+					label_i18n: {en_US: 'Id'},
 					name: 'id',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
 						actionsDataSetViewERC,
 					type: 'string',
 				});
 				await dataSetManagerApiHelpers.createDataSetViewFields({
-					label: 'Name',
+					label_i18n: {en_US: 'Name'},
 					name: 'name',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
 						actionsDataSetViewERC,
@@ -720,14 +720,14 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 
 			await fragmentTest.step('Populate Data Set', async () => {
 				await dataSetManagerApiHelpers.createDataSetViewFields({
-					label: 'Id',
+					label_i18n: {en_US: 'Id'},
 					name: 'id',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
 						actionsDataSetViewERC,
 					type: 'string',
 				});
 				await dataSetManagerApiHelpers.createDataSetViewFields({
-					label: 'Name',
+					label_i18n: {en_US: 'Name'},
 					name: 'name',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
 						actionsDataSetViewERC,

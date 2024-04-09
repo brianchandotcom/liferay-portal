@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelCPInstanceException;
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException;
@@ -14,6 +15,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
+import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -33,6 +36,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -212,16 +216,29 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 
 		boolean preselected = ParamUtil.getBoolean(
 			actionRequest, "preselected");
-		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "price", BigDecimal.ZERO);
-		BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "quantity", BigDecimal.ZERO);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String price = ParamUtil.getString(
+			actionRequest, "price", BigDecimal.ZERO.toString());
+
+		price = _commercePriceFormatter.parse(price, themeDisplay.getLocale());
+
+		BigDecimal formattedPrice = new BigDecimal(price);
+
+		String quantity = ParamUtil.getString(
+			actionRequest, "quantity", BigDecimal.ZERO.toString());
+
+		BigDecimal formattedQuantity =
+			_commerceOrderItemQuantityFormatter.parse(
+				quantity, themeDisplay.getLocale());
 
 		return _cpDefinitionOptionValueRelService.
 			updateCPDefinitionOptionValueRel(
 				cpDefinitionOptionValueRelId, cpInstanceId, key, nameMap,
-				preselected, price, priority, quantity, unitOfMeasureKey,
-				serviceContext);
+				preselected, formattedPrice, priority, formattedQuantity,
+				unitOfMeasureKey, serviceContext);
 	}
 
 	private CPDefinitionOptionValueRel _updatePreselected(
@@ -248,6 +265,13 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditCPDefinitionOptionValueRelMVCActionCommand.class);
+
+	@Reference
+	private CommerceOrderItemQuantityFormatter
+		_commerceOrderItemQuantityFormatter;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CPDefinitionOptionValueRelService

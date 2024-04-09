@@ -5,6 +5,39 @@ components:
                 caseAmount:
                     format: int32
                     type: integer
+        TestrayCaseResultComparison:
+            properties:
+                error1:
+                    type: string
+                error2:
+                    type: string
+                id1:
+                    format: int64
+                    type: integer
+                id2:
+                    format: int64
+                    type: integer
+                issue1:
+                    type: string
+                issue2:
+                    type: string
+                name:
+                    type: string
+                priority:
+                    type: integer
+                status1:
+                    type: string
+                status2:
+                    type: string
+                testrayCaseId:
+                    format: int64
+                    type: integer
+                testrayComponentName:
+                    type: string
+                testrayTeamId:
+                    format: int64
+                    type: integer
+            type: object
         TestrayCaseTypeMetric:
             properties:
                 testrayCaseTypeId:
@@ -31,11 +64,10 @@ components:
                     items:
                         type: object
                     type: array
-                testrayCasePriorities:
-                    type: string
-                testrayTeamId:
-                    format: int64
-                    type: integer
+                testrayCaseResultComparisons:
+                    items:
+                        $ref: "#/components/schemas/TestrayCaseResultComparison"
+                    type: array
             type: object
         TestrayRunMetric:
             properties:
@@ -147,14 +179,63 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: testrayCasePriorities
+                  name: filter
                   schema:
                       type: string
-                - in: query
-                  name: testrayTeamId
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TestrayRunComparison"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TestrayRunComparison"
+            tags: ["TestrayRunComparison"]
+    "/testray-run-comparisons/{testrayRunId1}/{testrayRunId2}/details":
+        get:
+            operationId: getTestrayRunComparisonDetail
+            parameters:
+                - in: path
+                  name: testrayRunId1
+                  required: true
                   schema:
                       format: int64
                       type: integer
+                - in: path
+                  name: testrayRunId2
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCaseResultError1
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCaseResultError2
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCaseResultIssue1
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCaseResultIssue2
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCaseResultStatus1
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCaseResultStatus2
+                  schema:
+                      type: string
             responses:
                 200:
                     content:

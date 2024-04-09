@@ -27,26 +27,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Vendel Toreki
  */
 @Component(
-	property = "batch.engine.task.item.delegate.name=dummy-entity-performance-test",
+	property = "batch.engine.task.item.delegate.name=ExportImportTaskResourcePerformanceTest",
 	service = BatchEngineTaskItemDelegate.class
 )
 public class TestEntityBatchEngineTaskItemDelegate
 	extends BaseBatchEngineTaskItemDelegate<TestEntity> {
-
-	public void generateTestData(int count) {
-		for (int i = 0; i < count; i++) {
-			TestEntity dummyEntity = new TestEntity();
-
-			dummyEntity.setTextValue(
-				RandomTestUtil.randomString(
-					NumericStringRandomizerBumper.INSTANCE,
-					UniqueStringRandomizerBumper.INSTANCE));
-
-			dummyEntity.setIntValue(RandomTestUtil.nextInt());
-
-			_items.add(dummyEntity);
-		}
-	}
 
 	@Override
 	public Page<TestEntity> read(
@@ -55,13 +40,27 @@ public class TestEntityBatchEngineTaskItemDelegate
 		throws Exception {
 
 		return Page.of(
-			_items.subList(
+			_testEntities.subList(
 				pagination.getStartPosition(),
-				Math.min(pagination.getEndPosition(), _items.size())),
+				Math.min(pagination.getEndPosition(), _testEntities.size())),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
-			_items.size());
+			_testEntities.size());
 	}
 
-	private final List<TestEntity> _items = new ArrayList<>();
+	protected void generate(int count) {
+		for (int i = 0; i < count; i++) {
+			TestEntity testEntity = new TestEntity();
+
+			testEntity.setIntValue(RandomTestUtil.nextInt());
+			testEntity.setTextValue(
+				RandomTestUtil.randomString(
+					NumericStringRandomizerBumper.INSTANCE,
+					UniqueStringRandomizerBumper.INSTANCE));
+
+			_testEntities.add(testEntity);
+		}
+	}
+
+	private final List<TestEntity> _testEntities = new ArrayList<>();
 
 }

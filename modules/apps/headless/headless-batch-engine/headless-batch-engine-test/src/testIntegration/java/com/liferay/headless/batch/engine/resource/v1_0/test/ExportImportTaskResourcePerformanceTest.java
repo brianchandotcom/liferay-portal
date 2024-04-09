@@ -179,7 +179,7 @@ public class ExportImportTaskResourcePerformanceTest {
 								"test.TestEntity",
 							"dummy-entity-performance-test");
 
-		testEntityBatchEngineTaskItemDelegate.generateTestData(_recordsCount);
+		testEntityBatchEngineTaskItemDelegate.generate(_recordsCount);
 
 		_testPostExportTask(
 			"com.liferay.headless.batch.engine.resource.v1_0.test." +

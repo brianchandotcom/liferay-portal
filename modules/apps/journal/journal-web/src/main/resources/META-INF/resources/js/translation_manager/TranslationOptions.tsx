@@ -94,62 +94,70 @@ export default function TranslationOptions({
 
 	return (
 		<>
-			<ClayDropDown
-				active={dropdownActive}
-				onActiveChange={(active: boolean) => {
-					if (active) {
-						updateTranslations();
+			{selectedLanguageId !== defaultLanguageId && (
+				<ClayDropDown
+					active={dropdownActive}
+					onActiveChange={(active: boolean) => {
+						if (active) {
+							updateTranslations();
+						}
+
+						setDropdownActive(active);
+					}}
+					trigger={
+						<ClayButton
+							aria-label={Liferay.Language.get(
+								'translation-options'
+							)}
+							className="px-2"
+							displayType="secondary"
+							size="sm"
+							title={Liferay.Language.get('translation-options')}
+							type="button"
+						>
+							<ClayIcon symbol="ellipsis-v" />
+						</ClayButton>
 					}
+				>
+					<ClayDropDown.ItemList>
+						<ClayDropDown.Item>
+							<ClayButton
+								className="font-weight-normal text-secondary"
+								disabled={!!disabledResetButton}
+								displayType="unstyled"
+								onClick={() =>
+									onOpenChangeResetTranslation(true)
+								}
+								size="sm"
+							>
+								<ClayIcon symbol="trash" />
 
-					setDropdownActive(active);
-				}}
-				trigger={
-					<ClayButton
-						aria-label={Liferay.Language.get('translation-options')}
-						className="px-2"
-						displayType="secondary"
-						size="sm"
-						title={Liferay.Language.get('translation-options')}
-						type="button"
-					>
-						<ClayIcon symbol="ellipsis-v" />
-					</ClayButton>
-				}
-			>
-				<ClayDropDown.ItemList>
-					<ClayDropDown.Item>
-						<ClayButton
-							className="font-weight-normal text-secondary"
-							disabled={!!disabledResetButton}
-							displayType="unstyled"
-							onClick={() => onOpenChangeResetTranslation(true)}
-							size="sm"
-						>
-							<ClayIcon symbol="trash" />
+								<span className="c-ml-3">
+									{Liferay.Language.get('reset-translation')}
+								</span>
+							</ClayButton>
+						</ClayDropDown.Item>
 
-							<span className="c-ml-3">
-								{Liferay.Language.get('reset-translation')}
-							</span>
-						</ClayButton>
-					</ClayDropDown.Item>
+						<ClayDropDown.Item>
+							<ClayButton
+								className="font-weight-normal text-secondary"
+								disabled={!!disabledMarkTranslatedButton}
+								displayType="unstyled"
+								onClick={() =>
+									onOpenChangeMarkAsTranslated(true)
+								}
+								size="sm"
+							>
+								<ClayIcon symbol="question-circle-full" />
 
-					<ClayDropDown.Item>
-						<ClayButton
-							className="font-weight-normal text-secondary"
-							disabled={!!disabledMarkTranslatedButton}
-							displayType="unstyled"
-							onClick={() => onOpenChangeMarkAsTranslated(true)}
-							size="sm"
-						>
-							<ClayIcon symbol="question-circle-full" />
-
-							<span className="c-ml-3">
-								{Liferay.Language.get('mark-as-translated')}
-							</span>
-						</ClayButton>
-					</ClayDropDown.Item>
-				</ClayDropDown.ItemList>
-			</ClayDropDown>
+								<span className="c-ml-3">
+									{Liferay.Language.get('mark-as-translated')}
+								</span>
+							</ClayButton>
+						</ClayDropDown.Item>
+					</ClayDropDown.ItemList>
+				</ClayDropDown>
+			)}
 
 			{openResetTranslation && (
 				<ClayModal observer={resetTranslationObserver} status="danger">

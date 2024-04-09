@@ -176,7 +176,7 @@ definition {
 		task ("Then one new Student item is created") {
 			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
 
-			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items..[0]name");
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items[*].name");
 
 			TestUtils.assertEquals(
 				actual = ${actualValue},

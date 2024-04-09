@@ -95,10 +95,23 @@ function BuildInformation({build}) {
 function BuildPage() {
 	const {id} = useParams();
 	const [build, setBuild] = useState(null);
-	const [job, setJob] = useState(null);
 
 	if (!build) {
 		getBuildById({id, setBuild});
+	}
+
+	if (!build) {
+		return (
+			<ClayLayout.Container>
+				<Jethr0Card>
+					<Jethr0NavigationBar active="Jobs" />
+					<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
+					<Heading level={3} weight="lighter">
+						{'Build #' + id}
+					</Heading>
+				</Jethr0Card>
+			</ClayLayout.Container>
+		);
 	}
 
 	let buildName = 'Build #' + id;
@@ -108,13 +121,9 @@ function BuildPage() {
 	if (build) {
 		buildName = build.name;
 
-		if (!job && build.jobId) {
-			getJobById({id: build.jobId, setJob});
-		}
-
-		if (job) {
-			jobId = job.id;
-			jobName = job.name;
+		if (build.job) {
+			jobId = build.job.id;
+			jobName = build.job.name;
 		}
 	}
 

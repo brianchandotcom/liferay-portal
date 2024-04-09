@@ -8,6 +8,7 @@ Import-Package:\
 	com.liferay.commerce.product.service;version="[40.1.0,9999.0.0)",\
 	com.liferay.frontend.taglib.servlet.taglib;version="[9.2.0,9999.0.0)",\
 	com.liferay.portal.kernel.util;version="[74.0.0,9999.0.0)",\
+	\
 	*
 Web-ContextPath: /commerce-punchout-web
 -dsannotations-options: inherit

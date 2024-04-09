@@ -444,6 +444,97 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		}
 	}
 
+	private LayoutPageTemplateCollection _getBasicLayoutPageTemplateCollection(
+			long groupId, long layoutPageTemplateCollectionId,
+			LayoutsImportStrategy layoutsImportStrategy,
+			PageTemplateCollectionEntry pageTemplateCollectionEntry)
+		throws Exception {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection = null;
+
+		if (layoutPageTemplateCollectionId > 0) {
+			layoutPageTemplateCollection =
+				_layoutPageTemplateCollectionService.
+					fetchLayoutPageTemplateCollection(
+						layoutPageTemplateCollectionId);
+
+			if (layoutPageTemplateCollection == null) {
+				throw new PortalException(
+					"Invalid layout page template collection ID: " +
+						layoutPageTemplateCollectionId);
+			}
+
+			return layoutPageTemplateCollection;
+		}
+
+		String layoutPageTemplateCollectionKey =
+			pageTemplateCollectionEntry.getKey();
+
+		PageTemplateCollection pageTemplateCollection =
+			pageTemplateCollectionEntry.getPageTemplateCollection();
+
+		layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				fetchLayoutPageTemplateCollection(
+					groupId, layoutPageTemplateCollectionKey,
+					LayoutPageTemplateEntryTypeConstants.BASIC);
+
+		if (layoutPageTemplateCollection == null) {
+			layoutPageTemplateCollection =
+				_layoutPageTemplateCollectionLocalService.
+					fetchLayoutPageTemplateCollectionByName(
+						groupId, pageTemplateCollection.getName(),
+						LayoutPageTemplateEntryTypeConstants.BASIC);
+
+			if (layoutPageTemplateCollection == null) {
+				return _layoutPageTemplateCollectionService.
+					addLayoutPageTemplateCollection(
+						pageTemplateCollection.getUuid(), groupId,
+						LayoutPageTemplateConstants.
+							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+						pageTemplateCollection.getName(),
+						pageTemplateCollection.getDescription(),
+						LayoutPageTemplateCollectionTypeConstants.BASIC,
+						ServiceContextThreadLocal.getServiceContext());
+			}
+		}
+
+		if (Objects.equals(
+				LayoutsImportStrategy.KEEP_BOTH, layoutsImportStrategy)) {
+
+			return _layoutPageTemplateCollectionService.
+				addLayoutPageTemplateCollection(
+					pageTemplateCollection.getUuid(), groupId,
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					_layoutPageTemplateCollectionLocalService.
+						getUniqueLayoutPageTemplateCollectionName(
+							groupId, pageTemplateCollection.getName(),
+							LayoutPageTemplateEntryTypeConstants.BASIC),
+					pageTemplateCollection.getDescription(),
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
+					ServiceContextThreadLocal.getServiceContext());
+		}
+		else if (Objects.equals(
+					LayoutsImportStrategy.OVERWRITE, layoutsImportStrategy)) {
+
+			return _layoutPageTemplateCollectionService.
+				updateLayoutPageTemplateCollection(
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId(),
+					pageTemplateCollection.getName(),
+					pageTemplateCollection.getDescription());
+		}
+
+		if (layoutPageTemplateCollection == null) {
+			throw new PortalException(
+				"Invalid layout page template collection ID: " +
+					layoutPageTemplateCollectionId);
+		}
+
+		return layoutPageTemplateCollection;
+	}
+
 	private PageTemplateCollectionEntry
 		_getDefaultPageTemplateCollectionEntry() {
 
@@ -605,97 +696,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		key = StringUtil.toLowerCase(key);
 
 		return key;
-	}
-
-	private LayoutPageTemplateCollection _getLayoutPageTemplateCollection(
-			long groupId, long layoutPageTemplateCollectionId,
-			LayoutsImportStrategy layoutsImportStrategy,
-			PageTemplateCollectionEntry pageTemplateCollectionEntry)
-		throws Exception {
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection = null;
-
-		if (layoutPageTemplateCollectionId > 0) {
-			layoutPageTemplateCollection =
-				_layoutPageTemplateCollectionService.
-					fetchLayoutPageTemplateCollection(
-						layoutPageTemplateCollectionId);
-
-			if (layoutPageTemplateCollection == null) {
-				throw new PortalException(
-					"Invalid layout page template collection ID: " +
-						layoutPageTemplateCollectionId);
-			}
-
-			return layoutPageTemplateCollection;
-		}
-
-		String layoutPageTemplateCollectionKey =
-			pageTemplateCollectionEntry.getKey();
-
-		PageTemplateCollection pageTemplateCollection =
-			pageTemplateCollectionEntry.getPageTemplateCollection();
-
-		layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionLocalService.
-				fetchLayoutPageTemplateCollection(
-					groupId, layoutPageTemplateCollectionKey,
-					LayoutPageTemplateEntryTypeConstants.BASIC);
-
-		if (layoutPageTemplateCollection == null) {
-			layoutPageTemplateCollection =
-				_layoutPageTemplateCollectionLocalService.
-					fetchLayoutPageTemplateCollectionByName(
-						groupId, pageTemplateCollection.getName(),
-						LayoutPageTemplateEntryTypeConstants.BASIC);
-
-			if (layoutPageTemplateCollection == null) {
-				return _layoutPageTemplateCollectionService.
-					addLayoutPageTemplateCollection(
-						null, groupId,
-						LayoutPageTemplateConstants.
-							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-						pageTemplateCollection.getName(),
-						pageTemplateCollection.getDescription(),
-						LayoutPageTemplateCollectionTypeConstants.BASIC,
-						ServiceContextThreadLocal.getServiceContext());
-			}
-		}
-
-		if (Objects.equals(
-				LayoutsImportStrategy.KEEP_BOTH, layoutsImportStrategy)) {
-
-			return _layoutPageTemplateCollectionService.
-				addLayoutPageTemplateCollection(
-					null, groupId,
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					_layoutPageTemplateCollectionLocalService.
-						getUniqueLayoutPageTemplateCollectionName(
-							groupId, pageTemplateCollection.getName(),
-							LayoutPageTemplateEntryTypeConstants.BASIC),
-					pageTemplateCollection.getDescription(),
-					LayoutPageTemplateCollectionTypeConstants.BASIC,
-					ServiceContextThreadLocal.getServiceContext());
-		}
-		else if (Objects.equals(
-					LayoutsImportStrategy.OVERWRITE, layoutsImportStrategy)) {
-
-			return _layoutPageTemplateCollectionService.
-				updateLayoutPageTemplateCollection(
-					layoutPageTemplateCollection.
-						getLayoutPageTemplateCollectionId(),
-					pageTemplateCollection.getName(),
-					pageTemplateCollection.getDescription());
-		}
-
-		if (layoutPageTemplateCollection == null) {
-			throw new PortalException(
-				"Invalid layout page template collection ID: " +
-					layoutPageTemplateCollectionId);
-		}
-
-		return layoutPageTemplateCollection;
 	}
 
 	private List<UtilityPageTemplateEntry> _getLayoutUtilityPageEntries(
@@ -1262,7 +1262,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			}
 
 			LayoutPageTemplateCollection layoutPageTemplateCollection =
-				_getLayoutPageTemplateCollection(
+				_getBasicLayoutPageTemplateCollection(
 					groupId, layoutPageTemplateCollectionId,
 					layoutsImportStrategy, pageTemplateCollectionEntry);
 

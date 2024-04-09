@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Vendel Toreki
  */
 @Component(
-	property = "batch.engine.task.item.delegate.name=ExportImportTaskResourcePerformanceTest",
+	property = "batch.engine.task.item.delegate.name=export-import-task-resource-performance-test-entities",
 	service = BatchEngineTaskItemDelegate.class
 )
 public class TestEntityBatchEngineTaskItemDelegate
@@ -47,8 +47,8 @@ public class TestEntityBatchEngineTaskItemDelegate
 			_testEntities.size());
 	}
 
-	protected void generate(int count) {
-		for (int i = 0; i < count; i++) {
+	protected void generate(int testEntitiesCount) {
+		for (int i = 0; i < testEntitiesCount; i++) {
 			TestEntity testEntity = new TestEntity();
 
 			testEntity.setIntValue(RandomTestUtil.nextInt());

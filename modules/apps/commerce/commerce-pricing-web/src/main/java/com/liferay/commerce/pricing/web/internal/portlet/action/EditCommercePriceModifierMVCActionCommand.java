@@ -124,13 +124,12 @@ public class EditCommercePriceModifierMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String modifierAmount = ParamUtil.getString(
-			actionRequest, "modifierAmount", BigDecimal.ZERO.toString());
-
-		modifierAmount = _commercePriceFormatter.parse(
-			modifierAmount, themeDisplay.getLocale());
-
-		BigDecimal formattedModifierAmount = new BigDecimal(modifierAmount);
+		BigDecimal formattedModifierAmount = new BigDecimal(
+			_commercePriceFormatter.parse(
+				ParamUtil.getString(
+					actionRequest, "modifierAmount",
+					BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale()));
 
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");

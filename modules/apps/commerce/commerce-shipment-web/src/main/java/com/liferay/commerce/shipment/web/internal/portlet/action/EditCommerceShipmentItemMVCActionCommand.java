@@ -255,13 +255,13 @@ public class EditCommerceShipmentItemMVCActionCommand
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			String quantity = ParamUtil.getString(
-				actionRequest, commerceInventoryWarehouseId + "_quantity",
-				BigDecimal.ZERO.toString());
-
 			BigDecimal formattedQuantity =
 				_commerceOrderItemQuantityFormatter.parse(
-					quantity, themeDisplay.getLocale());
+					ParamUtil.getString(
+						actionRequest,
+						commerceInventoryWarehouseId + "_quantity",
+						BigDecimal.ZERO.toString()),
+					themeDisplay.getLocale());
 
 			if ((initialCommerceShipmentItem != null) &&
 				BigDecimalUtil.gt(formattedQuantity, BigDecimal.ZERO)) {

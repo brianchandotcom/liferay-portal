@@ -93,26 +93,19 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String quantity = ParamUtil.getString(
-			actionRequest, "quantity", BigDecimal.ZERO.toString());
-
-		BigDecimal formattedQuantity =
-			_commerceOrderItemQuantityFormatter.parse(
-				quantity, themeDisplay.getLocale());
-
-		String reservedQuantity = ParamUtil.getString(
-			actionRequest, "reservedQuantity", BigDecimal.ZERO.toString());
-
-		BigDecimal formattedReservedQuantity =
-			_commerceOrderItemQuantityFormatter.parse(
-				reservedQuantity, themeDisplay.getLocale());
-
-		long mvccVersion = ParamUtil.getLong(actionRequest, "mvccVersion");
-
 		_commerceInventoryWarehouseItemService.
 			updateCommerceInventoryWarehouseItem(
-				commerceInventoryWarehouseItemId, formattedQuantity,
-				formattedReservedQuantity, mvccVersion);
+				commerceInventoryWarehouseItemId,
+				_commerceOrderItemQuantityFormatter.parse(
+					ParamUtil.getString(
+						actionRequest, "quantity", BigDecimal.ZERO.toString()),
+					themeDisplay.getLocale()),
+				_commerceOrderItemQuantityFormatter.parse(
+					ParamUtil.getString(
+						actionRequest, "reservedQuantity",
+						BigDecimal.ZERO.toString()),
+					themeDisplay.getLocale()),
+				ParamUtil.getLong(actionRequest, "mvccVersion"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

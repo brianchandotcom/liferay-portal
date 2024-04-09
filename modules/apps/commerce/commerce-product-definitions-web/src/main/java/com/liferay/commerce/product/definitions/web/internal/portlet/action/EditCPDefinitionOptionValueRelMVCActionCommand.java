@@ -214,30 +214,23 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 			cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 		}
 
-		boolean preselected = ParamUtil.getBoolean(
-			actionRequest, "preselected");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		String price = ParamUtil.getString(
-			actionRequest, "price", BigDecimal.ZERO.toString());
-
-		price = _commercePriceFormatter.parse(price, themeDisplay.getLocale());
-
-		BigDecimal formattedPrice = new BigDecimal(price);
-
-		String quantity = ParamUtil.getString(
-			actionRequest, "quantity", BigDecimal.ZERO.toString());
-
-		BigDecimal formattedQuantity =
-			_commerceOrderItemQuantityFormatter.parse(
-				quantity, themeDisplay.getLocale());
 
 		return _cpDefinitionOptionValueRelService.
 			updateCPDefinitionOptionValueRel(
 				cpDefinitionOptionValueRelId, cpInstanceId, key, nameMap,
-				preselected, formattedPrice, priority, formattedQuantity,
+				ParamUtil.getBoolean(actionRequest, "preselected"),
+				new BigDecimal(
+					_commercePriceFormatter.parse(
+						ParamUtil.getString(
+							actionRequest, "price", BigDecimal.ZERO.toString()),
+						themeDisplay.getLocale())),
+				priority,
+				_commerceOrderItemQuantityFormatter.parse(
+					ParamUtil.getString(
+						actionRequest, "quantity", BigDecimal.ZERO.toString()),
+					themeDisplay.getLocale()),
 				unitOfMeasureKey, serviceContext);
 	}
 

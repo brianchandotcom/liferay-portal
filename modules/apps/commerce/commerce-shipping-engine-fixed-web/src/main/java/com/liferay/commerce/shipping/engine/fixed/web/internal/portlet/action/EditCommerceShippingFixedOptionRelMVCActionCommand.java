@@ -118,22 +118,18 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String fixedPrice = ParamUtil.getString(
-			actionRequest, "fixedPrice", BigDecimal.ZERO.toString());
-
-		fixedPrice = _commercePriceFormatter.parse(
-			fixedPrice, themeDisplay.getLocale());
-
-		BigDecimal formattedFixedPrice = new BigDecimal(fixedPrice);
-
-		String rateUnitWeightPrice = ParamUtil.getString(
-			actionRequest, "rateUnitWeightPrice", BigDecimal.ZERO.toString());
-
-		rateUnitWeightPrice = _commercePriceFormatter.parse(
-			rateUnitWeightPrice, themeDisplay.getLocale());
+		BigDecimal formattedFixedPrice = new BigDecimal(
+			_commercePriceFormatter.parse(
+				ParamUtil.getString(
+					actionRequest, "fixedPrice", BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale()));
 
 		BigDecimal formattedRateUnitWeightPrice = new BigDecimal(
-			rateUnitWeightPrice);
+			_commercePriceFormatter.parse(
+				ParamUtil.getString(
+					actionRequest, "rateUnitWeightPrice",
+					BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale()));
 
 		double ratePercentage = ParamUtil.getDouble(
 			actionRequest, "ratePercentage");
@@ -149,8 +145,6 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 		else {
 			long commerceShippingMethodId = ParamUtil.getLong(
 				actionRequest, "commerceShippingMethodId");
-			long commerceShippingFixedOptionId = ParamUtil.getLong(
-				actionRequest, "commerceShippingFixedOptionId");
 
 			CommerceShippingMethod commerceShippingMethod =
 				_commerceShippingMethodService.getCommerceShippingMethod(
@@ -160,10 +154,11 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 				addCommerceShippingFixedOptionRel(
 					commerceShippingMethod.getGroupId(),
 					commerceShippingMethod.getCommerceShippingMethodId(),
-					commerceShippingFixedOptionId, commerceInventoryWarehouseId,
-					countryId, regionId, zip, weightFrom, weightTo,
-					formattedFixedPrice, formattedRateUnitWeightPrice,
-					ratePercentage);
+					ParamUtil.getLong(
+						actionRequest, "commerceShippingFixedOptionId"),
+					commerceInventoryWarehouseId, countryId, regionId, zip,
+					weightFrom, weightTo, formattedFixedPrice,
+					formattedRateUnitWeightPrice, ratePercentage);
 		}
 	}
 

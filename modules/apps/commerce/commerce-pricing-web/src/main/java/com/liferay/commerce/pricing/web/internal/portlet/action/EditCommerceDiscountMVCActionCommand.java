@@ -17,7 +17,6 @@ import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -164,27 +163,16 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 		boolean usePercentage = ParamUtil.getBoolean(
 			actionRequest, "usePercentage");
 
-		String maximumDiscountAmount = ParamUtil.getString(
-			actionRequest, "maximumDiscountAmount", BigDecimal.ZERO.toString());
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		maximumDiscountAmount = _commercePriceFormatter.parse(
-			maximumDiscountAmount, themeDisplay.getLocale());
-
-		BigDecimal formattedMaximumDiscountAmount = new BigDecimal(
-			maximumDiscountAmount);
-
 		String level = ParamUtil.getString(actionRequest, "level");
 
-		String amount = ParamUtil.getString(
-			actionRequest, "amount", BigDecimal.ZERO.toString());
-
-		amount = _commercePriceFormatter.parse(
-			amount, themeDisplay.getLocale());
-
-		BigDecimal formattedAmount = new BigDecimal(amount);
+		BigDecimal formattedAmount = new BigDecimal(
+			_commercePriceFormatter.parse(
+				ParamUtil.getString(
+					actionRequest, "amount", BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale()));
 
 		BigDecimal[] discountLevels = _getDiscountLevels(
 			level, formattedAmount);
@@ -193,19 +181,6 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "limitationTimes");
 		int limitationTimesPerAccount = ParamUtil.getInteger(
 			actionRequest, "limitationTimesPerAccount");
-		boolean rulesConjunction = ParamUtil.getBoolean(
-			actionRequest, "rulesConjunction");
-
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
-
-		int displayDateMonth = ParamUtil.getInteger(
-			actionRequest, "displayDateMonth");
-
-		int displayDateDay = ParamUtil.getInteger(
-			actionRequest, "displayDateDay");
-
-		int displayDateYear = ParamUtil.getInteger(
-			actionRequest, "displayDateYear");
 
 		int displayDateHour = ParamUtil.getInteger(
 			actionRequest, "displayDateHour");
@@ -217,18 +192,6 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 			displayDateHour += 12;
 		}
 
-		int displayDateMinute = ParamUtil.getInteger(
-			actionRequest, "displayDateMinute");
-
-		int expirationDateMonth = ParamUtil.getInteger(
-			actionRequest, "expirationDateMonth");
-
-		int expirationDateDay = ParamUtil.getInteger(
-			actionRequest, "expirationDateDay");
-
-		int expirationDateYear = ParamUtil.getInteger(
-			actionRequest, "expirationDateYear");
-
 		int expirationDateHour = ParamUtil.getInteger(
 			actionRequest, "expirationDateHour");
 
@@ -239,29 +202,35 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 			expirationDateHour += 12;
 		}
 
-		int expirationDateMinute = ParamUtil.getInteger(
-			actionRequest, "expirationDateMinute");
-
-		String externalReferenceCode = ParamUtil.getString(
-			actionRequest, "externalReferenceCode");
-
-		boolean neverExpire = ParamUtil.getBoolean(
-			actionRequest, "neverExpire");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceDiscount.class.getName(), actionRequest);
-
 		return _commerceDiscountService.addOrUpdateCommerceDiscount(
-			externalReferenceCode, commerceDiscountId, title, target,
-			useCouponCode, couponCode, usePercentage,
-			formattedMaximumDiscountAmount, level, discountLevels[0],
-			discountLevels[1], discountLevels[2], discountLevels[3],
+			ParamUtil.getString(actionRequest, "externalReferenceCode"),
+			commerceDiscountId, title, target, useCouponCode, couponCode,
+			usePercentage,
+			new BigDecimal(
+				_commercePriceFormatter.parse(
+					ParamUtil.getString(
+						actionRequest, "maximumDiscountAmount",
+						BigDecimal.ZERO.toString()),
+					themeDisplay.getLocale())),
+			level, discountLevels[0], discountLevels[1], discountLevels[2],
+			discountLevels[3],
 			_getLimitationType(limitationTimes, limitationTimesPerAccount),
-			limitationTimes, limitationTimesPerAccount, rulesConjunction,
-			active, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			limitationTimes, limitationTimesPerAccount,
+			ParamUtil.getBoolean(actionRequest, "rulesConjunction"),
+			ParamUtil.getBoolean(actionRequest, "active"),
+			ParamUtil.getInteger(actionRequest, "displayDateMonth"),
+			ParamUtil.getInteger(actionRequest, "displayDateDay"),
+			ParamUtil.getInteger(actionRequest, "displayDateYear"),
+			displayDateHour,
+			ParamUtil.getInteger(actionRequest, "displayDateMinute"),
+			ParamUtil.getInteger(actionRequest, "expirationDateMonth"),
+			ParamUtil.getInteger(actionRequest, "expirationDateDay"),
+			ParamUtil.getInteger(actionRequest, "expirationDateYear"),
+			expirationDateHour,
+			ParamUtil.getInteger(actionRequest, "expirationDateMinute"),
+			ParamUtil.getBoolean(actionRequest, "neverExpire"),
+			ServiceContextFactory.getInstance(
+				CommerceDiscount.class.getName(), actionRequest));
 	}
 
 	@Reference

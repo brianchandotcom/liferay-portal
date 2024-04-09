@@ -214,54 +214,48 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String price = ParamUtil.getString(
-			actionRequest, "price", BigDecimal.ZERO.toString());
-
-		price = _commercePriceFormatter.parse(price, themeDisplay.getLocale());
-
-		BigDecimal formattedPrice = new BigDecimal(price);
-
-		String minQuantity = ParamUtil.getString(
-			actionRequest, "minQuantity", BigDecimal.ZERO.toString());
+		BigDecimal formattedPrice = new BigDecimal(
+			_commercePriceFormatter.parse(
+				ParamUtil.getString(
+					actionRequest, "price", BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale()));
 
 		BigDecimal formattedMinQuantity =
 			_commerceOrderItemQuantityFormatter.parse(
-				minQuantity, themeDisplay.getLocale());
+				ParamUtil.getString(
+					actionRequest, "minQuantity", BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale());
 
 		boolean overrideDiscount = ParamUtil.getBoolean(
 			actionRequest, "overrideDiscount");
 
-		String discountLevel1 = ParamUtil.getString(
-			actionRequest, "discountLevel1", BigDecimal.ZERO.toString());
+		BigDecimal formattedDiscountLevel1 = new BigDecimal(
+			_commercePriceFormatter.parse(
+				ParamUtil.getString(
+					actionRequest, "discountLevel1",
+					BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale()));
 
-		discountLevel1 = _commercePriceFormatter.parse(
-			discountLevel1, themeDisplay.getLocale());
+		BigDecimal formattedDiscountLevel2 = new BigDecimal(
+			_commercePriceFormatter.parse(
+				ParamUtil.getString(
+					actionRequest, "discountLevel2",
+					BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale()));
 
-		BigDecimal formattedDiscountLevel1 = new BigDecimal(discountLevel1);
+		BigDecimal formattedDiscountLevel3 = new BigDecimal(
+			_commercePriceFormatter.parse(
+				ParamUtil.getString(
+					actionRequest, "discountLevel3",
+					BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale()));
 
-		String discountLevel2 = ParamUtil.getString(
-			actionRequest, "discountLevel2", BigDecimal.ZERO.toString());
-
-		discountLevel2 = _commercePriceFormatter.parse(
-			discountLevel2, themeDisplay.getLocale());
-
-		BigDecimal formattedDiscountLevel2 = new BigDecimal(discountLevel2);
-
-		String discountLevel3 = ParamUtil.getString(
-			actionRequest, "discountLevel3", BigDecimal.ZERO.toString());
-
-		discountLevel3 = _commercePriceFormatter.parse(
-			discountLevel3, themeDisplay.getLocale());
-
-		BigDecimal formattedDiscountLevel3 = new BigDecimal(discountLevel3);
-
-		String discountLevel4 = ParamUtil.getString(
-			actionRequest, "discountLevel4", BigDecimal.ZERO.toString());
-
-		discountLevel4 = _commercePriceFormatter.parse(
-			discountLevel4, themeDisplay.getLocale());
-
-		BigDecimal formattedDiscountLevel4 = new BigDecimal(discountLevel4);
+		BigDecimal formattedDiscountLevel4 = new BigDecimal(
+			_commercePriceFormatter.parse(
+				ParamUtil.getString(
+					actionRequest, "discountLevel4",
+					BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale()));
 
 		Date date = new Date();
 

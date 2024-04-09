@@ -162,13 +162,11 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String amount = ParamUtil.getString(
-			actionRequest, "amount", BigDecimal.ZERO.toString());
-
-		amount = _commercePriceFormatter.parse(
-			amount, themeDisplay.getLocale());
-
-		BigDecimal formattedAmount = new BigDecimal(amount);
+		BigDecimal formattedAmount = new BigDecimal(
+			_commercePriceFormatter.parse(
+				ParamUtil.getString(
+					actionRequest, "amount", BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale()));
 
 		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
 			actionRequest, "description");

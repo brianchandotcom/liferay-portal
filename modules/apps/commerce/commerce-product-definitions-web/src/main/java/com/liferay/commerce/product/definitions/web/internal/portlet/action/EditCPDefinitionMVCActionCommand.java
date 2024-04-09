@@ -610,33 +610,33 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String minStockQuantity = ParamUtil.getString(
-			actionRequest, "minStockQuantity", BigDecimal.ZERO.toString());
-
 		BigDecimal formattedMinStockQuantity =
 			_commerceOrderItemQuantityFormatter.parse(
-				minStockQuantity, themeDisplay.getLocale());
-
-		String minOrderQuantity = ParamUtil.getString(
-			actionRequest, "minOrderQuantity", BigDecimal.ZERO.toString());
+				ParamUtil.getString(
+					actionRequest, "minStockQuantity",
+					BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale());
 
 		BigDecimal formattedMinOrderQuantity =
 			_commerceOrderItemQuantityFormatter.parse(
-				minOrderQuantity, themeDisplay.getLocale());
-
-		String maxOrderQuantity = ParamUtil.getString(
-			actionRequest, "maxOrderQuantity", BigDecimal.ZERO.toString());
+				ParamUtil.getString(
+					actionRequest, "minOrderQuantity",
+					BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale());
 
 		BigDecimal formattedMaxOrderQuantity =
 			_commerceOrderItemQuantityFormatter.parse(
-				maxOrderQuantity, themeDisplay.getLocale());
-
-		String multipleOrderQuantity = ParamUtil.getString(
-			actionRequest, "multipleOrderQuantity", BigDecimal.ZERO.toString());
+				ParamUtil.getString(
+					actionRequest, "maxOrderQuantity",
+					BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale());
 
 		BigDecimal formattedMultipleOrderQuantity =
 			_commerceOrderItemQuantityFormatter.parse(
-				multipleOrderQuantity, themeDisplay.getLocale());
+				ParamUtil.getString(
+					actionRequest, "multipleOrderQuantity",
+					BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale());
 
 		String allowedOrderQuantities = ParamUtil.getString(
 			actionRequest, "allowedOrderQuantities");

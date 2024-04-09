@@ -243,27 +243,23 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String price = ParamUtil.getString(
-			actionRequest, "price", BigDecimal.ZERO.toString());
+		BigDecimal formattedPrice = new BigDecimal(
+			_commercePriceFormatter.parse(
+				ParamUtil.getString(
+					actionRequest, "price", BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale()));
 
-		price = _commercePriceFormatter.parse(price, themeDisplay.getLocale());
+		BigDecimal formattedPromoPrice = new BigDecimal(
+			_commercePriceFormatter.parse(
+				ParamUtil.getString(
+					actionRequest, "promoPrice", BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale()));
 
-		BigDecimal formattedPrice = new BigDecimal(price);
-
-		String promoPrice = ParamUtil.getString(
-			actionRequest, "promoPrice", BigDecimal.ZERO.toString());
-
-		promoPrice = _commercePriceFormatter.parse(
-			promoPrice, themeDisplay.getLocale());
-
-		BigDecimal formattedPromoPrice = new BigDecimal(promoPrice);
-
-		String cost = ParamUtil.getString(
-			actionRequest, "cost", BigDecimal.ZERO.toString());
-
-		cost = _commercePriceFormatter.parse(cost, themeDisplay.getLocale());
-
-		BigDecimal formattedCost = new BigDecimal(cost);
+		BigDecimal formattedCost = new BigDecimal(
+			_commercePriceFormatter.parse(
+				ParamUtil.getString(
+					actionRequest, "cost", BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale()));
 
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");

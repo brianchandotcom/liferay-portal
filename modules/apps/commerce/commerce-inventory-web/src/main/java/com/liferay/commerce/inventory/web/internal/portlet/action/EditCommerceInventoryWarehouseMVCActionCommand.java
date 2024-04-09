@@ -150,12 +150,11 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String quantity = ParamUtil.getString(
-			actionRequest, "quantity", BigDecimal.ZERO.toString());
-
 		BigDecimal formattedQuantity =
 			_commerceOrderItemQuantityFormatter.parse(
-				quantity, themeDisplay.getLocale());
+				ParamUtil.getString(
+					actionRequest, "quantity", BigDecimal.ZERO.toString()),
+				themeDisplay.getLocale());
 
 		if (commerceInventoryWarehouseItem == null) {
 			_commerceInventoryWarehouseItemService.

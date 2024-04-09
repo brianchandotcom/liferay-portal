@@ -164,11 +164,11 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 		boolean usePercentage = ParamUtil.getBoolean(
 			actionRequest, "usePercentage");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String maximumDiscountAmount = ParamUtil.getString(
 			actionRequest, "maximumDiscountAmount", BigDecimal.ZERO.toString());
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		maximumDiscountAmount = _commercePriceFormatter.parse(
 			maximumDiscountAmount, themeDisplay.getLocale());

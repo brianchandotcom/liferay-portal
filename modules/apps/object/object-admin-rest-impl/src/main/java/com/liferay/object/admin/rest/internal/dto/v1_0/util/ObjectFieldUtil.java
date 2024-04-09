@@ -20,10 +20,12 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -234,7 +236,17 @@ public class ObjectFieldUtil {
 			Validator.isNull(labelMap.get(siteDefaultLocale)) &&
 			Validator.isNotNull(labelMap.get(defaultLocale))) {
 
-			labelMap.put(siteDefaultLocale, labelMap.get(defaultLocale));
+			if (GetterUtil.getBoolean(objectField.getSystem())) {
+				labelMap.put(
+					siteDefaultLocale,
+					LanguageUtil.get(
+						siteDefaultLocale,
+						_systemObjectFieldLabelKeys.get(objectField.getName()),
+						labelMap.get(defaultLocale)));
+			}
+			else {
+				labelMap.put(siteDefaultLocale, labelMap.get(defaultLocale));
+			}
 		}
 
 		serviceBuilderObjectField.setLabelMap(labelMap);
@@ -266,5 +278,20 @@ public class ObjectFieldUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectFieldUtil.class);
+
+	private static final Map<String, String> _systemObjectFieldLabelKeys =
+		HashMapBuilder.put(
+			"createDate", "create-date"
+		).put(
+			"creator", "author"
+		).put(
+			"externalReferenceCode", "external-reference-code"
+		).put(
+			"id", "id"
+		).put(
+			"modifiedDate", "modified-date"
+		).put(
+			"status", "status"
+		).build();
 
 }

@@ -2,10 +2,17 @@ import React, {useState} from 'react';
 import {Link} from './Link';
 import {MAIN_NODE_WIDTH, SANKEY_HEIGHT} from './utils';
 import {Node} from './Node';
+import {RangeSelectors} from 'shared/types';
 import {Tooltip as RechartsTooltip, Sankey as SankeyChart} from 'recharts';
 import {Tooltip} from './Tooltip';
 
-const Sankey = ({data, width}) => {
+interface ISankeyProps {
+	data: any;
+	rangeSelectors: RangeSelectors;
+	width: number;
+}
+
+const Sankey: React.FC<ISankeyProps> = ({data, rangeSelectors, width}) => {
 	const [hovered, setMouseEnter] = useState(false);
 	const [selectedNode, setSelectedNode] = useState(null);
 
@@ -27,6 +34,7 @@ const Sankey = ({data, width}) => {
 				<Node
 					hovered={hovered}
 					onNodeChange={setSelectedNode}
+					rangeSelectors={rangeSelectors}
 					selectedNode={selectedNode}
 				/>
 			}

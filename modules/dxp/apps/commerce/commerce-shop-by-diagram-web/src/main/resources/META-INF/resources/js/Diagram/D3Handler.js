@@ -67,20 +67,18 @@ class D3Handler extends DiagramZoomHandler {
 	}
 
 	_printImage() {
-		const wrappperBoundingClientRect =
-			this._diagramWrapper.getBoundingClientRect();
+		const wrapperBoundingClientRect = this._diagramWrapper.getBoundingClientRect();
 
 		this._image = this._d3zoomWrapper
 			.append('image')
 			.attr('href', this._imageURL)
-			.attr('height', wrappperBoundingClientRect.height)
+			.attr('height', wrapperBoundingClientRect.height)
 			.attr('x', 0)
 			.attr('y', 0)
 			.on('load', (_d, index, nodes) => {
 				const imageWidth = nodes[index].getBoundingClientRect().width;
 
-				const panX =
-					(wrappperBoundingClientRect.width - imageWidth) / 2;
+				const panX = (wrapperBoundingClientRect.width - imageWidth) / 2;
 
 				if (!ZOOM_DISABLED) {
 					this._d3diagramWrapper.call(
@@ -338,7 +336,8 @@ class D3Handler extends DiagramZoomHandler {
 				'transform',
 				`translate(${d3event.x},${d3event.y})`
 			);
-		} else {
+		}
+		else {
 			selectedPin.classList.remove('dragging');
 			this._dragDetails.moved = false;
 

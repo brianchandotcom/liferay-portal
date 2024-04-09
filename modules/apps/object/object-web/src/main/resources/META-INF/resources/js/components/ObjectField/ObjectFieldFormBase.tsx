@@ -489,17 +489,15 @@ export default function ObjectFieldFormBase({
 				/>
 			)}
 
-			{Liferay.FeatureFlags['LPS-196724'] &&
-				values.businessType === 'AutoIncrement' &&
-				!editingObjectField && (
-					<AutoIncrementFormBase
-						disabled={disabled as boolean}
-						errors={errors}
-						onSubmit={onSubmit}
-						setValues={setValues}
-						values={values}
-					/>
-				)}
+			{values.businessType === 'AutoIncrement' && !editingObjectField && (
+				<AutoIncrementFormBase
+					disabled={disabled as boolean}
+					errors={errors}
+					onSubmit={onSubmit}
+					setValues={setValues}
+					values={values}
+				/>
+			)}
 
 			{values.businessType === 'Aggregation' &&
 				objectDefinition?.externalReferenceCode && (

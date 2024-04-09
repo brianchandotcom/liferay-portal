@@ -96,11 +96,11 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 
 		calendar.set(year, month, day);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String quantity = ParamUtil.getString(
 			actionRequest, "quantity", BigDecimal.ZERO.toString());
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		BigDecimal formattedQuantity =
 			_commerceOrderItemQuantityFormatter.parse(

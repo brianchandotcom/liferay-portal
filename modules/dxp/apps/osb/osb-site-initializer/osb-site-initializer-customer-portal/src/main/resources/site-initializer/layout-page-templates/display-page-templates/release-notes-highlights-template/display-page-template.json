@@ -2,6 +2,5 @@
 	"contentType": {
 		"className": "com.liferay.asset.kernel.model.AssetCategory"
 	},
-	"defaultTemplate": true,
-	"name": "DXP Release Notes Template"
+	"name": "Release Notes Highlights Template"
 }

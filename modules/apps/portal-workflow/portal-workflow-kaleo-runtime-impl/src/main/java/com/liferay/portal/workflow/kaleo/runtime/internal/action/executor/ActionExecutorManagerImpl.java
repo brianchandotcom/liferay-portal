@@ -5,12 +5,15 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.action.executor;
 
+import com.liferay.object.scope.CompanyScoped;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.workflow.kaleo.definition.ActionType;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
@@ -18,6 +21,7 @@ import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorManager;
 import com.liferay.portal.workflow.kaleo.runtime.action.executor.ActionExecutor;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,8 +45,8 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 
 		ActionExecutor actionExecutor = null;
 
-		List<ActionExecutor> actionExecutors = _serviceTrackerMap.getService(
-			actionExecutorKey);
+		List<ActionExecutor> actionExecutors = _getActionExecutors(
+			actionExecutorKey, CompanyThreadLocal.getCompanyId());
 
 		if (actionExecutors != null) {
 			if (Objects.equals(
@@ -77,8 +81,21 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 
 	@Override
 	public String[] getFunctionActionExecutorKeys() {
+		HashSet<String> filteredKeySet = new HashSet<>();
+
+		for (String key : _serviceTrackerMap.keySet()) {
+			if (ListUtil.isEmpty(
+					_getActionExecutors(
+						key, CompanyThreadLocal.getCompanyId()))) {
+
+				continue;
+			}
+
+			filteredKeySet.add(key);
+		}
+
 		return TransformUtil.transformToArray(
-			_serviceTrackerMap.keySet(),
+			filteredKeySet,
 			key -> {
 				if (key.startsWith("function")) {
 					return key;
@@ -112,6 +129,27 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 		}
 
 		return kaleoAction.getScriptLanguage();
+	}
+
+	private List<ActionExecutor> _getActionExecutors(
+		String actionExecutorKey, long companyId) {
+
+		return ListUtil.filter(
+			ListUtil.fromCollection(
+				_serviceTrackerMap.getService(actionExecutorKey)),
+			actionExecutor -> {
+				boolean allowed = true;
+
+				if (actionExecutor instanceof CompanyScoped) {
+					CompanyScoped actionExecutorCompanyScoped =
+						(CompanyScoped)actionExecutor;
+
+					allowed = actionExecutorCompanyScoped.isAllowedCompany(
+						companyId);
+				}
+
+				return allowed;
+			});
 	}
 
 	private ServiceTrackerMap<String, List<ActionExecutor>> _serviceTrackerMap;

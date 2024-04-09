@@ -7,6 +7,7 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.action.executor;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.scope.CompanyScoped;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -54,7 +55,8 @@ import org.osgi.service.component.annotations.Reference;
 	factory = "com.liferay.portal.workflow.kaleo.runtime.internal.action.executor.FunctionActionExecutorImpl",
 	service = ActionExecutor.class
 )
-public class FunctionActionExecutorImpl implements ActionExecutor {
+public class FunctionActionExecutorImpl
+	implements ActionExecutor, CompanyScoped {
 
 	public static final String KEY = "actionExecutorLanguage";
 
@@ -74,6 +76,11 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 	@Override
 	public String getActionExecutorKey() {
 		return _actionExecutorKey;
+	}
+
+	@Override
+	public long getAllowedCompanyId() {
+		return _companyId;
 	}
 
 	@Activate

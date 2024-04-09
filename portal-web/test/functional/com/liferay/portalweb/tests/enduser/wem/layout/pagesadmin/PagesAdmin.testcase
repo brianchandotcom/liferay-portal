@@ -2284,57 +2284,48 @@ definition {
 				displayPageTemplateEntryName = "Web Content DPT",
 				groupId = ${groupId},
 				subType = "Basic Web Content");
-		}
 
-		task ("Add a Display Page Content fragment to DPT then publish") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content DPT");
 
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Display Page Content");
-
 			PageEditor.publish();
 		}
 
-		task ("Add three web contents") {
-			for (var i : list "1,2,3") {
-				JSONWebcontent.addWebContent(
-					content = "Web Content Content ${i}",
-					groupId = ${groupId},
-					title = "Web Content Title ${i}");
-			}
+		task ("Adds a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupId = ${groupId},
+				title = "Web Content Title");
 		}
 
 		task ("Select Web Content DPT as Specific Display Page Template") {
-			for (var i : list "1,2,3") {
-				WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
-				WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title ${i}");
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-				WebContent.editDisplayPage(
-					pageName = "Web Content DPT",
-					pageType = "Display Page Templates");
+			WebContent.editDisplayPage(
+				pageName = "Web Content DPT",
+				pageType = "Display Page Templates");
 
-				PortletEntry.publish();
-			}
+			PortletEntry.publish();
 		}
 
 		task ("Add a manual collection with Web Content Article item type and Basic Web Content item subtype") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
-
-			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
-
-			AssetListsAdmin.configureItemTypeInManualCollection(
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = ${randomSiteName},
 				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article");
+				itemType = "Web Content Article",
+				title = "Manual Collection");
 		}
 
 		task ("Select all web contents as collection item") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+
 			AssetListsAdmin.selectAsset(
+				assetListName = "Manual Collection",
 				assetType = "Basic Web Content",
-				entryList = "Web Content Title 1,Web Content Title 2,Web Content Title 3");
+				entryList = "Web Content Title");
 		}
 
 		task ("Add a collection page based on manual collection") {
@@ -2349,28 +2340,26 @@ definition {
 		}
 
 		task ("View display page of all web contents via collection items in pages admin") {
-			for (var i : list "1,2,3") {
-				WaitForLiferayEvent.initializeLiferayEventLog();
+			WaitForLiferayEvent.initializeLiferayEventLog();
 
-				PagesAdmin.gotoPageEllipsisMenuItem(
-					menuItem = "View Collection Items",
-					pageName = "Manual Collection Page Name");
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View Collection Items",
+				pageName = "Manual Collection Page Name");
 
-				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-				Page.gotoCollectionEntryEllipsisItem(
-					item = "View Display Page",
-					tableEntry = "Web Content Title ${i}");
+			Page.gotoCollectionEntryEllipsisItem(
+				item = "View Display Page",
+				tableEntry = "Web Content Title");
 
-				SelectFrameTop();
+			SelectFrameTop();
 
-				ContentPages.viewFragmentText(
-					assetType = "journal",
-					fragmentName = "Display Page Content",
-					text = "Web Content Content ${i}");
+			ContentPages.viewFragmentText(
+				assetType = "journal",
+				fragmentName = "Display Page Content",
+				text = "Web Content Content");
 
-				Navigator.gotoBack();
-			}
+			Navigator.gotoBack();
 		}
 
 		task ("View display page of all web contents via collection items in page tree") {
@@ -2378,30 +2367,23 @@ definition {
 
 			PagesFinder.goToPagesFinder();
 
-			for (var i : list "1,2,3") {
-				WaitForLiferayEvent.initializeLiferayEventLog();
+			WaitForLiferayEvent.initializeLiferayEventLog();
 
-				PagesFinder.gotoPageEllipsisItem(
-					item = "View Collection Items",
-					pageName = "Manual Collection Page Name");
+			PagesFinder.gotoPageEllipsisItem(
+				item = "View Collection Items",
+				pageName = "Manual Collection Page Name");
 
-				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-				Page.gotoCollectionEntryEllipsisItem(
-					item = "View Display Page",
-					tableEntry = "Web Content Title ${i}");
+			Page.gotoCollectionEntryEllipsisItem(
+				item = "View Display Page",
+				tableEntry = "Web Content Title");
 
-				SelectFrameTop();
+			SelectFrameTop();
 
-				ContentPages.viewFragmentText(
-					assetType = "journal",
-					fragmentName = "Display Page Content",
-					text = "Web Content Content ${i}");
+			PageEditor.clickBack();
 
-				PageEditor.clickBack();
-
-				ControlMenu.viewHeaderTitle(headerTitle = "Manual Collection Page Name");
-			}
+			ControlMenu.viewHeaderTitle(headerTitle = "Manual Collection Page Name");
 		}
 	}
 

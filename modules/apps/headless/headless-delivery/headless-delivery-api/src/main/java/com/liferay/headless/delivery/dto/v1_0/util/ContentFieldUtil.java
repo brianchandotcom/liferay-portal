@@ -303,10 +303,11 @@ public class ContentFieldUtil {
 										dlAppService.getFileEntry(fileEntryId),
 										uriInfo);
 
-								String alt = jsonObject.getString("alt");
-
 								contentDocument.setDescription(
 									() -> {
+										String alt = jsonObject.getString(
+											"alt");
+
 										if (Validator.isNotNull(alt) &&
 											JSONUtil.isJSONObject(alt)) {
 

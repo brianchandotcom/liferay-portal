@@ -79,22 +79,54 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 			DTOConverterContext dtoConverterContext, BaseModel<?> baseModel)
 		throws Exception {
 
-		Map<String, Function<?, Object>> attributeGetterFunctions =
-			(Map<String, Function<?, Object>>)
-				baseModel.getAttributeGetterFunctions();
-
-		Function<Object, Object> modifiedDateGetterFunction =
-			(Function<Object, Object>)attributeGetterFunctions.get(
-				"modifiedDate");
-
 		try {
 			return TransactionInvokerUtil.invoke(
 				_transactionConfig,
-				() -> _toDXPEntity(
-					_getExpandoFields(baseModel), _getFields(baseModel),
-					String.valueOf(baseModel.getPrimaryKeyObj()),
-					(Date)modifiedDateGetterFunction.apply(baseModel),
-					baseModel.getModelClassName()));
+				() -> new DXPEntity() {
+					{
+						setExpandoFields(
+							() -> {
+								ExpandoField[] expandoFields =
+									_getExpandoFields(baseModel);
+
+								if (expandoFields != null) {
+									return expandoFields;
+								}
+
+								return new ExpandoField[0];
+							});
+						setFields(
+							() -> {
+								Field[] fields = _getFields(baseModel);
+
+								if (fields != null) {
+									return fields;
+								}
+
+								return new Field[0];
+							});
+						setId(
+							() -> String.valueOf(baseModel.getPrimaryKeyObj()));
+						setModifiedDate(
+							() -> {
+								Map<String, Function<?, Object>>
+									attributeGetterFunctions =
+										(Map<String, Function<?, Object>>)
+											baseModel.
+												getAttributeGetterFunctions();
+
+								Function<Object, Object>
+									modifiedDateGetterFunction =
+										(Function<Object, Object>)
+											attributeGetterFunctions.get(
+												"modifiedDate");
+
+								return (Date)modifiedDateGetterFunction.apply(
+									baseModel);
+							});
+						setType(baseModel::getModelClassName);
+					}
+				});
 		}
 		catch (Throwable throwable) {
 			throw new Exception(throwable);
@@ -424,9 +456,12 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 			for (Field field : fields) {
 				if (StringUtil.equals(field.getName(), "name")) {
-					Group group = (Group)baseModel;
+					field.setValue(
+						() -> {
+							Group group = (Group)baseModel;
 
-					field.setValue(group::getNameCurrentValue);
+							return group.getNameCurrentValue();
+						});
 
 					break;
 				}
@@ -436,13 +471,17 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		if (StringUtil.equals(
 				baseModel.getModelClassName(), Organization.class.getName())) {
 
-			Field field = new Field();
+			Field field = new Field() {
+				{
+					setName(() -> "parentOrganizationName");
+					setValue(
+						() -> {
+							Organization organization = (Organization)baseModel;
 
-			field.setName(() -> "parentOrganizationName");
-
-			Organization organization = (Organization)baseModel;
-
-			field.setValue(organization::getParentOrganizationName);
+							return organization.getParentOrganizationName();
+						});
+				}
+			};
 
 			fields.add(field);
 		}
@@ -573,37 +612,6 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		}
 
 		return null;
-	}
-
-	private DXPEntity _toDXPEntity(
-		ExpandoField[] expandoFields, Field[] fields, String id,
-		Date modifiedDate, String type) {
-
-		DXPEntity dxpEntity = new DXPEntity();
-
-		dxpEntity.setExpandoFields(
-			() -> {
-				if (expandoFields != null) {
-					return expandoFields;
-				}
-
-				return new ExpandoField[0];
-			});
-
-		dxpEntity.setFields(
-			() -> {
-				if (fields != null) {
-					return fields;
-				}
-
-				return new Field[0];
-			});
-
-		dxpEntity.setId(() -> id);
-		dxpEntity.setModifiedDate(() -> modifiedDate);
-		dxpEntity.setType(() -> type);
-
-		return dxpEntity;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

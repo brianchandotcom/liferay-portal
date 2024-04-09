@@ -63,9 +63,9 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 				contextCompany.getCompanyId());
 
 		List<Field> fields = _getFields(
-			FieldAccountConstants.FIELD_ACCOUNT_EXAMPLES,
+			FieldAccountConstants.FIELD_ACCOUNT_EXAMPLES, "account",
 			FieldAccountConstants.FIELD_ACCOUNT_NAMES,
-			FieldAccountConstants.FIELD_ACCOUNT_REQUIRED_NAMES, "account",
+			FieldAccountConstants.FIELD_ACCOUNT_REQUIRED_NAMES,
 			_getOrDefault(
 				FieldAccountConstants.FIELD_ACCOUNT_DEFAULTS,
 				analyticsConfiguration.syncedAccountFieldNames()),
@@ -97,18 +97,18 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 				contextCompany.getCompanyId());
 
 		List<Field> fields = _getFields(
-			FieldOrderConstants.FIELD_ORDER_EXAMPLES,
+			FieldOrderConstants.FIELD_ORDER_EXAMPLES, "order",
 			FieldOrderConstants.FIELD_ORDER_NAMES,
-			FieldOrderConstants.FIELD_ORDER_REQUIRED_NAMES, "order",
+			FieldOrderConstants.FIELD_ORDER_REQUIRED_NAMES,
 			analyticsConfiguration.syncedOrderFieldNames(),
 			FieldOrderConstants.FIELD_ORDER_TYPES);
 
 		fields.addAll(
 			_getFields(
-				FieldOrderConstants.FIELD_ORDER_ITEM_EXAMPLES,
+				FieldOrderConstants.FIELD_ORDER_ITEM_EXAMPLES, "order-item",
 				FieldOrderConstants.FIELD_ORDER_ITEM_NAMES,
 				FieldOrderConstants.FIELD_ORDER_ITEM_REQUIRED_NAMES,
-				"order-item", analyticsConfiguration.syncedOrderFieldNames(),
+				analyticsConfiguration.syncedOrderFieldNames(),
 				FieldOrderConstants.FIELD_ORDER_ITEM_TYPES));
 
 		fields = _filter(fields, keyword);
@@ -132,17 +132,17 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 				contextCompany.getCompanyId());
 
 		List<Field> fields = _getFields(
-			FieldPeopleConstants.FIELD_CONTACT_EXAMPLES,
+			FieldPeopleConstants.FIELD_CONTACT_EXAMPLES, "contact",
 			FieldPeopleConstants.FIELD_CONTACT_NAMES,
-			FieldPeopleConstants.FIELD_CONTACT_REQUIRED_NAMES, "contact",
+			FieldPeopleConstants.FIELD_CONTACT_REQUIRED_NAMES,
 			analyticsConfiguration.syncedContactFieldNames(),
 			FieldPeopleConstants.FIELD_CONTACT_TYPES);
 
 		fields.addAll(
 			_getFields(
-				FieldPeopleConstants.FIELD_USER_EXAMPLES,
+				FieldPeopleConstants.FIELD_USER_EXAMPLES, "user",
 				FieldPeopleConstants.FIELD_USER_NAMES,
-				FieldPeopleConstants.FIELD_USER_REQUIRED_NAMES, "user",
+				FieldPeopleConstants.FIELD_USER_REQUIRED_NAMES,
 				analyticsConfiguration.syncedUserFieldNames(),
 				FieldPeopleConstants.FIELD_USER_TYPES));
 
@@ -172,25 +172,25 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 				contextCompany.getCompanyId());
 
 		List<Field> fields = _getFields(
-			FieldProductConstants.FIELD_CATEGORY_EXAMPLES,
+			FieldProductConstants.FIELD_CATEGORY_EXAMPLES, "category",
 			FieldProductConstants.FIELD_CATEGORY_NAMES,
-			FieldProductConstants.FIELD_CATEGORY_REQUIRED_NAMES, "category",
+			FieldProductConstants.FIELD_CATEGORY_REQUIRED_NAMES,
 			analyticsConfiguration.syncedCategoryFieldNames(),
 			FieldProductConstants.FIELD_CATEGORY_TYPES);
 
 		fields.addAll(
 			_getFields(
-				FieldProductConstants.FIELD_PRODUCT_EXAMPLES,
+				FieldProductConstants.FIELD_PRODUCT_EXAMPLES, "product",
 				FieldProductConstants.FIELD_PRODUCT_NAMES,
-				FieldProductConstants.FIELD_PRODUCT_REQUIRED_NAMES, "product",
+				FieldProductConstants.FIELD_PRODUCT_REQUIRED_NAMES,
 				analyticsConfiguration.syncedProductFieldNames(),
 				FieldProductConstants.FIELD_PRODUCT_TYPES));
 		fields.addAll(
 			_getFields(
 				FieldProductConstants.FIELD_PRODUCT_CHANNEL_EXAMPLES,
+				"product-channel",
 				FieldProductConstants.FIELD_PRODUCT_CHANNEL_NAMES,
 				FieldProductConstants.FIELD_PRODUCT_CHANNEL_REQUIRED_NAMES,
-				"product-channel",
 				analyticsConfiguration.syncedProductChannelFieldNames(),
 				FieldProductConstants.FIELD_PRODUCT_CHANNEL_TYPES));
 
@@ -376,7 +376,8 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 	}
 
 	private List<Field> _getExpandoFields(
-		String className, long companyId, String source, String[] syncedNames) {
+		String className, long companyId, String fieldSource,
+		String[] syncedNames) {
 
 		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
 			companyId, _portal.getClassNameId(className),
@@ -395,39 +396,38 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 					setSelected(
 						() -> ArrayUtil.contains(
 							syncedNames, expandoColumn.getName()));
-					setSource(() -> source);
+					setSource(() -> fieldSource);
 					setType(() -> _getDataType(expandoColumn.getType()));
 				}
 			});
 	}
 
 	private List<Field> _getFields(
-		String[] examples, String[] names, String[] requiredNames,
-		String source, String[] syncedNames, String[] types) {
+		String[] examples, String fieldSource, String[] names,
+		String[] requiredNames, String[] syncedNames, String[] types) {
 
 		List<Field> fields = new ArrayList<>();
 
 		for (int i = 0; i < names.length; i++) {
 			int index = i;
 
-			Field field = new Field() {
-				{
-					setExample(() -> examples[index]);
-					setName(() -> names[index]);
-					setRequired(
-						() -> ArrayUtil.contains(requiredNames, names[index]));
-					setSelected(
-						() ->
-							ArrayUtil.contains(syncedNames, names[index]) ||
-							ArrayUtil.contains(requiredNames, names[index]));
-
-					setType(() -> types[index]);
-				}
-			};
-
-			field.setSource(() -> source);
-
-			fields.add(field);
+			fields.add(
+				new Field() {
+					{
+						setExample(() -> examples[index]);
+						setName(() -> names[index]);
+						setRequired(
+							() -> ArrayUtil.contains(
+								requiredNames, names[index]));
+						setSelected(
+							() ->
+								ArrayUtil.contains(syncedNames, names[index]) ||
+								ArrayUtil.contains(
+									requiredNames, names[index]));
+						setSource(() -> fieldSource);
+						setType(() -> types[index]);
+					}
+				});
 		}
 
 		return fields;

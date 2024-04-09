@@ -91,15 +91,7 @@ public class LoginLayoutUtilityPageTest {
 	}
 
 	@Test
-	public void testCreateAccountUtilityPageTypeHasBeenRegistered() {
-		Assert.assertNotNull(
-			LayoutUtilityPageEntryViewRendererRegistryUtil.
-				getLayoutUtilityPageEntryViewRenderer(
-					LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT));
-	}
-
-	@Test
-	public void testDefaultLayoutUtilityPagesAfterSiteInitialization()
+	public void testDefaultLayoutUtilityPageEntriesAfterSiteInitialization()
 		throws PortalException {
 
 		UserTestUtil.setUser(TestPropsValues.getUser());
@@ -124,15 +116,17 @@ public class LoginLayoutUtilityPageTest {
 	}
 
 	@Test
-	public void testForgotPasswordUtilityPageTypeHasBeenRegistered() {
+	public void testLayoutUtilityPageEntryViewRenderersHaveBeenRegistered() {
+		Assert.assertNotNull(
+			LayoutUtilityPageEntryViewRendererRegistryUtil.
+				getLayoutUtilityPageEntryViewRenderer(
+					LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT));
+
 		Assert.assertNotNull(
 			LayoutUtilityPageEntryViewRendererRegistryUtil.
 				getLayoutUtilityPageEntryViewRenderer(
 					LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD));
-	}
 
-	@Test
-	public void testLoginUtilityPageTypeHasBeenRegistered() {
 		Assert.assertNotNull(
 			LayoutUtilityPageEntryViewRendererRegistryUtil.
 				getLayoutUtilityPageEntryViewRenderer(

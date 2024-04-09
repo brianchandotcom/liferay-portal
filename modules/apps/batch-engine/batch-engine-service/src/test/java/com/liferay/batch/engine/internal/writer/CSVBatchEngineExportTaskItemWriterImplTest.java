@@ -192,8 +192,9 @@ public class CSVBatchEngineExportTaskItemWriterImplTest
 		try (CSVBatchEngineExportTaskItemWriterImpl
 				csvBatchEngineExportTaskItemWriterImpl =
 					new CSVBatchEngineExportTaskItemWriterImpl(
-						StringPool.COMMA, fieldNameObjectValuePairs, fieldNames,
-						0, unsyncByteArrayOutputStream, parameters)) {
+						null, 0, StringPool.COMMA, fieldNameObjectValuePairs,
+						fieldNames, unsyncByteArrayOutputStream, parameters,
+						null)) {
 
 			for (Item[] items : getItemGroups()) {
 				csvBatchEngineExportTaskItemWriterImpl.write(

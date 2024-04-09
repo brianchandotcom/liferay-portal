@@ -20,7 +20,7 @@ import {toLocaleString} from '../../services/DateUtil';
 import {toDurationString} from '../../services/DurationUtil';
 
 function JobBuilds({job}) {
-	if (!job.builds) {
+	if (!job?.builds) {
 		return <div>Loading...</div>;
 	}
 
@@ -218,6 +218,24 @@ function JobPage() {
 
 	if (!job) {
 		getJobById({id, setJob});
+	}
+
+	if (!job) {
+		return (
+			<ClayLayout.Container>
+				<Jethr0Card>
+					<Jethr0NavigationBar active="Jobs" />
+					<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
+					<Jethr0ContainerFluid>
+						<ClayLayout.Row justify="between">
+							<Heading level={3} weight="lighter">
+								{'Job #' + id}
+							</Heading>
+						</ClayLayout.Row>
+					</Jethr0ContainerFluid>
+				</Jethr0Card>
+			</ClayLayout.Container>
+		);
 	}
 
 	function redirectToJobsPage() {

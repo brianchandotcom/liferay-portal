@@ -103,10 +103,12 @@ export async function getJobById({id, setJob}) {
 
 		job.builds = builds;
 
-		if (job && setJob) {
-			setJob(job);
+		if (job) {
+			if (setJob) {
+				setJob(job);
+			}
 
-			break;
+			return job;
 		}
 	}
 }
@@ -122,10 +124,15 @@ export async function getJobQueueOrderedJobs({setJobs}) {
 
 	const result = JSON.parse(await response.text());
 
-	getJobs({
-		orderedJobIds: JSON.parse(result.items[0].prioritizedJobIds),
-		setJobs,
-	});
+	const jobs = [];
+
+	for (const id of JSON.parse(result.items[0].prioritizedJobIds)) {
+		const job = await getJobById({id});
+
+		jobs.push(job);
+	}
+
+	setJobs(jobs);
 }
 
 export async function getJobs({orderedJobIds, setJobs}) {

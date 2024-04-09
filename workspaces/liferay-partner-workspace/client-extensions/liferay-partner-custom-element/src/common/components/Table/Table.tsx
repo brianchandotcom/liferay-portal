@@ -16,6 +16,7 @@ import classNames from 'classnames';
 import TableColumn from '../../interfaces/tableColumn';
 
 import './index.css';
+import {SetStateAction, useCallback, useState} from 'react';
 
 interface BasicRow {
 	[key: string]: string | number | boolean | string[] | undefined;
@@ -37,6 +38,11 @@ interface RowProps<T> {
 }
 
 type ChildrenRender<T> = ((item: T) => React.ReactElement) & string;
+
+type Sorting = {
+	column: React.Key;
+	direction: 'ascending' | 'descending';
+};
 
 const Row = <T extends BasicRow>({
 	columns,
@@ -98,45 +104,74 @@ const Table = <T extends BasicRow>({
 	customClickOnRow,
 	rows,
 	tableLayoutAuto,
-}: TableProps<T>) => (
-	<ClayTooltipProvider>
-		<ClayTable
-			borderless
-			className={classNames(className, {
-				'table-layout-auto': tableLayoutAuto,
-			})}
-			columnsVisibility={false}
-			noWrap
-		>
-			<Head align="left" items={columns}>
-				{
-					((column) => (
-						<Cell
-							className="align-baseline border-neutral-2 rounded-0 text-neutral-10"
-							key={column.columnKey}
-						>
-							{column.label}
-						</Cell>
-					)) as ChildrenRender<TableColumn<T>>
-				}
-			</Head>
+}: TableProps<T>) => {
+	const [sort, setSort] = useState<Sorting | null>(null);
+	const [items, setItems] = useState(rows);
 
-			<Body align="left" defaultItems={rows}>
-				{
-					((row: T, index: number) => {
-						return (
-							<Row
-								columns={columns}
-								customClickOnRow={customClickOnRow}
-								row={row}
-								rowIndex={index}
-							/>
-						);
-					}) as ChildrenRender<T>
-				}
-			</Body>
-		</ClayTable>
-	</ClayTooltipProvider>
-);
+	const onSortChange = useCallback((sort: Sorting | null) => {
+		if (sort) {
+			setItems((items) =>
+				items.sort((a, b) => {
+					let cmp = new Intl.Collator('en', {numeric: true}).compare(
+						String(a[sort.column as string]),
+						String(b[sort.column as string])
+					);
+
+					if (sort.direction === 'descending') {
+						cmp *= -1;
+					}
+
+					return cmp;
+				})
+			);
+		}
+
+		setSort(sort);
+	}, []);
+
+	return (
+		<ClayTooltipProvider>
+			<ClayTable
+				borderless
+				className={classNames(className, {
+					'table-layout-auto': tableLayoutAuto,
+				})}
+				columnsVisibility={false}
+				noWrap
+				onSortChange={onSortChange}
+				sort={sort}
+			>
+				<Head align="left" items={columns}>
+					{
+						((column) => (
+							<Cell
+								className="align-baseline border-neutral-2 rounded-0 text-neutral-10"
+								key={column.columnKey}
+								sortable
+							>
+								{column.label}
+							</Cell>
+						)) as ChildrenRender<TableColumn<T>>
+					}
+				</Head>
+
+				<Body align="left" defaultItems={rows}>
+					{
+						((row: T, index: number) => {
+							return (
+								<Row
+									columns={columns}
+									customClickOnRow={customClickOnRow}
+									row={row}
+									rowIndex={index}
+								/>
+							);
+						}) as ChildrenRender<T>
+					}
+				</Body>
+			</ClayTable>
+		</ClayTooltipProvider>
+	);
+};
 
 export default Table;

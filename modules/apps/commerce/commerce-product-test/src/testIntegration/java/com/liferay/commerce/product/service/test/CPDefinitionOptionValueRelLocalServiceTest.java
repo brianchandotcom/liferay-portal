@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -781,6 +782,7 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 		Assert.assertNull(cpDefinitionOptionValueRel);
 	}
 
+	@FeatureFlags("LPD-10887")
 	@Test
 	public void testValidateCPDefinitionOptionValueRelKey() throws Exception {
 		frutillaRule.scenario(
@@ -916,6 +918,7 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			cpDefinitionOptionValueRel.getUnitOfMeasureKey());
 	}
 
+	@FeatureFlags("LPD-10887")
 	@Test(expected = CPDefinitionOptionValueRelKeyException.class)
 	public void testValidateCPDefinitionOptionValueRelWithInvalidDate()
 		throws Exception {
@@ -935,6 +938,7 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 		_addCPDefinitionWitOptionValue("2024-03-32-16-45-1-hours-europe-paris");
 	}
 
+	@FeatureFlags("LPD-10887")
 	@Test(expected = CPDefinitionOptionValueRelKeyException.class)
 	public void testValidateCPDefinitionOptionValueRelWithInvalidDateValue()
 		throws Exception {
@@ -954,6 +958,7 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 		_addCPDefinitionWitOptionValue("03-18-aa-16-45-1-hours-europe-paris");
 	}
 
+	@FeatureFlags("LPD-10887")
 	@Test(expected = CPDefinitionOptionValueRelKeyException.class)
 	public void testValidateCPDefinitionOptionValueRelWithInvalidDuration()
 		throws Exception {
@@ -973,6 +978,7 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 		_addCPDefinitionWitOptionValue("03-18-2024-16-45-1-xyz-europe-paris");
 	}
 
+	@FeatureFlags("LPD-10887")
 	@Test(expected = CPDefinitionOptionValueRelKeyException.class)
 	public void testValidateCPDefinitionOptionValueRelWithInvalidKey()
 		throws Exception {
@@ -992,6 +998,7 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 		_addCPDefinitionWitOptionValue("03-18-2024_16-45-1-hours-europe-paris");
 	}
 
+	@FeatureFlags("LPD-10887")
 	@Test(expected = CPDefinitionOptionValueRelKeyException.class)
 	public void testValidateCPDefinitionOptionValueRelWithNullKey()
 		throws Exception {

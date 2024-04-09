@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -62,6 +63,7 @@ public class CPOptionValueLocalServiceTest {
 		_cpOptionLocalService.deleteCPOptions(_serviceContext.getCompanyId());
 	}
 
+	@FeatureFlags("LPD-10887")
 	@Test
 	public void testValidateCPOptionValueKey() throws Exception {
 		frutillaRule.scenario(
@@ -80,6 +82,7 @@ public class CPOptionValueLocalServiceTest {
 		Assert.assertNotNull("Option value was not created", cpOptionValue);
 	}
 
+	@FeatureFlags("LPD-10887")
 	@Test(expected = CPOptionValueKeyException.class)
 	public void testValidateCPOptionValueWithInvalidDate() throws Exception {
 		frutillaRule.scenario(
@@ -97,6 +100,7 @@ public class CPOptionValueLocalServiceTest {
 		_addCPOptionWitCPOptionValue("2024-03-32-16-45-1-hours-europe-paris");
 	}
 
+	@FeatureFlags("LPD-10887")
 	@Test(expected = CPOptionValueKeyException.class)
 	public void testValidateCPOptionValueWithInvalidDateValue()
 		throws Exception {
@@ -116,6 +120,7 @@ public class CPOptionValueLocalServiceTest {
 		_addCPOptionWitCPOptionValue("03-18-aa-16-45-1-hours-europe-paris");
 	}
 
+	@FeatureFlags("LPD-10887")
 	@Test(expected = CPOptionValueKeyException.class)
 	public void testValidateCPOptionValueWithInvalidDuration()
 		throws Exception {
@@ -135,6 +140,7 @@ public class CPOptionValueLocalServiceTest {
 		_addCPOptionWitCPOptionValue("03-18-2024-16-45-1-xyz-europe-paris");
 	}
 
+	@FeatureFlags("LPD-10887")
 	@Test(expected = CPOptionValueKeyException.class)
 	public void testValidateCPOptionValueWithInvalidKey() throws Exception {
 		frutillaRule.scenario(
@@ -152,6 +158,7 @@ public class CPOptionValueLocalServiceTest {
 		_addCPOptionWitCPOptionValue("03-18-2024_16-45-1-hours-europe-paris");
 	}
 
+	@FeatureFlags("LPD-10887")
 	@Test(expected = CPOptionValueKeyException.class)
 	public void testValidateCPOptionValueWithNullKey() throws Exception {
 		frutillaRule.scenario(

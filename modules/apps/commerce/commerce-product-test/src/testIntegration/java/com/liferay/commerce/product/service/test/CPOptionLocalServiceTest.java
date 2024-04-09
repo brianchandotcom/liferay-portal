@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -133,6 +134,7 @@ public class CPOptionLocalServiceTest {
 			false, RandomTestUtil.randomString(), _serviceContext);
 	}
 
+	@FeatureFlags("LPD-10887")
 	@Test
 	public void testAddOptionSKUContributor() throws Exception {
 		String[] cpOptionSKUContributorFieldTypes =

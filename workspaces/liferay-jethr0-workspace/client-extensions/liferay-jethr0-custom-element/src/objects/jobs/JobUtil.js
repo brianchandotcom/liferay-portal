@@ -52,6 +52,8 @@ export async function getJobById({id, setJob}) {
 			c {
 				builds(filter: \\"r_jobToBuilds_c_jobId eq '${id}'\\") {
 					items {
+						dateCreated
+						dateModified
 						id
 						initialBuild
 						name
@@ -64,6 +66,8 @@ export async function getJobById({id, setJob}) {
 				}
 				jobs(filter: \\"id eq '${id}'\\") {
 					items {
+						dateCreated
+						dateModified
 						id
 						name
 						parameters

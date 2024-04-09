@@ -89,29 +89,34 @@ public class TestrayRunComparison implements Serializable {
 	private Supplier<Object[]> _resultsSupplier;
 
 	@Schema
-	public String getTestrayCasePriorities() {
-		if (_testrayCasePrioritiesSupplier != null) {
-			testrayCasePriorities = _testrayCasePrioritiesSupplier.get();
+	@Valid
+	public TestrayCaseResultComparison[] getTestrayCaseResultComparisons() {
+		if (_testrayCaseResultComparisonsSupplier != null) {
+			testrayCaseResultComparisons =
+				_testrayCaseResultComparisonsSupplier.get();
 
-			_testrayCasePrioritiesSupplier = null;
+			_testrayCaseResultComparisonsSupplier = null;
 		}
 
-		return testrayCasePriorities;
+		return testrayCaseResultComparisons;
 	}
 
-	public void setTestrayCasePriorities(String testrayCasePriorities) {
-		this.testrayCasePriorities = testrayCasePriorities;
+	public void setTestrayCaseResultComparisons(
+		TestrayCaseResultComparison[] testrayCaseResultComparisons) {
 
-		_testrayCasePrioritiesSupplier = null;
+		this.testrayCaseResultComparisons = testrayCaseResultComparisons;
+
+		_testrayCaseResultComparisonsSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setTestrayCasePriorities(
-		UnsafeSupplier<String, Exception> testrayCasePrioritiesUnsafeSupplier) {
+	public void setTestrayCaseResultComparisons(
+		UnsafeSupplier<TestrayCaseResultComparison[], Exception>
+			testrayCaseResultComparisonsUnsafeSupplier) {
 
-		_testrayCasePrioritiesSupplier = () -> {
+		_testrayCaseResultComparisonsSupplier = () -> {
 			try {
-				return testrayCasePrioritiesUnsafeSupplier.get();
+				return testrayCaseResultComparisonsUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -124,51 +129,11 @@ public class TestrayRunComparison implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String testrayCasePriorities;
+	protected TestrayCaseResultComparison[] testrayCaseResultComparisons;
 
 	@JsonIgnore
-	private Supplier<String> _testrayCasePrioritiesSupplier;
-
-	@Schema
-	public Long getTestrayTeamId() {
-		if (_testrayTeamIdSupplier != null) {
-			testrayTeamId = _testrayTeamIdSupplier.get();
-
-			_testrayTeamIdSupplier = null;
-		}
-
-		return testrayTeamId;
-	}
-
-	public void setTestrayTeamId(Long testrayTeamId) {
-		this.testrayTeamId = testrayTeamId;
-
-		_testrayTeamIdSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setTestrayTeamId(
-		UnsafeSupplier<Long, Exception> testrayTeamIdUnsafeSupplier) {
-
-		_testrayTeamIdSupplier = () -> {
-			try {
-				return testrayTeamIdUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long testrayTeamId;
-
-	@JsonIgnore
-	private Supplier<Long> _testrayTeamIdSupplier;
+	private Supplier<TestrayCaseResultComparison[]>
+		_testrayCaseResultComparisonsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -224,32 +189,27 @@ public class TestrayRunComparison implements Serializable {
 			sb.append("]");
 		}
 
-		String testrayCasePriorities = getTestrayCasePriorities();
+		TestrayCaseResultComparison[] testrayCaseResultComparisons =
+			getTestrayCaseResultComparisons();
 
-		if (testrayCasePriorities != null) {
+		if (testrayCaseResultComparisons != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"testrayCasePriorities\": ");
+			sb.append("\"testrayCaseResultComparisons\": ");
 
-			sb.append("\"");
+			sb.append("[");
 
-			sb.append(_escape(testrayCasePriorities));
+			for (int i = 0; i < testrayCaseResultComparisons.length; i++) {
+				sb.append(String.valueOf(testrayCaseResultComparisons[i]));
 
-			sb.append("\"");
-		}
-
-		Long testrayTeamId = getTestrayTeamId();
-
-		if (testrayTeamId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+				if ((i + 1) < testrayCaseResultComparisons.length) {
+					sb.append(", ");
+				}
 			}
 
-			sb.append("\"testrayTeamId\": ");
-
-			sb.append(testrayTeamId);
+			sb.append("]");
 		}
 
 		sb.append("}");

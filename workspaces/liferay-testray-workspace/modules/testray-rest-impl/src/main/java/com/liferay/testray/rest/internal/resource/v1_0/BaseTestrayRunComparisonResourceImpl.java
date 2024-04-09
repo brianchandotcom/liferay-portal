@@ -57,11 +57,7 @@ public abstract class BaseTestrayRunComparisonResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "testrayCasePriorities"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "testrayTeamId"
+				name = "filter"
 			)
 		}
 	)
@@ -87,12 +83,98 @@ public abstract class BaseTestrayRunComparisonResourceImpl
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("testrayRunId2")
 			Long testrayRunId2,
+			@javax.ws.rs.core.Context Filter filter)
+		throws Exception {
+
+		return new TestrayRunComparison();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/testray-rest/v1.0/testray-run-comparisons/{testrayRunId1}/{testrayRunId2}/details'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "testrayRunId1"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "testrayRunId2"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testrayCaseResultError1"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testrayCaseResultError2"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testrayCaseResultIssue1"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testrayCaseResultIssue2"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testrayCaseResultStatus1"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testrayCaseResultStatus2"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "TestrayRunComparison"
+			)
+		}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/testray-run-comparisons/{testrayRunId1}/{testrayRunId2}/details"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public TestrayRunComparison getTestrayRunComparisonDetail(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("testrayCasePriorities")
-			String testrayCasePriorities,
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("testrayRunId1")
+			Long testrayRunId1,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("testrayTeamId")
-			Long testrayTeamId)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("testrayRunId2")
+			Long testrayRunId2,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("testrayCaseResultError1")
+			String testrayCaseResultError1,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("testrayCaseResultError2")
+			String testrayCaseResultError2,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("testrayCaseResultIssue1")
+			String testrayCaseResultIssue1,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("testrayCaseResultIssue2")
+			String testrayCaseResultIssue2,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("testrayCaseResultStatus1")
+			String testrayCaseResultStatus1,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("testrayCaseResultStatus2")
+			String testrayCaseResultStatus2,
+			@javax.ws.rs.core.Context Filter filter)
 		throws Exception {
 
 		return new TestrayRunComparison();

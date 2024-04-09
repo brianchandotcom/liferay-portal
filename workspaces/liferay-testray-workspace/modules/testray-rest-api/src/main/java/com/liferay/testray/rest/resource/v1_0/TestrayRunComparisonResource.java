@@ -39,8 +39,15 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface TestrayRunComparisonResource {
 
 	public TestrayRunComparison getTestrayRunComparison(
+			Long testrayRunId1, Long testrayRunId2, Filter filter)
+		throws Exception;
+
+	public TestrayRunComparison getTestrayRunComparisonDetail(
 			Long testrayRunId1, Long testrayRunId2,
-			String testrayCasePriorities, Long testrayTeamId)
+			String testrayCaseResultError1, String testrayCaseResultError2,
+			String testrayCaseResultIssue1, String testrayCaseResultIssue2,
+			String testrayCaseResultStatus1, String testrayCaseResultStatus2,
+			Filter filter)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

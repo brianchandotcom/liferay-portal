@@ -11,6 +11,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
+import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {settingsPageTest} from './fixtures/settingsPageTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
@@ -22,6 +23,7 @@ export const test = mergeTests(
 		'LPS-164563': true,
 	}),
 	loginTest(),
+	dataSetManagerSetupTest,
 	settingsPageTest,
 	visualizationModesPageTest
 );

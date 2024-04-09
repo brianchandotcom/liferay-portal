@@ -9,6 +9,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
+import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
 
 export const test = mergeTests(
@@ -17,7 +18,8 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-164563': true,
 	}),
-	loginTest()
+	loginTest(),
+	dataSetManagerSetupTest
 );
 
 const DATASET_LABEL = getRandomString();

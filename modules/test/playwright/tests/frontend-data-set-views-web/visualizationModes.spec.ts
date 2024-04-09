@@ -11,6 +11,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
+import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
 
@@ -21,7 +22,8 @@ export const test = mergeTests(
 		'LPS-186871': true,
 	}),
 	visualizationModesPageTest,
-	loginTest()
+	loginTest(),
+	dataSetManagerSetupTest
 );
 
 let dataSetERC: string;

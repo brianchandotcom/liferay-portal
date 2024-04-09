@@ -52,13 +52,13 @@ function JobQueue() {
 					let totalBuilds = 0;
 
 					for (const build of job.builds) {
-						if (build.state.key == 'completed') {
+						if (build.state.key === 'completed') {
 							completedBuilds++;
 						}
-						else if (build.state.key == 'opened') {
+						else if (build.state.key === 'opened') {
 							openedBuilds++;
 						}
-						else if (build.state.key == 'running') {
+						else if (build.state.key === 'running') {
 							runningBuilds++;
 						}
 

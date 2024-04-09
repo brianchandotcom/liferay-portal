@@ -102,6 +102,7 @@ import com.liferay.portal.security.script.management.test.util.ScriptManagementC
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -144,7 +145,9 @@ public class ObjectActionLocalServiceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -884,13 +887,8 @@ public class ObjectActionLocalServiceTest {
 	public void testAddObjectActionWithConditionExpression() throws Exception {
 		_publishCustomObjectDefinition();
 
-		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), true,
+		ObjectAction objectAction1 = _addObjectAction(
 			"equals(firstName, \"João\")", RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_GROOVY,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
 			UnicodePropertiesBuilder.put(
@@ -926,7 +924,71 @@ public class ObjectActionLocalServiceTest {
 
 		_assertGroovyObjectActionExecutorArguments("João", objectEntry);
 
-		_objectActionLocalService.deleteObjectAction(objectAction);
+		_objectActionLocalService.deleteObjectAction(objectAction1);
+
+		ObjectAction objectAction2 = _addObjectAction(
+			"currentUserId == creator", RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			UnicodePropertiesBuilder.put(
+				"objectDefinitionId", _objectDefinition.getObjectDefinitionId()
+			).put(
+				"predefinedValues",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "firstName"
+					).put(
+						"value", "John"
+					)
+				).toString()
+			).build(),
+			false);
+		ObjectAction objectAction3 = _addObjectAction(
+			"currentUserId != creator", RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			UnicodePropertiesBuilder.put(
+				"objectDefinitionId", _objectDefinition.getObjectDefinitionId()
+			).put(
+				"predefinedValues",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "firstName"
+					).put(
+						"value", "Peter"
+					)
+				).toString()
+			).build(),
+			false);
+
+		objectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			"John",
+			MapUtil.getString(
+				_objectEntryLocalService.getValues(
+					objectEntry.getObjectEntryId()),
+				"firstName"));
+
+		_objectActionLocalService.deleteObjectAction(objectAction2);
+		_objectActionLocalService.deleteObjectAction(objectAction3);
 	}
 
 	@Test
@@ -1882,19 +1944,30 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	private ObjectAction _addObjectAction(
+			String conditionExpression, String name,
+			String objectActionExecutorKey, String objectActionTriggerKey,
+			UnicodeProperties unicodeProperties, boolean system)
+		throws Exception {
+
+		return _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true,
+			conditionExpression, RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			name, objectActionExecutorKey, objectActionTriggerKey,
+			unicodeProperties, system);
+	}
+
+	private ObjectAction _addObjectAction(
 			String name, String objectActionExecutorKey,
 			String objectActionTriggerKey, UnicodeProperties unicodeProperties,
 			boolean system)
 		throws Exception {
 
-		return _objectActionLocalService.addObjectAction(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
-			RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			name, objectActionExecutorKey, objectActionTriggerKey,
-			unicodeProperties, system);
+		return _addObjectAction(
+			StringPool.BLANK, name, objectActionExecutorKey,
+			objectActionTriggerKey, unicodeProperties, system);
 	}
 
 	private void _assertGroovyObjectActionExecutorArguments(

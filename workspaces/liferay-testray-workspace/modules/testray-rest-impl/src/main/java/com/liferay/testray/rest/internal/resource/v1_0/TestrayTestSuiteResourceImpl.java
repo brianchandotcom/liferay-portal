@@ -69,20 +69,26 @@ public class TestrayTestSuiteResourceImpl
 		DocumentBuilder documentBuilder =
 			documentBuilderFactory.newDocumentBuilder();
 
-		File tempFile = FileUtil.createTempFile(
-			multipartBody.getBinaryFileAsBytes("file"));
-
-		Document document = documentBuilder.parse(tempFile);
-
-		_processDocument(document);
-
 		TestrayTestSuite testrayTestSuite = new TestrayTestSuite();
+		File file = null;
 
-		testrayTestSuite.setRuntime(System.currentTimeMillis() - startTime);
-		testrayTestSuite.setXmlFileName(
-			multipartBody.getBinaryFile(
-				"file"
-			).getFileName());
+		try {
+			file = FileUtil.createTempFile(
+				multipartBody.getBinaryFileAsBytes("file"));
+
+			Document document = documentBuilder.parse(file);
+
+			_processDocument(document);
+
+			testrayTestSuite.setRuntime(System.currentTimeMillis() - startTime);
+			testrayTestSuite.setXmlFileName(
+				multipartBody.getBinaryFile(
+					"file"
+				).getFileName());
+		}
+		finally {
+			FileUtil.delete(file);
+		}
 
 		return testrayTestSuite;
 	}

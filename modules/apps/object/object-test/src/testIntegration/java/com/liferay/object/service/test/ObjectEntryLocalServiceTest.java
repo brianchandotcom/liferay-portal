@@ -3755,7 +3755,18 @@ public class ObjectEntryLocalServiceTest {
 				"firstName", "John"
 			).put(
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).put(
+				"state", "listTypeEntryKey1"
 			).build());
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", "Peter"
+			).put(
+				"state", "listTypeEntryKey1"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
 
 		ObjectState objectStateListTypeEntryKey1 = objectStates.get(0);
 		ObjectState objectStateListTypeEntryKey2 = objectStates.get(1);

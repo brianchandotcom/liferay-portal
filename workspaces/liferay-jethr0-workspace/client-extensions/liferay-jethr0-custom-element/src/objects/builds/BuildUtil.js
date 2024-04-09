@@ -52,26 +52,3 @@ export async function getBuildById({id, setBuild}) {
 		}
 	}
 }
-
-export async function getBuildsByJob({job, setBuilds}) {
-	const urlSearchParams = new URLSearchParams({
-		filter: "r_jobToBuilds_c_jobId eq '" + job.id + "'",
-	});
-
-	const response = await liferayRequest({
-		urlPath: '/o/c/builds',
-		urlSearchParams,
-	});
-
-	const result = JSON.parse(await response.text());
-
-	const builds = [];
-
-	result.items.forEach((item) => {
-		builds.push(new Build(item));
-	});
-
-	if (builds && setBuilds) {
-		setBuilds(builds);
-	}
-}

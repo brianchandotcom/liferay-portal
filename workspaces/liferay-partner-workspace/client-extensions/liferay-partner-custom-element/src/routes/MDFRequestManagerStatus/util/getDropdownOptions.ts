@@ -14,22 +14,15 @@ export default function getDropdownOptions(
 	mdfRequestStatus: LiferayPicklist,
 	updateRequestStatus: (status: LiferayPicklist) => Promise<void>
 ) {
-	const callConfirmCancelMDFRequestModal = () =>
+	const callConfirmActionMDFRequestModal = (
+		action: string,
+		status: LiferayPicklist
+	) =>
 		Liferay.Util.openConfirmModal({
-			message: 'Are you sure you want to cancel the MDF request?',
+			message: `Are you sure you want to ${action} this MDF request?`,
 			onConfirm: (isConfirmed: boolean) => {
 				if (isConfirmed) {
-					updateRequestStatus(Status.CANCELED);
-				}
-			},
-		});
-
-	const callConfirmCompleteMDFRequestModal = () =>
-		Liferay.Util.openConfirmModal({
-			message: 'Are you sure you want to complete the MDF request?',
-			onConfirm: (isConfirmed: boolean) => {
-				if (isConfirmed) {
-					updateRequestStatus(Status.COMPLETED);
+					updateRequestStatus(status);
 				}
 			},
 		});
@@ -210,7 +203,7 @@ export default function getDropdownOptions(
 				key: Status.CANCELED.key,
 				label: Status.CANCELED.name,
 				onClick: () => {
-					callConfirmCancelMDFRequestModal();
+					callConfirmActionMDFRequestModal('cancel', Status.CANCELED);
 				},
 			});
 		}
@@ -223,7 +216,10 @@ export default function getDropdownOptions(
 				key: Status.COMPLETED.key,
 				label: Status.COMPLETED.name,
 				onClick: () => {
-					callConfirmCompleteMDFRequestModal();
+					callConfirmActionMDFRequestModal(
+						'complete',
+						Status.COMPLETED
+					);
 				},
 			});
 		}

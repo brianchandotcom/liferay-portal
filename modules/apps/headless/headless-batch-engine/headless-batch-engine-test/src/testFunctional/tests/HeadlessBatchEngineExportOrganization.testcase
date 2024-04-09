@@ -78,7 +78,7 @@ definition {
 			BatchEngine.assertExportedFileContainsCorrectObject(
 				expectedValue = "testOrganization,sub_testOrganization",
 				fileName = "export.json",
-				jsonObject = "$..[0]name");
+				jsonObject = "$.[*].name");
 		}
 	}
 

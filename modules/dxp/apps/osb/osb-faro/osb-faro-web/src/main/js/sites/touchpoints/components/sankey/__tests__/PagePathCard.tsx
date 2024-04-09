@@ -121,17 +121,19 @@ const EMPTY_STATE_DATA = {
 	}
 };
 
-const WrapperComponent = ({data}) => (
+const WrapperComponent = ({
+	data,
+	rangeSelectors = {
+		rangeEnd: '',
+		rangeKey: RangeKeyTimeRanges.Last30Days,
+		rangeStart: ''
+	},
+	reqOptions = {}
+}) => (
 	<ApolloProvider client={client}>
 		<BrowserRouter>
-			<MockedProvider mocks={[mockPagePathReq(data)]}>
-				<PagePathCard
-					rangeSelectors={{
-						rangeEnd: '',
-						rangeKey: RangeKeyTimeRanges.Last30Days,
-						rangeStart: ''
-					}}
-				/>
+			<MockedProvider mocks={[mockPagePathReq(data, reqOptions)]}>
+				<PagePathCard rangeSelectors={rangeSelectors} />
 			</MockedProvider>
 		</BrowserRouter>
 	</ApolloProvider>
@@ -270,5 +272,51 @@ describe('PagePathCard', () => {
 		 */
 
 		expect(nodes).toHaveLength(11);
+	});
+
+	it('should create the link with the rangeKey from dropdown', async () => {
+		const {container} = render(
+			<WrapperComponent
+				data={DATA}
+				rangeSelectors={{
+					rangeEnd: '',
+					rangeKey: RangeKeyTimeRanges.Last24Hours,
+					rangeStart: ''
+				}}
+				reqOptions={{rangeKey: Number(RangeKeyTimeRanges.Last24Hours)}}
+			/>
+		);
+
+		await waitForLoadingToBeRemoved(container);
+
+		const link = container.querySelector('[data-tooltip-align="right"]');
+
+		expect(link).toHaveAttribute(
+			'href',
+			'/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.liferay.com/Liferay Home Page?rangeKey=0'
+		);
+	});
+
+	it('should create the link with the rangeKey from dropdown even in a empty state', async () => {
+		const {container} = render(
+			<WrapperComponent
+				data={EMPTY_STATE_DATA}
+				rangeSelectors={{
+					rangeEnd: '',
+					rangeKey: RangeKeyTimeRanges.Last24Hours,
+					rangeStart: ''
+				}}
+				reqOptions={{rangeKey: Number(RangeKeyTimeRanges.Last24Hours)}}
+			/>
+		);
+
+		await waitForLoadingToBeRemoved(container);
+
+		const link = container.querySelector('[data-tooltip-align="right"]');
+
+		expect(link).toHaveAttribute(
+			'href',
+			'/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.liferay.com/Liferay Home Page?rangeKey=0'
+		);
 	});
 });

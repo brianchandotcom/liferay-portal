@@ -1308,7 +1308,7 @@ export function mockRecommendationReq(item = {}, mockVariables = {}) {
 	};
 }
 
-export function mockPagePathReq(data = []) {
+export function mockPagePathReq(data = [], {rangeKey = 30}) {
 	return {
 		request: {
 			query: PagePathQuery,
@@ -1316,7 +1316,7 @@ export function mockPagePathReq(data = []) {
 				canonicalUrl: 'https://liferay.com/home',
 				channelId: '123',
 				rangeEnd: null,
-				rangeKey: 30,
+				rangeKey,
 				rangeStart: null,
 				title: 'Liferay DXP - Home'
 			}

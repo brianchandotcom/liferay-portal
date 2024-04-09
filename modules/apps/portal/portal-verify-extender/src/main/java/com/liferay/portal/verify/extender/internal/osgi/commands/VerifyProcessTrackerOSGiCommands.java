@@ -236,7 +236,7 @@ public class VerifyProcessTrackerOSGiCommands {
 
 						release.setServletContextName(bundle.getSymbolicName());
 
-						release.setVerified(false);
+						release.setVerified(true);
 						release.setState(ReleaseConstants.STATE_GOOD);
 
 						release = _releaseLocalService.updateRelease(release);

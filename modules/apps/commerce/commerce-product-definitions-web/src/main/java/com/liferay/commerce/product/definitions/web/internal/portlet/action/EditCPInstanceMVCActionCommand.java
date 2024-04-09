@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -239,12 +240,30 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		double depth = ParamUtil.getDouble(actionRequest, "depth");
 		double weight = ParamUtil.getDouble(actionRequest, "weight");
 
-		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "price", BigDecimal.ZERO);
-		BigDecimal promoPrice = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "promoPrice", BigDecimal.ZERO);
-		BigDecimal cost = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "cost", BigDecimal.ZERO);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String price = ParamUtil.getString(
+			actionRequest, "price", BigDecimal.ZERO.toString());
+
+		price = _commercePriceFormatter.parse(price, themeDisplay.getLocale());
+
+		BigDecimal formattedPrice = new BigDecimal(price);
+
+		String promoPrice = ParamUtil.getString(
+			actionRequest, "promoPrice", BigDecimal.ZERO.toString());
+
+		promoPrice = _commercePriceFormatter.parse(
+			promoPrice, themeDisplay.getLocale());
+
+		BigDecimal formattedPromoPrice = new BigDecimal(promoPrice);
+
+		String cost = ParamUtil.getString(
+			actionRequest, "cost", BigDecimal.ZERO.toString());
+
+		cost = _commercePriceFormatter.parse(cost, themeDisplay.getLocale());
+
+		BigDecimal formattedCost = new BigDecimal(cost);
 
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
@@ -334,21 +353,22 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		if (cpInstanceId > 0) {
 			cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
 
-			price = (BigDecimal)ParamUtil.getNumber(
+			formattedPrice = (BigDecimal)ParamUtil.getNumber(
 				actionRequest, "price", cpInstance.getPrice());
-			promoPrice = (BigDecimal)ParamUtil.getNumber(
+			formattedPromoPrice = (BigDecimal)ParamUtil.getNumber(
 				actionRequest, "promoPrice", cpInstance.getPromoPrice());
-			cost = (BigDecimal)ParamUtil.getNumber(
+			formattedCost = (BigDecimal)ParamUtil.getNumber(
 				actionRequest, "cost", cpInstance.getCost());
 
 			cpInstance = _cpInstanceService.updateCPInstance(
 				externalReferenceCode, cpInstanceId, sku, gtin,
 				manufacturerPartNumber, purchasable, width, height, depth,
-				weight, price, promoPrice, cost, published, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, cpInstance.isOverrideSubscriptionInfo(),
+				weight, formattedPrice, formattedPromoPrice, formattedCost,
+				published, displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire,
+				cpInstance.isOverrideSubscriptionInfo(),
 				cpInstance.isSubscriptionEnabled(),
 				cpInstance.getSubscriptionLength(),
 				cpInstance.getSubscriptionType(),
@@ -380,29 +400,31 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 						cpDefinitionId,
 						ParamUtil.getString(
 							actionRequest, "cpInstanceOptions")),
-				width, height, depth, weight, price, promoPrice, cost,
-				published, displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, false, false, 1,
-				StringPool.BLANK, null, 0, false, 1, StringPool.BLANK, null, 0,
-				unspsc, discontinued, replacementCPInstanceUuid,
-				replacementCProductId, discontinuedDateMonth,
-				discontinuedDateDay, discontinuedDateYear, serviceContext);
+				width, height, depth, weight, formattedPrice,
+				formattedPromoPrice, formattedCost, published, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, false, false, 1, StringPool.BLANK, null, 0, false,
+				1, StringPool.BLANK, null, 0, unspsc, discontinued,
+				replacementCPInstanceUuid, replacementCProductId,
+				discontinuedDateMonth, discontinuedDateDay,
+				discontinuedDateYear, serviceContext);
 		}
 
 		cpInstance = _cpInstanceService.updatePricingInfo(
-			cpInstance.getCPInstanceId(), price, promoPrice, cost,
-			serviceContext);
+			cpInstance.getCPInstanceId(), formattedPrice, formattedPromoPrice,
+			formattedCost, serviceContext);
 
 		if (Objects.equals(
 				_getCommercePricingConfigurationKey(),
 				CommercePricingConstants.VERSION_2_0)) {
 
 			_updateCommercePriceEntries(
-				cpInstance, price,
+				cpInstance, formattedPrice,
 				ParamUtil.getBoolean(actionRequest, "priceOnApplication"),
-				promoPrice, ServiceContextFactory.getInstance(actionRequest));
+				formattedPromoPrice,
+				ServiceContextFactory.getInstance(actionRequest));
 		}
 
 		return cpInstance;
@@ -521,6 +543,9 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;

@@ -144,7 +144,7 @@ definition {
 			var actualValueList = ListUtil.newList();
 
 			for (var fieldNameList : list "name,r_subjectStudents_c_subjectERC,diploma.name") {
-				var actualValue = JSONUtil.getWithJSONPath(${response}, "$..items..[0]${fieldNameList}");
+				var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items[*].${fieldNameList}");
 
 				ListUtil.add(${actualValueList}, ${actualValue});
 			}

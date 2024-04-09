@@ -10,11 +10,9 @@
 	"objectActions": [
 		{
 			"active": true,
-			"conditionExpression": "",
-			"description": "",
 			"errorMessage": {
 			},
-			"externalReferenceCode": "22b29830-fa58-cbc5-7b7a-751a5603d5ea",
+			"externalReferenceCode": "AUTOMATION-TO-COMPLETE-REQUEST-ACTION",
 			"label": {
 				"en_US": "Automation To Complete Request"
 			},

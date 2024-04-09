@@ -230,11 +230,14 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			Number(caseResult.caseResult?.id)
 		);
 
+		const _issues = issues.join(', ');
+
 		await testrayCaseResultImpl.updateBatch(
 			caseResultIds,
 			caseResultIds.map(() => ({
 				defaultMessageId: subTaskcomment.mbMessageId,
 				dueStatus,
+				issues: _issues,
 				mbMessageId: subTaskcomment.mbMessageId,
 				mbThreadId: subTaskcomment.mbThreadId,
 			}))

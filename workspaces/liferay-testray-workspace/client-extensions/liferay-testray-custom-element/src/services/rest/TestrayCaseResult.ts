@@ -256,7 +256,10 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			}
 		>
 	): Promise<TestrayCaseResult> {
-		const issues = data.issues || [];
+		const issues =
+			(typeof data.issues === 'string'
+				? data.issues.split(', ')
+				: data.issues) || [];
 
 		if (data.issues) {
 			await this.assignCaseResultIssue(id, issues);

@@ -1,0 +1,16 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "20004",
+					"description": "Class Name Id",
+					"label": "Class Name Id",
+					"name": "classnameId",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

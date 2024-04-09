@@ -1,0 +1,7 @@
+[#if configuration.classnameId?has_content && configuration.classnameId != 0]
+	<span aria-hidden="true" class="loading-animation loading-animation-secondary loading-animation-sm"></span>
+[#else]
+	<div class="alert alert-info">
+		To use this fragment, set a value for the <em>classnameId</em>
+	</div>
+[/#if]

@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * @author Vendel Toreki
  */
-public class DummyEntity implements Serializable {
+public class TestEntity implements Serializable {
 
 	public int getIntValue() {
 		return _intValue;

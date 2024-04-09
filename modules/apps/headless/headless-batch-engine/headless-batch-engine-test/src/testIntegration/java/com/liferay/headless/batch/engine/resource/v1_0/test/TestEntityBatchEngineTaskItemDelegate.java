@@ -30,12 +30,12 @@ import org.osgi.service.component.annotations.Component;
 	property = "batch.engine.task.item.delegate.name=dummy-entity-performance-test",
 	service = BatchEngineTaskItemDelegate.class
 )
-public class DummyEntityPerformanceTestBatchEngineTaskItemDelegate
-	extends BaseBatchEngineTaskItemDelegate<DummyEntity> {
+public class TestEntityBatchEngineTaskItemDelegate
+	extends BaseBatchEngineTaskItemDelegate<TestEntity> {
 
 	public void generateTestData(int count) {
 		for (int i = 0; i < count; i++) {
-			DummyEntity dummyEntity = new DummyEntity();
+			TestEntity dummyEntity = new TestEntity();
 
 			dummyEntity.setTextValue(
 				RandomTestUtil.randomString(
@@ -49,7 +49,7 @@ public class DummyEntityPerformanceTestBatchEngineTaskItemDelegate
 	}
 
 	@Override
-	public Page<DummyEntity> read(
+	public Page<TestEntity> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
@@ -62,6 +62,6 @@ public class DummyEntityPerformanceTestBatchEngineTaskItemDelegate
 			_items.size());
 	}
 
-	private final List<DummyEntity> _items = new ArrayList<>();
+	private final List<TestEntity> _items = new ArrayList<>();
 
 }

@@ -25,4 +25,6 @@ export default class Build {
 		this.parameters = parameters;
 		this.state = state;
 	}
+
+	job;
 }

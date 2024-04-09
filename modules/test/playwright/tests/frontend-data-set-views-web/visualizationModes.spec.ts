@@ -388,7 +388,7 @@ export const fragmentTest = mergeTests(
 
 fragmentTest.describe('Visualization Modes in the fragment', () => {
 	fragmentTest(
-		'Show mapped Table Fields in the fragment',
+		'Show mapped fields in the fragment',
 		async ({
 			apiHelpers,
 			dataSetManagerApiHelpers,

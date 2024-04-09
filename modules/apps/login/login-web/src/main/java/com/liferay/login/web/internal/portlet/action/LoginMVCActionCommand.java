@@ -247,11 +247,6 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		LiferayPortletRequest liferayPortletRequest =
-			_portal.getLiferayPortletRequest(actionRequest);
-
-		String portletName = liferayPortletRequest.getPortletName();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -264,6 +259,9 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		if (layout == null) {
 			layout = (Layout)actionRequest.getAttribute(WebKeys.LAYOUT);
 		}
+
+		LiferayPortletRequest liferayPortletRequest =
+			_portal.getLiferayPortletRequest(actionRequest);
 
 		PortletURL portletURL = PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
@@ -289,6 +287,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		if (Validator.isNotNull(login)) {
 			SessionErrors.add(actionRequest, "login", login);
 		}
+
+		String portletName = liferayPortletRequest.getPortletName();
 
 		if (portletName.equals(LoginPortletKeys.LOGIN)) {
 			portletURL.setWindowState(WindowState.MAXIMIZED);

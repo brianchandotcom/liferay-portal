@@ -16,6 +16,10 @@
 			"type": "StructuredContent"
 		}
 	],
+	"externalReferenceCode": "QUARTERLY-RELEASES",
 	"name": "Quarterly Releases",
+	"name_i18n": {
+		"en_US": "Quarterly Releases"
+	},
 	"viewableBy": "Anyone"
 }

@@ -6,6 +6,10 @@
 			"type": "StructuredContent"
 		}
 	],
+	"externalReferenceCode": "RELEASES-STATUS-CURRENT",
 	"name": "Release Status Current",
+	"name_i18n": {
+		"en_US": "Release Status Current"
+	},
 	"viewableBy": "Anyone"
 }

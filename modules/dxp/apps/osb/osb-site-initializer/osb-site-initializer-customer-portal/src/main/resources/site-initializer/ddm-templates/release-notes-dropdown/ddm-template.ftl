@@ -1,9 +1,7 @@
-<#if themeDisplay?has_content && (AssetCategory_vocabulary.getData())??>
-	<#assign quarterlyReleaseVocabularyId = (request.getAttribute("INFO_ITEM").vocabularyId)! />
+<#assign quarterlyReleaseVocabularyId = (restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies/by-external-reference-code/QUARTERLY-RELEASES").id)! />
 
-	<#if quarterlyReleaseVocabularyId?has_content>
-		<#assign releaseCategories = (restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${quarterlyReleaseVocabularyId}/taxonomy-categories?pageSize=4&sort=dateCreated:desc").items)! />
-	</#if>
+<#if quarterlyReleaseVocabularyId?has_content>
+	<#assign releaseCategories = (restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${quarterlyReleaseVocabularyId}/taxonomy-categories?pageSize=4&sort=dateCreated:desc").items)! />
 </#if>
 
 <style>

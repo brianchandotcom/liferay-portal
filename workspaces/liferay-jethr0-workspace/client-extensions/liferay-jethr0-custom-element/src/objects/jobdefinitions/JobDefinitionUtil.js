@@ -4,6 +4,7 @@
  */
 
 import liferayRequest from '../../services/liferayRequest';
+import JobDefinitionParameter from './JobDefinitionParameter';
 import JobDefinition from './JobDefinition';
 
 export async function getJobDefinitionById({id, setJobDefinition}) {
@@ -46,15 +47,62 @@ export async function getJobDefinitionByKey({key, setJobDefinition}) {
 }
 
 export async function getJobDefinitions({setJobDefinitions}) {
-	const response = await liferayRequest({urlPath: '/o/c/jobdefinitions'});
+	const pagesResponse = await liferayRequest({
+		graphqlQuery: `{
+			c {
+			  jobDefinitions {
+				page
+				pageSize
+				lastPage
+			  }
+			}
+		  }`,
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+		urlPath: '/o/graphql',
+	});
 
-	const result = JSON.parse(await response.text());
+	const pagesResult = JSON.parse(await pagesResponse.text());
 
 	const jobDefinitions = [];
 
-	result.items.forEach((item) => {
-		jobDefinitions.push(new JobDefinition(item));
-	});
+	for (let i = 1; i <= pagesResult.data.c.jobDefinitions.lastPage; i++) {
+		const response = await liferayRequest({
+			graphqlQuery: `{
+				c {
+					jobDefinitions (page: ${i}) {
+						items {
+							dateCreated
+							dateModified
+							id
+							jobDefinitionsToJobDefinitionParameters
+							key
+							label
+						}
+					}
+				}
+			}`,
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'POST',
+			urlPath: '/o/graphql',
+		});
+	
+		const result = JSON.parse(await response.text());
+
+		for (const item of result.data.c.jobDefinitions.items) {
+			const jobDefinition = new JobDefinition(item);
+
+			item.jobDefinitionsToJobDefinitionParameters.forEach(jobDefinitionParameter => {
+				jobDefinition.jobDefinitionParameters.push(new JobDefinitionParameter(jobDefinitionParameter));
+			});
+
+			jobDefinitions.push(jobDefinition);
+		}
+	}
 
 	if (jobDefinitions && setJobDefinitions) {
 		setJobDefinitions(jobDefinitions);

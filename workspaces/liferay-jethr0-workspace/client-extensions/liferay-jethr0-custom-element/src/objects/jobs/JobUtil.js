@@ -22,16 +22,14 @@ export async function createJob({data, redirect}) {
 
 	const jobsResult = JSON.parse(await jobsResponse.text());
 
-	const createJobResponse = await liferayRequest({
+	await liferayRequest({
 		headers,
 		method: 'PUT',
 		urlPath: `/o/c/jobs/${jobsResult.id}/object-actions/Jethr0EtcSpringBootJobAdd`,
 	});
 
-	const createJobResult = JSON.parse(await createJobResponse.text());
-
-	if (createJobResult && redirect) {
-		redirect(createJobResult);
+	if (jobsResult && redirect) {
+		redirect(jobsResult);
 	}
 }
 
@@ -41,10 +39,10 @@ export async function deleteJobById({id, redirect}) {
 		urlPath: '/o/c/jobs/' + id,
 	});
 
-	const result = JSON.parse(await response.text());
+	await response.text();
 
-	if (redirect && result) {
-		redirect(result);
+	if (redirect) {
+		redirect(null);
 	}
 }
 

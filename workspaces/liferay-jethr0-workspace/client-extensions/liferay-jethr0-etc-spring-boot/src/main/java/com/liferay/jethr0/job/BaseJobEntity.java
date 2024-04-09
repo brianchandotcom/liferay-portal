@@ -282,6 +282,7 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		super.setJSONObject(jsonObject);
 
 		_name = jsonObject.getString("name");
+		_parameters = new HashMap<>();
 		_priority = jsonObject.optInt("priority");
 		_startDate = StringUtil.toDate(jsonObject.optString("startDate"));
 		_state = State.get(jsonObject.get("state"));
@@ -511,7 +512,7 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 			"(?<branchName>[^/]+)");
 
 	private String _name;
-	private final Map<String, String> _parameters = new HashMap<>();
+	private Map<String, String> _parameters;
 	private int _priority;
 	private Date _startDate;
 	private State _state;

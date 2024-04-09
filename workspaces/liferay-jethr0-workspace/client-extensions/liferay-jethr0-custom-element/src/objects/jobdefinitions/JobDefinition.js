@@ -10,6 +10,6 @@ export default class JobDefinition {
 		this.id = id;
 		this.key = key;
 		this.label = label;
-		this.parameterDefinitions = [];
+		this.jobDefinitionParameters = [];
 	}
 }

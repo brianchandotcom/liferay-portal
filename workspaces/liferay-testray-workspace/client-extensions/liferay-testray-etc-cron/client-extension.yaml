@@ -7,3 +7,4 @@ liferay-testray-etc-cron-oauth-application-headless-server:
     scopes:
         - c_build.everything
     type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account

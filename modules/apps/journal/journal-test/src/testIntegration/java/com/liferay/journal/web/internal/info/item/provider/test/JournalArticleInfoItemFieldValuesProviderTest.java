@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -81,7 +82,7 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
-			PortalUtil.getClassNameId(JournalArticle.class));
+			_portal.getClassNameId(JournalArticle.class));
 
 		Calendar displayDateCalendar = new GregorianCalendar();
 
@@ -164,7 +165,7 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 
 			DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 				_group.getGroupId(), ddmStructure.getStructureId(),
-				PortalUtil.getClassNameId(JournalArticle.class));
+				_portal.getClassNameId(JournalArticle.class));
 
 			Calendar displayDateCalendar = new GregorianCalendar();
 
@@ -269,5 +270,8 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
+	private Portal _portal;
 
 }

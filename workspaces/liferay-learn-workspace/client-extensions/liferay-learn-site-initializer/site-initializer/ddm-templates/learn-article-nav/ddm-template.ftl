@@ -107,6 +107,7 @@
 				<#list 0..childrenJSONArray.length()-1 as i>
 					<li class="learn-article-nav-item ${(navigationJSONObject.getJSONObject("self").url == childrenJSONArray.getJSONObject(i).url)?then("selected", "")}">
 						<a
+							class="liferay-nav-item"
 							href="${childrenJSONArray.getJSONObject(i).url}"
 						>
 							<span>${childrenJSONArray.getJSONObject(i).getString("title")}</span>
@@ -118,6 +119,7 @@
 			<#list 0..siblingsJSONArray.length()-1 as i>
 				<li class="learn-article-nav-item ${(navigationJSONObject.getJSONObject("self").url == siblingsJSONArray.getJSONObject(i).url)?then("selected", "")}">
 					<a
+						class="liferay-nav-item"
 						href="${siblingsJSONArray.getJSONObject(i).url}"
 					>
 						<span>${siblingsJSONArray.getJSONObject(i).getString("title")}</span>

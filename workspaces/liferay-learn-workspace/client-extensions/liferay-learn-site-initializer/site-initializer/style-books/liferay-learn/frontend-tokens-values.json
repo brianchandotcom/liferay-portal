@@ -87,6 +87,10 @@
 		"cssVariableMapping": "color-action-primary-active-20",
 		"value": "#E6EDFB"
 	},
+	"colorActionPrimaryActiveLighten": {
+		"cssVariableMapping": "color-action-primary-active-lighten",
+		"value": "#E6EDFB"
+	},
 	"colorActionPrimaryDefault": {
 		"cssVariableMapping": "color-action-primary-default",
 		"value": "#0B5FFF"

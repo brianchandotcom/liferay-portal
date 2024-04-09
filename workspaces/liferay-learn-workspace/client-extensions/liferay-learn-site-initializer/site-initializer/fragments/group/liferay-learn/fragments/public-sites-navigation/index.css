@@ -325,8 +325,7 @@ nav.public-sites-navigation
 	.language-dropdown-list-container
 	.language-dropdown-list {
 	background-color: var(--white);
-	border-radius: var(--border-radius-xs);
-	box-shadow: var(--elevation-fluffy-1);
+	border-radius: var(--border-radius);
 	display: flex;
 	flex-direction: column;
 	padding: 0.5rem 0.25rem 0;
@@ -349,23 +348,6 @@ nav.public-sites-navigation
 	display: flex;
 	font-weight: var(--font-weight-semi-bold);
 	text-align: left;
-}
-nav.public-sites-navigation
-	.language-selector-container
-	.language-dropdown-list-container
-	.language-dropdown-list
-	.language-nav-item:active,
-nav.public-sites-navigation
-	.language-selector-container
-	.language-dropdown-list-container
-	.language-dropdown-list
-	.language-nav-item:focus,
-nav.public-sites-navigation
-	.language-selector-container
-	.language-dropdown-list-container
-	.language-dropdown-list
-	.language-nav-item:hover {
-	background-color: var(--color-action-primary-hover-lighten);
 }
 nav.public-sites-navigation
 	.language-selector-container
@@ -526,6 +508,8 @@ nav.public-sites-navigation .account .account-info .user-avatar {
 }
 nav.public-sites-navigation .account .account-info .user-avatar img {
 	border-radius: 3.5rem;
+	max-height: 100%;
+	max-width: 100%;
 }
 nav.public-sites-navigation .sites-container .sites {
 	border-radius: var(--border-radius-sm);
@@ -573,8 +557,7 @@ nav.public-sites-navigation
 }
 nav.public-sites-navigation .sites-container .liferay-sites-dropdown {
 	background: var(--white);
-	border-radius: 10px;
-	box-shadow: var(--elevation-fluffy-1);
+	border-radius: var(--border-radius);
 	display: none;
 	margin-top: 2.75rem;
 	position: absolute;
@@ -589,8 +572,7 @@ nav.public-sites-navigation .sites-container .liferay-sites-dropdown.show {
 nav.public-sites-navigation .skip-to-footer-wrapper,
 nav.public-sites-navigation .skip-to-content-wrapper {
 	background: var(--white);
-	border-radius: var(--border-radius-xs);
-	box-shadow: var(--elevation-fluffy-1);
+	border-radius: var(--border-radius);
 	left: -50%;
 	padding: 0.25rem 0.75rem;
 	position: absolute;
@@ -614,7 +596,6 @@ nav.public-sites-navigation .account-dropdown {
 	background: var(--white);
 	border: 1px solid var(--color-neutral-3);
 	border-radius: var(--border-radius);
-	box-shadow: var(--elevation-fluffy-1);
 	color: var(--color-neutral-3);
 	display: none;
 	right: 0;
@@ -1020,7 +1001,6 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 	border-color: var(--hr-border-color);
 	border-style: solid;
 	border-width: 0;
-	box-shadow: var(--elevation-fluffy-1);
 	display: block;
 	left: 0;
 	list-style: none;
@@ -1477,7 +1457,6 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 	bottom: auto;
-	box-shadow: var(--elevation-fluffy-1);
 	display: flex;
 	flex-direction: column;
 	left: 0;

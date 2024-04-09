@@ -25,7 +25,7 @@ function initArticle() {
 			if (articleTOC) {
 				articleTOC.innerHTML += `
 				<li class="learn-article-nav-item">
-					<a href="#${id}" id="toc-${id}">
+					<a href="#${id}" class=" liferay-nav-item" id="toc-${id}">
 						${heading.innerText}
 					</a>
 				</li>`;

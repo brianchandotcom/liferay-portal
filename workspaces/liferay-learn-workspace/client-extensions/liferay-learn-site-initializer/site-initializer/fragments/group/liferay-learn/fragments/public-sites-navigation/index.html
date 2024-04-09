@@ -59,15 +59,9 @@
 										[#list availableLocales as locale]
 											[#assign isSelected = locale.getLanguage() == themeDisplay.getLanguageId() /]
 
-											<li class="${isSelected?then('selected', '')} language-nav-item">
-												[#if isSelected]
-													<div class="d-inline-block pl-3 selected-icon">
-														[@clay["icon"] symbol="check" /]
-													</div>
-												[/#if]
-
+											<li>
 												[@clay["link"]
-													cssClass="language-locale-long-text"
+													cssClass="${isSelected?then('selected', '')} language-nav-item language-locale-long-text liferay-nav-item"
 													href="${themeDisplay.getURLCurrent()}${separator}languageId=${locale.getLanguage()}"
 													label=locale.getDisplayLanguage()?cap_first
 													lang=localeUtil.toW3cLanguageId(locale)
@@ -129,14 +123,14 @@
 									<div class="create-account-settings">
 										[#if themeDisplay.isSignedIn()]
 											<div class="signed-in-account">
-												<a class="d-flex p-3 settings text-decoration-none" href="https://login.liferay.com/enduser/settings">
+												<a class="d-flex liferay-nav-item settings text-decoration-none" href="https://login.liferay.com/enduser/settings">
 													<span class="pr-2">[@clay["icon"] symbol="cog"/]</span>
 													<span class="account-settings">
 														${languageUtil.get(locale, "account-settings", "Account Settings")}
 													</span>
 												</a>
 
-												<a class="d-flex p-3 sign-out text-decoration-none" href="${htmlUtil.escape(themeDisplay.getURLSignOut())}">
+												<a class="d-flex liferay-nav-item sign-out text-decoration-none" href="${htmlUtil.escape(themeDisplay.getURLSignOut())}">
 													<span class="pr-2 sign-out-icon opacity-70">[@clay["icon"] symbol="logout"/]</span>
 													<span>
 														${languageUtil.get(locale, "sign-out")}

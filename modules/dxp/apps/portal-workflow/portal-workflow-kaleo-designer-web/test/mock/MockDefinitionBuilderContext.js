@@ -9,7 +9,7 @@ import {ReactFlowProvider} from 'react-flow-renderer';
 import {DefinitionBuilderContextProvider} from '../../src/main/resources/META-INF/resources/designer/js/definition-builder/DefinitionBuilderContext';
 
 export default function MockDefinitionBuilderContext({children}) {
-	const [blockingErrors, setBlockingErrors] = useState({});
+	const [blockingError, setBlockingError] = useState({});
 	const [selectedLanguageId, setSelectedLanguageId] = useState('');
 	const [translations, setTranslations] = useState({});
 	const [showDefinitionInfo, setShowDefinitionInfo] = useState(false);
@@ -19,11 +19,11 @@ export default function MockDefinitionBuilderContext({children}) {
 	] = useState('');
 
 	const contextProps = {
-		blockingErrors,
+		blockingError,
 		defaultLanguageId: themeDisplay.getLanguageId(),
 		definitionTitleTranslations,
 		selectedLanguageId,
-		setBlockingErrors,
+		setBlockingError,
 		setDefinitionTitleTranslations,
 		setSelectedLanguageId,
 		setShowDefinitionInfo,

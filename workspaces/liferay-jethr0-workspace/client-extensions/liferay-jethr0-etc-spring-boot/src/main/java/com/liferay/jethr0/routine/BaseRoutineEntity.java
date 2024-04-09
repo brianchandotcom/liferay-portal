@@ -6,10 +6,13 @@
 package com.liferay.jethr0.routine;
 
 import com.liferay.jethr0.entity.BaseEntity;
+import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.util.StringUtil;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -27,8 +30,38 @@ public abstract class BaseRoutineEntity
 	extends BaseEntity implements RoutineEntity {
 
 	@Override
+	public void addGitBranchEntities(Set<GitBranchEntity> gitBranchEntities) {
+		_gitBranchEntities.addAll(gitBranchEntities);
+	}
+
+	@Override
+	public void addGitBranchEntity(GitBranchEntity gitBranchEntity) {
+		addGitBranchEntities(Collections.singleton(gitBranchEntity));
+	}
+
+	@Override
+	public void addJobEntities(Set<JobEntity> jobEntities) {
+		_jobEntities.addAll(jobEntities);
+	}
+
+	@Override
+	public void addJobEntity(JobEntity jobEntity) {
+		addJobEntities(Collections.singleton(jobEntity));
+	}
+
+	@Override
 	public String getCron() {
 		return _cron;
+	}
+
+	@Override
+	public Set<GitBranchEntity> getGitBranchEntities() {
+		return _gitBranchEntities;
+	}
+
+	@Override
+	public Set<JobEntity> getJobEntities() {
+		return _jobEntities;
 	}
 
 	@Override
@@ -90,6 +123,28 @@ public abstract class BaseRoutineEntity
 	@Override
 	public Type getType() {
 		return _type;
+	}
+
+	@Override
+	public void removeGitBranchEntities(
+		Set<GitBranchEntity> gitBranchEntities) {
+
+		_gitBranchEntities.removeAll(gitBranchEntities);
+	}
+
+	@Override
+	public void removeGitBranchEntity(GitBranchEntity gitBranchEntity) {
+		_gitBranchEntities.remove(gitBranchEntity);
+	}
+
+	@Override
+	public void removeJobEntities(Set<JobEntity> jobEntities) {
+		_jobEntities.removeAll(jobEntities);
+	}
+
+	@Override
+	public void removeJobEntity(JobEntity jobEntity) {
+		_jobEntities.remove(jobEntity);
 	}
 
 	@Override
@@ -182,6 +237,8 @@ public abstract class BaseRoutineEntity
 	private static final Log _log = LogFactory.getLog(BaseRoutineEntity.class);
 
 	private String _cron;
+	private final Set<GitBranchEntity> _gitBranchEntities = new HashSet<>();
+	private final Set<JobEntity> _jobEntities = new HashSet<>();
 	private String _jobName;
 	private Map<String, String> _jobParameters;
 	private int _jobPriority;

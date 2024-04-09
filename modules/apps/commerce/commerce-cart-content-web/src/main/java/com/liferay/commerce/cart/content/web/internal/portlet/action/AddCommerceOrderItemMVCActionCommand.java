@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -102,28 +101,21 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			String quantity = ParamUtil.getString(
-				actionRequest, "quantity", BigDecimal.ZERO.toString());
-
-			BigDecimal formattedQuantity =
-				_commerceOrderItemQuantityFormatter.parse(
-					quantity, themeDisplay.getLocale());
-
-			String unitOfMeasureKey = ParamUtil.getString(
-				actionRequest, "unitOfMeasureKey");
-
-			CommerceContext commerceContext =
-				(CommerceContext)httpServletRequest.getAttribute(
-					CommerceWebKeys.COMMERCE_CONTEXT);
-
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CommerceOrderItem.class.getName(), httpServletRequest);
-
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(), cpInstanceId,
-					formFieldValues, formattedQuantity, 0, BigDecimal.ZERO,
-					unitOfMeasureKey, commerceContext, serviceContext);
+					formFieldValues,
+					_commerceOrderItemQuantityFormatter.parse(
+						ParamUtil.getString(
+							actionRequest, "quantity",
+							BigDecimal.ZERO.toString()),
+						themeDisplay.getLocale()),
+					0, BigDecimal.ZERO,
+					ParamUtil.getString(actionRequest, "unitOfMeasureKey"),
+					(CommerceContext)httpServletRequest.getAttribute(
+						CommerceWebKeys.COMMERCE_CONTEXT),
+					ServiceContextFactory.getInstance(
+						CommerceOrderItem.class.getName(), httpServletRequest));
 
 			jsonObject.put(
 				"commerceOrderItemId",

@@ -3,6 +3,9 @@ Bundle-SymbolicName: com.liferay.commerce.punchout.portal.security.auto.login
 Bundle-Version: 4.0.28
 Import-Package:\
 	com.liferay.commerce.order;version="[8.0.0,9999.0.0)",\
-	com.liferay.portal.kernel.service;version="[4.0.0,9999.0.0)",\
+	com.liferay.commerce.product.service;version="[40.1.0,9999.0.0)",\
+	com.liferay.portal.kernel.model;version="[31.4.0,9999.0.0)",\
+	com.liferay.portal.kernel.service;version="[30.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.util;version="[74.0.0,9999.0.0)",\
 	\
 	*

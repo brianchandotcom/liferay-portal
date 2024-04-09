@@ -7,7 +7,6 @@ package com.liferay.portal.kernel.test.rule;
 
 import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -213,9 +212,11 @@ public class CodeCoverageAssertor implements TestRule {
 		for (int i = 0; i < assertClasses.size(); i++) {
 			Class<?> assertClass = assertClasses.get(i);
 
-			includes[i] = StringUtil.replace(
-				assertClass.getName(), new char[] {'.', '$'},
-				new String[] {"/", "\\$"});
+			String name = assertClass.getName();
+
+			name = name.replace('.', '/');
+
+			includes[i] = name.replace("$", "\\$");
 		}
 
 		return includes;

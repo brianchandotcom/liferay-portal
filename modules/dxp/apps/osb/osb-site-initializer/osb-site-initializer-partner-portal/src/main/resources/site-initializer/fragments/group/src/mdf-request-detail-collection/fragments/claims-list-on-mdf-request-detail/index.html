@@ -113,7 +113,7 @@
 	[#assign has_active_or_approved_activities_available = (mdf_request.mdfReqToActs?filter(activity -> (activity.activityStatus.key == "active" || activity.activityStatus.key == "approved") && !activity.actToMDFClmActs?filter(activity_claim -> activity_claim.r_mdfClmToMDFClmActs_c_mdfClaim.mdfClaimStatus.key != "draft" && activity_claim.selected)?has_content)?has_content)! /]
 	[#assign valid_claims_size = (mdf_request.mdfReqToMDFClms?filter(mdf_claim -> check_claim(mdf_claim.mdfClaimStatus.key))?size)! /]
 
-	[#if (mdf_request.mdfRequestStatus.key)! == "approved" || (mdf_request.mdfRequestStatus.key)! == "canceled" ]
+	[#if (mdf_request.mdfRequestStatus.key)! == "approved" || (mdf_request.mdfRequestStatus.key)! == "canceled" || (mdf_request.mdfRequestStatus.key)! == "completed"]
 		[#list (mdf_request.mdfReqToMDFClms)! as claim]
 			[@panel claim=claim site_url=site_url /]
 		[/#list]

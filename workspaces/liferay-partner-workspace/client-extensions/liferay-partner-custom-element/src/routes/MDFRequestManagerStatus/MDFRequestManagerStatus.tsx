@@ -72,7 +72,10 @@ const MDFRequestManagerStatus = () => {
 
 		setIsSubmitting(false);
 
-		if (newRequestStatus?.key === Status.CANCELED.key) {
+		if (
+			newRequestStatus?.key === Status.CANCELED.key ||
+			newRequestStatus?.key === Status.COMPLETED.key
+		) {
 			location.reload();
 		}
 

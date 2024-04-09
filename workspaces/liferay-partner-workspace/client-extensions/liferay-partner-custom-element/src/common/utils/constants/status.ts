@@ -20,6 +20,10 @@ export const Status = {
 		key: 'claimPaid',
 		name: 'Claim Paid',
 	},
+	COMPLETED: {
+		key: 'completed',
+		name: 'Completed',
+	},
 	DRAFT: {
 		key: 'draft',
 		name: 'Draft',

@@ -86,6 +86,42 @@ export default function getMDFListColumns(
 				}
 
 				if (
+					currentValue === PermissionActionType.COMPLETE &&
+					row[MDFColumnKey.STATUS] === Status.APPROVED.name
+				) {
+					previousValue.push({
+						icon: 'check',
+						key: Status.COMPLETED.key,
+						label: ' Complete',
+						onClick: () => {
+							Liferay.Util.openConfirmModal({
+								message:
+									'Are you sure you want to complete the MDF request?',
+								onConfirm: async (isConfirmed: boolean) => {
+									if (isConfirmed) {
+										const newRequestStatus = await patchRequestStatus(
+											Status.COMPLETED,
+											String(row[MDFColumnKey.ID])
+										);
+
+										if (newRequestStatus) {
+											Liferay.Util.openToast({
+												message:
+													'MDF Request successfully completed!',
+												title: 'Success',
+												type: 'success',
+											});
+										}
+
+										mutate(mutated);
+									}
+								},
+							});
+						},
+					});
+				}
+
+				if (
 					currentValue === PermissionActionType.CANCEL &&
 					row[MDFColumnKey.STATUS] === Status.APPROVED.name
 				) {

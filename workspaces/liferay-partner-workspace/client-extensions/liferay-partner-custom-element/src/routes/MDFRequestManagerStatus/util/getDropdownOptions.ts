@@ -24,6 +24,16 @@ export default function getDropdownOptions(
 			},
 		});
 
+	const callConfirmCompleteMDFRequestModal = () =>
+		Liferay.Util.openConfirmModal({
+			message: 'Are you sure you want to complete the MDF request?',
+			onConfirm: (isConfirmed: boolean) => {
+				if (isConfirmed) {
+					updateRequestStatus(Status.COMPLETED);
+				}
+			},
+		});
+
 	return actions?.reduce<DropdownOption[]>((previousValue, currentValue) => {
 		if (mdfRequestStatus?.key === Status.PENDING.key) {
 			if (
@@ -201,6 +211,19 @@ export default function getDropdownOptions(
 				label: Status.CANCELED.name,
 				onClick: () => {
 					callConfirmCancelMDFRequestModal();
+				},
+			});
+		}
+
+		if (
+			mdfRequestStatus?.key === Status.APPROVED.key &&
+			currentValue === PermissionActionType.COMPLETE
+		) {
+			previousValue.push({
+				key: Status.COMPLETED.key,
+				label: Status.COMPLETED.name,
+				onClick: () => {
+					callConfirmCompleteMDFRequestModal();
 				},
 			});
 		}

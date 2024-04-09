@@ -71,6 +71,11 @@
 			"object": "MDF Request"
 		},
 		{
+			"action": "COMPLETE",
+			"externalReferenceCode": "MDF-REQUEST-COMPLETE",
+			"object": "MDF Request"
+		},
+		{
 			"action": "VIEW",
 			"externalReferenceCode": "MDF-CLAIM-VIEW",
 			"object": "MDF Claim"

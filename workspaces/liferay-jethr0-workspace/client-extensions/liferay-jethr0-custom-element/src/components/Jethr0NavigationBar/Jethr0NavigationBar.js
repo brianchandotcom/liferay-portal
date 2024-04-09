@@ -12,6 +12,9 @@ function Jethr0NavigationBar({active}) {
 			<ClayNavigationBar.Item active={active === 'Home'}>
 				<ClayLink href="/#/">Home</ClayLink>
 			</ClayNavigationBar.Item>
+			<ClayNavigationBar.Item active={active === 'Routines'}>
+				<ClayLink href="/#/routines">Routines</ClayLink>
+			</ClayNavigationBar.Item>
 			<ClayNavigationBar.Item active={active === 'Jobs'}>
 				<ClayLink href="/#/jobs">Jobs</ClayLink>
 			</ClayNavigationBar.Item>

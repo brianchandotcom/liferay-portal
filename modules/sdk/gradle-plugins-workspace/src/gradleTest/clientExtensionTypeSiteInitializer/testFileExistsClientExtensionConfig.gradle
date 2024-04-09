@@ -1,4 +1,4 @@
-ext.expectedContentStrings = ['    ":configurator:policy" : "force"', '    "buildTimestamp" : ']
+ext.expectedContentStrings = ['    ":configurator:policy": "force"', '    "buildTimestamp": ']
 ext.expectedFilePath = "site-initializer.client-extension-config.json"
 ext.taskPath = ":site-initializer:createClientExtensionConfig"
 

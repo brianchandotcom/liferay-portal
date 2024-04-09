@@ -1,11 +1,11 @@
 ext.expectedFilePath = "LCP.json"
 ext.expectedContentStrings = [
-	'"foo" : "bar"',
-	'"kind" : "Deployment"',
+	'"foo": "bar"',
+	'"kind": "Deployment"',
 ]
 ext.taskPath = ":client-extension-no-classification:createClientExtensionConfig"
 ext.unexpectedContentStrings = [
-	'"kind" : "Job"',
+	'"kind": "Job"',
 ]
 
 apply from: project.property("commonScript.testClientExtensionBuildFileContentsTestCase.gradle")

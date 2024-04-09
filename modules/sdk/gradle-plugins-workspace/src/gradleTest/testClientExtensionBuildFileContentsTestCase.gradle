@@ -24,11 +24,23 @@ runGradleTest {
 		assert file.exists()
 
 		expectedContentStrings.each {
-			assert file.text.contains(it)
+			assert _contains(file, it)
 		}
 
 		unexpectedContentStrings.each {
-			assert !file.text.contains(it)
+			assert !_contains(file, it)
 		}
 	}
+}
+
+private boolean _contains(File file, String s) {
+	if (file.text.contains(s)) {
+		return true
+	}
+
+	if (file.text.contains(s.replaceAll('"(\\S+)": ', '"\$1" : '))) {
+		return true
+	}
+
+	return false
 }

@@ -97,8 +97,8 @@ public class CommerceQuantityFormatterImpl
 			CommerceOrderConstants.DECIMAL_FORMAT_PATTERN,
 			DecimalFormatSymbols.getInstance(locale));
 
-		decimalFormat.setParseBigDecimal(true);
 		decimalFormat.setMinimumFractionDigits(0);
+		decimalFormat.setParseBigDecimal(true);
 		decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
 
 		return decimalFormat;

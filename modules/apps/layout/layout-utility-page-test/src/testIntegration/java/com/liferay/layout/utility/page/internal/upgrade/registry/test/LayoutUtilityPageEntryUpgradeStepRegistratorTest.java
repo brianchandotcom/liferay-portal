@@ -44,7 +44,7 @@ import org.junit.runner.RunWith;
  * @author Eudaldo Alonso
  */
 @RunWith(Arquillian.class)
-public class LayoutUpgradeProcessTest {
+public class LayoutUtilityPageEntryUpgradeStepRegistratorTest {
 
 	@ClassRule
 	@Rule

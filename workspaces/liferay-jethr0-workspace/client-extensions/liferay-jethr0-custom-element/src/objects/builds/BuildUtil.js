@@ -4,8 +4,8 @@
  */
 
 import liferayRequest from '../../services/liferayRequest';
-import Build from './Build';
 import Job from '../jobs/Job';
+import Build from './Build';
 
 export async function getBuildById({id, setBuild}) {
 	const response = await liferayRequest({

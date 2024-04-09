@@ -15,7 +15,6 @@ import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0Navi
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
 import {getBuildRunsByBuildId} from '../../objects/buildruns/BuildRunUtil';
 import {getBuildById} from '../../objects/builds/BuildUtil';
-import {getJobById} from '../../objects/jobs/JobUtil';
 import {toLocaleString} from '../../services/DateUtil';
 import {toDurationString} from '../../services/DurationUtil';
 

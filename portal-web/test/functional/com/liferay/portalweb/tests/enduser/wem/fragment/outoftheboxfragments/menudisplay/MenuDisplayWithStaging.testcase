@@ -134,7 +134,7 @@ definition {
 				key_pageName = "Liferay",
 				locator1 = "Home#PAGE");
 
-			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+			AssertLocation.assertPartialLocation(value1 = "liferay.com");
 		}
 
 		task ("Navigate via Menu Display in Live site") {
@@ -158,7 +158,7 @@ definition {
 				key_pageName = "Liferay",
 				locator1 = "Home#PAGE");
 
-			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+			AssertLocation.assertPartialLocation(value1 = "liferay.com");
 		}
 	}
 

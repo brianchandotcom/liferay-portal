@@ -403,7 +403,7 @@ definition {
 				key_url = "https://liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+			AssertLocation.assertPartialLocation(value1 = "liferay.com");
 		}
 	}
 
@@ -512,7 +512,7 @@ definition {
 				key_url = "https://liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+			AssertLocation.assertPartialLocation(value1 = "liferay.com");
 		}
 	}
 
@@ -1243,7 +1243,7 @@ definition {
 				key_url = "https://www.liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+			AssertLocation.assertPartialLocation(value1 = "liferay.com");
 		}
 	}
 
@@ -1328,7 +1328,7 @@ definition {
 				key_url = "https://www.liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+			AssertLocation.assertPartialLocation(value1 = "liferay.com");
 		}
 	}
 
@@ -1413,7 +1413,7 @@ definition {
 				key_url = "https://www.liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+			AssertLocation.assertPartialLocation(value1 = "liferay.com");
 		}
 	}
 

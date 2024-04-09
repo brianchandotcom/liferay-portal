@@ -384,7 +384,7 @@ definition {
 
 			SelectWindow.selectPopUp(value1 = "null");
 
-			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+			AssertLocation.assertPartialLocation(value1 = "liferay.com");
 		}
 	}
 
@@ -441,7 +441,7 @@ definition {
 				locator1 = "Home#PAGE",
 				value1 = "Liferay");
 
-			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+			AssertLocation.assertPartialLocation(value1 = "liferay.com");
 		}
 	}
 

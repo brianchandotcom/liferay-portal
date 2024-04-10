@@ -1349,7 +1349,7 @@
 	<source-processor name="MarkdownSourceProcessor">
 		<check name="MarkdownBreakingChangesAmendmentsFileCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consistency in code style." />
+			<description name="Checks that breaking changes amendments should contain the schematized breaking changes in `BREAKING_CHANGES_AMENDMENTS.markdown` file." />
 		</check>
 		<check name="MarkdownEmptyLinesCheck">
 			<category name="Styling" />

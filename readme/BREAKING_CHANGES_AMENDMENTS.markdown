@@ -531,7 +531,7 @@ Removed "index.permission.filter.search.amplification.factor"
 
 "index.permission.filter.search.amplification.factor" was not an effective way to improve permission filtering and was only applied on the first search.
 
-## Alternative
+## Alternatives
 
 The search amplification has in place a better algorithm to speed permission filtering.
 

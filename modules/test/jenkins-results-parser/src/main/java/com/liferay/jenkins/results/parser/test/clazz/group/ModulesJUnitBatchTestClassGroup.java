@@ -108,7 +108,7 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 			}
 
 			excludesJobProperties.addAll(
-				_getJobProperties(
+				getJobProperties(
 					modifiedFile,
 					"modules.includes.required.test.batch.class.names.excludes",
 					JobProperty.Type.MODULE_EXCLUDE_GLOB, null));
@@ -179,13 +179,13 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 			if (modifiedFileCanonicalPath.contains("modules")) {
 				includesJobProperties.addAll(
-					_getJobProperties(
+					getJobProperties(
 						modifiedFile, "test.batch.class.names.includes.modules",
 						JobProperty.Type.MODULE_INCLUDE_GLOB, null));
 			}
 
 			includesJobProperties.addAll(
-				_getJobProperties(
+				getJobProperties(
 					modifiedFile,
 					"modules.includes.required.test.batch.class.names.includes",
 					JobProperty.Type.MODULE_INCLUDE_GLOB, null));
@@ -255,67 +255,6 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 		}
 
 		return bundledModuleNames;
-	}
-
-	private List<JobProperty> _getJobProperties(
-		File file, String basePropertyName, JobProperty.Type jobType,
-		Set<File> traversedPropertyFileSet) {
-
-		List<JobProperty> jobPropertiesList = new ArrayList<>();
-
-		File modulesBaseDir = new File(
-			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
-
-		if ((file == null) || file.equals(modulesBaseDir) ||
-			JenkinsResultsParserUtil.isPoshiFile(file)) {
-
-			return jobPropertiesList;
-		}
-
-		if (!file.isDirectory()) {
-			file = file.getParentFile();
-		}
-
-		File testPropertiesFile = new File(file, "test.properties");
-
-		if (traversedPropertyFileSet == null) {
-			traversedPropertyFileSet = new HashSet<>();
-		}
-
-		if (testPropertiesFile.exists() &&
-			!traversedPropertyFileSet.contains(testPropertiesFile)) {
-
-			JobProperty jobProperty = getJobProperty(
-				basePropertyName, file, jobType);
-
-			String jobPropertyValue = jobProperty.getValue();
-
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue) &&
-				!jobPropertiesList.contains(jobProperty)) {
-
-				jobPropertiesList.add(jobProperty);
-			}
-
-			traversedPropertyFileSet.add(testPropertiesFile);
-		}
-
-		JobProperty ignoreParentsJobProperty = getJobProperty(
-			"ignoreParents[" + getTestSuiteName() + "]", file,
-			JobProperty.Type.MODULE_TEST_DIR);
-
-		boolean ignoreParents = Boolean.valueOf(
-			ignoreParentsJobProperty.getValue());
-
-		if (ignoreParents) {
-			return jobPropertiesList;
-		}
-
-		jobPropertiesList.addAll(
-			_getJobProperties(
-				file.getParentFile(), basePropertyName, jobType,
-				traversedPropertyFileSet));
-
-		return jobPropertiesList;
 	}
 
 	private File _getLiferayHome() {

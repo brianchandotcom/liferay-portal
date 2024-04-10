@@ -6,7 +6,8 @@
 export default function getFragmentDefinition(
 	id: string,
 	key: string,
-	fragmentConfig?: Record<string, string>
+	fragmentConfig?: Record<string, string>,
+	fragmentFields?: FragmentField[]
 ): PageElement {
 	return {
 		definition: {
@@ -14,6 +15,7 @@ export default function getFragmentDefinition(
 				key,
 			},
 			fragmentConfig,
+			fragmentFields,
 		},
 		id,
 		type: 'Fragment',

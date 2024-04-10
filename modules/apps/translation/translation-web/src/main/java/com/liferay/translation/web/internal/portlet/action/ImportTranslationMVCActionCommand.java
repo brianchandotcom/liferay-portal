@@ -264,6 +264,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			_translationEntryService.addOrUpdateTranslationEntry(
 				groupId,
+				_language.getLanguageId(translationSnapshot.getSourceLocale()),
 				_language.getLanguageId(translationSnapshot.getTargetLocale()),
 				infoItemFieldValues.getInfoItemReference(), infoItemFieldValues,
 				ServiceContextFactory.getInstance(actionRequest));

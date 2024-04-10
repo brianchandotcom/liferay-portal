@@ -161,7 +161,8 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest);
 
 			_translationEntryService.addOrUpdateTranslationEntry(
-				groupId, _getTargetLanguageId(actionRequest), infoItemReference,
+				groupId, _getSourceLanguageId(actionRequest),
+				_getTargetLanguageId(actionRequest), infoItemReference,
 				infoItemFieldValues, serviceContext);
 
 			String portletResource = ParamUtil.getString(

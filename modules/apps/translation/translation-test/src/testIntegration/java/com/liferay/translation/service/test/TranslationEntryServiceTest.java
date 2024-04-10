@@ -105,6 +105,7 @@ public class TranslationEntryServiceTest {
 				_translationEntry =
 					_translationEntryService.addOrUpdateTranslationEntry(
 						_group.getGroupId(),
+						_language.getLanguageId(LocaleUtil.US),
 						LocaleUtil.toBCP47LanguageId(
 							LocaleUtil.SIMPLIFIED_CHINESE),
 						infoItemReference,
@@ -146,6 +147,7 @@ public class TranslationEntryServiceTest {
 				_translationEntry =
 					_translationEntryService.addOrUpdateTranslationEntry(
 						_group.getGroupId(),
+						_language.getLanguageId(LocaleUtil.US),
 						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 						infoItemReference,
 						infoItemFieldValuesProvider.getInfoItemFieldValues(
@@ -278,6 +280,7 @@ public class TranslationEntryServiceTest {
 				_translationEntry =
 					_translationEntryService.addOrUpdateTranslationEntry(
 						_group.getGroupId(),
+						_language.getLanguageId(LocaleUtil.US),
 						LocaleUtil.toLanguageId(LocaleUtil.US),
 						infoItemReference, infoItemFieldValues, serviceContext);
 
@@ -333,6 +336,7 @@ public class TranslationEntryServiceTest {
 				_translationEntry =
 					_translationEntryLocalService.addOrUpdateTranslationEntry(
 						_group.getGroupId(),
+						_language.getLanguageId(LocaleUtil.US),
 						LocaleUtil.toLanguageId(LocaleUtil.US),
 						infoItemReference, infoItemFieldValues,
 						ServiceContextTestUtil.getServiceContext());
@@ -460,8 +464,10 @@ public class TranslationEntryServiceTest {
 
 				_translationEntry =
 					_translationEntryService.addOrUpdateTranslationEntry(
-						_group.getGroupId(), LocaleUtil.toLanguageId(locale),
-						infoItemReference, infoItemFieldValues, serviceContext);
+						_group.getGroupId(),
+						_language.getLanguageId(LocaleUtil.US),
+						LocaleUtil.toLanguageId(locale), infoItemReference,
+						infoItemFieldValues, serviceContext);
 			});
 	}
 

@@ -79,7 +79,7 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 			}
 
 			if (!bndFile) {
-				return;
+				continue;
 			}
 
 			String filePath = StringUtil.trim(trimmedLine.substring(7));

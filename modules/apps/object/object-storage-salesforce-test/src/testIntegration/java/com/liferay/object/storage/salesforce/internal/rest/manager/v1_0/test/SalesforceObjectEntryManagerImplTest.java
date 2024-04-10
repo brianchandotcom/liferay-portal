@@ -8,8 +8,8 @@ package com.liferay.object.storage.salesforce.internal.rest.manager.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -333,18 +334,19 @@ public class SalesforceObjectEntryManagerImplTest
 		LocalDateTime localDateTime1 = LocalDateTime.now();
 
 		ObjectEntry objectEntry2 = _addObjectEntry(
-			"started", new Date(date.getTime() - Time.DAY), false, localDateTime1,
-			title2);
+			"started", new Date(date.getTime() - Time.DAY), true,
+			localDateTime1, title2);
 
 		LocalDateTime localDateTime2 = localDateTime1.plusHours(1);
 
 		ObjectEntry objectEntry3 = _addObjectEntry(
-			"completed", new Date(date.getTime() + Time.DAY), false, localDateTime2,
-			title3);
+			"completed", new Date(date.getTime() + Time.DAY), false,
+			localDateTime2, title3);
 
 		ObjectEntry objectEntry4 = _addObjectEntry(
-			"queued", date, false, null, title4);
-		ObjectEntry objectEntry5 = _addObjectEntry("queued", date, false, null, null);
+			"queued", date, true, null, title4);
+		ObjectEntry objectEntry5 = _addObjectEntry(
+			"queued", date, false, null, null);
 
 		// And/or with equals/not equals expression
 
@@ -545,7 +547,8 @@ public class SalesforceObjectEntryManagerImplTest
 	public void testGetObjectEntry() throws Exception {
 		String title = RandomTestUtil.randomString();
 
-		ObjectEntry objectEntry = _addObjectEntry(null, null, false, null, title);
+		ObjectEntry objectEntry = _addObjectEntry(
+			null, null, false, null, title);
 
 		_assertObjectEntry(objectEntry.getExternalReferenceCode(), title);
 	}
@@ -586,8 +589,8 @@ public class SalesforceObjectEntryManagerImplTest
 	}
 
 	private ObjectEntry _addObjectEntry(
-			String customStatus, Date date, boolean flagged, LocalDateTime startDate,
-			String title)
+			String customStatus, Date date, boolean flagged,
+			LocalDateTime startDate, String title)
 		throws Exception {
 
 		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(

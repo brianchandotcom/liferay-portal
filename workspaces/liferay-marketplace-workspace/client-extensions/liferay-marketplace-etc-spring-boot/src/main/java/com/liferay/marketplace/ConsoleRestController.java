@@ -5,11 +5,11 @@
 
 package com.liferay.marketplace;
 
-import org.json.JSONObject;
+import com.liferay.marketplace.console.service.ConsoleService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,67 +51,18 @@ public class ConsoleRestController extends BaseRestController {
 				"userEmail", finalEmailAddress
 			).build()
 		).header(
-			HttpHeaders.AUTHORIZATION, "Bearer " + _getAuthorization()
+			HttpHeaders.AUTHORIZATION,
+			"Bearer " + _consoleService.getAuthorization()
 		).retrieve(
 		).bodyToMono(
 			String.class
 		).block();
 	}
-
-	private String _getAuthorization() throws Exception {
-		if ((_accessToken != null) &&
-			(System.currentTimeMillis() < (_tokenExpirationMillis - 30000))) {
-
-			return _accessToken;
-		}
-
-		String response = WebClient.create(
-			_consoleAuthURL
-		).post(
-		).uri(
-			"/login"
-		).accept(
-			MediaType.APPLICATION_JSON
-		).contentType(
-			MediaType.APPLICATION_JSON
-		).bodyValue(
-			new JSONObject(
-			).put(
-				"email", _consoleAuthEmailAddress
-			).put(
-				"password", _consoleAuthPassword
-			).toString()
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
-
-		if (response == null) {
-			throw new Exception("Unable to get authorization");
-		}
-
-		_accessToken = new JSONObject(
-			response
-		).getString(
-			"token"
-		);
-
-		_tokenExpirationMillis = System.currentTimeMillis() + 900000;
-
-		return _accessToken;
-	}
-
-	private String _accessToken;
-
-	@Value("${liferay.marketplace.console.auth.email.address}")
-	private String _consoleAuthEmailAddress;
-
-	@Value("${liferay.marketplace.console.auth.password}")
-	private String _consoleAuthPassword;
 
 	@Value("${liferay.marketplace.console.auth.url}")
 	private String _consoleAuthURL;
 
-	private long _tokenExpirationMillis;
+	@Autowired
+	private ConsoleService _consoleService;
 
 }

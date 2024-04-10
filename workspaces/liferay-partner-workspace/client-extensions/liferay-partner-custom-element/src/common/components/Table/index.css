@@ -1,3 +1,20 @@
+.autofit-row {
+	width: min-content;
+}
+
+.autofit-col-expand {
+	min-inline-size: min-content;
+}
+
+.lexicon-icon-order-arrow {
+	color: #6e6868;
+}
+
+.lexicon-icon-order-arrow:hover {
+	color: #000;
+	transition: 0.2s;
+}
+
 .table-cell-items {
 	display: block;
 	overflow: hidden;

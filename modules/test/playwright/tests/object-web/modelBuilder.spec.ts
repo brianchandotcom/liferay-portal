@@ -205,3 +205,73 @@ test('can delete object relationship from different folders', async ({
 
 	await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
 });
+
+test('can create an object definition inside a folder and see if it renders correctly in the model builder', async ({
+	addObjectDefinitionModalPage,
+	apiHelpers,
+	modelBuilderPage,
+	objectDefinitionsPage,
+	page,
+}) => {
+	await objectDefinitionsPage.goto();
+
+	const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
+
+	const objectDefinition =
+		await addObjectDefinitionModalPage.createObjectDefinition(
+			objectDefinitionsPage.createObjectDefinitionButton,
+			objectDefinitionLabel
+		);
+
+	expect(page.getByText(objectDefinitionLabel)).toBeVisible();
+
+	await objectDefinitionsPage.viewInModelBuilder();
+
+	await expect(
+		modelBuilderPage.objectDefinitionNodes.filter({
+			hasText: objectDefinition.name,
+		})
+	).toBeVisible();
+
+	await expect(
+		modelBuilderPage.leftSidebarItems.filter({
+			hasText: objectDefinition.name,
+		})
+	).toBeVisible();
+
+	// Clean up
+
+	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
+});
+
+test('can create an object definition by model builder', async ({
+	addObjectDefinitionModalPage,
+	apiHelpers,
+	modelBuilderPage,
+}) => {
+	await modelBuilderPage.goto();
+
+	const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
+
+	const objectDefinition =
+		await addObjectDefinitionModalPage.createObjectDefinition(
+			modelBuilderPage.createNewObjectDefinitionButton,
+			objectDefinitionLabel
+		);
+
+	await expect(
+		modelBuilderPage.objectDefinitionNodes.filter({
+			hasText: objectDefinition.name,
+		})
+	).toBeVisible();
+
+	await expect(
+		modelBuilderPage.leftSidebarItems.filter({
+			hasText: objectDefinition.name,
+		})
+	).toBeVisible();
+
+	// Clean up
+
+	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
+});

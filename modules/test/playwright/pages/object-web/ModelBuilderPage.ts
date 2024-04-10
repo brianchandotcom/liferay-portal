@@ -9,6 +9,7 @@ import {ObjectDefinitionsPage} from './ObjectDefinitionsPage';
 
 export class ModelBuilderPage {
 	readonly addObjectFieldButton: Locator;
+	readonly createNewObjectDefinitionButton: Locator;
 	readonly deleteObjectRelationshipButton: Locator;
 	readonly fitViewButton: Locator;
 	readonly leftSidebarItems: Locator;
@@ -34,6 +35,8 @@ export class ModelBuilderPage {
 			exact: true,
 			name: 'Add Field',
 		});
+		this.createNewObjectDefinitionButton =
+			page.getByText('Create New Object');
 		this.deleteObjectRelationshipButton = page.getByLabel(
 			'Delete Relationship'
 		);

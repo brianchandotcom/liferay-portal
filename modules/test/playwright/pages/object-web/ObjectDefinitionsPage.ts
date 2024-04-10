@@ -10,6 +10,7 @@ import {ApplicationsMenuPage} from '../product-navigation-applications-menu/Appl
 export class ObjectDefinitionsPage {
 	readonly addObjectFolderButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly createObjectDefinitionButton: Locator;
 	readonly createObjectFolderButton: Locator;
 	readonly defaultObjectFolderLink: Locator;
 	readonly objectFolderActionsLink: Locator;
@@ -22,6 +23,9 @@ export class ObjectDefinitionsPage {
 	constructor(page: Page) {
 		this.addObjectFolderButton = page.getByLabel('Add Object Folder');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.createObjectDefinitionButton = page.getByTestId(
+			'fdsCreationActionButton'
+		);
 		this.createObjectFolderButton = page.getByRole('button', {
 			name: 'Create Folder',
 		});

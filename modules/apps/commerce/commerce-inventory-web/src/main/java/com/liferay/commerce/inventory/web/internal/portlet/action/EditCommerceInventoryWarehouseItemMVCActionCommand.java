@@ -15,12 +15,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.math.BigDecimal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -90,29 +86,14 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 		long commerceInventoryWarehouseItemId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseItemId");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String quantity = ParamUtil.getString(
-			actionRequest, "quantity", BigDecimal.ZERO.toString());
-
-		BigDecimal formattedQuantity =
-			_commerceOrderItemQuantityFormatter.parse(
-				quantity, themeDisplay.getLocale());
-
-		String reservedQuantity = ParamUtil.getString(
-			actionRequest, "reservedQuantity", BigDecimal.ZERO.toString());
-
-		BigDecimal formattedReservedQuantity =
-			_commerceOrderItemQuantityFormatter.parse(
-				reservedQuantity, themeDisplay.getLocale());
-
-		long mvccVersion = ParamUtil.getLong(actionRequest, "mvccVersion");
-
 		_commerceInventoryWarehouseItemService.
 			updateCommerceInventoryWarehouseItem(
-				commerceInventoryWarehouseItemId, formattedQuantity,
-				formattedReservedQuantity, mvccVersion);
+				commerceInventoryWarehouseItemId,
+				_commerceOrderItemQuantityFormatter.parse(
+					actionRequest, "quantity"),
+				_commerceOrderItemQuantityFormatter.parse(
+					actionRequest, "reservedQuantity"),
+				ParamUtil.getLong(actionRequest, "mvccVersion"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

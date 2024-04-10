@@ -17,12 +17,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.math.BigDecimal;
 
 import java.util.Calendar;
 
@@ -96,24 +92,13 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 
 		calendar.set(year, month, day);
 
-		String quantity = ParamUtil.getString(
-			actionRequest, "quantity", BigDecimal.ZERO.toString());
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		BigDecimal formattedQuantity =
-			_commerceOrderItemQuantityFormatter.parse(
-				quantity, themeDisplay.getLocale());
-
-		String sku = ParamUtil.getString(actionRequest, "sku");
-		String unitOfMeasureKey = ParamUtil.getString(
-			actionRequest, "unitOfMeasureKey");
-
 		_commerceInventoryReplenishmentItemService.
 			addCommerceInventoryReplenishmentItem(
 				null, commerceInventoryWarehouseId, calendar.getTime(),
-				formattedQuantity, sku, unitOfMeasureKey);
+				_commerceOrderItemQuantityFormatter.parse(
+					actionRequest, "quantity"),
+				ParamUtil.getString(actionRequest, "sku"),
+				ParamUtil.getString(actionRequest, "unitOfMeasureKey"));
 	}
 
 	private void _deleteCommerceInventoryReplenishmentItem(
@@ -140,16 +125,6 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 				getCommerceInventoryReplenishmentItem(
 					commerceInventoryReplenishmentItemId);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String quantity = ParamUtil.getString(
-			actionRequest, "quantity", BigDecimal.ZERO.toString());
-
-		BigDecimal formattedQuantity =
-			_commerceOrderItemQuantityFormatter.parse(
-				quantity, themeDisplay.getLocale());
-
 		int day = ParamUtil.getInteger(actionRequest, "dateDay");
 		int month = ParamUtil.getInteger(actionRequest, "dateMonth");
 		int year = ParamUtil.getInteger(actionRequest, "dateYear");
@@ -164,7 +139,9 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 			updateCommerceInventoryReplenishmentItem(
 				commerceInventoryReplenishmentItem.getExternalReferenceCode(),
 				commerceInventoryReplenishmentItemId, calendar.getTime(),
-				formattedQuantity, mvccVersion);
+				_commerceOrderItemQuantityFormatter.parse(
+					actionRequest, "quantity"),
+				mvccVersion);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

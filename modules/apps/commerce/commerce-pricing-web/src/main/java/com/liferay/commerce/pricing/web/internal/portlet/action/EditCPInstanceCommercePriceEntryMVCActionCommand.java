@@ -23,11 +23,9 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -177,40 +175,17 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 		boolean overrideDiscount = ParamUtil.getBoolean(
 			actionRequest, "overrideDiscount");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		BigDecimal formattedDiscountLevel1 = new BigDecimal(
+			_commercePriceFormatter.parse(actionRequest, "discountLevel1"));
 
-		String discountLevel1 = ParamUtil.getString(
-			actionRequest, "discountLevel1", BigDecimal.ZERO.toString());
+		BigDecimal formattedDiscountLevel2 = new BigDecimal(
+			_commercePriceFormatter.parse(actionRequest, "discountLevel2"));
 
-		discountLevel1 = _commercePriceFormatter.parse(
-			discountLevel1, themeDisplay.getLocale());
+		BigDecimal formattedDiscountLevel3 = new BigDecimal(
+			_commercePriceFormatter.parse(actionRequest, "discountLevel3"));
 
-		BigDecimal formattedDiscountLevel1 = new BigDecimal(discountLevel1);
-
-		String discountLevel2 = ParamUtil.getString(
-			actionRequest, "discountLevel2", BigDecimal.ZERO.toString());
-
-		discountLevel2 = _commercePriceFormatter.parse(
-			discountLevel2, themeDisplay.getLocale());
-
-		BigDecimal formattedDiscountLevel2 = new BigDecimal(discountLevel2);
-
-		String discountLevel3 = ParamUtil.getString(
-			actionRequest, "discountLevel3", BigDecimal.ZERO.toString());
-
-		discountLevel3 = _commercePriceFormatter.parse(
-			discountLevel3, themeDisplay.getLocale());
-
-		BigDecimal formattedDiscountLevel3 = new BigDecimal(discountLevel3);
-
-		String discountLevel4 = ParamUtil.getString(
-			actionRequest, "discountLevel4", BigDecimal.ZERO.toString());
-
-		discountLevel4 = _commercePriceFormatter.parse(
-			discountLevel4, themeDisplay.getLocale());
-
-		BigDecimal formattedDiscountLevel4 = new BigDecimal(discountLevel4);
+		BigDecimal formattedDiscountLevel4 = new BigDecimal(
+			_commercePriceFormatter.parse(actionRequest, "discountLevel4"));
 
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
@@ -249,12 +224,8 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 		boolean neverExpire = ParamUtil.getBoolean(
 			actionRequest, "neverExpire");
 
-		String price = ParamUtil.getString(
-			actionRequest, "price", BigDecimal.ZERO.toString());
-
-		price = _commercePriceFormatter.parse(price, themeDisplay.getLocale());
-
-		BigDecimal formattedPrice = new BigDecimal(price);
+		BigDecimal formattedPrice = new BigDecimal(
+			_commercePriceFormatter.parse(actionRequest, "price"));
 
 		boolean priceOnApplication = ParamUtil.getBoolean(
 			actionRequest, "priceOnApplication");

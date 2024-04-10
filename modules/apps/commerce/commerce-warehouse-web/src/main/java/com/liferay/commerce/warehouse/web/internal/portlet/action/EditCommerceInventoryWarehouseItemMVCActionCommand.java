@@ -15,10 +15,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -77,38 +75,31 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 		long commerceInventoryWarehouseItemId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseItemId");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String quantity = ParamUtil.getString(
-			actionRequest, "quantity", BigDecimal.ZERO.toString());
-
 		BigDecimal formattedQuantity =
 			_commerceOrderItemQuantityFormatter.parse(
-				quantity, themeDisplay.getLocale());
+				actionRequest, "quantity");
 
 		String unitOfMeasureKey = ParamUtil.getString(
 			actionRequest, "unitOfMeasureKey");
 
 		if (commerceInventoryWarehouseItemId > 0) {
-			long mvccVersion = ParamUtil.getLong(actionRequest, "mvccVersion");
-
 			commerceInventoryWarehouseItem =
 				_commerceInventoryWarehouseItemService.
 					updateCommerceInventoryWarehouseItem(
-						commerceInventoryWarehouseItemId, mvccVersion,
+						commerceInventoryWarehouseItemId,
+						ParamUtil.getLong(actionRequest, "mvccVersion"),
 						formattedQuantity, unitOfMeasureKey);
 		}
 		else {
-			long commerceInventoryWarehouseId = ParamUtil.getLong(
-				actionRequest, "commerceInventoryWarehouseId");
-			String sku = ParamUtil.getString(actionRequest, "sku");
-
 			commerceInventoryWarehouseItem =
 				_commerceInventoryWarehouseItemService.
 					addCommerceInventoryWarehouseItem(
-						StringPool.BLANK, commerceInventoryWarehouseId,
-						formattedQuantity, sku, unitOfMeasureKey);
+						StringPool.BLANK,
+						ParamUtil.getLong(
+							actionRequest, "commerceInventoryWarehouseId"),
+						formattedQuantity,
+						ParamUtil.getString(actionRequest, "sku"),
+						unitOfMeasureKey);
 		}
 
 		return commerceInventoryWarehouseItem;

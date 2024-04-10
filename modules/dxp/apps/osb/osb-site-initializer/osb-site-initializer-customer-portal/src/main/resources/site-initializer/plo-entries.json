@@ -44,10 +44,10 @@
 	{
 		"key": "no-highlights-found-for-the-selected-product-capabilities",
 		"value": {
-			"en-US": "No highlights found for the selected product capabilities",
-			"es-ES": "No se encontraron aspectos destacados para las capacidades del producto seleccionado",
-			"ja-JP": "選択した製品機能のハイライトは見つかりませんでした",
-			"pt-BR": "Nenhum destaque encontrado para os recursos do produto selecionado"
+			"en-US": "No highlights found for the selected product capabilities.",
+			"es-ES": "No se encontraron aspectos destacados para las capacidades del producto seleccionado.",
+			"ja-JP": "選択した製品機能のハイライトは見つかりませんでした。",
+			"pt-BR": "Nenhum destaque encontrado para os recursos do produto selecionado."
 		}
 	},
 	{

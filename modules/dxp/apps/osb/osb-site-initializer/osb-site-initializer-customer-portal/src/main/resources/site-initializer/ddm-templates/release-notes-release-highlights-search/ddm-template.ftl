@@ -19,7 +19,6 @@
 	.empty-result-message {
 		align-items: center;
 		margin: 5rem auto;
-		max-width: 27.25rem;
 	}
 
 	.features-box {

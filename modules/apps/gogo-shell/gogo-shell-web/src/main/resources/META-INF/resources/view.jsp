@@ -7,6 +7,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String commandOutput = (String)SessionMessages.get(renderRequest, "commandOutput");
+%>
+
 <liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
 <liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
 <liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
@@ -51,10 +55,6 @@
 				/>
 			</div>
 		</aui:button-row>
-
-		<%
-		String commandOutput = (String)SessionMessages.get(renderRequest, "commandOutput");
-		%>
 
 		<c:if test="<%= Validator.isNotNull(commandOutput) %>">
 			<b><liferay-ui:message key="output" /></b>

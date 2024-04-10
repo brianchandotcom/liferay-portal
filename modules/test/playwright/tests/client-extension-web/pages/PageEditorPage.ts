@@ -26,7 +26,13 @@ export class PageEditorPage {
 		await this.page
 			.getByRole('tab', {exact: true, name: 'Widgets'})
 			.click();
-		await this.page.getByRole('menuitem', {name: category}).click();
+
+		const categoryDropdown = this.page.getByRole('menuitem', {name: category});
+
+		if (!categoryDropdown.getAttribute('aria-expanded')) {
+			await categoryDropdown.click();
+		}
+
 		await this.page.getByText(name).click();
 		await this.page
 			.getByRole('menuitem', {

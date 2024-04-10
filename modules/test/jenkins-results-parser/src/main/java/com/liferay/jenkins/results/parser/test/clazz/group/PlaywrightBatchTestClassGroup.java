@@ -5,8 +5,6 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
-import com.google.common.collect.Lists;
-
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
@@ -131,40 +129,28 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected List<JobProperty> getRelevantPlaywrightJobProperties() {
-		Set<File> modifiedModuleDirsSet;
-
-		try {
-			modifiedModuleDirsSet = new HashSet<>(
-				portalGitWorkingDirectory.getModifiedModuleDirsList());
-		}
-		catch (IOException ioException) {
-			File workingDirectory =
-				portalGitWorkingDirectory.getWorkingDirectory();
-
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to get relevant module group directories in ",
-					workingDirectory.getPath()),
-				ioException);
-		}
-
-		modifiedModuleDirsSet.addAll(
-			getRequiredModuleDirs(Lists.newArrayList(modifiedModuleDirsSet)));
-
 		Set<JobProperty> playwrightJobProperties = new HashSet<>();
 
-		for (File modifiedModuleDir : modifiedModuleDirsSet) {
-			JobProperty playwrightTestProjectJobProperty = getJobProperty(
-				PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME, modifiedModuleDir,
-				JobProperty.Type.MODULE_TEST_DIR);
+		for (File modifiedFile :
+				portalGitWorkingDirectory.getModifiedFilesList(false)) {
 
-			if (playwrightTestProjectJobProperty.getValue() != null) {
-				String projectNames =
-					playwrightTestProjectJobProperty.getValue();
+			List<JobProperty> playwrightTestProjectJobProperties =
+				getJobProperties(
+					modifiedFile, PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME,
+					JobProperty.Type.MODULE_TEST_DIR, null);
 
-				_addProjectNames(projectNames);
+			for (JobProperty playwrightTestProjectJobProperty :
+					playwrightTestProjectJobProperties) {
 
-				playwrightJobProperties.add(playwrightTestProjectJobProperty);
+				if (playwrightTestProjectJobProperty.getValue() != null) {
+					String projectNames =
+						playwrightTestProjectJobProperty.getValue();
+
+					_addProjectNames(projectNames);
+
+					playwrightJobProperties.add(
+						playwrightTestProjectJobProperty);
+				}
 			}
 		}
 

@@ -5581,6 +5581,50 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPatchObjectEntryWithRequiredObjectFields()
+		throws Exception {
+
+		ObjectField objectField1 = _objectFieldLocalService.getObjectField(
+			_objectDefinition1.getObjectDefinitionId(), _OBJECT_FIELD_NAME_1);
+
+		_objectFieldLocalService.updateRequired(
+			objectField1.getObjectFieldId(), true);
+
+		ObjectField objectField2 = _objectFieldLocalService.getObjectField(
+			_objectDefinition1.getObjectDefinitionId(),
+			_OBJECT_FIELD_NAME_TEXT);
+
+		_objectFieldLocalService.updateRequired(
+			objectField2.getObjectFieldId(), true);
+
+		String objectFieldValue1 = RandomTestUtil.randomString();
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, objectFieldValue1
+			).put(
+				_OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		String objectFieldValue2 = RandomTestUtil.randomString();
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_TEXT, objectFieldValue2
+			).toString(),
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
+				jsonObject.get("id")),
+			Http.Method.PATCH);
+
+		Assert.assertEquals(
+			objectFieldValue1, jsonObject.getString(_OBJECT_FIELD_NAME_1));
+		Assert.assertEquals(
+			objectFieldValue2, jsonObject.getString(_OBJECT_FIELD_NAME_TEXT));
+	}
+
+	@Test
 	public void testPatchObjectEntryWithTaxonomyCategories() throws Exception {
 		TaxonomyCategory taxonomyCategory1 = _addTaxonomyCategory();
 		TaxonomyCategory taxonomyCategory2 = _addTaxonomyCategory();

@@ -53,6 +53,7 @@ test('LPD-18809 search suggestions should filter by product visibility with the 
 		name: {
 			en_US: 'product' + getRandomInt(),
 		},
+		productChannelFilter: true,
 	});
 
 	// this is to verify that the search suggestions are still showing,
@@ -63,7 +64,6 @@ test('LPD-18809 search suggestions should filter by product visibility with the 
 		name: {
 			en_US: 'product' + getRandomInt(),
 		},
-		productChannelFilter: false,
 	});
 
 	try {

@@ -27,7 +27,6 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 					label: '',
 				},
 			]}
-			layoutAuto
 			rows={[
 				{
 					title: 'Company Name',
@@ -38,6 +37,7 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 					value: mdfRequest.partnerCountry?.name,
 				},
 			]}
+			tableLayoutAuto
 		/>
 
 		<Table<Item>
@@ -55,7 +55,6 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 					),
 				},
 			]}
-			layoutAuto
 			rows={[
 				{
 					title: 'Provide the name of the campaign',
@@ -81,6 +80,7 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 						: mdfRequest.liferayBusinessSalesGoals?.join('; '),
 				},
 			]}
+			tableLayoutAuto
 		/>
 
 		<Table<Item>
@@ -95,7 +95,6 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 					label: '',
 				},
 			]}
-			layoutAuto
 			rows={[
 				{
 					title: 'Target Market(s)',
@@ -110,6 +109,7 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 					value: mdfRequest.targetAudienceRoles?.join('; '),
 				},
 			]}
+			tableLayoutAuto
 		/>
 	</div>
 );

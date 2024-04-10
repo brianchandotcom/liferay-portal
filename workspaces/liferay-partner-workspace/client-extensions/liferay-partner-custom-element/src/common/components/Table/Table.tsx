@@ -16,7 +16,10 @@ import classNames from 'classnames';
 import TableColumn from '../../interfaces/tableColumn';
 
 import './index.css';
-import {SetStateAction, useCallback, useState} from 'react';
+
+import {useCallback, useState} from 'react';
+
+import {SortableTable} from '../../enums/sortableTable';
 
 interface BasicRow {
 	[key: string]: string | number | boolean | string[] | undefined;
@@ -27,6 +30,7 @@ interface TableProps<T> {
 	columns: TableColumn<T>[];
 	customClickOnRow?: (item: T) => void;
 	rows: T[];
+	sortable?: SortableTable[];
 	tableLayoutAuto: boolean;
 }
 
@@ -103,6 +107,7 @@ const Table = <T extends BasicRow>({
 	columns,
 	customClickOnRow,
 	rows,
+	sortable,
 	tableLayoutAuto,
 }: TableProps<T>) => {
 	const [sort, setSort] = useState<Sorting | null>(null);
@@ -113,8 +118,8 @@ const Table = <T extends BasicRow>({
 			setItems((items) =>
 				items.sort((a, b) => {
 					let cmp = new Intl.Collator('en', {numeric: true}).compare(
-						String(a[sort.column as string]),
-						String(b[sort.column as string])
+						a[sort.column as string] as string,
+						b[sort.column as string] as string
 					);
 
 					if (sort.direction === 'descending') {
@@ -147,7 +152,12 @@ const Table = <T extends BasicRow>({
 							<Cell
 								className="align-baseline border-neutral-2 rounded-0 text-neutral-10"
 								key={column.columnKey}
-								sortable
+								sortable={
+									sortable &&
+									sortable?.some((item) =>
+										column.columnKey.includes(item)
+									)
+								}
 							>
 								{column.label}
 							</Cell>
@@ -155,7 +165,7 @@ const Table = <T extends BasicRow>({
 					}
 				</Head>
 
-				<Body align="left" defaultItems={rows}>
+				<Body align="left" defaultItems={items}>
 					{
 						((row: T, index: number) => {
 							return (

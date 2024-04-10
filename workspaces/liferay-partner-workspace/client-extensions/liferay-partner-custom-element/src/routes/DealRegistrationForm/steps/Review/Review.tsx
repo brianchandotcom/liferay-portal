@@ -41,7 +41,6 @@ const Review = ({
 							label: '',
 						},
 					]}
-					layoutAuto
 					rows={[
 						{
 							title: 'Partner Account Name',
@@ -52,6 +51,7 @@ const Review = ({
 							value: values.mdfActivityAssociated.name,
 						},
 					]}
+					tableLayoutAuto
 				/>
 
 				<Table
@@ -66,7 +66,6 @@ const Review = ({
 							label: '',
 						},
 					]}
-					layoutAuto
 					rows={[
 						{
 							title: 'Account Name',
@@ -97,6 +96,7 @@ const Review = ({
 							value: values.prospect?.country?.name,
 						},
 					]}
+					tableLayoutAuto
 				/>
 
 				<Table
@@ -111,7 +111,6 @@ const Review = ({
 							label: '',
 						},
 					]}
-					layoutAuto
 					rows={[
 						{
 							title: 'First Name',
@@ -138,6 +137,7 @@ const Review = ({
 							value: values.primaryProspect?.jobRole?.name,
 						},
 					]}
+					tableLayoutAuto
 				/>
 
 				<Table
@@ -152,7 +152,6 @@ const Review = ({
 							label: '',
 						},
 					]}
-					layoutAuto
 					rows={[
 						{
 							title: 'First Name',
@@ -167,6 +166,7 @@ const Review = ({
 							value: values.additionalContact?.emailAddress,
 						},
 					]}
+					tableLayoutAuto
 				/>
 
 				<Table
@@ -181,7 +181,6 @@ const Review = ({
 							label: '',
 						},
 					]}
-					layoutAuto
 					rows={[
 						{
 							title: 'Additional Information',
@@ -189,6 +188,7 @@ const Review = ({
 								values.additionalInformationAboutTheOpportunity,
 						},
 					]}
+					tableLayoutAuto
 				/>
 
 				<Table
@@ -203,7 +203,6 @@ const Review = ({
 							label: '',
 						},
 					]}
-					layoutAuto
 					rows={[
 						{
 							title: 'Project Need',
@@ -214,6 +213,7 @@ const Review = ({
 							value: values.projectCategories.join(', '),
 						},
 					]}
+					tableLayoutAuto
 				/>
 
 				<Table
@@ -228,13 +228,13 @@ const Review = ({
 							label: '',
 						},
 					]}
-					layoutAuto
 					rows={[
 						{
 							title: 'Project Timeline',
 							value: values.projectTimeline,
 						},
 					]}
+					tableLayoutAuto
 				/>
 
 				<PRMForm.Footer>

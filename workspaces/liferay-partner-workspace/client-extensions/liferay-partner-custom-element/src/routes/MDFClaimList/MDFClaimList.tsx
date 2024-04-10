@@ -21,6 +21,7 @@ import Search from '../../common/components/TableHeader/Search';
 import {MDFClaimColumnKey} from '../../common/enums/mdfClaimColumnKey';
 import {ObjectActionName} from '../../common/enums/objectActionName';
 import {PermissionActionType} from '../../common/enums/permissionActionType';
+import {SortableTable} from '../../common/enums/sortableTable';
 import useIsChannel from '../../common/hooks/useIsChannel';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
@@ -102,8 +103,14 @@ const MDFClaimList = () => {
 				<div className="mt-3">
 					<Table<MDFClaimListItem>
 						columns={columns}
-						layoutAuto
 						rows={items}
+						sortable={[
+							SortableTable.DATE_SUBMITTED,
+							SortableTable.PARTNER,
+							SortableTable.STATUS,
+							SortableTable.TYPE,
+						]}
+						tableLayoutAuto
 					/>
 
 					<ClayPaginationBarWithBasicItems

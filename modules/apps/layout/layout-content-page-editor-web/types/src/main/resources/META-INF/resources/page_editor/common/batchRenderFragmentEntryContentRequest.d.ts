@@ -8,6 +8,7 @@ declare type DataType = Parameters<
 	typeof FragmentService.renderFragmentEntryLinksContent
 >[number]['data'][number];
 export default function batchRenderFragmentEntryContentRequest(
+	languageId: string,
 	segmentsExperienceId: string,
 	data: DataType,
 	callback: (content: string) => void

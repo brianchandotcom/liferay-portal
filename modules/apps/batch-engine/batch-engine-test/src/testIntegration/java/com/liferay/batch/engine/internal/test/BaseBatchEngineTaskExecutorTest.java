@@ -61,6 +61,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -94,7 +95,13 @@ public class BaseBatchEngineTaskExecutorTest {
 	public void setUp() throws Exception {
 		user = TestPropsValues.getUser();
 
-		baseDate = dateFormat.parse(dateFormat.format(new Date()));
+		Date date = new Date();
+
+		Instant instant = date.toInstant();
+
+		instant = instant.truncatedTo(ChronoUnit.MINUTES);
+
+		baseDate = Date.from(instant);
 
 		Bundle bundle = FrameworkUtil.getBundle(
 			BatchEngineImportTaskExecutorTest.class);
@@ -212,7 +219,7 @@ public class BaseBatchEngineTaskExecutorTest {
 					Field.ENTRY_CLASS_PK),
 				searchContext -> {
 					searchContext.setAttribute(
-						Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+						Field.STATUS, WorkflowConstants.STATUS_ANY);
 					searchContext.setCompanyId(contextCompany.getCompanyId());
 					searchContext.setGroupIds(new long[] {siteId});
 				},
@@ -415,7 +422,7 @@ public class BaseBatchEngineTaskExecutorTest {
 	protected int getBlogEntriesCount() throws Exception {
 		return blogsEntryLocalService.getGroupEntriesCount(
 			TestPropsValues.getGroupId(),
-			new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED));
+			new QueryDefinition<>(WorkflowConstants.STATUS_ANY));
 	}
 
 	protected static final String[] FIELD_NAMES = {

@@ -731,20 +731,21 @@ public class BatchEngineImportTaskExecutorTest
 		assertBlogsEntriesCount();
 
 		List<BlogsEntry> blogsEntries = new ArrayList<>(
-			blogsEntryLocalService.getGroupEntriesCount(
+			blogsEntryLocalService.getGroupEntries(
 				TestPropsValues.getGroupId(),
-				new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED)));
+				new QueryDefinition<>(WorkflowConstants.STATUS_ANY)));
 
 		blogsEntries.sort(Comparator.comparingLong(BlogsEntry::getEntryId));
 
-		for (int i = 0; i < blogsEntries.size(); i++) {
-			BlogsEntry blogsEntry = blogsEntries.get(i);
+		for (int i = 0; i < ROWS_COUNT; i++) {
+			BlogsEntry blogsEntry = blogsEntries.get(i + initialCount);
 
 			Assert.assertEquals(
 				"alternativeHeadline" + i, blogsEntry.getSubtitle());
 			Assert.assertEquals("articleBody" + i, blogsEntry.getContent());
 			Assert.assertEquals(
-				_toTime(baseDate, i), _toTime(blogsEntry.getDisplayDate(), 0));
+				_toTime(baseDate, i - 1000),
+				_toTime(blogsEntry.getDisplayDate(), 0));
 			Assert.assertEquals("headline" + i, blogsEntry.getTitle());
 		}
 	}
@@ -756,7 +757,7 @@ public class BatchEngineImportTaskExecutorTest
 			initialCount,
 			blogsEntryLocalService.getGroupEntriesCount(
 				TestPropsValues.getGroupId(),
-				new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED)));
+				new QueryDefinition<>(WorkflowConstants.STATUS_ANY)));
 	}
 
 	private void _assertInvalidFileImportWithOnErrorContinueStrategy(
@@ -839,27 +840,25 @@ public class BatchEngineImportTaskExecutorTest
 	private void _assertUpdatedBlogPostings() throws Exception {
 		Assert.assertEquals(
 			ROWS_COUNT, _batchEngineImportTask.getProcessedItemsCount());
-		Assert.assertEquals(
-			ROWS_COUNT,
-			blogsEntryLocalService.getGroupEntriesCount(
-				TestPropsValues.getGroupId(),
-				new QueryDefinition<>(WorkflowConstants.STATUS_SCHEDULED)));
+
+		assertBlogsEntriesCount();
 
 		List<BlogsEntry> blogsEntries = new ArrayList<>(
-			blogsEntryLocalService.getGroupEntriesCount(
+			blogsEntryLocalService.getGroupEntries(
 				TestPropsValues.getGroupId(),
-				new QueryDefinition<>(WorkflowConstants.STATUS_SCHEDULED)));
+				new QueryDefinition<>(WorkflowConstants.STATUS_ANY)));
 
 		blogsEntries.sort(Comparator.comparingLong(BlogsEntry::getEntryId));
 
-		for (int i = 0; i < blogsEntries.size(); i++) {
-			BlogsEntry blogsEntry = blogsEntries.get(i);
+		for (int i = 0; i < ROWS_COUNT; i++) {
+			BlogsEntry blogsEntry = blogsEntries.get(i + initialCount);
 
 			Assert.assertEquals(
 				"alternativeHeadline" + i + i, blogsEntry.getSubtitle());
 			Assert.assertEquals("articleBody" + i + i, blogsEntry.getContent());
 			Assert.assertEquals(
-				_toTime(baseDate, i), _toTime(blogsEntry.getDisplayDate(), 0));
+				_toTime(baseDate, i + 100),
+				_toTime(blogsEntry.getDisplayDate(), 0));
 			Assert.assertEquals("headline" + i + i, blogsEntry.getTitle());
 		}
 	}

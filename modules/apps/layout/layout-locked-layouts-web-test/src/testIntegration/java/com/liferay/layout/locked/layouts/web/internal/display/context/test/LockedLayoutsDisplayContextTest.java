@@ -182,7 +182,7 @@ public class LockedLayoutsDisplayContextTest {
 		_assertSearchContainerLayoutPlids(
 			1, new long[] {draftLayout.getPlid()},
 			_getSearchContainer(
-				_getMockLiferayPortletRenderRequest("utility")));
+				_getMockLiferayPortletRenderRequest("utility-page")));
 	}
 
 	@Test

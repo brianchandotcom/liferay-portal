@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.solr8.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.suggest.SpellCheckIndexWriter;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.document.BulkDocumentItemResponse;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
@@ -357,11 +359,18 @@ public class SolrIndexWriter extends BaseIndexWriter {
 				_searchEngineAdapter.execute(bulkDocumentRequest);
 
 			if (bulkDocumentResponse.hasErrors()) {
+				String bulkDocumentResponseFailureMessages =
+					_getBulkDocumentResponseFailureMessages(
+						bulkDocumentResponse);
+
+				String errorMessage =
+					"Update failed. " + bulkDocumentResponseFailureMessages;
+
 				if (_logExceptionsOnly) {
-					_log.error("Update failed");
+					_log.error(errorMessage);
 				}
 				else {
-					throw new SystemException("Update failed");
+					throw new SystemException(errorMessage);
 				}
 			}
 		}
@@ -388,6 +397,26 @@ public class SolrIndexWriter extends BaseIndexWriter {
 	@Override
 	protected SpellCheckIndexWriter getSpellCheckIndexWriter() {
 		return _spellCheckIndexWriter;
+	}
+
+	private String _getBulkDocumentResponseFailureMessages(
+		BulkDocumentResponse bulkDocumentResponse) {
+
+		StringBundler sb = new StringBundler();
+
+		for (BulkDocumentItemResponse bulkDocumentItemResponse :
+				bulkDocumentResponse.getBulkDocumentItemResponses()) {
+
+			if (bulkDocumentItemResponse.getFailureMessage() != null) {
+				if (sb.length() > 0) {
+					sb.append(", ");
+				}
+
+				sb.append(bulkDocumentItemResponse.getFailureMessage());
+			}
+		}
+
+		return sb.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -18,33 +18,33 @@ import org.junit.Assert;
 public class PerformanceTestTimer implements Closeable {
 
 	public PerformanceTestTimer(Class<?> clazz, String name, long maxTime) {
-		this(_getInvokerName(clazz, name), System.currentTimeMillis(), maxTime);
+		this(getInvokerName(clazz, name), System.currentTimeMillis(), maxTime);
 	}
 
 	public PerformanceTestTimer(long maxTime) {
-		this(_getInvokerName(null, null), System.currentTimeMillis(), maxTime);
+		this(getInvokerName(null, null), System.currentTimeMillis(), maxTime);
 	}
 
 	public PerformanceTestTimer(String name, int maxTime) {
-		this(_getInvokerName(null, name), System.currentTimeMillis(), maxTime);
+		this(getInvokerName(null, name), System.currentTimeMillis(), maxTime);
 	}
 
 	@Override
 	public void close() {
-		long delta = System.currentTimeMillis() - _startTime;
+		long delta = System.currentTimeMillis() - startTime;
 
 		System.out.println(
-			StringBundler.concat("Completed ", _name, " in ", delta, " ms"));
+			StringBundler.concat("Completed ", name, " in ", delta, " ms"));
 
 		Assert.assertTrue(
 			StringBundler.concat(
 				"Completed in ", delta,
 				"ms, but the expected completion time should be less than ",
-				_maxTime, "ms"),
-			delta < _maxTime);
+				maxTime, "ms"),
+			delta < maxTime);
 	}
 
-	private static String _getInvokerName(Class<?> clazz, String name) {
+	protected static String getInvokerName(Class<?> clazz, String name) {
 		Thread thread = Thread.currentThread();
 
 		StackTraceElement[] stackTraceElements = thread.getStackTrace();
@@ -71,16 +71,16 @@ public class PerformanceTestTimer implements Closeable {
 		return sb.toString();
 	}
 
-	private PerformanceTestTimer(String name, long startTime, long maxTime) {
-		_name = name;
-		_startTime = startTime;
-		_maxTime = maxTime;
+	protected PerformanceTestTimer(String name, long startTime, long maxTime) {
+		this.name = name;
+		this.startTime = startTime;
+		this.maxTime = maxTime;
 
 		System.out.println("Starting " + name);
 	}
 
-	private final long _maxTime;
-	private final String _name;
-	private final long _startTime;
+	protected final long maxTime;
+	protected final String name;
+	protected final long startTime;
 
 }

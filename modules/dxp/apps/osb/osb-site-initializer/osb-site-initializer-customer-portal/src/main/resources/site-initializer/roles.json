@@ -27,7 +27,31 @@
 		"actions": [
 		],
 		"description": "",
+		"name": "Partner Marketing User",
+		"subtype": "",
+		"type": 6
+	},
+	{
+		"actions": [
+		],
+		"description": "",
 		"name": "Partner Member",
+		"subtype": "",
+		"type": 6
+	},
+	{
+		"actions": [
+		],
+		"description": "",
+		"name": "Partner Sales User",
+		"subtype": "",
+		"type": 6
+	},
+	{
+		"actions": [
+		],
+		"description": "",
+		"name": "Partner Technical User",
 		"subtype": "",
 		"type": 6
 	},

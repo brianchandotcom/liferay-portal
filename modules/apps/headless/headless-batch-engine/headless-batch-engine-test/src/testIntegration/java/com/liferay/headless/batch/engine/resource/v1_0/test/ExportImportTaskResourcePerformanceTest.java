@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.test.util.ItemCountPerformanceTestTimer;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -304,41 +305,6 @@ public class ExportImportTaskResourcePerformanceTest {
 		return classNamePartsMap;
 	}
 
-	private Closeable _startTimer(int count) {
-		return _startTimer(count, null);
-	}
-
-	private Closeable _startTimer(int count, String message) {
-		Thread thread = Thread.currentThread();
-
-		StackTraceElement stackTraceElement = thread.getStackTrace()[3];
-
-		String invokerName = StringBundler.concat(
-			stackTraceElement.getClassName(), StringPool.POUND,
-			stackTraceElement.getMethodName());
-
-		long startTime = System.currentTimeMillis();
-
-		return () -> {
-			if (_log.isInfoEnabled()) {
-				long totalTimeMillis = System.currentTimeMillis() - startTime;
-
-				double speed = (totalTimeMillis > 0) ?
-					(double)(count * 1000) / (double)totalTimeMillis :
-						Double.NaN;
-
-				_log.info(
-					StringBundler.concat(
-						invokerName,
-						Validator.isNotNull(message) ? (" (" + message + ") ") :
-							"",
-						" used ", totalTimeMillis, " ms, for ", count,
-						" records, speed: ", String.format("%.2f", speed),
-						" records/s"));
-			}
-		};
-	}
-
 	private void _testPostExportTask(String className, int count)
 		throws Exception {
 
@@ -352,7 +318,10 @@ public class ExportImportTaskResourcePerformanceTest {
 
 		Map<String, String> classNamePartsMap = _splitClassName(className);
 
-		try (Closeable closeable = _startTimer(count, "export_items")) {
+		try (ItemCountPerformanceTestTimer itemCountPerformanceTestTimer =
+				new ItemCountPerformanceTestTimer(
+					count, className + "#export", 60000)) {
+
 			httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.header(
@@ -402,7 +371,10 @@ public class ExportImportTaskResourcePerformanceTest {
 			}
 		}
 
-		try (Closeable closeable = _startTimer(count, "download")) {
+		try (ItemCountPerformanceTestTimer itemCountPerformanceTestTimer =
+				new ItemCountPerformanceTestTimer(
+					count, className + "#download", 60000)) {
+
 			httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.header(
@@ -442,7 +414,9 @@ public class ExportImportTaskResourcePerformanceTest {
 		String json = _createBatchJSON(
 			classNamePartsMap.get("className"), count);
 
-		try (Closeable closeable = _startTimer(count)) {
+		try (Closeable closeable = new ItemCountPerformanceTestTimer(
+				count, className, 60000)) {
+
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(json, "application/json");

@@ -106,6 +106,10 @@ public class BaseBatchEngineTaskExecutorTest {
 				BatchEngineTaskItemDelegate.class.getName(),
 				new TestBlogPostingBatchEngineTaskItemDelegate(),
 				new HashMapDictionary<String, String>());
+
+		initialCount = blogsEntryLocalService.getGroupEntriesCount(
+			TestPropsValues.getGroupId(),
+			new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED));
 	}
 
 	@After
@@ -408,7 +412,7 @@ public class BaseBatchEngineTaskExecutorTest {
 
 	protected void assertBlogsEntriesCount() throws Exception {
 		Assert.assertEquals(
-			ROWS_COUNT,
+			initialCount + ROWS_COUNT,
 			blogsEntryLocalService.getGroupEntriesCount(
 				TestPropsValues.getGroupId(),
 				new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED)));
@@ -428,6 +432,7 @@ public class BaseBatchEngineTaskExecutorTest {
 
 	protected final DateFormat dateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:ssX");
+	protected int initialCount;
 	protected User user;
 
 	private ServiceRegistration<?>

@@ -753,7 +753,7 @@ public class BatchEngineImportTaskExecutorTest
 		Assert.assertEquals(
 			ROWS_COUNT, _batchEngineImportTask.getProcessedItemsCount());
 		Assert.assertEquals(
-			0,
+			initialCount,
 			blogsEntryLocalService.getGroupEntriesCount(
 				TestPropsValues.getGroupId(),
 				new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED)));
@@ -771,7 +771,7 @@ public class BatchEngineImportTaskExecutorTest
 		Assert.assertEquals(
 			itemsCount, _batchEngineImportTask.getTotalItemsCount());
 		Assert.assertEquals(
-			itemsCount - invalidItemRowNumbers.size(),
+			initialCount + itemsCount - invalidItemRowNumbers.size(),
 			blogsEntryLocalService.getGroupEntriesCount(
 				TestPropsValues.getGroupId(),
 				new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED)));
@@ -823,7 +823,7 @@ public class BatchEngineImportTaskExecutorTest
 			invalidItemRowNumber, batchEngineImportTaskError.getItemIndex());
 
 		Assert.assertEquals(
-			0,
+			initialCount,
 			blogsEntryLocalService.getGroupEntriesCount(
 				TestPropsValues.getGroupId(),
 				new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED)));

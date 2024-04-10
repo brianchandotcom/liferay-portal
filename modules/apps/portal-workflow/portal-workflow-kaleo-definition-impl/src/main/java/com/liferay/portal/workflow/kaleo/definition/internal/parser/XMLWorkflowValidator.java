@@ -64,7 +64,8 @@ public class XMLWorkflowValidator implements WorkflowValidator {
 						"<script-language>java</script-language>") &&
 					 !Objects.equals(
 						 definition.getName(),
-						 "message-boards-user-stats-moderation")) {
+						 "Message Board Threads and Comments Reputation " +
+							 "Approver")) {
 
 				throw new KaleoDefinitionValidationException.
 					NotAllowedScriptLanguage("Java is not allowed");

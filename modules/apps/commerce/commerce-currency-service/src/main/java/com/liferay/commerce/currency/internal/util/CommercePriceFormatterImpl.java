@@ -15,13 +15,18 @@ import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import java.util.Locale;
 import java.util.Map;
+
+import javax.portlet.ActionRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -79,6 +84,19 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 		return String.format(
 			"%2s %s", StringPool.PLUS, decimalFormat.format(relativePrice));
+	}
+
+	@Override
+	public String parse(ActionRequest actionRequest, String param)
+		throws Exception {
+
+		String price = ParamUtil.getString(
+			actionRequest, param, BigDecimal.ZERO.toString());
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return parse(price, themeDisplay.getLocale());
 	}
 
 	@Override

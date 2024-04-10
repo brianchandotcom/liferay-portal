@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -30,7 +30,7 @@ public class ConsoleService {
 	}
 
 	public String deployApp(String orderId, String projectId) throws Exception {
-		return deployApp(_consoleAuthEmailAddress, orderId, projectId);
+		return deployApp(_consoleAuthEmail, orderId, projectId);
 	}
 
 	public String deployApp(String email, String orderId, String projectId)
@@ -76,7 +76,7 @@ public class ConsoleService {
 		).bodyValue(
 			new JSONObject(
 			).put(
-				"email", _consoleAuthEmailAddress
+				"email", _consoleAuthEmail
 			).put(
 				"password", _consoleAuthPassword
 			).toString()
@@ -190,8 +190,8 @@ public class ConsoleService {
 
 	private String _accessToken;
 
-	@Value("${liferay.marketplace.console.auth.email.address}")
-	private String _consoleAuthEmailAddress;
+	@Value("${liferay.marketplace.console.auth.email}")
+	private String _consoleAuthEmail;
 
 	@Value("${liferay.marketplace.console.auth.password}")
 	private String _consoleAuthPassword;

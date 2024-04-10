@@ -20,13 +20,11 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -159,16 +157,8 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 		long commerceShippingFixedOptionId = ParamUtil.getLong(
 			actionRequest, "commerceShippingFixedOptionId");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String amount = ParamUtil.getString(
-			actionRequest, "amount", BigDecimal.ZERO.toString());
-
-		amount = _commercePriceFormatter.parse(
-			amount, themeDisplay.getLocale());
-
-		BigDecimal formattedAmount = new BigDecimal(amount);
+		BigDecimal formattedAmount = new BigDecimal(
+			_commercePriceFormatter.parse(actionRequest, "amount"));
 
 		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
 			actionRequest, "description");

@@ -13,6 +13,7 @@ import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcru
 import Jethr0ButtonsRow from '../../components/Jethr0ButtonsRow/Jethr0ButtonsRow';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0ContainerFluid';
+import Jethr0InformationField from '../../components/Jethr0InformationField/Jethr0InformationField';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
 import {deleteJobById, getJobById} from '../../objects/jobs/JobUtil';
@@ -125,37 +126,37 @@ function JobInformation({job}) {
 			displayType="secondary"
 		>
 			<ClayPanel.Body>
-				<JobInformationField
+				<Jethr0InformationField
 					fieldLabel="Job Name"
 					fieldType="STRING"
 					fieldValue={job.name}
 				/>
-				<JobInformationField
+				<Jethr0InformationField
 					fieldLabel="Job ID"
 					fieldType="STRING"
 					fieldValue={job.id}
 				/>
-				<JobInformationField
+				<Jethr0InformationField
 					fieldLabel="Job State"
 					fieldType="STRING"
 					fieldValue={job.state.name}
 				/>
-				<JobInformationField
+				<Jethr0InformationField
 					fieldLabel="Job Type"
 					fieldType="STRING"
 					fieldValue={job.type.name}
 				/>
-				<JobInformationField
+				<Jethr0InformationField
 					fieldLabel="Create Date"
 					fieldType="DATE"
 					fieldValue={job.dateCreated}
 				/>
-				<JobInformationField
+				<Jethr0InformationField
 					fieldLabel="Modified Date"
 					fieldType="DATE"
 					fieldValue={job.dateModified}
 				/>
-				<JobInformationField
+				<Jethr0InformationField
 					fieldLabel="Start Date"
 					fieldType="DATE"
 					fieldValue={job.startDate}
@@ -163,7 +164,7 @@ function JobInformation({job}) {
 				{jobParameters &&
 					jobParameterDefinitions?.map((jobParameterDefinition) => {
 						return (
-							<JobInformationField
+							<Jethr0InformationField
 								fieldLabel={jobParameterDefinition.label}
 								fieldType={jobParameterDefinition.type}
 								fieldValue={
@@ -175,40 +176,6 @@ function JobInformation({job}) {
 					})}
 			</ClayPanel.Body>
 		</ClayPanel>
-	);
-}
-
-function JobInformationField({fieldLabel, fieldType, fieldValue}) {
-	if (fieldValue === undefined || fieldValue === '') {
-		return <></>;
-	}
-
-	if (fieldType === 'DATE') {
-		return (
-			<>
-				<strong>{fieldLabel + ': '}</strong>
-				{toLocaleString(fieldValue)}
-				<br />
-			</>
-		);
-	}
-
-	if (fieldType === 'URL') {
-		return (
-			<>
-				<strong>{fieldLabel + ': '}</strong>
-				<a href={fieldValue}>{fieldValue}</a>
-				<br />
-			</>
-		);
-	}
-
-	return (
-		<>
-			<strong>{fieldLabel + ': '}</strong>
-			{fieldValue}
-			<br />
-		</>
 	);
 }
 

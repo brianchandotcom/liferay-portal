@@ -1,0 +1,42 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {toLocaleString} from '../../services/DateUtil';
+
+function Jethr0InformationField({fieldLabel, fieldType, fieldValue}) {
+	if (fieldValue === undefined || fieldValue === '') {
+		return <></>;
+	}
+
+	if (fieldType === 'DATE') {
+		return (
+			<>
+				<strong>{fieldLabel + ': '}</strong>
+					{toLocaleString(fieldValue)}
+				<br />
+			</>
+		);
+	}
+
+	if (fieldType === 'URL') {
+		return (
+			<>
+				<strong>{fieldLabel + ': '}</strong>
+				<a href={fieldValue}>{fieldValue}</a>
+				<br />
+			</>
+		);
+	}
+
+	return (
+		<>
+			<strong>{fieldLabel + ': '}</strong>
+			{fieldValue}
+			<br />
+		</>
+	);
+}
+
+export default Jethr0InformationField;

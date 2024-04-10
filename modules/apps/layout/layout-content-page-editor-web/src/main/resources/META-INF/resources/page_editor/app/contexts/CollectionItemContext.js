@@ -7,8 +7,8 @@ import {usePrevious} from '@liferay/frontend-js-react-web';
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import React, {useCallback, useContext, useEffect} from 'react';
 
+import batchRenderFragmentEntryContentRequest from '../../common/batchRenderFragmentEntryContentRequest';
 import {updateFragmentEntryLinkContent} from '../actions/index';
-import FragmentService from '../services/FragmentService';
 import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
 import isMappedToInfoItem from '../utils/editable_value/isMappedToInfoItem';
@@ -152,22 +152,27 @@ const useGetContent = (
 				withinCollection,
 			})
 		) {
-			FragmentService.renderFragmentEntryLinkContent({
-				fragmentEntryLinkId,
-				itemClassName,
-				itemClassPK,
-				itemExternalReferenceCode,
+			batchRenderFragmentEntryContentRequest(
 				languageId,
 				segmentsExperienceId,
-			}).then(({content}) => {
-				dispatch(
-					updateFragmentEntryLinkContent({
-						collectionContentId,
-						content,
-						fragmentEntryLinkId,
-					})
-				);
-			});
+
+				{
+					fragmentEntryLinkId,
+					itemClassName,
+					itemClassPK,
+					itemExternalReferenceCode,
+				},
+
+				(content) => {
+					dispatch(
+						updateFragmentEntryLinkContent({
+							collectionContentId,
+							content,
+							fragmentEntryLinkId,
+						})
+					);
+				}
+			);
 		}
 	}, [
 		collectionContentId,

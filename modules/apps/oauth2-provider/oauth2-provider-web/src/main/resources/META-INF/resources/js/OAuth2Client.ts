@@ -18,7 +18,6 @@ interface IOAuth2ClientOptions {
 	authorizeURL: string;
 	clientId: string;
 	debug?: boolean;
-	encodedRedirectURL: string;
 	homePageURL: string;
 	redirectURIs: Array<string>;
 	tokenURL: string;
@@ -37,7 +36,6 @@ class OAuth2Client {
 	private authorizeURL: string;
 	private clientId: string;
 	private debug: boolean;
-	private encodedRedirectURL: string;
 	private homePageURL: string;
 	private redirectURIs: Array<string>;
 	private tokenURL: string;
@@ -46,7 +44,6 @@ class OAuth2Client {
 		this.authorizeURL = options.authorizeURL;
 		this.clientId = options.clientId;
 		this.debug = options.debug || false;
-		this.encodedRedirectURL = options.encodedRedirectURL;
 		this.homePageURL = options.homePageURL;
 		this.redirectURIs = options.redirectURIs;
 		this.tokenURL = options.tokenURL;
@@ -79,9 +76,16 @@ class OAuth2Client {
 	): Promise<any> {
 		const oauth2Client = this;
 
+		const origin = window.location.origin;
+		const redirectURI = oauth2Client.redirectURIs.find(uri => uri.startsWith(origin));
+
+		if (!redirectURI) {
+			return Promise.reject(`No redirectURI in ${oauth2Client.redirectURIs} matching origin ${origin}`);
+		}
+
 		const ifrm = document.createElement('iframe');
 
-		ifrm.src = `${oauth2Client.authorizeURL}?client_id=${oauth2Client.clientId}&code_challenge=${challenge.code_challenge}&code_challenge_method=S256&redirect_uri=${oauth2Client.encodedRedirectURL}&response_type=code&prompt=none&state=${sessionKey}`;
+		ifrm.src = `${oauth2Client.authorizeURL}?client_id=${oauth2Client.clientId}&code_challenge=${challenge.code_challenge}&code_challenge_method=S256&redirect_uri=${encodeURIComponent(redirectURI)}&response_type=code&prompt=none&state=${sessionKey}`;
 		ifrm.style.display = 'none';
 
 		document.body.appendChild(ifrm);
@@ -287,10 +291,6 @@ export function FromParameters(options: IOAuth2ClientFromParametersOptions) {
 		authorizeURL: options.authorizeURL || Liferay.OAuth2.getAuthorizeURL(),
 		clientId: options.clientId,
 		debug: options.debug,
-		encodedRedirectURL: encodeURIComponent(
-			(options.redirectURIs && options.redirectURIs[0]) ||
-				Liferay.OAuth2.getBuiltInRedirectURL()
-		),
 		homePageURL: options.homePageURL,
 		redirectURIs: options.redirectURIs || [
 			Liferay.OAuth2.getBuiltInRedirectURL(),
@@ -317,9 +317,6 @@ export function FromUserAgentApplication(
 		authorizeURL: Liferay.OAuth2.getAuthorizeURL(),
 		clientId: userAgentApplication.clientId,
 		debug,
-		encodedRedirectURL: encodeURIComponent(
-			userAgentApplication.redirectURIs[0]
-		),
 		homePageURL: userAgentApplication.homePageURL,
 		redirectURIs: userAgentApplication.redirectURIs,
 		tokenURL: Liferay.OAuth2.getTokenURL(),

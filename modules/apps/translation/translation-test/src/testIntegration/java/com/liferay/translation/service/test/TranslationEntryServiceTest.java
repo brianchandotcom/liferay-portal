@@ -251,7 +251,7 @@ public class TranslationEntryServiceTest {
 				RoleTestUtil.addResourcePermission(
 					role,
 					TranslationConstants.RESOURCE_NAME + "." +
-						LocaleUtil.toLanguageId(LocaleUtil.US),
+						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 					ResourceConstants.SCOPE_GROUP,
 					String.valueOf(_group.getGroupId()),
 					TranslationActionKeys.TRANSLATE);
@@ -281,7 +281,7 @@ public class TranslationEntryServiceTest {
 					_translationEntryService.addOrUpdateTranslationEntry(
 						_group.getGroupId(),
 						_language.getLanguageId(LocaleUtil.US),
-						LocaleUtil.toLanguageId(LocaleUtil.US),
+						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 						infoItemReference, infoItemFieldValues, serviceContext);
 
 				Assert.assertNotNull(_translationEntry);
@@ -337,7 +337,7 @@ public class TranslationEntryServiceTest {
 					_translationEntryLocalService.addOrUpdateTranslationEntry(
 						_group.getGroupId(),
 						_language.getLanguageId(LocaleUtil.US),
-						LocaleUtil.toLanguageId(LocaleUtil.US),
+						LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 						infoItemReference, infoItemFieldValues,
 						ServiceContextTestUtil.getServiceContext());
 

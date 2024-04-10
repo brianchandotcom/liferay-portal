@@ -4,11 +4,12 @@
  */
 
 import {FilterImplementation, FilterImplementationArgs} from '../Filter';
+import {EEntityFieldType} from '../utils/types';
 export interface SelectionFilterImplementationArgs
 	extends FilterImplementationArgs<SelectedData> {
 	apiURL: string;
 	autocompleteEnabled: boolean;
-	entityFieldType: string;
+	entityFieldType: EEntityFieldType;
 	inputPlaceholder: string;
 	itemKey: string;
 	itemLabel: string;

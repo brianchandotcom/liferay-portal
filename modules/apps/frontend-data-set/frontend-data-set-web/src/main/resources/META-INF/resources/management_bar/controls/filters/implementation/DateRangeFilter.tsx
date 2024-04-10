@@ -17,12 +17,13 @@ import {
 	// @ts-ignore
 
 } from '../../../../utils/dates';
+import {EEntityFieldType} from '../utils/types';
 
 import type {FilterImplementation, FilterImplementationArgs} from '../Filter';
 
 export interface DateRangeFilterImplementationArgs
 	extends FilterImplementationArgs<SelectedData> {
-	entityFieldType: string;
+	entityFieldType: EEntityFieldType;
 	max: Date;
 	min: Date;
 	placeholder: string;
@@ -45,7 +46,7 @@ const getIsoString = ({
 	objectDate,
 }: {
 	direction: 'from' | 'to';
-	entityFieldType: string;
+	entityFieldType: EEntityFieldType;
 	objectDate: Date;
 }) => {
 	const timestamp = Date.UTC(
@@ -65,7 +66,7 @@ const getIsoString = ({
 
 	const dateISOString = date.toISOString();
 
-	if (entityFieldType === 'date') {
+	if (entityFieldType === EEntityFieldType.DATE) {
 		return dateISOString.split('T')[0];
 	}
 

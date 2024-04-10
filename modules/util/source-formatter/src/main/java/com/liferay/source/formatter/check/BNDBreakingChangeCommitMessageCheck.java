@@ -25,7 +25,8 @@ import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 /**
  * @author Alan Huang
  */
-public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
+public class BNDBreakingChangeCommitMessageCheck
+	extends BaseBreakingChangesCheck {
 
 	@Override
 	protected String doProcess(
@@ -88,79 +89,11 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 			_checkMissingEmptyLinesAroundHeaders(fileName, parts);
 
 			String[] breakingChanges = parts[1].split("\n----");
+			String message =
+				"Incorrect commit message in SHA " + parts[0] + ": ";
 
-			for (String breakingChange : breakingChanges) {
-				int alternativesCount = StringUtil.count(
-					breakingChange, "## Alternatives");
-				int breakingCount = StringUtil.count(
-					breakingChange, "# breaking\n");
-				int whatCount = StringUtil.count(breakingChange, "## What");
-				int whyCount = StringUtil.count(breakingChange, "## Why");
-
-				if ((alternativesCount > 1) || (breakingCount != 1) ||
-					(whatCount != 1) || (whyCount != 1)) {
-
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Incorrect commit message in SHA ", parts[0], ": ",
-							"Each breaking change should have one, and only ",
-							"one '# breaking', '## What', '## Why' and ## ",
-							"'Alternatives'(Optional). Use '----' to split ",
-							"each breaking change."));
-
-					return;
-				}
-
-				int alternativesPosition = breakingChange.indexOf(
-					"## Alternatives");
-				int whatPosition = breakingChange.indexOf("## What");
-				int whyPosition = breakingChange.indexOf("## Why");
-
-				if ((whatPosition > whyPosition) ||
-					((alternativesPosition != -1) &&
-					 (whyPosition > alternativesPosition))) {
-
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Incorrect commit message in SHA ", parts[0], ": ",
-							"The correct order of headers should be '## What' ",
-							"| '## Why' | '## Alternatives'"));
-
-					return;
-				}
-
-				int lineNumber = SourceUtil.getLineNumber(
-					breakingChange, whatPosition);
-
-				String trimmedLine = StringUtil.trimLeading(
-					SourceUtil.getLine(breakingChange, lineNumber));
-
-				if (trimmedLine.length() == 7) {
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Incorrect commit message in SHA ", parts[0], ": ",
-							"There should be one file path after '## What'"));
-
-					return;
-				}
-
-				String filePath = StringUtil.trim(trimmedLine.substring(7));
-
-				if (getPortalContent(filePath, absolutePath, true) == null) {
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Incorrect commit message in SHA ", parts[0], ": '",
-							filePath, "' points to nonexistent file. '## ",
-							"What' should be followed by only one path, which ",
-							"is from ", _LIFERAY_PORTAL_MASTER_URL, "."));
-
-					return;
-				}
-			}
+			checkBreakingChanges(
+				fileName, absolutePath, breakingChanges, message, true);
 		}
 	}
 
@@ -301,9 +234,6 @@ public class BNDBreakingChangeCommitMessageCheck extends BaseFileCheck {
 	private static final String[] _BREAKING_CHANGE_HEADER_NAMES = {
 		"----", "## Alternatives", "# breaking", "## What", "## Why"
 	};
-
-	private static final String _LIFERAY_PORTAL_MASTER_URL =
-		"https://github.com/liferay/liferay-portal/blob/master/";
 
 	private static List<String> _currentBranchFileNames;
 

@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.io.IOException;
 
@@ -21,7 +20,8 @@ import java.util.List;
 /**
  * @author Alan Huang
  */
-public class MarkdownBreakingChangesAmendmentsFileCheck extends BaseFileCheck {
+public class MarkdownBreakingChangesAmendmentsFileCheck
+	extends BaseBreakingChangesCheck {
 
 	@Override
 	protected String doProcess(
@@ -37,76 +37,15 @@ public class MarkdownBreakingChangesAmendmentsFileCheck extends BaseFileCheck {
 		List<String> breakingChangesAmendments =
 			_splitBreakingChangesAmendments(content);
 
-		_checkBreakingChangesAmendments(fileName, breakingChangesAmendments);
+		_checkBreakingChangesAmendments(
+			fileName, absolutePath, breakingChangesAmendments);
 
 		return content;
 	}
 
-	private void _checkBreakingChanges(
-		String fileName, String sha, String[] breakingChanges) {
-
-		for (String breakingChange : breakingChanges) {
-			int alternativesCount = StringUtil.count(
-				breakingChange, "## Alternatives");
-			int breakingCount = StringUtil.count(
-				breakingChange, "# breaking\n");
-			int whatCount = StringUtil.count(breakingChange, "## What");
-			int whyCount = StringUtil.count(breakingChange, "## Why");
-
-			if ((alternativesCount > 1) || (breakingCount != 1) ||
-				(whatCount != 1) || (whyCount != 1)) {
-
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Incorrect breaking change content in ", sha, ": ",
-						"Each breaking change should have one, and only ",
-						"one '# breaking', '## What', '## Why' and ## ",
-						"'Alternatives'(Optional). Use '----' to split ",
-						"each breaking change."));
-
-				return;
-			}
-
-			int alternativesPosition = breakingChange.indexOf(
-				"## Alternatives");
-			int whatPosition = breakingChange.indexOf("## What");
-			int whyPosition = breakingChange.indexOf("## Why");
-
-			if ((whatPosition > whyPosition) ||
-				((alternativesPosition != -1) &&
-				 (whyPosition > alternativesPosition))) {
-
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Incorrect breaking change content in ", sha, ": ",
-						"The correct order of headers should be '## What' ",
-						"| '## Why' | '## Alternatives'"));
-
-				return;
-			}
-
-			int lineNumber = SourceUtil.getLineNumber(
-				breakingChange, whatPosition);
-
-			String trimmedLine = StringUtil.trimLeading(
-				SourceUtil.getLine(breakingChange, lineNumber));
-
-			if (trimmedLine.length() == 7) {
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Incorrect breaking change content in ", sha, ": ",
-						"There should be one file path after '## What'"));
-
-				return;
-			}
-		}
-	}
-
 	private void _checkBreakingChangesAmendments(
-			String fileName, List<String> breakingChangesAmendments)
+			String fileName, String absolutePath,
+			List<String> breakingChangesAmendments)
 		throws IOException {
 
 		for (String breakingChangesAmendment : breakingChangesAmendments) {
@@ -144,8 +83,12 @@ public class MarkdownBreakingChangesAmendmentsFileCheck extends BaseFileCheck {
 			String breakingChanges = breakingChangesAmendment.substring(
 				x + 3, y);
 
-			_checkBreakingChanges(
-				fileName, firstLine, breakingChanges.split("\n----"));
+			String message =
+				"Incorrect breaking change content in " + firstLine + ": ";
+
+			checkBreakingChanges(
+				fileName, absolutePath, breakingChanges.split("\n----"),
+				message, false);
 		}
 	}
 

@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.solr8.internal.query.translator;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermQuery;
@@ -28,6 +30,8 @@ public class SolrQueryTranslator {
 		if (query instanceof WildcardQuery) {
 			return visit((WildcardQuery)query);
 		}
+
+		_log.error("Query translator not found for " + query.getClass());
 
 		return null;
 	}
@@ -62,5 +66,8 @@ public class SolrQueryTranslator {
 
 		return wildcardQueryTranslatorImpl.translate(wildcardQuery);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SolrQueryTranslator.class);
 
 }

@@ -28,7 +28,7 @@ public class TestrayUtil {
 			String sql, List<Object> params)
 		throws SQLException {
 
-		List<Map<String, Object>> values = new ArrayList<>();
+		List<Map<String, Object>> list = new ArrayList<>();
 
 		try (Connection connection = DataAccess.getConnection()) {
 			PreparedStatement preparedStatement = connection.prepareStatement(
@@ -58,12 +58,12 @@ public class TestrayUtil {
 						map.put(columnLabel, object);
 					}
 
-					values.add(map);
+					list.add(map);
 				}
 			}
 		}
 
-		return values;
+		return list;
 	}
 
 }

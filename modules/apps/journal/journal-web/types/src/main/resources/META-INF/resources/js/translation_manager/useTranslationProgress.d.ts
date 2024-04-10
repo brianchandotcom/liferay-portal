@@ -31,6 +31,10 @@ export default function useTranslationProgress({
 		| 'zh_TW';
 	selectedLanguageId: Liferay.Language.Locale;
 	translationProgress: TranslationProgress | null | undefined;
+	translations: {
+		fieldName: string;
+		languages: Liferay.Language.Locale[];
+	}[];
 	updateTranslations: () => void;
 };
 export declare function fieldToTranslations(

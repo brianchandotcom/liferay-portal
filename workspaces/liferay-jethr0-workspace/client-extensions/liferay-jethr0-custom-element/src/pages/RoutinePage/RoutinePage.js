@@ -16,8 +16,10 @@ import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0Co
 import Jethr0InformationField from '../../components/Jethr0InformationField/Jethr0InformationField';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
-import {deleteRoutineById, getRoutineByType} from '../../objects/routines/RoutineUtil'
-
+import {
+	deleteRoutineById,
+	getRoutineByType,
+} from '../../objects/routines/RoutineUtil';
 import {toLocaleString} from '../../services/DateUtil';
 
 function RoutineJobs({routine}) {

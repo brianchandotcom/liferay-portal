@@ -156,14 +156,14 @@ export async function getRoutines({setRoutines}) {
 	}
 }
 
-
 export async function getRoutineTypes({setRoutineTypes}) {
 	const response = await liferayRequest({
 		headers: {
 			'Content-Type': 'application/json',
 		},
 		method: 'GET',
-		urlPath: '/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/routineType',
+		urlPath:
+			'/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/routineType',
 	});
 
 	const result = JSON.parse(await response.text());

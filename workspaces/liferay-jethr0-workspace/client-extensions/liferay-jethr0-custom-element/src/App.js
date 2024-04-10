@@ -25,7 +25,10 @@ function App() {
 			<Routes>
 				<Route element={<BuildPage />} path="/builds/:id" />
 				<Route element={<CreateJobPage />} path="/jobs/create" />
-				<Route element={<CreateRoutinePage />} path="/routines/create" />
+				<Route
+					element={<CreateRoutinePage />}
+					path="/routines/create"
+				/>
 				<Route element={<JobPage />} path="/jobs/:id" />
 				<Route element={<JobQueuePage />} path="/" />
 				<Route element={<JobsPage />} path="/jobs" />

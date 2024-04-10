@@ -13,7 +13,10 @@ import Jethr0ButtonsRow from '../../components/Jethr0ButtonsRow/Jethr0ButtonsRow
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import {getJobDefinitions} from '../../objects/jobdefinitions/JobDefinitionUtil';
-import {createRoutine, getRoutineTypes} from '../../objects/routines/RoutineUtil';
+import {
+	createRoutine,
+	getRoutineTypes,
+} from '../../objects/routines/RoutineUtil';
 
 function CreateRoutinePage() {
 	const [jobDefinitionKey, setJobDefinitionKey] = useState('default');
@@ -39,7 +42,7 @@ function CreateRoutinePage() {
 	}
 
 	if (!routineTypes) {
-		getRoutineTypes({setRoutineTypes})
+		getRoutineTypes({setRoutineTypes});
 
 		return;
 	}

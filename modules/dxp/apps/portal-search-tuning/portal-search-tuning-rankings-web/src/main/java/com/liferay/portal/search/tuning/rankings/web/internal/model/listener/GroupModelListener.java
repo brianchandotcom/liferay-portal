@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
@@ -18,6 +19,7 @@ import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexNameBuil
 import com.liferay.portal.search.tuning.rankings.storage.RankingStorageAdapter;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,6 +32,12 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
 	public void onBeforeRemove(Group group) {
+		if (Objects.equals(
+				_searchEngineInformation.getVendorString(), "Solr")) {
+
+			return;
+		}
+
 		try {
 			RankingIndexName rankingIndexName =
 				_rankingIndexNameBuilder.getRankingIndexName(
@@ -70,5 +78,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Reference
 	private RankingStorageAdapter _rankingStorageAdapter;
+
+	@Reference
+	private SearchEngineInformation _searchEngineInformation;
 
 }

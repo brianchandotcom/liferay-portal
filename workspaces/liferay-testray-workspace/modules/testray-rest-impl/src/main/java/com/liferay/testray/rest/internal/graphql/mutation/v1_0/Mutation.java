@@ -11,7 +11,9 @@ import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTa
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
+import com.liferay.testray.rest.dto.v1_0.TestrayBuildAutofill;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestSuite;
+import com.liferay.testray.rest.resource.v1_0.TestrayBuildAutofillResource;
 import com.liferay.testray.rest.resource.v1_0.TestrayTestSuiteResource;
 
 import java.util.function.BiFunction;
@@ -33,12 +35,50 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
+	public static void setTestrayBuildAutofillResourceComponentServiceObjects(
+		ComponentServiceObjects<TestrayBuildAutofillResource>
+			testrayBuildAutofillResourceComponentServiceObjects) {
+
+		_testrayBuildAutofillResourceComponentServiceObjects =
+			testrayBuildAutofillResourceComponentServiceObjects;
+	}
+
 	public static void setTestrayTestSuiteResourceComponentServiceObjects(
 		ComponentServiceObjects<TestrayTestSuiteResource>
 			testrayTestSuiteResourceComponentServiceObjects) {
 
 		_testrayTestSuiteResourceComponentServiceObjects =
 			testrayTestSuiteResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	public TestrayBuildAutofill createTestrayBuildAutofill(
+			@GraphQLName("testrayBuildId1") Long testrayBuildId1,
+			@GraphQLName("testrayBuildId2") Long testrayBuildId2)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_testrayBuildAutofillResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			testrayBuildAutofillResource ->
+				testrayBuildAutofillResource.postTestrayBuildAutofill(
+					testrayBuildId1, testrayBuildId2));
+	}
+
+	@GraphQLField
+	public Response createTestrayBuildAutofillBatch(
+			@GraphQLName("testrayBuildId1") Long testrayBuildId1,
+			@GraphQLName("testrayBuildId2") Long testrayBuildId2,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_testrayBuildAutofillResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			testrayBuildAutofillResource ->
+				testrayBuildAutofillResource.postTestrayBuildAutofillBatch(
+					testrayBuildId1, testrayBuildId2, callbackURL, object));
 	}
 
 	@GraphQLField
@@ -110,6 +150,28 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			TestrayBuildAutofillResource testrayBuildAutofillResource)
+		throws Exception {
+
+		testrayBuildAutofillResource.setContextAcceptLanguage(_acceptLanguage);
+		testrayBuildAutofillResource.setContextCompany(_company);
+		testrayBuildAutofillResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		testrayBuildAutofillResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		testrayBuildAutofillResource.setContextUriInfo(_uriInfo);
+		testrayBuildAutofillResource.setContextUser(_user);
+		testrayBuildAutofillResource.setGroupLocalService(_groupLocalService);
+		testrayBuildAutofillResource.setRoleLocalService(_roleLocalService);
+
+		testrayBuildAutofillResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		testrayBuildAutofillResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
 			TestrayTestSuiteResource testrayTestSuiteResource)
 		throws Exception {
 
@@ -131,6 +193,8 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private static ComponentServiceObjects<TestrayBuildAutofillResource>
+		_testrayBuildAutofillResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TestrayTestSuiteResource>
 		_testrayTestSuiteResourceComponentServiceObjects;
 

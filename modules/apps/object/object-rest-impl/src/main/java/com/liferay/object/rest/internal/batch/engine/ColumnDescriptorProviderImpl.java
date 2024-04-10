@@ -56,7 +56,7 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
-			return _getMultiselectPickListColumnDescriptors(
+			return _getMultiselectPicklistColumnDescriptors(
 				fieldName, index, objectField.getListTypeDefinitionId(),
 				objectField.getBusinessType(), propertiesObjectValuePair);
 		}
@@ -65,7 +65,7 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
-			return _getPickListColumnDescriptors(
+			return _getPicklistColumnDescriptors(
 				fieldName, index, objectField.getBusinessType(),
 				propertiesObjectValuePair);
 		}
@@ -109,7 +109,7 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 		return listEntry.getName();
 	}
 
-	private ColumnDescriptor[] _getMultiselectPickListColumnDescriptors(
+	private ColumnDescriptor[] _getMultiselectPicklistColumnDescriptors(
 		String fieldName, int index, long listTypeDefinitionId,
 		String objectFieldBusinessType,
 		ObjectValuePair<Field, Method> propertiesObjectValuePair) {
@@ -118,22 +118,22 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 			_listTypeEntryLocalService.getListTypeEntriesCount(
 				listTypeDefinitionId);
 
-		ColumnDescriptor[] multiselectPickListColumnDescriptors =
+		ColumnDescriptor[] multiselectPicklistColumnDescriptors =
 			new ColumnDescriptor[listTypeEntriesCount * 2];
 
 		int listTypeEntriesHeaderIndex = 1;
 
-		for (int i = 0; i < multiselectPickListColumnDescriptors.length;
+		for (int i = 0; i < multiselectPicklistColumnDescriptors.length;
 			 i = i + 2) {
 
-			multiselectPickListColumnDescriptors[i] = ColumnDescriptor.from(
+			multiselectPicklistColumnDescriptors[i] = ColumnDescriptor.from(
 				StringBundler.concat(
 					fieldName, ".key_", listTypeEntriesHeaderIndex),
 				index++,
 				_getObjectEntryCustomFieldUnsafeFunction(
 					objectFieldBusinessType, propertiesObjectValuePair,
 					fieldName, "key_" + listTypeEntriesHeaderIndex));
-			multiselectPickListColumnDescriptors[i + 1] = ColumnDescriptor.from(
+			multiselectPicklistColumnDescriptors[i + 1] = ColumnDescriptor.from(
 				StringBundler.concat(
 					fieldName, ".name_", listTypeEntriesHeaderIndex),
 				index++,
@@ -144,7 +144,7 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 			listTypeEntriesHeaderIndex++;
 		}
 
-		return multiselectPickListColumnDescriptors;
+		return multiselectPicklistColumnDescriptors;
 	}
 
 	private UnsafeFunction<Object, Object, ReflectiveOperationException>
@@ -228,25 +228,25 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 		};
 	}
 
-	private ColumnDescriptor[] _getPickListColumnDescriptors(
+	private ColumnDescriptor[] _getPicklistColumnDescriptors(
 		String fieldName, int index, String objectFieldBusinessType,
 		ObjectValuePair<Field, Method> propertiesObjectValuePair) {
 
-		ColumnDescriptor[] pickListColumnDescriptors = new ColumnDescriptor[2];
+		ColumnDescriptor[] picklistColumnDescriptors = new ColumnDescriptor[2];
 
-		pickListColumnDescriptors[0] = ColumnDescriptor.from(
+		picklistColumnDescriptors[0] = ColumnDescriptor.from(
 			fieldName + ".key", index++,
 			_getObjectEntryCustomFieldUnsafeFunction(
 				objectFieldBusinessType, propertiesObjectValuePair, fieldName,
 				"key"));
 
-		pickListColumnDescriptors[1] = ColumnDescriptor.from(
+		picklistColumnDescriptors[1] = ColumnDescriptor.from(
 			fieldName + ".name", index,
 			_getObjectEntryCustomFieldUnsafeFunction(
 				objectFieldBusinessType, propertiesObjectValuePair, fieldName,
 				"name"));
 
-		return pickListColumnDescriptors;
+		return picklistColumnDescriptors;
 	}
 
 	private Object _getValue(

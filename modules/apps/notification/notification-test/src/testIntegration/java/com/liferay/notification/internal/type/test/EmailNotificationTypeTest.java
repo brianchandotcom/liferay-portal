@@ -225,7 +225,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	@Test
-	public void testFreeMarkerNotificationPickListObjectFieldTerm()
+	public void testFreeMarkerNotificationPicklistObjectFieldTerm()
 		throws Exception {
 
 		String body = LocalizationUtil.updateLocalization(

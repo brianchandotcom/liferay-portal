@@ -85,6 +85,10 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 			put(_RANDOM_ID + "Options", getOptions());
 		}
 
+		if (Objects.equals(templateNode.getName(), "optionsMap")) {
+			put(_RANDOM_ID + "OptionsMap", getOptionsMap());
+		}
+
 		put(templateNode.getName(), templateNode);
 	}
 
@@ -244,6 +248,13 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	public Map<String, String> getOptionsMap() {
+		if (super.containsKey(_RANDOM_ID + "OptionsMap") ||
+			MapUtil.isNotEmpty(
+				(Map<String, String>)get(_RANDOM_ID + "OptionsMap"))) {
+
+			return (Map<String, String>)get(_RANDOM_ID + "OptionsMap");
+		}
+
 		return (Map<String, String>)get("optionsMap");
 	}
 

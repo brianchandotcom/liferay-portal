@@ -14,6 +14,7 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import FieldBase from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
+import fieldPopoverMap from '../util/fieldPopoverMap';
 import {getTooltipTitle} from '../util/tooltip';
 import withConfirmationField from '../util/withConfirmationField.es';
 
@@ -498,6 +499,7 @@ const Main = ({
 			id={id}
 			localizedValue={localizedValue}
 			name={name}
+			popover={fieldPopoverMap[fieldName]}
 			readOnly={readOnly}
 			repeatable={repeatable}
 			valid={error.valid ?? valid}

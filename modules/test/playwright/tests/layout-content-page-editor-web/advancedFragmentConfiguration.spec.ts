@@ -141,7 +141,10 @@ test('checks that the advanced configuration of a fragment appears in its corres
 	// Add a new fragment set and a fragment inside it
 
 	const setName = getRandomString();
+
 	await fragmentsPage.createFragmentSet(setName);
+
+	await fragmentsPage.goto(site.friendlyUrlPath);
 
 	await fragmentsPage.createFragment(setName, 'My Fragment');
 

@@ -285,7 +285,7 @@ if (commerceOrder != null) {
 		<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "handleCTA('processQuote');" %>' value="process-quote" />
 	</c:if>
 
-	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10562") %>'>
+	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10562") && (commerceOrder.getOrderStatus() == CommerceOrderConstants.ORDER_STATUS_COMPLETED) %>'>
 		<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "handleCTA('makeReturn');" %>' value="make-a-return" />
 	</c:if>
 

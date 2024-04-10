@@ -1347,6 +1347,10 @@
 		</check>
 	</source-processor>
 	<source-processor name="MarkdownSourceProcessor">
+		<check name="MarkdownBreakingChangesAmendmentsFileCheck">
+			<category name="Styling" />
+			<description name="Applies rules to enforce consistency in code style." />
+		</check>
 		<check name="MarkdownEmptyLinesCheck">
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary empty lines." />

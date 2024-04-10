@@ -132,7 +132,7 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 - *liferay-sample-js-import-maps-entry*
 
-	TODO
+	Make a third party npm package (jQuery) available to other JavaScript code running in DXP using an import maps entry client extension.
 
 - *liferay-sample-site-initializer*
 

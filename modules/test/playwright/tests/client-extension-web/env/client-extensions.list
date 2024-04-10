@@ -9,7 +9,7 @@ workspaces/liferay-sample-workspace/client-extensions/liferay-sample-global-css
 workspaces/liferay-sample-workspace/client-extensions/liferay-sample-global-js
 workspaces/liferay-sample-workspace/client-extensions/liferay-sample-iframe-1
 workspaces/liferay-sample-workspace/client-extensions/liferay-sample-iframe-2
-workspaces/liferay-sample-workspace/client-extensions/liferay-sample-js-import-maps-entry-1
+workspaces/liferay-sample-workspace/client-extensions/liferay-sample-js-import-maps-entry
 workspaces/liferay-sample-workspace/client-extensions/liferay-sample-theme-css-1
 workspaces/liferay-sample-workspace/client-extensions/liferay-sample-theme-css-2
 workspaces/liferay-sample-workspace/client-extensions/liferay-sample-theme-favicon

@@ -13,9 +13,9 @@ export const test = mergeTests(loginTest());
 const SAMPLES = [
 	{
 		bareSpecifier: 'jquery',
-		erc: 'LXC:liferay-sample-js-import-maps-entry-1',
-		name: 'Liferay Sample JS Import Maps Entry 1',
-		url: '/o/liferay-sample-js-import-maps-entry-1/jquery.db7c7063a8b5d1298dbc.js',
+		erc: 'LXC:liferay-sample-js-import-maps-entry',
+		name: 'Liferay Sample JS Import Maps Entry',
+		url: '/o/liferay-sample-js-import-maps-entry/jquery.db7c7063a8b5d1298dbc.js',
 	},
 	{
 		bareSpecifier: 'my-utils',

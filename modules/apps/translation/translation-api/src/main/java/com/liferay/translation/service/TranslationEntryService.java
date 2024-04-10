@@ -50,7 +50,7 @@ public interface TranslationEntryService extends BaseService {
 		throws PortalException;
 
 	public TranslationEntry addOrUpdateTranslationEntry(
-			long groupId, String languageId,
+			long groupId, String sourceLanguageId, String targetLanguageId,
 			InfoItemReference infoItemReference,
 			InfoItemFieldValues infoItemFieldValues,
 			ServiceContext serviceContext)

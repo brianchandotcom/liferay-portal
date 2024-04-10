@@ -89,7 +89,8 @@ public class TranslationEntryServiceHttp {
 
 	public static com.liferay.translation.model.TranslationEntry
 			addOrUpdateTranslationEntry(
-				HttpPrincipal httpPrincipal, long groupId, String languageId,
+				HttpPrincipal httpPrincipal, long groupId,
+				String sourceLanguageId, String targetLanguageId,
 				com.liferay.info.item.InfoItemReference infoItemReference,
 				com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -102,8 +103,8 @@ public class TranslationEntryServiceHttp {
 				_addOrUpdateTranslationEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, languageId, infoItemReference,
-				infoItemFieldValues, serviceContext);
+				methodKey, groupId, sourceLanguageId, targetLanguageId,
+				infoItemReference, infoItemFieldValues, serviceContext);
 
 			Object returnObj = null;
 
@@ -185,7 +186,7 @@ public class TranslationEntryServiceHttp {
 		};
 	private static final Class<?>[]
 		_addOrUpdateTranslationEntryParameterTypes1 = new Class[] {
-			long.class, String.class,
+			long.class, String.class, String.class,
 			com.liferay.info.item.InfoItemReference.class,
 			com.liferay.info.item.InfoItemFieldValues.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

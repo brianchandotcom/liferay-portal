@@ -43,15 +43,15 @@ public class TranslationEntryServiceWrapper
 
 	@Override
 	public TranslationEntry addOrUpdateTranslationEntry(
-			long groupId, String languageId,
+			long groupId, String sourceLanguageId, String targetLanguageId,
 			com.liferay.info.item.InfoItemReference infoItemReference,
 			com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _translationEntryService.addOrUpdateTranslationEntry(
-			groupId, languageId, infoItemReference, infoItemFieldValues,
-			serviceContext);
+			groupId, sourceLanguageId, targetLanguageId, infoItemReference,
+			infoItemFieldValues, serviceContext);
 	}
 
 	@Override

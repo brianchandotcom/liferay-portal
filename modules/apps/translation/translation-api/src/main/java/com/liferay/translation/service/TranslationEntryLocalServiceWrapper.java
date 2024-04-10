@@ -34,19 +34,6 @@ public class TranslationEntryLocalServiceWrapper
 
 	@Override
 	public TranslationEntry addOrUpdateTranslationEntry(
-			long groupId, String languageId,
-			com.liferay.info.item.InfoItemReference infoItemReference,
-			com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _translationEntryLocalService.addOrUpdateTranslationEntry(
-			groupId, languageId, infoItemReference, infoItemFieldValues,
-			serviceContext);
-	}
-
-	@Override
-	public TranslationEntry addOrUpdateTranslationEntry(
 			long groupId, String className, long classPK, String content,
 			String contentType, String languageId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -55,6 +42,19 @@ public class TranslationEntryLocalServiceWrapper
 		return _translationEntryLocalService.addOrUpdateTranslationEntry(
 			groupId, className, classPK, content, contentType, languageId,
 			serviceContext);
+	}
+
+	@Override
+	public TranslationEntry addOrUpdateTranslationEntry(
+			long groupId, String sourceLanguageId, String targetLanguageId,
+			com.liferay.info.item.InfoItemReference infoItemReference,
+			com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _translationEntryLocalService.addOrUpdateTranslationEntry(
+			groupId, sourceLanguageId, targetLanguageId, infoItemReference,
+			infoItemFieldValues, serviceContext);
 	}
 
 	/**

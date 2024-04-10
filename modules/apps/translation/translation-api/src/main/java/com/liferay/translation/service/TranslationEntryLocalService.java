@@ -66,16 +66,16 @@ public interface TranslationEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public TranslationEntry addOrUpdateTranslationEntry(
-			long groupId, String languageId,
-			InfoItemReference infoItemReference,
-			InfoItemFieldValues infoItemFieldValues,
+			long groupId, String className, long classPK, String content,
+			String contentType, String languageId,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public TranslationEntry addOrUpdateTranslationEntry(
-			long groupId, String className, long classPK, String content,
-			String contentType, String languageId,
+			long groupId, String sourceLanguageId, String targetLanguageId,
+			InfoItemReference infoItemReference,
+			InfoItemFieldValues infoItemFieldValues,
 			ServiceContext serviceContext)
 		throws PortalException;
 

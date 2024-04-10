@@ -46,6 +46,13 @@ public class BooleanQueryTranslatorImpl {
 		LuceneQueryConsumer luceneQueryConsumer) {
 
 		for (Query query : queryClauses) {
+			org.apache.lucene.search.Query luceneQuery = translate(
+				query, solrQueryTranslator);
+
+			if (luceneQuery == null) {
+				continue;
+			}
+
 			luceneQueryConsumer.accept(translate(query, solrQueryTranslator));
 		}
 	}

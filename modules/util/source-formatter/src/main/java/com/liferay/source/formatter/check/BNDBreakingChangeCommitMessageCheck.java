@@ -5,15 +5,10 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
-import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.processor.SourceProcessor;
 
 import java.util.Iterator;
@@ -86,85 +81,15 @@ public class BNDBreakingChangeCommitMessageCheck
 				continue;
 			}
 
-			_checkMissingEmptyLinesAroundHeaders(fileName, parts);
-
-			String[] breakingChanges = parts[1].split("\n----");
 			String message =
 				"Incorrect commit message in SHA " + parts[0] + ": ";
 
+			checkMissingEmptyLinesAroundHeaders(fileName, parts[1], message);
+
+			String[] breakingChanges = parts[1].split("\n----");
+
 			checkBreakingChanges(
 				fileName, absolutePath, breakingChanges, message, true);
-		}
-	}
-
-	private void _checkMissingEmptyLinesAroundHeaders(
-		String fileName, String[] parts) {
-
-		if (!parts[1].endsWith("\n\n----")) {
-			addMessage(
-				fileName,
-				StringBundler.concat(
-					"Incorrect commit message in SHA ", parts[0], ": The ",
-					"commit message contains '# breaking' should end with ",
-					"'\\n\\n----'"));
-		}
-
-		for (String header : _BREAKING_CHANGE_HEADER_NAMES) {
-			int x = parts[1].indexOf(header);
-
-			if (x == -1) {
-				continue;
-			}
-
-			if (header.equals("## Alternatives") || header.equals("## Why")) {
-				char c = parts[1].charAt(x + header.length());
-
-				if (c != CharPool.NEW_LINE) {
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Incorrect commit message in SHA ", parts[0], ": ",
-							"There should be a line break after ' ", header,
-							"'"));
-				}
-			}
-
-			int lineNumber = SourceUtil.getLineNumber(parts[1], x);
-
-			String nextLine = SourceUtil.getLine(parts[1], lineNumber + 1);
-			String previousLine = SourceUtil.getLine(parts[1], lineNumber - 1);
-
-			if (Validator.isNotNull(nextLine) ||
-				Validator.isNotNull(previousLine)) {
-
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Incorrect commit message in SHA ", parts[0], ": ",
-						"There should be an empty line after/before '----', ",
-						"'# breaking', '## What', '## Why' and '## ",
-						"Alternatives'"));
-			}
-
-			if (header.equals("## Alternatives") || header.equals("## What") ||
-				header.equals("## Why")) {
-
-				String explanationLine = SourceUtil.getLine(
-					parts[1], lineNumber + 2);
-
-				if (Validator.isNull(explanationLine) ||
-					ArrayUtil.contains(
-						_BREAKING_CHANGE_HEADER_NAMES, explanationLine)) {
-
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Incorrect commit message in SHA ", parts[0], ": ",
-							"There should be at least a line containing an ",
-							"explanation after '## What', '## Why' and '## ",
-							"Alternatives'"));
-				}
-			}
 		}
 	}
 
@@ -230,10 +155,6 @@ public class BNDBreakingChangeCommitMessageCheck
 
 		return false;
 	}
-
-	private static final String[] _BREAKING_CHANGE_HEADER_NAMES = {
-		"----", "## Alternatives", "# breaking", "## What", "## Why"
-	};
 
 	private static List<String> _currentBranchFileNames;
 

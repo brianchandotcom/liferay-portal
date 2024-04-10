@@ -5,8 +5,11 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.io.IOException;
@@ -94,6 +97,80 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 			}
 		}
 	}
+
+	protected void checkMissingEmptyLinesAroundHeaders(
+		String fileName, String breakingChanges, String message) {
+
+		if (!breakingChanges.endsWith("\n\n----")) {
+			addMessage(
+				fileName,
+				message + "The commit message contains '# breaking' should " +
+					"end with '\\n\\n----'");
+		}
+
+		for (String header : _BREAKING_CHANGE_HEADER_NAMES) {
+			int x = breakingChanges.indexOf(header);
+
+			if (x == -1) {
+				continue;
+			}
+
+			if (header.equals("## Alternatives") || header.equals("## Why")) {
+				char c = breakingChanges.charAt(x + header.length());
+
+				if (c != CharPool.NEW_LINE) {
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							message, "There should be a line break after ' ",
+							header, "'"));
+				}
+			}
+
+			int lineNumber = SourceUtil.getLineNumber(breakingChanges, x);
+
+			String nextLine = SourceUtil.getLine(
+				breakingChanges, lineNumber + 1);
+			String previousLine = SourceUtil.getLine(
+				breakingChanges, lineNumber - 1);
+
+			if (Validator.isNotNull(nextLine) ||
+				Validator.isNotNull(previousLine)) {
+
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						message,
+						"There should be an empty line after/before '----', ",
+						"'# breaking', '## What', '## Why' and '## ",
+						"Alternatives'"));
+			}
+
+			if (header.equals("## Alternatives") || header.equals("## What") ||
+				header.equals("## Why")) {
+
+				String explanationLine = SourceUtil.getLine(
+					breakingChanges, lineNumber + 2);
+
+				if (Validator.isNull(explanationLine) ||
+					ArrayUtil.contains(
+						_BREAKING_CHANGE_HEADER_NAMES, explanationLine)) {
+
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							message,
+							"There should be at least a line containing an ",
+							"explanation after '## What', '## Why' and '## ",
+							"Alternatives'"));
+				}
+			}
+		}
+	}
+
+	private static final String[] _BREAKING_CHANGE_HEADER_NAMES = {
+		"----", "## Alternatives", "# breaking", "## What", "## Why"
+	};
 
 	private static final String _LIFERAY_PORTAL_MASTER_URL =
 		"https://github.com/liferay/liferay-portal/blob/master/";

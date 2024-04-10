@@ -17,6 +17,7 @@ import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -51,7 +52,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -61,6 +61,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Ivica Cardic
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class BatchEngineExportTaskExecutorTest
 	extends BaseBatchEngineTaskExecutorTest {
@@ -78,17 +79,6 @@ public class BatchEngineExportTaskExecutorTest
 		_parameters = HashMapBuilder.<String, Serializable>put(
 			"siteId", TestPropsValues.getGroupId()
 		).build();
-	}
-
-	@After
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		if (_batchEngineExportTask != null) {
-			_batchEngineExportTaskLocalService.deleteBatchEngineExportTask(
-				_batchEngineExportTask.getBatchEngineExportTaskId());
-		}
 	}
 
 	@Test

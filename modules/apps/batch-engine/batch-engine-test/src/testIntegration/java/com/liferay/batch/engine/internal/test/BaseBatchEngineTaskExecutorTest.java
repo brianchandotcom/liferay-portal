@@ -110,8 +110,6 @@ public class BaseBatchEngineTaskExecutorTest {
 
 	@After
 	public void tearDown() throws Exception {
-		blogsEntryLocalService.deleteEntries(TestPropsValues.getGroupId());
-
 		_batchEngineTaskItemDelegateServiceRegistration.unregister();
 	}
 

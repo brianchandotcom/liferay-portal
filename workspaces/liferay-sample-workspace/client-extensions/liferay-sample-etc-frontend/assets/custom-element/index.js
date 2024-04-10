@@ -37,9 +37,9 @@ Farewell in:
 	}
 }
 
-if (!customElements.get('liferay-sample-etc-frontend-3-custom-element')) {
+if (!customElements.get('liferay-sample-etc-frontend-custom-element')) {
 	customElements.define(
-		'liferay-sample-etc-frontend-3-custom-element',
+		'liferay-sample-etc-frontend-custom-element',
 		CustomElement
 	);
 }

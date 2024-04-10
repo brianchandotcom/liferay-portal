@@ -19,9 +19,9 @@ const SAMPLES = [
 	},
 	{
 		bareSpecifier: 'my-utils',
-		erc: 'LXC:liferay-sample-etc-frontend-3-js-import-maps-entry',
-		name: 'Liferay Sample Etc Frontend 3 JS Import Maps Entry',
-		url: '/o/liferay-sample-etc-frontend-3/my-utils.2db3acbc64ea700ac5b4.js',
+		erc: 'LXC:liferay-sample-etc-frontend-js-import-maps-entry',
+		name: 'Liferay Sample Etc Frontend JS Import Maps Entry',
+		url: '/o/liferay-sample-etc-frontend/my-utils.2db3acbc64ea700ac5b4.js',
 	},
 ];
 

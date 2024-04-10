@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -214,30 +212,15 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 			cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 		}
 
-		boolean preselected = ParamUtil.getBoolean(
-			actionRequest, "preselected");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String price = ParamUtil.getString(
-			actionRequest, "price", BigDecimal.ZERO.toString());
-
-		price = _commercePriceFormatter.parse(price, themeDisplay.getLocale());
-
-		BigDecimal formattedPrice = new BigDecimal(price);
-
-		String quantity = ParamUtil.getString(
-			actionRequest, "quantity", BigDecimal.ZERO.toString());
-
-		BigDecimal formattedQuantity =
-			_commerceOrderItemQuantityFormatter.parse(
-				quantity, themeDisplay.getLocale());
-
 		return _cpDefinitionOptionValueRelService.
 			updateCPDefinitionOptionValueRel(
 				cpDefinitionOptionValueRelId, cpInstanceId, key, nameMap,
-				preselected, formattedPrice, priority, formattedQuantity,
+				ParamUtil.getBoolean(actionRequest, "preselected"),
+				new BigDecimal(
+					_commercePriceFormatter.parse(actionRequest, "price")),
+				priority,
+				_commerceOrderItemQuantityFormatter.parse(
+					actionRequest, "quantity"),
 				unitOfMeasureKey, serviceContext);
 	}
 

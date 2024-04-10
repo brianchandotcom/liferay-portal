@@ -153,13 +153,9 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String incrementalOrderQuantity = ParamUtil.getString(
-			actionRequest, "incrementalOrderQuantity",
-			BigDecimal.ZERO.toString());
-
 		BigDecimal formattedIncrementalOrderQuantity =
 			_commerceOrderItemQuantityFormatter.parse(
-				incrementalOrderQuantity, themeDisplay.getLocale());
+				actionRequest, "incrementalOrderQuantity");
 
 		String key = ParamUtil.getString(actionRequest, "key");
 		Map<Locale, String> nameMap = _localization.getLocalizationMap(
@@ -174,9 +170,8 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 			rate = BigDecimal.ONE.toString();
 		}
 
-		rate = _commercePriceFormatter.parse(rate, themeDisplay.getLocale());
-
-		BigDecimal formattedRate = new BigDecimal(rate);
+		BigDecimal formattedRate = new BigDecimal(
+			_commercePriceFormatter.parse(rate, themeDisplay.getLocale()));
 
 		String sku = ParamUtil.getString(actionRequest, "sku");
 
@@ -226,35 +221,22 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 		CPInstance cpInstance = _cpInstanceService.fetchCPInstance(
 			cpInstanceId);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String basePrice = ParamUtil.getString(
-			actionRequest, "basePrice", BigDecimal.ZERO.toString());
-
-		basePrice = _commercePriceFormatter.parse(
-			basePrice, themeDisplay.getLocale());
-
-		BigDecimal formattedBasePrice = new BigDecimal(basePrice);
+		BigDecimal formattedBasePrice = new BigDecimal(
+			_commercePriceFormatter.parse(actionRequest, "basePrice"));
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPInstanceUnitOfMeasure.class.getName(), actionRequest);
 
-		if (basePrice != null) {
+		if (formattedBasePrice != null) {
 			_updateCommercePriceEntry(
 				cpInstance.getCPInstanceUuid(), key, formattedBasePrice,
 				CommercePriceListConstants.TYPE_PRICE_LIST, serviceContext);
 		}
 
-		String promoPrice = ParamUtil.getString(
-			actionRequest, "promoPrice", BigDecimal.ZERO.toString());
+		BigDecimal formattedPromoPrice = new BigDecimal(
+			_commercePriceFormatter.parse(actionRequest, "promoPrice"));
 
-		promoPrice = _commercePriceFormatter.parse(
-			promoPrice, themeDisplay.getLocale());
-
-		BigDecimal formattedPromoPrice = new BigDecimal(promoPrice);
-
-		if (promoPrice != null) {
+		if (formattedPromoPrice != null) {
 			_updateCommercePriceEntry(
 				cpInstance.getCPInstanceUuid(), key, formattedPromoPrice,
 				CommercePriceListConstants.TYPE_PROMOTION, serviceContext);

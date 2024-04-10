@@ -252,16 +252,9 @@ public class EditCommerceShipmentItemMVCActionCommand
 					commerceShipmentId, commerceOrderItemId,
 					commerceInventoryWarehouseId);
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			String quantity = ParamUtil.getString(
-				actionRequest, commerceInventoryWarehouseId + "_quantity",
-				BigDecimal.ZERO.toString());
-
 			BigDecimal formattedQuantity =
 				_commerceOrderItemQuantityFormatter.parse(
-					quantity, themeDisplay.getLocale());
+					actionRequest, commerceInventoryWarehouseId + "_quantity");
 
 			if ((initialCommerceShipmentItem != null) &&
 				BigDecimalUtil.gt(formattedQuantity, BigDecimal.ZERO)) {

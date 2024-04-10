@@ -14,12 +14,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.math.BigDecimal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -73,23 +69,12 @@ public class TransferQuantitiesMVCActionCommand extends BaseMVCActionCommand {
 		long toCommerceInventoryWarehouseId = ParamUtil.getLong(
 			actionRequest, "toCommerceInventoryWarehouseId");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String quantity = ParamUtil.getString(
-			actionRequest, "quantity", BigDecimal.ZERO.toString());
-
-		BigDecimal formattedQuantity =
-			_commerceOrderItemQuantityFormatter.parse(
-				quantity, themeDisplay.getLocale());
-
-		String sku = ParamUtil.getString(actionRequest, "sku");
-		String unitOfMeasureKey = ParamUtil.getString(
-			actionRequest, "unitOfMeasureKey");
-
 		_commerceInventoryWarehouseItemService.moveQuantitiesBetweenWarehouses(
 			fromCommerceInventoryWarehouseId, toCommerceInventoryWarehouseId,
-			formattedQuantity, sku, unitOfMeasureKey);
+			_commerceOrderItemQuantityFormatter.parse(
+				actionRequest, "quantity"),
+			ParamUtil.getString(actionRequest, "sku"),
+			ParamUtil.getString(actionRequest, "unitOfMeasureKey"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

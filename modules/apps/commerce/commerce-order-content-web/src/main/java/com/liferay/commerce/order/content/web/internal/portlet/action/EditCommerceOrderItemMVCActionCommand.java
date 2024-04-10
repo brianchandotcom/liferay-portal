@@ -20,15 +20,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.math.BigDecimal;
 
 import java.util.List;
 
@@ -67,29 +62,18 @@ public class EditCommerceOrderItemMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.UPDATE)) {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)actionRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				String quantity = ParamUtil.getString(
-					actionRequest, "quantity", BigDecimal.ZERO.toString());
-
-				BigDecimal formattedQuantity =
-					_commerceOrderItemQuantityFormatter.parse(
-						quantity, themeDisplay.getLocale());
-
 				CommerceOrderItem commerceOrderItem =
 					_commerceOrderItemService.getCommerceOrderItem(
 						commerceOrderItemId);
 
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(
-						CommerceOrderItem.class.getName(), actionRequest);
-
 				_commerceOrderItemService.updateCommerceOrderItem(
 					commerceOrderItem.getCommerceOrderItemId(),
-					commerceOrderItem.getJson(), formattedQuantity,
-					commerceContext, serviceContext);
+					commerceOrderItem.getJson(),
+					_commerceOrderItemQuantityFormatter.parse(
+						actionRequest, "quantity"),
+					commerceContext,
+					ServiceContextFactory.getInstance(
+						CommerceOrderItem.class.getName(), actionRequest));
 			}
 			else if (cmd.equals(Constants.RESET)) {
 				_deleteCommerceOrderItems(actionRequest);

@@ -17,7 +17,7 @@
 				"en_US": "Automation To Complete Request"
 			},
 			"name": "automationToCompleteRequest",
-			"objectActionExecutorKey": "",
+			"objectActionExecutorKey": "function#liferay-partner-etc-spring-boot-object-action-mdf-claim-status-management",
 			"objectActionTriggerKey": "onAfterUpdate",
 			"parameters": {
 			},

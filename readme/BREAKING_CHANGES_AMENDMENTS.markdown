@@ -85,7 +85,7 @@ The commit message has the wrong format for multiple files. The correct message 
 ```
 LPS-199164 Move XmlRpcUtil, Success, Fault into impl
 
-# breaking_change_report
+# breaking
 
 ## What portal-kernel/src/com/liferay/portal/kernel/xmlrpc/Success.java
 
@@ -101,7 +101,7 @@ Add portal-impl as a build dependency and fix the import statements to continue 
 
 ----
 
-# breaking_change_report
+# breaking
 
 ## What portal-kernel/src/com/liferay/portal/kernel/xmlrpc/Fault.java
 
@@ -117,7 +117,7 @@ Add portal-impl as a build dependency and fix the import statements to continue 
 
 ----
 
-# breaking_change_report
+# breaking
 
 ## What portal-kernel/src/com/liferay/portal/kernel/xmlrpc/XmlRpcUtil.java
 
@@ -141,7 +141,7 @@ The commit message has the wrong format for multiple files. The correct message 
 ```
 LPS-198859 Remove ThreadLocalDistributor, no usage
 
-# breaking_change_report
+# breaking
 
 ## What portal-kernel/src/com/liferay/portal/kernel/util/ThreadLocalDistributor.java
 
@@ -153,7 +153,7 @@ ThreadLocalDistributor has no current usage.
 
 ----
 
-# breaking_change_report
+# breaking
 
 ## What portal-kernel/src/com/liferay/portal/kernel/util/ThreadLocalDistributorRegistry.java
 
@@ -173,7 +173,7 @@ This commit is missing a breaking change message. The correct message is:
 ```
 LPS-200453 Make PortletToolbar not a spring bean and provide the instance through filed INSTANCE.
 
-# breaking_change_report
+# breaking
 
 ## What portal-kernel/src/com/liferay/portal/kernel/portlet/toolbar/PortletToolbar.java
 
@@ -197,7 +197,7 @@ The commit message is missing a breaking change message. The correct message is:
 ```
 LPS-198809 Remove ModelSearchRegistrarHelper, not used anymore
 
-# breaking_change_report
+# breaking
 
 ## What modules/apps/portal-search/portal-search-spi/src/main/java/com/liferay/portal/search/spi/model/registrar/ModelSearchRegistrarHelper.java
 
@@ -209,7 +209,7 @@ The self-bootstrapping style *SearchRegistrar has changed so this class is no lo
 
 ----
 
-# breaking_change_report
+# breaking
 
 ## What modules/apps/portal-search/portal-search-spi/src/main/java/com/liferay/portal/search/spi/model/registrar/contributor/ModelSearchDefinitionContributor.java
 
@@ -233,7 +233,7 @@ The commit message has the wrong format for multiple files. The correct message 
 ```
 LPS-201086 Merge AuditMessageFactoryUtil/AuditMessageFactoryImpl into AuditMessageFactory
 
-# breaking_change_report
+# breaking
 
 ## What portal-kernel/src/com/liferay/portal/kernel/audit/AuditMessageFactory.java
 
@@ -245,7 +245,7 @@ The logic being split between multiple classes did not provide any value. They a
 
 ----
 
-# breaking_change_report
+# breaking
 
 ## What portal-kernel/src/com/liferay/portal/kernel/audit/AuditMessageFactoryUtil.java
 
@@ -285,7 +285,7 @@ The commit message's file path has a typo. The correct message is:
 ```
 LPS-196035 Avoid needing to regenerate after every screenName or emailAddress change. Use the immutable userId field for WebDAV access.
 
-# breaking_change_report
+# breaking
 
 ## What portal-impl/src/com/liferay/portal/model/impl/UserImpl.java
 

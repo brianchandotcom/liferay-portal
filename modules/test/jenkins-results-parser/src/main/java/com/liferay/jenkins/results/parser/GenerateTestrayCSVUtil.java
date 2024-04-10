@@ -44,6 +44,15 @@ public class GenerateTestrayCSVUtil {
 		List<TestrayCaseResult> allTestrayCaseResults = _getTestrayCaseResults(
 			projectTestrayBuildId);
 
+		if (allTestrayCaseResults.isEmpty()) {
+			System.out.println(
+				"There are no Testray case results to report. Testray may " +
+					"not have the results imported yet or there are no " +
+						"failures.");
+
+			return;
+		}
+
 		sb.append(
 			_generate(allTestrayCaseResults, TestrayCaseResult.Type.UNIQUE));
 
@@ -59,7 +68,9 @@ public class GenerateTestrayCSVUtil {
 			System.out.println("Setting testray results to: " + sb.toString());
 
 			JenkinsResultsParserUtil.write(
-				new File(projectBuildDir, "testray-results.csv"),
+				new File(
+					projectBuildDir,
+					projectTestrayBuildId + "-testray-results.csv"),
 				sb.toString());
 		}
 		catch (IOException ioException) {

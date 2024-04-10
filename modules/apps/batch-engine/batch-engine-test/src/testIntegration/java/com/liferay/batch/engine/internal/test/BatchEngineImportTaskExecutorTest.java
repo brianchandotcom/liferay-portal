@@ -772,9 +772,7 @@ public class BatchEngineImportTaskExecutorTest
 			itemsCount, _batchEngineImportTask.getTotalItemsCount());
 		Assert.assertEquals(
 			initialCount + itemsCount - invalidItemRowNumbers.size(),
-			blogsEntryLocalService.getGroupEntriesCount(
-				TestPropsValues.getGroupId(),
-				new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED)));
+			getBlogEntriesCount());
 
 		List<BatchEngineImportTaskError> batchEngineImportTaskErrors =
 			_batchEngineImportTaskErrorLocalService.
@@ -822,11 +820,7 @@ public class BatchEngineImportTaskExecutorTest
 		Assert.assertEquals(
 			invalidItemRowNumber, batchEngineImportTaskError.getItemIndex());
 
-		Assert.assertEquals(
-			initialCount,
-			blogsEntryLocalService.getGroupEntriesCount(
-				TestPropsValues.getGroupId(),
-				new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED)));
+		Assert.assertEquals(initialCount, getBlogEntriesCount());
 
 		List<LogEntry> logEntries = logCapture.getLogEntries();
 

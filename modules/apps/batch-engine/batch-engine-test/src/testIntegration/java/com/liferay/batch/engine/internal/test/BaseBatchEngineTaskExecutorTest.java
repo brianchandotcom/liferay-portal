@@ -107,9 +107,7 @@ public class BaseBatchEngineTaskExecutorTest {
 				new TestBlogPostingBatchEngineTaskItemDelegate(),
 				new HashMapDictionary<String, String>());
 
-		initialCount = blogsEntryLocalService.getGroupEntriesCount(
-			TestPropsValues.getGroupId(),
-			new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED));
+		initialCount = getBlogEntriesCount();
 	}
 
 	@After
@@ -411,11 +409,13 @@ public class BaseBatchEngineTaskExecutorTest {
 	}
 
 	protected void assertBlogsEntriesCount() throws Exception {
-		Assert.assertEquals(
-			initialCount + ROWS_COUNT,
-			blogsEntryLocalService.getGroupEntriesCount(
-				TestPropsValues.getGroupId(),
-				new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED)));
+		Assert.assertEquals(initialCount + ROWS_COUNT, getBlogEntriesCount());
+	}
+
+	protected int getBlogEntriesCount() throws Exception {
+		return blogsEntryLocalService.getGroupEntriesCount(
+			TestPropsValues.getGroupId(),
+			new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED));
 	}
 
 	protected static final String[] FIELD_NAMES = {

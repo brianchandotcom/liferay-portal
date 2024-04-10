@@ -5,6 +5,14 @@
 
 import {openModal} from 'frontend-js-web';
 
+function toggleModalTitleTooltip(isShow) {
+	const tooltipElement = document.querySelector(
+		'#returnable-items-header-tooltip'
+	);
+
+	tooltipElement.classList[isShow ? 'add' : 'remove']('show');
+}
+
 export default function ({namespace, viewReturnableCommerceOrderItemsURL}) {
 	const formElement = document[`${namespace}fm`];
 	const cmdInputElement = formElement[`${namespace}cmd`];
@@ -15,8 +23,37 @@ export default function ({namespace, viewReturnableCommerceOrderItemsURL}) {
 				containerProps: {
 					center: true,
 				},
+				headerHTML: `
+					<div class="d-inline-flex flex-row align-items-center">
+						<h1 class="modal-title" id="clay-modal-label-1">${Liferay.Language.get(
+							'select-returnable-items'
+						)}</h1>
+						<span
+							class="label-icon lfr-portal-tooltip ml-2 mt-1 small"
+							id="returnable-items-header-tooltip-icon"
+						>
+							${Liferay.Util.getLexiconIconTpl('question-circle-full')}
+						</span>
+						<div id="returnable-items-header-tooltip" class="position-relative fade tooltip clay-tooltip-right" role="tooltip">
+							<div class="arrow"></div>
+							<div class="tooltip-inner small">${Liferay.Language.get(
+								'items-not-displayed-here-dont-support-return'
+							)}</div>
+						</div>
+					</div>
+				`,
 				height: '32rem',
 				iframeBodyCssClass: 'w-100',
+				onOpen: () => {
+					const tooltipHeaderIcon = document.querySelector(
+						'#returnable-items-header-tooltip-icon'
+					);
+
+					tooltipHeaderIcon.onmouseover = () =>
+						toggleModalTitleTooltip(true);
+					tooltipHeaderIcon.onmouseout = () =>
+						toggleModalTitleTooltip(false);
+				},
 				size: 'lg',
 				title: Liferay.Language.get('select-returnable-items'),
 				url: viewReturnableCommerceOrderItemsURL,

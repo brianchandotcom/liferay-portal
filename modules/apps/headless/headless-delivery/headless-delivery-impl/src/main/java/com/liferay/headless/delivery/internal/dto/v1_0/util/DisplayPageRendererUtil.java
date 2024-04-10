@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -170,17 +169,11 @@ public class DisplayPageRendererUtil {
 
 		LayoutSet layoutSet = layout.getLayoutSet();
 
-		ServletContext servletContext = ServletContextPool.get(
-			StringPool.BLANK);
-
-		if (httpServletRequest.getAttribute(WebKeys.CTX) == null) {
-			httpServletRequest.setAttribute(WebKeys.CTX, servletContext);
-		}
-
 		Document document = Jsoup.parse(
 			ThemeUtil.include(
-				servletContext, httpServletRequest, httpServletResponse,
-				"portal_normal.ftl", layoutSet.getTheme(), false));
+				ServletContextPool.get(StringPool.BLANK), httpServletRequest,
+				httpServletResponse, "portal_normal.ftl", layoutSet.getTheme(),
+				false));
 
 		Element bodyElement = document.body();
 

@@ -478,16 +478,16 @@ const Sorting = ({fdsView, namespace}: IFDSViewSectionProps) => {
 
 			setFDSSorts([...notOrdered, ...ordered]);
 
+			await getFields(fdsView).then((newFields) => {
+				if (newFields) {
+					setFields(newFields);
+				}
+			});
+
 			setLoading(false);
 		};
 
 		getFDSSort();
-
-		getFields(fdsView).then((newFields) => {
-			if (newFields) {
-				setFields(newFields);
-			}
-		});
 	}, [fdsView]);
 
 	const handleCreation = () =>

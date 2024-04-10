@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlParserUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -862,7 +863,8 @@ public class ObjectEntryDTOConverter
 				map.put(objectFieldName, serializable);
 				map.put(
 					objectFieldName + "RawText",
-					ObjectEntryValuesUtil.getValueString(objectField, values));
+					HtmlParserUtil.extractText(
+						GetterUtil.getString(serializable)));
 			}
 			else if (Objects.equals(
 						objectField.getRelationshipType(),

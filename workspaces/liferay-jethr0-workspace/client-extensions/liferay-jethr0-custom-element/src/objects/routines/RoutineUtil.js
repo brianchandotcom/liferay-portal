@@ -4,6 +4,7 @@
  */
 
 import liferayRequest from '../../services/liferayRequest';
+import Job from '../jobs/Job';
 import Routine from './Routine';
 
 export async function createRoutine({data, redirect}) {
@@ -21,6 +22,80 @@ export async function createRoutine({data, redirect}) {
 
 	if (routinesResult && redirect) {
 		redirect(routinesResult);
+	}
+}
+
+export async function getRoutineByType({id, setRoutine}) {
+	const response = await liferayRequest({
+		graphqlQuery: `{
+			c {
+				jobs(filter: \\"r_routineToJobs_c_routineId eq '${id}'\\") {
+					items {
+						dateCreated
+						dateModified
+						id
+						name
+						parameters
+						priority
+						startDate
+						state {
+							key
+							name
+						}
+						type {
+							key
+							name
+						}
+					}
+				}
+				routines(filter: \\"id eq '${id}'\\") {
+					items {
+						dateCreated
+						dateModified
+						id
+						name
+						jobName
+						jobParameters
+						jobPriority
+						jobType {
+							key
+							name
+						}
+						type {
+							key
+							name
+						}
+					}
+				}
+			}
+		}`,
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+		urlPath: '/o/graphql',
+	});
+
+	const result = JSON.parse(await response.text());
+
+	const jobs = [];
+
+	for (const jobsJSON of result.data.c.jobs.items) {
+		jobs.push(new Job(jobsJSON));
+	}
+
+	for (const routineJSON of result.data.c.routines.items) {
+		const routine = new Routine(routineJSON);
+
+		routine.jobs = jobs;
+
+		if (routine) {
+			if (setRoutine) {
+				setRoutine(routine);
+			}
+
+			return routine;
+		}
 	}
 }
 

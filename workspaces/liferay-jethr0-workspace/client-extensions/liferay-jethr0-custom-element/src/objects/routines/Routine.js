@@ -25,4 +25,6 @@ export default class Routine {
 		this.jobType = jobType;
 		this.type = type;
 	}
+
+	jobs = [];
 }

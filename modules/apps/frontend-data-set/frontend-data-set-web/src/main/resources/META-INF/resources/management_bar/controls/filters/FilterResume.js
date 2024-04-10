@@ -10,9 +10,9 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-import ViewsContext from '../../views/ViewsContext';
-import {VIEWS_ACTION_TYPES} from '../../views/viewsReducer';
-import Filter from './filters/Filter';
+import ViewsContext from '../../../views/ViewsContext';
+import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
+import Filter from './Filter';
 
 function FilterResume(props) {
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);

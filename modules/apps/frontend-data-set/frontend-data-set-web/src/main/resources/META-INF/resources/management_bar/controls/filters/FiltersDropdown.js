@@ -8,8 +8,8 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import React, {useContext, useEffect, useState} from 'react';
 
-import ViewsContext from '../../views/ViewsContext';
-import Filter from './filters/Filter';
+import ViewsContext from '../../../views/ViewsContext';
+import Filter from './Filter';
 
 const FiltersDropdown = () => {
 	const [{filters: initialFilters}] = useContext(ViewsContext);

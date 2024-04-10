@@ -4,7 +4,7 @@
  */
 
 import {IFrontendDataSetContext} from '../../FrontendDataSetContext';
-import {ICreationActionItem} from '../../management_bar/components/CreationMenu';
+import {ICreationActionItem} from '../../management_bar/controls/CreationMenu';
 export declare function triggerAction(
 	item: ICreationActionItem,
 	context: IFrontendDataSetContext

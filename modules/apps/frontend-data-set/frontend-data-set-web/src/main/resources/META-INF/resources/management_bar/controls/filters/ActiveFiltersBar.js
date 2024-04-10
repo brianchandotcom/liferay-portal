@@ -7,8 +7,8 @@ import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import ViewsContext from '../../views/ViewsContext';
-import {VIEWS_ACTION_TYPES} from '../../views/viewsReducer';
+import ViewsContext from '../../../views/ViewsContext';
+import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
 import FilterResume from './FilterResume';
 
 function ActiveFiltersBar({disabled}) {

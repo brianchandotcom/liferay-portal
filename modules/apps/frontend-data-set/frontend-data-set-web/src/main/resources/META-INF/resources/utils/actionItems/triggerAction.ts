@@ -6,7 +6,7 @@
 import {navigate} from 'frontend-js-web';
 
 import {IFrontendDataSetContext} from '../../FrontendDataSetContext';
-import {ICreationActionItem} from '../../management_bar/components/CreationMenu';
+import {ICreationActionItem} from '../../management_bar/controls/CreationMenu';
 import {OPEN_MODAL, OPEN_SIDE_PANEL} from '../../utils/eventsDefinitions';
 import {resolveModalSize} from '../../utils/modals/resolveModalSize';
 import {ACTION_ITEM_TARGETS} from './constants';

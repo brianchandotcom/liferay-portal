@@ -6,9 +6,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import ActiveFiltersBar from './components/ActiveFiltersBar';
-import BulkActions from './components/BulkActions';
-import NavBar from './components/NavBar';
+import BulkActions from './controls/BulkActions';
+import NavBar from './controls/NavBar';
+import ActiveFiltersBar from './controls/filters/ActiveFiltersBar';
 
 function ManagementBar({
 	bulkActions,

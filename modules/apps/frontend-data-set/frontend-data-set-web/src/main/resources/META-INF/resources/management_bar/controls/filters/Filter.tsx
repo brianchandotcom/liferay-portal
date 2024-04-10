@@ -15,13 +15,7 @@ import ViewsContext from '../../../views/ViewsContext';
 
 import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
 import clientExtensionFilterImplementation from './implementation/ClientExtensionFilter';
-
-// @ts-ignore
-
 import dateRangeFilterImplementation from './implementation/DateRangeFilter';
-
-// @ts-ignore
-
 import selectionFilterImplementation from './implementation/SelectionFilter';
 
 export interface FilterImplementation<

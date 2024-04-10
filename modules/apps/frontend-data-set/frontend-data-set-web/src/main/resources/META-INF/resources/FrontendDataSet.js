@@ -26,8 +26,8 @@ import ClayEmptyState from '@clayui/empty-state';
 
 import FrontendDataSetContext from './FrontendDataSetContext';
 import ManagementBar from './management_bar/ManagementBar';
-import CreationMenu from './management_bar/components/CreationMenu';
-import {FILTER_IMPLEMENTATIONS} from './management_bar/components/filters/Filter';
+import CreationMenu from './management_bar/controls/CreationMenu';
+import {FILTER_IMPLEMENTATIONS} from './management_bar/controls/filters/Filter';
 import Modal from './modal/Modal';
 import SidePanel from './side_panel/SidePanel';
 import filterCreationActions from './utils/actionItems/filterCreationActions';

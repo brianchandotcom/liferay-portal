@@ -13,8 +13,8 @@ import ViewsContext from '../../views/ViewsContext';
 import ActiveViewSelector from './ActiveViewSelector';
 import CreationMenu from './CreationMenu';
 import CustomViewsControls from './CustomViewsControls';
-import FiltersDropdown from './FiltersDropdown';
 import MainSearch from './MainSearch';
+import FiltersDropdown from './filters/FiltersDropdown';
 
 function NavBar({creationMenu, showSearch}) {
 	const [{customViewsEnabled, filters, views}] = useContext(ViewsContext);

@@ -148,8 +148,8 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 				userId, groupId,
 				targetLayoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true,
-				serviceContext);
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				copyPermissions, serviceContext);
 		}
 
 		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =

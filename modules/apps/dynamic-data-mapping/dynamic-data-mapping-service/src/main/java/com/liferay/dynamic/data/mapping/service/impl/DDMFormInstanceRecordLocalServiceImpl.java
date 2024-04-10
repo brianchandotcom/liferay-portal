@@ -737,6 +737,10 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 		long primaryKey = ddmStorageAdapterSaveResponse.getPrimaryKey();
 
+		if (primaryKey == 0) {
+			return primaryKey;
+		}
+
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
 		DDMStructureVersion ddmStructureVersion =

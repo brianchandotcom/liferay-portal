@@ -89,10 +89,6 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	@Override
 	public boolean isEnabled(HttpServletRequest httpServletRequest) {
-		if (_captchaConfiguration.maxChallenges() == 0) {
-			return true;
-		}
-
 		if (_captchaConfiguration.maxChallenges() > 0) {
 			HttpSession httpSession = _getHttpSession(httpServletRequest);
 
@@ -105,6 +101,10 @@ public class SimpleCaptchaImpl implements Captcha {
 				return false;
 			}
 
+			return true;
+		}
+
+		if (_captchaConfiguration.maxChallenges() >= 0) {
 			return true;
 		}
 

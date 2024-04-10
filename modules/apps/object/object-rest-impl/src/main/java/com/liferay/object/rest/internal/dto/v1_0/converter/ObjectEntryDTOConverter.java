@@ -720,6 +720,9 @@ public class ObjectEntryDTOConverter
 					if (localizedValue != null) {
 						serializable = localizedValue;
 					}
+					else {
+						serializable = "";
+					}
 				}
 			}
 

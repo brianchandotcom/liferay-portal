@@ -67,6 +67,10 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	public void appendChild(TemplateNode templateNode) {
 		_childTemplateNodes.put(templateNode.getName(), templateNode);
 
+		if (Objects.equals(templateNode.getName(), "data")) {
+			put(_RANDOM_ID + "Data", _getData());
+		}
+
 		if (Objects.equals(templateNode.getName(), "name")) {
 			put(_RANDOM_ID + "Name", getName());
 		}
@@ -178,7 +182,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 			return _getGeolocationData();
 		}
 
-		return (String)get("data");
+		return _getData();
 	}
 
 	public String getFriendlyUrl() {
@@ -239,7 +243,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 			return StringPool.BLANK;
 		}
 
-		String data = (String)get("data");
+		String data = _getData();
 
 		if (!JSONUtil.isJSONObject(data)) {
 			return StringPool.BLANK;
@@ -269,7 +273,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	private String _getColorData() {
-		String data = (String)get("data");
+		String data = _getData();
 
 		if (data.startsWith(StringPool.POUND)) {
 			return data;
@@ -278,12 +282,22 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		return StringPool.POUND + data;
 	}
 
+	private String _getData() {
+		if (super.containsKey(_RANDOM_ID + "Data") ||
+			Validator.isNotNull((String)get(_RANDOM_ID + "Data"))) {
+
+			return (String)get(_RANDOM_ID + "Data");
+		}
+
+		return (String)get("data");
+	}
+
 	private String _getDDMJournalArticleFriendlyURL() {
 		if (_themeDisplay == null) {
 			return StringPool.BLANK;
 		}
 
-		String data = (String)get("data");
+		String data = _getData();
 
 		try {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
@@ -330,7 +344,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	private String _getFileEntryData() {
-		String data = (String)get("data");
+		String data = _getData();
 
 		try {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
@@ -360,7 +374,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	private String _getGeolocationData() {
-		String data = (String)get("data");
+		String data = _getData();
 
 		if (Validator.isNull(data)) {
 			return StringPool.BLANK;
@@ -395,7 +409,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	private String _getLatestArticleData() {
-		String data = (String)get("data");
+		String data = _getData();
 
 		try {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
@@ -459,11 +473,11 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 			}
 		}
 
-		return (String)get("data");
+		return _getData();
 	}
 
 	private String _getNumericData() {
-		String data = (String)get("data");
+		String data = _getData();
 
 		DecimalFormat decimalFormat = (DecimalFormat)DecimalFormat.getInstance(
 			LocaleUtil.getMostRelevantLocale());

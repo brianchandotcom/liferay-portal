@@ -20,6 +20,7 @@ export {default as unloadReducer} from './unloadReducer';
 export {default as updateColSize} from './updateColSize';
 export {default as updateEditableValues} from './updateEditableValues';
 export {default as updateFragmentEntryLinkContent} from './updateFragmentEntryLinkContent';
+export {default as updateFragmentEntryLinksContent} from './updateFragmentEntryLinksContent';
 export {default as updateLanguageId} from './updateLanguageId';
 export {default as updateNetwork} from './updateNetwork';
 export {default as updateRule} from './updateRule';

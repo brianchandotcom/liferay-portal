@@ -119,23 +119,27 @@ declare const _default: {
 		onNetworkStatus: OnNetworkStatus;
 		resolved: boolean;
 	}): Promise<FragmentEntryLinkComment>;
-	renderFragmentEntryLinkContent({
-		fragmentEntryLinkId,
-		itemClassName,
-		itemClassPK,
-		itemExternalReferenceCode,
+	renderFragmentEntryLinksContent({
+		data,
 		languageId,
 		segmentsExperienceId,
 	}: {
-		fragmentEntryLinkId: string;
-		itemClassName?: string | null | undefined;
-		itemClassPK?: string | null | undefined;
-		itemExternalReferenceCode?: string | null | undefined;
-		languageId: Liferay.Language.Locale;
+		data: Array<{
+			fragmentEntryLinkId: string;
+			itemClassName?: string | null;
+			itemClassPK?: string | null;
+			itemExternalReferenceCode?: string | null;
+		}>;
+		languageId: string;
 		segmentsExperienceId: string;
-	}): Promise<{
-		content: string;
-	}>;
+	}): Promise<
+		[
+			{
+				content: string;
+				fragmentEntryLinkId: string;
+			}
+		]
+	>;
 	toggleFragmentHighlighted({
 		fragmentEntryKey,
 		groupId,

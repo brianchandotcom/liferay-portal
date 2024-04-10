@@ -18,6 +18,7 @@ import updateEditableValues from '../actions/updateEditableValues';
 import updateFormItemConfig from '../actions/updateFormItemConfig';
 import updateFragmentEntryLinkConfiguration from '../actions/updateFragmentEntryLinkConfiguration';
 import updateFragmentEntryLinkContent from '../actions/updateFragmentEntryLinkContent';
+import updateFragmentEntryLinksContent from '../actions/updateFragmentEntryLinksContent';
 import updatePreviewImage from '../actions/updatePreviewImage';
 export declare const INITIAL_STATE: FragmentEntryLinkMap;
 export default function fragmentEntryLinksReducer(
@@ -36,6 +37,7 @@ export default function fragmentEntryLinksReducer(
 		| typeof updateFormItemConfig
 		| typeof updateFragmentEntryLinkConfiguration
 		| typeof updateFragmentEntryLinkContent
+		| typeof updateFragmentEntryLinksContent
 		| typeof updatePreviewImage
 	>
 ): FragmentEntryLinkMap;

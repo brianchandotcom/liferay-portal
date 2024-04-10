@@ -6,8 +6,8 @@
 /// <reference types="react" />
 
 import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
-import {FDSViewType} from '../FDSViews';
-import '../../css/Filters.scss';
+import {FDSViewType} from '../../FDSViews';
+import '../../../css/Filters.scss';
 interface IProps {
 	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsView: FDSViewType;

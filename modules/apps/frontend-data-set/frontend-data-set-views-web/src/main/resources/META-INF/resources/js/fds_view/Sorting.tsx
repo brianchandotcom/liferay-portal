@@ -478,10 +478,8 @@ const Sorting = ({fdsView, namespace}: IFDSViewSectionProps) => {
 
 			setFDSSorts([...notOrdered, ...ordered]);
 
-			await getFields(fdsView).then((newFields) => {
-				if (newFields) {
-					setFields(newFields);
-				}
+			await getFields(fdsView).then((fields) => {
+				setFields(fields);
 			});
 
 			setLoading(false);

@@ -22,6 +22,7 @@ import com.liferay.testray.rest.resource.v1_0.TestrayRunComparisonResource;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -48,8 +49,8 @@ public class TestrayRunComparisonResourceImpl
 		throws Exception {
 
 		Set<Map<String, Serializable>> set = _getMergedTestrayCaseResults(
-			ParamUtil.getString(contextHttpServletRequest, "filter"),
-			testrayRunId1, testrayRunId2);
+			ParamUtil.getString(contextHttpServletRequest, "filter"), null,
+			null, null, null, null, null, testrayRunId1, testrayRunId2);
 
 		Map<String, Map<String, Serializable>> testrayComponentsMap =
 			_getObjectEntriesMap(
@@ -75,6 +76,35 @@ public class TestrayRunComparisonResourceImpl
 								testrayRunId2),
 							"c_teamId", "Team"),
 						set)
+				).build()
+			).toArray());
+
+		return testrayRunComparison;
+	}
+
+	@Override
+	public TestrayRunComparison getTestrayRunComparisonDetail(
+			Long testrayRunId1, Long testrayRunId2,
+			String testrayCaseResultError1, String testrayCaseResultError2,
+			String testrayCaseResultIssue1, String testrayCaseResultIssue2,
+			String testrayCaseResultStatus1, String testrayCaseResultStatus2,
+			Filter filter)
+		throws Exception {
+
+		TestrayRunComparison testrayRunComparison = new TestrayRunComparison();
+
+		testrayRunComparison.setResults(
+			ListUtil.fromArray(
+				HashMapBuilder.<String, Object>put(
+					"Runs",
+					_getTestrayRunComparisons(
+						_getMergedTestrayCaseResults(
+							ParamUtil.getString(
+								contextHttpServletRequest, "filter"),
+							testrayCaseResultError1, testrayCaseResultError2,
+							testrayCaseResultIssue1, testrayCaseResultIssue2,
+							testrayCaseResultStatus1, testrayCaseResultStatus2,
+							testrayRunId1, testrayRunId2))
 				).build()
 			).toArray());
 
@@ -111,21 +141,6 @@ public class TestrayRunComparisonResourceImpl
 			count + 1);
 	}
 
-	private String _getCaseResultFilterString(
-		String filter, long testrayRunId) {
-
-		StringBundler sb = new StringBundler("runId eq '" + testrayRunId + "'");
-
-		if (Validator.isNull(filter)) {
-			return sb.toString();
-		}
-
-		sb.append(" and ");
-		sb.append(filter);
-
-		return sb.toString();
-	}
-
 	private String _getComponentFilterString(
 		String prefix, long testrayRunId1, long testrayRunId2) {
 
@@ -144,18 +159,32 @@ public class TestrayRunComparisonResourceImpl
 	}
 
 	private Set<Map<String, Serializable>> _getMergedTestrayCaseResults(
-			String filter, long testrayRunId1, long testrayRunId2)
+			String filter, String testrayCaseResultError1,
+			String testrayCaseResultError2, String testrayCaseResultIssue1,
+			String testrayCaseResultIssue2, String testrayCaseResultStatus1,
+			String testrayCaseResultStatus2, long testrayRunId1,
+			long testrayRunId2)
 		throws Exception {
 
 		Set<Map<String, Serializable>> set = new HashSet<>();
 
 		Map<String, Map<String, Serializable>> testrayCaseResultsMap1 =
 			_getObjectEntriesMap(
-				_getCaseResultFilterString(filter, testrayRunId1),
+				_merge(
+					ListUtil.fromArray(
+						"runId eq '" + testrayRunId1 + "'", filter,
+						testrayCaseResultError1, testrayCaseResultIssue1,
+						testrayCaseResultStatus1),
+					" and "),
 				"r_caseToCaseResult_c_caseId", "CaseResult");
 		Map<String, Map<String, Serializable>> testrayCaseResultsMap2 =
 			_getObjectEntriesMap(
-				_getCaseResultFilterString(filter, testrayRunId2),
+				_merge(
+					ListUtil.fromArray(
+						"runId eq '" + testrayRunId2 + "'", filter,
+						testrayCaseResultError2, testrayCaseResultIssue2,
+						testrayCaseResultStatus2),
+					" and "),
 				"r_caseToCaseResult_c_caseId", "CaseResult");
 
 		for (Map.Entry<String, Map<String, Serializable>> entry :
@@ -281,6 +310,28 @@ public class TestrayRunComparisonResourceImpl
 		}
 
 		return testrayTeamComparisonsMap;
+	}
+
+	private String _merge(Collection<?> col, String delimiter) {
+		StringBundler sb = new StringBundler(2 * col.size());
+
+		for (Object object : col) {
+			if (Validator.isNull(object)) {
+				continue;
+			}
+
+			String objectString = String.valueOf(object);
+
+			sb.append(objectString.trim());
+
+			sb.append(delimiter);
+		}
+
+		if (!delimiter.isEmpty()) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	private Map<String, Serializable> _mergeTestrayCaseResults(

@@ -14,8 +14,8 @@ import classNames from 'classnames';
 import fuzzy from 'fuzzy';
 import React, {useState} from 'react';
 
-import {IPickList} from '../../utils/types';
-import CheckboxMultiSelect from '../CheckboxMultiSelect';
+import CheckboxMultiSelect from '../../../components/CheckboxMultiSelect';
+import {IPickList} from '../../../utils/types';
 
 function Header() {
 	return <>{Liferay.Language.get('new-selection-filter')}</>;

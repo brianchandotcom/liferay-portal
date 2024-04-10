@@ -371,8 +371,8 @@
 													"frequencyThreshold": "1",
 													"maxTerms": "10",
 													"order": "key:asc",
-													"parameterName": "Release Status Previous",
-													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Release Status Previous$]"
+													"parameterName": "Release Status Current",
+													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Release Status Current$]"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
@@ -395,8 +395,8 @@
 													"frequencyThreshold": "1",
 													"maxTerms": "10",
 													"order": "key:asc",
-													"parameterName": "Release Status Current",
-													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Release Status Current$]"
+													"parameterName": "Release Status Previous",
+													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Release Status Previous$]"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}

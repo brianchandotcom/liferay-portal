@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -78,6 +79,10 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 		if (Objects.equals(templateNode.getName(), "name")) {
 			put(_RANDOM_ID + "Name", getName());
+		}
+
+		if (Objects.equals(templateNode.getName(), "options")) {
+			put(_RANDOM_ID + "Options", getOptions());
 		}
 
 		put(templateNode.getName(), templateNode);
@@ -229,6 +234,12 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	public List<String> getOptions() {
+		if (super.containsKey(_RANDOM_ID + "Options") ||
+			ListUtil.isNotEmpty((List<String>)get(_RANDOM_ID + "Options"))) {
+
+			return (List<String>)get(_RANDOM_ID + "Options");
+		}
+
 		return (List<String>)get("options");
 	}
 

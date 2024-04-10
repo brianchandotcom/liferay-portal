@@ -26,12 +26,13 @@ import getValueFromItem from '../../../../utils/getValueFromItem';
 
 import {isValuesArrayChanged} from '../../../../utils/index';
 import {FilterImplementation, FilterImplementationArgs} from '../Filter';
+import {EEntityFieldType} from '../utils/types';
 
 export interface SelectionFilterImplementationArgs
 	extends FilterImplementationArgs<SelectedData> {
 	apiURL: string;
 	autocompleteEnabled: boolean;
-	entityFieldType: string;
+	entityFieldType: EEntityFieldType;
 	inputPlaceholder: string;
 	itemKey: string;
 	itemLabel: string;
@@ -112,12 +113,13 @@ function getOdataString({
 	}
 
 	const quotedSelectedItems = selectedItems.map((item) =>
-		typeof item.value === 'string' || entityFieldType === 'string'
+		typeof item.value === 'string' ||
+		entityFieldType === EEntityFieldType.STRING
 			? `'${item.value}'`
 			: item.value
 	);
 
-	if (entityFieldType === 'collection') {
+	if (entityFieldType === EEntityFieldType.COLLECTION) {
 		return `${id}/any(x:${quotedSelectedItems
 			.map((value) => `(x ${exclude ? 'ne' : 'eq'} ${value})`)
 			.join(exclude ? ' and ' : ' or ')})`;

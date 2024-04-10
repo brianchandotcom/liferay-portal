@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -139,16 +138,8 @@ public class EditCommercePaymentEntryMVCActionCommand
 		long commercePaymentEntryId = ParamUtil.getLong(
 			actionRequest, "commercePaymentEntryId");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String amount = ParamUtil.getString(
-			actionRequest, "amount", BigDecimal.ZERO.toString());
-
-		amount = _commercePriceFormatter.parse(
-			amount, themeDisplay.getLocale());
-
-		BigDecimal formattedAmount = new BigDecimal(amount);
+		BigDecimal formattedAmount = new BigDecimal(
+			_commercePriceFormatter.parse(actionRequest, "amount"));
 
 		String reasonKey = ParamUtil.getString(actionRequest, "reasonKey");
 
@@ -175,30 +166,20 @@ public class EditCommercePaymentEntryMVCActionCommand
 				curCommercePaymentEntry.getType());
 		}
 
-		long commerceChannelId = ParamUtil.getLong(
-			actionRequest, "commerceChannelId");
-		String className = ParamUtil.getString(actionRequest, "className");
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-		String currencyCode = ParamUtil.getString(
-			actionRequest, "currencyCode");
-		String languageId = ParamUtil.getString(actionRequest, "languageId");
-		String paymentIntegrationKey = ParamUtil.getString(
-			actionRequest, "paymentIntegrationKey");
-		int paymentIntegrationType = ParamUtil.getInteger(
-			actionRequest, "paymentIntegrationType");
-		String transactionCode = ParamUtil.getString(
-			actionRequest, "transactionCode");
-		int type = ParamUtil.getInteger(actionRequest, "type");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommercePaymentEntry.class.getName(), actionRequest);
-
 		return _commercePaymentEntryService.addCommercePaymentEntry(
-			_classNameLocalService.getClassNameId(className), classPK,
-			commerceChannelId, formattedAmount, StringPool.BLANK,
-			StringPool.BLANK, currencyCode, languageId, StringPool.BLANK,
-			paymentIntegrationKey, paymentIntegrationType, reasonKey,
-			transactionCode, type, serviceContext);
+			_classNameLocalService.getClassNameId(
+				ParamUtil.getString(actionRequest, "className")),
+			ParamUtil.getLong(actionRequest, "classPK"),
+			ParamUtil.getLong(actionRequest, "commerceChannelId"),
+			formattedAmount, StringPool.BLANK, StringPool.BLANK,
+			ParamUtil.getString(actionRequest, "currencyCode"),
+			ParamUtil.getString(actionRequest, "languageId"), StringPool.BLANK,
+			ParamUtil.getString(actionRequest, "paymentIntegrationKey"),
+			ParamUtil.getInteger(actionRequest, "paymentIntegrationType"),
+			reasonKey, ParamUtil.getString(actionRequest, "transactionCode"),
+			ParamUtil.getInteger(actionRequest, "type"),
+			ServiceContextFactory.getInstance(
+				CommercePaymentEntry.class.getName(), actionRequest));
 	}
 
 	@Reference

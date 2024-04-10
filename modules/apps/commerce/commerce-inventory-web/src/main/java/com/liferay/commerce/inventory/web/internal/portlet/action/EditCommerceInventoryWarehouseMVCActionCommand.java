@@ -22,11 +22,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionC
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -91,27 +89,15 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 	private void _addCommerceInventoryWarehouse(ActionRequest actionRequest)
 		throws Exception {
 
-		long commerceInventoryWarehouseId = ParamUtil.getLong(
-			actionRequest, "commerceInventoryWarehouseId");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String quantity = ParamUtil.getString(
-			actionRequest, "quantity", BigDecimal.ZERO.toString());
-
-		BigDecimal formattedQuantity =
-			_commerceOrderItemQuantityFormatter.parse(
-				quantity, themeDisplay.getLocale());
-
-		String sku = ParamUtil.getString(actionRequest, "sku");
-		String unitOfMeasure = ParamUtil.getString(
-			actionRequest, "unitOfMeasure");
-
 		_commerceInventoryWarehouseItemService.
 			addCommerceInventoryWarehouseItem(
-				StringPool.BLANK, commerceInventoryWarehouseId,
-				formattedQuantity, sku, unitOfMeasure);
+				StringPool.BLANK,
+				ParamUtil.getLong(
+					actionRequest, "commerceInventoryWarehouseId"),
+				_commerceOrderItemQuantityFormatter.parse(
+					actionRequest, "quantity"),
+				ParamUtil.getString(actionRequest, "sku"),
+				ParamUtil.getString(actionRequest, "unitOfMeasure"));
 	}
 
 	private void _deleteCommerceInventoryWarehouse(ActionRequest actionRequest)
@@ -147,15 +133,9 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 				fetchCommerceInventoryWarehouseItem(
 					commerceInventoryWarehouseId, sku, unitOfMeasureKey);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String quantity = ParamUtil.getString(
-			actionRequest, "quantity", BigDecimal.ZERO.toString());
-
 		BigDecimal formattedQuantity =
 			_commerceOrderItemQuantityFormatter.parse(
-				quantity, themeDisplay.getLocale());
+				actionRequest, "quantity");
 
 		if (commerceInventoryWarehouseItem == null) {
 			_commerceInventoryWarehouseItemService.

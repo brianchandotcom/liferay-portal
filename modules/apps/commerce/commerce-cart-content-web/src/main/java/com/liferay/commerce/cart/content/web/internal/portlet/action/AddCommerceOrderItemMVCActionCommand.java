@@ -27,11 +27,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -98,18 +96,12 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 					httpServletRequest);
 			}
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(), cpInstanceId,
 					formFieldValues,
 					_commerceOrderItemQuantityFormatter.parse(
-						ParamUtil.getString(
-							actionRequest, "quantity",
-							BigDecimal.ZERO.toString()),
-						themeDisplay.getLocale()),
+						actionRequest, "quantity"),
 					0, BigDecimal.ZERO,
 					ParamUtil.getString(actionRequest, "unitOfMeasureKey"),
 					(CommerceContext)httpServletRequest.getAttribute(

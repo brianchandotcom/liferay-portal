@@ -35,6 +35,8 @@ export default function TranslationFilter({
 	const {
 		defaultLanguageId,
 		selectedLanguageId,
+		translationProgress,
+		translations,
 		updateTranslations,
 	} = useTranslationProgress({
 		defaultLanguageId: initialDefaultLanguageId,
@@ -45,9 +47,80 @@ export default function TranslationFilter({
 	});
 
 	const handleSelection = (option: React.Key) => {
-		Liferay.fire('inputLocalized:translationFilterChange', {option})
-		setSelectedKey(option as string)
-	}
+		Liferay.fire('inputLocalized:translationFilterChange', {option});
+
+		const metadataWrapper = document.getElementById(namespace + 'metadata');
+		const contentWrapper = document.getElementById(namespace + 'content');
+		const emptyPlaceholder = document.getElementById('emptyPlaceHolder');
+
+		translations.map((field) => {
+			if (Object.keys(initialFields).includes(field.fieldName)) {
+				const fieldNode = document.getElementById(
+					namespace + field.fieldName + 'Wrapper'
+				);
+				if (
+					fieldNode &&
+					metadataWrapper &&
+					contentWrapper &&
+					emptyPlaceholder
+				) {
+					switch (option) {
+						case 'translated':
+							if (!field.languages.includes(selectedLanguageId)) {
+								fieldNode.hidden = true;
+							}
+							else {
+								fieldNode.hidden = false;
+							}
+							if (
+								!translationProgress?.translatedItems[
+									selectedLanguageId
+								]
+							) {
+								metadataWrapper.hidden = true;
+								contentWrapper.hidden = true;
+								emptyPlaceholder.hidden = false;
+							}
+							else {
+								metadataWrapper.hidden = false;
+								contentWrapper.hidden = false;
+								emptyPlaceholder.hidden = true;
+							}
+							break;
+						case 'untranslated':
+							if (field.languages.includes(selectedLanguageId)) {
+								fieldNode.hidden = true;
+							}
+							else {
+								fieldNode.hidden = false;
+							}
+							if (
+								translationProgress?.totalItems ===
+								translationProgress?.translatedItems[
+									selectedLanguageId
+								]
+							) {
+								metadataWrapper.hidden = true;
+								contentWrapper.hidden = true;
+								emptyPlaceholder.hidden = false;
+							}
+							else {
+								metadataWrapper.hidden = false;
+								contentWrapper.hidden = false;
+								emptyPlaceholder.hidden = true;
+							}
+							break;
+						default:
+							fieldNode.hidden = false;
+							metadataWrapper.hidden = false;
+							contentWrapper.hidden = false;
+							emptyPlaceholder.hidden = true;
+					}
+				}
+			}
+		});
+		setSelectedKey(option as string);
+	};
 
 	return (
 		<>

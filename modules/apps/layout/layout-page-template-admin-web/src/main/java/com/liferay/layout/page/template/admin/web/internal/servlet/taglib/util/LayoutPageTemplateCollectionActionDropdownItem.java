@@ -239,6 +239,8 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
 		).setParameter(
+			"copyPermissions", true
+		).setParameter(
 			"layoutPageTemplateCollectionsIds",
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
 		).setParameter(

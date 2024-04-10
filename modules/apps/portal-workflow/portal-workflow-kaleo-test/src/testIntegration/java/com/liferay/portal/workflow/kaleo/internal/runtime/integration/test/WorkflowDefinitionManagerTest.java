@@ -75,6 +75,65 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 	}
 
 	@Test
+	public void testDeployJavaWorkflowDefinition() throws Exception {
+
+		// Custom workflow definition, Java based scripts,
+		// allowScriptContentToBeExecutedOrIncluded false
+
+		String content1 = StringUtil.read(
+			getResourceInputStream(
+				"java-based-condition-node-workflow-definition.xml"));
+
+		try (Closeable closeable =
+				ScriptManagementConfigurationTestUtil.disable()) {
+
+			AssertUtils.assertFailure(
+				KaleoDefinitionValidationException.NotAllowedScriptLanguage.
+					class,
+				"Java is not allowed",
+				() -> _workflowDefinitionManager.deployWorkflowDefinition(
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					StringPool.BLANK, "Java Workflow Definition",
+					content1.getBytes()));
+		}
+
+		// Custom workflow definition, Java based scripts,
+		// allowScriptContentToBeExecutedOrIncluded true
+
+		Assert.assertNotNull(
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				StringPool.BLANK, "Java Workflow Definition",
+				content1.getBytes()));
+
+		// System workflow definition, Java based scripts,
+		// allowScriptContentToBeExecutedOrIncluded false
+
+		String content2 = StringUtil.read(
+			getResourceInputStream(
+				"message-boards-moderation-workflow-definition.xml"));
+
+		try (Closeable closeable =
+				ScriptManagementConfigurationTestUtil.disable()) {
+
+			Assert.assertNotNull(
+				_workflowDefinitionManager.deployWorkflowDefinition(
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					StringPool.BLANK, "message-boards-user-stats-moderation",
+					content2.getBytes()));
+		}
+
+		// System workflow definition, Java based scripts,
+		// allowScriptContentToBeExecutedOrIncluded true
+
+		Assert.assertNotNull(
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				StringPool.BLANK, "message-boards-user-stats-moderation",
+				content2.getBytes()));
+	}
+
+	@Test
 	public void testDeployWorkflowDefinitionWithContentAsJSON()
 		throws Exception {
 

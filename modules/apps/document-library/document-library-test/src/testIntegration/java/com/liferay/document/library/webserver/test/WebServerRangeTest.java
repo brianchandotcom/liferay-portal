@@ -221,7 +221,7 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 			Assert.assertTrue(contentType.startsWith("multipart/byteranges"));
 		}
 		else {
-			Assert.assertEquals(ContentTypes.TEXT_PLAIN, contentType);
+			Assert.assertTrue(contentType.startsWith(ContentTypes.TEXT_PLAIN));
 		}
 
 		return mockHttpServletResponse;

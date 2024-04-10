@@ -267,6 +267,38 @@ export default {
 		});
 	},
 
+	renderFragmentEntryLinksContent({
+		data,
+		languageId,
+		segmentsExperienceId,
+	}: {
+		data: Array<{
+			fragmentEntryLinkId: string;
+			itemClassName?: string | null;
+			itemClassPK?: string | null;
+			itemExternalReferenceCode?: string | null;
+		}>;
+		languageId: string;
+		segmentsExperienceId: string;
+	}) {
+		const body: {
+			data: string;
+			languageId: string;
+			segmentsExperienceId: string;
+		} = {
+			data: JSON.stringify(data),
+			languageId,
+			segmentsExperienceId,
+		};
+
+		return serviceFetch<[{content: string; fragmentEntryLinkId: string}]>(
+			config.renderFragmentEntriesURL,
+			{
+				body,
+			}
+		);
+	},
+
 	toggleFragmentHighlighted({
 		fragmentEntryKey,
 		groupId = '0',

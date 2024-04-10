@@ -151,10 +151,7 @@ public class NotificationTemplateResourceTest
 		JSONAssert.assertEquals(
 			jsonArray.toString(), jsonObject.getString("recipients"),
 			JSONCompareMode.NON_EXTENSIBLE);
-	}
 
-	@Test
-	public void testPostNotificationTemplateBatch() throws Exception {
 		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"editorType",

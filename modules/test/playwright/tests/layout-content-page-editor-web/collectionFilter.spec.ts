@@ -141,7 +141,7 @@ const createPageWithCollectionAndFilterCollection = async ({
 	});
 };
 
-test('Filter a web content collection by single and multiple categories', async ({
+test('filters a web content collection by single and multiple categories', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -262,6 +262,113 @@ test('Filter a web content collection by single and multiple categories', async 
 	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
 	await selectFilter(page, ['dogs', 'cats']);
+
+	await expect(page.getByText(webContents[0].name)).toBeVisible();
+	await expect(page.getByText(webContents[1].name)).toBeVisible();
+	await expect(page.getByText(webContents[2].name)).not.toBeVisible();
+});
+
+test('filters a web content collection by single and multiple tags', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+
+	// Create two tags
+
+	const tags = [];
+
+	for (const tagName of ['Dogs', 'Cats']) {
+		tags.push(
+			await apiHelpers.headlessAdminTaxonomy.createTag({
+				name: tagName,
+				siteId: site.id,
+			})
+		);
+	}
+
+	// Create two Web Contents with tags
+
+	const contentStructureId = await getBasicWebContentStructureId(apiHelpers);
+	const webContents = [
+		{
+			name: 'Web content with the tag Dogs',
+			tags: [tags[0].name],
+		},
+		{
+			name: 'Web content with the tags of Dogs and Cats',
+			tags: [tags[0].name, tags[1].name],
+		},
+		{
+			name: 'Web content without tags',
+		},
+	];
+
+	for (const {name, tags} of webContents) {
+		await addApprovedStructuredContent({
+			apiHelpers,
+			contentStructureId,
+			siteId: site.id,
+			tags,
+			title: name,
+		});
+	}
+
+	// Create a dynamic collection with the previous Web Contents
+
+	await createCollection(page, site.friendlyUrlPath);
+
+	// Create a page with Collection Display and Collection Filter fragments
+
+	const collectionFilterId = getRandomString();
+
+	const layout = await createPageWithCollectionAndFilterCollection({
+		apiHelpers,
+		collectionFilterId,
+		page,
+		siteId: site.id,
+	});
+
+	// Go to edit mode of the created page and select the Collection Filter fragment
+
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+
+	await pageEditorPage.selectFragment(collectionFilterId);
+
+	// Set Filter configuration for tags
+
+	await page.getByLabel('Select', {exact: true}).click();
+
+	await page.getByLabel('Animal Collection').check();
+
+	await page.getByLabel('Filter', {exact: true}).selectOption('tags');
+
+	// Publish the page and go to the view mode
+
+	await pageEditorPage.publishPage();
+
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+	for (const {name} of webContents) {
+		await expect(page.getByText(name)).toBeVisible();
+	}
+
+	// Select tag filter: Cats
+
+	await page.getByLabel('', {exact: true}).click();
+
+	await page.getByRole('option', {name: 'Cats'}).click();
+
+	await expect(page.getByText(webContents[0].name)).not.toBeVisible();
+	await expect(page.getByText(webContents[1].name)).toBeVisible();
+	await expect(page.getByText(webContents[2].name)).not.toBeVisible();
+
+	// Select tag filter: Cats and Dogs
+
+	await page.getByLabel('', {exact: true}).click();
+
+	await page.getByRole('option', {name: 'Dogs'}).click();
 
 	await expect(page.getByText(webContents[0].name)).toBeVisible();
 	await expect(page.getByText(webContents[1].name)).toBeVisible();

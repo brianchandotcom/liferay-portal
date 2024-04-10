@@ -109,7 +109,7 @@ const RequiredProperty = () => {
 	);
 };
 
-const TooltipProperty = ({showPopover = false, tooltip}) => {
+const FieldInformation = ({showPopover = false, tooltip}) => {
 	return showPopover ? (
 		<Popover tooltip={tooltip} />
 	) : Liferay.FeatureFlags['LPS-114700'] ? (
@@ -531,14 +531,14 @@ export default function FieldBase({
 							</label>
 
 							{tooltip && (
-								<TooltipProperty
+								<FieldInformation
 									showPopover={showPopover}
 									tooltip={tooltip}
 								/>
 							)}
 
 							{showDisabledFieldIcon && (
-								<TooltipProperty
+								<FieldInformation
 									tooltip={Liferay.Language.get(
 										'this-field-cannot-be-localized'
 									)}
@@ -572,14 +572,14 @@ export default function FieldBase({
 							</label>
 
 							{showLabel && tooltip && (
-								<TooltipProperty
+								<FieldInformation
 									showPopover={showPopover}
 									tooltip={tooltip}
 								/>
 							)}
 
 							{showDisabledFieldIcon && (
-								<TooltipProperty
+								<FieldInformation
 									tooltip={Liferay.Language.get(
 										'this-field-cannot-be-localized'
 									)}
@@ -589,7 +589,7 @@ export default function FieldBase({
 							{children}
 
 							{!showLabel && tooltip && (
-								<TooltipProperty
+								<FieldInformation
 									showPopover={showPopover}
 									tooltip={tooltip}
 								/>

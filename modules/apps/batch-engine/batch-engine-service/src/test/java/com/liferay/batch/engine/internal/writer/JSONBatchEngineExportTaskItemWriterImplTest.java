@@ -40,23 +40,23 @@ public class JSONBatchEngineExportTaskItemWriterImplTest
 	@Test
 	public void testWriteRowsWithDefinedFieldNames2() throws Exception {
 		_testWriteRows(
-			Arrays.asList("createDate", "description", "id", "name"));
+			Arrays.asList("createDate", "description", "id", "map", "name"));
 	}
 
 	@Test
 	public void testWriteRowsWithDefinedFieldNames3() throws Exception {
-		_testWriteRows(Arrays.asList("createDate", "id", "name"));
+		_testWriteRows(Arrays.asList("createDate", "id", "map", "name"));
 	}
 
 	@Test
 	public void testWriteRowsWithDefinedFieldNames4() throws Exception {
 		_testWriteRows(
-			Arrays.asList("id", "name", "description", "createDate"));
+			Arrays.asList("id", "map", "name", "description", "createDate"));
 	}
 
 	@Test
 	public void testWriteRowsWithDefinedFieldNames5() throws Exception {
-		_testWriteRows(Arrays.asList("id", "name", "childItem"));
+		_testWriteRows(Arrays.asList("id", "map", "name", "childItem"));
 	}
 
 	@Test

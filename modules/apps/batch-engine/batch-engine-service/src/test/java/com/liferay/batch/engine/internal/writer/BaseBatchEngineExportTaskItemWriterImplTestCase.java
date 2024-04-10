@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.lang.reflect.Field;
@@ -68,6 +69,10 @@ public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 			return _description;
 		}
 
+		public Map<Object, String> getMap() {
+			return _map;
+		}
+
 		public Map<String, String> getName() {
 			return _name;
 		}
@@ -84,6 +89,10 @@ public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 			_description = description;
 		}
 
+		public void setMap(Map<Object, String> map) {
+			_map = map;
+		}
+
 		public void setName(Map<String, String> name) {
 			_name = name;
 		}
@@ -91,6 +100,7 @@ public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 		private Item _childItem;
 		private Date _createDate;
 		private String _description;
+		private Map<Object, String> _map;
 		private Map<String, String> _name;
 
 	}
@@ -115,6 +125,11 @@ public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 				}
 
 				item.setId((long)(i + j));
+
+				item.setMap(
+					HashMapBuilder.<Object, String>put(
+						LocaleUtil.getDefault(), "test"
+					).build());
 
 				Map<String, String> name = HashMapBuilder.put(
 					"en", "sample name" + i + j
@@ -154,6 +169,11 @@ public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 									name.get(childItemNameKey);
 							});
 					}
+
+					childItem.setMap(
+						HashMapBuilder.<Object, String>put(
+							LocaleUtil.getDefault(), "test"
+						).build());
 
 					childItem.setName(childItemName);
 
@@ -200,6 +220,29 @@ public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 			sb.append(StringPool.COMMA);
 		}
 
+		if (fieldNames.contains("map")) {
+			Map<Object, String> map = item.getMap();
+
+			sb.append("\"map\": {");
+
+			for (Map.Entry<Object, String> entry : map.entrySet()) {
+				if (entry.getValue() == null) {
+					continue;
+				}
+
+				sb.append("\"");
+				sb.append(entry.getKey());
+				sb.append("\": ");
+				sb.append(_formatJSONValue(entry.getValue()));
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			sb.append("}");
+			sb.append(StringPool.COMMA);
+		}
+
 		if (fieldNames.contains("name")) {
 			Map<String, String> name = item.getName();
 
@@ -241,11 +284,11 @@ public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 	}
 
 	protected static final List<String> columnFieldNames = Arrays.asList(
-		"createDate", "description", "id", "name_en", "name_hr");
+		"createDate", "description", "id", "map", "name_en", "name_hr");
 	protected static final DateFormat dateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:ssX");
 	protected static final List<String> jsonFieldNames = Arrays.asList(
-		"childItem", "createDate", "description", "id", "name");
+		"childItem", "createDate", "description", "id", "map", "name");
 
 	protected Map<String, ObjectValuePair<Field, Method>>
 		fieldNameObjectValuePairs = ItemClassIndexUtil.index(Item.class);

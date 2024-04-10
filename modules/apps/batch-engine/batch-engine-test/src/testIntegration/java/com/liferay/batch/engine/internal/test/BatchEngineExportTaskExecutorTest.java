@@ -120,12 +120,15 @@ public class BatchEngineExportTaskExecutorTest
 
 		_exportBlogPostings("CSV", fieldNames, _parameters);
 
+		List<Object[]> rowValuesList = _readRowValuesList(
+			_csvFilterFunction,
+			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
+				_batchEngineExportTask.getBatchEngineExportTaskId()));
+
+		Assert.assertEquals(rowValuesList.toString(), 1, rowValuesList.size());
+
 		_assertExportedValues(
-			Collections.singletonList(blogsEntries.get(1)), fieldNames,
-			_readRowValuesList(
-				_csvFilterFunction,
-				_batchEngineExportTaskLocalService.getBatchEngineExportTask(
-					_batchEngineExportTask.getBatchEngineExportTaskId())));
+			blogsEntries.get(1), fieldNames, rowValuesList.get(0));
 	}
 
 	@Test
@@ -278,85 +281,91 @@ public class BatchEngineExportTaskExecutorTest
 	}
 
 	private void _assertExportedValues(
+			BlogsEntry blogsEntry, List<String> fieldNames, Object[] rowValues)
+		throws Exception {
+
+		Set<String> fieldNamesSet = new HashSet<>(fieldNames);
+
+		int index = 0;
+
+		if (fieldNamesSet.isEmpty() || fieldNamesSet.contains(FIELD_NAMES[0])) {
+			Assert.assertEquals(blogsEntry.getSubtitle(), rowValues[index++]);
+		}
+
+		if (fieldNamesSet.isEmpty() || fieldNamesSet.contains(FIELD_NAMES[1])) {
+			Assert.assertEquals(blogsEntry.getContent(), rowValues[index++]);
+		}
+
+		if (fieldNamesSet.isEmpty() || fieldNamesSet.contains(FIELD_NAMES[2])) {
+			Object value = rowValues[index++];
+
+			if (value instanceof String) {
+				value = dateFormat.parse((String)value);
+			}
+
+			Assert.assertEquals(blogsEntry.getDisplayDate(), value);
+		}
+
+		if (fieldNamesSet.isEmpty() || fieldNamesSet.contains(FIELD_NAMES[3])) {
+			Assert.assertEquals(blogsEntry.getTitle(), rowValues[index++]);
+		}
+
+		if (fieldNamesSet.isEmpty() || fieldNamesSet.contains("id")) {
+			Object value = rowValues[index++];
+
+			if (value instanceof String) {
+				value = GetterUtil.getLong(value);
+			}
+
+			if (value instanceof Double) {
+				Double doubleValue = (Double)value;
+
+				value = doubleValue.longValue();
+			}
+
+			Assert.assertEquals(blogsEntry.getEntryId(), value);
+		}
+
+		if (fieldNamesSet.isEmpty() || fieldNamesSet.contains("siteId")) {
+			Object value = rowValues[index];
+
+			if (value instanceof String) {
+				value = GetterUtil.getLong(value);
+			}
+
+			if (value instanceof Double) {
+				Double doubleValue = (Double)value;
+
+				value = doubleValue.longValue();
+			}
+
+			Assert.assertEquals(blogsEntry.getGroupId(), value);
+		}
+	}
+
+	private void _assertExportedValues(
 			List<BlogsEntry> blogsEntries, List<String> fieldNames,
 			List<Object[]> rowValuesList)
 		throws Exception {
 
-		blogsEntries.sort(Comparator.comparing(BlogsEntry::getSubtitle));
-		rowValuesList.sort(
-			Comparator.comparing(rowValues -> (String)rowValues[0]));
+		blogsEntries.sort(Comparator.comparing(BlogsEntry::getEntryId));
 
-		Set<String> fieldNamesSet = new HashSet<>(fieldNames);
+		if (fieldNames.contains("id")) {
+			rowValuesList.sort(
+				Comparator.comparing(
+					rowValues -> GetterUtil.getLong(
+						rowValues[fieldNames.indexOf("id")])));
+		}
+		else {
+			rowValuesList.sort(
+				Comparator.comparing(rowValues -> (Long)rowValues[4]));
+		}
 
 		for (int i = 0; i < blogsEntries.size(); i++) {
 			BlogsEntry blogsEntry = blogsEntries.get(i);
-			Object[] rowValues = rowValuesList.get(i);
+			Object[] rowValues = rowValuesList.get(i + initialCount);
 
-			int index = 0;
-
-			if (fieldNamesSet.isEmpty() ||
-				fieldNamesSet.contains(FIELD_NAMES[0])) {
-
-				Assert.assertEquals(
-					blogsEntry.getSubtitle(), rowValues[index++]);
-			}
-
-			if (fieldNamesSet.isEmpty() ||
-				fieldNamesSet.contains(FIELD_NAMES[1])) {
-
-				Assert.assertEquals(
-					blogsEntry.getContent(), rowValues[index++]);
-			}
-
-			if (fieldNamesSet.isEmpty() ||
-				fieldNamesSet.contains(FIELD_NAMES[2])) {
-
-				Object value = rowValues[index++];
-
-				if (value instanceof String) {
-					value = dateFormat.parse((String)value);
-				}
-
-				Assert.assertEquals(blogsEntry.getDisplayDate(), value);
-			}
-
-			if (fieldNamesSet.isEmpty() ||
-				fieldNamesSet.contains(FIELD_NAMES[3])) {
-
-				Assert.assertEquals(blogsEntry.getTitle(), rowValues[index++]);
-			}
-
-			if (fieldNamesSet.isEmpty() || fieldNamesSet.contains("id")) {
-				Object value = rowValues[index++];
-
-				if (value instanceof String) {
-					value = GetterUtil.getLong(value);
-				}
-
-				if (value instanceof Double) {
-					Double doubleValue = (Double)value;
-
-					value = doubleValue.longValue();
-				}
-
-				Assert.assertEquals(blogsEntry.getEntryId(), value);
-			}
-
-			if (fieldNamesSet.isEmpty() || fieldNamesSet.contains("siteId")) {
-				Object value = rowValues[index];
-
-				if (value instanceof String) {
-					value = GetterUtil.getLong(value);
-				}
-
-				if (value instanceof Double) {
-					Double doubleValue = (Double)value;
-
-					value = doubleValue.longValue();
-				}
-
-				Assert.assertEquals(blogsEntry.getGroupId(), value);
-			}
+			_assertExportedValues(blogsEntry, fieldNames, rowValues);
 		}
 	}
 
@@ -373,9 +382,11 @@ public class BatchEngineExportTaskExecutorTest
 		}
 		else {
 			Assert.assertEquals(
-				ROWS_COUNT, batchEngineExportTask.getProcessedItemsCount());
+				initialCount + ROWS_COUNT,
+				batchEngineExportTask.getProcessedItemsCount());
 			Assert.assertEquals(
-				ROWS_COUNT, batchEngineExportTask.getTotalItemsCount());
+				initialCount + ROWS_COUNT,
+				batchEngineExportTask.getTotalItemsCount());
 		}
 	}
 

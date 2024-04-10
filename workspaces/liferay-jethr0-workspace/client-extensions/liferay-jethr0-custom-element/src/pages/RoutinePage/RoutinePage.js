@@ -10,12 +10,13 @@ import {useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 
 import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
+import Jethr0ButtonsRow from '../../components/Jethr0ButtonsRow/Jethr0ButtonsRow';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0ContainerFluid';
 import Jethr0InformationField from '../../components/Jethr0InformationField/Jethr0InformationField';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
-import {getRoutineByType} from '../../objects/routines/RoutineUtil'
+import {deleteRoutineById, getRoutineByType} from '../../objects/routines/RoutineUtil'
 
 import {toLocaleString} from '../../services/DateUtil';
 
@@ -159,6 +160,10 @@ function RoutinePage() {
 		);
 	}
 
+	function redirectToRoutinesPage() {
+		window.location.replace('/#/routines');
+	}
+
 	let routineName = 'Routine #' + id;
 
 	if (routine) {
@@ -181,6 +186,19 @@ function RoutinePage() {
 						<Heading level={3} weight="lighter">
 							{routineName}
 						</Heading>
+						<Jethr0ButtonsRow
+							buttons={[
+								{
+									onClick: () => {
+										deleteRoutineById({
+											id,
+											redirect: redirectToRoutinesPage,
+										});
+									},
+									title: 'Delete',
+								},
+							]}
+						/>
 					</ClayLayout.Row>
 				</Jethr0ContainerFluid>
 				<RoutineInformation routine={routine} />

@@ -37,6 +37,7 @@ import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
 
 import '../../../../css/TableVisualizationMode.scss';
 
+import ClayAlert from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 
 import {EFieldType, IFDSField, IField} from '../../../utils/types';
@@ -932,93 +933,107 @@ function Table({
 	};
 
 	return fdsFields ? (
-		<OrderableTable
-			actions={[
-				{
-					icon: 'pencil',
-					label: Liferay.Language.get('edit'),
-					onClick: ({item}: {item: IFDSField}) => {
-						openModal({
-							className: 'overflow-auto',
-							contentComponent: ({
-								closeModal,
-							}: {
-								closeModal: Function;
-							}) => (
-								<EditFDSFieldModalContent
-									closeModal={closeModal}
-									fdsClientExtensionCellRenderers={
+		<ClayLayout.ContentCol className="c-gap-4">
+			<ClayAlert
+				displayType="info"
+				title={`${Liferay.Language.get('info')}:`}
+				variant="stripe"
+			>
+				{Liferay.Language.get(
+					'this-visualization-mode-will-not-be-shown-until-you-assign-at-least-one-field'
+				)}
+			</ClayAlert>
+
+			<OrderableTable
+				actions={[
+					{
+						icon: 'pencil',
+						label: Liferay.Language.get('edit'),
+						onClick: ({item}: {item: IFDSField}) => {
+							openModal({
+								className: 'overflow-auto',
+								contentComponent: ({
+									closeModal,
+								}: {
+									closeModal: Function;
+								}) => (
+									<EditFDSFieldModalContent
+										closeModal={closeModal}
+										fdsClientExtensionCellRenderers={
+											fdsClientExtensionCellRenderers
+										}
+										fdsField={item}
+										namespace={namespace}
+										onSave={onEditFDSField}
+									/>
+								),
+							});
+						},
+					},
+					{
+						icon: 'trash',
+						label: Liferay.Language.get('delete'),
+						onClick: handleDelete,
+					},
+				]}
+				creationMenuItems={[
+					{
+						label: Liferay.Language.get('add-fields'),
+						onClick: onCreationButtonClick,
+					},
+				]}
+				fields={[
+					{
+						label: Liferay.Language.get('name'),
+						name: 'name',
+					},
+					{
+						label: Liferay.Language.get('label'),
+						name: 'label',
+					},
+					{
+						label: Liferay.Language.get('type'),
+						name: 'type',
+					},
+					{
+						contentRenderer: {
+							component: ({item, query}) => (
+								<RendererLabelCellRendererComponent
+									cetRenderers={
 										fdsClientExtensionCellRenderers
 									}
-									fdsField={item}
-									namespace={namespace}
-									onSave={onEditFDSField}
+									item={item}
+									query={query}
 								/>
 							),
-						});
+							textMatch: (item: IFDSField) =>
+								getRendererLabel({
+									cetRenderers: fdsClientExtensionCellRenderers,
+									rendererName: item.renderer,
+								}),
+						},
+						label: Liferay.Language.get('renderer'),
+						name: 'renderer',
 					},
-				},
-				{
-					icon: 'trash',
-					label: Liferay.Language.get('delete'),
-					onClick: handleDelete,
-				},
-			]}
-			creationMenuItems={[
-				{
-					label: Liferay.Language.get('add-fields'),
-					onClick: onCreationButtonClick,
-				},
-			]}
-			fields={[
-				{
-					label: Liferay.Language.get('name'),
-					name: 'name',
-				},
-				{
-					label: Liferay.Language.get('label'),
-					name: 'label',
-				},
-				{
-					label: Liferay.Language.get('type'),
-					name: 'type',
-				},
-				{
-					contentRenderer: {
-						component: ({item, query}) => (
-							<RendererLabelCellRendererComponent
-								cetRenderers={fdsClientExtensionCellRenderers}
-								item={item}
-								query={query}
-							/>
-						),
-						textMatch: (item: IFDSField) =>
-							getRendererLabel({
-								cetRenderers: fdsClientExtensionCellRenderers,
-								rendererName: item.renderer,
-							}),
+					{
+						label: Liferay.Language.get('sortable'),
+						name: 'sortable',
 					},
-					label: Liferay.Language.get('renderer'),
-					name: 'renderer',
-				},
-				{
-					label: Liferay.Language.get('sortable'),
-					name: 'sortable',
-				},
-			]}
-			items={fdsFields}
-			noItemsButtonLabel={Liferay.Language.get('add-fields')}
-			noItemsDescription={Liferay.Language.get(
-				'add-fields-to-show-in-your-view'
-			)}
-			noItemsTitle={Liferay.Language.get('no-fields-added-yet')}
-			onOrderChange={({order}: {order: string}) => {
-				updateFDSFieldsOrder({
-					fdsFieldsOrder: order,
-				});
-			}}
-			title={title}
-		/>
+				]}
+				items={fdsFields}
+				noItemsButtonLabel={Liferay.Language.get('add-fields')}
+				noItemsDescription={Liferay.Language.get(
+					'add-fields-to-show-in-your-view'
+				)}
+				noItemsTitle={Liferay.Language.get('no-fields-added-yet')}
+				onOrderChange={({order}: {order: string}) => {
+					updateFDSFieldsOrder({
+						fdsFieldsOrder: order,
+					});
+				}}
+				title={title}
+			/>
+		</ClayLayout.ContentCol>
 	) : (
 		<ClayLoadingIndicator />
 	);

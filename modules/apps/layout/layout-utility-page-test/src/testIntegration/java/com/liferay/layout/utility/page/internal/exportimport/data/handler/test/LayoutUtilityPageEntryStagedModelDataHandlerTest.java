@@ -171,8 +171,8 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
-				0, true, _TEST_NAME, _TEST_TYPE, 0,
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				null, 0, 0, true, _TEST_NAME, _TEST_TYPE, 0, true,
 				ServiceContextTestUtil.getServiceContext(
 					stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
@@ -182,8 +182,8 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 		initImport();
 
 		_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-			null, TestPropsValues.getUserId(), liveGroup.getGroupId(), 0, 0,
-			true, _TEST_NAME, _TEST_TYPE, 0,
+			null, TestPropsValues.getUserId(), liveGroup.getGroupId(), null, 0,
+			0, true, _TEST_NAME, _TEST_TYPE, 0, true,
 			ServiceContextTestUtil.getServiceContext(
 				liveGroup.getGroupId(), TestPropsValues.getUserId()));
 
@@ -232,8 +232,8 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 		long userId = TestPropsValues.getUserId();
 
 		return _layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-			null, userId, group.getGroupId(), 0, 0, false, "Test Entry",
-			LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
+			null, userId, group.getGroupId(), null, 0, 0, false, "Test Entry",
+			LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0, true,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), userId));
 	}
@@ -279,9 +279,9 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 		throws Exception {
 
 		return _layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-			null, TestPropsValues.getUserId(), group.getGroupId(), 0, 0,
+			null, TestPropsValues.getUserId(), group.getGroupId(), null, 0, 0,
 			defaultLayoutUtilityPageEntry, RandomTestUtil.randomString(),
-			LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
+			LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0, true,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 	}

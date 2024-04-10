@@ -374,10 +374,10 @@ public class LockedLayoutsDisplayContextTest {
 
 		_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 			null, _serviceContext.getUserId(),
-			_serviceContext.getScopeGroupId(), draftLayout.getClassPK(), 0,
-			false, RandomTestUtil.randomString(),
+			_serviceContext.getScopeGroupId(), null, draftLayout.getClassPK(),
+			0, false, RandomTestUtil.randomString(),
 			LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR, 0,
-			_serviceContext);
+			true, _serviceContext);
 
 		return draftLayout;
 	}

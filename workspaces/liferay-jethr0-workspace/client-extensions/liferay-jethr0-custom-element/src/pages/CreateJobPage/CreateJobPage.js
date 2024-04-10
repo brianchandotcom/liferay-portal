@@ -96,10 +96,10 @@ function CreateJobPage() {
 				</Heading>
 
 				<ClayForm.Group>
-					<label htmlFor="buildPriority">Build Priority</label>
+					<label htmlFor="jobPriority">Job Priority</label>
 
 					<ClayInput
-						id="buildPriority"
+						id="jobPriority"
 						onChange={(event) => {
 							setJobPriority(event.target.value);
 						}}

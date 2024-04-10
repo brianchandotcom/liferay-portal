@@ -677,6 +677,10 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	private void _deleteAssetEntry(String className, long classPK) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-11147")) {
+			return;
+		}
+
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			className, classPK);
 

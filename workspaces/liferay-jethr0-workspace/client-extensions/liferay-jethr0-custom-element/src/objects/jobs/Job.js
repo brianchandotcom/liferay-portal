@@ -27,4 +27,5 @@ export default class Job {
 	}
 
 	builds = [];
+	routine;
 }

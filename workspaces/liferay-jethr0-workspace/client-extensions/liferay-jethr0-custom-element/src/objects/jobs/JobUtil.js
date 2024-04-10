@@ -5,6 +5,7 @@
 
 import liferayRequest from '../../services/liferayRequest';
 import Build from '../builds/Build';
+import Routine from '../routines/Routine';
 import Job from './Job';
 
 export async function createJob({data, redirect}) {
@@ -72,6 +73,7 @@ export async function getJobById({id, setJob}) {
 						name
 						parameters
 						priority
+						routineToJobs
 						startDate
 						state {
 							key
@@ -104,6 +106,10 @@ export async function getJobById({id, setJob}) {
 		const job = new Job(jobJSON);
 
 		job.builds = builds;
+
+		if (jobJSON.routineToJobs) {
+			job.routine = new Routine(jobJSON.routineToJobs);
+		}
 
 		if (job) {
 			if (setJob) {

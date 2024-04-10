@@ -5,7 +5,7 @@
 
 import {toLocaleString} from '../../services/DateUtil';
 
-function Jethr0InformationField({fieldLabel, fieldType, fieldValue}) {
+function Jethr0InformationField({fieldLabel, fieldType, fieldURLValue, fieldValue}) {
 	if (fieldValue === undefined || fieldValue === '') {
 		return <></>;
 	}
@@ -21,10 +21,14 @@ function Jethr0InformationField({fieldLabel, fieldType, fieldValue}) {
 	}
 
 	if (fieldType === 'URL') {
+		if (!fieldURLValue) {
+			fieldURLValue = fieldValue;
+		}
+
 		return (
 			<>
 				<strong>{fieldLabel + ': '}</strong>
-				<a href={fieldValue}>{fieldValue}</a>
+				<a href={fieldURLValue}>{fieldValue}</a>
 				<br />
 			</>
 		);

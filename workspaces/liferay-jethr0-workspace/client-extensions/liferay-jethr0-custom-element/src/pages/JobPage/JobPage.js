@@ -146,6 +146,14 @@ function JobInformation({job}) {
 					fieldType="STRING"
 					fieldValue={job.type.name}
 				/>
+				{job.routine && (
+					<Jethr0InformationField
+						fieldLabel="Routine"
+						fieldType="URL"
+						fieldURLValue={'/#/routines/' + job.routine.id}
+						fieldValue={job.routine.name}
+					/>
+				)}
 				<Jethr0InformationField
 					fieldLabel="Create Date"
 					fieldType="DATE"

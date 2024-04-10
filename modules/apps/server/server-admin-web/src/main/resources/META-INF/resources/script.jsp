@@ -29,10 +29,6 @@ if (SessionMessages.contains(renderRequest, "script")) {
 String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput");
 %>
 
-<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
-<liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
-<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
-
 <liferay-ui:error exception="<%= ScriptingException.class %>">
 
 	<%
@@ -64,8 +60,6 @@ String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput")
 		</aui:select>
 
 		<aui:input cssClass="lfr-textarea-container" name="script" resizable="<%= true %>" type="textarea" value="<%= script %>" />
-
-		<liferay-captcha:captcha />
 
 		<aui:button-row>
 			<aui:button cssClass="save-server-button" data-cmd="runScript" primary="<%= true %>" value="execute" />

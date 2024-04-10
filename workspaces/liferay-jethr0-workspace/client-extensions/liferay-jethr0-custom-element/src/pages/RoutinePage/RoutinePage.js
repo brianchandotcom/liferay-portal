@@ -16,6 +16,7 @@ import Jethr0InformationField from '../../components/Jethr0InformationField/Jeth
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
 import {getRoutineByType} from '../../objects/routines/RoutineUtil'
+
 import {toLocaleString} from '../../services/DateUtil';
 
 function RoutineJobs({routine}) {
@@ -82,18 +83,6 @@ function RoutineInformation({routine}) {
 				<ClayPanel.Body>Loading...</ClayPanel.Body>
 			</ClayPanel>
 		);
-	}
-
-	let jobParameterDefinitions = [];
-
-	if (routine.definition) {
-		jobParameterDefinitions = routine.definition.parameterDefinitions;
-	}
-
-	let jobParameters = '';
-
-	if (routine.jobParameters) {
-		jobParameters = JSON.parse(routine.jobParameters);
 	}
 
 	return (
@@ -168,10 +157,6 @@ function RoutinePage() {
 				</Jethr0Card>
 			</ClayLayout.Container>
 		);
-	}
-
-	function redirectToRoutinesPage() {
-		window.location.replace('/#/routines');
 	}
 
 	let routineName = 'Routine #' + id;

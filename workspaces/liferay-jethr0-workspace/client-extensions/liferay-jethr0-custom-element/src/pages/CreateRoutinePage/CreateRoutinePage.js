@@ -98,12 +98,12 @@ function CreateRoutinePage() {
 	}
 
 	const routineData = {
-		name: routineName,
 		cron: routineCron,
-		jobName: jobName,
+		jobName,
 		jobParameters: JSON.stringify(jobParameters),
-		jobPriority: jobPriority,
+		jobPriority,
 		jobType: jobDefinition.key,
+		name: routineName,
 		type: routineTypeKey,
 	};
 

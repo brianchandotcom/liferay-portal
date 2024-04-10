@@ -11,8 +11,8 @@ export async function createRoutine({data, redirect}) {
 	const routinesResponse = await liferayRequest({
 		body: JSON.stringify(data),
 		headers: {
-			'accept': 'application/json',
 			'Content-Type': 'application/json',
+			'accept': 'application/json',
 		},
 		method: 'POST',
 		urlPath: '/o/c/routines',

@@ -523,8 +523,24 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(commerceChannelId);
 
-		List<AccountEntry> accountEntries =
-			_accountEntryLocalService.getUserAccountEntries(
+		List<AccountEntry> accountEntries = null;
+
+		User currentUser = _userLocalService.fetchUser(userId);
+
+		Role administratorRole = _roleLocalService.getRole(
+			commerceChannel.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		if ((currentUser != null) &&
+			_roleLocalService.hasUserRole(
+				currentUser.getUserId(), administratorRole.getRoleId())) {
+
+			accountEntries = _accountEntryLocalService.getAccountEntries(
+				commerceChannel.getCompanyId(),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+		}
+		else {
+			accountEntries = _accountEntryLocalService.getUserAccountEntries(
 				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
 				new String[] {
 					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
@@ -533,6 +549,7 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 					AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER
 				},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
 
 		for (AccountEntry accountEntry : accountEntries) {
 			if (_isChannelAccountEntry(

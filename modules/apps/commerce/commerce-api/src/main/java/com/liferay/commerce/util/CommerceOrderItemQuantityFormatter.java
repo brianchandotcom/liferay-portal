@@ -13,6 +13,8 @@ import java.math.BigDecimal;
 
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
+
 /**
  * @author Alessio Antonio Rendina
  */
@@ -25,6 +27,9 @@ public interface CommerceOrderItemQuantityFormatter {
 
 	public String format(CommerceOrderItem commerceOrderItem, Locale locale)
 		throws PortalException;
+
+	public BigDecimal parse(ActionRequest actionRequest, String param)
+		throws Exception;
 
 	public BigDecimal parse(String quantity, Locale locale) throws Exception;
 

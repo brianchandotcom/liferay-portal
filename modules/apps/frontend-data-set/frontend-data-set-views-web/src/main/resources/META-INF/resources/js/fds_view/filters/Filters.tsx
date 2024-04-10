@@ -597,7 +597,8 @@ function Filters({fdsFilterClientExtensions, fdsView, namespace}: IProps) {
 					item.type === EFieldType.STRING &&
 					!item.format) ||
 				(filterType === EFilterType.DATE_RANGE &&
-					item.format === EFieldFormat.DATE)
+					(item.format === EFieldFormat.DATE ||
+						item.format === EFieldFormat.DATE_TIME))
 		);
 
 		if (!availableFields.length) {

@@ -1,0 +1,208 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Heading} from '@clayui/core';
+import ClayLayout from '@clayui/layout';
+import ClayPanel from '@clayui/panel';
+import {useState} from 'react';
+import {Link, useParams} from 'react-router-dom';
+
+import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
+import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
+import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0ContainerFluid';
+import Jethr0InformationField from '../../components/Jethr0InformationField/Jethr0InformationField';
+import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
+import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
+import {getRoutineByType} from '../../objects/routines/RoutineUtil'
+import {toLocaleString} from '../../services/DateUtil';
+
+function RoutineJobs({routine}) {
+	if (!routine?.jobs) {
+		return <div>Loading...</div>;
+	}
+
+	return (
+		<ClayPanel
+			collapsable
+			defaultExpanded
+			displayTitle="Jobs"
+			displayType="secondary"
+			showCollapseIcon={true}
+		>
+			<ClayPanel.Body>
+				<Jethr0Table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Type</th>
+							<th>Create Date</th>
+							<th>State</th>
+						</tr>
+					</thead>
+					<tbody>
+						{routine.jobs?.map((routineJob) => {
+							return (
+								<tr key={routineJob.id}>
+									<th className="font-weight-semi-bold">
+										<Link
+											title={routineJob.id}
+											to={'/jobs/' + routineJob.id}
+										>
+											{routineJob.id}
+										</Link>
+									</th>
+									<td>{routineJob.name}</td>
+									<td>{routineJob.type.name}</td>
+									<td>
+										{toLocaleString(routineJob.dateCreated)}
+									</td>
+									<td>{routineJob.state.name}</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</Jethr0Table>
+			</ClayPanel.Body>
+		</ClayPanel>
+	);
+}
+
+function RoutineInformation({routine}) {
+	if (!routine) {
+		return (
+			<ClayPanel
+				collapsable
+				defaultExpanded
+				displayTitle="Routine Information"
+				displayType="secondary"
+			>
+				<ClayPanel.Body>Loading...</ClayPanel.Body>
+			</ClayPanel>
+		);
+	}
+
+	let jobParameterDefinitions = [];
+
+	if (routine.definition) {
+		jobParameterDefinitions = routine.definition.parameterDefinitions;
+	}
+
+	let jobParameters = '';
+
+	if (routine.jobParameters) {
+		jobParameters = JSON.parse(routine.jobParameters);
+	}
+
+	return (
+		<ClayPanel
+			collapsable
+			defaultExpanded
+			displayTitle="Routine Information"
+			displayType="secondary"
+		>
+			<ClayPanel.Body>
+				<Jethr0InformationField
+					fieldLabel="Routine Name"
+					fieldType="STRING"
+					fieldValue={routine.name}
+				/>
+				<Jethr0InformationField
+					fieldLabel="Routine ID"
+					fieldType="STRING"
+					fieldValue={routine.id}
+				/>
+				<Jethr0InformationField
+					fieldLabel="Routine Cron"
+					fieldType="STRING"
+					fieldValue={routine.cron}
+				/>
+				<Jethr0InformationField
+					fieldLabel="Job Name"
+					fieldType="STRING"
+					fieldValue={routine.jobName}
+				/>
+				<Jethr0InformationField
+					fieldLabel="Job Type"
+					fieldType="STRING"
+					fieldValue={routine.type.name}
+				/>
+				<Jethr0InformationField
+					fieldLabel="Create Date"
+					fieldType="DATE"
+					fieldValue={routine.dateCreated}
+				/>
+				<Jethr0InformationField
+					fieldLabel="Modified Date"
+					fieldType="DATE"
+					fieldValue={routine.dateModified}
+				/>
+			</ClayPanel.Body>
+		</ClayPanel>
+	);
+}
+
+function RoutinePage() {
+	const {id} = useParams();
+	const [routine, setRoutine] = useState(null);
+
+	if (!routine) {
+		getRoutineByType({id, setRoutine});
+	}
+
+	if (!routine) {
+		return (
+			<ClayLayout.Container>
+				<Jethr0Card>
+					<Jethr0NavigationBar active="Routines" />
+					<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
+					<Jethr0ContainerFluid>
+						<ClayLayout.Row justify="between">
+							<Heading level={3} weight="lighter">
+								{'Routine #' + id}
+							</Heading>
+						</ClayLayout.Row>
+					</Jethr0ContainerFluid>
+				</Jethr0Card>
+			</ClayLayout.Container>
+		);
+	}
+
+	function redirectToRoutinesPage() {
+		window.location.replace('/#/routines');
+	}
+
+	let routineName = 'Routine #' + id;
+
+	if (routine) {
+		routineName = routine.name;
+	}
+
+	const breadcrumbs = [
+		{active: false, link: '/', name: 'Home'},
+		{active: false, link: '/routines', name: 'Routines'},
+		{active: true, link: '/routines/' + id, name: routineName},
+	];
+
+	return (
+		<ClayLayout.Container>
+			<Jethr0Card>
+				<Jethr0NavigationBar active="Routines" />
+				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
+				<Jethr0ContainerFluid>
+					<ClayLayout.Row justify="between">
+						<Heading level={3} weight="lighter">
+							{routineName}
+						</Heading>
+					</ClayLayout.Row>
+				</Jethr0ContainerFluid>
+				<RoutineInformation routine={routine} />
+				<RoutineJobs routine={routine} />
+			</Jethr0Card>
+		</ClayLayout.Container>
+	);
+}
+
+export default RoutinePage;

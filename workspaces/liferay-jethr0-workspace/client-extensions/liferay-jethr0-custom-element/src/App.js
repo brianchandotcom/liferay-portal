@@ -12,6 +12,7 @@ import JobPage from './pages/JobPage/JobPage';
 import JobQueuePage from './pages/JobQueuePage/JobQueuePage';
 import JobsPage from './pages/JobsPage/JobsPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import RoutinePage from './pages/RoutinePage/RoutinePage';
 import RoutinesPage from './pages/RoutinesPage/RoutinesPage';
 import UpstreamBranchPage from './pages/UpstreamBranchPage/UpstreamBranchPage';
 import UpstreamBranchesPage from './pages/UpstreamBranchesPage/UpstreamBranchesPage';
@@ -29,6 +30,7 @@ function App() {
 				<Route element={<JobQueuePage />} path="/" />
 				<Route element={<JobsPage />} path="/jobs" />
 				<Route element={<NotFoundPage />} path="*" />
+				<Route element={<RoutinePage />} path="/routines/:id" />
 				<Route element={<RoutinesPage />} path="/routines" />
 				<Route
 					element={<UpstreamBranchesPage />}

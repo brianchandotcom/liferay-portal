@@ -2797,13 +2797,6 @@ public class LayoutStagedModelDataHandler
 						"layout-master-page-template", Boolean.TRUE.toString());
 				}
 			}
-			else {
-				if (layout.isTypeUtility()) {
-					layoutElement.addAttribute(
-						"layout-content-page-template",
-						Boolean.TRUE.toString());
-				}
-			}
 		}
 
 		LayoutStagingHandler layoutStagingHandler =

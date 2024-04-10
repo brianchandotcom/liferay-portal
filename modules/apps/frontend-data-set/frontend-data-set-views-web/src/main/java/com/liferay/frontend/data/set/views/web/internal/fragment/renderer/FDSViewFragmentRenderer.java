@@ -632,7 +632,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 				String type = MapUtil.getString(properties, "type");
 
-				if (Objects.equals(type, "date")) {
+				if (Objects.equals(type, "date") ||
+					Objects.equals(type, "date-time")) {
+
 					JSONObject fromJSONObject = _getDateJSONObject(
 						properties.get("from"));
 					JSONObject toJSONObject = _getDateJSONObject(
@@ -644,7 +646,10 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					return JSONUtil.put(
 						"active", hasPreloadedData
 					).put(
-						"entityFieldType", FDSEntityFieldTypes.DATE
+						"entityFieldType",
+						Objects.equals(type, "date") ?
+							FDSEntityFieldTypes.DATE :
+								FDSEntityFieldTypes.DATE_TIME
 					).put(
 						"id", properties.get("fieldName")
 					).put(

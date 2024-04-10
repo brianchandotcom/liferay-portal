@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -94,22 +93,18 @@ public class PlacedOrderItemResourceImpl
 			_commerceOrderItemService.searchCommerceOrderItems(
 				placedOrderId, search, startPosition, endPosition, sort);
 
+		List<PlacedOrderItem> placedOrderItems = _filterPlacedOrderItems(
+			transform(
+				searchResult.getBaseModels(),
+				commerceOrderItem -> _toPlacedOrderItem(
+					commerceOrder.getCommerceAccountId(), commerceOrderItem)));
+
 		return Page.of(
-			_filterPlacedOrderItems(
-				transform(
-					searchResult.getBaseModels(),
-					commerceOrderItem -> {
-						if ((skuId != null) &&
-							!Objects.equals(
-								commerceOrderItem.getCPInstanceId(), skuId)) {
-
-							return null;
-						}
-
-						return _toPlacedOrderItem(
-							commerceOrder.getCommerceAccountId(),
-							commerceOrderItem);
-					})));
+			placedOrderItems, pagination,
+			Math.max(
+				_commerceOrderItemService.getCommerceOrderItemsCount(
+					placedOrderId),
+				placedOrderItems.size()));
 	}
 
 	private List<PlacedOrderItem> _filterPlacedOrderItems(

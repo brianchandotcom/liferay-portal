@@ -1,4 +1,3 @@
-<%--
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -13,6 +12,12 @@ double latitude = (Double)request.getAttribute("liferay-map:map:latitude");
 double longitude = (Double)request.getAttribute("liferay-map:map:longitude");
 String name = (String)request.getAttribute("liferay-map:map:name");
 String points = (String)request.getAttribute("liferay-map:map:points");
+
+JSONObject pointsJSONObject = null;
+
+if (Validator.isNotNull(points)) {
+	pointsJSONObject = JSONFactoryUtil.createJSONObject(points);
+}
 
 name = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse) + name;
 %>
@@ -30,7 +35,7 @@ name = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse) + nam
 		HashMapBuilder.<String, Object>put(
 			"boundingBox", "#" + HtmlUtil.escapeJS(name) + "Map"
 		).put(
-			"data", points
+			"data", pointsJSONObject
 		).put(
 			"geolocation", geolocation
 		).put(

@@ -370,6 +370,111 @@ export default function FieldBase({
 		}, 1000);
 	};
 
+	const translationFilterChange = useCallback(
+		(event) => {
+			const pagesVisitor = new PagesVisitor(pages);
+			switch (event.option) {
+				case 'translated':
+					dispatch({
+						payload: pagesVisitor.mapFields(
+							(field) => {
+								if (!field.localizable) {
+									return {
+										...field,
+										disabled: true,
+										hidden: true,
+										visible: false,
+									};
+								}
+								if (
+									field.localizedValueEdited?.[
+										editingLanguageId
+									]
+								) {
+									return {
+										...field,
+										disabled: false,
+										hidden: false,
+										visible: true,
+									};
+								}
+								else {
+									return {
+										...field,
+										disabled: true,
+										hidden: true,
+										visible: false,
+									};
+								}
+							},
+							false,
+							true
+						),
+						type: CORE_EVENT_TYPES.PAGE.UPDATE,
+					});
+
+					break;
+				case 'untranslated':
+					dispatch({
+						payload: pagesVisitor.mapFields(
+							(field) => {
+								if (!field.localizable) {
+									return {
+										...field,
+										disabled: true,
+										hidden: true,
+										visible: false,
+									};
+								}
+								if (
+									field.localizedValueEdited?.[
+										editingLanguageId
+									]
+								) {
+									return {
+										...field,
+										disabled: true,
+										hidden: true,
+										visible: false,
+									};
+								}
+								else {
+									return {
+										...field,
+										disabled: false,
+										hidden: false,
+										visible: true,
+									};
+								}
+							},
+							false,
+							true
+						),
+						type: CORE_EVENT_TYPES.PAGE.UPDATE,
+					});
+					break;
+				default:
+					dispatch({
+						payload: pagesVisitor.mapFields(
+							(field) => {
+								return {
+									...field,
+									disabled: false,
+									hidden: false,
+									visible: true,
+								};
+							},
+							false,
+							true
+						),
+						type: CORE_EVENT_TYPES.PAGE.UPDATE,
+					});
+					break;
+			}
+		},
+		[dispatch, editingLanguageId, pages]
+	);
+
 	useEffect(() => {
 		Liferay.on('disableRepeatableButton', disableRepeatableButton);
 
@@ -442,6 +547,10 @@ export default function FieldBase({
 	useEffect(() => {
 		Liferay.on('inputLocalized:resetTranslations', resetTranslations);
 		Liferay.on('inputLocalized:markAsTranslated', markAsTranslated);
+		Liferay.on(
+			'inputLocalized:translationFilterChange',
+			translationFilterChange
+		);
 
 		return () => {
 			Liferay.detach(
@@ -449,8 +558,9 @@ export default function FieldBase({
 				resetTranslations
 			);
 			Liferay.detach('inputLocalized:markAsTranslated', markAsTranslated);
+			Liferay.on('translationFilterChange', translationFilterChange);
 		};
-	}, [resetTranslations, markAsTranslated]);
+	}, [resetTranslations, markAsTranslated, translationFilterChange]);
 
 	return (
 		<ClayForm.Group

@@ -189,11 +189,9 @@ public class FriendlyURLEntryLocalServiceImpl
 				friendlyURLEntry.getClassNameId(),
 				friendlyURLEntry.getClassPK());
 
-		long friendlyURLEntryId = friendlyURLEntry.getFriendlyURLEntryId();
-
 		if ((friendlyURLEntryMapping != null) &&
 			(friendlyURLEntryMapping.getFriendlyURLEntryId() ==
-				friendlyURLEntryId)) {
+				friendlyURLEntry.getFriendlyURLEntryId())) {
 
 			friendlyURLEntry = friendlyURLEntryPersistence.fetchByG_C_C_Last(
 				friendlyURLEntry.getGroupId(),
@@ -207,7 +205,7 @@ public class FriendlyURLEntryLocalServiceImpl
 			}
 			else {
 				friendlyURLEntryMapping.setFriendlyURLEntryId(
-					friendlyURLEntryId);
+					friendlyURLEntry.getFriendlyURLEntryId());
 
 				_friendlyURLEntryMappingPersistence.update(
 					friendlyURLEntryMapping);
@@ -216,7 +214,9 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		// Asset
 
-		_deleteAssetEntry(FriendlyURLEntry.class.getName(), friendlyURLEntryId);
+		_deleteAssetEntry(
+			FriendlyURLEntry.class.getName(),
+			deletedFriendlyURLEntry.getFriendlyURLEntryId());
 
 		return deletedFriendlyURLEntry;
 	}

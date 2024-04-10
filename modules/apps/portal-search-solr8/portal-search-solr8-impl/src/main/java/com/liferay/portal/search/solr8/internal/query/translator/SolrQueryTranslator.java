@@ -8,9 +8,11 @@ package com.liferay.portal.search.solr8.internal.query.translator;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermQuery;
+import com.liferay.portal.search.query.WildcardQuery;
 
 /**
  * @author André de Oliveira
+ * @author Petteri Karttunen
  */
 public class SolrQueryTranslator {
 
@@ -21,6 +23,10 @@ public class SolrQueryTranslator {
 
 		if (query instanceof TermQuery) {
 			return visit((TermQuery)query);
+		}
+
+		if (query instanceof WildcardQuery) {
+			return visit((WildcardQuery)query);
 		}
 
 		return null;
@@ -48,6 +54,13 @@ public class SolrQueryTranslator {
 			new TermQueryTranslatorImpl();
 
 		return termQueryTranslatorImpl.translate(termQuery);
+	}
+
+	public org.apache.lucene.search.Query visit(WildcardQuery wildcardQuery) {
+		WildcardQueryTranslatorImpl wildcardQueryTranslatorImpl =
+			new WildcardQueryTranslatorImpl();
+
+		return wildcardQueryTranslatorImpl.translate(wildcardQuery);
 	}
 
 }

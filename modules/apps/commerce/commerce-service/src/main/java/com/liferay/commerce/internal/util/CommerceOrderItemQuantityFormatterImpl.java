@@ -15,7 +15,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -25,6 +28,8 @@ import java.text.DecimalFormatSymbols;
 
 import java.util.Locale;
 import java.util.Map;
+
+import javax.portlet.ActionRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -76,6 +81,19 @@ public class CommerceOrderItemQuantityFormatterImpl
 		DecimalFormat decimalFormat = _getDecimalFormat(true, false, locale);
 
 		return decimalFormat.format(commerceOrderItem.getQuantity());
+	}
+
+	@Override
+	public BigDecimal parse(ActionRequest actionRequest, String param)
+		throws Exception {
+
+		String quantity = ParamUtil.getString(
+			actionRequest, param, BigDecimal.ZERO.toString());
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return parse(quantity, themeDisplay.getLocale());
 	}
 
 	@Override

@@ -11,13 +11,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.LoggingTimer;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Lourdes Fernández Besada
@@ -35,11 +37,9 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		long classNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class.getName());
-		Map<Long, Map<Long, List<Long>>> entryIdsMaps =
-			new ConcurrentHashMap<>();
+		Map<Long, Map<Long, List<Long>>> entryIdsMaps = new HashMap<>();
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			processConcurrently(
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select distinct AssetEntry.entryId, ",
 					"AssetEntry.classTypeId, JournalArticle.DDMStructureId ",
@@ -47,35 +47,38 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcess
 					"AssetEntry.classNameId = ", classNameId,
 					" and (AssetEntry.classPK = JournalArticle.id_ or ",
 					"AssetEntry.classPK = JournalArticle.resourcePrimKey) and ",
-					"AssetEntry.classTypeId != JournalArticle.DDMStructureId"),
-				"update AssetEntry set classTypeId = ? where entryId = ?",
-				resultSet -> new Object[] {
-					resultSet.getLong(1), resultSet.getLong(2),
-					resultSet.getLong(3)
-				},
-				(values, preparedStatement) -> {
-					Long entryId = (Long)values[0];
-					Long classTypeId = (Long)values[1];
+					"AssetEntry.classTypeId != JournalArticle.DDMStructureId"));
+			PreparedStatement preparedStatement2 = connection.prepareStatement(
+				"update AssetEntry set classTypeId = ? where entryId = ?");
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
-					Long ddmStructureId = (Long)values[2];
+			while (resultSet.next()) {
+				long entryId = resultSet.getLong(1);
 
-					preparedStatement.setLong(1, ddmStructureId);
+				long classTypeId = resultSet.getLong(2);
 
-					preparedStatement.setLong(2, entryId);
+				long ddmStructureId = resultSet.getLong(3);
 
-					preparedStatement.addBatch();
+				preparedStatement2.setLong(1, ddmStructureId);
 
-					Map<Long, List<Long>> entryIdsMap =
-						entryIdsMaps.computeIfAbsent(
-							classTypeId, key -> new ConcurrentHashMap<>());
+				preparedStatement2.setLong(2, entryId);
 
-					List<Long> entryIds = entryIdsMap.computeIfAbsent(
-						ddmStructureId,
-						key -> Collections.synchronizedList(new ArrayList<>()));
+				preparedStatement2.addBatch();
 
-					entryIds.add(entryId);
-				},
-				"Unable to set asset entry class type ID");
+				Map<Long, List<Long>> entryIdsMap =
+					entryIdsMaps.computeIfAbsent(
+						classTypeId, key -> new HashMap<>());
+
+				List<Long> entryIds = entryIdsMap.computeIfAbsent(
+					ddmStructureId, key -> new ArrayList<>());
+
+				entryIds.add(entryId);
+			}
+
+			preparedStatement2.executeBatch();
+		}
+		catch (SQLException sqlException) {
+			_log.error("Unable to set asset entry class type ID", sqlException);
 		}
 
 		if (_log.isDebugEnabled() && entryIdsMaps.isEmpty()) {

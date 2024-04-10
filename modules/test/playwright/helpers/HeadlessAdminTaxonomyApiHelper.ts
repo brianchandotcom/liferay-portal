@@ -6,11 +6,7 @@
 import {ApiHelpers} from './ApiHelpers';
 
 interface createVocabularyProps {
-	assetTypes: {
-		required: boolean;
-		subtype: 'AllAssetSubtypes';
-		type: 'AllAssetTypes';
-	}[];
+	assetTypes: AssetType[];
 	name: string;
 	siteId: string;
 }

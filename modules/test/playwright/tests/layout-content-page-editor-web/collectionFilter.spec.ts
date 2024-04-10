@@ -66,6 +66,81 @@ const selectFilter = async (page, categories) => {
 	await page.getByRole('button', {name: 'Apply'}).click();
 };
 
+const createCollection = async (page, friendlyUrlPath) => {
+
+	// Create a dynamic collection
+
+	await page.goto(`/group${friendlyUrlPath}${PORTLET_URLS.collections}`);
+
+	await page.getByRole('button', {name: 'New'}).first().click();
+
+	await page.getByRole('menuitem', {name: 'Dynamic Collection'}).click();
+
+	await page.getByPlaceholder('Title').fill('Animal Collection');
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await page.waitForTimeout(3000);
+
+	// Configure the dynamic collection for Web Contents
+
+	await page
+		.getByLabel('Item Type')
+		.selectOption({label: 'Web Content Article'});
+
+	await page.waitForTimeout(3000);
+
+	await page
+		.locator('.asset-subtype:not(.hide)')
+		.getByLabel('Item Subtype')
+		.selectOption({label: 'Basic Web Content'});
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await page.waitForTimeout(3000);
+};
+
+const createPageWithCollectionAndFilterCollection = async ({
+	apiHelpers,
+	collectionFilterId,
+	page,
+	siteId,
+}) => {
+	const classPK = await getCollectionClassPK(page);
+
+	const collectionFilterDefinition = getFragmentDefinition(
+		collectionFilterId,
+		'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer'
+	);
+
+	const collectionFragmentDefinition = getFragmentDefinition(
+		getRandomString(),
+		'BASIC_COMPONENT-heading',
+		{},
+		FRAGMENT_FIELDS
+	);
+
+	const collectionItemDefinition = getCollectionItemDefinition(
+		getRandomString(),
+		[collectionFragmentDefinition]
+	);
+
+	const collectionDefinition = getCollectionDefinition(
+		getRandomString(),
+		classPK,
+		[collectionItemDefinition]
+	);
+
+	return await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			collectionFilterDefinition,
+			collectionDefinition,
+		]),
+		siteId,
+		title: getRandomString(),
+	});
+};
+
 test('Filter a web content collection by single and multiple categories', async ({
 	apiHelpers,
 	page,
@@ -94,7 +169,7 @@ test('Filter a web content collection by single and multiple categories', async 
 		);
 	}
 
-	// Create two Web Contents
+	// Create two Web Contents with categories
 
 	const contentStructureId = await getBasicWebContentStructureId(apiHelpers);
 	const webContents = [
@@ -121,74 +196,19 @@ test('Filter a web content collection by single and multiple categories', async 
 		});
 	}
 
-	// Go to Collections admin page
-
-	await page.goto(`/group${site.friendlyUrlPath}${PORTLET_URLS.collections}`);
-
 	// Create a dynamic collection with the previous Web Contents
 
-	await page.getByRole('button', {name: 'New'}).first().click();
-
-	await page.getByRole('menuitem', {name: 'Dynamic Collection'}).click();
-
-	await page.getByPlaceholder('Title').fill('Animal Collection');
-
-	await page.getByRole('button', {name: 'Save'}).click();
-
-	await page.waitForTimeout(3000);
-
-	// Configure the dynamic collection for Web Contents
-
-	await page
-		.getByLabel('Item Type')
-		.selectOption({label: 'Web Content Article'});
-
-	await page.waitForTimeout(3000);
-
-	await page
-		.locator('.asset-subtype:not(.hide)')
-		.getByLabel('Item Subtype')
-		.selectOption({label: 'Basic Web Content'});
-
-	await page.getByRole('button', {name: 'Save'}).click();
-
-	await page.waitForTimeout(3000);
+	await createCollection(page, site.friendlyUrlPath);
 
 	// Create a page with Collection Display and Collection Filter fragments
 
-	const classPK = await getCollectionClassPK(page);
 	const collectionFilterId = getRandomString();
 
-	const collectionFilterDefinition = getFragmentDefinition(
+	const layout = await createPageWithCollectionAndFilterCollection({
+		apiHelpers,
 		collectionFilterId,
-		'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer'
-	);
-
-	const collectionFragmentDefinition = getFragmentDefinition(
-		getRandomString(),
-		'BASIC_COMPONENT-heading',
-		{},
-		FRAGMENT_FIELDS
-	);
-
-	const collectionItemDefinition = getCollectionItemDefinition(
-		getRandomString(),
-		[collectionFragmentDefinition]
-	);
-
-	const collectionDefinition = getCollectionDefinition(
-		getRandomString(),
-		classPK,
-		[collectionItemDefinition]
-	);
-
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([
-			collectionFilterDefinition,
-			collectionDefinition,
-		]),
+		page,
 		siteId: site.id,
-		title: getRandomString(),
 	});
 
 	// Go to edit mode of the created page and select the Collection Filter fragment
@@ -197,7 +217,7 @@ test('Filter a web content collection by single and multiple categories', async 
 
 	await pageEditorPage.selectFragment(collectionFilterId);
 
-	// Set Filter configuration
+	// Set Filter configuration for categories
 
 	await page.getByLabel('Select', {exact: true}).click();
 
@@ -229,7 +249,7 @@ test('Filter a web content collection by single and multiple categories', async 
 		await expect(page.getByText(name)).toBeVisible();
 	}
 
-	// Select category filter: Dogs
+	// Select category filter: Cats
 
 	await selectFilter(page, ['cats']);
 

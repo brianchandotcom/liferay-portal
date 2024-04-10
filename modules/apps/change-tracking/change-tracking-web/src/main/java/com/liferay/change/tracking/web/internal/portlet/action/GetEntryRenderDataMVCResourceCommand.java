@@ -40,8 +40,10 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
@@ -53,6 +55,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -78,6 +81,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -1091,6 +1095,38 @@ public class GetEntryRenderDataMVCResourceCommand
 
 				return _language.get(themeDisplay.getLocale(), "never");
 			}
+		).put(
+			"usages",
+			() -> {
+				HttpServletRequest httpServletRequest =
+					themeDisplay.getRequest();
+
+				return PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						httpServletRequest, PortletKeys.MY_WORKFLOW_TASK,
+						PortletRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/view_layout_classed_model_usages.jsp"
+				).setRedirect(
+					PortletURLBuilder.create(
+						PortletURLFactoryUtil.create(
+							httpServletRequest, CTPortletKeys.PUBLICATIONS,
+							PortletRequest.RENDER_PHASE)
+					).setMVCRenderCommandName(
+						"/change_tracking/view_change"
+					).setParameter(
+						"ctCollectionId", ctEntry.getCtCollectionId()
+					).setParameter(
+						"ctEntryId", ctEntry.getCtEntryId()
+					).buildString()
+				).setParameter(
+					"className", workflowInstanceLink.getClassName()
+				).setParameter(
+					"classPK", workflowInstanceLink.getClassPK()
+				).setParameter(
+					"workflowTaskId", workflowTask.getWorkflowTaskId()
+				).buildString();
+			}
 		).build();
 	}
 
@@ -1122,6 +1158,17 @@ public class GetEntryRenderDataMVCResourceCommand
 						WorkflowConstants.getStatusLabel(status)));
 				sb.append("</span");
 				sb.append("</span");
+			}
+
+			if (Objects.equals(entry.getKey(), "usages")) {
+				String url = entry.getValue();
+
+				sb.append("<a href=\"");
+				sb.append(HtmlUtil.escape(url));
+				sb.append("\">");
+				sb.append(
+					_language.get(themeDisplay.getLocale(), "view-usages"));
+				sb.append("</a>");
 			}
 			else {
 				sb.append(HtmlUtil.escape(String.valueOf(entry.getValue())));

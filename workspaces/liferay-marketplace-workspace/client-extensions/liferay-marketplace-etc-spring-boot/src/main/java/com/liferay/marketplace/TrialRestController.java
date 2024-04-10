@@ -14,6 +14,7 @@ import com.liferay.headless.portal.instances.client.dto.v1_0.Admin;
 import com.liferay.headless.portal.instances.client.dto.v1_0.PortalInstance;
 import com.liferay.headless.portal.instances.client.resource.v1_0.PortalInstanceResource;
 import com.liferay.marketplace.console.service.ConsoleService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.net.URL;
 
@@ -23,8 +24,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.logging.Log;
@@ -261,65 +260,50 @@ public class TrialRestController extends BaseRestController {
 
 		_initResourceBuilders();
 
-		Order order = new Order();
-
 		JSONObject jsonObject = new JSONObject(json);
-
-		long classPK = jsonObject.getLong("classPK");
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Provision order " + classPK);
-		}
-
-		order.setId(() -> classPK);
 
 		JSONObject modelDTOOrderJSONObject = jsonObject.getJSONObject(
 			"modelDTOOrder");
 
-		String accountId = modelDTOOrderJSONObject.getString("accountId");
+		long orderId = jsonObject.getLong("classPK");
 
-		if (_hasAccountOrders(accountId)) {
+		if (_log.isInfoEnabled()) {
+			_log.info("Provision order " + orderId);
+		}
+
+		Order order = new Order();
+
+		if (_hasAccountOrders(modelDTOOrderJSONObject.getString("accountId"))) {
 			_log.error(
-				"Account " + accountId + " already has a provisioned order");
+				"Account " + modelDTOOrderJSONObject.getString("accountId") +
+					" already has a provisioned order");
 
 			order.setOrderStatus(() -> _ORDER_STATUS_CANCELLED);
 
-			_orderResource.patchOrder(order.getId(), order);
+			_orderResource.patchOrder(orderId, order);
 
 			return;
 		}
 
-		order.setOrderStatus(() -> _ORDER_STATUS_PROCESSING);
+		if (!_isTrialAvailable()) {
+			_log.error(
+				"The limit of " + _TRIAL_MAX_INSTANCES_IN_PROGRESS +
+					" has exceeded, trial installation will be scheduled");
 
-		_orderResource.patchOrder(order.getId(), order);
+			order.setOrderStatus(_ORDER_STATUS_ON_HOLD);
+
+			_orderResource.patchOrder(orderId, order);
+
+			return;
+		}
+
+		order.setOrderStatus(_ORDER_STATUS_PROCESSING);
+
+		_orderResource.patchOrder(orderId, order);
 
 		PortalInstance portalInstance = _postPortalInstance(
 			jwt, modelDTOOrderJSONObject.getString("creatorEmailAddress"),
-			order.getId());
-
-		Map<String, String> customFields = new HashMap<>();
-
-		customFields.put(
-			"trial-end-date",
-			ZonedDateTime.now(
-			).plusDays(
-				7
-			).format(
-				DateTimeFormatter.ISO_INSTANT
-			));
-		customFields.put(
-			"trial-start-date",
-			ZonedDateTime.now(
-			).format(
-				DateTimeFormatter.ISO_INSTANT
-			));
-
-		customFields.put("trial-virtualhost", portalInstance.getVirtualHost());
-
-		order.setCustomFields(() -> customFields);
-
-		String orderId = order.getId(
-		).toString();
+			orderId);
 
 		JSONObject environmentProjectJSONObject =
 			_consoleService.postEnvironmentProject("ext" + orderId);
@@ -333,11 +317,31 @@ public class TrialRestController extends BaseRestController {
 			environmentProjectJSONObject.getString("id"));
 
 		_consoleService.deployApp(
-			orderId, environmentProjectJSONObject.getString("projectId"));
+			String.valueOf(orderId),
+			environmentProjectJSONObject.getString("projectId"));
+
+		order.setCustomFields(
+			HashMapBuilder.put(
+				"trial-end-date",
+				ZonedDateTime.now(
+				).plusDays(
+					7
+				).format(
+					DateTimeFormatter.ISO_INSTANT
+				)
+			).put(
+				"trial-start-date",
+				ZonedDateTime.now(
+				).format(
+					DateTimeFormatter.ISO_INSTANT
+				)
+			).put(
+				"trial-virtualhost", portalInstance.getVirtualHost()
+			).build());
 
 		order.setOrderStatus(_ORDER_STATUS_COMPLETED);
 
-		_orderResource.patchOrder(order.getId(), order);
+		_orderResource.patchOrder(orderId, order);
 	}
 
 	private static final int _ORDER_STATUS_CANCELLED = 8;

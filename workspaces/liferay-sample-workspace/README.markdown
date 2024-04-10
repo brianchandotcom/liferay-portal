@@ -130,6 +130,10 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 	Customize instance settings with YAML by overridding OSGi configurations.
 
+- *liferay-sample-js-import-maps-entry*
+
+	TODO
+
 - *liferay-sample-site-initializer*
 
 	TODO

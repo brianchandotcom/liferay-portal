@@ -25,6 +25,19 @@ export async function createRoutine({data, redirect}) {
 	}
 }
 
+export async function deleteRoutineById({id, redirect}) {
+	const response = await liferayRequest({
+		method: 'DELETE',
+		urlPath: '/o/c/routines/' + id,
+	});
+
+	await response.text();
+
+	if (redirect) {
+		redirect(null);
+	}
+}
+
 export async function getRoutineByType({id, setRoutine}) {
 	const response = await liferayRequest({
 		graphqlQuery: `{

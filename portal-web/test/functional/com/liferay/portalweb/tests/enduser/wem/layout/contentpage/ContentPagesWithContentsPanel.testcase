@@ -919,16 +919,6 @@ definition {
 			AssertElementNotPresent(
 				key_itemName = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
-
-			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Heading Example,Dynamic Collection") {
-				AssertElementNotPresent(
-					key_itemName = ${itemName},
-					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
-			}
-
-			AssertElementNotPresent(
-				key_itemName = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
-				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 		}
 
 		task ("Search the displayed assets by keyword when the content filter is Collection") {
@@ -937,10 +927,6 @@ definition {
 			PageEditor.searchInPageContentPanel(searchTerm = "Dynamic Collection");
 
 			AssertVisible(
-				key_itemName = "Dynamic Collection",
-				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
-
-			AssertElementNotPresent(
 				key_itemName = "Dynamic Collection",
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 		}

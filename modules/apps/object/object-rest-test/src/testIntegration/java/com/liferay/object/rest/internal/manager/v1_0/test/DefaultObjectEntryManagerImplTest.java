@@ -40,6 +40,7 @@ import com.liferay.object.field.builder.DecimalObjectFieldBuilder;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
+import com.liferay.object.field.builder.MultiselectPicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PrecisionDecimalObjectFieldBuilder;
 import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
@@ -359,6 +360,15 @@ public class DefaultObjectEntryManagerImplTest
 					true
 				).name(
 					"localizedLongTextObjectFieldName"
+				).build(),
+				new MultiselectPicklistObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).listTypeDefinitionId(
+					listTypeDefinition.getListTypeDefinitionId()
+				).name(
+					"multiselectPicklistObjectFieldName"
 				).build(),
 				new PicklistObjectFieldBuilder(
 				).indexed(
@@ -2892,6 +2902,9 @@ public class DefaultObjectEntryManagerImplTest
 							ObjectFieldValidationConstants.
 								BUSINESS_TYPE_LONG_VALUE_MAX)
 					).put(
+						"multiselectPicklistObjectFieldName",
+						Collections.singletonList(_addListTypeEntry())
+					).put(
 						"precisionDecimalObjectFieldName",
 						new BigDecimal(
 							String.valueOf(RandomTestUtil.randomDouble()))
@@ -2917,6 +2930,25 @@ public class DefaultObjectEntryManagerImplTest
 				"integerObjectFieldName", 25
 			).put(
 				"longIntegerObjectFieldName", 200L
+			).put(
+				"multiselectPicklistObjectFieldName",
+				() -> {
+					ListTypeEntry listTypeEntry =
+						_listTypeEntryLocalService.addListTypeEntry(
+							null, adminUser.getUserId(),
+							listTypeDefinition.getListTypeDefinitionId(),
+							RandomTestUtil.randomString(),
+							Collections.singletonMap(
+								LocaleUtil.US, RandomTestUtil.randomString()));
+
+					return Collections.singletonList(
+						new ListEntry() {
+							{
+								key = listTypeEntry.getKey();
+								name = listTypeEntry.getName(LocaleUtil.US);
+							}
+						});
+				}
 			).put(
 				"precisionDecimalObjectFieldName",
 				new BigDecimal("0.8755445767")

@@ -181,8 +181,7 @@ public class GenerateReportsControllerBuildRunner
 			String reportName = report.toString();
 
 			long defaultStartTime =
-				System.currentTimeMillis() -
-					_getReportStaleDuration(reportName);
+				buildData.getStartTime() - _getReportStaleDuration(reportName);
 
 			if (!latestReportUpdateTimes.containsKey(reportName)) {
 				latestReportUpdateTimes.put(reportName, defaultStartTime);

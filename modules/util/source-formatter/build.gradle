@@ -4,9 +4,6 @@ apply plugin: "com.liferay.maven.plugin.builder"
 
 task installDistCache(type: Copy)
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 File userHomeDistDir = new File(System.getProperty("user.home"), ".liferay/install/dist")
 
 buildPluginDescriptor {

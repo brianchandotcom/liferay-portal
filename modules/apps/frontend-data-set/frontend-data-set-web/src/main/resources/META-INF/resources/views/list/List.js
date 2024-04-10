@@ -115,7 +115,7 @@ const ListItem = ({item, schema}) => {
 				<ClayList.ItemField>
 					<ImageRenderer
 						sticker={sticker && item[sticker]}
-						value={{src: item[image]}}
+						value={item[image]}
 					/>
 				</ClayList.ItemField>
 			) : (

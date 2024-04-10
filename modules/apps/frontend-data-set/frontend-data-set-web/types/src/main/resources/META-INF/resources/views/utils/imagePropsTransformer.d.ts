@@ -5,6 +5,29 @@
 
 /// <reference types="react" />
 
+interface IDocsAndMediaImageProps {
+	id: number;
+	link: {
+		href: string;
+		label: string;
+	};
+	name: string;
+}
+interface IImageProps {
+	itemData?: any;
+	name?: string;
+	options?: {
+		label?: string;
+		labelKey?: string;
+		shape?: 'circle' | 'rounded' | 'user-icon';
+		size?: 'lg' | 'sm' | 'xl';
+	};
+	value?:
+		| string
+		| IDocsAndMediaImageProps
+		| React.ImgHTMLAttributes<HTMLImageElement>;
+}
 export default function imagePropsTransformer(
-	imageData: any | string
-): React.ImgHTMLAttributes<HTMLImageElement> | string | undefined;
+	imageData: IDocsAndMediaImageProps | IImageProps | string | undefined
+): React.ImgHTMLAttributes<HTMLImageElement>;
+export {};

@@ -1,8 +1,8 @@
 assemble:
     - from: build/static
       into: static
-liferay-sample-js-import-maps-entry-1:
+liferay-sample-js-import-maps-entry:
     bareSpecifier: jquery
-    name: Liferay Sample JS Import Maps Entry 1
+    name: Liferay Sample JS Import Maps Entry
     type: jsImportMapsEntry
     url: jquery.*.js

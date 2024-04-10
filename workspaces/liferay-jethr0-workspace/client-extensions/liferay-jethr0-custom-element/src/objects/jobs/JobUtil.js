@@ -128,10 +128,14 @@ export async function getJobQueueOrderedJobs({setJobs}) {
 
 	const jobs = [];
 
-	for (const id of JSON.parse(result.items[0].prioritizedJobIds)) {
-		const job = await getJobById({id});
+	const jobPrioritizer = result.items[0];
 
-		jobs.push(job);
+	if (jobPrioritizer?.prioritizedJobIds) {
+		for (const id of JSON.parse(jobPrioritizer.prioritizedJobIds)) {
+			const job = await getJobById({id});
+
+			jobs.push(job);
+		}
 	}
 
 	setJobs(jobs);

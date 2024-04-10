@@ -5,11 +5,6 @@
 
 import imagePropsTransformer from '../../../src/main/resources/META-INF/resources/views/utils/imagePropsTransformer';
 
-const emptyImageAttributes = {
-	alt: '',
-	src: undefined,
-};
-
 const docsAndMediaImage = {
 	id: 1,
 	link: {
@@ -20,12 +15,10 @@ const docsAndMediaImage = {
 };
 
 describe('imagePropsTransformer utility', () => {
-	it('returns an object with valid HTML image attributes when there is no input information', () => {
-		expect(imagePropsTransformer(undefined)).toMatchObject(
-			emptyImageAttributes
-		);
+	it('returns undefined when there is no input information', () => {
+		expect(imagePropsTransformer(undefined)).toBeUndefined();
 
-		expect(imagePropsTransformer({})).toMatchObject(emptyImageAttributes);
+		expect(imagePropsTransformer({})).toBeUndefined();
 	});
 
 	it('returns an object with valid HTML image attributes when the input information is a string', () => {

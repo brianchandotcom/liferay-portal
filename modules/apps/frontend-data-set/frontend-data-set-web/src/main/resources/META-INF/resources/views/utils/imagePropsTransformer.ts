@@ -31,14 +31,14 @@ interface IImageProps {
 
 export default function imagePropsTransformer(
 	imageData: IDocsAndMediaImageProps | IImageProps | string | undefined
-): React.ImgHTMLAttributes<HTMLImageElement> {
+): React.ImgHTMLAttributes<HTMLImageElement> | undefined {
 	let imageProps: React.ImgHTMLAttributes<HTMLImageElement> = {
 		alt: '',
 		src: undefined,
 	};
 
-	if (!imageData) {
-		return imageProps;
+	if (!imageData || !Object.keys(imageData).length) {
+		return undefined;
 	}
 
 	if (typeof imageData === 'string') {

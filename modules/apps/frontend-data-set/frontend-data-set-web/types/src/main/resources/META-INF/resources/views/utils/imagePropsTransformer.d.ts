@@ -29,5 +29,5 @@ interface IImageProps {
 }
 export default function imagePropsTransformer(
 	imageData: IDocsAndMediaImageProps | IImageProps | string | undefined
-): React.ImgHTMLAttributes<HTMLImageElement>;
+): React.ImgHTMLAttributes<HTMLImageElement> | undefined;
 export {};

@@ -26,6 +26,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.account.exception.NoSuchEntryException" %><%@
 page import="com.liferay.account.model.AccountEntry" %><%@
 page import="com.liferay.commerce.constants.CommerceOrderActionKeys" %><%@
+page import="com.liferay.commerce.constants.CommerceOrderConstants" %><%@
 page import="com.liferay.commerce.constants.CommercePortletKeys" %><%@
 page import="com.liferay.commerce.constants.CommerceWebKeys" %><%@
 page import="com.liferay.commerce.currency.model.CommerceMoney" %><%@

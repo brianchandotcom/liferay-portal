@@ -38,13 +38,9 @@ public class CommerceReturnTableFDSView extends BaseTableFDSView {
 				fdsTableSchemaField.setSortable(true);
 			}
 		).add(
-			"r_accountToCommerceReturns_accountEntryId", "account"
+			"totalAmount", "amount"
 		).add(
-			"totalAmount", "amount",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
-		).add(
-			"requestedItems", "quantity",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			"requestedItems", "number-of-items"
 		).add(
 			"dateCreated", "return-date",
 			fdsTableSchemaField -> {

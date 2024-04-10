@@ -86,7 +86,7 @@ function RoutinesPage() {
 						<Jethr0ButtonsRow
 							buttons={[
 								{
-									link: '/routine/create',
+									link: '/routines/create',
 									title: 'Create Routine',
 								},
 							]}

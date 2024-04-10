@@ -136,13 +136,6 @@ public class ObjectEntryEntityModelTest {
 					new StringEntityField(
 						"keywords", locale -> "assetTagNames.raw"))
 			).put(
-				"objectDefinitionId",
-				new IntegerEntityField(
-					"objectDefinitionId", locale -> "objectDefinitionId")
-			).put(
-				"siteId",
-				new IntegerEntityField("siteId", locale -> Field.GROUP_ID)
-			).put(
 				"status",
 				new CollectionEntityField(
 					new IntegerEntityField("status", locale -> Field.STATUS))

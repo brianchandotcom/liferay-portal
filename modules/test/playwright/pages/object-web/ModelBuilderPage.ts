@@ -124,7 +124,7 @@ export class ModelBuilderPage {
 		objectDefinitionName,
 		objectFieldBusinessType,
 		objectFieldLabel,
-	}: createObjectField) {
+	}: CreateObjectField) {
 		await this.leftSidebarItems
 			.filter({hasText: objectDefinitionName})
 			.click();

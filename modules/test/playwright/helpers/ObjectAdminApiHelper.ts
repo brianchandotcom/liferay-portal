@@ -127,7 +127,7 @@ export class ObjectAdminApiHelper {
 		);
 	}
 
-	async postRandomObjectFolder() {
+	async postRandomObjectFolder(): Promise<ObjectFolder> {
 		const objectFolderExternalReferenceCode =
 			'objectFolder' + getRandomInt();
 

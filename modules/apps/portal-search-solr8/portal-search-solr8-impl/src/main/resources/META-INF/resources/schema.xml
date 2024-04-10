@@ -781,12 +781,12 @@
 		<field indexed="true" name="viewCount" stored="true" type="long" />
 		<field indexed="true" name="visible" stored="true" type="string" />
 		<dynamicField docValues="true" indexed="true" name="*_coordinate" stored="false" type="double" />
-		<dynamicField docValues="true" indexed="true" multiValued="false" name="*Date_sortable" stored="true" type="long" />
-		<dynamicField docValues="true" indexed="true" multiValued="false" name="*Number_sortable" stored="true" type="double" />
-		<dynamicField docValues="true" indexed="true" multiValued="false" name="*String_sortable" stored="true" type="string" />
-		<dynamicField docValues="true" indexed="true" multiValued="false" name="*_sortable" stored="true" type="string" />
+		<dynamicField docValues="true" indexed="true" multiValued="true" name="*Date_sortable" stored="true" type="long" />
+		<dynamicField docValues="true" indexed="true" multiValued="true" name="*Number_sortable" stored="true" type="double" />
+		<dynamicField docValues="true" indexed="true" multiValued="true" name="*String_sortable" stored="true" type="string" />
+		<dynamicField docValues="true" indexed="true" multiValued="true" name="*_sortable" stored="true" type="string" />
 		<dynamicField indexed="true" multiValued="false" name="*_geolocation" stored="true" type="location" />
-		<dynamicField indexed="true" multiValued="false" name="*_sortable.keyword_lowercase" stored="false" type="string_keyword_lowercase" />
+		<dynamicField indexed="true" multiValued="true" name="*_sortable.keyword_lowercase" stored="false" type="string_keyword_lowercase" />
 		<dynamicField indexed="true" multiValued="true" name="ddm__keyword__*" stored="true" type="string" />
 		<dynamicField indexed="true" multiValued="true" name="expando__keyword__*" stored="true" type="string_keyword_lowercase" />
 		<dynamicField indexed="true" multiValued="true" name="*_ar" stored="true" termOffsets="true" termPositions="true" termVectors="true" type="text_ar" />

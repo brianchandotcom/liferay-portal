@@ -5,13 +5,18 @@
 
 import {test} from '@playwright/test';
 
+import {AddObjectDefinitionModalPage} from '../pages/object-web/AddObjectDefinitionModalPage';
 import {ModelBuilderPage} from '../pages/object-web/ModelBuilderPage';
 import {ObjectDefinitionsPage} from '../pages/object-web/ObjectDefinitionsPage';
 
 const objectPagesTest = test.extend<{
+	addObjectDefinitionModalPage: AddObjectDefinitionModalPage;
 	modelBuilderPage: ModelBuilderPage;
 	objectDefinitionsPage: ObjectDefinitionsPage;
 }>({
+	addObjectDefinitionModalPage: async ({page}, use) => {
+		await use(new AddObjectDefinitionModalPage(page));
+	},
 	modelBuilderPage: async ({page}, use) => {
 		await use(new ModelBuilderPage(page));
 	},

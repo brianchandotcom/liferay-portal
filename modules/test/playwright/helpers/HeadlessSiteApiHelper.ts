@@ -29,16 +29,6 @@ export class HeadlessSiteApiHelper {
 		);
 	}
 
-	async createSiteFromSiteTemplate(
-		name: string,
-		templateKey: number
-	): Promise<Site> {
-		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/sites`,
-			{name, templateKey, templateType: 'site-template'}
-		);
-	}
-
 	async getSiteByERC(externalReferenceCode: string): Promise<Site> {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/by-external-reference-code/${externalReferenceCode}`

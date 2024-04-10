@@ -133,7 +133,6 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 				_getObjectEntryCustomFieldUnsafeFunction(
 					objectFieldBusinessType, propertiesObjectValuePair,
 					fieldName, "key_" + listTypeEntriesHeaderIndex));
-
 			multiselectPickListColumnDescriptors[i + 1] = ColumnDescriptor.from(
 				StringBundler.concat(
 					fieldName, ".name_", listTypeEntriesHeaderIndex),

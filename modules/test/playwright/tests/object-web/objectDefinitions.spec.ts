@@ -59,7 +59,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 		modalAddObjectDefinitionPage,
 		modelBuilderPage,
 	}) => {
-		await modelBuilderPage.goto();
+		await modelBuilderPage.goto({objectFolderName: 'Default'});
 
 		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
 

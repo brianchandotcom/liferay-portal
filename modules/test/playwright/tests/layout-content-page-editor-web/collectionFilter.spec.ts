@@ -374,3 +374,103 @@ test('filters a web content collection by single and multiple tags', async ({
 	await expect(page.getByText(webContents[1].name)).toBeVisible();
 	await expect(page.getByText(webContents[2].name)).not.toBeVisible();
 });
+
+test('enables search field in dropdown list of Collection Filter', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+
+	// Create a vocabulary with two categories
+
+	const vocabulary = await apiHelpers.headlessAdminTaxonomy.createVocabulary({
+		assetTypes: getAssetTypesDefinition(),
+		name: 'Animals',
+		siteId: site.id,
+	});
+
+	const categories = [];
+
+	for (const categoryName of ['Dogs', 'Cats']) {
+		categories.push(
+			await apiHelpers.headlessAdminTaxonomy.createCategory({
+				name: categoryName,
+				vocabularyId: vocabulary.id,
+			})
+		);
+	}
+
+	// Create a Web Content
+
+	const contentStructureId = await getBasicWebContentStructureId(apiHelpers);
+	await addApprovedStructuredContent({
+		apiHelpers,
+		contentStructureId,
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	// Create a dynamic collection with the previous Web Content
+
+	await createCollection(page, site.friendlyUrlPath);
+
+	// Create a page with Collection Display and Collection Filter fragments
+
+	const collectionFilterId = getRandomString();
+
+	const layout = await createPageWithCollectionAndFilterCollection({
+		apiHelpers,
+		collectionFilterId,
+		page,
+		siteId: site.id,
+	});
+
+	// Go to edit mode of the created page and select the Collection Filter fragment
+
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+
+	await pageEditorPage.selectFragment(collectionFilterId);
+
+	// Set Filter configuration for categories
+
+	await page.getByLabel('Select', {exact: true}).click();
+
+	await page.getByLabel('Animal Collection').check();
+
+	await page.getByLabel('Filter', {exact: true}).selectOption('category');
+
+	await page.getByLabel('Select Source').click();
+
+	await page
+		.frameLocator('iframe[title="Select"]')
+		.getByRole('link', {name: 'Animals'})
+		.click();
+
+	await page.waitForTimeout(1000);
+
+	await page
+		.frameLocator('iframe[title="Select"]')
+		.getByRole('button', {name: 'Select This Level'})
+		.click();
+
+	await page.waitForTimeout(1000);
+
+	await page.getByLabel('Include Search Field').check();
+
+	await pageEditorPage.publishPage();
+
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+	// Check the categories that appear in the dropdown
+
+	await page.getByRole('button', {name: 'Select'}).click();
+
+	await expect(page.getByText('dogs')).toBeVisible();
+	await expect(page.getByText('cats')).toBeVisible();
+
+	await page.getByRole('textbox').fill('dogs');
+
+	await expect(page.getByText('dogs')).toBeVisible();
+	await expect(page.getByText('cats')).not.toBeVisible();
+});

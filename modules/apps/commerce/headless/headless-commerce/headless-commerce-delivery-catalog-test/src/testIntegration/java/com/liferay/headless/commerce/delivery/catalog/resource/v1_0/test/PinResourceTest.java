@@ -7,6 +7,7 @@ package com.liferay.headless.commerce.delivery.catalog.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
@@ -45,24 +46,39 @@ public class PinResourceTest extends BasePinResourceTestCase {
 	}
 
 	@Override
+	protected Pin
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodePinsPage_addPin(
+				String channelExternalReferenceCode,
+				String productExternalReferenceCode, Pin pin)
+		throws Exception {
+
+		return _addCSDiagramPin(pin);
+	}
+
+	@Override
+	protected String
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodePinsPage_getChannelExternalReferenceCode()
+		throws Exception {
+
+		return _commerceChannel.getExternalReferenceCode();
+	}
+
+	@Override
+	protected String
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodePinsPage_getProductExternalReferenceCode()
+		throws Exception {
+
+		CProduct cProduct = _cpDefinition.getCProduct();
+
+		return cProduct.getExternalReferenceCode();
+	}
+
+	@Override
 	protected Pin testGetChannelProductPinsPage_addPin(
 			Long channelId, Long productId, Pin pin)
 		throws Exception {
 
-		CSDiagramPin csDiagramPin = _csDiagramPinLocalService.addCSDiagramPin(
-			_user.getUserId(), _cpDefinition.getCPDefinitionId(),
-			pin.getPositionX(), pin.getPositionY(), pin.getSequence());
-
-		_csDiagramPins.add(csDiagramPin);
-
-		return new Pin() {
-			{
-				id = csDiagramPin.getCSDiagramPinId();
-				positionX = csDiagramPin.getPositionX();
-				positionY = csDiagramPin.getPositionY();
-				sequence = csDiagramPin.getSequence();
-			}
-		};
+		return _addCSDiagramPin(pin);
 	}
 
 	@Override
@@ -77,6 +93,23 @@ public class PinResourceTest extends BasePinResourceTestCase {
 		throws Exception {
 
 		return _cpDefinition.getCProductId();
+	}
+
+	private Pin _addCSDiagramPin(Pin pin) throws Exception {
+		CSDiagramPin csDiagramPin = _csDiagramPinLocalService.addCSDiagramPin(
+			_user.getUserId(), _cpDefinition.getCPDefinitionId(),
+			pin.getPositionX(), pin.getPositionY(), pin.getSequence());
+
+		_csDiagramPins.add(csDiagramPin);
+
+		return new Pin() {
+			{
+				id = csDiagramPin.getCSDiagramPinId();
+				positionX = csDiagramPin.getPositionX();
+				positionY = csDiagramPin.getPositionY();
+				sequence = csDiagramPin.getSequence();
+			}
+		};
 	}
 
 	@DeleteAfterTestRun

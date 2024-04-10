@@ -8,8 +8,12 @@ package com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
+import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
+import com.liferay.commerce.product.service.CProductLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductSpecificationResource;
@@ -39,6 +43,28 @@ import org.osgi.service.component.annotations.ServiceScope;
 @CTAware
 public class ProductSpecificationResourceImpl
 	extends BaseProductSpecificationResourceImpl {
+
+	@Override
+	public Page<ProductSpecification>
+			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage(
+				String channelExternalReferenceCode,
+				String productExternalReferenceCode, Pagination pagination)
+		throws Exception {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.
+				getCommerceChannelByExternalReferenceCode(
+					channelExternalReferenceCode,
+					contextCompany.getCompanyId());
+
+		CProduct cProduct =
+			_cProductLocalService.getCProductByExternalReferenceCode(
+				productExternalReferenceCode, contextCompany.getCompanyId());
+
+		return getChannelProductProductSpecificationsPage(
+			commerceChannel.getCommerceChannelId(), cProduct.getCProductId(),
+			pagination);
+	}
 
 	@NestedField(parentClass = Product.class, value = "productSpecifications")
 	@Override
@@ -98,11 +124,17 @@ public class ProductSpecificationResourceImpl
 	}
 
 	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPDefinitionSpecificationOptionValueLocalService
 		_cpDefinitionSpecificationOptionValueLocalService;
+
+	@Reference
+	private CProductLocalService _cProductLocalService;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.ProductSpecificationDTOConverter)"

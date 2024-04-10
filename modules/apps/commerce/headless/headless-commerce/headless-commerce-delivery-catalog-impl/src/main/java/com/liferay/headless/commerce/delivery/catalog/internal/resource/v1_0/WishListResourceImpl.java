@@ -39,6 +39,20 @@ public class WishListResourceImpl extends BaseWishListResourceImpl {
 	}
 
 	@Override
+	public Page<WishList> getChannelByExternalReferenceCodeWishListsPage(
+			String externalReferenceCode, Long accountId, Pagination pagination)
+		throws Exception {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.
+				getCommerceChannelByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		return getChannelWishListsPage(
+			commerceChannel.getCommerceChannelId(), accountId, pagination);
+	}
+
+	@Override
 	public Page<WishList> getChannelWishListsPage(
 			Long channelId, Long accountId, Pagination pagination)
 		throws Exception {
@@ -83,6 +97,20 @@ public class WishListResourceImpl extends BaseWishListResourceImpl {
 				GetterUtil.getBoolean(
 					wishList.getDefaultWishList(),
 					commerceWishList.isDefaultWishList())));
+	}
+
+	@Override
+	public WishList postChannelByExternalReferenceCodeWishList(
+			String externalReferenceCode, Long accountId, WishList wishList)
+		throws Exception {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.
+				getCommerceChannelByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		return postChannelWishList(
+			commerceChannel.getCommerceChannelId(), accountId, wishList);
 	}
 
 	@Override

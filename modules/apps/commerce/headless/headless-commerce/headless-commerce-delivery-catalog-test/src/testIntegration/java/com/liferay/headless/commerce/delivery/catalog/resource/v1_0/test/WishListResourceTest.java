@@ -89,9 +89,24 @@ public class WishListResourceTest extends BaseWishListResourceTestCase {
 
 	@Override
 	protected WishList testDeleteWishList_addWishList() throws Exception {
-		return wishListResource.postChannelWishList(
-			_commerceChannel.getCommerceChannelId(),
-			_accountEntry.getAccountEntryId(), randomWishList());
+		return _postChannelWishList(randomWishList());
+	}
+
+	@Override
+	protected WishList
+			testGetChannelByExternalReferenceCodeWishListsPage_addWishList(
+				String externalReferenceCode, WishList wishList)
+		throws Exception {
+
+		return _postChannelWishList(wishList);
+	}
+
+	@Override
+	protected String
+			testGetChannelByExternalReferenceCodeWishListsPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _commerceChannel.getExternalReferenceCode();
 	}
 
 	@Override
@@ -110,28 +125,35 @@ public class WishListResourceTest extends BaseWishListResourceTestCase {
 
 	@Override
 	protected WishList testGetWishList_addWishList() throws Exception {
-		return wishListResource.postChannelWishList(
-			_commerceChannel.getCommerceChannelId(),
-			_accountEntry.getAccountEntryId(), randomWishList());
+		return _postChannelWishList(randomWishList());
 	}
 
 	@Override
 	protected WishList testGraphQLWishList_addWishList() throws Exception {
-		return wishListResource.postChannelWishList(
-			_commerceChannel.getCommerceChannelId(),
-			_accountEntry.getAccountEntryId(), randomWishList());
+		return _postChannelWishList(randomWishList());
 	}
 
 	protected WishList testPatchChannelWishList_addWishList() throws Exception {
-		return wishListResource.postChannelWishList(
-			_commerceChannel.getCommerceChannelId(),
-			_accountEntry.getAccountEntryId(), randomWishList());
+		return _postChannelWishList(randomWishList());
+	}
+
+	@Override
+	protected WishList
+			testPostChannelByExternalReferenceCodeWishList_addWishList(
+				WishList wishList)
+		throws Exception {
+
+		return _postChannelWishList(wishList);
 	}
 
 	@Override
 	protected WishList testPostChannelWishList_addWishList(WishList wishList)
 		throws Exception {
 
+		return _postChannelWishList(wishList);
+	}
+
+	private WishList _postChannelWishList(WishList wishList) throws Exception {
 		return wishListResource.postChannelWishList(
 			_commerceChannel.getCommerceChannelId(),
 			_accountEntry.getAccountEntryId(), wishList);

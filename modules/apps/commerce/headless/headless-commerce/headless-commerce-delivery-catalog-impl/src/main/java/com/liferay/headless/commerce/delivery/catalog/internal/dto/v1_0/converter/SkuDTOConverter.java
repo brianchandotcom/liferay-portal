@@ -174,6 +174,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 							displayDiscountLevels();
 					});
 				setExpirationDate(cpInstance::getExpirationDate);
+				setExternalReferenceCode(cpInstance::getExternalReferenceCode);
 				setGtin(cpInstance::getGtin);
 				setHeight(cpInstance::getHeight);
 				setId(cpInstance::getCPInstanceId);
@@ -544,6 +545,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 								null));
 					});
 				setSku(replacementCPInstance::getSku);
+				setSkuExternalReferenceCode(
+					replacementCPInstance::getExternalReferenceCode);
 				setSkuId(replacementCPInstance::getCPInstanceId);
 				setSkuOptions(
 					() -> SkuOptionUtil.getSkuOptions(

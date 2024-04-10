@@ -13,10 +13,14 @@ import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.product.exception.NoSuchCProductException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
+import com.liferay.commerce.product.service.CPOptionLocalService;
+import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
@@ -52,6 +56,36 @@ public class ProductOptionValueResourceImpl
 
 	@Override
 	public Page<ProductOptionValue>
+			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage(
+				String channelExternalReferenceCode,
+				String productExternalReferenceCode,
+				String productOptionExternalReferenceCode, Long accountId,
+				Long productOptionValueId, Long skuId, Pagination pagination)
+		throws Exception {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.
+				getCommerceChannelByExternalReferenceCode(
+					channelExternalReferenceCode,
+					contextCompany.getCompanyId());
+
+		CProduct cProduct =
+			_cProductLocalService.getCProductByExternalReferenceCode(
+				productExternalReferenceCode, contextCompany.getCompanyId());
+
+		CPOption cpOption =
+			_cpOptionLocalService.getCPOptionByExternalReferenceCode(
+				productOptionExternalReferenceCode,
+				contextCompany.getCompanyId());
+
+		return getChannelProductProductOptionProductOptionValuesPage(
+			commerceChannel.getCommerceChannelId(), cProduct.getCProductId(),
+			cpOption.getCPOptionId(), accountId, productOptionValueId, skuId,
+			pagination);
+	}
+
+	@Override
+	public Page<ProductOptionValue>
 			getChannelProductProductOptionProductOptionValuesPage(
 				Long channelId, Long productId, Long productOptionId,
 				Long accountId, Long productOptionValueId, Long skuId,
@@ -61,6 +95,37 @@ public class ProductOptionValueResourceImpl
 		return _getProductOptionValuePage(
 			channelId, productId, productOptionId, accountId,
 			productOptionValueId, skuId, pagination, null);
+	}
+
+	@Override
+	public Page<ProductOptionValue>
+			postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage(
+				String channelExternalReferenceCode,
+				String productExternalReferenceCode,
+				String productOptionExternalReferenceCode, Long accountId,
+				Long productOptionValueId, Long skuId, Pagination pagination,
+				SkuOption[] skuOptions)
+		throws Exception {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.
+				getCommerceChannelByExternalReferenceCode(
+					channelExternalReferenceCode,
+					contextCompany.getCompanyId());
+
+		CProduct cProduct =
+			_cProductLocalService.getCProductByExternalReferenceCode(
+				productExternalReferenceCode, contextCompany.getCompanyId());
+
+		CPOption cpOption =
+			_cpOptionLocalService.getCPOptionByExternalReferenceCode(
+				productOptionExternalReferenceCode,
+				contextCompany.getCompanyId());
+
+		return postChannelProductProductOptionProductOptionValuesPage(
+			commerceChannel.getCommerceChannelId(), cProduct.getCProductId(),
+			cpOption.getCPOptionId(), accountId, productOptionValueId, skuId,
+			pagination, skuOptions);
 	}
 
 	@Override
@@ -206,6 +271,12 @@ public class ProductOptionValueResourceImpl
 	@Reference
 	private CPDefinitionOptionValueRelLocalService
 		_cpDefinitionOptionValueRelLocalService;
+
+	@Reference
+	private CPOptionLocalService _cpOptionLocalService;
+
+	@Reference
+	private CProductLocalService _cProductLocalService;
 
 	@Reference(
 		target = DTOConverterConstants.PRODUCT_OPTION_VALUE_DTO_CONVERTER

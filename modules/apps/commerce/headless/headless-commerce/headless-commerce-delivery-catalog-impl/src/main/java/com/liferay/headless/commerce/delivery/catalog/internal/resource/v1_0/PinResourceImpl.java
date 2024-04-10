@@ -12,9 +12,11 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
@@ -43,6 +45,29 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = PinResource.class
 )
 public class PinResourceImpl extends BasePinResourceImpl {
+
+	@Override
+	public Page<Pin>
+			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodePinsPage(
+				String channelExternalReferenceCode,
+				String productExternalReferenceCode, Long accountId,
+				String search, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.
+				getCommerceChannelByExternalReferenceCode(
+					channelExternalReferenceCode,
+					contextCompany.getCompanyId());
+
+		CProduct cProduct =
+			_cProductLocalService.getCProductByExternalReferenceCode(
+				productExternalReferenceCode, contextCompany.getCompanyId());
+
+		return getChannelProductPinsPage(
+			commerceChannel.getCommerceChannelId(), cProduct.getCProductId(),
+			accountId, search, pagination, sorts);
+	}
 
 	@Override
 	public Page<Pin> getChannelProductPinsPage(
@@ -151,6 +176,9 @@ public class PinResourceImpl extends BasePinResourceImpl {
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private CProductLocalService _cProductLocalService;
 
 	@Reference
 	private CSDiagramPinLocalService _csDiagramPinLocalService;

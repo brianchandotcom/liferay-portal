@@ -6,6 +6,7 @@
 import {ApiHelpers} from './ApiHelpers';
 
 type TSite = {
+	externalReferenceCode?: string;
 	id?: number;
 	name: string;
 	templateKey?: string;
@@ -38,9 +39,21 @@ export class HeadlessSiteApiHelper {
 		);
 	}
 
+	async getSiteByERC(externalReferenceCode: string): Promise<Site> {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/by-external-reference-code/${externalReferenceCode}`
+		);
+	}
+
 	async deleteSite(siteId: string) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}`
+		);
+	}
+
+	async deleteSiteByERC(externalReferenceCode: string) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/by-external-reference-code/${externalReferenceCode}`
 		);
 	}
 }

@@ -1167,7 +1167,7 @@
 					"businessType": "LongText",
 					"indexed": false,
 					"label": {
-						"en_US": "JobParameters"
+						"en_US": "Job Parameters"
 					},
 					"name": "jobParameters",
 					"type": "Clob"

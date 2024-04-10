@@ -41,8 +41,6 @@ export async function getRoutines({setRoutines}) {
 
 	const routines = [];
 
-	console.log(result);
-
 	for (const item of result.data.c.routines.items) {
 		routines.push(new Routine(item));
 	}

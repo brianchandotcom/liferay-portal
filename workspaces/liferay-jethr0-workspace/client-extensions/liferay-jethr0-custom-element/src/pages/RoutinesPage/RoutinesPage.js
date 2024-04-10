@@ -46,7 +46,10 @@ function Routines() {
 					return (
 						<tr key={routine.id}>
 							<th className="font-weight-semi-bold">
-								<Link title={routine.id} to={'/routines/' + routine.id}>
+								<Link
+									title={routine.id}
+									to={'/routines/' + routine.id}
+								>
 									{routine.id}
 								</Link>
 							</th>
@@ -82,7 +85,10 @@ function RoutinesPage() {
 						</Heading>
 						<Jethr0ButtonsRow
 							buttons={[
-								{link: '/routine/create', title: 'Create Routine'},
+								{
+									link: '/routine/create',
+									title: 'Create Routine',
+								},
 							]}
 						/>
 					</ClayLayout.Row>

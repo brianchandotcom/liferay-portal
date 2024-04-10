@@ -8,11 +8,11 @@ export default class Routine {
 		dateCreated,
 		dateModified,
 		id,
-		name,
 		jobName,
 		jobParameters,
 		jobPriority,
 		jobType,
+		name,
 		type,
 	}) {
 		this.dateCreated = dateCreated;

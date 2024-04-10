@@ -42,9 +42,12 @@ const FieldRepeatableDND = ({children, field, index, nestedFieldIndex}) => {
 
 	return (
 		<div
-			className={classNames('lfr-forms__form-view-field-repeatable-dnd', {
-				'lfr-forms__form-view-field-repeatable-dnd--dragging': isDragging,
-			})}
+			className={
+				(field.hidden ? 'hide ' : '') +
+				classNames('lfr-forms__form-view-field-repeatable-dnd', {
+					'lfr-forms__form-view-field-repeatable-dnd--dragging': isDragging,
+				})
+			}
 			ref={(element) => {
 				dragRef(element);
 				ref.current = element;

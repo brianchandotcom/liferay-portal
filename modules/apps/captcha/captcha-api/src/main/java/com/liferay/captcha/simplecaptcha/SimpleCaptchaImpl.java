@@ -95,9 +95,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			Integer count = (Integer)httpSession.getAttribute(
 				_getHttpSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest));
 
-			if ((count != null) &&
-				(count >= _captchaConfiguration.maxChallenges())) {
-
+			if (isExceededMaxChallenges(count)) {
 				return false;
 			}
 
@@ -365,6 +363,16 @@ public class SimpleCaptchaImpl implements Captcha {
 			_wordRenderers[i] = (WordRenderer)_getInstance(
 				wordRendererClassName);
 		}
+	}
+
+	protected boolean isExceededMaxChallenges(Integer count) {
+		if ((count != null) &&
+			(count >= _captchaConfiguration.maxChallenges())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void setCaptchaConfiguration(

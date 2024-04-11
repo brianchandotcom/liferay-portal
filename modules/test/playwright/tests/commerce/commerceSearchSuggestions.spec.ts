@@ -36,7 +36,9 @@ test('LPD-18809 search suggestions should filter by product visibility with the 
 
 	// setup
 
-	const site = await apiHelpers.headlessSite.createSite(getRandomString());
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		siteGroupId: site.id,

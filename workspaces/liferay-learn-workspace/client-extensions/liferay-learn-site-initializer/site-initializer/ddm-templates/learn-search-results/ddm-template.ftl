@@ -1,3 +1,9 @@
+<style>
+	.portlet-content{
+		text-align: left;
+	}
+</style>
+
 <div class="search-results" id="searchResults">
 	<#if entries?has_content>
 		<#list entries as searchEntry>

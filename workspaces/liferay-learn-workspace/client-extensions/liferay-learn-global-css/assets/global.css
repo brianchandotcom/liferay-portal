@@ -456,7 +456,7 @@ pre[class*='language-'] {
 				border-top-left-radius: 3rem;
 				font-size: var(--h5-font-size);
 				line-height: 20px;
-				padding: 2.25rem;
+				padding: 1rem;
 
 				&::placeholder {
 					font-size: var(--h5-font-size);

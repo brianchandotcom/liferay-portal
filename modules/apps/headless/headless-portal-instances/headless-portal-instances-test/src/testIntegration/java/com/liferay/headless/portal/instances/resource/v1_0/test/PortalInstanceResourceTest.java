@@ -13,8 +13,10 @@ import com.liferay.headless.portal.instances.client.problem.Problem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -375,6 +377,16 @@ public class PortalInstanceResourceTest
 		PortalInstance postPortalInstance =
 			testPostPortalInstance_addPortalInstance(randomPortalInstance);
 
+		User adminUser = _userLocalService.getUserByEmailAddress(
+			postPortalInstance.getCompanyId(), "test123@liferay.com");
+
+		postPortalInstance.setAdmin(
+			Admin.toDTO(
+				StringBundler.concat(
+					"{\"emailAddress\": \"", adminUser.getEmailAddress(), "\",",
+					"\"familyName\": \"", adminUser.getLastName(), "\",",
+					"\"givenName\": \"", adminUser.getFirstName(), "\"}")));
+
 		assertEquals(randomPortalInstance, postPortalInstance);
 		assertValid(postPortalInstance);
 
@@ -402,5 +414,8 @@ public class PortalInstanceResourceTest
 
 	@Inject
 	private static PortalInstancesLocalService _portalInstancesLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

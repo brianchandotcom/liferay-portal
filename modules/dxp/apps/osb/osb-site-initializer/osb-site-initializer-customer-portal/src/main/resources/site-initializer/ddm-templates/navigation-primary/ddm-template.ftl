@@ -4,11 +4,11 @@
 			<#if (navPrimaryItem.getChildren()?size > 0)>
 				<div class="adt-nav-item dropdown dropdown-action w-100">
 					<button
-							class="adt-nav-text align-items-center d-flex menu-info"
-							data-toggle="liferay-dropdown"
-							id="main-menu-id"
-							aria-expanded="true"
-							tabindex="4"
+						class="adt-nav-text align-items-center d-flex menu-info"
+						data-toggle="liferay-dropdown"
+						id="main-menu-id"
+						aria-expanded="true"
+						tabindex="4"
 					>
 						<span class="adt-nav-title text-truncate">
 							${navPrimaryItem.getName()}
@@ -17,6 +17,7 @@
 							<svg class="lexicon-icon lexicon-icon-caret-bottom" role="presentation" viewBox="0 0 512 512"><use xlink:href="/o/admin-theme/images/clay/icons.svg#caret-bottom"></use></svg>
 						</span>
 					</button>
+
 					<@render_navigation_dropdown navPrimaryItem />
 				</div>
 			<#else>
@@ -41,6 +42,7 @@
 				<#list navPrimaryItem.getChildren() as navSecondaryItem>
 					<#assign
 						secondaryCustomFields = navSecondaryItem.getExpandoAttributes()!{}
+
 						backgroundColor = secondaryCustomFields["Submenu Background"]?first!""
 						childColumns = secondaryCustomFields["Submenu Child Columns"]?first!""
 						columnSpan = secondaryCustomFields["Submenu Column Span"]!?first!""
@@ -60,6 +62,7 @@
 						<#list navSecondaryItem.getChildren() as navTertiaryItem>
 							<#assign
 								tertiaryCustomFields = navTertiaryItem.getExpandoAttributes()
+
 								descriptionText = getLocalizedExpandoValue(tertiaryCustomFields["Menu Item Description"])!""
 								imageURL = getLocalizedExpandoValue(tertiaryCustomFields["Menu Item Image URL"])!""
 								menuItemType = tertiaryCustomFields["Menu Item Type"]?first!""
@@ -74,13 +77,19 @@
 
 									<div class="adt-submenu-item-text">
 										<#if stringUtil.equals(menuItemType, "Image") && preheaderText?has_content>
-											<div class="adt-submenu-item-preheader color-neutral-3 font-weight-semi-bold">${preheaderText}</div>
+											<div class="adt-submenu-item-preheader color-neutral-3 font-weight-semi-bold">
+												${preheaderText}
+											</div>
 										</#if>
 
-										<h5 class="adt-submenu-item-title">${navTertiaryItem.getName()}</h5>
+										<h5 class="adt-submenu-item-title">
+											${navTertiaryItem.getName()}
+										</h5>
 
 										<#if descriptionText?has_content>
-											<div class="adt-submenu-item-description">${descriptionText}</div>
+											<div class="adt-submenu-item-description">
+												${descriptionText}
+											</div>
 										</#if>
 									</div>
 								</a>

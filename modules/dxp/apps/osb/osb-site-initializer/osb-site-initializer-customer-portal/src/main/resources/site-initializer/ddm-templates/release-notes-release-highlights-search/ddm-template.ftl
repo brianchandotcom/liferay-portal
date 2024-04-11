@@ -195,20 +195,19 @@
 <div class="search-results" id="searchResults">
 	<#if entries?has_content>
 		<#list entries as searchEntry>
-			<#assign
-				searchEntryTitle=searchEntry.getTitle()!""
-				restArticle=restClient.get("/headless-delivery/v1.0/structured-contents/${searchEntry.getClassPK()}?fields=contentFields,relatedContents,taxonomyCategoryBriefs&nestedFields=embeddedTaxonomyCategory") />
+			<#assign searchEntryTitle = searchEntry.getTitle()!"" />
+
 			<#if searchEntryTitle?has_content>
+				<#assign restArticle = restClient.get("/headless-delivery/v1.0/structured-contents/${searchEntry.getClassPK()}?fields=contentFields,relatedContents,taxonomyCategoryBriefs&nestedFields=embeddedTaxonomyCategory") />
+
 				<div class="align-items-stretch pt-3 search-results-entry">
 					<div class="font-weight-bold search-results-entry-title text-decoration-none unstyled">
 						<div class="product-capabilities">
 							<#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief>
-								<#assign
-									taxonomyVocabularyName=taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name />
+								<#assign taxonomyVocabularyName = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name />
 
-								<#if taxonomyVocabularyName=="Product Capabilities">
-									<span
-										class="font-weight-normal label label-secondary label-tonal-info m-0 px-2 text-paragraph-sm">
+								<#if taxonomyVocabularyName == "Product Capabilities">
+									<span class="font-weight-normal label label-secondary label-tonal-info m-0 px-2 text-paragraph-sm">
 										${taxonomyCategoryBrief.taxonomyCategoryName}
 									</span>
 								</#if>
@@ -222,7 +221,9 @@
 				  				<#if fieldData.contentFieldValue.data?has_content>
 									<#assign webContentData = fieldData.contentFieldValue.data />
 
-									<div>${webContentData}</div>
+									<div>
+										${webContentData}
+									</div>
 								</#if>
 							</#list>
 						</div>
@@ -230,11 +231,15 @@
 
 					<#if restArticle.relatedContents?has_content>
 						<div>
-							<div class="features-header">${languageUtil.get(locale, "features", "Features:")}</div>
+							<div class="features-header">
+								${languageUtil.get(locale, "features", "Features:")}
+							</div>
 
 							<#list restArticle.relatedContents as relatedContents>
-								<#assign relatedContentsId = relatedContents.id
-									relatedContentsTitle=relatedContents.title />
+								<#assign
+									relatedContentsId = relatedContents.id
+									relatedContentsTitle = relatedContents.title
+								/>
 
 								<div class="features-box">
 									<div class="features-container">
@@ -253,19 +258,19 @@
 				<hr class="solid">
 			</#if>
 		</#list>
-
-		<#else>
-			<div class="empty-container">
-				<div class="d-flex empty-result-message flex-column">
-					<div class="icon-container">
-						<div class="search-icon">
-							<@clay["icon"] symbol="search-experiences" />
-						</div>
+	<#else>
+		<div class="empty-container">
+			<div class="d-flex empty-result-message flex-column">
+				<div class="icon-container">
+					<div class="search-icon">
+						<@clay["icon"] symbol="search-experiences" />
 					</div>
-
-					<h1 class="empty-message-title text-center">${languageUtil.get(locale,
-						"no-highlights-found-for-the-selected-product-capabilities", "No highlights found for the selected product capabilities")}</h1>
 				</div>
+
+				<h1 class="empty-message-title text-center">
+					${languageUtil.get(locale, "no-highlights-found-for-the-selected-product-capabilities", "No highlights found for the selected product capabilities")}
+				</h1>
 			</div>
+		</div>
 	</#if>
 </div>

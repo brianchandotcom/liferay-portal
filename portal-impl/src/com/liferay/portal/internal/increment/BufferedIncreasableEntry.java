@@ -9,6 +9,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.aop.AopMethodInvocation;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
@@ -30,12 +31,14 @@ public class BufferedIncreasableEntry<K, T>
 		_arguments = arguments;
 
 		_companyId = CompanyThreadLocal.getCompanyId();
+		_ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 	}
 
 	@Override
 	public BufferedIncreasableEntry<K, T> increase(Increment<T> deltaValue) {
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(_companyId)) {
+				CompanyThreadLocal.setWithSafeCloseable(
+					_companyId, _ctCollectionId)) {
 
 			return new BufferedIncreasableEntry<>(
 				_aopMethodInvocation, _arguments, key,
@@ -47,7 +50,8 @@ public class BufferedIncreasableEntry<K, T>
 		_arguments[_arguments.length - 1] = getValue().getValue();
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(_companyId)) {
+				CompanyThreadLocal.setWithSafeCloseable(
+					_companyId, _ctCollectionId)) {
 
 			_aopMethodInvocation.proceed(_arguments);
 		}
@@ -63,5 +67,6 @@ public class BufferedIncreasableEntry<K, T>
 	private final AopMethodInvocation _aopMethodInvocation;
 	private final Object[] _arguments;
 	private final long _companyId;
+	private final long _ctCollectionId;
 
 }

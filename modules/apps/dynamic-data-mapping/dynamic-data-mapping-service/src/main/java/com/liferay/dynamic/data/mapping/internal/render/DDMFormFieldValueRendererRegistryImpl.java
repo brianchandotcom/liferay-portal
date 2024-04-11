@@ -76,6 +76,7 @@ public class DDMFormFieldValueRendererRegistryImpl
 			new GeolocationDDMFormFieldValueRenderer(),
 			new ImageDDMFormFieldValueRenderer(),
 			new IntegerDDMFormFieldValueRenderer(),
+			new JournalArticleDDMFormFieldValueRenderer(),
 			new LinkToPageDDMFormFieldValueRenderer(),
 			new NumberDDMFormFieldValueRenderer(),
 			new RadioDDMFormFieldValueRenderer(),

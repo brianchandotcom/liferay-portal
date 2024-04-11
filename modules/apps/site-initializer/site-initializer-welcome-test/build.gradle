@@ -1,0 +1,5 @@
+dependencies {
+	testIntegrationImplementation project(":apps:layout:layout-utility-page-api")
+	testIntegrationImplementation project(":apps:site:site-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
+}

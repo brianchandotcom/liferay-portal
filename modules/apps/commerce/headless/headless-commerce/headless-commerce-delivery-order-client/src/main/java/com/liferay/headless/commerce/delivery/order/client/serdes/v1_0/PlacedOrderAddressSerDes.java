@@ -102,6 +102,20 @@ public class PlacedOrderAddressSerDes {
 			sb.append("\"");
 		}
 
+		if (placedOrderAddress.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(placedOrderAddress.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (placedOrderAddress.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -335,6 +349,15 @@ public class PlacedOrderAddressSerDes {
 				String.valueOf(placedOrderAddress.getDescription()));
 		}
 
+		if (placedOrderAddress.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(placedOrderAddress.getExternalReferenceCode()));
+		}
+
 		if (placedOrderAddress.getId() == null) {
 			map.put("id", null);
 		}
@@ -480,6 +503,14 @@ public class PlacedOrderAddressSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					placedOrderAddress.setDescription(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					placedOrderAddress.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}

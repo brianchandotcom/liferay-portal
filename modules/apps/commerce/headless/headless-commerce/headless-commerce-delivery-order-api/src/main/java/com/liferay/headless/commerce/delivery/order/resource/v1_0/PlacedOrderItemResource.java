@@ -48,7 +48,17 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PlacedOrderItemResource {
 
+	public PlacedOrderItem getPlacedOrderItemByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public PlacedOrderItem getPlacedOrderItem(Long placedOrderItemId)
+		throws Exception;
+
+	public Page<PlacedOrderItem>
+			getPlacedOrderByExternalReferenceCodePlacedOrderItemsPage(
+				String externalReferenceCode, String search, Long skuId,
+				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Page<PlacedOrderItem> getPlacedOrderPlacedOrderItemsPage(

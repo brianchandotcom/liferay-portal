@@ -70,6 +70,20 @@ public class ShippingOptionSerDes {
 			sb.append("\"");
 		}
 
+		if (shippingOption.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(shippingOption.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (shippingOption.getLabel() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -133,6 +147,15 @@ public class ShippingOptionSerDes {
 				String.valueOf(shippingOption.getAmountFormatted()));
 		}
 
+		if (shippingOption.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(shippingOption.getExternalReferenceCode()));
+		}
+
 		if (shippingOption.getLabel() == null) {
 			map.put("label", null);
 		}
@@ -177,6 +200,14 @@ public class ShippingOptionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "amountFormatted")) {
 				if (jsonParserFieldValue != null) {
 					shippingOption.setAmountFormatted(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					shippingOption.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}

@@ -142,6 +142,21 @@ public class PlacedOrderItemShipmentSerDes {
 			sb.append("\"");
 		}
 
+		if (placedOrderItemShipment.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(placedOrderItemShipment.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (placedOrderItemShipment.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -364,6 +379,16 @@ public class PlacedOrderItemShipmentSerDes {
 					placedOrderItemShipment.getEstimatedShippingDate()));
 		}
 
+		if (placedOrderItemShipment.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(
+					placedOrderItemShipment.getExternalReferenceCode()));
+		}
+
 		if (placedOrderItemShipment.getId() == null) {
 			map.put("id", null);
 		}
@@ -530,6 +555,14 @@ public class PlacedOrderItemShipmentSerDes {
 				if (jsonParserFieldValue != null) {
 					placedOrderItemShipment.setEstimatedShippingDate(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					placedOrderItemShipment.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

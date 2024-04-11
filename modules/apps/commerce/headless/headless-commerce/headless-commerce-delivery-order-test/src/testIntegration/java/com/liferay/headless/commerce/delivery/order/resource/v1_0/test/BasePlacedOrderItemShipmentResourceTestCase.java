@@ -177,6 +177,7 @@ public abstract class BasePlacedOrderItemShipmentResourceTestCase {
 
 		placedOrderItemShipment.setAuthor(regex);
 		placedOrderItemShipment.setCarrier(regex);
+		placedOrderItemShipment.setExternalReferenceCode(regex);
 		placedOrderItemShipment.setShippingOptionName(regex);
 		placedOrderItemShipment.setTrackingNumber(regex);
 		placedOrderItemShipment.setTrackingURL(regex);
@@ -192,11 +193,113 @@ public abstract class BasePlacedOrderItemShipmentResourceTestCase {
 		Assert.assertEquals(regex, placedOrderItemShipment.getAuthor());
 		Assert.assertEquals(regex, placedOrderItemShipment.getCarrier());
 		Assert.assertEquals(
+			regex, placedOrderItemShipment.getExternalReferenceCode());
+		Assert.assertEquals(
 			regex, placedOrderItemShipment.getShippingOptionName());
 		Assert.assertEquals(regex, placedOrderItemShipment.getTrackingNumber());
 		Assert.assertEquals(regex, placedOrderItemShipment.getTrackingURL());
 		Assert.assertEquals(
 			regex, placedOrderItemShipment.getUnitOfMeasureKey());
+	}
+
+	@Test
+	public void testGetPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage_getIrrelevantExternalReferenceCode();
+
+		Page<PlacedOrderItemShipment> page =
+			placedOrderItemShipmentResource.
+				getPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage(
+					externalReferenceCode);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantExternalReferenceCode != null) {
+			PlacedOrderItemShipment irrelevantPlacedOrderItemShipment =
+				testGetPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage_addPlacedOrderItemShipment(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantPlacedOrderItemShipment());
+
+			page =
+				placedOrderItemShipmentResource.
+					getPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage(
+						irrelevantExternalReferenceCode);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantPlacedOrderItemShipment,
+				(List<PlacedOrderItemShipment>)page.getItems());
+			assertValid(
+				page,
+				testGetPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
+		}
+
+		PlacedOrderItemShipment placedOrderItemShipment1 =
+			testGetPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage_addPlacedOrderItemShipment(
+				externalReferenceCode, randomPlacedOrderItemShipment());
+
+		PlacedOrderItemShipment placedOrderItemShipment2 =
+			testGetPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage_addPlacedOrderItemShipment(
+				externalReferenceCode, randomPlacedOrderItemShipment());
+
+		page =
+			placedOrderItemShipmentResource.
+				getPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage(
+					externalReferenceCode);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(
+			placedOrderItemShipment1,
+			(List<PlacedOrderItemShipment>)page.getItems());
+		assertContains(
+			placedOrderItemShipment2,
+			(List<PlacedOrderItemShipment>)page.getItems());
+		assertValid(
+			page,
+			testGetPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	protected PlacedOrderItemShipment
+			testGetPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage_addPlacedOrderItemShipment(
+				String externalReferenceCode,
+				PlacedOrderItemShipment placedOrderItemShipment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
 	}
 
 	@Test
@@ -453,6 +556,18 @@ public abstract class BasePlacedOrderItemShipmentResourceTestCase {
 					"estimatedShippingDate", additionalAssertFieldName)) {
 
 				if (placedOrderItemShipment.getEstimatedShippingDate() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (placedOrderItemShipment.getExternalReferenceCode() ==
 						null) {
 
 					valid = false;
@@ -737,6 +852,19 @@ public abstract class BasePlacedOrderItemShipmentResourceTestCase {
 				if (!Objects.deepEquals(
 						placedOrderItemShipment1.getEstimatedShippingDate(),
 						placedOrderItemShipment2.getEstimatedShippingDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						placedOrderItemShipment1.getExternalReferenceCode(),
+						placedOrderItemShipment2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1186,6 +1314,52 @@ public abstract class BasePlacedOrderItemShipmentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = placedOrderItemShipment.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1490,6 +1664,8 @@ public abstract class BasePlacedOrderItemShipmentResourceTestCase {
 				createDate = RandomTestUtil.nextDate();
 				estimatedDeliveryDate = RandomTestUtil.nextDate();
 				estimatedShippingDate = RandomTestUtil.nextDate();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				modifiedDate = RandomTestUtil.nextDate();
 				orderId = RandomTestUtil.randomLong();

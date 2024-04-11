@@ -48,6 +48,11 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface PlacedOrderItemShipmentResource {
 
 	public Page<PlacedOrderItemShipment>
+			getPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage(
+				String externalReferenceCode)
+		throws Exception;
+
+	public Page<PlacedOrderItemShipment>
 			getPlacedOrderItemPlacedOrderItemShipmentsPage(
 				Long placedOrderItemId)
 		throws Exception;

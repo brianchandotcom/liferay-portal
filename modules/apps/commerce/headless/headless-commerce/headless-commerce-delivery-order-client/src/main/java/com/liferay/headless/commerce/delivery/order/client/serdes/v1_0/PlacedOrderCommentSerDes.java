@@ -74,6 +74,20 @@ public class PlacedOrderCommentSerDes {
 			sb.append("\"");
 		}
 
+		if (placedOrderComment.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(placedOrderComment.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (placedOrderComment.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -139,6 +153,15 @@ public class PlacedOrderCommentSerDes {
 			map.put("content", String.valueOf(placedOrderComment.getContent()));
 		}
 
+		if (placedOrderComment.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(placedOrderComment.getExternalReferenceCode()));
+		}
+
 		if (placedOrderComment.getId() == null) {
 			map.put("id", null);
 		}
@@ -191,6 +214,14 @@ public class PlacedOrderCommentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "content")) {
 				if (jsonParserFieldValue != null) {
 					placedOrderComment.setContent((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					placedOrderComment.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

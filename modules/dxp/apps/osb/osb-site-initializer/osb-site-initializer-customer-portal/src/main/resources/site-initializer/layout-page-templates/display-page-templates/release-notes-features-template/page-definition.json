@@ -272,7 +272,7 @@
 											"widgetInstance": {
 												"widgetConfig": {
 													"displayInDocumentForm": "false",
-													"displayStyle": "ddmTemplate_RELEASE-NOTES-RELEASE-HIGHLIGHTS-SEARCH",
+													"displayStyle": "ddmTemplate_RELEASE-NOTES-HIGHLIGHTS-SEARCH",
 													"displayStyleGroupId": "[$GROUP_ID$]",
 													"federatedSearchKey": "",
 													"fieldsToDisplay": "",

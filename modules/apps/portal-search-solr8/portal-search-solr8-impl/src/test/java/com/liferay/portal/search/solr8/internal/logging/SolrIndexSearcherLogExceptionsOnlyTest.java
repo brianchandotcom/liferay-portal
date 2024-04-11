@@ -47,7 +47,7 @@ public class SolrIndexSearcherLogExceptionsOnlyTest
 	@ExpectedLog(
 		expectedClass = SolrIndexSearcher.class,
 		expectedLevel = ExpectedLog.Level.WARNING,
-		expectedLog = "Cannot parse '+f^eld:text'"
+		expectedLog = "Cannot parse '+(+f^eld:text)"
 	)
 	@Test
 	public void testExceptionOnlyLoggedWhenQueryMalformedSearch() {
@@ -57,7 +57,7 @@ public class SolrIndexSearcherLogExceptionsOnlyTest
 	@ExpectedLog(
 		expectedClass = SolrIndexSearcher.class,
 		expectedLevel = ExpectedLog.Level.WARNING,
-		expectedLog = "Cannot parse '+f^eld:text'"
+		expectedLog = "Cannot parse '+(+f^eld:text)"
 	)
 	@Test
 	public void testExceptionOnlyLoggedWhenQueryMalformedSearchCount() {

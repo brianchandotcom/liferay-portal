@@ -15,6 +15,12 @@ import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
@@ -39,6 +45,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.InfoFormException;
@@ -69,8 +76,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -84,6 +93,7 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -174,6 +184,58 @@ public class RenderLayoutStructureTagTest {
 
 		Assert.assertEquals(
 			"removed-template-id", layoutTypePortlet.getLayoutTemplateId());
+	}
+
+	@Test
+	public void testRenderCollectionStyledLayoutStructureItem()
+		throws Exception {
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem =
+				_addCollectionStyledLayoutStructureItem(
+					assetListEntry, layout, segmentsExperienceId);
+
+		_addFragmentEntryLinks(
+			layout, collectionStyledLayoutStructureItem.getItemId(),
+			segmentsExperienceId);
+
+		List<AssetEntry> assetEntries = _addAssetEntries(assetListEntry);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(layout);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		RenderLayoutStructureTag renderLayoutStructureTag =
+			_getRenderLayoutStructureTag(
+				layout, mockHttpServletRequest, mockHttpServletResponse,
+				segmentsExperienceId);
+
+		renderLayoutStructureTag.doTag(
+			mockHttpServletRequest, mockHttpServletResponse);
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		for (AssetEntry assetEntry : assetEntries) {
+			int count = StringUtil.count(
+				content,
+				assetEntry.getTitle(assetEntry.getDefaultLanguageId()));
+
+			Assert.assertTrue(String.valueOf(count), count >= 5);
+		}
 	}
 
 	@Test
@@ -679,6 +741,73 @@ public class RenderLayoutStructureTagTest {
 		}
 	}
 
+	private List<AssetEntry> _addAssetEntries(AssetListEntry assetListEntry)
+		throws Exception {
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		List<AssetEntry> assetEntries = new ArrayList<>();
+
+		for (int i = 0; i < 5; i++) {
+			JournalArticle journalArticle = _addJournalArticle(ddmStructure);
+
+			assetEntries.add(
+				_assetEntryLocalService.fetchEntry(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey()));
+		}
+
+		_assetListEntryLocalService.addAssetEntrySelections(
+			assetListEntry.getAssetListEntryId(),
+			TransformUtil.transformToLongArray(
+				assetEntries, assetEntry -> assetEntry.getEntryId()),
+			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
+
+		return assetEntries;
+	}
+
+	private CollectionStyledLayoutStructureItem
+			_addCollectionStyledLayoutStructureItem(
+				AssetListEntry assetListEntry, Layout layout,
+				long segmentsExperienceId)
+		throws Exception {
+
+		LayoutStructure layoutStructure =
+			_addCollectionStyledLayoutStructureItemAndGetLayoutStructure(
+				JSONUtil.put(
+					"classNameId", _portal.getClassNameId(AssetListEntry.class)
+				).put(
+					"classPK", assetListEntry.getAssetListEntryId()
+				).put(
+					"itemType", JournalArticle.class.getName()
+				).put(
+					"type", InfoListItemSelectorReturnType.class.getName()
+				),
+				JSONUtil.put(
+					"displayAllPages", true
+				).put(
+					"numberOfItems", 5
+				).put(
+					"numberOfItemsPerPage", 5
+				).put(
+					"paginationType", "none"
+				).put(
+					"showAllItems", true
+				),
+				layout, null, segmentsExperienceId);
+
+		List<CollectionStyledLayoutStructureItem>
+			collectionStyledLayoutStructureItems =
+				layoutStructure.getCollectionStyledLayoutStructureItems();
+
+		Assert.assertEquals(
+			collectionStyledLayoutStructureItems.toString(), 1,
+			collectionStyledLayoutStructureItems.size());
+
+		return collectionStyledLayoutStructureItems.get(0);
+	}
+
 	private LayoutStructure
 			_addCollectionStyledLayoutStructureItemAndGetLayoutStructure(
 				JSONObject collectionJSONObject,
@@ -727,6 +856,45 @@ public class RenderLayoutStructureTagTest {
 
 		return LayoutStructure.of(
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+	}
+
+	private void _addFragmentEntryLinks(
+			Layout layout, String parentItemId, long segmentsExperienceId)
+		throws Exception {
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				StringUtil.randomString(), StringPool.BLANK, _serviceContext);
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				StringPool.BLANK,
+				"<h1 data-lfr-editable-id=\"element-text\" " +
+					"data-lfr-editable-type=\"text\">Heading Example</h1>",
+				StringPool.BLANK, false, StringPool.BLANK, null, 0, false,
+				FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		for (int i = 0; i < 5; i++) {
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"element-text",
+						JSONUtil.put(
+							"collectionFieldId", "JournalArticle_title"))
+				).toString(),
+				fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), layout,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				parentItemId, i, segmentsExperienceId);
+		}
 	}
 
 	private JournalArticle _addJournalArticle(DDMStructure ddmStructure)
@@ -913,6 +1081,12 @@ public class RenderLayoutStructureTagTest {
 		filter = "info.item.capability.key=" + EditPageInfoItemCapability.KEY
 	)
 	private InfoItemCapability _editPageInfoItemCapability;
+
+	@Inject
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

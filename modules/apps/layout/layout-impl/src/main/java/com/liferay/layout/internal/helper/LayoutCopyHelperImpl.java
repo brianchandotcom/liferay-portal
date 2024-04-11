@@ -215,9 +215,15 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		ServiceContext currentServiceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
+		long ctCollectionId = sourceLayout.getCtCollectionId();
+
+		if (ctCollectionId == 0) {
+			ctCollectionId = targetLayout.getCtCollectionId();
+		}
+
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					sourceLayout.getCtCollectionId())) {
+					ctCollectionId)) {
 
 			CopyLayoutThreadLocal.setCopyLayout(true);
 

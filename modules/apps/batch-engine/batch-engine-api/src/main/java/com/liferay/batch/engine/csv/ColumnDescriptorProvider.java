@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import java.util.Map;
+
 /**
  * @author Matija Petanjek
  */
@@ -18,7 +20,7 @@ public interface ColumnDescriptorProvider {
 
 	public ColumnDescriptor[] getColumnDescriptors(
 			long companyId, String fieldName, int index,
-			ObjectValuePair<Field, Method> propertiesObjectValuePair,
+			Map<String, ObjectValuePair<Field, Method>> objectValuePairs,
 			String taskItemDelegateName)
 		throws PortalException;
 

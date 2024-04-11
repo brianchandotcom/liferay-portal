@@ -218,14 +218,17 @@ public class ColumnValuesExtractorTest {
 		@Override
 		public ColumnDescriptor[] getColumnDescriptors(
 			long companyId, String fieldName, int index,
-			ObjectValuePair<Field, Method> propertiesObjectValuePair,
+			Map<String, ObjectValuePair<Field, Method>> objectValuePairs,
 			String taskItemDelegateName) {
 
 			return new ColumnDescriptor[] {
 				ColumnDescriptor.from(
 					fieldName, index,
 					object -> {
-						Method method = propertiesObjectValuePair.getValue();
+						ObjectValuePair<Field, Method> properties =
+							objectValuePairs.get("properties");
+
+						Method method = properties.getValue();
 
 						Map<String, Object> map =
 							(Map<String, Object>)method.invoke(object);

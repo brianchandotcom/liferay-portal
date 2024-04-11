@@ -153,7 +153,7 @@ public class PortalInstanceResourceTest
 
 		return new PortalInstance() {
 			{
-				active = RandomTestUtil.randomBoolean();
+				active = true;
 				companyId = RandomTestUtil.randomLong();
 				domain = randomDomain;
 				portalInstanceId = randomName;

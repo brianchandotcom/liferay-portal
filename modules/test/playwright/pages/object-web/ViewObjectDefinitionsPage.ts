@@ -18,8 +18,10 @@ export class ViewObjectDefinitionsPage {
 	readonly deleteObjectFolderButton: Locator;
 	readonly frontendDataSetEntries: Locator;
 	readonly objectFolderActionsLink: Locator;
+	readonly objectFolderCardHeader: Locator;
 	readonly objectFolderDeleteFolderOption: Locator;
 	readonly objectFolderEditLabelAndERCOption: Locator;
+	readonly objectFolders: Locator;
 	readonly objectFolderLabel: Locator;
 	readonly page: Page;
 	readonly viewInModelBuilderButton: Locator;
@@ -43,9 +45,15 @@ export class ViewObjectDefinitionsPage {
 			name: 'Delete',
 		});
 		this.frontendDataSetEntries = page.locator('div.table-list-title a');
+		this.objectFolders = page
+			.getByRole('list')
+			.filter({hasText: 'Default'});
 		this.objectFolderActionsLink = page
 			.locator('div.lfr__object-web-view-object-definitions-title-kebab')
 			.getByLabel('Object Folder Actions');
+		this.objectFolderCardHeader = page.locator(
+			'div.lfr-objects__card-header'
+		);
 		this.objectFolderDeleteFolderOption = page.getByRole('menuitem', {
 			name: 'Delete Object Folder',
 		});
@@ -82,6 +90,13 @@ export class ViewObjectDefinitionsPage {
 		await this.deleteObjectFolderButton.click();
 	}
 
+	getObjectFolderCardHeaderLabel = (objectFolderLabel: string) => {
+		return this.objectFolderCardHeader
+			.locator('span')
+			.filter({hasText: objectFolderLabel})
+			.first();
+	};
+
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
 		await this.page.goto(
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.objects}`,
@@ -95,7 +110,7 @@ export class ViewObjectDefinitionsPage {
 
 	async openObjectFolder(objectFolderLabel: string) {
 		await this.page
-			.locator('li')
+			.getByRole('listitem')
 			.filter({hasText: objectFolderLabel})
 			.click();
 	}

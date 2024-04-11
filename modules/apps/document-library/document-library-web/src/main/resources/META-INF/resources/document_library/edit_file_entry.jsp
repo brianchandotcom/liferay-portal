@@ -428,6 +428,7 @@ renderResponse.setTitle(headerTitle);
 												containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" + ddmStructure.getStructureId() %>'
 												dataDefinitionId="<%= ddmStructure.getStructureId() %>"
 												dataRecordValues="<%= ddmFormValuesToMapConverter.convert(ddmFormValues, DDMStructureLocalServiceUtil.getStructure(ddmStructure.getStructureId())) %>"
+												defaultLanguageId="<%= defaultLanguageId %>"
 												languageId="<%= dlEditFileEntryDisplayContext.getDLFileEntryTypeLanguageId(ddmStructure, PortalUtil.getLocale(request)) %>"
 												namespace="<%= liferayPortletResponse.getNamespace() + ddmStructure.getStructureId() + StringPool.UNDERLINE %>"
 												persistDefaultValues="<%= true %>"

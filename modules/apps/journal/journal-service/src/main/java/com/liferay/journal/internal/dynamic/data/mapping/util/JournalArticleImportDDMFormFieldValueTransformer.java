@@ -97,24 +97,26 @@ public class JournalArticleImportDDMFormFieldValueTransformer
 					articlePrimaryKey);
 			}
 
-			if ((journalArticle == null) &&
-				((originalArticlePrimaryKey != 0) || (originalClassPK != 0))) {
-
+			if (journalArticle == null) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to get journal article with primary key " +
 							articlePrimaryKey);
 				}
 
-				Map<String, String> postProcess =
-					(Map<String, String>)
-						_portletDataContext.getNewPrimaryKeysMap(
-							JournalArticle.class + ".postProcess");
+				if ((originalArticlePrimaryKey != 0) ||
+					(originalClassPK != 0)) {
 
-				if (!postProcess.containsKey(_stagedModel.getUuid())) {
-					postProcess.put(
-						_stagedModel.getUuid(),
-						ExportImportPathUtil.getModelPath(_stagedModel));
+					Map<String, String> postProcess =
+						(Map<String, String>)
+							_portletDataContext.getNewPrimaryKeysMap(
+								JournalArticle.class + ".postProcess");
+
+					if (!postProcess.containsKey(_stagedModel.getUuid())) {
+						postProcess.put(
+							_stagedModel.getUuid(),
+							ExportImportPathUtil.getModelPath(_stagedModel));
+					}
 				}
 
 				continue;

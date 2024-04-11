@@ -16,8 +16,8 @@ test.describe('Manage object fields through Model Builder', () => {
 	test('can add picklist object field to object definition node', async ({
 		apiHelpers,
 		modelBuilderPage,
-		objectDefinitionsPage,
 		page,
+		viewObjectDefinitionsPage,
 	}) => {
 		await page.goto('/');
 
@@ -27,11 +27,11 @@ test.describe('Manage object fields through Model Builder', () => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition('default');
 
-		await objectDefinitionsPage.goto();
+		await viewObjectDefinitionsPage.goto();
 
-		await objectDefinitionsPage.openObjectFolder('default');
+		await viewObjectDefinitionsPage.openObjectFolder('default');
 
-		await objectDefinitionsPage.viewInModelBuilder();
+		await viewObjectDefinitionsPage.viewInModelBuilder();
 
 		const objectFieldLabel = 'objectFieldLabel' + getRandomInt();
 

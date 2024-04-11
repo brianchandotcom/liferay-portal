@@ -17,22 +17,23 @@ test.describe('Manage object definitions through Model Builder', () => {
 		addObjectDefinitionModalPage,
 		apiHelpers,
 		modelBuilderPage,
-		objectDefinitionsPage,
 		page,
+		viewObjectDefinitionsPage,
 	}) => {
-		await objectDefinitionsPage.goto();
+		await viewObjectDefinitionsPage.goto();
 
 		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
 
+		viewObjectDefinitionsPage.createObjectDefinitionButton.click();
+
 		const objectDefinition =
 			await addObjectDefinitionModalPage.createObjectDefinition(
-				objectDefinitionsPage.createObjectDefinitionButton,
 				objectDefinitionLabel
 			);
 
 		expect(page.getByText(objectDefinitionLabel)).toBeVisible();
 
-		await objectDefinitionsPage.viewInModelBuilder();
+		await viewObjectDefinitionsPage.viewInModelBuilder();
 
 		await expect(
 			modelBuilderPage.objectDefinitionNodes.filter({
@@ -62,9 +63,10 @@ test.describe('Manage object definitions through Model Builder', () => {
 
 		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
 
+		modelBuilderPage.createNewObjectDefinitionButton.click();
+
 		const objectDefinition =
 			await addObjectDefinitionModalPage.createObjectDefinition(
-				modelBuilderPage.createNewObjectDefinitionButton,
 				objectDefinitionLabel
 			);
 

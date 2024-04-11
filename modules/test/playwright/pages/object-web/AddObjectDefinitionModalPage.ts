@@ -18,11 +18,7 @@ export class AddObjectDefinitionModalPage {
 		this.page = page;
 	}
 
-	async createObjectDefinition(
-		createObjectDefinitionButton: Locator,
-		objectDefinitionLabel: string
-	) {
-		await createObjectDefinitionButton.click();
+	async createObjectDefinition(objectDefinitionLabel: string) {
 		await this.objectLabelInput.click();
 		await this.objectLabelInput.fill(objectDefinitionLabel);
 		await this.objectPluralLabelInput.click();

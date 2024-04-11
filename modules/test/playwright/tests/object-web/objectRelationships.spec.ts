@@ -12,11 +12,13 @@ import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
 
+const objectRelationshipRandomNumber = Math.floor(Math.random() * 99);
+
 test.describe('Manage object relationships through Model Builder', () => {
 	test('can create relationship by dragging node handles', async ({
 		apiHelpers,
 		modelBuilderPage,
-		objectDefinitionsPage,
+		viewObjectDefinitionsPage,
 	}) => {
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
@@ -30,13 +32,13 @@ test.describe('Manage object relationships through Model Builder', () => {
 				objectFolder.externalReferenceCode
 			);
 
-		await objectDefinitionsPage.goto();
+		await viewObjectDefinitionsPage.goto();
 
-		await objectDefinitionsPage.openObjectFolder(
-			objectFolder.externalReferenceCode
+		await viewObjectDefinitionsPage.openObjectFolder(
+			objectFolder.label['en_US']
 		);
 
-		await objectDefinitionsPage.viewInModelBuilder();
+		await viewObjectDefinitionsPage.viewInModelBuilder();
 
 		await modelBuilderPage.clickToggleSidebarsButton();
 
@@ -89,8 +91,8 @@ test.describe('Manage object relationships through Model Builder', () => {
 	test('can delete object relationship from different folders', async ({
 		apiHelpers,
 		modelBuilderPage,
-		objectDefinitionsPage,
 		page,
+		viewObjectDefinitionsPage,
 	}) => {
 		await page.goto('/');
 
@@ -108,7 +110,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 		const objectRelationshipLabel =
 			'objectRelationshipLabel' + getRandomInt();
 		const objectRelationshipName =
-			'objectRelationshipName' + getRandomInt();
+			'objectRelationshipName' + objectRelationshipRandomNumber;
 
 		const objectRelationshipData: Partial<ObjectRelationship> = {
 			label: {
@@ -129,19 +131,19 @@ test.describe('Manage object relationships through Model Builder', () => {
 			objectRelationshipData
 		);
 
-		await objectDefinitionsPage.goto();
+		await viewObjectDefinitionsPage.goto();
 
-		await objectDefinitionsPage.openObjectFolder(
-			objectFolder.externalReferenceCode
+		await viewObjectDefinitionsPage.openObjectFolder(
+			objectFolder.label['en_US']
 		);
 
-		await objectDefinitionsPage.viewInModelBuilder();
+		await viewObjectDefinitionsPage.viewInModelBuilder();
 
 		await expect(
 			modelBuilderPage.objectRelationshipEdges.filter({
 				hasText: objectRelationshipLabel,
 			})
-		).not.toBeVisible();
+		).toBeVisible();
 
 		await expect(
 			modelBuilderPage.objectDefinitionNodes.filter({
@@ -159,13 +161,13 @@ test.describe('Manage object relationships through Model Builder', () => {
 			modelBuilderPage.objectRelationshipEdges.filter({
 				hasText: objectRelationshipLabel,
 			})
-		).toBeHidden();
+		).not.toBeVisible();
 
 		await expect(
 			modelBuilderPage.objectDefinitionNodes.filter({
 				hasText: objectDefinition2.name,
 			})
-		).toBeHidden();
+		).not.toBeVisible();
 
 		// Clean up
 

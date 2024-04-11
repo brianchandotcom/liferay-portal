@@ -63,7 +63,7 @@ public class MarkdownBreakingChangesAmendmentsFileCheck
 			if (!firstLine.matches("# [0-9a-f]{40}")) {
 				addMessage(
 					fileName,
-					"The first line in each amendment should be '# SHA'");
+					"The first line in each amendment should be # SHA");
 
 				continue;
 			}

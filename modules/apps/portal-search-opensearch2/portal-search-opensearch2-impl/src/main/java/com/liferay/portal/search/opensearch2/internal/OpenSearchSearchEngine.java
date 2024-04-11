@@ -226,6 +226,8 @@ public class OpenSearchSearchEngine
 				_indexNameBuilder.getIndexName(companyId));
 		}
 
+		setAutoCreateIndex(false);
+
 		try {
 			OpenSearchClient openSearchClient =
 				_openSearchConnectionManager.getOpenSearchClient();

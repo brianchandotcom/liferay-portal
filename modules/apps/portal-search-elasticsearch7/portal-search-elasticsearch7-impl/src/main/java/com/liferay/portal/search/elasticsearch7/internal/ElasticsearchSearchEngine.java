@@ -227,6 +227,8 @@ public class ElasticsearchSearchEngine
 				_indexNameBuilder.getIndexName(companyId));
 		}
 
+		setAutoCreateIndex(false);
+
 		try {
 			RestHighLevelClient restHighLevelClient =
 				_elasticsearchConnectionManager.getRestHighLevelClient();

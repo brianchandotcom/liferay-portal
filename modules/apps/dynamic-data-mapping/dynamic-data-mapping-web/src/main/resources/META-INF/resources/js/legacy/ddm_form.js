@@ -1835,258 +1835,260 @@ AUI.add(
 		FieldTypes['ddm-documentlibrary'] = DocumentLibraryField;
 
 		const JournalArticleField = A.Component.create({
-        			EXTENDS: Field,
-
-        			prototype: {
-        				_getWebContentSelectorURL() {
-        					var instance = this;
-
-        					var form = instance.getForm();
-
-        					var webContentSelectorURL = form.get(
-        						'webContentSelectorURL'
-        					);
-
-        					return webContentSelectorURL
-        						? webContentSelectorURL
-        						: instance._getWebContentURL(
-        								'com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion'
-        						  );
-        				},
-
-        				_getWebContentURL(criteria) {
-        					var instance = this;
-
-        					var container = instance.get('container');
-
-        					var portletNamespace = instance.get('portletNamespace');
-
-        					var criterionJSON = {
-        						desiredItemSelectorReturnTypes:
-        							'com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType',
-        					};
-
-        					var webContentParameters = {
-        						'0_json': JSON.stringify(criterionJSON),
-        						criteria,
-        						itemSelectedEventName:
-        							portletNamespace + 'selectWebContent',
-        						p_p_auth: container.getData('itemSelectorAuthToken'),
-        						p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
-        						p_p_mode: 'view',
-        						p_p_state: 'pop_up',
-        					};
-
-        					var webContentURL = Liferay.Util.PortletURL.createPortletURL(
-        						themeDisplay.getLayoutRelativeControlPanelURL(),
-        						webContentParameters
-        					);
-
-        					return webContentURL.toString();
-        				},
-
-        				_handleButtonsClick(event) {
-        					var instance = this;
-
-        					if (!instance.get('readOnly')) {
-        						var currentTarget = event.currentTarget;
-
-        						if (currentTarget.test('.select-button')) {
-        							instance._handleSelectButtonClick(event);
-        						}
-        						else if (currentTarget.test('.clear-button')) {
-        							instance._handleClearButtonClick(event);
-        						}
-        					}
-        				},
-
-        				_handleClearButtonClick() {
-        					var instance = this;
-
-        					instance.setValue('');
-
-        					instance._hideMessage();
-        				},
+			EXTENDS: Field,
+
+			prototype: {
+				_getWebContentSelectorURL() {
+					const instance = this;
+
+					const form = instance.getForm();
+
+					const webContentSelectorURL = form.get(
+						'webContentSelectorURL'
+					);
+
+					return webContentSelectorURL
+						? webContentSelectorURL
+						: instance._getWebContentURL(
+								'com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion'
+						  );
+				},
+
+				_getWebContentURL(criteria) {
+					const instance = this;
+
+					const container = instance.get('container');
+
+					const portletNamespace = instance.get('portletNamespace');
+
+					const criterionJSON = {
+						desiredItemSelectorReturnTypes:
+							'com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType',
+					};
+
+					const webContentParameters = {
+						'0_json': JSON.stringify(criterionJSON),
+						criteria,
+						'itemSelectedEventName':
+							portletNamespace + 'selectWebContent',
+						'p_p_auth': container.getData('itemSelectorAuthToken'),
+						'p_p_id': Liferay.PortletKeys.ITEM_SELECTOR,
+						'p_p_mode': 'view',
+						'p_p_state': 'pop_up',
+					};
+
+					const webContentURL = Liferay.Util.PortletURL.createPortletURL(
+						themeDisplay.getLayoutRelativeControlPanelURL(),
+						webContentParameters
+					);
+
+					return webContentURL.toString();
+				},
+
+				_handleButtonsClick(event) {
+					const instance = this;
+
+					if (!instance.get('readOnly')) {
+						const currentTarget = event.currentTarget;
+
+						if (currentTarget.test('.select-button')) {
+							instance._handleSelectButtonClick(event);
+						}
+						else if (currentTarget.test('.clear-button')) {
+							instance._handleClearButtonClick(event);
+						}
+					}
+				},
+
+				_handleClearButtonClick() {
+					const instance = this;
+
+					instance.setValue('');
+
+					instance._hideMessage();
+				},
+
+				_handleSelectButtonClick() {
+					const instance = this;
+
+					const portletNamespace = instance.get('portletNamespace');
+
+					Liferay.Util.openSelectionModal({
+						onSelect: (selectedItem) => {
+							if (selectedItem) {
+								const itemValue = JSON.parse(
+									selectedItem.value
+								);
+
+								instance.setValue({
+									className: itemValue.className,
+									classPK: itemValue.classPK,
+									title: itemValue.title || '',
+									titleMap: itemValue.titleMap,
+								});
+
+								instance._hideMessage();
+							}
+						},
+						selectEventName: portletNamespace + 'selectWebContent',
+						title: Liferay.Language.get('journal-article'),
+						url: instance._getWebContentSelectorURL(),
+					});
+				},
+
+				_hideMessage() {
+					const instance = this;
 
-        				_handleSelectButtonClick() {
-        					var instance = this;
-
-        					var portletNamespace = instance.get('portletNamespace');
-
-        					Liferay.Util.openSelectionModal({
-        						onSelect: (selectedItem) => {
-        							if (selectedItem) {
-        								var itemValue = JSON.parse(selectedItem.value);
-
-        								instance.setValue({
-        									className: itemValue.className,
-        									classPK: itemValue.classPK,
-        									title: itemValue.title || '',
-        									titleMap: itemValue.titleMap,
-        								});
-
-        								instance._hideMessage();
-        							}
-        						},
-        						selectEventName: portletNamespace + 'selectWebContent',
-        						title: Liferay.Language.get('journal-article'),
-        						url: instance._getWebContentSelectorURL(),
-        					});
-        				},
-
-        				_hideMessage() {
-        					var instance = this;
+					const container = instance.get('container');
 
-        					var container = instance.get('container');
+					const message = container.one(
+						'#' + instance.getInputName() + 'Message'
+					);
 
-        					var message = container.one(
-        						'#' + instance.getInputName() + 'Message'
-        					);
+					if (message) {
+						message.addClass('hide');
+					}
 
-        					if (message) {
-        						message.addClass('hide');
-        					}
+					const formGroup = container.one(
+						'#' + instance.getInputName() + 'FormGroup'
+					);
 
-        					var formGroup = container.one(
-        						'#' + instance.getInputName() + 'FormGroup'
-        					);
+					formGroup.removeClass('has-warning');
+				},
 
-        					formGroup.removeClass('has-warning');
-        				},
+				_validateField(fieldNode) {
+					const instance = this;
 
-        				_validateField(fieldNode) {
-        					var instance = this;
+					const liferayForm = instance.get('liferayForm');
 
-        					var liferayForm = instance.get('liferayForm');
+					if (liferayForm) {
+						const formValidator = liferayForm.formValidator;
 
-        					if (liferayForm) {
-        						var formValidator = liferayForm.formValidator;
+						if (formValidator) {
+							formValidator.validateField(fieldNode);
+						}
+					}
+				},
 
-        						if (formValidator) {
-        							formValidator.validateField(fieldNode);
-        						}
-        					}
-        				},
+				getParsedValue(value) {
+					if (Lang.isString(value)) {
+						if (value !== '') {
+							value = JSON.parse(value);
+						}
+						else {
+							value = {};
+						}
+					}
 
-        				getParsedValue(value) {
-        					if (Lang.isString(value)) {
-        						if (value !== '') {
-        							value = JSON.parse(value);
-        						}
-        						else {
-        							value = {};
-        						}
-        					}
+					return value;
+				},
 
-        					return value;
-        				},
+				getRuleInputName() {
+					const instance = this;
 
-        				getRuleInputName() {
-        					var instance = this;
+					const inputName = instance.getInputName();
 
-        					var inputName = instance.getInputName();
+					return inputName + 'Title';
+				},
 
-        					return inputName + 'Title';
-        				},
+				initializer() {
+					const instance = this;
 
-        				initializer() {
-        					var instance = this;
+					const container = instance.get('container');
 
-        					var container = instance.get('container');
+					container.delegate(
+						'click',
+						instance._handleButtonsClick,
+						'> .form-group .btn',
+						instance
+					);
+				},
 
-        					container.delegate(
-        						'click',
-        						instance._handleButtonsClick,
-        						'> .form-group .btn',
-        						instance
-        					);
-        				},
+				setValue(value) {
+					const instance = this;
 
-        				setValue(value) {
-        					var instance = this;
+					const parsedValue = instance.getParsedValue(value);
 
-        					var parsedValue = instance.getParsedValue(value);
+					if (!parsedValue.className && !parsedValue.classPK) {
+						value = '';
+					}
+					else {
+						value = JSON.stringify(parsedValue);
+					}
 
-        					if (!parsedValue.className && !parsedValue.classPK) {
-        						value = '';
-        					}
-        					else {
-        						value = JSON.stringify(parsedValue);
-        					}
+					JournalArticleField.superclass.setValue.call(
+						instance,
+						value
+					);
 
-        					JournalArticleField.superclass.setValue.call(
-        						instance,
-        						value
-        					);
+					instance.syncUI();
+				},
 
-        					instance.syncUI();
-        				},
+				showNotice(message) {
+					Liferay.Util.openToast({
+						message,
+						type: 'warning',
+					});
+				},
 
-        				showNotice(message) {
-        					Liferay.Util.openToast({
-        						message,
-        						type: 'warning',
-        					});
-        				},
+				syncReadOnlyUI() {
+					const instance = this;
 
-        				syncReadOnlyUI() {
-        					var instance = this;
+					const readOnly = instance.getReadOnly();
 
-        					var readOnly = instance.getReadOnly();
+					const container = instance.get('container');
 
-        					var container = instance.get('container');
+					const selectButtonNode = container.one(
+						'#' + instance.getInputName() + 'SelectButton'
+					);
 
-        					var selectButtonNode = container.one(
-        						'#' + instance.getInputName() + 'SelectButton'
-        					);
+					selectButtonNode.attr('disabled', readOnly);
 
-        					selectButtonNode.attr('disabled', readOnly);
+					const clearButtonNode = container.one(
+						'#' + instance.getInputName() + 'ClearButton'
+					);
 
-        					var clearButtonNode = container.one(
-        						'#' + instance.getInputName() + 'ClearButton'
-        					);
+					clearButtonNode.attr('disabled', readOnly);
+				},
 
-        					clearButtonNode.attr('disabled', readOnly);
-        				},
+				syncUI() {
+					const instance = this;
 
-        				syncUI() {
-        					var instance = this;
+					const parsedValue = instance.getParsedValue(
+						instance.getValue()
+					);
 
-        					var parsedValue = instance.getParsedValue(
-        						instance.getValue()
-        					);
+					const titleNode = A.one(
+						'input[name=' + instance.getInputName() + 'Title]'
+					);
 
-        					var titleNode = A.one(
-        						'input[name=' + instance.getInputName() + 'Title]'
-        					);
+					const parsedTitleMap = instance.getParsedValue(
+						parsedValue.titleMap
+					);
 
-        					var parsedTitleMap = instance.getParsedValue(
-        						parsedValue.titleMap
-        					);
+					if (parsedTitleMap) {
+						const journalTitle =
+							parsedTitleMap[instance.get('displayLocale')];
 
-        					if (parsedTitleMap) {
-        						var journalTitle =
-        							parsedTitleMap[instance.get('displayLocale')];
+						if (journalTitle) {
+							parsedValue.title = journalTitle;
+						}
+					}
 
-        						if (journalTitle) {
-        							parsedValue.title = journalTitle;
-        						}
-        					}
+					titleNode.val(parsedValue.title || '');
 
-        					titleNode.val(parsedValue.title || '');
+					instance._validateField(titleNode);
 
-        					instance._validateField(titleNode);
+					const clearButtonNode = A.one(
+						'#' + instance.getInputName() + 'ClearButton'
+					);
 
-        					var clearButtonNode = A.one(
-        						'#' + instance.getInputName() + 'ClearButton'
-        					);
+					clearButtonNode.toggle(!!parsedValue.classPK);
+				},
+			},
+		});
 
-        					clearButtonNode.toggle(!!parsedValue.classPK);
-        				},
-        			},
-        		});
-
-        		FieldTypes['ddm-journal-article'] = JournalArticleField;
+		FieldTypes['ddm-journal-article'] = JournalArticleField;
 
 		const LinkToPageField = A.Component.create({
 			EXTENDS: Field,

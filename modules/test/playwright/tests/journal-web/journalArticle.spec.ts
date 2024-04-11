@@ -316,6 +316,8 @@ translationTest(
 			name: 'Reset Translation',
 		});
 
+		await expect(resetTranslationButton).toBeEnabled();
+
 		await resetTranslationButton.click();
 
 		const deleteButton = page.getByRole('button', {name: 'Delete'});

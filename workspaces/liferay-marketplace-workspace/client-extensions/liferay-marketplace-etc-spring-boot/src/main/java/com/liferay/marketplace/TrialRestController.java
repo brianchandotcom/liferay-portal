@@ -24,6 +24,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.logging.Log;
@@ -74,7 +75,7 @@ public class TrialRestController extends BaseRestController {
 					portalInstance.getVirtualHost(),
 					orderId + "." + _TRIAL_DXP_DOMAIN)) {
 
-				portalInstanceResource.putPortalInstanceDeactivate(
+				portalInstanceResource.deletePortalInstance(
 					portalInstance.getPortalInstanceId());
 
 				break;
@@ -179,20 +180,6 @@ public class TrialRestController extends BaseRestController {
 		return portalInstanceResource.getPortalInstancesPage(true);
 	}
 
-	private boolean _hasAccountOrders(String accountId) throws Exception {
-		Page<Order> ordersPage = _orderResource.getOrdersPage(
-			"",
-			"accountId/any(x:(x eq " + accountId +
-				")) and orderTypeExternalReferenceCode eq 'SOLUTIONS7'",
-			Pagination.of(-1, -1), "");
-
-		if (ordersPage.getTotalCount() > 1) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private void _initResourceBuilders() throws Exception {
 		URL liferayDXPURL = new URL(
 			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
@@ -206,16 +193,6 @@ public class TrialRestController extends BaseRestController {
 				"liferay-marketplace-etc-spring-boot-oauth-application-" +
 					"headless-server")
 		).build();
-	}
-
-	private boolean _isTrialAvailable() throws Exception {
-		if (_TRIAL_MAX_INSTANCES_IN_PROGRESS >
-				_getPortalInstancesPage().getTotalCount()) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private PortalInstance _postPortalInstance(
@@ -271,35 +248,36 @@ public class TrialRestController extends BaseRestController {
 			_log.info("Provision order " + orderId);
 		}
 
-		Order order = new Order();
+		if (_orderResource.getOrdersPage(
+				"",
+				"accountId/any(x:(x eq " +
+					modelDTOOrderJSONObject.getString("accountId") +
+						")) and orderTypeExternalReferenceCode eq 'SOLUTIONS7'",
+				Pagination.of(1, 1), ""
+			).getTotalCount() > 1) {
 
-		if (_hasAccountOrders(modelDTOOrderJSONObject.getString("accountId"))) {
 			_log.error(
 				"Account " + modelDTOOrderJSONObject.getString("accountId") +
 					" already has a provisioned order");
 
-			order.setOrderStatus(() -> _ORDER_STATUS_CANCELLED);
-
-			_orderResource.patchOrder(orderId, order);
+			_updateOrder(null, orderId, _ORDER_STATUS_CANCELLED);
 
 			return;
 		}
 
-		if (!_isTrialAvailable()) {
+		if (_getPortalInstancesPage().getTotalCount() ==
+				_TRIAL_MAX_INSTANCES_IN_PROGRESS) {
+
 			_log.error(
 				"The limit of " + _TRIAL_MAX_INSTANCES_IN_PROGRESS +
 					" has exceeded, trial installation will be scheduled");
 
-			order.setOrderStatus(_ORDER_STATUS_ON_HOLD);
-
-			_orderResource.patchOrder(orderId, order);
+			_updateOrder(null, orderId, _ORDER_STATUS_ON_HOLD);
 
 			return;
 		}
 
-		order.setOrderStatus(_ORDER_STATUS_PROCESSING);
-
-		_orderResource.patchOrder(orderId, order);
+		_updateOrder(null, orderId, _ORDER_STATUS_PROCESSING);
 
 		PortalInstance portalInstance = _postPortalInstance(
 			jwt, modelDTOOrderJSONObject.getString("creatorEmailAddress"),
@@ -320,7 +298,7 @@ public class TrialRestController extends BaseRestController {
 			String.valueOf(orderId),
 			environmentProjectJSONObject.getString("projectId"));
 
-		order.setCustomFields(
+		_updateOrder(
 			HashMapBuilder.put(
 				"trial-end-date",
 				ZonedDateTime.now(
@@ -337,9 +315,18 @@ public class TrialRestController extends BaseRestController {
 				)
 			).put(
 				"trial-virtualhost", portalInstance.getVirtualHost()
-			).build());
+			).build(),
+			orderId, _ORDER_STATUS_COMPLETED);
+	}
 
-		order.setOrderStatus(_ORDER_STATUS_COMPLETED);
+	private void _updateOrder(
+			Map<String, ?> customFields, long orderId, int orderStatus)
+		throws Exception {
+
+		Order order = new Order();
+
+		order.setCustomFields(customFields);
+		order.setOrderStatus(orderStatus);
 
 		_orderResource.patchOrder(orderId, order);
 	}

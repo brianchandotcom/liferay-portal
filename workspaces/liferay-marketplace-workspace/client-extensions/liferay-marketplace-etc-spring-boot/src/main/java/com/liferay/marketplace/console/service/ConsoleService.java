@@ -29,32 +29,21 @@ public class ConsoleService {
 		);
 	}
 
-	public String deployApp(String orderId, String projectId) throws Exception {
-		return deployApp(_consoleAuthEmail, orderId, projectId);
+	public void deployApp(String orderId, String projectId) throws Exception {
+		deployApp(_consoleAuthEmail, orderId, projectId);
 	}
 
-	public String deployApp(String email, String orderId, String projectId)
+	public void deployApp(String email, String orderId, String projectId)
 		throws Exception {
 
-		return _getWebClient(
-		).post(
-		).uri(
-			"/admin/projects/" + projectId + "/apps"
-		).accept(
-			MediaType.APPLICATION_JSON
-		).contentType(
-			MediaType.APPLICATION_JSON
-		).bodyValue(
+		_post(
 			new JSONObject(
 			).put(
 				"orderId", orderId
 			).put(
 				"userEmail", email
-			).toString()
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
+			),
+			"/admin/projects/" + projectId + "/apps");
 	}
 
 	public String getAuthorization() throws Exception {
@@ -103,80 +92,45 @@ public class ConsoleService {
 	public void inviteProject(String email, String projectId, String role)
 		throws Exception {
 
-		_getWebClient(
-		).post(
-		).uri(
-			"/projects/" + projectId + "/invite"
-		).accept(
-			MediaType.APPLICATION_JSON
-		).contentType(
-			MediaType.APPLICATION_JSON
-		).bodyValue(
+		_post(
 			new JSONObject(
 			).put(
 				"email", email
 			).put(
 				"role", role
-			).toString()
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
+			),
+			"/projects/" + projectId + "/invite");
 	}
 
 	public JSONObject postEnvironmentProject(String projectId)
 		throws Exception {
 
-		return new JSONObject(
-			_getWebClient(
-			).post(
-			).uri(
-				"/projects"
-			).accept(
-				MediaType.APPLICATION_JSON
-			).contentType(
-				MediaType.APPLICATION_JSON
-			).bodyValue(
-				new JSONObject(
-				).put(
-					"cluster", _consoleCluster
-				).put(
-					"environment", true
-				).put(
-					"projectId", _consoleProjectId + "-" + projectId
-				).toString()
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block());
+		return _post(
+			new JSONObject(
+			).put(
+				"cluster", _consoleCluster
+			).put(
+				"environment", true
+			).put(
+				"projectId", _consoleProjectId + "-" + projectId
+			),
+			"/projects");
 	}
 
 	public JSONObject setupLinkBetweenPortalInstanceAndExtensionEnvironment(
 			String dxpVirtualInstanceId, String extensionProjectUid)
 		throws Exception {
 
-		return new JSONObject(
-			_getWebClient(
-			).post(
-			).uri(
-				"/lxc-extension-links"
-			).accept(
-				MediaType.APPLICATION_JSON
-			).contentType(
-				MediaType.APPLICATION_JSON
-			).bodyValue(
-				new JSONObject(
-				).put(
-					"dxpProjectUid", _consoleProjectUid
-				).put(
-					"dxpVirtualInstanceId", dxpVirtualInstanceId
-				).put(
-					"extensionProjectUid", extensionProjectUid
-				).toString()
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block());
+		return _post(
+			new JSONObject(
+			).put(
+				"dxpProjectUid", _consoleProjectUid
+			).put(
+				"dxpVirtualInstanceId", dxpVirtualInstanceId
+			).put(
+				"extensionProjectUid", extensionProjectUid
+			),
+			"/lxc-extension-links");
 	}
 
 	private WebClient _getWebClient() throws Exception {
@@ -186,6 +140,26 @@ public class ConsoleService {
 		).defaultHeader(
 			HttpHeaders.AUTHORIZATION, "Bearer " + getAuthorization()
 		).build();
+	}
+
+	private JSONObject _post(JSONObject jsonObject, String path)
+		throws Exception {
+
+		return new JSONObject(
+			_getWebClient(
+			).post(
+			).uri(
+				path
+			).accept(
+				MediaType.APPLICATION_JSON
+			).contentType(
+				MediaType.APPLICATION_JSON
+			).bodyValue(
+				jsonObject.toString()
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block());
 	}
 
 	private String _accessToken;

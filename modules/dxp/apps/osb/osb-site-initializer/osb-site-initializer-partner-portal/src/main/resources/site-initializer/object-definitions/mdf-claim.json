@@ -12,11 +12,11 @@
 			"active": true,
 			"errorMessage": {
 			},
-			"externalReferenceCode": "AUTOMATION-TO-COMPLETE-REQUEST-ACTION",
+			"externalReferenceCode": "MDF-CLAIM-STATUS-MANAGEMENT-ACTION",
 			"label": {
-				"en_US": "Automation To Complete Request"
+				"en_US": "MDF Claim Status Management"
 			},
-			"name": "automationToCompleteRequest",
+			"name": "mdfClaimStatusManagement",
 			"objectActionExecutorKey": "function#liferay-partner-etc-spring-boot-object-action-mdf-claim-status-management",
 			"objectActionTriggerKey": "onAfterUpdate",
 			"parameters": {

@@ -65,9 +65,13 @@ definition {
 
 	@summary = "Select highlighted structures"
 	macro selectHighlightedStructures(structureNameList = null) {
+		WaitForElementPresent(
+			key_text = "Select",
+			locator1 = "Button#ANY");
+
 		Click(
-			ariaLabel = "Select Highlighted Structures",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+			key_text = "Select",
+			locator1 = "Button#ANY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

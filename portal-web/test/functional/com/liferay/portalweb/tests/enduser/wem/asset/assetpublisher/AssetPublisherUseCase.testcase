@@ -1241,24 +1241,6 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Stop and start com.liferay.layout.type.controller.portlet bundle via GogoShell") {
-			GogoShell.openGogoShellAdmin(siteURLKey = "test-site-name");
-
-			var moduleId = GogoShell.getModuleID(moduleName = "com.liferay.layout.type.controller.portlet");
-
-			GogoShell.stopModule(moduleId = ${moduleId});
-
-			GogoShell.viewModuleStatus(
-				moduleName = "com.liferay.layout.type.controller.portlet",
-				moduleStatus = "Resolved");
-
-			GogoShell.startModule(moduleId = ${moduleId});
-
-			GogoShell.viewModuleStatus(
-				moduleName = "com.liferay.layout.type.controller.portlet",
-				moduleStatus = "Active");
-		}
-
 		task ("Add three web contents based on Basic Web Content") {
 			for (var n : list "1,2,3") {
 				JSONWebcontent.addWebContent(

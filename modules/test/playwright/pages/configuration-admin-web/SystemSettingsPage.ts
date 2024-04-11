@@ -44,4 +44,24 @@ export class SystemSettingsPage {
 		await this.updateButton.click();
 		await this.uiElementsPage.anySuccessAlert.waitFor({state: 'visible'});
 	}
+
+	async goto() {
+		await this.applicationsMenuPage.goToSystemSettings();
+	}
+
+	async goToSystemSetting(categoryKey: string, configurationName: string) {
+		await this.goto();
+		await this.page
+			.getByRole('link', {
+				exact: true,
+				name: categoryKey,
+			})
+			.click();
+		await this.page
+			.getByRole('menuitem', {
+				exact: true,
+				name: configurationName,
+			})
+			.click();
+	}
 }

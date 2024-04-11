@@ -20,6 +20,7 @@ import {CommerceAdminProductDetailsDiagramPage} from '../pages/commerce/commerce
 import {CommerceAdminProductDetailsPage} from '../pages/commerce/commerceAdminProductDetailsPage';
 import {CommerceAdminProductDetailsProductRelationsPage} from '../pages/commerce/commerceAdminProductDetailsProductRelationsPage';
 import {CommerceAdminProductPage} from '../pages/commerce/commerceAdminProductPage';
+import {CommerceCatalogSystemSettingsPage} from '../pages/commerce/commerceCatalogSystemSettingsPage';
 import {CommerceLayoutsPage} from '../pages/commerce/commerceLayoutsPage';
 import {CommerceMiniCartPage} from '../pages/commerce/commerceMiniCartPage';
 import {CommercePaymentsPage} from '../pages/commerce/commercePaymentsPage';
@@ -37,6 +38,7 @@ const commercePagesTest = test.extend<{
 	commerceAdminProductDetailsPage: CommerceAdminProductDetailsPage;
 	commerceAdminProductDetailsProductRelationsPage: CommerceAdminProductDetailsProductRelationsPage;
 	commerceAdminProductPage: CommerceAdminProductPage;
+	commerceCatalogSystemSettingsPage: CommerceCatalogSystemSettingsPage;
 	commerceLayoutsPage: CommerceLayoutsPage;
 	commerceMiniCartPage: CommerceMiniCartPage;
 	commercePaymentsPage: CommercePaymentsPage;
@@ -76,6 +78,9 @@ const commercePagesTest = test.extend<{
 	},
 	commerceAdminProductPage: async ({page}, use) => {
 		await use(new CommerceAdminProductPage(page));
+	},
+	commerceCatalogSystemSettingsPage: async ({page}, use) => {
+		await use(new CommerceCatalogSystemSettingsPage(page));
 	},
 	commerceLayoutsPage: async ({page}, use) => {
 		await use(new CommerceLayoutsPage(page));

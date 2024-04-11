@@ -12,24 +12,6 @@ a.liferay-nav-item,
 		color: var(--color-action-primary-active);
 		text-decoration: none;
 	}
-	&::before {
-		/* stylelint-disable-next-line function-url-quotes */
-		background-color: green;
-		content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='lexicon-icon lexicon-icon-sites' role='presentation' viewBox='0 0 512 512'%3E%3Cpath class='lexicon-icon-body lx-sites-bg' fill='none' d='M437,75C388.7,26.6,324.4,0,256,0C187.6,0,123.3,26.6,75,75C26.6,123.3,0,187.6,0,256c0,68.4,26.6,132.7,75,181c48.4,48.4,112.6,75,181,75c68.4,0,132.7-26.6,181-75c48.4-48.4,75-112.6,75-181C512,187.6,485.4,123.3,437,75z'%3E%3C/path%3E%3Cpath class='lexicon-icon-outline lx-sites-border' d='M437,75C388.7,26.6,324.4,0,256,0C187.6,0,123.3,26.6,75,75C26.6,123.3,0,187.6,0,256c0,68.4,26.6,132.7,75,181c48.4,48.4,112.6,75,181,75c68.4,0,132.7-26.6,181-75c48.4-48.4,75-112.6,75-181C512,187.6,485.4,123.3,437,75z M256,448c-105.9,0-192-86.1-192-192S150.1,64,256,64s192,86.1,192,192S361.9,448,256,448z'%3E%3C/path%3E%3Cpath class='lexicon-icon-outline lx-sites-hands' d='M128,384l192-64l64-192l-192,64L128,384z M254.9,224c17.7,0,32,14.3,32,32s-14.3,32-32,32s-32-14.3-32-32C222.9,238.3,237.2,224,254.9,224z'%3E%3C/path%3E%3C/svg%3E");
-		display: inline-block;
-		margin-right: var(--spacer-2);
-		position: relative;
-		width: var(--spacer-3);
-	}
-
-	&::after {
-		/* stylelint-disable-next-line function-url-quotes */
-		content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='lexicon-icon lexicon-icon-shortcut' role='presentation' viewBox='0 0 512 512'%3E%3Cpath class='lexicon-icon-outline lx-shortcut-border' d='M480,320c-17.6729,0-32,14.3271-32,32v96H64V64h96c17.6729,0,32-14.3271,32-32S177.6729,0,160,0H64C28.7104,0,0,28.7104,0,64v384c0,35.29,28.7104,64,64,64h384c35.29,0,64-28.71,64-64v-96C512,334.3271,497.6729,320,480,320z'%3E%3C/path%3E%3Cpath class='lexicon-icon-outline lx-shortcut-arrow' d='M480,0H320c-17.6729,0-32,14.3267-32,32s14.3271,32,32,32h82.7456L265.373,201.3726c-12.4971,12.4971-12.4971,32.7578,0,45.2549C271.6211,252.876,279.8105,256,288,256s16.3789-3.124,22.627-9.3726L448,109.2544V192c0,17.6733,14.3271,32,32,32s32-14.3267,32-32V32C512,14.3267,497.6729,0,480,0z'%3E%3C/path%3E%3C/svg%3E");
-		display: inline-block;
-		position: absolute;
-		right: var(--spacer-3);
-		width: var(--spacer-3);
-	}
 }
 
 code[class*='language-'],

@@ -688,11 +688,13 @@ nav.public-sites-navigation .menu-button-group.menu-open .menu-btn {
 nav.public-sites-navigation .menu-button-group.menu-open .close-btn {
 	display: flex;
 }
-nav.public-sites-navigation .search-account-container .search-icon, 
+nav.public-sites-navigation .search-account-container .search-icon,
 nav.public-sites-navigation .search-account-container .question-icon {
 	border-radius: var(--border-radius-sm);
+	color: var(--body-color);
 	cursor: pointer;
 	padding: 0.75rem;
+	text-decoration: none;
 	transition-duration: 0.2s, 0.2s;
 	transition-property: color, background-color;
 	transition-timing-function: ease, ease;
@@ -711,7 +713,10 @@ nav.public-sites-navigation .search-account-container .search-icon:focus svg,
 nav.public-sites-navigation .search-account-container .search-icon:active svg,
 nav.public-sites-navigation .search-account-container .question-icon:hover svg,
 nav.public-sites-navigation .search-account-container .question-icon:focus svg,
-nav.public-sites-navigation .search-account-container .question-icon:active svg{
+nav.public-sites-navigation
+	.search-account-container
+	.question-icon:active
+	svg {
 	fill: var(--color-action-primary-hover, #0053f0);
 }
 nav.public-sites-navigation .nav-items-wrapper {

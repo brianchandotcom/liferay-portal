@@ -29,6 +29,14 @@
 				{
 					"dataType": "string",
 					"defaultValue": true,
+					"description": "Show Help",
+					"label": "Show Help",
+					"name": "showHelp",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
 					"description": "Show Account Menu",
 					"label": "Show Account Menu",
 					"name": "showAccountMenu",

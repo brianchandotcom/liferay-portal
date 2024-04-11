@@ -15,30 +15,25 @@ export function FieldFeedback({
 	warningMessage,
 	...otherProps
 }: IProps) {
-	if (!errorMessage && !helpMessage && !warningMessage) {
-		return null;
-	}
+	const message =
+		warningMessage && !errorMessage ? warningMessage : errorMessage;
+
+	const symbol =
+		warningMessage && !errorMessage ? 'warning-full' : 'exclamation-full';
 
 	return (
 		<ClayForm.FeedbackGroup
 			className="lfr-de__field-feedback"
 			{...otherProps}
 		>
-			{errorMessage && (
-				<ClayForm.FeedbackItem id={`${name}_fieldError`} role="alert">
-					<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+			<ClayForm.FeedbackItem
+				aria-live="assertive"
+				id={`${name}_fieldError`}
+			>
+				{message && <ClayForm.FeedbackIndicator symbol={symbol} />}
 
-					{errorMessage}
-				</ClayForm.FeedbackItem>
-			)}
-
-			{warningMessage && !errorMessage && (
-				<ClayForm.FeedbackItem id={`${name}_fieldError`} role="alert">
-					<ClayForm.FeedbackIndicator symbol="warning-full" />
-
-					{warningMessage}
-				</ClayForm.FeedbackItem>
-			)}
+				{message}
+			</ClayForm.FeedbackItem>
 
 			{helpMessage && <div id={`${name}_fieldHelp`}>{helpMessage}</div>}
 		</ClayForm.FeedbackGroup>

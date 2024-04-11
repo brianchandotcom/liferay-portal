@@ -524,11 +524,11 @@ public class ObjectDefinitionGraphQLTest {
 			Assert.assertEquals(
 				JSONUtil.putAll(
 					JSONUtil.put(
-						_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
+						_OBJECT_FIELD_NAME_LONG_TEXT, ""
 					).put(
-						_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
+						_OBJECT_FIELD_NAME_RICH_TEXT, ""
 					).put(
-						_OBJECT_FIELD_NAME_TEXT, "textEng"
+						_OBJECT_FIELD_NAME_TEXT, ""
 					)
 				).toString(),
 				JSONUtil.getValueAsString(

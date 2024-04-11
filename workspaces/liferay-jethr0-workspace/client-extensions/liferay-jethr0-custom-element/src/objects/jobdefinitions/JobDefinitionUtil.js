@@ -9,12 +9,36 @@ import JobDefinitionParameter from './JobDefinitionParameter';
 
 export async function getJobDefinitionById({id, setJobDefinition}) {
 	const response = await liferayRequest({
-		urlPath: '/o/c/jobdefinitions/' + id,
+		graphqlQuery: `{
+			c {
+				jobDefinitions(filter: \\"id eq '${id}'\\") {
+					items {
+						dateCreated
+						dateModified
+						id
+						key
+						label
+						jobDefinitionsToJobDefinitionParameters
+					}
+				}
+			}
+		}`,
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+		urlPath: '/o/graphql',
 	});
 
 	const result = JSON.parse(await response.text());
 
-	const jobDefinition = new JobDefinition(result);
+	const jobDefinitionJSON = result.data.c.jobDefinitions.items[0];
+
+	if (!jobDefinitionJSON) {
+		return;
+	}
+
+	const jobDefinition = _getJobDefinition(jobDefinitionJSON);
 
 	if (jobDefinition && setJobDefinition) {
 		setJobDefinition(jobDefinition);
@@ -22,24 +46,37 @@ export async function getJobDefinitionById({id, setJobDefinition}) {
 }
 
 export async function getJobDefinitionByKey({key, setJobDefinition}) {
-	const urlSearchParams = new URLSearchParams({
-		filter: "key eq '" + key + "'",
-	});
-
 	const response = await liferayRequest({
-		urlPath: '/o/c/jobdefinitions',
-		urlSearchParams,
+		graphqlQuery: `{
+			c {
+				jobDefinitions(filter: \\"key eq '${key}'\\") {
+					items {
+						dateCreated
+						dateModified
+						id
+						key
+						label
+						jobDefinitionsToJobDefinitionParameters
+					}
+				}
+			}
+		}`,
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+		urlPath: '/o/graphql',
 	});
 
 	const result = JSON.parse(await response.text());
 
-	if (!result.items || !result.items.length) {
-		setJobDefinition(null);
+	const jobDefinitionJSON = result.data.c.jobDefinitions.items[0];
 
+	if (!jobDefinitionJSON) {
 		return;
 	}
 
-	const jobDefinition = new JobDefinition(result.items[0]);
+	const jobDefinition = _getJobDefinition(jobDefinitionJSON);
 
 	if (jobDefinition && setJobDefinition) {
 		setJobDefinition(jobDefinition);
@@ -94,21 +131,25 @@ export async function getJobDefinitions({setJobDefinitions}) {
 		const result = JSON.parse(await response.text());
 
 		for (const item of result.data.c.jobDefinitions.items) {
-			const jobDefinition = new JobDefinition(item);
-
-			item.jobDefinitionsToJobDefinitionParameters.forEach(
-				(jobDefinitionParameter) => {
-					jobDefinition.jobDefinitionParameters.push(
-						new JobDefinitionParameter(jobDefinitionParameter)
-					);
-				}
-			);
-
-			jobDefinitions.push(jobDefinition);
+			jobDefinitions.push(_getJobDefinition(item));
 		}
 	}
 
 	if (jobDefinitions && setJobDefinitions) {
 		setJobDefinitions(jobDefinitions);
 	}
+}
+
+function _getJobDefinition(jobDefinitionJSON) {
+	const jobDefinition = new JobDefinition(jobDefinitionJSON);
+
+	jobDefinitionJSON.jobDefinitionsToJobDefinitionParameters.forEach(
+		(jobDefinitionParameter) => {
+			jobDefinition.jobDefinitionParameters.push(
+				new JobDefinitionParameter(jobDefinitionParameter)
+			);
+		}
+	);
+
+	return jobDefinition;
 }

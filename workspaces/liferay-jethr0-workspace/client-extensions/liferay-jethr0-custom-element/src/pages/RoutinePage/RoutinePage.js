@@ -16,6 +16,7 @@ import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0Co
 import Jethr0InformationField from '../../components/Jethr0InformationField/Jethr0InformationField';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
+import {getJobDefinitionByKey} from '../../objects/jobdefinitions/JobDefinitionUtil';
 import {
 	deleteRoutineById,
 	getRoutineByType,
@@ -75,6 +76,8 @@ function RoutineJobs({routine}) {
 }
 
 function RoutineInformation({routine}) {
+	const [jobDefinition, setJobDefinition] = useState(null);
+
 	if (!routine) {
 		return (
 			<ClayPanel
@@ -86,6 +89,18 @@ function RoutineInformation({routine}) {
 				<ClayPanel.Body>Loading...</ClayPanel.Body>
 			</ClayPanel>
 		);
+	}
+
+	if (!jobDefinition) {
+		getJobDefinitionByKey({key: routine.jobType.key, setJobDefinition});
+
+		return;
+	}
+
+	let jobParameters = '';
+
+	if (routine.jobParameters) {
+		jobParameters = JSON.parse(routine.jobParameters);
 	}
 
 	return (
@@ -131,6 +146,27 @@ function RoutineInformation({routine}) {
 					fieldType="DATE"
 					fieldValue={routine.dateModified}
 				/>
+				{jobDefinition.jobDefinitionParameters &&
+					Object.entries(jobParameters).map(([key, value]) => {
+						let parameter;
+
+						for (const jobDefinitionParameter of jobDefinition.jobDefinitionParameters) {
+							if (jobDefinitionParameter.key === key) {
+								parameter = jobDefinitionParameter;
+
+								break;
+							}
+						}
+
+						return (
+							<Jethr0InformationField
+								fieldLabel={parameter.label}
+								fieldType={parameter.type.name}
+								fieldValue={value}
+								key={key}
+							/>
+						);
+					})}
 			</ClayPanel.Body>
 		</ClayPanel>
 	);

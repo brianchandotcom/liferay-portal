@@ -16,6 +16,7 @@ import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0Co
 import Jethr0InformationField from '../../components/Jethr0InformationField/Jethr0InformationField';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
+import {getJobDefinitionByKey} from '../../objects/jobdefinitions/JobDefinitionUtil';
 import {deleteJobById, getJobById} from '../../objects/jobs/JobUtil';
 import {toLocaleString} from '../../services/DateUtil';
 import {toDurationString} from '../../services/DurationUtil';
@@ -93,6 +94,14 @@ function JobBuilds({job}) {
 }
 
 function JobInformation({job}) {
+	const [jobDefinition, setJobDefinition] = useState(null);
+
+	if (!jobDefinition) {
+		getJobDefinitionByKey({key: job.type.key, setJobDefinition});
+
+		return;
+	}
+
 	if (!job) {
 		return (
 			<ClayPanel
@@ -104,12 +113,6 @@ function JobInformation({job}) {
 				<ClayPanel.Body>Loading...</ClayPanel.Body>
 			</ClayPanel>
 		);
-	}
-
-	let jobParameterDefinitions = [];
-
-	if (job.definition) {
-		jobParameterDefinitions = job.definition.parameterDefinitions;
 	}
 
 	let jobParameters = '';
@@ -169,16 +172,24 @@ function JobInformation({job}) {
 					fieldType="DATE"
 					fieldValue={job.startDate}
 				/>
-				{jobParameters &&
-					jobParameterDefinitions?.map((jobParameterDefinition) => {
+				{jobDefinition.jobDefinitionParameters &&
+					Object.entries(jobParameters).map(([key, value]) => {
+						let parameter;
+
+						for (const jobDefinitionParameter of jobDefinition.jobDefinitionParameters) {
+							if (jobDefinitionParameter.key === key) {
+								parameter = jobDefinitionParameter;
+
+								break;
+							}
+						}
+
 						return (
 							<Jethr0InformationField
-								fieldLabel={jobParameterDefinition.label}
-								fieldType={jobParameterDefinition.type}
-								fieldValue={
-									jobParameters[jobParameterDefinition.key]
-								}
-								key={jobParameterDefinition.key}
+								fieldLabel={parameter.label}
+								fieldType={parameter.type.name}
+								fieldValue={value}
+								key={key}
 							/>
 						);
 					})}

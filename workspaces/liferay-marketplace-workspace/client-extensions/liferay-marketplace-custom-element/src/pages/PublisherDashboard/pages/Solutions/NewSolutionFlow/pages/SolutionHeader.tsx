@@ -13,10 +13,15 @@ import i18n from '../../../../../../i18n';
 import 'react-quill/dist/quill.snow.css';
 import ClayIcon from '@clayui/icon';
 
+enum RadioOptions {
+	EMBED_VIDEO_URL = 'embed-video-url',
+	UPLOAD_IMAGES = 'upload-images',
+}
+
 const SolutionHeader = () => {
 	const [editorValue, setEditorValue] = useState('');
 
-	const [videoURL, setVideoURL] = useState(false);
+	const [radioValue, setRadioValue] = useState('');
 
 	return (
 		<div className="mb-4 solution-header-container">
@@ -46,23 +51,22 @@ const SolutionHeader = () => {
 				Content Media Type
 			</Form.Label>
 
-			<ClayRadioGroup
-				className="d-flex flex-column mt-1"
-				defaultValue="upload-images"
-			>
+			<ClayRadioGroup className="d-flex flex-column mt-1">
 				<ClayRadio
 					label="Upload images"
-					onClick={() => setVideoURL(false)}
+					onClick={() => {
+						setRadioValue(RadioOptions.UPLOAD_IMAGES);
+					}}
 					value="upload-images"
 				/>
 				<ClayRadio
 					label="Embed video URL"
-					onClick={() => setVideoURL(true)}
+					onClick={() => setRadioValue(RadioOptions.EMBED_VIDEO_URL)}
 					value="embed-video-url"
 				/>
 			</ClayRadioGroup>
 
-			{videoURL && (
+			{radioValue === RadioOptions.EMBED_VIDEO_URL && (
 				<>
 					<Form.Label className="mt-5" htmlFor="url" required>
 						Video URL
@@ -92,6 +96,12 @@ const SolutionHeader = () => {
 						/>
 					</div>
 				</>
+			)}
+
+			{radioValue === RadioOptions.UPLOAD_IMAGES && (
+				<Form.Label className="mt-5" htmlFor="description">
+					Add up to 5 images
+				</Form.Label>
 			)}
 		</div>
 	);

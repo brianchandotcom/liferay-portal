@@ -1,10 +1,10 @@
 .solutions-details-container {
 	.content-block {
 		background-color: #fbfcfe;
-		color: #2871fa;
 		border: none;
-		border-radius: 0.5rem;
 		border: 1px solid #eaf1ff;
+		border-radius: 0.5rem;
+		color: #2871fa;
 
 		&:hover {
 			background-color: #edf3fe;
@@ -16,8 +16,8 @@
 
 .solution-header-container {
 	.ql-container {
-		height: 100px;
 		border-radius: 4px;
+		height: 100px;
 	}
 
 	.video-player {
@@ -31,15 +31,15 @@
 .solution-profile-container {
 	.marketplace-form-multiselect {
 		.form-control {
+			background-color: #ffff;
 			border: 1px solid #b1b2b9;
 			border-radius: 8px;
-			background-color: #ffff;
 			height: 48px;
 
 			.label {
 				background-color: #e6ebf5;
-				color: #1c3667;
 				border: none;
+				color: #1c3667;
 				font-size: 13px;
 				padding: 8px;
 			}
@@ -56,7 +56,7 @@
 
 .solution-company-profile {
 	.ql-container {
-		height: 100px;
 		border-radius: 4px;
+		height: 100px;
 	}
 }

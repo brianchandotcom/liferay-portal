@@ -14,6 +14,7 @@ export function DashboardEmptyTable({
 	button,
 	buttonName,
 	children,
+	className,
 	description1,
 	description2,
 	icon,
@@ -22,6 +23,7 @@ export function DashboardEmptyTable({
 	button?: boolean;
 	buttonName?: string;
 	children?: ReactNode;
+	className?: string;
 	description1?: string;
 	description2?: string;
 	icon: string;
@@ -46,7 +48,9 @@ export function DashboardEmptyTable({
 					</span>
 				)}
 
-				{description2 && <span> {description2}</span>}
+				{description2 && (
+					<span className={className}>{description2}</span>
+				)}
 			</div>
 
 			{children}

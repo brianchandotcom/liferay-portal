@@ -96,6 +96,7 @@ const SolutionProfile = () => {
 					items={items}
 					onChange={setValue}
 					onItemsChange={setItems}
+					placeholder="Select categories"
 					sourceItems={sourceItems}
 					spritemap={getIconSpriteMap()}
 					value={value}
@@ -111,6 +112,7 @@ const SolutionProfile = () => {
 					items={items}
 					onChange={setValue}
 					onItemsChange={setItems}
+					placeholder="Select tags"
 					sourceItems={sourceItems}
 					spritemap={getIconSpriteMap()}
 					value={value}

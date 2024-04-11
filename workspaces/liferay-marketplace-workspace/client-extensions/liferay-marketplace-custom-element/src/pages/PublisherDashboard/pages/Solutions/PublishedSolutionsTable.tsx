@@ -34,6 +34,11 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 		return (
 			<DashboardTable
 				emptyStateMessage={{
+					className: 'd-flex justify-content-center',
+					description1:
+						'Create and submit new Solutions and they will show up here.',
+					description2: 'Click on “Add Solution Template” to start.',
+
 					title: 'No Solutions Yet',
 				}}
 				icon="grid"
@@ -51,8 +56,7 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 				message: i18n.translate('request-sent-successfully'),
 				type: 'success',
 			});
-		}
-		catch (error) {
+		} catch (error) {
 			Liferay.Util.openToast({
 				message: i18n.translate('an-unexpected-error-occurred'),
 				type: 'danger',

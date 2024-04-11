@@ -65,6 +65,7 @@ public class TextDDMFormFieldTemplateContextContributorTest
 
 		Assert.assertTrue(parameters.containsKey("autocompleteEnabled"));
 		Assert.assertTrue(parameters.containsKey("displayStyle"));
+		Assert.assertTrue(parameters.containsKey("htmlAutocompleteAttribute"));
 		Assert.assertTrue(parameters.containsKey("invalidCharacters"));
 		Assert.assertTrue(parameters.containsKey("normalizeField"));
 		Assert.assertTrue(parameters.containsKey("placeholder"));

@@ -58,6 +58,16 @@ public class DateDDMFormFieldTypeSettingsTest
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);
 
+		DDMFormField htmlAutocompleteAttribute = ddmFormFieldsMap.get(
+			"htmlAutocompleteAttribute");
+
+		Assert.assertNotNull(htmlAutocompleteAttribute);
+		Assert.assertNotNull(htmlAutocompleteAttribute.getLabel());
+		Assert.assertNotNull(
+			htmlAutocompleteAttribute.getProperty("invalidCharacters"));
+		Assert.assertTrue(htmlAutocompleteAttribute.isVisualProperty());
+		Assert.assertEquals("text", htmlAutocompleteAttribute.getType());
+
 		DDMFormField predefinedValueDDMFormField = ddmFormFieldsMap.get(
 			"predefinedValue");
 
@@ -130,11 +140,12 @@ public class DateDDMFormFieldTypeSettingsTest
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
 					"label", "tip", "required", "requiredErrorMessage"),
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
-					"fieldReference", "name", "predefinedValue",
-					"objectFieldName", "visibilityExpression", "fieldNamespace",
-					"indexType", "labelAtStructureLevel", "localizable",
-					"nativeField", "readOnly", "dataType", "type", "showLabel",
-					"repeatable", "validation")));
+					"fieldReference", "name", "htmlAutocompleteAttribute",
+					"predefinedValue", "objectFieldName",
+					"visibilityExpression", "fieldNamespace", "indexType",
+					"labelAtStructureLevel", "localizable", "nativeField",
+					"readOnly", "dataType", "type", "showLabel", "repeatable",
+					"validation")));
 	}
 
 	@Override

@@ -131,7 +131,7 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"maxWidth": "var(--container-max-xl)",
+						"maxWidth": "var(--container-max-lg)",
 						"paddingBottom": "4",
 						"paddingLeft": "4",
 						"paddingRight": "4",

@@ -309,7 +309,7 @@
 	},
 	"containerMaxMd": {
 		"cssVariableMapping": "container-max-md",
-		"value": "960px"
+		"value": "800px"
 	},
 	"containerMaxSm": {
 		"cssVariableMapping": "container-max-sm",

@@ -12,45 +12,125 @@ import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
 
-test('created object folders are on the left side bar', async ({
-	apiHelpers,
-	viewObjectDefinitionsPage,
-}) => {
-	await viewObjectDefinitionsPage.goto();
+test.describe('manage object definitions through model builder', () => {
+	test('navigate between object folders on model builder page', async ({
+		apiHelpers,
+		modelBuilderPage,
+	}) => {
+		const objectFolders: ObjectFolder[] = await Promise.all(
+			Array.apply(null, Array(5)).map(async () => {
+				return await apiHelpers.objectAdmin.postRandomObjectFolder();
+			})
+		);
 
-	const objectFolderExternalReferenceCode = 'objectFolder' + getRandomInt();
+		await modelBuilderPage.goto({objectFolderName: 'Default'});
 
-	const objectFolder = await viewObjectDefinitionsPage.createObjectFolder(
-		objectFolderExternalReferenceCode
-	);
+		for (const objectFolder of objectFolders) {
+			await expect(modelBuilderPage.otherObjectFolders).toBeVisible();
 
-	await expect(
-		viewObjectDefinitionsPage.page
-			.locator('li')
-			.filter({hasText: objectFolderExternalReferenceCode})
-	).toBeVisible();
+			const otherObjectFolderLocator =
+				modelBuilderPage.getOtherObjectFolderLocator(
+					objectFolder.label['en_US']
+				);
 
-	// Clean up
+			await otherObjectFolderLocator.hover();
 
-	await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+			await otherObjectFolderLocator
+				.getByRole('button', {name: 'Go to Folder'})
+				.click();
+
+			await expect(otherObjectFolderLocator).toBeHidden();
+
+			await expect(
+				modelBuilderPage.getObjectFolderLabelHeaderLocator(
+					objectFolder.label['en_US']
+				)
+			).toBeVisible();
+		}
+
+		// Clean up
+
+		for (const objectFolder of objectFolders) {
+			await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+		}
+	});
 });
 
-test('default folder does not contains delete and edit options', async ({
-	viewObjectDefinitionsPage,
-}) => {
-	await viewObjectDefinitionsPage.goto();
+test.describe('manage object definitions through view object definitions', () => {
+	test('created object folders are on the left side bar', async ({
+		apiHelpers,
+		viewObjectDefinitionsPage,
+	}) => {
+		await viewObjectDefinitionsPage.goto();
 
-	await viewObjectDefinitionsPage.clickDefaultObjectFolder();
+		const objectFolderExternalReferenceCode =
+			'objectFolder' + getRandomInt();
 
-	await viewObjectDefinitionsPage.openObjectFolderActions();
+		const objectFolder = await viewObjectDefinitionsPage.createObjectFolder(
+			objectFolderExternalReferenceCode
+		);
 
-	await expect(
-		viewObjectDefinitionsPage.objectFolderDeleteFolderOption
-	).toBeHidden();
+		await expect(
+			viewObjectDefinitionsPage.page
+				.locator('li')
+				.filter({hasText: objectFolderExternalReferenceCode})
+		).toBeVisible();
 
-	await expect(
-		viewObjectDefinitionsPage.objectFolderEditLabelAndERCOption
-	).toBeHidden();
+		// Clean up
+
+		await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+	});
+
+	test('default folder does not contains delete and edit options', async ({
+		viewObjectDefinitionsPage,
+	}) => {
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.clickDefaultObjectFolder();
+
+		await viewObjectDefinitionsPage.openObjectFolderActions();
+
+		await expect(
+			viewObjectDefinitionsPage.objectFolderDeleteFolderOption
+		).toBeHidden();
+
+		await expect(
+			viewObjectDefinitionsPage.objectFolderEditLabelAndERCOption
+		).toBeHidden();
+	});
+
+	test('navigate between object folders on view object definitions page', async ({
+		apiHelpers,
+		viewObjectDefinitionsPage,
+	}) => {
+		const objectFolders: ObjectFolder[] = await Promise.all(
+			Array.apply(null, Array(5)).map(async () => {
+				return await apiHelpers.objectAdmin.postRandomObjectFolder();
+			})
+		);
+
+		await viewObjectDefinitionsPage.goto();
+
+		for (const objectFolder of objectFolders) {
+			await expect(viewObjectDefinitionsPage.objectFolders).toBeVisible();
+
+			viewObjectDefinitionsPage.openObjectFolder(
+				objectFolder.label['en_US']
+			);
+
+			expect(
+				viewObjectDefinitionsPage.getObjectFolderCardHeaderLabel(
+					objectFolder.label['en']
+				)
+			).toBeVisible();
+		}
+
+		// Clean up
+
+		for (const objectFolder of objectFolders) {
+			await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+		}
+	});
 });
 
 test('object definitions from a deleted folder are moved to the default folder', async ({

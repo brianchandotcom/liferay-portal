@@ -27,6 +27,7 @@ export class ModelBuilderPage {
 	readonly newObjectRelationshipSaveButton: Locator;
 	readonly objectDefinitionNodes: Locator;
 	readonly objectRelationshipEdges: Locator;
+	readonly otherObjectFolders: Locator;
 	readonly page: Page;
 	readonly toggleSidebarsButton: Locator;
 	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
@@ -87,6 +88,9 @@ export class ModelBuilderPage {
 		this.viewObjectDefinitionsPage = new ViewObjectDefinitionsPage(page);
 		this.objectDefinitionNodes = page.locator('.react-flow__node');
 		this.objectRelationshipEdges = page.locator('.react-flow__edge');
+		this.otherObjectFolders = page
+			.getByRole('region')
+			.filter({has: page.getByTitle('Go to Folder')});
 		this.page = page;
 		this.toggleSidebarsButton = page.getByLabel('Toggle Sidebars');
 	}
@@ -213,6 +217,18 @@ export class ModelBuilderPage {
 			`div[data-handleid="${objectDefinitionExternalReferenceCode}_${position}"]:not([data-handleid="${dataHandled}"])`
 		);
 	}
+
+	getObjectFolderLabelHeaderLocator = (objectFolderLabel: string) => {
+		return this.page.getByTitle(
+			`Object Folder Label: ${objectFolderLabel}`
+		);
+	};
+
+	getOtherObjectFolderLocator = (objectFolderLabel: string) => {
+		return this.otherObjectFolders
+			.getByRole('treeitem')
+			.filter({hasText: objectFolderLabel});
+	};
 
 	async goto({
 		objectFolderName,

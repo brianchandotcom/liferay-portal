@@ -11,7 +11,7 @@ import React, {
 	useRef,
 } from 'react';
 
-import {updateFragmentEntryLinkContent} from '../actions';
+import {updateFragmentEntryLinksContent} from '../actions';
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
 import FragmentService from '../services/FragmentService';
 import {useDispatch, useSelector, useSelectorRef} from './StoreContext';
@@ -48,25 +48,19 @@ function PortletContentContextProvider({children}: {children: ReactNode}) {
 
 			pendingItemsRef.current = [];
 
-			for (const fragmentEntryLinkId of pendingItems) {
-				const fragmentEntryLink =
-					fragmentEntryLinksRef.current?.[fragmentEntryLinkId];
-
-				if (!fragmentEntryLink?.removed) {
-					await FragmentService.renderFragmentEntryLinkContent({
-						fragmentEntryLinkId,
-						languageId: languageIdRef.current as Liferay.Language.Locale,
-						segmentsExperienceId: segmentsExperienceIdRef.current!,
-					}).then(({content}) => {
-						dispatch(
-							updateFragmentEntryLinkContent({
-								content,
-								fragmentEntryLinkId,
-							})
-						);
-					});
-				}
-			}
+			FragmentService.renderFragmentEntryLinksContent({
+				data: pendingItems.map((fragmentEntryLinkId) => ({
+					fragmentEntryLinkId,
+				})),
+				languageId: languageIdRef.current!,
+				segmentsExperienceId: segmentsExperienceIdRef.current!,
+			}).then((response) => {
+				dispatch(
+					updateFragmentEntryLinksContent({
+						fragmentEntryLinksContent: response,
+					})
+				);
+			});
 		};
 
 		updateContents();

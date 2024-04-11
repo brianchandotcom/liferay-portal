@@ -268,6 +268,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		_updateReport(filePath);
 
 		_updateNodeDataFile(filePath);
+
+		_archiveReport(filePath);
 	}
 
 	private void _generatePullRequestReport(String reportName)

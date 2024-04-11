@@ -66,6 +66,21 @@ public class ForgotPasswordPortlet extends MVCPortlet {
 				"/login.jsp");
 		}
 
+		javax.servlet.http.HttpServletRequest httpServletRequest =
+			com.liferay.portal.kernel.util.PortalUtil.getOriginalServletRequest(
+				com.liferay.portal.kernel.util.PortalUtil.getHttpServletRequest(renderRequest));
+
+		String currentUrl =
+			(String) httpServletRequest.getAttribute("CURRENT_URL");
+
+		String updatePasswordURL = "/portal/update_password";
+
+		if (currentUrl.contains(updatePasswordURL)) {
+			renderRequest.setAttribute(
+				getMVCPathAttributeName(renderResponse.getNamespace()),
+				"/set_password.jsp");
+		}
+
 		super.render(renderRequest, renderResponse);
 	}
 

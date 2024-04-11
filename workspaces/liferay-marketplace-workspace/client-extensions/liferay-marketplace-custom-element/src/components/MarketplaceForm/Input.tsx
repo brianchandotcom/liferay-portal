@@ -12,5 +12,12 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export function Input({component, ...props}: InputProps) {
-	return <ClayInput component={component} id={props.name} {...props} />;
+	return (
+		<ClayInput
+			className="marketplace-form-input"
+			component={component}
+			id={props.name}
+			{...props}
+		/>
+	);
 }

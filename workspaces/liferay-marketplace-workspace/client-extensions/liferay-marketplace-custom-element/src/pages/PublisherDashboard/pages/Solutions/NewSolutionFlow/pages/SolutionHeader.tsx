@@ -36,13 +36,11 @@ const SolutionHeader = () => {
 				{i18n.translate('description')}
 			</Form.Label>
 
-			<div className="rich-text-editor">
-				<ReactQuill
-					onChange={(value) => setEditorValue(value)}
-					placeholder="Insert text here"
-					value={editorValue}
-				/>
-			</div>
+			<ReactQuill
+				onChange={(value) => setEditorValue(value)}
+				placeholder="Insert text here"
+				value={editorValue}
+			/>
 
 			<Form.Label className="mt-5" htmlFor="text" required>
 				Content Media Type

@@ -9,7 +9,7 @@ import i18n from '../../../../../../i18n';
 const SolutionContactUs = () => {
 	return (
 		<div>
-			<h3>{i18n.translate('company-profile')}</h3>
+			<h3>{i18n.translate('contact-us')}</h3>
 			<hr />
 			<Form.Label className="mt-3" htmlFor="email" required>
 				Email

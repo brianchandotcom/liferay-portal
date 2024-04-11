@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
 
@@ -44,16 +45,26 @@ const SolutionProfile = () => {
 					<ClayIcon symbol="picture" />
 				</div>
 
-				<input
-					accept="image/jpeg, image/png, image/gif"
-					id="file"
-					name="file"
-					type="file"
-				/>
+				<div className="d-flex inline-item">
+					<input
+						accept="image/jpeg, image/png, image/gif"
+						id="file"
+						name="file"
+						type="file"
+					/>
 
-				<label className="btn btn-primary btn-sm" htmlFor="file">
-					{i18n.translate('upload-image')}
-				</label>
+					<label className="btn btn-primary btn-sm" htmlFor="file">
+						{i18n.translate('upload-image')}
+					</label>
+
+					<ClayButton
+						className="mb-1 ml-4"
+						displayType="secondary"
+						size="sm"
+					>
+						{i18n.translate('delete')}
+					</ClayButton>
+				</div>
 			</div>
 
 			<Form.Label className="mt-5" htmlFor="name" required>
@@ -75,33 +86,36 @@ const SolutionProfile = () => {
 				type="textarea"
 			/>
 
-			<Form.Label className="mt-5" htmlFor="categories" required>
-				{i18n.translate('categories')}
-			</Form.Label>
+			<div className="marketplace-form-multiselect">
+				<Form.Label className="mt-5" htmlFor="categories" required>
+					{i18n.translate('categories')}
+				</Form.Label>
 
-			<ClayMultiSelect
-				inputName="description-selector"
-				items={items}
-				onChange={setValue}
-				onItemsChange={setItems}
-				sourceItems={sourceItems}
-				spritemap={getIconSpriteMap()}
-				value={value}
-			/>
+				<ClayMultiSelect
+					inputName="description-selector"
+					items={items}
+					onChange={setValue}
+					onItemsChange={setItems}
+					sourceItems={sourceItems}
+					spritemap={getIconSpriteMap()}
+					value={value}
+				/>
 
-			<Form.Label className="mt-5" htmlFor="tags" required>
-				{i18n.translate('tags')}
-			</Form.Label>
+				<Form.Label className="mt-5" htmlFor="tags" required>
+					{i18n.translate('tags')}
+				</Form.Label>
 
-			<ClayMultiSelect
-				inputName="tags-selector"
-				items={items}
-				onChange={setValue}
-				onItemsChange={setItems}
-				sourceItems={sourceItems}
-				spritemap={getIconSpriteMap()}
-				value={value}
-			/>
+				<ClayMultiSelect
+					className="marketplace-form-multiselect"
+					inputName="tags-selector"
+					items={items}
+					onChange={setValue}
+					onItemsChange={setItems}
+					sourceItems={sourceItems}
+					spritemap={getIconSpriteMap()}
+					value={value}
+				/>
+			</div>
 		</div>
 	);
 };

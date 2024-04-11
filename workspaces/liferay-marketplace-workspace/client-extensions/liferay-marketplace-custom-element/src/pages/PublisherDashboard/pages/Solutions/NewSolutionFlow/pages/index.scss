@@ -17,9 +17,7 @@
 .solution-header-container {
 	.ql-container {
 		height: 100px;
-	}
-	.rich-text-editor {
-		background-color: #f1f2f5;
+		border-radius: 4px;
 	}
 
 	.video-player {
@@ -31,6 +29,23 @@
 }
 
 .solution-profile-container {
+	.marketplace-form-multiselect {
+		.form-control {
+			border: 1px solid #b1b2b9;
+			border-radius: 8px;
+			background-color: #ffff;
+			height: 48px;
+
+			.label {
+				background-color: #e6ebf5;
+				color: #1c3667;
+				border: none;
+				font-size: 13px;
+				padding: 8px;
+			}
+		}
+	}
+
 	.upload-icon-background {
 		background-color: #ebeef2;
 		border-radius: 8px;
@@ -42,5 +57,6 @@
 .solution-company-profile {
 	.ql-container {
 		height: 100px;
+		border-radius: 4px;
 	}
 }

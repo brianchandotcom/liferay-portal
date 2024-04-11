@@ -157,6 +157,10 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 		int... headerPositions) {
 
 		for (int headerPosition : headerPositions) {
+			if (headerPosition == -1) {
+				continue;
+			}
+
 			int lineNumber = SourceUtil.getLineNumber(
 				breakingChange, headerPosition);
 

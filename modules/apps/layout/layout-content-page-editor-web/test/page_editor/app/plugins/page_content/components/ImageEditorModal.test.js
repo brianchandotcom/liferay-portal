@@ -16,11 +16,17 @@ import {updateFragmentsPreviewImage} from '../../../../../../src/main/resources/
 jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService',
 	() => ({
-		renderFragmentEntryLinkContent: jest.fn(() =>
-			Promise.resolve({
-				content: 'new content',
-				fragmentEntryLinkId: '40626',
-			})
+		renderFragmentEntryLinksContent: jest.fn(() =>
+			Promise.resolve([
+				{
+					content: 'new content',
+					fragmentEntryLinkId: '40626',
+				},
+				{
+					content: 'new content',
+					fragmentEntryLinkId: '40628',
+				},
+			])
 		),
 	})
 );
@@ -91,7 +97,7 @@ const languageId = 'en_US';
 describe('ImageEditorModal', () => {
 	describe('updateFragmentsPreviewImage', () => {
 		afterEach(() => {
-			FragmentService.renderFragmentEntryLinkContent.mockClear();
+			FragmentService.renderFragmentEntryLinksContent.mockClear();
 			ImageService.getFileEntry.mockClear();
 		});
 
@@ -117,8 +123,15 @@ describe('ImageEditorModal', () => {
 			});
 
 			expect(
-				FragmentService.renderFragmentEntryLinkContent
-			).toHaveBeenCalledWith({fragmentEntryLinkId: '40626'});
+				FragmentService.renderFragmentEntryLinksContent
+			).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: [
+						{fragmentEntryLinkId: '40626'},
+						{fragmentEntryLinkId: '40628'},
+					],
+				})
+			);
 		});
 
 		it('dispatchs updateFragmentsPreviewImage action when the promise is resolved ', async () => {

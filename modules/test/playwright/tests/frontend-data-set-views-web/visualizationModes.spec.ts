@@ -374,6 +374,45 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await visualizationModesPage.cancelAddFieldsModal();
 		});
 	});
+
+	test('Configure table visualization mode with scalar array fields @LPD-11769', async ({
+		visualizationModesPage,
+	}) => {
+		const SAMPLE_SCALAR_ARRAY_FIELD = 'keywords';
+		const TYPE_COLUMN_INDEX = 3;
+
+		await test.step('Navigate to table visualization mode page', async () => {
+			await visualizationModesPage.goto({
+				dataSetLabel,
+				viewLabel,
+			});
+
+			await visualizationModesPage.selectTab('Table');
+
+			await expect(
+				visualizationModesPage.page.getByPlaceholder('Search')
+			).toBeVisible();
+		});
+
+		await test.step('Add scalar array field', async () => {
+			await visualizationModesPage.openAddFieldsModal();
+
+			await visualizationModesPage.addRootField(
+				SAMPLE_SCALAR_ARRAY_FIELD
+			);
+
+			await visualizationModesPage.saveAddFieldsModal();
+		});
+
+		await test.step('Check if field shows the correct type', async () => {
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_SCALAR_ARRAY_FIELD)
+					.locator('td')
+					.nth(TYPE_COLUMN_INDEX)
+			).toHaveText('array');
+		});
+	});
 });
 
 export const fragmentTest = mergeTests(
@@ -563,123 +602,83 @@ fragmentTest.describe('Visualization Modes in the fragment', () => {
 			);
 		}
 	);
-});
 
-test('Configure table visualization mode @LPD-11049', async ({
-	visualizationModesPage,
-}) => {
-	const SAMPLE_SCALAR_FIELD = 'id';
-	const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
-	const SAMPLE_OBJECT_CHILD_FIELD = 'id';
-	const SORTABLE_COLUMN_INDEX = 5;
+	fragmentTest(
+		'Show mapped scalar array field in the fragment @LPD-11769',
+		async ({
+			apiHelpers,
+			dataSetManagerApiHelpers,
+			fdsFragmentPage,
+			page,
+			site,
+		}) => {
+			const SAMPLE_SCALAR_ARRAY_FIELD = 'keywords';
+			const SAMPLE_SCALAR_ARRAY_CONTENT = ['one', 'two', 'three'];
 
-	await test.step('Navigate to table visualization mode page', async () => {
-		await visualizationModesPage.goto({
-			dataSetLabel,
-			viewLabel,
-		});
+			await fragmentTest.step('Create table fields', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewFields({
+					extraBodyParams: {
+						keywords: SAMPLE_SCALAR_ARRAY_CONTENT,
+					},
+					label_i18n: {en_US: SAMPLE_SCALAR_ARRAY_FIELD},
+					name: SAMPLE_SCALAR_ARRAY_FIELD,
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC: viewERC,
+					type: 'array',
+				});
+			});
 
-		await visualizationModesPage.selectTab('Table');
+			const layout = await fragmentTest.step(
+				'Create a new page',
+				async () => {
+					const pageLayout =
+						await apiHelpers.headlessDelivery.createSitePage({
+							siteId: site.id,
+							title: getRandomString(),
+						});
 
-		await expect(
-			visualizationModesPage.page.getByPlaceholder('Search')
-		).toBeVisible();
-	});
+					return pageLayout;
+				}
+			);
 
-	await test.step('Add fields', async () => {
-		await visualizationModesPage.openAddFieldsModal();
+			await fragmentTest.step(
+				'Configure Data Set in the page',
+				async () => {
+					await fdsFragmentPage.configureDataSetFragment({
+						layout,
+						site,
+						viewLabel,
+					});
+				}
+			);
 
-		await visualizationModesPage.addRootField(SAMPLE_SCALAR_FIELD);
-		await visualizationModesPage.addRootField(SAMPLE_OBJECT_FIELD);
-		await visualizationModesPage.addChildField(
-			[SAMPLE_OBJECT_FIELD],
-			SAMPLE_OBJECT_CHILD_FIELD
-		);
+			await fragmentTest.step(
+				'Data Set Table is in the page',
+				async () => {
+					await fdsFragmentPage.fdsTableWrapper.waitFor({
+						state: 'visible',
+					});
 
-		await visualizationModesPage.saveAddFieldsModal();
-	});
+					expect(
+						await fdsFragmentPage.fdsTableWrapper
+					).toBeInViewport();
 
-	await test.step('Check if field defaults are correct', async () => {
-		await expect(
-			visualizationModesPage
-				.getRowByText(SAMPLE_SCALAR_FIELD)
-				.locator('td')
-				.nth(SORTABLE_COLUMN_INDEX)
-		).toHaveText('true');
+					expect(
+						await page
+							.locator('.dnd-thead > div')
+							.first()
+							.locator('.dnd-th')
+							.allInnerTexts()
+					).toEqual([SAMPLE_SCALAR_ARRAY_FIELD, '']);
 
-		await expect(
-			visualizationModesPage
-				.getRowByText(`${SAMPLE_OBJECT_FIELD}.*`)
-				.locator('td')
-				.nth(SORTABLE_COLUMN_INDEX)
-		).toHaveText('false');
-
-		await expect(
-			visualizationModesPage
-				.getRowByText(
-					`${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`
-				)
-				.locator('td')
-				.nth(SORTABLE_COLUMN_INDEX)
-		).toHaveText('true');
-	});
-
-	await test.step('Edit a field', async () => {
-		await visualizationModesPage
-			.getRowByText(SAMPLE_SCALAR_FIELD)
-			.locator('.actions-cell button')
-			.click();
-
-		const editButton = visualizationModesPage.page.getByRole('menuitem', {
-			name: 'Edit',
-		});
-
-		await expect(editButton).toBeInViewport();
-
-		await editButton.click();
-
-		const sortableInput =
-			visualizationModesPage.page.getByLabel('Sortable');
-
-		await expect(sortableInput).toBeInViewport();
-		await expect(sortableInput).toBeEnabled();
-		await expect(sortableInput).toBeChecked();
-
-		await sortableInput.click();
-
-		await expect(sortableInput).not.toBeChecked();
-
-		await visualizationModesPage.saveAddFieldsModal();
-
-		await expect(
-			visualizationModesPage
-				.getRowByText(SAMPLE_SCALAR_FIELD)
-				.locator('td')
-				.nth(SORTABLE_COLUMN_INDEX)
-		).toHaveText('false');
-	});
-
-	await test.step('Check if object field has disabled sortable option', async () => {
-		await visualizationModesPage
-			.getRowByText(`${SAMPLE_OBJECT_FIELD}.*`)
-			.locator('.actions-cell button')
-			.click();
-
-		const editButton = visualizationModesPage.page.getByRole('menuitem', {
-			name: 'Edit',
-		});
-
-		await expect(editButton).toBeInViewport();
-
-		await editButton.click();
-
-		const sortableLabel =
-			visualizationModesPage.page.getByLabel('Sortable');
-
-		await expect(sortableLabel).toBeInViewport();
-
-		await expect(sortableLabel).toBeDisabled();
-
-		await visualizationModesPage.cancelAddFieldsModal();
-	});
+					expect(
+						await page
+							.locator('.dnd-tbody > div')
+							.first()
+							.locator('.dnd-td')
+							.allInnerTexts()
+					).toEqual(['["one","two","three"]', '']);
+				}
+			);
+		}
+	);
 });

@@ -21,6 +21,7 @@ const LOCALIZABLE_PROPERTY_SUFFIX = '_i18n';
 interface IProperty {
 	$ref?: string;
 	format?: EFieldFormat;
+	items?: any;
 	type: EFieldType;
 }
 
@@ -62,7 +63,9 @@ function getValidFields({
 		const type = propertyValue.type;
 
 		if (type === EFieldType.ARRAY) {
-			return;
+			if (propertyValue.items && propertyValue.items.$ref) {
+				return;
+			}
 		}
 
 		if (propertyValue.$ref) {

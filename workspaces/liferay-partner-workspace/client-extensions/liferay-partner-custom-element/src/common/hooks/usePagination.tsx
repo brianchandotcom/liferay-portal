@@ -6,22 +6,20 @@
 import {useEffect, useState} from 'react';
 
 export default function usePagination(urlParams?: URLSearchParams) {
-	const [activeDelta, setActiveDelta] = useState<number>(
-		urlParams?.get('activedelta')
-			? Number(urlParams.get('activedelta'))
-			: 20
+	const [pageSize, setPageSize] = useState<number>(
+		urlParams?.get('pagesize') ? Number(urlParams.get('pagesize')) : 20
 	);
 
-	const [activePage, setActivePage] = useState<number>(
-		urlParams?.get('activepage') ? Number(urlParams.get('activepage')) : 1
+	const [page, setPage] = useState<number>(
+		urlParams?.get('page') ? Number(urlParams.get('page')) : 1
 	);
 
 	useEffect(() => {
 		if (urlParams) {
-			urlParams.set('activedelta', `${activeDelta}`);
-			urlParams.set('activepage', `${activePage}`);
+			urlParams.set('pagesize', `${pageSize}`);
+			urlParams.set('page', `${page}`);
 		}
-	}, [activeDelta, activePage, urlParams]);
+	}, [page, pageSize, urlParams]);
 
 	const deltas = [
 		{
@@ -39,10 +37,10 @@ export default function usePagination(urlParams?: URLSearchParams) {
 	];
 
 	return {
-		activeDelta,
-		activePage,
+		activeDelta: pageSize,
+		activePage: page,
 		deltas,
-		onDeltaChange: setActiveDelta,
-		onPageChange: setActivePage,
+		onDeltaChange: setPageSize,
+		onPageChange: setPage,
 	};
 }

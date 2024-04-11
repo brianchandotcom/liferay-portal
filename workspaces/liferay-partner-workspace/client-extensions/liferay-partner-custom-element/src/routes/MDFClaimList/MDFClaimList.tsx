@@ -46,15 +46,12 @@ const MAX_ITEMS = -1;
 const MDFClaimList = () => {
 	const {isChannel} = useIsChannel();
 
+	const urlParams = useQueryParams();
 	const [openClaimsFilter, setOpenClaimsFilter] = useState(
-		JSON.parse(sessionStorage.getItem('openClaimsFilter')!) === null
-			? true
-			: JSON.parse(sessionStorage.getItem('openClaimsFilter')!)
+		!urlParams.get('tab') || urlParams.get('tab') === 'open' ? true : false
 	);
 
 	const {companiesEntries} = useDynamicFieldEntries();
-
-	const urlParams = useQueryParams();
 
 	const {filters, filtersTerm, onFilter, setFilters} = useFilters(
 		openClaimsFilter,
@@ -126,14 +123,20 @@ const MDFClaimList = () => {
 					<ClayTabs.Item
 						active={openClaimsFilter}
 						className="nav-item"
-						onClick={() => setOpenClaimsFilter(true)}
+						onClick={() => {
+							setOpenClaimsFilter(true);
+							urlParams.set('tab', 'open');
+						}}
 					>
 						Open
 					</ClayTabs.Item>
 					<ClayTabs.Item
 						active={!openClaimsFilter}
 						className="nav-item"
-						onClick={() => setOpenClaimsFilter(false)}
+						onClick={() => {
+							setOpenClaimsFilter(false);
+							urlParams.set('tab', 'completed');
+						}}
 					>
 						Completed
 					</ClayTabs.Item>

@@ -37,8 +37,8 @@ export default function useFilters(
 			initialFilter.partner.value = urlParams.getAll('partner')!;
 		}
 
-		if (urlParams.get('searchterm')) {
-			initialFilter.searchTerm = urlParams.get('searchterm')!;
+		if (urlParams.get('search')) {
+			initialFilter.searchTerm = urlParams.get('search')!;
 		}
 
 		if (urlParams.getAll('status').length) {

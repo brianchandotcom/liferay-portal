@@ -48,16 +48,13 @@ type MDFRequestItem = {
 
 const MDFRequestList = () => {
 	const {isChannel} = useIsChannel();
+	const urlParams = useQueryParams();
 	const [openRequestFilter, setOpenRequestFilter] = useState(
-		JSON.parse(sessionStorage.getItem('openRequestFilter')!) === null
-			? true
-			: JSON.parse(sessionStorage.getItem('openRequestFilter')!)
+		!urlParams.get('tab') || urlParams.get('tab') === 'open' ? true : false
 	);
 
 	const {userAccount} = useDynamicFieldEntries();
 	const actions = usePermissionActions(ObjectActionName.MDF_REQUEST);
-
-	const urlParams = useQueryParams();
 
 	const {filters, filtersTerm, onFilter, setFilters} = useFilters(
 		openRequestFilter,
@@ -229,14 +226,20 @@ const MDFRequestList = () => {
 					<ClayTabs.Item
 						active={openRequestFilter}
 						className="nav-item"
-						onClick={() => setOpenRequestFilter(true)}
+						onClick={() => {
+							setOpenRequestFilter(true);
+							urlParams.set('tab', 'open');
+						}}
 					>
 						Open
 					</ClayTabs.Item>
 					<ClayTabs.Item
 						active={!openRequestFilter}
 						className="nav-item"
-						onClick={() => setOpenRequestFilter(false)}
+						onClick={() => {
+							setOpenRequestFilter(false);
+							urlParams.set('tab', 'completed');
+						}}
 					>
 						Completed
 					</ClayTabs.Item>

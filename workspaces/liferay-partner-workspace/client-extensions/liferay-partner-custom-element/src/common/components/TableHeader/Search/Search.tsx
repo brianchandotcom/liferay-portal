@@ -28,12 +28,12 @@ const Search = ({initialSearchTerm, onSearchSubmit, urlParams}: IProps) => {
 
 			if (urlParams) {
 				if (term) {
-					urlParams.set('searchterm', term);
+					urlParams.set('search', term);
 
 					return;
 				}
 
-				urlParams.delete('searchterm');
+				urlParams.delete('search');
 			}
 
 			return;
@@ -44,7 +44,7 @@ const Search = ({initialSearchTerm, onSearchSubmit, urlParams}: IProps) => {
 		setSearching(true);
 
 		if (urlParams) {
-			urlParams.delete('searchterm');
+			urlParams.delete('search');
 		}
 	};
 

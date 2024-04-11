@@ -79,13 +79,11 @@ public class PortalInstanceResourceTest
 	@Override
 	@Test
 	public void testPatchPortalInstance() throws Exception {
-		PortalInstance randomPortalInstance = randomPortalInstance();
-
-		PortalInstance patchPortalInstance =
-			portalInstanceResource.patchPortalInstance(
-				_portalInstance.getPortalInstanceId(), randomPortalInstance);
-
-		assertEquals(_portalInstance, patchPortalInstance);
+		_testPatchPortalInstanceChangeActive();
+		_testPatchPortalInstanceChangeCompanyId();
+		_testPatchPortalInstanceChangeDomain();
+		_testPatchPortalInstanceChangePortletInstanceId();
+		_testPatchPortalInstanceChangeVirtualHostName();
 	}
 
 	@Test
@@ -199,6 +197,43 @@ public class PortalInstanceResourceTest
 		};
 	}
 
+	private PortalInstance _copyPortalInstance(
+			boolean changeActive, boolean changeCompanyId, boolean changeDomain,
+			boolean changePortletInstanceId, boolean changeVirtualHostName)
+		throws Exception {
+
+		String randomName = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		String randomDomain =
+			randomName + "." +
+				StringUtil.toLowerCase(RandomTestUtil.randomString(3));
+
+		PortalInstance copyPortalInstance = _portalInstance.clone();
+
+		if (changeActive) {
+			copyPortalInstance.setActive(!copyPortalInstance.getActive());
+		}
+
+		if (changeCompanyId) {
+			copyPortalInstance.setCompanyId(RandomTestUtil.randomLong());
+		}
+
+		if (changeDomain) {
+			copyPortalInstance.setDomain(randomDomain);
+		}
+
+		if (changePortletInstanceId) {
+			copyPortalInstance.setPortalInstanceId(randomName);
+		}
+
+		if (changeVirtualHostName) {
+			copyPortalInstance.setVirtualHost(randomDomain);
+		}
+
+		return copyPortalInstance;
+	}
+
 	private void _testDeletePortalInstanceExisting() throws Exception {
 		PortalInstance randomPortalInstance = randomPortalInstance();
 
@@ -238,6 +273,93 @@ public class PortalInstanceResourceTest
 					portalInstanceId, "}"),
 				problem.getTitle());
 		}
+	}
+
+	private void _testPatchPortalInstace(
+			boolean changeActive, boolean changeCompanyId,
+			boolean changePortletInstanceId, PortalInstance portalInstance)
+		throws Exception {
+
+		PortalInstance patchPortalInstance =
+			portalInstanceResource.patchPortalInstance(
+				_portalInstance.getPortalInstanceId(), portalInstance);
+
+		if (changeActive) {
+			Assert.assertNotEquals(
+				patchPortalInstance.getActive(), portalInstance.getActive());
+		}
+		else {
+			Assert.assertEquals(
+				patchPortalInstance.getActive(), portalInstance.getActive());
+		}
+
+		if (changeCompanyId) {
+			Assert.assertNotEquals(
+				patchPortalInstance.getCompanyId(),
+				portalInstance.getCompanyId());
+		}
+		else {
+			Assert.assertEquals(
+				patchPortalInstance.getCompanyId(),
+				portalInstance.getCompanyId());
+		}
+
+		Assert.assertEquals(
+			patchPortalInstance.getDomain(), portalInstance.getDomain());
+
+		if (changePortletInstanceId) {
+			Assert.assertNotEquals(
+				patchPortalInstance.getPortalInstanceId(),
+				portalInstance.getPortalInstanceId());
+		}
+		else {
+			Assert.assertEquals(
+				patchPortalInstance.getPortalInstanceId(),
+				portalInstance.getPortalInstanceId());
+		}
+
+		Assert.assertEquals(
+			patchPortalInstance.getVirtualHost(),
+			portalInstance.getVirtualHost());
+	}
+
+	private void _testPatchPortalInstanceChangeActive() throws Exception {
+		PortalInstance portalInstance = _copyPortalInstance(
+			true, false, false, false, false);
+
+		_testPatchPortalInstace(true, false, false, portalInstance);
+	}
+
+	private void _testPatchPortalInstanceChangeCompanyId() throws Exception {
+		PortalInstance portalInstance = _copyPortalInstance(
+			false, true, false, false, false);
+
+		_testPatchPortalInstace(false, true, false, portalInstance);
+	}
+
+	private void _testPatchPortalInstanceChangeDomain() throws Exception {
+		PortalInstance portalInstance = _copyPortalInstance(
+			false, false, true, false, false);
+
+		_testPatchPortalInstace(false, false, false, portalInstance);
+	}
+
+	private void _testPatchPortalInstanceChangePortletInstanceId()
+		throws Exception {
+
+		PortalInstance portalInstance = _copyPortalInstance(
+			false, false, false, true, false);
+
+		_testPatchPortalInstace(false, false, true, portalInstance);
+	}
+
+	private void _testPatchPortalInstanceChangeVirtualHostName()
+		throws Exception {
+
+		PortalInstance portalInstance = _copyPortalInstance(
+			false, false, false, false, true);
+
+		_testPatchPortalInstace(false, false, false, portalInstance);
 	}
 
 	private void _testPostPortalInstanceWithAdmin() throws Exception {

@@ -27,6 +27,7 @@ import {
 	UPDATE_COLLECTION_DISPLAY_COLLECTION,
 	UPDATE_EDITABLE_VALUES,
 	UPDATE_FORM_ITEM_CONFIG,
+	UPDATE_FRAGMENT_ENTRY_LINKS_CONTENT,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,
 	UPDATE_PREVIEW_IMAGE,
@@ -36,6 +37,7 @@ import updateEditableValues from '../actions/updateEditableValues';
 import updateFormItemConfig from '../actions/updateFormItemConfig';
 import updateFragmentEntryLinkConfiguration from '../actions/updateFragmentEntryLinkConfiguration';
 import updateFragmentEntryLinkContent from '../actions/updateFragmentEntryLinkContent';
+import updateFragmentEntryLinksContent from '../actions/updateFragmentEntryLinksContent';
 import updatePreviewImage from '../actions/updatePreviewImage';
 
 export const INITIAL_STATE: FragmentEntryLinkMap = {};
@@ -56,6 +58,7 @@ export default function fragmentEntryLinksReducer(
 		| typeof updateFormItemConfig
 		| typeof updateFragmentEntryLinkConfiguration
 		| typeof updateFragmentEntryLinkContent
+		| typeof updateFragmentEntryLinksContent
 		| typeof updatePreviewImage
 	>
 ): FragmentEntryLinkMap {
@@ -355,6 +358,28 @@ export default function fragmentEntryLinksReducer(
 			};
 		}
 
+		case UPDATE_FRAGMENT_ENTRY_LINKS_CONTENT: {
+			let nextFragmentEntryLinks = {...fragmentEntryLinks};
+
+			for (const {
+				content,
+				fragmentEntryLinkId,
+			} of action.fragmentEntryLinksContent) {
+				const fragmentEntryLink =
+					fragmentEntryLinks[fragmentEntryLinkId];
+
+				nextFragmentEntryLinks = {
+					...nextFragmentEntryLinks,
+					[fragmentEntryLinkId]: {
+						...fragmentEntryLink,
+						content,
+					},
+				};
+			}
+
+			return nextFragmentEntryLinks;
+		}
+
 		case UPDATE_PREVIEW_IMAGE: {
 			const objectIsFileEntry = (
 				object: any
@@ -384,7 +409,7 @@ export default function fragmentEntryLinksReducer(
 			};
 
 			const newFragmentEntryLinks = action.contents.map(
-				({content, fragmentEntryLinkId}) => {
+				({fragmentEntryLinkId}) => {
 					const {editableValues} = fragmentEntryLinks[
 						fragmentEntryLinkId
 					];
@@ -393,7 +418,6 @@ export default function fragmentEntryLinksReducer(
 						fragmentEntryLinkId,
 						{
 							...fragmentEntryLinks[fragmentEntryLinkId],
-							content,
 							editableValues: updateFileEntryPreviewURL(
 								editableValues
 							),

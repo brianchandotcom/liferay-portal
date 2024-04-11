@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -224,8 +225,10 @@ public class RenderLayoutStructureTagTest {
 				layout, mockHttpServletRequest, mockHttpServletResponse,
 				segmentsExperienceId);
 
-		renderLayoutStructureTag.doTag(
-			mockHttpServletRequest, mockHttpServletResponse);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			renderLayoutStructureTag.doTag(
+				mockHttpServletRequest, mockHttpServletResponse);
+		}
 
 		String content = mockHttpServletResponse.getContentAsString();
 
@@ -234,7 +237,8 @@ public class RenderLayoutStructureTagTest {
 				content,
 				assetEntry.getTitle(assetEntry.getDefaultLanguageId()));
 
-			Assert.assertTrue(String.valueOf(count), count >= 5);
+			Assert.assertTrue(
+				String.valueOf(count), count >= _NUMBER_FRAGMENT_ENTRY_LINKS);
 		}
 	}
 
@@ -749,7 +753,7 @@ public class RenderLayoutStructureTagTest {
 
 		List<AssetEntry> assetEntries = new ArrayList<>();
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < _NUMBER_INFO_LIST_ITEMS; i++) {
 			JournalArticle journalArticle = _addJournalArticle(ddmStructure);
 
 			assetEntries.add(
@@ -787,9 +791,9 @@ public class RenderLayoutStructureTagTest {
 				JSONUtil.put(
 					"displayAllPages", true
 				).put(
-					"numberOfItems", 5
+					"numberOfItems", _NUMBER_INFO_LIST_ITEMS
 				).put(
-					"numberOfItemsPerPage", 5
+					"numberOfItemsPerPage", _NUMBER_INFO_LIST_ITEMS
 				).put(
 					"paginationType", "none"
 				).put(
@@ -879,7 +883,7 @@ public class RenderLayoutStructureTagTest {
 				FragmentConstants.TYPE_COMPONENT, null,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < _NUMBER_FRAGMENT_ENTRY_LINKS; i++) {
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 				JSONUtil.put(
 					FragmentEntryProcessorConstants.
@@ -1060,6 +1064,10 @@ public class RenderLayoutStructureTagTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid()));
 	}
+
+	private static final int _NUMBER_FRAGMENT_ENTRY_LINKS = 5;
+
+	private static final int _NUMBER_INFO_LIST_ITEMS = 5;
 
 	private static final Pattern _inputJSONObjectPattern = Pattern.compile(
 		"<p>InputJSONObject:(.*?)<\\/p>");

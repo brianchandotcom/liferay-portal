@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.GradleUtil
+
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
@@ -44,4 +46,8 @@ processResources {
 
 updateFileVersions {
 	match(/classpath group: "com\.liferay", name: "com\.liferay\.gradle\.plugins\.defaults", version: "(\d.+)"/, "../../../portal-web/build-test.gradle")
+
+	FileTree workspacesFileTree = fileTree(dir: new File(GradleUtil.getRootDir(project.getRootProject(), "portal-impl"), "workspaces"), include: "**/build.gradle")
+
+	match(/classpath group: "com\.liferay", name: "com\.liferay\.gradle\.plugins\.defaults", version: "(\d.+)"/, workspacesFileTree.files)
 }

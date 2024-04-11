@@ -411,10 +411,10 @@ const ListView: React.FC<ListViewProps> = ({
 						<TableChart matrixData={itemsMemoized} title={title} />
 					</ClayLayout.Col>
 				) : (
-					<div className="d-flex flex-wrap">
+					<div className="d-flex flex-wrap justify-content-around">
 						{Object.entries(itemsMemoized).map(
 							([name, data], index) => (
-								<div className="m-4" key={index}>
+								<div className="my-4" key={index}>
 									<TableChart
 										matrixData={data}
 										title={name}

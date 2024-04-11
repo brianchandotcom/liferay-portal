@@ -100,7 +100,7 @@ const TableChart: React.FC<TableChartProps> = ({matrixData, title}) => {
 		<table className="table table-borderless table-sm tr-table-chart">
 			<thead>
 				<tr>
-					<td className="border-0 h6" colSpan={2}>
+					<td className="border-0 h6" colSpan={4}>
 						{title}
 					</td>
 				</tr>

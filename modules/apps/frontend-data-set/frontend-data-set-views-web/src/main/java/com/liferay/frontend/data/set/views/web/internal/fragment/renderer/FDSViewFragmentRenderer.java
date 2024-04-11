@@ -975,7 +975,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				Map<String, Object> properties = objectEntry.getProperties();
 
 				return JSONUtil.put(
-					"direction", properties.get("sortingDirection")
+					"direction", properties.get("orderType")
 				).put(
 					"key", properties.get("fieldName")
 				);

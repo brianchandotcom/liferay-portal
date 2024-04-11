@@ -63,6 +63,10 @@ public class NumericDDMFormFieldTemplateContextContributor
 			"hideField",
 			GetterUtil.getBoolean(ddmFormField.getProperty("hideField"))
 		).put(
+			"htmlAutocompleteAttribute",
+			GetterUtil.getString(
+				ddmFormField.getProperty("htmlAutocompleteAttribute"))
+		).put(
 			"placeholder",
 			DDMFormFieldTypeUtil.getPropertyValue(
 				ddmFormField, locale, "placeholder")

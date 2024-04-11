@@ -64,6 +64,10 @@ public class TextDDMFormFieldTemplateContextContributor
 				"hideField",
 				GetterUtil.getBoolean(ddmFormField.getProperty("hideField"))
 			).put(
+				"htmlAutocompleteAttribute",
+				GetterUtil.getString(
+					ddmFormField.getProperty("htmlAutocompleteAttribute"))
+			).put(
 				"maxLength",
 				() -> {
 					Object maxLength = ddmFormField.getProperty("maxLength");

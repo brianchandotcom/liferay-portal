@@ -80,15 +80,12 @@ export default function TranslationOptions({
 	};
 
 	const disabledResetButton =
-		(translationProgress &&
-			!translationProgress.translatedItems[selectedLanguageId]) ||
-		(translationProgress &&
-			translationProgress.translatedItems[selectedLanguageId] === 0);
+		!translationProgress?.translatedItems[selectedLanguageId] ||
+		translationProgress?.translatedItems[selectedLanguageId] === 0;
 
 	const disabledMarkTranslatedButton =
-		translationProgress &&
-		translationProgress.translatedItems[selectedLanguageId] ===
-			translationProgress.totalItems;
+		translationProgress?.translatedItems[selectedLanguageId] ===
+		translationProgress?.totalItems;
 
 	return (
 		<>

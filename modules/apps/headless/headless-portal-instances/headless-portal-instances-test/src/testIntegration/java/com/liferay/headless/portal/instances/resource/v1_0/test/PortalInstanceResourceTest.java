@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.List;
@@ -115,6 +116,22 @@ public class PortalInstanceResourceTest
 			_portalInstance.getCompanyId());
 
 		Assert.assertFalse(company.isActive());
+	}
+
+	@Override
+	protected void assertValid(PortalInstance portalInstance) throws Exception {
+		boolean valid = true;
+
+		if (Validator.isNull(portalInstance.getActive()) ||
+			Validator.isNull(portalInstance.getCompanyId()) ||
+			Validator.isNull(portalInstance.getDomain()) ||
+			Validator.isNull(portalInstance.getPortalInstanceId()) ||
+			Validator.isNull(portalInstance.getVirtualHost())) {
+
+			valid = false;
+		}
+
+		Assert.assertTrue(valid);
 	}
 
 	@Override

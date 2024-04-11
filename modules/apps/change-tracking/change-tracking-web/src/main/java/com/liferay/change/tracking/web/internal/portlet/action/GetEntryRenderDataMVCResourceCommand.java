@@ -1060,9 +1060,17 @@ public class GetEntryRenderDataMVCResourceCommand
 		WorkflowTask workflowTask = workflowTasks.get(0);
 
 		return LinkedHashMapBuilder.put(
+			"status",
+			() -> {
+				Map<String, Object> modelAttributes =
+					model.getModelAttributes();
+
+				return String.valueOf(modelAttributes.get("status"));
+			}
+		).put(
 			"assigned-to",
 			() -> {
-				if (workflowTask.isAssignedToSingleUser()) {
+				if (!workflowTask.isAssignedToSingleUser()) {
 					return _language.get(themeDisplay.getLocale(), "nobody");
 				}
 
@@ -1070,6 +1078,8 @@ public class GetEntryRenderDataMVCResourceCommand
 					workflowTask.getAssigneeUserId(),
 					String.valueOf(workflowTask.getAssigneeUserId()));
 			}
+		).put(
+			"task-name", workflowTask.getLabel(themeDisplay.getLocale())
 		).put(
 			"create-date", format.format(workflowTask.getCreateDate())
 		).put(
@@ -1081,16 +1091,6 @@ public class GetEntryRenderDataMVCResourceCommand
 
 				return _language.get(themeDisplay.getLocale(), "never");
 			}
-		).put(
-			"status",
-			() -> {
-				Map<String, Object> modelAttributes =
-					model.getModelAttributes();
-
-				return String.valueOf(modelAttributes.get("status"));
-			}
-		).put(
-			"task-name", workflowTask.getLabel(themeDisplay.getLocale())
 		).build();
 	}
 

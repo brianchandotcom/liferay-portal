@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -272,15 +273,21 @@ public class CommerceOrderGenerator {
 			// Add commerce order item
 
 			try {
+				BigDecimal minOrderQuantity =
+					cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance);
+
+				if (BigDecimalUtil.lt(maxOrderQuantity, minOrderQuantity)) {
+					continue;
+				}
+
 				List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
 					_cpInstanceUnitOfMeasureLocalService.
 						getCPInstanceUnitOfMeasures(
 							cpInstance.getCompanyId(), cpInstance.getSku());
 
 				BigDecimal quantity = _randomQuantity(
-					cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance),
-					maxOrderQuantity,
-					(cpInstanceUnitOfMeasures == null) ? null :
+					minOrderQuantity, maxOrderQuantity,
+					ListUtil.isEmpty(cpInstanceUnitOfMeasures) ? null :
 						cpInstanceUnitOfMeasures.get(0));
 
 				_commerceOrderItemLocalService.addCommerceOrderItem(

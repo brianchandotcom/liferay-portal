@@ -60,7 +60,7 @@
 			"type": "Date"
 		},
 		{
-			"DBType": "Date",
+			"DBType": "DateTime",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

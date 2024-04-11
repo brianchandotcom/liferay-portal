@@ -272,7 +272,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 			}
 
 			String trimmedSetterObjectName = setterObjectName.replaceFirst(
-				"(.+?)(List|Map|Properties)$", "$1");
+				"(.+?)(List|Map|(Unicode)?Properties)$", "$1");
 
 			for (Element columnElement :
 					(List<Element>)entityElement.elements("column")) {

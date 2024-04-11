@@ -194,10 +194,10 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 	};
 
 	useEffect(() => {
-		if (serializedFilter) {
+		if (customFilterFields && serializedFilter) {
 			getFilterWithOptions();
 		}
-	}, [getFilterWithOptions, serializedFilter]);
+	}, [customFilterFields, getFilterWithOptions, serializedFilter]);
 
 	const filterEntries = useMemo(
 		() =>

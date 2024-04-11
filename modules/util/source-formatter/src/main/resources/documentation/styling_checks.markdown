@@ -105,6 +105,7 @@ LDIFWhitespaceCheck | .ldif | Finds missing and unnecessary whitespace. |
 [ListUtilCheck](check/list_util_check.markdown#listutilcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for utilization of class `ListUtil`. |
 LiteralStringEqualsCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where `Objects.equals` should be used. |
 [LogMessageCheck](check/message_check.markdown#messagecheck) | .java | Validates messages that are passed to `log.*` calls. |
+MarkdownBreakingChangesAmendmentsFileCheck | .markdown or .md | Checks that breaking changes amendments should contain the schematized breaking changes in `BREAKING_CHANGES_AMENDMENTS.markdown` file. |
 MarkdownEmptyLinesCheck | .markdown or .md | Finds missing and unnecessary empty lines. |
 MarkdownFileExtensionCheck | .markdown or .md | Finds `markdown` files with `.md` extension (use `.markdown`). |
 MarkdownStylingCheck | .markdown or .md | Applies rules to enforce consistency in code style. |

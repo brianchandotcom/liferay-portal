@@ -347,18 +347,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 			downstreamBuilds = getDownstreamBuilds(status);
 		}
 
-		for (Build downstreamBuild : downstreamBuilds) {
-			if (!(downstreamBuild instanceof ParentBuild)) {
-				continue;
-			}
-
-			ParentBuild parentBuild = (ParentBuild)downstreamBuild;
-
-			totalSlavesUsedCount += parentBuild.getTotalSlavesUsedCount(
-				status, modifiedBuildsOnly);
-		}
-
-		return totalSlavesUsedCount;
+		return totalSlavesUsedCount + downstreamBuilds.size();
 	}
 
 	@Override

@@ -25,6 +25,10 @@ public class BooleanQueryTranslatorImpl {
 			new org.apache.lucene.search.BooleanQuery.Builder();
 
 		processQueryClause(
+			booleanQuery.getFilterQueryClauses(), solrQueryTranslator,
+			query -> builder.add(query, BooleanClause.Occur.FILTER));
+
+		processQueryClause(
 			booleanQuery.getMustQueryClauses(), solrQueryTranslator,
 			query -> builder.add(query, BooleanClause.Occur.MUST));
 

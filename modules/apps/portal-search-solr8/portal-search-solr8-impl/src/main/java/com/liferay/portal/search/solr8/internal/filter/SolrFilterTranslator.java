@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.solr8.internal.filter;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.DateRangeTermFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
@@ -37,21 +36,11 @@ import org.osgi.service.component.annotations.Reference;
 	property = "search.engine.impl=Solr", service = FilterTranslator.class
 )
 public class SolrFilterTranslator
-	implements FilterTranslator<String>, FilterVisitor<Query> {
+	implements FilterTranslator<Query>, FilterVisitor<Query> {
 
 	@Override
-	public String translate(Filter filter) {
-		String filterString = StringPool.BLANK;
-
-		if (filter != null) {
-			Query luceneQuery = filter.accept(this);
-
-			if (luceneQuery != null) {
-				filterString = luceneQuery.toString();
-			}
-		}
-
-		return filterString;
+	public Query translate(Filter filter) {
+		return filter.accept(this);
 	}
 
 	@Override

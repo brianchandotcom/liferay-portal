@@ -5,11 +5,14 @@
 
 package com.liferay.portal.search.solr8.internal.query;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
+import com.liferay.portal.search.solr8.internal.filter.FilterTranslator;
 
 import java.util.List;
 
@@ -21,6 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author André de Oliveira
  * @author Miguel Angelo Caldas Gallindo
+ * @author Petteri Karttunen
  */
 @Component(service = BooleanQueryTranslator.class)
 public class BooleanQueryTranslatorImpl implements BooleanQueryTranslator {
@@ -30,32 +34,43 @@ public class BooleanQueryTranslatorImpl implements BooleanQueryTranslator {
 		BooleanQuery booleanQuery,
 		QueryVisitor<org.apache.lucene.search.Query> queryVisitor) {
 
-		List<BooleanClause<Query>> clauses = booleanQuery.clauses();
-
-		if (clauses.isEmpty()) {
-			return null;
-		}
-
-		org.apache.lucene.search.BooleanQuery.Builder builder =
+		org.apache.lucene.search.BooleanQuery.Builder booleanQueryBuilder =
 			new org.apache.lucene.search.BooleanQuery.Builder();
+
+		List<BooleanClause<Query>> clauses = booleanQuery.clauses();
 
 		for (BooleanClause<Query> booleanClause : clauses) {
 			org.apache.lucene.search.Query query = translate(
 				booleanClause.getClause(), queryVisitor);
 
 			if (query != null) {
-				builder.add(
+				booleanQueryBuilder.add(
 					query, translate(booleanClause.getBooleanClauseOccur()));
 			}
 		}
 
-		org.apache.lucene.search.Query query = builder.build();
+		BooleanFilter booleanFilter = booleanQuery.getPreBooleanFilter();
 
-		if (!booleanQuery.isDefaultBoost()) {
-			return new BoostQuery(query, booleanQuery.getBoost());
+		if (booleanFilter == null) {
+			return _addBoost(booleanQuery, booleanQueryBuilder.build());
 		}
 
-		return query;
+		org.apache.lucene.search.BooleanQuery.Builder
+			wrapperBooleanQueryBuilder =
+				new org.apache.lucene.search.BooleanQuery.Builder();
+
+		if (!clauses.isEmpty()) {
+			wrapperBooleanQueryBuilder.add(
+				booleanQueryBuilder.build(), Occur.MUST);
+		}
+
+		FilterTranslator<org.apache.lucene.search.Query> filterTranslator =
+			_filterTranslatorSnapshot.get();
+
+		wrapperBooleanQueryBuilder.add(
+			filterTranslator.translate(booleanFilter), Occur.FILTER);
+
+		return _addBoost(booleanQuery, wrapperBooleanQueryBuilder.build());
 	}
 
 	protected Occur translate(BooleanClauseOccur booleanClauseOccur) {
@@ -78,5 +93,22 @@ public class BooleanQueryTranslatorImpl implements BooleanQueryTranslator {
 
 		return query.accept(queryVisitor);
 	}
+
+	private org.apache.lucene.search.Query _addBoost(
+		BooleanQuery booleanQuery, org.apache.lucene.search.Query query) {
+
+		if (!booleanQuery.isDefaultBoost()) {
+			return new BoostQuery(query, booleanQuery.getBoost());
+		}
+
+		return query;
+	}
+
+	private static final Snapshot
+		<FilterTranslator<org.apache.lucene.search.Query>>
+			_filterTranslatorSnapshot = new Snapshot<>(
+				BooleanQueryTranslatorImpl.class,
+				Snapshot.cast(FilterTranslator.class),
+				"(search.engine.impl=Solr)", true);
 
 }

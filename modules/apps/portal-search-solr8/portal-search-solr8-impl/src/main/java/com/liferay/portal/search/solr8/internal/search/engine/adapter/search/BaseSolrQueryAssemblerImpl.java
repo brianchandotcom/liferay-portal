@@ -12,7 +12,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
@@ -91,11 +90,11 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 			return;
 		}
 
-		String filterString = translate(booleanClause);
+		org.apache.lucene.search.Query filterQuery = translate(booleanClause);
 
 		filterQueries.add(
 			StringBundler.concat(
-				"{!tag=", tag, StringPool.CLOSE_CURLY_BRACE, filterString));
+				"{!tag=", tag, StringPool.CLOSE_CURLY_BRACE, filterQuery));
 	}
 
 	@Deactivate
@@ -222,10 +221,6 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		if (query != null) {
 			_add(filterQueries, query.getPreBooleanFilter());
 			_add(filterQueries, query.getPostFilter());
-
-			if (query instanceof BooleanQuery) {
-				_add(filterQueries, (BooleanQuery)query);
-			}
 		}
 
 		_addAll(filterQueries, solrQuery.getFilterQueries());
@@ -257,7 +252,9 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		}
 	}
 
-	protected String translate(BooleanClause<Filter> booleanClause) {
+	protected org.apache.lucene.search.Query translate(
+		BooleanClause<Filter> booleanClause) {
+
 		BooleanFilter booleanFilter = new BooleanFilter();
 
 		booleanFilter.add(
@@ -266,23 +263,12 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		return _filterTranslator.translate(booleanFilter);
 	}
 
-	private void _add(
-		Collection<String> filterQueries, BooleanQuery booleanQuery) {
-
-		for (BooleanClause<Query> booleanClause : booleanQuery.clauses()) {
-			Query booleanClauseQuery = booleanClause.getClause();
-
-			_add(filterQueries, booleanClauseQuery.getPreBooleanFilter());
-
-			if (booleanClauseQuery instanceof BooleanQuery) {
-				_add(filterQueries, (BooleanQuery)booleanClauseQuery);
-			}
-		}
-	}
-
 	private void _add(Collection<String> filterQueries, Filter filter) {
 		if (filter != null) {
-			filterQueries.add(_filterTranslator.translate(filter));
+			org.apache.lucene.search.Query query = _filterTranslator.translate(
+				filter);
+
+			filterQueries.add(query.toString());
 		}
 	}
 
@@ -368,7 +354,7 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		};
 
 	@Reference(target = "(search.engine.impl=Solr)")
-	private FilterTranslator<String> _filterTranslator;
+	private FilterTranslator<org.apache.lucene.search.Query> _filterTranslator;
 
 	@Reference(target = "(search.engine.impl=Solr)")
 	private QueryTranslator<String> _queryTranslator;

@@ -63,6 +63,10 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 
 		AssertElementPresent(locator1 = "Icon#BACK");
+
+		WaitForVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+		WaitForVisible(locator1 = "Sidebar#FORM_BUILDER");
 	}
 
 	@summary = "Default summary"

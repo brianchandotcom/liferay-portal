@@ -314,8 +314,6 @@ definition {
 
 			PageAudit.openPageAuditSidebar();
 
-			Navigator.gotoNavTab(navTab = "PageSpeed Insights");
-
 			PageAudit.changeLocale(locale = "French");
 
 			AssertElementPresent(

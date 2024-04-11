@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
@@ -68,10 +69,14 @@ public class JournalArticleImportDDMFormFieldValueTransformer
 
 			JournalArticle journalArticle = null;
 
+			long originalArticlePrimaryKey = jsonObject.getLong(
+				"articlePrimaryKey");
+			long originalClassPK = jsonObject.getLong("classPK");
+
 			long articlePrimaryKey = GetterUtil.getLong(
 				_portletDataContext.getNewPrimaryKey(
 					JournalArticle.class + ".primaryKey",
-					jsonObject.getLong("articlePrimaryKey")));
+					originalArticlePrimaryKey));
 
 			if (articlePrimaryKey != 0) {
 				journalArticle =
@@ -79,15 +84,25 @@ public class JournalArticleImportDDMFormFieldValueTransformer
 						articlePrimaryKey);
 			}
 
-			if (journalArticle == null) {
+			if ((journalArticle == null) &&
+				((originalArticlePrimaryKey != 0) || (originalClassPK != 0))) {
+
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to get journal article with primary key " +
 							articlePrimaryKey);
 				}
 
-				_portletDataContext.removePrimaryKey(
-					ExportImportPathUtil.getModelPath(_stagedModel));
+				Map<String, String> postProcess =
+					(Map<String, String>)
+						_portletDataContext.getNewPrimaryKeysMap(
+							JournalArticle.class + ".postProcess");
+
+				if (!postProcess.containsKey(_stagedModel.getUuid())) {
+					postProcess.put(
+						_stagedModel.getUuid(),
+						ExportImportPathUtil.getModelPath(_stagedModel));
+				}
 
 				continue;
 			}

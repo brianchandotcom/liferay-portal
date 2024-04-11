@@ -64,6 +64,10 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 				return;
 			}
 
+			_checkMissingExplanation(
+				fileName, breakingChange, message, alternativesPosition,
+				whatPosition, whyPosition);
+
 			int lineNumber = SourceUtil.getLineNumber(
 				breakingChange, whatPosition);
 
@@ -145,25 +149,31 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 						"'# breaking', '## What', '## Why' and '## ",
 						"Alternatives'"));
 			}
+		}
+	}
 
-			if (header.equals("## Alternatives") || header.equals("## What") ||
-				header.equals("## Why")) {
+	private void _checkMissingExplanation(
+		String fileName, String breakingChange, String message,
+		int... headerPositions) {
 
-				String explanationLine = SourceUtil.getLine(
-					breakingChanges, lineNumber + 2);
+		for (int headerPosition : headerPositions) {
+			int lineNumber = SourceUtil.getLineNumber(
+				breakingChange, headerPosition);
 
-				if (Validator.isNull(explanationLine) ||
-					ArrayUtil.contains(
-						_BREAKING_CHANGE_HEADER_NAMES, explanationLine)) {
+			String explanationLine = SourceUtil.getLine(
+				breakingChange, lineNumber + 2);
 
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							message,
-							"There should be at least a line containing an ",
-							"explanation after '## What', '## Why' and '## ",
-							"Alternatives'"));
-				}
+			if (Validator.isNull(explanationLine) ||
+				ArrayUtil.contains(
+					_BREAKING_CHANGE_HEADER_NAMES, explanationLine)) {
+
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						message,
+						"There should be at least a line containing an ",
+						"explanation after '## What', '## Why' and '## ",
+						"Alternatives'"));
 			}
 		}
 	}

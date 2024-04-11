@@ -62,9 +62,24 @@ const renderTranslatedComponent = () =>
 describe('TranslationOptions', () => {
 	Liferay.FeatureFlags['LPD-11253'] = true;
 
+	it('translations options ellipsis not rendered when default language is selected', () => {
+		renderDefaultComponent();
+
+		const resetTranslationsButton = screen.queryByTitle(
+			'translation-options'
+		);
+
+		expect(resetTranslationsButton).not.toBeInTheDocument();
+	});
+
 	describe('Reset Translations Button', () => {
-		it('reset translations button is disabled with default language', () => {
-			renderDefaultComponent();
+		it('reset translations button is disabled when default language is selected', () => {
+			render(
+				<TranslationOptions
+					{...DEFAULT_PROPS}
+					selectedLanguageId="ca_ES"
+				/>
+			);
 
 			const resetTranslationsButton = screen.getByText(
 				'reset-translation'

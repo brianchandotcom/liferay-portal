@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.solr8.internal.indexing;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
@@ -28,6 +29,23 @@ import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr8.internal.connection.TestSolrClientManager;
 import com.liferay.portal.search.solr8.internal.document.DefaultSolrDocumentFactory;
 import com.liferay.portal.search.solr8.internal.facet.FacetProcessor;
+import com.liferay.portal.search.solr8.internal.filter.BooleanFilterTranslatorImpl;
+import com.liferay.portal.search.solr8.internal.filter.DateRangeFilterTranslatorImpl;
+import com.liferay.portal.search.solr8.internal.filter.DateRangeTermFilterTranslatorImpl;
+import com.liferay.portal.search.solr8.internal.filter.ExistsFilterTranslatorImpl;
+import com.liferay.portal.search.solr8.internal.filter.FilterTranslator;
+import com.liferay.portal.search.solr8.internal.filter.GeoBoundingBoxFilterTranslatorImpl;
+import com.liferay.portal.search.solr8.internal.filter.GeoDistanceFilterTranslatorImpl;
+import com.liferay.portal.search.solr8.internal.filter.GeoDistanceRangeFilterTranslatorImpl;
+import com.liferay.portal.search.solr8.internal.filter.GeoPolygonFilterTranslatorImpl;
+import com.liferay.portal.search.solr8.internal.filter.MissingFilterTranslatorImpl;
+import com.liferay.portal.search.solr8.internal.filter.PrefixFilterTranslatorImpl;
+import com.liferay.portal.search.solr8.internal.filter.QueryFilterTranslatorImpl;
+import com.liferay.portal.search.solr8.internal.filter.RangeTermFilterTranslatorImpl;
+import com.liferay.portal.search.solr8.internal.filter.SolrFilterTranslator;
+import com.liferay.portal.search.solr8.internal.filter.TermFilterTranslatorImpl;
+import com.liferay.portal.search.solr8.internal.filter.TermsFilterTranslatorImpl;
+import com.liferay.portal.search.solr8.internal.query.BooleanQueryTranslator;
 import com.liferay.portal.search.solr8.internal.query.BooleanQueryTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.query.DisMaxQueryTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.query.FuzzyQueryTranslatorImpl;
@@ -52,6 +70,7 @@ import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.Map;
 
+import org.apache.lucene.search.Query;
 import org.apache.solr.client.solrj.SolrQuery;
 
 import org.mockito.Mockito;
@@ -141,7 +160,7 @@ public class SolrIndexingFixture implements IndexingFixture {
 
 		ReflectionTestUtil.setFieldValue(
 			solrQueryTranslator, "booleanQueryTranslator",
-			new BooleanQueryTranslatorImpl());
+			_createBooleanQueryTranslator());
 		ReflectionTestUtil.setFieldValue(
 			solrQueryTranslator, "disMaxQueryTranslator",
 			new DisMaxQueryTranslatorImpl());
@@ -336,6 +355,75 @@ public class SolrIndexingFixture implements IndexingFixture {
 			searchEngineAdapter);
 
 		return solrSpellCheckIndexWriter;
+	}
+
+	private static BooleanQueryTranslator _createBooleanQueryTranslator() {
+		BooleanQueryTranslatorImpl booleanQueryTranslatorImpl =
+			new BooleanQueryTranslatorImpl();
+
+		SolrFilterTranslator solrFilterTranslator =
+			_createSolrFilterTranslator();
+
+		ReflectionTestUtil.setFieldValue(
+			booleanQueryTranslatorImpl, "_filterTranslatorSnapshot",
+			new Snapshot<FilterTranslator<Query>>(null, null) {
+
+				public FilterTranslator<Query> get() {
+					return solrFilterTranslator;
+				}
+
+			});
+
+		return booleanQueryTranslatorImpl;
+	}
+
+	private static SolrFilterTranslator _createSolrFilterTranslator() {
+		SolrFilterTranslator solrFilterTranslator = new SolrFilterTranslator();
+
+		ReflectionTestUtil.setFieldValue(
+			solrFilterTranslator, "_booleanFilterTranslator",
+			new BooleanFilterTranslatorImpl());
+		ReflectionTestUtil.setFieldValue(
+			solrFilterTranslator, "_dateRangeFilterTranslator",
+			new DateRangeFilterTranslatorImpl());
+		ReflectionTestUtil.setFieldValue(
+			solrFilterTranslator, "_dateRangeTermFilterTranslator",
+			new DateRangeTermFilterTranslatorImpl());
+		ReflectionTestUtil.setFieldValue(
+			solrFilterTranslator, "_existsFilterTranslator",
+			new ExistsFilterTranslatorImpl());
+		ReflectionTestUtil.setFieldValue(
+			solrFilterTranslator, "_geoBoundingBoxFilterTranslator",
+			new GeoBoundingBoxFilterTranslatorImpl());
+		ReflectionTestUtil.setFieldValue(
+			solrFilterTranslator, "_geoDistanceFilterTranslator",
+			new GeoDistanceFilterTranslatorImpl());
+		ReflectionTestUtil.setFieldValue(
+			solrFilterTranslator, "_geoDistanceRangeFilterTranslator",
+			new GeoDistanceRangeFilterTranslatorImpl());
+		ReflectionTestUtil.setFieldValue(
+			solrFilterTranslator, "_geoPolygonFilterTranslator",
+			new GeoPolygonFilterTranslatorImpl());
+		ReflectionTestUtil.setFieldValue(
+			solrFilterTranslator, "_missingFilterTranslator",
+			new MissingFilterTranslatorImpl());
+		ReflectionTestUtil.setFieldValue(
+			solrFilterTranslator, "_prefixFilterTranslator",
+			new PrefixFilterTranslatorImpl());
+		ReflectionTestUtil.setFieldValue(
+			solrFilterTranslator, "_queryFilterTranslator",
+			new QueryFilterTranslatorImpl());
+		ReflectionTestUtil.setFieldValue(
+			solrFilterTranslator, "_rangeTermFilterTranslator",
+			new RangeTermFilterTranslatorImpl());
+		ReflectionTestUtil.setFieldValue(
+			solrFilterTranslator, "_termFilterTranslator",
+			new TermFilterTranslatorImpl());
+		ReflectionTestUtil.setFieldValue(
+			solrFilterTranslator, "_termsFilterTranslator",
+			new TermsFilterTranslatorImpl());
+
+		return solrFilterTranslator;
 	}
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();

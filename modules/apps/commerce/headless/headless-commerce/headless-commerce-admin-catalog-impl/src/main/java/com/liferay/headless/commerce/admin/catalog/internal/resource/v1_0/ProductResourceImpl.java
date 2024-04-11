@@ -736,6 +736,10 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 					"UPDATE", cpDefinition.getCPDefinitionId(), "deleteProduct",
 					_cpDefinitionModelResourcePermission);
 
+				if (action == null) {
+					return null;
+				}
+
 				String href = action.get("href");
 
 				action.put(
@@ -753,6 +757,10 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 					"VIEW", cpDefinition.getCPDefinitionId(), "getProduct",
 					_cpDefinitionModelResourcePermission);
 
+				if (action == null) {
+					return null;
+				}
+
 				String href = action.get("href");
 
 				action.put(
@@ -769,6 +777,10 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				Map<String, String> action = addAction(
 					"UPDATE", cpDefinition.getCPDefinitionId(), "patchProduct",
 					_cpDefinitionModelResourcePermission);
+
+				if (action == null) {
+					return null;
+				}
 
 				String href = action.get("href");
 

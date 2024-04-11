@@ -62,25 +62,179 @@
 			"externalReferenceCode": "L_COMMERCE_RETURN_STATUSES",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "COMPLETED",
-					"key": "completed",
-					"name": "completed",
+					"externalReferenceCode": "AUTHORIZED",
+					"key": "authorized",
+					"name": "Authorized",
 					"name_i18n": {
-						"en-US": "Completed"
+						"en-US": "Authorized"
 					}
 				},
 				{
 					"externalReferenceCode": "DRAFT",
 					"key": "draft",
-					"name": "draft",
+					"name": "Draft",
 					"name_i18n": {
 						"en-US": "Draft"
+					}
+				},
+				{
+					"externalReferenceCode": "CANCELLED",
+					"key": "cancelled",
+					"name": "Cancelled",
+					"name_i18n": {
+						"en-US": "Cancelled"
+					}
+				},
+				{
+					"externalReferenceCode": "COMPLETED",
+					"key": "completed",
+					"name": "Completed",
+					"name_i18n": {
+						"en-US": "Completed"
+					}
+				},
+				{
+					"externalReferenceCode": "PENDING",
+					"key": "pending",
+					"name": "Pending",
+					"name_i18n": {
+						"en-US": "Pending"
+					}
+				},
+				{
+					"externalReferenceCode": "PROCESSING",
+					"key": "processing",
+					"name": "Processing",
+					"name_i18n": {
+						"en-US": "Processing"
+					}
+				},
+				{
+					"externalReferenceCode": "REJECTED",
+					"key": "rejected",
+					"name": "Rejected",
+					"name_i18n": {
+						"en-US": "Rejected"
 					}
 				}
 			],
 			"name": "Commerce Return Statuses",
 			"name_i18n": {
 				"en-US": "Commerce Return Statuses"
+			},
+			"system": true
+		},
+		{
+			"externalReferenceCode": "L_COMMERCE_RETURN_ITEM_STATUSES",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "ACCEPTED",
+					"key": "accepted",
+					"name": "Accepted",
+					"name_i18n": {
+						"en-US": "Accepted"
+					}
+				},
+				{
+					"externalReferenceCode": "AUTHORIZED",
+					"key": "authorized",
+					"name": "Authorized",
+					"name_i18n": {
+						"en-US": "Authorized"
+					}
+				},
+				{
+					"externalReferenceCode": "COMPLETED",
+					"key": "completed",
+					"name": "Completed",
+					"name_i18n": {
+						"en-US": "Completed"
+					}
+				},
+				{
+					"externalReferenceCode": "DEFINED",
+					"key": "defined",
+					"name": "Defined",
+					"name_i18n": {
+						"en-US": "Defined"
+					}
+				},
+				{
+					"externalReferenceCode": "NOT_ACCEPTED",
+					"key": "notAccepted",
+					"name": "Not Accepted",
+					"name_i18n": {
+						"en-US": "Not Accepted"
+					}
+				},
+				{
+					"externalReferenceCode": "NOT_AUTHORIZED",
+					"key": "notAuthorized",
+					"name": "Not Authorized",
+					"name_i18n": {
+						"en-US": "Not Authorized"
+					}
+				},
+				{
+					"externalReferenceCode": "PARTIALLY_ACCEPTED",
+					"key": "partiallyAccepted",
+					"name": "Partially Accepted",
+					"name_i18n": {
+						"en-US": "Partially Accepted"
+					}
+				},
+				{
+					"externalReferenceCode": "PARTIALLY_AUTHORIZED",
+					"key": "partiallyAuthorized",
+					"name": "Partially Authorized",
+					"name_i18n": {
+						"en-US": "Partially Authorized"
+					}
+				},
+				{
+					"externalReferenceCode": "PROCESSED",
+					"key": "processed",
+					"name": "Processed",
+					"name_i18n": {
+						"en-US": "Processed"
+					}
+				},
+				{
+					"externalReferenceCode": "TO_BE_ACCEPTED",
+					"key": "toBeAccepted",
+					"name": "To Be Accepted",
+					"name_i18n": {
+						"en-US": "To Be Accepted"
+					}
+				},
+				{
+					"externalReferenceCode": "TO_BE_AUTHORIZED",
+					"key": "toBeAuthorized",
+					"name": "To Be Authorized",
+					"name_i18n": {
+						"en-US": "To Be Authorized"
+					}
+				},
+				{
+					"externalReferenceCode": "TO_BE_DEFINED",
+					"key": "toBeDefined",
+					"name": "To Be Defined",
+					"name_i18n": {
+						"en-US": "To Be Defined"
+					}
+				},
+				{
+					"externalReferenceCode": "TO_BE_PROCESSED",
+					"key": "toBeProcessed",
+					"name": "To Be Processed",
+					"name_i18n": {
+						"en-US": "To Be Processed"
+					}
+				}
+			],
+			"name": "Commerce Return Item Statuses",
+			"name_i18n": {
+				"en-US": "Commerce Return Item Statuses"
 			},
 			"system": true
 		}

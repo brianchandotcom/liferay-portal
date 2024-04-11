@@ -24,6 +24,11 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Guilherme Camacho
  */
@@ -67,17 +72,24 @@ public class ObjectEntryInfoItemObjectProvider
 			return objectEntry;
 		}
 
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerRegistry.getObjectEntryManager(
-				_objectDefinition.getStorageType());
-
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
 		ERCInfoItemIdentifier ercInfoItemIdentifier =
 			(ERCInfoItemIdentifier)infoItemIdentifier;
+
+		Map<InfoItemIdentifier, ObjectEntry> objectEntries = _getObjectEntries(
+			serviceContext.getRequest());
+
+		if (objectEntries.containsKey(ercInfoItemIdentifier)) {
+			return objectEntries.get(ercInfoItemIdentifier);
+		}
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerRegistry.getObjectEntryManager(
+				_objectDefinition.getStorageType());
 
 		try {
 			Group group = themeDisplay.getScopeGroup();
@@ -92,8 +104,12 @@ public class ObjectEntryInfoItemObjectProvider
 					_objectDefinition, group.getGroupKey());
 
 			if (objectEntry != null) {
-				return ObjectEntryUtil.toObjectEntry(
+				ObjectEntry nextObjectEntry = ObjectEntryUtil.toObjectEntry(
 					_objectDefinition.getObjectDefinitionId(), objectEntry);
+
+				objectEntries.put(ercInfoItemIdentifier, nextObjectEntry);
+
+				return nextObjectEntry;
 			}
 		}
 		catch (Exception exception) {
@@ -106,6 +122,28 @@ public class ObjectEntryInfoItemObjectProvider
 			"Unable to get object entry " +
 				ercInfoItemIdentifier.getExternalReferenceCode());
 	}
+
+	private Map<InfoItemIdentifier, ObjectEntry> _getObjectEntries(
+		HttpServletRequest httpServletRequest) {
+
+		if (httpServletRequest == null) {
+			return new HashMap<>();
+		}
+
+		Map<InfoItemIdentifier, ObjectEntry> objectEntries =
+			(Map<InfoItemIdentifier, ObjectEntry>)
+				httpServletRequest.getAttribute(_OBJECT_ENTRIES);
+
+		if (objectEntries == null) {
+			objectEntries = new HashMap<>();
+
+			httpServletRequest.setAttribute(_OBJECT_ENTRIES, objectEntries);
+		}
+
+		return objectEntries;
+	}
+
+	private static final String _OBJECT_ENTRIES = "OBJECT_ENTRIES";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryInfoItemObjectProvider.class);

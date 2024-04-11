@@ -23,6 +23,7 @@ export default function DatePicker({
 	dir,
 	displayErrors,
 	errorMessage,
+	htmlAutocompleteAttribute,
 	locale,
 	localizable,
 	localizedValue,
@@ -253,6 +254,9 @@ export default function DatePicker({
 					{...getTooltipTitle({placeholder, value: formattedDate})}
 				>
 					<ClayDatePicker
+						{...(htmlAutocompleteAttribute && {
+							autoComplete: htmlAutocompleteAttribute,
+						})}
 						aria-required={otherProps.required}
 						ariaLabels={{
 							buttonChooseDate: `${Liferay.Language.get(

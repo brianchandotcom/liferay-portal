@@ -19,6 +19,7 @@ interface IProps {
 	defaultLanguageId: Locale;
 	errorMessage?: string;
 	focused: boolean;
+	htmlAutocompleteAttribute: string;
 	id: string;
 	inputMask?: boolean;
 	inputMaskFormat?: string;

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -82,6 +83,18 @@ public class JournalArticleImportDDMFormFieldValueTransformer
 				journalArticle =
 					_journalArticleLocalService.fetchJournalArticle(
 						articlePrimaryKey);
+			}
+
+			if ((journalArticle == null) && (originalClassPK != 0)) {
+				Map<Long, Long> primaryKeys =
+					(Map<Long, Long>)_portletDataContext.getNewPrimaryKeysMap(
+						JournalArticle.class);
+
+				articlePrimaryKey = MapUtil.getLong(
+					primaryKeys, originalClassPK);
+
+				journalArticle = _journalArticleLocalService.fetchLatestArticle(
+					articlePrimaryKey);
 			}
 
 			if ((journalArticle == null) &&

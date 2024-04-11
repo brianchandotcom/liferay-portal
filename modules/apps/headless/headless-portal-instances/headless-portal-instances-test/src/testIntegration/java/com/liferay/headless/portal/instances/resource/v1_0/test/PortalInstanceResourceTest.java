@@ -118,6 +118,14 @@ public class PortalInstanceResourceTest
 	}
 
 	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {
+			"active", "admin", "companyId", "domain", "portalInstanceId",
+			"siteInitializerKey", "virtualHost"
+		};
+	}
+
+	@Override
 	protected PortalInstance randomPortalInstance() throws Exception {
 		String randomName = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());

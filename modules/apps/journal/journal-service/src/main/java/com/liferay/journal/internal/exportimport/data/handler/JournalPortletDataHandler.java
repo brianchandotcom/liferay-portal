@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
@@ -465,6 +466,29 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "web-content")) {
 			for (Element articleElement : articleElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, articleElement);
+			}
+
+			Map<String, String> postProcessArticles =
+				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+					JournalArticle.class + ".postProcess");
+
+			for (Map.Entry<String, String> entry :
+					postProcessArticles.entrySet()) {
+
+				portletDataContext.removePrimaryKey(entry.getValue());
+			}
+
+			for (Element articleElement : articleElements) {
+				String uuid = articleElement.attributeValue("uuid");
+
+				if (!postProcessArticles.containsKey(uuid)) {
+					continue;
+				}
+
+				postProcessArticles.remove(uuid);
+
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, articleElement);
 			}

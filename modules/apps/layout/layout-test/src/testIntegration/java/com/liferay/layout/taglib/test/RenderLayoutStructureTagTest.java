@@ -679,6 +679,56 @@ public class RenderLayoutStructureTagTest {
 		}
 	}
 
+	private LayoutStructure
+			_addCollectionStyledLayoutStructureItemAndGetLayoutStructure(
+				JSONObject collectionJSONObject,
+				JSONObject displayConfigJSONObject, Layout layout,
+				String listStyle, long segmentsExperienceId)
+		throws Exception {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem =
+				(CollectionStyledLayoutStructureItem)
+					layoutStructure.addCollectionStyledLayoutStructureItem(
+						layoutStructure.getMainItemId(), 0);
+
+		collectionStyledLayoutStructureItem.setCollectionJSONObject(
+			collectionJSONObject);
+
+		if (displayConfigJSONObject != null) {
+			JSONObject itemConfigJSONObject =
+				collectionStyledLayoutStructureItem.getItemConfigJSONObject();
+
+			for (String key : displayConfigJSONObject.keySet()) {
+				itemConfigJSONObject.put(key, displayConfigJSONObject.get(key));
+			}
+
+			collectionStyledLayoutStructureItem.updateItemConfig(
+				itemConfigJSONObject);
+		}
+
+		collectionStyledLayoutStructureItem.setListStyle(listStyle);
+		collectionStyledLayoutStructureItem.setNamespace(
+			RandomTestUtil.randomString());
+
+		layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructureData(
+					_group.getGroupId(), layout.getPlid(), segmentsExperienceId,
+					layoutStructure.toString());
+
+		return LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+	}
+
 	private JournalArticle _addJournalArticle(DDMStructure ddmStructure)
 		throws Exception {
 
@@ -747,21 +797,7 @@ public class RenderLayoutStructureTagTest {
 			long assetListEntryId, Layout layout, long segmentsExperienceId)
 		throws Exception {
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(), layout.getPlid());
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
-
-		CollectionStyledLayoutStructureItem
-			collectionStyledLayoutStructureItem =
-				(CollectionStyledLayoutStructureItem)
-					layoutStructure.addCollectionStyledLayoutStructureItem(
-						layoutStructure.getMainItemId(), 0);
-
-		collectionStyledLayoutStructureItem.setCollectionJSONObject(
+		_addCollectionStyledLayoutStructureItemAndGetLayoutStructure(
 			JSONUtil.put(
 				"classNameId", _portal.getClassNameId(AssetListEntry.class)
 			).put(
@@ -770,17 +806,11 @@ public class RenderLayoutStructureTagTest {
 				"itemType", JournalArticle.class.getName()
 			).put(
 				"type", InfoListItemSelectorReturnType.class.getName()
-			));
-		collectionStyledLayoutStructureItem.setListStyle(
+			),
+			null, layout,
 			"com.liferay.journal.web.internal.info.list.renderer." +
-				"BulletedJournalArticleBasicInfoListRenderer");
-		collectionStyledLayoutStructureItem.setNamespace(
-			RandomTestUtil.randomString());
-
-		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), layout.getPlid(), segmentsExperienceId,
-				layoutStructure.toString());
+				"BulletedJournalArticleBasicInfoListRenderer",
+			segmentsExperienceId);
 	}
 
 	private LayoutStructure _getDefaultMasterLayoutStructure() {

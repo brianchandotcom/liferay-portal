@@ -34,11 +34,8 @@ public class MarkdownBreakingChangesAmendmentsFileCheck
 			return content;
 		}
 
-		List<String> breakingChangesAmendments =
-			_splitBreakingChangesAmendments(content);
-
 		_checkBreakingChangesAmendments(
-			fileName, absolutePath, breakingChangesAmendments);
+			fileName, absolutePath, _splitBreakingChangesAmendments(content));
 
 		return content;
 	}

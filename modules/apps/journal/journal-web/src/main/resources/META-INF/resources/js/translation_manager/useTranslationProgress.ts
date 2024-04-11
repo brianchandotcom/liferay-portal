@@ -146,13 +146,22 @@ export default function useTranslationProgress({
 		};
 	}, [defaultLocaleChangeHandler, localeChangeHandler]);
 
-	return {
-		defaultLanguageId,
-		selectedLanguageId,
-		translationProgress,
-		translations,
-		updateTranslations,
-	};
+	return useMemo(
+		() => ({
+			defaultLanguageId,
+			selectedLanguageId,
+			translationProgress,
+			translations,
+			updateTranslations,
+		}),
+		[
+			defaultLanguageId,
+			selectedLanguageId,
+			translationProgress,
+			translations,
+			updateTranslations,
+		]
+	);
 }
 
 export function fieldToTranslations(fields: Record<string, Field>) {

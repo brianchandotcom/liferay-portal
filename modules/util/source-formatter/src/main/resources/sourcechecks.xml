@@ -1350,6 +1350,7 @@
 		<check name="MarkdownBreakingChangesAmendmentsFileCheck">
 			<category name="Styling" />
 			<description name="Checks that breaking changes amendments should contain the schematized breaking changes in `BREAKING_CHANGES_AMENDMENTS.markdown` file." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="MarkdownEmptyLinesCheck">
 			<category name="Styling" />

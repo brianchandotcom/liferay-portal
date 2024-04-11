@@ -4,7 +4,7 @@
  */
 
 import {Option, Picker} from '@clayui/core';
-import React, {LegacyRef, useState} from 'react';
+import React, {LegacyRef, useEffect, useState} from 'react';
 
 import {TranslationManagerProps} from './Types';
 import useTranslationProgress from './useTranslationProgress';
@@ -121,6 +121,11 @@ export default function TranslationFilter({
 		});
 		setSelectedKey(option as string);
 	};
+
+	useEffect(() => {
+		handleSelection('all-fields');
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selectedLanguageId]);
 
 	return (
 		<>

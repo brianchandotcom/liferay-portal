@@ -222,51 +222,6 @@ export default {
 		);
 	},
 
-	renderFragmentEntryLinkContent({
-		fragmentEntryLinkId,
-		itemClassName,
-		itemClassPK,
-		itemExternalReferenceCode,
-		languageId,
-		segmentsExperienceId,
-	}: {
-		fragmentEntryLinkId: string;
-		itemClassName?: string | null;
-		itemClassPK?: string | null;
-		itemExternalReferenceCode?: string | null;
-		languageId: Liferay.Language.Locale;
-		segmentsExperienceId: string;
-	}) {
-		const body: {
-			fragmentEntryLinkId: string;
-			itemClassName?: string;
-			itemClassPK?: string;
-			itemExternalReferenceCode?: string;
-			languageId: Liferay.Language.Locale;
-			segmentsExperienceId: string;
-		} = {
-			fragmentEntryLinkId,
-			languageId,
-			segmentsExperienceId,
-		};
-
-		if (itemClassName) {
-			body.itemClassName = itemClassName;
-		}
-
-		if (itemClassPK) {
-			body.itemClassPK = itemClassPK;
-		}
-
-		if (itemExternalReferenceCode) {
-			body.itemExternalReferenceCode = itemExternalReferenceCode;
-		}
-
-		return serviceFetch<{content: string}>(config.renderFragmentEntryURL, {
-			body,
-		});
-	},
-
 	renderFragmentEntryLinksContent({
 		data,
 		languageId,

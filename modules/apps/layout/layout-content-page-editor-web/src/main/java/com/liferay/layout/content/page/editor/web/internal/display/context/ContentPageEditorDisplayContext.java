@@ -621,10 +621,6 @@ public class ContentPageEditorDisplayContext {
 				_getResourceURL(
 					"/layout_content_page_editor/get_fragment_entry_links")
 			).put(
-				"renderFragmentEntryURL",
-				_getResourceURL(
-					"/layout_content_page_editor/get_fragment_entry_link")
-			).put(
 				"restoreCollectionDisplayConfigURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor" +

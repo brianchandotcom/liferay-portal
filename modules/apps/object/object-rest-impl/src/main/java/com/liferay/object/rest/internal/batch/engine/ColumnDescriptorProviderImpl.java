@@ -41,7 +41,7 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 	@Override
 	public ColumnDescriptor[] getColumnDescriptors(
 			long companyId, String fieldName, int index,
-			ObjectValuePair<Field, Method> propertiesObjectValuePair,
+			Map<String, ObjectValuePair<Field, Method>> objectValuePairs,
 			String taskItemDelegateName)
 		throws PortalException {
 
@@ -51,6 +51,9 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectDefinition.getObjectDefinitionId(), fieldName);
+
+		ObjectValuePair<Field, Method> propertiesObjectValuePair =
+			objectValuePairs.get("properties");
 
 		if (Objects.equals(
 				objectField.getBusinessType(),

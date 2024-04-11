@@ -118,7 +118,8 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"fieldReference", "name", "predefinedValue",
+								"fieldReference", "name",
+								"htmlAutocompleteAttribute", "predefinedValue",
 								"objectFieldName", "visibilityExpression",
 								"fieldNamespace", "indexType",
 								"labelAtStructureLevel", "localizable",
@@ -221,6 +222,16 @@ public interface TextDDMFormFieldTypeSettings
 		}
 	)
 	public boolean hideField();
+
+	@DDMFormField(
+		dataType = "string", label = "%html-autocomplete-attribute",
+		properties = {
+			"invalidCharacters=[^a-z0-9-]|-{2,}", "maxLength=20",
+			"visualProperty=true"
+		},
+		type = "text"
+	)
+	public String htmlAutocompleteAttribute();
 
 	@DDMFormField(
 		label = "%searchable", optionLabels = {"%disable", "%keyword", "%text"},

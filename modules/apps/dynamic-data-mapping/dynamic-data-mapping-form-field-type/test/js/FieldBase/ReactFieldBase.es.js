@@ -194,6 +194,19 @@ describe('ReactFieldBase', () => {
 		const {container, findByTestId, getByRole, getByText} = render(
 			<FieldBaseWithProvider
 				fieldName="inputMaskFormat"
+				popover={{
+					alignPosition: 'right-bottom',
+					content: 'Tooltip Description',
+					header: 'input-mask-format',
+					hideOnTriggerOut: true,
+					image: {
+						alt: 'input-mask-format',
+						height: 170,
+						src:
+							'http://localhost:8080/forms/input_mask_format.png',
+						width: 232,
+					},
+				}}
 				spritemap={spritemap}
 				tooltip="Tooltip Description"
 			/>

@@ -86,10 +86,9 @@ public class BNDBreakingChangeCommitMessageCheck
 
 			checkMissingEmptyLinesAroundHeaders(fileName, parts[1], message);
 
-			String[] breakingChanges = parts[1].split("\n----");
-
 			checkBreakingChanges(
-				fileName, absolutePath, breakingChanges, message, true);
+				fileName, absolutePath, parts[1].split("\n----"), message,
+				true);
 		}
 	}
 

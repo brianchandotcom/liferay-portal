@@ -14,12 +14,6 @@ double longitude = (Double)request.getAttribute("liferay-map:map:longitude");
 String name = (String)request.getAttribute("liferay-map:map:name");
 String points = (String)request.getAttribute("liferay-map:map:points");
 
-JSONObject pointsJSONObject = null;
-
-if (Validator.isNotNull(points)) {
-	pointsJSONObject = JSONFactoryUtil.createJSONObject(points);
-}
-
 name = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse) + name;
 %>
 
@@ -36,7 +30,14 @@ name = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse) + nam
 		HashMapBuilder.<String, Object>put(
 			"boundingBox", "#" + HtmlUtil.escapeJS(name) + "Map"
 		).put(
-			"data", pointsJSONObject
+			"data",
+			() -> {
+				if (Validator.isNull(points)) {
+					return null;
+				}
+
+				return JSONFactoryUtil.createJSONObject(points);
+			}
 		).put(
 			"geolocation", geolocation
 		).put(

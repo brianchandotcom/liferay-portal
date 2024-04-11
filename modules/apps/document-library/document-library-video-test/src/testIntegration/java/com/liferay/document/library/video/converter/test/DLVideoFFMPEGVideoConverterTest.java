@@ -30,6 +30,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Dictionary;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -77,7 +78,7 @@ public class DLVideoFFMPEGVideoConverterTest {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.document.library.preview.video.internal." +
-					"processor.VideoDLProcessorImpl",
+					"processor.VideoPreviewableDLProcessor",
 				LoggerTestUtil.ERROR)) {
 
 			_withDLVideoFFMPEGVideoConverterConfiguration(
@@ -91,7 +92,11 @@ public class DLVideoFFMPEGVideoConverterTest {
 							fileEntry.getFileVersion()));
 				});
 
-			_assertLogMessage(logCapture);
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertFalse(logEntries.isEmpty());
+
+			_assertLogMessage(logEntries);
 		}
 	}
 
@@ -145,7 +150,7 @@ public class DLVideoFFMPEGVideoConverterTest {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.document.library.preview.video.internal." +
-					"processor.VideoDLProcessorImpl",
+					"processor.VideoPreviewableDLProcessor",
 				LoggerTestUtil.ERROR)) {
 
 			_withDLVideoFFMPEGVideoConverterConfiguration(
@@ -171,12 +176,14 @@ public class DLVideoFFMPEGVideoConverterTest {
 					Assert.assertTrue(ogvPreviewFileSize > 0);
 				});
 
-			_assertLogMessage(logCapture);
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertTrue(logEntries.isEmpty());
 		}
 	}
 
-	private void _assertLogMessage(LogCapture logCapture) {
-		for (LogEntry logEntry : logCapture.getLogEntries()) {
+	private void _assertLogMessage(List<LogEntry> logEntries) {
+		for (LogEntry logEntry : logEntries) {
 			String logEntryMessage = logEntry.getMessage();
 
 			Assert.assertTrue(logEntryMessage.contains("Unable to process"));

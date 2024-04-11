@@ -85,6 +85,8 @@ public class PlacedOrderDTOConverter
 
 						return expandoBridge.getAttributes();
 					});
+				setExternalReferenceCode(
+					commerceOrder::getExternalReferenceCode);
 				setId(commerceOrder::getCommerceOrderId);
 				setLastPriceUpdateDate(commerceOrder::getLastPriceUpdateDate);
 				setModifiedDate(commerceOrder::getModifiedDate);

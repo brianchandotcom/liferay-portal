@@ -164,6 +164,7 @@ public class PlacedOrderItemShipmentResourceTest
 				createDate = RandomTestUtil.nextDate();
 				estimatedDeliveryDate = RandomTestUtil.nextDate();
 				estimatedShippingDate = RandomTestUtil.nextDate();
+				externalReferenceCode = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				modifiedDate = RandomTestUtil.nextDate();
 				orderId = _commerceOrder.getCommerceOrderId();
@@ -176,6 +177,24 @@ public class PlacedOrderItemShipmentResourceTest
 					RandomTestUtil.randomString());
 			}
 		};
+	}
+
+	@Override
+	protected PlacedOrderItemShipment
+			testGetPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage_addPlacedOrderItemShipment(
+				String externalReferenceCode,
+				PlacedOrderItemShipment placedOrderItemShipment)
+		throws Exception {
+
+		return _addCommerceShipmentItem(placedOrderItemShipment);
+	}
+
+	@Override
+	protected String
+			testGetPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _commerceOrderItem.getExternalReferenceCode();
 	}
 
 	@Override
@@ -238,6 +257,8 @@ public class PlacedOrderItemShipmentResourceTest
 					placedOrderItemShipment.getEstimatedDeliveryDate();
 				estimatedShippingDate =
 					placedOrderItemShipment.getEstimatedShippingDate();
+				externalReferenceCode =
+					placedOrderItemShipment.getExternalReferenceCode();
 				id = commerceShipmentItem.getCommerceShipmentItemId();
 				modifiedDate = commerceShipmentItem.getModifiedDate();
 				orderId = _commerceOrder.getCommerceOrderId();

@@ -121,6 +121,25 @@ public class PlacedOrderItemResourceTest
 				1, 2022, 12, 0, 0, 0, 0, 0, 0, true, _serviceContext);
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPage()
+		throws Exception {
+
+		super.testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageWithPagination()
+		throws Exception {
+
+		super.
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPageWithPagination();
+	}
+
 	@Override
 	@Test
 	public void testGetPlacedOrderItem() throws Exception {
@@ -218,7 +237,32 @@ public class PlacedOrderItemResourceTest
 	}
 
 	@Override
+	protected PlacedOrderItem
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPage_addPlacedOrderItem(
+				String externalReferenceCode, PlacedOrderItem placedOrderItem)
+		throws Exception {
+
+		return _addPlacedOrderItem(placedOrderItem);
+	}
+
+	@Override
+	protected String
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderItemsPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _commerceOrder.getExternalReferenceCode();
+	}
+
+	@Override
 	protected PlacedOrderItem testGetPlacedOrderItem_addPlacedOrderItem()
+		throws Exception {
+
+		return _addPlacedOrderItem(randomPlacedOrderItem());
+	}
+
+	@Override
+	protected PlacedOrderItem
+			testGetPlacedOrderItemByExternalReferenceCode_addPlacedOrderItem()
 		throws Exception {
 
 		return _addPlacedOrderItem(randomPlacedOrderItem());
@@ -299,6 +343,8 @@ public class PlacedOrderItemResourceTest
 
 		return new PlacedOrderItem() {
 			{
+				externalReferenceCode =
+					commerceOrderItem.getExternalReferenceCode();
 				id = commerceOrderItem.getCommerceOrderItemId();
 				name = commerceOrderItem.getName();
 				productId = commerceOrderItem.getCProductId();
@@ -343,6 +389,8 @@ public class PlacedOrderItemResourceTest
 
 		return new PlacedOrderItem() {
 			{
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				productId = cpDefinition.getCProductId();

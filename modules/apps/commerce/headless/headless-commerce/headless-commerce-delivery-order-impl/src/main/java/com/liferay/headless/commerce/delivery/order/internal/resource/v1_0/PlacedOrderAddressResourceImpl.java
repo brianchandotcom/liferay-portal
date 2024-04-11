@@ -33,6 +33,46 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class PlacedOrderAddressResourceImpl
 	extends BasePlacedOrderAddressResourceImpl {
 
+	@Override
+	public PlacedOrderAddress
+			getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress(
+				String externalReferenceCode)
+		throws Exception {
+
+		CommerceOrder commerceOrder =
+			_commerceOrderService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrder == null) {
+			throw new NoSuchOrderException(
+				"Unable to find order with external reference code " +
+					externalReferenceCode);
+		}
+
+		return getPlacedOrderPlacedOrderBillingAddres(
+			commerceOrder.getCommerceOrderId());
+	}
+
+	@Override
+	public PlacedOrderAddress
+			getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress(
+				String externalReferenceCode)
+		throws Exception {
+
+		CommerceOrder commerceOrder =
+			_commerceOrderService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrder == null) {
+			throw new NoSuchOrderException(
+				"Unable to find order with external reference code " +
+					externalReferenceCode);
+		}
+
+		return getPlacedOrderPlacedOrderShippingAddres(
+			commerceOrder.getCommerceOrderId());
+	}
+
 	@NestedField(
 		parentClass = PlacedOrder.class, value = "placedOrderBillingAddress"
 	)

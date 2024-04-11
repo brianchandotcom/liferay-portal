@@ -5,10 +5,14 @@
 
 package com.liferay.headless.commerce.delivery.order.internal.resource.v1_0;
 
+import com.liferay.account.exception.NoSuchEntryException;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.product.exception.NoSuchChannelException;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -75,6 +79,40 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 	}
 
 	@Override
+	public Page<PlacedOrder>
+			getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodePlacedOrdersPage(
+				String accountExternalReferenceCode,
+				String channelExternalReferenceCode, Pagination pagination)
+		throws Exception {
+
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), accountExternalReferenceCode);
+
+		if (accountEntry == null) {
+			throw new NoSuchEntryException(
+				"Unable to find account entry with external reference code " +
+					accountExternalReferenceCode);
+		}
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.
+				fetchCommerceChannelByExternalReferenceCode(
+					channelExternalReferenceCode,
+					contextCompany.getCompanyId());
+
+		if (commerceChannel == null) {
+			throw new NoSuchChannelException(
+				"Unable to find channel with external reference code " +
+					channelExternalReferenceCode);
+		}
+
+		return getChannelAccountPlacedOrdersPage(
+			accountEntry.getAccountEntryId(),
+			commerceChannel.getCommerceChannelId(), pagination);
+	}
+
+	@Override
 	public PlacedOrder getPlacedOrder(Long placedOrderId) throws Exception {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			placedOrderId);
@@ -84,6 +122,43 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 		}
 
 		return _toPlacedOrder(commerceOrder.getCommerceOrderId());
+	}
+
+	@Override
+	public PlacedOrder getPlacedOrderByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CommerceOrder commerceOrder =
+			_commerceOrderService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrder == null) {
+			throw new NoSuchOrderException(
+				"Unable to find order with external reference code " +
+					externalReferenceCode);
+		}
+
+		return getPlacedOrder(commerceOrder.getCommerceOrderId());
+	}
+
+	@Override
+	public String getPlacedOrderByExternalReferenceCodePaymentURL(
+			String externalReferenceCode, String callbackURL)
+		throws Exception {
+
+		CommerceOrder commerceOrder =
+			_commerceOrderService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrder == null) {
+			throw new NoSuchOrderException(
+				"Unable to find order with external reference code " +
+					externalReferenceCode);
+		}
+
+		return getPlacedOrderPaymentURL(
+			commerceOrder.getCommerceOrderId(), callbackURL);
 	}
 
 	@Override
@@ -204,6 +279,9 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}
+
+	@Reference
+	private AccountEntryService _accountEntryService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

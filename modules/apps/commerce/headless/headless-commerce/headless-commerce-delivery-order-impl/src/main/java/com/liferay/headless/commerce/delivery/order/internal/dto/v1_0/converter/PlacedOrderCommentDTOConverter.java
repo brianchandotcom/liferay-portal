@@ -43,6 +43,8 @@ public class PlacedOrderCommentDTOConverter
 			{
 				setAuthor(commerceOrderNote::getUserName);
 				setContent(commerceOrderNote::getContent);
+				setExternalReferenceCode(
+					commerceOrderNote::getExternalReferenceCode);
 				setId(commerceOrderNote::getCommerceOrderNoteId);
 				setOrderId(
 					() -> {

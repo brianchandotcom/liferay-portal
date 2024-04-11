@@ -79,6 +79,15 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testGetPlacedOrderByExternalReferenceCodePaymentURL()
+		throws Exception {
+
+		super.testGetPlacedOrderByExternalReferenceCodePaymentURL();
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGetPlacedOrderPaymentURL() throws Exception {
 		super.testGetPlacedOrderPaymentURL();
 	}
@@ -101,6 +110,8 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 					RandomTestUtil.randomString());
 				createDate = RandomTestUtil.nextDate();
 				currencyCode = _commerceCurrency.getCode();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				lastPriceUpdateDate = RandomTestUtil.nextDate();
 				modifiedDate = RandomTestUtil.nextDate();
@@ -150,7 +161,41 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 	}
 
 	@Override
+	protected PlacedOrder
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodePlacedOrdersPage_addPlacedOrder(
+				String accountExternalReferenceCode,
+				String channelExternalReferenceCode, PlacedOrder placedOrder)
+		throws Exception {
+
+		return _addCommerceOrder(placedOrder);
+	}
+
+	@Override
+	protected String
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodePlacedOrdersPage_getAccountExternalReferenceCode()
+		throws Exception {
+
+		return _accountEntry.getExternalReferenceCode();
+	}
+
+	@Override
+	protected String
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodePlacedOrdersPage_getChannelExternalReferenceCode()
+		throws Exception {
+
+		return _commerceChannel.getExternalReferenceCode();
+	}
+
+	@Override
 	protected PlacedOrder testGetPlacedOrder_addPlacedOrder() throws Exception {
+		return _addCommerceOrder(randomPlacedOrder());
+	}
+
+	@Override
+	protected PlacedOrder
+			testGetPlacedOrderByExternalReferenceCode_addPlacedOrder()
+		throws Exception {
+
 		return _addCommerceOrder(randomPlacedOrder());
 	}
 
@@ -194,6 +239,8 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 				couponCode = commerceOrder.getCouponCode();
 				createDate = commerceOrder.getCreateDate();
 				currencyCode = _commerceCurrency.getCode();
+				externalReferenceCode =
+					commerceOrder.getExternalReferenceCode();
 				id = commerceOrder.getCommerceOrderId();
 				lastPriceUpdateDate = commerceOrder.getLastPriceUpdateDate();
 				modifiedDate = commerceOrder.getModifiedDate();

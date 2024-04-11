@@ -130,6 +130,7 @@ public class PlacedOrderAddressResourceTest
 				country = _country.getName();
 				countryISOCode = _country.getA2();
 				description = address.getDescription();
+				externalReferenceCode = address.getExternalReferenceCode();
 				id = address.getAddressId();
 				latitude = address.getLatitude();
 				longitude = address.getLongitude();
@@ -147,6 +148,40 @@ public class PlacedOrderAddressResourceTest
 				zip = address.getZip();
 			}
 		};
+	}
+
+	@Override
+	protected PlacedOrderAddress
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_addPlacedOrderAddress()
+		throws Exception {
+
+		return _updateBillingAndShippingAddresses();
+	}
+
+	@Override
+	protected String
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode(
+				PlacedOrderAddress placedOrderAddress)
+		throws Exception {
+
+		return _commerceOrder.getExternalReferenceCode();
+	}
+
+	@Override
+	protected PlacedOrderAddress
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_addPlacedOrderAddress()
+		throws Exception {
+
+		return _updateBillingAndShippingAddresses();
+	}
+
+	@Override
+	protected String
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode(
+				PlacedOrderAddress placedOrderAddress)
+		throws Exception {
+
+		return _commerceOrder.getExternalReferenceCode();
 	}
 
 	@Override
@@ -178,6 +213,24 @@ public class PlacedOrderAddressResourceTest
 		throws Exception {
 
 		return _commerceOrder.getCommerceOrderId();
+	}
+
+	@Override
+	protected String
+			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode(
+				PlacedOrderAddress placedOrderAddress)
+		throws Exception {
+
+		return _commerceOrder.getExternalReferenceCode();
+	}
+
+	@Override
+	protected String
+			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode(
+				PlacedOrderAddress placedOrderAddress)
+		throws Exception {
+
+		return _commerceOrder.getExternalReferenceCode();
 	}
 
 	@Override

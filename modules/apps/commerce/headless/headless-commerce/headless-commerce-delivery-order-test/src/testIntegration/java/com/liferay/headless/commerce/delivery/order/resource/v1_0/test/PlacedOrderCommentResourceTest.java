@@ -98,6 +98,8 @@ public class PlacedOrderCommentResourceTest
 		return new PlacedOrderComment() {
 			{
 				content = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				orderId = _commerceOrder.getCommerceOrderId();
 				restricted = RandomTestUtil.randomBoolean();
@@ -107,7 +109,33 @@ public class PlacedOrderCommentResourceTest
 
 	@Override
 	protected PlacedOrderComment
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage_addPlacedOrderComment(
+				String externalReferenceCode,
+				PlacedOrderComment placedOrderComment)
+		throws Exception {
+
+		return _addCommerceOrderNote(placedOrderComment);
+	}
+
+	@Override
+	protected String
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _commerceOrder.getExternalReferenceCode();
+	}
+
+	@Override
+	protected PlacedOrderComment
 			testGetPlacedOrderComment_addPlacedOrderComment()
+		throws Exception {
+
+		return _addCommerceOrderNote(randomPlacedOrderComment());
+	}
+
+	@Override
+	protected PlacedOrderComment
+			testGetPlacedOrderCommentByExternalReferenceCode_addPlacedOrderComment()
 		throws Exception {
 
 		return _addCommerceOrderNote(randomPlacedOrderComment());
@@ -143,6 +171,7 @@ public class PlacedOrderCommentResourceTest
 
 		CommerceOrderNote commerceOrderNote =
 			_commerceOrderNoteLocalService.addCommerceOrderNote(
+				placedOrderComment.getExternalReferenceCode(),
 				placedOrderComment.getOrderId(),
 				placedOrderComment.getContent(),
 				placedOrderComment.getRestricted(), _serviceContext);
@@ -152,6 +181,8 @@ public class PlacedOrderCommentResourceTest
 		return new PlacedOrderComment() {
 			{
 				content = commerceOrderNote.getContent();
+				externalReferenceCode =
+					commerceOrderNote.getExternalReferenceCode();
 				id = commerceOrderNote.getCommerceOrderNoteId();
 				orderId = commerceOrderNote.getCommerceOrderId();
 				restricted = commerceOrderNote.isRestricted();

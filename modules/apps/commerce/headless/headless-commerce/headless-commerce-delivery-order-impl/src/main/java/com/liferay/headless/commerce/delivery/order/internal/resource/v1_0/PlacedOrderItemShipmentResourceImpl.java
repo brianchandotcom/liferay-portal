@@ -6,6 +6,7 @@
 package com.liferay.headless.commerce.delivery.order.internal.resource.v1_0;
 
 import com.liferay.commerce.exception.NoSuchOrderException;
+import com.liferay.commerce.exception.NoSuchOrderItemException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
@@ -40,6 +41,26 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class PlacedOrderItemShipmentResourceImpl
 	extends BasePlacedOrderItemShipmentResourceImpl {
+
+	@Override
+	public Page<PlacedOrderItemShipment>
+			getPlacedOrderItemByExternalReferenceCodePlacedOrderItemShipmentsPage(
+				String externalReferenceCode)
+		throws Exception {
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrderItem == null) {
+			throw new NoSuchOrderItemException(
+				"Unable to find order item with external reference code " +
+					externalReferenceCode);
+		}
+
+		return getPlacedOrderItemPlacedOrderItemShipmentsPage(
+			commerceOrderItem.getCommerceOrderItemId());
+	}
 
 	@NestedField(
 		parentClass = PlacedOrderItem.class, value = "placedOrderItemShipments"

@@ -98,6 +98,8 @@ public class PlacedOrderItemDTOConverter
 					});
 				setErrorMessages(
 					() -> _getErrorMessages(commerceOrderItem, locale));
+				setExternalReferenceCode(
+					commerceOrderItem::getExternalReferenceCode);
 				setId(commerceOrderItem::getCommerceOrderItemId);
 				setName(
 					() -> commerceOrderItem.getName(

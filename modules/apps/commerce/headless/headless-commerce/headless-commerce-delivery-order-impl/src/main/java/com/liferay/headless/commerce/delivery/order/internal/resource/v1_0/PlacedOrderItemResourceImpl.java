@@ -6,6 +6,7 @@
 package com.liferay.headless.commerce.delivery.order.internal.resource.v1_0;
 
 import com.liferay.commerce.exception.NoSuchOrderException;
+import com.liferay.commerce.exception.NoSuchOrderItemException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -45,6 +46,28 @@ public class PlacedOrderItemResourceImpl
 	extends BasePlacedOrderItemResourceImpl {
 
 	@Override
+	public Page<PlacedOrderItem>
+			getPlacedOrderByExternalReferenceCodePlacedOrderItemsPage(
+				String externalReferenceCode, String search, Long skuId,
+				Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		CommerceOrder commerceOrder =
+			_commerceOrderService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrder == null) {
+			throw new NoSuchOrderException(
+				"Unable to find order with external reference code " +
+					externalReferenceCode);
+		}
+
+		return getPlacedOrderPlacedOrderItemsPage(
+			commerceOrder.getCommerceOrderId(), search, skuId, pagination,
+			sorts);
+	}
+
+	@Override
 	public PlacedOrderItem getPlacedOrderItem(Long placedOrderItemId)
 		throws Exception {
 
@@ -59,6 +82,24 @@ public class PlacedOrderItemResourceImpl
 
 		return _toPlacedOrderItem(
 			commerceOrder.getCommerceAccountId(), commerceOrderItem);
+	}
+
+	@Override
+	public PlacedOrderItem getPlacedOrderItemByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrderItem == null) {
+			throw new NoSuchOrderItemException(
+				"Unable to find order item with external reference code " +
+					externalReferenceCode);
+		}
+
+		return getPlacedOrderItem(commerceOrderItem.getCommerceOrderItemId());
 	}
 
 	@NestedField(parentClass = PlacedOrder.class, value = "placedOrderItems")

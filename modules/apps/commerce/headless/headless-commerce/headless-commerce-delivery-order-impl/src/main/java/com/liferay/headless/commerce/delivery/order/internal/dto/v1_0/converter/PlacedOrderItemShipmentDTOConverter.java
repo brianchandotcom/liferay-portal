@@ -70,6 +70,8 @@ public class PlacedOrderItemShipmentDTOConverter
 				setCreateDate(commerceShipment::getCreateDate);
 				setEstimatedDeliveryDate(commerceShipment::getExpectedDate);
 				setEstimatedShippingDate(commerceShipment::getShippingDate);
+				setExternalReferenceCode(
+					commerceShipment::getExternalReferenceCode);
 				setId(commerceShipment::getCommerceShipmentId);
 				setModifiedDate(commerceShipment::getModifiedDate);
 				setQuantity(

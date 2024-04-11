@@ -25,6 +25,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.HelpTasksPlugin;
@@ -241,7 +242,10 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 		resolveTask.dependsOn(taskContainer.findByName("assemble"));
 
-		resolveTask.setBndrunFile(bndrunFile);
+		RegularFileProperty bndrun = resolveTask.getBndrun();
+
+		bndrun.set(bndrunFile);
+
 		resolveTask.setDescription(
 			"Resolve a project against the Liferay distro.");
 		resolveTask.setDistro(targetPlatformDistroConfiguration);

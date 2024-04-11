@@ -8,8 +8,8 @@ package com.liferay.gradle.plugins.target.platform.task;
 import aQute.bnd.build.Workspace;
 import aQute.bnd.build.model.clauses.HeaderClause;
 import aQute.bnd.build.model.conversions.Converter;
+import aQute.bnd.gradle.BeanProperties;
 import aQute.bnd.gradle.FileSetRepositoryConvention;
-import aQute.bnd.gradle.PropertiesWrapper;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.osgi.Processor;
 import aQute.bnd.service.RepositoryPlugin;
@@ -105,19 +105,19 @@ public class ResolveTask extends DefaultTask {
 		File bndrunFile = getBndrunFile();
 		File temporaryDir = getTemporaryDir();
 
-		Properties gradleProperties = new PropertiesWrapper();
+		Properties beanProperties = new BeanProperties();
 
-		gradleProperties.put("project", project);
+		beanProperties.put("project", project);
 
 		File distroFile = getDistroFile();
 
-		gradleProperties.put(
+		beanProperties.put(
 			"targetPlatformDistro",
 			distroFile.getAbsolutePath() + ";version=file");
 
-		gradleProperties.put("task", this);
+		beanProperties.put("task", this);
 
-		Processor processor = new ProcessorWrapper(gradleProperties);
+		Processor processor = new ProcessorWrapper(beanProperties);
 
 		Workspace workspace = Workspace.createStandaloneWorkspace(
 			processor, bndrunFile.toURI());

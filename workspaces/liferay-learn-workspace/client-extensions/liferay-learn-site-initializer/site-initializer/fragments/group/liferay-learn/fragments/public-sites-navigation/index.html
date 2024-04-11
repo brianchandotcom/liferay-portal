@@ -91,10 +91,15 @@
 
 			<div class="align-items-center d-flex search-account-container">
 				[#if configuration.showSearch]
-					<div class="mr-2 search-icon-container">
-						<span class="search-icon mr-2 opacity-50" id="searchIcon" tabindex="8"> [@clay["icon"] symbol="search"/] </span>
+					<div class="search-icon-container">
+						<span class="search-icon opacity-50" id="searchIcon" tabindex="8"> [@clay["icon"] symbol="search"/] </span>
 					</div>
 				[/#if]
+				<a class="text-decoration-none" href="https://help.liferay.com/" style="color: #272833;">
+					<div class="question-icon-container">
+						<span class="question-icon opacity-50" id="questionIcon" tabindex="9" href="https://help.liferay.com/"> [@clay["icon"] symbol="question-circle"/]</span>
+					</div>
+				</a>
 				[#if configuration.showAccountMenu]
 					<div class="account position-relative" tabindex="9">
 						<div class="account-info align-items-center d-flex ${themeDisplay.isSignedIn()?then('py-1 pl-2', '')}">

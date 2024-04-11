@@ -60,6 +60,10 @@ components:
                         type: string
                     readOnly: true
                     type: array
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    readOnly: true
+                    type: string
                 id:
                     format: int64
                     readOnly: true
@@ -168,6 +172,10 @@ components:
                 description:
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    readOnly: true
+                    type: string
                 id:
                     format: int64
                     readOnly: true
@@ -223,6 +231,10 @@ components:
                 content:
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    readOnly: true
+                    type: string
                 id:
                     format: int64
                     readOnly: true
@@ -249,6 +261,10 @@ components:
                         type: string
                     readOnly: true
                     type: array
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    readOnly: true
+                    type: string
                 id:
                     format: int64
                     readOnly: true
@@ -358,6 +374,10 @@ components:
                     type: string
                 estimatedShippingDate:
                     format: date
+                    readOnly: true
+                    type: string
+                externalReferenceCode:
+                    example: AB-34098-789-N
                     readOnly: true
                     type: string
                 id:
@@ -498,6 +518,10 @@ components:
                 description:
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    readOnly: true
+                    type: string
                 id:
                     format: int64
                     readOnly: true
@@ -516,6 +540,10 @@ components:
                     readOnly: true
                     type: number
                 amountFormatted:
+                    readOnly: true
+                    type: string
+                externalReferenceCode:
+                    example: AB-34098-789-N
                     readOnly: true
                     type: string
                 label:
@@ -640,7 +668,7 @@ components:
 info:
     description:
         "Headless Delivery Commerce Order API. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.delivery.order.client', and version '1.0.18'."
+        artifact ID 'com.liferay.headless.commerce.delivery.order.client', and version '1.0.19'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -648,6 +676,77 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    /channels/by-externalReferenceCode/{channelExternalReferenceCode}/accounts/by-externalReferenceCode/{accountExternalReferenceCode}/placed-orders:
+        get:
+            description:
+                Retrieves placed orders for specific account in the given channel.
+            parameters:
+                - in: path
+                  name: accountExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: channelExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PlacedOrder"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PlacedOrder"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["PlacedOrder"]
     /channels/{channelId}/accounts/{accountId}/placed-orders:
         get:
             description:
@@ -729,6 +828,60 @@ paths:
                     description:
                         Unexpected error
             tags: ["PlacedOrder"]
+    /placed-order-comments/by-externalReferenceCode/{externalReferenceCode}:
+        get:
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrderComment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrderComment"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Gets a Note by ERC.
+            tags: ["PlacedOrderComment"]
     /placed-order-comments/{placedOrderCommentId}:
         get:
             parameters:
@@ -788,6 +941,110 @@ paths:
                         Unexpected error
             summary: Gets a Note by ID.
             tags: ["PlacedOrderComment"]
+    /placed-order-items/by-externalReferenceCode/{externalReferenceCode}:
+        get:
+            description:
+                Retrieve information of the given placed order item.
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrderItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrderItem"
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["PlacedOrderItem"]
+    /placed-order-items/by-externalReferenceCode/{externalReferenceCode}/placed-order-item-shipments:
+        get:
+            description:
+                Retrieve shipments of the given placed order item.
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PlacedOrderItemShipment"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PlacedOrderItemShipment"
+                                type: array
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["PlacedOrderItemShipment"]
     /placed-order-items/{placedOrderItemId}:
         get:
             description:
@@ -902,6 +1159,332 @@ paths:
                     description:
                         Unexpected error
             tags: ["PlacedOrderItemShipment"]
+    /placed-orders/by-externalReferenceCode/{externalReferenceCode}:
+        get:
+            description:
+                Retrieve information of the given Placed Order.
+            operationId: getPlacedOrderByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrder"
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["PlacedOrder"]
+    /placed-orders/by-externalReferenceCode/{externalReferenceCode}/payment-url:
+        get:
+            operationId: getPlacedOrderByExternalReferenceCodePaymentURL
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: callbackURL
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+            tags: ["PlacedOrder"]
+    /placed-orders/by-externalReferenceCode/{externalReferenceCode}/placed-order-billing-address:
+        get:
+            description:
+                Retrieve placed order billing address.
+            operationId: getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrderAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrderAddress"
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["PlacedOrderAddress"]
+    /placed-orders/by-externalReferenceCode/{externalReferenceCode}/placed-order-comments:
+        get:
+            operationId: getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PlacedOrderComment"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PlacedOrderComment"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Gets a list of Comments related to an Order.
+            tags: ["PlacedOrderComment"]
+    /placed-orders/by-externalReferenceCode/{externalReferenceCode}/placed-order-items:
+        get:
+            description:
+                Retrieve placed order items.
+            operationId: getPlacedOrderByExternalReferenceCodePlacedOrderItemsPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: skuId
+                  required: false
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PlacedOrderItem"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PlacedOrderItem"
+                                type: array
+                    description:
+                        Return the items of the placed order
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["PlacedOrderItem"]
+    /placed-orders/by-externalReferenceCode/{externalReferenceCode}/placed-order-shipping-address:
+        get:
+            description:
+                Retrieve placed order shipping address.
+            operationId: getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrderAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrderAddress"
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["PlacedOrderAddress"]
     /placed-orders/{placedOrderId}:
         get:
             description:

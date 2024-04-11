@@ -38,7 +38,7 @@ export async function deleteRoutineById({id, redirect}) {
 	}
 }
 
-export async function getRoutineByType({id, setRoutine}) {
+export async function getRoutineById({id, setRoutine}) {
 	const response = await liferayRequest({
 		graphqlQuery: `{
 			c {

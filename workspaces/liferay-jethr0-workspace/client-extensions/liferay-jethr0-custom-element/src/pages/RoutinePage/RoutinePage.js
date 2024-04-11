@@ -19,7 +19,7 @@ import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
 import {getJobDefinitionByKey} from '../../objects/jobdefinitions/JobDefinitionUtil';
 import {
 	deleteRoutineById,
-	getRoutineByType,
+	getRoutineById,
 } from '../../objects/routines/RoutineUtil';
 import {toLocaleString} from '../../services/DateUtil';
 
@@ -177,7 +177,7 @@ function RoutinePage() {
 	const [routine, setRoutine] = useState(null);
 
 	if (!routine) {
-		getRoutineByType({id, setRoutine});
+		getRoutineById({id, setRoutine});
 	}
 
 	if (!routine) {
@@ -226,6 +226,7 @@ function RoutinePage() {
 						</Heading>
 						<Jethr0ButtonsRow
 							buttons={[
+								{link: `/jobs/create/${id}`, title: 'Create Job'},
 								{
 									onClick: () => {
 										deleteRoutineById({

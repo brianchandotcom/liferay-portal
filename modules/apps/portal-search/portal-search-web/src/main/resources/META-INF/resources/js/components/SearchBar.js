@@ -176,6 +176,13 @@ export default function SearchBar({
 			const keywords = inputValue.trim();
 			let queryString = _updateQueryString(document.location.search);
 
+			/*
+			 * Refer to LPD-19994 for acceptance criteria regarding
+			 * retaining facet selections across searches. Default behavior
+			 * is to clear all facet selections after searching a new
+			 * keyword.
+			 */
+
 			if (
 				(initialKeywords !== keywords || keywords === '') &&
 				!retainFacetSelections

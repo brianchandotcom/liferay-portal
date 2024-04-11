@@ -48,6 +48,8 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.exception.InfoFormException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -224,6 +226,9 @@ public class RenderLayoutStructureTagTest {
 			_getRenderLayoutStructureTag(
 				layout, mockHttpServletRequest, mockHttpServletResponse,
 				segmentsExperienceId);
+
+		_entityCache.clearCache();
+		_multiVMPool.clear();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			renderLayoutStructureTag.doTag(
@@ -1091,6 +1096,9 @@ public class RenderLayoutStructureTagTest {
 	private InfoItemCapability _editPageInfoItemCapability;
 
 	@Inject
+	private EntityCache _entityCache;
+
+	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@Inject
@@ -1111,6 +1119,9 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;
+
+	@Inject
+	private MultiVMPool _multiVMPool;
 
 	@Inject
 	private Portal _portal;

@@ -57,6 +57,16 @@ const contents = {
 	],
 };
 
+const selectOption = (option) => {
+	const dropdown = screen.getByRole('combobox');
+
+	userEvent.click(dropdown);
+
+	const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+	fireEvent.click(dropdownItems[option]);
+};
+
 const renderPageContents = ({pageContents = contents} = {}) =>
 	render(
 		<StoreContextProvider
@@ -102,15 +112,23 @@ describe('PageContent', () => {
 		expect(screen.queryByText('mountain.png')).not.toBeInTheDocument();
 	});
 
-	it('filters content according to a type value', () => {
+	it('filters content according to a type value: Collections', () => {
 		renderPageContents();
-		const dropdown = screen.getByRole('combobox');
 
-		userEvent.click(dropdown);
+		selectOption(1);
 
-		const dropdownItems = document.querySelectorAll('.dropdown-item');
+		expect(screen.queryByText('Collection1')).toBeInTheDocument();
+		expect(screen.queryByText('mountain.png')).not.toBeInTheDocument();
+		expect(
+			screen.queryByText('This is a inline text')
+		).not.toBeInTheDocument();
+		expect(screen.queryByText('WC1')).not.toBeInTheDocument();
+	});
 
-		fireEvent.click(dropdownItems[2]);
+	it('filters content according to a type value: Document', () => {
+		renderPageContents();
+
+		selectOption(2);
 
 		expect(screen.queryByText('mountain.png')).toBeInTheDocument();
 		expect(screen.queryByText('Collection1')).not.toBeInTheDocument();
@@ -118,5 +136,29 @@ describe('PageContent', () => {
 			screen.queryByText('This is a inline text')
 		).not.toBeInTheDocument();
 		expect(screen.queryByText('WC1')).not.toBeInTheDocument();
+	});
+
+	it('filters content according to a type value: Inline Text', () => {
+		renderPageContents();
+
+		selectOption(3);
+
+		expect(screen.queryByText('This is a inline text')).toBeInTheDocument();
+		expect(screen.queryByText('mountain.png')).not.toBeInTheDocument();
+		expect(screen.queryByText('Collection1')).not.toBeInTheDocument();
+		expect(screen.queryByText('WC1')).not.toBeInTheDocument();
+	});
+
+	it('filters content according to a type value: Web Content', () => {
+		renderPageContents();
+
+		selectOption(4);
+
+		expect(screen.queryByText('WC1')).toBeInTheDocument();
+		expect(
+			screen.queryByText('This is a inline text')
+		).not.toBeInTheDocument();
+		expect(screen.queryByText('mountain.png')).not.toBeInTheDocument();
+		expect(screen.queryByText('Collection1')).not.toBeInTheDocument();
 	});
 });

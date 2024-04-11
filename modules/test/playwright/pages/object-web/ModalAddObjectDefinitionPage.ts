@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-export class AddObjectDefinitionModalPage {
+export class ModalAddObjectDefinitionPage {
 	readonly objectDefinitionSaveButton: Locator;
 	readonly objectLabelInput: Locator;
 	readonly objectPluralLabelInput: Locator;

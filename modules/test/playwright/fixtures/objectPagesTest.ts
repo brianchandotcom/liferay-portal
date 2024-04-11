@@ -5,17 +5,17 @@
 
 import {test} from '@playwright/test';
 
-import {AddObjectDefinitionModalPage} from '../pages/object-web/AddObjectDefinitionModalPage';
+import {ModalAddObjectDefinitionPage} from '../pages/object-web/ModalAddObjectDefinitionPage';
 import {ModelBuilderPage} from '../pages/object-web/ModelBuilderPage';
 import {ViewObjectDefinitionsPage} from '../pages/object-web/ViewObjectDefinitionsPage';
 
 const objectPagesTest = test.extend<{
-	addObjectDefinitionModalPage: AddObjectDefinitionModalPage;
+	modalAddObjectDefinitionPage: ModalAddObjectDefinitionPage;
 	modelBuilderPage: ModelBuilderPage;
 	viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
 }>({
-	addObjectDefinitionModalPage: async ({page}, use) => {
-		await use(new AddObjectDefinitionModalPage(page));
+	modalAddObjectDefinitionPage: async ({page}, use) => {
+		await use(new ModalAddObjectDefinitionPage(page));
 	},
 	modelBuilderPage: async ({page}, use) => {
 		await use(new ModelBuilderPage(page));

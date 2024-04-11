@@ -14,8 +14,8 @@ export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
 
 test.describe('Manage object definitions through Model Builder', () => {
 	test('can create an object definition inside a folder and see if it renders correctly in the model builder', async ({
-		addObjectDefinitionModalPage,
 		apiHelpers,
+		modalAddObjectDefinitionPage,
 		modelBuilderPage,
 		page,
 		viewObjectDefinitionsPage,
@@ -27,7 +27,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 		viewObjectDefinitionsPage.createObjectDefinitionButton.click();
 
 		const objectDefinition =
-			await addObjectDefinitionModalPage.createObjectDefinition(
+			await modalAddObjectDefinitionPage.createObjectDefinition(
 				objectDefinitionLabel
 			);
 
@@ -55,8 +55,8 @@ test.describe('Manage object definitions through Model Builder', () => {
 	});
 
 	test('can create an object definition by model builder', async ({
-		addObjectDefinitionModalPage,
 		apiHelpers,
+		modalAddObjectDefinitionPage,
 		modelBuilderPage,
 	}) => {
 		await modelBuilderPage.goto();
@@ -66,7 +66,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 		modelBuilderPage.createNewObjectDefinitionButton.click();
 
 		const objectDefinition =
-			await addObjectDefinitionModalPage.createObjectDefinition(
+			await modalAddObjectDefinitionPage.createObjectDefinition(
 				objectDefinitionLabel
 			);
 

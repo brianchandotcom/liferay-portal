@@ -546,6 +546,10 @@ public class FreeMarkerManager extends BaseTemplateManager {
 				"Unable to Initialize FreeMarker manager", exception);
 		}
 
+		_configuration.setAttemptExceptionReporter(
+			(templateException, environment) -> {
+			});
+
 		_configuration.setDefaultEncoding(StringPool.UTF8);
 		_configuration.setLocalizedLookup(
 			_freeMarkerEngineConfiguration.localizedLookup());

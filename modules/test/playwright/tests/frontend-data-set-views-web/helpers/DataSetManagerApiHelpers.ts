@@ -132,11 +132,13 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async createDataSetViewFields({
+		extraBodyParams = {},
 		label_i18n = {en_US: 'Title'},
 		name = 'title',
 		r_fdsViewFDSFieldRelationship_c_fdsViewERC = DEFAULT_DATA_SET_ERC,
 		type = 'string',
 	}: {
+		extraBodyParams?: any;
 		label_i18n?: {[key: string]: string};
 		name?: string;
 		r_fdsViewFDSFieldRelationship_c_fdsViewERC?: string;
@@ -149,6 +151,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			name,
 			r_fdsViewFDSFieldRelationship_c_fdsViewERC,
 			type,
+			...extraBodyParams,
 		};
 
 		return this.post(url, data);

@@ -16,9 +16,9 @@ export async function getJobDefinitionById({id, setJobDefinition}) {
 						dateCreated
 						dateModified
 						id
+						jobDefinitionsToJobDefinitionParameters
 						key
 						label
-						jobDefinitionsToJobDefinitionParameters
 					}
 				}
 			}
@@ -54,9 +54,9 @@ export async function getJobDefinitionByKey({key, setJobDefinition}) {
 						dateCreated
 						dateModified
 						id
+						jobDefinitionsToJobDefinitionParameters
 						key
 						label
-						jobDefinitionsToJobDefinitionParameters
 					}
 				}
 			}

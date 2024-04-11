@@ -114,6 +114,12 @@ public class FaroUserLocalServiceUtil {
 		return getService().deleteFaroUser(faroUserId);
 	}
 
+	public static void deleteFaroUsers(List<FaroUser> faroUsers)
+		throws PortalException {
+
+		getService().deleteFaroUsers(faroUsers);
+	}
+
 	public static void deleteFaroUsers(long groupId) {
 		getService().deleteFaroUsers(groupId);
 	}

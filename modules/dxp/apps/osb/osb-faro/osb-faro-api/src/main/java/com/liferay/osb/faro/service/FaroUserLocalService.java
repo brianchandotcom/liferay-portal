@@ -114,6 +114,9 @@ public interface FaroUserLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public FaroUser deleteFaroUser(long faroUserId) throws PortalException;
 
+	public void deleteFaroUsers(List<FaroUser> faroUsers)
+		throws PortalException;
+
 	public void deleteFaroUsers(long groupId);
 
 	/**

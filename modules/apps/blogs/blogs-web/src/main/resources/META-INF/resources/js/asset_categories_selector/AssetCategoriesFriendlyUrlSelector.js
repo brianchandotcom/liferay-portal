@@ -22,6 +22,7 @@ const DEFAULT_URL = 'default-url';
 const CUSTOM_URL = 'custom-url';
 function AssetVocabulariesCategoriesFriendlyUrlSelector({
 	customFriendlyURL = '',
+	friendlyUrlInfo,
 	formGroupClassName = '',
 	id,
 	inputAddon,
@@ -244,7 +245,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 
 					<span
 						className="lfr-portal-tooltip ml-1 taglib-icon-help"
-						title="This is the help msg for friendly url."
+						title={friendlyUrlInfo}
 					>
 						<span className="c-inner">
 							<ClayIcon symbol="question-circle-full"></ClayIcon>

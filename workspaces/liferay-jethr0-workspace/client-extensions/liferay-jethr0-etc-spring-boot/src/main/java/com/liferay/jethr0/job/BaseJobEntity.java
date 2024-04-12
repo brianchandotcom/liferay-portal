@@ -148,7 +148,7 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		jsonObject.put(
 			"name", getName()
 		).put(
-			"parameters", String.valueOf(_getParametersJSONObject())
+			"parameters", String.valueOf(_getParametersJSONArray())
 		).put(
 			"priority", getPriority()
 		).put(
@@ -288,10 +288,15 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		}
 
 		try {
-			JSONObject parametersJSONObject = new JSONObject(parameters);
+			JSONArray parametersJSONArray = new JSONArray(parameters);
 
-			for (String key : parametersJSONObject.keySet()) {
-				_parameters.put(key, parametersJSONObject.getString(key));
+			for (int i = 0; i < parametersJSONArray.length(); i++) {
+				JSONObject parameterJSONObject =
+					parametersJSONArray.getJSONObject(i);
+
+				_parameters.put(
+					parameterJSONObject.getString("key"),
+					parameterJSONObject.getString("value"));
 			}
 		}
 		catch (JSONException jsonException) {
@@ -481,21 +486,28 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		return initialBuildParametersJSONArray;
 	}
 
-	private JSONObject _getParametersJSONObject() {
-		JSONObject parametersJSONObject = new JSONObject();
+	private JSONArray _getParametersJSONArray() {
+		JSONArray parametersJSONArray = new JSONArray();
 
 		if (_parameters.isEmpty()) {
-			return parametersJSONObject;
+			return parametersJSONArray;
 		}
 
 		Set<String> parameterNames = new TreeSet<>(_parameters.keySet());
 
 		for (String parameterName : parameterNames) {
-			parametersJSONObject.put(
-				parameterName, _parameters.get(parameterName));
+			JSONObject parameterJSONObject = new JSONObject();
+
+			parameterJSONObject.put(
+				"key", parameterName
+			).put(
+				"value", _parameters.get(parameterName)
+			);
+
+			parametersJSONArray.put(parameterJSONObject);
 		}
 
-		return parametersJSONObject;
+		return parametersJSONArray;
 	}
 
 	private static final Log _log = LogFactory.getLog(BaseJobEntity.class);

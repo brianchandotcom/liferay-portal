@@ -16,7 +16,11 @@ import Jethr0Input from '../../components/Jethr0Input/Jethr0Input';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0SelectWithOption from '../../components/Jethr0SelectWithOption/Jethr0SelectWithOption';
 import {getJobDefinitions} from '../../objects/jobdefinitions/JobDefinitionUtil';
-import {createJob} from '../../objects/jobs/JobUtil';
+import {
+	createJob,
+	getJobParameterValue,
+	updateJobParameters,
+} from '../../objects/jobs/JobUtil';
 import {getRoutineById} from '../../objects/routines/RoutineUtil';
 
 function CreateJobPage() {
@@ -79,24 +83,40 @@ function CreateJobPage() {
 	}
 
 	if (!jobParameters) {
-		const defaultJobParameters = {};
+		const defaultJobParameters = [];
 
 		if (jobDefinition?.jobDefinitionParameters) {
 			jobDefinition.jobDefinitionParameters.forEach(
 				(jobDefinitionParameter) => {
-					if (jobDefinitionParameter.valueDefault) {
-						defaultJobParameters[jobDefinitionParameter.key] =
-							jobDefinitionParameter.valueDefault;
-					}
-				}
-			);
-		}
+					let defaultJobParameter;
 
-		if (routine?.jobParameters) {
-			Object.entries(JSON.parse(routine?.jobParameters)).map(
-				([key, value]) => {
-					if (value) {
-						defaultJobParameters[key] = value;
+					if (jobDefinitionParameter.valueDefault) {
+						defaultJobParameter = {
+							key: jobDefinitionParameter.key,
+							value: jobDefinitionParameter.valueDefault,
+						};
+					}
+
+					if (routine?.jobParameters) {
+						const routineJobParameters = JSON.parse(
+							routine?.jobParameters
+						);
+
+						const routineJobParameterValue = getJobParameterValue({
+							jobParameters: routineJobParameters,
+							key: jobDefinitionParameter.key,
+						});
+
+						if (routineJobParameterValue) {
+							defaultJobParameter = {
+								key: jobDefinitionParameter.key,
+								value: routineJobParameterValue,
+							};
+						}
+					}
+
+					if (defaultJobParameter) {
+						defaultJobParameters.push(defaultJobParameter);
 					}
 				}
 			);
@@ -223,21 +243,22 @@ function CreateJobPage() {
 									<Jethr0Input
 										id={jobParameterDefinition.key}
 										onChange={(event) => {
-											setJobParameters({
-												...jobParameters,
-												[jobParameterDefinition.key]:
-													event.target.value,
+											updateJobParameters({
+												jobParameters,
+												key: jobParameterDefinition.key,
+												value: event.target.value,
 											});
+
+											setJobParameters(jobParameters);
 										}}
 										placeholder={
 											jobParameterDefinition.valueDescription
 										}
 										type="text"
-										value={
-											jobParameters[
-												jobParameterDefinition.key
-											] || ''
-										}
+										value={getJobParameterValue({
+											jobParameters,
+											key: jobParameterDefinition.key,
+										})}
 									/>
 								</ClayForm.Group>
 							);

@@ -115,7 +115,7 @@ function JobInformation({job}) {
 		);
 	}
 
-	let jobParameters = '';
+	let jobParameters = [];
 
 	if (job.parameters) {
 		jobParameters = JSON.parse(job.parameters);
@@ -173,11 +173,13 @@ function JobInformation({job}) {
 					fieldValue={job.startDate}
 				/>
 				{jobDefinition.jobDefinitionParameters &&
-					Object.entries(jobParameters).map(([key, value]) => {
+					jobParameters?.map((jobParameter) => {
 						let parameter;
 
 						for (const jobDefinitionParameter of jobDefinition.jobDefinitionParameters) {
-							if (jobDefinitionParameter.key === key) {
+							if (
+								jobDefinitionParameter.key === jobParameter.key
+							) {
 								parameter = jobDefinitionParameter;
 
 								break;
@@ -189,8 +191,8 @@ function JobInformation({job}) {
 								<Jethr0InformationField
 									fieldLabel={parameter.label}
 									fieldType={parameter.type.name}
-									fieldValue={value}
-									key={key}
+									fieldValue={jobParameter.value}
+									key={jobParameter.key}
 								/>
 							);
 						}

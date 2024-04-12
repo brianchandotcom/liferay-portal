@@ -14,15 +14,15 @@ export class ViewObjectDefinitionsPage {
 	readonly createObjectDefinitionButton: Locator;
 	readonly createObjectFolderButton: Locator;
 	readonly confirmObjectFolderNameInput: Locator;
-	readonly defaultObjectFolderLink: Locator;
+	readonly defaultObjectFolder: Locator;
 	readonly deleteObjectFolderButton: Locator;
 	readonly frontendDataSetEntries: Locator;
-	readonly objectFolderActionsLink: Locator;
+	readonly objectFolderActions: Locator;
 	readonly objectFolderCardHeader: Locator;
 	readonly objectFolderDeleteFolderOption: Locator;
 	readonly objectFolderEditLabelAndERCOption: Locator;
 	readonly objectFolders: Locator;
-	readonly objectFolderLabel: Locator;
+	readonly objectFolderLabelInput: Locator;
 	readonly page: Page;
 	readonly viewInModelBuilderButton: Locator;
 
@@ -38,8 +38,8 @@ export class ViewObjectDefinitionsPage {
 		this.createObjectFolderButton = page.getByRole('button', {
 			name: 'Create Folder',
 		});
-		this.defaultObjectFolderLink = page
-			.locator('li')
+		this.defaultObjectFolder = page
+			.getByRole('listitem')
 			.filter({hasText: 'Default'});
 		this.deleteObjectFolderButton = page.getByRole('button', {
 			name: 'Delete',
@@ -48,7 +48,7 @@ export class ViewObjectDefinitionsPage {
 		this.objectFolders = page
 			.getByRole('list')
 			.filter({hasText: 'Default'});
-		this.objectFolderActionsLink = page
+		this.objectFolderActions = page
 			.locator('div.lfr__object-web-view-object-definitions-title-kebab')
 			.getByLabel('Object Folder Actions');
 		this.objectFolderCardHeader = page.locator(
@@ -60,7 +60,7 @@ export class ViewObjectDefinitionsPage {
 		this.objectFolderEditLabelAndERCOption = page.getByRole('menuitem', {
 			name: 'Edit Label and ERC',
 		});
-		this.objectFolderLabel = page.locator('input[name="label"]');
+		this.objectFolderLabelInput = page.locator('input[name="label"]');
 		this.page = page;
 		this.viewInModelBuilderButton = page.getByLabel(
 			'View in Model Builder'
@@ -68,13 +68,13 @@ export class ViewObjectDefinitionsPage {
 	}
 
 	async clickDefaultObjectFolder() {
-		await this.defaultObjectFolderLink.click();
+		await this.defaultObjectFolder.click();
 	}
 
 	async createObjectFolder(objectFolderLabel: string) {
 		await this.addObjectFolderButton.click();
-		await this.objectFolderLabel.click();
-		await this.objectFolderLabel.fill(objectFolderLabel);
+		await this.objectFolderLabelInput.click();
+		await this.objectFolderLabelInput.fill(objectFolderLabel);
 
 		const responsePromise = this.page.waitForResponse('**/object-folders');
 		await this.createObjectFolderButton.click();
@@ -105,7 +105,7 @@ export class ViewObjectDefinitionsPage {
 	}
 
 	async openObjectFolderActions() {
-		await this.objectFolderActionsLink.click();
+		await this.objectFolderActions.click();
 	}
 
 	async openObjectFolder(objectFolderLabel: string) {

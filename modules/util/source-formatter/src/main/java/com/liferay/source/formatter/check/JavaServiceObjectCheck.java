@@ -272,6 +272,9 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 			}
 
 			String convertedSetterObjectName = setterObjectName.replaceFirst(
+				"^(create|modified)Date$", "$1Time");
+
+			convertedSetterObjectName = convertedSetterObjectName.replaceFirst(
 				"(.+?)(List|Map|(Unicode)?Properties)$", "$1");
 
 			for (Element columnElement :

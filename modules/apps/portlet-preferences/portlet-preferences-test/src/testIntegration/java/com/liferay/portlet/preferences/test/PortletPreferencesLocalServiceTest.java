@@ -94,7 +94,7 @@ public class PortletPreferencesLocalServiceTest
 	}
 
 	@Test
-	public void testAddPortletPreferencesWithCompanyThreadLocalNotSetToZero()
+	public void testAddPortletPreferencesWithCompanyThreadLocal()
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
@@ -114,7 +114,7 @@ public class PortletPreferencesLocalServiceTest
 	}
 
 	@Test
-	public void testAddPortletPreferencesWithCompanyThreadLocalSetToZero()
+	public void testAddPortletPreferencesWithCompanyThreadLocalSystem()
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =

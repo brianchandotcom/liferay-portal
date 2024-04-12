@@ -95,11 +95,11 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 
 	const friendlyUrlAddon = useMemo(
 		() =>
-			selectedItems.map(
-				(category) => category.label.replace(/ /g, '-') + '/'
-			),
+			selectedItems
+				.map((category) => category.label.replace(/ /g, '-') + '/')
+				.join(''),
 		[selectedItems]
-	).join('');
+	);
 
 	useEffect(() => {
 		const titleInput = document.getElementById(namespace + 'title');

@@ -455,6 +455,11 @@ public class ObjectServiceUpgradeStepRegistrator
 					"businessType in ('",
 					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION, "', '",
 					ObjectFieldConstants.BUSINESS_TYPE_FORMULA, "')")));
+
+		registry.register(
+			"9.1.1", "9.1.2",
+			new com.liferay.object.internal.upgrade.v9_1_2.
+				ObjectRelationshipUpgradeProcess());
 	}
 
 	@Reference

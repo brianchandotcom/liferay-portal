@@ -1508,7 +1508,7 @@
 </tr>
 <tr>
 	<td>SEARCH_PRODUCT_RELATIONS</td>
-	<td>//input[@placeholder='Search']</td>
+	<td>//input[starts-with(@placeholder, 'Search')]</td>
 	<td></td>
 </tr>
 <tr>

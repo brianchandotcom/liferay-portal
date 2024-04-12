@@ -115,6 +115,8 @@
 									},
 									"widgetInstance": {
 										"widgetConfig": {
+											"destination": "/search",
+											"searchScope": "this-site"
 										},
 										"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
 									}

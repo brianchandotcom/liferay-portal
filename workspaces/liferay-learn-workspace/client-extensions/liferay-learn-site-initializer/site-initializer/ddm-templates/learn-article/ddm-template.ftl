@@ -41,7 +41,7 @@
 </#list>
 
 <article class="learn-article">
-	<div class="flex-column d-flex">
+	<div class="d-flex flex-column">
 		<div class="learn-article-breadcrumbs">
 			<div>
 				<div class="align-items-baseline d-flex justify-content-between mb-3">
@@ -81,8 +81,6 @@
 		</div>
 
 		<div class="learn-article-wrapper">
-			
-
 			<div class="learn-article-content">
 				<#if (content.getData())??>
 					${content.getData()}
@@ -93,14 +91,14 @@
 						<a href='${childrenJSONArray.getJSONObject(i).getString("url")}'>${childrenJSONArray.getJSONObject(i).getString("title")}</a>
 					</#list>
 				</#if>
-				<div class="article-categories-tags">
+				<div class="learn-article-categories-tags">
 					<#list taxonomyVocabularies as vocabulary>
 						<div class="align-items-baseline d-flex mt-2">
-							<div class="article-category-title mr-2">
+							<div class="learn-article-category-title mr-2">
 								${vocabulary}:
 							</div>
 							<#list taxonomyCategoriesMap[vocabulary]?sort_by("categoryName") as taxonomyCategory>
-								<div class="article-category-tag mr-2">
+								<div class="learn-article-category-tag mr-2">
 									<a
 										class="label tag-container"
 										href="/search?category=${taxonomyCategory.categoryId}"
@@ -113,6 +111,7 @@
 					</#list>
 				</div>
 			</div>
+
 			<div class="learn-article-page-nav">
 				<ul class="nav nav-stacked toc" id="articleTOC"></ul>
 			</div>

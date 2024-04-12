@@ -91,19 +91,8 @@
 											},
 											"widgetInstance": {
 												"widgetConfig": {
-													"destination": "",
-													"displayStyle": "default",
-													"displayStyleGroupId": "20119",
-													"federatedSearchKey": "",
-													"invisible": "false",
-													"keywordsParameterName": "q",
-													"scopeParameterName": "scope",
-													"searchScope": "this-site",
-													"showStagedResults": "false",
-													"suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
-													"suggestionsDisplayThreshold": "2",
-													"suggestionsEnabled": "true",
-													"useAdvancedSearchSyntax": "false"
+													"destination": "/search",
+													"searchScope": "this-site"
 												},
 												"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
 											}
@@ -124,8 +113,7 @@
 								"paddingBottom": "24px",
 								"paddingLeft": "24px",
 								"paddingRight": "24px",
-								"paddingTop": "24px",
-								"textAlign": "center"
+								"paddingTop": "24px"
 							},
 							"indexed": true,
 							"layout": {

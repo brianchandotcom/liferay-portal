@@ -37,7 +37,7 @@
 											"value": {
 												"html": {
 													"mapping": {
-														"fieldKey": "_ddmTemplate_LEARN_ARTICLE_NAV",
+														"fieldKey": "_ddmTemplate_LEARN-ARTICLE-NAV",
 														"itemReference": {
 															"contextSource": "DisplayPageItem"
 														}
@@ -90,7 +90,7 @@
 													"value": {
 														"html": {
 															"mapping": {
-																"fieldKey": "_ddmTemplate_LEARN_ARTICLE",
+																"fieldKey": "_ddmTemplate_LEARN-ARTICLE",
 																"itemReference": {
 																	"contextSource": "DisplayPageItem"
 																}

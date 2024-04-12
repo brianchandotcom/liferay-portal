@@ -50,7 +50,7 @@ public class CISystemStatusReportUtil {
 
 		long durationDays = _getReportDurationDays();
 
-		localDate = localDate.minusDays(durationDays);
+		localDate = localDate.minusDays(durationDays - 1);
 
 		for (String dateString :
 				JenkinsResultsParserUtil.getDateStrings(

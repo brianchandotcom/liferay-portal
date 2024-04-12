@@ -230,9 +230,11 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 		Files.deleteIfExists(Paths.get(filePath, "js/testray-data.js"));
 
+		long reportDurationDays = _getReportDurationDays(reportName);
+
 		_copyArchivedNodeData(
 			_getReportDurationDays(reportName),
-			_getStartDateString(reportName));
+			_getStartDateString(reportDurationDays - 1));
 
 		CISystemStatusReportUtil.writeJenkinsDataJavaScriptFile(
 			filePath + "/js/jenkins-data.js");
@@ -463,13 +465,17 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		return buildParameter.split("\\s*,\\s*");
 	}
 
-	private String _getStartDateString(String reportName) {
+	private String _getStartDateString(long daysAgo) {
 		LocalDate localDate = LocalDate.parse(
 			_CURRENT_DATE_STRING, _dateTimeFormatter);
 
-		localDate = localDate.minusDays(_getReportDurationDays(reportName));
+		localDate = localDate.minusDays(daysAgo);
 
 		return localDate.format(_dateTimeFormatter);
+	}
+
+	private String _getStartDateString(String reportName) {
+		return _getStartDateString(_getReportDurationDays(reportName));
 	}
 
 	private void _updateNodeDataFile(String filePath) throws IOException {

@@ -86,22 +86,38 @@ public class TestrayRunComparisonResourceImpl
 			Filter filter)
 		throws Exception {
 
+		Map<String, Map<String, Serializable>> testrayCaseMap =
+			_getObjectEntriesMap(
+				_getCaseFilterString(testrayRunId1, testrayRunId2), "c_caseId",
+				"Case");
+
+		Set<TestrayCaseResult> set = _getMergedTestrayCaseResults(
+			ParamUtil.getString(contextHttpServletRequest, "filter"),
+			testrayCaseResultError1, testrayCaseResultError2,
+			testrayCaseResultIssue1, testrayCaseResultIssue2,
+			testrayCaseResultStatus1, testrayCaseResultStatus2, testrayRunId1,
+			testrayRunId2);
+
+		for (TestrayCaseResult testrayCaseResult : set) {
+			Map<String, Serializable> testrayCase = testrayCaseMap.get(
+				String.valueOf(testrayCaseResult.getTestrayCaseId()));
+
+			testrayCaseResult.setName(String.valueOf(testrayCase.get("name")));
+
+			testrayCaseResult.setPriority(
+				GetterUtil.getInteger(testrayCase.get("priority")));
+		}
+
 		TestrayRunComparison testrayRunComparison = new TestrayRunComparison();
 
 		testrayRunComparison.setResults(
 			ListUtil.fromArray(
 				HashMapBuilder.<String, Object>put(
-					"Runs",
-					_getTestrayRunComparisons(
-						_getMergedTestrayCaseResults(
-							ParamUtil.getString(
-								contextHttpServletRequest, "filter"),
-							testrayCaseResultError1, testrayCaseResultError2,
-							testrayCaseResultIssue1, testrayCaseResultIssue2,
-							testrayCaseResultStatus1, testrayCaseResultStatus2,
-							testrayRunId1, testrayRunId2))
+					"Runs", _getTestrayRunComparisons(set)
 				).build()
 			).toArray());
+		testrayRunComparison.setTestrayCaseResults(
+			set.toArray(new TestrayCaseResult[0]));
 
 		return testrayRunComparison;
 	}
@@ -127,6 +143,20 @@ public class TestrayRunComparisonResourceImpl
 		}
 
 		map.put(testrayCaseResult.getStatus2(), count + 1);
+	}
+
+	private String _getCaseFilterString(
+		long testrayRunId1, long testrayRunId2) {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("caseToCaseResult/r_runToCaseResult_c_runId eq '");
+		sb.append(String.valueOf(testrayRunId1));
+		sb.append("' or caseToCaseResult/r_runToCaseResult_c_runId eq '");
+		sb.append(String.valueOf(testrayRunId2));
+		sb.append("'");
+
+		return sb.toString();
 	}
 
 	private String _getComponentFilterString(
@@ -221,33 +251,6 @@ public class TestrayRunComparisonResourceImpl
 		);
 
 		return map;
-	}
-
-	private long _getTestrayCaseResultId(
-		Map<String, Serializable> testrayCaseResultMap) {
-
-		if (testrayCaseResultMap == null) {
-			return 0;
-		}
-
-		return GetterUtil.getLong(testrayCaseResultMap.get("c_caseResultId"));
-	}
-
-	private String _getTestrayCaseResultStatus(
-		Map<String, Serializable> testrayCaseResultMap) {
-
-		if (testrayCaseResultMap == null) {
-			return "DIDNOTRUN";
-		}
-
-		String dueStatus = String.valueOf(
-			testrayCaseResultMap.get("dueStatus"));
-
-		if (Objects.equals(dueStatus, "UNTESTED")) {
-			return "DIDNOTRUN";
-		}
-
-		return dueStatus;
 	}
 
 	private Map<String, Map<String, Map<String, Integer>>>

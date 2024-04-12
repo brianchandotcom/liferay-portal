@@ -29,10 +29,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -94,7 +91,7 @@ public class XLSBatchEngineExportTaskItemWriterImplTest
 		try (Workbook workbook = new XSSFWorkbook()) {
 			Sheet sheet = workbook.createSheet();
 
-			_populateRow(sheet.createRow(0), workbook, fieldNames);
+			_populateRow(sheet.createRow(0), fieldNames);
 
 			for (int i = 0; i < items.size(); i++) {
 				Item item = items.get(i);
@@ -126,7 +123,7 @@ public class XLSBatchEngineExportTaskItemWriterImplTest
 					}
 				}
 
-				_populateRow(sheet.createRow(i + 1), workbook, values);
+				_populateRow(sheet.createRow(i + 1), values);
 			}
 
 			ByteArrayOutputStream byteArrayOutputStream =
@@ -150,7 +147,7 @@ public class XLSBatchEngineExportTaskItemWriterImplTest
 		return expectedSheet.rowIterator();
 	}
 
-	private void _populateRow(Row row, Workbook workbook, List<?> cellValues) {
+	private void _populateRow(Row row, List<?> cellValues) {
 		for (int i = 0; i < cellValues.size(); i++) {
 			Object value = cellValues.get(i);
 
@@ -160,18 +157,7 @@ public class XLSBatchEngineExportTaskItemWriterImplTest
 				cell.setCellValue((Boolean)value);
 			}
 			else if (value instanceof Date) {
-				CellStyle cellStyle = workbook.createCellStyle();
-
-				CreationHelper creationHelper = workbook.getCreationHelper();
-
-				DataFormat dataFormat = creationHelper.createDataFormat();
-
-				cellStyle.setDataFormat(
-					dataFormat.getFormat("yyyy-mm-dd hh:mm:ss"));
-
-				cell.setCellStyle(cellStyle);
-
-				cell.setCellValue((Date)value);
+				cell.setCellValue(dateFormat.format(value));
 			}
 			else if (value instanceof Map) {
 				Map<?, ?> map = (Map<?, ?>)value;

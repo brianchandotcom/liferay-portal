@@ -187,7 +187,7 @@ definition {
 
 		Click.javaScriptClick(locator1 = "PageAudit#BUTTON_LAUNCH_ANY");
 
-		while (IsNotVisible(locator1 = "PageAudit#ALERT_BOX")) {
+		while (IsElementNotPresent(locator1 = "PageAudit#ALERT_BOX")) {
 			WaitForElementPresent(locator1 = "PageAudit#ALERT_BOX");
 		}
 	}

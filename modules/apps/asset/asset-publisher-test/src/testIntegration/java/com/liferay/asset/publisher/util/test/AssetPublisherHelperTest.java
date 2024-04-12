@@ -7,6 +7,7 @@ package com.liferay.asset.publisher.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
@@ -34,10 +35,13 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletPreferences;
+import com.liferay.ratings.test.util.RatingsTestUtil;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 
 import java.util.Arrays;
@@ -438,6 +442,150 @@ public class AssetPublisherHelperTest {
 	}
 
 	@Test
+	public void testHighestRatedAsset() throws Exception {
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group1.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group1.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group1.getGroupId());
+
+		PortletPreferences portletPreferences = new MockPortletPreferences();
+
+		portletPreferences.setValue("orderByColumn1", "ratings");
+		portletPreferences.setValue("orderByType1", "DESC");
+
+		AssetEntryQuery assetEntryQuery =
+			_assetPublisherHelper.getAssetEntryQuery(
+				portletPreferences, _group1.getGroupId(), layout, new long[0],
+				new String[0], new String[0]);
+
+		assetEntryQuery.setClassNameIds(
+			new long[] {
+				_classNameLocalService.getClassNameId(
+					JournalArticle.class.getName())
+			});
+
+		SearchContainer<AssetEntry> searchContainer = new SearchContainer<>();
+
+		searchContainer.setResultsAndTotal(Collections::emptyList, 10);
+
+		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(),
+			journalArticle2.getResourcePrimKey());
+
+		RatingsTestUtil.addStats(
+			assetEntry2.getClassName(), assetEntry2.getClassPK(), 2000);
+
+		_checkAssetEntryResults(
+			_assetPublisherHelper.getAssetEntryResults(
+				searchContainer, assetEntryQuery, layout, portletPreferences,
+				StringPool.BLANK, null, null, TestPropsValues.getCompanyId(),
+				_group1.getGroupId(), TestPropsValues.getUserId(),
+				assetEntryQuery.getClassNameIds(), null),
+			new long[] {
+				journalArticle2.getResourcePrimKey(),
+				journalArticle1.getResourcePrimKey()
+			});
+
+		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(),
+			journalArticle1.getResourcePrimKey());
+
+		RatingsTestUtil.addStats(
+			assetEntry1.getClassName(), assetEntry1.getClassPK(), 4000);
+
+		_checkAssetEntryResults(
+			_assetPublisherHelper.getAssetEntryResults(
+				searchContainer, assetEntryQuery, layout, portletPreferences,
+				StringPool.BLANK, null, null, TestPropsValues.getCompanyId(),
+				_group1.getGroupId(), TestPropsValues.getUserId(),
+				assetEntryQuery.getClassNameIds(), null),
+			new long[] {
+				journalArticle1.getResourcePrimKey(),
+				journalArticle2.getResourcePrimKey()
+			});
+	}
+
+	@Test
+	public void testMostViewedAsset() throws Exception {
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group1.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group1.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group1.getGroupId());
+
+		PortletPreferences portletPreferences = new MockPortletPreferences();
+
+		portletPreferences.setValue("orderByColumn1", "viewCount");
+		portletPreferences.setValue("orderByType1", "DESC");
+
+		AssetEntryQuery assetEntryQuery =
+			_assetPublisherHelper.getAssetEntryQuery(
+				portletPreferences, _group1.getGroupId(), layout, new long[0],
+				new String[0], new String[0]);
+
+		assetEntryQuery.setClassNameIds(
+			new long[] {
+				_classNameLocalService.getClassNameId(
+					JournalArticle.class.getName())
+			});
+
+		SearchContainer<AssetEntry> searchContainer = new SearchContainer<>();
+
+		searchContainer.setResultsAndTotal(Collections::emptyList, 10);
+
+		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(),
+			journalArticle2.getResourcePrimKey());
+
+		_viewCountManager.incrementViewCount(
+			TestPropsValues.getCompanyId(),
+			_portal.getClassNameId(AssetEntry.class), assetEntry2.getEntryId(),
+			2);
+
+		_checkAssetEntryResults(
+			_assetPublisherHelper.getAssetEntryResults(
+				searchContainer, assetEntryQuery, layout, portletPreferences,
+				StringPool.BLANK, null, null, TestPropsValues.getCompanyId(),
+				_group1.getGroupId(), TestPropsValues.getUserId(),
+				assetEntryQuery.getClassNameIds(), null),
+			new long[] {
+				journalArticle2.getResourcePrimKey(),
+				journalArticle1.getResourcePrimKey()
+			});
+
+		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(),
+			journalArticle1.getResourcePrimKey());
+
+		_viewCountManager.incrementViewCount(
+			TestPropsValues.getCompanyId(),
+			_portal.getClassNameId(AssetEntry.class), assetEntry1.getEntryId(),
+			3);
+
+		_checkAssetEntryResults(
+			_assetPublisherHelper.getAssetEntryResults(
+				searchContainer, assetEntryQuery, layout, portletPreferences,
+				StringPool.BLANK, null, null, TestPropsValues.getCompanyId(),
+				_group1.getGroupId(), TestPropsValues.getUserId(),
+				assetEntryQuery.getClassNameIds(), null),
+			new long[] {
+				journalArticle1.getResourcePrimKey(),
+				journalArticle2.getResourcePrimKey()
+			});
+	}
+
+	@Test
 	public void testNotGetAssetWithTagsFromDifferentSite() throws Exception {
 		String assetTagName1 = RandomTestUtil.randomString();
 
@@ -527,10 +675,29 @@ public class AssetPublisherHelperTest {
 		return portletPreferences;
 	}
 
+	private void _checkAssetEntryResults(
+		List<AssetEntryResult> assetEntryResults, long[] classPKs) {
+
+		AssetEntryResult assetEntryResult = assetEntryResults.get(0);
+
+		List<AssetEntry> assetEntries = assetEntryResult.getAssetEntries();
+
+		AssetEntry assetEntry1 = assetEntries.get(0);
+
+		Assert.assertEquals(assetEntry1.getClassPK(), classPKs[0]);
+
+		AssetEntry assetEntry2 = assetEntries.get(1);
+
+		Assert.assertEquals(assetEntry2.getClassPK(), classPKs[1]);
+	}
+
 	private static Configuration _assetPublisherWebConfiguration;
 
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
 	private AssetPublisherHelper _assetPublisherHelper;
@@ -550,10 +717,16 @@ public class AssetPublisherHelperTest {
 	@DeleteAfterTestRun
 	private Group _group2;
 
+	@Inject
+	private Portal _portal;
+
 	@Inject(
 		filter = "segments.criteria.contributor.key=user",
 		type = SegmentsCriteriaContributor.class
 	)
 	private SegmentsCriteriaContributor _segmentsCriteriaContributor;
+
+	@Inject
+	private ViewCountManager _viewCountManager;
 
 }

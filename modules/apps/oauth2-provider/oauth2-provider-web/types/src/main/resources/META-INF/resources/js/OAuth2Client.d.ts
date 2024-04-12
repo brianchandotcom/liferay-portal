@@ -15,7 +15,6 @@ interface IOAuth2ClientOptions {
 	authorizeURL: string;
 	clientId: string;
 	debug?: boolean;
-	encodedRedirectURL: string;
 	homePageURL: string;
 	redirectURIs: Array<string>;
 	tokenURL: string;
@@ -24,7 +23,6 @@ declare class OAuth2Client {
 	private authorizeURL;
 	private clientId;
 	private debug;
-	private encodedRedirectURL;
 	private homePageURL;
 	private redirectURIs;
 	private tokenURL;

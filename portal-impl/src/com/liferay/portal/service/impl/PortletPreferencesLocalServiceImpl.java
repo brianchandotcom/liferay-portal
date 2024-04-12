@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutStagingHandler;
@@ -86,6 +87,10 @@ public class PortletPreferencesLocalServiceImpl
 
 		PortletPreferences portletPreferences =
 			portletPreferencesPersistence.create(portletPreferencesId);
+
+		if (portletPreferences.getCompanyId() == CompanyConstants.SYSTEM) {
+			portletPreferences.setCompanyId(companyId);
+		}
 
 		portletPreferences.setOwnerId(ownerId);
 		portletPreferences.setOwnerType(ownerType);

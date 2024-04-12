@@ -17,6 +17,8 @@ import {
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
+const DEFAULT_URL = 'default-url';
+const CUSTOM_URL = 'custom-url';
 function AssetVocabulariesCategoriesFriendlyUrlSelector({
 	formGroupClassName = '',
 	id,
@@ -30,7 +32,9 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 	showVocabularyLabel = true,
 	useFallbackInput = true,
 }) {
-	const [customUrlCheckboxValue, setCustomUrlCheckboxValue] = useState(0);
+	const [customUrlCheckboxValue, setCustomUrlCheckboxValue] = useState(
+		DEFAULT_URL
+	);
 
 	const [friendlyUrlValue, setFriendlyUrlValue] = useState('');
 
@@ -124,7 +128,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 				</div>
 
 				<ClayRadioGroup
-					defaultValue={0}
+					defaultValue={DEFAULT_URL}
 					id={namespace + 'automaticURL'}
 					name={namespace + 'automaticURL'}
 					onChange={setCustomUrlCheckboxValue}
@@ -132,14 +136,14 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 				>
 					<ClayRadio
 						label={Liferay.Language.get('use-the-default-url')}
-						value={0}
+						value={DEFAULT_URL}
 					/>
 
 					<ClayRadio
 						label={Liferay.Language.get(
 							'i-want-to-customize-the-url'
 						)}
-						value={1}
+						value={CUSTOM_URL}
 					/>
 				</ClayRadioGroup>
 			</div>
@@ -215,7 +219,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 								Liferay.Language.get('select-x'),
 								label
 							)}
-							disabled={customUrlCheckboxValue === 0}
+							disabled={customUrlCheckboxValue === DEFAULT_URL}
 							displayType="secondary"
 							onClick={handleSelectButtonClick}
 							ref={selectButtonRef}
@@ -249,6 +253,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 
 					<ClayInput.GroupItem append>
 						<ClayInput
+							disabled={customUrlCheckboxValue === DEFAULT_URL}
 							id={namespace + 'friendly_url'}
 							onChange={setFriendlyUrlValue}
 							placeholder={Liferay.Language.get('friendly-url')}

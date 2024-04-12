@@ -109,7 +109,7 @@ export default class Blogs {
 		);
 
 		if (Liferay.FeatureFlags['LPD-11147']) {
-			return automaticURLInput.value === '0';
+			return automaticURLInput.value === 'default-url';
 		}
 
 		return automaticURLInput.value === 'true';

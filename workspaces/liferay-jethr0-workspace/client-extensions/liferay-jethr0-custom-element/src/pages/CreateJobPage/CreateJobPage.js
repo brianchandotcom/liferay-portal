@@ -13,14 +13,11 @@ import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcru
 import Jethr0ButtonsRow from '../../components/Jethr0ButtonsRow/Jethr0ButtonsRow';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0Input from '../../components/Jethr0Input/Jethr0Input';
+import Jethr0JobParameterFields from '../../components/Jethr0JobParameterFields/Jethr0JobParameterFields';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0SelectWithOption from '../../components/Jethr0SelectWithOption/Jethr0SelectWithOption';
 import {getJobDefinitions} from '../../objects/jobdefinitions/JobDefinitionUtil';
-import {
-	createJob,
-	getJobParameterValue,
-	updateJobParameters,
-} from '../../objects/jobs/JobUtil';
+import {createJob, getJobParameterValue} from '../../objects/jobs/JobUtil';
 import {getRoutineById} from '../../objects/routines/RoutineUtil';
 
 function CreateJobPage() {
@@ -229,41 +226,11 @@ function CreateJobPage() {
 					/>
 				</ClayForm.Group>
 
-				{jobParameters &&
-					jobDefinition.jobDefinitionParameters?.map(
-						(jobParameterDefinition) => {
-							return (
-								<ClayForm.Group
-									key={jobParameterDefinition.key}
-								>
-									<label htmlFor={jobParameterDefinition.key}>
-										{jobParameterDefinition.label}
-									</label>
-
-									<Jethr0Input
-										id={jobParameterDefinition.key}
-										onChange={(event) => {
-											updateJobParameters({
-												jobParameters,
-												key: jobParameterDefinition.key,
-												value: event.target.value,
-											});
-
-											setJobParameters(jobParameters);
-										}}
-										placeholder={
-											jobParameterDefinition.valueDescription
-										}
-										type="text"
-										value={getJobParameterValue({
-											jobParameters,
-											key: jobParameterDefinition.key,
-										})}
-									/>
-								</ClayForm.Group>
-							);
-						}
-					)}
+				<Jethr0JobParameterFields
+					jobParameters={jobParameters}
+					jobDefinitionParameters={jobDefinition.jobDefinitionParameters}
+					setJobParameters={setJobParameters}
+				/>
 
 				<Jethr0ButtonsRow
 					buttons={[

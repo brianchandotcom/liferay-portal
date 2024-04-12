@@ -47,8 +47,8 @@ public class GenerateTestrayCSVUtil {
 		if (allTestrayCaseResults.isEmpty()) {
 			System.out.println(
 				"There are no Testray case results to report. Testray may " +
-					"not have the results imported yet or there are no " +
-						"failures.");
+					"not have imported the results yet or the results " +
+						"contained no failures.");
 
 			return;
 		}

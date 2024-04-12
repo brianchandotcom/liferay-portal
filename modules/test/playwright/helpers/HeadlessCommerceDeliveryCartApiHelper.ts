@@ -42,7 +42,7 @@ export class HeadlessCommerceDeliveryCartApiHelper {
 	async postCart(cart: TCart, channelId: number): Promise<TCart> {
 		return await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/channels/${channelId}/carts?nestedFields=cartItems`,
-			{accountId: 0, cartItems: [], currencyCode: 'USD', ...cart}
+			{data: {accountId: 0, cartItems: [], currencyCode: 'USD', ...cart}}
 		);
 	}
 }

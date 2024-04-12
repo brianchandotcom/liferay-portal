@@ -24,9 +24,11 @@ export class JSONWebServicesJournalApiHelper {
 
 		return this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/expire-article`,
-			urlSearchParams.toString(),
-			true,
-			await this.apiHelpers.getJSONWebServicesHeaders()
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
 		);
 	}
 
@@ -38,9 +40,11 @@ export class JSONWebServicesJournalApiHelper {
 
 		return this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/move-article-to-trash`,
-			urlSearchParams.toString(),
-			true,
-			await this.apiHelpers.getJSONWebServicesHeaders()
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
 		);
 	}
 }

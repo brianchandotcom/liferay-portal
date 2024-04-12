@@ -25,7 +25,7 @@ export class HeadlessSiteApiHelper {
 	async createSite(site: TSite): Promise<Site> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites`,
-			site
+			{data: site}
 		);
 	}
 

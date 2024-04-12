@@ -45,15 +45,17 @@ export class HeadlessCommerceAdminPaymentApiHelper {
 		return await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/payments`,
 			{
-				amount: 0,
-				channelId: 0,
-				currencyCode: 'USD',
-				paymentIntegrationKey: 'paypal-integration',
-				paymentIntegrationType: 0,
-				paymentStatus: 0,
-				relatedItemName: 'com.liferay.commerce.model.CommerceOrder',
-				type: 0,
-				...payment,
+				data: {
+					amount: 0,
+					channelId: 0,
+					currencyCode: 'USD',
+					paymentIntegrationKey: 'paypal-integration',
+					paymentIntegrationType: 0,
+					paymentStatus: 0,
+					relatedItemName: 'com.liferay.commerce.model.CommerceOrder',
+					type: 0,
+					...payment,
+				},
 			}
 		);
 	}

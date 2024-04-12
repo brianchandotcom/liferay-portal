@@ -35,7 +35,7 @@ export class ListTypeAdminApiHelper {
 
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/list-type-definitions`,
-			requestBody
+			{data: requestBody}
 		);
 	}
 }

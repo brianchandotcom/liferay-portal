@@ -23,14 +23,14 @@ export class ApiBuilderHelper {
 	async postApiResource(data: DataObject, url: String) {
 		return this.apiHelpers.postResponse(
 			`${this.apiHelpers.baseUrl}${this.basePath}/${url}`,
-			data
+			{data}
 		);
 	}
 
 	async postApiApplication(data: DataObject) {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/applications`,
-			data
+			{data}
 		);
 	}
 
@@ -43,7 +43,7 @@ export class ApiBuilderHelper {
 	async postAPIFilter(data: DataObject) {
 		return this.apiHelpers.postResponse(
 			`${this.apiHelpers.baseUrl}${this.basePath}/filters`,
-			data
+			{data}
 		);
 	}
 

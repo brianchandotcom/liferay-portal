@@ -28,7 +28,7 @@ export class DataEngineApiHelper {
 	): Promise<DataDefinition> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/data-definitions/by-content-type/journal`,
-			dataDefinition
+			{data: dataDefinition}
 		);
 	}
 }

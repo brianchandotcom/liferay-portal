@@ -76,9 +76,11 @@ export class JSONWebServicesLayoutApiHelper {
 
 		const layout = await this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/add-layout`,
-			urlSearchParams.toString(),
-			true,
-			await this.apiHelpers.getJSONWebServicesHeaders()
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
 		);
 
 		// Publish content layouts using UI (since there's no headless method available yet)
@@ -107,9 +109,11 @@ export class JSONWebServicesLayoutApiHelper {
 
 		return this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/delete-layout`,
-			urlSearchParams.toString(),
-			true,
-			await this.apiHelpers.getJSONWebServicesHeaders()
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
 		);
 	}
 }

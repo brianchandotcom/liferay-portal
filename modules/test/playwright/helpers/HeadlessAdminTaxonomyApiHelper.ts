@@ -45,7 +45,7 @@ export class HeadlessAdminTaxonomyApiHelper {
 	}: createVocabularyProps): Promise<{id: number}> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/taxonomy-vocabularies`,
-			{assetTypes, name}
+			{data: {assetTypes, name}}
 		);
 	}
 
@@ -62,7 +62,7 @@ export class HeadlessAdminTaxonomyApiHelper {
 	}: createCategoryProps): Promise<{id: number}> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories`,
-			{name}
+			{data: {name}}
 		);
 	}
 
@@ -76,7 +76,7 @@ export class HeadlessAdminTaxonomyApiHelper {
 	async createTag({name, siteId}: createTagProps): Promise<{id: number}> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/keywords`,
-			{name}
+			{data: {name}}
 		);
 	}
 }

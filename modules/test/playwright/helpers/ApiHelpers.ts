@@ -41,6 +41,12 @@ type TDataApiHelpersData = {
 	type: string;
 };
 
+type TPostOptions = {
+	data?: DataObject | any[] | string;
+	failOnStatusCode?: boolean;
+	headers?: {[key: string]: string};
+};
+
 export class ApiHelpers {
 	readonly apiBuilder: ApiBuilderHelper;
 	readonly baseUrl: string;
@@ -119,9 +125,7 @@ export class ApiHelpers {
 
 	async postResponse(
 		url: string,
-		data: DataObject | any[] | string,
-		failOnStatusCode?: boolean,
-		headers?: {[key: string]: string}
+		{data, failOnStatusCode, headers}: TPostOptions = {}
 	) {
 		return await this.page.request.post(url, {
 			data,
@@ -130,18 +134,8 @@ export class ApiHelpers {
 		});
 	}
 
-	async post(
-		url: string,
-		data?: DataObject | any[] | string,
-		failOnStatusCode?: boolean,
-		headers?: {[key: string]: string}
-	) {
-		const response = await this.postResponse(
-			url,
-			data,
-			failOnStatusCode,
-			headers
-		);
+	async post(url: string, options: TPostOptions = {}) {
+		const response = await this.postResponse(url, options);
 
 		if (response.status() === 204) {
 			return;

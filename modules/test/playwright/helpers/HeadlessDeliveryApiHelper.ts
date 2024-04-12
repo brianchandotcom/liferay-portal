@@ -40,7 +40,7 @@ export class HeadlessDeliveryApiHelper {
 	}: createSitePageProps): Promise<Layout> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/site-pages`,
-			{pageDefinition, pagePermissions, title}
+			{data: {pageDefinition, pagePermissions, title}}
 		);
 	}
 
@@ -82,13 +82,15 @@ export class HeadlessDeliveryApiHelper {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/structured-contents`,
 			{
-				contentStructureId,
-				datePublished,
-				keywords: tags,
-				taxonomyCategoryIds: categoryIds,
-				title,
-			},
-			true
+				data: {
+					contentStructureId,
+					datePublished,
+					keywords: tags,
+					taxonomyCategoryIds: categoryIds,
+					title,
+				},
+				failOnStatusCode: true,
+			}
 		);
 	}
 

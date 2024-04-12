@@ -45,11 +45,13 @@ export class HeadlessCommerceAdminChannelApiHelper {
 		channel = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/channels`,
 			{
-				currencyCode: 'USD',
-				name: 'Channel' + getRandomInt(),
-				siteGroupId: 0,
-				type: 'site',
-				...channel,
+				data: {
+					currencyCode: 'USD',
+					name: 'Channel' + getRandomInt(),
+					siteGroupId: 0,
+					type: 'site',
+					...channel,
+				},
 			}
 		);
 

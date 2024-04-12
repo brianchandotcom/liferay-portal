@@ -57,14 +57,14 @@ export class ObjectApiHelper {
 
 		return this.apiHelpers.postResponse(
 			`${liferayConfig.environment.baseUrl}${restContextPath}`,
-			data
+			{data}
 		);
 	}
 
 	async postObjectEntry(data: DataObject, applicationName: string) {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${applicationName}/`,
-			data
+			{data}
 		);
 	}
 }

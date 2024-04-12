@@ -66,7 +66,7 @@ export class ObjectAdminApiHelper {
 	): Promise<TObjectAction> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${externalReferenceCode}/object-actions`,
-			objectAction
+			{data: objectAction}
 		);
 	}
 
@@ -75,7 +75,7 @@ export class ObjectAdminApiHelper {
 	) {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${objectRelationship.objectDefinitionExternalReferenceCode1}/object-relationships`,
-			objectRelationship
+			{data: objectRelationship}
 		);
 	}
 
@@ -123,7 +123,7 @@ export class ObjectAdminApiHelper {
 
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions`,
-			requestBody
+			{data: requestBody}
 		);
 	}
 
@@ -134,11 +134,13 @@ export class ObjectAdminApiHelper {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-folders`,
 			{
-				externalReferenceCode: objectFolderExternalReferenceCode,
-				label: {
-					en_US: objectFolderExternalReferenceCode,
+				data: {
+					externalReferenceCode: objectFolderExternalReferenceCode,
+					label: {
+						en_US: objectFolderExternalReferenceCode,
+					},
+					name: objectFolderExternalReferenceCode,
 				},
-				name: objectFolderExternalReferenceCode,
 			}
 		);
 	}

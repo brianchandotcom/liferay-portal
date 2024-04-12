@@ -26,9 +26,11 @@ export class JSONWebServicesGroupApiHelper {
 
 		return this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/get-company-group`,
-			urlSearchParams.toString(),
-			true,
-			await this.apiHelpers.getJSONWebServicesHeaders()
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
 		);
 	}
 
@@ -40,9 +42,11 @@ export class JSONWebServicesGroupApiHelper {
 
 		return this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/get-group`,
-			urlSearchParams.toString(),
-			true,
-			await this.apiHelpers.getJSONWebServicesHeaders()
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
 		);
 	}
 }

@@ -145,10 +145,12 @@ test('can export as JSON with all field types mapped', async ({
 	const picklist = await apiHelpers.post(
 		'/o/headless-admin-list-type/v1.0/list-type-definitions',
 		{
-			externalReferenceCode: 'customPicklistERC',
-			name: 'customPicklist',
-			name_i18n: {
-				en_US: 'customPicklist',
+			data: {
+				externalReferenceCode: 'customPicklistERC',
+				name: 'customPicklist',
+				name_i18n: {
+					en_US: 'customPicklist',
+				},
 			},
 		}
 	);
@@ -156,10 +158,12 @@ test('can export as JSON with all field types mapped', async ({
 	await apiHelpers.post(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions/${picklist.id}/list-type-entries`,
 		{
-			key: 'distance1',
-			name: 'distance1',
-			name_i18n: {
-				en_US: 'distance1',
+			data: {
+				key: 'distance1',
+				name: 'distance1',
+				name_i18n: {
+					en_US: 'distance1',
+				},
 			},
 		}
 	);

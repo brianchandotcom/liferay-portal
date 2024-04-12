@@ -38,7 +38,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			restSchema,
 		};
 
-		return this.post(url, data);
+		return this.post(url, {data});
 	}
 
 	async createDataSetView({
@@ -73,7 +73,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			symbol,
 		};
 
-		return this.post(url, data);
+		return this.post(url, {data});
 	}
 
 	async createDataSetViewCardsSection({
@@ -93,7 +93,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC,
 		};
 
-		return this.post(url, data);
+		return this.post(url, {data});
 	}
 
 	async createDataSetViewCreationAction({
@@ -128,7 +128,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			url,
 		};
 
-		return this.post(endpointUrl, data);
+		return this.post(endpointUrl, {data});
 	}
 
 	async createDataSetViewFields({
@@ -154,7 +154,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			...extraBodyParams,
 		};
 
-		return this.post(url, data);
+		return this.post(url, {data});
 	}
 
 	async createDataSetViewItemAction({
@@ -204,7 +204,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			url,
 		};
 
-		return this.post(endpointUrl, data);
+		return this.post(endpointUrl, {data});
 	}
 
 	async createDataSetViewListSection({
@@ -224,7 +224,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			r_fdsViewFDSListSectionRelationship_c_fdsViewERC,
 		};
 
-		return this.post(url, data);
+		return this.post(url, {data});
 	}
 
 	async deleteDataSet({erc = DEFAULT_DATA_SET_ERC}: {erc?: string}) {

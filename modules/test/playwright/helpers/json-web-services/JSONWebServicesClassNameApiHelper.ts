@@ -26,9 +26,11 @@ export class JSONWebServicesClassNameApiHelper {
 
 		return this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/fetch-class-name`,
-			urlSearchParams.toString(),
-			true,
-			await this.apiHelpers.getJSONWebServicesHeaders()
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
 		);
 	}
 }

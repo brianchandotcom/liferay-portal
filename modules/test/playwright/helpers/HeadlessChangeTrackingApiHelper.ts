@@ -30,7 +30,7 @@ export class HeadlessChangeTrackingApiHelper {
 
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/ct-collections`,
-			requestBody
+			{data: requestBody}
 		);
 	}
 

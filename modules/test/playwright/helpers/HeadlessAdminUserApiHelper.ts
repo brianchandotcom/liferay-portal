@@ -45,7 +45,7 @@ export class HeadlessAdminUserApiHelper {
 	) {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/accounts/${accountId}/user-accounts/by-email-address`,
-			emails || []
+			{data: emails || []}
 		);
 	}
 
@@ -91,7 +91,7 @@ export class HeadlessAdminUserApiHelper {
 	async postAccount(account?: TAccount): Promise<TAccount> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/accounts`,
-			{name: 'Account' + getRandomInt(), ...(account || {})}
+			{data: {name: 'Account' + getRandomInt(), ...(account || {})}}
 		);
 	}
 
@@ -101,7 +101,7 @@ export class HeadlessAdminUserApiHelper {
 	) {
 		return this.apiHelpers.postResponse(
 			`${this.apiHelpers.baseUrl}${this.basePath}/roles/${roleId}/association/user-account/${userAccountId}`,
-			{}
+			{data: {}}
 		);
 	}
 
@@ -110,7 +110,12 @@ export class HeadlessAdminUserApiHelper {
 	): Promise<TOrganization> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/organizations`,
-			{name: 'Organization' + getRandomInt(), ...(organization || {})}
+			{
+				data: {
+					name: 'Organization' + getRandomInt(),
+					...(organization || {}),
+				},
+			}
 		);
 	}
 
@@ -127,7 +132,7 @@ export class HeadlessAdminUserApiHelper {
 	) {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/accounts/by-external-reference-code/${accountERC}/account-roles/${roleId}/user-accounts/by-email-address/${userEmail}`,
-			{}
+			{data: {}}
 		);
 	}
 }

@@ -26,9 +26,11 @@ export class JSONWebServicesCompanyApiHelper {
 
 		return this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/get-company-by-web-id`,
-			urlSearchParams.toString(),
-			true,
-			await this.apiHelpers.getJSONWebServicesHeaders()
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
 		);
 	}
 }

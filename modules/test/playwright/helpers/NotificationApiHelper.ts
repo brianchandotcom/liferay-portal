@@ -59,7 +59,7 @@ export class NotificationApiHelper {
 	): Promise<TNotificationTemplate> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/notification-templates`,
-			notificationTemplate
+			{data: notificationTemplate}
 		);
 	}
 }

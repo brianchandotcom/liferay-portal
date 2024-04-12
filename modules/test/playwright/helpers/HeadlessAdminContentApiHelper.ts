@@ -32,13 +32,15 @@ export class HeadlessAdminContentApiHelper {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/structured-contents/draft`,
 			{
-				contentStructureId,
-				datePublished,
-				keywords: tags,
-				taxonomyCategoryIds: categoryIds,
-				title,
-			},
-			true
+				data: {
+					contentStructureId,
+					datePublished,
+					keywords: tags,
+					taxonomyCategoryIds: categoryIds,
+					title,
+				},
+				failOnStatusCode: true,
+			}
 		);
 	}
 }

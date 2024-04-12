@@ -2354,11 +2354,6 @@ definition {
 
 			SelectFrameTop();
 
-			ContentPages.viewFragmentText(
-				assetType = "journal",
-				fragmentName = "Display Page Content",
-				text = "Web Content Content");
-
 			Navigator.gotoBack();
 		}
 

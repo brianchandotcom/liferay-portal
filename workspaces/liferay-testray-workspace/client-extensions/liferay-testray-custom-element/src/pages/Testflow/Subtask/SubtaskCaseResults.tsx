@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Dispatch} from 'react';
+import {Dispatch, useState} from 'react';
 import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
@@ -37,6 +37,7 @@ const SubtasksCaseResults = () => {
 	const navigate = useNavigate();
 	const {subtaskId, taskId} = useParams();
 	const {updateItemFromList} = useMutate();
+	const [isLoading, setIsLoading] = useState(false);
 	const {
 		data: {testraySubtask},
 		mutate: {mutateSubtask},
@@ -72,7 +73,8 @@ const SubtasksCaseResults = () => {
 		const subtaskUserCheck = () => {
 			const subtasksWithDifferentAssignedUsers =
 				testraySubtask?.user?.id?.toString() !==
-				Liferay.ThemeDisplay.getUserId();
+					Liferay.ThemeDisplay.getUserId() ||
+				!testraySubtask?.user?.id;
 
 			if (subtasksWithDifferentAssignedUsers) {
 				return [
@@ -97,6 +99,7 @@ const SubtasksCaseResults = () => {
 		mutate: KeyedMutator<TestraySubTaskCaseResult>,
 		selectedCaseResults: TestraySubTaskCaseResult[]
 	) => {
+		setIsLoading(true);
 		const {currentSubtask, newSubtask} = await testraySubTaskImpl.split(
 			selectedCaseResults,
 			Number(subtaskId),
@@ -114,6 +117,12 @@ const SubtasksCaseResults = () => {
 			}
 		);
 
+		dispatch({
+			payload: [],
+			type: ListViewTypes.SET_CLEAR_CHECKED_ROW,
+		});
+		setIsLoading(false);
+
 		Liferay.Util.openToast({
 			message: i18n.sub('x-tests-were-split-into-x-successfully-view-x', [
 				selectedCaseResults.length.toString(),
@@ -127,11 +136,6 @@ const SubtasksCaseResults = () => {
 					navigate(`../../subtasks/${newSubtask.id}`);
 				}
 			},
-		});
-
-		dispatch({
-			payload: [],
-			type: ListViewTypes.SET_CHECKED_ROW,
 		});
 	};
 
@@ -262,7 +266,7 @@ const SubtasksCaseResults = () => {
 						clearList={() =>
 							dispatch({
 								payload: [],
-								type: ListViewTypes.SET_CHECKED_ROW,
+								type: ListViewTypes.SET_CLEAR_CHECKED_ROW,
 							})
 						}
 						isVisible={!!selectedRows.length}
@@ -274,7 +278,8 @@ const SubtasksCaseResults = () => {
 							)
 						}
 						primaryButtonProps={{
-							disabled: !!alerts.length,
+							disabled: !!alerts.length && isLoading,
+							loading: isLoading,
 							title: i18n.translate('split-tests'),
 						}}
 						selectedCount={selectedRows.length}

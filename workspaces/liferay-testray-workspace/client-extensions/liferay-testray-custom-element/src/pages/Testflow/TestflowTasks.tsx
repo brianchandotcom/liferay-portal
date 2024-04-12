@@ -4,7 +4,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import {Dispatch, useContext} from 'react';
+import {Dispatch, useContext, useState} from 'react';
 import {Link, useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 import Avatar from '~/components/Avatar';
@@ -67,6 +67,7 @@ const TestFlowTasks = () => {
 	const {actions, completeModal, forceRefetch} = useSubtasksActions();
 	const {taskId} = useParams();
 	const {updateItemFromList} = useMutate();
+	const [isLoading, setIsLoading] = useState(false);
 
 	const projectId = String(testrayTask.build?.project?.id);
 
@@ -107,15 +108,15 @@ const TestFlowTasks = () => {
 		}
 
 		const subtasksWithDifferentAssignedUsers = subtasks
-			.filter(
-				({user}) =>
-					user &&
-					user.id.toString() !== Liferay.ThemeDisplay.getUserId()
+			?.filter(
+				(subtask) =>
+					subtask?.user?.id.toString() !==
+						Liferay.ThemeDisplay.getUserId() || !subtask?.user?.id
 			)
-			.map(({name}) => ({
+			?.map((subtask) => ({
 				text: i18n.sub(
 					'subtask-x-must-be-assigned-to-you-to-be-user-in-a-merge',
-					name
+					subtask?.name
 				),
 			}));
 
@@ -127,6 +128,8 @@ const TestFlowTasks = () => {
 		mutate: KeyedMutator<any>,
 		dispatch: Dispatch<any>
 	) => {
+		setIsLoading(true);
+
 		await testraySubTaskImpl.mergedToSubtask(subtasks);
 
 		updateItemFromList(
@@ -140,8 +143,10 @@ const TestFlowTasks = () => {
 
 		dispatch({
 			payload: [],
-			type: ListViewTypes.SET_CHECKED_ROW,
+			type: ListViewTypes.SET_CLEAR_CHECKED_ROW,
 		});
+
+		setIsLoading(false);
 	};
 
 	const searchBuilder = new SearchBuilder({useURIEncode: false});
@@ -429,7 +434,8 @@ const TestFlowTasks = () => {
 								clearList={() =>
 									dispatch({
 										payload: [],
-										type: ListViewTypes.SET_CHECKED_ROW,
+										type:
+											ListViewTypes.SET_CLEAR_CHECKED_ROW,
 									})
 								}
 								isVisible={!!selectedRows.length}
@@ -441,7 +447,8 @@ const TestFlowTasks = () => {
 									)
 								}
 								primaryButtonProps={{
-									disabled: !!alerts.length,
+									disabled: !!alerts.length && isLoading,
+									loading: isLoading,
 									title: i18n.translate('merge-subtasks'),
 								}}
 								selectedCount={selectedRows.length}

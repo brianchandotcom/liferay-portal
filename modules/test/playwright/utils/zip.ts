@@ -10,9 +10,13 @@ import {zip} from 'zip-a-folder';
 import {streamToString} from './stream';
 import {getTempDir} from './temp';
 
-export async function zipFolder(folderPath: string) {
+type ZipOptions = {
+	destPath?: string;
+};
+
+export async function zipFolder(folderPath: string, zipOptions?: ZipOptions) {
 	const tempFilePath = path.join(getTempDir(), path.basename(folderPath));
-	await zip(folderPath, tempFilePath);
+	await zip(folderPath, tempFilePath, zipOptions);
 
 	return tempFilePath;
 }

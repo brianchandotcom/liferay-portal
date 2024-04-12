@@ -97,10 +97,19 @@ public class PortalInstanceResourceTest
 	@Override
 	@Test
 	public void testPutPortalInstanceActivate() throws Exception {
+		_companyLocalService.updateCompany(
+			_company.getCompanyId(), _company.getVirtualHostname(),
+			_company.getMx(), _company.getMaxUsers(), false);
+
+		Company company = _companyLocalService.fetchCompany(
+			_portalInstance.getCompanyId());
+
+		Assert.assertFalse(company.isActive());
+
 		portalInstanceResource.putPortalInstanceActivate(
 			_portalInstance.getPortalInstanceId());
 
-		Company company = _companyLocalService.fetchCompany(
+		company = _companyLocalService.fetchCompany(
 			_portalInstance.getCompanyId());
 
 		Assert.assertTrue(company.isActive());
@@ -109,10 +118,19 @@ public class PortalInstanceResourceTest
 	@Override
 	@Test
 	public void testPutPortalInstanceDeactivate() throws Exception {
+		_companyLocalService.updateCompany(
+			_company.getCompanyId(), _company.getVirtualHostname(),
+			_company.getMx(), _company.getMaxUsers(), true);
+
+		Company company = _companyLocalService.fetchCompany(
+			_portalInstance.getCompanyId());
+
+		Assert.assertTrue(company.isActive());
+
 		portalInstanceResource.putPortalInstanceDeactivate(
 			_portalInstance.getPortalInstanceId());
 
-		Company company = _companyLocalService.fetchCompany(
+		company = _companyLocalService.fetchCompany(
 			_portalInstance.getCompanyId());
 
 		Assert.assertFalse(company.isActive());

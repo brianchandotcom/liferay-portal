@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ResourceRequest;
@@ -45,6 +46,7 @@ public class GetEmailNotificationRolesMVCResourceCommand
 
 		JSONArray accountRolesJSONArray = _jsonFactory.createJSONArray();
 		JSONArray organizationRolesJSONArray = _jsonFactory.createJSONArray();
+		JSONArray regularRolesJSONArray = _jsonFactory.createJSONArray();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -54,7 +56,8 @@ public class GetEmailNotificationRolesMVCResourceCommand
 					themeDisplay.getCompanyId(),
 					new int[] {
 						RoleConstants.TYPE_ACCOUNT,
-						RoleConstants.TYPE_ORGANIZATION
+						RoleConstants.TYPE_ORGANIZATION,
+						RoleConstants.TYPE_REGULAR
 					})) {
 
 			JSONObject roleJSONObject = JSONUtil.put(
@@ -66,8 +69,15 @@ public class GetEmailNotificationRolesMVCResourceCommand
 			if (role.getType() == RoleConstants.TYPE_ACCOUNT) {
 				accountRolesJSONArray.put(roleJSONObject);
 			}
-			else {
+			else if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
 				organizationRolesJSONArray.put(roleJSONObject);
+			}
+			else {
+				if (StringUtil.equals(role.getName(), RoleConstants.GUEST)) {
+					continue;
+				}
+
+				regularRolesJSONArray.put(roleJSONObject);
 			}
 		}
 
@@ -77,6 +87,8 @@ public class GetEmailNotificationRolesMVCResourceCommand
 				"accountRoles", accountRolesJSONArray
 			).put(
 				"organizationRoles", organizationRolesJSONArray
+			).put(
+				"regularRoles", regularRolesJSONArray
 			));
 	}
 

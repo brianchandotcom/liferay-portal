@@ -24,12 +24,12 @@ import com.liferay.testray.rest.resource.v1_0.TestrayRunComparisonResource;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,18 +50,20 @@ public class TestrayRunComparisonResourceImpl
 			Long testrayRunId1, Long testrayRunId2, Filter filter)
 		throws Exception {
 
-		Set<TestrayCaseResult> set = _getMergedTestrayCaseResults(
-			ParamUtil.getString(contextHttpServletRequest, "filter"), null,
-			null, null, null, null, null, testrayRunId1, testrayRunId2);
+		List<TestrayCaseResult> testrayCaseResults =
+			_getMergedTestrayCaseResults(
+				ParamUtil.getString(contextHttpServletRequest, "filter"), null,
+				null, null, null, null, null, testrayRunId1, testrayRunId2);
 
 		TestrayRunComparison testrayRunComparison = new TestrayRunComparison();
 
 		testrayRunComparison.setResults(
 			ListUtil.fromArray(
 				HashMapBuilder.<String, Object>put(
-					"Components", _getTestrayComponentComparisons(set)
+					"Components",
+					_getTestrayComponentComparisons(testrayCaseResults)
 				).put(
-					"Runs", _getTestrayRunComparisons(set)
+					"Runs", _getTestrayRunComparisons(testrayCaseResults)
 				).put(
 					"Teams",
 					_getTestrayTeamComparisons(
@@ -70,7 +72,7 @@ public class TestrayRunComparisonResourceImpl
 								"teamToComponents/", testrayRunId1,
 								testrayRunId2),
 							"c_teamId", "Team"),
-						set)
+						testrayCaseResults)
 				).build()
 			).toArray());
 
@@ -91,14 +93,15 @@ public class TestrayRunComparisonResourceImpl
 				_getCaseFilterString(testrayRunId1, testrayRunId2), "c_caseId",
 				"Case");
 
-		Set<TestrayCaseResult> set = _getMergedTestrayCaseResults(
-			ParamUtil.getString(contextHttpServletRequest, "filter"),
-			testrayCaseResultError1, testrayCaseResultError2,
-			testrayCaseResultIssue1, testrayCaseResultIssue2,
-			testrayCaseResultStatus1, testrayCaseResultStatus2, testrayRunId1,
-			testrayRunId2);
+		List<TestrayCaseResult> testrayCaseResults =
+			_getMergedTestrayCaseResults(
+				ParamUtil.getString(contextHttpServletRequest, "filter"),
+				testrayCaseResultError1, testrayCaseResultError2,
+				testrayCaseResultIssue1, testrayCaseResultIssue2,
+				testrayCaseResultStatus1, testrayCaseResultStatus2,
+				testrayRunId1, testrayRunId2);
 
-		for (TestrayCaseResult testrayCaseResult : set) {
+		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
 			Map<String, Serializable> testrayCase = testrayCaseMap.get(
 				String.valueOf(testrayCaseResult.getTestrayCaseId()));
 
@@ -113,11 +116,11 @@ public class TestrayRunComparisonResourceImpl
 		testrayRunComparison.setResults(
 			ListUtil.fromArray(
 				HashMapBuilder.<String, Object>put(
-					"Runs", _getTestrayRunComparisons(set)
+					"Runs", _getTestrayRunComparisons(testrayCaseResults)
 				).build()
 			).toArray());
 		testrayRunComparison.setTestrayCaseResults(
-			set.toArray(new TestrayCaseResult[0]));
+			testrayCaseResults.toArray(new TestrayCaseResult[0]));
 
 		return testrayRunComparison;
 	}
@@ -176,7 +179,7 @@ public class TestrayRunComparisonResourceImpl
 		return sb.toString();
 	}
 
-	private Set<TestrayCaseResult> _getMergedTestrayCaseResults(
+	private List<TestrayCaseResult> _getMergedTestrayCaseResults(
 			String filter, String testrayCaseResultError1,
 			String testrayCaseResultError2, String testrayCaseResultIssue1,
 			String testrayCaseResultIssue2, String testrayCaseResultStatus1,
@@ -184,7 +187,7 @@ public class TestrayRunComparisonResourceImpl
 			long testrayRunId2)
 		throws Exception {
 
-		Set<TestrayCaseResult> set = new HashSet<>();
+		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 
 		Map<String, Map<String, Serializable>> testrayCaseResultsMap1 =
 			_getObjectEntriesMap(
@@ -212,7 +215,7 @@ public class TestrayRunComparisonResourceImpl
 		for (Map.Entry<String, Map<String, Serializable>> entry :
 				testrayCaseResultsMap1.entrySet()) {
 
-			set.add(
+			testrayCaseResults.add(
 				_mergeTestrayCaseResults(
 					entry.getValue(),
 					testrayCaseResultsMap2.remove(entry.getKey()),
@@ -222,12 +225,12 @@ public class TestrayRunComparisonResourceImpl
 		for (Map.Entry<String, Map<String, Serializable>> entry :
 				testrayCaseResultsMap2.entrySet()) {
 
-			set.add(
+			testrayCaseResults.add(
 				_mergeTestrayCaseResults(
 					null, entry.getValue(), testrayComponentsMap));
 		}
 
-		return set;
+		return testrayCaseResults;
 	}
 
 	private Map<String, Map<String, Serializable>> _getObjectEntriesMap(
@@ -254,12 +257,13 @@ public class TestrayRunComparisonResourceImpl
 	}
 
 	private Map<String, Map<String, Map<String, Integer>>>
-		_getTestrayComponentComparisons(Set<TestrayCaseResult> set) {
+		_getTestrayComponentComparisons(
+			List<TestrayCaseResult> testrayCaseResults) {
 
 		Map<String, Map<String, Map<String, Integer>>>
 			testrayComponentComparisonsMap = new HashMap<>();
 
-		for (TestrayCaseResult testrayCaseResult : set) {
+		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
 			Map<String, Map<String, Integer>> entityComparisonsMap =
 				testrayComponentComparisonsMap.get(
 					testrayCaseResult.getTestrayComponentName());
@@ -280,11 +284,11 @@ public class TestrayRunComparisonResourceImpl
 	}
 
 	private Map<String, Map<String, Integer>> _getTestrayRunComparisons(
-		Set<TestrayCaseResult> set) {
+		List<TestrayCaseResult> testrayCaseResults) {
 
 		Map<String, Map<String, Integer>> map = new HashMap<>();
 
-		for (TestrayCaseResult testrayCaseResult : set) {
+		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
 			_compareTestrayCaseResultStatus(map, testrayCaseResult);
 		}
 
@@ -294,12 +298,12 @@ public class TestrayRunComparisonResourceImpl
 	private Map<String, Map<String, Map<String, Integer>>>
 		_getTestrayTeamComparisons(
 			Map<String, Map<String, Serializable>> testrayTeamsMap,
-			Set<TestrayCaseResult> set) {
+			List<TestrayCaseResult> testrayCaseResults) {
 
 		Map<String, Map<String, Map<String, Integer>>>
 			testrayTeamComparisonsMap = new HashMap<>();
 
-		for (TestrayCaseResult testrayCaseResult : set) {
+		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
 			Map<String, Serializable> testrayTeam = testrayTeamsMap.get(
 				String.valueOf(testrayCaseResult.getTestrayTeamId()));
 

@@ -148,7 +148,9 @@ export async function getJobQueueOrderedJobs({setJobs}) {
 		for (const id of JSON.parse(jobPrioritizer.prioritizedJobIds)) {
 			const job = await getJobById({id});
 
-			jobs.push(job);
+			if (job) {
+				jobs.push(job);
+			}
 		}
 	}
 
@@ -205,20 +207,22 @@ export async function getJobs({orderedJobIds, setJobs}) {
 }
 
 
-export function updateJobParameters({jobParameters, key, value}) {
-	let jobParameterUpdated = false;
+export function getUpdatedJobParameters({jobParameters, key, value}) {
+	const updatedJobParameters = [];
+
+	let updated = false;
 
 	for (const jobParameter of jobParameters) {
 		if (jobParameter.key === key) {
-			jobParameter.value = value;
+			updatedJobParameters.push({key, value});
 
-			jobParameterUpdated = true;
-
-			break;
+			updated = true;
 		}
 	}
 
-	if (!jobParameterUpdated) {
-		jobParameters.push({key, value});
+	if (!updated) {
+		updatedJobParameters.push({key, value});
 	}
+
+	return updatedJobParameters;
 }

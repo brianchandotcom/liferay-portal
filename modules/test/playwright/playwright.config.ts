@@ -5,6 +5,7 @@
 
 import {defineConfig} from '@playwright/test';
 
+import {wemSiteSetup, wemSiteTeardown} from './setup/wem-site/config';
 import {config as accountAdminWebConfig} from './tests/account-admin-web/config';
 import {config as analyticsSettingsWebConfig} from './tests/analytics-settings-web/config';
 import {config as analyticsWebConfig} from './tests/analytics-web/config';
@@ -37,6 +38,8 @@ import {config as productNavigationUserPersonalBarWebConfig} from './tests/produ
 import {config as stableConfig} from './tests/stable/config';
 import {config as stylebookConfig} from './tests/style-book-web/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
+
+const setupProjects = [wemSiteSetup, wemSiteTeardown];
 
 export default defineConfig({
 	expect: {
@@ -76,6 +79,7 @@ export default defineConfig({
 		stableConfig,
 		stylebookConfig,
 		usersAdminWebConfig,
+		...setupProjects,
 	],
 	reporter: [
 		[

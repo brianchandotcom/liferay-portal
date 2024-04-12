@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -388,13 +389,30 @@ public class BuildHistoryProcessor {
 		return mergedBuildHistory;
 	}
 
-	private static final File _BASE_DIR = new File(
-		"/opt/dev/projects/github/liferay-jenkins-ee/tmp/jenkins");
+	private static final File _BASE_DIR;
 
 	private static final Integer _THREAD_COUNT = 8;
 
+	private static final Properties _buildProperties;
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(_THREAD_COUNT, true);
+
+	static {
+		_buildProperties = new Properties() {
+			{
+				try {
+					putAll(JenkinsResultsParserUtil.getBuildProperties());
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+			}
+		};
+
+		_BASE_DIR = new File(
+			_buildProperties.getProperty("archive.ci.build.data.tmp.dir"),
+			"builds");
+	}
 
 	private static class GroupByCategory
 		implements Function<BuildJSONObject, String> {

@@ -157,7 +157,7 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 		long commerceShippingFixedOptionId = ParamUtil.getLong(
 			actionRequest, "commerceShippingFixedOptionId");
 
-		BigDecimal formattedAmount = new BigDecimal(
+		BigDecimal amount = new BigDecimal(
 			_commercePriceFormatter.parse(actionRequest, "amount"));
 
 		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
@@ -173,8 +173,8 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 			commerceShippingFixedOption =
 				_commerceShippingFixedOptionService.
 					updateCommerceShippingFixedOption(
-						commerceShippingFixedOptionId, formattedAmount,
-						descriptionMap, key, nameMap, priority);
+						commerceShippingFixedOptionId, amount, descriptionMap,
+						key, nameMap, priority);
 		}
 		else {
 			long commerceShippingMethodId = ParamUtil.getLong(
@@ -189,8 +189,7 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 					addCommerceShippingFixedOption(
 						commerceShippingMethod.getGroupId(),
 						commerceShippingMethod.getCommerceShippingMethodId(),
-						formattedAmount, descriptionMap, key, nameMap,
-						priority);
+						amount, descriptionMap, key, nameMap, priority);
 		}
 
 		return commerceShippingFixedOption;

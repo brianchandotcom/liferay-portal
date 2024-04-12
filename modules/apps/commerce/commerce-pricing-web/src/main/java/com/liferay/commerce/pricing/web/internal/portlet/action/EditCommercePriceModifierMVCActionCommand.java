@@ -119,7 +119,7 @@ public class EditCommercePriceModifierMVCActionCommand
 		String modifierType = ParamUtil.getString(
 			actionRequest, "modifierType");
 
-		BigDecimal formattedModifierAmount = new BigDecimal(
+		BigDecimal modifierAmount = new BigDecimal(
 			_commercePriceFormatter.parse(actionRequest, "modifierAmount"));
 
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
@@ -176,21 +176,20 @@ public class EditCommercePriceModifierMVCActionCommand
 
 			return _commercePriceModifierService.updateCommercePriceModifier(
 				commercePriceModifierId, commercePriceListGroupId, title,
-				target, commercePriceListId, modifierType,
-				formattedModifierAmount, priority, active, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, serviceContext);
+				target, commercePriceListId, modifierType, modifierAmount,
+				priority, active, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				serviceContext);
 		}
 
 		return _commercePriceModifierService.addCommercePriceModifier(
-			0, title, target, commercePriceListId, modifierType,
-			formattedModifierAmount, priority, active, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			0, title, target, commercePriceListId, modifierType, modifierAmount,
+			priority, active, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Reference

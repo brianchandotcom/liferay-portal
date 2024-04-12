@@ -74,8 +74,12 @@ public class GetEmailNotificationRolesMVCResourceCommandTest {
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), RoleConstants.TYPE_ACCOUNT,
 			null, null);
-		Role organizationRole1 = _addOrganizationRole(user);
-		Role organizationRole2 = _addOrganizationRole(user);
+		Role organizationRole1 = _addRole(
+			RoleConstants.TYPE_ORGANIZATION, user);
+		Role organizationRole2 = _addRole(
+			RoleConstants.TYPE_ORGANIZATION, user);
+		Role regularRole1 = _addRole(RoleConstants.TYPE_REGULAR, user);
+		Role regularRole2 = _addRole(RoleConstants.TYPE_REGULAR, user);
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
@@ -149,6 +153,26 @@ public class GetEmailNotificationRolesMVCResourceCommandTest {
 					).put(
 						"name", organizationRole2.getName()
 					))
+			).put(
+				"regularRoles",
+				JSONUtil.putAll(
+					JSONUtil.put("name", RoleConstants.ADMINISTRATOR),
+					JSONUtil.put("name", RoleConstants.ANALYTICS_ADMINISTRATOR),
+					JSONUtil.put("name", RoleConstants.OWNER),
+					JSONUtil.put("name", RoleConstants.PORTAL_CONTENT_REVIEWER),
+					JSONUtil.put("name", RoleConstants.POWER_USER),
+					JSONUtil.put("name", RoleConstants.PUBLICATIONS_USER),
+					JSONUtil.put("name", RoleConstants.USER),
+					JSONUtil.put(
+						"label", regularRole1.getTitle(LocaleUtil.getDefault())
+					).put(
+						"name", regularRole1.getName()
+					),
+					JSONUtil.put(
+						"label", regularRole2.getTitle(LocaleUtil.getDefault())
+					).put(
+						"name", regularRole2.getName()
+					))
 			).toString(),
 			byteArrayOutputStream.toString(), JSONCompareMode.LENIENT);
 
@@ -173,10 +197,10 @@ public class GetEmailNotificationRolesMVCResourceCommandTest {
 		return accountRole.getRole();
 	}
 
-	private Role _addOrganizationRole(User user) throws Exception {
+	private Role _addRole(int roleType, User user) throws Exception {
 		return _roleLocalService.addRole(
 			user.getUserId(), null, 0, RandomTestUtil.randomString(), null,
-			null, RoleConstants.TYPE_ORGANIZATION, null, null);
+			null, roleType, null, null);
 	}
 
 	@Inject

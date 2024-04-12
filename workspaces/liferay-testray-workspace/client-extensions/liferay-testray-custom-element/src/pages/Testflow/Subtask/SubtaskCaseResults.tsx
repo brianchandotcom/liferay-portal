@@ -121,6 +121,7 @@ const SubtasksCaseResults = () => {
 			payload: [],
 			type: ListViewTypes.SET_CLEAR_CHECKED_ROW,
 		});
+
 		setIsLoading(false);
 
 		Liferay.Util.openToast({

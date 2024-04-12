@@ -10,8 +10,8 @@ exports[`useQueryRangeSelectors should return RangeSelectors params from query p
 
 exports[`useQueryRangeSelectors should return initial values 1`] = `
 <div>
-  rangeEnd 123123
+  rangeEnd null
   rangeKey: 30
-  rangeStart: 321321
+  rangeStart: null
 </div>
 `;

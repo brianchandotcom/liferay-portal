@@ -1,31 +1,27 @@
 import BaseCard from '..';
-import BasePage from 'shared/components/base-page';
 import client from 'shared/apollo/client';
 import React from 'react';
 import {ApolloProvider} from '@apollo/react-hoc';
 import {render} from '@testing-library/react';
 
-const MOCK_CONTEXT = {
-	router: {
-		query: {
-			rangeKey: '0'
-		}
-	}
-};
+jest.unmock('react-dom');
+
+jest.mock('react-router-dom', () => ({
+	...jest.requireActual('react-router-dom'),
+	useLocation: () => ({
+		search: '?rangeKey=0'
+	})
+}));
 
 const WrappedComponent = props => (
 	<ApolloProvider client={client}>
-		<BasePage.Context.Provider value={MOCK_CONTEXT}>
-			<BaseCard
-				className='my-component-classname'
-				label='My title'
-				{...props}
-			/>
-		</BasePage.Context.Provider>
+		<BaseCard
+			className='my-component-classname'
+			label='My title'
+			{...props}
+		/>
 	</ApolloProvider>
 );
-
-jest.unmock('react-dom');
 
 describe('BaseCard', () => {
 	it('should render component', () => {
@@ -65,19 +61,20 @@ describe('BaseCard', () => {
 
 		expect(customBodyProps).toMatchInlineSnapshot(`
 		Object {
-		  "filters": undefined,
+		  "filters": Object {},
 		  "interval": "D",
 		  "onChangeInterval": [Function],
 		  "onRangeSelectorsChange": [Function],
 		  "rangeSelectors": Object {
-		    "rangeEnd": "",
+		    "rangeEnd": undefined,
 		    "rangeKey": "0",
-		    "rangeStart": "",
+		    "rangeStart": undefined,
 		  },
 		  "router": Object {
-		    "query": Object {
-		      "rangeKey": "0",
+		    "params": Object {
+		      "groupId": "",
 		    },
+		    "query": Object {},
 		  },
 		}
 	`);

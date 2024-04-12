@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {createReadStream} from 'fs';
+
+import {zipFolder} from '../utils/zip';
 import {ApiHelpers} from './ApiHelpers';
 
 type TSite = {
@@ -26,6 +29,28 @@ export class HeadlessSiteApiHelper {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites`,
 			{data: site}
+		);
+	}
+
+	async createSiteFromZip(
+		site: TSite,
+		siteInitializerPath: string
+	): Promise<Site> {
+		const zip = await zipFolder(siteInitializerPath, {
+			destPath: 'site-initializer/',
+		});
+
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites`,
+			{
+				headers: {
+					...(await this.apiHelpers.getCSRFTokenHeader()),
+				},
+				multipart: {
+					file: createReadStream(zip),
+					site: JSON.stringify(site),
+				},
+			}
 		);
 	}
 

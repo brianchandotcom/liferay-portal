@@ -198,18 +198,18 @@ export class ApiHelpers {
 		return {
 			'Authorization': ApiHelpers._authorization,
 			'Content-Type': 'application/x-www-form-urlencoded',
-			...(await this._getCSRFTokenHeader()),
+			...(await this.getCSRFTokenHeader()),
 		};
 	}
 
 	async getHeader() {
 		return {
 			'Content-Type': 'application/json',
-			...(await this._getCSRFTokenHeader()),
+			...(await this.getCSRFTokenHeader()),
 		};
 	}
 
-	async _getCSRFTokenHeader() {
+	async getCSRFTokenHeader() {
 		const authToken = await this.page.evaluate(() => Liferay.authToken);
 
 		return {

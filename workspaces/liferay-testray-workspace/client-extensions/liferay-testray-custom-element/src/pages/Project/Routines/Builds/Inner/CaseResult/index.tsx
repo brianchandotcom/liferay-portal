@@ -22,7 +22,6 @@ import {
 	MessageBoardMessage,
 	TestrayAttachment,
 	TestrayCaseResult,
-	TestrayIssue,
 	testrayCaseResultImpl,
 } from '../../../../../../services/rest';
 import {safeJSONParse} from '../../../../../../util';
@@ -233,19 +232,12 @@ const CaseResult = () => {
 								{
 									divider: true,
 									title: i18n.translate('issues'),
-									value: caseResult
-										.caseResultToCaseResultsIssues?.length
-										? caseResult.caseResultToCaseResultsIssues.map(
-												(caseResultIssue, index) => (
-													<JiraLink
-														issue={
-															caseResultIssue.r_issueToCaseResultsIssues_c_issue as TestrayIssue
-														}
-														key={index}
-													/>
-												)
-										  )
-										: '-',
+									value: (
+										<JiraLink
+											displayViewInJira={false}
+											issue={caseResult.issues}
+										/>
+									),
 								},
 								{
 									title: i18n.translate('comment'),

@@ -21,12 +21,10 @@ import {
 	APIResponse,
 	TestrayCaseResult,
 	TestraySubTask,
-	TestraySubTaskIssue,
 	liferayMessageBoardImpl,
 	testrayCaseResultImpl,
 	testraySubTaskImpl,
 } from '../../../services/rest';
-import {testraySubtaskIssuesImpl} from '../../../services/rest/TestraySubtaskIssues';
 import {CaseResultStatuses} from '../../../util/statuses';
 
 type SubtaskForm = typeof yupSchema.subtask.__outputType;
@@ -42,17 +40,6 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 	revalidateSubtask,
 	subtask,
 }) => {
-	const {
-		data: subTaskIssuesResponse,
-		revalidate: revalidateSubtaskIssues,
-	} = useFetch(testraySubtaskIssuesImpl.resource, {
-		params: {
-			filter: SearchBuilder.eq('subtaskId', subtask.id),
-		},
-		transformData: (response) =>
-			testraySubtaskIssuesImpl.transformDataFromList(response),
-	});
-
 	const {data: mbMessage} = useFetch(
 		liferayMessageBoardImpl.getMessagesIdURL(subtask.mbMessageId)
 	);
@@ -76,23 +63,22 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 				aggregationTerms: 'dueStatus',
 				fields: 'id',
 				filter: caseResultsStatusFilter,
-				nestedFields:
-					'caseResultToSubtasksCasesResults,caseResultToCaseResultsIssues',
+				nestedFields: 'caseResultToSubtasksCasesResults',
 				pageSize: 4,
 			},
 		}
 	);
 
-	const subtaskIssues =
-		subTaskIssuesResponse?.items.map(
-			(subtaskIssue: TestraySubTaskIssue) => subtaskIssue?.issue?.name
-		) || [];
-
-	const subtaskCaseResultsIssues = subtask.issues || [];
+	const subtaskIssues = subtask.issues
+		? subtask.issues
+				.split(',')
+				.map((name) => name.trim())
+				.filter(Boolean)
+		: [];
 
 	const issues = getUniqueList([
 		...subtaskIssues,
-		...subtaskCaseResultsIssues,
+		...subtask.caseResultIssues,
 	]).join(', ');
 
 	const statusMode = useMemo(() => {
@@ -153,8 +139,6 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 			);
 
 			revalidateSubtask();
-
-			revalidateSubtaskIssues();
 
 			onSave();
 		}

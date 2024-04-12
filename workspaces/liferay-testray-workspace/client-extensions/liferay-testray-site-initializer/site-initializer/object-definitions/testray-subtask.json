@@ -93,6 +93,17 @@
 			"name": "statusUpdateDate",
 			"required": false,
 			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Issues"
+			},
+			"name": "issues",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

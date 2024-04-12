@@ -17,7 +17,6 @@ import {
 	liferayMessageBoardImpl,
 	testraySubTaskImpl,
 } from '../../../services/rest';
-import {testraySubtaskIssuesImpl} from '../../../services/rest/TestraySubtaskIssues';
 
 type OutletContext = {
 	data: {
@@ -62,17 +61,6 @@ const SubtaskOutlet = () => {
 			testraySubTaskImpl.transformDataFromList(response),
 	});
 
-	const {data, mutate: mutateSubtaskIssues} = useFetch(
-		testraySubtaskIssuesImpl.resource,
-		{
-			params: {
-				filter: SearchBuilder.eq('subtaskId', subtaskId as string),
-			},
-			transformData: (response) =>
-				testraySubtaskIssuesImpl.transformDataFromList(response),
-		}
-	);
-
 	const {data: mbMessage} = useFetch(
 		testraySubtask?.mbMessageId
 			? liferayMessageBoardImpl.getMessagesIdURL(
@@ -96,8 +84,6 @@ const SubtaskOutlet = () => {
 				testraySubTaskImpl.transformDataFromList(response),
 		}
 	);
-
-	const subtaskIssues = data?.items || [];
 
 	const mergedSubtaskNames = (testraySubtaskToMerged?.items || [])
 		.map(({name}) => name)
@@ -132,13 +118,11 @@ const SubtaskOutlet = () => {
 					mbMessage,
 					mergedSubtaskNames,
 					splitSubtaskNames,
-					subtaskIssues,
 					testraySubtask,
 					testrayTask,
 				},
 				mutate: {
 					mutateSubtask,
-					mutateSubtaskIssues,
 				},
 				revalidate: {
 					revalidateSubtask,

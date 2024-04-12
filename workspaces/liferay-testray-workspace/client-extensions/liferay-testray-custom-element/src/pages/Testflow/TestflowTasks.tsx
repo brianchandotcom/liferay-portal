@@ -342,16 +342,12 @@ const TestFlowTasks = () => {
 							},
 							{
 								key: 'issues',
-								render: (issues) => {
+								render: (issues: string) => {
 									return (
-										<>
-											{!!issues.length && (
-												<JiraLink
-													displayViewInJira={false}
-													issue={issues}
-												/>
-											)}
-										</>
+										<JiraLink
+											displayViewInJira={false}
+											issue={issues}
+										/>
 									);
 								},
 								value: i18n.translate('issues'),

@@ -4,14 +4,11 @@
  */
 
 import Rest from '../../core/Rest';
-import SearchBuilder from '../../core/SearchBuilder';
 import yupSchema from '../../schema/yup';
 import {waitTimeout} from '../../util';
 import {CaseResultStatuses} from '../../util/statuses';
 import {Liferay} from '../liferay';
 import {liferayMessageBoardImpl} from './LiferayMessageBoard';
-import {testrayCaseResultsIssuesImpl} from './TestrayCaseresultsIssues';
-import {testrayIssueImpl} from './TestrayIssues';
 import {CaseResultAggregation, TestrayCaseResult} from './types';
 
 type CaseResultForm = typeof yupSchema.caseResult.__outputType;
@@ -45,7 +42,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 				startDate,
 			}),
 			nestedFields:
-				'case.caseType,component.team.name,team,build.productVersion,build.routine,run,user,caseResultToCaseResultsIssues, caseResultToCaseResultsIssues.issueToCaseResultsIssues',
+				'case.caseType,component.team.name,team,build.productVersion,build.routine,run,user',
 			transformData: (caseResult) => ({
 				...caseResult,
 				...this.normalizeCaseResultAggregation(caseResult),
@@ -80,12 +77,6 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 								: undefined,
 					  }
 					: undefined,
-				caseResultsIssues: caseResult.caseResultToCaseResultsIssues
-					? caseResult.caseResultToCaseResultsIssues.map(
-							(caseResultsIssues) =>
-								caseResultsIssues.r_issueToCaseResultsIssues_c_issue
-					  )
-					: [],
 				component: caseResult?.r_componentToCaseResult_c_component
 					? {
 							...caseResult.r_componentToCaseResult_c_component,
@@ -94,13 +85,6 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 									.r_teamToComponents_c_team,
 					  }
 					: undefined,
-				issues:
-					caseResult.caseResultToCaseResultsIssues
-						?.map(
-							(caseResultsIssues) =>
-								caseResultsIssues.issueToCaseResultsIssues?.name
-						)
-						.join(', ') || '',
 				run: caseResult?.r_runToCaseResult_c_run
 					? {
 							...caseResult?.r_runToCaseResult_c_run,
@@ -186,40 +170,6 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 		});
 	}
 
-	public async assignCaseResultIssue(caseResultId: number, issues: string[]) {
-		const caseResultIssuesResponse = await testrayCaseResultsIssuesImpl.getAll(
-			{
-				filter: SearchBuilder.eq('caseResultId', caseResultId),
-			}
-		);
-
-		for (const issue of issues) {
-			const testrayIssue = await testrayIssueImpl.createIfNotExist({
-				name: issue,
-			});
-
-			await testrayCaseResultsIssuesImpl.createIfNotExist({
-				caseResultId,
-				issueId: testrayIssue?.id,
-				name: `${issue}${testrayIssueImpl.DELIMITER}${caseResultId}`,
-			});
-		}
-
-		if (caseResultIssuesResponse?.items) {
-			const caseResultIssuesTransform = testrayCaseResultsIssuesImpl.transformDataFromList(
-				caseResultIssuesResponse
-			);
-
-			const caseResulIssueIdsToRemove = caseResultIssuesTransform.items
-				.filter(({issue}) => !issues.includes(issue?.name || ''))
-				.map(({id}) => id);
-
-			for (const caseResultIssueId of caseResulIssueIdsToRemove) {
-				await testrayCaseResultsIssuesImpl.remove(caseResultIssueId);
-			}
-		}
-	}
-
 	private async addComment(data: Partial<CaseResultForm>) {
 		try {
 			const message = data.comment as string;
@@ -252,19 +202,9 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 		data: Partial<
 			CaseResultForm & {
 				defaultMessageId?: number;
-				issues: string[];
 			}
 		>
 	): Promise<TestrayCaseResult> {
-		const issues =
-			(typeof data.issues === 'string'
-				? data.issues.split(', ')
-				: data.issues) || [];
-
-		if (data.issues) {
-			await this.assignCaseResultIssue(id, issues);
-		}
-
 		if (data.comment) {
 			const {mbMessage, mbThreadId} = await this.addComment(data);
 
@@ -276,7 +216,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			data.mbMessageId = data.defaultMessageId ?? 0;
 		}
 
-		return super.update(id, {...data, issues: issues.join(', ')});
+		return super.update(id, {...data});
 	}
 }
 

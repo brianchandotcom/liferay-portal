@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useContext} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
+import JiraLink from '~/components/JiraLink';
 
 import Avatar from '../../../components/Avatar';
 import AssignToMe from '../../../components/Avatar/AssignToMe';
@@ -15,12 +15,10 @@ import Loading from '../../../components/Loading';
 import StatusBadge from '../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
 import QATable from '../../../components/Table/QATable';
-import {ApplicationPropertiesContext} from '../../../context/ApplicationPropertiesContext';
 import i18n from '../../../i18n';
 import {
 	MessageBoardMessage,
 	TestraySubTask,
-	TestraySubTaskIssue,
 	TestrayTask,
 } from '../../../services/rest';
 import {testraySubTaskImpl} from '../../../services/rest/TestraySubtask';
@@ -33,7 +31,6 @@ type OutletContext = {
 		mbMessage: MessageBoardMessage;
 		mergedSubtaskNames: string;
 		splitSubtaskNames: string;
-		subtaskIssues: TestraySubTaskIssue[];
 		testraySubtask: TestraySubTask & {
 			actions: {
 				[key: string]: string;
@@ -47,14 +44,11 @@ type OutletContext = {
 };
 
 const Subtasks = () => {
-	const {jiraBaseURL} = useContext(ApplicationPropertiesContext);
-
 	const {
 		data: {
 			mbMessage,
 			mergedSubtaskNames,
 			splitSubtaskNames,
-			subtaskIssues,
 			testraySubtask,
 		},
 		mutate: {mutateSubtask},
@@ -119,19 +113,11 @@ const Subtasks = () => {
 								},
 								{
 									title: i18n.translate('issues'),
-									value: subtaskIssues.map(
-										(
-											subtaskIssues: TestraySubTaskIssue,
-											index: number
-										) => (
-											<a
-												className="mr-2"
-												href={`${jiraBaseURL}/browse/${subtaskIssues?.issue?.name}`}
-												key={index}
-											>
-												{subtaskIssues?.issue?.name}
-											</a>
-										)
+									value: (
+										<JiraLink
+											displayViewInJira={false}
+											issue={testraySubtask.issues}
+										/>
 									),
 								},
 								{

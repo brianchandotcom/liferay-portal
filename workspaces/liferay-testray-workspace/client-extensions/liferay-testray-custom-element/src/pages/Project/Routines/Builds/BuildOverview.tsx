@@ -78,11 +78,7 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 						},
 						{
 							title: i18n.translate('all-issues-found'),
-							value: issues.length ? (
-								<JiraLink issue={issues} />
-							) : (
-								'-'
-							),
+							value: <JiraLink issue={issues} />,
 						},
 					]}
 				/>

@@ -105,11 +105,6 @@ const yupSchema = {
 		startDate: yup.string().nullable(),
 		userId: yup.number(),
 	}),
-	caseResultIssues: yup.object({
-		caseResultId: yup.number(),
-		issueId: yup.number(),
-		name: yup.string(),
-	}),
 	caseType: yup.object({
 		name: yup.string().required(),
 	}),
@@ -147,9 +142,6 @@ const yupSchema = {
 		buildId: yup.number(),
 		id: yup.string(),
 		number: yup.number(),
-	}),
-	issue: yup.object({
-		name: yup.string(),
 	}),
 	jiraImportRequirement: yup.object({
 		issues: yup.string().required(),
@@ -225,11 +217,6 @@ const yupSchema = {
 		splitFromSubtaskId: yup.number(),
 		taskId: yup.number(),
 		userId: yup.number(),
-	}),
-	subtaskIssues: yup.object({
-		issueId: yup.number(),
-		name: yup.string(),
-		subTaskId: yup.number(),
 	}),
 	subtaskToCaseResult: yup.object({
 		caseResultId: yup.number(),

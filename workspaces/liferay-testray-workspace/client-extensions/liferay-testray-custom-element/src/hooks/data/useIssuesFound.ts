@@ -8,10 +8,9 @@ import {useMemo} from 'react';
 import SearchBuilder from '../../core/SearchBuilder';
 import {
 	APIResponse,
-	TestrayCaseResultIssue,
-	TestrayIssue,
+	TestrayCaseResult,
+	testrayCaseResultImpl,
 } from '../../services/rest';
-import {testrayCaseResultsIssuesImpl} from '../../services/rest/TestrayCaseresultsIssues';
 import {useFetch} from '../useFetch';
 
 type useIssuesFoundProps = {
@@ -22,28 +21,40 @@ type useIssuesFoundProps = {
 const useIssuesFound = ({buildId, caseId}: useIssuesFoundProps) => {
 	const id = (buildId ?? caseId) as number;
 
-	const {data} = useFetch<APIResponse<TestrayCaseResultIssue>>(
-		testrayCaseResultsIssuesImpl.resource,
+	const filter = useMemo(
+		() =>
+			new SearchBuilder()
+				.eq(
+					buildId
+						? 'r_buildToCaseResult_c_buildId'
+						: 'r_caseToCaseResult_c_caseId',
+					id
+				)
+				.and()
+				.ne('issues', null)
+				.and()
+				.ne('issues', '')
+				.build(),
+		[buildId, id]
+	);
+
+	const {data} = useFetch<APIResponse<TestrayCaseResult>>(
+		testrayCaseResultImpl.resource,
 		{
 			params: {
-				fields: 'r_issueToCaseResultsIssues_c_issue.name',
-				filter: SearchBuilder.eq(
-					buildId
-						? 'caseResultToCaseResultsIssues/r_buildToCaseResult_c_buildId'
-						: 'caseResultToCaseResultsIssues/r_caseToCaseResult_c_caseId',
-					id
-				),
+				fields: 'issues',
+				filter,
 			},
 			swrConfig: {
 				shouldFetch: id,
 			},
 			transformData: (response) =>
-				testrayCaseResultsIssuesImpl.transformDataFromList(response),
+				testrayCaseResultImpl.transformDataFromList(response),
 		}
 	);
 
 	const issues = useMemo(
-		() => (data?.items ?? []).map(({issue}) => issue as TestrayIssue),
+		() => (data?.items ?? []).map(({issues}) => issues),
 		[data?.items]
 	);
 

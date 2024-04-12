@@ -78,7 +78,8 @@ const CaseResultEditTest = () => {
 		const _issues = issues
 			.split(',')
 			.map((name) => name.trim().toUpperCase())
-			.filter(Boolean);
+			.filter(Boolean)
+			.join(', ');
 
 		try {
 			const response = await onSubmit(
@@ -100,7 +101,6 @@ const CaseResultEditTest = () => {
 
 			mutateCaseResult({
 				...response,
-				issues: _issues.join(', '),
 			});
 
 			onSave();

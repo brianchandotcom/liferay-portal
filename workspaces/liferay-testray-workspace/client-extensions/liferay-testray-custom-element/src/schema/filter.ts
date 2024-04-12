@@ -345,10 +345,7 @@ const filterSchema = {
 					},
 				],
 			}),
-			overrides(baseFilters.issues, {
-				name: 'caseResultToCaseResultsIssues/name',
-				operator: 'contains',
-			}),
+			baseFilters.issues,
 			overrides(baseFilters.erros, {
 				operator: 'contains',
 			}),
@@ -409,10 +406,7 @@ const filterSchema = {
 					},
 				],
 			}),
-			overrides(baseFilters.issues, {
-				name: 'caseResultToCaseResultsIssues/name',
-				operator: 'contains',
-			}),
+			baseFilters.issues,
 			overrides(baseFilters.erros, {
 				operator: 'contains',
 			}),
@@ -587,7 +581,7 @@ const filterSchema = {
 			baseFilters.description,
 			baseFilters.steps,
 			overrides(baseFilters.issues, {
-				name: 'caseToCaseResult/caseResultToCaseResultsIssues/name',
+				name: 'caseToCaseResult/issues',
 				operator: 'contains',
 			}),
 			baseFilters.hasRequirements,
@@ -834,7 +828,7 @@ const filterSchema = {
 			},
 			overrides(baseFilters.issues, {
 				name:
-					'subtaskToSubtasksCasesResults/caseResultToSubtasksCasesResults/caseResultToCaseResultsIssues/issueToCaseResultsIssues/name',
+					'subtaskToSubtasksCasesResults/caseResultToSubtasksCasesResults/issues',
 				operator: 'contains',
 			}),
 			overrides(baseFilters.team, {

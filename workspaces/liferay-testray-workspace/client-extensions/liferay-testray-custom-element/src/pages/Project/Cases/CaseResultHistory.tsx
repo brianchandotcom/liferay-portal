@@ -12,11 +12,7 @@ import StatusBadge from '../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
 import {TableProps} from '../../../components/Table';
 import i18n from '../../../i18n';
-import {
-	PickList,
-	TestrayCaseResultIssue,
-	testrayCaseResultImpl,
-} from '../../../services/rest';
+import {PickList, testrayCaseResultImpl} from '../../../services/rest';
 import dayjs from '../../../util/date';
 
 type CaseResultHistoryProps = {
@@ -99,7 +95,7 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 					},
 					{
 						key: 'issues',
-						render: (issues: TestrayCaseResultIssue[]) => (
+						render: (issues: string) => (
 							<JiraLink
 								displayViewInJira={false}
 								issue={issues}

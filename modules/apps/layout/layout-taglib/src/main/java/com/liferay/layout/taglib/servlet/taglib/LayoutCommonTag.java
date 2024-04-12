@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -162,7 +163,7 @@ public class LayoutCommonTag extends IncludeTag {
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("Liferay.Util.openToast({autoClose: 10000, message: '");
-		sb.append(message);
+		sb.append(HtmlUtil.escape(message));
 		sb.append("', title: '");
 		sb.append(LanguageUtil.get(getRequest(), type));
 		sb.append(":', type: '");

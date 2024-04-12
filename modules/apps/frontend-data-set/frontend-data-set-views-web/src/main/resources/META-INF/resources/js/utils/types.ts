@@ -24,6 +24,10 @@ export enum EFieldType {
 	STRING = 'string',
 }
 
+export enum ESelectionFilterSourceType {
+	PICKLIST = 'PICKLIST',
+}
+
 export interface IBaseVisualizationMode<Type extends string> {
 	label: string;
 	thumbnail: string;
@@ -84,6 +88,7 @@ export interface ISelectionFilter extends IFilter {
 	listTypeDefinitionERC: string;
 	multiple: boolean;
 	preselectedValues: string;
+	source: ESelectionFilterSourceType;
 }
 
 export interface IPickList {

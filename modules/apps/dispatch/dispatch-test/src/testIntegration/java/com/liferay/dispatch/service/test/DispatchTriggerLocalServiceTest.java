@@ -425,8 +425,22 @@ public class DispatchTriggerLocalServiceTest {
 			expectedDispatchTrigger.getCronExpression(),
 			actualDispatchTrigger.getCronExpression());
 		Assert.assertNotNull(actualDispatchTrigger.getStartDate());
+
+		DispatchTaskClusterMode expectedDispatchTaskClusterMode =
+			DispatchTaskClusterMode.valueOf(
+				expectedDispatchTrigger.getDispatchTaskClusterMode());
+
+		if ((expectedDispatchTaskClusterMode ==
+				DispatchTaskClusterMode.ALL_NODES) &&
+			_dispatchTaskExecutorRegistry.isClusterModeSingle(
+				expectedDispatchTrigger.getDispatchTaskExecutorType())) {
+
+			expectedDispatchTaskClusterMode =
+				DispatchTaskClusterMode.SINGLE_NODE_MEMORY_CLUSTERED;
+		}
+
 		Assert.assertEquals(
-			expectedDispatchTrigger.getDispatchTaskClusterMode(),
+			expectedDispatchTaskClusterMode.getMode(),
 			actualDispatchTrigger.getDispatchTaskClusterMode());
 
 		DispatchLog dispatchLog =

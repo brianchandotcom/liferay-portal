@@ -4,33 +4,32 @@
  */
 
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import {useState} from 'react';
 import ReactQuill from 'react-quill';
 
 import Form from '../../../../../../components/MarketplaceForm';
 import i18n from '../../../../../../i18n';
 
-import 'react-quill/dist/quill.snow.css';
-import ClayIcon from '@clayui/icon';
-
 enum RadioOptions {
 	EMBED_VIDEO_URL = 'embed-video-url',
 	UPLOAD_IMAGES = 'upload-images',
 }
 
-const SolutionHeader = () => {
+const Header = () => {
 	const [editorValue, setEditorValue] = useState('');
-
 	const [radioValue, setRadioValue] = useState('');
 
 	return (
-		<div className="mb-4 solution-header-container">
+		<div className="mb-4 solutions-form-header">
 			<h3>{i18n.translate('solution-header')}</h3>
+
 			<hr />
 
 			<Form.Label className="mt-2" htmlFor="title" required>
 				Title
 			</Form.Label>
+
 			<Form.Input
 				name="title"
 				placeholder="Enter title header"
@@ -41,11 +40,13 @@ const SolutionHeader = () => {
 				{i18n.translate('description')}
 			</Form.Label>
 
-			<ReactQuill
-				onChange={(value) => setEditorValue(value)}
-				placeholder="Insert text here"
-				value={editorValue}
-			/>
+			<div className="rich-text-editor">
+				<ReactQuill
+					onChange={(value) => setEditorValue(value)}
+					placeholder="Insert text here"
+					value={editorValue}
+				/>
+			</div>
 
 			<Form.Label className="mt-5" htmlFor="text" required>
 				Content Media Type
@@ -59,6 +60,7 @@ const SolutionHeader = () => {
 					}}
 					value="upload-images"
 				/>
+
 				<ClayRadio
 					label="Embed video URL"
 					onClick={() => setRadioValue(RadioOptions.EMBED_VIDEO_URL)}
@@ -107,4 +109,4 @@ const SolutionHeader = () => {
 	);
 };
 
-export default SolutionHeader;
+export default Header;

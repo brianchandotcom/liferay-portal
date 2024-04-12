@@ -6,16 +6,13 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
-
-import './index.scss';
-
 import {useState} from 'react';
 
 import Form from '../../../../../../components/MarketplaceForm';
 import i18n from '../../../../../../i18n';
 import {getIconSpriteMap} from '../../../../../../liferay/constants';
 
-const SolutionProfile = () => {
+const Profile = () => {
 	const [value, setValue] = useState('');
 	const [items, setItems] = useState([
 		{
@@ -36,7 +33,7 @@ const SolutionProfile = () => {
 	];
 
 	return (
-		<div className="mb-4 solution-profile-container">
+		<div className="mb-4 solutions-form-profile">
 			<h3>{i18n.translate('solutions-info')}</h3>
 			<hr />
 
@@ -86,7 +83,7 @@ const SolutionProfile = () => {
 				type="textarea"
 			/>
 
-			<div className="marketplace-form-multiselect">
+			<div className="form-multiselect">
 				<Form.Label className="mt-5" htmlFor="categories" required>
 					{i18n.translate('categories')}
 				</Form.Label>
@@ -96,7 +93,6 @@ const SolutionProfile = () => {
 					items={items}
 					onChange={setValue}
 					onItemsChange={setItems}
-					placeholder="Select categories"
 					sourceItems={sourceItems}
 					spritemap={getIconSpriteMap()}
 					value={value}
@@ -107,12 +103,10 @@ const SolutionProfile = () => {
 				</Form.Label>
 
 				<ClayMultiSelect
-					className="marketplace-form-multiselect"
 					inputName="tags-selector"
 					items={items}
 					onChange={setValue}
 					onItemsChange={setItems}
-					placeholder="Select tags"
 					sourceItems={sourceItems}
 					spritemap={getIconSpriteMap()}
 					value={value}
@@ -122,4 +116,4 @@ const SolutionProfile = () => {
 	);
 };
 
-export default SolutionProfile;
+export default Profile;

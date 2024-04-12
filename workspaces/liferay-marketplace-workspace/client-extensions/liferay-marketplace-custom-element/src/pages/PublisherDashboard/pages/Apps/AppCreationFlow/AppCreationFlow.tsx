@@ -6,7 +6,6 @@
 import {useState} from 'react';
 
 import {AppFlowList} from '../../../../../components/NewAppFlowList/AppFlowList';
-import {NewAppToolBar} from '../../../../../components/NewAppToolBar/NewAppToolBar';
 import {ChoosePricingModelPage} from '../../../../ChoosePricingModelPage/ChoosePricingModelPage';
 import {CreateNewAppPage} from '../../../../CreateNewAppPage/CreateNewAppPage';
 import {InformLicensingTermsPage} from '../../../../InformLicensingTermsPage/InformLicensingTermsPage';
@@ -19,6 +18,7 @@ import {CustomizeAppStorefrontPage} from '../../../../StorefrontPage/CustomizeAp
 import {initialFLowListItems} from './AppCreationFlowUtil';
 
 import './AppCreationFlow.scss';
+import {AppToolBar} from '../../../../../components/AppToolBar/AppToolBar';
 import {useAccount} from '../../../../../hooks/data/useAccounts';
 import {Liferay} from '../../../../../liferay/liferay';
 import {useAppContext} from '../../../../../manage-app-state/AppManageState';
@@ -76,7 +76,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 
 	return (
 		<div className="app-creation-flow-container">
-			<NewAppToolBar
+			<AppToolBar
 				accountImage={account?.logoURL}
 				accountName={account?.name as string}
 				appImage={appLogo?.preview}
@@ -257,8 +257,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 								});
 
 								setCurrentFlow('licensingPrice');
-							}
-							else {
+							} else {
 								setAppFlowListState({
 									checkedItems: [
 										'create',
@@ -331,8 +330,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 								});
 
 								setCurrentFlow('licensingPrice');
-							}
-							else {
+							} else {
 								setAppFlowListState({
 									checkedItems: [
 										'create',

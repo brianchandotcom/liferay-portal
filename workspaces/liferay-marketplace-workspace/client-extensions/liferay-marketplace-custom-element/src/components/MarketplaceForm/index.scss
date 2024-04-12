@@ -1,20 +1,22 @@
-.marketplace-form-help-message {
-	color: #6c6c75;
-}
+.marketplace-form {
+	&-help-message {
+		color: #6c6c75;
+	}
 
-.marketplace-form-input {
-	background-color: #ffff;
-	border: 1px solid #b1b2b9;
-	border-radius: 8px;
-	height: 48px;
-}
+	&-input {
+		background-color: #ffff;
+		border: 1px solid #b1b2b9;
+		border-radius: 8px;
+		height: 48px;
+	}
 
-.marketplace-form-section {
-	background-color: #f7f7f8;
+	&-section {
+		background-color: #f7f7f8;
 
-	.arrow-container {
-		border: 1px solid #e2e2e4;
-		border-radius: 6px;
+		.arrow-container {
+			border: 1px solid #e2e2e4;
+			border-radius: 6px;
+		}
 	}
 }
 

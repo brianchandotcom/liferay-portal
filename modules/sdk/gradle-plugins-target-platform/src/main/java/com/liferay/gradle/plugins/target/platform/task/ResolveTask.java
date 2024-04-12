@@ -5,16 +5,11 @@
 
 package com.liferay.gradle.plugins.target.platform.task;
 
-import aQute.bnd.build.Workspace;
 import aQute.bnd.build.model.clauses.HeaderClause;
 import aQute.bnd.build.model.conversions.Converter;
 import aQute.bnd.gradle.AbstractBndrun;
-import aQute.bnd.gradle.FileSetRepositoryConvention;
+import aQute.bnd.gradle.BndUtils;
 import aQute.bnd.osgi.Constants;
-import aQute.bnd.osgi.Processor;
-import aQute.bnd.service.RepositoryPlugin;
-
-import aQute.service.reporter.Report;
 
 import biz.aQute.resolve.Bndrun;
 import biz.aQute.resolve.ResolveProcess;
@@ -27,19 +22,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.gradle.StartParameter;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.RegularFileProperty;
-import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.model.ObjectFactory;
-import org.gradle.api.plugins.Convention;
 import org.gradle.api.provider.MapProperty;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
@@ -52,22 +43,6 @@ import org.osgi.service.resolver.ResolutionException;
  * @author Raymond Augé
  */
 public class ResolveTask extends AbstractBndrun {
-
-	public ResolveTask() {
-		Project project = getProject();
-
-		Gradle gradle = project.getGradle();
-
-		StartParameter startParameter = gradle.getStartParameter();
-
-		_offline = startParameter.isOffline();
-
-		Convention convention = getConvention();
-
-		Map<String, Object> plugins = convention.getPlugins();
-
-		plugins.put("bundles", new FileSetRepositoryConvention(this));
-	}
 
 	/**
 	 * @deprecated replaced by bndrun property
@@ -113,8 +88,6 @@ public class ResolveTask extends AbstractBndrun {
 			"targetPlatformDistro",
 			distroFile.getAbsolutePath() + ";version=file");
 
-		mapProperty.put("task", this);
-
 		mapProperty.putAll(super.getProperties());
 
 		return mapProperty;
@@ -130,6 +103,10 @@ public class ResolveTask extends AbstractBndrun {
 		return GradleUtil.toBoolean(_failOnChanges);
 	}
 
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
 	@Input
 	public boolean isOffline() {
 		return GradleUtil.toBoolean(_offline);
@@ -138,6 +115,13 @@ public class ResolveTask extends AbstractBndrun {
 	@Input
 	public boolean isReportOptional() {
 		return GradleUtil.toBoolean(_reportOptional);
+	}
+
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
+	public void resolve() throws Exception {
 	}
 
 	/**
@@ -158,6 +142,10 @@ public class ResolveTask extends AbstractBndrun {
 		_failOnChanges = failOnChanges;
 	}
 
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
 	public void setOffline(Object offline) {
 		_offline = offline;
 	}
@@ -168,48 +156,17 @@ public class ResolveTask extends AbstractBndrun {
 
 	@Override
 	protected void worker(aQute.bnd.build.Project run) throws Exception {
-		Logger logger = getLogger();
-		Project project = getProject();
-		File temporaryDir = getTemporaryDir();
-
-		Bndrun bndrun = (Bndrun)run;
-
-		Workspace workspace = bndrun.getWorkspace();
-
-		bndrun.setBase(temporaryDir);
-
-		workspace.setOffline(isOffline());
-
-		File cnfDir = new File(temporaryDir, Workspace.CNFDIR);
-
-		project.mkdir(cnfDir);
-
-		workspace.setBuildDir(cnfDir);
-
-		Convention convention = getConvention();
-
-		FileSetRepositoryConvention fileSetRepositoryConvention =
-			convention.findPlugin(FileSetRepositoryConvention.class);
-
-		if (fileSetRepositoryConvention != null) {
-			workspace.addBasicPlugin(
-				fileSetRepositoryConvention.getFileSetRepository(getName()));
-
-			for (RepositoryPlugin repositoryPlugin :
-					workspace.getRepositories()) {
-
-				repositoryPlugin.list(null);
-			}
-		}
-
-		bndrun.getInfo(workspace);
-
-		_logReport(bndrun, logger);
-
-		if (!bndrun.isOk()) {
+		if (!(run instanceof Bndrun)) {
 			throw new GradleException(
-				bndrun.getPropertiesFile() + " has workspace errors");
+				"Resolving a project's bnd.bnd file is not supported by this " +
+					"task. This task can only resolve a bndrun file.");
 		}
+
+		_worker((Bndrun)run);
+	}
+
+	private void _worker(Bndrun bndrun) throws Exception {
+		Logger logger = getLogger();
 
 		try {
 			logger.info(
@@ -234,44 +191,12 @@ public class ResolveTask extends AbstractBndrun {
 				resolutionException);
 		}
 		finally {
-			_logReport(bndrun, logger);
+			BndUtils.logReport(bndrun, logger);
 		}
 
 		if (!bndrun.isOk()) {
 			throw new GradleException(
 				bndrun.getPropertiesFile() + " resolution failure");
-		}
-	}
-
-	private void _logReport(Report report, Logger logger) {
-		if (logger.isWarnEnabled()) {
-			for (String warning : report.getWarnings()) {
-				Report.Location location = report.getLocation(warning);
-
-				if ((location != null) && (location.file != null)) {
-					logger.warn(
-						"{}:{}: warning: {}", location.file, location.line,
-						warning);
-				}
-				else {
-					logger.warn("Warning: {}", warning);
-				}
-			}
-		}
-
-		if (logger.isErrorEnabled()) {
-			for (String error : report.getErrors()) {
-				Report.Location location = report.getLocation(error);
-
-				if ((location != null) && (location.file != null)) {
-					logger.error(
-						"{}:{}: error: {}", location.file, location.line,
-						error);
-				}
-				else {
-					logger.error("Error: {}", error);
-				}
-			}
 		}
 	}
 
@@ -307,20 +232,5 @@ public class ResolveTask extends AbstractBndrun {
 	private Object _offline;
 	private Object _reportOptional = Boolean.TRUE;
 	private List<String> _runBundles = Collections.emptyList();
-
-	private static class ProcessorWrapper extends Processor {
-
-		public ProcessorWrapper(Properties internalProperties) {
-			_internalProperties = internalProperties;
-		}
-
-		@Override
-		public Properties getProperties() {
-			return _internalProperties;
-		}
-
-		private final Properties _internalProperties;
-
-	}
 
 }

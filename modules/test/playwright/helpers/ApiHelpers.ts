@@ -45,6 +45,7 @@ type TPostOptions = {
 	data?: DataObject | any[] | string;
 	failOnStatusCode?: boolean;
 	headers?: {[key: string]: string};
+	multipart?: {[key: string]: any};
 };
 
 export class ApiHelpers {
@@ -125,12 +126,13 @@ export class ApiHelpers {
 
 	async postResponse(
 		url: string,
-		{data, failOnStatusCode, headers}: TPostOptions = {}
+		{data, failOnStatusCode, headers, multipart}: TPostOptions = {}
 	) {
 		return await this.page.request.post(url, {
 			data,
 			failOnStatusCode: failOnStatusCode || false,
 			headers: headers || (await this.getHeader()),
+			multipart,
 		});
 	}
 

@@ -8,6 +8,7 @@ import ClayForm, {ClayInput, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayMultiSelect from '@clayui/multi-select';
+import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {
 	normalizeFriendlyURL,
@@ -15,11 +16,12 @@ import {
 	sub,
 } from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 
 const DEFAULT_URL = 'default-url';
 const CUSTOM_URL = 'custom-url';
 function AssetVocabulariesCategoriesFriendlyUrlSelector({
+	customFriendlyURL = '',
 	formGroupClassName = '',
 	id,
 	inputAddon,
@@ -36,11 +38,12 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 		DEFAULT_URL
 	);
 
-	const [friendlyUrlValue, setFriendlyUrlValue] = useState('');
+	const [friendlyUrlValue, setFriendlyUrlValue] = useState(customFriendlyURL);
 
 	const [selectedItems, setSelectedItems] = useState(selectedCategories);
 
 	const selectButtonRef = useRef();
+	const editedRef = useRef(!!customFriendlyURL);
 
 	const getUnique = (array, property) => {
 		return array
@@ -101,16 +104,21 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 		[selectedItems]
 	);
 
-	useEffect(() => {
-		const titleInput = document.getElementById(namespace + 'title');
-
-		if (titleInput && customUrlCheckboxValue !== 0) {
-			titleInput.addEventListener('change', (event) => {
+	useEventListener(
+		'change',
+		(event) => {
+			if (!editedRef.current) {
 				setFriendlyUrlValue(normalizeFriendlyURL(event.target.value));
-			});
-			setFriendlyUrlValue(normalizeFriendlyURL(titleInput.value));
-		}
-	}, [customUrlCheckboxValue, namespace]);
+			}
+		},
+		true,
+		document.getElementById(namespace + 'title')
+	);
+
+	const handleChange = (event) => {
+		editedRef.current = true;
+		setFriendlyUrlValue(normalizeFriendlyURL(event.target.value));
+	};
 
 	return (
 		<div className="field-content">
@@ -255,7 +263,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 						<ClayInput
 							disabled={customUrlCheckboxValue === DEFAULT_URL}
 							id={namespace + 'friendly_url'}
-							onChange={setFriendlyUrlValue}
+							onChange={handleChange}
 							placeholder={Liferay.Language.get('friendly-url')}
 							type="text"
 							value={friendlyUrlValue}

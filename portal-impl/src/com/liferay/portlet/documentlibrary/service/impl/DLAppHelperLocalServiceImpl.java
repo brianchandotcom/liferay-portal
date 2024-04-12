@@ -469,11 +469,7 @@ public class DLAppHelperLocalServiceImpl
 				visible = true;
 			}
 			else {
-				String version = dlFileVersion.getVersion();
-
-				if (!version.equals(DLFileEntryConstants.VERSION_DEFAULT)) {
-					addDraftAssetEntry = true;
-				}
+				addDraftAssetEntry = _addDraftAssetEntry(dlFileVersion);
 			}
 		}
 		else {
@@ -883,6 +879,31 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	private boolean _addDraftAssetEntry(DLFileVersion dlFileVersion) {
+		String version = dlFileVersion.getVersion();
+
+		if (version.equals(DLFileEntryConstants.VERSION_DEFAULT)) {
+			return false;
+		}
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			DLFileEntryConstants.getClassName(),
+			dlFileVersion.getFileEntryId());
+
+		if (assetEntry == null) {
+			return false;
+		}
+
+		int approvedFileVersions = _dlFileVersionPersistence.countByF_ST(
+			dlFileVersion.getFileEntryId(), _ASSET_ENTRY_CREATION_STATUSES);
+
+		if (approvedFileVersions == 0) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private void _deleteFileEntry(long fileEntryId) throws PortalException {
 
 		// File shortcuts
@@ -899,6 +920,11 @@ public class DLAppHelperLocalServiceImpl
 		_ratingsStatsLocalService.deleteStats(
 			DLFileEntryConstants.getClassName(), fileEntryId);
 	}
+
+	private static final int[] _ASSET_ENTRY_CREATION_STATUSES = {
+		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_EXPIRED,
+		WorkflowConstants.STATUS_SCHEDULED
+	};
 
 	@BeanReference(type = AssetCategoryLocalService.class)
 	private AssetCategoryLocalService _assetCategoryLocalService;

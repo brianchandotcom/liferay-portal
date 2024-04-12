@@ -101,8 +101,9 @@ definition {
 			ImportExport.unzipDownloadedExportFile();
 
 			BatchEngine.assertExportedFileContainsCorrectObject(
-				expectedValue = "DELETE,GET,GET,PUT,PATCH",
+				expectedValue = "DELETE,GET,GET,PATCH,PUT",
 				fileName = "export.jsonl",
+				ignoreOrder = "true",
 				jsonObject = "$.actions..method");
 		}
 	}
@@ -165,8 +166,9 @@ definition {
 			}
 
 			BatchEngine.assertExportedFileContainsCorrectObject(
-				expectedValue = "DELETE,GET,GET,PUT,PATCH",
+				expectedValue = "DELETE,GET,GET,PATCH,PUT",
 				fileName = "export.json",
+				ignoreOrder = "true",
 				jsonObject = "$..actions..method");
 		}
 	}

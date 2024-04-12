@@ -541,7 +541,9 @@ public class ProjectController extends BaseFaroController {
 	@PATCH
 	@Path("/{groupId}")
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
-	public void patchTimeZone(
+	public void patch(
+			@DefaultValue(StringPool.BLANK) @FormParam("corpProjectUuid") String
+				corpProjectUuid,
 			@PathParam("groupId") long groupId,
 			@DefaultValue(StringPool.BLANK) @FormParam("timeZoneId") String
 				timeZoneId)
@@ -550,7 +552,13 @@ public class ProjectController extends BaseFaroController {
 		FaroProject faroProject =
 			faroProjectLocalService.getFaroProjectByGroupId(groupId);
 
-		if (!Objects.equals(faroProject.getTimeZoneId(), timeZoneId)) {
+		if (!Validator.isBlank(corpProjectUuid)) {
+			faroProject.setCorpProjectUuid(corpProjectUuid);
+		}
+
+		if (!Validator.isBlank(timeZoneId) &&
+			!Objects.equals(faroProject.getTimeZoneId(), timeZoneId)) {
+
 			_validateTimeZoneId(timeZoneId);
 
 			_sendTimeZoneNotification(groupId);
@@ -558,8 +566,12 @@ public class ProjectController extends BaseFaroController {
 			cerebroEngineClient.updateTimeZone(faroProject);
 
 			faroProject.setTimeZoneId(timeZoneId);
+		}
 
-			faroProjectLocalService.updateFaroProject(faroProject);
+		faroProjectLocalService.updateFaroProject(faroProject);
+
+		if (!Validator.isBlank(corpProjectUuid)) {
+			get(groupId, true, true);
 		}
 	}
 

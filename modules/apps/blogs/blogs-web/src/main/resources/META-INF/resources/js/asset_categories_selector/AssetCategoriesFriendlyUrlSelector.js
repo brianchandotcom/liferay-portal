@@ -144,14 +144,20 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 					value={customUrlCheckboxValue}
 				>
 					<ClayRadio
-						label={Liferay.Language.get('use-the-default-url')}
+						label={
+							<strong>
+								{Liferay.Language.get('use-the-default-url')}
+							</strong>
+						}
 						value={DEFAULT_URL}
 					/>
 
 					<ClayRadio
-						label={Liferay.Language.get(
-							'i-want-to-customize-the-url'
-						)}
+						label={
+							<strong>
+								{Liferay.Language.get('use-a-customized-url')}
+							</strong>
+						}
 						value={CUSTOM_URL}
 					/>
 				</ClayRadioGroup>

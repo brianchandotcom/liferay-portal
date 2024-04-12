@@ -21,8 +21,15 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -32,6 +39,8 @@ import org.junit.Test;
 
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 /**
  * @author Lourdes Fernández Besada
@@ -116,6 +125,45 @@ public class ObjectEntryInfoItemObjectProviderTest {
 	}
 
 	@Test
+	public void testGetInfoItemProxyObjectEntryInfoItemIdentifierCachedInObjectEntriesAttribute()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+		ObjectEntry objectEntry = Mockito.mock(ObjectEntry.class);
+
+		ERCInfoItemIdentifier ercInfoItemIdentifier = new ERCInfoItemIdentifier(
+			externalReferenceCode);
+
+		_setUpProxyObjectEntry(externalReferenceCode, objectEntry);
+
+		_assertGetInfoItemProxyObjectEntryCached(
+			ercInfoItemIdentifier,
+			_getHttpServletRequest(
+				HashMapBuilder.<String, Object>put(
+					_OBJECT_ENTRIES_KEY,
+					HashMapBuilder.<InfoItemIdentifier, ObjectEntry>put(
+						ercInfoItemIdentifier, objectEntry
+					).build()
+				).build()),
+			objectEntry);
+	}
+
+	@Test
+	public void testGetInfoItemProxyObjectEntryInfoItemIdentifierNotCachedInObjectEntriesAttribute()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+		ObjectEntry objectEntry = Mockito.mock(ObjectEntry.class);
+
+		Map<String, Object> attributes = new HashMap<>();
+
+		_assertGetInfoItemProxyObjectEntry(
+			attributes, new ERCInfoItemIdentifier(externalReferenceCode),
+			_getHttpServletRequest(attributes), objectEntry,
+			_setUpProxyObjectEntry(externalReferenceCode, objectEntry));
+	}
+
+	@Test
 	public void testGetInfoItemProxyObjectEntryNoSuchInfoItemException()
 		throws Exception {
 
@@ -133,6 +181,35 @@ public class ObjectEntryInfoItemObjectProviderTest {
 			Mockito.eq(externalReferenceCode), Mockito.eq(_objectDefinition),
 			Mockito.eq(null)
 		);
+	}
+
+	@Test
+	public void testGetInfoItemProxyObjectEntryNullHttpServletRequest()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+		ObjectEntry objectEntry = Mockito.mock(ObjectEntry.class);
+
+		ERCInfoItemIdentifier ercInfoItemIdentifier = new ERCInfoItemIdentifier(
+			externalReferenceCode);
+
+		com.liferay.object.rest.dto.v1_0.ObjectEntry proxyObjectEntry =
+			_setUpProxyObjectEntry(externalReferenceCode, objectEntry);
+
+		Assert.assertEquals(
+			objectEntry, _assertGetInfoItem(ercInfoItemIdentifier));
+
+		Mockito.verifyNoInteractions(_objectEntryLocalService);
+		Mockito.verify(
+			_objectEntryManager
+		).getObjectEntry(
+			Mockito.eq(0L), Mockito.any(DefaultDTOConverterContext.class),
+			Mockito.eq(ercInfoItemIdentifier.getExternalReferenceCode()),
+			Mockito.eq(_objectDefinition), Mockito.eq(null)
+		);
+
+		_objectEntryUtilMockedStatic.verify(
+			() -> ObjectEntryUtil.toObjectEntry(0L, proxyObjectEntry));
 	}
 
 	@Test
@@ -167,13 +244,21 @@ public class ObjectEntryInfoItemObjectProviderTest {
 			InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
+		return _assertGetInfoItem(infoItemIdentifier, null);
+	}
+
+	private ObjectEntry _assertGetInfoItem(
+			InfoItemIdentifier infoItemIdentifier,
+			HttpServletRequest httpServletRequest)
+		throws NoSuchInfoItemException {
+
 		ObjectEntryInfoItemObjectProvider objectEntryInfoItemObjectProvider =
 			new ObjectEntryInfoItemObjectProvider(
 				_objectDefinition, _objectEntryLocalService,
 				_objectEntryManagerRegistry);
 
 		try {
-			_pushServiceContext();
+			_pushServiceContext(httpServletRequest);
 
 			return objectEntryInfoItemObjectProvider.getInfoItem(
 				infoItemIdentifier);
@@ -200,8 +285,128 @@ public class ObjectEntryInfoItemObjectProviderTest {
 		Assert.assertTrue(noSuchInfoItemExceptionThrown);
 	}
 
-	private void _pushServiceContext() {
+	private void _assertGetInfoItemProxyObjectEntry(
+			Map<String, Object> attributes,
+			ERCInfoItemIdentifier ercInfoItemIdentifier,
+			HttpServletRequest httpServletRequest, ObjectEntry objectEntry,
+			com.liferay.object.rest.dto.v1_0.ObjectEntry proxyObjectEntry)
+		throws Exception {
+
+		Assert.assertEquals(
+			objectEntry,
+			_assertGetInfoItem(ercInfoItemIdentifier, httpServletRequest));
+
+		Mockito.verifyNoInteractions(_objectEntryLocalService);
+		Mockito.verify(
+			_objectEntryManager
+		).getObjectEntry(
+			Mockito.eq(0L), Mockito.any(DefaultDTOConverterContext.class),
+			Mockito.eq(ercInfoItemIdentifier.getExternalReferenceCode()),
+			Mockito.eq(_objectDefinition), Mockito.eq(null)
+		);
+
+		Mockito.verify(
+			httpServletRequest
+		).getAttribute(
+			_OBJECT_ENTRIES_KEY
+		);
+
+		_objectEntryUtilMockedStatic.verify(
+			() -> ObjectEntryUtil.toObjectEntry(0L, proxyObjectEntry));
+
+		_assertObjectEntriesAttribute(
+			attributes, ercInfoItemIdentifier, objectEntry);
+	}
+
+	private void _assertGetInfoItemProxyObjectEntryCached(
+			ERCInfoItemIdentifier ercInfoItemIdentifier,
+			HttpServletRequest httpServletRequest, ObjectEntry objectEntry)
+		throws Exception {
+
+		Assert.assertEquals(
+			objectEntry,
+			_assertGetInfoItem(ercInfoItemIdentifier, httpServletRequest));
+
+		Mockito.verifyNoInteractions(_objectEntryLocalService);
+		Mockito.verifyNoInteractions(_objectEntryManager);
+
+		_objectEntryUtilMockedStatic.verifyNoInteractions();
+
+		Mockito.verify(
+			httpServletRequest
+		).getAttribute(
+			_OBJECT_ENTRIES_KEY
+		);
+	}
+
+	private void _assertObjectEntriesAttribute(
+		Map<String, Object> attributes,
+		ERCInfoItemIdentifier infoItemIdentifier, ObjectEntry objectEntry) {
+
+		Object object = attributes.get(_OBJECT_ENTRIES_KEY);
+
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof Map);
+
+		Map<InfoItemIdentifier, ObjectEntry> objectEntries =
+			(Map<InfoItemIdentifier, ObjectEntry>)object;
+
+		Assert.assertEquals(
+			MapUtil.toString(objectEntries), 1, objectEntries.size());
+
+		ObjectEntry chachedObjectEntry = objectEntries.get(infoItemIdentifier);
+
+		Assert.assertNotNull(chachedObjectEntry);
+		Assert.assertEquals(objectEntry, chachedObjectEntry);
+	}
+
+	private HttpServletRequest _getHttpServletRequest(
+		Map<String, Object> attributes) {
+
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		Mockito.when(
+			httpServletRequest.getAttribute(Mockito.anyString())
+		).thenAnswer(
+			new Answer<Object>() {
+
+				@Override
+				public Object answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					return attributes.get(
+						invocationOnMock.getArgument(0, String.class));
+				}
+
+			}
+		);
+
+		Mockito.doAnswer(
+			invocation -> {
+				attributes.put(
+					invocation.getArgument(0, String.class),
+					invocation.getArgument(1));
+
+				return null;
+			}
+		).when(
+			httpServletRequest
+		).setAttribute(
+			Mockito.anyString(), Mockito.any(Object.class)
+		);
+
+		return httpServletRequest;
+	}
+
+	private void _pushServiceContext(HttpServletRequest httpServletRequest) {
 		ServiceContext serviceContext = Mockito.mock(ServiceContext.class);
+
+		Mockito.when(
+			serviceContext.getRequest()
+		).thenReturn(
+			httpServletRequest
+		);
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
@@ -220,7 +425,7 @@ public class ObjectEntryInfoItemObjectProviderTest {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 	}
 
-	private void _setUpProxyObjectEntry(
+	private com.liferay.object.rest.dto.v1_0.ObjectEntry _setUpProxyObjectEntry(
 			String externalReferenceCode, ObjectEntry objectEntry)
 		throws Exception {
 
@@ -241,7 +446,11 @@ public class ObjectEntryInfoItemObjectProviderTest {
 		).thenReturn(
 			objectEntry
 		);
+
+		return proxyObjectEntry;
 	}
+
+	private static final String _OBJECT_ENTRIES_KEY = "OBJECT_ENTRIES";
 
 	private static final MockedStatic<ObjectEntryUtil>
 		_objectEntryUtilMockedStatic = Mockito.mockStatic(

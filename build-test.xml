@@ -15450,7 +15450,10 @@ if (ppstate.equals("normal")) {
 			</else>
 		</if>
 
-		<poshi-execute task="writePoshiProperties" />
+		<gradle-execute dir="portal-web" task="generatePoshiReport">
+			<arg value="--build-file=build-test.gradle" />
+			<arg value="-Dreport.type=test-properties" />
+		</gradle-execute>
 
 		<local name="report.csv.file" />
 		<local name="report.csv.file.name" />

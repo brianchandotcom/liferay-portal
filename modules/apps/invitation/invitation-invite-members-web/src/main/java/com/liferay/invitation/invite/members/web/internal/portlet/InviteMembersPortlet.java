@@ -21,10 +21,12 @@ import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -177,6 +179,14 @@ public class InviteMembersPortlet extends MVCPortlet {
 			_memberRequestLocalService.updateMemberRequest(
 				themeDisplay.getUserId(), memberRequestId, status);
 
+			long userNotificationEventId = ParamUtil.getLong(
+				actionRequest, "userNotificationEventId");
+
+			if (userNotificationEventId != 0) {
+				_updateArchived(
+					themeDisplay.getUserId(), userNotificationEventId);
+			}
+
 			jsonObject.put("success", Boolean.TRUE);
 		}
 		catch (Exception exception) {
@@ -291,6 +301,27 @@ public class InviteMembersPortlet extends MVCPortlet {
 			invitedRoleId, invitedTeamId, serviceContext);
 	}
 
+	private void _updateArchived(long userId, long userNotificationEventId)
+		throws Exception {
+
+		UserNotificationEvent userNotificationEvent =
+			_userNotificationEventLocalService.fetchUserNotificationEvent(
+				userNotificationEventId);
+
+		if (userNotificationEvent == null) {
+			return;
+		}
+
+		if (userNotificationEvent.getUserId() != userId) {
+			throw new PrincipalException();
+		}
+
+		userNotificationEvent.setArchived(true);
+
+		_userNotificationEventLocalService.updateUserNotificationEvent(
+			userNotificationEvent);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		InviteMembersPortlet.class);
 
@@ -316,5 +347,9 @@ public class InviteMembersPortlet extends MVCPortlet {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

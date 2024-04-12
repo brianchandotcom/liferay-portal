@@ -190,9 +190,8 @@ public class EditCommerceOrderItemMVCActionCommand
 		long cpMeasurementUnitId = ParamUtil.getLong(
 			actionRequest, "cpMeasurementUnitId");
 
-		BigDecimal formattedDecimalQuantity =
-			_commerceOrderItemQuantityFormatter.parse(
-				actionRequest, "decimalQuantity");
+		BigDecimal decimalQuantity = _commerceOrderItemQuantityFormatter.parse(
+			actionRequest, "decimalQuantity");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceOrderItem.class.getName(), actionRequest);
@@ -200,13 +199,13 @@ public class EditCommerceOrderItemMVCActionCommand
 		serviceContext.setAttribute("validateOrder", Boolean.FALSE);
 
 		commerceOrderItem = _commerceOrderItemService.updateCommerceOrderItem(
-			commerceOrderItemId, cpMeasurementUnitId, formattedDecimalQuantity,
+			commerceOrderItemId, cpMeasurementUnitId, decimalQuantity,
 			serviceContext);
 
 		if (!commerceOrder.isOpen()) {
 			commerceOrderItem =
 				_commerceOrderItemService.updateCommerceOrderItemUnitPrice(
-					commerceOrderItemId, formattedDecimalQuantity,
+					commerceOrderItemId, decimalQuantity,
 					new BigDecimal(
 						_commercePriceFormatter.parse(actionRequest, "price")));
 

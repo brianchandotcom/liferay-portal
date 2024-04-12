@@ -141,26 +141,21 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 			_commercePriceEntryService.getCommercePriceEntry(
 				commercePriceEntryId);
 
-		BigDecimal formattedPrice = new BigDecimal(
+		BigDecimal price = new BigDecimal(
 			_commercePriceFormatter.parse(actionRequest, "price"));
-
-		BigDecimal formattedMinQuantity =
-			_commerceOrderItemQuantityFormatter.parse(
-				actionRequest, "minQuantity");
+		BigDecimal minQuantity = _commerceOrderItemQuantityFormatter.parse(
+			actionRequest, "minQuantity");
 
 		boolean overrideDiscount = ParamUtil.getBoolean(
 			actionRequest, "overrideDiscount");
 
-		BigDecimal formattedDiscountLevel1 = new BigDecimal(
+		BigDecimal discountLevel1 = new BigDecimal(
 			_commercePriceFormatter.parse(actionRequest, "discountLevel1"));
-
-		BigDecimal formattedDiscountLevel2 = new BigDecimal(
+		BigDecimal discountLevel2 = new BigDecimal(
 			_commercePriceFormatter.parse(actionRequest, "discountLevel2"));
-
-		BigDecimal formattedDiscountLevel3 = new BigDecimal(
+		BigDecimal discountLevel3 = new BigDecimal(
 			_commercePriceFormatter.parse(actionRequest, "discountLevel3"));
-
-		BigDecimal formattedDiscountLevel4 = new BigDecimal(
+		BigDecimal discountLevel4 = new BigDecimal(
 			_commercePriceFormatter.parse(actionRequest, "discountLevel4"));
 
 		Date date = new Date();
@@ -213,11 +208,10 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 		if (commerceTierPriceEntryId <= 0) {
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.addCommerceTierPriceEntry(
-					null, commercePriceEntryId, formattedPrice,
-					formattedMinQuantity, commercePriceEntry.isBulkPricing(),
-					!overrideDiscount, formattedDiscountLevel1,
-					formattedDiscountLevel2, formattedDiscountLevel3,
-					formattedDiscountLevel4, displayDateMonth, displayDateDay,
+					null, commercePriceEntryId, price, minQuantity,
+					commercePriceEntry.isBulkPricing(), !overrideDiscount,
+					discountLevel1, discountLevel2, discountLevel3,
+					discountLevel4, displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
 					expirationDateMonth, expirationDateDay, expirationDateYear,
 					expirationDateHour, expirationDateMinute, neverExpire,
@@ -226,11 +220,10 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 		else {
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.updateCommerceTierPriceEntry(
-					commerceTierPriceEntryId, formattedPrice,
-					formattedMinQuantity, commercePriceEntry.isBulkPricing(),
-					!overrideDiscount, formattedDiscountLevel1,
-					formattedDiscountLevel2, formattedDiscountLevel3,
-					formattedDiscountLevel4, displayDateMonth, displayDateDay,
+					commerceTierPriceEntryId, price, minQuantity,
+					commercePriceEntry.isBulkPricing(), !overrideDiscount,
+					discountLevel1, discountLevel2, discountLevel3,
+					discountLevel4, displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
 					expirationDateMonth, expirationDateDay, expirationDateYear,
 					expirationDateHour, expirationDateMinute, neverExpire,

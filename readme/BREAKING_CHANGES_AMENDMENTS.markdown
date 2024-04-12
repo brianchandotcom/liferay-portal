@@ -456,7 +456,7 @@ This change makes getJSOnClickConfigJSONObject generic so that it can be used fo
 
 # 1b0f30a46f323932a2b9151fd4771910f07bb0b7
 
-The commit message does not contain the reason of the What section. The correct message is:
+The breaking change message is missing a reason. The correct message is:
 
 ```
 LPD-15236 Add companyId argument to scope every request by companyId.
@@ -473,18 +473,18 @@ For that, in the following commits we need to scope by companyId all the BatchEn
 
 ## What modules/apps/batch-engine/batch-engine-api/src/main/java/com/liferay/batch/engine/BatchEngineTaskItemDelegateRegistry.java
 
-The method getBatchEngineTaskItemDelegate(String itemClassName, String taskItemDelegateName) has been replaced with getBatchEngineTaskItemDelegate(long companyId, String itemClassName, String taskItemDelegateName), as the invocation must be scoped by company.
+The method getBatchEngineTaskItemDelegate(String itemClassName, String taskItemDelegateName) is replaced with getBatchEngineTaskItemDelegate(long companyId, String itemClassName, String taskItemDelegateName).
 
 ## Why
 
-To get the BatchEngineTaskItemDelegate based on the company too, it must be scoped by the company, because it depends on the company that a taskItemDelegateName exists or not (an Object Definition given its name)
+Whether a taskItemDelegateName exists depends on the company, so BatchEngineTaskItemDelegate objects must also be retrieved with a company's scope.
 ```
 
 ----
 
 # ac48b1fe243d41f6e4691e3f6e7025037811e4ac
 
-The breaking change message has a wrong formatting. The correct message is:
+The breaking change message has the wrong format. The correct message is:
 
 ```
 LRAC-15144 segments-service Add Experiment type support
@@ -493,11 +493,11 @@ LRAC-15144 segments-service Add Experiment type support
 
 ## What modules/apps/segments/segments-service/src/main/java/com/liferay/segments/service/impl/SegmentsExperimentServiceImpl.java
 
-Added the Experiment type parameter to the runSegmentsExpeirment
+The runSegmentsExperiment method has a new Experiment parameter.
 
 ## Why
 
-To support additional Experiment types
+This change adds support for additional Experiment types.
 
 ----
 
@@ -505,11 +505,11 @@ To support additional Experiment types
 
 ## What modules/apps/segments/segments-service/src/main/java/com/liferay/segments/service/impl/SegmentsExperimentLocalServiceImpl.java
 
-Added the Experiment type parameter to the runSegmentsExpeirment
+The runSegmentsExperiment method has a new Experiment parameter.
 
 ## Why
 
-To support additional Experiment types
+This change adds support for additional Experiment types.
 ```
 
 ----
@@ -525,16 +525,15 @@ LPS-199540 portal-impl: Remove portal property and add obsolete portal key to Ve
 
 ## What portal-impl/src/portal.properties
 
-Removed "index.permission.filter.search.amplification.factor"
+The index.permission.filter.search.amplification.factor property is removed.
 
 ## Why
 
-"index.permission.filter.search.amplification.factor" was not an effective way to improve permission filtering and was only applied on the first search.
+The index.permission.filter.search.amplification.factor property did not effectively improve permission filtering and it was only applied on the first search.
 
 ## Alternatives
 
-The search amplification has in place a better algorithm to speed permission filtering.
+The search amplification uses a better algorithm to speed permission filtering.
 
-If the total amount of time spent searching is still a concern, it can be regulated with the new Permission Filtering Time Limit under Control Panel > System Settings > Search > Default Search Result Permission Filter.
-
+If the total time spent searching is still a concern, regulate it with the new Permission Filtering Time Limit at Control Panel &rarr; System Settings &rarr; Search &rarr; Default Search Result Permission Filter.
 ```

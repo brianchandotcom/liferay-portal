@@ -377,20 +377,26 @@ public class PortalInstanceResourceTest
 		PortalInstance postPortalInstance =
 			testPostPortalInstance_addPortalInstance(randomPortalInstance);
 
-		User adminUser = _userLocalService.getUserByEmailAddress(
-			postPortalInstance.getCompanyId(), "test123@liferay.com");
+		try {
+			User adminUser = _userLocalService.getUserByEmailAddress(
+				postPortalInstance.getCompanyId(), "test123@liferay.com");
 
-		postPortalInstance.setAdmin(
-			Admin.toDTO(
-				StringBundler.concat(
-					"{\"emailAddress\": \"", adminUser.getEmailAddress(), "\",",
-					"\"familyName\": \"", adminUser.getLastName(), "\",",
-					"\"givenName\": \"", adminUser.getFirstName(), "\"}")));
+			postPortalInstance.setAdmin(
+				Admin.toDTO(
+					StringBundler.concat(
+						"{\"emailAddress\": \"", adminUser.getEmailAddress(),
+						"\",\"familyName\": \"", adminUser.getLastName(),
+						"\",\"givenName\": \"", adminUser.getFirstName(),
+						"\"}")));
 
-		assertEquals(randomPortalInstance, postPortalInstance);
-		assertValid(postPortalInstance);
-
-		_deletePortalInstance(postPortalInstance);
+			assertEquals(randomPortalInstance, postPortalInstance);
+			assertValid(postPortalInstance);
+		}
+		finally {
+			if (postPortalInstance != null) {
+				_deletePortalInstance(postPortalInstance);
+			}
+		}
 	}
 
 	private void _testPostPortalInstanceWithoutAdmin() throws Exception {
@@ -399,10 +405,15 @@ public class PortalInstanceResourceTest
 		PortalInstance postPortalInstance =
 			testPostPortalInstance_addPortalInstance(randomPortalInstance);
 
-		assertEquals(randomPortalInstance, postPortalInstance);
-		assertValid(postPortalInstance);
-
-		_deletePortalInstance(postPortalInstance);
+		try {
+			assertEquals(randomPortalInstance, postPortalInstance);
+			assertValid(postPortalInstance);
+		}
+		finally {
+			if (postPortalInstance != null) {
+				_deletePortalInstance(postPortalInstance);
+			}
+		}
 	}
 
 	private static Company _company;

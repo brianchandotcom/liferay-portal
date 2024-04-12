@@ -34,6 +34,10 @@ function App() {
 				<Route element={<JobsPage />} path="/jobs" />
 				<Route element={<NotFoundPage />} path="*" />
 				<Route element={<RoutinePage />} path="/routines/:id" />
+				<Route
+					element={<CreateJobPage />}
+					path="/routines/:routineId/create-job"
+				/>
 				<Route element={<RoutinesPage />} path="/routines" />
 				<Route
 					element={<UpstreamBranchesPage />}

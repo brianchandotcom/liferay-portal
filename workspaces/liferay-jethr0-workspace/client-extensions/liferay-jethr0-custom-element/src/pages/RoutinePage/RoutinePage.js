@@ -226,7 +226,10 @@ function RoutinePage() {
 						</Heading>
 						<Jethr0ButtonsRow
 							buttons={[
-								{link: `/jobs/create/${id}`, title: 'Create Job'},
+								{
+									link: `/routines/${id}/create-job`,
+									title: 'Create Job',
+								},
 								{
 									onClick: () => {
 										deleteRoutineById({

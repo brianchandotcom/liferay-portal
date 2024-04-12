@@ -5,24 +5,26 @@ import {sub} from 'shared/util/lang';
 import {toLocale} from 'shared/util/numbers';
 import {useDownloadCSV} from './utils';
 import {useModal} from '@clayui/modal';
+import {useUnsafeQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 export interface IDownloadReport {
 	assetId?: string;
 	assetType?: string;
 	disabled: boolean;
-	infoMessage: string;
 	type: string;
+	typeLang: string;
 }
 
 const DownloadCSVReport: React.FC<IDownloadReport> = ({
 	assetId,
 	assetType,
 	disabled,
-	infoMessage,
-	type
+	type,
+	typeLang
 }) => {
 	const {onClick} = useDownloadCSV({assetId, assetType, type});
 	const {observer, onOpenChange, open} = useModal();
+	const rangeSelectors = useUnsafeQueryRangeSelectors();
 
 	return (
 		<div className='download-report'>
@@ -41,19 +43,18 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 							['CSV']
 						) as string
 					}
-					descriptionMessage={
+					infoMessage={
 						sub(
 							Liferay.Language.get(
-								'select-a-date-range-to-export-this-list-as-a-csv-document.-the-maximum-number-of-entries-supported-per-export-is-x.-the-request-may-take-a-couple-minutes-to-process'
+								'the-generated-CSV-file-will-respect-the-current-filter-and-search-results,-with-a-maximum-of-x-entries-supported-per-export.-please-ensure-that-any-desired-changes-have-been-successfully-applied-before-downloading-the-individual-x-list'
 							),
-							[toLocale(10000)]
+							[toLocale(10000), typeLang]
 						) as string
 					}
-					infoMessage={infoMessage}
 					observer={observer}
 					onClose={() => onOpenChange(false)}
 					onSubmit={onClick}
-					requiredDateRange
+					rangeSelectors={rangeSelectors}
 					type={ReportType.CSV}
 				/>
 			)}

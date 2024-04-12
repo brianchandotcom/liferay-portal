@@ -214,9 +214,6 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 							['PDF']
 						) as string
 					}
-					descriptionMessage={Liferay.Language.get(
-						'select-the-reports,-and-optionally-specify-the-date-range-to-generate-a-PDF-file-from-the-current-dashboard.-your-download-may-take-a-couple-of-minutes-to-process'
-					)}
 					disabled={!filteredContainers.length}
 					infoMessage={Liferay.Language.get(
 						'the-dashboard-will-be-downloaded-exactly-as-it-is-displayed-on-your-screen.-please-verify-if-the-desired-tabs-and-filters-are-selected-before-downloading'

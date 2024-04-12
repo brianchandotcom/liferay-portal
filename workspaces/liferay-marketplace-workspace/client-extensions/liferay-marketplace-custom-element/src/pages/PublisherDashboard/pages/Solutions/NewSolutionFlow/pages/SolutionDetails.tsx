@@ -10,11 +10,15 @@ import './index.scss';
 
 import {ClaySelect} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
+import {useState} from 'react';
 
 import Form from '../../../../../../components/MarketplaceForm';
 
 const SolutionDetails = () => {
 	const {observer, onOpenChange, open} = useModal();
+	const [selectedBlock, setSelectedBlock] = useState('Choose an option');
+	const [submit, setSubmit] = useState(false);
+
 	const items = [
 		{label: 'Choose an option'},
 		{label: 'Text & Images Block'},
@@ -30,6 +34,8 @@ const SolutionDetails = () => {
 			<Form.Label className="mt-3" htmlFor="minimum-blocks" required>
 				Add a minimum of 2 blocks
 			</Form.Label>
+
+			{submit && <Form.Section name="Text & Images Block"></Form.Section>}
 
 			<ClayButton
 				className="align-items-center content-block d-flex flex-row justify-content-center mt-4 w-100"
@@ -69,7 +75,13 @@ const SolutionDetails = () => {
 							Choose Block
 						</Form.Label>
 
-						<ClaySelect aria-label="Select Label" id="mySelectId">
+						<ClaySelect
+							aria-label="Select Label"
+							id="mySelectId"
+							onChange={({target}) => {
+								setSelectedBlock(target.value);
+							}}
+						>
 							{items.map((item, index) => (
 								<ClaySelect.Option
 									key={index}
@@ -88,7 +100,19 @@ const SolutionDetails = () => {
 								Cancel
 							</ClayButton>
 
-							<ClayButton displayType="primary">Save</ClayButton>
+							<ClayButton
+								disabled={
+									selectedBlock === 'Choose an option' ||
+									selectedBlock === ''
+								}
+								displayType="primary"
+								onClick={() => {
+									onOpenChange(false);
+									setSubmit(true);
+								}}
+							>
+								Save
+							</ClayButton>
 						</div>
 					</ClayModal.Body>
 				</ClayModal>

@@ -10,5 +10,5 @@ type HelpMessageProps = {
 };
 
 export function HelpMessage({children}: HelpMessageProps) {
-	return <small className="help-message">{children}</small>;
+	return <small className="marketplace-form-help-message">{children}</small>;
 }

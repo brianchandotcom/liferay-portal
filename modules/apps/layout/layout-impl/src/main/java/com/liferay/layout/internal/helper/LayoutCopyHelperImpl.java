@@ -217,7 +217,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					targetLayout.getCtCollectionId())) {
+					sourceLayout.getCtCollectionId())) {
 
 			CopyLayoutThreadLocal.setCopyLayout(true);
 

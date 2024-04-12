@@ -342,12 +342,12 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
 
 			PagesAdmin.addPage(
-				pageName = "Widget Page Name",
+				pageName = "My widget page",
 				sitePageType = "Widget Page");
 		}
 
 		task ("Set Google PageSpeed API") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/my-widget-page");
 
 			PageAudit.setAPIViaSiteSettings();
 		}
@@ -355,13 +355,13 @@ definition {
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(
 				canonicalLocale = "nl-NL",
-				pageName = "Widget Page Name",
+				pageName = "My widget page",
 				url = "https://liferay-echo.github.io/liferay-portal/page-audit-test",
-				urlAppend = "web/test-site-name/3");
+				urlAppend = "web/test-site-name/my-widget-page");
 		}
 
 		task ("Open Page Audit panel and change locale/language") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/my-widget-page");
 
 			PageAudit.openPageAuditSidebar();
 

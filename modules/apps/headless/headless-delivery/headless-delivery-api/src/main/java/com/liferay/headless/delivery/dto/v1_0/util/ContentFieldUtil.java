@@ -152,8 +152,25 @@ public class ContentFieldUtil {
 		try {
 			UriInfo uriInfo = dtoConverterContext.getUriInfo();
 
-			if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType()) ||
-				Objects.equals(ddmFormField.getType(), "date")) {
+			if (Objects.equals(
+					DDMFormFieldType.CHECKBOX, ddmFormField.getType())) {
+
+				return new ContentFieldValue() {
+					{
+						setData(
+							() -> {
+								if (Validator.isNull(valueString)) {
+									return Boolean.FALSE.toString();
+								}
+
+								return valueString;
+							});
+					}
+				};
+			}
+			else if (Objects.equals(
+						DDMFormFieldType.DATE, ddmFormField.getType()) ||
+					 Objects.equals(ddmFormField.getType(), "date")) {
 
 				return new ContentFieldValue() {
 					{

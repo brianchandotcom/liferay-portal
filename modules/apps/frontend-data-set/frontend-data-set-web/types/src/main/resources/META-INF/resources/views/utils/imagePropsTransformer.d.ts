@@ -19,7 +19,7 @@ interface IImageProps {
 	options?: {
 		label?: string;
 		labelKey?: string;
-		shape?: 'circle' | 'rounded' | 'user-icon';
+		shape?: 'circle' | 'user-icon';
 		size?: 'lg' | 'sm' | 'xl';
 	};
 	value?:

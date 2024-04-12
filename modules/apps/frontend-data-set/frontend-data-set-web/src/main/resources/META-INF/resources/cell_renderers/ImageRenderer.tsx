@@ -13,7 +13,7 @@ function ImageRenderer(sourceImageProps: any) {
 
 	return (
 		<ClaySticker
-			shape={sourceImageProps.options?.shape || 'rounded'}
+			shape={sourceImageProps.options?.shape}
 			size={sourceImageProps.options?.size || 'xl'}
 		>
 			<img className="sticker-img" {...imageProps} />

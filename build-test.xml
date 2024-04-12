@@ -12574,6 +12574,9 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 		</if>
 
+		<echo append="true" file="portal-impl/src/portal-ext.properties">
+captcha.enforce.disabled=true</echo>
+
 		<apply-portal-ext-properties />
 	</target>
 

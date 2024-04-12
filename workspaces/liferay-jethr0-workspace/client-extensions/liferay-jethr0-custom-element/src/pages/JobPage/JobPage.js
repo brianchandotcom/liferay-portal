@@ -184,14 +184,16 @@ function JobInformation({job}) {
 							}
 						}
 
-						return (
-							<Jethr0InformationField
-								fieldLabel={parameter.label}
-								fieldType={parameter.type.name}
-								fieldValue={value}
-								key={key}
-							/>
-						);
+						if (parameter) {
+							return (
+								<Jethr0InformationField
+									fieldLabel={parameter.label}
+									fieldType={parameter.type.name}
+									fieldValue={value}
+									key={key}
+								/>
+							);
+						}
 					})}
 			</ClayPanel.Body>
 		</ClayPanel>
@@ -234,16 +236,31 @@ function JobPage() {
 		jobName = job.name;
 	}
 
-	const breadcrumbs = [
+	let breadcrumbs = [
 		{active: false, link: '/', name: 'Home'},
 		{active: false, link: '/jobs', name: 'Jobs'},
 		{active: true, link: '/jobs/' + id, name: jobName},
 	];
 
+	if (job.routine) {
+		breadcrumbs = [
+			{active: false, link: '/', name: 'Home'},
+			{active: false, link: '/routines', name: 'Routines'},
+			{
+				active: false,
+				link: '/routines/' + job.routine.id,
+				name: job.routine.name,
+			},
+			{active: true, link: '/jobs/' + id, name: jobName},
+		];
+	}
+
 	return (
 		<ClayLayout.Container>
 			<Jethr0Card>
-				<Jethr0NavigationBar active="Jobs" />
+				<Jethr0NavigationBar
+					active={job.routine ? 'Routines' : 'Jobs'}
+				/>
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
 				<Jethr0ContainerFluid>
 					<ClayLayout.Row justify="between">

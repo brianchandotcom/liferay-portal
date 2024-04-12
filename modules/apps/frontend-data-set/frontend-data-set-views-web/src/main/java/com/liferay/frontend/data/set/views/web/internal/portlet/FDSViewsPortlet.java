@@ -285,7 +285,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 						false)));
 
 		_objectDefinitionLocalService.publishSystemObjectDefinition(
-			userId, fdsCardsSectionObjectDefinition.getObjectDefinitionId());
+			userId, fdsCardsSectionObjectDefinition.getObjectDefinitionId());	
 
 		_objectRelationshipLocalService.addObjectRelationship(
 			null, userId, fdsViewObjectDefinition.getObjectDefinitionId(),
@@ -429,8 +429,14 @@ public class FDSViewsPortlet extends MVCPortlet {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
 						_language.get(locale, "preselected-values"),
-						"preselectedValues", false)));
+						"preselectedValues", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "source"), "source", false)
+					));
 
+					
 		_enableLocalization(fdsDynamicFilterObjectDefinition);
 
 		_addLocalizedCustomObjectField(

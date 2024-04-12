@@ -382,66 +382,6 @@ public class GraphQLServletTest {
 	}
 
 	@Test
-	public void testSchema() throws Exception {
-
-		// Mutation fields
-
-		JSONArray mutationFieldsJSONArray = JSONUtil.getValueAsJSONArray(
-			_invoke(
-				new GraphQLField(
-					"__schema",
-					new GraphQLField(
-						"mutationType",
-						new GraphQLField(
-							"fields(includeDeprecated: true)",
-							new GraphQLField("deprecationReason"),
-							new GraphQLField("isDeprecated"),
-							new GraphQLField("name"),
-							new GraphQLField(
-								"type",
-								new GraphQLField(
-									"fields",
-									new GraphQLField("deprecationReason"),
-									new GraphQLField("isDeprecated"),
-									new GraphQLField("name")))))),
-				"query"),
-			"JSONObject/data", "JSONObject/__schema", "JSONObject/mutationType",
-			"JSONArray/fields");
-
-		_assertGraphQLSchemaField(
-			false, mutationFieldsJSONArray, true, "createTestDTO");
-
-		// Query fields
-
-		JSONArray queryFieldsJSONArray = JSONUtil.getValueAsJSONArray(
-			_invoke(
-				new GraphQLField(
-					"__schema",
-					new GraphQLField(
-						"queryType",
-						new GraphQLField(
-							"fields(includeDeprecated: true)",
-							new GraphQLField("deprecationReason"),
-							new GraphQLField("isDeprecated"),
-							new GraphQLField("name"),
-							new GraphQLField(
-								"type",
-								new GraphQLField(
-									"fields",
-									new GraphQLField("deprecationReason"),
-									new GraphQLField("isDeprecated"),
-									new GraphQLField("name")))))),
-				"query"),
-			"JSONObject/data", "JSONObject/__schema", "JSONObject/queryType",
-			"JSONArray/fields");
-
-		_assertGraphQLSchemaField(
-			false, queryFieldsJSONArray, false, "testDTO");
-		_assertGraphQLSchemaField(
-			false, queryFieldsJSONArray, false, "testDTOPage");
-	}
-
-	@Test
 	public void testSchemaWithGraphQLNamespaces() throws Exception {
 
 		// Mutation fields

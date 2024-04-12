@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -50,7 +51,8 @@ public class RoleEmailProvider implements EmailProvider {
 		ObjectFieldLocalService objectFieldLocalService,
 		OrganizationLocalService organizationLocalService,
 		RoleLocalService roleLocalService,
-		UserGroupRoleLocalService userGroupRoleLocalService) {
+		UserGroupRoleLocalService userGroupRoleLocalService,
+		UserLocalService userLocalService) {
 
 		_accountEntryLocalService = accountEntryLocalService;
 		_accountEntryOrganizationRelLocalService =
@@ -60,6 +62,7 @@ public class RoleEmailProvider implements EmailProvider {
 		_organizationLocalService = organizationLocalService;
 		_roleLocalService = roleLocalService;
 		_userGroupRoleLocalService = userGroupRoleLocalService;
+		_userLocalService = userLocalService;
 	}
 
 	@Override
@@ -152,19 +155,33 @@ public class RoleEmailProvider implements EmailProvider {
 
 			if ((role == null) ||
 				((role.getType() != RoleConstants.TYPE_ACCOUNT) &&
-				 (role.getType() != RoleConstants.TYPE_ORGANIZATION))) {
+				 (role.getType() != RoleConstants.TYPE_ORGANIZATION) &&
+				 (role.getType() != RoleConstants.TYPE_REGULAR))) {
 
 				continue;
 			}
 
-			for (long groupId : groupIdsMap.get(role.getType())) {
-				for (UserGroupRole userGroupRole :
-						_userGroupRoleLocalService.
-							getUserGroupRolesByGroupAndRole(
-								groupId, role.getRoleId())) {
+			if ((role.getType() == RoleConstants.TYPE_ACCOUNT) ||
+				(role.getType() == RoleConstants.TYPE_ORGANIZATION)) {
 
-					User user = userGroupRole.getUser();
+				for (long groupId : groupIdsMap.get(role.getType())) {
+					for (UserGroupRole userGroupRole :
+							_userGroupRoleLocalService.
+								getUserGroupRolesByGroupAndRole(
+									groupId, role.getRoleId())) {
 
+						User user = userGroupRole.getUser();
+
+						emailAddresses.add(user.getEmailAddress());
+					}
+				}
+			}
+			else {
+				List<User> users = _userLocalService.getRoleUsers(
+					role.getRoleId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null);
+
+				for (User user : users) {
 					emailAddresses.add(user.getEmailAddress());
 				}
 			}
@@ -181,5 +198,6 @@ public class RoleEmailProvider implements EmailProvider {
 	private final OrganizationLocalService _organizationLocalService;
 	private final RoleLocalService _roleLocalService;
 	private final UserGroupRoleLocalService _userGroupRoleLocalService;
+	private final UserLocalService _userLocalService;
 
 }

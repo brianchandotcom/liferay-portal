@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -468,7 +469,7 @@ public class EmailNotificationType extends BaseNotificationType {
 				_accountEntryOrganizationRelLocalService,
 				_objectDefinitionLocalService, _objectFieldLocalService,
 				_organizationLocalService, _roleLocalService,
-				_userGroupRoleLocalService));
+				_userGroupRoleLocalService, _userLocalService));
 	}
 
 	private void _addFileAttachments(
@@ -743,5 +744,8 @@ public class EmailNotificationType extends BaseNotificationType {
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

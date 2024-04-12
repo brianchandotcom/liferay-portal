@@ -86,5 +86,5 @@ const KnownIndividualsListCard = ({
 
 export default compose(
 	withQueryPagination({initialOrderIOMap: createOrderIOMap(NAME)}),
-	withQueryRangeSelectors({})
+	withQueryRangeSelectors()
 )(KnownIndividualsListCard);

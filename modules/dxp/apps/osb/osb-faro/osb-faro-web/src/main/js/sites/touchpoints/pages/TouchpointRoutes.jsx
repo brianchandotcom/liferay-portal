@@ -14,12 +14,12 @@ import RouteNotFound from 'shared/components/RouteNotFound';
 import TextTruncate from 'shared/components/TextTruncate';
 import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {getMatchedRoute, Routes} from 'shared/util/router';
-import {getRangeSelectorsFromQuery} from 'shared/util/util';
 import {pickBy} from 'lodash';
 import {PropTypes} from 'prop-types';
 import {Switch} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
 import {useDataSource} from 'shared/hooks/useDataSource';
+import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 const KnownIndividuals = lazy(() =>
 	import(
@@ -55,7 +55,7 @@ const NAV_ITEMS = [
 
 function TouchpointRoutes({className, router}) {
 	const dataSourceStates = useDataSource();
-	const rangeSelectors = getRangeSelectorsFromQuery(router.query);
+	const rangeSelectors = useQueryRangeSelectors();
 	const {channelId, groupId, title, touchpoint} = router.params;
 	const [pathRangeSelectors, setPathRangeSelectors] = useState(
 		rangeSelectors

@@ -19,6 +19,11 @@ import {
 export const isBlank = (value: string | number): boolean =>
 	isNil(value) || (isString(value) && !value.length);
 
+/**
+ * It is deprecated, you should use useQueryRangeSelectors instead.
+ * @param query
+ * @deprecated
+ */
 export const getRangeSelectorsFromQuery = query => {
 	const rangeEnd = get(query, 'rangeEnd', '');
 	const rangeKey = get(query, 'rangeKey', RangeKeyTimeRanges.Last30Days);

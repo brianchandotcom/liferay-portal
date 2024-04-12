@@ -7,10 +7,7 @@ import TrendComponent from 'shared/components/Trend';
 import {ApolloError} from 'apollo-client';
 import {DocumentNode} from 'apollo-boost';
 import {getIcon, getStatsColor} from 'shared/util/metrics';
-import {
-	getRangeSelectorsFromQuery,
-	getSafeRangeSelectors
-} from 'shared/util/util';
+import {getSafeRangeSelectors} from 'shared/util/util';
 import {RangeSelectors, RawRangeSelectors} from 'shared/types';
 import {sub} from 'shared/util/lang';
 import {toRounded} from 'shared/util/numbers';
@@ -18,6 +15,7 @@ import {Trend} from 'commerce/utils/types';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/react-hooks';
+import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 type Currency = {
 	currencyCode: string;
@@ -76,9 +74,10 @@ function CommerceMetricCard<TGraphQlData>({
 	mapper,
 	Query
 }: ICommerceMetricCardProps<TGraphQlData>): React.ReactElement {
-	const {channelId, query} = useParams();
+	const {channelId} = useParams();
+	const initialRangeSelectors = useQueryRangeSelectors();
 	const [rangeSelectors, setRangeSelectors] = useState<RangeSelectors>(
-		getRangeSelectorsFromQuery(query)
+		initialRangeSelectors
 	);
 	const {data, error, loading} = useQuery<TGraphQlData, TGraphQlVariables>(
 		Query,

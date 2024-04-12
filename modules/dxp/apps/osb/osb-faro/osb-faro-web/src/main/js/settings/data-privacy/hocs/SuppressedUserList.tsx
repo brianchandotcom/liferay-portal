@@ -195,5 +195,5 @@ const SuppressedUserList: React.FC<ISuppressedUserListProps> = props => (
 export default compose<any>(
 	connector,
 	withQueryPagination({initialOrderIOMap: createOrderIOMap(CREATE_DATE)}),
-	withQueryRangeSelectors({})
+	withQueryRangeSelectors()
 )(SuppressedUserList);

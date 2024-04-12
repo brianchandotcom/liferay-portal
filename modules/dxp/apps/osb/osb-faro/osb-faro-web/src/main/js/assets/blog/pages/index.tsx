@@ -12,13 +12,13 @@ import React, {lazy, Suspense, useState} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import {ENABLE_GLOBAL_FILTER} from 'shared/util/constants';
 import {getMatchedRoute, Routes} from 'shared/util/router';
-import {getRangeSelectorsFromQuery} from 'shared/util/util';
 import {pickBy} from 'lodash';
 import {Router} from 'shared/types';
 import {sub} from 'shared/util/lang';
 import {Switch} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
 import {useDataSource} from 'shared/hooks/useDataSource';
+import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 const Overview = lazy(
 	() => import(/* webpackChunkName: "BlogsOverview" */ './Overview')
@@ -48,8 +48,7 @@ const Blog: React.FC<{
 	router: Router;
 }> = ({className, router}) => {
 	const {
-		params: {assetId, channelId, groupId, title, touchpoint},
-		query
+		params: {assetId, channelId, groupId, title, touchpoint}
 	} = router;
 
 	const [filters, setFilters] = useState({});
@@ -58,7 +57,7 @@ const Blog: React.FC<{
 
 	const decodedTitle = decodeURIComponent(title);
 
-	const rangeSelectorsFromQuery = getRangeSelectorsFromQuery(query);
+	const rangeSelectorsFromQuery = useQueryRangeSelectors();
 
 	const {selectedChannel} = useChannelContext();
 
@@ -126,15 +125,8 @@ const Blog: React.FC<{
 							assetId={assetId}
 							assetType='blog'
 							disabled={dataSourceStates.empty}
-							infoMessage={
-								sub(
-									Liferay.Language.get(
-										'the-x-list-will-be-downloaded-respecting-the-current-ordering,-filter,-and-search-results.-please-verify-if-the-desired-changes-are-applied'
-									),
-									[Liferay.Language.get('individuals')]
-								) as string
-							}
 							type='individual'
+							typeLang={Liferay.Language.get('blogs')}
 						/>
 					</div>
 				</BasePage.SubHeader>

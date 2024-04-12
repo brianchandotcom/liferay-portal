@@ -82,3 +82,8 @@ b52d93ce94d2bdebcdc6ac50a4ded4516ee42fcf^..11b8dbebfad1c5921301c404d3bb6a0e01f6c
 # Bundle Version 1.0.18
 #
 b29ce5074e95ffd9485ab4c4ee9d2b5e0618e8a5^..d0d0d39e9bdfc3341b8d3d835d2b10bda97b0d69=LPD-6865 LPD-6874 LPD-6875
+
+#
+# Bundle Version 1.0.19
+#
+d0d0d39e9bdfc3341b8d3d835d2b10bda97b0d69^..1c4472314cf27f40fa30c55792f01bc63a8a55ef=LPD-6874 LPD-6875

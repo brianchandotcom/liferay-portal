@@ -41,45 +41,47 @@
 </#list>
 
 <article class="learn-article">
-	<div class="d-flex">
-		<div class="learn-article-wrapper">
-			<div class="learn-article-breadcrumbs">
-				<div>
-					<div class="align-items-baseline d-flex justify-content-between">
-						<ul
-							aria-label="breadcrumb navigation"
-							class="article-breadcrumb"
-							role="navigation"
+	<div class="flex-column d-flex">
+		<div class="learn-article-breadcrumbs">
+			<div>
+				<div class="align-items-baseline d-flex justify-content-between mb-3">
+					<ul
+						aria-label="breadcrumb navigation"
+						class="article-breadcrumb"
+						role="navigation"
+					>
+						<li>
+							<a href="/"><@clay["icon"] symbol="home-full" /></a>
+						</li>
+
+						<#if breadcrumbJSONArray?has_content>
+							<#list breadcrumbJSONArray.length()-1..0 as i>
+								<li>
+									<a href='${breadcrumbJSONArray.getJSONObject(i).getString("url")}'>${breadcrumbJSONArray.getJSONObject(i).getString("title")}</a>
+								</li>
+							</#list>
+						</#if>
+
+						<li>
+							${navigationJSONObject.getJSONObject("self").getString("title")}
+						</li>
+					</ul>
+
+					<div class="submit-feedback">
+						<a
+							class="text-decoration-none"
+							href="https://liferay.dev/c/portal/login?redirect=https://liferay.dev/ask/questions/liferay-learn-feedback/new"
 						>
-							<li>
-								<a href="/"><@clay["icon"] symbol="home-full" /></a>
-							</li>
-
-							<#if breadcrumbJSONArray?has_content>
-								<#list breadcrumbJSONArray.length()-1..0 as i>
-									<li>
-										<a href='${breadcrumbJSONArray.getJSONObject(i).getString("url")}'>${breadcrumbJSONArray.getJSONObject(i).getString("title")}</a>
-									</li>
-								</#list>
-							</#if>
-
-							<li>
-								${navigationJSONObject.getJSONObject("self").getString("title")}
-							</li>
-						</ul>
-
-						<div class="submit-feedback">
-							<a
-								class="text-decoration-none"
-								href="https://liferay.dev/c/portal/login?redirect=https://liferay.dev/ask/questions/liferay-learn-feedback/new"
-							>
-								${languageUtil.get(locale, "submit-feedback", "Submit Feedback")}
-								<@clay["icon"] symbol="message-boards" />
-							</a>
-						</div>
+							${languageUtil.get(locale, "submit-feedback", "Submit Feedback")}
+							<@clay["icon"] symbol="message-boards" />
+						</a>
 					</div>
 				</div>
 			</div>
+		</div>
+
+		<div class="learn-article-wrapper">
+			
 
 			<div class="learn-article-content">
 				<#if (content.getData())??>
@@ -91,32 +93,29 @@
 						<a href='${childrenJSONArray.getJSONObject(i).getString("url")}'>${childrenJSONArray.getJSONObject(i).getString("title")}</a>
 					</#list>
 				</#if>
-
-				<#list taxonomyVocabularies as vocabulary>
-					<div class="align-items-baseline col-10 d-flex mt-2 pl-0">
-						<div class="align-items-baseline d-flex flex-wrap mr-2">
-							${vocabulary}:
-						</div>
-
-						<div class="d-flex font-weight-bold mr-2 tags-container">
+				<div class="article-categories-tags">
+					<#list taxonomyVocabularies as vocabulary>
+						<div class="align-items-baseline d-flex mt-2">
+							<div class="article-category-title mr-2">
+								${vocabulary}:
+							</div>
 							<#list taxonomyCategoriesMap[vocabulary]?sort_by("categoryName") as taxonomyCategory>
-								<div class="d-flex">
+								<div class="article-category-tag mr-2">
 									<a
-										class="align-items-center d-flex label label-primary tag-container"
+										class="label tag-container"
 										href="/search?category=${taxonomyCategory.categoryId}"
 									>
-										<span class="label-item label-item-expand">${taxonomyCategory.categoryName}</span>
+										<span>${taxonomyCategory.categoryName}</span>
 									</a>
 								</div>
 							</#list>
 						</div>
-					</div>
-				</#list>
+					</#list>
+				</div>
 			</div>
-		</div>
-
-		<div class="learn-article-page-nav">
-			<ul class="nav nav-stacked toc" id="articleTOC"></ul>
+			<div class="learn-article-page-nav">
+				<ul class="nav nav-stacked toc" id="articleTOC"></ul>
+			</div>
 		</div>
 	</div>
 </article>

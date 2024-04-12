@@ -255,33 +255,22 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		Map<String, Object> fdsViewObjectEntryProperties =
 			fdsViewObjectEntry.getProperties();
 
-		ObjectEntry fdsEntryObjectEntry = _getObjectEntry(
-			fragmentEntryLink.getCompanyId(),
-			String.valueOf(
-				fdsViewObjectEntryProperties.get(
-					"r_fdsEntryFDSViewRelationship_c_fdsEntryERC")),
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				fragmentEntryLink.getCompanyId(), "FDSEntry"));
-
 		Set<ObjectEntry> fdsFieldObjectEntries = _getFDSFieldObjectEntries(
 			fdsViewObjectDefinition, fdsViewObjectEntry);
-
-		Collection<ObjectEntry> fdsCardsSectionObjectEntries =
-			_getRelatedObjectEntries(
-				fdsViewObjectDefinition, fdsViewObjectEntry,
-				"fdsViewFDSCardsSectionRelationship");
-		Collection<ObjectEntry> fdsListSectionObjectEntries =
-			_getRelatedObjectEntries(
-				fdsViewObjectDefinition, fdsViewObjectEntry,
-				"fdsViewFDSListSectionRelationship");
 
 		_reactRenderer.renderReact(
 			componentDescriptor,
 			HashMapBuilder.<String, Object>put(
 				"apiURL",
 				_getAPIURL(
-					fdsEntryObjectEntry, fdsFieldObjectEntries,
-					httpServletRequest)
+					_getObjectEntry(
+						fragmentEntryLink.getCompanyId(),
+						String.valueOf(
+							fdsViewObjectEntryProperties.get(
+								"r_fdsEntryFDSViewRelationship_c_fdsEntryERC")),
+						_objectDefinitionLocalService.fetchObjectDefinition(
+							fragmentEntryLink.getCompanyId(), "FDSEntry")),
+					fdsFieldObjectEntries, httpServletRequest)
 			).put(
 				"creationMenu",
 				_getCreationMenuJSONObject(
@@ -310,11 +299,16 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				"views",
 				_getFDSViewsJSONArray(
 					fragmentEntryLink.getCompanyId(),
-					fdsCardsSectionObjectEntries,
+					_getRelatedObjectEntries(
+						fdsViewObjectDefinition, fdsViewObjectEntry,
+						"fdsViewFDSCardsSectionRelationship"),
 					String.valueOf(
 						fdsViewObjectEntryProperties.get(
 							"defaultVisualizationMode")),
-					fdsFieldObjectEntries, fdsListSectionObjectEntries,
+					fdsFieldObjectEntries,
+					_getRelatedObjectEntries(
+						fdsViewObjectDefinition, fdsViewObjectEntry,
+						"fdsViewFDSListSectionRelationship"),
 					httpServletRequest)
 			).build(),
 			httpServletRequest, writer);

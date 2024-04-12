@@ -14,7 +14,9 @@ long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-layout:l
 LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = new LayoutClassedModelUsagesDisplayContext(request, renderRequest, renderResponse, className, classPK);
 %>
 
-<react:component
-	module="{ViewUsages} from layout-taglib"
-	props="<%= layoutClassedModelUsagesDisplayContext.getUsagesData() %>"
-/>
+<div>
+	<react:component
+		module="{ViewUsages} from layout-taglib"
+		props="<%= layoutClassedModelUsagesDisplayContext.getUsagesData() %>"
+	/>
+</div>

@@ -90,9 +90,41 @@ const MDFClaimPage = ({
 		return isDisplayable;
 	};
 
+	const availableMDFActivities = values.activities?.filter((activity) =>
+		isDisplayableMDFActivityClaim(activity)
+	).length;
+
 	const getClaimPage = () => {
 		if (!fieldEntries || !companiesEntries) {
 			return <ClayLoadingIndicator />;
+		}
+
+		if (!availableMDFActivities || availableMDFActivities === 0) {
+			return (
+				<PRMForm name="New" title="Reimbursement Claim">
+					<div className="d-flex justify-content-center mt-4">
+						<ClayAlert
+							className="m-0 w-100"
+							displayType="info"
+							title="Info:"
+						>
+							You don&apos;t have activities available to claim.
+						</ClayAlert>
+					</div>
+
+					<PRMForm.Footer>
+						<div className="d-flex mr-auto">
+							<ClayButton
+								className="mr-4"
+								displayType="secondary"
+								onClick={() => onCancel()}
+							>
+								Cancel
+							</ClayButton>
+						</div>
+					</PRMForm.Footer>
+				</PRMForm>
+			);
 		}
 
 		if (claimsFiltered && claimsFiltered >= 2 && !values.id) {

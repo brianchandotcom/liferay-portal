@@ -1041,16 +1041,10 @@ public class PortalImpl implements Portal {
 		Layout layout = null;
 
 		if (Validator.isNull(friendlyURL)) {
-			HttpServletRequest httpServletRequest =
-				(HttpServletRequest)requestContext.get("request");
-
-			User user = UserServiceUtil.getUserById(
-				getUserId(httpServletRequest));
-
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
-
-			layout = _getLayout(groupId, privateLayout, permissionChecker);
+			layout = _getLayout(
+				groupId, privateLayout,
+				_getPermissionChecker(
+					(HttpServletRequest)requestContext.get("request")));
 
 			if (layout == null) {
 				throw new NoSuchLayoutException(
@@ -7706,6 +7700,15 @@ public class PortalImpl implements Portal {
 		}
 
 		return layout;
+	}
+
+	private PermissionChecker _getPermissionChecker(
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		User user = UserServiceUtil.getUserById(getUserId(httpServletRequest));
+
+		return PermissionCheckerFactoryUtil.create(user);
 	}
 
 	private String _getPortalURL(

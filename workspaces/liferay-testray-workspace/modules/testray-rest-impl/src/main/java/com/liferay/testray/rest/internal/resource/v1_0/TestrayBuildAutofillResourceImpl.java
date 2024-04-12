@@ -5,17 +5,24 @@
 
 package com.liferay.testray.rest.internal.resource.v1_0;
 
+import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.testray.rest.dto.v1_0.TestrayBuildAutofill;
 import com.liferay.testray.rest.internal.util.TestrayUtil;
 import com.liferay.testray.rest.resource.v1_0.TestrayBuildAutofillResource;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -74,7 +81,7 @@ public class TestrayBuildAutofillResourceImpl
 			params);
 
 		for (Map<String, Object> map : values) {
-			_autofillCaseResult(map);
+			_autofillTestrayCaseResult(map);
 		}
 
 		TestrayBuildAutofill testrayBuildAutofill = new TestrayBuildAutofill();
@@ -83,5 +90,51 @@ public class TestrayBuildAutofillResourceImpl
 
 		return testrayBuildAutofill;
 	}
+
+	private void _autofillTestrayCaseResult(Map<String, Object> map)
+		throws Exception {
+
+		int sourceCaseResultIndex = 1;
+		int targetCaseResultIndex = 2;
+
+		if ((GetterUtil.getString(map.get("issues_1")) == null) ||
+			(GetterUtil.getLong(map.get("r_userToCaseResults_userId_1")) ==
+				0)) {
+
+			sourceCaseResultIndex = 2;
+			targetCaseResultIndex = 1;
+		}
+
+		ObjectEntry targetObjectEntry = _objectEntryLocalService.getObjectEntry(
+			GetterUtil.getLong(
+				map.get("c_caseResultId_" + targetCaseResultIndex)));
+
+		Map<String, Serializable> values = targetObjectEntry.getValues();
+
+		values.put(
+			"dueStatus",
+			GetterUtil.getString(
+				map.get("dueStatus_" + sourceCaseResultIndex)));
+		values.put(
+			"issues",
+			GetterUtil.getString(map.get("issues_" + sourceCaseResultIndex)));
+		values.put(
+			"r_userToCaseResults_userId",
+			GetterUtil.getLong(
+				map.get(
+					"r_userToCaseResults_userId_" + sourceCaseResultIndex)));
+
+		_objectEntryLocalService.updateObjectEntry(
+			contextUser.getUserId(),
+			GetterUtil.getLong(
+				map.get("c_caseResultId_" + targetCaseResultIndex)),
+			values, _serviceContextHelper.getServiceContext());
+	}
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ServiceContextHelper _serviceContextHelper;
 
 }

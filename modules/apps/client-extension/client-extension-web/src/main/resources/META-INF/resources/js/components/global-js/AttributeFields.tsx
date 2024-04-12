@@ -82,11 +82,12 @@ export default function AttributeFields({
 							}
 							else {
 								setErrorMessage(null);
-
-								onAttributeChange(index, {name: target.value});
 							}
+
+							onAttributeChange(index, {name: target.value});
 						}}
 						type="text"
+						value={name}
 					/>
 				</FieldBase>
 			</ClayLayout.Col>

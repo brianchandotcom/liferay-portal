@@ -152,6 +152,96 @@ public class FreemarkerFragmentEntryProcessorTest {
 	}
 
 	@Test
+	public void testAddFragmentWithFragmentElementId() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
+				serviceContext);
+
+		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"fragment-entry", "Fragment Entry", null, "${fragmentElementId}",
+			null, false, StringPool.BLANK, null, 0, false,
+			FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					null, LocaleUtil.getDefault());
+
+		defaultFragmentEntryProcessorContext.setFragmentElementId("elementId");
+
+		Assert.assertEquals(
+			"elementId",
+			_getProcessedHTML(
+				_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+					fragmentEntryLink, defaultFragmentEntryProcessorContext)));
+	}
+
+	@Test
+	public void testAddFragmentWithLayoutMode() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
+				serviceContext);
+
+		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"fragment-entry", "Fragment Entry", null, "${layoutMode}", null,
+			false, StringPool.BLANK, null, 0, false,
+			FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					null, LocaleUtil.getDefault());
+
+		Assert.assertEquals(
+			Constants.VIEW,
+			_getProcessedHTML(
+				_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+					fragmentEntryLink, defaultFragmentEntryProcessorContext)));
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter("p_l_mode", Constants.EDIT);
+
+		defaultFragmentEntryProcessorContext =
+			new DefaultFragmentEntryProcessorContext(
+				mockHttpServletRequest, new MockHttpServletResponse(), null,
+				LocaleUtil.getDefault());
+
+		Assert.assertEquals(
+			Constants.EDIT,
+			_getProcessedHTML(
+				_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+					fragmentEntryLink, defaultFragmentEntryProcessorContext)));
+	}
+
+	@Test
 	public void testProcessFragmentEntryLinkHTML() throws Exception {
 		FragmentEntry fragmentEntry = _addFragmentEntry(
 			"fragment_entry.html", null);

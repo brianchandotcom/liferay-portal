@@ -1,9 +1,13 @@
-import FaroConstants, {LanguageIds} from 'shared/util/constants';
+import FaroConstants, {
+	LanguageIds,
+	RangeKeyTimeRanges
+} from 'shared/util/constants';
 import html2canvas from 'html2canvas';
 import JsPDF from 'jspdf';
 import moment from 'moment';
 import {buildOrderByFields} from 'shared/util/pagination';
 import {DEFAULT_DATE_FORMAT} from 'shared/util/date';
+import {DEFAULT_RANGE_SELECTORS} from 'shared/hooks/useQueryRangeSelectors';
 import {INDIVIDUALS} from 'shared/util/router';
 import {isJapaneseLang} from 'shared/util/lang';
 import {TransformedContainer} from './DownloadPDFReport';
@@ -223,19 +227,26 @@ export function useDownloadCSV({
 	const {channelId, groupId, title} = useParams();
 
 	return {
-		onClick: dateRange => {
+		onClick: initialRangeSelectors => {
+			const rangeSelectors =
+				initialRangeSelectors || DEFAULT_RANGE_SELECTORS;
 			const searchParams = new URLSearchParams(location.search);
 
 			const field = searchParams.get('field');
 			const query = searchParams.get('query');
-			const rangeKey = searchParams.get('rangeKey');
 			const sortOrder = searchParams.get('sortOrder');
 
 			const a = document.createElement('a');
 
-			let url = `/o/faro/main/${groupId}/reports/export/csv/${type}?channelId=${channelId}&fromDate=${formatDate(
-				dateRange?.start
-			)}&toDate=${formatDate(dateRange?.end)}`;
+			let url = `/o/faro/main/${groupId}/reports/export/csv/${type}?channelId=${channelId}`;
+
+			if (rangeSelectors.rangeKey === RangeKeyTimeRanges.CustomRange) {
+				url += '&rangeKey=CUSTOM';
+				url += `&fromDate=${formatDate(rangeSelectors?.rangeStart)}`;
+				url += `&toDate=${formatDate(rangeSelectors?.rangeEnd)}`;
+			} else {
+				url += `&rangeKey=${rangeSelectors.rangeKey}`;
+			}
 
 			if (assetId) {
 				url += `&assetId=${encodeURIComponent(assetId)}`;
@@ -259,12 +270,6 @@ export function useDownloadCSV({
 
 			if (query) {
 				url += `&query=${query}`;
-			}
-
-			if (dateRange?.end && dateRange?.start) {
-				url += '&rangeKey=CUSTOM';
-			} else if (rangeKey) {
-				url += `&rangeKey=${rangeKey}`;
 			}
 
 			a.href = url;

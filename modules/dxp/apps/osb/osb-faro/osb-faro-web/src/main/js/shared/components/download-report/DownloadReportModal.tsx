@@ -1,27 +1,20 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import ClayDropDown, {Align} from '@clayui/drop-down';
-import ClayForm, {ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
+import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import DatePicker from 'shared/components/date-picker';
-import getCN from 'classnames';
 import React, {useState} from 'react';
 import {addAlert} from 'shared/actions/alerts';
-import {Alert} from 'shared/types';
-import {DatePickerRetentionPeriodHeader} from '../DatePickerRetentionPeriodHeader';
-import {formatDate} from './utils';
-import {formatDateWithTimezone} from '../dropdown-range-key/utils';
+import {Alert, RangeSelectors} from 'shared/types';
+import {Align} from '@clayui/drop-down';
+import {DropdownRangeKey} from '../dropdown-range-key/DropdownRangeKey';
 import {Moment} from 'moment';
 import {MomentDateRange} from '../DateRangeInput';
 import {pickBy} from 'lodash';
-import {RangeKeyTimeRanges} from 'shared/util/constants';
-import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
+import {setUriQueryValues} from 'shared/util/router';
 import {spritemap} from 'shared/util/constants';
+import {Text} from '@clayui/core';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
-import {useRetentionPeriod} from 'shared/hooks/useRetentionPeriod';
-import {useTimeZone} from 'shared/hooks/useTimeZone';
 
 export enum ReportType {
 	CSV = 'CSV',
@@ -31,12 +24,12 @@ export enum ReportType {
 interface IDownloadReportModal {
 	alertMessage: string;
 	date?: MomentDateRange;
-	descriptionMessage: string;
 	disabled?: boolean;
 	infoMessage: string;
 	observer: any;
 	onClose: () => void;
-	onSubmit: (dateRange?: MomentDateRange) => void;
+	onSubmit: (rangeSelectors?: RangeSelectors) => void;
+	rangeSelectors?: RangeSelectors;
 	requiredDateRange?: boolean;
 	showDateRange?: boolean;
 	type?: ReportType;
@@ -47,18 +40,12 @@ interface IDownloadReportModal {
 export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	alertMessage,
 	children,
-	date = {
-		end: null,
-		start: null
-	},
-	descriptionMessage,
 	disabled = false,
 	infoMessage,
-	maxDate: initialMaxDate,
-	minDate: initialMinDate,
 	observer,
 	onClose,
 	onSubmit,
+	rangeSelectors: initialRangeSelectors,
 	requiredDateRange = false,
 	showDateRange = true,
 	type
@@ -66,20 +53,10 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const [openAlert, setOpenAlert] = useState(true);
-	const [dateRange, setDateRange] = useState<MomentDateRange>(date);
 	const [submitDisabled, setSubmitDisabled] = useState(false);
-
-	const retentionPeriod = useRetentionPeriod();
-	const {timeZoneId} = useTimeZone();
-
-	const maxDate =
-		initialMaxDate ||
-		formatDateWithTimezone(timeZoneId).clone().subtract(1, 'days');
-	const minDate =
-		initialMinDate ||
-		formatDateWithTimezone(timeZoneId)
-			.clone()
-			.subtract(retentionPeriod, 'month');
+	const [rangeSelectors, setRangeSelectors] = useState<RangeSelectors>(
+		initialRangeSelectors
+	);
 
 	return (
 		<ClayModal observer={observer}>
@@ -99,25 +76,18 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 					);
 
 					if (type === 'CSV') {
-						onSubmit(dateRange);
+						onSubmit(rangeSelectors);
 
 						return;
 					}
 
-					if (dateRange && dateRange.end && dateRange.start) {
+					if (rangeSelectors) {
 						history.push(
 							setUriQueryValues(
 								pickBy({
 									downloadReport: true,
-									rangeEnd: formatDate(dateRange.end),
-									rangeKey: RangeKeyTimeRanges.CustomRange,
-									rangeStart: formatDate(dateRange.start)
-								}),
-								removeUriQueryParam(
-									window.location.href,
-									'rangeEnd',
-									'rangeStart'
-								)
+									...rangeSelectors
+								})
 							)
 						);
 
@@ -148,19 +118,18 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 					{Liferay.Language.get('download-report')}
 				</ClayModal.Header>
 
+				{openAlert && (
+					<ClayAlert
+						onClose={() => setOpenAlert(false)}
+						spritemap={spritemap}
+						title={Liferay.Language.get('info')}
+						variant='stripe'
+					>
+						{infoMessage}
+					</ClayAlert>
+				)}
+
 				<ClayModal.Body>
-					{openAlert && (
-						<ClayAlert
-							onClose={() => setOpenAlert(false)}
-							spritemap={spritemap}
-							title={Liferay.Language.get('info')}
-						>
-							{infoMessage}
-						</ClayAlert>
-					)}
-
-					<p>{descriptionMessage}</p>
-
 					{showDateRange && (
 						<ClayForm.Group>
 							<label htmlFor='timeRange'>
@@ -171,66 +140,20 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 									  )}
 							</label>
 
-							<ClayDropDown
-								alignmentPosition={Align.BottomLeft}
-								menuElementAttrs={{
-									className: getCN(
-										'dropdown-range-key-menu-root',
-										{'show-date-picker': showDateRange}
-									)
-								}}
-								trigger={
-									<ClayInput.Group>
-										<ClayInput.GroupItem prepend>
-											<ClayInput
-												id='timeRange'
-												placeholder={`${Liferay.Language.get(
-													'yyyy-mm-dd'
-												)} - ${Liferay.Language.get(
-													'yyyy-mm-dd'
-												)}`}
-												readOnly
-												type='text'
-												value={
-													dateRange.start &&
-													dateRange.end
-														? `${formatDate(
-																dateRange.start
-														  )} - ${formatDate(
-																dateRange.end
-														  )}`
-														: ''
-												}
-											/>
-										</ClayInput.GroupItem>
+							<p>
+								<Text size={3}>
+									{Liferay.Language.get(
+										'only-select-a-date-range-if-you-want-to-modify-the-current-date-filter'
+									)}
+								</Text>
+							</p>
 
-										<ClayInput.GroupItem append shrink>
-											<ClayInput.GroupText>
-												<ClayIcon symbol='calendar' />
-											</ClayInput.GroupText>
-										</ClayInput.GroupItem>
-									</ClayInput.Group>
-								}
-							>
-								<DatePicker
-									date={dateRange}
-									displayLabel={false}
-									header={
-										<DatePickerRetentionPeriodHeader
-											retentionPeriod={retentionPeriod}
-										/>
-									}
-									maxDate={maxDate}
-									maxRange={365}
-									minDate={minDate}
-									onSelect={({end, start}) => {
-										setDateRange({
-											end,
-											start
-										});
-									}}
-								/>
-							</ClayDropDown>
+							<DropdownRangeKey
+								alignmentPosition={Align.BottomLeft}
+								legacy={false}
+								onRangeSelectorChange={setRangeSelectors}
+								rangeSelectors={rangeSelectors}
+							/>
 						</ClayForm.Group>
 					)}
 
@@ -250,13 +173,7 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 
 							<ClayButton
 								data-testid='submit'
-								disabled={
-									(requiredDateRange &&
-										!dateRange.end &&
-										!dateRange.start) ||
-									disabled ||
-									submitDisabled
-								}
+								disabled={disabled || submitDisabled}
 								type='submit'
 							>
 								{Liferay.Language.get('download')}

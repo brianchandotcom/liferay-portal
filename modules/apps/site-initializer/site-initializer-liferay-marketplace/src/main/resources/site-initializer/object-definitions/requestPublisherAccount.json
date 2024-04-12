@@ -39,7 +39,8 @@
 			"type": "String"
 		},
 		{
-			"DBType": "String",
+			"DBType": "Clob",
+			"businessType": "LongText",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -47,7 +48,7 @@
 			},
 			"name": "requestDescription",
 			"required": false,
-			"type": "String"
+			"type": "Clob"
 		},
 		{
 			"DBType": "String",

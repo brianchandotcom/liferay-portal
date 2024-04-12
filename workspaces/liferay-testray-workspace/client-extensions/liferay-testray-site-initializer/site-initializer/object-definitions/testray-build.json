@@ -67,6 +67,12 @@
 				"en_US": "Date Archived"
 			},
 			"name": "dateArchived",
+			"objectFieldSettings": [
+				{
+					"name": "timeStorage",
+					"value": "convertToUTC"
+				}
+			],
 			"required": false,
 			"type": "DateTime"
 		},

@@ -522,7 +522,22 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		_configuration = new Configuration(Configuration.VERSION_2_3_32);
 
+		_configuration.setAttemptExceptionReporter(
+			(templateException, environment) -> {
+			});
+		_configuration.setDefaultEncoding(StringPool.UTF8);
+		_configuration.setLocalizedLookup(
+			_freeMarkerEngineConfiguration.localizedLookup());
+		_configuration.setNewBuiltinClassResolver(_templateClassResolver);
+
 		try {
+			_configuration.setLogTemplateExceptions(
+				_freeMarkerEngineConfiguration.logTemplateExceptions());
+			_configuration.setSetting("auto_import", _getMacroLibrary());
+			_configuration.setSetting(
+				"template_exception_handler",
+				_freeMarkerEngineConfiguration.templateExceptionHandler());
+
 			Field field = ReflectionUtil.getDeclaredField(
 				Configuration.class, "cache");
 
@@ -540,28 +555,6 @@ public class FreeMarkerManager extends BaseTemplateManager {
 				"loop-count-threshold",
 				new SimpleNumber(
 					_freeMarkerEngineConfiguration.loopCountThreshold()));
-		}
-		catch (Exception exception) {
-			throw new TemplateException(
-				"Unable to Initialize FreeMarker manager", exception);
-		}
-
-		_configuration.setAttemptExceptionReporter(
-			(templateException, environment) -> {
-			});
-
-		_configuration.setDefaultEncoding(StringPool.UTF8);
-		_configuration.setLocalizedLookup(
-			_freeMarkerEngineConfiguration.localizedLookup());
-		_configuration.setNewBuiltinClassResolver(_templateClassResolver);
-
-		try {
-			_configuration.setLogTemplateExceptions(
-				_freeMarkerEngineConfiguration.logTemplateExceptions());
-			_configuration.setSetting("auto_import", _getMacroLibrary());
-			_configuration.setSetting(
-				"template_exception_handler",
-				_freeMarkerEngineConfiguration.templateExceptionHandler());
 		}
 		catch (Exception exception) {
 			throw new TemplateException(

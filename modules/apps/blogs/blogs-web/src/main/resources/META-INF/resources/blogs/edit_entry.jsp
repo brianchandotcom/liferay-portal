@@ -180,7 +180,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 
 					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11147") %>'>
 						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="friendly-url">
-							<div class="clearfix form-group">
+							<div class="form-group">
 								<react:component
 									module="{AssetCategoriesFriendlyUrlSelector} from blogs-web"
 									props='<%=

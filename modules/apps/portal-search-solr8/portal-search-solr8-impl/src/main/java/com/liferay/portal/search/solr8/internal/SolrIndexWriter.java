@@ -364,7 +364,7 @@ public class SolrIndexWriter extends BaseIndexWriter {
 						bulkDocumentResponse);
 
 				String errorMessage =
-					"Update failed. " + bulkDocumentResponseFailureMessages;
+					"Update failed: " + bulkDocumentResponseFailureMessages;
 
 				if (_logExceptionsOnly) {
 					_log.error(errorMessage);

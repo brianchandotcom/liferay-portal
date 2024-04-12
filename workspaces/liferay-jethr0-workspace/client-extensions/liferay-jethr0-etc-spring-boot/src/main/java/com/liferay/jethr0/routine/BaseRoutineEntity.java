@@ -20,6 +20,7 @@ import java.util.TreeSet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -101,7 +102,7 @@ public abstract class BaseRoutineEntity
 		).put(
 			"jobName", getJobName()
 		).put(
-			"jobParameters", String.valueOf(_getJobParametersJSONObject())
+			"jobParameters", String.valueOf(_getJobParametersJSONArray())
 		).put(
 			"jobPriority", getJobPriority()
 		).put(
@@ -217,21 +218,28 @@ public abstract class BaseRoutineEntity
 		super(jsonObject);
 	}
 
-	private JSONObject _getJobParametersJSONObject() {
-		JSONObject jobParametersJSONObject = new JSONObject();
+	private JSONArray _getJobParametersJSONArray() {
+		JSONArray jobParametersJSONArray = new JSONArray();
 
 		if (_jobParameters.isEmpty()) {
-			return jobParametersJSONObject;
+			return jobParametersJSONArray;
 		}
 
 		Set<String> jobParameterNames = new TreeSet<>(_jobParameters.keySet());
 
 		for (String jobParameterName : jobParameterNames) {
-			jobParametersJSONObject.put(
-				jobParameterName, _jobParameters.get(jobParameterName));
+			JSONObject jobParameterJSONObject = new JSONObject();
+
+			jobParameterJSONObject.put(
+				"key", jobParameterName
+			).put(
+				"value", _jobParameters.get(jobParameterName)
+			);
+
+			jobParametersJSONArray.put(jobParameterJSONObject);
 		}
 
-		return jobParametersJSONObject;
+		return jobParametersJSONArray;
 	}
 
 	private static final Log _log = LogFactory.getLog(BaseRoutineEntity.class);

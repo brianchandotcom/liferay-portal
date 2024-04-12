@@ -121,6 +121,14 @@ export async function getJobById({id, setJob}) {
 	}
 }
 
+export function getJobParameterValue({jobParameters, key}) {
+	for (const jobParameter of jobParameters) {
+		if (jobParameter.key === key) {
+			return jobParameter.value;
+		}
+	}
+}
+
 export async function getJobQueueOrderedJobs({setJobs}) {
 	const response = await liferayRequest({
 		urlPath: '/o/c/jobprioritizers',
@@ -193,5 +201,24 @@ export async function getJobs({orderedJobIds, setJobs}) {
 
 	if (setJobs) {
 		setJobs(jobs);
+	}
+}
+
+
+export function updateJobParameters({jobParameters, key, value}) {
+	let jobParameterUpdated = false;
+
+	for (const jobParameter of jobParameters) {
+		if (jobParameter.key === key) {
+			jobParameter.value = value;
+
+			jobParameterUpdated = true;
+
+			break;
+		}
+	}
+
+	if (!jobParameterUpdated) {
+		jobParameters.push({key, value});
 	}
 }

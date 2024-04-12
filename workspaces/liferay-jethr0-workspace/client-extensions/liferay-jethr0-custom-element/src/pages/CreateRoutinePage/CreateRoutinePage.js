@@ -4,19 +4,22 @@
  */
 
 import {Heading} from '@clayui/core';
-import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useState} from 'react';
 
 import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
 import Jethr0ButtonsRow from '../../components/Jethr0ButtonsRow/Jethr0ButtonsRow';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
+import Jethr0Input from '../../components/Jethr0Input/Jethr0Input';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
+import Jethr0SelectWithOption from '../../components/Jethr0SelectWithOption/Jethr0SelectWithOption';
 import {getJobDefinitions} from '../../objects/jobdefinitions/JobDefinitionUtil';
 import {
 	createRoutine,
 	getRoutineTypes,
 } from '../../objects/routines/RoutineUtil';
+import {getJobParameterValue, updateJobParameters} from '../../objects/jobs/JobUtil';
 
 function CreateRoutinePage() {
 	const [jobDefinitionKey, setJobDefinitionKey] = useState('default');
@@ -72,17 +75,27 @@ function CreateRoutinePage() {
 		}
 	}
 
-	if (!jobParameters && jobDefinition?.jobDefinitionParameters) {
-		const defaultJobParameters = {};
+	if (!jobParameters) {
+		const defaultJobParameters = [];
 
-		jobDefinition.jobDefinitionParameters.forEach(
-			(jobDefinitionParameter) => {
-				if (jobDefinitionParameter.valueDefault) {
-					defaultJobParameters[jobDefinitionParameter.key] =
-						jobDefinitionParameter.valueDefault;
+		if (jobDefinition?.jobDefinitionParameters) {
+			jobDefinition.jobDefinitionParameters.forEach(
+				(jobDefinitionParameter) => {
+					let defaultJobParameter;
+
+					if (jobDefinitionParameter.valueDefault) {
+						defaultJobParameter = {
+							key: jobDefinitionParameter.key,
+							value: jobDefinitionParameter.valueDefault,
+						};
+					}
+
+					if (defaultJobParameter) {
+						defaultJobParameters.push(defaultJobParameter);
+					}
 				}
-			}
-		);
+			);
+		}
 
 		setJobParameters(defaultJobParameters);
 
@@ -113,7 +126,7 @@ function CreateRoutinePage() {
 	return (
 		<ClayLayout.Container>
 			<Jethr0Card>
-				<Jethr0NavigationBar active="Jobs" />
+				<Jethr0NavigationBar active="Routines" />
 
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
 
@@ -124,7 +137,7 @@ function CreateRoutinePage() {
 				<ClayForm.Group>
 					<label htmlFor="routineName">Routine Name</label>
 
-					<ClayInput
+					<Jethr0Input
 						id="routineName"
 						onChange={(event) => {
 							setRoutineName(event.target.value);
@@ -138,7 +151,7 @@ function CreateRoutinePage() {
 				<ClayForm.Group>
 					<label htmlFor="routineCron">Routine Cron</label>
 
-					<ClayInput
+					<Jethr0Input
 						id="routineCron"
 						onChange={(event) => {
 							setRoutineCron(event.target.value);
@@ -152,7 +165,7 @@ function CreateRoutinePage() {
 				<ClayForm.Group>
 					<label htmlFor="routineType">Routine Type</label>
 
-					<ClaySelectWithOption
+					<Jethr0SelectWithOption
 						aria-label="Routine Types"
 						id="routineType"
 						onChange={(event) => {
@@ -166,7 +179,7 @@ function CreateRoutinePage() {
 				<ClayForm.Group>
 					<label htmlFor="jobName">Job Name</label>
 
-					<ClayInput
+					<Jethr0Input
 						id="jobName"
 						onChange={(event) => {
 							setJobName(event.target.value);
@@ -180,7 +193,7 @@ function CreateRoutinePage() {
 				<ClayForm.Group>
 					<label htmlFor="jobPriority">Job Priority</label>
 
-					<ClayInput
+					<Jethr0Input
 						id="jobPriority"
 						onChange={(event) => {
 							setJobPriority(event.target.value);
@@ -193,7 +206,7 @@ function CreateRoutinePage() {
 				<ClayForm.Group>
 					<label htmlFor="jobType">Job Type</label>
 
-					<ClaySelectWithOption
+					<Jethr0SelectWithOption
 						aria-label="Job Types"
 						id="jobType"
 						onChange={(event) => {
@@ -215,24 +228,25 @@ function CreateRoutinePage() {
 										{jobParameterDefinition.label}
 									</label>
 
-									<ClayInput
+									<Jethr0Input
 										id={jobParameterDefinition.key}
 										onChange={(event) => {
-											setJobParameters({
-												...jobParameters,
-												[jobParameterDefinition.key]:
-													event.target.value,
+											updateJobParameters({
+												jobParameters,
+												key: jobParameterDefinition.key,
+												value: event.target.value,
 											});
+
+											setJobParameters(jobParameters);
 										}}
 										placeholder={
 											jobParameterDefinition.valueDescription
 										}
 										type="text"
-										value={
-											jobParameters[
-												jobParameterDefinition.key
-											] || ''
-										}
+										value={getJobParameterValue({
+											jobParameters,
+											key: jobParameterDefinition.key,
+										})}
 									/>
 								</ClayForm.Group>
 							);

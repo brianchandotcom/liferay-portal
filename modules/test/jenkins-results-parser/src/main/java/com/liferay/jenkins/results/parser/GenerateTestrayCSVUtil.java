@@ -71,7 +71,8 @@ public class GenerateTestrayCSVUtil {
 			JenkinsResultsParserUtil.write(
 				new File(
 					projectBuildDir,
-					projectTestrayBuildId + "-testray-results.csv"),
+					JenkinsResultsParserUtil.combine(
+						"testray-results-", projectTestrayBuildId, ".csv")),
 				sb.toString());
 		}
 		catch (IOException ioException) {

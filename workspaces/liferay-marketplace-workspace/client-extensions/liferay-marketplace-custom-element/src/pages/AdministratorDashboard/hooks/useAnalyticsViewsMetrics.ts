@@ -17,6 +17,7 @@ const useAnalyticsViewsMetrics = () => {
 		Promise.all([
 			marketplaceSpringBootOAuth2.getAnalyticsPages(
 				new URLSearchParams({
+					rangeKey: '90',
 					sortMetric: 'viewsMetric',
 					sortOrder: 'desc',
 				})
@@ -24,6 +25,7 @@ const useAnalyticsViewsMetrics = () => {
 			marketplaceSpringBootOAuth2.getAnalyticsPages(
 				new URLSearchParams({
 					keywords: '/p/',
+					rangeKey: '90',
 					sortMetric: 'visitorsMetric',
 					sortOrder: 'desc',
 				})

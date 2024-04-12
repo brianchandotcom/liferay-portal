@@ -114,8 +114,8 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 
 	return (
 		<div className="field-content">
-			<div style={{marginBottom: '1rem'}}>
-				<div style={{marginBottom: '2rem'}}>
+			<div className="c-mb-3">
+				<div className="c-mb-4">
 					{Liferay.Language.get(
 						'customize-the-url-of-this-blog-enty-to-your-preference-or-stick-to-the-default-setting-based-on-the-entry-title-categoires-can-also-be-added-to-the-url'
 					)}

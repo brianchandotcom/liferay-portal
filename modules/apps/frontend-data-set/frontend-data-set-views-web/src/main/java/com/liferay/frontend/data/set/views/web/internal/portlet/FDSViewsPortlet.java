@@ -727,6 +727,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 
 		_createFDSActionObjectDefintion(
 			fdsViewObjectDefinition, locale, userId);
+		_createFDSCardsSectionObjectDefinition(
+			fdsViewObjectDefinition, locale, userId);
 		_createFDSClientExtensionFilterObjectDefintion(
 			fdsViewObjectDefinition, locale, userId);
 		_createFDSDateFilterObjectDefinition(
@@ -735,12 +737,9 @@ public class FDSViewsPortlet extends MVCPortlet {
 			fdsViewObjectDefinition, locale, userId);
 		_createFDSFieldObjectDefinition(
 			fdsViewObjectDefinition, locale, userId);
-		_createFDSSortObjectDefinition(fdsViewObjectDefinition, locale, userId);
-
-		_createFDSCardsSectionObjectDefinition(
-			fdsViewObjectDefinition, locale, userId);
 		_createFDSListSectionObjectDefinition(
 			fdsViewObjectDefinition, locale, userId);
+		_createFDSSortObjectDefinition(fdsViewObjectDefinition, locale, userId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

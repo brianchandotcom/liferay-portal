@@ -4,38 +4,35 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayIcon from '@clayui/icon';
-
-import './index.scss';
-
 import {ClaySelect} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useState} from 'react';
 
 import Form from '../../../../../../components/MarketplaceForm';
 
-const SolutionDetails = () => {
+const items = [
+	{label: 'Choose an option'},
+	{label: 'Text & Images Block'},
+	{label: 'Text & Video Block'},
+	{label: 'Text Block'},
+	{label: 'Single Image Block'},
+	{label: 'Icons Block'},
+	{label: 'Images Grid Block'},
+];
+
+const Details = () => {
 	const {observer, onOpenChange, open} = useModal();
 	const [selectedBlock, setSelectedBlock] = useState('Choose an option');
 	const [submit, setSubmit] = useState(false);
 
-	const items = [
-		{label: 'Choose an option'},
-		{label: 'Text & Images Block'},
-		{label: 'Text & Video Block'},
-		{label: 'Text Block'},
-		{label: 'Single Image Block'},
-		{label: 'Icons Block'},
-		{label: 'Images Grid Block'},
-	];
-
 	return (
-		<div className="solutions-details-container">
+		<div className="solutions-form-details">
 			<Form.Label className="mt-3" htmlFor="minimum-blocks" required>
 				Add a minimum of 2 blocks
 			</Form.Label>
 
-			{submit && <Form.Section name="Text & Images Block"></Form.Section>}
+			{submit && <Form.Section name={selectedBlock}></Form.Section>}
 
 			<ClayButton
 				className="align-items-center content-block d-flex flex-row justify-content-center mt-4 w-100"
@@ -121,4 +118,4 @@ const SolutionDetails = () => {
 	);
 };
 
-export default SolutionDetails;
+export default Details;

@@ -1,0 +1,72 @@
+.solutions-body-container {
+	width: 600px;
+
+	.solutions-form {
+		&-company-profile {
+			.rich-text-editor {
+				.ql-container {
+					border-radius: 4px;
+					height: 100px;
+				}
+			}
+		}
+
+		&-details {
+			.content-block {
+				background-color: #fbfcfe;
+				border: none;
+				border: 1px solid #eaf1ff;
+				border-radius: 0.5rem;
+				color: #2871fa;
+
+				&:hover {
+					background-color: #edf3fe;
+					border: 1px solid #0053f0;
+					color: #0053f0;
+				}
+			}
+		}
+
+		&-header {
+			.rich-text-editor {
+				.ql-container {
+					border-radius: 4px;
+					height: 100px;
+				}
+			}
+
+			.video-player {
+				background-color: #f1f2f5;
+				border-radius: 8px;
+				height: 130px;
+				width: 230px;
+			}
+		}
+
+		&-profile {
+			.form-multiselect {
+				.form-control {
+					background-color: #ffff;
+					border: 1px solid #b1b2b9;
+					border-radius: 8px;
+					height: 48px;
+
+					.label {
+						background-color: #e6ebf5;
+						border: none;
+						color: #1c3667;
+						font-size: 13px;
+						padding: 8px;
+					}
+				}
+			}
+
+			.upload-icon-background {
+				background-color: #ebeef2;
+				border-radius: 8px;
+				height: 70px;
+				width: 70px;
+			}
+		}
+	}
+}

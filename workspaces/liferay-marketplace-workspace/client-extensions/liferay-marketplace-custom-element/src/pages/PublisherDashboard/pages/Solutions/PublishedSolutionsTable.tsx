@@ -56,7 +56,8 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 				message: i18n.translate('request-sent-successfully'),
 				type: 'success',
 			});
-		} catch (error) {
+		}
+		catch (error) {
 			Liferay.Util.openToast({
 				message: i18n.translate('an-unexpected-error-occurred'),
 				type: 'danger',

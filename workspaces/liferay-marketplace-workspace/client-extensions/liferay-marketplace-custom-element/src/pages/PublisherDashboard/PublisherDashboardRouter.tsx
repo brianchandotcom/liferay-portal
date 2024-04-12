@@ -20,14 +20,16 @@ import {AppCreationFlow} from './pages/Apps/AppCreationFlow/AppCreationFlow';
 import Members from './pages/Members';
 import Projects from './pages/Projects';
 import Solutions from './pages/Solutions';
-import NewSolution from './pages/Solutions/NewSolutionFlow/NewSolutionFlow';
-import SolutionCompanyProfile from './pages/Solutions/NewSolutionFlow/pages/SolutionCompanyProfile';
-import SolutionContactUs from './pages/Solutions/NewSolutionFlow/pages/SolutionContactUs';
-import SolutionCreate from './pages/Solutions/NewSolutionFlow/pages/SolutionCreate';
-import SolutionDetails from './pages/Solutions/NewSolutionFlow/pages/SolutionDetails';
-import SolutionHeader from './pages/Solutions/NewSolutionFlow/pages/SolutionHeader';
-import SolutionProfile from './pages/Solutions/NewSolutionFlow/pages/SolutionProfile';
-import SolutionSubmit from './pages/Solutions/NewSolutionFlow/pages/SolutionSubmit';
+import PublishSolutionForm from './pages/Solutions/NewSolutionFlow/PublishSolutionForm';
+import {
+	CompanyProfile,
+	ContactUs,
+	Create,
+	Details,
+	Header,
+	Profile,
+	Submit,
+} from './pages/Solutions/NewSolutionFlow/pages';
 
 const PublisherDashboardRouter = () => {
 	const {accountId} = Liferay.CommerceContext.account || {};
@@ -65,17 +67,14 @@ const PublisherDashboardRouter = () => {
 					path="app/create"
 				/>
 
-				<Route element={<NewSolution />} path="solution">
-					<Route element={<SolutionCreate />} path="publisher" />
-					<Route element={<SolutionHeader />} path="header" />
-					<Route element={<SolutionDetails />} path="details" />
-					<Route element={<SolutionProfile />} path="profile" />
-					<Route element={<SolutionContactUs />} path="contact" />
-					<Route
-						element={<SolutionCompanyProfile />}
-						path="company"
-					/>
-					<Route element={<SolutionSubmit />} path="submit" />
+				<Route element={<PublishSolutionForm />} path="solution">
+					<Route element={<Create />} path="publisher" />
+					<Route element={<Header />} path="header" />
+					<Route element={<Details />} path="details" />
+					<Route element={<Profile />} path="profile" />
+					<Route element={<ContactUs />} path="contact" />
+					<Route element={<CompanyProfile />} path="company" />
+					<Route element={<Submit />} path="submit" />
 				</Route>
 
 				<Route

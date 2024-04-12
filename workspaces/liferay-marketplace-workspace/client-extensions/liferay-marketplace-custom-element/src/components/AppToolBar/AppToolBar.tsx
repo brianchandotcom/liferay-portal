@@ -11,23 +11,23 @@ import circleFill from '../../assets/icons/circle_fill_icon.svg';
 import emptyPicture from '../../assets/icons/empty_picture_icon.svg';
 import {getAccountImage} from '../../utils/util';
 
-import './NewAppToolBar.scss';
+import './AppToolBar.scss';
 
 import {Link} from 'react-router-dom';
 
-type NewAppToolBarProps = {
+type AppToolBarProps = {
 	accountImage?: string;
 	accountName: string;
 	appImage?: string;
 	appName?: string;
 };
 
-export function NewAppToolBar({
+export function AppToolBar({
 	accountImage,
 	accountName,
 	appImage,
 	appName,
-}: NewAppToolBarProps) {
+}: AppToolBarProps) {
 	return (
 		<div className="container new-app-tool-bar-container">
 			<ClayManagementToolbar.ItemList expand>

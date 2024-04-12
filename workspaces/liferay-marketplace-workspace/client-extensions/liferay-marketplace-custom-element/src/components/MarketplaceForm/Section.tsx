@@ -7,51 +7,52 @@ import {ClayButtonWithIcon} from '@clayui/button';
 
 import './index.scss';
 
-export function Section({name, ...props}: any) {
+import {HTMLAttributes} from 'react';
+
+interface SectionProps extends HTMLAttributes<HTMLDivElement> {
+	name: string;
+}
+
+export function Section({name, ...props}: SectionProps) {
 	return (
-		<>
-			<div
-				className="marketplace-form-section mt-4 p-1 rounded"
-				{...props}
-			>
-				<div className="d-flex justify-content-between">
-					<div className="d-flex inline-item justify-content-start">
-						<div className="arrow-container ml-4">
-							<ClayButtonWithIcon
-								aria-label="arrow-up"
-								displayType="unstyled"
-								size="sm"
-								symbol="order-arrow-up"
-							></ClayButtonWithIcon>
-
-							<ClayButtonWithIcon
-								aria-label="arrow-down"
-								displayType="unstyled"
-								size="sm"
-								symbol="order-arrow-down"
-							></ClayButtonWithIcon>
-						</div>
-
-						<b className="ml-4">{name}</b>
-					</div>
-
-					<div className="d-flex justify-content-end">
+		<div className="marketplace-form-section mt-4 p-1 rounded" {...props}>
+			<div className="d-flex justify-content-between">
+				<div className="d-flex inline-item justify-content-start">
+					<div className="arrow-container ml-4">
 						<ClayButtonWithIcon
-							aria-labelledby="angle-down"
-							className="align-self-end d-flex"
+							aria-label="arrow-up"
 							displayType="unstyled"
-							symbol="ellipsis-v"
+							size="sm"
+							symbol="order-arrow-up"
 						/>
 
 						<ClayButtonWithIcon
-							aria-labelledby="angle-down"
-							className="align-self-end d-flex"
+							aria-label="arrow-down"
 							displayType="unstyled"
-							symbol="angle-right"
+							size="sm"
+							symbol="order-arrow-down"
 						/>
 					</div>
+
+					<b className="ml-4">{name}</b>
+				</div>
+
+				<div className="d-flex justify-content-end">
+					<ClayButtonWithIcon
+						aria-labelledby="angle-down"
+						className="align-self-end d-flex"
+						displayType="unstyled"
+						symbol="ellipsis-v"
+					/>
+
+					<ClayButtonWithIcon
+						aria-labelledby="angle-down"
+						className="align-self-end d-flex"
+						displayType="unstyled"
+						symbol="angle-right"
+					/>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }

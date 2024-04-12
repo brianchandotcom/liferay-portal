@@ -5,12 +5,10 @@
 
 import LicenseAgreement from '../../../../../AdministratorDashboard/components/LicenseAgreement/LicenseAgreement';
 
-const SolutionCreate = () => {
-	return (
-		<div className="license-agreement-container">
-			<LicenseAgreement />
-		</div>
-	);
-};
+const Create = () => (
+	<div className="license-agreement-container">
+		<LicenseAgreement />
+	</div>
+);
 
-export default SolutionCreate;
+export default Create;

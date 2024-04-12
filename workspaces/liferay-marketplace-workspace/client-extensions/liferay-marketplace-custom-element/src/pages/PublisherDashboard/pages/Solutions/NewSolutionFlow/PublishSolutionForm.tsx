@@ -6,14 +6,16 @@
 import ClayButton from '@clayui/button';
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
 
+import {AppToolBar} from '../../../../../components/AppToolBar/AppToolBar';
 import {AppFlowList} from '../../../../../components/NewAppFlowList/AppFlowList';
-import {NewAppToolBar} from '../../../../../components/NewAppToolBar/NewAppToolBar';
 import {useAccount} from '../../../../../hooks/data/useAccounts';
 
-import './NewSolutionFlow.scss';
+import './PublishSolutionForm.scss';
 import {SOLUTION_FLOW_ITEMS} from '../constants';
 
-const NewSolution = () => {
+import 'react-quill/dist/quill.snow.css';
+
+const PublishSolutionForm = () => {
 	const {data: account} = useAccount();
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -41,9 +43,12 @@ const NewSolution = () => {
 					isContinue ? index + 1 : index - 1
 				].selected = true;
 
-				isContinue
-					? (SOLUTION_FLOW_ITEMS[index].checked = true)
-					: (SOLUTION_FLOW_ITEMS[index - 1].checked = false);
+				if (isContinue) {
+					SOLUTION_FLOW_ITEMS[index].checked = true;
+				}
+				else {
+					SOLUTION_FLOW_ITEMS[index - 1].checked = false;
+				}
 
 				return SOLUTION_FLOW_ITEMS;
 			}
@@ -57,7 +62,7 @@ const NewSolution = () => {
 
 	return (
 		<>
-			<NewAppToolBar
+			<AppToolBar
 				accountImage={account?.logoURL}
 				accountName={account?.name as string}
 			/>
@@ -72,8 +77,8 @@ const NewSolution = () => {
 						{activeRoute.description}
 					</div>
 
-					<div className="mt-6">
-						<Outlet></Outlet>
+					<div className="mt-6 solutions-form">
+						<Outlet />
 					</div>
 
 					<hr className="my-6"></hr>
@@ -101,4 +106,4 @@ const NewSolution = () => {
 	);
 };
 
-export default NewSolution;
+export default PublishSolutionForm;

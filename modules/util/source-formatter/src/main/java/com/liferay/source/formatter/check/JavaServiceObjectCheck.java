@@ -271,7 +271,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 				tableName = entityElement.attributeValue("table");
 			}
 
-			String trimmedSetterObjectName = setterObjectName.replaceFirst(
+			String convertedSetterObjectName = setterObjectName.replaceFirst(
 				"(.+?)(List|Map|(Unicode)?Properties)$", "$1");
 
 			for (Element columnElement :
@@ -281,7 +281,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 
 				if (StringUtil.equalsIgnoreCase(setterObjectName, columnName) ||
 					StringUtil.equalsIgnoreCase(
-						trimmedSetterObjectName, columnName) ||
+						convertedSetterObjectName, columnName) ||
 					(setterObjectName.equals("className") &&
 					 columnName.equals("classNameId"))) {
 

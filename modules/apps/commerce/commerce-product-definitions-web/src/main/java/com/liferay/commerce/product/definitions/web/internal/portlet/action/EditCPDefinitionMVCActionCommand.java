@@ -607,19 +607,13 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "displayStockQuantity");
 		boolean backOrders = ParamUtil.getBoolean(actionRequest, "backOrders");
 
-		BigDecimal formattedMinStockQuantity =
-			_commerceOrderItemQuantityFormatter.parse(
-				actionRequest, "minStockQuantity");
-
-		BigDecimal formattedMinOrderQuantity =
-			_commerceOrderItemQuantityFormatter.parse(
-				actionRequest, "minOrderQuantity");
-
-		BigDecimal formattedMaxOrderQuantity =
-			_commerceOrderItemQuantityFormatter.parse(
-				actionRequest, "maxOrderQuantity");
-
-		BigDecimal formattedMultipleOrderQuantity =
+		BigDecimal minStockQuantity = _commerceOrderItemQuantityFormatter.parse(
+			actionRequest, "minStockQuantity");
+		BigDecimal minOrderQuantity = _commerceOrderItemQuantityFormatter.parse(
+			actionRequest, "minOrderQuantity");
+		BigDecimal maxOrderQuantity = _commerceOrderItemQuantityFormatter.parse(
+			actionRequest, "maxOrderQuantity");
+		BigDecimal multipleOrderQuantity =
 			_commerceOrderItemQuantityFormatter.parse(
 				actionRequest, "multipleOrderQuantity");
 
@@ -633,19 +627,17 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		if (cpDefinitionInventory == null) {
 			_cpDefinitionInventoryService.addCPDefinitionInventory(
 				cpDefinitionId, cpDefinitionInventoryEngine, lowStockActivity,
-				displayAvailability, displayStockQuantity,
-				formattedMinStockQuantity, backOrders,
-				formattedMinOrderQuantity, formattedMaxOrderQuantity,
-				allowedOrderQuantities, formattedMultipleOrderQuantity);
+				displayAvailability, displayStockQuantity, minStockQuantity,
+				backOrders, minOrderQuantity, maxOrderQuantity,
+				allowedOrderQuantities, multipleOrderQuantity);
 		}
 		else {
 			_cpDefinitionInventoryService.updateCPDefinitionInventory(
 				cpDefinitionInventory.getCPDefinitionInventoryId(),
 				cpDefinitionInventoryEngine, lowStockActivity,
-				displayAvailability, displayStockQuantity,
-				formattedMinStockQuantity, backOrders,
-				formattedMinOrderQuantity, formattedMaxOrderQuantity,
-				allowedOrderQuantities, formattedMultipleOrderQuantity);
+				displayAvailability, displayStockQuantity, minStockQuantity,
+				backOrders, minOrderQuantity, maxOrderQuantity,
+				allowedOrderQuantities, multipleOrderQuantity);
 		}
 
 		_cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(

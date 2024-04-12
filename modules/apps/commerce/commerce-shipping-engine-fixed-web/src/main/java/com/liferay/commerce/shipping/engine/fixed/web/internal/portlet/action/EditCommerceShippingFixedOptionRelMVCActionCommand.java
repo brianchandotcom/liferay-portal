@@ -113,10 +113,9 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 		double weightFrom = ParamUtil.getDouble(actionRequest, "weightFrom");
 		double weightTo = ParamUtil.getDouble(actionRequest, "weightTo");
 
-		BigDecimal formattedFixedPrice = new BigDecimal(
+		BigDecimal fixedPrice = new BigDecimal(
 			_commercePriceFormatter.parse(actionRequest, "fixedPrice"));
-
-		BigDecimal formattedRateUnitWeightPrice = new BigDecimal(
+		BigDecimal rateUnitWeightPrice = new BigDecimal(
 			_commercePriceFormatter.parse(
 				actionRequest, "rateUnitWeightPrice"));
 
@@ -128,8 +127,8 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 				updateCommerceShippingFixedOptionRel(
 					commerceShippingFixedOptionRelId,
 					commerceInventoryWarehouseId, countryId, regionId, zip,
-					weightFrom, weightTo, formattedFixedPrice,
-					formattedRateUnitWeightPrice, ratePercentage);
+					weightFrom, weightTo, fixedPrice, rateUnitWeightPrice,
+					ratePercentage);
 		}
 		else {
 			long commerceShippingMethodId = ParamUtil.getLong(
@@ -146,8 +145,8 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 					ParamUtil.getLong(
 						actionRequest, "commerceShippingFixedOptionId"),
 					commerceInventoryWarehouseId, countryId, regionId, zip,
-					weightFrom, weightTo, formattedFixedPrice,
-					formattedRateUnitWeightPrice, ratePercentage);
+					weightFrom, weightTo, fixedPrice, rateUnitWeightPrice,
+					ratePercentage);
 		}
 	}
 

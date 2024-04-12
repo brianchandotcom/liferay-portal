@@ -138,7 +138,7 @@ public class EditCommercePaymentEntryMVCActionCommand
 		long commercePaymentEntryId = ParamUtil.getLong(
 			actionRequest, "commercePaymentEntryId");
 
-		BigDecimal formattedAmount = new BigDecimal(
+		BigDecimal amount = new BigDecimal(
 			_commercePriceFormatter.parse(actionRequest, "amount"));
 
 		String reasonKey = ParamUtil.getString(actionRequest, "reasonKey");
@@ -151,7 +151,7 @@ public class EditCommercePaymentEntryMVCActionCommand
 			return _commercePaymentEntryService.updateCommercePaymentEntry(
 				curCommercePaymentEntry.getExternalReferenceCode(),
 				curCommercePaymentEntry.getCommercePaymentEntryId(),
-				curCommercePaymentEntry.getCommerceChannelId(), formattedAmount,
+				curCommercePaymentEntry.getCommerceChannelId(), amount,
 				curCommercePaymentEntry.getCallbackURL(),
 				curCommercePaymentEntry.getCancelURL(),
 				curCommercePaymentEntry.getCurrencyCode(),
@@ -170,8 +170,8 @@ public class EditCommercePaymentEntryMVCActionCommand
 			_classNameLocalService.getClassNameId(
 				ParamUtil.getString(actionRequest, "className")),
 			ParamUtil.getLong(actionRequest, "classPK"),
-			ParamUtil.getLong(actionRequest, "commerceChannelId"),
-			formattedAmount, StringPool.BLANK, StringPool.BLANK,
+			ParamUtil.getLong(actionRequest, "commerceChannelId"), amount,
+			StringPool.BLANK, StringPool.BLANK,
 			ParamUtil.getString(actionRequest, "currencyCode"),
 			ParamUtil.getString(actionRequest, "languageId"), StringPool.BLANK,
 			ParamUtil.getString(actionRequest, "paymentIntegrationKey"),

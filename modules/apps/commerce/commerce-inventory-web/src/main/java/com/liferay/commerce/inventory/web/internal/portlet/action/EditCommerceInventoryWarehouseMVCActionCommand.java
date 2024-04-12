@@ -133,22 +133,21 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 				fetchCommerceInventoryWarehouseItem(
 					commerceInventoryWarehouseId, sku, unitOfMeasureKey);
 
-		BigDecimal formattedQuantity =
-			_commerceOrderItemQuantityFormatter.parse(
-				actionRequest, "quantity");
+		BigDecimal quantity = _commerceOrderItemQuantityFormatter.parse(
+			actionRequest, "quantity");
 
 		if (commerceInventoryWarehouseItem == null) {
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
-					StringPool.BLANK, commerceInventoryWarehouseId,
-					formattedQuantity, sku, unitOfMeasureKey);
+					StringPool.BLANK, commerceInventoryWarehouseId, quantity,
+					sku, unitOfMeasureKey);
 		}
 		else {
 			_commerceInventoryWarehouseItemService.
 				increaseCommerceInventoryWarehouseItemQuantity(
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseItemId(),
-					formattedQuantity);
+					quantity);
 		}
 	}
 

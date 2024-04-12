@@ -252,43 +252,41 @@ public class EditCommerceShipmentItemMVCActionCommand
 					commerceShipmentId, commerceOrderItemId,
 					commerceInventoryWarehouseId);
 
-			BigDecimal formattedQuantity =
-				_commerceOrderItemQuantityFormatter.parse(
-					actionRequest, commerceInventoryWarehouseId + "_quantity");
+			BigDecimal quantity = _commerceOrderItemQuantityFormatter.parse(
+				actionRequest, commerceInventoryWarehouseId + "_quantity");
 
 			if ((initialCommerceShipmentItem != null) &&
-				BigDecimalUtil.gt(formattedQuantity, BigDecimal.ZERO)) {
+				BigDecimalUtil.gt(quantity, BigDecimal.ZERO)) {
 
 				commerceShipmentItem =
 					_commerceShipmentItemService.updateCommerceShipmentItem(
 						initialCommerceShipmentItem.getCommerceShipmentItemId(),
-						commerceInventoryWarehouseId, formattedQuantity, true);
+						commerceInventoryWarehouseId, quantity, true);
 
 				initialCommerceShipmentItem = null;
 			}
 			else if ((commerceShipmentItem == null) &&
-					 BigDecimalUtil.gt(formattedQuantity, BigDecimal.ZERO)) {
+					 BigDecimalUtil.gt(quantity, BigDecimal.ZERO)) {
 
 				commerceShipmentItem =
 					_commerceShipmentItemService.addCommerceShipmentItem(
 						null, commerceShipmentId, commerceOrderItemId,
-						commerceInventoryWarehouseId, formattedQuantity, null,
-						true, serviceContext);
+						commerceInventoryWarehouseId, quantity, null, true,
+						serviceContext);
 			}
 			else if ((commerceShipmentItem != null) &&
-					 (formattedQuantity !=
-						 commerceShipmentItem.getQuantity())) {
+					 (quantity != commerceShipmentItem.getQuantity())) {
 
 				commerceShipmentItem =
 					_commerceShipmentItemService.updateCommerceShipmentItem(
 						commerceShipmentItem.getCommerceShipmentItemId(),
-						commerceInventoryWarehouseId, formattedQuantity, true);
+						commerceInventoryWarehouseId, quantity, true);
 
-				if (BigDecimalUtil.eq(formattedQuantity, BigDecimal.ZERO)) {
+				if (BigDecimalUtil.eq(quantity, BigDecimal.ZERO)) {
 					commerceShipmentItem =
 						_commerceShipmentItemService.updateCommerceShipmentItem(
 							commerceShipmentItem.getCommerceShipmentItemId(), 0,
-							formattedQuantity, true);
+							quantity, true);
 				}
 			}
 		}

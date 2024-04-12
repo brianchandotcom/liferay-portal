@@ -153,7 +153,7 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		BigDecimal formattedIncrementalOrderQuantity =
+		BigDecimal incrementalOrderQuantity =
 			_commerceOrderItemQuantityFormatter.parse(
 				actionRequest, "incrementalOrderQuantity");
 
@@ -187,13 +187,13 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 			return _cpInstanceUnitOfMeasureService.
 				updateCPInstanceUnitOfMeasure(
 					cpInstanceUnitOfMeasureId, cpInstanceId, active,
-					formattedIncrementalOrderQuantity, key, nameMap, precision,
-					primary, priority, formattedRate, sku);
+					incrementalOrderQuantity, key, nameMap, precision, primary,
+					priority, formattedRate, sku);
 		}
 
 		_cpInstanceUnitOfMeasureService.addCPInstanceUnitOfMeasure(
-			cpInstanceId, active, formattedIncrementalOrderQuantity, key,
-			nameMap, precision, primary, priority, formattedRate, sku);
+			cpInstanceId, active, incrementalOrderQuantity, key, nameMap,
+			precision, primary, priority, formattedRate, sku);
 
 		_updateCommercePriceEntries(actionRequest, cpInstanceId, key);
 
@@ -221,24 +221,24 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 		CPInstance cpInstance = _cpInstanceService.fetchCPInstance(
 			cpInstanceId);
 
-		BigDecimal formattedBasePrice = new BigDecimal(
+		BigDecimal basePrice = new BigDecimal(
 			_commercePriceFormatter.parse(actionRequest, "basePrice"));
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPInstanceUnitOfMeasure.class.getName(), actionRequest);
 
-		if (formattedBasePrice != null) {
+		if (basePrice != null) {
 			_updateCommercePriceEntry(
-				cpInstance.getCPInstanceUuid(), key, formattedBasePrice,
+				cpInstance.getCPInstanceUuid(), key, basePrice,
 				CommercePriceListConstants.TYPE_PRICE_LIST, serviceContext);
 		}
 
-		BigDecimal formattedPromoPrice = new BigDecimal(
+		BigDecimal promoPrice = new BigDecimal(
 			_commercePriceFormatter.parse(actionRequest, "promoPrice"));
 
-		if (formattedPromoPrice != null) {
+		if (promoPrice != null) {
 			_updateCommercePriceEntry(
-				cpInstance.getCPInstanceUuid(), key, formattedPromoPrice,
+				cpInstance.getCPInstanceUuid(), key, promoPrice,
 				CommercePriceListConstants.TYPE_PROMOTION, serviceContext);
 		}
 	}

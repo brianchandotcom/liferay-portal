@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -85,6 +86,10 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	@Override
 	public void enforceCaptcha(HttpServletRequest httpServletRequest) {
+		if (GetterUtil.getBoolean(PropsUtil.get("captcha.enforce.disabled"))) {
+			return;
+		}
+
 		HttpSession httpSession = _getHttpSession(httpServletRequest);
 
 		httpSession.setAttribute(

@@ -124,11 +124,20 @@ function CreateJobPage() {
 		return;
 	}
 
-	const breadcrumbs = [
+	let breadcrumbs = [
 		{active: false, link: '/', name: 'Home'},
 		{active: false, link: '/jobs', name: 'Jobs'},
 		{active: true, link: '/jobs/create', name: 'Create Job'},
 	];
+
+	if (routine) {
+		breadcrumbs = [
+			{active: false, link: '/', name: 'Home'},
+			{active: false, link: '/routines', name: 'Routines'},
+			{active: false, link: '/routines/' + routine.id, name: routine.name},
+			{active: true, link: '/jobs/create', name: 'Create Job'},
+		];
+	}
 
 	const jobTypeOptions = jobDefinitions.map((jobDefinition) => {
 		return {
@@ -149,38 +158,13 @@ function CreateJobPage() {
 	return (
 		<ClayLayout.Container>
 			<Jethr0Card>
-				<Jethr0NavigationBar active="Jobs" />
+				<Jethr0NavigationBar active={routine ? "Routines" : "Jobs"} />
 
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
 
 				<Heading level={3} weight="lighter">
 					Create Job
 				</Heading>
-
-				{routine && (
-					<>
-						<ClayForm.Group>
-							<label htmlFor="routineId">Routine ID</label>
-
-							<Jethr0Input
-								disabled={true}
-								id="routineId"
-								type="text"
-								value={routine.id}
-							/>
-						</ClayForm.Group>
-						<ClayForm.Group>
-							<label htmlFor="routineName">Routine Name</label>
-
-							<Jethr0Input
-								disabled={true}
-								id="routineName"
-								type="text"
-								value={routine.name}
-							/>
-						</ClayForm.Group>
-					</>
-				)}
 
 				<ClayForm.Group>
 					<label htmlFor="jobPriority">Job Priority</label>

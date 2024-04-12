@@ -46,9 +46,10 @@ public class GenerateTestrayCSVUtil {
 
 		if (allTestrayCaseResults.isEmpty()) {
 			System.out.println(
-				"There are no Testray case results to report. Testray may " +
-					"not have imported the results yet or the results " +
-						"contained no failures.");
+				JenkinsResultsParserUtil.combine(
+					"There are no Testray case results to report. Testray may ",
+					"not have imported the results yet or the results ",
+					"contained no failures."));
 
 			return;
 		}

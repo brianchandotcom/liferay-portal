@@ -92,9 +92,15 @@ public class AuditPortlet extends MVCPortlet {
 			AuditEvent auditEvent = AuditEventManagerUtil.fetchAuditEvent(
 				auditEventId);
 
-			if (permissionChecker.getCompanyId() != auditEvent.getCompanyId()) {
-				throw new PortletException(
-					"This event does not belong to this company");
+			if ((auditEvent != null) &&
+				(permissionChecker.getCompanyId() !=
+					auditEvent.getCompanyId())) {
+
+				PrincipalException principalException =
+					new PrincipalException.MustBeCompanyAdmin(
+						permissionChecker.getUserId());
+
+				throw new PortletException(principalException);
 			}
 		}
 

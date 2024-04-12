@@ -1,5 +1,5 @@
 <definition component-name="test">
-	<property name="testray.main.component.name" value="Tools" />
+	<property name="testray.main.component.name" value="Poshi Core" />
 	<execute function="Open" locator1="//here" />
 
 	<set-up>

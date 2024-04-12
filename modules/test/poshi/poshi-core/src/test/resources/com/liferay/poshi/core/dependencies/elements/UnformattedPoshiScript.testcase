@@ -5,7 +5,7 @@ definition {
     property app.server.bundles.size = "12890";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Smoke";
+	property testray.main.component.name = "Poshi Core";
 
 	property testray.main.component.name = '''
 	Order Management''';

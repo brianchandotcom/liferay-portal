@@ -2,7 +2,7 @@
 definition {
 
 	property poshi.runner.acceptance = "true";
-	property testray.main.component.name = "Smoke";
+	property testray.main.component.name = "Poshi Runner";
 
 	var nonStaticVariable = "OLD - Non-Static Value";
 	static var staticVariable = "OLD - Static Value";

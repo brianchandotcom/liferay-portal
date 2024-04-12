@@ -2,7 +2,7 @@
 definition {
 
 	property portal.smoke = "dummy";
-	property testray.main.component.name = "Tools";
+	property testray.main.component.name = "Poshi Runner";
 
 	@priority = 5
 	test Dummy {

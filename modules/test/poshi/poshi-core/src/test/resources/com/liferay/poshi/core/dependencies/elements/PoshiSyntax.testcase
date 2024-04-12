@@ -2,7 +2,7 @@
 	<property name="app.server.bundles.size" value="12890"/>
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Smoke" />
+	<property name="testray.main.component.name" value="Poshi Core" />
 	<property name="testray.main.component.name"><![CDATA[
 	Order Management]]></property>
 

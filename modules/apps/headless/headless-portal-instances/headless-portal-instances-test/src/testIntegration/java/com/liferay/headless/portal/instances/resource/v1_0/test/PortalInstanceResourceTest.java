@@ -367,19 +367,22 @@ public class PortalInstanceResourceTest
 	private void _testPostPortalInstanceWithAdmin() throws Exception {
 		PortalInstance randomPortalInstance = randomPortalInstance();
 
+		String firstName = RandomTestUtil.randomString();
+		String lastName = RandomTestUtil.randomString();
+		String email = firstName + "@liferay.com";
+
 		randomPortalInstance.setAdmin(
 			Admin.toDTO(
 				StringBundler.concat(
-					"{\"emailAddress\": \"test123@liferay.com\",",
-					"\"familyName\": \"Test123\",",
-					"\"givenName\": \"Test123\"}")));
+					"{\"emailAddress\": \"", email, "\",\"familyName\": \"",
+					lastName, "\",\"givenName\": \"", firstName, "\"}")));
 
 		PortalInstance postPortalInstance =
 			testPostPortalInstance_addPortalInstance(randomPortalInstance);
 
 		try {
 			User adminUser = _userLocalService.getUserByEmailAddress(
-				postPortalInstance.getCompanyId(), "test123@liferay.com");
+				postPortalInstance.getCompanyId(), email);
 
 			postPortalInstance.setAdmin(
 				Admin.toDTO(

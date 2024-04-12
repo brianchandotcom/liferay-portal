@@ -17,7 +17,7 @@ import Jethr0JobParameterFields from '../../components/Jethr0JobParameterFields/
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0SelectWithOption from '../../components/Jethr0SelectWithOption/Jethr0SelectWithOption';
 import {getJobDefinitions} from '../../objects/jobdefinitions/JobDefinitionUtil';
-import {createJob, getJobParameterValue} from '../../objects/jobs/JobUtil';
+import {createJob, getJobParameter} from '../../objects/jobs/JobUtil';
 import {getRoutineById} from '../../objects/routines/RoutineUtil';
 
 function CreateJobPage() {
@@ -99,15 +99,16 @@ function CreateJobPage() {
 							routine?.jobParameters
 						);
 
-						const routineJobParameterValue = getJobParameterValue({
+						const routineJobParameter = getJobParameter({
 							jobParameters: routineJobParameters,
-							key: jobDefinitionParameter.key,
+							key: jobDefinitionParameter.key
 						});
 
-						if (routineJobParameterValue) {
+						if (routineJobParameter && (routineJobParameter.value !== '')) {
 							defaultJobParameter = {
 								key: jobDefinitionParameter.key,
-								value: routineJobParameterValue,
+								routineField: true,
+								value: routineJobParameter.value,
 							};
 						}
 					}

@@ -121,10 +121,10 @@ export async function getJobById({id, setJob}) {
 	}
 }
 
-export function getJobParameterValue({jobParameters, key}) {
+export function getJobParameter({jobParameters, key}) {
 	for (const jobParameter of jobParameters) {
 		if (jobParameter.key === key) {
-			return jobParameter.value;
+			return jobParameter;
 		}
 	}
 }
@@ -205,7 +205,6 @@ export async function getJobs({orderedJobIds, setJobs}) {
 		setJobs(jobs);
 	}
 }
-
 
 export function getUpdatedJobParameters({jobParameters, key, value}) {
 	const updatedJobParameters = [];

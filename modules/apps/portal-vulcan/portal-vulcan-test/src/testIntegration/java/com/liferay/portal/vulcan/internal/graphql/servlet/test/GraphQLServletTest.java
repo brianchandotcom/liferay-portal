@@ -382,7 +382,7 @@ public class GraphQLServletTest {
 	}
 
 	@Test
-	public void testSchemaWithGraphQLNamespaces() throws Exception {
+	public void testSchema() throws Exception {
 
 		// Mutation fields
 

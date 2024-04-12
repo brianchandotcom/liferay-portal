@@ -97,7 +97,7 @@ definition {
 			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
 		}
 
-		task ("Then 'actions' node is available in the dowloaded file") {
+		task ("Then 'actions' node is available in the downloaded file") {
 			ImportExport.unzipDownloadedExportFile();
 
 			BatchEngine.assertExportedFileContainsCorrectObject(

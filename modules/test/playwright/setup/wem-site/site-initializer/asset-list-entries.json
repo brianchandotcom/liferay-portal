@@ -1,0 +1,11 @@
+[
+	{
+		"ddmStructureKey": "SAMPLE",
+		"title": "Samples",
+		"unicodeProperties": {
+			"anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",
+			"classNameIds": "com.liferay.journal.model.JournalArticle",
+			"classTypeIds": "classTypeIdsJournalArticleAssetRendererFactory"
+		}
+	}
+]

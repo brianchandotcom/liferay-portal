@@ -9,10 +9,11 @@ import {useQuery} from '@apollo/react-hooks';
 
 export interface DropdownRangeKeyIProps
 	extends React.HTMLAttributes<HTMLElement> {
+	alignmentPosition?: number;
 	legacy: boolean;
 	onRangeSelectorChange: (rangeSelectors: RangeSelectors) => void;
 	rangeKeys?: Array<RangeKeyTimeRanges>;
-	rangeSelectors: RangeSelectors;
+	rangeSelectors?: RangeSelectors;
 }
 
 export type Data = {
@@ -27,6 +28,7 @@ export type Data = {
 };
 
 export const DropdownRangeKey: React.FC<DropdownRangeKeyIProps> = ({
+	alignmentPosition,
 	legacy,
 	onRangeSelectorChange,
 	rangeKeys,
@@ -44,6 +46,7 @@ export const DropdownRangeKey: React.FC<DropdownRangeKeyIProps> = ({
 
 			<StatesRenderer.Success>
 				<DropdownRangeKeyContent
+					alignmentPosition={alignmentPosition}
 					data={data}
 					legacy={legacy}
 					onRangeSelectorChange={onRangeSelectorChange}

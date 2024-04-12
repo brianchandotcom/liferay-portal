@@ -1,5 +1,5 @@
 import ClayButton from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
+import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import moment from 'moment';
@@ -18,23 +18,28 @@ import {useRetentionPeriod} from 'shared/hooks/useRetentionPeriod';
 export const DropdownRangeKeyContent: React.FC<
 	DropdownRangeKeyIProps & {data: Data}
 > = ({
+	alignmentPosition = Align.BottomRight,
 	data,
-	legacy = true, // legacy can be removed once we convert all uses of DropdownRangeKey to include the new values.
+	/**
+	 * Legacy can be removed once we convert all uses of
+	 * DropdownRangeKey to include the new values
+	 */
+	legacy = true,
 	onRangeSelectorChange,
 	/**
 	 * When legacy props is true, rangeKeys will be ignored.
 	 */
 	rangeKeys,
-	rangeSelectors: {rangeEnd, rangeKey, rangeStart} = {
-		rangeEnd: '',
-		rangeKey: RangeKeyTimeRanges.Last30Days,
-		rangeStart: ''
-	}
+	rangeSelectors
 }) => {
 	const [active, setActive] = useState(false);
 	const [customDateRange, setCustomDateRange] = useState<MomentDateRange>({
-		end: rangeEnd ? moment(rangeEnd, DEFAULT_DATE_FORMAT) : null,
-		start: rangeStart ? moment(rangeStart, DEFAULT_DATE_FORMAT) : null
+		end: rangeSelectors?.rangeEnd
+			? moment(rangeSelectors.rangeEnd, DEFAULT_DATE_FORMAT)
+			: null,
+		start: rangeSelectors?.rangeStart
+			? moment(rangeSelectors.rangeStart, DEFAULT_DATE_FORMAT)
+			: null
 	});
 	const [seeMore, setSeeMore] = useState(false);
 	const [showDatePicker, setShowDatePicker] = useState(false);
@@ -43,30 +48,36 @@ export const DropdownRangeKeyContent: React.FC<
 	const timeRange = formatTimeRange(data.timeRange);
 	const filteredItems = getFilteredItems({
 		legacy,
-		rangeKey,
+		rangeKey: rangeSelectors?.rangeKey,
 		rangeKeys,
 		retentionPeriod,
 		seeMore,
 		timeRange
 	});
-	const selectedItem = getSelectedItem({
-		rangeEnd,
-		rangeKey,
-		rangeStart,
-		timeRange
-	});
+
+	let selectedItem = null;
+
+	if (rangeSelectors) {
+		selectedItem = getSelectedItem({
+			rangeEnd: rangeSelectors.rangeEnd,
+			rangeKey: rangeSelectors.rangeKey,
+			rangeStart: rangeSelectors.rangeStart,
+			timeRange
+		});
+	}
 
 	useEffect(() => {
 		const unlisten = history.listen(location => {
 			const query = new URLSearchParams(location.search);
 
 			if (query.get('downloadReport')) {
-				onRangeSelectorChange &&
+				if (onRangeSelectorChange) {
 					onRangeSelectorChange({
 						rangeEnd: query.get('rangeEnd'),
-						rangeKey: RangeKeyTimeRanges.CustomRange,
+						rangeKey: query.get('rangeKey') as RangeKeyTimeRanges,
 						rangeStart: query.get('rangeStart')
 					});
+				}
 			}
 		});
 
@@ -77,21 +88,15 @@ export const DropdownRangeKeyContent: React.FC<
 
 	useEffect(() => {
 		if (customDateRange && customDateRange.end && customDateRange.start) {
-			const {end, start} = customDateRange;
-
-			const dateRangeItem = {
-				label: `${start.format('ll')} - ${end.format('ll')}`,
-				value: RangeKeyTimeRanges.CustomRange
-			};
-
-			onRangeSelectorChange &&
+			if (onRangeSelectorChange) {
 				onRangeSelectorChange({
 					rangeEnd: customDateRange.end.format(DEFAULT_DATE_FORMAT),
-					rangeKey: dateRangeItem.value,
+					rangeKey: RangeKeyTimeRanges.CustomRange,
 					rangeStart: customDateRange.start.format(
 						DEFAULT_DATE_FORMAT
 					)
 				});
+			}
 
 			setActive(false);
 		}
@@ -100,7 +105,7 @@ export const DropdownRangeKeyContent: React.FC<
 	return (
 		<ClayDropDown
 			active={active}
-			alignmentPosition={3}
+			alignmentPosition={alignmentPosition}
 			className='dropdown-range-key-root'
 			menuElementAttrs={{
 				className: getCN('dropdown-range-key-menu-root', {
@@ -119,7 +124,8 @@ export const DropdownRangeKeyContent: React.FC<
 					displayType='secondary'
 					size='sm'
 				>
-					{selectedItem.label}
+					{selectedItem?.label ??
+						Liferay.Language.get('select-date-range')}
 
 					<ClayIcon
 						className='icon-root ml-2'
@@ -139,7 +145,7 @@ export const DropdownRangeKeyContent: React.FC<
 					{filteredItems.map(({description, label, value}, index) => (
 						<ClayDropDown.Item
 							className={getCN('c-pointer', {
-								active: selectedItem.value === value
+								active: selectedItem?.value === value
 							})}
 							key={index}
 							onClick={() => {

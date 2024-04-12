@@ -24,7 +24,7 @@ export const DropdownRangeKeyLegacy = ({
 
 		<ClayDropDown.Item
 			className={getCN('c-pointer', {
-				active: selectedItem.value === 'CUSTOM'
+				active: selectedItem?.value === 'CUSTOM'
 			})}
 			key='CUSTOM'
 			onClick={onClickShowDatePicker}

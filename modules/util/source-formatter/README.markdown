@@ -120,6 +120,7 @@ Checks are configured in the following files:
    - [.jsp, .jspf, .jspx, .tag, .tpl or .vm](src/main/resources/documentation/jsp_source_processor_checks.markdown#checks-for-jsp-jspf-jspx-tag-tpl-or-vm)
    - [.ldif](src/main/resources/documentation/ldif_source_processor_checks.markdown#checks-for-ldif)
    - [.lfrbuild-*](src/main/resources/documentation/lfr_build_source_processor_checks.markdown#checks-for-lfrbuild)
+   - [.list](src/main/resources/documentation/list_source_processor_checks.markdown#checks-for-list)
    - [.markdown or .md](src/main/resources/documentation/markdown_source_processor_checks.markdown#checks-for-markdown-or-md)
    - [.py](src/main/resources/documentation/python_source_processor_checks.markdown#checks-for-py)
    - [.soy](src/main/resources/documentation/soy_source_processor_checks.markdown#checks-for-soy)

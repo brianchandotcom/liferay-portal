@@ -8,6 +8,7 @@ package com.liferay.portal.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
@@ -15,14 +16,20 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -30,6 +37,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -158,7 +166,22 @@ public class PortalImplActualURLTest {
 			layout, LayoutTestUtil.addTypeContentLayout(_group),
 			LayoutTestUtil.addTypeContentLayout(_group));
 
-		_assertGetActualURL(layout);
+		_assertGetActualURLAsGuestUser(layout);
+	}
+
+	@Test
+	public void testNullFriendlyURLFirstLayoutPublishedWithoutPermission()
+		throws Exception {
+
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_publishLayouts(
+			layout1, layout2, LayoutTestUtil.addTypeContentLayout(_group));
+
+		_removeResourcePermission(layout1);
+
+		_assertGetActualURLAsGuestUser(layout2);
 	}
 
 	@Test
@@ -170,7 +193,7 @@ public class PortalImplActualURLTest {
 
 		_publishLayouts(layout, LayoutTestUtil.addTypeContentLayout(_group));
 
-		_assertGetActualURL(layout);
+		_assertGetActualURLAsGuestUser(layout);
 	}
 
 	@Test
@@ -180,19 +203,73 @@ public class PortalImplActualURLTest {
 		LayoutTestUtil.addTypeContentLayout(_group);
 		LayoutTestUtil.addTypeContentLayout(_group);
 
-		_assertGetActualURL(layout);
+		_assertGetActualURLAsGuestUser(layout);
 	}
 
-	private void _assertGetActualURL(Layout layout) throws Exception {
-		Map<String, String[]> parameterMap = HttpComponentsUtil.getParameterMap(
-			HttpComponentsUtil.getQueryString(
-				_portal.getActualURL(
-					_group.getGroupId(), false, Portal.PATH_MAIN, null,
-					Collections.emptyMap(), _getRequestContext())));
+	@Test
+	public void testNullFriendlyURLNoLayoutWithPermission() throws Exception {
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout3 = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_publishLayouts(layout1, layout2, layout3);
+
+		_removeResourcePermission(layout1, layout2, layout3);
+
+		try {
+			_getActualURLAsGuestUserParameterMap();
+
+			Assert.fail();
+		}
+		catch (NoSuchLayoutException noSuchLayoutException) {
+			Assert.assertEquals(
+				noSuchLayoutException.getMessage(),
+				StringBundler.concat(
+					"{groupId=", _group.getGroupId(), ", privateLayout=false}"),
+				noSuchLayoutException.getMessage());
+		}
+	}
+
+	private void _assertGetActualURLAsGuestUser(Layout layout)
+		throws Exception {
+
+		Map<String, String[]> parameterMap =
+			_getActualURLAsGuestUserParameterMap();
 
 		Assert.assertEquals(
 			MapUtil.toString(parameterMap), layout.getPlid(),
 			MapUtil.getLong(parameterMap, "p_l_id"));
+	}
+
+	private Map<String, String[]> _getActualURLAsGuestUserParameterMap()
+		throws Exception {
+
+		User user = _userLocalService.fetchGuestUser(_group.getCompanyId());
+
+		try {
+			UserTestUtil.setUser(user);
+
+			return HttpComponentsUtil.getParameterMap(
+				HttpComponentsUtil.getQueryString(
+					_portal.getActualURL(
+						_group.getGroupId(), false, Portal.PATH_MAIN, null,
+						Collections.emptyMap(),
+						HashMapBuilder.<String, Object>put(
+							"request",
+							() -> {
+								MockHttpServletRequest mockHttpServletRequest =
+									new MockHttpServletRequest();
+
+								mockHttpServletRequest.setAttribute(
+									WebKeys.USER_ID, user.getUserId());
+
+								return mockHttpServletRequest;
+							}
+						).build())));
+		}
+		finally {
+			UserTestUtil.setUser(TestPropsValues.getUser());
+		}
 	}
 
 	private Map<String, Object> _getRequestContext() {
@@ -205,6 +282,15 @@ public class PortalImplActualURLTest {
 		for (Layout layout : layouts) {
 			ContentLayoutTestUtil.publishLayout(
 				layout.fetchDraftLayout(), layout);
+		}
+	}
+
+	private void _removeResourcePermission(Layout... layouts) throws Exception {
+		for (Layout layout : layouts) {
+			RoleTestUtil.removeResourcePermission(
+				RoleConstants.GUEST, Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layout.getPlid()), ActionKeys.VIEW);
 		}
 	}
 
@@ -227,5 +313,8 @@ public class PortalImplActualURLTest {
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

@@ -1347,6 +1347,9 @@
 		</check>
 	</source-processor>
 	<source-processor name="ListSourceProcessor">
+
+		<!-- Liferay Source Checks -->
+
 		<check name="ListClientExtensionsFileCheck">
 			<category name="Styling" />
 			<description name="Sorts paths in `client-extensions.list` file." />

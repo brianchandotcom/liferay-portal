@@ -23,6 +23,11 @@ import java.util.List;
 public class ListClientExtensionsFileCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isLiferaySourceCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws IOException {

@@ -51,6 +51,7 @@ public class FTLWhitespaceCheck extends WhitespaceCheck {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
+			boolean assignBlock = false;
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
@@ -58,10 +59,12 @@ public class FTLWhitespaceCheck extends WhitespaceCheck {
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
-				if (trimmedLine.startsWith("<#assign ")) {
+				if (trimmedLine.startsWith("<#assign ") || assignBlock) {
 					line = formatWhitespace(line, trimmedLine, true);
 
 					line = formatIncorrectSyntax(line, "=[", "= [", false);
+					line = formatIncorrectSyntax(line, "=.", "= .", false);
+					line = formatIncorrectSyntax(line, "=\"", "= \"", false);
 					line = formatIncorrectSyntax(line, "+[", "+ [", false);
 				}
 
@@ -72,10 +75,18 @@ public class FTLWhitespaceCheck extends WhitespaceCheck {
 
 							line = StringUtil.replaceLast(line, "/>", " />");
 						}
+
+						if (assignBlock) {
+							assignBlock = false;
+						}
 					}
 					else if (line.endsWith(" >")) {
 						line = StringUtil.replaceLast(line, " >", ">");
 					}
+				}
+
+				if (trimmedLine.equals("<#assign")) {
+					assignBlock = true;
 				}
 
 				sb.append(line);

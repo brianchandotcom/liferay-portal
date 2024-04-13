@@ -10,8 +10,8 @@
 				<#assign curLanguageLabel = curLanguage.longDisplayName?capitalize />
 				<#if curLanguage.shortDisplayName="en" | curLanguage.shortDisplayName="pt">
 					<#assign
-						curLanguageLocale=curLanguage.getLocale()
-						curLanguageLabel=curLanguageLabel + " (" + curLanguageLocale.getDisplayCountry(curLanguageLocale) + ")" />
+						curLanguageLocale = curLanguage.getLocale()
+						curLanguageLabel = curLanguageLabel + " (" + curLanguageLocale.getDisplayCountry(curLanguageLocale) + ")" />
 				</#if>
 				<@clay["link"]
 					cssClass="language-entry-long-text"

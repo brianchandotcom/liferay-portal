@@ -107,7 +107,7 @@
 
 <#assign
 	channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1&filter=name eq 'Marketplace Channel' and siteGroupId eq '${scopeGroupId}'")
-	productThumbnail1 ="/o/commerce-media/default/?groupId=${scopeGroupId}"
+	productThumbnail1 = "/o/commerce-media/default/?groupId=${scopeGroupId}"
 />
 
 <#if channel?has_content>
@@ -120,17 +120,17 @@
 			<#list entries as entry>
 				<#if entry?has_content>
 					<#assign
-						portalURL=portalUtil.getLayoutURL(themeDisplay)
-						productId=entry.getClassPK() + 1
-						product=restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=productSpecifications,categories,images")
-						productImage=(product.images![]
+						portalURL = portalUtil.getLayoutURL(themeDisplay)
+						productId = entry.getClassPK() + 1
+						product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=productSpecifications,categories,images")
+						productImage =(product.images![]
 						)?filter(item -> item.tags?seq_contains("app icon"))![]
 						remainingCategoriesText = []
 					/>
 
 					<#if product.categories?has_content && product.productSpecifications?has_content>
 						<#assign
-								productCategories = product.categories?filter(productCategory -> productCategory.vocabulary=="marketplace app category")![]
+								productCategories = product.categories?filter(productCategory -> productCategory.vocabulary == "marketplace app category")![]
 								categoriesListSize = productCategories?size-1
 								productSpecifications = product.productSpecifications![]
 						/>
@@ -139,7 +139,7 @@
 					<#if product.name?has_content>
 						<#assign productName = product.name />
 						<#else>
-							<#assign productName ="" />
+							<#assign productName = "" />
 					</#if>
 
 					<#if product.description?has_content>

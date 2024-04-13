@@ -51,7 +51,7 @@
 			<#assign nextSession = "<div class='mb-3'>The next live session is not yet scheduled, please check again later.</div>" />
 		</#if>
 
-		<#assign nowDate =.now?date />
+		<#assign nowDate = .now?date />
 
 		<span>
 			<span>

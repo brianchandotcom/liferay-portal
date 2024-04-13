@@ -32,7 +32,7 @@
 					<#if showChildrenNavItems>
 						<#assign
 							nav_item_attr_has_popup = "aria-haspopup='true'"
-						 	nav_item_caret = '<span class="lfr-nav-child-toggle"><i class="icon-caret-down"></i></span>'
+							nav_item_caret = '<span class="lfr-nav-child-toggle"><i class="icon-caret-down"></i></span>'
 							nav_item_css_class = "${nav_item_css_class} dropdown"
 							nav_item_link_css_class = "${nav_item_link_css_class} dropdown-toggle"
 						/>

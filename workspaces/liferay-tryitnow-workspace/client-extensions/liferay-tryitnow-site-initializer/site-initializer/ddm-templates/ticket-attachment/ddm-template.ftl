@@ -1,6 +1,6 @@
 <#assign
-	myID =""
-	myTicket =""
+	myID = ""
+	myTicket = ""
 />
 
 <#if (ObjectEntry_objectEntryId.getData())??>

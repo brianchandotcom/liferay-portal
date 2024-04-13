@@ -94,7 +94,7 @@
 					developerName = expandoValueLocalService.getData(companyId, COMMERCE_PRODUCT_CLASS_NAME, "CUSTOM_FIELDS", "Developer Name", curCPCatalogEntry.getCPDefinitionId(), "")!""
 					productImageURL = cpContentHelper.getDefaultImageFileURL(ACCOUNT_ID_GUEST, cpDefinitionId)
 					productName = curCPCatalogEntry.getName()
-					productDescription = (stringUtil.shorten(htmlUtil.stripHtml(curCPCatalogEntry.getDescription()), 150,"..."))
+					productDescription = (stringUtil.shorten(htmlUtil.stripHtml(curCPCatalogEntry.getDescription()), 150, "..."))
 					friendlyURL = cpContentHelper.getFriendlyURL(curCPCatalogEntry, themeDisplay)
 					solutionsCategories = categories?filter(category -> category.getVocabularyId() == MARKETPLACE_SOLUTIONS_CATEGORIES_VOCABULARY_ID)
 				/>

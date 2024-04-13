@@ -147,7 +147,7 @@
 
 					<#if product.categories?has_content>
 						<#assign
-							productCategories = product.categories?filter(productCategory -> productCategory.vocabulary=="marketplace-solution-category")![]
+							productCategories = product.categories?filter(productCategory -> productCategory.vocabulary == "marketplace-solution-category")![]
 							categoriesListSize = productCategories?size-1
 						/>
 					</#if>

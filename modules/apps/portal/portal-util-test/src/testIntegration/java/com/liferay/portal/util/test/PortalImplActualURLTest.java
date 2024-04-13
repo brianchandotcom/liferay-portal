@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,40 +53,42 @@ public class PortalImplActualURLTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Test
-	public void testChildLayoutFriendlyURL() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+	@Before
+	public void setUp() throws Exception {
+		_serviceContext = ServiceContextTestUtil.getServiceContext();
 
-		UserGroup userGroup = _userGroupLocalService.addUserGroup(
+		_userGroup = _userGroupLocalService.addUserGroup(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			"Test " + RandomTestUtil.nextInt(), StringPool.BLANK,
-			serviceContext);
+			_serviceContext);
+	}
 
-		_group = userGroup.getGroup();
+	@Test
+	public void testChildLayoutFriendlyURL() throws Exception {
+		Group group = _userGroup.getGroup();
 
 		Layout homeLayout = _layoutLocalService.addLayout(
-			serviceContext.getUserId(), _group.getGroupId(), true,
+			_serviceContext.getUserId(), group.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Home", StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
-			StringPool.BLANK, serviceContext);
+			StringPool.BLANK, _serviceContext);
 
 		_layoutLocalService.addLayout(
-			serviceContext.getUserId(), _group.getGroupId(), true,
+			_serviceContext.getUserId(), group.getGroupId(), true,
 			homeLayout.getLayoutId(), "Child Layout", StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
-			StringPool.BLANK, serviceContext);
+			StringPool.BLANK, _serviceContext);
 
 		Assert.assertNotNull(
 			_portal.getActualURL(
-				_group.getGroupId(), true, Portal.PATH_MAIN,
-				"/~/" + userGroup.getUserGroupId() + "/child-layout",
+				group.getGroupId(), true, Portal.PATH_MAIN,
+				"/~/" + _userGroup.getUserGroupId() + "/child-layout",
 				new HashMap<>(), _getRequestContext()));
 
 		try {
 			_portal.getActualURL(
-				_group.getGroupId(), true, Portal.PATH_MAIN,
-				"/~/" + userGroup.getUserGroupId() +
+				group.getGroupId(), true, Portal.PATH_MAIN,
+				"/~/" + _userGroup.getUserGroupId() +
 					"/nonexistent-child-layout",
 				new HashMap<>(), _getRequestContext());
 
@@ -100,39 +103,31 @@ public class PortalImplActualURLTest {
 
 	@Test
 	public void testNodeLayoutActualURL() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		UserGroup userGroup = _userGroupLocalService.addUserGroup(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-			"Test " + RandomTestUtil.nextInt(), StringPool.BLANK,
-			serviceContext);
-
-		_group = userGroup.getGroup();
+		Group group = _userGroup.getGroup();
 
 		Layout homeLayout = _layoutLocalService.addLayout(
-			serviceContext.getUserId(), _group.getGroupId(), true,
+			_serviceContext.getUserId(), group.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Home", StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
-			StringPool.BLANK, serviceContext);
+			StringPool.BLANK, _serviceContext);
 
 		Layout nodeLayout = _layoutLocalService.addLayout(
-			serviceContext.getUserId(), _group.getGroupId(), true,
+			_serviceContext.getUserId(), group.getGroupId(), true,
 			homeLayout.getLayoutId(), "Node", StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_NODE, false,
-			StringPool.BLANK, serviceContext);
+			StringPool.BLANK, _serviceContext);
 
 		Layout childLayout = _layoutLocalService.addLayout(
-			serviceContext.getUserId(), _group.getGroupId(), true,
+			_serviceContext.getUserId(), group.getGroupId(), true,
 			nodeLayout.getLayoutId(), "Child Layout", StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
-			StringPool.BLANK, serviceContext);
+			StringPool.BLANK, _serviceContext);
 
 		Map<String, String[]> parameterMap = HttpComponentsUtil.getParameterMap(
 			HttpComponentsUtil.getQueryString(
 				_portal.getActualURL(
-					_group.getGroupId(), true, Portal.PATH_MAIN,
-					"/~/" + userGroup.getUserGroupId() + "/node",
+					group.getGroupId(), true, Portal.PATH_MAIN,
+					"/~/" + _userGroup.getUserGroupId() + "/node",
 					new HashMap<>(), _getRequestContext())));
 
 		Assert.assertNull(parameterMap.get("p_l_id"));
@@ -155,14 +150,16 @@ public class PortalImplActualURLTest {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalImplActualURLTest.class);
 
-	@DeleteAfterTestRun
-	private Group _group;
-
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private Portal _portal;
+
+	private ServiceContext _serviceContext;
+
+	@DeleteAfterTestRun
+	private UserGroup _userGroup;
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;

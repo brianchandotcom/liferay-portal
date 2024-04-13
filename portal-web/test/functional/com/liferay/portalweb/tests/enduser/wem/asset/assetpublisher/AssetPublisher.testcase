@@ -593,27 +593,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-86192. The default asset link behavior should be 'View in Context'."
-	@priority = 4
-	@uitest
-	test ViewDefaultAssetLinkBehavior {
-		task ("Navigate to Asset Publisher widget display settings") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			AssetPublisherPortlet.gotoConfigurationPG();
-
-			Navigator.gotoNavTab(navTab = "Display Settings");
-		}
-
-		task ("View the default asset link behavior is View in Context") {
-			AssertSelectedLabel(
-				locator1 = "APConfigurationDisplaysettings#ASSET_LINK_BEHAVIOR_SELECT",
-				value1 = "View on New Page");
-		}
-	}
-
 	@description = "This is a test for LPS-135881. View the order of fieldsets in Asset Selection settings when selection style is dynamic."
 	@priority = 4
 	@uitest

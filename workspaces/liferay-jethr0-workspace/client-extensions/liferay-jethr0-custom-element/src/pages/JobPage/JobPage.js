@@ -229,7 +229,12 @@ function JobPage() {
 	}
 
 	function redirectToJobsPage() {
-		window.location.replace('/#/jobs');
+		if (job.routine) {
+			window.location.replace('/#/routines/' + job.routine.id);
+		}
+		else {
+			window.location.replace('/#/jobs');
+		}
 	}
 
 	let jobName = 'Job #' + id;

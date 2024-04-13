@@ -7720,7 +7720,22 @@ public class PortalImpl implements Portal {
 			return permissionChecker;
 		}
 
-		User user = UserServiceUtil.getUserById(getUserId(httpServletRequest));
+		User user = null;
+
+		try {
+			user = getUser(httpServletRequest);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
+
+		if (user == null) {
+			Company company = getCompany(httpServletRequest);
+
+			user = company.getGuestUser();
+		}
 
 		return PermissionCheckerFactoryUtil.create(user);
 	}

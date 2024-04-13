@@ -11,6 +11,7 @@ import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.util.JobUtil;
 
 import org.json.JSONObject;
 
@@ -25,6 +26,8 @@ public class JobAddLiferayEventHandler extends BaseLiferayEventHandler {
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
 		JobEntity jobEntity = jobEntityRepository.add(getJobJSONObject());
+
+		JobUtil.updateJobEntityName(jobEntityRepository, jobEntity);
 
 		for (JSONObject initialBuildJSONObject :
 				jobEntity.getInitialBuildJSONObjects()) {

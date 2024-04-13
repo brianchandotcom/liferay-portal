@@ -1349,7 +1349,7 @@
 	<source-processor name="ListSourceProcessor">
 		<check name="ListClientExtensionsFileCheck">
 			<category name="Styling" />
-			<description name="Sorts paths in `client-extensions.list` files." />
+			<description name="Sorts paths in `client-extensions.list` file." />
 		</check>
 	</source-processor>
 	<source-processor name="MarkdownSourceProcessor">

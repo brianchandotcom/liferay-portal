@@ -101,10 +101,13 @@ function CreateJobPage() {
 
 						const routineJobParameter = getJobParameter({
 							jobParameters: routineJobParameters,
-							key: jobDefinitionParameter.key
+							key: jobDefinitionParameter.key,
 						});
 
-						if (routineJobParameter && (routineJobParameter.value !== '')) {
+						if (
+							routineJobParameter &&
+							routineJobParameter.value !== ''
+						) {
 							defaultJobParameter = {
 								key: jobDefinitionParameter.key,
 								routineField: true,
@@ -135,7 +138,11 @@ function CreateJobPage() {
 		breadcrumbs = [
 			{active: false, link: '/', name: 'Home'},
 			{active: false, link: '/routines', name: 'Routines'},
-			{active: false, link: '/routines/' + routine.id, name: routine.name},
+			{
+				active: false,
+				link: '/routines/' + routine.id,
+				name: routine.name,
+			},
 			{active: true, link: '/jobs/create', name: 'Create Job'},
 		];
 	}
@@ -159,7 +166,7 @@ function CreateJobPage() {
 	return (
 		<ClayLayout.Container>
 			<Jethr0Card>
-				<Jethr0NavigationBar active={routine ? "Routines" : "Jobs"} />
+				<Jethr0NavigationBar active={routine ? 'Routines' : 'Jobs'} />
 
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
 
@@ -212,8 +219,10 @@ function CreateJobPage() {
 				</ClayForm.Group>
 
 				<Jethr0JobParameterFields
+					jobDefinitionParameters={
+						jobDefinition.jobDefinitionParameters
+					}
 					jobParameters={jobParameters}
-					jobDefinitionParameters={jobDefinition.jobDefinitionParameters}
 					setJobParameters={setJobParameters}
 				/>
 

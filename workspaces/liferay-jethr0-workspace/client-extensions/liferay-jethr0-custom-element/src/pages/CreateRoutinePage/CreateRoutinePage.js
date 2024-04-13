@@ -16,7 +16,10 @@ import Jethr0JobParameterFields from '../../components/Jethr0JobParameterFields/
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0SelectWithOption from '../../components/Jethr0SelectWithOption/Jethr0SelectWithOption';
 import {getJobDefinitions} from '../../objects/jobdefinitions/JobDefinitionUtil';
-import {createRoutine, getRoutineTypes} from '../../objects/routines/RoutineUtil';
+import {
+	createRoutine,
+	getRoutineTypes,
+} from '../../objects/routines/RoutineUtil';
 
 function CreateRoutinePage() {
 	const [jobDefinitionKey, setJobDefinitionKey] = useState('default');
@@ -215,8 +218,10 @@ function CreateRoutinePage() {
 				</ClayForm.Group>
 
 				<Jethr0JobParameterFields
+					jobDefinitionParameters={
+						jobDefinition.jobDefinitionParameters
+					}
 					jobParameters={jobParameters}
-					jobDefinitionParameters={jobDefinition.jobDefinitionParameters}
 					setJobParameters={setJobParameters}
 				/>
 

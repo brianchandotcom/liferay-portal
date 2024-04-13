@@ -9,6 +9,7 @@ import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.util.JobUtil;
 
 import org.json.JSONObject;
 
@@ -28,6 +29,8 @@ public class JobUpdateLiferayEventHandler extends BaseLiferayEventHandler {
 
 		if (jobEntity != null) {
 			jobEntity.setJSONObject(jobJSONObject);
+
+			JobUtil.updateJobEntityName(jobEntityRepository, jobEntity);
 
 			JobQueue jobQueue = getJobQueue();
 

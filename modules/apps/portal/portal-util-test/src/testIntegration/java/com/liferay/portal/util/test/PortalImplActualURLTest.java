@@ -6,6 +6,8 @@
 package com.liferay.portal.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
@@ -19,9 +21,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -30,6 +34,7 @@ import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,12 +60,16 @@ public class PortalImplActualURLTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext();
 
 		_userGroup = _userGroupLocalService.addUserGroup(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			"Test " + RandomTestUtil.nextInt(), StringPool.BLANK,
 			_serviceContext);
+
+		UserTestUtil.setUser(TestPropsValues.getUser());
 	}
 
 	@Test
@@ -141,14 +150,69 @@ public class PortalImplActualURLTest {
 			MapUtil.getLong(parameterMap, "layoutId"));
 	}
 
+	@Test
+	public void testNullFriendlyURLFirstLayoutPublished() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_publishLayouts(
+			layout, LayoutTestUtil.addTypeContentLayout(_group),
+			LayoutTestUtil.addTypeContentLayout(_group));
+
+		_assertGetActualURL(layout);
+	}
+
+	@Test
+	public void testNullFriendlyURLFirstLayoutUnpublished() throws Exception {
+		LayoutTestUtil.addTypeContentLayout(_group);
+		LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_publishLayouts(layout, LayoutTestUtil.addTypeContentLayout(_group));
+
+		_assertGetActualURL(layout);
+	}
+
+	@Test
+	public void testNullFriendlyURLNoLayoutPublished() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		LayoutTestUtil.addTypeContentLayout(_group);
+		LayoutTestUtil.addTypeContentLayout(_group);
+
+		_assertGetActualURL(layout);
+	}
+
+	private void _assertGetActualURL(Layout layout) throws Exception {
+		Map<String, String[]> parameterMap = HttpComponentsUtil.getParameterMap(
+			HttpComponentsUtil.getQueryString(
+				_portal.getActualURL(
+					_group.getGroupId(), false, Portal.PATH_MAIN, null,
+					Collections.emptyMap(), _getRequestContext())));
+
+		Assert.assertEquals(
+			MapUtil.toString(parameterMap), layout.getPlid(),
+			MapUtil.getLong(parameterMap, "p_l_id"));
+	}
+
 	private Map<String, Object> _getRequestContext() {
 		return HashMapBuilder.<String, Object>put(
 			"request", new MockHttpServletRequest(Method.GET, "/")
 		).build();
 	}
 
+	private void _publishLayouts(Layout... layouts) throws Exception {
+		for (Layout layout : layouts) {
+			ContentLayoutTestUtil.publishLayout(
+				layout.fetchDraftLayout(), layout);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalImplActualURLTest.class);
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

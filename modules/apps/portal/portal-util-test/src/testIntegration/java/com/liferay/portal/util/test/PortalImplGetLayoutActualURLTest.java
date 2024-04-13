@@ -36,7 +36,8 @@ import org.junit.runner.RunWith;
  * @author Lourdes Fernández Besada
  */
 @RunWith(Arquillian.class)
-public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
+public class PortalImplGetLayoutActualURLTest
+	extends BasePortalImplURLTestCase {
 
 	@ClassRule
 	@Rule

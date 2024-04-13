@@ -6,14 +6,16 @@
 import ClayForm from '@clayui/form';
 
 import Jethr0Input from '../../components/Jethr0Input/Jethr0Input';
-import {getJobParameter, getUpdatedJobParameters} from '../../objects/jobs/JobUtil';
+import {
+	getJobParameter,
+	getUpdatedJobParameters,
+} from '../../objects/jobs/JobUtil';
 
 function Jethr0JobParameterFields({
 	jobDefinitionParameters,
 	jobParameters,
 	setJobParameters,
 }) {
-
 	if (!jobDefinitionParameters || !jobParameters) {
 		return <></>;
 	}
@@ -30,12 +32,8 @@ function Jethr0JobParameterFields({
 		}
 
 		return (
-			<ClayForm.Group
-				key={key}
-			>
-				<label htmlFor={key}>
-					{jobDefinitionParameter.label}
-				</label>
+			<ClayForm.Group key={key}>
+				<label htmlFor={key}>{jobDefinitionParameter.label}</label>
 
 				<Jethr0Input
 					disabled={disabled}
@@ -49,9 +47,7 @@ function Jethr0JobParameterFields({
 							})
 						);
 					}}
-					placeholder={
-						jobDefinitionParameter.valueDescription
-					}
+					placeholder={jobDefinitionParameter.valueDescription}
 					type="text"
 					value={jobParameter?.value}
 				/>

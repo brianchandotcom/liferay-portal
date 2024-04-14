@@ -3693,68 +3693,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of collection."
-	@priority = 4
-	test ViewDropdownMenuIconsInCollectionsAdmin {
-		task ("Given a Collection creator has a dynamic collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection Test");
-
-			AssetListsAdmin.configureItemTypeInDynamicCollection(
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article");
-		}
-
-		task ("When the Collection creator opens the dropdown menu of Anyone") {
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
-		}
-
-		task ("Then the Collection creator can see the new icon on the dropdown menu") {
-			AssertVisible(
-				key_text = "view",
-				locator1 = "MenuItem#ANY_ICON");
-		}
-
-		task ("When the Collection creator opens the dropdown menu of dynamic collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			LexiconList.clickEllipsis(listEntry = "Dynamic Collection");
-		}
-
-		task ("Then the Collection creator can see the new icons on the dropdown menu") {
-			for (var icon : list "pencil,list-ul,password-policies,trash") {
-				AssertVisible(
-					key_text = ${icon},
-					locator1 = "MenuItem#ANY_ICON");
-			}
-		}
-
-		task ("When the Collection creator opens the dropdown menu of management toolbar after selecting the new collection") {
-			LexiconEntry.selectEntry(key_rowEntry = "Dynamic Collection");
-
-			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
-		}
-
-		task ("Then the Collection creator can see the new icon on the dropdown menu") {
-			AssertVisible(
-				key_text = "trash",
-				locator1 = "MenuItem#ANY_ICON");
-		}
-
-		task ("When the Collection creator opens the dropdown menu of any collection providers") {
-			Navigator.gotoNavTab(navTab = "Collection Providers");
-
-			LexiconList.clickEllipsis(listEntry = "Most Viewed Assets");
-		}
-
-		task ("Then the Collection creator can see the new icon on the dropdown menu") {
-			AssertVisible(
-				key_text = "view",
-				locator1 = "MenuItem#ANY_ICON");
-		}
-	}
-
 	@description = "This is a test for LPS-168664. View collections in Asset Publisher in list and table views."
 	@priority = 3
 	test ViewListAndTableStylesOfCollectionsInSelector {

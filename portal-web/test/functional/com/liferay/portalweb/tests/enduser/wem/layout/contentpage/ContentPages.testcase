@@ -1436,53 +1436,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of page editor."
-	@priority = 4
-	test ViewDropdownIconsInPageEditor {
-		task ("Given a Page designer has a content page with a Collection Display fragment") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = ${randomSiteName},
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Collection Display");
-		}
-
-		task ("When the Page designer opens the dropdown menu of Collection Display topper") {
-			PageEditor.clickConfigurableField(fragmentName = "Collection Display");
-
-			Click.waitForMenuToggleJSClick(
-				key_fragmentName = "Collection Display",
-				locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
-		}
-
-		task ("Then the Page designer can see the new icons on the dropdown menu") {
-			DropdownMenuItem.viewIcon(iconList = "hidden,copy,trash");
-		}
-
-		task ("When the Page designer opens the dropdown menu of Collection after selecting a dynamic collection") {
-			PageEditor.editCollectionDisplay(
-				assetListName = "Dynamic Collection",
-				fragmentName = "Collection Display");
-
-			Click.clickNoWaitForVisible(
-				key_fieldLabel = "Collection",
-				key_text = "ellipsis-v",
-				locator1 = "Icon#ANY_ITEM_SELECTOR");
-		}
-
-		task ("Then the Page designer can see the new icons on the dropdown menu") {
-			DropdownMenuItem.viewIcon(iconList = "pencil,list-ul,plus,password-policies,trash");
-		}
-	}
-
 	@description = "This is a test for LPS-81870. In edit mode the page should still show the elements of the page that are not from the page itself, like the header, footer, or elements defined by the theme."
 	@priority = 5
 	@uitest

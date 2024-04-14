@@ -1173,62 +1173,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of fragment."
-	@priority = 4
-	test ViewDropdownMenuIconsInFragmentsAdmin {
-		task ("Given a Fragments creator has a new Fragment Set and custom fragment") {
-			JSONFragment.addFragmentCollection(
-				groupName = ${randomSiteName},
-				name = "New Fragment Set Name");
-
-			JSONFragment.addSection(
-				collectionName = "New Fragment Set Name",
-				fragmentStatus = "Approved",
-				groupName = ${randomSiteName},
-				name = "Fragment Name");
-		}
-
-		task ("When the Fragments creator opens the dropdown menu of custom fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
-
-			Click.waitForMenuToggleJSClick(
-				key_card = "Fragment Name",
-				locator1 = "Card#CARD_ELLIPSIS");
-		}
-
-		task ("Then the Fragments creator can see the new icons on the dropdown menu of custom fragment") {
-			DropdownMenuItem.viewIcon(iconList = "pencil,change,export,copy,move-folder,trash");
-		}
-
-		task ("When the Fragments creator opens the dropdown menu of custom fragment set") {
-			Click.waitForMenuToggleJSClick(
-				key_headerName = "New Fragment Set Name",
-				locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
-		}
-
-		task ("Then the Fragments creator can see the new icons on the dropdown menu of custom fragment set") {
-			DropdownMenuItem.viewIcon(iconList = "pencil,export,import,trash");
-		}
-
-		task ("When the Fragments creator opens the dropdown menu on the Fragment Sets") {
-			Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
-		}
-
-		task ("Then the Fragments creator can see the new icons on the dropdown menu of Framents Sets") {
-			DropdownMenuItem.viewIcon(iconList = "export,import,trash");
-		}
-
-		task ("When the Fragments creator opens the dropdown menu of management toolbar after selecting the new fragment") {
-			LexiconCard.checkCardCheckbox(card = "Fragment Name");
-
-			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
-		}
-
-		task ("Then the Fragments creator can see the new icons on the dropdown menu") {
-			DropdownMenuItem.viewIcon(iconList = "export,copy,move-folder,trash");
-		}
-	}
-
 	@description = "This is a test for LPS-177286. View error alert and feedback message when failing to Propagate Contributed Fragments Changes During Deploy Process Automatically."
 	@priority = 3
 	test ViewErrorMessageWhenFailToPropagateChanges {

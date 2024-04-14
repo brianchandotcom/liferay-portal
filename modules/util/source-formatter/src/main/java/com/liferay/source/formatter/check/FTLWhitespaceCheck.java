@@ -62,11 +62,11 @@ public class FTLWhitespaceCheck extends WhitespaceCheck {
 				if (trimmedLine.startsWith("<#assign ") || assignBlock) {
 					line = formatWhitespace(line, trimmedLine, true);
 
+					line = formatIncorrectSyntax(line, "+[", "+ [", false);
 					line = formatIncorrectSyntax(line, "=[", "= [", false);
 					line = formatIncorrectSyntax(line, "=(", "= (", false);
 					line = formatIncorrectSyntax(line, "=.", "= .", false);
 					line = formatIncorrectSyntax(line, "=\"", "= \"", false);
-					line = formatIncorrectSyntax(line, "+[", "+ [", false);
 				}
 
 				if (line.endsWith(">")) {

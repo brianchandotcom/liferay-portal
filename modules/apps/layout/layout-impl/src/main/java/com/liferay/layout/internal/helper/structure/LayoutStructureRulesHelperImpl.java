@@ -38,10 +38,13 @@ public class LayoutStructureRulesHelperImpl
 		List<LayoutStructureRule> layoutStructureRules =
 			layoutStructure.getLayoutStructureRules();
 
+		LayoutStructureRulesContext layoutStructureRulesContext =
+			new LayoutStructureRulesContext(
+				groupId, permissionChecker, segmentsEntryIds);
+
 		for (LayoutStructureRule layoutStructureRule : layoutStructureRules) {
 			if (_isLayoutStructureRuleActive(
-					groupId, layoutStructureRule, permissionChecker,
-					segmentsEntryIds)) {
+					layoutStructureRule, layoutStructureRulesContext)) {
 
 				_processActions(
 					layoutStructureRule.getActionsJSONArray(), displayedItemIds,
@@ -53,8 +56,8 @@ public class LayoutStructureRulesHelperImpl
 	}
 
 	private boolean _isConditionActive(
-		long groupId, JSONObject conditionJSONObject,
-		PermissionChecker permissionChecker, long[] segmentsEntryIds) {
+		JSONObject conditionJSONObject,
+		LayoutStructureRulesContext layoutStructureRulesContext) {
 
 		long value = conditionJSONObject.getLong("value");
 
@@ -62,20 +65,19 @@ public class LayoutStructureRulesHelperImpl
 				conditionJSONObject.getString("condition"), "role")) {
 
 			return ArrayUtil.contains(
-				permissionChecker.getRoleIds(
-					permissionChecker.getUserId(), groupId),
-				value);
+				layoutStructureRulesContext.getRoleIds(), value);
 		}
 
 		if (Objects.equals(
 				conditionJSONObject.getString("condition"), "segment")) {
 
-			return ArrayUtil.contains(segmentsEntryIds, value);
+			return ArrayUtil.contains(
+				layoutStructureRulesContext.getSegmentsEntryIds(), value);
 		}
 
 		if (Objects.equals(
 				conditionJSONObject.getString("condition"), "user") &&
-			Objects.equals(permissionChecker.getUserId(), value)) {
+			Objects.equals(layoutStructureRulesContext.getUserId(), value)) {
 
 			return true;
 		}
@@ -84,8 +86,8 @@ public class LayoutStructureRulesHelperImpl
 	}
 
 	private boolean _isLayoutStructureRuleActive(
-		long groupId, LayoutStructureRule layoutStructureRule,
-		PermissionChecker permissionChecker, long[] segmentsEntryIds) {
+		LayoutStructureRule layoutStructureRule,
+		LayoutStructureRulesContext layoutStructureRulesContext) {
 
 		JSONArray conditionsJSONArray =
 			layoutStructureRule.getConditionsJSONArray();
@@ -95,8 +97,7 @@ public class LayoutStructureRulesHelperImpl
 				i);
 
 			boolean conditionActive = _isConditionActive(
-				groupId, conditionJSONObject, permissionChecker,
-				segmentsEntryIds);
+				conditionJSONObject, layoutStructureRulesContext);
 
 			if (conditionActive) {
 				if (Objects.equals(
@@ -129,6 +130,47 @@ public class LayoutStructureRulesHelperImpl
 				hiddenItemIds.add(actionsJSONObject.getString("itemId"));
 			}
 		}
+	}
+
+	private class LayoutStructureRulesContext {
+
+		public long getGroupId() {
+			return _groupId;
+		}
+
+		public long[] getRoleIds() {
+			if (_roleIds != null) {
+				return _roleIds;
+			}
+
+			_roleIds = _permissionChecker.getRoleIds(
+				_permissionChecker.getUserId(), _groupId);
+
+			return _roleIds;
+		}
+
+		public long[] getSegmentsEntryIds() {
+			return _segmentsEntryIds;
+		}
+
+		public long getUserId() {
+			return _permissionChecker.getUserId();
+		}
+
+		private LayoutStructureRulesContext(
+			long groupId, PermissionChecker permissionChecker,
+			long[] segmentsEntryIds) {
+
+			_groupId = groupId;
+			_permissionChecker = permissionChecker;
+			_segmentsEntryIds = segmentsEntryIds;
+		}
+
+		private final long _groupId;
+		private final PermissionChecker _permissionChecker;
+		private long[] _roleIds;
+		private final long[] _segmentsEntryIds;
+
 	}
 
 }

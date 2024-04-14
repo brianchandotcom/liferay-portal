@@ -59,20 +59,18 @@ public class LayoutStructureRulesHelperImpl
 		long value = conditionJSONObject.getLong("value");
 
 		if (Objects.equals(
-				conditionJSONObject.getString("condition"), "role") &&
-			ArrayUtil.contains(
+				conditionJSONObject.getString("condition"), "role")) {
+
+			return ArrayUtil.contains(
 				permissionChecker.getRoleIds(
 					permissionChecker.getUserId(), groupId),
-				value)) {
-
-			return true;
+				value);
 		}
 
 		if (Objects.equals(
-				conditionJSONObject.getString("condition"), "segment") &&
-			ArrayUtil.contains(segmentsEntryIds, value)) {
+				conditionJSONObject.getString("condition"), "segment")) {
 
-			return true;
+			return ArrayUtil.contains(segmentsEntryIds, value);
 		}
 
 		if (Objects.equals(

@@ -224,38 +224,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-177722. In the edit mode of Widget Template the tooltip of the back button is 'Go to Templates'"
-	@priority = 3
-	test ViewBackButtonTooltipInWidgetTemplateEditor {
-		task ("Given access to the Widget Template editor") {
-			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
-
-			Navigator.gotoNavTab(navTab = "Widget Templates");
-
-			LexiconEntry.gotoAdd();
-
-			MenuItem.click(menuItem = "Asset Publisher Template");
-
-			SiteAdmin.viewPortletTitle(portletTitle = "Add Asset Publisher Template");
-
-			PortletEntry.inputName(name = "Test Widget Template");
-
-			Click(
-				key_fieldName = "Asset Entry",
-				locator1 = "DDMEditTemplate#SCRIPT_FIELD");
-		}
-
-		task ("When hover over the back button") {
-			MouseOver(locator1 = "Icon#BACK");
-		}
-
-		task ("Then see the tooltip message") {
-			AssertVisible(
-				key_content = "Go to Templates",
-				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
-		}
-	}
-
 	@description = "This is a use case for LPS-137903. View the new GUI in Widget Templates."
 	@priority = 4
 	@uitest

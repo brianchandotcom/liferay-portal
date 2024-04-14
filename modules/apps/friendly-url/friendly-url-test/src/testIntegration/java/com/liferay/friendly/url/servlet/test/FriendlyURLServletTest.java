@@ -283,7 +283,7 @@ public class FriendlyURLServletTest {
 		_resourcePermissionLocalService.updateResourcePermission(
 			resourcePermission);
 
-		_user = UserTestUtil.addUser();
+		_user = UserTestUtil.addUser(group.getGroupId());
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));

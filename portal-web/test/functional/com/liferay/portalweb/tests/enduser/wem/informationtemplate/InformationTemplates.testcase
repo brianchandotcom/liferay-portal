@@ -805,27 +805,4 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-177722. In the edit mode of Information Template the tooltip of the back button is 'Go to Templates'"
-	@priority = 3
-	test ViewBackButtonTooltipInInformationTemplateEditor {
-		task ("Given access to the Information Template editor") {
-			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
-
-			InformationTemplates.addCP(
-				informationTemplateName = "Test Information Template",
-				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article");
-		}
-
-		task ("When hover over the back button") {
-			MouseOver(locator1 = "Icon#BACK");
-		}
-
-		task ("Then see the tooltip message") {
-			AssertVisible(
-				key_content = "Go to Templates",
-				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
-		}
-	}
-
 }

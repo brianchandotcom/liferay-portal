@@ -18,7 +18,6 @@ import TestrayIcons from '../Icons/TestrayIcon';
 import Tooltip from '../Tooltip';
 import SidebarFooter from './SidebarFooter';
 import SidebarItem from './SidebarItem';
-import TaskSidebar from './TasksSidebar';
 
 const Sidebar = () => {
 	const {pathname} = useLocation();
@@ -159,8 +158,6 @@ const Sidebar = () => {
 
 						<div className="tr-sidebar__content__divider" />
 					</div>
-
-					<TaskSidebar expanded={expanded} />
 
 					<div className="pb-1">
 						<SidebarFooter

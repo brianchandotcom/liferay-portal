@@ -180,7 +180,7 @@ public class SiteInitializerSerializerImpl
 							assetListEntry.getTypeSettings(0)
 						).build(
 						).get(
-							""
+							"anyClassType"
 						)));
 
 			jsonArray.put(

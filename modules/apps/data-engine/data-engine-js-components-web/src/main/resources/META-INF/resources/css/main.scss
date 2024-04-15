@@ -100,11 +100,7 @@ body .ddm-user-view-content {
 .lfr-ddm-form-container {
 	word-break: normal;
 
-	.btn {
-		opacity: unset;
-	}
-
-	.custom-control-label-text {
+	.custom-control-label-text:disabled {
 		color: #6b6c7e;
 	}
 
@@ -122,7 +118,7 @@ body .ddm-user-view-content {
 		border-color: #0043c5;
 	}
 
-	.form-control {
+	.form-control:disabled {
 		color: #6b6c7e;
 	}
 

@@ -4,8 +4,8 @@
 		"title": "Test Asset List Entry 1",
 		"unicodeProperties": {
 			"anyClassType":"anyClassType",
-			"classTypeIds":"classTypeIds",
-			"classNameIds": "com.liferay.journal.model.JournalArticle"
+			"classNameIds": "com.liferay.journal.model.JournalArticle",
+			"classTypeIds":"classTypeIds"
 		}
 	},
 	{
@@ -13,8 +13,8 @@
 		"title": "Test Asset List Entry 2",
 		"unicodeProperties": {
 			"anyClassType":"anyClassType",
-			"classTypeIds":"classTypeIds",
-			"classNameIds": "com.liferay.journal.model.JournalArticle"
+			"classNameIds": "com.liferay.journal.model.JournalArticle",
+			"classTypeIds":"classTypeIds"
 		}
 	}
 ]

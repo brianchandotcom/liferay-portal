@@ -104,6 +104,8 @@ public class DDMFormTemplateContextProcessor {
 			jsonObject.getJSONArray("options"), ddmFormField);
 		_setDDMFormFieldPlaceholder(
 			jsonObject.getString("placeholder"), ddmFormField);
+		_setDDMFormFieldPredefinedValue(
+			jsonObject.getString("predefinedValue"), ddmFormField);
 		_setDDMFormFieldProperty(
 			ddmFormField, "buttonLabel", jsonObject.getString("buttonLabel"));
 		_setDDMFormFieldProperty(
@@ -381,6 +383,14 @@ public class DDMFormTemplateContextProcessor {
 		ddmFormField.setProperty(
 			"placeholder",
 			_getLocalizedValue(GetterUtil.getString(placeholder)));
+	}
+
+	private void _setDDMFormFieldPredefinedValue(
+		String predefinedValue, DDMFormField ddmFormField) {
+
+		ddmFormField.setProperty(
+			"predefinedValue",
+			_getLocalizedValue(GetterUtil.getString(predefinedValue)));
 	}
 
 	private void _setDDMFormFieldProperty(

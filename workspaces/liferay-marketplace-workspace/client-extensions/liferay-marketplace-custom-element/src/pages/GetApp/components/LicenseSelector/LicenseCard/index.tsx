@@ -11,6 +11,7 @@ import ClayButton from '@clayui/button';
 
 import infoCircleFullIcon from '../../../../../assets/icons/icon_info_circle_full.svg';
 import useCart from '../../../../../hooks/useCart';
+import i18n from '../../../../../i18n';
 
 const MAX_ITEM = 99;
 const MIN_ITEM = 0;
@@ -40,13 +41,29 @@ const LicenseSectorCard: React.FC<LicenseSectorCardProps> = ({
 
 	const tierPrices = licensetiers[0]?.tierPrice ?? ([] as TierPrice[]);
 
+	const tierPriceText = (tierPrice: TierPrice, index: number) => {
+		const {priceFormatted, quantity} = tierPrice;
+
+		const minPriceLicenseOption = index === tierPrices?.length - 1;
+
+		const toLicenseQuantityValue = tierPrices[index + 1]?.quantity - 1;
+
+		const quantityText = `${quantity}${`${
+			minPriceLicenseOption ? '+ ' : `-${toLicenseQuantityValue}`
+		}`} ${i18n.translate('licenses')}:`;
+
+		const tierPriceValue = `${priceFormatted} ${i18n.translate('each')}`;
+
+		return `${quantityText} ${tierPriceValue}`;
+	};
+
 	return (
 		<div className="license__card p-3">
 			<div className="align-items-center d-flex justify-content-between w-100">
 				<span>
 					<div className="mb-1">
 						<span className="font-weight-bold text-capitalize">
-							{`${lisenceType} License`}
+							{`${lisenceType} ${i18n.translate('license')}`}
 						</span>
 						<span className="license__card__icon ml-3">
 							{lisenceType.toLowerCase() === 'standard' ? (
@@ -99,32 +116,28 @@ const LicenseSectorCard: React.FC<LicenseSectorCardProps> = ({
 				</div>
 			</div>
 
-			{!!tierPrices.length && (
-				<div className="d-flex flex-column license__card__tier mt-4 p-4">
-					<div className="font-weight-bold license__card__tier__title mb-1">
-						License Prices
-					</div>
-
-					{!tierPrices.some(
-						({quantity}: TierPrice) => quantity === 1
-					) && (
-						<span className="license__card__tier__price__text">
-							{`1 License: ${sku?.price?.priceFormatted}.`}
-						</span>
-					)}
-
-					{tierPrices.map((tier: TierPrice, index: number) => (
-						<span
-							className="license__card__tier__price__text"
-							key={index}
-						>
-							{`${tier?.quantity} License: ${
-								tier?.priceFormatted
-							} ${tier?.quantity > 1 ? 'each.' : ''}`}
-						</span>
-					))}
+			<div className="d-flex flex-column license__card__tier mt-4 p-4">
+				<div className="font-weight-bold license__card__tier__title mb-1">
+					{i18n.translate('license-prices')}
 				</div>
-			)}
+
+				{tierPrices.length > 1 ? (
+					tierPrices.map((tier: TierPrice, index: number) => {
+						return (
+							<span
+								className="license__card__tier__price__text"
+								key={index}
+							>
+								{tierPriceText(tier, index)}
+							</span>
+						);
+					})
+				) : (
+					<span className="license__card__tier__price__text">
+						{`1 License: ${sku?.price?.priceFormatted}`}
+					</span>
+				)}
+			</div>
 		</div>
 	);
 };

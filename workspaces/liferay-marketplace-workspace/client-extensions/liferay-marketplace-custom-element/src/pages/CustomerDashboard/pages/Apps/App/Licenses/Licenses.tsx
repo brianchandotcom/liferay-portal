@@ -68,11 +68,7 @@ const Licenses = () => {
 			? 'On-Premise'
 			: 'Cloud';
 
-	const {
-		data: licenseKeysResponse,
-		isLoading,
-		mutate,
-	} = useSWR(
+	const {data: licenseKeysResponse, isLoading, mutate} = useSWR(
 		`/order-license-keys/${orderId}/${page}/${pageSize}`,
 		async () => {
 			try {
@@ -83,7 +79,8 @@ const Licenses = () => {
 						pageSize: pageSize.toString(),
 					})
 				);
-			} catch (error) {
+			}
+			catch (error) {
 				return {
 					items: [],
 					totalCount: 0,
@@ -97,16 +94,19 @@ const Licenses = () => {
 	const orderStatusIsNotCompleted =
 		placedOrder?.orderStatusInfo?.label !== OrderStatuses.COMPLETED;
 
-	const {onDeativateLicenseKey, onDownload, onViewLicenseKey} =
-		useLicenseActions({
-			product,
-			deactivateLicenseModal,
-			keyType,
-			licenseKeyModal,
-			marketplaceSpringBootOAuth2,
-			mutate,
-			setModal: setModalData,
-		});
+	const {
+		onDeativateLicenseKey,
+		onDownload,
+		onViewLicenseKey,
+	} = useLicenseActions({
+		deactivateLicenseModal,
+		keyType,
+		licenseKeyModal,
+		marketplaceSpringBootOAuth2,
+		mutate,
+		product,
+		setModal: setModalData,
+	});
 
 	const buttonsInfo = useMemo(
 		() => ({

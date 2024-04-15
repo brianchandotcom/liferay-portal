@@ -1,0 +1,19 @@
+{
+	"friendlyURL": "/capabilities",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Capabilities"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "node"
+}

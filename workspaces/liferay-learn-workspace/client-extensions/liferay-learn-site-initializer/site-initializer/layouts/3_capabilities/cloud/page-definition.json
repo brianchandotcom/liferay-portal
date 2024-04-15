@@ -1,0 +1,503 @@
+{
+	"pageElement": {
+		"id": "17d745a6-04e6-61aa-5a32-a0baffc83ba6",
+		"pageElements": [
+			{
+				"definition": {
+					"cssClasses": [
+						"learn-banner"
+					],
+					"fragmentStyle": {
+					},
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"id": "5e4067ca-ee7f-3fb6-e1bc-bac083e8af6a",
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"maxWidth": "var(--container-max-xl)",
+								"paddingBottom": "5",
+								"paddingLeft": "4",
+								"paddingRight": "4",
+								"paddingTop": "5",
+								"width": "100%"
+							},
+							"indexed": true,
+							"layout": {
+								"paddingBottom": 4,
+								"paddingLeft": 2,
+								"paddingRight": 2,
+								"paddingTop": 4,
+								"widthType": "Fixed"
+							}
+						},
+						"id": "a2e684d8-a0f0-de45-2150-2cf3f3f1e3d6",
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"maxWidth": "var(--container-max-sm)",
+										"textColor": ""
+									},
+									"indexed": true,
+									"layout": {
+									}
+								},
+								"id": "7c5d2d5c-085c-ceb1-bdef-bb3cbc8728e1",
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "dialect-text",
+												"siteKey": "Liferay Learn"
+											},
+											"fragmentConfig": {
+												"textType": "text-paragraph-lg",
+												"truncateText": false
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"defaultFragmentInlineValue": {
+																"value": "Capability"
+															},
+															"mapping": {
+																"fieldKey": "AssetCategory_vocabulary",
+																"itemReference": {
+																	"className": "com.liferay.asset.kernel.model.AssetCategory",
+																	"classPK": "[$CAPABILITY#CLOUD$]"
+																}
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"backgroundColor": "",
+												"marginBottom": "3",
+												"textColor": ""
+											},
+											"indexed": true
+										},
+										"id": "a3aa5ede-aa92-c166-9d6b-c044d9ad3342",
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: var(--spacer-3);\n}",
+											"indexed": true,
+											"layout": {
+												"contentDisplay": "FlexRow"
+											}
+										},
+										"id": "829a0030-1415-8a86-e2cb-acd9f19eca09",
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-100"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "AssetCategory_mainImage",
+																			"itemReference": {
+																				"className": "com.liferay.asset.kernel.model.AssetCategory",
+																				"classPK": "[$CAPABILITY#CLOUD$]"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"id": "882602c2-4383-395b-ee3d-fa1a94c7bd05",
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-text",
+														"siteKey": "Liferay Learn"
+													},
+													"fragmentConfig": {
+														"textType": "h1",
+														"truncateText": false
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"defaultFragmentInlineValue": {
+																		"value": "Cloud"
+																	},
+																	"mapping": {
+																		"fieldKey": "AssetCategory_name",
+																		"itemReference": {
+																			"className": "com.liferay.asset.kernel.model.AssetCategory",
+																			"classPK": "[$CAPABILITY#CLOUD$]"
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"backgroundColor": ""
+													},
+													"indexed": true
+												},
+												"id": "addaf9f7-a3c8-1d02-5f10-84aa9aec610e",
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"cssClasses": [
+												"learn-search"
+											],
+											"fragmentStyle": {
+												"marginTop": "4"
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+												},
+												"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+											}
+										},
+										"id": "e18900ab-3cd8-fe27-1968-7c9c85e6ad3f",
+										"type": "Widget"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"maxWidth": "var(--container-max-xl)",
+						"paddingBottom": "4",
+						"paddingLeft": "4",
+						"paddingRight": "4",
+						"paddingTop": "4"
+					},
+					"indexed": true,
+					"layout": {
+						"paddingBottom": 2,
+						"paddingLeft": 2,
+						"paddingRight": 2,
+						"paddingTop": 2,
+						"widthType": "Fixed"
+					}
+				},
+				"id": "0ccfedcb-fca3-8031-d484-d3a7dba01abe",
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "dialect-text",
+								"siteKey": "Liferay Learn"
+							},
+							"fragmentConfig": {
+								"textType": "text-paragraph-lg",
+								"truncateText": false
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"defaultFragmentInlineValue": {
+												"value": "<p>Liferay Cloud Platform provides the infrastructure and tooling necessary to simplify, secure, and deliver applications on Liferay DXP when using the SaaS or PaaS deployment approaches. Using Liferay’s Cloud infrastructure provides a secure, reliable, and scalable platform for building Liferay solutions.<p>The Liferay Cloud Platform includes DevOps CI/CD tools, automated backups, real-time logs, and much more.<div>Check these articles for an introduction:<ul><li><a href=/w/liferay-cloud/getting-started>Getting Started - Liferay Cloud</a><li><a href=/w/liferay-cloud/getting-started/development-requirements>Development Requirements</a><li><a href=/w/liferay-cloud/getting-started/configuring-your-github-repository>Configuring Your Github Repository</a><li><a href=/w/liferay-cloud/updating-services-in-liferay-paas/overview-of-the-liferay-cloud-deployment-workflow>Overview of the Liferay Cloud Deployment Workflow</a><li><a href=/w/liferay-cloud/updating-services-in-liferay-paas/deploying-changes-via-the-liferay-cloud-console>Deploying Changes via the Liferay Cloud Console</a></ul></div>"
+											},
+											"mapping": {
+												"fieldKey": "AssetCategory_description",
+												"itemReference": {
+													"className": "com.liferay.asset.kernel.model.AssetCategory",
+													"classPK": "[$CAPABILITY#CLOUD$]"
+												}
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"backgroundColor": ""
+							},
+							"indexed": true
+						},
+						"id": "f3cf16d9-94a1-a42e-caa5-6316381b40e1",
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: var(--spacer-4);\n}",
+					"fragmentStyle": {
+						"paddingBottom": "4",
+						"paddingLeft": "4",
+						"paddingRight": "4",
+						"paddingTop": "4"
+					},
+					"indexed": true,
+					"layout": {
+						"contentDisplay": "FlexRow",
+						"paddingBottom": 2,
+						"paddingLeft": 2,
+						"paddingRight": 2,
+						"paddingTop": 2,
+						"widthType": "Fixed"
+					}
+				},
+				"id": "6d1e43b9-559d-e30d-f3ee-dbfe7c80aa9f",
+				"pageElements": [
+					{
+						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] {\nflex: 0 0 300px;\n}",
+							"fragmentStyle": {
+								"maxWidth": "300px"
+							},
+							"indexed": true,
+							"layout": {
+								"widthType": "Fixed"
+							}
+						},
+						"id": "ef2e1723-47e5-429f-f5e2-e78f14f55f7c",
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"backgroundColor": "colorNeutral1",
+										"borderRadius": "borderRadiusLg",
+										"marginBottom": "4",
+										"paddingBottom": "3",
+										"paddingLeft": "3",
+										"paddingRight": "3",
+										"paddingTop": "3"
+									},
+									"indexed": true,
+									"layout": {
+										"marginBottom": 2,
+										"paddingBottom": 1,
+										"paddingLeft": 1,
+										"paddingRight": 1,
+										"paddingTop": 1
+									}
+								},
+								"id": "c7c45add-deaf-0519-f24b-76ce23f2a256",
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"displayStyle": "default",
+													"displayStyleGroupId": "33405",
+													"frequenciesVisible": "false",
+													"frequencyThreshold": "1",
+													"maxTerms": "100",
+													"order": "key:asc",
+													"parameterName": "feature",
+													"vocabularyIds": "33633,32435"
+												},
+												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+											}
+										},
+										"id": "d9920c3f-9441-a6af-0fbf-6c508511fd5f",
+										"type": "Widget"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"backgroundColor": "colorNeutral1",
+										"borderRadius": "borderRadiusLg",
+										"marginBottom": "4",
+										"paddingBottom": "3",
+										"paddingLeft": "3",
+										"paddingRight": "3",
+										"paddingTop": "3"
+									},
+									"indexed": true,
+									"layout": {
+										"marginBottom": 2,
+										"paddingBottom": 1,
+										"paddingLeft": 1,
+										"paddingRight": 1,
+										"paddingTop": 1
+									}
+								},
+								"id": "5b92cb37-37d6-ea5f-3a03-e8286e078115",
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"displayStyle": "default",
+													"displayStyleGroupId": "33405",
+													"frequenciesVisible": "false",
+													"frequencyThreshold": "1",
+													"maxTerms": "100",
+													"order": "key:asc",
+													"parameterName": "deployment-approach",
+													"vocabularyIds": "33623,32425"
+												},
+												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+											}
+										},
+										"id": "430555bf-f976-d3aa-8822-1e8cb817512f",
+										"type": "Widget"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"width": "100%"
+							},
+							"indexed": true,
+							"layout": {
+								"contentDisplay": "FlexRow",
+								"justify": "Center",
+								"widthType": "Fixed"
+							}
+						},
+						"id": "03444246-630e-ba17-fc6b-9feb46c515ac",
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"maxWidth": "var(--container-max-lg)",
+										"width": "100%"
+									},
+									"indexed": true,
+									"layout": {
+									}
+								},
+								"id": "4b1723a0-8ed2-e235-ae60-03b2465ab6cc",
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"displayInDocumentForm": "false",
+													"displayStyle": "ddmTemplate_LEARN_SEARCH_RESULTS",
+													"displayStyleGroupId": "32201",
+													"federatedSearchKey": "",
+													"fieldsToDisplay": "",
+													"highlightEnabled": "true",
+													"paginationDelta": "20",
+													"paginationDeltaParameterName": "delta",
+													"paginationStartParameterName": "start",
+													"showEmptyResultMessage": "true",
+													"showPagination": "true",
+													"viewInContext": "true"
+												},
+												"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+											}
+										},
+										"id": "82f24110-29cf-6036-642a-bf626407e891",
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"hidden": true
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"boost": "",
+													"customHeading": "",
+													"disabled": "false",
+													"displayStyle": "default",
+													"displayStyleGroupId": "32201",
+													"federatedSearchKey": "",
+													"filterField": "assetCategoryIds",
+													"filterQueryType": "match",
+													"filterValue": "[$CAPABILITY#CLOUD$]",
+													"immutable": "true",
+													"invisible": "true",
+													"occur": "filter",
+													"parameterName": "",
+													"parentQueryName": "",
+													"queryName": ""
+												},
+												"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet"
+											}
+										},
+										"id": "ef7d492b-90a0-27a2-7350-6c93cc3c074a",
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"hidden": true
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"allowEmptySearches": "true",
+													"basicFacetSelection": "false",
+													"federatedSearchKey": ""
+												},
+												"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
+											}
+										},
+										"id": "99603735-4d0b-92cf-4333-f4ae35eac2df",
+										"type": "Widget"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "liferay-learn"
+		}
+	},
+	"version": 1.0
+}

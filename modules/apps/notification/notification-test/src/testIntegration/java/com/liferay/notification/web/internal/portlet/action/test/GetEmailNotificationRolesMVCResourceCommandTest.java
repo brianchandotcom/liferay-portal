@@ -197,10 +197,10 @@ public class GetEmailNotificationRolesMVCResourceCommandTest {
 		return accountRole.getRole();
 	}
 
-	private Role _addRole(int roleType, User user) throws Exception {
+	private Role _addRole(int type, User user) throws Exception {
 		return _roleLocalService.addRole(
 			user.getUserId(), null, 0, RandomTestUtil.randomString(), null,
-			null, roleType, null, null);
+			null, type, null, null);
 	}
 
 	@Inject

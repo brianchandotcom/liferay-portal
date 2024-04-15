@@ -97,7 +97,7 @@ public class FTLStylingCheck extends BaseStylingCheck {
 					continue;
 				}
 
-				String s = content.substring(matcher.start(3), x + 2);
+				String s = content.substring(matcher.start(2), x + 2);
 
 				int level = getLevel(
 					s, StringPool.OPEN_CURLY_BRACE,
@@ -110,10 +110,10 @@ public class FTLStylingCheck extends BaseStylingCheck {
 				JSONObject jsonObject = JsonSourceUtil.getJSONObject(s);
 
 				if (jsonObject == null) {
-					continue;
+					break;
 				}
 
-				String indent = matcher.group(2);
+				String indent = matcher.group(1);
 
 				StringBundler sb = new StringBundler(2);
 
@@ -128,7 +128,7 @@ public class FTLStylingCheck extends BaseStylingCheck {
 				}
 
 				return StringUtil.replace(
-					content, s, replacement, matcher.start(3));
+					content, s, replacement, matcher.start(2));
 			}
 		}
 
@@ -136,6 +136,6 @@ public class FTLStylingCheck extends BaseStylingCheck {
 	}
 
 	private static final Pattern _assignPattern = Pattern.compile(
-		"(\n(\t*)\\w+ =)(\\s*\\{)");
+		"\n(\t*)\\w+ =(\\s*\\{)");
 
 }

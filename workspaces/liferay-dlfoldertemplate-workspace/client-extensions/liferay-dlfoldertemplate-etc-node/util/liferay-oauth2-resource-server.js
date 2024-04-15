@@ -26,7 +26,7 @@ const lxcDXPServerProtocol = lxcConfig.dxpProtocol();
 const oauthAgentClientId = agentOauthApp.clientId();
 
 const allowList = domains
-	? domains.split(',').map((domain) => `${lxcDXPServerProtocol}://${domain}`)
+	? domains.map((domain) => `${lxcDXPServerProtocol}://${domain}`)
 	: '';
 
 const corsOptions = {

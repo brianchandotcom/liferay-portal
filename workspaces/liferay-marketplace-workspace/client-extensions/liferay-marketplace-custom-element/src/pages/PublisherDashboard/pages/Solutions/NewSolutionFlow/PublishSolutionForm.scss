@@ -2,12 +2,10 @@
 	width: 600px;
 
 	.solutions-form {
-		&-company-profile {
-			.rich-text-editor {
-				.ql-container {
-					border-radius: 4px;
-					height: 100px;
-				}
+		.rich-text-editor {
+			.ql-container {
+				border-radius: 4px;
+				height: 100px;
 			}
 		}
 
@@ -28,13 +26,6 @@
 		}
 
 		&-header {
-			.rich-text-editor {
-				.ql-container {
-					border-radius: 4px;
-					height: 100px;
-				}
-			}
-
 			.video-player {
 				background-color: #f1f2f5;
 				border-radius: 8px;

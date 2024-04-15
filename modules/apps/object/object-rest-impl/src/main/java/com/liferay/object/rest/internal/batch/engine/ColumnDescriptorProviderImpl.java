@@ -14,12 +14,10 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.CSVUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.lang.reflect.Field;
@@ -58,7 +56,7 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 
 			return _getMultiselectPicklistColumnDescriptors(
 				fieldName, index, objectField.getListTypeDefinitionId(),
-				objectField.getBusinessType(), propertiesObjectValuePair);
+				propertiesObjectValuePair);
 		}
 
 		if (Objects.equals(
@@ -66,21 +64,33 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 			return _getPicklistColumnDescriptors(
-				fieldName, index, objectField.getBusinessType(),
-				propertiesObjectValuePair);
+				fieldName, index, propertiesObjectValuePair);
 		}
 
 		return new ColumnDescriptor[] {
 			ColumnDescriptor.from(
 				fieldName, index,
-				_getObjectEntryCustomFieldUnsafeFunction(
-					objectField.getBusinessType(), propertiesObjectValuePair,
-					fieldName))
+				object -> {
+					Object property = _getProperty(
+						fieldName, object, propertiesObjectValuePair);
+
+					if (property == null) {
+						return StringPool.BLANK;
+					}
+
+					return CSVUtil.encode(property);
+				})
 		};
 	}
 
-	private String _getListEntryValue(String fieldName, Object object) {
-		ListEntry listEntry = (ListEntry)object;
+	private String _getMultiselectListEntryValue(
+		int columnIndex, String fieldName, List<ListEntry> listEntries) {
+
+		if (listEntries.size() < columnIndex) {
+			return StringPool.BLANK;
+		}
+
+		ListEntry listEntry = listEntries.get(columnIndex - 1);
 
 		if (Objects.equals(fieldName, "key")) {
 			return listEntry.getKey();
@@ -89,29 +99,8 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 		return listEntry.getName();
 	}
 
-	private String _getMultiselectListEntryValue(
-		String fieldName, List<ListEntry> listEntries) {
-
-		String[] parts = fieldName.split(StringPool.UNDERLINE);
-
-		int columnIndex = GetterUtil.getInteger(parts[1]);
-
-		if (listEntries.size() < columnIndex) {
-			return StringPool.BLANK;
-		}
-
-		ListEntry listEntry = listEntries.get(columnIndex - 1);
-
-		if (Objects.equals(parts[0], "key")) {
-			return listEntry.getKey();
-		}
-
-		return listEntry.getName();
-	}
-
 	private ColumnDescriptor[] _getMultiselectPicklistColumnDescriptors(
 		String fieldName, int index, long listTypeDefinitionId,
-		String objectFieldBusinessType,
 		ObjectValuePair<Field, Method> propertiesObjectValuePair) {
 
 		int listTypeEntriesCount =
@@ -121,147 +110,108 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 		ColumnDescriptor[] multiselectPicklistColumnDescriptors =
 			new ColumnDescriptor[listTypeEntriesCount * 2];
 
-		int listTypeEntriesHeaderIndex = 1;
+		int listTypeEntriesIndex = 1;
 
 		for (int i = 0; i < multiselectPicklistColumnDescriptors.length;
 			 i = i + 2) {
 
-			multiselectPicklistColumnDescriptors[i] = ColumnDescriptor.from(
-				StringBundler.concat(
-					fieldName, ".key_", listTypeEntriesHeaderIndex),
-				index++,
-				_getObjectEntryCustomFieldUnsafeFunction(
-					objectFieldBusinessType, propertiesObjectValuePair,
-					fieldName, "key_" + listTypeEntriesHeaderIndex));
-			multiselectPicklistColumnDescriptors[i + 1] = ColumnDescriptor.from(
-				StringBundler.concat(
-					fieldName, ".name_", listTypeEntriesHeaderIndex),
-				index++,
-				_getObjectEntryCustomFieldUnsafeFunction(
-					objectFieldBusinessType, propertiesObjectValuePair,
-					fieldName, "name_" + listTypeEntriesHeaderIndex));
+			int listTypeEntriesLambdaIndex = listTypeEntriesIndex;
 
-			listTypeEntriesHeaderIndex++;
+			multiselectPicklistColumnDescriptors[i] = ColumnDescriptor.from(
+				StringBundler.concat(fieldName, ".key_", listTypeEntriesIndex),
+				index++,
+				object -> {
+					Object property = _getProperty(
+						fieldName, object, propertiesObjectValuePair);
+
+					if (property == null) {
+						return StringPool.BLANK;
+					}
+
+					return _getMultiselectListEntryValue(
+						listTypeEntriesLambdaIndex, "key",
+						(List<ListEntry>)property);
+				});
+			multiselectPicklistColumnDescriptors[i + 1] = ColumnDescriptor.from(
+				StringBundler.concat(fieldName, ".name_", listTypeEntriesIndex),
+				index++,
+				object -> {
+					Object property = _getProperty(
+						fieldName, object, propertiesObjectValuePair);
+
+					if (property == null) {
+						return StringPool.BLANK;
+					}
+
+					return _getMultiselectListEntryValue(
+						listTypeEntriesLambdaIndex, "name",
+						(List<ListEntry>)property);
+				});
+
+			listTypeEntriesIndex++;
 		}
 
 		return multiselectPicklistColumnDescriptors;
 	}
 
-	private UnsafeFunction<Object, Object, ReflectiveOperationException>
-		_getObjectEntryCustomFieldUnsafeFunction(
-			String objectFieldBusinessType,
-			ObjectValuePair<Field, Method> propertiesObjectValuePair,
-			String... fieldNames) {
-
-		if (Objects.equals(
-				objectFieldBusinessType,
-				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
-
-			return new UnsafeFunction
-				<Object, Object, ReflectiveOperationException>() {
-
-				@Override
-				public Object apply(Object object)
-					throws ReflectiveOperationException {
-
-					Map<?, ?> map = (Map<?, ?>)_getValue(
-						object, propertiesObjectValuePair);
-
-					Object value = map.get(fieldNames[0]);
-
-					if (value == null) {
-						return StringPool.BLANK;
-					}
-
-					return _getMultiselectListEntryValue(
-						fieldNames[1], (List<ListEntry>)value);
-				}
-
-			};
-		}
-
-		if (Objects.equals(
-				objectFieldBusinessType,
-				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-			return new UnsafeFunction
-				<Object, Object, ReflectiveOperationException>() {
-
-				@Override
-				public Object apply(Object object)
-					throws ReflectiveOperationException {
-
-					Map<?, ?> map = (Map<?, ?>)_getValue(
-						object, propertiesObjectValuePair);
-
-					Object value = map.get(fieldNames[0]);
-
-					if (value == null) {
-						return StringPool.BLANK;
-					}
-
-					return _getListEntryValue(fieldNames[1], value);
-				}
-
-			};
-		}
-
-		return new UnsafeFunction
-			<Object, Object, ReflectiveOperationException>() {
-
-			@Override
-			public Object apply(Object object)
-				throws ReflectiveOperationException {
-
-				Map<?, ?> map = (Map<?, ?>)_getValue(
-					object, propertiesObjectValuePair);
-
-				Object value = map.get(fieldNames[0]);
-
-				if (value == null) {
-					return StringPool.BLANK;
-				}
-
-				return CSVUtil.encode(value);
-			}
-
-		};
-	}
-
 	private ColumnDescriptor[] _getPicklistColumnDescriptors(
-		String fieldName, int index, String objectFieldBusinessType,
+		String fieldName, int index,
 		ObjectValuePair<Field, Method> propertiesObjectValuePair) {
 
 		ColumnDescriptor[] picklistColumnDescriptors = new ColumnDescriptor[2];
 
 		picklistColumnDescriptors[0] = ColumnDescriptor.from(
 			fieldName + ".key", index++,
-			_getObjectEntryCustomFieldUnsafeFunction(
-				objectFieldBusinessType, propertiesObjectValuePair, fieldName,
-				"key"));
+			object -> {
+				Object property = _getProperty(
+					fieldName, object, propertiesObjectValuePair);
+
+				if (property == null) {
+					return StringPool.BLANK;
+				}
+
+				ListEntry listEntry = (ListEntry)property;
+
+				return listEntry.getKey();
+			});
 
 		picklistColumnDescriptors[1] = ColumnDescriptor.from(
 			fieldName + ".name", index,
-			_getObjectEntryCustomFieldUnsafeFunction(
-				objectFieldBusinessType, propertiesObjectValuePair, fieldName,
-				"name"));
+			object -> {
+				Object property = _getProperty(
+					fieldName, object, propertiesObjectValuePair);
+
+				if (property == null) {
+					return StringPool.BLANK;
+				}
+
+				ListEntry listEntry = (ListEntry)property;
+
+				return listEntry.getName();
+			});
 
 		return picklistColumnDescriptors;
 	}
 
-	private Object _getValue(
-			Object object, ObjectValuePair<Field, Method> objectValuePair)
+	private Object _getProperty(
+			String fieldName, Object object,
+			ObjectValuePair<Field, Method> objectValuePair)
 		throws ReflectiveOperationException {
 
 		Method method = objectValuePair.getValue();
 
+		Map<?, ?> propertiesMap = null;
+
 		if (method == null) {
 			Field field = objectValuePair.getKey();
 
-			return field.get(object);
+			propertiesMap = (Map<?, ?>)field.get(object);
+		}
+		else {
+			propertiesMap = (Map<?, ?>)method.invoke(object);
 		}
 
-		return method.invoke(object);
+		return propertiesMap.get(fieldName);
 	}
 
 	@Reference

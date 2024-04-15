@@ -17,7 +17,9 @@ export default function getDateSubmittedFilterTerm(
 		);
 	}
 	if (dataSubmitted.dates.endDate) {
-		filterDates.push(`createdDate le ${dataSubmitted.dates.endDate}T00:00:00Z`);
+		filterDates.push(
+			`createdDate le ${dataSubmitted.dates.endDate}T00:00:00Z`
+		);
 	}
 
 	return initialFilter

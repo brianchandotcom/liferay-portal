@@ -5,6 +5,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
@@ -15,6 +16,8 @@ import {CSVLink} from 'react-csv';
 import Modal from '../../common/components/Modal';
 import Table from '../../common/components/Table';
 import TableHeader from '../../common/components/TableHeader';
+import DropDownWithDrillDown from '../../common/components/TableHeader/Filter/components/DropDownWithDrillDown';
+import DateFilter from '../../common/components/TableHeader/Filter/components/filters/DateFilter';
 import Search from '../../common/components/TableHeader/Search';
 import {DealRegistrationColumnKey} from '../../common/enums/dealRegistrationColumnKey';
 import {ObjectActionName} from '../../common/enums/objectActionName';
@@ -26,16 +29,16 @@ import usePermissionActions from '../../common/hooks/usePermissionActions';
 import {DealRegistrationListItem} from '../../common/interfaces/dealRegistrationListItem';
 import TableColumn from '../../common/interfaces/tableColumn';
 import {Liferay} from '../../common/services/liferay';
+import {
+	currentFiscalYearStart,
+	previousFiscalYearStart,
+} from '../../common/utils/constants/filters';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
+import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
 import ModalContent from './components/ModalContent';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromDealRegistration from './hooks/useGetListItemsFromDealRegistration';
-import DateFilter from '../../common/components/TableHeader/Filter/components/filters/DateFilter';
-import DropDownWithDrillDown from '../../common/components/TableHeader/Filter/components/DropDownWithDrillDown';
-import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
-import ClayIcon from '@clayui/icon';
-import { INITIAL_FILTER } from './utils/constants/initialFilter';
-import {currentFiscalYearStart, previousFiscalYearStart} from '../../common/utils/constants/filters';
+import {INITIAL_FILTER} from './utils/constants/initialFilter';
 export type DealRegistrationItem = {
 	[key in DealRegistrationColumnKey]?: any;
 };
@@ -181,14 +184,14 @@ const DealRegistrationList = ({sort}: IProps) => {
 	const formattedDate = todayDate.toISOString().slice(0, 10);
 
 	const rangeDataPicker = submittedDealsFilter
-	? {
-		end: formattedDate,
-		start: previousFiscalYearStart
-	  }
-	: {
-		end: formattedDate,
-		start: currentFiscalYearStart
-	  };
+		? {
+				end: formattedDate,
+				start: previousFiscalYearStart,
+		  }
+		: {
+				end: formattedDate,
+				start: currentFiscalYearStart,
+		  };
 
 	const filterFields = [
 		{
@@ -206,15 +209,12 @@ const DealRegistrationList = ({sort}: IProps) => {
 					}}
 					filterDescription="Date Submitted "
 					initialDates={filters.dataSubmitted?.dates}
-					years={{
-						end: rangeDataPicker.end,
-						start: rangeDataPicker.start
-					  }}
+					years={rangeDataPicker}
 				/>
 			),
 			name: 'Date Submitted',
 		},
-	]
+	];
 
 	return (
 		<div className="border-0 my-4">
@@ -282,7 +282,7 @@ const DealRegistrationList = ({sort}: IProps) => {
 								</ClayButton>
 							)}
 						</div>
-						</div>
+					</div>
 
 					<DropDownWithDrillDown
 						className=""
@@ -297,7 +297,6 @@ const DealRegistrationList = ({sort}: IProps) => {
 							</ClayButton>
 						}
 					/>
-
 				</div>
 
 				<div>

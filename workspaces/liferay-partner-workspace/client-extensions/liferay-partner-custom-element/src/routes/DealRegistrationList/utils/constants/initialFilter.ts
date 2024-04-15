@@ -12,5 +12,4 @@ export const INITIAL_FILTER = {
 	},
 	hasValue: false,
 	searchTerm: '',
-
 };

@@ -31,21 +31,21 @@ export default function useFilters(submittedDealsFilter?: boolean) {
 		'submittedDealsFilter',
 		JSON.stringify(submittedDealsFilter)
 	);
-	
+
 	useEffect(() => {
 		let hasFilter = false;
 		let initialFilter = '';
-	
+
 		if (dealsInitialFilter) {
 			initialFilter = initialFilter
-			? initialFilter.concat(dealsInitialFilter)
-			: `${dealsInitialFilter}`;
+				? initialFilter.concat(dealsInitialFilter)
+				: `${dealsInitialFilter}`;
 		}
-		
+
 		if (filters.searchTerm) {
 			initialFilter = initialFilter
-			? initialFilter.concat(getSearchFilterTerm(filters.searchTerm))
-			: getSearchFilterTerm(filters.searchTerm);
+				? initialFilter.concat(getSearchFilterTerm(filters.searchTerm))
+				: getSearchFilterTerm(filters.searchTerm);
 		}
 
 		if (
@@ -63,7 +63,12 @@ export default function useFilters(submittedDealsFilter?: boolean) {
 		});
 
 		setFilterTerm(initialFilter);
-	}, [dealsInitialFilter, filters.searchTerm, setFilters,	filters.dataSubmitted]);
+	}, [
+		dealsInitialFilter,
+		filters.searchTerm,
+		setFilters,
+		filters.dataSubmitted,
+	]);
 
 	return {filters, filtersTerm, onFilter};
 }

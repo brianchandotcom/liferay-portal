@@ -25,9 +25,6 @@ jarManifest {
 }
 
 jarPatched {
-	mustRunAfter compileJava
-	mustRunAfter processResources
-
 	archiveFileName = jar.archiveFileName
 	destinationDirectory = jar.destinationDirectory
 	duplicatesStrategy = "exclude"
@@ -42,6 +39,9 @@ jarPatched {
 				it.name.startsWith "ehcache-"
 			})
 	}
+
+	mustRunAfter compileJava
+	mustRunAfter processResources
 }
 
 jarSources {

@@ -75,9 +75,6 @@ jar {
 }
 
 jarPatched {
-	mustRunAfter compileJava
-	mustRunAfter processResources
-
 	archiveFileName = jar.archiveFileName
 	destinationDirectory = jar.destinationDirectory
 	duplicatesStrategy = 'exclude'
@@ -89,6 +86,9 @@ jarPatched {
 	from {
 		zipTree(configurations.compileOnly.singleFile)
 	}
+
+	mustRunAfter compileJava
+	mustRunAfter processResources
 }
 
 jarSources {

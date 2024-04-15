@@ -28,9 +28,6 @@ jarManifest {
 }
 
 jarPatched {
-	mustRunAfter compileJava
-	mustRunAfter processResources
-
 	archiveFileName = jar.archiveFileName
 	destinationDirectory = jar.destinationDirectory
 	duplicatesStrategy = "exclude"
@@ -43,6 +40,9 @@ jarPatched {
 				it.name.startsWith "org.eclipse.equinox.http.servlet-"
 			})
 	}
+
+	mustRunAfter compileJava
+	mustRunAfter processResources
 }
 
 jarSources {

@@ -1,7 +1,17 @@
 {
 	"description": "",
 	"hidden": false,
-	"private": false,
+	"private": true,
 	"system": false,
-	"type": "content"
+	"type": "content",
+	"typeSettings": [
+		{
+			"key": "layoutUpdateable",
+			"value": "true"
+		},
+		{
+			"key": "published",
+			"value": "true"
+		}
+	]
 }

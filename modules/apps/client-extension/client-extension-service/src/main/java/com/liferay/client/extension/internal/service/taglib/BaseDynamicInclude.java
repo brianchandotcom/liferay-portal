@@ -107,11 +107,15 @@ public abstract class BaseDynamicInclude implements DynamicInclude {
 				printWriter.print(
 					_toScriptElementAttributes(
 						globalJSCET.getScriptElementAttributesJSON()));
+				printWriter.print(" src=\"");
+				printWriter.print(globalJSCET.getURL());
+				printWriter.print("\"></script>");
 			}
-
-			printWriter.print(" data-senna-track=\"temporary\" src=\"");
-			printWriter.print(globalJSCET.getURL());
-			printWriter.print("\" type=\"text/javascript\"></script>");
+			else {
+				printWriter.print(" data-senna-track=\"temporary\" src=\"");
+				printWriter.print(globalJSCET.getURL());
+				printWriter.print("\" type=\"text/javascript\"></script>");
+			}
 		}
 	}
 
@@ -134,8 +138,20 @@ public abstract class BaseDynamicInclude implements DynamicInclude {
 
 			Iterator<String> iterator = jsonObject.keys();
 
+			if (!jsonObject.has("data-senna-track")) {
+				stringBuilder.append("data-senna-track=\"temporary\" ");
+			}
+
+			if (!jsonObject.has("type")) {
+				stringBuilder.append("type=\"text/javascript\" ");
+			}
+
 			while (iterator.hasNext()) {
 				String key = iterator.next();
+
+				if (key.equals("async") || key.equals("defer")) {
+					continue;
+				}
 
 				Object value = jsonObject.get(key);
 

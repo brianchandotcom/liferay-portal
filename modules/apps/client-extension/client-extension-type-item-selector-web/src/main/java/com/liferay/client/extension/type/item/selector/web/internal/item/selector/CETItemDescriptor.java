@@ -7,8 +7,10 @@ package com.liferay.client.extension.type.item.selector.web.internal.item.select
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.GlobalJSCET;
 import com.liferay.client.extension.type.ThemeFaviconCET;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -47,6 +49,21 @@ public class CETItemDescriptor
 			"cetExternalReferenceCode", _cet.getExternalReferenceCode()
 		).put(
 			"name", _cet.getName(LocaleUtil.getMostRelevantLocale())
+		).put(
+			"scriptElementAttributesJSON",
+			() -> {
+				if (Objects.equals(
+						_cet.getType(),
+						ClientExtensionEntryConstants.TYPE_GLOBAL_JS) &&
+					FeatureFlagManagerUtil.isEnabled("LPD-10981")) {
+
+					GlobalJSCET globalJSCET = (GlobalJSCET)_cet;
+
+					return globalJSCET.getScriptElementAttributesJSON();
+				}
+
+				return null;
+			}
 		).put(
 			"type", _cet.getType()
 		).put(

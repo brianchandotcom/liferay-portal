@@ -11,6 +11,8 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.rest.dto.v1_0.FileEntry;
+import com.liferay.object.rest.dto.v1_0.Link;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -52,6 +54,14 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 
 		if (Objects.equals(
 				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+			return _getAttachmentColumnDescriptors(
+				fieldName, index, propertiesObjectValuePair);
+		}
+
+		if (Objects.equals(
+				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
 			return _getMultiselectPicklistColumnDescriptors(
@@ -81,6 +91,80 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 					return CSVUtil.encode(property);
 				})
 		};
+	}
+
+	private ColumnDescriptor[] _getAttachmentColumnDescriptors(
+		String fieldName, int index,
+		ObjectValuePair<Field, Method> propertiesObjectValuePair) {
+
+		ColumnDescriptor[] attachmentColumnDescriptors =
+			new ColumnDescriptor[4];
+
+		attachmentColumnDescriptors[0] = ColumnDescriptor.from(
+			fieldName + ".id", index++,
+			object -> {
+				Object property = _getProperty(
+					fieldName, object, propertiesObjectValuePair);
+
+				if (property == null) {
+					return StringPool.BLANK;
+				}
+
+				FileEntry fileEntry = (FileEntry)property;
+
+				return fileEntry.getId();
+			});
+
+		attachmentColumnDescriptors[1] = ColumnDescriptor.from(
+			fieldName + ".name", index++,
+			object -> {
+				Object property = _getProperty(
+					fieldName, object, propertiesObjectValuePair);
+
+				if (property == null) {
+					return StringPool.BLANK;
+				}
+
+				FileEntry fileEntry = (FileEntry)property;
+
+				return fileEntry.getName();
+			});
+
+		attachmentColumnDescriptors[2] = ColumnDescriptor.from(
+			fieldName + ".link.href", index++,
+			object -> {
+				Object property = _getProperty(
+					fieldName, object, propertiesObjectValuePair);
+
+				if (property == null) {
+					return StringPool.BLANK;
+				}
+
+				FileEntry fileEntry = (FileEntry)property;
+
+				Link link = fileEntry.getLink();
+
+				return link.getHref();
+			});
+
+		attachmentColumnDescriptors[3] = ColumnDescriptor.from(
+			fieldName + ".link.label", index,
+			object -> {
+				Object property = _getProperty(
+					fieldName, object, propertiesObjectValuePair);
+
+				if (property == null) {
+					return StringPool.BLANK;
+				}
+
+				FileEntry fileEntry = (FileEntry)property;
+
+				Link link = fileEntry.getLink();
+
+				return link.getLabel();
+			});
+
+		return attachmentColumnDescriptors;
 	}
 
 	private String _getMultiselectListEntryValue(

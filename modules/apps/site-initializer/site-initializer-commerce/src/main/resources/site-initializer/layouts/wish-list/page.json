@@ -1,0 +1,12 @@
+{
+	"description": "",
+	"friendlyURL": "/wish-list",
+	"hidden": false,
+	"name": "wish-list",
+	"name_i18n": {
+		"en_US": "Wish List"
+	},
+	"private": true,
+	"system": false,
+	"type": "content"
+}

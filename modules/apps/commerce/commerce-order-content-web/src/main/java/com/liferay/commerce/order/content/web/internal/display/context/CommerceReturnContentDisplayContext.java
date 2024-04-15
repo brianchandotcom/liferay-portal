@@ -121,10 +121,10 @@ public class CommerceReturnContentDisplayContext {
 	}
 
 	public String getAPIURL() {
-		long commerceChannelId = getCommerceChannelId();
 		long accountEntryId = getCommerceAccountEntryId();
+		long commerceChannelId = getCommerceChannelId();
 
-		if ((commerceChannelId == 0) || (accountEntryId == 0)) {
+		if ((accountEntryId == 0) || (commerceChannelId == 0)) {
 			return StringPool.BLANK;
 		}
 

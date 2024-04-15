@@ -6,6 +6,7 @@
 import {devices} from '@playwright/test';
 
 export const config = {
+	dependencies: ['wem-site-setup'],
 	name: 'layout-content-page-editor-web',
 	testDir: 'tests/layout-content-page-editor-web',
 	use: {

@@ -56,6 +56,13 @@ renderResponse.setTitle(title);
 
 		<aui:model-context bean="<%= category %>" model="<%= AssetCategory.class %>" />
 
+		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11147") && (assetCategoriesDisplayContext.getAssetEntryAssetCategoryRelsCountByClassNameId(categoryId) > 0) && (category != null) %>'>
+			<clay:alert
+				displayType="info"
+				message="changes-made-to-the-category-will-impact-the-associated-friendly-url"
+			/>
+		</c:if>
+
 		<liferay-frontend:fieldset
 			collapsed="<%= false %>"
 			collapsible="<%= true %>"

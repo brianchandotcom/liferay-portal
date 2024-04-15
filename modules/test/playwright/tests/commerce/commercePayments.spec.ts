@@ -64,8 +64,6 @@ test.afterEach(async ({apiHelpers}) => {
 				break;
 		}
 	}
-
-	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-12754', false);
 });
 
 test('can view payments list admin page', async ({
@@ -74,8 +72,6 @@ test('can view payments list admin page', async ({
 	commercePaymentsPage,
 	page,
 }) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-12754', true);
-
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		name: 'Payment account',
 		type: 'person',

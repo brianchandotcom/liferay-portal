@@ -11,7 +11,6 @@ import com.liferay.commerce.payment.internal.entry.comparator.CommercePaymentEnt
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -40,9 +39,7 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 	public CommercePaymentEntryRefundType getCommercePaymentEntryRefundType(
 		long companyId, String key) {
 
-		if (Validator.isNull(key) ||
-			!FeatureFlagManagerUtil.isEnabled("COMMERCE-12754")) {
-
+		if (Validator.isNull(key)) {
 			return null;
 		}
 
@@ -63,10 +60,6 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 	@Override
 	public List<CommercePaymentEntryRefundType>
 		getCommercePaymentEntryRefundTypes(long companyId) {
-
-		if (!FeatureFlagManagerUtil.isEnabled("COMMERCE-12754")) {
-			return Collections.emptyList();
-		}
 
 		List<CommercePaymentEntryRefundType> commercePaymentEntryRefundTypes =
 			new ArrayList<>();

@@ -20,9 +20,11 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -199,14 +201,8 @@ public class DDMDataProviderInvokerImplTest {
 
 	@Test
 	public void testFetchDataProviderNotFound() throws Exception {
-		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl =
-			new DDMDataProviderInvokerImpl();
-
 		DDMDataProviderInstanceService ddmDataProviderInstanceService =
 			Mockito.mock(DDMDataProviderInstanceService.class);
-
-		ddmDataProviderInvokerImpl.ddmDataProviderInstanceService =
-			ddmDataProviderInstanceService;
 
 		Mockito.when(
 			ddmDataProviderInstanceService.fetchDataProviderInstanceByUuid(
@@ -215,20 +211,44 @@ public class DDMDataProviderInvokerImplTest {
 			null
 		);
 
+		Snapshot snapshot = Mockito.mock(Snapshot.class);
+
+		Mockito.when(
+			snapshot.get()
+		).thenReturn(
+			ddmDataProviderInstanceService
+		);
+
+		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl =
+			new DDMDataProviderInvokerImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			ddmDataProviderInvokerImpl,
+			"ddmDataProviderInstanceServiceSnapshot", snapshot);
+
 		Assert.assertNull(
 			ddmDataProviderInvokerImpl.fetchDDMDataProviderInstance("test"));
 	}
 
 	@Test
 	public void testFetchDDMDataProviderInstance1() throws Exception {
-		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl =
-			new DDMDataProviderInvokerImpl();
-
 		DDMDataProviderInstanceService ddmDataProviderInstanceService =
 			Mockito.mock(DDMDataProviderInstanceService.class);
 
-		ddmDataProviderInvokerImpl.ddmDataProviderInstanceService =
-			ddmDataProviderInstanceService;
+		Snapshot snapshot = Mockito.mock(Snapshot.class);
+
+		Mockito.when(
+			snapshot.get()
+		).thenReturn(
+			ddmDataProviderInstanceService
+		);
+
+		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl =
+			new DDMDataProviderInvokerImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			ddmDataProviderInvokerImpl,
+			"ddmDataProviderInstanceServiceSnapshot", snapshot);
 
 		Assert.assertNull(
 			ddmDataProviderInvokerImpl.fetchDDMDataProviderInstance("1"));
@@ -248,14 +268,23 @@ public class DDMDataProviderInvokerImplTest {
 
 	@Test
 	public void testFetchDDMDataProviderInstance2() throws Exception {
-		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl =
-			new DDMDataProviderInvokerImpl();
-
 		DDMDataProviderInstanceService ddmDataProviderInstanceService =
 			Mockito.mock(DDMDataProviderInstanceService.class);
 
-		ddmDataProviderInvokerImpl.ddmDataProviderInstanceService =
-			ddmDataProviderInstanceService;
+		Snapshot snapshot = Mockito.mock(Snapshot.class);
+
+		Mockito.when(
+			snapshot.get()
+		).thenReturn(
+			ddmDataProviderInstanceService
+		);
+
+		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl =
+			new DDMDataProviderInvokerImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			ddmDataProviderInvokerImpl,
+			"ddmDataProviderInstanceServiceSnapshot", snapshot);
 
 		DDMDataProviderInstance ddmDataProviderInstance = Mockito.mock(
 			DDMDataProviderInstance.class);

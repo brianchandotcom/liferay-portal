@@ -140,7 +140,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 				long plid = resultSet.getLong("plid");
 
-				preparedStatement2.setLong(10, resultSet.getLong("plid"));
+				preparedStatement2.setLong(10, plid);
 
 				preparedStatement2.addBatch();
 

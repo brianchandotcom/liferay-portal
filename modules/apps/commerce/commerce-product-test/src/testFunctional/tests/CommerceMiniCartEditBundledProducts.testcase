@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Shopping Experience";
@@ -756,7 +756,7 @@ definition {
 	@description = "COMMERCE-12628. As a buyer, I want to be able to assert decimal UOM prices are converted in the Edit Bundeld Product panel for the product bundles"
 	@priority = 5
 	test CanAssertDecimalUOMPricesAreConvertedInEditBundledProductPanel {
-		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given 2 UOMs are created to MIN93015(base price: $30, incremental: 0.6 for UOM1; base price: $50, promo price: $40, incremental: 1.5 for UOM2)") {
@@ -952,7 +952,7 @@ definition {
 	@description = "COMMERCE-12611. As a buyer, I can verify product options work with the decimal quantity correctly"
 	@priority = 5
 	test CanBundledProductSkusWorkWithDecimalQuantity {
-		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a new bundled product with an option(two values) and Dynamic Price Type is created") {

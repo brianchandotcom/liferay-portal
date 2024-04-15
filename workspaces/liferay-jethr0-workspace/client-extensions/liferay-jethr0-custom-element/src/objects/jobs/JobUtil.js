@@ -214,14 +214,17 @@ export function getUpdatedJobParameters({jobParameters, key, value}) {
 	for (const jobParameter of jobParameters) {
 		const jobParameterKey = jobParameter.key;
 		let jobParameterValue = jobParameter.value;
-		
+
 		if (jobParameter.key === key) {
 			jobParameterValue = value;
 
 			updated = true;
 		}
 
-		updatedJobParameters.push({key: jobParameterKey, value: jobParameterValue});
+		updatedJobParameters.push({
+			key: jobParameterKey,
+			value: jobParameterValue,
+		});
 	}
 
 	if (!updated) {

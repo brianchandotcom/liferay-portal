@@ -148,23 +148,21 @@ function CreateRoutinePage() {
 					/>
 				</ClayForm.Group>
 
-				{
-					routineTypeKey === 'cron' && (
-						<ClayForm.Group>
-							<label htmlFor="routineCron">Routine Cron</label>
+				{routineTypeKey === 'cron' && (
+					<ClayForm.Group>
+						<label htmlFor="routineCron">Routine Cron</label>
 
-							<Jethr0Input
-								id="routineCron"
-								onChange={(event) => {
-									setRoutineCron(event.target.value);
-								}}
-								placeholder="Insert your cron here (e.g. 5 4 * * *)"
-								type="text"
-								value={routineCron}
-							/>
-						</ClayForm.Group>
-					)
-				}
+						<Jethr0Input
+							id="routineCron"
+							onChange={(event) => {
+								setRoutineCron(event.target.value);
+							}}
+							placeholder="Insert your cron here (e.g. 5 4 * * *)"
+							type="text"
+							value={routineCron}
+						/>
+					</ClayForm.Group>
+				)}
 
 				<ClayForm.Group>
 					<label htmlFor="routineType">Routine Type</label>

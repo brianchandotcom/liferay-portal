@@ -13,6 +13,7 @@ import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcru
 import Jethr0ButtonsRow from '../../components/Jethr0ButtonsRow/Jethr0ButtonsRow';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0Input from '../../components/Jethr0Input/Jethr0Input';
+import Jethr0JobFieldLabel from '../../components/Jethr0JobFieldLabel/Jethr0JobFieldLabel';
 import Jethr0JobParameterFields from '../../components/Jethr0JobParameterFields/Jethr0JobParameterFields';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0SelectWithOption from '../../components/Jethr0SelectWithOption/Jethr0SelectWithOption';
@@ -109,8 +110,8 @@ function CreateJobPage() {
 							routineJobParameter.value !== ''
 						) {
 							defaultJobParameter = {
+								fromRoutine: true,
 								key: jobDefinitionParameter.key,
-								routineField: true,
 								value: routineJobParameter.value,
 							};
 						}
@@ -175,10 +176,15 @@ function CreateJobPage() {
 				</Heading>
 
 				<ClayForm.Group>
-					<label htmlFor="jobPriority">Job Priority</label>
+					<Jethr0JobFieldLabel
+						fromRoutine={routine?.jobPriority ? true : false}
+						labelKey="jobPriority"
+						labelName="Job Priority"
+						routine={routine}
+					/>
 
 					<Jethr0Input
-						disabled={routine ? true : false}
+						disabled={routine?.jobPriority ? true : false}
 						id="jobPriority"
 						onChange={(event) => {
 							setJobPriority(event.target.value);
@@ -189,11 +195,16 @@ function CreateJobPage() {
 				</ClayForm.Group>
 
 				<ClayForm.Group>
-					<label htmlFor="jobType">Job Type</label>
+					<Jethr0JobFieldLabel
+						fromRoutine={routine?.jobType ? true : false}
+						labelKey="jobType"
+						labelName="Job Type"
+						routine={routine}
+					/>
 
 					<Jethr0SelectWithOption
 						ariaLabel="Job Types"
-						disabled={routine ? true : false}
+						disabled={routine?.jobType ? true : false}
 						id="jobType"
 						onChange={(event) => {
 							setJobDefinitionKey(event.target.value);
@@ -204,10 +215,15 @@ function CreateJobPage() {
 				</ClayForm.Group>
 
 				<ClayForm.Group>
-					<label htmlFor="jobName">Name</label>
+					<Jethr0JobFieldLabel
+						fromRoutine={routine?.jobName ? true : false}
+						labelKey="jobName"
+						labelName="Job Name"
+						routine={routine}
+					/>
 
 					<Jethr0Input
-						disabled={routine ? true : false}
+						disabled={routine?.jobName ? true : false}
 						id="jobName"
 						onChange={(event) => {
 							setJobName(event.target.value);
@@ -223,6 +239,7 @@ function CreateJobPage() {
 						jobDefinition.jobDefinitionParameters
 					}
 					jobParameters={jobParameters}
+					routine={routine}
 					setJobParameters={setJobParameters}
 				/>
 

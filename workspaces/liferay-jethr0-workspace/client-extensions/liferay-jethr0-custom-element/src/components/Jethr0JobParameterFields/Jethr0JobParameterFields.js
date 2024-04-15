@@ -6,6 +6,7 @@
 import ClayForm from '@clayui/form';
 
 import Jethr0Input from '../../components/Jethr0Input/Jethr0Input';
+import Jethr0JobFieldLabel from '../Jethr0JobFieldLabel/Jethr0JobFieldLabel';
 import {
 	getJobParameter,
 	getUpdatedJobParameters,
@@ -14,6 +15,7 @@ import {
 function Jethr0JobParameterFields({
 	jobDefinitionParameters,
 	jobParameters,
+	routine,
 	setJobParameters,
 }) {
 	if (!jobDefinitionParameters || !jobParameters) {
@@ -25,18 +27,17 @@ function Jethr0JobParameterFields({
 
 		const jobParameter = getJobParameter({jobParameters, key});
 
-		let disabled = false;
-
-		if (jobParameter?.routineField) {
-			disabled = true;
-		}
-
 		return (
 			<ClayForm.Group key={key}>
-				<label htmlFor={key}>{jobDefinitionParameter.label}</label>
+				<Jethr0JobFieldLabel
+					fromRoutine={jobParameter?.fromRoutine ? true : false}
+					labelKey={key}
+					labelName={jobDefinitionParameter.label}
+					routine={routine}
+				/>
 
 				<Jethr0Input
-					disabled={disabled}
+					disabled={jobParameter?.fromRoutine ? true : false}
 					id={key}
 					onChange={(event) => {
 						setJobParameters(

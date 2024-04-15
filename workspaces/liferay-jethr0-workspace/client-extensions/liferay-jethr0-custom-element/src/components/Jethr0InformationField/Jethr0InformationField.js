@@ -11,7 +11,7 @@ function Jethr0InformationField({
 	fieldURLValue,
 	fieldValue,
 }) {
-	if (fieldValue === undefined || fieldValue === '') {
+	if (!fieldValue || fieldValue === '') {
 		return <></>;
 	}
 

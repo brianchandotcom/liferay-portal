@@ -204,7 +204,12 @@ public class FragmentCollectionContributorPropagationTest {
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+			for (LogEntry logEntry : logEntries) {
+				Assert.assertEquals(
+					"No theme found for specified theme id " +
+						"not_registered_theme. Returning the default theme.",
+					logEntry.getMessage());
+			}
 		}
 		finally {
 			try {

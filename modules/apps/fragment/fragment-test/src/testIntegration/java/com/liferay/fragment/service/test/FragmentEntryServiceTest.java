@@ -418,6 +418,36 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
+	public void testGetApprovedFragmentCompositionsAndFragmentEntriesCount()
+		throws Exception {
+
+		FragmentCompositionTestUtil.addFragmentComposition(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+		FragmentCompositionTestUtil.addFragmentComposition(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+		FragmentCompositionTestUtil.addFragmentComposition(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+		FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			5,
+			_fragmentEntryService.
+				getFragmentCompositionsAndFragmentEntriesCount(
+					_fragmentCollection.getGroupId(),
+					_fragmentCollection.getFragmentCollectionId(),
+					WorkflowConstants.STATUS_APPROVED));
+	}
+
+	@Test
 	public void testGetFragmentCompositionsAndFragmentEntries()
 		throws Exception {
 
@@ -651,36 +681,6 @@ public class FragmentEntryServiceTest {
 			upperCaseFragmentCompositionsAndFragmentEntries.toString(),
 			fragmentCompositionsAndFragmentEntries,
 			upperCaseFragmentCompositionsAndFragmentEntries);
-	}
-
-	@Test
-	public void testGetFragmentCompositionsAndFragmentEntriesCount()
-		throws Exception {
-
-		FragmentCompositionTestUtil.addFragmentComposition(
-			_fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString());
-		FragmentCompositionTestUtil.addFragmentComposition(
-			_fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString());
-		FragmentCompositionTestUtil.addFragmentComposition(
-			_fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString());
-
-		FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString());
-		FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString());
-
-		Assert.assertEquals(
-			5,
-			_fragmentEntryService.
-				getFragmentCompositionsAndFragmentEntriesCount(
-					_fragmentCollection.getGroupId(),
-					_fragmentCollection.getFragmentCollectionId(),
-					WorkflowConstants.STATUS_APPROVED));
 	}
 
 	@Test

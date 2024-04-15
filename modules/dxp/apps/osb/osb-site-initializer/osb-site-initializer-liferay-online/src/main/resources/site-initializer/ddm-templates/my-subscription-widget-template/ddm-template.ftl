@@ -53,7 +53,14 @@
 						</td>
 
 						<#assign
-							subscriptionStatusMap = {"-1": "inactive", "0": "active", "1": "suspended", "2": "cancelled", "3": "completed"}
+							subscriptionStatusMap =
+								{
+									"-1": "inactive",
+									"0": "active",
+									"1": "suspended",
+									"2": "cancelled",
+									"3": "completed"
+								}
 
 							subscriptionStatus = subscriptionStatusMap[commerceSubscriptionEntry.getSubscriptionStatus()?string]
 						/>

@@ -51,14 +51,30 @@ function resolveField(path: string | Array<string>, item: any) {
 		itemPath.pop();
 	}
 
+	const resolvedFieldname = itemPath[itemPath.length - 1];
+	let resolvedItem = undefined;
+
+	if (itemPath.length > 1) {
+		resolvedItem =
+			itemPath.slice(0, -1).reduce((prev, curr) => prev?.[curr], item) ||
+			{};
+
+		if (Array.isArray(resolvedItem)) {
+			const key = resolvedFieldname;
+			resolvedItem = resolvedItem.map((prop: any) => {
+				const {[key]: value} = prop;
+
+				return {[key]: value};
+			});
+		}
+	}
+	else {
+		resolvedItem = item;
+	}
+
 	return {
-		resolvedFieldname: itemPath[itemPath.length - 1],
-		resolvedItem:
-			itemPath.length > 1
-				? itemPath
-						.slice(0, -1)
-						.reduce((prev, curr) => prev?.[curr], item) || {}
-				: item,
+		resolvedFieldname,
+		resolvedItem,
 		rootPropertyName: itemPath[0],
 	};
 }
@@ -133,7 +149,14 @@ export function getLocalizedValue(
 	}
 	else {
 		valuePath.push(resolvedFieldname);
-		navigatedValue = navigatedValue[resolvedFieldname];
+		if (Array.isArray(navigatedValue)) {
+			navigatedValue = navigatedValue.map(
+				(value) => getLocalizedValue(value, resolvedFieldname)?.value
+			);
+		}
+		else {
+			navigatedValue = navigatedValue[resolvedFieldname];
+		}
 	}
 
 	if (fieldName !== resolvedFieldname) {

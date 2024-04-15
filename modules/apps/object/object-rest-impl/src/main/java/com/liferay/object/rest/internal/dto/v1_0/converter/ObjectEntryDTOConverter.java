@@ -715,15 +715,9 @@ public class ObjectEntryDTOConverter
 				if ((dtoConverterContext.getLocale() != null) &&
 					(objectField_i18n != null)) {
 
-					Serializable localizedValue = objectField_i18n.get(
-						String.valueOf(dtoConverterContext.getLocale()));
-
-					if (localizedValue != null) {
-						serializable = localizedValue;
-					}
-					else {
-						serializable = "";
-					}
+					serializable = GetterUtil.getString(
+						objectField_i18n.get(
+							String.valueOf(dtoConverterContext.getLocale())));
 				}
 			}
 

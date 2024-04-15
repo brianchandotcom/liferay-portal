@@ -497,6 +497,14 @@ export default function EditObjectFolder({
 					id={selectedObjectFolder.id}
 					initialLabel={selectedObjectFolder.label}
 					name={selectedObjectFolder.name}
+					onAfterSubmit={(editedObjectFolder) => {
+						dispatch({
+							payload: {
+								updatedSelectedObjectFolder: editedObjectFolder,
+							},
+							type: TYPES.SET_SELECTED_OBJECT_FOLDER_DETAILS,
+						});
+					}}
 				/>
 			)}
 

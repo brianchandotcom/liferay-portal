@@ -170,6 +170,12 @@ export type TAction =
 	  }
 	| {
 			payload: {
+				updatedSelectedObjectFolder: ObjectFolder;
+			};
+			type: TYPES.SET_SELECTED_OBJECT_FOLDER_DETAILS;
+	  }
+	| {
+			payload: {
 				selectedObjectRelationshipId: number;
 			};
 			type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE;

@@ -12,7 +12,10 @@ export class ViewObjectDefinitionsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly createObjectDefinitionButton: Locator;
 	readonly createObjectFolderButton: Locator;
+	readonly confirmObjectFolderNameInput: Locator;
 	readonly defaultObjectFolderLink: Locator;
+	readonly deleteObjectFolderButton: Locator;
+	readonly frontendDataSetEntries: Locator;
 	readonly objectFolderActionsLink: Locator;
 	readonly objectFolderDeleteFolderOption: Locator;
 	readonly objectFolderEditLabelAndERCOption: Locator;
@@ -23,6 +26,9 @@ export class ViewObjectDefinitionsPage {
 	constructor(page: Page) {
 		this.addObjectFolderButton = page.getByLabel('Add Object Folder');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.confirmObjectFolderNameInput = page.locator(
+			'input[placeholder="Confirm Folder Name"]'
+		);
 		this.createObjectDefinitionButton = page.getByTestId(
 			'fdsCreationActionButton'
 		);
@@ -32,11 +38,15 @@ export class ViewObjectDefinitionsPage {
 		this.defaultObjectFolderLink = page
 			.locator('li')
 			.filter({hasText: 'Default'});
+		this.deleteObjectFolderButton = page.getByRole('button', {
+			name: 'Delete',
+		});
+		this.frontendDataSetEntries = page.locator('div.table-list-title a');
 		this.objectFolderActionsLink = page
 			.locator('div.lfr__object-web-view-object-definitions-title-kebab')
 			.getByLabel('Object Folder Actions');
 		this.objectFolderDeleteFolderOption = page.getByRole('menuitem', {
-			name: 'Delete Folder',
+			name: 'Delete Object Folder',
 		});
 		this.objectFolderEditLabelAndERCOption = page.getByRole('menuitem', {
 			name: 'Edit Label and ERC',
@@ -62,6 +72,13 @@ export class ViewObjectDefinitionsPage {
 		const response = await responsePromise;
 
 		return response.json();
+	}
+
+	async deleteObjectFolder(objectFolderName: string) {
+		await this.objectFolderDeleteFolderOption.click();
+		await this.confirmObjectFolderNameInput.click();
+		await this.confirmObjectFolderNameInput.fill(objectFolderName);
+		await this.deleteObjectFolderButton.click();
 	}
 
 	async goto() {

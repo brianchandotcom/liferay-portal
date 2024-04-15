@@ -16,11 +16,10 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.PerformanceTestTimer;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -39,7 +38,6 @@ import java.io.Closeable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 
 import java.util.Collections;
 import java.util.List;
@@ -105,7 +103,9 @@ public class ObjectEntryPerformanceTest {
 
 	@Test
 	public void testGetObjectEntries() throws Exception {
-		try (Closeable closeable = _startTimer()) {
+		try (Closeable closeable = new PerformanceTestTimer(
+				60000, _logFilePath)) {
+
 			_objectEntries = _objectEntryLocalService.getObjectEntries(
 				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
@@ -142,27 +142,6 @@ public class ObjectEntryPerformanceTest {
 
 			_objectEntryLocalService.deleteObjectEntry(objectEntry);
 		}
-	}
-
-	private Closeable _startTimer() {
-		Thread thread = Thread.currentThread();
-
-		StackTraceElement stackTraceElement = thread.getStackTrace()[2];
-
-		String invokerName = StringBundler.concat(
-			stackTraceElement.getClassName(), StringPool.POUND,
-			stackTraceElement.getMethodName());
-
-		long startTime = System.currentTimeMillis();
-
-		return () -> Files.write(
-			_logFilePath,
-			Collections.singletonList(
-				StringBundler.concat(
-					invokerName, " used ",
-					System.currentTimeMillis() - startTime, "ms")),
-			StandardOpenOption.APPEND, StandardOpenOption.CREATE,
-			StandardOpenOption.WRITE);
 	}
 
 	private static Path _logFilePath;

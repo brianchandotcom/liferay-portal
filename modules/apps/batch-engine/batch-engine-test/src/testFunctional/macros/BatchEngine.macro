@@ -31,12 +31,16 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertExportedFileContainsCorrectObject(fileName = null, expectedValue = null, jsonObject = null) {
+	macro assertExportedFileContainsCorrectObject(fileName = null, expectedValue = null, ignoreOrder = null, jsonObject = null) {
 		Variables.assertDefined(parameterList = "${fileName},${jsonObject},${expectedValue}");
 
 		var fileContent = TestCase.getTempFileContent(fileName = ${fileName});
 
 		var actualValue = JSONUtil.getWithJSONPath(${fileContent}, ${jsonObject});
+
+		if (isSet(ignoreOrder) && (${ignoreOrder} == "true")) {
+			var actualValue = ListUtil.sort(${actualValue});
+		}
 
 		TestUtils.assertEquals(
 			actual = ${actualValue},

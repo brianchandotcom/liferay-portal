@@ -103,11 +103,10 @@ test('filters a web content collection by single and multiple categories', async
 
 	await collectionsPage.goto(site.friendlyUrlPath);
 
-	const {collectionId} =
-		await collectionsPage.createWebContentDynamicCollection(
-			collectionName,
-			site.friendlyUrlPath
-		);
+	const {classPK} = await collectionsPage.createWebContentDynamicCollection(
+		collectionName,
+		site.friendlyUrlPath
+	);
 
 	// Create a page with Collection Display and Collection Filter fragments
 
@@ -115,8 +114,8 @@ test('filters a web content collection by single and multiple categories', async
 
 	const layout = await createPageWithCollectionAndFilterCollection({
 		apiHelpers,
+		classPK,
 		collectionFilterId,
-		collectionId,
 		siteId: site.id,
 	});
 
@@ -233,11 +232,10 @@ test('filters a web content collection by single and multiple tags', async ({
 
 	await collectionsPage.goto(site.friendlyUrlPath);
 
-	const {collectionId} =
-		await collectionsPage.createWebContentDynamicCollection(
-			collectionName,
-			site.friendlyUrlPath
-		);
+	const {classPK} = await collectionsPage.createWebContentDynamicCollection(
+		collectionName,
+		site.friendlyUrlPath
+	);
 
 	// Create a page with Collection Display and Collection Filter fragments
 
@@ -245,8 +243,8 @@ test('filters a web content collection by single and multiple tags', async ({
 
 	const layout = await createPageWithCollectionAndFilterCollection({
 		apiHelpers,
+		classPK,
 		collectionFilterId,
-		collectionId,
 		siteId: site.id,
 	});
 
@@ -338,11 +336,10 @@ test('enables search field in dropdown list of Collection Filter', async ({
 
 	await collectionsPage.goto(site.friendlyUrlPath);
 
-	const {collectionId} =
-		await collectionsPage.createWebContentDynamicCollection(
-			collectionName,
-			site.friendlyUrlPath
-		);
+	const {classPK} = await collectionsPage.createWebContentDynamicCollection(
+		collectionName,
+		site.friendlyUrlPath
+	);
 
 	// Create a page with Collection Display and Collection Filter fragments
 
@@ -350,8 +347,8 @@ test('enables search field in dropdown list of Collection Filter', async ({
 
 	const layout = await createPageWithCollectionAndFilterCollection({
 		apiHelpers,
+		classPK,
 		collectionFilterId,
-		collectionId,
 		siteId: site.id,
 	});
 

@@ -28,13 +28,13 @@ const FRAGMENT_FIELDS = [
 
 export default async function createPageWithCollectionAndFilterCollection({
 	apiHelpers,
+	classPK,
 	collectionFilterId,
-	collectionId,
 	siteId,
 }: {
 	apiHelpers: ApiHelpers;
+	classPK: number;
 	collectionFilterId: string;
-	collectionId: string;
 	siteId: string;
 }) {
 	const collectionFilterDefinition = getFragmentDefinition(
@@ -54,11 +54,11 @@ export default async function createPageWithCollectionAndFilterCollection({
 		[collectionFragmentDefinition]
 	);
 
-	const collectionDefinition = getCollectionDefinition(
-		getRandomString(),
-		collectionId,
-		[collectionItemDefinition]
-	);
+	const collectionDefinition = getCollectionDefinition({
+		classPK,
+		id: getRandomString(),
+		pageElements: [collectionItemDefinition],
+	});
 
 	return await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([

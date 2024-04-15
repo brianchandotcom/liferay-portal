@@ -34,7 +34,7 @@ export class CollectionsPage {
 		await this.page.waitForTimeout(3000);
 
 		return {
-			collectionId: await this.getCollectionClassPK(name, siteUrl),
+			classPK: await this.getCollectionClassPK(name, siteUrl),
 		};
 	}
 
@@ -80,9 +80,11 @@ export class CollectionsPage {
 	async getCollectionClassPK(name, siteUrl) {
 		await this.goto(siteUrl);
 
-		return await this.page
+		const classPK = await this.page
 			.locator(`button[data-assetlistentrytitle="${name}"]`)
 			.first()
 			.evaluate((event) => event.dataset.assetlistentryid);
+
+		return Number(classPK);
 	}
 }

@@ -27,6 +27,8 @@ downloadSrc {
 		}
 	}
 
+	doNotTrackState("")
+
 	from {
 		zipTree(FileUtil.get(project, mockMockSrcUrl))
 	}
@@ -51,12 +53,20 @@ jarMvn {
 			into base.distsDirectory
 
 			rename {
-				jar.archiveName
+				jar.archiveFileName.get()
 			}
 		}
 	}
 
 	workingDir = srcDir
+}
+
+jarSources {
+	mustRunAfter downloadSrc
+}
+
+processResources {
+	mustRunAfter downloadSrc
 }
 
 private List<String> _getMvnCommand(String command) {

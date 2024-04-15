@@ -62,9 +62,8 @@ public class XMLCDATACheck extends BaseFileCheck {
 				continue;
 			}
 
-			String match = matcher.group();
-
 			String indent = matcher.group(2);
+			String match = matcher.group();
 
 			StringBundler sb = new StringBundler(5);
 

@@ -297,10 +297,12 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 					"LayoutPageTemplateStructure", "classPK")) {
 
 				_db.runSQLTemplateString(
-					"alter table LayoutPageTemplateStructure drop classNameId;",
+					"alter table LayoutPageTemplateStructure drop column " +
+						"classNameId;",
 					true);
 				_db.runSQLTemplateString(
-					"alter table LayoutPageTemplateStructure drop classPK;",
+					"alter table LayoutPageTemplateStructure drop column " +
+						"classPK;",
 					true);
 			}
 		}

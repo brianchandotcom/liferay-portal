@@ -37,7 +37,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.io.StreamUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
@@ -53,6 +52,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PerformanceTestTimer;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -73,7 +73,6 @@ import com.liferay.sites.kernel.util.Sites;
 
 import java.io.Closeable;
 import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 
 import java.nio.file.Files;
@@ -180,7 +179,9 @@ public class ExportImportPerformanceTest {
 
 	@Test
 	public void testExportGroupToLAR() throws Exception {
-		try (Closeable closeable = _startTimer()) {
+		try (Closeable closeable = new PerformanceTestTimer(
+				1000, _logFilePath)) {
+
 			Map<String, Serializable> exportLayoutSettingsMap =
 				_exportImportConfigurationSettingsMapFactory.
 					buildExportLayoutSettingsMap(
@@ -217,7 +218,9 @@ public class ExportImportPerformanceTest {
 		File file = _exportImportLocalService.exportLayoutsAsFile(
 			_exportImportConfiguration);
 
-		try (Closeable closeable = _startTimer()) {
+		try (Closeable closeable = new PerformanceTestTimer(
+				1000, _logFilePath)) {
+
 			Map<String, Serializable> importLayoutSettingsMap =
 				_exportImportConfigurationSettingsMapFactory.
 					buildImportLayoutSettingsMap(
@@ -238,7 +241,9 @@ public class ExportImportPerformanceTest {
 
 	@Test
 	public void testInitialStagingPublication() throws Exception {
-		try (Closeable closeable = _startTimer()) {
+		try (Closeable closeable = new PerformanceTestTimer(
+				10000, _logFilePath)) {
+
 			_stagingLocalService.enableLocalStaging(
 				TestPropsValues.getUserId(), _group, false, false,
 				_serviceContext);
@@ -275,7 +280,9 @@ public class ExportImportPerformanceTest {
 			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
 			true);
 
-		try (Closeable closeable = _startTimer()) {
+		try (Closeable closeable = new PerformanceTestTimer(
+				1000, _logFilePath)) {
+
 			MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
 			_sites.mergeLayoutSetPrototypeLayouts(
@@ -288,7 +295,9 @@ public class ExportImportPerformanceTest {
 		_stagingLocalService.enableLocalStaging(
 			TestPropsValues.getUserId(), _group, false, false, _serviceContext);
 
-		try (Closeable closeable = _startTimer()) {
+		try (Closeable closeable = new PerformanceTestTimer(
+				1000, _logFilePath)) {
+
 			Group stagingGroup = _group.getStagingGroup();
 
 			Map<String, Serializable> stagingSettingsMap =
@@ -316,7 +325,7 @@ public class ExportImportPerformanceTest {
 		}
 	}
 
-	private static void _writeToLogFile(String... contents) throws IOException {
+	private static void _writeToLogFile(String... contents) throws Exception {
 		Files.write(
 			_logFilePath, Arrays.asList(contents), StandardOpenOption.APPEND,
 			StandardOpenOption.CREATE, StandardOpenOption.WRITE);
@@ -506,23 +515,6 @@ public class ExportImportPerformanceTest {
 		}
 
 		return layoutStructure.toString();
-	}
-
-	private Closeable _startTimer() {
-		Thread thread = Thread.currentThread();
-
-		StackTraceElement stackTraceElement = thread.getStackTrace()[2];
-
-		String invokerName = StringBundler.concat(
-			stackTraceElement.getClassName(), StringPool.POUND,
-			stackTraceElement.getMethodName());
-
-		long startTime = System.currentTimeMillis();
-
-		return () -> _writeToLogFile(
-			StringBundler.concat(
-				invokerName, " used ", System.currentTimeMillis() - startTime,
-				"ms"));
 	}
 
 	private void _updateLayoutPortletSetup(Layout layout, String portletId)

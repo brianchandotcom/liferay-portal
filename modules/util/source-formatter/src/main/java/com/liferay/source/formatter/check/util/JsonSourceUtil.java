@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -20,6 +20,22 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class JsonSourceUtil extends SourceUtil {
 
+	public static String fixIndentation(JSONObject jsonObject, String indent) {
+		String s = JSONUtil.toString(jsonObject);
+
+		String[] lines = StringUtil.splitLines(s);
+
+		StringBundler sb = new StringBundler(lines.length * 3);
+
+		for (String line : StringUtil.splitLines(s)) {
+			sb.append(indent);
+			sb.append(line);
+			sb.append("\n");
+		}
+
+		return sb.toString();
+	}
+
 	public static JSONObject getJSONObject(String s) {
 		s = StringUtil.trim(s);
 
@@ -37,22 +53,6 @@ public class JsonSourceUtil extends SourceUtil {
 
 			return null;
 		}
-	}
-
-	public static String toString(JSONObject jsonObject, String indent) {
-		String s = JSONUtil.toString(jsonObject);
-
-		String[] lines = StringUtil.splitLines(s);
-
-		StringBundler sb = new StringBundler(lines.length * 3);
-
-		for (String line : StringUtil.splitLines(s)) {
-			sb.append(indent);
-			sb.append(line);
-			sb.append("\n");
-		}
-
-		return sb.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JsonSourceUtil.class);

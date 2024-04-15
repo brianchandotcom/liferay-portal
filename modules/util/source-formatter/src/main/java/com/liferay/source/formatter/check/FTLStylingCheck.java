@@ -118,7 +118,8 @@ public class FTLStylingCheck extends BaseStylingCheck {
 				StringBundler sb = new StringBundler(2);
 
 				sb.append("\n");
-				sb.append(JsonSourceUtil.toString(jsonObject, indent + "\t"));
+				sb.append(
+					JsonSourceUtil.fixIndentation(jsonObject, indent + "\t"));
 
 				String replacement = sb.toString();
 

@@ -41,7 +41,8 @@ public class XMLCDATACheck extends BaseFileCheck {
 			sb.append("\n");
 			sb.append(indent);
 			sb.append("\t<![CDATA[\n");
-			sb.append(JsonSourceUtil.toString(jsonObject, indent + "\t\t"));
+			sb.append(
+				JsonSourceUtil.fixIndentation(jsonObject, indent + "\t\t"));
 			sb.append(indent);
 			sb.append("\t]]>\n");
 			sb.append(indent);
@@ -69,7 +70,7 @@ public class XMLCDATACheck extends BaseFileCheck {
 
 			sb.append(matcher.group(1));
 			sb.append("\n");
-			sb.append(JsonSourceUtil.toString(jsonObject, indent + "\t"));
+			sb.append(JsonSourceUtil.fixIndentation(jsonObject, indent + "\t"));
 			sb.append(indent);
 			sb.append("]]>\n");
 

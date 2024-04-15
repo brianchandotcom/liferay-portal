@@ -10,7 +10,7 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.util.ExpandoConverterUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.TextInfoFieldType;
-import com.liferay.info.item.field.reader.LocalizedInfoItemFieldReader;
+import com.liferay.info.item.field.reader.InfoItemFieldReader;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.SingleValueInfoLocalizedValue;
 import com.liferay.petra.string.StringBundler;
@@ -42,8 +42,7 @@ import java.util.Map;
  * @author Pavel Savinov
  * @author Jorge Ferrer
  */
-public class ExpandoInfoItemFieldReader
-	implements LocalizedInfoItemFieldReader {
+public class ExpandoInfoItemFieldReader implements InfoItemFieldReader {
 
 	public ExpandoInfoItemFieldReader(
 		String attributeName, ExpandoBridge expandoBridge) {
@@ -195,11 +194,6 @@ public class ExpandoInfoItemFieldReader
 				return ExpandoConverterUtil.getStringFromAttribute(
 					attributeType, attributeValue);
 			});
-	}
-
-	@Override
-	public Object getValue(Object model, Locale locale) {
-		return null;
 	}
 
 	private String _getLabel(Locale locale) {

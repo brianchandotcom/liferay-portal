@@ -145,6 +145,31 @@ public class ProductOption implements Cloneable, Serializable {
 
 	protected String name;
 
+	public String getOptionExternalReferenceCode() {
+		return optionExternalReferenceCode;
+	}
+
+	public void setOptionExternalReferenceCode(
+		String optionExternalReferenceCode) {
+
+		this.optionExternalReferenceCode = optionExternalReferenceCode;
+	}
+
+	public void setOptionExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			optionExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			optionExternalReferenceCode =
+				optionExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String optionExternalReferenceCode;
+
 	public Long getOptionId() {
 		return optionId;
 	}

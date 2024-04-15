@@ -197,6 +197,264 @@ public abstract class BaseProductSpecificationResourceTestCase {
 	}
 
 	@Test
+	public void testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage()
+		throws Exception {
+
+		String channelExternalReferenceCode =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_getChannelExternalReferenceCode();
+		String irrelevantChannelExternalReferenceCode =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_getIrrelevantChannelExternalReferenceCode();
+		String productExternalReferenceCode =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_getProductExternalReferenceCode();
+		String irrelevantProductExternalReferenceCode =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_getIrrelevantProductExternalReferenceCode();
+
+		Page<ProductSpecification> page =
+			productSpecificationResource.
+				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage(
+					channelExternalReferenceCode, productExternalReferenceCode,
+					Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		if ((irrelevantChannelExternalReferenceCode != null) &&
+			(irrelevantProductExternalReferenceCode != null)) {
+
+			ProductSpecification irrelevantProductSpecification =
+				testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
+					irrelevantChannelExternalReferenceCode,
+					irrelevantProductExternalReferenceCode,
+					randomIrrelevantProductSpecification());
+
+			page =
+				productSpecificationResource.
+					getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage(
+						irrelevantChannelExternalReferenceCode,
+						irrelevantProductExternalReferenceCode,
+						Pagination.of(1, (int)totalCount + 1));
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantProductSpecification,
+				(List<ProductSpecification>)page.getItems());
+			assertValid(
+				page,
+				testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_getExpectedActions(
+					irrelevantChannelExternalReferenceCode,
+					irrelevantProductExternalReferenceCode));
+		}
+
+		ProductSpecification productSpecification1 =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
+				channelExternalReferenceCode, productExternalReferenceCode,
+				randomProductSpecification());
+
+		ProductSpecification productSpecification2 =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
+				channelExternalReferenceCode, productExternalReferenceCode,
+				randomProductSpecification());
+
+		page =
+			productSpecificationResource.
+				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage(
+					channelExternalReferenceCode, productExternalReferenceCode,
+					Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(
+			productSpecification1, (List<ProductSpecification>)page.getItems());
+		assertContains(
+			productSpecification2, (List<ProductSpecification>)page.getItems());
+		assertValid(
+			page,
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_getExpectedActions(
+				channelExternalReferenceCode, productExternalReferenceCode));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_getExpectedActions(
+				String channelExternalReferenceCode,
+				String productExternalReferenceCode)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPageWithPagination()
+		throws Exception {
+
+		String channelExternalReferenceCode =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_getChannelExternalReferenceCode();
+		String productExternalReferenceCode =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_getProductExternalReferenceCode();
+
+		Page<ProductSpecification> productSpecificationPage =
+			productSpecificationResource.
+				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage(
+					channelExternalReferenceCode, productExternalReferenceCode,
+					null);
+
+		int totalCount = GetterUtil.getInteger(
+			productSpecificationPage.getTotalCount());
+
+		ProductSpecification productSpecification1 =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
+				channelExternalReferenceCode, productExternalReferenceCode,
+				randomProductSpecification());
+
+		ProductSpecification productSpecification2 =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
+				channelExternalReferenceCode, productExternalReferenceCode,
+				randomProductSpecification());
+
+		ProductSpecification productSpecification3 =
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
+				channelExternalReferenceCode, productExternalReferenceCode,
+				randomProductSpecification());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<ProductSpecification> page1 =
+				productSpecificationResource.
+					getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage(
+						channelExternalReferenceCode,
+						productExternalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(
+				productSpecification1,
+				(List<ProductSpecification>)page1.getItems());
+
+			Page<ProductSpecification> page2 =
+				productSpecificationResource.
+					getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage(
+						channelExternalReferenceCode,
+						productExternalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(
+				productSpecification2,
+				(List<ProductSpecification>)page2.getItems());
+
+			Page<ProductSpecification> page3 =
+				productSpecificationResource.
+					getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage(
+						channelExternalReferenceCode,
+						productExternalReferenceCode,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
+
+			assertContains(
+				productSpecification3,
+				(List<ProductSpecification>)page3.getItems());
+		}
+		else {
+			Page<ProductSpecification> page1 =
+				productSpecificationResource.
+					getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage(
+						channelExternalReferenceCode,
+						productExternalReferenceCode,
+						Pagination.of(1, totalCount + 2));
+
+			List<ProductSpecification> productSpecifications1 =
+				(List<ProductSpecification>)page1.getItems();
+
+			Assert.assertEquals(
+				productSpecifications1.toString(), totalCount + 2,
+				productSpecifications1.size());
+
+			Page<ProductSpecification> page2 =
+				productSpecificationResource.
+					getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage(
+						channelExternalReferenceCode,
+						productExternalReferenceCode,
+						Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ProductSpecification> productSpecifications2 =
+				(List<ProductSpecification>)page2.getItems();
+
+			Assert.assertEquals(
+				productSpecifications2.toString(), 1,
+				productSpecifications2.size());
+
+			Page<ProductSpecification> page3 =
+				productSpecificationResource.
+					getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage(
+						channelExternalReferenceCode,
+						productExternalReferenceCode,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				productSpecification1,
+				(List<ProductSpecification>)page3.getItems());
+			assertContains(
+				productSpecification2,
+				(List<ProductSpecification>)page3.getItems());
+			assertContains(
+				productSpecification3,
+				(List<ProductSpecification>)page3.getItems());
+		}
+	}
+
+	protected ProductSpecification
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_addProductSpecification(
+				String channelExternalReferenceCode,
+				String productExternalReferenceCode,
+				ProductSpecification productSpecification)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_getChannelExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_getIrrelevantChannelExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	protected String
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_getProductExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage_getIrrelevantProductExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetChannelProductProductSpecificationsPage()
 		throws Exception {
 

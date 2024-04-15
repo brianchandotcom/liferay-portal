@@ -49,6 +49,23 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ProductOptionValueResource {
 
 	public Page<ProductOptionValue>
+			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage(
+				String channelExternalReferenceCode,
+				String productExternalReferenceCode,
+				String productOptionExternalReferenceCode, Long accountId,
+				Long productOptionValueId, Long skuId, Pagination pagination)
+		throws Exception;
+
+	public Page<ProductOptionValue>
+			postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage(
+				String channelExternalReferenceCode,
+				String productExternalReferenceCode,
+				String productOptionExternalReferenceCode, Long accountId,
+				Long productOptionValueId, Long skuId, Pagination pagination,
+				SkuOption[] skuOptions)
+		throws Exception;
+
+	public Page<ProductOptionValue>
 			getChannelProductProductOptionProductOptionValuesPage(
 				Long channelId, Long productId, Long productOptionId,
 				Long accountId, Long productOptionValueId, Long skuId,

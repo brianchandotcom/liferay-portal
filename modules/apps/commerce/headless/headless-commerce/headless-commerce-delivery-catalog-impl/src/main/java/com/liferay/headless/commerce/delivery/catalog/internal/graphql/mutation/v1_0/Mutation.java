@@ -132,6 +132,42 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Retrieves a list of ProductOptionValue with selected channel, product and product option external reference code."
+	)
+	public java.util.Collection<ProductOptionValue>
+			createChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage(
+				@GraphQLName("channelExternalReferenceCode") String
+					channelExternalReferenceCode,
+				@GraphQLName("productExternalReferenceCode") String
+					productExternalReferenceCode,
+				@GraphQLName("productOptionExternalReferenceCode") String
+					productOptionExternalReferenceCode,
+				@GraphQLName("accountId") Long accountId,
+				@GraphQLName("productOptionValueId") Long productOptionValueId,
+				@GraphQLName("skuId") Long skuId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("skuOptions") SkuOption[] skuOptions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productOptionValueResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productOptionValueResource -> {
+				Page paginationPage =
+					productOptionValueResource.
+						postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage(
+							channelExternalReferenceCode,
+							productExternalReferenceCode,
+							productOptionExternalReferenceCode, accountId,
+							productOptionValueId, skuId,
+							Pagination.of(page, pageSize), skuOptions);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField(
 		description = "Retrieves a list of ProductOptionValue from selected channel, product ID and product option ID."
 	)
 	public java.util.Collection<ProductOptionValue>
@@ -160,6 +196,55 @@ public class Mutation {
 
 				return paginationPage.getItems();
 			});
+	}
+
+	@GraphQLField(
+		description = "Posts an SKU with selected channel and product external reference code."
+	)
+	public Sku
+			createChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSku(
+				@GraphQLName("channelExternalReferenceCode") String
+					channelExternalReferenceCode,
+				@GraphQLName("productExternalReferenceCode") String
+					productExternalReferenceCode,
+				@GraphQLName("accountId") Long accountId,
+				@GraphQLName("quantity") java.math.BigDecimal quantity,
+				@GraphQLName("ddmOptions") DDMOption[] ddmOptions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_skuResourceComponentServiceObjects, this::_populateResourceContext,
+			skuResource ->
+				skuResource.
+					postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSku(
+						channelExternalReferenceCode,
+						productExternalReferenceCode, accountId, quantity,
+						ddmOptions));
+	}
+
+	@GraphQLField(
+		description = "Retrieves a SKU from selected channel and product using their external reference code."
+	)
+	public Sku
+			createChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption(
+				@GraphQLName("channelExternalReferenceCode") String
+					channelExternalReferenceCode,
+				@GraphQLName("productExternalReferenceCode") String
+					productExternalReferenceCode,
+				@GraphQLName("accountId") Long accountId,
+				@GraphQLName("quantity") java.math.BigDecimal quantity,
+				@GraphQLName("skuUnitOfMeasureKey") String skuUnitOfMeasureKey,
+				@GraphQLName("skuOptions") SkuOption[] skuOptions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_skuResourceComponentServiceObjects, this::_populateResourceContext,
+			skuResource ->
+				skuResource.
+					postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption(
+						channelExternalReferenceCode,
+						productExternalReferenceCode, accountId, quantity,
+						skuUnitOfMeasureKey, skuOptions));
 	}
 
 	@GraphQLField(
@@ -196,6 +281,21 @@ public class Mutation {
 			skuResource -> skuResource.postChannelProductSkuBySkuOption(
 				channelId, productId, accountId, quantity, skuUnitOfMeasureKey,
 				skuOptions));
+	}
+
+	@GraphQLField
+	public WishList createChannelByExternalReferenceCodeWishList(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("wishList") WishList wishList)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_wishListResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wishListResource ->
+				wishListResource.postChannelByExternalReferenceCodeWishList(
+					externalReferenceCode, accountId, wishList));
 	}
 
 	@GraphQLField

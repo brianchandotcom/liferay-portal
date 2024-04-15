@@ -151,10 +151,25 @@ public class ServletDataImpl implements ServletData {
 							ChannelResourceImpl.class,
 							"postChannelsPageExportBatch"));
 					put(
+						"mutation#createChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage",
+						new ObjectValuePair<>(
+							ProductOptionValueResourceImpl.class,
+							"postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage"));
+					put(
 						"mutation#createChannelProductProductOptionProductOptionValuesPage",
 						new ObjectValuePair<>(
 							ProductOptionValueResourceImpl.class,
 							"postChannelProductProductOptionProductOptionValuesPage"));
+					put(
+						"mutation#createChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSku",
+						new ObjectValuePair<>(
+							SkuResourceImpl.class,
+							"postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSku"));
+					put(
+						"mutation#createChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption",
+						new ObjectValuePair<>(
+							SkuResourceImpl.class,
+							"postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption"));
 					put(
 						"mutation#createChannelProductSku",
 						new ObjectValuePair<>(
@@ -164,6 +179,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							SkuResourceImpl.class,
 							"postChannelProductSkuBySkuOption"));
+					put(
+						"mutation#createChannelByExternalReferenceCodeWishList",
+						new ObjectValuePair<>(
+							WishListResourceImpl.class,
+							"postChannelByExternalReferenceCodeWishList"));
 					put(
 						"mutation#createChannelWishList",
 						new ObjectValuePair<>(
@@ -231,6 +251,11 @@ public class ServletDataImpl implements ServletData {
 							MappedProductResourceImpl.class,
 							"getChannelProductMappedProductsPage"));
 					put(
+						"query#channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodePins",
+						new ObjectValuePair<>(
+							PinResourceImpl.class,
+							"getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodePinsPage"));
+					put(
 						"query#channelProductPins",
 						new ObjectValuePair<>(
 							PinResourceImpl.class,
@@ -245,15 +270,30 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ProductResourceImpl.class, "getChannelProduct"));
 					put(
+						"query#channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptions",
+						new ObjectValuePair<>(
+							ProductOptionResourceImpl.class,
+							"getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionsPage"));
+					put(
 						"query#channelProductProductOptions",
 						new ObjectValuePair<>(
 							ProductOptionResourceImpl.class,
 							"getChannelProductProductOptionsPage"));
 					put(
+						"query#channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValues",
+						new ObjectValuePair<>(
+							ProductOptionValueResourceImpl.class,
+							"getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage"));
+					put(
 						"query#channelProductProductOptionProductOptionValues",
 						new ObjectValuePair<>(
 							ProductOptionValueResourceImpl.class,
 							"getChannelProductProductOptionProductOptionValuesPage"));
+					put(
+						"query#channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecifications",
+						new ObjectValuePair<>(
+							ProductSpecificationResourceImpl.class,
+							"getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage"));
 					put(
 						"query#channelProductProductSpecifications",
 						new ObjectValuePair<>(
@@ -265,6 +305,16 @@ public class ServletDataImpl implements ServletData {
 							RelatedProductResourceImpl.class,
 							"getChannelProductRelatedProductsPage"));
 					put(
+						"query#channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkus",
+						new ObjectValuePair<>(
+							SkuResourceImpl.class,
+							"getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage"));
+					put(
+						"query#channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode",
+						new ObjectValuePair<>(
+							SkuResourceImpl.class,
+							"getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode"));
+					put(
 						"query#channelProductSkus",
 						new ObjectValuePair<>(
 							SkuResourceImpl.class,
@@ -273,6 +323,11 @@ public class ServletDataImpl implements ServletData {
 						"query#channelProductSku",
 						new ObjectValuePair<>(
 							SkuResourceImpl.class, "getChannelProductSku"));
+					put(
+						"query#channelByExternalReferenceCodeWishLists",
+						new ObjectValuePair<>(
+							WishListResourceImpl.class,
+							"getChannelByExternalReferenceCodeWishListsPage"));
 					put(
 						"query#channelWishLists",
 						new ObjectValuePair<>(

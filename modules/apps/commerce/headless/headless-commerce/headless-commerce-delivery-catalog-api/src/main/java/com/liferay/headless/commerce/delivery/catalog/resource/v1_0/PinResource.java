@@ -47,6 +47,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PinResource {
 
+	public Page<Pin>
+			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodePinsPage(
+				String channelExternalReferenceCode,
+				String productExternalReferenceCode, Long accountId,
+				String search, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public Page<Pin> getChannelProductPinsPage(
 			Long channelId, Long productId, Long accountId, String search,
 			Pagination pagination, Sort[] sorts)

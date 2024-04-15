@@ -292,6 +292,51 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
+	@Schema(example = "AB-34098-789-N")
+	public String getOptionExternalReferenceCode() {
+		if (_optionExternalReferenceCodeSupplier != null) {
+			optionExternalReferenceCode =
+				_optionExternalReferenceCodeSupplier.get();
+
+			_optionExternalReferenceCodeSupplier = null;
+		}
+
+		return optionExternalReferenceCode;
+	}
+
+	public void setOptionExternalReferenceCode(
+		String optionExternalReferenceCode) {
+
+		this.optionExternalReferenceCode = optionExternalReferenceCode;
+
+		_optionExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setOptionExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			optionExternalReferenceCodeUnsafeSupplier) {
+
+		_optionExternalReferenceCodeSupplier = () -> {
+			try {
+				return optionExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String optionExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _optionExternalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30080")
 	public Long getOptionId() {
@@ -613,6 +658,22 @@ public class ProductOption implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		String optionExternalReferenceCode = getOptionExternalReferenceCode();
+
+		if (optionExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"optionExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(optionExternalReferenceCode));
 
 			sb.append("\"");
 		}

@@ -82,6 +82,20 @@ public class ReplacementSkuSerDes {
 			sb.append("\"");
 		}
 
+		if (replacementSku.getSkuExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(replacementSku.getSkuExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (replacementSku.getSkuId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -187,6 +201,15 @@ public class ReplacementSkuSerDes {
 			map.put("sku", String.valueOf(replacementSku.getSku()));
 		}
 
+		if (replacementSku.getSkuExternalReferenceCode() == null) {
+			map.put("skuExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"skuExternalReferenceCode",
+				String.valueOf(replacementSku.getSkuExternalReferenceCode()));
+		}
+
 		if (replacementSku.getSkuId() == null) {
 			map.put("skuId", null);
 		}
@@ -257,6 +280,14 @@ public class ReplacementSkuSerDes {
 			else if (Objects.equals(jsonParserFieldName, "sku")) {
 				if (jsonParserFieldValue != null) {
 					replacementSku.setSku((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "skuExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					replacementSku.setSkuExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "skuId")) {

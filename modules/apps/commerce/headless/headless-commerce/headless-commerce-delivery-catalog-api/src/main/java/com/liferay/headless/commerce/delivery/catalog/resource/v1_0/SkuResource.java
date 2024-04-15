@@ -49,6 +49,35 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SkuResource {
 
+	public Page<Sku>
+			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage(
+				String channelExternalReferenceCode,
+				String productExternalReferenceCode, Long accountId,
+				Pagination pagination)
+		throws Exception;
+
+	public Sku
+			postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSku(
+				String channelExternalReferenceCode,
+				String productExternalReferenceCode, Long accountId,
+				java.math.BigDecimal quantity, DDMOption[] ddmOptions)
+		throws Exception;
+
+	public Sku
+			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode(
+				String channelExternalReferenceCode,
+				String productExternalReferenceCode,
+				String skuExternalReferenceCode, Long accountId)
+		throws Exception;
+
+	public Sku
+			postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption(
+				String channelExternalReferenceCode,
+				String productExternalReferenceCode, Long accountId,
+				java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
+				SkuOption[] skuOptions)
+		throws Exception;
+
 	public Page<Sku> getChannelProductSkusPage(
 			Long channelId, Long productId, Long accountId,
 			Pagination pagination)

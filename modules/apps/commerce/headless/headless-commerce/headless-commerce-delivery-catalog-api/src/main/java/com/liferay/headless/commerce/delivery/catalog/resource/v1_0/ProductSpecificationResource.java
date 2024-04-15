@@ -48,6 +48,12 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ProductSpecificationResource {
 
 	public Page<ProductSpecification>
+			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage(
+				String channelExternalReferenceCode,
+				String productExternalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public Page<ProductSpecification>
 			getChannelProductProductSpecificationsPage(
 				Long channelId, Long productId, Pagination pagination)
 		throws Exception;

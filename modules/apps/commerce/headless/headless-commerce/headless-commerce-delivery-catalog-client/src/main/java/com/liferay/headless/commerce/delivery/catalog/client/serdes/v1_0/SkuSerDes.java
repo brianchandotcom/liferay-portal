@@ -214,6 +214,20 @@ public class SkuSerDes {
 			sb.append("\"");
 		}
 
+		if (sku.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sku.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (sku.getGtin() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -593,6 +607,15 @@ public class SkuSerDes {
 				liferayToJSONDateFormat.format(sku.getExpirationDate()));
 		}
 
+		if (sku.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(sku.getExternalReferenceCode()));
+		}
+
 		if (sku.getGtin() == null) {
 			map.put("gtin", null);
 		}
@@ -861,6 +884,13 @@ public class SkuSerDes {
 			else if (Objects.equals(jsonParserFieldName, "expirationDate")) {
 				if (jsonParserFieldValue != null) {
 					sku.setExpirationDate(toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					sku.setExternalReferenceCode((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "gtin")) {

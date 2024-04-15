@@ -170,6 +170,7 @@ public abstract class BaseRelatedProductResourceTestCase {
 
 		RelatedProduct relatedProduct = randomRelatedProduct();
 
+		relatedProduct.setProductExternalReferenceCode(regex);
 		relatedProduct.setType(regex);
 
 		String json = RelatedProductSerDes.toJSON(relatedProduct);
@@ -178,6 +179,8 @@ public abstract class BaseRelatedProductResourceTestCase {
 
 		relatedProduct = RelatedProductSerDes.toDTO(json);
 
+		Assert.assertEquals(
+			regex, relatedProduct.getProductExternalReferenceCode());
 		Assert.assertEquals(regex, relatedProduct.getType());
 	}
 
@@ -488,6 +491,17 @@ public abstract class BaseRelatedProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"productExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (relatedProduct.getProductExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("productId", additionalAssertFieldName)) {
 				if (relatedProduct.getProductId() == null) {
 					valid = false;
@@ -644,6 +658,20 @@ public abstract class BaseRelatedProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"productExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						relatedProduct1.getProductExternalReferenceCode(),
+						relatedProduct2.getProductExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("productId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						relatedProduct1.getProductId(),
@@ -784,6 +812,52 @@ public abstract class BaseRelatedProductResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("productExternalReferenceCode")) {
+			Object object = relatedProduct.getProductExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("productId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -881,6 +955,8 @@ public abstract class BaseRelatedProductResourceTestCase {
 			{
 				id = RandomTestUtil.randomLong();
 				priority = RandomTestUtil.randomDouble();
+				productExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				productId = RandomTestUtil.randomLong();
 				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}

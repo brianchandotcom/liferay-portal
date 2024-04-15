@@ -1139,7 +1139,6 @@
 						"en_US": "Cron"
 					},
 					"name": "cron",
-					"required": true,
 					"type": "String"
 				},
 				{
@@ -1159,7 +1158,6 @@
 						"en_US": "Job Name"
 					},
 					"name": "jobName",
-					"required": true,
 					"type": "String"
 				},
 				{
@@ -1179,7 +1177,6 @@
 						"en_US": "Job Priority"
 					},
 					"name": "jobPriority",
-					"required": false,
 					"type": "Integer"
 				},
 				{
@@ -1190,7 +1187,6 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "jobType",
 					"name": "jobType",
-					"required": true,
 					"state": false,
 					"type": "String"
 				},

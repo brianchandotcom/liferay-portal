@@ -711,6 +711,14 @@
 			"externalReferenceCode": "routineType",
 			"listTypeEntries": [
 				{
+					"externalReferenceCode": "cron",
+					"key": "cron",
+					"name": "Cron",
+					"name_i18n": {
+						"en-US": "Cron"
+					}
+				},
+				{
 					"externalReferenceCode": "manual",
 					"key": "manual",
 					"name": "Manual",

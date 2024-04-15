@@ -73,8 +73,7 @@ public class SchemaCreatorImpl implements SchemaCreator {
 			StringPool.BLANK);
 
 		return GetterUtil.getString(
-			headers.get("Liferay-Require-SchemaVersion"),
-			headers.get("Bundle-Version"));
+			headers.get("Liferay-Require-SchemaVersion"), "1.0.0");
 	}
 
 	private void _create() throws UpgradeException {

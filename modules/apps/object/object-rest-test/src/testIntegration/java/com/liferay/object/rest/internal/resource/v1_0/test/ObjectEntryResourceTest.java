@@ -7302,12 +7302,12 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlags("LPD-18730")
 	@Test
-	public void testSortByNotSupportedObjectFields() throws Exception {
+	public void testSortByUnsupportedObjectFields() throws Exception {
 		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
 			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		_testSortByNotSupportedObjectField(
+		_testSortByUnsupportedObjectField(
 			"Unable to sort by a many to many related object field",
 			_objectDefinition1,
 			String.format(
@@ -7318,17 +7318,17 @@ public class ObjectEntryResourceTest {
 			_objectDefinition2, _objectDefinition1, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		_testSortByNotSupportedObjectField(
+		_testSortByUnsupportedObjectField(
 			"Unable to sort by a many to one related object field",
 			_objectDefinition1,
 			String.format(
 				"%s/%s:asc", _objectRelationship2.getName(),
 				_OBJECT_FIELD_NAME_TEXT));
 
-		_testSortByNotSupportedObjectField(
+		_testSortByUnsupportedObjectField(
 			"Unable to sort by property: objectDefinitionId",
 			_objectDefinition1, "objectDefinitionId");
-		_testSortByNotSupportedObjectField(
+		_testSortByUnsupportedObjectField(
 			"Unable to sort by property: siteId", _siteScopedObjectDefinition1,
 			"siteId");
 	}
@@ -10834,7 +10834,7 @@ public class ObjectEntryResourceTest {
 		_assertItem(1, pageJSONObject, "id", expectedJSONObject1.getLong("id"));
 	}
 
-	private void _testSortByNotSupportedObjectField(
+	private void _testSortByUnsupportedObjectField(
 			String expectedTitle, ObjectDefinition objectDefinition,
 			String sortString)
 		throws Exception {

@@ -159,7 +159,8 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 				_getCPOptionCategoryId(specification),
 				LanguageUtils.getLocalizedMap(specification.getTitle()),
 				LanguageUtils.getLocalizedMap(specification.getDescription()),
-				_isFacetable(specification), specificationKey,
+				GetterUtil.getBoolean(specification.getFacetable()),
+				specificationKey,
 				GetterUtil.getDouble(specification.getPriority()),
 				_serviceContextHelper.getServiceContext());
 
@@ -175,16 +176,6 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 		}
 
 		return optionCategory.getId();
-	}
-
-	private boolean _isFacetable(Specification specification) {
-		boolean facetable = false;
-
-		if (specification.getFacetable() != null) {
-			facetable = specification.getFacetable();
-		}
-
-		return facetable;
 	}
 
 	private Specification _toSpecification(Long cpSpecificationOptionId)
@@ -211,8 +202,8 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 			LanguageUtils.getLocalizedMap(specification.getTitle()),
 			LanguageUtils.getLocalizedMap(specification.getDescription()),
 			GetterUtil.getBoolean(
-				cpSpecificationOption.isFacetable(),
-				_isFacetable(specification)),
+				specification.getFacetable(),
+				cpSpecificationOption.isFacetable()),
 			GetterUtil.getString(
 				specification.getKey(), cpSpecificationOption.getKey()),
 			GetterUtil.getDouble(
@@ -237,7 +228,10 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 			_getCPOptionCategoryId(specification),
 			LanguageUtils.getLocalizedMap(specification.getTitle()),
 			LanguageUtils.getLocalizedMap(specification.getDescription()),
-			_isFacetable(specification), key,
+			GetterUtil.getBoolean(
+				specification.getFacetable(),
+				cpSpecificationOption.isFacetable()),
+			key,
 			GetterUtil.getDouble(
 				specification.getPriority(),
 				cpSpecificationOption.getPriority()),

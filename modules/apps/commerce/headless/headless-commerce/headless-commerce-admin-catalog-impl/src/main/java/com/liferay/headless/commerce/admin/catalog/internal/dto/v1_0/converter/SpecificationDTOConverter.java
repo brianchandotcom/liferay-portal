@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "dto.class.name=com.liferay.commerce.product.model.CPSpecificationOption",
+	property = "dto.class.name=com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification",
 	service = DTOConverter.class
 )
 public class SpecificationDTOConverter

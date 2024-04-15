@@ -115,7 +115,12 @@
 </style>
 
 <div class="language-selector-container ml-2">
-	<button class="d-flex language language-selector language-selector-${template_id} px-2 py-2 utility-nav-link" data-toggle="liferay-dropdown" id="language-selector-id" tabindex="${template_id}">
+	<button
+		class="d-flex language language-selector language-selector-${template_id} px-2 py-2 utility-nav-link"
+		data-toggle="liferay-dropdown"
+		id="language-selector-id"
+		tabindex="${template_id}"
+	>
 		<div class="language-selector-globe-icon">
 			<@clay["icon"] symbol="globe-lines" />
 		</div>

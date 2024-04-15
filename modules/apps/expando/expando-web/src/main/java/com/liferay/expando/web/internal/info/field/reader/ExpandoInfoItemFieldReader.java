@@ -11,6 +11,7 @@ import com.liferay.expando.util.ExpandoConverterUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.field.reader.LocalizedInfoItemFieldReader;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.SingleValueInfoLocalizedValue;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -73,7 +74,7 @@ public class ExpandoInfoItemFieldReader
 
 	@Override
 	public Object getValue(Object model) {
-		return getValue(model, LocaleUtil.getDefault());
+		return InfoLocalizedValue.function(locale -> getValue(model, locale));
 	}
 
 	@Override

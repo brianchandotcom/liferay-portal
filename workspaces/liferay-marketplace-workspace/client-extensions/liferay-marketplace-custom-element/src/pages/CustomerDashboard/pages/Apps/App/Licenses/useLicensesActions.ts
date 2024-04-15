@@ -7,6 +7,7 @@ import {useModal} from '@clayui/modal';
 import {useCallback} from 'react';
 import {KeyedMutator} from 'swr';
 
+import {Analytics} from '../../../../../../core/Analytics';
 import i18n from '../../../../../../i18n';
 import {Liferay} from '../../../../../../liferay/liferay';
 import MarketplaceSpringBootOAuth2, {
@@ -19,6 +20,7 @@ type Props = {
 	licenseKeyModal: ReturnType<typeof useModal>;
 	marketplaceSpringBootOAuth2: MarketplaceSpringBootOAuth2;
 	mutate: KeyedMutator<any>;
+	product?: DeliveryProduct;
 	setModal: (data: any) => void;
 };
 
@@ -28,11 +30,12 @@ const useLicenseActions = ({
 	licenseKeyModal,
 	marketplaceSpringBootOAuth2,
 	mutate,
+	product,
 	setModal,
 }: Props) => {
-	const onDeativateLicenseKey = (row: LicenseKey) =>
+	const onDeativateLicenseKey = (licenseKey: LicenseKey) =>
 		marketplaceSpringBootOAuth2
-			.deactivateLicenseKey(row?.id as number)
+			.deactivateLicenseKey(licenseKey?.id as number)
 			.then(() => {
 				mutate((data: any) => data, {revalidate: true});
 
@@ -40,6 +43,11 @@ const useLicenseActions = ({
 					message: i18n.translate(
 						'key-deactivation-requested-succesfully'
 					),
+				});
+
+				Analytics.track('DEACTIVATE_LICENSE_KEY', {
+					licenseType: licenseKey.licenseType,
+					productName: product?.name,
 				});
 
 				deactivateLicenseModal.onClose();
@@ -61,8 +69,12 @@ const useLicenseActions = ({
 				await marketplaceSpringBootOAuth2.downloadLicenseKey(
 					licenseKey?.id as number
 				);
-			}
-			catch {
+
+				Analytics.track('DOWNLOAD_LICENSE_KEY', {
+					licenseType: licenseKey.licenseType,
+					productName: product?.name,
+				});
+			} catch {
 				Liferay.Util.openToast({
 					message: i18n.translate(
 						'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard'
@@ -71,7 +83,7 @@ const useLicenseActions = ({
 				});
 			}
 		},
-		[marketplaceSpringBootOAuth2]
+		[marketplaceSpringBootOAuth2, product?.name]
 	);
 
 	return {

@@ -14,6 +14,21 @@ const getAppDescriptionElement = fragmentElement.querySelector(
 );
 const tooltipElement = fragmentElement.querySelector('.clay-tooltip-bottom');
 
+const isFreeApp = (productSpecifications = []) =>
+	productSpecifications.some(
+		(productSpecification) =>
+			productSpecification.specificationKey === 'price-model' &&
+			productSpecification.value === 'Free'
+	);
+
+const trackAnalytics = (key, options) => {
+	if (!window.Analytics) {
+		return;
+	}
+
+	Analytics.track(key, options);
+};
+
 const productId = fragmentElement
 	.querySelector('.product-id')
 	.innerText.replace(/[\n\r]+|[\s]{2,}/g, ' ')
@@ -22,13 +37,7 @@ const productId = fragmentElement
 const getProductPrice = (product) => {
 	const {productSpecifications = []} = product;
 
-	const isFreeApp = productSpecifications.some(
-		(productSpecification) =>
-			productSpecification.specificationKey === 'price-model' &&
-			productSpecification.value === 'Free'
-	);
-
-	if (isFreeApp) {
+	if (isFreeApp(productSpecifications)) {
 		return 'Free';
 	}
 
@@ -65,6 +74,11 @@ const getProductPrice = (product) => {
 
 const customizeGetAppButton = (product) => {
 	getAppButtonElement.onclick = () => {
+		trackAnalytics('Click on Get App Button', {
+			isFree: isFreeApp(product.productSpecifications),
+			productName: product.name,
+		});
+
 		Liferay.Util.navigate(`${getSiteURL()}/get-app?productId=${productId}`);
 	};
 
@@ -142,7 +156,12 @@ const customizeUnavailableButton = async (product) => {
 		customFields.find((customField) => customField.name === name)
 			?.customValue?.data ?? '';
 
-	contactPublisherButtonElement.onclick = () =>
+	contactPublisherButtonElement.onclick = () => {
+		trackAnalytics('Click on Contact Publisher Button', {
+			isFree: isFreeApp(product.productSpecifications),
+			productName: product.name,
+		});
+
 		Liferay.Util.openModal({
 			bodyHTML: getModalTemplate({
 				accountName: product.catalogName || product.name,
@@ -163,6 +182,7 @@ const customizeUnavailableButton = async (product) => {
 			headerHTML: 'Publisher Contact Info',
 			size: 'md',
 		});
+	};
 
 	if (sessionStorage.getItem('@marketplace/redirect-to')) {
 		contactPublisherButtonElement.click();

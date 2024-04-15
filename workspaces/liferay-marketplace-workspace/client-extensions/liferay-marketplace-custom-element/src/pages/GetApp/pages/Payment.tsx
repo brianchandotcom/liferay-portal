@@ -45,6 +45,7 @@ export default function Payment() {
 			currentStep,
 			formState: {isValid},
 			payment: {billingAddress, invoice, method: paymentMethod},
+			product,
 			steps,
 		},
 		dispatch,

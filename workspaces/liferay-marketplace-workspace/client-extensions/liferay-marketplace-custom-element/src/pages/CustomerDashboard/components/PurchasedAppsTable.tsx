@@ -14,6 +14,7 @@ import OrderStatus, {
 } from '../../../components/OrderStatus';
 import Table from '../../../components/Table/Table';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import {Analytics} from '../../../core/Analytics';
 import {OrderType} from '../../../enums/OrderType';
 import i18n from '../../../i18n';
 import {safeJSONParse} from '../../../utils/util';
@@ -118,7 +119,9 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 					render: (
 						_,
 						{
+							account,
 							id,
+							name,
 							orderStatusInfo,
 							orderTypeExternalReferenceCode,
 							placedOrderItems,
@@ -137,6 +140,11 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 							!orderOptions.some(({value}) =>
 								value.includes('trial')
 							);
+
+						const metadata = {
+							account,
+							productName: name,
+						};
 
 						return (
 							<div onClick={(event) => event.stopPropagation()}>
@@ -199,6 +207,14 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 											OrderType.CLOUD && (
 											<ClayDropDown.Item
 												onClick={() => {
+													Analytics.track(
+														'ACCCESS_CONSOLE_BUTTON',
+														{
+															account,
+															productName: name,
+														}
+													);
+
 													window.open(
 														properties.cloudBaseURL
 													);
@@ -221,7 +237,23 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 															: orderStatusIsNotCompleted
 													}
 													onClick={() => {
-														window.location.href = virtualURL;
+														if (!virtualURL) {
+															Analytics.track(
+																'VIRTUAL_URL_NOT_FOUND',
+																metadata
+															);
+
+															return alert(
+																'Download file not found'
+															);
+														}
+
+														Analytics.track(
+															'DOWNLOAD_APP',
+															metadata
+														);
+
+														window.open(virtualURL);
 													}}
 													title={
 														orderStatusIsNotCompleted

@@ -27,6 +27,7 @@ import getReplaceCurrentURL from './utils/getReplaceCurrentURL';
 import {postCartByPaymentMethod} from './utils/postCartByPaymentMethod';
 
 import './styles/index.scss';
+import {Analytics} from '../../core/Analytics';
 import i18n from '../../i18n';
 import {Liferay} from '../../liferay/liferay';
 
@@ -46,7 +47,7 @@ const getProductBasePriceAndTrial = (
 	}
 
 	const {isFreeApp} = getProductPriceModel(product);
-	const skus = ((product.skus as unknown) as DeliverySKU[]).filter(
+	const skus = (product.skus as unknown as DeliverySKU[]).filter(
 		({purchasable}) => purchasable
 	);
 
@@ -76,8 +77,7 @@ const getProductBasePriceAndTrial = (
 					skuOption.skuOptionValueKey === 'no'
 			)
 		);
-	}
-	else {
+	} else {
 		const skusLicenseUsageTypes = skus
 			.map(({skuOptions, ...sku}) => ({
 				...sku,
@@ -130,7 +130,7 @@ const GetAppOutlet = () => {
 	const navigate = useNavigate();
 
 	const productBasePriceAndTrial = getProductBasePriceAndTrial(
-		(product as unknown) as DeliveryProduct,
+		product as unknown as DeliveryProduct,
 		isCloudApp
 	);
 
@@ -187,6 +187,12 @@ const GetAppOutlet = () => {
 
 			await postCheckoutCart({cartId: cartResponse.id});
 
+			Analytics.track('APP_PURCHASE', {
+				isFreeApp,
+				paymentMethod,
+				productName: product.name,
+			});
+
 			await postEmailAppInformation({
 				dashboardLink: getReplaceCurrentURL(
 					'get-app',
@@ -210,8 +216,7 @@ const GetAppOutlet = () => {
 			);
 
 			window.location.href = paymentMethodURL || nextStepsCallbackURL;
-		}
-		catch (error) {
+		} catch (error) {
 			console.error('Unable to handleGetApp', error);
 
 			Liferay.Util.openToast({

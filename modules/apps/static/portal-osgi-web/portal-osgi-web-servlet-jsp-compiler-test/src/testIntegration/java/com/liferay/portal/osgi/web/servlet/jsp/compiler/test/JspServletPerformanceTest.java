@@ -107,10 +107,10 @@ public class JspServletPerformanceTest {
 	public void testElExpressionWithUndefinedScopedVariablesJsp()
 		throws Exception {
 
-		_testJsp(_FILE_NAME_EL_EXPRESSION_UNDEFINED_SCOPED_VARIABLES_JSP, 1);
+		_test(_FILE_NAME_EL_EXPRESSION_UNDEFINED_SCOPED_VARIABLES_JSP, 1);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_testJsp(
+			_test(
 				_FILE_NAME_EL_EXPRESSION_UNDEFINED_SCOPED_VARIABLES_JSP,
 				_NUMBER_OF_REQUESTS);
 		}
@@ -118,10 +118,10 @@ public class JspServletPerformanceTest {
 
 	@Test
 	public void testElExpressionWithUndefinedVariablesJsp() throws Exception {
-		_testJsp(_FILE_NAME_EL_EXPRESSION_UNDEFINED_VARIABLES_JSP, 1);
+		_test(_FILE_NAME_EL_EXPRESSION_UNDEFINED_VARIABLES_JSP, 1);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_testJsp(
+			_test(
 				_FILE_NAME_EL_EXPRESSION_UNDEFINED_VARIABLES_JSP,
 				_NUMBER_OF_REQUESTS);
 		}
@@ -129,10 +129,10 @@ public class JspServletPerformanceTest {
 
 	@Test
 	public void testJsp() throws Exception {
-		_testJsp(_FILE_NAME_TEST_JSP, 1);
+		_test(_FILE_NAME_TEST_JSP, 1);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_testJsp(_FILE_NAME_TEST_JSP, _NUMBER_OF_REQUESTS);
+			_test(_FILE_NAME_TEST_JSP, _NUMBER_OF_REQUESTS);
 		}
 	}
 
@@ -216,7 +216,7 @@ public class JspServletPerformanceTest {
 		return string.getBytes();
 	}
 
-	private void _testJsp(String jspFileName, int numberOfRequests)
+	private void _test(String jspFileName, int numberOfRequests)
 		throws Exception {
 
 		URL url = new URL(

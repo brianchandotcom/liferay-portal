@@ -109,7 +109,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 		_runUpgrade();
 
-		_updateClassPKColumn(layoutPageTemplateEntry.getPlid());
+		_updatePlidColumn(layoutPageTemplateEntry.getPlid());
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -156,7 +156,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 		_runUpgrade();
 
-		_updateClassPKColumn(layoutPageTemplateEntry.getPlid());
+		_updatePlidColumn(layoutPageTemplateEntry.getPlid());
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -194,7 +194,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 		_runUpgrade();
 
-		_updateClassPKColumn(layout.getPlid());
+		_updatePlidColumn(layout.getPlid());
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -230,7 +230,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 		_runUpgrade();
 
-		_updateClassPKColumn(layout.getPlid());
+		_updatePlidColumn(layout.getPlid());
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -347,7 +347,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 		}
 	}
 
-	private void _updateClassPKColumn(long plid) throws Exception {
+	private void _updatePlidColumn(long plid) throws Exception {
 		_db.runSQL(
 			StringBundler.concat(
 				"update LayoutPageTemplateStructure set plid = ", plid,

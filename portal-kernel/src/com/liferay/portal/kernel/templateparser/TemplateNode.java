@@ -406,7 +406,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 			return DLUtil.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), _themeDisplay,
-				StringPool.BLANK, false, true);
+				StringPool.BLANK, false, false);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

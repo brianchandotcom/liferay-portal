@@ -48,7 +48,7 @@ export class UserPersonalBarPage {
 			.locator(
 				'#_com_liferay_portal_workflow_web_portlet_ControlPanelWorkflowPortlet_fm_search'
 			)
-			.getByLabel('Search', {exact: true});
+			.getByLabel('Search for', {exact: true});
 		this.showNotificationBadgeInPersonalMenuLabel = page
 			.getByTestId('showNotificationBadgeInPersonalMenu')
 			.getByLabel('Show Notification Badge in Personal Menu', {

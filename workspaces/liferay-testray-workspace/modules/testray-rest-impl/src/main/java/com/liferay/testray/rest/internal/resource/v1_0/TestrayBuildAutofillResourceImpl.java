@@ -42,14 +42,14 @@ public class TestrayBuildAutofillResourceImpl
 
 		StringBundler sb = new StringBundler(24);
 
-		sb.append("SELECT cr1.c_caseResultId_ AS c_caseResultId_1,");
-		sb.append("cr1.dueStatus_ AS dueStatus_1, cr1.errors_ AS errors_1,");
-		sb.append("cr1.issues_ AS issues_1, cr1.r_userToCaseResults_userId ");
-		sb.append("AS r_userToCaseResults_userId_1,");
-		sb.append("cr2.c_caseResultId_ AS c_caseResultId_2,");
-		sb.append("cr2.dueStatus_ AS dueStatus_2, cr2.errors_ AS errors_2,");
-		sb.append("cr2.issues_ AS issues_2, cr2.r_userToCaseResults_userId ");
-		sb.append("AS r_userToCaseResults_userId_2 FROM ");
+		sb.append("select cr1.c_caseResultId_ as c_caseResultId_1,");
+		sb.append("cr1.dueStatus_ as dueStatus_1, cr1.errors_ as errors_1,");
+		sb.append("cr1.issues_ as issues_1, cr1.r_userToCaseResults_userId ");
+		sb.append("as r_userToCaseResults_userId_1,");
+		sb.append("cr2.c_caseResultId_ as c_caseResultId_2,");
+		sb.append("cr2.dueStatus_ as dueStatus_2, cr2.errors_ as errors_2,");
+		sb.append("cr2.issues_ as issues_2, cr2.r_userToCaseResults_userId ");
+		sb.append("as r_userToCaseResults_userId_2 FROM ");
 		sb.append("O_[%COMPANY_ID%]_Build b1, O_[%COMPANY_ID%]_Build b2, ");
 		sb.append("O_[%COMPANY_ID%]_CaseResult cr1, ");
 		sb.append("O_[%COMPANY_ID%]_CaseResult cr2, O_[%COMPANY_ID%]_Case ");

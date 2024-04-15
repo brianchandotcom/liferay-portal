@@ -8,7 +8,7 @@ import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import React, {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 import i18n from '~/i18n';
 
@@ -92,8 +92,6 @@ const Table: React.FC<TableProps> = ({
 	} = useContextMenu(displayActionColumn);
 
 	const [sorted, setSorted] = useState<SortDirection>(SortOption.ASC);
-
-	const navigate = useNavigate();
 
 	const changeSort = (key: string) => {
 		onSort(key, sorted);
@@ -251,49 +249,57 @@ const Table: React.FC<TableProps> = ({
 								</ClayTable.Cell>
 							)}
 
-							{columns?.map((column, columnIndex) => (
-								<ClayTable.Cell
-									className={classNames('text-dark', {
-										'cursor-pointer': column.clickable,
-										[`table-cell-minw-${column.width}`]: column.width,
-										'table-cell-expand':
-											column.size === 'sm',
-										'table-cell-expand-small':
-											column.size === 'xl',
-										'table-cell-expand-smaller':
-											column.size === 'lg',
-										'table-cell-expand-smallest':
-											column.size === 'md',
-									})}
-									expanded={column.truncate}
-									key={columnIndex}
-									onClick={() => {
-										if (column.clickable) {
-											if (onClickRow) {
+							{columns?.map((column, columnIndex) => {
+								const Wrapper =
+									column.clickable && navigateTo
+										? Link
+										: (props: any) => <div {...props} />;
+
+								return (
+									<ClayTable.Cell
+										className={classNames('text-dark', {
+											'cursor-pointer': column.clickable,
+											[`table-cell-minw-${column.width}`]: column.width,
+											'table-cell-expand':
+												column.size === 'sm',
+											'table-cell-expand-small':
+												column.size === 'xl',
+											'table-cell-expand-smaller':
+												column.size === 'lg',
+											'table-cell-expand-smallest':
+												column.size === 'md',
+										})}
+										expanded={column.truncate}
+										key={columnIndex}
+										onClick={() => {
+											if (
+												column.clickable &&
+												onClickRow
+											) {
 												onClickRow(item);
 											}
-
-											if (navigateTo) {
-												navigate(
-													navigateTo(item).toString()
-												);
+										}}
+										truncate={column.truncate}
+									>
+										<Wrapper
+											className="text-dark"
+											to={
+												navigateTo?.(
+													item
+												)?.toString() as string
 											}
-										}
-									}}
-									truncate={column.truncate}
-								>
-									{column.render
-										? column.render(
-												item[column.key],
-												{
-													...item,
-													rowIndex,
-												},
-												mutate
-										  )
-										: item[column.key]}
-								</ClayTable.Cell>
-							))}
+										>
+											{column.render
+												? column.render(
+														item[column.key],
+														{...item, rowIndex},
+														mutate
+												  )
+												: item[column.key]}
+										</Wrapper>
+									</ClayTable.Cell>
+								);
+							})}
 						</ClayTable.Row>
 					))}
 				</ClayTable.Body>

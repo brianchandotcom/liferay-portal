@@ -89,8 +89,6 @@ const UserListView: React.FC<UserListViewProps> = ({
 };
 
 const Users = () => {
-	const navigate = useNavigate();
-
 	useHeader({
 		dropdown: [],
 		heading: [
@@ -105,7 +103,7 @@ const Users = () => {
 		<Container>
 			<UserListView
 				tableProps={{
-					onClickRow: (user) => navigate(`${user.id}/update`),
+					navigateTo: (user) => `${user.id}/update`,
 				}}
 			/>
 		</Container>

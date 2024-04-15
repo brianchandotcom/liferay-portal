@@ -63,7 +63,21 @@ function getValidFields({
 		const type = propertyValue.type;
 
 		if (type === EFieldType.ARRAY) {
-			if (propertyValue.items && propertyValue.items.$ref) {
+			if (propertyValue.items?.$ref) {
+				fields.push({
+					children: getValidFields({
+						contextPath: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_DELIMITER}`,
+						schemaName: propertyValue.items.$ref.replace(
+							/^.*\//,
+							''
+						),
+						schemas,
+					}),
+					label: propertyKey,
+					name: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_PARENT_SUFFIX}`,
+					type: type ? type : 'object',
+				});
+
 				return;
 			}
 		}

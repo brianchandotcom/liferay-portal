@@ -74,7 +74,8 @@ const useLicenseActions = ({
 					licenseType: licenseKey.licenseType,
 					productName: product?.name,
 				});
-			} catch {
+			}
+			catch {
 				Liferay.Util.openToast({
 					message: i18n.translate(
 						'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard'

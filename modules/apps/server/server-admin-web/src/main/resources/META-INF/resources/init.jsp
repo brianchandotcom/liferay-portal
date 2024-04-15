@@ -10,6 +10,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/captcha" prefix="liferay-captcha" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
@@ -32,6 +33,9 @@ page import="com.liferay.portal.convert.documentlibrary.FileSystemStoreRootDirEx
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTask" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants" %><%@
+page import="com.liferay.portal.kernel.captcha.CaptchaConfigurationException" %><%@
+page import="com.liferay.portal.kernel.captcha.CaptchaException" %><%@
+page import="com.liferay.portal.kernel.captcha.CaptchaTextException" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.*" %><%@

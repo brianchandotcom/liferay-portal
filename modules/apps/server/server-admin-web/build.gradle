@@ -16,6 +16,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:captcha:captcha-api")
+	compileOnly project(":apps:captcha:captcha-taglib")
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
 	compileOnly project(":apps:document-library:document-library-preview-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")

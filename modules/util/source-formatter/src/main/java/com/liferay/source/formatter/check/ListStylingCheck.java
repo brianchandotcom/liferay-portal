@@ -32,13 +32,6 @@ public class ListStylingCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		if (!absolutePath.endsWith(
-				"modules/test/playwright/tests/client-extension-web/env" +
-					"/client-extensions.list")) {
-
-			return content;
-		}
-
 		List<String> lines = new ArrayList<>();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =

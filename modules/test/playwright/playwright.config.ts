@@ -29,6 +29,7 @@ import {config as layoutTaglib} from './tests/layout-taglib/config';
 import {config as lockedItemsConfig} from './tests/locked-items-web/config';
 import {config as objectWebConfig} from './tests/object-web/config';
 import {config as osbFaroWebConfig} from './tests/osb-faro-web/config';
+import {config as portalDefaultPermissionsWebConfig} from './tests/portal-default-permissions-web/config';
 import {config as portalWebConfig} from './tests/portal-web/config';
 import {config as portalWorkflowKaleoDesignerWebConfig} from './tests/portal-workflow-kaleo-designer-web/config';
 import {config as productNavigationControlMenuWebConfig} from './tests/product-navigation-control-menu-web/config';
@@ -68,6 +69,7 @@ export default defineConfig({
 		lockedItemsConfig,
 		objectWebConfig,
 		osbFaroWebConfig,
+		portalDefaultPermissionsWebConfig,
 		portalWebConfig,
 		portalWorkflowKaleoDesignerWebConfig,
 		productNavigationControlMenuWebConfig,

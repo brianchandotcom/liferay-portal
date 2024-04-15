@@ -47,14 +47,14 @@ public class ItemCountPerformanceTestTimer extends PerformanceTestTimer {
 			maxTime, logFilePath);
 	}
 
-	public ItemCountPerformanceTestTimer(int count, String name, int maxTime) {
+	public ItemCountPerformanceTestTimer(int count, String name, long maxTime) {
 		this(
 			count, getInvokerName(null, name), System.currentTimeMillis(),
 			maxTime, null);
 	}
 
 	public ItemCountPerformanceTestTimer(
-		int count, String name, int maxTime, Path logFilePath) {
+		int count, String name, long maxTime, Path logFilePath) {
 
 		this(
 			count, getInvokerName(null, name), System.currentTimeMillis(),

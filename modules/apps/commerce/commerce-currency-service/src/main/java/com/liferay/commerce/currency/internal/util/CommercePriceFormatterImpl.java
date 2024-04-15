@@ -87,16 +87,24 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 	}
 
 	@Override
-	public String parse(ActionRequest actionRequest, String param)
+	public BigDecimal parse(ActionRequest actionRequest, String param)
 		throws Exception {
 
 		String price = ParamUtil.getString(
 			actionRequest, param, BigDecimal.ZERO.toString());
 
+		if (param.equals("rate")) {
+			price = ParamUtil.getString(actionRequest, "rate");
+
+			if (Validator.isNull(price)) {
+				price = BigDecimal.ONE.toString();
+			}
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return parse(price, themeDisplay.getLocale());
+		return new BigDecimal(parse(price, themeDisplay.getLocale()));
 	}
 
 	@Override

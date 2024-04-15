@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
@@ -146,33 +145,18 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 
 		long cpInstanceUnitOfMeasureId = ParamUtil.getLong(
 			actionRequest, "cpInstanceUnitOfMeasureId");
-
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		BigDecimal incrementalOrderQuantity =
 			_commerceOrderItemQuantityFormatter.parse(
 				actionRequest, "incrementalOrderQuantity");
-
 		String key = ParamUtil.getString(actionRequest, "key");
 		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name");
 		int precision = ParamUtil.getInteger(actionRequest, "precision");
 		boolean primary = ParamUtil.getBoolean(actionRequest, "primary");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
-
-		String rate = ParamUtil.getString(actionRequest, "rate");
-
-		if (Validator.isNull(rate)) {
-			rate = BigDecimal.ONE.toString();
-		}
-
-		BigDecimal formattedRate = new BigDecimal(
-			_commercePriceFormatter.parse(rate, themeDisplay.getLocale()));
-
+		BigDecimal rate = _commercePriceFormatter.parse(actionRequest, "rate");
 		String sku = ParamUtil.getString(actionRequest, "sku");
 
 		if (cpInstanceUnitOfMeasureId > 0) {
@@ -188,12 +172,12 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 				updateCPInstanceUnitOfMeasure(
 					cpInstanceUnitOfMeasureId, cpInstanceId, active,
 					incrementalOrderQuantity, key, nameMap, precision, primary,
-					priority, formattedRate, sku);
+					priority, rate, sku);
 		}
 
 		_cpInstanceUnitOfMeasureService.addCPInstanceUnitOfMeasure(
 			cpInstanceId, active, incrementalOrderQuantity, key, nameMap,
-			precision, primary, priority, formattedRate, sku);
+			precision, primary, priority, rate, sku);
 
 		_updateCommercePriceEntries(actionRequest, cpInstanceId, key);
 
@@ -221,8 +205,8 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 		CPInstance cpInstance = _cpInstanceService.fetchCPInstance(
 			cpInstanceId);
 
-		BigDecimal basePrice = new BigDecimal(
-			_commercePriceFormatter.parse(actionRequest, "basePrice"));
+		BigDecimal basePrice = _commercePriceFormatter.parse(
+			actionRequest, "basePrice");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPInstanceUnitOfMeasure.class.getName(), actionRequest);
@@ -233,8 +217,8 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 				CommercePriceListConstants.TYPE_PRICE_LIST, serviceContext);
 		}
 
-		BigDecimal promoPrice = new BigDecimal(
-			_commercePriceFormatter.parse(actionRequest, "promoPrice"));
+		BigDecimal promoPrice = _commercePriceFormatter.parse(
+			actionRequest, "promoPrice");
 
 		if (promoPrice != null) {
 			_updateCommercePriceEntry(

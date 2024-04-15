@@ -119,8 +119,8 @@ public class EditCommercePriceModifierMVCActionCommand
 		String modifierType = ParamUtil.getString(
 			actionRequest, "modifierType");
 
-		BigDecimal modifierAmount = new BigDecimal(
-			_commercePriceFormatter.parse(actionRequest, "modifierAmount"));
+		BigDecimal modifierAmount = _commercePriceFormatter.parse(
+			actionRequest, "modifierAmount");
 
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");

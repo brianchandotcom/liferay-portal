@@ -156,10 +156,8 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 
 		long commerceShippingFixedOptionId = ParamUtil.getLong(
 			actionRequest, "commerceShippingFixedOptionId");
-
-		BigDecimal amount = new BigDecimal(
-			_commercePriceFormatter.parse(actionRequest, "amount"));
-
+		BigDecimal amount = _commercePriceFormatter.parse(
+			actionRequest, "amount");
 		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
 			actionRequest, "description");
 		String key = ParamUtil.getString(actionRequest, "key");

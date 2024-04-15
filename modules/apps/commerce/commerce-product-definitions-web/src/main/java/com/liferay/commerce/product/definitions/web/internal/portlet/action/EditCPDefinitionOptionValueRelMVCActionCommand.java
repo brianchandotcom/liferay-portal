@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.math.BigDecimal;
-
 import java.util.Locale;
 import java.util.Map;
 
@@ -216,9 +214,7 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 			updateCPDefinitionOptionValueRel(
 				cpDefinitionOptionValueRelId, cpInstanceId, key, nameMap,
 				ParamUtil.getBoolean(actionRequest, "preselected"),
-				new BigDecimal(
-					_commercePriceFormatter.parse(actionRequest, "price")),
-				priority,
+				_commercePriceFormatter.parse(actionRequest, "price"), priority,
 				_commerceOrderItemQuantityFormatter.parse(
 					actionRequest, "quantity"),
 				unitOfMeasureKey, serviceContext);

@@ -30,7 +30,7 @@ public interface CommercePriceFormatter {
 	public String formatAsRelative(
 		CommerceCurrency commerceCurrency, BigDecimal price, Locale locale);
 
-	public String parse(ActionRequest actionRequest, String param)
+	public BigDecimal parse(ActionRequest actionRequest, String param)
 		throws Exception;
 
 	public String parse(String price, Locale locale) throws Exception;

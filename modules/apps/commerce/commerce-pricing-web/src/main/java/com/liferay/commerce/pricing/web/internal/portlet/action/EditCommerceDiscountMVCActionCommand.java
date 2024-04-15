@@ -164,9 +164,7 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 		String level = ParamUtil.getString(actionRequest, "level");
 
 		BigDecimal[] discountLevels = _getDiscountLevels(
-			level,
-			new BigDecimal(
-				_commercePriceFormatter.parse(actionRequest, "amount")));
+			level, _commercePriceFormatter.parse(actionRequest, "amount"));
 
 		int limitationTimes = ParamUtil.getInteger(
 			actionRequest, "limitationTimes");
@@ -197,9 +195,8 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "externalReferenceCode"),
 			commerceDiscountId, title, target, useCouponCode, couponCode,
 			usePercentage,
-			new BigDecimal(
-				_commercePriceFormatter.parse(
-					actionRequest, "maximumDiscountAmount")),
+			_commercePriceFormatter.parse(
+				actionRequest, "maximumDiscountAmount"),
 			level, discountLevels[0], discountLevels[1], discountLevels[2],
 			discountLevels[3],
 			_getLimitationType(limitationTimes, limitationTimesPerAccount),

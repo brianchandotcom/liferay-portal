@@ -141,22 +141,22 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 			_commercePriceEntryService.getCommercePriceEntry(
 				commercePriceEntryId);
 
-		BigDecimal price = new BigDecimal(
-			_commercePriceFormatter.parse(actionRequest, "price"));
+		BigDecimal price = _commercePriceFormatter.parse(
+			actionRequest, "price");
 		BigDecimal minQuantity = _commerceOrderItemQuantityFormatter.parse(
 			actionRequest, "minQuantity");
 
 		boolean overrideDiscount = ParamUtil.getBoolean(
 			actionRequest, "overrideDiscount");
 
-		BigDecimal discountLevel1 = new BigDecimal(
-			_commercePriceFormatter.parse(actionRequest, "discountLevel1"));
-		BigDecimal discountLevel2 = new BigDecimal(
-			_commercePriceFormatter.parse(actionRequest, "discountLevel2"));
-		BigDecimal discountLevel3 = new BigDecimal(
-			_commercePriceFormatter.parse(actionRequest, "discountLevel3"));
-		BigDecimal discountLevel4 = new BigDecimal(
-			_commercePriceFormatter.parse(actionRequest, "discountLevel4"));
+		BigDecimal discountLevel1 = _commercePriceFormatter.parse(
+			actionRequest, "discountLevel1");
+		BigDecimal discountLevel2 = _commercePriceFormatter.parse(
+			actionRequest, "discountLevel2");
+		BigDecimal discountLevel3 = _commercePriceFormatter.parse(
+			actionRequest, "discountLevel3");
+		BigDecimal discountLevel4 = _commercePriceFormatter.parse(
+			actionRequest, "discountLevel4");
 
 		Date date = new Date();
 

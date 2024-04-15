@@ -46,8 +46,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
-import java.math.BigDecimal;
-
 import java.util.Calendar;
 
 import javax.portlet.ActionRequest;
@@ -464,31 +462,23 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		_commerceOrderService.updateCommerceOrderPrices(
 			commerceOrder.getCommerceOrderId(),
-			new BigDecimal(
-				_commercePriceFormatter.parse(actionRequest, "shippingAmount")),
-			new BigDecimal(
-				_commercePriceFormatter.parse(
-					actionRequest, "shippingDiscountAmount")),
+			_commercePriceFormatter.parse(actionRequest, "shippingAmount"),
+			_commercePriceFormatter.parse(
+				actionRequest, "shippingDiscountAmount"),
 			commerceOrder.getShippingDiscountPercentageLevel1(),
 			commerceOrder.getShippingDiscountPercentageLevel2(),
 			commerceOrder.getShippingDiscountPercentageLevel3(),
 			commerceOrder.getShippingDiscountPercentageLevel4(),
-			new BigDecimal(
-				_commercePriceFormatter.parse(actionRequest, "subtotal")),
-			new BigDecimal(
-				_commercePriceFormatter.parse(
-					actionRequest, "subtotalDiscountAmount")),
+			_commercePriceFormatter.parse(actionRequest, "subtotal"),
+			_commercePriceFormatter.parse(
+				actionRequest, "subtotalDiscountAmount"),
 			commerceOrder.getSubtotalDiscountPercentageLevel1(),
 			commerceOrder.getSubtotalDiscountPercentageLevel2(),
 			commerceOrder.getSubtotalDiscountPercentageLevel3(),
 			commerceOrder.getSubtotalDiscountPercentageLevel4(),
-			new BigDecimal(
-				_commercePriceFormatter.parse(actionRequest, "taxAmount")),
-			new BigDecimal(
-				_commercePriceFormatter.parse(actionRequest, "total")),
-			new BigDecimal(
-				_commercePriceFormatter.parse(
-					actionRequest, "totalDiscountAmount")),
+			_commercePriceFormatter.parse(actionRequest, "taxAmount"),
+			_commercePriceFormatter.parse(actionRequest, "total"),
+			_commercePriceFormatter.parse(actionRequest, "totalDiscountAmount"),
 			commerceOrder.getTotalDiscountPercentageLevel1(),
 			commerceOrder.getTotalDiscountPercentageLevel2(),
 			commerceOrder.getTotalDiscountPercentageLevel3(),
@@ -655,16 +645,13 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrder.getAdvanceStatus(),
 			commerceOrder.getCommercePaymentMethodKey(),
 			commerceOrder.getPurchaseOrderNumber(),
-			new BigDecimal(
-				_commercePriceFormatter.parse(actionRequest, "shippingPrice")),
+			_commercePriceFormatter.parse(actionRequest, "shippingPrice"),
 			commerceOrder.getShippingOptionName(),
 			commerceOrder.getShippingWithTaxAmount(),
-			new BigDecimal(
-				_commercePriceFormatter.parse(actionRequest, "subtotal")),
+			_commercePriceFormatter.parse(actionRequest, "subtotal"),
 			commerceOrder.getSubtotalWithTaxAmount(),
 			commerceOrder.getTaxAmount(),
-			new BigDecimal(
-				_commercePriceFormatter.parse(actionRequest, "total")),
+			_commercePriceFormatter.parse(actionRequest, "total"),
 			commerceOrder.getTotalDiscountAmount(),
 			commerceOrder.getTotalWithTaxAmount(), commerceContext, false);
 	}

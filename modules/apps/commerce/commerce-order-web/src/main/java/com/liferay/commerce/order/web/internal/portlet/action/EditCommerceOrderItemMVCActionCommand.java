@@ -206,22 +206,18 @@ public class EditCommerceOrderItemMVCActionCommand
 			commerceOrderItem =
 				_commerceOrderItemService.updateCommerceOrderItemUnitPrice(
 					commerceOrderItemId, decimalQuantity,
-					new BigDecimal(
-						_commercePriceFormatter.parse(actionRequest, "price")));
+					_commercePriceFormatter.parse(actionRequest, "price"));
 
 			commerceOrderItem =
 				_commerceOrderItemService.updateCommerceOrderItemPrices(
 					commerceOrderItemId,
-					new BigDecimal(
-						_commercePriceFormatter.parse(
-							actionRequest, "discountAmount")),
+					_commercePriceFormatter.parse(
+						actionRequest, "discountAmount"),
 					commerceOrderItem.getDiscountPercentageLevel1(),
 					commerceOrderItem.getDiscountPercentageLevel2(),
 					commerceOrderItem.getDiscountPercentageLevel3(),
 					commerceOrderItem.getDiscountPercentageLevel4(),
-					new BigDecimal(
-						_commercePriceFormatter.parse(
-							actionRequest, "finalPrice")),
+					_commercePriceFormatter.parse(actionRequest, "finalPrice"),
 					commerceOrderItem.getPromoPrice(),
 					commerceOrderItem.getUnitPrice());
 		}

@@ -303,14 +303,12 @@ function OrganizationChart({
 					</div>
 				)}
 
-				{Liferay.FeatureFlags['COMMERCE-12192'] && (
-					<InfoPanelProvider
-						namespace={namespace}
-						pathImage={pathImage}
-						selectLogoURL={selectLogoURL}
-						spritemap={spritemap}
-					/>
-				)}
+				<InfoPanelProvider
+					namespace={namespace}
+					pathImage={pathImage}
+					selectLogoURL={selectLogoURL}
+					spritemap={spritemap}
+				/>
 
 				<MenuProvider
 					alignElementRef={clickedMenuButtonRef}

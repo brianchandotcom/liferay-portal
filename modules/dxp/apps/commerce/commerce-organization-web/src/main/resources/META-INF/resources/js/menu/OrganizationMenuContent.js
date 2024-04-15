@@ -85,13 +85,11 @@ export default function OrganizationMenuContent({
 
 	const actions = [];
 
-	if (Liferay.FeatureFlags['COMMERCE-12192']) {
-		actions.push(
-			<ClayDropDown.Item key="view" onClick={handleView}>
-				{Liferay.Language.get('view')}
-			</ClayDropDown.Item>
-		);
-	}
+	actions.push(
+		<ClayDropDown.Item key="view" onClick={handleView}>
+			{Liferay.Language.get('view')}
+		</ClayDropDown.Item>
+	);
 
 	if (
 		parentData &&
@@ -117,10 +115,7 @@ export default function OrganizationMenuContent({
 		);
 	}
 
-	if (
-		Liferay.FeatureFlags['COMMERCE-12192'] &&
-		hasPermission(data, ACTION_KEYS.organization.UPDATE)
-	) {
+	if (hasPermission(data, ACTION_KEYS.organization.UPDATE)) {
 		actions.push(
 			<ClayDropDown.Item key="edit" onClick={handleEdit}>
 				{Liferay.Language.get('edit')}

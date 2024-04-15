@@ -227,13 +227,10 @@ export function fillEntityNode(nodeEnter, spritemap, openMenu) {
 		if (!chartItem.parent || chartItem.parent.data.type === 'fakeRoot') {
 			chartItem.data.isRootNode = true;
 
-			return (
-				Liferay.FeatureFlags['COMMERCE-12192'] &&
-				hasPermissions(chartItem.data, [
-					ACTION_KEYS[chartItem.data.type].UPDATE,
-					ACTION_KEYS[chartItem.data.type].VIEW,
-				])
-			);
+			return hasPermissions(chartItem.data, [
+				ACTION_KEYS[chartItem.data.type].UPDATE,
+				ACTION_KEYS[chartItem.data.type].VIEW,
+			]);
 		}
 
 		chartItem.data.isRootNode = false;
@@ -243,11 +240,10 @@ export function fillEntityNode(nodeEnter, spritemap, openMenu) {
 				ACTION_KEYS[chartItem.data.type].DELETE,
 				ACTION_KEYS[chartItem.data.type].REMOVE,
 			]) ||
-			(Liferay.FeatureFlags['COMMERCE-12192'] &&
-				hasPermissions(chartItem.data, [
-					ACTION_KEYS[chartItem.data.type].UPDATE,
-					ACTION_KEYS[chartItem.data.type].VIEW,
-				]))
+			hasPermissions(chartItem.data, [
+				ACTION_KEYS[chartItem.data.type].UPDATE,
+				ACTION_KEYS[chartItem.data.type].VIEW,
+			])
 		);
 	});
 

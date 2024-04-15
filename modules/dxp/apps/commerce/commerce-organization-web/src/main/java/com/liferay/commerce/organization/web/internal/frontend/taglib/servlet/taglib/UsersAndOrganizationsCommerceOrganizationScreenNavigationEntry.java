@@ -10,7 +10,6 @@ import com.liferay.commerce.organization.web.internal.display.context.CommerceOr
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -62,15 +61,6 @@ public class UsersAndOrganizationsCommerceOrganizationScreenNavigationEntry
 	public String getScreenNavigationKey() {
 		return UserScreenNavigationEntryConstants.
 			SCREEN_NAVIGATION_KEY_USERS_AND_ORGANIZATIONS;
-	}
-
-	@Override
-	public boolean isVisible(User user, User selUser) {
-		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-12192")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

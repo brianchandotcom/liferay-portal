@@ -23,94 +23,80 @@ function ManagementBar({onSearchSelected}) {
 	return (
 		<ManagementToolbar.Container className="org-chart-management-toolbar">
 			<ManagementToolbar.ItemList>
-				{Liferay.FeatureFlags['COMMERCE-12192'] && (
-					<>
-						<ManagementToolbar.Item className="root-org-filter">
-							<RootOrganizationFilter />
-						</ManagementToolbar.Item>
+				<ManagementToolbar.Item className="root-org-filter">
+					<RootOrganizationFilter />
+				</ManagementToolbar.Item>
 
-						<ManagementToolbar.Item className="search">
-							<Autocomplete
-								apiUrl={[
-									'/o/headless-admin-user/v1.0/accounts',
-									'/o/headless-admin-user/v1.0/organizations?flatten=true',
-									'/o/headless-admin-user/v1.0/user-accounts',
-								]}
-								autoload={false}
-								customView={CustomAutocompleteRenderer}
-								customViewInsideDropDown={true}
-								fetchDataDebounce={300}
-								infiniteScrollMode={true}
-								initialLabel={
-									searchSelectedItemRef.current
-										? searchSelectedItemRef.current.name
-										: ''
+				<ManagementToolbar.Item className="search">
+					<Autocomplete
+						apiUrl={[
+							'/o/headless-admin-user/v1.0/accounts',
+							'/o/headless-admin-user/v1.0/organizations?flatten=true',
+							'/o/headless-admin-user/v1.0/user-accounts',
+						]}
+						autoload={false}
+						customView={CustomAutocompleteRenderer}
+						customViewInsideDropDown={true}
+						fetchDataDebounce={300}
+						infiniteScrollMode={true}
+						initialLabel={
+							searchSelectedItemRef.current
+								? searchSelectedItemRef.current.name
+								: ''
+						}
+						initialValue={
+							searchSelectedItemRef.current
+								? searchSelectedItemRef.current.id
+								: ''
+						}
+						inputName="search"
+						itemsKey="id"
+						itemsLabel="name"
+						onValueUpdated={(currentValue, selectedItem) => {
+							let type;
+
+							if (currentValue) {
+								if (
+									(searchSelectedItemRef.current &&
+										String(
+											searchSelectedItemRef.current.id
+										) === String(currentValue) &&
+										String(
+											searchSelectedItemRef.current
+												.randomId
+										) === String(selectedItem.randomId)) ||
+									!selectedItem.randomId
+								) {
+									return;
 								}
-								initialValue={
-									searchSelectedItemRef.current
-										? searchSelectedItemRef.current.id
-										: ''
+
+								searchSelectedItemRef.current = selectedItem;
+
+								if ('accountBriefs' in selectedItem) {
+									type = MODEL_TYPE_MAP.user;
 								}
-								inputName="search"
-								itemsKey="id"
-								itemsLabel="name"
-								onValueUpdated={(
+								else if (
+									'numberOfOrganizations' in selectedItem
+								) {
+									type = MODEL_TYPE_MAP.organization;
+								}
+								else if ('parentAccountId' in selectedItem) {
+									type = MODEL_TYPE_MAP.account;
+								}
+
+								onSearchSelected(
 									currentValue,
-									selectedItem
-								) => {
-									let type;
-
-									if (currentValue) {
-										if (
-											(searchSelectedItemRef.current &&
-												String(
-													searchSelectedItemRef
-														.current.id
-												) === String(currentValue) &&
-												String(
-													searchSelectedItemRef
-														.current.randomId
-												) ===
-													String(
-														selectedItem.randomId
-													)) ||
-											!selectedItem.randomId
-										) {
-											return;
-										}
-
-										searchSelectedItemRef.current = selectedItem;
-
-										if ('accountBriefs' in selectedItem) {
-											type = MODEL_TYPE_MAP.user;
-										}
-										else if (
-											'numberOfOrganizations' in
-											selectedItem
-										) {
-											type = MODEL_TYPE_MAP.organization;
-										}
-										else if (
-											'parentAccountId' in selectedItem
-										) {
-											type = MODEL_TYPE_MAP.account;
-										}
-
-										onSearchSelected(
-											currentValue,
-											selectedItem.name,
-											type
-										);
-									}
-									else {
-										onSearchSelected(null, null, null);
-									}
-								}}
-								pageSize={10}
-							/>
-						</ManagementToolbar.Item>
-					</>
-				)}
+									selectedItem.name,
+									type
+								);
+							}
+							else {
+								onSearchSelected(null, null, null);
+							}
+						}}
+						pageSize={10}
+					/>
+				</ManagementToolbar.Item>
 
 				<ManagementToolbar.Item>
 					<ClayButton

@@ -24,6 +24,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 	customFriendlyURL = '',
 	friendlyUrlInfo,
 	formGroupClassName = '',
+	friendlyURLSeparatorCompanyConfigurationURL,
 	id,
 	inputAddon,
 	isValid = true,
@@ -129,11 +130,16 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 						'customize-the-url-of-this-blog-enty-to-your-preference-or-stick-to-the-default-setting-based-on-the-entry-title-categoires-can-also-be-added-to-the-url'
 					)}
 
-					<ClayLink>
-						{Liferay.Language.get(
-							'check-instance-settings-for-more-url-separator-configurations'
-						)}
-					</ClayLink>
+					{friendlyURLSeparatorCompanyConfigurationURL && (
+						<ClayLink
+							href={friendlyURLSeparatorCompanyConfigurationURL}
+						>
+							{' ' +
+								Liferay.Language.get(
+									'check-instance-settings-for-more-url-separator-configurations'
+								)}
+						</ClayLink>
+					)}
 				</div>
 
 				<ClayRadioGroup

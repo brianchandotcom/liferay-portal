@@ -15,6 +15,7 @@ import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.settings.BlogsGroupServiceSettings;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
@@ -36,12 +37,15 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,6 +56,8 @@ import com.liferay.portal.util.PropsValues;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -222,6 +228,34 @@ public class BlogsEditEntryDisplayContext {
 			getBlogsEntry(), _httpServletRequest, "entryId");
 
 		return _entryId;
+	}
+
+	public String getFriendlyURLSeparatorCompanyConfigurationURL()
+		throws PortalException {
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(
+				PortalUtil.getUser(_httpServletRequest));
+
+		if (!permissionChecker.isCompanyAdmin()) {
+			return null;
+		}
+
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_httpServletRequest,
+				ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/configuration_admin/view_configuration_screen"
+		).setRedirect(
+			ParamUtil.getString(
+				_httpServletRequest, "backURL",
+				PortalUtil.getCurrentCompleteURL(_httpServletRequest))
+		).setParameter(
+			"configurationScreenKey",
+			"friendly-url-separator-company-configuration"
+		).buildString();
 	}
 
 	public String[] getImageExtensions() throws ConfigurationException {

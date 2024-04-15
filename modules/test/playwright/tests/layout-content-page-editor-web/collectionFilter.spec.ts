@@ -5,23 +5,21 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {collectionPagesTest} from '../../fixtures/CollectionPageTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import getRandomString from '../../utils/getRandomString';
-import {PORTLET_URLS} from '../../utils/portletUrls';
 import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
+import createPageWithCollectionAndFilterCollection from './utils/createPageWithCollectionAndFilterCollection';
 import getAssetTypesDefinition from './utils/getAssetTypesDefinition';
-import getCollectionDefinition from './utils/getCollectionDefinition';
-import getCollectionItemDefinition from './utils/getCollectionItemDefinition';
-import getFragmentDefinition from './utils/getFragmentDefinition';
-import getPageDefinition from './utils/getPageDefinition';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	collectionPagesTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
@@ -29,31 +27,6 @@ export const test = mergeTests(
 	journalPagesTest,
 	pageEditorPagesTest
 );
-
-const FRAGMENT_FIELDS = [
-	{
-		id: 'element-text',
-		value: {
-			text: {
-				mapping: {
-					fieldKey: 'JournalArticle_title',
-					itemReference: {
-						contextSource: 'CollectionItem',
-					},
-				},
-			},
-		},
-	},
-];
-
-const getCollectionClassPK = async (page) => {
-	const url = await page.url();
-	const urlParams = new URLSearchParams(url);
-
-	return urlParams.get(
-		'_com_liferay_asset_list_web_portlet_AssetListPortlet_assetListEntryId'
-	);
-};
 
 const selectFilter = async (page, categories) => {
 	await page.getByRole('button', {name: 'Select'}).click();
@@ -66,83 +39,9 @@ const selectFilter = async (page, categories) => {
 	await page.getByRole('button', {name: 'Apply'}).click();
 };
 
-const createCollection = async (page, friendlyUrlPath) => {
-
-	// Create a dynamic collection
-
-	await page.goto(`/group${friendlyUrlPath}${PORTLET_URLS.collections}`);
-
-	await page.getByRole('button', {name: 'New'}).first().click();
-
-	await page.getByRole('menuitem', {name: 'Dynamic Collection'}).click();
-
-	await page.getByPlaceholder('Title').fill('Animal Collection');
-
-	await page.getByRole('button', {name: 'Save'}).click();
-
-	await page.waitForTimeout(3000);
-
-	// Configure the dynamic collection for Web Contents
-
-	await page
-		.getByLabel('Item Type')
-		.selectOption({label: 'Web Content Article'});
-
-	await page.waitForTimeout(3000);
-
-	await page
-		.locator('.asset-subtype:not(.hide)')
-		.getByLabel('Item Subtype')
-		.selectOption({label: 'Basic Web Content'});
-
-	await page.getByRole('button', {name: 'Save'}).click();
-
-	await page.waitForTimeout(3000);
-};
-
-const createPageWithCollectionAndFilterCollection = async ({
-	apiHelpers,
-	collectionFilterId,
-	page,
-	siteId,
-}) => {
-	const classPK = await getCollectionClassPK(page);
-
-	const collectionFilterDefinition = getFragmentDefinition(
-		collectionFilterId,
-		'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer'
-	);
-
-	const collectionFragmentDefinition = getFragmentDefinition(
-		getRandomString(),
-		'BASIC_COMPONENT-heading',
-		{},
-		FRAGMENT_FIELDS
-	);
-
-	const collectionItemDefinition = getCollectionItemDefinition(
-		getRandomString(),
-		[collectionFragmentDefinition]
-	);
-
-	const collectionDefinition = getCollectionDefinition(
-		getRandomString(),
-		classPK,
-		[collectionItemDefinition]
-	);
-
-	return await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([
-			collectionFilterDefinition,
-			collectionDefinition,
-		]),
-		siteId,
-		title: getRandomString(),
-	});
-};
-
 test('filters a web content collection by single and multiple categories', async ({
 	apiHelpers,
+	collectionPage,
 	page,
 	pageEditorPage,
 	site,
@@ -198,7 +97,15 @@ test('filters a web content collection by single and multiple categories', async
 
 	// Create a dynamic collection with the previous Web Contents
 
-	await createCollection(page, site.friendlyUrlPath);
+	const collectionName = 'Animal Collection';
+
+	await collectionPage.goto(site.friendlyUrlPath);
+
+	const {collectionId} =
+		await collectionPage.createWebContentDynamicCollection(
+			collectionName,
+			site.friendlyUrlPath
+		);
 
 	// Create a page with Collection Display and Collection Filter fragments
 
@@ -207,7 +114,7 @@ test('filters a web content collection by single and multiple categories', async
 	const layout = await createPageWithCollectionAndFilterCollection({
 		apiHelpers,
 		collectionFilterId,
-		page,
+		collectionId,
 		siteId: site.id,
 	});
 
@@ -221,7 +128,7 @@ test('filters a web content collection by single and multiple categories', async
 
 	await page.getByLabel('Select', {exact: true}).click();
 
-	await page.getByLabel('Animal Collection').check();
+	await page.getByLabel(collectionName).check();
 
 	await page.getByLabel('Filter', {exact: true}).selectOption('category');
 
@@ -238,6 +145,8 @@ test('filters a web content collection by single and multiple categories', async
 		.frameLocator('iframe[title="Select"]')
 		.getByRole('button', {name: 'Select This Level'})
 		.click();
+
+	await page.waitForTimeout(1000);
 
 	await pageEditorPage.publishPage();
 
@@ -270,6 +179,7 @@ test('filters a web content collection by single and multiple categories', async
 
 test('filters a web content collection by single and multiple tags', async ({
 	apiHelpers,
+	collectionPage,
 	page,
 	pageEditorPage,
 	site,
@@ -317,7 +227,15 @@ test('filters a web content collection by single and multiple tags', async ({
 
 	// Create a dynamic collection with the previous Web Contents
 
-	await createCollection(page, site.friendlyUrlPath);
+	const collectionName = 'Animal Collection';
+
+	await collectionPage.goto(site.friendlyUrlPath);
+
+	const {collectionId} =
+		await collectionPage.createWebContentDynamicCollection(
+			collectionName,
+			site.friendlyUrlPath
+		);
 
 	// Create a page with Collection Display and Collection Filter fragments
 
@@ -326,7 +244,7 @@ test('filters a web content collection by single and multiple tags', async ({
 	const layout = await createPageWithCollectionAndFilterCollection({
 		apiHelpers,
 		collectionFilterId,
-		page,
+		collectionId,
 		siteId: site.id,
 	});
 
@@ -340,7 +258,7 @@ test('filters a web content collection by single and multiple tags', async ({
 
 	await page.getByLabel('Select', {exact: true}).click();
 
-	await page.getByLabel('Animal Collection').check();
+	await page.getByLabel(collectionName).check();
 
 	await page.getByLabel('Filter', {exact: true}).selectOption('tags');
 
@@ -377,6 +295,7 @@ test('filters a web content collection by single and multiple tags', async ({
 
 test('enables search field in dropdown list of Collection Filter', async ({
 	apiHelpers,
+	collectionPage,
 	page,
 	pageEditorPage,
 	site,
@@ -413,7 +332,15 @@ test('enables search field in dropdown list of Collection Filter', async ({
 
 	// Create a dynamic collection with the previous Web Content
 
-	await createCollection(page, site.friendlyUrlPath);
+	const collectionName = 'Animal Collection';
+
+	await collectionPage.goto(site.friendlyUrlPath);
+
+	const {collectionId} =
+		await collectionPage.createWebContentDynamicCollection(
+			collectionName,
+			site.friendlyUrlPath
+		);
 
 	// Create a page with Collection Display and Collection Filter fragments
 
@@ -422,7 +349,7 @@ test('enables search field in dropdown list of Collection Filter', async ({
 	const layout = await createPageWithCollectionAndFilterCollection({
 		apiHelpers,
 		collectionFilterId,
-		page,
+		collectionId,
 		siteId: site.id,
 	});
 
@@ -436,7 +363,7 @@ test('enables search field in dropdown list of Collection Filter', async ({
 
 	await page.getByLabel('Select', {exact: true}).click();
 
-	await page.getByLabel('Animal Collection').check();
+	await page.getByLabel(collectionName).check();
 
 	await page.getByLabel('Filter', {exact: true}).selectOption('category');
 

@@ -1,6 +1,6 @@
 {
 	"pageElement": {
-		"id": "97aea8cb-84f9-3ab5-d86a-3ca410023ea9",
+		"id": "e80d27fd-f68e-d1a0-50c7-98fcb27a8867",
 		"pageElements": [
 			{
 				"definition": {
@@ -2745,11 +2745,9 @@
 		"type": "Root"
 	},
 	"settings": {
-		"colorSchemeName": "01",
 		"masterPage": {
 			"key": "liferay-learn"
-		},
-		"themeName": "Dialect"
+		}
 	},
-	"version": 1.1
+	"version": 1.0
 }

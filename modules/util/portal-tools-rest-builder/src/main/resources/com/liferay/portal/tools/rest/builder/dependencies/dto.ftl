@@ -224,20 +224,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 							}
 						});
 
-					_${propertyName}Supplier = null;
 					_lazy${capitalizedPropertyName} = null;
-
-					return ${propertyName};
-				}
-
-				if (${propertyName} != null) {
-					return ${propertyName};
-				}
-
-				if (_${propertyName}Supplier != null) {
-					${propertyName} = _${propertyName}Supplier.get();
-
-					_${propertyName}Supplier = null;
 				}
 
 				return ${propertyName};
@@ -271,9 +258,10 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		public void set${capitalizedPropertyName}(${propertyType} ${propertyName}) {
 			this.${propertyName} = ${propertyName};
 
-			_${propertyName}Supplier = null;
 			<#if propertySchema.isJsonMap()>
 				_lazy${capitalizedPropertyName} = null;
+			<#else>
+				_${propertyName}Supplier = null;
 			</#if>
 		}
 
@@ -341,10 +329,15 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 				@NotNull
 			</#if>
 		</#if>
-		protected ${propertyType} ${propertyName}<#if propertySchema.jsonMap> = new HashMap<>()</#if>;
 
-		@JsonIgnore
-		private Supplier<${propertyType}> _${propertyName}Supplier;
+		<#if propertySchema.jsonMap>
+			protected ${propertyType} ${propertyName} = new HashMap<>();
+		<#else>
+			protected ${propertyType} ${propertyName};
+
+			@JsonIgnore
+			private Supplier<${propertyType}> _${propertyName}Supplier;
+		</#if>
 	</#list>
 
 	@Override

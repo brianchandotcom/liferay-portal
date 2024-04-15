@@ -3,33 +3,33 @@
 	groupPathFriendlyURLPublic = themeDisplay.getPathFriendlyURLPublic() + groupFriendlyURL
 	navigationJSONObject = jsonFactoryUtil.createJSONObject(navigation.getData())
 	navigationMenuItems =
-	{
-	"Analytics Cloud": {
-	"title": "Analytics Cloud",
-	"url": "analytics-cloud",
-	"image": "/documents/d${groupFriendlyURL}/analytics_c-svg"
-	},
-	"Commerce": {
-	"title": "Commerce",
-	"url": "commerce",
-	"image": "/documents/d${groupFriendlyURL}/commerce_product-svg"
-	},
-	"DXP": {
-	"title": "DXP / Portal",
-	"url": "dxp",
-	"image": "/documents/d${groupFriendlyURL}/dxp_p-svg"
-	},
-	"Liferay Cloud": {
-	"title": "Liferay Cloud",
-	"url": "liferay-cloud",
-	"image": "/documents/d${groupFriendlyURL}/dxp_c-svg"
-	},
-	"Reference": {
-	"title": "Reference",
-	"url": "reference",
-	"image": "/documents/d${groupFriendlyURL}/reference-svg"
-	}
-	}
+		{
+			"Analytics Cloud": {
+				"image": "/documents/d${groupFriendlyURL}/analytics_c-svg",
+				"title": "Analytics Cloud",
+				"url": "analytics-cloud"
+			},
+			"Commerce": {
+				"image": "/documents/d${groupFriendlyURL}/commerce_product-svg",
+				"title": "Commerce",
+				"url": "commerce"
+			},
+			"DXP": {
+				"image": "/documents/d${groupFriendlyURL}/dxp_p-svg",
+				"title": "DXP / Portal",
+				"url": "dxp"
+			},
+			"Liferay Cloud": {
+				"image": "/documents/d${groupFriendlyURL}/dxp_c-svg",
+				"title": "Liferay Cloud",
+				"url": "liferay-cloud"
+			},
+			"Reference": {
+				"image": "/documents/d${groupFriendlyURL}/reference-svg",
+				"title": "Reference",
+				"url": "reference"
+			}
+		}
 
 	breadcrumbJSONArray = navigationJSONObject.getJSONArray("breadcrumb")
 	childrenJSONArray = navigationJSONObject.getJSONArray("children")

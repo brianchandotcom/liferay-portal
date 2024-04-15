@@ -50,11 +50,11 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 	@Override
 	@Test
 	public void testGetUserAccountEmailVerificationTicket() throws Exception {
-		Ticket getTicket = ticketResource.getUserAccountEmailVerificationTicket(
+		Ticket ticket = ticketResource.getUserAccountEmailVerificationTicket(
 			testGetUserAccountEmailVerificationTicket_getUserAccountId());
 
-		Assert.assertNotNull(getTicket);
-		assertValid(getTicket);
+		Assert.assertNotNull(ticket);
+		assertValid(ticket);
 
 		User requestingUser = _addUser(RandomTestUtil.randomString());
 
@@ -66,11 +66,11 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 	@Override
 	@Test
 	public void testGetUserAccountPasswordResetTicket() throws Exception {
-		Ticket getTicket = ticketResource.getUserAccountPasswordResetTicket(
+		Ticket ticket = ticketResource.getUserAccountPasswordResetTicket(
 			testGetUserAccountPasswordResetTicket_getUserAccountId());
 
-		Assert.assertNotNull(getTicket);
-		assertValid(getTicket);
+		Assert.assertNotNull(ticket);
+		assertValid(ticket);
 
 		User requestingUser = _addUser(RandomTestUtil.randomString());
 
@@ -194,10 +194,10 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 
 		_userLocalService.addRoleUser(role.getRoleId(), requestingUser);
 
-		Ticket getTicket = unsafeFunction.apply(_user.getUserId());
+		Ticket ticket = unsafeFunction.apply(_user.getUserId());
 
-		Assert.assertNotNull(getTicket);
-		assertValid(getTicket);
+		Assert.assertNotNull(ticket);
+		assertValid(ticket);
 	}
 
 	private TicketResource _getTicketResource(String login, String password) {

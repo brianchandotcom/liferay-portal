@@ -747,7 +747,7 @@
 </tr>
 <tr>
 	<td>PAGINATION_ITEMS_PER_PAGE_SELECT</td>
-	<td>//div[contains(@id,'${key_id}')]//../button[contains(@class,'dropdown-toggle btn btn-unstyled')]</td>
+	<td>//div[contains(@id,'${key_id}')]//div[contains (@class,'pagination')]/button[contains(@class,'dropdown-toggle btn btn-unstyled')]</td>
 	<td></td>
 </tr>
 <tr>

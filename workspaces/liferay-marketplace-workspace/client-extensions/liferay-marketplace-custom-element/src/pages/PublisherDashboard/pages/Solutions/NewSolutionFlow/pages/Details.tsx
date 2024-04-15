@@ -32,7 +32,11 @@ const Details = () => {
 				Add a minimum of 2 blocks
 			</Form.Label>
 
-			{submit && <Form.Section name={selectedBlock}></Form.Section>}
+			{submit && (
+				<Form.SectionWithControllers
+					name={selectedBlock}
+				></Form.SectionWithControllers>
+			)}
 
 			<ClayButton
 				className="align-items-center content-block d-flex flex-row justify-content-center mt-4 w-100"

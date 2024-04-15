@@ -9,7 +9,7 @@ import {FormProvider} from 'react-hook-form';
 import {HelpMessage} from './HelpMessage';
 import {Input} from './Input';
 import {Label} from './Label';
-import {Section} from './Section';
+import {SectionWithControllers} from './SectionWithControllers';
 
 type FormProps = {
 	children: ReactNode;
@@ -20,7 +20,7 @@ type FormChildrens = {
 	HelpMessage: typeof HelpMessage;
 	Input: typeof Input;
 	Label: typeof Label;
-	Section: typeof Section;
+	SectionWithControllers: typeof SectionWithControllers;
 };
 
 const Form: React.FC<FormProps> & FormChildrens = ({
@@ -38,6 +38,6 @@ const Form: React.FC<FormProps> & FormChildrens = ({
 Form.HelpMessage = HelpMessage;
 Form.Input = Input;
 Form.Label = Label;
-Form.Section = Section;
+Form.SectionWithControllers = SectionWithControllers;
 
 export default Form;

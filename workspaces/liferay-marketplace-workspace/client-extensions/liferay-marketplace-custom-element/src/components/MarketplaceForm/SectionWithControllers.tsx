@@ -9,11 +9,14 @@ import './index.scss';
 
 import {HTMLAttributes} from 'react';
 
-interface SectionProps extends HTMLAttributes<HTMLDivElement> {
+interface SectionWithControllersProps extends HTMLAttributes<HTMLDivElement> {
 	name: string;
 }
 
-export function Section({name, ...props}: SectionProps) {
+export function SectionWithControllers({
+	name,
+	...props
+}: SectionWithControllersProps) {
 	return (
 		<div className="marketplace-form-section mt-4 p-1 rounded" {...props}>
 			<div className="d-flex justify-content-between">

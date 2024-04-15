@@ -4,10 +4,10 @@
 			<#if (navPrimaryItem.getChildren()?size > 0)>
 				<div class="adt-nav-item dropdown dropdown-action w-100">
 					<button
+						aria-expanded="true"
 						class="adt-nav-text align-items-center d-flex menu-info"
 						data-toggle="liferay-dropdown"
 						id="main-menu-id"
-						aria-expanded="true"
 						tabindex="4"
 					>
 						<span class="adt-nav-title text-truncate">

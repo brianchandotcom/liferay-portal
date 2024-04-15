@@ -15,7 +15,6 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -174,7 +173,7 @@ public class ProductsLimitCOREntryTypeImpl implements COREntryType {
 
 	@Override
 	public boolean isActive() {
-		return FeatureFlagManagerUtil.isEnabled("COMMERCE-11922");
+		return true;
 	}
 
 	@Reference

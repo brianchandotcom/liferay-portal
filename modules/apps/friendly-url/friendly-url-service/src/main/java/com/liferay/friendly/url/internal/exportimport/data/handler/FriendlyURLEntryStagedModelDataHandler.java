@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -245,7 +246,7 @@ public class FriendlyURLEntryStagedModelDataHandler
 			return;
 		}
 
-		long[] assetCategoryIds = {};
+		List<Long> assetCategoryIds = new ArrayList<>();
 
 		for (Element assetCategoryElement : assetCategoryElements) {
 			String assetCategoryPath = assetCategoryElement.attributeValue(
@@ -262,8 +263,7 @@ public class FriendlyURLEntryStagedModelDataHandler
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					AssetCategory.class);
 
-			assetCategoryIds = ArrayUtil.append(
-				assetCategoryIds,
+			assetCategoryIds.add(
 				MapUtil.getLong(
 					assetCategoryNewPrimaryKeys, assetCategory.getCategoryId(),
 					assetCategory.getCategoryId()));
@@ -278,9 +278,10 @@ public class FriendlyURLEntryStagedModelDataHandler
 			importedFriendlyURL.getModifiedDate(),
 			FriendlyURLEntry.class.getName(),
 			importedFriendlyURL.getFriendlyURLEntryId(),
-			importedFriendlyURL.getUuid(), 0, assetCategoryIds, new String[0],
-			true, false, null, null, null, null, ContentTypes.TEXT_PLAIN, null,
-			null, null, null, null, 0, 0, serviceContext.getAssetPriority());
+			importedFriendlyURL.getUuid(), 0,
+			ArrayUtil.toLongArray(assetCategoryIds), new String[0], true, false,
+			null, null, null, null, ContentTypes.TEXT_PLAIN, null, null, null,
+			null, null, 0, 0, serviceContext.getAssetPriority());
 	}
 
 	@Reference

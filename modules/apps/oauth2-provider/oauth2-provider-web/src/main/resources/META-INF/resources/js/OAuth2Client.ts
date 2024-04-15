@@ -131,7 +131,8 @@ class OAuth2Client {
 
 				const tokenResponse = oauth2Client._requestToken(
 					challenge.code_verifier,
-					event.data.code
+					event.data.code,
+					redirectURI
 				);
 
 				resolve(tokenResponse);
@@ -255,7 +256,8 @@ class OAuth2Client {
 
 	private async _requestToken(
 		codeVerifier: string,
-		code: string
+		code: string,
+		redirectURI: string
 	): Promise<IOAuth2ClientTokenResponse> {
 		const oauth2Client = this;
 
@@ -268,7 +270,7 @@ class OAuth2Client {
 				code,
 				code_verifier: codeVerifier,
 				grant_type: 'authorization_code',
-				redirect_uri: oauth2Client.redirectURIs[0],
+				redirect_uri: redirectURI,
 			}),
 			cache: 'no-cache',
 			headers: {

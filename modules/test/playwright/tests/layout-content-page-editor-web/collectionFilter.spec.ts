@@ -5,7 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {collectionPagesTest} from '../../fixtures/CollectionPageTest';
+import {collectionsPagesTest} from '../../fixtures/CollectionsPageTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
@@ -20,7 +20,7 @@ import getAssetTypesDefinition from './utils/getAssetTypesDefinition';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	collectionPagesTest,
+	collectionsPagesTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
@@ -43,7 +43,7 @@ const selectFilter = async (page, categories) => {
 
 test('filters a web content collection by single and multiple categories', async ({
 	apiHelpers,
-	collectionPage,
+	collectionsPage,
 	page,
 	pageEditorPage,
 	site,
@@ -101,10 +101,10 @@ test('filters a web content collection by single and multiple categories', async
 
 	const collectionName = 'Animal Collection';
 
-	await collectionPage.goto(site.friendlyUrlPath);
+	await collectionsPage.goto(site.friendlyUrlPath);
 
 	const {collectionId} =
-		await collectionPage.createWebContentDynamicCollection(
+		await collectionsPage.createWebContentDynamicCollection(
 			collectionName,
 			site.friendlyUrlPath
 		);
@@ -181,7 +181,7 @@ test('filters a web content collection by single and multiple categories', async
 
 test('filters a web content collection by single and multiple tags', async ({
 	apiHelpers,
-	collectionPage,
+	collectionsPage,
 	page,
 	pageEditorPage,
 	site,
@@ -231,10 +231,10 @@ test('filters a web content collection by single and multiple tags', async ({
 
 	const collectionName = 'Animal Collection';
 
-	await collectionPage.goto(site.friendlyUrlPath);
+	await collectionsPage.goto(site.friendlyUrlPath);
 
 	const {collectionId} =
-		await collectionPage.createWebContentDynamicCollection(
+		await collectionsPage.createWebContentDynamicCollection(
 			collectionName,
 			site.friendlyUrlPath
 		);
@@ -297,7 +297,7 @@ test('filters a web content collection by single and multiple tags', async ({
 
 test('enables search field in dropdown list of Collection Filter', async ({
 	apiHelpers,
-	collectionPage,
+	collectionsPage,
 	page,
 	pageEditorPage,
 	site,
@@ -336,10 +336,10 @@ test('enables search field in dropdown list of Collection Filter', async ({
 
 	const collectionName = 'Animal Collection';
 
-	await collectionPage.goto(site.friendlyUrlPath);
+	await collectionsPage.goto(site.friendlyUrlPath);
 
 	const {collectionId} =
-		await collectionPage.createWebContentDynamicCollection(
+		await collectionsPage.createWebContentDynamicCollection(
 			collectionName,
 			site.friendlyUrlPath
 		);

@@ -7,7 +7,7 @@ import {Page} from '@playwright/test';
 
 import {PORTLET_URLS} from '../../utils/portletUrls';
 
-export class CollectionPage {
+export class CollectionsPage {
 	readonly page: Page;
 
 	constructor(page: Page) {

@@ -169,7 +169,7 @@ public class FriendlyURLEntryLocalServiceTest {
 
 	@FeatureFlags("LPD-11147")
 	@Test
-	public void testAddFriendlyURLEntryWithLocalizedCategories()
+	public void testAddFriendlyURLEntryWithLocalizedAssetCategories()
 		throws Exception {
 
 		ServiceContext serviceContext = _getServiceContext();
@@ -188,7 +188,6 @@ public class FriendlyURLEntryLocalServiceTest {
 			).build(),
 			new HashMap<>(), assetVocabulary.getVocabularyId(), null,
 			serviceContext);
-
 		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
 			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 			HashMapBuilder.put(
@@ -199,8 +198,6 @@ public class FriendlyURLEntryLocalServiceTest {
 			new HashMap<>(), assetVocabulary.getVocabularyId(), null,
 			serviceContext);
 
-		long classNameId = _classNameLocalService.getClassNameId(User.class);
-
 		serviceContext.setAttribute(
 			"friendlyURLAssetCategoryIds",
 			new long[] {
@@ -209,7 +206,9 @@ public class FriendlyURLEntryLocalServiceTest {
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.addFriendlyURLEntry(
-				_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
+				_group.getGroupId(),
+				_classNameLocalService.getClassNameId(User.class),
+				TestPropsValues.getUserId(),
 				HashMapBuilder.put(
 					_language.getLanguageId(LocaleUtil.US), "url-title-en"
 				).put(
@@ -222,7 +221,6 @@ public class FriendlyURLEntryLocalServiceTest {
 			"cat1-en/cat2-en/url-title-en",
 			friendlyURLEntry.getCategorizedUrlTitle(
 				_language.getLanguageId(LocaleUtil.US)));
-
 		Assert.assertEquals(
 			"cat1-es/cat2-es/url-title-es",
 			friendlyURLEntry.getCategorizedUrlTitle(

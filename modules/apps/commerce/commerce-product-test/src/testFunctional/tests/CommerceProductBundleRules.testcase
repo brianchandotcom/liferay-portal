@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "feature.flag.COMMERCE-11922=true${line.separator}jsonws.web.service.paths.excludes=";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Product Info Management";
@@ -2673,7 +2673,7 @@ definition {
 	@description = "COMMERCE-12797. As a buyer, I want to be able to view the Products Limit rule applied to decimal UOM quantity"
 	@priority = 5
 	test CanVerifyProductsLimitRuleWithDecimalUOMQuantity {
-		property custom.properties = "${line.separator}feature.flag.COMMERCE-11922=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given an access token is generated to enable Show Unselectable Options from Instance Settings") {

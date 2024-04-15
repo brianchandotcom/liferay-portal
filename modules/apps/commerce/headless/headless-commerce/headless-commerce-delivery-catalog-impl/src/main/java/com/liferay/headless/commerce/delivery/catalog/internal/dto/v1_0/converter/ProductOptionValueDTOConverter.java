@@ -47,7 +47,6 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -121,9 +120,7 @@ public class ProductOptionValueDTOConverter
 							return null;
 						}
 
-						if (FeatureFlagManagerUtil.isEnabled(
-								"COMMERCE-11922") &&
-							cpDefinitionOptionRelConfiguration.
+						if (cpDefinitionOptionRelConfiguration.
 								showUnselectableOptions()) {
 
 							Long skuId = (Long)dtoConverterContext.getAttribute(
@@ -358,68 +355,60 @@ public class ProductOptionValueDTOConverter
 							return true;
 						}
 
-						if (FeatureFlagManagerUtil.isEnabled(
-								"COMMERCE-11922")) {
+						Long skuId = (Long)dtoConverterContext.getAttribute(
+							"skuId");
 
-							Long skuId = (Long)dtoConverterContext.getAttribute(
-								"skuId");
+						if (Validator.isNull(skuId)) {
+							return true;
+						}
 
-							if (Validator.isNull(skuId)) {
-								return true;
-							}
+						CPInstance selectedCPInstance =
+							_cpInstanceLocalService.fetchCPInstance(skuId);
 
-							CPInstance selectedCPInstance =
-								_cpInstanceLocalService.fetchCPInstance(skuId);
+						if (selectedCPInstance == null) {
+							return true;
+						}
 
-							if (selectedCPInstance == null) {
-								return true;
-							}
+						List<CommerceOptionValue> commerceOptionValues =
+							new ArrayList<>();
 
-							List<CommerceOptionValue> commerceOptionValues =
-								new ArrayList<>();
+						JSONArray jsonArray = _getSelectedSkuOptionsJSONArray(
+							cpDefinitionOptionRel, cpDefinitionOptionValueRel,
+							(SkuOption[])dtoConverterContext.getAttribute(
+								"skuOptions"));
 
-							JSONArray jsonArray =
-								_getSelectedSkuOptionsJSONArray(
-									cpDefinitionOptionRel,
-									cpDefinitionOptionValueRel,
-									(SkuOption[])
-										dtoConverterContext.getAttribute(
-											"skuOptions"));
+						if (jsonArray == null) {
+							jsonArray = _getClonedJSONArray(
+								cpDefinitionOptionRel,
+								cpDefinitionOptionValueRel,
+								selectedCPInstance.getCPInstanceId());
+						}
 
-							if (jsonArray == null) {
-								jsonArray = _getClonedJSONArray(
-									cpDefinitionOptionRel,
-									cpDefinitionOptionValueRel,
-									selectedCPInstance.getCPInstanceId());
-							}
+						if (jsonArray != null) {
+							commerceOptionValues =
+								_commerceOptionValueHelper.
+									getCPDefinitionCommerceOptionValues(
+										cpDefinitionOptionRel.
+											getCPDefinitionId(),
+										jsonArray.toString());
+						}
 
-							if (jsonArray != null) {
-								commerceOptionValues =
-									_commerceOptionValueHelper.
-										getCPDefinitionCommerceOptionValues(
-											cpDefinitionOptionRel.
-												getCPDefinitionId(),
-											jsonArray.toString());
-							}
+						CPDefinition cpDefinition =
+							cpInstance.getCPDefinition();
 
-							CPDefinition cpDefinition =
-								cpInstance.getCPDefinition();
+						if (Validator.isNotNull(
+								_getCOREntryInfoMessage(
+									commerceOptionValues, cpDefinitionOptionRel,
+									cpDefinitionOptionValueRel, cpInstance,
+									cpDefinition.getCProductId(),
+									dtoConverterContext)) ||
+							Validator.isNotNull(
+								_getCPDefinitionLinkInfoMessage(
+									commerceOptionValues,
+									cpDefinitionOptionValueRel.getKey(),
+									cpDefinition, dtoConverterContext))) {
 
-							if (Validator.isNotNull(
-									_getCOREntryInfoMessage(
-										commerceOptionValues,
-										cpDefinitionOptionRel,
-										cpDefinitionOptionValueRel, cpInstance,
-										cpDefinition.getCProductId(),
-										dtoConverterContext)) ||
-								Validator.isNotNull(
-									_getCPDefinitionLinkInfoMessage(
-										commerceOptionValues,
-										cpDefinitionOptionValueRel.getKey(),
-										cpDefinition, dtoConverterContext))) {
-
-								return false;
-							}
+							return false;
 						}
 
 						return true;
@@ -437,10 +426,8 @@ public class ProductOptionValueDTOConverter
 				setVisible(
 					() -> {
 						if (!cpDefinitionOptionRel.isSkuContributor() ||
-							(FeatureFlagManagerUtil.isEnabled(
-								"COMMERCE-11922") &&
-							 cpDefinitionOptionRelConfiguration.
-								 showUnselectableOptions())) {
+							cpDefinitionOptionRelConfiguration.
+								showUnselectableOptions()) {
 
 							return true;
 						}

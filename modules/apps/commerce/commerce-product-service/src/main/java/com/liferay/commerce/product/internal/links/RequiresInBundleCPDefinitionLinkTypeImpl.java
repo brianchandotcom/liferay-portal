@@ -7,7 +7,6 @@ package com.liferay.commerce.product.internal.links;
 
 import com.liferay.commerce.product.constants.CPDefinitionLinkTypeConstants;
 import com.liferay.commerce.product.links.CPDefinitionLinkType;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,7 +24,7 @@ public class RequiresInBundleCPDefinitionLinkTypeImpl
 
 	@Override
 	public boolean isActive() {
-		return FeatureFlagManagerUtil.isEnabled("COMMERCE-11922");
+		return true;
 	}
 
 	@Override

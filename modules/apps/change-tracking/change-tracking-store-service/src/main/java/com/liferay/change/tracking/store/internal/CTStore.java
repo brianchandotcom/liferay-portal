@@ -104,10 +104,10 @@ public class CTStore implements Store {
 		else {
 			_ensureCTSContentIsLoaded(
 				companyId, repositoryId, fileName, versionLabel);
-		}
 
-		_ctsContentLocalService.deleteCTSContent(
-			companyId, repositoryId, fileName, versionLabel, _storeType);
+			_ctsContentLocalService.deleteCTSContent(
+				companyId, repositoryId, fileName, versionLabel, _storeType);
+		}
 	}
 
 	@Override

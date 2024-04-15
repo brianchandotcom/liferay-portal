@@ -7,7 +7,8 @@ package com.liferay.portal.kernel.test.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -51,13 +52,13 @@ public class PerformanceTestTimer implements Closeable {
 			logFilePath);
 	}
 
-	public PerformanceTestTimer(String name, int maxTime) {
+	public PerformanceTestTimer(String name, long maxTime) {
 		this(
 			getInvokerName(null, name), System.currentTimeMillis(), maxTime,
 			null);
 	}
 
-	public PerformanceTestTimer(String name, int maxTime, Path logFilePath) {
+	public PerformanceTestTimer(String name, long maxTime, Path logFilePath) {
 		this(
 			getInvokerName(null, name), System.currentTimeMillis(), maxTime,
 			logFilePath);
@@ -116,16 +117,18 @@ public class PerformanceTestTimer implements Closeable {
 	}
 
 	protected void log(String message) {
-		if (Validator.isNotNull(_logFilePath)) {
+		if (_logFilePath != null) {
 			try {
 				_writeToLogFile(message);
 			}
-			catch (IOException e) {
-				throw new RuntimeException(e);
+			catch (IOException ioException) {
+				_log.error(ioException);
 			}
 		}
 		else {
-			System.out.println(message);
+			if (_log.isInfoEnabled()) {
+				_log.info(message);
+			}
 		}
 	}
 
@@ -138,6 +141,9 @@ public class PerformanceTestTimer implements Closeable {
 			_logFilePath, Arrays.asList(contents), StandardOpenOption.APPEND,
 			StandardOpenOption.CREATE, StandardOpenOption.WRITE);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PerformanceTestTimer.class);
 
 	private Path _logFilePath;
 

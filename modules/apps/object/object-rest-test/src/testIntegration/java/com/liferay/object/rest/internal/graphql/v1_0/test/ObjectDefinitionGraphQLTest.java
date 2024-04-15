@@ -667,11 +667,7 @@ public class ObjectDefinitionGraphQLTest {
 	private JSONObject _invoke(GraphQLField queryGraphQLField)
 		throws Exception {
 
-		return HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"query", queryGraphQLField.toString()
-			).toString(),
-			"graphql", Http.Method.POST);
+		return _invoke(null, queryGraphQLField);
 	}
 
 	private JSONObject _invoke(String acceptLanguage, GraphQLField graphQLField)
@@ -683,7 +679,7 @@ public class ObjectDefinitionGraphQLTest {
 			).toString(),
 			"graphql",
 			HashMapBuilder.put(
-				"Accept-Language", acceptLanguage
+				"Accept-Language", () -> acceptLanguage
 			).build(),
 			Http.Method.POST);
 	}

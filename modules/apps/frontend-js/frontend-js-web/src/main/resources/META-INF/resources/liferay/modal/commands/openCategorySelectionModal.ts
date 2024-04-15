@@ -47,14 +47,18 @@ export default function openCategorySelectionModal({
 				return;
 			}
 
-			let url = redirectURL;
+			let url = new URL(redirectURL);
+
+			const resetCurParam = `_${url.searchParams.get('p_p_id')}_resetCur`;
+
+			url.searchParams.set(resetCurParam, 'true');
 
 			const assetCategories = Object.keys(selectedItems);
 
 			assetCategories.forEach((assetCategory) => {
 				url = addParams(
 					`${portletNamespace}assetCategoryId=${selectedItems[assetCategory].categoryId}`,
-					url
+					url.href
 				);
 			});
 

@@ -42,7 +42,11 @@ export default function openTagSelectionModal({
 				return;
 			}
 
-			let url = redirectURL;
+			let url = new URL(redirectURL);
+
+			const resetCurParam = `_${url.searchParams.get('p_p_id')}_resetCur`;
+
+			url.searchParams.set(resetCurParam, 'true');
 
 			const assetTags = selectedItems.map((tag) => tag.value);
 
@@ -51,7 +55,7 @@ export default function openTagSelectionModal({
 
 				url = addParams(
 					`${portletNamespace}assetTagId=${selectedValue.tagName}`,
-					url
+					url.href
 				);
 			});
 

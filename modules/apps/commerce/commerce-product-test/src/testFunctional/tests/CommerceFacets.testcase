@@ -1057,7 +1057,7 @@ definition {
 		}
 
 		task ("And the term count of the other values doesn't change either") {
-			for (var priceRangeValueAndCount : list "$ 0.00 - $ 49.99:(21),$ 100.00 - $ 199.99:(10),$ 200.00 - $ 499.99:(4),$ 500.00 - $ 999.99:(2),000.00+:(0)") {
+			for (var priceRangeValueAndCount : list "$ 0.00 - $ 49.99:(21),$ 100.00 - $ 199.99:(10),$ 200.00 - $ 499.99:(4),$ 500.00 - $ 999.99:(2)") {
 				var priceRangeValue = StringUtil.extractFirst(${priceRangeValueAndCount}, ":");
 				var priceRangeCount = StringUtil.extractLast(${priceRangeValueAndCount}, ":");
 

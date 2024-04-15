@@ -501,9 +501,7 @@ const ProductOptionSelect = ({
 				<Asterisk required={optionIsRequired} />
 			</label>
 
-			{!isAdmin &&
-			Liferay.CommerceContext.showUnselectableOptions &&
-			Liferay.FeatureFlags['COMMERCE-11922'] ? (
+			{!isAdmin && Liferay.CommerceContext.showUnselectableOptions ? (
 				<Picker
 					data-sku-contributor={productOption.skuContributor}
 					defaultSelectedKey={

@@ -22,7 +22,6 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -81,7 +80,7 @@ public class BundleProductCommerceOrderValidatorImpl
 			boolean child, CPInstance cpInstance, String json, Locale locale)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("COMMERCE-11922") || child) {
+		if (child) {
 			return new CommerceOrderValidatorResult(true);
 		}
 

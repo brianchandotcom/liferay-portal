@@ -5427,6 +5427,91 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testGetObjectEntryWithLocalizedObjectField() throws Exception {
+
+		// Accept-Language header
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEsp"
+			).put(
+				_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEsp</p>"
+			).put(
+				_OBJECT_FIELD_NAME_TEXT, "textEsp"
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				_objectDefinition5.getRESTContextPath() + StringPool.SLASH +
+					_objectEntry5.getObjectEntryId(),
+				HashMapBuilder.put(
+					"Accept-Language", "es-ES"
+				).build(),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		// Empty Accept-Language header
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
+			).put(
+				_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
+			).put(
+				_OBJECT_FIELD_NAME_TEXT, "textEng"
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				_objectDefinition5.getRESTContextPath() + StringPool.SLASH +
+					_objectEntry5.getObjectEntryId(),
+				HashMapBuilder.put(
+					"Accept-Language", ""
+				).build(),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		// Nonexistent Accept-Language header
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_LONG_TEXT, ""
+			).put(
+				_OBJECT_FIELD_NAME_RICH_TEXT, ""
+			).put(
+				_OBJECT_FIELD_NAME_TEXT, ""
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				_objectDefinition5.getRESTContextPath() + StringPool.SLASH +
+					_objectEntry5.getObjectEntryId(),
+				HashMapBuilder.put(
+					"Accept-Language", "de-DE"
+				).build(),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		// Without Accept-Language header
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
+			).put(
+				_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
+			).put(
+				_OBJECT_FIELD_NAME_TEXT, "textEng"
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				_objectDefinition5.getRESTContextPath() + StringPool.SLASH +
+					_objectEntry5.getObjectEntryId(),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
 	public void testGetObjectEntryWithTaxonomyCategories() throws Exception {
 		TaxonomyCategory taxonomyCategory1 = _addTaxonomyCategory();
 		TaxonomyCategory taxonomyCategory2 = _addTaxonomyCategory();
@@ -5620,97 +5705,6 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals(
 			itemJSONObject.getLong("id"),
 			_siteScopedObjectEntry1.getObjectEntryId());
-	}
-
-	@Test
-	public void testLocalizedObjectFieldWithAcceptLanguage() throws Exception {
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEsp"
-			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEsp</p>"
-			).put(
-				_OBJECT_FIELD_NAME_TEXT, "textEsp"
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				_objectDefinition5.getRESTContextPath() + StringPool.SLASH +
-					_objectEntry5.getObjectEntryId(),
-				HashMapBuilder.put(
-					"Accept-Language", "es-ES"
-				).build(),
-				Http.Method.GET
-			).toString(),
-			JSONCompareMode.LENIENT);
-	}
-
-	@Test
-	public void testLocalizedObjectFieldWithEmptyAcceptLanguage()
-		throws Exception {
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
-			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
-			).put(
-				_OBJECT_FIELD_NAME_TEXT, "textEng"
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				_objectDefinition5.getRESTContextPath() + StringPool.SLASH +
-					_objectEntry5.getObjectEntryId(),
-				HashMapBuilder.put(
-					"Accept-Language", ""
-				).build(),
-				Http.Method.GET
-			).toString(),
-			JSONCompareMode.LENIENT);
-	}
-
-	@Test
-	public void testLocalizedObjectFieldWithNonexistentAcceptLanguage()
-		throws Exception {
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_LONG_TEXT, ""
-			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT, ""
-			).put(
-				_OBJECT_FIELD_NAME_TEXT, ""
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				_objectDefinition5.getRESTContextPath() + StringPool.SLASH +
-					_objectEntry5.getObjectEntryId(),
-				HashMapBuilder.put(
-					"Accept-Language", "de-DE"
-				).build(),
-				Http.Method.GET
-			).toString(),
-			JSONCompareMode.LENIENT);
-	}
-
-	@Test
-	public void testLocalizedObjectFieldWithoutAcceptLanguage()
-		throws Exception {
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
-			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
-			).put(
-				_OBJECT_FIELD_NAME_TEXT, "textEng"
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				_objectDefinition5.getRESTContextPath() + StringPool.SLASH +
-					_objectEntry5.getObjectEntryId(),
-				Http.Method.GET
-			).toString(),
-			JSONCompareMode.LENIENT);
 	}
 
 	@Test

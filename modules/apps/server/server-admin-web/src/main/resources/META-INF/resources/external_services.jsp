@@ -7,6 +7,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
+<liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
+<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
+
 <div class="sheet">
 	<div class="panel-group panel-group-flush">
 		<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="enabling-imagemagick-provides-document-preview-functionality">
@@ -30,6 +34,8 @@
 			%>
 
 		</aui:fieldset>
+
+		<liferay-captcha:captcha />
 
 		<aui:button-row>
 			<aui:button cssClass="save-server-button" data-cmd="updateExternalServices" primary="<%= true %>" value="save" />

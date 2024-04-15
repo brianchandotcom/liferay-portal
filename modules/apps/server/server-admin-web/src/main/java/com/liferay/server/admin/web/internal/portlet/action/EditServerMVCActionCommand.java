@@ -5,6 +5,7 @@
 
 package com.liferay.server.admin.web.internal.portlet.action;
 
+import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversion;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
@@ -181,6 +182,16 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getLong(actionRequest, "preferencesCompanyId"));
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (!cmd.equals("addLogLevel") &&
+			!cmd.equals("dlGenerateAudioPreviews") &&
+			!cmd.equals("dlGenerateOpenOfficePreviews") &&
+			!cmd.equals("dlGenerateVideoPreviews") &&
+			!cmd.equals("updateLogLevels") &&
+			!cmd.equals("updatePortalProperties")) {
+
+			CaptchaUtil.check(actionRequest);
+		}
 
 		if (cmd.equals("addLogLevel")) {
 			_updateLogLevels(

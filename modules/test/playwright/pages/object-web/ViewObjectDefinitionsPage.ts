@@ -90,6 +90,12 @@ export class ViewObjectDefinitionsPage {
 		await this.deleteObjectFolderButton.click();
 	}
 
+	getObjectFolderCardHeaderERC = (objectFolderERC: string) => {
+		return this.objectFolderCardHeader
+			.getByRole('strong')
+			.filter({hasText: objectFolderERC});
+	};
+
 	getObjectFolderCardHeaderLabel = (objectFolderLabel: string) => {
 		return this.objectFolderCardHeader
 			.locator('span')

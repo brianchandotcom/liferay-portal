@@ -94,12 +94,26 @@ const MDFClaimPage = ({
 		isDisplayableMDFActivityClaim(activity)
 	).length;
 
+	const getCreateClaimDenialMessage = () => {
+		if (mdfRequest.mdfRequestStatus?.key !== 'approved') {
+			return 'Waiting for Manager approval.';
+		}
+		else if (claimsFiltered && claimsFiltered >= 2 && !values.id) {
+			return 'You already submitted 2 claims.';
+		}
+		else if (!availableMDFActivities || availableMDFActivities === 0) {
+			return "You don't have activities available to claim.";
+		}
+	};
+
 	const getClaimPage = () => {
 		if (!fieldEntries || !companiesEntries) {
 			return <ClayLoadingIndicator />;
 		}
 
-		if (!availableMDFActivities || availableMDFActivities === 0) {
+		const createClaimDenialMessage = getCreateClaimDenialMessage();
+
+		if (createClaimDenialMessage) {
 			return (
 				<PRMForm name="New" title="Reimbursement Claim">
 					<div className="d-flex justify-content-center mt-4">
@@ -108,63 +122,7 @@ const MDFClaimPage = ({
 							displayType="info"
 							title="Info:"
 						>
-							You don&apos;t have activities available to claim.
-						</ClayAlert>
-					</div>
-
-					<PRMForm.Footer>
-						<div className="d-flex mr-auto">
-							<ClayButton
-								className="mr-4"
-								displayType="secondary"
-								onClick={() => onCancel()}
-							>
-								Cancel
-							</ClayButton>
-						</div>
-					</PRMForm.Footer>
-				</PRMForm>
-			);
-		}
-
-		if (claimsFiltered && claimsFiltered >= 2 && !values.id) {
-			return (
-				<PRMForm name="New" title="Reimbursement Claim">
-					<div className="d-flex justify-content-center mt-4">
-						<ClayAlert
-							className="m-0 w-100"
-							displayType="info"
-							title="Info:"
-						>
-							You already submitted 2 claims.
-						</ClayAlert>
-					</div>
-
-					<PRMForm.Footer>
-						<div className="d-flex mr-auto">
-							<ClayButton
-								className="mr-4"
-								displayType="secondary"
-								onClick={() => onCancel()}
-							>
-								Cancel
-							</ClayButton>
-						</div>
-					</PRMForm.Footer>
-				</PRMForm>
-			);
-		}
-
-		if (mdfRequest.mdfRequestStatus?.key !== 'approved') {
-			return (
-				<PRMForm name="New" title="Reimbursement Claim">
-					<div className="d-flex justify-content-center mt-4">
-						<ClayAlert
-							className="m-0 w-100"
-							displayType="info"
-							title="Info:"
-						>
-							Waiting for Manager approval
+							{createClaimDenialMessage}
 						</ClayAlert>
 					</div>
 

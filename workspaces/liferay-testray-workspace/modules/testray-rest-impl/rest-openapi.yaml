@@ -5,6 +5,26 @@ components:
                 caseAmount:
                     format: int32
                     type: integer
+        TestrayCaseTypeMetric:
+            properties:
+                testrayCaseTypeId:
+                    format: int64
+                    type: integer
+                testrayCaseTypeName:
+                    type: string
+                testrayStatusMetric:
+                    $ref: "#/components/schemas/TestrayStatusMetric"
+            type: object
+        TestrayComponentMetric:
+            properties:
+                testrayComponentId:
+                    format: int64
+                    type: integer
+                testrayComponentName:
+                    type: string
+                testrayStatusMetric:
+                    $ref: "#/components/schemas/TestrayStatusMetric"
+            type: object
         TestrayRunComparison:
             properties:
                 results:
@@ -16,6 +36,51 @@ components:
                 testrayTeamId:
                     format: int64
                     type: integer
+            type: object
+        TestrayRunMetric:
+            properties:
+                testrayRunId:
+                    format: int64
+                    type: integer
+                testrayRunNumber:
+                    format: int64
+                    type: integer
+                testrayStatusMetric:
+                    $ref: "#/components/schemas/TestrayStatusMetric"
+            type: object
+        TestrayStatusMetric:
+            properties:
+                blocked:
+                    format: int64
+                    type: integer
+                failed:
+                    format: int64
+                    type: integer
+                inProgress:
+                    format: int64
+                    type: integer
+                passed:
+                    format: int64
+                    type: integer
+                testfix:
+                    format: int64
+                    type: integer
+                total:
+                    format: int64
+                    type: integer
+                untested:
+                    format: int64
+                    type: integer
+            type: object
+        TestrayTeamMetric:
+            properties:
+                testrayStatusMetric:
+                    $ref: "#/components/schemas/TestrayStatusMetric"
+                testrayTeamId:
+                    format: int64
+                    type: integer
+                testrayTeamName:
+                    type: string
             type: object
         TestrayTestSuite:
             properties:
@@ -98,6 +163,187 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/TestrayRunComparison"
             tags: ["TestrayRunComparison"]
+    "/testray-status-metrics/by-testray-buildId/{testrayBuildId}/testray-case-types-metrics":
+        get:
+            operationId: getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayCaseTypesMetricsPage
+            parameters:
+                - in: path
+                  name: testrayBuildId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: string
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCasePriorities
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayTeamId
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestrayCaseTypeMetric"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestrayCaseTypeMetric"
+                                type: array
+            tags: ["TestrayStatusMetric"]
+    "/testray-status-metrics/by-testray-buildId/{testrayBuildId}/testray-components-metrics":
+        get:
+            operationId: getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayComponentsMetricsPage
+            parameters:
+                - in: path
+                  name: testrayBuildId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: string
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCasePriorities
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCaseTypes
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayTeamId
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestrayComponentMetric"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestrayComponentMetric"
+                                type: array
+            tags: ["TestrayStatusMetric"]
+    "/testray-status-metrics/by-testray-buildId/{testrayBuildId}/testray-runs-metrics":
+        get:
+            operationId: getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayRunsMetricsPage
+            parameters:
+                - in: path
+                  name: testrayBuildId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: string
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCasePriorities
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCaseTypes
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayTeamId
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestrayRunMetric"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestrayRunMetric"
+                                type: array
+            tags: ["TestrayStatusMetric"]
+    "/testray-status-metrics/by-testray-buildId/{testrayBuildId}/testray-teams-metrics":
+        get:
+            operationId: getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayTeamsMetricsPage
+            parameters:
+                - in: path
+                  name: testrayBuildId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: string
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCasePriorities
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCaseTypes
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayRunId
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: testrayTeamId
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestrayTeamMetric"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestrayTeamMetric"
+                                type: array
+            tags: ["TestrayStatusMetric"]
     "/testray-test-suite":
         post:
             operationId: postTestrayTestSuite

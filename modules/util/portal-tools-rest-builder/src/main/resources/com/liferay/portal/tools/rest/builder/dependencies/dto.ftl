@@ -137,10 +137,10 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 	<#list properties?keys as propertyName>
 		<#assign
+			capitalizedPropertyName = propertyName?cap_first
 			propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)
 			propertyType = properties[propertyName]
 			sizeParameters = []
-			capitalizedPropertyName = propertyName?cap_first
 		/>
 
 		<#if propertySchema.jsonMap>

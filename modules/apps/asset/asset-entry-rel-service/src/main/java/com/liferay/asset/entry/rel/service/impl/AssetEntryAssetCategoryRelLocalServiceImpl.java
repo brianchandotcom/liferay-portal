@@ -6,10 +6,14 @@
 package com.liferay.asset.entry.rel.service.impl;
 
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
+import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRelTable;
 import com.liferay.asset.entry.rel.service.base.AssetEntryAssetCategoryRelLocalServiceBaseImpl;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -187,6 +191,28 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 
 		return assetEntryAssetCategoryRelPersistence.countByAssetCategoryId(
 			assetCategoryId);
+	}
+
+	@Override
+	public int getAssetEntryAssetCategoryRelsCountByClassNameId(
+		long assetCategoryId, long classNameId) {
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.count(
+		).from(
+			AssetEntryTable.INSTANCE
+		).innerJoinON(
+			AssetEntryAssetCategoryRelTable.INSTANCE,
+			AssetEntryAssetCategoryRelTable.INSTANCE.assetEntryId.eq(
+				AssetEntryTable.INSTANCE.entryId)
+		).where(
+			AssetEntryAssetCategoryRelTable.INSTANCE.assetCategoryId.eq(
+				assetCategoryId
+			).and(
+				AssetEntryTable.INSTANCE.classNameId.eq(classNameId)
+			)
+		);
+
+		return _assetEntryLocalService.dslQueryCount(dslQuery);
 	}
 
 	@Override

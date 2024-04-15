@@ -300,6 +300,10 @@ public interface AssetEntryAssetCategoryRelLocalService
 		long assetCategoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssetEntryAssetCategoryRelsCountByClassNameId(
+		long assetCategoryId, long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getAssetEntryPrimaryKeys(long assetCategoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -84,6 +84,8 @@ public class OpenAPIResourceImpl {
 
 			add(TestrayRunComparisonResourceImpl.class);
 
+			add(TestrayRunMetricResourceImpl.class);
+
 			add(TestrayTestSuiteResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

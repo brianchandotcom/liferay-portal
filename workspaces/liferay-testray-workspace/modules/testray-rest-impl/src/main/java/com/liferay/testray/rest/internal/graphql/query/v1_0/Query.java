@@ -10,8 +10,11 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.testray.rest.dto.v1_0.TestrayRunComparison;
+import com.liferay.testray.rest.dto.v1_0.TestrayRunMetric;
 import com.liferay.testray.rest.resource.v1_0.TestrayRunComparisonResource;
+import com.liferay.testray.rest.resource.v1_0.TestrayRunMetricResource;
 
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -40,6 +43,14 @@ public class Query {
 			testrayRunComparisonResourceComponentServiceObjects;
 	}
 
+	public static void setTestrayRunMetricResourceComponentServiceObjects(
+		ComponentServiceObjects<TestrayRunMetricResource>
+			testrayRunMetricResourceComponentServiceObjects) {
+
+		_testrayRunMetricResourceComponentServiceObjects =
+			testrayRunMetricResourceComponentServiceObjects;
+	}
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -62,6 +73,33 @@ public class Query {
 					testrayTeamId));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayRunByTestrayBuildIdTestrayBuildTestrayRunMetrics(page: ___, pageSize: ___, testrayBuildId: ___, testrayCasePriorities: ___, testrayCaseTypes: ___, testrayTeamId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public TestrayRunMetricPage
+			testrayRunByTestrayBuildIdTestrayBuildTestrayRunMetrics(
+				@GraphQLName("testrayBuildId") Long testrayBuildId,
+				@GraphQLName("testrayCasePriorities") String
+					testrayCasePriorities,
+				@GraphQLName("testrayCaseTypes") String testrayCaseTypes,
+				@GraphQLName("testrayTeamId") Long testrayTeamId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_testrayRunMetricResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			testrayRunMetricResource -> new TestrayRunMetricPage(
+				testrayRunMetricResource.
+					getTestrayRunByTestrayBuildIdTestrayBuildTestrayRunMetricsPage(
+						testrayBuildId, testrayCasePriorities, testrayCaseTypes,
+						testrayTeamId, Pagination.of(page, pageSize))));
+	}
+
 	@GraphQLName("TestrayRunComparisonPage")
 	public class TestrayRunComparisonPage {
 
@@ -80,6 +118,39 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<TestrayRunComparison> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("TestrayRunMetricPage")
+	public class TestrayRunMetricPage {
+
+		public TestrayRunMetricPage(Page testrayRunMetricPage) {
+			actions = testrayRunMetricPage.getActions();
+
+			items = testrayRunMetricPage.getItems();
+			lastPage = testrayRunMetricPage.getLastPage();
+			page = testrayRunMetricPage.getPage();
+			pageSize = testrayRunMetricPage.getPageSize();
+			totalCount = testrayRunMetricPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<TestrayRunMetric> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -130,8 +201,26 @@ public class Query {
 		testrayRunComparisonResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			TestrayRunMetricResource testrayRunMetricResource)
+		throws Exception {
+
+		testrayRunMetricResource.setContextAcceptLanguage(_acceptLanguage);
+		testrayRunMetricResource.setContextCompany(_company);
+		testrayRunMetricResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		testrayRunMetricResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		testrayRunMetricResource.setContextUriInfo(_uriInfo);
+		testrayRunMetricResource.setContextUser(_user);
+		testrayRunMetricResource.setGroupLocalService(_groupLocalService);
+		testrayRunMetricResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<TestrayRunComparisonResource>
 		_testrayRunComparisonResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TestrayRunMetricResource>
+		_testrayRunMetricResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

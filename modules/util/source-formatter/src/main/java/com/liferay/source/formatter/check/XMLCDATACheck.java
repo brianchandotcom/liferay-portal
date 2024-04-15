@@ -6,14 +6,9 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.json.JSONObjectImpl;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.check.util.JsonSourceUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,7 +27,7 @@ public class XMLCDATACheck extends BaseFileCheck {
 		while (matcher.find()) {
 			String cdataValue = matcher.group(5);
 
-			JSONObject jsonObject = _getJSONObject(cdataValue);
+			JSONObject jsonObject = JsonSourceUtil.getJSONObject(cdataValue);
 
 			if (jsonObject == null) {
 				continue;
@@ -46,7 +41,7 @@ public class XMLCDATACheck extends BaseFileCheck {
 			sb.append("\n");
 			sb.append(indent);
 			sb.append("\t<![CDATA[\n");
-			sb.append(_toString(jsonObject, indent + "\t\t"));
+			sb.append(JsonSourceUtil.toString(jsonObject, indent + "\t\t"));
 			sb.append(indent);
 			sb.append("\t]]>\n");
 			sb.append(indent);
@@ -60,7 +55,7 @@ public class XMLCDATACheck extends BaseFileCheck {
 		while (matcher.find()) {
 			String cdataValue = matcher.group(3);
 
-			JSONObject jsonObject = _getJSONObject(cdataValue);
+			JSONObject jsonObject = JsonSourceUtil.getJSONObject(cdataValue);
 
 			if (jsonObject == null) {
 				continue;
@@ -74,7 +69,7 @@ public class XMLCDATACheck extends BaseFileCheck {
 
 			sb.append(matcher.group(1));
 			sb.append("\n");
-			sb.append(_toString(jsonObject, indent + "\t"));
+			sb.append(JsonSourceUtil.toString(jsonObject, indent + "\t"));
 			sb.append(indent);
 			sb.append("]]>\n");
 
@@ -87,43 +82,6 @@ public class XMLCDATACheck extends BaseFileCheck {
 
 		return content;
 	}
-
-	private JSONObject _getJSONObject(String s) {
-		s = StringUtil.trim(s);
-
-		if (Validator.isNull(s) || s.equals("{}")) {
-			return null;
-		}
-
-		try {
-			return new JSONObjectImpl(s);
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
-			}
-
-			return null;
-		}
-	}
-
-	private String _toString(JSONObject jsonObject, String indent) {
-		String s = JSONUtil.toString(jsonObject);
-
-		String[] lines = StringUtil.splitLines(s);
-
-		StringBundler sb = new StringBundler(lines.length * 3);
-
-		for (String line : StringUtil.splitLines(s)) {
-			sb.append(indent);
-			sb.append(line);
-			sb.append("\n");
-		}
-
-		return sb.toString();
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(XMLCDATACheck.class);
 
 	private static final Pattern _cdataPattern1 = Pattern.compile(
 		"(\n(\t*)<([\\w-]+)( .+)?>)<\\!\\[CDATA\\[(.*?)\\]\\]>(</\\3>\n)");

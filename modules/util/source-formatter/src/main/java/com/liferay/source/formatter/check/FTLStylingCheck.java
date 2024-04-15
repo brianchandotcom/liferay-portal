@@ -7,15 +7,10 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONObjectImpl;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.check.util.JsonSourceUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -112,7 +107,7 @@ public class FTLStylingCheck extends BaseStylingCheck {
 					continue;
 				}
 
-				JSONObject jsonObject = _getJSONObject(s);
+				JSONObject jsonObject = JsonSourceUtil.getJSONObject(s);
 
 				if (jsonObject == null) {
 					continue;
@@ -123,7 +118,7 @@ public class FTLStylingCheck extends BaseStylingCheck {
 				StringBundler sb = new StringBundler(2);
 
 				sb.append("\n");
-				sb.append(_toString(jsonObject, indent + "\t"));
+				sb.append(JsonSourceUtil.toString(jsonObject, indent + "\t"));
 
 				String replacement = sb.toString();
 
@@ -138,44 +133,6 @@ public class FTLStylingCheck extends BaseStylingCheck {
 
 		return content;
 	}
-
-	private JSONObject _getJSONObject(String s) {
-		s = StringUtil.trim(s);
-
-		if (Validator.isNull(s) || s.equals("{}")) {
-			return null;
-		}
-
-		try {
-			return new JSONObjectImpl(s);
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
-			}
-
-			return null;
-		}
-	}
-
-	private String _toString(JSONObject jsonObject, String indent) {
-		String s = JSONUtil.toString(jsonObject);
-
-		String[] lines = StringUtil.splitLines(s);
-
-		StringBundler sb = new StringBundler(lines.length * 3);
-
-		for (String line : StringUtil.splitLines(s)) {
-			sb.append(indent);
-			sb.append(line);
-			sb.append("\n");
-		}
-
-		return sb.toString();
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FTLStylingCheck.class);
 
 	private static final Pattern _assignPattern = Pattern.compile(
 		"(\n(\t*)\\w+ =)(\\s*\\{)");

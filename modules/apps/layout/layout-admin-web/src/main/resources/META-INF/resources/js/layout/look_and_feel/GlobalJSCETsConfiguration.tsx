@@ -36,6 +36,33 @@ const SCRIPT_LOCATION_LABELS: Array<{
 
 const DEFAULT_SCRIPT_LOCATION_OPTION: IScriptLocationOptions = 'bottom';
 
+const getLoadTypeOptions = (scriptElementAttributesJSON: any) => {
+	const loadTypeOptions = LOAD_TYPE_OPTIONS;
+
+	if (!scriptElementAttributesJSON) {
+		return loadTypeOptions;
+	}
+
+	return loadTypeOptions.filter(
+		(option) => scriptElementAttributesJSON[option.label] !== false
+	);
+};
+
+const getPredefinedLoadType = (scriptElementAttributesJSON: any) => {
+	if (!scriptElementAttributesJSON) {
+		return null;
+	}
+
+	if (scriptElementAttributesJSON.async) {
+		return 'async';
+	}
+	else if (scriptElementAttributesJSON.defer) {
+		return 'defer';
+	}
+
+	return null;
+};
+
 export default function GlobalJSCETsConfiguration({
 	globalJSCETSelectorURL,
 	globalJSCETs: initialGlobalJSCETs,
@@ -369,6 +396,17 @@ function ExtensionRow({
 	const disabled = globalJSCET.inherited;
 	const dropdownTriggerId = `${portletNamespace}_GlobalJSCETsConfigurationOptionsButton_${globalJSCET.cetExternalReferenceCode}`;
 
+	const scriptElementAttributesJSONString =
+		globalJSCET.scriptElementAttributesJSON;
+
+	const scriptElementAttributesJSON = useMemo(() => {
+		if (!scriptElementAttributesJSONString) {
+			return null;
+		}
+
+		return JSON.parse(scriptElementAttributesJSONString);
+	}, [scriptElementAttributesJSONString]);
+
 	const dropdownItems = [
 		{
 			label: Liferay.Language.get('delete'),
@@ -376,6 +414,18 @@ function ExtensionRow({
 			symbolLeft: 'trash',
 		},
 	];
+
+	const predefinedLoadType = getPredefinedLoadType(
+		scriptElementAttributesJSON
+	);
+
+	if (predefinedLoadType && predefinedLoadType !== globalJSCET.loadType) {
+		updateGlobalJSCET(
+			globalJSCET,
+			'loadType',
+			predefinedLoadType as ILoadTypeOptions
+		);
+	}
 
 	return (
 		<ClayTable.Row
@@ -392,9 +442,11 @@ function ExtensionRow({
 				<ClaySelectWithOption
 					className="load-type-select"
 					defaultValue={
-						globalJSCET.loadType || DEFAULT_LOAD_TYPE_OPTION
+						globalJSCET.loadType ||
+						predefinedLoadType ||
+						DEFAULT_LOAD_TYPE_OPTION
 					}
-					disabled={disabled}
+					disabled={disabled || !!predefinedLoadType}
 					onChange={(event) =>
 						updateGlobalJSCET(
 							globalJSCET,
@@ -402,7 +454,7 @@ function ExtensionRow({
 							event.target.value as ILoadTypeOptions
 						)
 					}
-					options={LOAD_TYPE_OPTIONS}
+					options={getLoadTypeOptions(scriptElementAttributesJSON)}
 					sizing="sm"
 				/>
 			</ClayTable.Cell>
@@ -428,6 +480,7 @@ interface IGlobalJSCET {
 	inheritedLabel: string;
 	loadType?: ILoadTypeOptions;
 	name: string;
+	scriptElementAttributesJSON?: string;
 	scriptLocation?: IScriptLocationOptions;
 }
 

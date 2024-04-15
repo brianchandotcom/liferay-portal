@@ -20,6 +20,7 @@ interface IGlobalJSCET {
 	inheritedLabel: string;
 	loadType?: ILoadTypeOptions;
 	name: string;
+	scriptElementAttributesJSON?: string;
 	scriptLocation?: IScriptLocationOptions;
 }
 interface IProps {

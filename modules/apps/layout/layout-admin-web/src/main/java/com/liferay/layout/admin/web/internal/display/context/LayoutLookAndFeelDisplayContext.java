@@ -9,6 +9,7 @@ import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceUtil;
 import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.GlobalJSCET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
@@ -21,6 +22,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -439,6 +441,21 @@ public class LayoutLookAndFeelDisplayContext {
 			() -> typeSettingsUnicodeProperties.getProperty("loadType", null)
 		).put(
 			"name", cet.getName(_themeDisplay.getLocale())
+		).put(
+			"scriptElementAttributesJSON",
+			() -> {
+				if (Objects.equals(
+						cet.getType(),
+						ClientExtensionEntryConstants.TYPE_GLOBAL_JS) &&
+					FeatureFlagManagerUtil.isEnabled("LPD-10981")) {
+
+					GlobalJSCET globalJSCET = (GlobalJSCET)cet;
+
+					return globalJSCET.getScriptElementAttributesJSON();
+				}
+
+				return null;
+			}
 		).put(
 			"scriptLocation",
 			() -> typeSettingsUnicodeProperties.getProperty(

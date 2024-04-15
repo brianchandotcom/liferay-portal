@@ -18,6 +18,11 @@ public class FTLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testJsonAssign() throws Exception {
+		test("JsonAssign.testftl");
+	}
+
+	@Test
 	public void testWhitespace() throws Exception {
 		test("Whitespace.testftl");
 	}

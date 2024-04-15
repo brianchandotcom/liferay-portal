@@ -1,0 +1,6 @@
+<#assign
+	subscriptionStatusMap = {"3":"completed", "0" : "active", "-1": "inactive", "1": "suspended", "2": "cancelled"
+	}
+
+	subscriptionStatus = subscriptionStatusMap[commerceSubscriptionEntry.getSubscriptionStatus()?string]
+/>

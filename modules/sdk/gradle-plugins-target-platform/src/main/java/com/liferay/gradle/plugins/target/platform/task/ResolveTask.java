@@ -45,7 +45,7 @@ import org.osgi.service.resolver.ResolutionException;
 public class ResolveTask extends AbstractBndrun {
 
 	/**
-	 * @deprecated replaced by bndrun property
+	 * @deprecated as of 4.0.0, replaced by bndrun property
 	 */
 	@Deprecated
 	@InputFile
@@ -104,7 +104,7 @@ public class ResolveTask extends AbstractBndrun {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated as of 4.0.0, with no direct replacement
 	 */
 	@Deprecated
 	@Input
@@ -118,14 +118,14 @@ public class ResolveTask extends AbstractBndrun {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated as of 4.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public void resolve() throws Exception {
 	}
 
 	/**
-	 * @deprecated replaced by bndrun property
+	 * @deprecated as of 4.0.0, replaced by bndrun property
 	 */
 	@Deprecated
 	public void setBndrunFile(Object bndrunFile) {
@@ -143,7 +143,7 @@ public class ResolveTask extends AbstractBndrun {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated as of 4.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public void setOffline(Object offline) {

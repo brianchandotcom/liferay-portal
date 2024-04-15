@@ -2,4 +2,4 @@
 
 Check | Category | Description
 ----- | -------- | -----------
-ListClientExtensionsFileCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts paths in `client-extensions.list` file. |
+ListStylingCheck | [Styling](styling_checks.markdown#styling-checks) | Applies rules to enforce consistency in code style. |

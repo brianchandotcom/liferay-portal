@@ -30,3 +30,16 @@ export interface IItemAction extends IBaseAction {
 	permissionKey?: string;
 	type: ItemActionTypes;
 }
+
+interface IBaseFilter {
+	filterBy: string;
+	name: string;
+}
+
+export interface ISelectionFilter extends IBaseFilter {
+	filterMode: 'Include' | 'Exclude';
+	picklist?: string;
+	preselectedValues: string[];
+	selectionType: 'Multiple' | 'Single';
+	source: 'Object Picklist';
+}

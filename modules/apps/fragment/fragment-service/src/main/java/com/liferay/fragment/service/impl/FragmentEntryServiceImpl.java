@@ -235,14 +235,14 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 								fragmentCollectionId
 							).and(
 								() -> {
-									if (status !=
+									if (status ==
 											WorkflowConstants.STATUS_ANY) {
 
-										return FragmentCompositionTable.
-											INSTANCE.status.eq(status);
+										return null;
 									}
 
-									return null;
+									return FragmentCompositionTable.INSTANCE.
+										status.eq(status);
 								}
 							)
 					);

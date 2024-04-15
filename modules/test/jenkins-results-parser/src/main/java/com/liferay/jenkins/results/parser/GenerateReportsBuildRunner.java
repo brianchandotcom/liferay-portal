@@ -580,7 +580,6 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			"archive.ci.build.data.tmp.dir");
 
 		_TMP_ARCHIVE_DIR_PATH = _TMP_BASE_DIR_PATH + "/builds/";
-
 		_TMP_REPORT_DIR_PATH = _TMP_BASE_DIR_PATH + "/reports/";
 	}
 

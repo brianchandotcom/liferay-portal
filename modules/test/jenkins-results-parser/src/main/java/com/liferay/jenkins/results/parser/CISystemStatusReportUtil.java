@@ -710,11 +710,9 @@ public class CISystemStatusReportUtil {
 
 		_CI_SYSTEM_STATUS_REPORT_DIR = new File(
 			_buildProperties.getProperty("ci.system.status.report.dir"));
-
 		_TESTRAY_LOGS_DIR = new File(
 			_buildProperties.getProperty("jenkins.testray.results.dir"),
 			"production/logs");
-
 		_TMP_BASE_DIR = new File(
 			_buildProperties.getProperty("archive.ci.build.data.tmp.dir"),
 			"nodes");

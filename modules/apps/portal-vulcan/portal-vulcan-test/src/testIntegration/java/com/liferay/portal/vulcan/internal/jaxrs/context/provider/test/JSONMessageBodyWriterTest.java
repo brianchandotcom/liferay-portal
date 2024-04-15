@@ -128,6 +128,24 @@ public class JSONMessageBodyWriterTest {
 			"property1UnsafeSupplier should not have been computed",
 			_property2UnsafeSupplierComputed);
 
+		_property1UnsafeSupplierComputed = false;
+		_property2UnsafeSupplierComputed = false;
+
+		HTTPTestUtil.invokeToJSONObject(
+			null,
+			"test-vulcan/test-class?restrictFields=property1UnsafeSupplier",
+			Http.Method.GET);
+
+		Assert.assertFalse(
+			"property1UnsafeSupplier should not have been computed",
+			_property1UnsafeSupplierComputed);
+		Assert.assertTrue(
+			"property1UnsafeSupplier should have been computed",
+			_property2UnsafeSupplierComputed);
+
+		_property1UnsafeSupplierComputed = false;
+		_property2UnsafeSupplierComputed = false;
+
 		HTTPTestUtil.invokeToJSONObject(
 			null, "test-vulcan/test-class", Http.Method.GET);
 

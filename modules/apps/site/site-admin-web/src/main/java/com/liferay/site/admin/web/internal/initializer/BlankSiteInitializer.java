@@ -94,8 +94,9 @@ public class BlankSiteInitializer implements SiteInitializer {
 
 			LayoutUtilityPageEntry layoutUtilityPageEntry =
 				_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
-					"LFR-" + errorCode + "-ERROR", groupId, 0, 0, true, name,
-					type, 0, ServiceContextThreadLocal.getServiceContext());
+					"LFR-" + errorCode + "-ERROR", null, groupId, 0, 0, true,
+					name, type, 0, true,
+					ServiceContextThreadLocal.getServiceContext());
 
 			Layout layout = _layoutLocalService.getLayout(
 				layoutUtilityPageEntry.getPlid());

@@ -312,9 +312,9 @@ public class ContentLayoutTypeControllerTest {
 	private Layout _addTypeUtilityPageEntryLayout() throws Exception {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
-				false, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
+				null, null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				0, false, RandomTestUtil.randomString(),
+				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0, true,
 				ServiceContextThreadLocal.getServiceContext());
 
 		return _layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid());

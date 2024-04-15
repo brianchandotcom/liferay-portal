@@ -91,8 +91,9 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 			actionRequest);
 
 		return _layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			0, 0, false, name, type, masterLayoutPlid, serviceContext);
+			null, null, serviceContext.getUserId(),
+			serviceContext.getScopeGroupId(), 0, 0, false, name, type,
+			masterLayoutPlid, true, serviceContext);
 	}
 
 	private String _getRedirectURL(

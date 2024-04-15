@@ -48,13 +48,13 @@ public class LayoutUtilityPageEntryStagedModelRepository
 		}
 
 		return _layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-			layoutUtilityPageEntry.getExternalReferenceCode(), userId,
+			layoutUtilityPageEntry.getExternalReferenceCode(), null, userId,
 			layoutUtilityPageEntry.getGroupId(),
 			layoutUtilityPageEntry.getPlid(),
 			layoutUtilityPageEntry.getPreviewFileEntryId(),
 			layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry(),
 			layoutUtilityPageEntry.getName(), layoutUtilityPageEntry.getType(),
-			0, serviceContext);
+			0, true, serviceContext);
 	}
 
 	@Override

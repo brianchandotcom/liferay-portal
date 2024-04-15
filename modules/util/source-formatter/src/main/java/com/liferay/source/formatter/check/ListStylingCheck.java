@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Alan Huang
  */
-public class ListClientExtensionsFileCheck extends BaseFileCheck {
+public class ListStylingCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {

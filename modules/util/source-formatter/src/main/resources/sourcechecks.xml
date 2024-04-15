@@ -1350,9 +1350,9 @@
 
 		<!-- Liferay Source Checks -->
 
-		<check name="ListClientExtensionsFileCheck">
+		<check name="ListStylingCheck">
 			<category name="Styling" />
-			<description name="Sorts paths in `client-extensions.list` file." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 	</source-processor>
 	<source-processor name="MarkdownSourceProcessor">

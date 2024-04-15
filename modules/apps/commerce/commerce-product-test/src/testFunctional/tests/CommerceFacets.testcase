@@ -290,7 +290,7 @@ definition {
 			SearchFacets.clearFacet();
 
 			for (var searchFieldValue : list "48,112") {
-				FormViewBuilder.viewCheckboxNotChecked(
+				CommerceWidget.viewCheckboxNotChecked(
 					fieldName = "Option Facet",
 					fieldValue = ${searchFieldValue});
 			}
@@ -316,7 +316,7 @@ definition {
 			SearchFacets.clearFacet();
 
 			for (var searchFieldValue : list "Steel,Rubber") {
-				FormViewBuilder.viewCheckboxNotChecked(
+				CommerceWidget.viewCheckboxNotChecked(
 					fieldName = "Specification Facet",
 					fieldValue = ${searchFieldValue});
 			}
@@ -342,7 +342,7 @@ definition {
 			SearchFacets.clearFacet();
 
 			for (var searchFieldValue : list "$ 0.00 - $ 49.99,$ 50.00 - $ 99.99") {
-				FormViewBuilder.viewCheckboxNotChecked(
+				CommerceWidget.viewCheckboxNotChecked(
 					fieldName = "Price Range Facet",
 					fieldValue = ${searchFieldValue});
 			}

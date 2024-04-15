@@ -872,6 +872,14 @@ definition {
 		}
 	}
 
+	@summary = "Default summary"
+	macro viewCheckboxNotChecked(fieldName = null, fieldValue = null) {
+		AssertNotChecked.assertNotCheckedNotVisible(
+			key_fieldName = ${fieldName},
+			key_fieldValue = ${fieldValue},
+			locator1 = "FormViewBuilder#CHECKBOX_LABEL");
+	}
+
 	@summary = "This macro can be used for asserting user information from Organization Management Chart"
 	macro viewUserInformationAtSidebar(userBirthday = null, userEmailAddress = null, userFirstName = null, userID = null, userImage = null, userLanguage = null, userLastName = null, userMiddleName = null, userPrefix = null, userScreenName = null, userSuffix = null) {
 		if (isSet(viewCurrentInfo)) {

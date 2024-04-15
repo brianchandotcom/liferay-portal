@@ -13,13 +13,7 @@ import FrontendDataSetContext, {
 } from '../../FrontendDataSetContext';
 import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
 import {getInputRendererById} from '../../utils/renderer';
-
-// @ts-ignore
-
 import ViewsContext from '../ViewsContext';
-
-// @ts-ignore
-
 import DndTableCell from './dnd_table/Cell';
 
 function InlineEditInputRenderer({

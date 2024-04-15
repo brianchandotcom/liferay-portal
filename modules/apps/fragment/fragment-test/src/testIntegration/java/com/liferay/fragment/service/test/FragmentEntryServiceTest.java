@@ -13,8 +13,8 @@ import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.FragmentEntryService;
-import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
 import com.liferay.fragment.test.util.FragmentCompositionTestUtil;
 import com.liferay.fragment.test.util.FragmentEntryTestUtil;
 import com.liferay.fragment.test.util.FragmentTestUtil;
@@ -30,14 +30,12 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.sql.Timestamp;
 
@@ -65,9 +63,7 @@ public class FragmentEntryServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.fragment.service"));
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -130,11 +126,7 @@ public class FragmentEntryServiceTest {
 			"{fieldSets: []}", null, 0, false, FragmentConstants.TYPE_SECTION,
 			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		FragmentEntry persistedFragmentEntry =
-			_fragmentEntryPersistence.fetchByPrimaryKey(
-				fragmentEntry.getFragmentEntryId());
-
-		Assert.assertEquals(name, persistedFragmentEntry.getName());
+		Assert.assertEquals(name, fragmentEntry.getName());
 	}
 
 	@Test(expected = FragmentEntryNameException.class)
@@ -179,11 +171,7 @@ public class FragmentEntryServiceTest {
 			FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		FragmentEntry persistedFragmentEntry =
-			_fragmentEntryPersistence.fetchByPrimaryKey(
-				fragmentEntry.getFragmentEntryId());
-
-		Assert.assertEquals(html, persistedFragmentEntry.getHtml());
+		Assert.assertEquals(html, fragmentEntry.getHtml());
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
@@ -237,12 +225,7 @@ public class FragmentEntryServiceTest {
 			FragmentConstants.TYPE_SECTION, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		FragmentEntry persistedFragmentEntry =
-			_fragmentEntryPersistence.fetchByPrimaryKey(
-				fragmentEntry.getFragmentEntryId());
-
-		Assert.assertEquals(
-			configuration, persistedFragmentEntry.getConfiguration());
+		Assert.assertEquals(configuration, fragmentEntry.getConfiguration());
 	}
 
 	@Test
@@ -256,15 +239,10 @@ public class FragmentEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
-		FragmentEntry persistedFragmentEntry =
-			_fragmentEntryPersistence.fetchByPrimaryKey(
-				fragmentEntry.getFragmentEntryId());
-
 		Assert.assertEquals(
-			"fragmententrykey", persistedFragmentEntry.getFragmentEntryKey());
+			"fragmententrykey", fragmentEntry.getFragmentEntryKey());
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			persistedFragmentEntry.getStatus());
+			WorkflowConstants.STATUS_APPROVED, fragmentEntry.getStatus());
 	}
 
 	@Test
@@ -280,14 +258,10 @@ public class FragmentEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
-		FragmentEntry persistedFragmentEntry =
-			_fragmentEntryPersistence.fetchByPrimaryKey(
-				fragmentEntry.getFragmentEntryId());
-
 		Assert.assertEquals(
-			"fragmententrykey", persistedFragmentEntry.getFragmentEntryKey());
+			"fragmententrykey", fragmentEntry.getFragmentEntryKey());
 		Assert.assertEquals(
-			FragmentConstants.TYPE_COMPONENT, persistedFragmentEntry.getType());
+			FragmentConstants.TYPE_COMPONENT, fragmentEntry.getType());
 	}
 
 	@Test
@@ -305,11 +279,7 @@ public class FragmentEntryServiceTest {
 			FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		FragmentEntry persistedFragmentEntry =
-			_fragmentEntryPersistence.fetchByPrimaryKey(
-				fragmentEntry.getFragmentEntryId());
-
-		Assert.assertEquals(html, persistedFragmentEntry.getHtml());
+		Assert.assertEquals(html, fragmentEntry.getHtml());
 	}
 
 	@Test
@@ -323,12 +293,8 @@ public class FragmentEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
-		FragmentEntry persistedFragmentEntry =
-			_fragmentEntryPersistence.fetchByPrimaryKey(
-				fragmentEntry.getFragmentEntryId());
-
 		Assert.assertEquals(
-			FragmentConstants.TYPE_COMPONENT, persistedFragmentEntry.getType());
+			FragmentConstants.TYPE_COMPONENT, fragmentEntry.getType());
 	}
 
 	@Test
@@ -346,13 +312,9 @@ public class FragmentEntryServiceTest {
 			FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		FragmentEntry persistedFragmentEntry =
-			_fragmentEntryPersistence.fetchByPrimaryKey(
-				fragmentEntry.getFragmentEntryId());
-
-		Assert.assertEquals(html, persistedFragmentEntry.getHtml());
+		Assert.assertEquals(html, fragmentEntry.getHtml());
 		Assert.assertEquals(
-			FragmentConstants.TYPE_COMPONENT, persistedFragmentEntry.getType());
+			FragmentConstants.TYPE_COMPONENT, fragmentEntry.getType());
 	}
 
 	@Test
@@ -420,11 +382,11 @@ public class FragmentEntryServiceTest {
 			});
 
 		Assert.assertNull(
-			_fragmentEntryPersistence.fetchByPrimaryKey(
+			_fragmentEntryLocalService.fetchFragmentEntry(
 				fragmentEntry1.getFragmentEntryId()));
 
 		Assert.assertNull(
-			_fragmentEntryPersistence.fetchByPrimaryKey(
+			_fragmentEntryLocalService.fetchFragmentEntry(
 				fragmentEntry2.getFragmentEntryId()));
 	}
 
@@ -437,7 +399,7 @@ public class FragmentEntryServiceTest {
 			fragmentEntry.getFragmentEntryId());
 
 		Assert.assertNull(
-			_fragmentEntryPersistence.fetchByPrimaryKey(
+			_fragmentEntryLocalService.fetchFragmentEntry(
 				fragmentEntry.getFragmentEntryId()));
 	}
 
@@ -1669,17 +1631,13 @@ public class FragmentEntryServiceTest {
 		FragmentCollection targetFragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		_fragmentEntryService.moveFragmentEntry(
+		fragmentEntry = _fragmentEntryService.moveFragmentEntry(
 			fragmentEntry.getFragmentEntryId(),
 			targetFragmentCollection.getFragmentCollectionId());
 
-		FragmentEntry persistedFragmentEntry =
-			_fragmentEntryPersistence.fetchByPrimaryKey(
-				fragmentEntry.getFragmentEntryId());
-
 		Assert.assertEquals(
 			targetFragmentCollection.getFragmentCollectionId(),
-			persistedFragmentEntry.getFragmentCollectionId());
+			fragmentEntry.getFragmentCollectionId());
 	}
 
 	@Test
@@ -1687,7 +1645,7 @@ public class FragmentEntryServiceTest {
 		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
 			_fragmentCollection.getFragmentCollectionId());
 
-		_fragmentEntryService.updateFragmentEntry(
+		fragmentEntry = _fragmentEntryService.updateFragmentEntry(
 			fragmentEntry.getFragmentEntryId(),
 			_updatedFragmentCollection.getFragmentCollectionId(),
 			"Fragment Entry Updated", "div {\ncolor: red;\n}",
@@ -1695,24 +1653,16 @@ public class FragmentEntryServiceTest {
 			"{\n\t\"fieldSets\": [\n\t]\n}", fragmentEntry.getIcon(), 1, false,
 			fragmentEntry.getTypeOptions(), WorkflowConstants.STATUS_APPROVED);
 
-		FragmentEntry persistedFragmentEntry =
-			_fragmentEntryPersistence.fetchByPrimaryKey(
-				fragmentEntry.getFragmentEntryId());
-
 		Assert.assertEquals(
-			persistedFragmentEntry.getFragmentCollectionId(),
+			fragmentEntry.getFragmentCollectionId(),
 			_updatedFragmentCollection.getFragmentCollectionId());
+		Assert.assertEquals("Fragment Entry Updated", fragmentEntry.getName());
+		Assert.assertEquals("div {\ncolor: red;\n}", fragmentEntry.getCss());
+		Assert.assertEquals("<div>Updated</div>", fragmentEntry.getHtml());
+		Assert.assertEquals("alert(\"test\");", fragmentEntry.getJs());
+		Assert.assertEquals(1, fragmentEntry.getPreviewFileEntryId());
 		Assert.assertEquals(
-			"Fragment Entry Updated", persistedFragmentEntry.getName());
-		Assert.assertEquals(
-			"div {\ncolor: red;\n}", persistedFragmentEntry.getCss());
-		Assert.assertEquals(
-			"<div>Updated</div>", persistedFragmentEntry.getHtml());
-		Assert.assertEquals("alert(\"test\");", persistedFragmentEntry.getJs());
-		Assert.assertEquals(1, persistedFragmentEntry.getPreviewFileEntryId());
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			persistedFragmentEntry.getStatus());
+			WorkflowConstants.STATUS_APPROVED, fragmentEntry.getStatus());
 	}
 
 	@Test
@@ -1724,12 +1674,7 @@ public class FragmentEntryServiceTest {
 		fragmentEntry = _fragmentEntryService.updateFragmentEntry(
 			fragmentEntry.getFragmentEntryId(), "Fragment Name Updated");
 
-		FragmentEntry persistedFragmentEntry =
-			_fragmentEntryPersistence.fetchByPrimaryKey(
-				fragmentEntry.getFragmentEntryId());
-
-		Assert.assertEquals(
-			"Fragment Name Updated", persistedFragmentEntry.getName());
+		Assert.assertEquals("Fragment Name Updated", fragmentEntry.getName());
 	}
 
 	@Test
@@ -1753,20 +1698,12 @@ public class FragmentEntryServiceTest {
 			false, fragmentEntry.getTypeOptions(),
 			WorkflowConstants.STATUS_APPROVED);
 
-		FragmentEntry persistedFragmentEntry =
-			_fragmentEntryPersistence.fetchByPrimaryKey(
-				fragmentEntry.getFragmentEntryId());
-
+		Assert.assertEquals("Fragment Entry Updated", fragmentEntry.getName());
+		Assert.assertEquals("div {\ncolor: red;\n}", fragmentEntry.getCss());
+		Assert.assertEquals("<div>Updated</div>", fragmentEntry.getHtml());
+		Assert.assertEquals("alert(\"test\");", fragmentEntry.getJs());
 		Assert.assertEquals(
-			"Fragment Entry Updated", persistedFragmentEntry.getName());
-		Assert.assertEquals(
-			"div {\ncolor: red;\n}", persistedFragmentEntry.getCss());
-		Assert.assertEquals(
-			"<div>Updated</div>", persistedFragmentEntry.getHtml());
-		Assert.assertEquals("alert(\"test\");", persistedFragmentEntry.getJs());
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			persistedFragmentEntry.getStatus());
+			WorkflowConstants.STATUS_APPROVED, fragmentEntry.getStatus());
 	}
 
 	@Test
@@ -1793,21 +1730,13 @@ public class FragmentEntryServiceTest {
 			fragmentEntry.getIcon(), 1, false, fragmentEntry.getTypeOptions(),
 			WorkflowConstants.STATUS_APPROVED);
 
-		FragmentEntry persistedFragmentEntry =
-			_fragmentEntryPersistence.fetchByPrimaryKey(
-				fragmentEntry.getFragmentEntryId());
-
+		Assert.assertEquals("Fragment Entry Updated", fragmentEntry.getName());
+		Assert.assertEquals("div {\ncolor: red;\n}", fragmentEntry.getCss());
+		Assert.assertEquals("<div>Updated</div>", fragmentEntry.getHtml());
+		Assert.assertEquals("alert(\"test\");", fragmentEntry.getJs());
+		Assert.assertEquals(1, fragmentEntry.getPreviewFileEntryId());
 		Assert.assertEquals(
-			"Fragment Entry Updated", persistedFragmentEntry.getName());
-		Assert.assertEquals(
-			"div {\ncolor: red;\n}", persistedFragmentEntry.getCss());
-		Assert.assertEquals(
-			"<div>Updated</div>", persistedFragmentEntry.getHtml());
-		Assert.assertEquals("alert(\"test\");", persistedFragmentEntry.getJs());
-		Assert.assertEquals(1, persistedFragmentEntry.getPreviewFileEntryId());
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			persistedFragmentEntry.getStatus());
+			WorkflowConstants.STATUS_APPROVED, fragmentEntry.getStatus());
 	}
 
 	@Test
@@ -1817,16 +1746,11 @@ public class FragmentEntryServiceTest {
 
 		long previewFileEntryId = fragmentEntry.getPreviewFileEntryId();
 
-		_fragmentEntryService.updateFragmentEntry(
+		fragmentEntry = _fragmentEntryService.updateFragmentEntry(
 			fragmentEntry.getFragmentEntryId(), previewFileEntryId + 1);
 
-		FragmentEntry persistedFragmentEntry =
-			_fragmentEntryPersistence.fetchByPrimaryKey(
-				fragmentEntry.getFragmentEntryId());
-
 		Assert.assertEquals(
-			previewFileEntryId + 1,
-			persistedFragmentEntry.getPreviewFileEntryId());
+			previewFileEntryId + 1, fragmentEntry.getPreviewFileEntryId());
 	}
 
 	private void _assertCopiedFragment(
@@ -1860,7 +1784,7 @@ public class FragmentEntryServiceTest {
 	private FragmentCollection _fragmentCollection;
 
 	@Inject
-	private FragmentEntryPersistence _fragmentEntryPersistence;
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Inject
 	private FragmentEntryService _fragmentEntryService;

@@ -17,7 +17,6 @@ definition {
 	@description = "This is a test for COMMERCE-12756. As an admin I can add a refund reason."
 	@priority = 5
 	test CanAddRefundReason {
-		property custom.properties = "feature.flag.COMMERCE-12754=true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -166,7 +165,6 @@ definition {
 	@description = "This is a test for COMMERCE-12756. As an admin I can delete a refund reason."
 	@priority = 5
 	test CanDeleteRefundReason {
-		property custom.properties = "feature.flag.COMMERCE-12754=true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -206,7 +204,6 @@ definition {
 	@description = "This is a test for COMMERCE-12756. As an admin I can edit a refund reason."
 	@priority = 5
 	test CanEditRefundReason {
-		property custom.properties = "feature.flag.COMMERCE-12754=true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

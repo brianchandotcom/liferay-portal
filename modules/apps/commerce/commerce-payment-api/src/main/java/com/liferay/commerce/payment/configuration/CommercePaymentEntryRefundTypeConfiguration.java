@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
  */
 @ExtendedObjectClassDefinition(
 	category = "payment", factoryInstanceLabelAttribute = "key",
-	featureFlagKey = "COMMERCE-12754",
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(

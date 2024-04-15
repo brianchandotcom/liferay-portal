@@ -9,11 +9,7 @@ import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.commerce.application.list.constants.CommercePanelCategoryKeys;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,13 +34,6 @@ public class CommercePaymentPanelApp extends BasePanelApp {
 	@Override
 	public String getPortletId() {
 		return CommercePortletKeys.COMMERCE_PAYMENT;
-	}
-
-	@Override
-	public boolean isShow(PermissionChecker permissionChecker, Group group)
-		throws PortalException {
-
-		return FeatureFlagManagerUtil.isEnabled("COMMERCE-12754");
 	}
 
 	@Reference(

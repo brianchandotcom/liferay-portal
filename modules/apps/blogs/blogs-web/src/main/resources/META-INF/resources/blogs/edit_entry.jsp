@@ -187,6 +187,8 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 										HashMapBuilder.<String, Object>put(
 											"friendlyUrlInfo", LanguageUtil.format(request, "there-is-a-limit-of-x-characters-in-encoded-format-for-friendly-urls-(e.g.-x)", new String[] {String.valueOf(250), "/blogs"}, false)
 										).put(
+											"friendlyURLSeparatorCompanyConfigurationURL", blogsEditEntryDisplayContext.getFriendlyURLSeparatorCompanyConfigurationURL()
+										).put(
 											"id", liferayPortletResponse.getNamespace() + "friendly_url_category_selector"
 										).put(
 											"inputAddon", StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping()) + StringPool.SLASH

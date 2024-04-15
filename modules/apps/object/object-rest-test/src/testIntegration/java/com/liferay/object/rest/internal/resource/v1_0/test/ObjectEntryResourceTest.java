@@ -5020,8 +5020,8 @@ public class ObjectEntryResourceTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		AtomicBoolean property1Computed = new AtomicBoolean();
-		AtomicBoolean property2Computed = new AtomicBoolean();
+		AtomicBoolean booleanObjectFieldComputed = new AtomicBoolean();
+		AtomicBoolean dateObjectFieldComputed = new AtomicBoolean();
 
 		ServiceRegistration<Feature> serviceRegistration =
 			bundleContext.registerService(
@@ -5050,7 +5050,7 @@ public class ObjectEntryResourceTest {
 								lazyProperties.put(
 									_OBJECT_FIELD_NAME_BOOLEAN,
 									() -> {
-										property1Computed.set(true);
+										booleanObjectFieldComputed.set(true);
 
 										return unsafeSupplier1.get();
 									});
@@ -5062,7 +5062,7 @@ public class ObjectEntryResourceTest {
 								lazyProperties.put(
 									_OBJECT_FIELD_NAME_DATE,
 									() -> {
-										property2Computed.set(true);
+										dateObjectFieldComputed.set(true);
 
 										return unsafeSupplier2.get();
 									});
@@ -5101,10 +5101,11 @@ public class ObjectEntryResourceTest {
 				Http.Method.GET);
 
 			Assert.assertTrue(
-				"property1 should have been computed", property1Computed.get());
+				_OBJECT_FIELD_NAME_BOOLEAN + " should have been computed",
+				booleanObjectFieldComputed.get());
 			Assert.assertFalse(
-				"property2 should not have been computed",
-				property2Computed.get());
+				_OBJECT_FIELD_NAME_DATE + " should not have been computed",
+				dateObjectFieldComputed.get());
 
 			HTTPTestUtil.invokeToJSONObject(
 				null,
@@ -5114,9 +5115,11 @@ public class ObjectEntryResourceTest {
 				Http.Method.GET);
 
 			Assert.assertTrue(
-				"property1 should have been computed", property1Computed.get());
+				_OBJECT_FIELD_NAME_BOOLEAN + " should have been computed",
+				booleanObjectFieldComputed.get());
 			Assert.assertTrue(
-				"property2 should have been computed", property2Computed.get());
+				_OBJECT_FIELD_NAME_DATE + " should have been computed",
+				dateObjectFieldComputed.get());
 		}
 		finally {
 			serviceRegistration.unregister();

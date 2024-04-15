@@ -10,6 +10,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {useState} from 'react';
 
 import Form from '../../../../../../components/MarketplaceForm';
+import TextBlock from './Blocks/TextBlock';
 
 const items = [
 	{label: 'Choose an option'},
@@ -33,9 +34,9 @@ const Details = () => {
 			</Form.Label>
 
 			{submit && (
-				<Form.SectionWithControllers
-					name={selectedBlock}
-				></Form.SectionWithControllers>
+				<Form.SectionWithControllers name={selectedBlock}>
+					<TextBlock />
+				</Form.SectionWithControllers>
 			)}
 
 			<ClayButton

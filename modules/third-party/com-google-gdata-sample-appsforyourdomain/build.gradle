@@ -20,6 +20,8 @@ dependencies {
 }
 
 downloadSrc {
+	doNotTrackState("")
+
 	eachFile {
 		if (path.startsWith("gdata/java/lib") || path.startsWith("gdata/java/sample/util/lib")) {
 			path = "lib/" + name

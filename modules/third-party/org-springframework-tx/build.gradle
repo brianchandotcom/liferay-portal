@@ -48,6 +48,7 @@ jarPatched {
 	from copyPatchOriginalLibClasses
 
 	mustRunAfter compileJava
+	mustRunAfter generatePomFileForMavenPublication
 	mustRunAfter processResources
 }
 

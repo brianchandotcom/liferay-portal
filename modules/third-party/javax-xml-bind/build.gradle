@@ -33,5 +33,6 @@ jarPatched {
 	}
 
 	mustRunAfter compileJava
+	mustRunAfter generatePomFileForMavenPublication
 	mustRunAfter processResources
 }

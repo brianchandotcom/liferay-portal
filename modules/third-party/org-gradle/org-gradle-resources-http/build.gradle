@@ -17,9 +17,9 @@ dependencies {
 }
 
 jar {
-	finalizedBy jarOverwrite
+	setActions([])
 
-	enabled = false
+	dependsOn jarOverwrite
 }
 
 jarOverwrite {
@@ -33,4 +33,6 @@ jarOverwrite {
 				it.name.startsWith "gradle-resources-http-"
 			}
 		})
+
+	mustRunAfter generatePomFileForMavenPublication
 }

@@ -30,6 +30,12 @@ import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
 import ModalContent from './components/ModalContent';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromDealRegistration from './hooks/useGetListItemsFromDealRegistration';
+import DateFilter from '../../common/components/TableHeader/Filter/components/filters/DateFilter';
+import DropDownWithDrillDown from '../../common/components/TableHeader/Filter/components/DropDownWithDrillDown';
+import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
+import ClayIcon from '@clayui/icon';
+import { INITIAL_FILTER } from './utils/constants/initialFilter';
+import {currentFiscalYearStart, previousFiscalYearStart} from '../../common/utils/constants/filters';
 export type DealRegistrationItem = {
 	[key in DealRegistrationColumnKey]?: any;
 };
@@ -171,6 +177,45 @@ const DealRegistrationList = ({sort}: IProps) => {
 		}
 	};
 
+	const todayDate = new Date();
+	const formattedDate = todayDate.toISOString().slice(0, 10);
+
+	const rangeDataPicker = submittedDealsFilter
+	? {
+		end: formattedDate,
+		start: previousFiscalYearStart
+	  }
+	: {
+		end: formattedDate,
+		start: currentFiscalYearStart
+	  };
+
+	const filterFields = [
+		{
+			component: (
+				<DateFilter
+					dateFilters={(dates: {
+						endDate: string;
+						startDate: string;
+					}) => {
+						onFilter({
+							dataSubmitted: {
+								dates,
+							},
+						});
+					}}
+					filterDescription="Date Submitted "
+					initialDates={filters.dataSubmitted?.dates}
+					years={{
+						end: rangeDataPicker.end,
+						start: rangeDataPicker.start
+					  }}
+				/>
+			),
+			name: 'Date Submitted',
+		},
+	]
+
 	return (
 		<div className="border-0 my-4">
 			<div className="align-items-center d-md-flex justify-content-between mb-3 mr-4">
@@ -217,8 +262,42 @@ const DealRegistrationList = ({sort}: IProps) => {
 										</p>
 									</div>
 								)}
+							{filters.hasValue && (
+								<ClayButton
+									borderless
+									className="link"
+									onClick={() => {
+										onFilter({
+											...INITIAL_FILTER,
+											searchTerm: filters.searchTerm,
+										});
+									}}
+									small
+								>
+									<ClayIcon
+										className="ml-n2 mr-1"
+										symbol="times-circle"
+									/>
+									Clear All Filters
+								</ClayButton>
+							)}
 						</div>
-					</div>
+						</div>
+
+					<DropDownWithDrillDown
+						className=""
+						initialActiveMenu="x0a0"
+						menus={getDropDownFilterMenus(filterFields)}
+						trigger={
+							<ClayButton borderless className="btn-secondary">
+								<span className="inline-item inline-item-before">
+									<ClayIcon symbol="filter" />
+								</span>
+								Filter
+							</ClayButton>
+						}
+					/>
+
 				</div>
 
 				<div>

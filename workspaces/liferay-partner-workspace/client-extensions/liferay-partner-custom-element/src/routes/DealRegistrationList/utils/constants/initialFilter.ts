@@ -4,5 +4,13 @@
  */
 
 export const INITIAL_FILTER = {
+	dataSubmitted: {
+		dates: {
+			endDate: '',
+			startDate: '',
+		},
+	},
+	hasValue: false,
 	searchTerm: '',
+
 };

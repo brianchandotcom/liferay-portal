@@ -47,7 +47,8 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 
 		String moduleName = BNDSourceUtil.getModuleName(absolutePath);
 
-		if (moduleName.contains("-import-") ||
+		if (moduleName.contains("-default-") ||
+			moduleName.contains("-import-") ||
 			moduleName.contains("-private-")) {
 
 			return;

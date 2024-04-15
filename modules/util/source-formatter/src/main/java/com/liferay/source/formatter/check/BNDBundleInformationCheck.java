@@ -69,7 +69,8 @@ public class BNDBundleInformationCheck extends BaseFileCheck {
 			addMessage(fileName, "Missing Bundle-Name");
 		}
 
-		if (moduleName.endsWith("-import") || moduleName.contains("-import-") ||
+		if (moduleName.contains("-default-") ||
+			moduleName.endsWith("-import") || moduleName.contains("-import-") ||
 			moduleName.contains("-private-")) {
 
 			return;

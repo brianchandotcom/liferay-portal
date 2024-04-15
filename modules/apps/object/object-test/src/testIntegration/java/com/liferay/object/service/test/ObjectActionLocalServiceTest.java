@@ -93,6 +93,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -1713,6 +1714,94 @@ public class ObjectActionLocalServiceTest {
 		_objectFieldLocalService.deleteObjectField(objectField1);
 		_objectFieldLocalService.deleteObjectField(objectField2);
 		_objectFieldLocalService.deleteObjectField(objectField3);
+	}
+
+	@Test
+	public void testConcurrentObjectActions() throws Exception {
+		_addObjectAction(
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			UnicodePropertiesBuilder.put(
+				"script", "println \"Hello World\""
+			).build(),
+			false);
+
+		_objectDefinition = _publishCustomObjectDefinition();
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(_user));
+			PrincipalThreadLocal.setName(_user.getUserId());
+
+			Thread thread1 = new Thread(
+				() -> {
+					try {
+						_objectEntryLocalService.addObjectEntry(
+							TestPropsValues.getUserId(), 0,
+							_objectDefinition.getObjectDefinitionId(),
+							HashMapBuilder.<String, Serializable>put(
+								"firstName", "John"
+							).build(),
+							ServiceContextTestUtil.getServiceContext());
+					}
+					catch (PortalException portalException) {
+					}
+				});
+
+			Thread thread2 = new Thread(
+				() -> {
+					try {
+						_objectEntryLocalService.addObjectEntry(
+							TestPropsValues.getUserId(), 0,
+							_objectDefinition.getObjectDefinitionId(),
+							HashMapBuilder.<String, Serializable>put(
+								"firstName", "Peter"
+							).build(),
+							ServiceContextTestUtil.getServiceContext());
+					}
+					catch (PortalException portalException) {
+					}
+				});
+
+			thread1.start();
+			thread2.start();
+
+			thread1.join();
+			thread2.join();
+
+			Assert.assertEquals(
+				2,
+				_objectEntryLocalService.getObjectEntriesCount(
+					0, _objectDefinition.getObjectDefinitionId()));
+
+			Assert.assertEquals(2, _argumentsList.size());
+
+			Object[] arguments = _argumentsList.poll();
+
+			Set<String> firstNames = SetUtil.fromArray(
+				new String[] {"John", "Peter"});
+
+			Map<String, Object> inputObjects =
+				(Map<String, Object>)arguments[0];
+
+			Assert.assertTrue(firstNames.remove(inputObjects.get("firstName")));
+
+			arguments = _argumentsList.poll();
+
+			inputObjects = (Map<String, Object>)arguments[0];
+
+			Assert.assertTrue(firstNames.remove(inputObjects.get("firstName")));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+		}
 	}
 
 	@Test

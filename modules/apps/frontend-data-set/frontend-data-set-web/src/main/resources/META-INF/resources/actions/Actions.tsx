@@ -11,13 +11,7 @@ import FrontendDataSetContext, {
 } from '../FrontendDataSetContext';
 import filterItemActions from '../utils/actionItems/filterItemActions';
 import handleActionClick from '../utils/actionItems/handleActionClick';
-
-// @ts-ignore
-
 import ViewsContext from '../views/ViewsContext';
-
-// @ts-ignore
-
 import ActionsDropdown from './ActionsDropdown';
 import QuickActions from './QuickActions';
 

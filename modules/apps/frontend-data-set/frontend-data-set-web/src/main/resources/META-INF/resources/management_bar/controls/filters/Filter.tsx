@@ -7,8 +7,6 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {loadModule} from 'frontend-js-web';
 import React, {ReactElement, useContext, useEffect, useState} from 'react';
 
-// @ts-ignore
-
 import ViewsContext from '../../../views/ViewsContext';
 
 // @ts-ignore
@@ -74,9 +72,6 @@ function getFakeComponent() {
 }
 
 const Filter = ({id, moduleURL, type, ...otherProps}: FilterComponentArgs) => {
-
-	// @ts-ignore
-
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const filterImplementation = FILTER_IMPLEMENTATIONS[type];

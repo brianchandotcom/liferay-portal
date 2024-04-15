@@ -596,6 +596,29 @@ export default function ViewObjectDefinitions({
 					id={selectedObjectFolder.id as number}
 					initialLabel={selectedObjectFolder.label}
 					name={selectedObjectFolder.name}
+					onAfterSubmit={(editedObjectFolder) => {
+						setSelectedObjectFolder(editedObjectFolder);
+						setObjectFoldersRequestInfo({
+							...objectFoldersRequestInfo,
+							items: objectFoldersRequestInfo.items.map(
+								(objectFolder) => {
+									if (
+										objectFolder.name ===
+										editedObjectFolder.name
+									) {
+										return {
+											...objectFolder,
+											externalReferenceCode:
+												editedObjectFolder.externalReferenceCode,
+											label: editedObjectFolder.label,
+										};
+									}
+
+									return objectFolder;
+								}
+							),
+						});
+					}}
 				/>
 			)}
 			{showModal.moveObjectDefinition && (

@@ -453,6 +453,49 @@ public class LayoutCopyHelperTest {
 	}
 
 	@Test
+	public void testCopyLayoutContentUpdateAndPublishDraftWithinPublication()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CTSettingsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).build())) {
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			Assert.assertNotNull(draftLayout);
+
+			CTCollection ctCollection =
+				_ctCollectionLocalService.addCTCollection(
+					null, TestPropsValues.getCompanyId(),
+					TestPropsValues.getUserId(), 0,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString());
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollection.getCtCollectionId())) {
+
+				String content = RandomTestUtil.randomString();
+
+				_layoutCopyHelper.copyLayoutContent(
+					_addFragmentEntryLinkAndGetLayout(content, draftLayout),
+					layout);
+
+				_assertLayoutContent(
+					content, _portal.getSiteDefaultLocale(_group), 1,
+					layout.getPlid());
+			}
+		}
+	}
+
+	@Test
 	public void testCopyLayoutContentWithPublication() throws Exception {
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
@@ -849,6 +892,33 @@ public class LayoutCopyHelperTest {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
+	private Layout _addFragmentEntryLinkAndGetLayout(
+			String elementText, Layout layout)
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _addFragmentEntry();
+
+		Locale locale = _portal.getSiteDefaultLocale(_group);
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text", JSONUtil.put(languageId, elementText))
+			).toString(),
+			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), layout, fragmentEntry.getFragmentEntryKey(),
+			fragmentEntry.getType(), null, 0,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
+
+		return _layoutLocalService.getLayout(layout.getPlid());
+	}
+
 	private long[] _assertFragmentEntryLinksAndGetOriginalFragmentEntryLinkIds(
 		List<FragmentEntryLink> copiedFragmentEntryLinks,
 		List<FragmentEntryLink> sourceFragmentEntryLinks) {
@@ -917,33 +987,41 @@ public class LayoutCopyHelperTest {
 		throws Exception {
 
 		for (Map.Entry<Long, String> entry : layoutPlidMap.entrySet()) {
-			Long plid = entry.getKey();
-
-			LayoutPageTemplateStructure layoutPageTemplateStructure =
-				_layoutPageTemplateStructureLocalService.
-					fetchLayoutPageTemplateStructure(_group.getGroupId(), plid);
-
-			LayoutStructure layoutStructure = LayoutStructure.of(
-				layoutPageTemplateStructure.getData(
-					SegmentsExperienceConstants.KEY_DEFAULT));
-
-			Map<Long, LayoutStructureItem> fragmentEntryLinkIdMap =
-				layoutStructure.getFragmentLayoutStructureItems();
-
-			Assert.assertEquals(
-				fragmentEntryLinkIdMap.toString(), _NUMBER_FRAGMENT_ENTRY_LINKS,
-				fragmentEntryLinkIdMap.size());
-
-			for (long fragmentEntryLinkId : fragmentEntryLinkIdMap.keySet()) {
-				Assert.assertNotNull(
-					_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-						fragmentEntryLinkId));
-			}
-
-			Assert.assertEquals(
-				entry.getValue(),
-				_getLayoutContent(_layoutLocalService.getLayout(plid), locale));
+			_assertLayoutContent(
+				entry.getValue(), locale, _NUMBER_FRAGMENT_ENTRY_LINKS,
+				entry.getKey());
 		}
+	}
+
+	private void _assertLayoutContent(
+			String content, Locale locale, int numberFragmentEntryLinks,
+			long plid)
+		throws Exception {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(_group.getGroupId(), plid);
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(
+				SegmentsExperienceConstants.KEY_DEFAULT));
+
+		Map<Long, LayoutStructureItem> fragmentEntryLinkIdMap =
+			layoutStructure.getFragmentLayoutStructureItems();
+
+		Assert.assertEquals(
+			fragmentEntryLinkIdMap.toString(), numberFragmentEntryLinks,
+			fragmentEntryLinkIdMap.size());
+
+		for (long fragmentEntryLinkId : fragmentEntryLinkIdMap.keySet()) {
+			Assert.assertNotNull(
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					fragmentEntryLinkId));
+		}
+
+		Assert.assertEquals(
+			content,
+			_getLayoutContent(_layoutLocalService.getLayout(plid), locale));
 	}
 
 	private String _getLayoutContent(Layout layout, Locale locale)

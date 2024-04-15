@@ -5437,6 +5437,8 @@ public class ObjectEntryResourceTest {
 			).put(
 				_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEsp</p>"
 			).put(
+				_OBJECT_FIELD_NAME_RICH_TEXT + "RawText", "richTextEsp"
+			).put(
 				_OBJECT_FIELD_NAME_TEXT, "textEsp"
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
@@ -5457,6 +5459,8 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
 			).put(
 				_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
+			).put(
+				_OBJECT_FIELD_NAME_RICH_TEXT + "RawText", "richTextEng"
 			).put(
 				_OBJECT_FIELD_NAME_TEXT, "textEng"
 			).toString(),
@@ -5479,6 +5483,8 @@ public class ObjectEntryResourceTest {
 			).put(
 				_OBJECT_FIELD_NAME_RICH_TEXT, ""
 			).put(
+				_OBJECT_FIELD_NAME_RICH_TEXT + "RawText", ""
+			).put(
 				_OBJECT_FIELD_NAME_TEXT, ""
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
@@ -5499,6 +5505,8 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
 			).put(
 				_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
+			).put(
+				_OBJECT_FIELD_NAME_RICH_TEXT + "RawText", "richTextEng"
 			).put(
 				_OBJECT_FIELD_NAME_TEXT, "textEng"
 			).toString(),

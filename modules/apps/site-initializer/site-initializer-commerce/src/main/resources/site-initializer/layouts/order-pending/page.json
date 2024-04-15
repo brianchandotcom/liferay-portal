@@ -1,0 +1,12 @@
+{
+	"description": "",
+	"friendlyURL": "/order-pending",
+	"hidden": false,
+	"name": "order-pending",
+	"name_i18n": {
+		"en_US": "Pending Orders"
+	},
+	"private": true,
+	"system": false,
+	"type": "content"
+}

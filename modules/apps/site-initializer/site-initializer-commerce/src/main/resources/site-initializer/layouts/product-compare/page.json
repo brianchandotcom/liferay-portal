@@ -1,0 +1,12 @@
+{
+	"description": "",
+	"friendlyURL": "/product-compare",
+	"hidden": true,
+	"name": "product-compare",
+	"name_i18n": {
+		"en_US": "Product Comparison"
+	},
+	"private": true,
+	"system": false,
+	"type": "content"
+}

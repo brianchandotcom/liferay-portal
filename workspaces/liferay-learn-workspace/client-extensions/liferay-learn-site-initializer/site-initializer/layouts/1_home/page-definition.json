@@ -1,6 +1,6 @@
 {
 	"pageElement": {
-		"id": "e80d27fd-f68e-d1a0-50c7-98fcb27a8867",
+		"id": "97aea8cb-84f9-3ab5-d86a-3ca410023ea9",
 		"pageElements": [
 			{
 				"definition": {
@@ -271,6 +271,7 @@
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -415,6 +416,7 @@
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -554,6 +556,7 @@
 														"backgroundColor": "#fff",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -693,6 +696,7 @@
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -832,6 +836,7 @@
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -971,6 +976,7 @@
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -1110,6 +1116,7 @@
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -1249,6 +1256,7 @@
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -1388,6 +1396,7 @@
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -1527,6 +1536,7 @@
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -1666,6 +1676,7 @@
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -1805,6 +1816,7 @@
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
 														"paddingRight": "3",
@@ -1993,6 +2005,7 @@
 																"backgroundColor": "colorNeutral0",
 																"borderRadius": "borderRadiusLg",
 																"borderWidth": "1px",
+																"maxWidth": "300px",
 																"paddingBottom": "3",
 																"paddingLeft": "3",
 																"paddingRight": "3",
@@ -2139,6 +2152,7 @@
 																"backgroundColor": "colorNeutral0",
 																"borderRadius": "borderRadiusLg",
 																"borderWidth": "1px",
+																"maxWidth": "300px",
 																"paddingBottom": "3",
 																"paddingLeft": "3",
 																"paddingRight": "3",
@@ -2285,6 +2299,7 @@
 																"backgroundColor": "colorNeutral0",
 																"borderRadius": "borderRadiusLg",
 																"borderWidth": "1px",
+																"maxWidth": "300px",
 																"paddingBottom": "3",
 																"paddingLeft": "3",
 																"paddingRight": "3",
@@ -2431,6 +2446,7 @@
 																"backgroundColor": "colorNeutral0",
 																"borderRadius": "borderRadiusLg",
 																"borderWidth": "1px",
+																"maxWidth": "300px",
 																"paddingBottom": "3",
 																"paddingLeft": "3",
 																"paddingRight": "3",
@@ -2577,6 +2593,7 @@
 																"backgroundColor": "colorNeutral0",
 																"borderRadius": "borderRadiusLg",
 																"borderWidth": "1px",
+																"maxWidth": "300px",
 																"paddingBottom": "3",
 																"paddingLeft": "3",
 																"paddingRight": "3",
@@ -2728,9 +2745,11 @@
 		"type": "Root"
 	},
 	"settings": {
+		"colorSchemeName": "01",
 		"masterPage": {
 			"key": "liferay-learn"
-		}
+		},
+		"themeName": "Dialect"
 	},
-	"version": 1.0
+	"version": 1.1
 }

@@ -22,7 +22,6 @@ export const test = mergeTests(
 	commercePagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'COMMERCE-9599': true,
 		'LPS-178052': true,
 	}),
 	loginTest()

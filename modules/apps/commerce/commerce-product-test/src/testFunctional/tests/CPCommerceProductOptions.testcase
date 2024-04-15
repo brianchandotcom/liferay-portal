@@ -127,7 +127,7 @@ definition {
 	@description = "COMMERCE-12610. As an Operations Manager, I can assert the bundled product shown with option values in the orders admin"
 	@priority = 5
 	test CanAssertAllTypesOfOptionsShownInOrdersAdmin {
-		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user is created") {
@@ -309,7 +309,7 @@ definition {
 	@description = "COMMERCE-12610. As a buyer, I can assert the bundled product shown with option values in the placed order"
 	@priority = 5
 	test CanAssertAllTypesOfOptionsShownInPlacedOrders {
-		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user is created") {
@@ -2083,7 +2083,7 @@ definition {
 	@description = "COMMERCE-12700 Verify that is not possible to view the accordion 'Show Option' in case the product has no options"
 	@priority = 4
 	test CannotViewTheAccordionForProductsWithNoOptions {
-		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a buyer user is created") {
@@ -2309,7 +2309,7 @@ definition {
 	@description = "COMMERCE-12701 Verify that is possible to view and use the accordion 'Show Options' for the bundled products with UOM"
 	@priority = 5
 	test CanUseTheAccordionForBundledProductsWithUOM {
-		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user is created") {
@@ -2441,7 +2441,7 @@ definition {
 	@description = "COMMERCE-12699 Verify that is possible to view and use the accordion 'Show Options' for the Define Externally bundled products"
 	@priority = 5
 	test CanUseTheAccordionForDefineExternallyProducts {
-		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user is created") {
@@ -2539,7 +2539,7 @@ definition {
 	@description = "COMMERCE-12698 Verify that is possible to view and use the accordion 'Show Options' for the normal products"
 	@priority = 5
 	test CanUseTheAccordionForNormalProducts {
-		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user is created") {

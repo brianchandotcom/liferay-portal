@@ -60,8 +60,6 @@ test.afterEach(async ({apiHelpers}) => {
 				break;
 		}
 	}
-
-	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-9599', false);
 });
 
 test('Edit pending order item with UOM', async ({
@@ -70,8 +68,6 @@ test('Edit pending order item with UOM', async ({
 	commerceLayoutsPage,
 	pendingOrdersPage,
 }) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-9599', true);
-
 	const site = await apiHelpers.headlessSite.createSite({
 		name: 'Edit pending order',
 	});
@@ -163,8 +159,6 @@ test('Edit pending order item without UOM', async ({
 	commerceLayoutsPage,
 	pendingOrdersPage,
 }) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-9599', true);
-
 	const site = await apiHelpers.headlessSite.createSite({
 		name: 'Edit pending order',
 	});

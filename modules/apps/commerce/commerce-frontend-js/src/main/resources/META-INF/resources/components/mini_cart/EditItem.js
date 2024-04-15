@@ -181,18 +181,16 @@ function EditItem() {
 			updating: false,
 		});
 
-		if (Liferay.FeatureFlags['COMMERCE-9599']) {
-			const dataSetId = editedItem.dataSetId;
+		const dataSetId = editedItem.dataSetId;
 
-			if (dataSetId) {
-				if (refreshDataSet) {
-					Liferay.fire(FDS_UPDATE_DISPLAY, {
-						id: dataSetId,
-					});
-				}
-
-				closeCart();
+		if (dataSetId) {
+			if (refreshDataSet) {
+				Liferay.fire(FDS_UPDATE_DISPLAY, {
+					id: dataSetId,
+				});
 			}
+
+			closeCart();
 		}
 	};
 
@@ -299,8 +297,7 @@ function EditItem() {
 				</div>
 
 				<div className="flex-grow-1 flex-shrink-1 overflow-auto p-4">
-					{Liferay.FeatureFlags['COMMERCE-9599'] &&
-					options?.items?.length > 0 ? (
+					{options?.items?.length > 0 ? (
 						<>
 							<div className="panel panel-unstyled">
 								<div className="panel-header">

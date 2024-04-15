@@ -250,15 +250,24 @@ const FrontendDataSet = ({
 							}))
 					: [],
 				onLoad: (bindingContexts) => {
-					const newFilters = bindingContexts.map(
-						({
-							binding: clientExtensionFilterImplementation,
-							context: filter,
-						}) => ({
-							...filter,
-							clientExtensionFilterImplementation,
-						})
-					);
+					const newFilters = initialFilters.map((filter) => {
+						const bindingContext = bindingContexts.find(
+							(bindingContext) =>
+								bindingContext.context
+									.clientExtensionFilterURL ===
+								filter.clientExtensionFilterURL
+						);
+
+						if (bindingContext) {
+							return {
+								...filter,
+								clientExtensionFilterImplementation:
+									bindingContext.binding,
+							};
+						}
+
+						return filter;
+					});
 
 					viewsDispatch({
 						type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,

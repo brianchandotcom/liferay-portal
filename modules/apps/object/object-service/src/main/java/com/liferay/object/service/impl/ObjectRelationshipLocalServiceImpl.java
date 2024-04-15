@@ -563,12 +563,17 @@ public class ObjectRelationshipLocalServiceImpl
 		ObjectDefinition objectDefinition1 =
 			objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1());
+
 		ObjectDefinition objectDefinition2 =
 			objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2());
 
-		if (objectDefinition1.getRootObjectDefinitionId() !=
-				objectDefinition2.getRootObjectDefinitionId()) {
+		long objectDefinition2RootObjectDefinitionId =
+			objectDefinition2.getRootObjectDefinitionId();
+
+		if ((objectDefinition1.getRootObjectDefinitionId() !=
+				objectDefinition2RootObjectDefinitionId) &&
+			(objectDefinition2RootObjectDefinitionId != 0)) {
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(

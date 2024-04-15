@@ -15,11 +15,10 @@ export function FieldFeedback({
 	warningMessage,
 	...otherProps
 }: IProps) {
-	const message =
-		warningMessage && !errorMessage ? warningMessage : errorMessage;
+	const showWarning = warningMessage && !errorMessage;
 
-	const symbol =
-		warningMessage && !errorMessage ? 'warning-full' : 'exclamation-full';
+	const message = showWarning ? warningMessage : errorMessage;
+	const symbol = showWarning ? 'warning-full' : 'exclamation-full';
 
 	return (
 		<ClayForm.FeedbackGroup

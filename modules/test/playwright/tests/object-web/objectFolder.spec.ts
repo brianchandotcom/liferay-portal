@@ -54,6 +54,43 @@ test.describe('manage object definitions through model builder', () => {
 			await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
 		}
 	});
+
+	test('can edit object folder label and ERC by Model Builder', async ({
+		apiHelpers,
+		modalEditObjectFolderPage,
+		modelBuilderPage,
+	}) => {
+		const objectFolder =
+			await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+		await modelBuilderPage.goto({objectFolderName: objectFolder.name});
+
+		await modelBuilderPage.editObjectFolderDetailsButton.click();
+
+		const newObjectFolderLabel = 'objectFolderLabel' + getRandomInt();
+		const newObjectFolderERC = 'objectFolderERC' + getRandomInt();
+
+		await modalEditObjectFolderPage.editObjectFolderDetails(
+			newObjectFolderERC,
+			newObjectFolderLabel
+		);
+
+		expect(
+			modelBuilderPage.getObjectFolderLabelHeaderLocator(
+				newObjectFolderLabel
+			)
+		).toBeVisible();
+
+		expect(modelBuilderPage.selectedObjectFolder).toBeVisible();
+
+		expect(
+			modelBuilderPage.getObjectFolderERCHeaderLocator(newObjectFolderERC)
+		).toBeVisible();
+
+		// Clean up
+
+		await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+	});
 });
 
 test.describe('manage object definitions through view object definitions', () => {

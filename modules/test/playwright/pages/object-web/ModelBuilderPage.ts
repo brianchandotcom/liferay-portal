@@ -12,6 +12,7 @@ export class ModelBuilderPage {
 	readonly addObjectFieldButton: Locator;
 	readonly createNewObjectDefinitionButton: Locator;
 	readonly deleteObjectRelationshipButton: Locator;
+	readonly editObjectFolderDetailsButton: Locator;
 	readonly fitViewButton: Locator;
 	readonly leftSidebarItems: Locator;
 	readonly newObjectFieldSelectBusinessType: Locator;
@@ -30,6 +31,7 @@ export class ModelBuilderPage {
 	readonly otherObjectFolders: Locator;
 	readonly page: Page;
 	readonly rightSidebar: Locator;
+	readonly selectedObjectFolder: Locator;
 	readonly toggleSidebarsButton: Locator;
 	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
 
@@ -42,6 +44,9 @@ export class ModelBuilderPage {
 			page.getByText('Create New Object');
 		this.deleteObjectRelationshipButton = page.getByLabel(
 			'Delete Relationship'
+		);
+		this.editObjectFolderDetailsButton = page.locator(
+			'button[name=editObjectFolderButton]'
 		);
 		this.fitViewButton = page.locator(
 			'button.react-flow__controls-button.react-flow__controls-fitview'
@@ -96,6 +101,11 @@ export class ModelBuilderPage {
 		this.rightSidebar = page
 			.getByRole('tabpanel')
 			.filter({hasNot: this.createNewObjectDefinitionButton});
+		this.selectedObjectFolder = page
+			.getByRole('tabpanel')
+			.getByRole('treeitem')
+			.filter({hasNot: page.getByTitle('Go to Folder')})
+			.first();
 		this.toggleSidebarsButton = page.getByLabel('Toggle Sidebars');
 	}
 
@@ -220,6 +230,10 @@ export class ModelBuilderPage {
 		return this.page.locator(
 			`div[data-handleid="${objectDefinitionExternalReferenceCode}_${position}"]:not([data-handleid="${dataHandled}"])`
 		);
+	}
+
+	getObjectFolderERCHeaderLocator(objectFolderERC: string) {
+		return this.page.getByTitle(`ERC: ${objectFolderERC}`);
 	}
 
 	getObjectFolderLabelHeaderLocator = (objectFolderLabel: string) => {

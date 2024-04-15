@@ -104,6 +104,7 @@ export default function EditObjectFolderHeader({
 									'edit-label-and-erc'
 								)}
 								displayType="unstyled"
+								name="editObjectFolderButton"
 								onClick={() =>
 									dispatch({
 										payload: {

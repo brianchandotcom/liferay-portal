@@ -20,6 +20,11 @@ public class UpgradeRelease extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_upgradeReleaseVerifiedStatus();
+		_upgradeRemoveReleaseEntry();
+	}
+
+	private void _upgradeReleaseVerifiedStatus() throws Exception {
 		StringBundler sb = new StringBundler(
 			"update Release_ set verified=0 where servletContextName not in (");
 
@@ -34,6 +39,12 @@ public class UpgradeRelease extends UpgradeProcess {
 		sb.append(StringPool.APOSTROPHE + StringPool.CLOSE_PARENTHESIS);
 
 		runSQL(sb.toString());
+	}
+
+	private void _upgradeRemoveReleaseEntry() throws Exception {
+		runSQL(
+			"delete from Release_ where servletContextName = " +
+				"'com.liferay.notifications.service'");
 	}
 
 	private static final List<String> _verifiedServletContextNames =

@@ -13,11 +13,11 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.test.util.DLAppTestUtil;
 import com.liferay.dynamic.data.mapping.configuration.DDMIndexerConfiguration;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
@@ -27,12 +27,12 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.search.TestOrderHelper;
-import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
+import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -55,9 +55,10 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.BaseSearchTestCase;
 import com.liferay.portal.test.rule.Inject;
@@ -68,6 +69,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.Collections;
+import java.util.Date;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -235,7 +237,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 			file = FileUtil.createTempFile(inputStream);
 
-			DLAppLocalServiceUtil.addFileEntry(
+			_dlAppLocalService.addFileEntry(
 				null, serviceContext.getUserId(),
 				serviceContext.getScopeGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName, mimeType,
@@ -252,7 +254,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 	@Test
 	public void testSearchTreePath() throws Exception {
-		DLAppLocalServiceUtil.addFileEntry(
+		_dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
@@ -260,13 +262,13 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			StringUtil.randomString(), new byte[0], null, null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
-		Folder folder = DLAppLocalServiceUtil.addFolder(
+		Folder folder = _dlAppLocalService.addFolder(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
-		DLAppLocalServiceUtil.addFileEntry(
+		_dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			folder.getFolderId(), StringUtil.randomString(),
 			ContentTypes.APPLICATION_OCTET_STREAM, "Document", StringPool.BLANK,
@@ -301,11 +303,11 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		_ddmStructure = ddmStructure;
 
 		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.fetchDataDefinitionFileEntryType(
+			_dlFileEntryTypeLocalService.fetchDataDefinitionFileEntryType(
 				ddmStructure.getGroupId(), ddmStructure.getStructureId());
 
 		if (dlFileEntryType == null) {
-			dlFileEntryType = DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+			dlFileEntryType = _dlFileEntryTypeLocalService.addFileEntryType(
 				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 				ddmStructure.getStructureId(), null,
 				Collections.singletonMap(
@@ -315,7 +317,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
 				serviceContext);
 
-			DLFileEntryTypeLocalServiceUtil.addDDMStructureLinks(
+			_dlFileEntryTypeLocalService.addDDMStructureLinks(
 				dlFileEntryType.getFileEntryTypeId(),
 				SetUtil.fromArray(ddmStructure.getStructureId()));
 		}
@@ -323,7 +325,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		String content = "Content: Enterprise. Open Source. For Life.";
 
 		DDMFormValues ddmFormValues = createDDMFormValues(
-			DDMBeanTranslatorUtil.translate(ddmStructure.getDDMForm()));
+			_ddmBeanTranslator.translate(ddmStructure.getDDMForm()));
 
 		for (String keyword : keywords) {
 			ddmFormValues.addDDMFormFieldValue(
@@ -339,7 +341,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 				ddmStructure.getStructureId(),
 			ddmFormValues);
 
-		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
@@ -415,7 +417,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 	@Override
 	protected void deleteBaseModel(long primaryKey) throws Exception {
-		DLFileEntryLocalServiceUtil.deleteFileEntry(primaryKey);
+		_dlFileEntryLocalService.deleteFileEntry(primaryKey);
 	}
 
 	@Override
@@ -427,10 +429,10 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		DLFileEntry dlFileEntry = (DLFileEntry)baseModel;
 
 		if (expireAllVersions) {
-			DLAppServiceUtil.deleteFileEntry(dlFileEntry.getFileEntryId());
+			_dlAppService.deleteFileEntry(dlFileEntry.getFileEntryId());
 		}
 		else {
-			DLAppServiceUtil.deleteFileVersion(
+			_dlAppService.deleteFileVersion(
 				dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
 		}
 	}
@@ -452,7 +454,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
 		throws Exception {
 
-		Folder folder = DLAppServiceUtil.addFolder(
+		Folder folder = _dlAppService.addFolder(
 			null, serviceContext.getScopeGroupId(),
 			(Long)parentBaseModel.getPrimaryKeyObj(),
 			RandomTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH),
@@ -466,7 +468,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 
-		Folder folder = DLAppServiceUtil.addFolder(
+		Folder folder = _dlAppService.addFolder(
 			null, serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH),
@@ -492,21 +494,21 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		DLTrashServiceUtil.moveFileEntryToTrash(primaryKey);
+		_dlTrashService.moveFileEntryToTrash(primaryKey);
 	}
 
 	@Override
 	protected void moveParentBaseModelToTrash(long primaryKey)
 		throws Exception {
 
-		DLTrashServiceUtil.moveFolderToTrash(primaryKey);
+		_dlTrashService.moveFolderToTrash(primaryKey);
 	}
 
 	@Override
 	protected Hits searchGroupEntries(long groupId, long creatorUserId)
 		throws Exception {
 
-		return DLAppServiceUtil.search(
+		return _dlAppService.search(
 			groupId, creatorUserId, WorkflowConstants.STATUS_APPROVED,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
@@ -519,7 +521,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)baseModel;
 
-		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
+		FileEntry fileEntry = _dlAppService.updateFileEntry(
 			dlFileEntry.getFileEntryId(), null, dlFileEntry.getMimeType(),
 			keywords, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.MAJOR, (byte[])null,
@@ -535,9 +537,9 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm("title");
 
-		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
-		DDMStructureLocalServiceUtil.updateStructure(
+		_ddmStructureLocalService.updateStructure(
 			_ddmStructure.getUserId(), _ddmStructure.getStructureId(),
 			_ddmStructure.getParentStructureId(), _ddmStructure.getNameMap(),
 			_ddmStructure.getDescriptionMap(), ddmForm, ddmFormLayout,
@@ -582,7 +584,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 		@Override
 		protected long getClassNameId() {
-			return PortalUtil.getClassNameId(DLFileEntryMetadata.class);
+			return _portal.getClassNameId(DLFileEntryMetadata.class);
 		}
 
 		@Override
@@ -610,6 +612,33 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	@Inject
 	private static DDMIndexer _ddmIndexer;
 
+	@Inject
+	private DDM _ddm;
+
+	@Inject
+	private DDMBeanTranslator _ddmBeanTranslator;
+
 	private DDMStructure _ddmStructure;
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLAppService _dlAppService;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Inject
+	private DLTrashService _dlTrashService;
+
+	@Inject
+	private Portal _portal;
 
 }

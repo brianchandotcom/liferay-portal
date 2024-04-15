@@ -7,6 +7,8 @@ package com.liferay.portal.kernel.test.util;
 
 import com.liferay.petra.string.StringBundler;
 
+import java.nio.file.Path;
+
 import org.junit.Assert;
 
 /**
@@ -19,19 +21,44 @@ public class ItemCountPerformanceTestTimer extends PerformanceTestTimer {
 
 		this(
 			count, getInvokerName(clazz, name), System.currentTimeMillis(),
-			maxTime);
+			maxTime, null);
+	}
+
+	public ItemCountPerformanceTestTimer(
+		int count, Class<?> clazz, String name, long maxTime,
+		Path logFilePath) {
+
+		this(
+			count, getInvokerName(clazz, name), System.currentTimeMillis(),
+			maxTime, logFilePath);
 	}
 
 	public ItemCountPerformanceTestTimer(int count, long maxTime) {
 		this(
 			count, getInvokerName(null, null), System.currentTimeMillis(),
-			maxTime);
+			maxTime, null);
+	}
+
+	public ItemCountPerformanceTestTimer(
+		int count, long maxTime, Path logFilePath) {
+
+		this(
+			count, getInvokerName(null, null), System.currentTimeMillis(),
+			maxTime, logFilePath);
 	}
 
 	public ItemCountPerformanceTestTimer(int count, String name, int maxTime) {
 		this(
 			count, getInvokerName(null, name), System.currentTimeMillis(),
-			maxTime);
+			maxTime, null);
+	}
+
+	public ItemCountPerformanceTestTimer(
+		int count, String name, int maxTime, Path logFilePath) {
+
+		this(
+			count, getInvokerName(null, name), System.currentTimeMillis(),
+			maxTime, logFilePath);
 	}
 
 	@Override
@@ -41,7 +68,7 @@ public class ItemCountPerformanceTestTimer extends PerformanceTestTimer {
 		double speed =
 			(delta > 0) ? (double)(_count * 1000) / (double)delta : Double.NaN;
 
-		System.out.println(
+		log(
 			StringBundler.concat(
 				"Completed ", name, " in ", delta, " ms, speed: ",
 				String.format("%.2f", speed), " items/s"));
@@ -55,9 +82,10 @@ public class ItemCountPerformanceTestTimer extends PerformanceTestTimer {
 	}
 
 	protected ItemCountPerformanceTestTimer(
-		int count, String name, long startTime, long maxTime) {
+		int count, String name, long startTime, long maxTime,
+		Path logFilePath) {
 
-		super(name, startTime, maxTime);
+		super(name, startTime, maxTime, logFilePath);
 
 		_count = count;
 	}

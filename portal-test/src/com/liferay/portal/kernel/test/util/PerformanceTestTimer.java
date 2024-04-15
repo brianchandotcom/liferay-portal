@@ -7,8 +7,16 @@ package com.liferay.portal.kernel.test.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Closeable;
+import java.io.IOException;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+
+import java.util.Arrays;
 
 import org.junit.Assert;
 
@@ -18,23 +26,48 @@ import org.junit.Assert;
 public class PerformanceTestTimer implements Closeable {
 
 	public PerformanceTestTimer(Class<?> clazz, String name, long maxTime) {
-		this(getInvokerName(clazz, name), System.currentTimeMillis(), maxTime);
+		this(
+			getInvokerName(clazz, name), System.currentTimeMillis(), maxTime,
+			null);
+	}
+
+	public PerformanceTestTimer(
+		Class<?> clazz, String name, long maxTime, Path logFilePath) {
+
+		this(
+			getInvokerName(clazz, name), System.currentTimeMillis(), maxTime,
+			logFilePath);
 	}
 
 	public PerformanceTestTimer(long maxTime) {
-		this(getInvokerName(null, null), System.currentTimeMillis(), maxTime);
+		this(
+			getInvokerName(null, null), System.currentTimeMillis(), maxTime,
+			null);
+	}
+
+	public PerformanceTestTimer(long maxTime, Path logFilePath) {
+		this(
+			getInvokerName(null, null), System.currentTimeMillis(), maxTime,
+			logFilePath);
 	}
 
 	public PerformanceTestTimer(String name, int maxTime) {
-		this(getInvokerName(null, name), System.currentTimeMillis(), maxTime);
+		this(
+			getInvokerName(null, name), System.currentTimeMillis(), maxTime,
+			null);
+	}
+
+	public PerformanceTestTimer(String name, int maxTime, Path logFilePath) {
+		this(
+			getInvokerName(null, name), System.currentTimeMillis(), maxTime,
+			logFilePath);
 	}
 
 	@Override
 	public void close() {
 		long delta = System.currentTimeMillis() - startTime;
 
-		System.out.println(
-			StringBundler.concat("Completed ", name, " in ", delta, " ms"));
+		log(StringBundler.concat("Completed ", name, " in ", delta, " ms"));
 
 		Assert.assertTrue(
 			StringBundler.concat(
@@ -71,16 +104,41 @@ public class PerformanceTestTimer implements Closeable {
 		return sb.toString();
 	}
 
-	protected PerformanceTestTimer(String name, long startTime, long maxTime) {
+	protected PerformanceTestTimer(
+		String name, long startTime, long maxTime, Path logFilePath) {
+
 		this.name = name;
 		this.startTime = startTime;
 		this.maxTime = maxTime;
+		_logFilePath = logFilePath;
 
-		System.out.println("Starting " + name);
+		log("Starting " + name);
+	}
+
+	protected void log(String message) {
+		if (Validator.isNotNull(_logFilePath)) {
+			try {
+				_writeToLogFile(message);
+			}
+			catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		else {
+			System.out.println(message);
+		}
 	}
 
 	protected final long maxTime;
 	protected final String name;
 	protected final long startTime;
+
+	private void _writeToLogFile(String... contents) throws IOException {
+		Files.write(
+			_logFilePath, Arrays.asList(contents), StandardOpenOption.APPEND,
+			StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+	}
+
+	private Path _logFilePath;
 
 }

@@ -29,7 +29,7 @@ interface ModalEditObjectFolderProps {
 	id: number;
 	initialLabel?: LocalizedValue<string>;
 	name?: string;
-	onAfterSubmit?: (value: ObjectFolder) => void;
+	onAfterSubmit: (value: ObjectFolder) => void;
 }
 
 type TInitialValues = {
@@ -89,13 +89,7 @@ export function ModalEditObjectFolder({
 
 			onClose();
 
-			if (onAfterSubmit) {
-				onAfterSubmit(editedObjectFolder as ObjectFolder);
-
-				return;
-			}
-
-			setTimeout(() => window.location.reload(), 1000);
+			onAfterSubmit(editedObjectFolder as ObjectFolder);
 		}
 		catch (error) {
 			setError((error as Error).message);

@@ -11,7 +11,7 @@ interface ModalEditObjectFolderProps {
 	id: number;
 	initialLabel?: LocalizedValue<string>;
 	name?: string;
-	onAfterSubmit?: (value: ObjectFolder) => void;
+	onAfterSubmit: (value: ObjectFolder) => void;
 }
 export declare function ModalEditObjectFolder({
 	externalReferenceCode,

@@ -843,6 +843,37 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			};
 		}
 
+		case TYPES.SET_SELECTED_OBJECT_FOLDER_DETAILS: {
+			const {leftSidebarItems} = state;
+			const {updatedSelectedObjectFolder} = action.payload;
+
+			const updatedLeftSidebarItems: LeftSidebarItem[] = leftSidebarItems.map(
+				(leftSidebarItem) => {
+					if (
+						leftSidebarItem.objectFolderName ===
+						updatedSelectedObjectFolder.name
+					) {
+						return {
+							...leftSidebarItem,
+							name: stringUtils.getLocalizableLabel(
+								defaultLanguageId,
+								updatedSelectedObjectFolder.label,
+								updatedSelectedObjectFolder.name
+							),
+						};
+					}
+
+					return leftSidebarItem;
+				}
+			);
+
+			return {
+				...state,
+				leftSidebarItems: updatedLeftSidebarItems,
+				selectedObjectFolder: updatedSelectedObjectFolder,
+			};
+		}
+
 		case TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE: {
 			const {
 				objectDefinitionNodes,

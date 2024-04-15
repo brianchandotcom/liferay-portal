@@ -5,6 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {ISelectionFilter} from '../../../utils/types';
 import {ViewPage} from '../ViewPage';
 
 export class FiltersPage {
@@ -15,6 +16,16 @@ export class FiltersPage {
 	private readonly newFilterModal: {
 		cancelButton: Locator;
 		saveButton: Locator;
+	};
+	private readonly newSelectionFilterModal: {
+		filterBySelect: Locator;
+		filterModeRarioButtons: Locator;
+		nameInput: Locator;
+		newFilterModalheading: Locator;
+		picklistDropdown: Locator;
+		preselectedValuesMultiSelect: Locator;
+		selectionRadioButtons: Locator;
+		sourceDropdown: Locator;
 	};
 	readonly page: Page;
 	private readonly viewPage: ViewPage;
@@ -29,6 +40,20 @@ export class FiltersPage {
 		this.newFilterModal = {
 			cancelButton: page.getByRole('button', {name: 'Cancel'}),
 			saveButton: page.getByRole('button', {name: 'Save'}),
+		};
+		this.newSelectionFilterModal = {
+			filterBySelect: page.getByLabel('Filter ByRequired'),
+			filterModeRarioButtons: page.getByText('Filter ModeIncludeExclude'),
+			nameInput: page.getByPlaceholder('Add a name'),
+			newFilterModalheading: page.getByRole('heading', {
+				name: 'New Selection Filter',
+			}),
+			picklistDropdown: page.getByLabel('Picklist'),
+			preselectedValuesMultiSelect: page.getByPlaceholder(
+				'Select a default value for your filter.'
+			),
+			selectionRadioButtons: page.getByText('SelectionMultipleSingle'),
+			sourceDropdown: page.getByLabel('Choose an Option'),
 		};
 		this.page = page;
 		this.viewPage = new ViewPage(page);
@@ -54,6 +79,36 @@ export class FiltersPage {
 					resp.url().includes('/openapi.json')
 			),
 		]);
+	}
+
+	async createSelectionFilter({
+		filterBy,
+		filterMode,
+		name,
+		picklist,
+		preselectedValues,
+		selectionType,
+		source,
+	}: ISelectionFilter) {
+		await this.openNewFilterModal({
+			dropdownItemLabel: 'Selection',
+		});
+
+		await this.newSelectionFilterModal.nameInput.click();
+		await this.newSelectionFilterModal.nameInput.fill(name);
+		await this.newSelectionFilterModal.filterBySelect.click();
+		await this.page.getByRole('option', {name: filterBy}).click();
+		await this.newSelectionFilterModal.sourceDropdown.selectOption(source);
+		await this.newSelectionFilterModal.picklistDropdown.selectOption(
+			picklist
+		);
+		await this.newSelectionFilterModal.preselectedValuesMultiSelect.click();
+		await this.page
+			.getByRole('option', {name: preselectedValues[0]})
+			.click();
+		await this.page.getByText(selectionType).click();
+		await this.page.locator('label').filter({hasText: filterMode}).click();
+		await this.newFilterModal.saveButton.click();
 	}
 
 	async openNewFilterModal({dropdownItemLabel}: {dropdownItemLabel: string}) {

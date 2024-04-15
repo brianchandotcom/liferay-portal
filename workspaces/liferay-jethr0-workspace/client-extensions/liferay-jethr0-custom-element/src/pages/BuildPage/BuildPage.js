@@ -59,6 +59,7 @@ function BuildInformation({build}) {
 			{parameters && (
 				<ClayPanel
 					collapsable
+					defaultExpanded
 					displayTitle="Build Parameters"
 					displayType="secondary"
 					showCollapseIcon={true}

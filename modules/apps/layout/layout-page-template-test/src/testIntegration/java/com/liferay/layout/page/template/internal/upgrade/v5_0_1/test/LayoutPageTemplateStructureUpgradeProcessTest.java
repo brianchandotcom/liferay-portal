@@ -274,6 +274,9 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 				_db.runSQLTemplateString(
 					"alter table LayoutPageTemplateStructure add classPK LONG;",
 					true);
+				_db.runSQLTemplateString(
+					"UPDATE LayoutPageTemplateStructure SET classPK = plid;",
+					true);
 
 				_classPKColumnsAdded = true;
 			}

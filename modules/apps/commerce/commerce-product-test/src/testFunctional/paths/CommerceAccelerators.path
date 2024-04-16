@@ -636,7 +636,7 @@
 </tr>
 <tr>
 	<td>MINI_CART_EDIT_ITEM_PRICE_ON_APPLICATION</td>
-	<td>//div[contains(@class,'mini-cart-prices mt-4')]//span[contains(@class,'price-on-application price-value')]</td>
+	<td>//div[contains(@class,'mini-cart-prices')]//span[contains(@class,'price-on-application price-value')]</td>
 	<td></td>
 </tr>
 <tr>

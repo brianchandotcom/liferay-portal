@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.testray.rest.dto.v1_0.TestrayCaseResult;
 import com.liferay.testray.rest.dto.v1_0.TestrayRunComparison;
 import com.liferay.testray.rest.resource.v1_0.TestrayRunComparisonResource;
+import com.liferay.testray.rest.util.comparator.TestrayCaseResultComparator;
 
 import java.io.Serializable;
 
@@ -120,7 +121,11 @@ public class TestrayRunComparisonResourceImpl
 				).build()
 			).toArray());
 		testrayRunComparison.setTestrayCaseResults(
-			testrayCaseResults.toArray(new TestrayCaseResult[0]));
+			ListUtil.sort(
+				testrayCaseResults, new TestrayCaseResultComparator()
+			).toArray(
+				new TestrayCaseResult[0]
+			));
 
 		return testrayRunComparison;
 	}

@@ -197,6 +197,18 @@ public class NewEnvTestRule implements TestRule {
 			arguments.add("-Dwhip.static.instrument=true");
 		}
 
+		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+
+		List<String> jvmArgs = runtimeMXBean.getInputArguments();
+
+		for (String jvmArg : jvmArgs) {
+			if (jvmArg.startsWith("--add-opens")) {
+				arguments.add(jvmArg);
+			}
+		}
+
+		arguments.add("-Dnet.bytebuddy.experimental=true");
+
 		return arguments;
 	}
 

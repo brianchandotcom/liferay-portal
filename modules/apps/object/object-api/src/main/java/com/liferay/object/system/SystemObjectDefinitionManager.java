@@ -143,6 +143,8 @@ public interface SystemObjectDefinitionManager {
 			variables.putAll(extendedProperties);
 		}
 
+		variables.computeIfAbsent("id", id -> payloadJSONObject.get("classPK"));
+
 		return variables;
 	}
 

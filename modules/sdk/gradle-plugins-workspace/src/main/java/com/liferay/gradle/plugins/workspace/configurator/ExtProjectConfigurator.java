@@ -227,6 +227,7 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 			RootProjectConfigurator.BUILD_DOCKER_IMAGE_TASK_NAME);
 
 		buildDockerImageTask.dependsOn(deployTask);
+		buildDockerImageTask.dependsOn(dockerDeploy);
 	}
 
 	private void _applyPlugins(Project project, boolean extPlugin) {

@@ -16,6 +16,7 @@ import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.dynamic.data.mapping.expression.ObjectEntryDDMExpressionFieldAccessor;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
+import com.liferay.object.exception.LockedObjectActionException;
 import com.liferay.object.exception.ObjectActionExecutorKeyException;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.internal.dynamic.data.mapping.expression.ObjectEntryDDMExpressionParameterAccessor;
@@ -28,6 +29,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -281,14 +283,12 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 				objectAction.getParametersUnicodeProperties(),
 				payloadJSONObject, userId);
 
-			_objectActionLocalService.updateStatus(
-				objectAction.getObjectActionId(),
-				ObjectActionConstants.STATUS_SUCCESS);
+			_updateObjectActionStatus(
+				objectAction, ObjectActionConstants.STATUS_SUCCESS);
 		}
 		catch (Exception exception) {
-			_objectActionLocalService.updateStatus(
-				objectAction.getObjectActionId(),
-				ObjectActionConstants.STATUS_FAILED);
+			_updateObjectActionStatus(
+				objectAction, ObjectActionConstants.STATUS_FAILED);
 
 			throw exception;
 		}
@@ -310,6 +310,25 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 		return GetterUtil.getLong(
 			map.get("id"), (long)map.get("objectEntryId"));
+	}
+
+	private void _updateObjectActionStatus(
+			ObjectAction objectAction, int status)
+		throws PortalException {
+
+		if (objectAction.getStatus() == status) {
+			return;
+		}
+
+		try {
+			_objectActionLocalService.updateStatus(
+				objectAction.getObjectActionId(), status);
+		}
+		catch (PortalException portalException) {
+			if (!(portalException instanceof LockedObjectActionException)) {
+				throw portalException;
+			}
+		}
 	}
 
 	private void _updatePayloadJSONObject(

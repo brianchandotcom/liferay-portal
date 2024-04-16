@@ -2,7 +2,6 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="JavaStringBundlerConcatCheck" files="portal-osgi-web-servlet-jsp-compiler-test/src/testIntegration/java/com/liferay/portal/osgi/web/servlet/jsp/compiler/test/JspServletPerformanceTest\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="portal-osgi-web-servlet-context-helper-impl/src/main/java/com/liferay/portal/osgi/web/servlet/context/helper/internal/definition/WebXMLDefinitionLoader\.java" />
 	</source-check>
 </suppressions>

@@ -400,6 +400,7 @@ export default function ChangeTrackingChangeView({
 								handleNavigation={(nodeId) => navigate(nodeId)}
 								initialDataURL={getDataURL(initialNode)}
 								moveChangesURL={getMoveChangesURL(initialNode)}
+								namespace={namespace}
 								parentEntries={initialNode.parents}
 								showDropdown={initialNode.modelClassNameId}
 								showWorkflow={initialNode.showWorkflow}

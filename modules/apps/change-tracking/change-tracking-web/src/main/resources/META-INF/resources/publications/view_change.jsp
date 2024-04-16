@@ -39,3 +39,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "review-change"));
 		/>
 	</div>
 </div>
+
+<aui:script>
+	function <%= PortalUtil.getPortletNamespace(PortletKeys.MY_WORKFLOW_TASK) %>refreshPortlet() {
+		window.location.reload();
+	}
+</aui:script>

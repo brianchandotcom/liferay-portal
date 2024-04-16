@@ -94,6 +94,9 @@ public class DLFileEntryModelDocumentContributor
 
 			document.addKeyword(
 				Field.CLASS_TYPE_ID, dlFileEntry.getFileEntryTypeId());
+			document.addText(
+				Field.DEFAULT_LANGUAGE_ID,
+				LocaleUtil.toLanguageId(defaultLocale));
 			document.addText(Field.DESCRIPTION, dlFileEntry.getDescription());
 			document.addText(
 				Field.getLocalizedName(defaultLocale, Field.DESCRIPTION),

@@ -320,7 +320,7 @@ public class FileSystemStore implements Store {
 	}
 
 	private void _deleteEmptyAncestors(File file) {
-		while (file != null) {
+		while ((file != null) && !file.equals(_rootDir)) {
 			if (!file.delete()) {
 				return;
 			}

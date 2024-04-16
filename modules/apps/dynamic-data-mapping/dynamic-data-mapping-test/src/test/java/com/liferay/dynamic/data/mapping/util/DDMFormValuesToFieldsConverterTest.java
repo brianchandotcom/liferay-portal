@@ -6,6 +6,7 @@
 package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.internal.util.DDMFormValuesToFieldsConverterImpl;
 import com.liferay.dynamic.data.mapping.internal.util.DDMImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -18,7 +19,9 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -65,46 +68,50 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 	public void testConversionWithBooleanField() throws Exception {
 		DDMForm ddmForm = createDDMForm();
 
-		DDMFormField booleanDDMFormField = new DDMFormField(
-			"Boolean", "checkbox");
+		DDMFormField ddmFormField = new DDMFormField(
+			"Boolean", DDMFormFieldTypeConstants.CHECKBOX);
 
-		booleanDDMFormField.setDataType("boolean");
+		ddmFormField.setDataType("boolean");
+		ddmFormField.setLabel(
+			DDMFormValuesTestUtil.createLocalizedValue(
+				RandomTestUtil.randomString(), LocaleUtil.US));
+		ddmFormField.setPredefinedValue(
+			DDMFormValuesTestUtil.createLocalizedValue(
+				StringPool.FALSE, LocaleUtil.US));
 
-		LocalizedValue localizedValue = booleanDDMFormField.getLabel();
+		addDDMFormFields(ddmForm, ddmFormField);
 
-		localizedValue.addString(LocaleUtil.US, "Boolean Field");
-
-		addDDMFormFields(ddmForm, booleanDDMFormField);
-
-		DDMStructure ddmStructure = createStructure("Test Structure", ddmForm);
+		DDMStructure ddmStructure = createStructure(
+			RandomTestUtil.randomString(), ddmForm);
 
 		DDMFormValues ddmFormValues = createDDMFormValues(
 			ddmForm, _availableLocales, LocaleUtil.US);
 
-		DDMFormFieldValue titleDDMFormFieldValue = createDDMFormFieldValue(
-			"rztm", "Boolean", new UnlocalizedValue("true"));
-
-		ddmFormValues.addDDMFormFieldValue(titleDDMFormFieldValue);
+		ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(
+				"rztm", "Boolean", new UnlocalizedValue(StringPool.TRUE)));
 
 		Fields fields = _ddmFormValuesToFieldsConverter.convert(
 			ddmStructure, ddmFormValues);
 
-		Assert.assertNotNull(fields);
-
-		Field field = fields.get("Boolean");
-
-		Serializable value = field.getValue();
-
-		Class<?> clazz = value.getClass();
-
-		Assert.assertTrue(clazz.isAssignableFrom(Boolean.class));
-
-		Assert.assertTrue((boolean)value);
+		_assertBooleanFieldValue(true, fields);
 
 		Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
 		Assert.assertEquals(
 			"Boolean_INSTANCE_rztm", fieldsDisplayField.getValue());
+
+		ddmFormValues = createDDMFormValues(
+			ddmForm, _availableLocales, LocaleUtil.US);
+
+		ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(
+				"rztm", "Boolean", new LocalizedValue(LocaleUtil.US)));
+
+		_assertBooleanFieldValue(
+			false,
+			_ddmFormValuesToFieldsConverter.convert(
+				ddmStructure, ddmFormValues));
 	}
 
 	@Test
@@ -535,6 +542,22 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 		Assert.assertEquals(expectedEnValues, field.getValues(LocaleUtil.US));
 		Assert.assertEquals(
 			expectedPtValues, field.getValues(LocaleUtil.BRAZIL));
+	}
+
+	private void _assertBooleanFieldValue(
+		boolean expectedValue, Fields fields) {
+
+		Assert.assertNotNull(fields);
+
+		Field field = fields.get("Boolean");
+
+		Serializable value = field.getValue();
+
+		Class<?> clazz = value.getClass();
+
+		Assert.assertTrue(clazz.isAssignableFrom(Boolean.class));
+
+		Assert.assertEquals(expectedValue, value);
 	}
 
 	private Set<Locale> _availableLocales;

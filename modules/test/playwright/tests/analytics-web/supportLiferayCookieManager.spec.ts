@@ -116,9 +116,7 @@ async function cleanVMCache(page) {
 	}
 }
 
-// LPD-22318 Enable automated tests after release Analytics SDK v1.2.0 on PROD
-
-test.describe.skip('LPD-6540 Support Liferay Cookie Manager', () => {
+test.describe('LPD-6540 Support Liferay Cookie Manager', () => {
 	test.beforeEach(async ({page}) => {
 		await cleanVMCache(page);
 

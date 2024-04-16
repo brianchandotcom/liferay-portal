@@ -157,7 +157,7 @@ const MDFClaimPage = ({
 			});
 		};
 
-		const isDisabledButton =
+		const isButtonDisabled =
 			((!isValid || isSubmitting || submitted) && isButtonClicked) ||
 			(Boolean(values.id) && !isValid);
 
@@ -276,7 +276,7 @@ const MDFClaimPage = ({
 
 						<ClayButton
 							className="inline-item inline-item-after"
-							disabled={isDisabledButton}
+							disabled={isButtonDisabled}
 							onClick={() => {
 								handleOnClick();
 							}}

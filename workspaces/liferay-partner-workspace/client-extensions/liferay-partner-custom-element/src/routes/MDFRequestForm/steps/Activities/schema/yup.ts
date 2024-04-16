@@ -198,7 +198,7 @@ const activitiesSchema = object({
 				}).test(
 					'is-empty',
 					'Required',
-					(value) => !isObjectEmpty(value)
+					(value) => !isObjectEmpty(value.name)
 				),
 				typeActivity: object({
 					id: number(),
@@ -207,7 +207,7 @@ const activitiesSchema = object({
 				}).test(
 					'is-empty',
 					'Required',
-					(value) => !isObjectEmpty(value)
+					(value) => !isObjectEmpty(value.name)
 				),
 			})
 		)

@@ -29,6 +29,7 @@ interface IProps {
 	currency: LiferayPicklist;
 	currentActivity: MDFRequestActivity;
 	currentActivityIndex: number;
+	isButtonClicked?: boolean;
 	setFieldValue: (
 		field: string,
 		value: any,
@@ -45,6 +46,7 @@ const Form = ({
 	currency,
 	currentActivity,
 	currentActivityIndex,
+	isButtonClicked,
 	setFieldValue,
 }: IProps) => {
 	const {fieldEntries} = useDynamicFieldEntries();
@@ -204,6 +206,7 @@ const Form = ({
 				expenseEntries={
 					fieldEntries[LiferayPicklistName.BUDGET_EXPENSES]
 				}
+				isButtonClicked={isButtonClicked}
 				name={`activities[${currentActivityIndex}].budgets`}
 				setFieldValue={setFieldValue}
 			/>

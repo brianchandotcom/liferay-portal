@@ -197,6 +197,7 @@ const Activities = ({
 					currency={values.currency}
 					currentActivity={values.activities[currentActivityIndex]}
 					currentActivityIndex={currentActivityIndex}
+					isButtonClicked={isButtonClicked}
 					setFieldValue={setFieldValue}
 				/>
 			) : (

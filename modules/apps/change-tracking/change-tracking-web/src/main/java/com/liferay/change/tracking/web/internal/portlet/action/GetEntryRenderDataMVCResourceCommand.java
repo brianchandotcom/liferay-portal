@@ -42,7 +42,9 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -194,6 +196,7 @@ public class GetEntryRenderDataMVCResourceCommand
 
 		String[] availableLanguageIds = null;
 		String defaultLanguageId = null;
+		JSONObject dividerJSONObject = null;
 		JSONObject editInProductionJSONObject = null;
 		JSONObject editInPublicationJSONObject = null;
 		JSONObject localizedTitlesJSONObject = _jsonFactory.createJSONObject();
@@ -203,6 +206,8 @@ public class GetEntryRenderDataMVCResourceCommand
 		String rightRender = null;
 		T rightModel = null;
 		String rightTitle = null;
+		JSONObject workflowAssignToJSONObject = null;
+		JSONObject workflowAssignToMeJSONObject = null;
 
 		if (ctEntry.getChangeType() != CTConstants.CT_CHANGE_TYPE_DELETION) {
 			rightTitle = ctCollection.getName();
@@ -242,6 +247,95 @@ public class GetEntryRenderDataMVCResourceCommand
 								httpServletRequest, "edit-in-x",
 								new Object[] {ctCollection.getName()}, false),
 							resourceRequest, resourceResponse);
+					}
+				}
+
+				boolean workflowEnabled =
+					_ctDisplayRendererRegistry.isWorkflowEnabled(
+						ctEntry, rightModel);
+
+				if (workflowEnabled &&
+					(rightModel instanceof WorkflowedModel)) {
+
+					long groupId = 0;
+
+					if (rightModel instanceof GroupedModel) {
+						GroupedModel groupedModel = (GroupedModel)rightModel;
+
+						groupId = groupedModel.getGroupId();
+					}
+
+					WorkflowInstanceLink workflowInstanceLink =
+						_workflowInstanceLinkLocalService.
+							fetchWorkflowInstanceLink(
+								ctEntry.getCompanyId(), groupId,
+								_portal.getClassName(
+									ctEntry.getModelClassNameId()),
+								ctEntry.getModelClassPK());
+
+					if (!(workflowInstanceLink == null)) {
+						List<WorkflowTask> workflowTasks =
+							_workflowTaskManager.
+								getWorkflowTasksByWorkflowInstance(
+									ctEntry.getCompanyId(), null,
+									workflowInstanceLink.
+										getWorkflowInstanceId(),
+									false, 0, 1, null);
+
+						if (!workflowTasks.isEmpty()) {
+							WorkflowTask workflowTask = workflowTasks.get(0);
+
+							if (Objects.equals(
+									workflowTask.getName(), "review")) {
+
+								if ((workflowTask.getAssigneeUserId() == -1) ||
+									!Objects.equals(
+										workflowTask.getAssigneeUserId(),
+										themeDisplay.getUserId())) {
+
+									workflowAssignToMeJSONObject = JSONUtil.put(
+										"href",
+										PortletURLBuilder.createRenderURL(
+											_portal.getLiferayPortletResponse(
+												resourceResponse),
+											PortletKeys.MY_WORKFLOW_TASK
+										).setMVCPath(
+											"/workflow_task_assign.jsp"
+										).setParameter(
+											"assigneeUserId",
+											themeDisplay.getUserId()
+										).setParameter(
+											"assignMode", "assignToMe"
+										).setParameter(
+											"workflowTaskId",
+											workflowTask.getWorkflowTaskId()
+										).setWindowState(
+											LiferayWindowState.POP_UP
+										).buildString());
+								}
+
+								dividerJSONObject = JSONUtil.put(
+									"type", "divider");
+								workflowAssignToJSONObject = JSONUtil.put(
+									"href",
+									PortletURLBuilder.createRenderURL(
+										_portal.getLiferayPortletResponse(
+											resourceResponse),
+										PortletKeys.MY_WORKFLOW_TASK
+									).setMVCPath(
+										"/workflow_task_assign.jsp"
+									).setParameter(
+										"assigneeUserId", -1
+									).setParameter(
+										"assignMode", "assignTo"
+									).setParameter(
+										"workflowTaskId",
+										workflowTask.getWorkflowTaskId()
+									).setWindowState(
+										LiferayWindowState.POP_UP
+									).buildString());
+							}
+						}
 					}
 				}
 
@@ -563,6 +657,10 @@ public class GetEntryRenderDataMVCResourceCommand
 				"defaultLocale", _getLocaleJSONObject(defaultLanguageId));
 		}
 
+		if (dividerJSONObject != null) {
+			jsonObject.put("divider", dividerJSONObject);
+		}
+
 		if (editInProductionJSONObject != null) {
 			jsonObject.put("editInProduction", editInProductionJSONObject);
 		}
@@ -613,6 +711,14 @@ public class GetEntryRenderDataMVCResourceCommand
 
 		if (rightTitle != null) {
 			jsonObject.put("rightTitle", rightTitle);
+		}
+
+		if (workflowAssignToJSONObject != null) {
+			jsonObject.put("workflowAssignTo", workflowAssignToJSONObject);
+		}
+
+		if (workflowAssignToMeJSONObject != null) {
+			jsonObject.put("workflowAssignToMe", workflowAssignToMeJSONObject);
 		}
 
 		if (ctDisplayRenderer.showPreviewDiff() && (leftPreview != null) &&

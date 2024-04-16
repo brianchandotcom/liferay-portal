@@ -1,0 +1,12 @@
+{
+	"description": "Official Documentation",
+	"description_i18n": {
+		"en_US": "Official Documentation"
+	},
+	"externalReferenceCode": "OFFICIAL_DOCUMENTATION",
+	"name": "Official Documentation",
+	"name_i18n": {
+		"en_US": "Official Documentation"
+	},
+	"viewableBy": "Anyone"
+}

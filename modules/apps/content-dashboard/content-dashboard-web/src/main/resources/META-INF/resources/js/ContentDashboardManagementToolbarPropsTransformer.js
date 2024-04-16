@@ -60,12 +60,13 @@ const _handleOnSelect = ({data, portletNamespace, selection}) => {
 		selection = Object.values(selection).filter((item) => !item.unchecked);
 	}
 
-	const url = new URL(		
-			_getRedirectURLWithParams({
+	const url = new URL(
+		_getRedirectURLWithParams({
 			data,
 			portletNamespace,
 			selection,
-		}));
+		})
+	);
 
 	const resetCurParam = `_${url.searchParams.get('p_p_id')}_resetCur`;
 
@@ -97,8 +98,10 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 					const url = new URL(redirectURL);
 
-					const resetCurParam = `_${url.searchParams.get('p_p_id')}_resetCur`;
-		
+					const resetCurParam = `_${url.searchParams.get(
+						'p_p_id'
+					)}_resetCur`;
+
 					url.searchParams.set(resetCurParam, 'true');
 
 					navigate(url.href);
@@ -148,8 +151,10 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 				const url = new URL(redirectURL);
 
-				const resetCurParam = `_${url.searchParams.get('p_p_id')}_resetCur`;
-	
+				const resetCurParam = `_${url.searchParams.get(
+					'p_p_id'
+				)}_resetCur`;
+
 				url.searchParams.set(resetCurParam, 'true');
 
 				navigate(url.href);
@@ -166,17 +171,17 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			height: '70vh',
 			id: `${portletNamespace}selectedScopeIdItem`,
 			onSelect: (selectedItem) => {
-				const redirectURL = (
-					addParams(
-						`${portletNamespace}scopeId=${selectedItem.groupid}`,
-						itemData?.redirectURL
-					)
+				const redirectURL = addParams(
+					`${portletNamespace}scopeId=${selectedItem.groupid}`,
+					itemData?.redirectURL
 				);
 
 				const url = new URL(redirectURL);
 
-				const resetCurParam = `_${url.searchParams.get('p_p_id')}_resetCur`;
-	
+				const resetCurParam = `_${url.searchParams.get(
+					'p_p_id'
+				)}_resetCur`;
+
 				url.searchParams.set(resetCurParam, 'true');
 
 				navigate(url.href);

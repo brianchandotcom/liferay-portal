@@ -148,21 +148,23 @@ const BaseRoleType = ({
 	};
 
 	const roleNameItemUpdate = (item) => {
-		setSelectedRoleName(item.roleName);
-		setRoleNameDropdownActive(false);
+		if (item.roleName) {
+			setSelectedRoleName(item.roleName);
+			setRoleNameDropdownActive(false);
 
-		setSections((prev) => {
-			const newSections = [...prev];
+			setSections((prev) => {
+				const newSections = [...prev];
 
-			newSections[index] = {
-				...newSections[index],
-				...item,
-			};
+				newSections[index] = {
+					...newSections[index],
+					...item,
+				};
 
-			updateSelectedItem(newSections);
+				updateSelectedItem(newSections);
 
-			return newSections;
-		});
+				return newSections;
+			});
+		}
 	};
 
 	const roleTypeInputFocus = () => {

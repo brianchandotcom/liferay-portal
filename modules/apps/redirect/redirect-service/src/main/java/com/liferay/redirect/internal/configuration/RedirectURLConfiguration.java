@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface RedirectURLConfiguration {
 
 	@Meta.AD(
-		deflt = "localhost", description = "allowed-domains-help",
+		deflt = "localhost|PORTAL_DOMAIN", description = "allowed-domains-help",
 		name = "allowed-domains", required = false
 	)
 	public String[] allowedDomains();

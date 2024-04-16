@@ -51,11 +51,6 @@ public abstract class BaseRoutineEntity
 	}
 
 	@Override
-	public String getCron() {
-		return _cron;
-	}
-
-	@Override
 	public Set<GitBranchEntity> getGitBranchEntities() {
 		return _gitBranchEntities;
 	}
@@ -98,8 +93,6 @@ public abstract class BaseRoutineEntity
 		Type type = getType();
 
 		jsonObject.put(
-			"cron", getCron()
-		).put(
 			"jobName", getJobName()
 		).put(
 			"jobParameters", String.valueOf(_getJobParametersJSONArray())
@@ -146,11 +139,6 @@ public abstract class BaseRoutineEntity
 	@Override
 	public void removeJobEntity(JobEntity jobEntity) {
 		_jobEntities.remove(jobEntity);
-	}
-
-	@Override
-	public void setCron(String cron) {
-		_cron = cron;
 	}
 
 	@Override
@@ -244,7 +232,6 @@ public abstract class BaseRoutineEntity
 
 	private static final Log _log = LogFactory.getLog(BaseRoutineEntity.class);
 
-	private String _cron;
 	private final Set<GitBranchEntity> _gitBranchEntities = new HashSet<>();
 	private final Set<JobEntity> _jobEntities = new HashSet<>();
 	private String _jobName;

@@ -5,17 +5,15 @@
 
 package com.liferay.jethr0.routine;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
-public interface CronRoutineEntity extends RoutineEntity {
+public class DefaultCronRoutineEntity extends BaseRoutineEntity {
 
-	public String getCron();
-
-	public Boolean getScheduled();
-
-	public void setCron(String cron);
-
-	public void setScheduled(Boolean scheduled);
+	protected DefaultCronRoutineEntity(JSONObject jsonObject) {
+		super(jsonObject);
+	}
 
 }

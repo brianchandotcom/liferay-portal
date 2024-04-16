@@ -23,7 +23,7 @@ public class RoutineEntityFactory extends BaseEntityFactory<RoutineEntity> {
 			jsonObject.get("routineType"));
 
 		if (type == RoutineEntity.Type.MANUAL) {
-			return new CronRoutineEntity(jsonObject);
+			return new DefaultCronRoutineEntity(jsonObject);
 		}
 
 		return new ManualRoutineEntity(jsonObject);

@@ -10,6 +10,11 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {useState} from 'react';
 
 import Form from '../../../../../../components/MarketplaceForm';
+import IconsBlock from './Blocks/IconBlock';
+import ImagesGrid from './Blocks/ImagesGrid';
+import SingleImage from './Blocks/SingleImage';
+import TextAndImages from './Blocks/TextAndImages';
+import TextAndVideos from './Blocks/TextAndVideo';
 import TextBlock from './Blocks/TextBlock';
 
 const items = [
@@ -22,10 +27,20 @@ const items = [
 	{label: 'Images Grid Block'},
 ];
 
+const blocks = [
+	{name: 'Text Block', render: <TextBlock />},
+	{name: 'Text & Images Block', render: <TextAndImages />},
+	{name: 'Text & Video Block', render: <TextAndVideos />},
+	{name: 'Single Image Block', render: <SingleImage />},
+	{name: 'Images Grid Block', render: <ImagesGrid />},
+	{name: 'Icons Block', render: <IconsBlock />},
+];
+
 const Details = () => {
 	const {observer, onOpenChange, open} = useModal();
 	const [selectedBlock, setSelectedBlock] = useState('Choose an option');
 	const [submit, setSubmit] = useState(false);
+	const [selectedBlockList, setSelectedBlockList] = useState<string[]>([]);
 
 	return (
 		<div className="solutions-form-details">
@@ -33,11 +48,25 @@ const Details = () => {
 				Add a minimum of 2 blocks
 			</Form.Label>
 
-			{submit && (
-				<Form.SectionWithControllers name={selectedBlock}>
-					<TextBlock />
-				</Form.SectionWithControllers>
-			)}
+			{submit &&
+				selectedBlockList.map(
+					(selectedBlock: string, index: number) => {
+						return (
+							<Form.SectionWithControllers
+								index={index}
+								key={index}
+								name={selectedBlock}
+								position={selectedBlockList.length}
+							>
+								{blocks.map((block) => {
+									if (block.name === selectedBlock) {
+										return block.render;
+									}
+								})}
+							</Form.SectionWithControllers>
+						);
+					}
+				)}
 
 			<ClayButton
 				className="align-items-center content-block d-flex flex-row justify-content-center mt-4 w-100"
@@ -111,6 +140,10 @@ const Details = () => {
 								onClick={() => {
 									onOpenChange(false);
 									setSubmit(true);
+									setSelectedBlockList([
+										...selectedBlockList,
+										selectedBlock,
+									]);
 								}}
 							>
 								Save

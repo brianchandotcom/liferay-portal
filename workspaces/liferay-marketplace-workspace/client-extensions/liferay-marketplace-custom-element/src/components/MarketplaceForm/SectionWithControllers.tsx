@@ -11,12 +11,16 @@ import ClayDropDown from '@clayui/drop-down';
 import {HTMLAttributes, useState} from 'react';
 
 interface SectionWithControllersProps extends HTMLAttributes<HTMLDivElement> {
+	index: number;
 	name: string;
+	position: number;
 }
 
 export function SectionWithControllers({
 	children,
+	index,
 	name,
+	position,
 	...props
 }: SectionWithControllersProps) {
 	const [openBody, setOpenBody] = useState(false);
@@ -36,7 +40,7 @@ export function SectionWithControllers({
 					<div className="arrow-container ml-4">
 						<ClayButtonWithIcon
 							aria-label="arrow-up"
-							disabled={true}
+							disabled={index === 0}
 							displayType="unstyled"
 							size="sm"
 							symbol="order-arrow-up"
@@ -44,7 +48,7 @@ export function SectionWithControllers({
 
 						<ClayButtonWithIcon
 							aria-label="arrow-down"
-							disabled={true}
+							disabled={index === position - 1}
 							displayType="unstyled"
 							size="sm"
 							symbol="order-arrow-down"

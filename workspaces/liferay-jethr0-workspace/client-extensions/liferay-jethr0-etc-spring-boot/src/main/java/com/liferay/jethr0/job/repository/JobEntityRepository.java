@@ -12,6 +12,7 @@ import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.dalo.JobEntityDALO;
 import com.liferay.jethr0.job.dalo.JobToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.job.queue.JobQueue;
+import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.util.Collections;
@@ -183,8 +184,18 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 		_jobQueue = jobQueue;
 	}
 
+	public void setRoutineEntityRepository(
+		RoutineEntityRepository routineEntityRepository) {
+
+		_routineEntityRepository = routineEntityRepository;
+	}
+
 	@Override
 	protected JobEntity updateRelationshipsFromDALO(JobEntity jobEntity) {
+		_routineEntityRepository.relateRoutineToJob(
+			_routineEntityRepository.getById(jobEntity.getRoutineEntityId()),
+			jobEntity);
+
 		return _updateJobToBuildsRelationshipsFromDALO(jobEntity);
 	}
 
@@ -228,5 +239,7 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 	@Autowired
 	private JobToBuildsEntityRelationshipDALO
 		_jobToBuildsEntityRelationshipDALO;
+
+	private RoutineEntityRepository _routineEntityRepository;
 
 }

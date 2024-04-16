@@ -9,6 +9,7 @@ import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
+import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.testsuite.TestSuiteEntity;
 import com.liferay.jethr0.util.StringUtil;
@@ -152,6 +153,8 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		).put(
 			"priority", getPriority()
 		).put(
+			"r_routineToJobs_c_routineId", getRoutineEntityId()
+		).put(
 			"startDate", StringUtil.toString(getStartDate())
 		).put(
 			"state", state.getJSONObject()
@@ -180,6 +183,16 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	@Override
 	public int getPriority() {
 		return _priority;
+	}
+
+	@Override
+	public RoutineEntity getRoutineEntity() {
+		return _routineEntity;
+	}
+
+	@Override
+	public long getRoutineEntityId() {
+		return _routineEntityId;
 	}
 
 	@Override
@@ -277,6 +290,7 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		_name = jsonObject.getString("name");
 		_parameters = new HashMap<>();
 		_priority = jsonObject.optInt("priority");
+		_routineEntityId = jsonObject.optLong("r_routineToJobs_c_routineId");
 		_startDate = StringUtil.toDate(jsonObject.optString("startDate"));
 		_state = State.get(jsonObject.get("state"));
 		_type = Type.get(jsonObject.get("type"));
@@ -319,6 +333,18 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	@Override
 	public void setPriority(int priority) {
 		_priority = priority;
+	}
+
+	@Override
+	public void setRoutineEntity(RoutineEntity routineEntity) {
+		_routineEntity = routineEntity;
+
+		if (_routineEntity != null) {
+			_routineEntityId = _routineEntity.getId();
+		}
+		else {
+			_routineEntityId = 0;
+		}
 	}
 
 	@Override
@@ -519,6 +545,8 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	private String _name;
 	private Map<String, String> _parameters;
 	private int _priority;
+	private RoutineEntity _routineEntity;
+	private long _routineEntityId;
 	private Date _startDate;
 	private State _state;
 	private Type _type;

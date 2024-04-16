@@ -15,6 +15,7 @@ import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobComparatorEntityRepository;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.job.repository.JobPrioritizerEntityRepository;
+import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -49,9 +50,13 @@ public class EntityInitializer {
 
 		_jobEntityRepository.setBuildEntityRepository(_buildEntityRepository);
 		_jobEntityRepository.setJobQueue(_jobQueue);
+		_jobEntityRepository.setRoutineEntityRepository(
+			_routineEntityRepository);
 
 		_jobPrioritizerEntityRepository.setJobComparatorEntityRepository(
 			_jobComparatorEntityRepository);
+
+		_routineEntityRepository.setJobEntityRepository(_jobEntityRepository);
 
 		_buildEntityRepository.initialize();
 		_buildRunEntityRepository.initialize();
@@ -62,6 +67,7 @@ public class EntityInitializer {
 		_jobComparatorEntityRepository.initialize();
 		_jobEntityRepository.initialize();
 		_jobPrioritizerEntityRepository.initialize();
+		_routineEntityRepository.initialize();
 
 		_buildEntityRepository.initializeRelationships();
 		_buildRunEntityRepository.initializeRelationships();
@@ -72,6 +78,7 @@ public class EntityInitializer {
 		_jobComparatorEntityRepository.initializeRelationships();
 		_jobEntityRepository.initializeRelationships();
 		_jobPrioritizerEntityRepository.initializeRelationships();
+		_routineEntityRepository.initializeRelationships();
 	}
 
 	@Autowired
@@ -103,5 +110,8 @@ public class EntityInitializer {
 
 	@Autowired
 	private JobQueue _jobQueue;
+
+	@Autowired
+	private RoutineEntityRepository _routineEntityRepository;
 
 }

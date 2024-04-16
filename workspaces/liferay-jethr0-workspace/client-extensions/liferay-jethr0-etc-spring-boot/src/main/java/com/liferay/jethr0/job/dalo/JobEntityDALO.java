@@ -9,6 +9,7 @@ import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.JobEntityFactory;
+import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.util.Arrays;
@@ -28,6 +29,12 @@ public class JobEntityDALO extends BaseEntityDALO<JobEntity> {
 	@Override
 	public EntityFactory<JobEntity> getEntityFactory() {
 		return _jobEntityFactory;
+	}
+
+	public Set<JobEntity> getJobsByRoutine(RoutineEntity routineEntity) {
+		return getAll(
+			"r_routineToJobs_c_routineId eq '" + routineEntity.getId() + "'",
+			null, null);
 	}
 
 	public Set<JobEntity> getJobsByState(JobEntity.State... states) {

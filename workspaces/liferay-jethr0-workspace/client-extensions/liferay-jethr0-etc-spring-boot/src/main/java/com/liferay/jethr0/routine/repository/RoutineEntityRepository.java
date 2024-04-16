@@ -5,9 +5,13 @@
 
 package com.liferay.jethr0.routine.repository;
 
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
+import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.routine.dalo.RoutineEntityDALO;
+import com.liferay.jethr0.routine.dalo.RoutineToJobsEntityRelationshipDALO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +28,61 @@ public class RoutineEntityRepository
 		return _routineEntityDALO;
 	}
 
+	@Override
+	public void initialize() {
+		addAll(_routineEntityDALO.getAll());
+	}
+
+	public void relateRoutineToJob(
+		RoutineEntity routineEntity, JobEntity jobEntity) {
+
+		routineEntity.addJobEntity(jobEntity);
+
+		jobEntity.setRoutineEntity(routineEntity);
+	}
+
+	public void setJobEntityRepository(
+		JobEntityRepository jobEntityRepository) {
+
+		_jobEntityRepository = jobEntityRepository;
+	}
+
+	@Override
+	protected RoutineEntity updateRelationshipsFromDALO(
+		RoutineEntity routineEntity) {
+
+		return _updateRoutineToJobRelationshipsFromDALO(routineEntity);
+	}
+
+	@Override
+	protected RoutineEntity updateRelationshipsToDALO(
+		RoutineEntity routineEntity) {
+
+		_routineToJobsEntityRelationshipDALO.updateChildEntities(routineEntity);
+
+		return routineEntity;
+	}
+
+	private RoutineEntity _updateRoutineToJobRelationshipsFromDALO(
+		RoutineEntity parentRoutineEntity) {
+
+		return updateParentToChildRelationshipsFromDALO(
+			parentRoutineEntity, _routineToJobsEntityRelationshipDALO,
+			_jobEntityRepository,
+			(routineEntity, jobEntity) -> relateRoutineToJob(
+				routineEntity, jobEntity),
+			jobEntity -> jobEntity.getJobEntities(),
+			(routineEntity, jobEntity) -> routineEntity.removeJobEntity(
+				jobEntity));
+	}
+
+	private JobEntityRepository _jobEntityRepository;
+
 	@Autowired
 	private RoutineEntityDALO _routineEntityDALO;
+
+	@Autowired
+	private RoutineToJobsEntityRelationshipDALO
+		_routineToJobsEntityRelationshipDALO;
 
 }

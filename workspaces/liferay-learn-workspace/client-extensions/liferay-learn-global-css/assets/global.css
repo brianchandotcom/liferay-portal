@@ -306,7 +306,7 @@ pre[class*='language-'] {
 
 	.learn-article-wrapper {
 		display: flex;
-		justify-content: space-between;
+		justify-content: flex-start;
 	}
 
 	.info-bar {

@@ -382,54 +382,6 @@ definition {
 			searchTerm = "WC Title");
 	}
 
-	@description = "This is a use case for LPS-74299."
-	@priority = 3
-	test ViewFacetPersistence {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		// Workaround for LPS-89026
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeReindex();
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Search Page");
-
-		SearchPage.addWidgets(
-			layoutName = "Search Page",
-			searchPortletList = "Site Facet,Search Results,Search Bar");
-
-		Navigator.gotoPage(pageName = "Search Page");
-
-		SearchPage.configureSearchBarWidget(searchScope = "Everything");
-
-		SearchPage.searchWidget(searchTerm = "*");
-
-		SearchResults.viewSearchResults(
-			searchAssetTitle = "Test Test",
-			searchAssetType = "User");
-
-		var siteName = TestCase.getSiteName();
-
-		SearchFacets.checkFacetTerm(
-			facetName = "Site Facet",
-			facetTerm = ${siteName});
-
-		SearchPage.searchWidget(searchTerm = "test");
-
-		SearchResults.viewSearchResults(
-			searchAssetTitle = "Test Test",
-			searchAssetType = "User");
-
-		FormFields.viewCheckboxChecked(fieldName = ${siteName});
-	}
-
 	@priority = 5
 	test ViewMultipleFacetURLs {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

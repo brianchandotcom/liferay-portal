@@ -361,6 +361,7 @@ pre[class*='language-'] {
 				color: var(--color-neutral-10, #282934) !important;
 				padding: 0 0 0 6px !important;
 			}
+
 			> a {
 				color: var(--color-neutral-6, #82828c);
 				font-family: Source Sans 3;

@@ -706,7 +706,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 		initBundleTask.setDestinationDir(
-			new File(project.getBuildDir(), "dist"));
+			new File(
+				project.getBuildDir(),
+				"dist" + StringUtil.capitalize(environment)));
 		initBundleTask.setGroup("hidden");
 
 		initBundleTask.doFirst(

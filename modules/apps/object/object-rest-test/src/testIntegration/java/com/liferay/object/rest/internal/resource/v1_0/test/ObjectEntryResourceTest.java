@@ -4962,6 +4962,53 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testGetObjectEntryPermissionsPage() throws Exception {
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_addResourcePermission(
+			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition1, role);
+
+		User user = _addUser("test1", "test1");
+
+		_roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			"test1@liferay.com", "test1"
+		).apply(
+			() -> {
+				String externalReferenceCode = RandomTestUtil.randomString();
+
+				JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						"externalReferenceCode", externalReferenceCode
+					).toString(),
+					_getEndpoint(
+						TestPropsValues.getGroupId(), _objectDefinition1),
+					Http.Method.POST);
+
+				jsonObject = HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"actionIds", JSONUtil.putAll()
+						).put(
+							"roleName", role.getName()
+						)
+					).toString(),
+					StringBundler.concat(
+						_getEndpoint(
+							TestPropsValues.getGroupId(), _objectDefinition1),
+						"/", jsonObject.getString("id"), "/permissions"),
+					Http.Method.PUT);
+
+				Assert.assertNotEquals(
+					jsonObject.getString("title"), "FORBIDDEN",
+					jsonObject.getString("status"));
+			}
+		);
+	}
+
+	@Test
 	public void testGetObjectEntryWithActions() throws Exception {
 		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),

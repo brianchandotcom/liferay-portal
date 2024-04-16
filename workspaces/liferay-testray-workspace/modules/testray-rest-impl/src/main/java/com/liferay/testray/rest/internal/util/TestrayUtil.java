@@ -5,7 +5,9 @@
 
 package com.liferay.testray.rest.internal.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.sql.Connection;
@@ -23,6 +25,25 @@ import java.util.Map;
  * @author José Abelenda
  */
 public class TestrayUtil {
+
+	public static long getTotalCount(String sql, List<Object> params)
+		throws SQLException {
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("select COUNT(*) as count FROM ( ");
+		sb.append(sql);
+		sb.append(") count");
+
+		List<Map<String, Object>> values = runSQL(sb.toString(), params);
+
+		return GetterUtil.getLong(
+			values.get(
+				0
+			).get(
+				"count"
+			));
+	}
 
 	public static List<Map<String, Object>> runSQL(
 			String sql, List<Object> params)

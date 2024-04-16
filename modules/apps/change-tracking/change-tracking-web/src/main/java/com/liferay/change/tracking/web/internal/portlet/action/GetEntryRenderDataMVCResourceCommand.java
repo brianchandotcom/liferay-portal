@@ -1052,8 +1052,7 @@ public class GetEntryRenderDataMVCResourceCommand
 		List<WorkflowTask> workflowTasks =
 			_workflowTaskManager.getWorkflowTasksByWorkflowInstance(
 				ctEntry.getCompanyId(), null,
-				workflowInstanceLink.getWorkflowInstanceId(), false, 0, 1,
-				null);
+				workflowInstanceLink.getWorkflowInstanceId(), null, 0, 1, null);
 
 		if (workflowTasks.isEmpty()) {
 			return new LinkedHashMap<>();

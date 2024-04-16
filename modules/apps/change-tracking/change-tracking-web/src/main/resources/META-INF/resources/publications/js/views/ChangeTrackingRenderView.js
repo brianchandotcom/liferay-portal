@@ -1337,7 +1337,7 @@ export default function ChangeTrackingRenderView({
 			);
 		}
 
-		if (workflowStatus && showWorkflow) {
+		if (workflowStatus !== null && showWorkflow) {
 			items.push(
 				<ClayNavigationBar.Item
 					active={state.contentType === CONTENT_TYPE_WORKFLOW}

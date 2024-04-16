@@ -25,7 +25,9 @@ test(`${SAMPLE.name} is registered`, async ({page}) => {
 	await viewClientExtensionPage.goto();
 
 	expect(viewClientExtensionPage.nameLocator).toHaveValue(SAMPLE.name);
-	expect(viewClientExtensionPage.fieldLocator('JavaScript URL')).toHaveValue(SAMPLE.url);
+	expect(viewClientExtensionPage.fieldLocator('JavaScript URL')).toHaveValue(
+		SAMPLE.url
+	);
 });
 
 test(`${SAMPLE.name}'s .js file can be downloaded`, async ({page}) => {

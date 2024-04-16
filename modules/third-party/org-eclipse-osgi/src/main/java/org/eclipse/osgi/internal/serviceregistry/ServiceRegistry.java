@@ -892,24 +892,35 @@ public class ServiceRegistry {
 					try {
 						filteredServiceListener.serviceChanged(event);
 					}
-					catch (Throwable t) {
+					catch (Throwable throwable1) {
 						if (debug.DEBUG_GENERAL) {
 							Debug.println(
 								"Exception in bottom level event dispatcher: " +
-									t.getMessage());
+									throwable1.getMessage());
 
-							Debug.printStackTrace(t);
+							Debug.printStackTrace(throwable1);
 						}
 
-						container.handleRuntimeError(t);
+						container.handleRuntimeError(throwable1);
 
 						EquinoxEventPublisher equinoxEventPublisher =
 							container.getEventPublisher();
 
 						BundleContextImpl bundleContextImpl = bundleContextEntry.getKey();
 
-						equinoxEventPublisher.publishFrameworkEvent(
-							FrameworkEvent.ERROR, bundleContextImpl.getBundle(), t);
+						try {
+							equinoxEventPublisher.publishFrameworkEvent(
+								FrameworkEvent.ERROR, bundleContextImpl.getBundle(), throwable1);
+						}
+						catch (Throwable throwable2) {
+							if (debug.DEBUG_GENERAL) {
+								Debug.println(
+									"Exception in bottom level event dispatcher: " +
+										throwable2.getMessage());
+
+								Debug.printStackTrace(throwable2);
+							}
+						}
 					}
 				}
 			}

@@ -148,30 +148,37 @@ public class BatchEngineImportTaskItemReaderUtil {
 					fieldNameParts[0]);
 
 				if (Validator.isNotNull(targetFieldName)) {
-					if (Objects.equals(fieldNameParts[1], "key") ||
-						Objects.equals(fieldNameParts[1], "name")) {
+					Matcher multiselectPicklistMatcher =
+						_multiselectPicklistPattern.matcher(fieldNameParts[1]);
 
-						Map<String, Object> map =
-							(Map<String, Object>)
-								targetFieldNameValueMap.computeIfAbsent(
-									targetFieldName, key -> new HashMap<>());
+					if (multiselectPicklistMatcher.matches()) {
+						if (fieldNameParts[1].startsWith("name_")) {
+							continue;
+						}
 
-						map.put(fieldNameParts[1], entry.getValue());
-
-						continue;
-					}
-
-					Matcher multiselectPicklistKeyMatcher =
-						_multiselectPicklistKeyPattern.matcher(
-							fieldNameParts[1]);
-
-					if (multiselectPicklistKeyMatcher.matches()) {
 						List<Object> list =
 							(List<Object>)
 								targetFieldNameValueMap.computeIfAbsent(
 									targetFieldName, key -> new ArrayList<>());
 
 						list.add(entry.getValue());
+					}
+					else {
+						Map<String, Object> map =
+							(Map<String, Object>)
+								targetFieldNameValueMap.computeIfAbsent(
+									targetFieldName, key -> new HashMap<>());
+
+						for (int i = 1; i < fieldNameParts.length; i++) {
+							if ((fieldNameParts.length - 1) > i) {
+								map = (Map<String, Object>)map.computeIfAbsent(
+									fieldNameParts[i], key -> new HashMap<>());
+
+								continue;
+							}
+
+							map.put(fieldNameParts[i], entry.getValue());
+						}
 					}
 				}
 			}
@@ -209,8 +216,8 @@ public class BatchEngineImportTaskItemReaderUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineImportTaskItemReaderUtil.class);
 
-	private static final Pattern _multiselectPicklistKeyPattern =
-		Pattern.compile("key_\\d+");
+	private static final Pattern _multiselectPicklistPattern = Pattern.compile(
+		"key_\\d+|name_\\d+");
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{

@@ -116,21 +116,6 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 			});
 
 		attachmentColumnDescriptors[1] = ColumnDescriptor.from(
-			fieldName + ".name", index++,
-			object -> {
-				Object property = _getProperty(
-					fieldName, object, propertiesObjectValuePair);
-
-				if (property == null) {
-					return StringPool.BLANK;
-				}
-
-				FileEntry fileEntry = (FileEntry)property;
-
-				return fileEntry.getName();
-			});
-
-		attachmentColumnDescriptors[2] = ColumnDescriptor.from(
 			fieldName + ".link.href", index++,
 			object -> {
 				Object property = _getProperty(
@@ -147,8 +132,8 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 				return link.getHref();
 			});
 
-		attachmentColumnDescriptors[3] = ColumnDescriptor.from(
-			fieldName + ".link.label", index,
+		attachmentColumnDescriptors[2] = ColumnDescriptor.from(
+			fieldName + ".link.label", index++,
 			object -> {
 				Object property = _getProperty(
 					fieldName, object, propertiesObjectValuePair);
@@ -162,6 +147,21 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 				Link link = fileEntry.getLink();
 
 				return link.getLabel();
+			});
+
+		attachmentColumnDescriptors[3] = ColumnDescriptor.from(
+			fieldName + ".name", index,
+			object -> {
+				Object property = _getProperty(
+					fieldName, object, propertiesObjectValuePair);
+
+				if (property == null) {
+					return StringPool.BLANK;
+				}
+
+				FileEntry fileEntry = (FileEntry)property;
+
+				return fileEntry.getName();
 			});
 
 		return attachmentColumnDescriptors;

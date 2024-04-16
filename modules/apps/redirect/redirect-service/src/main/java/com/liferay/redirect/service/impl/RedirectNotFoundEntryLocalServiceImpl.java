@@ -6,13 +6,19 @@
 package com.liferay.redirect.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -22,6 +28,7 @@ import com.liferay.redirect.service.base.RedirectNotFoundEntryLocalServiceBaseIm
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,9 +67,9 @@ public class RedirectNotFoundEntryLocalServiceImpl
 				redirectNotFoundEntryPersistence.flush();
 			}
 			catch (Exception exception) {
-				redirectNotFoundEntry =
-					redirectNotFoundEntryPersistence.fetchByG_U(
-						group.getGroupId(), url, false);
+				redirectNotFoundEntry = _transactionAwareInvoke(
+					() -> redirectNotFoundEntryPersistence.fetchByG_U(
+						group.getGroupId(), url, false));
 
 				if (redirectNotFoundEntry == null) {
 					throw exception;
@@ -197,6 +204,27 @@ public class RedirectNotFoundEntryLocalServiceImpl
 
 		return redirectNotFoundEntriesDynamicQuery;
 	}
+
+	private RedirectNotFoundEntry _transactionAwareInvoke(
+		Callable<RedirectNotFoundEntry> callable) {
+
+		DB db = DBManagerUtil.getDB();
+
+		try {
+			if (db.isSupportsQueryingAfterException()) {
+				return callable.call();
+			}
+
+			return TransactionInvokerUtil.invoke(_transactionConfig, callable);
+		}
+		catch (Throwable throwable) {
+			throw new SystemException(throwable);
+		}
+	}
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 	@Reference
 	private Portal _portal;

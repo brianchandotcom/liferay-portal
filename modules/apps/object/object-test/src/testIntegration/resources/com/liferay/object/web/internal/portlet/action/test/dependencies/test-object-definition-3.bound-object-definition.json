@@ -170,7 +170,7 @@
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "Test Object Definitions"
+		"en_US": "Test Object Definitions 3"
 	},
 	"portlet": false,
 	"restContextPath": "/o/c/testobjectdefinition2s/testobjectdefinition3s",

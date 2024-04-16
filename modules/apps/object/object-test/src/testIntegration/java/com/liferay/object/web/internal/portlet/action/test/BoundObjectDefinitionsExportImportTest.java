@@ -53,13 +53,13 @@ public class BoundObjectDefinitionsExportImportTest
 	@Test
 	public void testExportImportBoundObjectDefinitions() throws Exception {
 		testExportImport(
-			"test-bound-object-definitions.json",
-			"test-bound-object-definitions.json", null,
+			"test-bound-object-definitions.draft.json",
+			"test-bound-object-definitions.draft.json", null,
 			"TestObjectDefinition1");
 
 		testExportImport(
 			"test-bound-object-definitions.published.json",
-			"test-bound-object-definitions.json", null,
+			"test-bound-object-definitions.draft.json", null,
 			"TestObjectDefinition1");
 
 		testFailedImport(

@@ -181,7 +181,7 @@
 				"objectField": {
 					"DBType": "Long",
 					"businessType": "Relationship",
-					"externalReferenceCode": "TESTOBJECTRELATIONSHIP1OBJECTFIELD1",
+					"externalReferenceCode": "TESTOBJECTRELATIONSHIP1OBJECTFIELD",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -223,7 +223,7 @@
 		"panelCategoryKey": "",
 		"parameterRequired": false,
 		"pluralLabel": {
-			"en_US": "Test Object Definitions "
+			"en_US": "Test Object Definitions 1"
 		},
 		"portlet": true,
 		"restContextPath": "/o/c/testobjectdefinition1s",
@@ -416,7 +416,7 @@
 				"objectField": {
 					"DBType": "Long",
 					"businessType": "Relationship",
-					"externalReferenceCode": "TESTOBJECTRELATIONSHIP1OBJECTFIELD2",
+					"externalReferenceCode": "TESTOBJECTRELATIONSHIP2OBJECTFIELD",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -458,7 +458,7 @@
 		"panelCategoryKey": "",
 		"parameterRequired": false,
 		"pluralLabel": {
-			"en_US": "Test Object Definitions"
+			"en_US": "Test Object Definitions 2"
 		},
 		"portlet": false,
 		"restContextPath": "/o/c/testobjectdefinition1s/testobjectdefinition2s",
@@ -644,7 +644,7 @@
 		"panelCategoryKey": "",
 		"parameterRequired": false,
 		"pluralLabel": {
-			"en_US": "Test Object Definitions"
+			"en_US": "Test Object Definitions 3"
 		},
 		"portlet": false,
 		"restContextPath": "/o/c/testobjectdefinition1s/testobjectdefinition3s",

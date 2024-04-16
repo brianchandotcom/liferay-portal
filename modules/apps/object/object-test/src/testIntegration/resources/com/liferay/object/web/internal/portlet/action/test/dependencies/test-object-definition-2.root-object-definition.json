@@ -180,7 +180,7 @@
 			"objectField": {
 				"DBType": "Long",
 				"businessType": "Relationship",
-				"externalReferenceCode": "TESTOBJECTRELATIONSHIP1OBJECTFIELD1",
+				"externalReferenceCode": "TESTOBJECTRELATIONSHIP1OBJECTFIELD",
 				"indexed": true,
 				"indexedAsKeyword": false,
 				"indexedLanguageId": "",
@@ -222,7 +222,7 @@
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "Test Object Definitions "
+		"en_US": "Test Object Definitions 2"
 	},
 	"portlet": true,
 	"restContextPath": "/o/c/testobjectdefinition2s",

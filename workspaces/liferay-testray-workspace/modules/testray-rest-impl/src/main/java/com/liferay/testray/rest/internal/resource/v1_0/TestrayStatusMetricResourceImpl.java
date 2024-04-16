@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.testray.rest.dto.v1_0.TestrayCaseTypeMetric;
 import com.liferay.testray.rest.dto.v1_0.TestrayComponentMetric;
 import com.liferay.testray.rest.dto.v1_0.TestrayRunMetric;
 import com.liferay.testray.rest.dto.v1_0.TestrayStatusMetric;
@@ -34,6 +35,106 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class TestrayStatusMetricResourceImpl
 	extends BaseTestrayStatusMetricResourceImpl {
+
+	@Override
+	public Page<TestrayCaseTypeMetric>
+			getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayCaseTypesMetricsPage(
+				Long testrayBuildId, String testrayCasePriorities,
+				Long testrayTeamId, Pagination pagination)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(22);
+
+		sb.append("select ct.c_caseTypeId_, ct.name_, COUNT(cr.dueStatus_) ");
+		sb.append("as TOTAL, SUM(CASE WHEN cr.dueStatus_ = 'BLOCKED' THEN 1 ");
+		sb.append("ELSE 0 END) as BLOCKED, SUM(CASE WHEN cr.dueStatus_ =  ");
+		sb.append("'FAILED' THEN 1 ELSE 0 END) as FAILED, ");
+		sb.append("SUM(CASE WHEN cr.dueStatus_ = 'INPROGRESS' THEN 1 ELSE 0 ");
+		sb.append("END) as INPROGRESS, SUM(CASE WHEN cr.dueStatus_ = ");
+		sb.append("'PASSED' THEN 1 ELSE 0 END) as PASSED, SUM(CASE WHEN ");
+		sb.append("cr.dueStatus_ = 'TESTFIX' THEN 1 ELSE 0 END) as TESTFIX, ");
+		sb.append("SUM(CASE WHEN cr.dueStatus_ = 'UNTESTED' THEN 1 ELSE 0 ");
+		sb.append("END) as UNTESTED FROM O_[%COMPANY_ID%]_Build b, ");
+		sb.append("O_[%COMPANY_ID%]_CaseResult cr, O_[%COMPANY_ID%]_Case c, ");
+		sb.append("O_[%COMPANY_ID%]_CaseType ct, O_[%COMPANY_ID%]_Component ");
+		sb.append("co WHERE b.c_buildId_ = ? AND b.c_buildId_ = ");
+		sb.append("cr.r_buildToCaseResult_c_buildId AND ");
+		sb.append("cr.r_caseToCaseResult_c_caseId = c.c_caseId_ AND ");
+		sb.append("c.r_caseTypeToCases_c_caseTypeId = ct.c_caseTypeId_ AND ");
+		sb.append("c.r_componentToCases_c_componentId = co.c_componentId_ ");
+
+		List<Object> params = new ArrayList<>();
+
+		params.add(testrayBuildId);
+
+		if (Validator.isNotNull(testrayCasePriorities)) {
+			String[] testrayCasePrioritiesArray = StringUtil.split(
+				testrayCasePriorities);
+
+			sb.append("AND c.priority_ IN (");
+
+			for (String testrayCasePriority : testrayCasePrioritiesArray) {
+				sb.append("? ");
+				sb.append(", ");
+				params.add(testrayCasePriority);
+			}
+
+			sb.setIndex(sb.index() - 1);
+			sb.append(") ");
+		}
+
+		if (Validator.isNotNull(testrayTeamId)) {
+			sb.append("AND t.c_teamId_ = ? ");
+			params.add(testrayTeamId);
+		}
+
+		sb.append("GROUP BY ct.c_caseTypeId_, ct.name_ ORDER BY ct.name_ ");
+		sb.append("ASC LIMIT ? OFFSET ?");
+
+		params.add(pagination.getPageSize());
+		params.add(pagination.getStartPosition());
+
+		List<Map<String, Object>> values = TestrayUtil.runSQL(
+			StringUtil.replace(
+				sb.toString(), "[%COMPANY_ID%]",
+				String.valueOf(contextCompany.getCompanyId())),
+			params);
+
+		return Page.of(
+			transform(
+				values,
+				value -> {
+					TestrayStatusMetric testrayStatusMetric =
+						new TestrayStatusMetric();
+
+					testrayStatusMetric.setBlocked(
+						GetterUtil.getLong(value.get("BLOCKED")));
+					testrayStatusMetric.setFailed(
+						GetterUtil.getLong(value.get("FAILED")));
+					testrayStatusMetric.setInProgress(
+						GetterUtil.getLong(value.get("INPROGRESS")));
+					testrayStatusMetric.setPassed(
+						GetterUtil.getLong(value.get("PASSED")));
+					testrayStatusMetric.setTestfix(
+						GetterUtil.getLong(value.get("TESTFIX")));
+					testrayStatusMetric.setTotal(
+						GetterUtil.getLong(value.get("TOTAL")));
+					testrayStatusMetric.setUntested(
+						GetterUtil.getLong(value.get("UNTESTED")));
+
+					TestrayCaseTypeMetric testrayComponentMetric =
+						new TestrayCaseTypeMetric();
+
+					testrayComponentMetric.setTestrayCaseTypeId(
+						GetterUtil.getLong(value.get("c_caseTypeId_")));
+					testrayComponentMetric.setTestrayCaseTypeName(
+						GetterUtil.getString(value.get("name_")));
+					testrayComponentMetric.setTestrayStatusMetric(
+						testrayStatusMetric);
+
+					return testrayComponentMetric;
+				}));
+	}
 
 	@Override
 	public Page<TestrayComponentMetric>

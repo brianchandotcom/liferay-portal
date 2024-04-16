@@ -245,12 +245,14 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	}
 
 	private SearchPage<SearchResult> _assertFacetConfiguration(
-			boolean anyMatch, Map<String, Object> facetAttributes,
-			String facetName, Object facetValues, String... expectedValues)
+			boolean anyMatch, String entryClassNames,
+			Map<String, Object> facetAttributes, String facetName,
+			Object facetValues, String... expectedValues)
 		throws Exception {
 
 		SearchPage<SearchResult> searchPage =
 			_postSearchPageWithFacetConfiguration(
+				entryClassNames,
 				new FacetConfiguration() {
 					{
 						attributes = facetAttributes;
@@ -409,10 +411,8 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	}
 
 	private SearchPage<SearchResult> _postSearchPageWithFacetConfiguration(
-			FacetConfiguration facetConfiguration)
+			String entryClassNames, FacetConfiguration facetConfiguration)
 		throws Exception {
-
-		facetConfiguration.setFrequencyThreshold(0);
 
 		SearchRequestBody searchRequestBody = new SearchRequestBody() {
 			{
@@ -427,8 +427,9 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		};
 
 		return _postSearchPage(
-			null, "groupIds/any(g:g eq " + testGroup.getGroupId() + ")", null,
-			null, searchRequestBody);
+			entryClassNames,
+			"groupIds/any(g:g eq " + testGroup.getGroupId() + ")", null, null,
+			searchRequestBody);
 	}
 
 	private SearchPage<SearchResult>
@@ -454,7 +455,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		_assertFacetConfiguration(
-			false,
+			false, null,
 			HashMapBuilder.<String, Object>put(
 				"mode", "tree"
 			).put(
@@ -469,7 +470,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		_assertFacetConfiguration(
-			false,
+			false, null,
 			HashMapBuilder.<String, Object>put(
 				"field", Field.COMPANY_ID
 			).build(),
@@ -500,7 +501,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			));
 
 		SearchPage<SearchResult> searchPage = _assertFacetConfiguration(
-			false,
+			false, null,
 			HashMapBuilder.<String, Object>put(
 				"field", "modified"
 			).put(
@@ -559,7 +560,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		_assertFacetConfiguration(
-			false, null, "folder", _journalArticle.getFolderId(),
+			false, null, null, "folder", _journalArticle.getFolderId(),
 			String.valueOf(_journalArticle.getFolderId()));
 	}
 
@@ -593,7 +594,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		}
 
 		_assertFacetConfiguration(
-			false,
+			false, null,
 			HashMapBuilder.<String, Object>put(
 				"field",
 				"ddmFieldArray.ddmFieldValueKeyword_" +
@@ -640,7 +641,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		_assertFacetConfiguration(
-			true, null, "site", testGroup.getGroupId(),
+			true, null, null, "site", testGroup.getGroupId(),
 			String.valueOf(testGroup.getGroupId()));
 	}
 
@@ -648,23 +649,27 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		_assertFacetConfiguration(
-			true, null, "tag", _assetTag.getName(), _assetTag.getName());
+			true, null, null, "tag", _assetTag.getName(), _assetTag.getName());
 	}
 
 	private void _testPostSearchPageWithTypeFacetConfiguration()
 		throws Exception {
 
 		_assertFacetConfiguration(
-			false, null, "type", StringPool.BLANK,
-			JournalArticle.class.getName(), JournalFolder.class.getName(),
-			User.class.getName());
+			false,
+			StringBundler.concat(
+				JournalArticle.class.getName(), StringPool.COMMA,
+				JournalFolder.class.getName(), StringPool.COMMA,
+				User.class.getName()),
+			null, "type", StringPool.BLANK, JournalArticle.class.getName(),
+			JournalFolder.class.getName(), User.class.getName());
 	}
 
 	private void _testPostSearchPageWithUserFacetConfiguration()
 		throws Exception {
 
 		_assertFacetConfiguration(
-			true, null, "user", StringUtil.toLowerCase(_user.getFullName()),
+			true, null, null, "user", _user.getUserId(),
 			String.valueOf(_user.getUserId()));
 	}
 

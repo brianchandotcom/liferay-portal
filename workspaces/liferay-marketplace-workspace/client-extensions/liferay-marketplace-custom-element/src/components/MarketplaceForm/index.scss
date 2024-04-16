@@ -14,11 +14,6 @@
 		border: 1px solid #e2e2e4;
 		border-radius: 4px;
 
-		.controllers {
-			background-color: #f7f7f8;
-			height: 48px;
-		}
-
 		.arrow-container {
 			border: 1px solid #e2e2e4;
 			border-radius: 8px;
@@ -26,6 +21,11 @@
 
 		.children-container {
 			border-top: 1px solid #e2e2e4;
+		}
+
+		.controllers {
+			background-color: #f7f7f8;
+			height: 48px;
 		}
 	}
 }

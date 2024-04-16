@@ -7,6 +7,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 
 import './index.scss';
 
+import ClayDropDown from '@clayui/drop-down';
 import {HTMLAttributes, useState} from 'react';
 
 interface SectionWithControllersProps extends HTMLAttributes<HTMLDivElement> {
@@ -19,6 +20,14 @@ export function SectionWithControllers({
 	...props
 }: SectionWithControllersProps) {
 	const [openBody, setOpenBody] = useState(false);
+
+	const dropDownItems = [
+		{name: 'Move to Top'},
+		{name: 'Move Up'},
+		{name: 'Move Down'},
+		{name: 'Move to Bottom'},
+		{name: 'Delete'},
+	];
 
 	return (
 		<div className="marketplace-form-section mt-4 p-0" {...props}>
@@ -45,13 +54,25 @@ export function SectionWithControllers({
 					<b className="ml-4">{name}</b>
 				</div>
 
-				<div className="d-flex justify-content-end mb-1">
-					<ClayButtonWithIcon
-						aria-labelledby="angle-down"
-						className="align-self-end d-flex"
-						displayType="unstyled"
-						symbol="ellipsis-v"
-					/>
+				<div className="align-self-center d-flex justify-content-end">
+					<ClayDropDown
+						trigger={
+							<ClayButtonWithIcon
+								aria-label="Menu"
+								displayType={null}
+								symbol="ellipsis-v"
+								title="Menu"
+							/>
+						}
+					>
+						<ClayDropDown.ItemList>
+							{dropDownItems.map((dropDownItem, index) => (
+								<ClayDropDown.Item key={index}>
+									{dropDownItem.name}
+								</ClayDropDown.Item>
+							))}
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
 
 					<ClayButtonWithIcon
 						aria-labelledby="angle-right"

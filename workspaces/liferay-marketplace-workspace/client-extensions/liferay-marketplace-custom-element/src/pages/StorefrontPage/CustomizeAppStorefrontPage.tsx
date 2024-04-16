@@ -29,7 +29,7 @@ import fetcher from '../../services/fetcher';
 import HeadlessCommerceAdminCatalogImpl from '../../services/rest/HeadlessCommerceAdminCatalog';
 import {submitBase64EncodedFile} from '../../utils/util';
 
-const ACCEPT_FILE_TYPES = {
+export const ACCEPT_FILE_TYPES = {
 	'image/gif': ['.gif'],
 	'image/jpg': ['.jpg'],
 	'image/png': ['.png'],
@@ -180,8 +180,7 @@ export function CustomizeAppStorefrontPage({
 										type:
 											TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
 									});
-								}
-								catch (error) {
+								} catch (error) {
 									console.error(error);
 
 									Liferay.Util.openToast({

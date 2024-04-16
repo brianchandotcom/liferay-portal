@@ -8,8 +8,10 @@ import ClayIcon from '@clayui/icon';
 import {useState} from 'react';
 import ReactQuill from 'react-quill';
 
+import {DropzoneUpload} from '../../../../../../components/DropzoneUpload/DropzoneUpload';
 import Form from '../../../../../../components/MarketplaceForm';
 import i18n from '../../../../../../i18n';
+import {ACCEPT_FILE_TYPES} from '../../../../../StorefrontPage/CustomizeAppStorefrontPage';
 
 enum RadioOptions {
 	EMBED_VIDEO_URL = 'embed-video-url',
@@ -19,6 +21,11 @@ enum RadioOptions {
 const Header = () => {
 	const [editorValue, setEditorValue] = useState('');
 	const [radioValue, setRadioValue] = useState('');
+
+	const handleUpload = (files: File[]) => {
+		// eslint-disable-next-line no-console
+		console.log('files', files);
+	};
 
 	return (
 		<div className="mb-4 solutions-form-header">
@@ -81,8 +88,7 @@ const Header = () => {
 					/>
 
 					<Form.HelpMessage>
-						You can paste links directly from YouTube, Vimeo,
-						Facebook, and Twitch.
+						You can paste links directly from YouTube.
 					</Form.HelpMessage>
 
 					<div className="border d-flex flex-row mt-5 p-4 rounded">
@@ -101,9 +107,22 @@ const Header = () => {
 			)}
 
 			{radioValue === RadioOptions.UPLOAD_IMAGES && (
-				<Form.Label className="mt-5" htmlFor="description">
-					Add up to 5 images
-				</Form.Label>
+				<>
+					<Form.Label className="mb-4 mt-2" htmlFor="description">
+						Add up to 5 images
+					</Form.Label>
+
+					<DropzoneUpload
+						acceptFileTypes={ACCEPT_FILE_TYPES}
+						buttonText="Select a file"
+						description="Only gif, jpg, png are allowed. Max file size is 5MB "
+						maxFiles={5}
+						maxSize={5000000}
+						multiple={true}
+						onHandleUpload={handleUpload}
+						title="Drag and drop to upload or"
+					/>
+				</>
 			)}
 		</div>
 	);

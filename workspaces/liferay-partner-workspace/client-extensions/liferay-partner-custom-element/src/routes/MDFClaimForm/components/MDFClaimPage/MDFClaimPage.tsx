@@ -95,13 +95,13 @@ const MDFClaimPage = ({
 	).length;
 
 	const getCreateClaimDenialMessage = () => {
-		if (mdfRequest.mdfRequestStatus?.key !== 'approved') {
+		if (mdfRequest.mdfRequestStatus?.key !== Status.APPROVED.key) {
 			return 'Waiting for Manager approval.';
 		}
 		else if (claimsFiltered && claimsFiltered >= 2 && !values.id) {
 			return 'You already submitted 2 claims.';
 		}
-		else if (!availableMDFActivities || availableMDFActivities === 0) {
+		else if (!availableMDFActivities) {
 			return "You don't have activities available to claim.";
 		}
 	};

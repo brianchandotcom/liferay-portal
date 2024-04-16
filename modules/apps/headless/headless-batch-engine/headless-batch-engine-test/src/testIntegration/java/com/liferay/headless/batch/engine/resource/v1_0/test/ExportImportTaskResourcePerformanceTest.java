@@ -158,16 +158,11 @@ public class ExportImportTaskResourcePerformanceTest {
 
 		Class<?> clazz = ExportImportTaskResourcePerformanceTest.class;
 
-		Properties properties = PropertiesUtil.load(
+		_properties = PropertiesUtil.load(
 			clazz.getResourceAsStream(
 				"dependencies/export-import-task-resource-performance." +
 					"properties"),
 			"UTF-8");
-
-		_testEntitiesCount = GetterUtil.getInteger(
-			properties.getProperty("test.entities.count"));
-		_userAccountsCount = GetterUtil.getInteger(
-			properties.getProperty("user.accounts.count"));
 	}
 
 	@Test
@@ -176,23 +171,36 @@ public class ExportImportTaskResourcePerformanceTest {
 			testEntityBatchEngineTaskItemDelegate =
 				_getTestEntityBatchEngineTaskItemDelegate();
 
-		testEntityBatchEngineTaskItemDelegate.generate(_testEntitiesCount);
+		int count = GetterUtil.getInteger(
+			_properties.getProperty("test.entities.count"));
+
+		testEntityBatchEngineTaskItemDelegate.generate(count);
 
 		_testPostExportTask(
 			"com.liferay.headless.batch.engine.resource.v1_0.test.TestEntity#" +
 				"export-import-task-resource-performance-test-entities",
-			_testEntitiesCount);
+			count,
+			GetterUtil.getLong(
+				_properties.getProperty("test.entities.export.maxTime")),
+			GetterUtil.getLong(
+				_properties.getProperty("test.entities.download.maxTime")));
 	}
 
 	@Test
 	public void testPostExportTaskWithUserAccount() throws Exception {
-		for (int i = 0; i < _userAccountsCount; ++i) {
+		int count = GetterUtil.getInteger(
+			_properties.getProperty("user.accounts.count"));
+
+		for (int i = 0; i < count; ++i) {
 			UserTestUtil.addUser();
 		}
 
 		_testPostExportTask(
-			"com.liferay.headless.admin.user.dto.v1_0.UserAccount",
-			_userAccountsCount);
+			"com.liferay.headless.admin.user.dto.v1_0.UserAccount", count,
+			GetterUtil.getLong(
+				_properties.getProperty("user.accounts.export.maxTime")),
+			GetterUtil.getLong(
+				_properties.getProperty("user.accounts.download.maxTime")));
 	}
 
 	@Test
@@ -200,14 +208,20 @@ public class ExportImportTaskResourcePerformanceTest {
 		_testPostImportTask(
 			"com.liferay.headless.batch.engine.resource.v1_0.test.TestEntity#" +
 				"export-import-task-resource-performance-test-entities",
-			_testEntitiesCount);
+			GetterUtil.getInteger(
+				_properties.getProperty("test.entities.count")),
+			GetterUtil.getLong(
+				_properties.getProperty("test.entities.import.maxTime")));
 	}
 
 	@Test
 	public void testPostImportTaskWithUserAccount() throws Exception {
 		_testPostImportTask(
 			"com.liferay.headless.admin.user.dto.v1_0.UserAccount",
-			_userAccountsCount);
+			GetterUtil.getInteger(
+				_properties.getProperty("user.accounts.count")),
+			GetterUtil.getLong(
+				_properties.getProperty("user.accounts.import.maxTime")));
 	}
 
 	private String _createBatchJSON(String className, int count) {
@@ -305,7 +319,9 @@ public class ExportImportTaskResourcePerformanceTest {
 		return classNamePartsMap;
 	}
 
-	private void _testPostExportTask(String className, int count)
+	private void _testPostExportTask(
+			String className, int count, long maxExportTime,
+			long maxDownloadTime)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -320,7 +336,7 @@ public class ExportImportTaskResourcePerformanceTest {
 
 		try (ItemCountPerformanceTestTimer itemCountPerformanceTestTimer =
 				new ItemCountPerformanceTestTimer(
-					count, className + "#export", 60000)) {
+					count, className + "#export", maxExportTime)) {
 
 			httpInvoker = HttpInvoker.newHttpInvoker();
 
@@ -373,7 +389,7 @@ public class ExportImportTaskResourcePerformanceTest {
 
 		try (ItemCountPerformanceTestTimer itemCountPerformanceTestTimer =
 				new ItemCountPerformanceTestTimer(
-					count, className + "#download", 60000)) {
+					count, className + "#download", maxDownloadTime)) {
 
 			httpInvoker = HttpInvoker.newHttpInvoker();
 
@@ -402,7 +418,7 @@ public class ExportImportTaskResourcePerformanceTest {
 		}
 	}
 
-	private void _testPostImportTask(String className, int count)
+	private void _testPostImportTask(String className, int count, long maxTime)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
@@ -415,7 +431,7 @@ public class ExportImportTaskResourcePerformanceTest {
 			classNamePartsMap.get("className"), count);
 
 		try (Closeable closeable = new ItemCountPerformanceTestTimer(
-				count, className, 60000)) {
+				count, className, maxTime)) {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
@@ -478,8 +494,7 @@ public class ExportImportTaskResourcePerformanceTest {
 		ExportImportTaskResourcePerformanceTest.class);
 
 	private static Map<String, String> _jsons;
-	private static int _testEntitiesCount;
-	private static int _userAccountsCount;
+	private static Properties _properties;
 
 	@Inject
 	private BatchEngineTaskItemDelegateRegistry

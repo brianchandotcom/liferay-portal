@@ -2,17 +2,25 @@
 
 ${dataFactory.toInsertSQL(ctSchemaVersionModel)}
 
+<#--Create a Publications specific group-->
+
 <#assign publicationGroupModel = dataFactory.newPublicationGroupModel() />
 ${dataFactory.toInsertSQL(publicationGroupModel)}
+
+<#--CTCollection data creation-->
 
 <#list dataFactory.newCTCollectionModels(ctSchemaVersionModel) as ctCollectionModel>
 	${dataFactory.toInsertSQL(ctCollectionModel)}
 
-	<#list dataFactory.newCTCollectionContentPageLayoutModels(ctCollectionModel.ctCollectionId, publicationGroupModel.groupId) as ctCollectionContentPageLayoutModel>
-		${dataFactory.toInsertSQL(ctCollectionContentPageLayoutModel)}
+	<#assign
+		ctCollectionId = ctCollectionModel.ctCollectionId
+		ctCollectionIdString = ctCollectionModel.ctCollectionId?c
+		publicationGroupId = publicationGroupModel.groupId
+	/>
 
-		<#assign ctEntryModel = dataFactory.newCTEntryModel(ctCollectionModel.ctCollectionId, ctCollectionContentPageLayoutModel, dataFactory.ctChangeTypeAddition) />
+	<#include "ct_ddm.ftl">
 
-		${dataFactory.toInsertSQL(ctEntryModel)}
-	</#list>
+	<#include "ct_journal_article.ftl">
+
+	<#include "ct_layout.ftl">
 </#list>

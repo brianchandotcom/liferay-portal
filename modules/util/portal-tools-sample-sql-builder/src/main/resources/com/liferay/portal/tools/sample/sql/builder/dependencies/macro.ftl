@@ -3,25 +3,50 @@
 <#macro insertAssetEntry
 	_entry
 	_categoryAndTag = false
+	_ctCollectionId = ""
 >
-	<#local assetEntryModel = dataFactory.newAssetEntryModel(_entry)>
+	<#if (_ctCollectionId?has_content)>
+		<#local ctCollectionAssetEntryModel = dataFactory.newAssetEntryModel(_entry)>
 
-	${dataFactory.toInsertSQL(assetEntryModel)}
+		${dataFactory.toCTCollectionInsertSQL(ctCollectionAssetEntryModel, _ctCollectionId)}
 
-	<#if _categoryAndTag>
-		<#local assetCategoryIds = dataFactory.getAssetCategoryIds(assetEntryModel)>
+		<#if _categoryAndTag>
+			<#local ctCollectionAssetCategoryIds = dataFactory.getAssetCategoryIds(ctCollectionAssetEntryModel)>
 
-		<#list assetCategoryIds as assetCategoryId>
-			<#local assetEntryAssetCategoryRelId = dataFactory.getCounterNext()>
+			<#list ctCollectionAssetCategoryIds as ctCollectionAssetCategoryId>
+				<#local ctCollectionAssetEntryAssetCategoryRelId = dataFactory.getCounterNext()>
+
+			insert into AssetEntryAssetCategoryRel values (0, ${_ctCollectionId}, ${ctCollectionAssetEntryAssetCategoryRelId}, ${ctCollectionAssetEntryModel.companyId}, ${ctCollectionAssetEntryModel.entryId}, ${ctCollectionAssetCategoryId}, 0);
+			</#list>
+
+			<#local ctCollectionAssetTagIds = dataFactory.getAssetTagIds(ctCollectionAssetEntryModel)>
+
+			<#list ctCollectionAssetTagIds as ctCollectionAssetTagId>
+				${dataFactory.toInsertSQL("AssetEntries_AssetTags", ctCollectionAssetEntryModel.companyId, ctCollectionAssetEntryModel.entryId, ctCollectionAssetTagId)}
+			</#list>
+		</#if>
+
+	<#else>
+
+		<#local assetEntryModel = dataFactory.newAssetEntryModel(_entry)>
+
+		${dataFactory.toInsertSQL(assetEntryModel)}
+
+		<#if _categoryAndTag>
+			<#local assetCategoryIds = dataFactory.getAssetCategoryIds(assetEntryModel)>
+
+			<#list assetCategoryIds as assetCategoryId>
+				<#local assetEntryAssetCategoryRelId = dataFactory.getCounterNext()>
 
 			insert into AssetEntryAssetCategoryRel values (0, 0, ${assetEntryAssetCategoryRelId}, ${assetEntryModel.companyId}, ${assetEntryModel.entryId}, ${assetCategoryId}, 0);
-		</#list>
+			</#list>
 
-		<#local assetTagIds = dataFactory.getAssetTagIds(assetEntryModel)>
+			<#local assetTagIds = dataFactory.getAssetTagIds(assetEntryModel)>
 
-		<#list assetTagIds as assetTagId>
-			${dataFactory.toInsertSQL("AssetEntries_AssetTags", assetEntryModel.companyId, assetEntryModel.entryId, assetTagId)}
-		</#list>
+			<#list assetTagIds as assetTagId>
+				${dataFactory.toInsertSQL("AssetEntries_AssetTags", assetEntryModel.companyId, assetEntryModel.entryId, assetTagId)}
+			</#list>
+		</#if>
 	</#if>
 </#macro>
 
@@ -113,12 +138,21 @@
 	_ddmStructureModel
 	_ddmStructureLayoutModel
 	_ddmStructureVersionModel
+	_ctCollectionId=""
 >
-	${dataFactory.toInsertSQL(_ddmStructureModel)}
+	<#if (_ctCollectionId?has_content)>
+		${dataFactory.toCTCollectionInsertSQL(_ddmStructureModel, _ctCollectionId)}
 
-	${dataFactory.toInsertSQL(_ddmStructureLayoutModel)}
+		${dataFactory.toCTCollectionInsertSQL(_ddmStructureLayoutModel, _ctCollectionId)}
 
-	${dataFactory.toInsertSQL(_ddmStructureVersionModel)}
+		${dataFactory.toCTCollectionInsertSQL(_ddmStructureVersionModel, _ctCollectionId)}
+	<#else>
+		${dataFactory.toInsertSQL(_ddmStructureModel)}
+
+		${dataFactory.toInsertSQL(_ddmStructureLayoutModel)}
+
+		${dataFactory.toInsertSQL(_ddmStructureVersionModel)}
+	</#if>
 </#macro>
 
 <#macro insertDLFolder
@@ -203,45 +237,92 @@
 	_journalDDMStructureModel
 	_journalDDMTemplateModel
 	_insertAssetEntry
+	_ctCollectionId=""
 >
-	${dataFactory.toInsertSQL(_journalArticleModel)}
+	<#if (_ctCollectionId?has_content)>
+		${dataFactory.toCTCollectionInsertSQL(_journalArticleModel, _ctCollectionId)}
 
-	<#local ddmFieldModels = dataFactory.newDDMFieldModels(_journalArticleModel) />
+		<#local ddmFieldModels = dataFactory.newDDMFieldModels(_journalArticleModel) />
 
-	<#list ddmFieldModels as ddmFieldModel>
-		${dataFactory.toInsertSQL(ddmFieldModel)}
-	</#list>
+		<#list ddmFieldModels as ddmFieldModel>
+			${dataFactory.toCTCollectionInsertSQL(ddmFieldModel, _ctCollectionId)}
+		</#list>
 
-	<#local ddmFieldAttributeModels = dataFactory.newDDMFieldAttributeModels(_journalArticleModel, ddmFieldModels) />
+		<#local ddmFieldAttributeModels = dataFactory.newDDMFieldAttributeModels(_journalArticleModel, ddmFieldModels) />
 
-	<#list ddmFieldAttributeModels as ddmFieldAttributeModel>
-		${dataFactory.toInsertSQL(ddmFieldAttributeModel)}
-	</#list>
+		<#list ddmFieldAttributeModels as ddmFieldAttributeModel>
+			${dataFactory.toCTCollectionInsertSQL(ddmFieldAttributeModel, _ctCollectionId)}
+		</#list>
 
-	<#local journalArticleLocalizationModel = dataFactory.newJournalArticleLocalizationModel(_journalArticleModel)>
+		<#local journalArticleLocalizationModel = dataFactory.newJournalArticleLocalizationModel(_journalArticleModel)>
 
-	${dataFactory.toInsertSQL(journalArticleLocalizationModel)}
+		${dataFactory.toCTCollectionInsertSQL(journalArticleLocalizationModel, _ctCollectionId)}
 
-	${dataFactory.toInsertSQL(dataFactory.newDDMTemplateLinkModel(_journalArticleModel, _journalDDMTemplateModel.templateId))}
+		${dataFactory.toCTCollectionInsertSQL(dataFactory.newDDMTemplateLinkModel(_journalArticleModel, _journalDDMTemplateModel.templateId), _ctCollectionId)}
 
-	${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(_journalArticleModel, _journalDDMStructureModel.structureId))}
+		${dataFactory.toCTCollectionInsertSQL(dataFactory.newDDMStorageLinkModel(_journalArticleModel, _journalDDMStructureModel.structureId), _ctCollectionId)}
 
-	${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(_journalArticleModel))}
+		${dataFactory.toCTCollectionInsertSQL(dataFactory.newSocialActivityModel(_journalArticleModel), _ctCollectionId)}
 
-	<#if _insertAssetEntry>
-		<@insertAssetEntry
-			_categoryAndTag = true
-			_entry = dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
-		/>
+		<#if _insertAssetEntry>
+			<@insertAssetEntry
+				_categoryAndTag=true
+				_ctCollectionId=_ctCollectionId
+				_entry=dataFactory.newObjectValuePair(_journalArticleModel, journalArticleLocalizationModel)
+			/>
+		</#if>
+
+	<#else>
+		${dataFactory.toInsertSQL(_journalArticleModel)}
+
+		<#local ddmFieldModels = dataFactory.newDDMFieldModels(_journalArticleModel) />
+
+		<#list ddmFieldModels as ddmFieldModel>
+			${dataFactory.toInsertSQL(ddmFieldModel)}
+		</#list>
+
+		<#local ddmFieldAttributeModels = dataFactory.newDDMFieldAttributeModels(_journalArticleModel, ddmFieldModels) />
+
+		<#list ddmFieldAttributeModels as ddmFieldAttributeModel>
+			${dataFactory.toInsertSQL(ddmFieldAttributeModel)}
+		</#list>
+
+		<#local journalArticleLocalizationModel = dataFactory.newJournalArticleLocalizationModel(_journalArticleModel)>
+
+		${dataFactory.toInsertSQL(journalArticleLocalizationModel)}
+
+		${dataFactory.toInsertSQL(dataFactory.newDDMTemplateLinkModel(_journalArticleModel, _journalDDMTemplateModel.templateId))}
+
+		${dataFactory.toInsertSQL(dataFactory.newDDMStorageLinkModel(_journalArticleModel, _journalDDMStructureModel.structureId))}
+
+		${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(_journalArticleModel))}
+
+		<#if _insertAssetEntry>
+			<@insertAssetEntry
+				_categoryAndTag = true
+				_entry = dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
+			/>
+		</#if>
 	</#if>
 </#macro>
 
 <#macro insertLayout
 	_layoutModel
+	_ctCollectionId=""
 >
+	<#if (_ctCollectionId?has_content)>
+
+	${dataFactory.toCTCollectionInsertSQL(_layoutModel, _ctCollectionId)}
+
+	${dataFactory.toCTCollectionInsertSQL(dataFactory.newLayoutFriendlyURLModel(_layoutModel), _ctCollectionId)}
+
+	<#else>
+
 	${dataFactory.toInsertSQL(_layoutModel)}
 
 	${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(_layoutModel))}
+
+	</#if>
 </#macro>
 
 <#macro insertMBDiscussion
@@ -251,32 +332,72 @@
 	_maxCommentCount
 	_mbRootMessageId
 	_mbThreadId
+	_ctCollectionId=""
 >
-	<#local mbThreadModel = dataFactory.newMBThreadModel(_mbThreadId, _groupId, _mbRootMessageId)>
+	<#if (_ctCollectionId?has_content)>
+		<#local mbThreadModel = dataFactory.newMBThreadModel(_mbThreadId, _groupId, _mbRootMessageId)>
 
-	${dataFactory.toInsertSQL(mbThreadModel)}
+		${dataFactory.toCTCollectionInsertSQL(mbThreadModel, _ctCollectionId)}
 
-	<#local mbRootMessageModel = dataFactory.newMBMessageModel(mbThreadModel, _classNameId, _classPK, 0)>
+		<#local mbRootMessageModel = dataFactory.newMBMessageModel(mbThreadModel, _classNameId, _classPK, 0)>
 
-	<@insertMBMessage _mbMessageModel = mbRootMessageModel />
+		<@insertMBMessage
+			_ctCollectionId=_ctCollectionId
+			_mbMessageModel=mbRootMessageModel
+		/>
 
-	<#local mbMessageModels = dataFactory.newMBMessageModels(mbThreadModel, _classNameId, _classPK, _maxCommentCount)>
+		<#local mbMessageModels = dataFactory.newMBMessageModels(mbThreadModel, _classNameId, _classPK, _maxCommentCount)>
 
-	<#list mbMessageModels as mbMessageModel>
-		<@insertMBMessage _mbMessageModel = mbMessageModel />
+		<#list mbMessageModels as mbMessageModel>
+			<@insertMBMessage
+				_ctCollectionId=_ctCollectionId
+				_mbMessageModel=mbMessageModel
+			/>
 
-		${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(mbMessageModel))}
-	</#list>
+			${dataFactory.toCTCollectionInsertSQL(dataFactory.newSocialActivityModel(mbMessageModel), _ctCollectionId)}
+		</#list>
 
-	${dataFactory.toInsertSQL(dataFactory.newMBDiscussionModel(_groupId, _classNameId, _classPK, _mbThreadId))}
+		${dataFactory.toCTCollectionInsertSQL(dataFactory.newMBDiscussionModel(_groupId, _classNameId, _classPK, _mbThreadId), _ctCollectionId)}
+
+	<#else>
+
+		<#local mbThreadModel = dataFactory.newMBThreadModel(_mbThreadId, _groupId, _mbRootMessageId)>
+
+		${dataFactory.toInsertSQL(mbThreadModel)}
+
+		<#local mbRootMessageModel = dataFactory.newMBMessageModel(mbThreadModel, _classNameId, _classPK, 0)>
+
+		<@insertMBMessage _mbMessageModel = mbRootMessageModel />
+
+		<#local mbMessageModels = dataFactory.newMBMessageModels(mbThreadModel, _classNameId, _classPK, _maxCommentCount)>
+
+		<#list mbMessageModels as mbMessageModel>
+			<@insertMBMessage _mbMessageModel = mbMessageModel />
+
+			${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(mbMessageModel))}
+		</#list>
+
+		${dataFactory.toInsertSQL(dataFactory.newMBDiscussionModel(_groupId, _classNameId, _classPK, _mbThreadId))}
+
+	</#if>
 </#macro>
 
 <#macro insertMBMessage
 	_mbMessageModel
+	_ctCollectionId=""
 >
-	${dataFactory.toInsertSQL(_mbMessageModel)}
+	<#if (_ctCollectionId?has_content)>
+		${dataFactory.toCTCollectionInsertSQL(_mbMessageModel, _ctCollectionId)}
 
-	<@insertAssetEntry _entry = _mbMessageModel />
+		<@insertAssetEntry
+			_ctCollectionId=_ctCollectionId
+			_entry=_mbMessageModel
+		/>
+	<#else>
+		${dataFactory.toInsertSQL(_mbMessageModel)}
+
+		<@insertAssetEntry _entry = _mbMessageModel />
+	</#if>
 </#macro>
 
 <#macro insertUser

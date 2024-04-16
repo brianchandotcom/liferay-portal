@@ -363,6 +363,54 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	@FeatureFlags("LPD-11165")
 	@Test
+	public void testSendNotificationWithRegularRoles() throws Exception {
+		Role role1 = _addRole(RoleConstants.TYPE_REGULAR, user1);
+		Role role2 = _addRole(RoleConstants.TYPE_REGULAR, user2);
+
+		NotificationTemplate notificationTemplate =
+			notificationTemplateLocalService.addNotificationTemplate(
+				NotificationTemplateUtil.createNotificationContext(
+					TestPropsValues.getUser(), 0, RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
+					Arrays.asList(
+						createNotificationRecipientSetting(
+							NotificationRecipientSettingConstants.NAME_CC,
+							"[%CURRENT_USER_EMAIL_ADDRESS%],cc@liferay.com"),
+						createNotificationRecipientSetting(
+							NotificationRecipientSettingConstants.NAME_FROM,
+							"[%CURRENT_USER_EMAIL_ADDRESS%]"),
+						createNotificationRecipientSetting(
+							NotificationRecipientSettingConstants.
+								NAME_FROM_NAME,
+							Collections.singletonMap(
+								LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]")),
+						createNotificationRecipientSetting(
+							NotificationRecipientSettingConstants.
+								NAME_SINGLE_RECIPIENT,
+							Boolean.FALSE.toString()),
+						createNotificationRecipientSetting(
+							NotificationRecipientSettingConstants.NAME_TO,
+							role1.getName()),
+						createNotificationRecipientSetting(
+							NotificationRecipientSettingConstants.NAME_TO_TYPE,
+							NotificationRecipientConstants.TYPE_ROLE)),
+					RandomTestUtil.randomString(),
+					NotificationConstants.TYPE_EMAIL, Collections.emptyList()));
+
+		_testSendNotificationWithRoles(
+			null, StringPool.BLANK, 0, null, notificationTemplate);
+
+		_roleLocalService.addUserRole(user1.getUserId(), role1.getRoleId());
+		_roleLocalService.addUserRole(user2.getUserId(), role2.getRoleId());
+
+		_testSendNotificationWithRoles(
+			null, StringPool.BLANK, 1, user1.getEmailAddress(),
+			notificationTemplate);
+	}
+
+	@FeatureFlags("LPD-11165")
+	@Test
 	public void testSendNotificationWithRoles() throws Exception {
 		AccountEntry accountEntry1 = _addAccountEntry();
 
@@ -379,8 +427,10 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		AccountRole accountRole4 = _addAccountRole(
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
 
-		Role organizationRole1 = _addOrganizationRole();
-		Role organizationRole2 = _addOrganizationRole();
+		Role organizationRole1 = _addRole(
+			RoleConstants.TYPE_ORGANIZATION, TestPropsValues.getUser());
+		Role organizationRole2 = _addRole(
+			RoleConstants.TYPE_ORGANIZATION, TestPropsValues.getUser());
 
 		NotificationTemplate notificationTemplate =
 			notificationTemplateLocalService.addNotificationTemplate(
@@ -622,10 +672,10 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				Collections.singletonList(objectField.getObjectFieldId())));
 	}
 
-	private Role _addOrganizationRole() throws Exception {
+	private Role _addRole(int type, User user) throws Exception {
 		return _roleLocalService.addRole(
-			TestPropsValues.getUserId(), null, 0, RandomTestUtil.randomString(),
-			null, null, RoleConstants.TYPE_ORGANIZATION, null, null);
+			user.getUserId(), null, 0, RandomTestUtil.randomString(), null,
+			null, type, null, null);
 	}
 
 	private void _assertNotificationQueueEntry(

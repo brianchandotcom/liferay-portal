@@ -115,6 +115,10 @@ public class CommerceRecipientCommerceDefinitionTermContributor
 				return String.valueOf(user.getUserId());
 			}
 
+			if (accountEntry.isGuestAccount()) {
+				return accountEntry.getEmailAddress();
+			}
+
 			return String.valueOf(commerceOrder.getUserId());
 		}
 

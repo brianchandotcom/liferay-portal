@@ -5039,33 +5039,30 @@ public class ObjectEntryResourceTest {
 												containerResponseContext.
 													getEntity();
 
-								Map<String, UnsafeSupplier<Object, Exception>>
-									lazyProperties =
-										objectEntry.getLazyProperties();
+								Map<String, Object> properties =
+									objectEntry.getProperties();
 
 								UnsafeSupplier<Object, Exception>
-									unsafeSupplier1 = lazyProperties.get(
-										_OBJECT_FIELD_NAME_BOOLEAN);
-
-								lazyProperties.put(
-									_OBJECT_FIELD_NAME_BOOLEAN,
-									() -> {
+									unsafeSupplier1 = () -> {
 										booleanObjectFieldComputed.set(true);
 
-										return unsafeSupplier1.get();
-									});
+										return RandomTestUtil.randomBoolean();
+									};
+
+								properties.put(
+									_OBJECT_FIELD_NAME_BOOLEAN,
+									unsafeSupplier1);
 
 								UnsafeSupplier<Object, Exception>
-									unsafeSupplier2 = lazyProperties.get(
-										_OBJECT_FIELD_NAME_DATE);
-
-								lazyProperties.put(
-									_OBJECT_FIELD_NAME_DATE,
-									() -> {
+									unsafeSupplier2 = () -> {
 										dateObjectFieldComputed.set(true);
 
-										return unsafeSupplier2.get();
-									});
+										return _dateFormat.format(
+											RandomTestUtil.nextDate());
+									};
+
+								properties.put(
+									_OBJECT_FIELD_NAME_DATE, unsafeSupplier2);
 							});
 
 					return false;
@@ -5102,10 +5099,10 @@ public class ObjectEntryResourceTest {
 
 			Assert.assertTrue(
 				_OBJECT_FIELD_NAME_BOOLEAN + " should have been computed",
-				booleanObjectFieldComputed.get());
+				booleanObjectFieldComputed.getAndSet(false));
 			Assert.assertFalse(
 				_OBJECT_FIELD_NAME_DATE + " should not have been computed",
-				dateObjectFieldComputed.get());
+				dateObjectFieldComputed.getAndSet(false));
 
 			HTTPTestUtil.invokeToJSONObject(
 				null,
@@ -5116,10 +5113,10 @@ public class ObjectEntryResourceTest {
 
 			Assert.assertTrue(
 				_OBJECT_FIELD_NAME_BOOLEAN + " should have been computed",
-				booleanObjectFieldComputed.get());
+				booleanObjectFieldComputed.getAndSet(false));
 			Assert.assertTrue(
 				_OBJECT_FIELD_NAME_DATE + " should have been computed",
-				dateObjectFieldComputed.get());
+				dateObjectFieldComputed.getAndSet(false));
 		}
 		finally {
 			serviceRegistration.unregister();

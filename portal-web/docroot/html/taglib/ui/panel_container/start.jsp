@@ -7,4 +7,4 @@
 
 <%@ include file="/html/taglib/ui/panel_container/init.jsp" %>
 
-<div aria-multiselectable="true" class="panel-group <%= cssClass %>" id="<%= id %>" role="tablist">
+<div class="panel-group <%= cssClass %>" id="<%= id %>">

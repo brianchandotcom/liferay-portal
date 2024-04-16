@@ -104,35 +104,17 @@ public class TestrayStatusMetricResourceImpl
 			transform(
 				values,
 				value -> {
-					TestrayStatusMetric testrayStatusMetric =
-						new TestrayStatusMetric();
-
-					testrayStatusMetric.setBlocked(
-						GetterUtil.getLong(value.get("BLOCKED")));
-					testrayStatusMetric.setFailed(
-						GetterUtil.getLong(value.get("FAILED")));
-					testrayStatusMetric.setInProgress(
-						GetterUtil.getLong(value.get("INPROGRESS")));
-					testrayStatusMetric.setPassed(
-						GetterUtil.getLong(value.get("PASSED")));
-					testrayStatusMetric.setTestfix(
-						GetterUtil.getLong(value.get("TESTFIX")));
-					testrayStatusMetric.setTotal(
-						GetterUtil.getLong(value.get("TOTAL")));
-					testrayStatusMetric.setUntested(
-						GetterUtil.getLong(value.get("UNTESTED")));
-
-					TestrayCaseTypeMetric testrayComponentMetric =
+					TestrayCaseTypeMetric testrayCaseTypeMetric =
 						new TestrayCaseTypeMetric();
 
-					testrayComponentMetric.setTestrayCaseTypeId(
+					testrayCaseTypeMetric.setTestrayCaseTypeId(
 						GetterUtil.getLong(value.get("c_caseTypeId_")));
-					testrayComponentMetric.setTestrayCaseTypeName(
+					testrayCaseTypeMetric.setTestrayCaseTypeName(
 						GetterUtil.getString(value.get("name_")));
-					testrayComponentMetric.setTestrayStatusMetric(
-						testrayStatusMetric);
+					testrayCaseTypeMetric.setTestrayStatusMetric(
+						_getTestrayStatusMetric(value));
 
-					return testrayComponentMetric;
+					return testrayCaseTypeMetric;
 				}));
 	}
 
@@ -218,24 +200,6 @@ public class TestrayStatusMetricResourceImpl
 			transform(
 				values,
 				value -> {
-					TestrayStatusMetric testrayStatusMetric =
-						new TestrayStatusMetric();
-
-					testrayStatusMetric.setBlocked(
-						GetterUtil.getLong(value.get("BLOCKED")));
-					testrayStatusMetric.setFailed(
-						GetterUtil.getLong(value.get("FAILED")));
-					testrayStatusMetric.setInProgress(
-						GetterUtil.getLong(value.get("INPROGRESS")));
-					testrayStatusMetric.setPassed(
-						GetterUtil.getLong(value.get("PASSED")));
-					testrayStatusMetric.setTestfix(
-						GetterUtil.getLong(value.get("TESTFIX")));
-					testrayStatusMetric.setTotal(
-						GetterUtil.getLong(value.get("TOTAL")));
-					testrayStatusMetric.setUntested(
-						GetterUtil.getLong(value.get("UNTESTED")));
-
 					TestrayComponentMetric testrayComponentMetric =
 						new TestrayComponentMetric();
 
@@ -244,7 +208,7 @@ public class TestrayStatusMetricResourceImpl
 					testrayComponentMetric.setTestrayComponentName(
 						GetterUtil.getString(value.get("name_")));
 					testrayComponentMetric.setTestrayStatusMetric(
-						testrayStatusMetric);
+						_getTestrayStatusMetric(value));
 
 					return testrayComponentMetric;
 				}));
@@ -334,24 +298,6 @@ public class TestrayStatusMetricResourceImpl
 			transform(
 				values,
 				value -> {
-					TestrayStatusMetric testrayStatusMetric =
-						new TestrayStatusMetric();
-
-					testrayStatusMetric.setBlocked(
-						GetterUtil.getLong(value.get("BLOCKED")));
-					testrayStatusMetric.setFailed(
-						GetterUtil.getLong(value.get("FAILED")));
-					testrayStatusMetric.setInProgress(
-						GetterUtil.getLong(value.get("INPROGRESS")));
-					testrayStatusMetric.setPassed(
-						GetterUtil.getLong(value.get("PASSED")));
-					testrayStatusMetric.setTestfix(
-						GetterUtil.getLong(value.get("TESTFIX")));
-					testrayStatusMetric.setTotal(
-						GetterUtil.getLong(value.get("TOTAL")));
-					testrayStatusMetric.setUntested(
-						GetterUtil.getLong(value.get("UNTESTED")));
-
 					TestrayRunMetric testrayRunMetric = new TestrayRunMetric();
 
 					testrayRunMetric.setTestrayRunId(
@@ -359,7 +305,7 @@ public class TestrayStatusMetricResourceImpl
 					testrayRunMetric.setTestrayRunNumber(
 						GetterUtil.getLong(value.get("number_")));
 					testrayRunMetric.setTestrayStatusMetric(
-						testrayStatusMetric);
+						_getTestrayStatusMetric(value));
 
 					return testrayRunMetric;
 				}));
@@ -454,24 +400,6 @@ public class TestrayStatusMetricResourceImpl
 			transform(
 				values,
 				value -> {
-					TestrayStatusMetric testrayStatusMetric =
-						new TestrayStatusMetric();
-
-					testrayStatusMetric.setBlocked(
-						GetterUtil.getLong(value.get("BLOCKED")));
-					testrayStatusMetric.setFailed(
-						GetterUtil.getLong(value.get("FAILED")));
-					testrayStatusMetric.setInProgress(
-						GetterUtil.getLong(value.get("INPROGRESS")));
-					testrayStatusMetric.setPassed(
-						GetterUtil.getLong(value.get("PASSED")));
-					testrayStatusMetric.setTestfix(
-						GetterUtil.getLong(value.get("TESTFIX")));
-					testrayStatusMetric.setTotal(
-						GetterUtil.getLong(value.get("TOTAL")));
-					testrayStatusMetric.setUntested(
-						GetterUtil.getLong(value.get("UNTESTED")));
-
 					TestrayTeamMetric testrayTeamMetric =
 						new TestrayTeamMetric();
 
@@ -480,10 +408,28 @@ public class TestrayStatusMetricResourceImpl
 					testrayTeamMetric.setTestrayTeamName(
 						GetterUtil.getString(value.get("name_")));
 					testrayTeamMetric.setTestrayStatusMetric(
-						testrayStatusMetric);
+						_getTestrayStatusMetric(value));
 
 					return testrayTeamMetric;
 				}));
+	}
+
+	private TestrayStatusMetric _getTestrayStatusMetric(
+		Map<String, Object> map) {
+
+		TestrayStatusMetric testrayStatusMetric = new TestrayStatusMetric();
+
+		testrayStatusMetric.setBlocked(GetterUtil.getLong(map.get("BLOCKED")));
+		testrayStatusMetric.setFailed(GetterUtil.getLong(map.get("FAILED")));
+		testrayStatusMetric.setInProgress(
+			GetterUtil.getLong(map.get("INPROGRESS")));
+		testrayStatusMetric.setPassed(GetterUtil.getLong(map.get("PASSED")));
+		testrayStatusMetric.setTestfix(GetterUtil.getLong(map.get("TESTFIX")));
+		testrayStatusMetric.setTotal(GetterUtil.getLong(map.get("TOTAL")));
+		testrayStatusMetric.setUntested(
+			GetterUtil.getLong(map.get("UNTESTED")));
+
+		return testrayStatusMetric;
 	}
 
 }

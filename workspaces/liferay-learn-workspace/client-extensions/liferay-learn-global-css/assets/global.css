@@ -209,6 +209,14 @@ pre[class*='language-'] {
 	max-width: var(--container-max-xl);
 }
 
+.info-bar {
+	align-items: center;
+	border-bottom: 1px solid var(--color-neutral-2);
+	display: flex;
+	height: var(--info-bar-height);
+	z-index: 1;
+}
+
 .learn-article {
 	max-width: var(--container-max-xl);
 	padding: var(--spacer-4);
@@ -307,14 +315,6 @@ pre[class*='language-'] {
 	.learn-article-wrapper {
 		display: flex;
 		justify-content: flex-start;
-	}
-
-	.info-bar {
-		align-items: center;
-		border-bottom: 1px solid var(--color-neutral-2);
-		display: flex;
-		height: var(--info-bar-height);
-		z-index: 1;
 	}
 
 	.selected {

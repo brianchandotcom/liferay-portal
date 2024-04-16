@@ -212,12 +212,20 @@ export default function propsTransformer({
 						if (selectedItem) {
 							const itemValue = JSON.parse(selectedItem.value);
 
+							const url = new URL(viewDDMStructureArticlesURL);
+
+							const resetCurParam = `_${url.searchParams.get(
+								'p_p_id'
+							)}_resetCur`;
+
+							url.searchParams.set(resetCurParam, 'true');
+
 							navigate(
 								addParams(
 									{
 										[`${portletNamespace}ddmStructureId`]: itemValue.ddmstructureid,
 									},
-									viewDDMStructureArticlesURL
+									url.href
 								)
 							);
 						}

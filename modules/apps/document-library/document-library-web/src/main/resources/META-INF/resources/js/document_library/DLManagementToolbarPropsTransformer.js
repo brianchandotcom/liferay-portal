@@ -198,9 +198,17 @@ export default function propsTransformer({
 		openSelectionModal({
 			onSelect(selectedItem) {
 				if (selectedItem) {
+					const destinationURL = new URL(viewFileEntryTypeURL);
+
+					const resetCurParam = `_${destinationURL.searchParams.get(
+						'p_p_id'
+					)}_resetCur`;
+
+					destinationURL.searchParams.set(resetCurParam, 'true');
+
 					const url = addParams(
 						`${portletNamespace}fileEntryTypeId=${selectedItem.value}`,
-						viewFileEntryTypeURL
+						destinationURL.href
 					);
 					navigate(url);
 				}
@@ -227,7 +235,15 @@ export default function propsTransformer({
 						selectExtensionURL
 					);
 
-					navigate(url);
+					const destinationUrl = new URL(url);
+
+					const resetCurParam = `_${destinationUrl.searchParams.get(
+						'p_p_id'
+					)}_resetCur`;
+
+					destinationUrl.searchParams.set(resetCurParam, 'true');
+
+					navigate(destinationUrl.href);
 				}
 			},
 			selectEventName: `${portletNamespace}selectedFileExtension`,

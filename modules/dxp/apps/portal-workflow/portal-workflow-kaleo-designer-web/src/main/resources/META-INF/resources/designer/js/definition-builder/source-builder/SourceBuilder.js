@@ -116,6 +116,15 @@ export default function SourceBuilder() {
 		'import-a-file'
 	).toLowerCase();
 
+	function handleInvalidXMLBlockingError() {
+		setBlockingError(() => ({
+			errorMessage: Liferay.Language.get(
+				'please-select-a-valid-xml-file'
+			),
+			errorType: 'invalidXML',
+		}));
+	}
+
 	function loadFile(event) {
 		setBlockingError({errorType: ''});
 
@@ -125,7 +134,10 @@ export default function SourceBuilder() {
 			const reader = new FileReader();
 
 			reader.onloadend = (event) => {
-				if (event.target.readyState === FileReader.DONE) {
+				if (
+					event.target.readyState === FileReader.DONE &&
+					XMLUtil.validateDefinition(event.target.result)
+				) {
 					currentEditor.setData(event.target.result);
 
 					const fileInput = document.querySelector('#fileInput');
@@ -134,17 +146,15 @@ export default function SourceBuilder() {
 
 					setShowImportSuccessMessage(true);
 				}
+				else {
+					handleInvalidXMLBlockingError();
+				}
 			};
 
 			reader.readAsText(files[0]);
 		}
 		else if (files[0].type !== 'text/xml') {
-			setBlockingError(() => ({
-				errorMessage: Liferay.Language.get(
-					'please-select-a-valid-xml-file'
-				),
-				errorType: 'invalidXML',
-			}));
+			handleInvalidXMLBlockingError();
 		}
 	}
 

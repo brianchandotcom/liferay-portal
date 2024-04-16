@@ -124,9 +124,10 @@ public class ViewConflictsMVCRenderCommand implements MVCRenderCommand {
 				CTWebKeys.VIEW_CONFLICTS_DISPLAY_CONTEXT,
 				new ViewConflictsDisplayContext(
 					activeCtCollectionId, conflictInfoMap, ctCollection,
-					_ctDisplayRendererRegistry, _ctEntryLocalService,
-					_ctSettingsConfigurationHelper, hasUnapprovedChanges,
-					_language, _portal, renderRequest, renderResponse));
+					_ctCollectionLocalService, _ctDisplayRendererRegistry,
+					_ctEntryLocalService, _ctSettingsConfigurationHelper,
+					hasUnapprovedChanges, _language, _portal, renderRequest,
+					renderResponse));
 
 			return "/publications/view_conflicts.jsp";
 		}

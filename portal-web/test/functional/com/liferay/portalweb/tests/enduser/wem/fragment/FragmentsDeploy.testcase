@@ -193,42 +193,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-106253. Can not delete read-only deployed fragments of system-scoped in normal site."
-	@priority = 3
-	test CannotDeleteSystemScopedReadOnlyDeployedFragmentInNormalSite {
-		task ("Deploy fragments zip are available in System wide") {
-			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "image.zip");
-		}
-
-		task ("Assert can not delete system scoped read-only deployed fragment in normal site") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
-
-			if (IsElementNotPresent(key_menuBar = "Imported", key_stackName = "Default", locator1 = "MenuBar#NAV_LINK_IN_STACK")) {
-				Refresh();
-			}
-
-			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "Imported",
-				scope = "Default");
-
-			FragmentsAdmin.viewEntryPresent(entry = "Image");
-
-			Click.waitForMenuToggleJSClick(
-				key_card = "Image",
-				locator1 = "Card#CARD_ELLIPSIS");
-
-			MenuItem.viewNotPresent(menuItem = "Delete");
-
-			FragmentsAdminNavigator.gotoSpecificScopeCollection(
-				collectionName = "Imported",
-				scope = "Default");
-
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
-
-			MenuItem.viewNotPresent(menuItem = "Delete");
-		}
-	}
-
 	@description = "This is a test for LPS-106253. Can not delete read-only deployed fragments of system-scoped in other virtual instances."
 	@priority = 3
 	test CannotDeleteSystemScopedReadOnlyDeployedFragmentInOtherVirtualInstance {

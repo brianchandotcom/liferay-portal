@@ -908,14 +908,6 @@ public class PortalImpl implements Portal {
 				return url;
 			}
 
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-			boolean currentDomainIsPortalDomain = domain.equals(
-				themeDisplay.getPortalDomain());
-
 			for (String allowedDomain : allowedDomains) {
 				if (allowedDomain.startsWith("*.") &&
 					(allowedDomain.regionMatches(
@@ -927,11 +919,19 @@ public class PortalImpl implements Portal {
 
 					return url;
 				}
-				else if ((currentDomainIsPortalDomain &&
-						  allowedDomain.equals("PORTAL_DOMAIN")) ||
-						 allowedDomain.equals(domain)) {
-
+				else if (allowedDomain.equals(domain)) {
 					return url;
+				}
+				else if (allowedDomain.equals("PORTAL_DOMAIN")) {
+					ServiceContext serviceContext =
+						ServiceContextThreadLocal.getServiceContext();
+
+					ThemeDisplay themeDisplay =
+						serviceContext.getThemeDisplay();
+
+					if (domain.equals(themeDisplay.getPortalDomain())) {
+						return url;
+					}
 				}
 			}
 

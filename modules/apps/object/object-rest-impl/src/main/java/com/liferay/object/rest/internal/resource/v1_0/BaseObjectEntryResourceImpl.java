@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PermissionServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -1089,9 +1090,9 @@ public abstract class BaseObjectEntryResourceImpl
 		String resourceName = getPermissionCheckerResourceName(objectEntryId);
 		Long resourceId = getPermissionCheckerResourceId(objectEntryId);
 
-		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId,
-			getPermissionCheckerGroupId(objectEntryId));
+		PermissionServiceUtil.checkPermission(
+			getPermissionCheckerGroupId(objectEntryId),
+			resourceName, resourceId);
 
 		resourcePermissionLocalService.updateResourcePermissions(
 			contextCompany.getCompanyId(),

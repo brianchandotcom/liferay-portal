@@ -29,8 +29,6 @@ public interface RoutineEntity extends Entity {
 
 	public void addJobEntity(JobEntity jobEntity);
 
-	public String getCron();
-
 	public Set<GitBranchEntity> getGitBranchEntities();
 
 	public Set<JobEntity> getJobEntities();
@@ -56,8 +54,6 @@ public interface RoutineEntity extends Entity {
 	public void removeJobEntities(Set<JobEntity> jobEntities);
 
 	public void removeJobEntity(JobEntity jobEntity);
-
-	public void setCron(String cron);
 
 	public void setJobName(String jobName);
 

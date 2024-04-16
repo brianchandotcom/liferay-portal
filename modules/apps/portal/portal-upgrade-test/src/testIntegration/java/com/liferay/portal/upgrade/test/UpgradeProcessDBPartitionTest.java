@@ -10,20 +10,19 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsUtil;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 
 import java.util.concurrent.FutureTask;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.ClassRule;
@@ -51,31 +50,46 @@ public class UpgradeProcessDBPartitionTest {
 		Assume.assumeTrue(db.isSupportsDBPartition());
 	}
 
-	@After
-	public void tearDown() {
-		PropsUtil.set("database.partition.enabled", "true");
-	}
-
 	@Test
 	public void testUpgradeWithDatabasePartitionDisabled()
 		throws UpgradeException {
 
-		PropsUtil.set("database.partition.enabled", "false");
+		boolean databasePartitionEnabled =
+			ReflectionTestUtil.getAndSetFieldValue(
+				DBPartition.class, "_DATABASE_PARTITION_ENABLED", false);
 
-		UpgradeProcess upgradeProcess = new AssertConnectionUpgradeProcess();
+		try {
+			UpgradeProcess upgradeProcess =
+				new AssertConnectionUpgradeProcess();
 
-		upgradeProcess.upgrade();
+			upgradeProcess.upgrade();
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				DBPartition.class, "_DATABASE_PARTITION_ENABLED",
+				databasePartitionEnabled);
+		}
 	}
 
 	@Test
 	public void testUpgradeWithDatabasePartitionEnabled()
 		throws UpgradeException {
 
-		PropsUtil.set("database.partition.enabled", "true");
+		boolean databasePartitionEnabled =
+			ReflectionTestUtil.getAndSetFieldValue(
+				DBPartition.class, "_DATABASE_PARTITION_ENABLED", true);
 
-		UpgradeProcess upgradeProcess = new AssertConnectionUpgradeProcess();
+		try {
+			UpgradeProcess upgradeProcess =
+				new AssertConnectionUpgradeProcess();
 
-		upgradeProcess.upgrade();
+			upgradeProcess.upgrade();
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				DBPartition.class, "_DATABASE_PARTITION_ENABLED",
+				databasePartitionEnabled);
+		}
 	}
 
 	private class AssertConnectionUpgradeProcess extends DummyUpgradeProcess {

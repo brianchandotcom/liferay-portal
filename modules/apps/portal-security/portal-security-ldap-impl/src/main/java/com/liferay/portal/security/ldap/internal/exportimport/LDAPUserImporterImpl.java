@@ -1738,8 +1738,22 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 			passwordReset = user.isPasswordReset();
 		}
 
+		ExpandoBridge userExpandoBridge = user.getExpandoBridge();
+
+		long userExpandoValuesCount =
+			_expandoValueLocalService.getRowValuesCount(
+				userExpandoBridge.getCompanyId(),
+				userExpandoBridge.getClassName(),
+				ExpandoTableConstants.DEFAULT_TABLE_NAME,
+				userExpandoBridge.getClassPK());
+
+		int ldapUserExpandoMappingsCount =
+			ldapImportContext.getUserExpandoMappings(
+			).size();
+
 		if ((modifiedDate != null) &&
-			modifiedDate.equals(user.getModifiedDate())) {
+			modifiedDate.equals(user.getModifiedDate()) &&
+			(ldapUserExpandoMappingsCount == userExpandoValuesCount)) {
 
 			if ((ldapUser.isUpdatePassword() ||
 				 !ldapImportConfiguration.importUserPasswordEnabled()) &&
@@ -1809,8 +1823,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 		}
 
 		Contact ldapContact = ldapUser.getContact();
-
-		ExpandoBridge userExpandoBridge = user.getExpandoBridge();
 
 		_populateExpandoAttributes(
 			userExpandoBridge, ldapUser.getUserExpandoAttributes(),

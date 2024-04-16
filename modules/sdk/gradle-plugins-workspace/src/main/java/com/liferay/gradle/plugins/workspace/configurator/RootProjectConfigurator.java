@@ -297,8 +297,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, workspaceExtension, providedModulesConfiguration);
 
 		Dockerfile dockerfile = _addTaskCreateDockerfile(
-			project, CREATE_DOCKERFILE_TASK_NAME, workspaceExtension,
-			dockerDeploy, verifyProductTask);
+			project, workspaceExtension, dockerDeploy, verifyProductTask);
 
 		DockerBuildImage dockerBuildImage = _addTaskBuildDockerImage(
 			dockerfile, workspaceExtension, verifyProductTask);
@@ -547,12 +546,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private Dockerfile _addTaskCreateDockerfile(
-		Project project, String taskName,
-		final WorkspaceExtension workspaceExtension, Copy dockerDeploy,
-		VerifyProductTask verifyProductTask) {
+		Project project, final WorkspaceExtension workspaceExtension,
+		Copy dockerDeploy, VerifyProductTask verifyProductTask) {
 
 		Dockerfile dockerfile = GradleUtil.addTask(
-			project, taskName, Dockerfile.class);
+			project, CREATE_DOCKERFILE_TASK_NAME, Dockerfile.class);
 
 		dockerfile.dependsOn(verifyProductTask, dockerDeploy);
 		dockerfile.mustRunAfter(verifyProductTask);

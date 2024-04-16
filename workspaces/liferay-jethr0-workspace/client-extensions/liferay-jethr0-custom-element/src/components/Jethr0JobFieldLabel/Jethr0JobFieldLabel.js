@@ -5,22 +5,23 @@
 
 import {Text} from '@clayui/core';
 
-function Jethr0JobFieldLabel({
-	fromRoutine,
-	labelKey,
-	labelName,
-	routine,
-}) {
-	return (<>
-		<label htmlFor={labelKey}><Text size={6} weight="normal">{labelName}</Text></label>
+function Jethr0JobFieldLabel({fromRoutine, labelKey, labelName, routine}) {
+	return (
+		<>
+			<label htmlFor={labelKey}>
+				<Text size={6} weight="normal">
+					{labelName}
+				</Text>
+			</label>
 
-		{fromRoutine && routine && (
-			<div>
-				{'routine: '}
-				<a href={'/#/routines/' + routine.id}>{routine.name}</a>
-			</div>
-		)}
-	</>);
+			{fromRoutine && routine && (
+				<div>
+					{'routine: '}
+					<a href={'/#/routines/' + routine.id}>{routine.name}</a>
+				</div>
+			)}
+		</>
+	);
 }
 
 export default Jethr0JobFieldLabel;

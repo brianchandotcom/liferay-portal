@@ -6,11 +6,11 @@
 import ClayForm from '@clayui/form';
 
 import Jethr0Input from '../../components/Jethr0Input/Jethr0Input';
-import Jethr0JobFieldLabel from '../Jethr0JobFieldLabel/Jethr0JobFieldLabel';
 import {
 	getJobParameter,
 	getUpdatedJobParameters,
 } from '../../objects/jobs/JobUtil';
+import Jethr0JobFieldLabel from '../Jethr0JobFieldLabel/Jethr0JobFieldLabel';
 
 function Jethr0JobParameterFields({
 	jobDefinitionParameters,

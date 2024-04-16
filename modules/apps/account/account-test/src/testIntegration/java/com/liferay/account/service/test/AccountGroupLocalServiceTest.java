@@ -8,7 +8,6 @@ package com.liferay.account.service.test;
 import com.liferay.account.exception.AccountGroupNameException;
 import com.liferay.account.exception.DefaultAccountGroupException;
 import com.liferay.account.model.AccountGroup;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.account.service.test.util.AccountEntryArgs;
@@ -18,12 +17,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -37,7 +34,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,11 +50,6 @@ public class AccountGroupLocalServiceTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-	}
 
 	@Test
 	public void testAccountGroupName() throws Exception {
@@ -153,14 +144,14 @@ public class AccountGroupLocalServiceTest {
 
 		Assert.assertTrue(
 			_accountGroupLocalService.hasDefaultAccountGroup(
-				_company.getCompanyId()));
+				TestPropsValues.getCompanyId()));
 
 		AccountGroup defaultAccountGroup =
 			_accountGroupLocalService.getDefaultAccountGroup(
-				_company.getCompanyId());
+				TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(
-			_company.getCompanyId(), defaultAccountGroup.getCompanyId());
+			TestPropsValues.getCompanyId(), defaultAccountGroup.getCompanyId());
 	}
 
 	@Test
@@ -317,11 +308,6 @@ public class AccountGroupLocalServiceTest {
 			ListUtil.subList(expectedAccountGroups, start, start + delta),
 			actualAccountGroups);
 	}
-
-	private static Company _company;
-
-	@Inject
-	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
 	private AccountGroupLocalService _accountGroupLocalService;

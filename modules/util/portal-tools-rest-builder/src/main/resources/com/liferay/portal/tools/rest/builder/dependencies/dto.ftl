@@ -143,22 +143,6 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			sizeParameters = []
 		/>
 
-		<#if propertySchema.jsonMap>
-			<#assign jsonMapPropertyNames = jsonMapPropertyNames + [propertyName] />
-
-			@JsonAnyGetter
-			public Map<String, UnsafeSupplier<Object, Exception>> getLazy${capitalizedPropertyName}() {
-				return _lazy${capitalizedPropertyName};
-			}
-
-			@JsonIgnore
-			public void setLazy${capitalizedPropertyName}(Map<String, UnsafeSupplier<Object, Exception>> lazy${capitalizedPropertyName}) {
-				this._lazy${capitalizedPropertyName} = lazy${capitalizedPropertyName};
-			}
-
-			private Map<String, UnsafeSupplier<Object, Exception>> _lazy${capitalizedPropertyName};
-		</#if>
-
 		<#if propertySchema.maximum??>
 			@DecimalMax("${propertySchema.maximum}")
 		</#if>
@@ -211,21 +195,21 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		</#if>
 
 		<#if propertySchema.isJsonMap()>
-			public ${propertyType} get${capitalizedPropertyName}() {
-				if (_lazy${capitalizedPropertyName} != null) {
-					${propertyName} = new HashMap<>();
+			<#assign jsonMapPropertyNames = jsonMapPropertyNames + [propertyName] />
 
-					_lazy${capitalizedPropertyName}.forEach((key, value) -> {
+			public ${propertyType} get${capitalizedPropertyName}() {
+				${propertyName}.forEach(
+					(key, value) -> {
+						if (value instanceof UnsafeSupplier<?, ?>){
 							try {
-								${propertyName}.put(key, value.get());
+								${propertyName}.put(
+									key, ((UnsafeSupplier<?, ?>) value).get());
 							}
 							catch (Throwable e) {
 								throw new RuntimeException(e);
 							}
-						});
-
-					_lazy${capitalizedPropertyName} = null;
-				}
+						}
+					});
 
 				return ${propertyName};
 			}
@@ -258,9 +242,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		public void set${capitalizedPropertyName}(${propertyType} ${propertyName}) {
 			this.${propertyName} = ${propertyName};
 
-			<#if propertySchema.isJsonMap()>
-				_lazy${capitalizedPropertyName} = null;
-			<#else>
+			<#if !propertySchema.jsonMap>
 				_${propertyName}Supplier = null;
 			</#if>
 		}
@@ -331,6 +313,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		</#if>
 
 		<#if propertySchema.jsonMap>
+			@JsonAnyGetter
 			protected ${propertyType} ${propertyName} = new HashMap<>();
 		<#else>
 			protected ${propertyType} ${propertyName};
@@ -376,10 +359,19 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 			{
 				<#list jsonMapPropertyNames as propertyName>
-					Map<String, Object> ${propertyName} = get${propertyName?cap_first}();
-
 					if (${propertyName}.containsKey(propertyName)) {
-						return ${propertyName}.get(propertyName);
+						Object object = ${propertyName}.get(propertyName);
+
+						if (object instanceof UnsafeSupplier<?, ?>){
+							try {
+								object = ((UnsafeSupplier<?, ?>) object).get();
+								${propertyName}.put(propertyName, object);
+							} catch (Throwable e) {
+								throw new RuntimeException(e);
+							}
+						}
+
+						return object;
 					}
 				</#list>
 			}

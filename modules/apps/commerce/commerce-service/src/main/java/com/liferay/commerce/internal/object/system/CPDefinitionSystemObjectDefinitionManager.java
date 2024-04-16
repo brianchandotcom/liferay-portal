@@ -16,6 +16,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -23,6 +24,7 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
@@ -238,6 +240,20 @@ public class CPDefinitionSystemObjectDefinitionManager
 	@Override
 	public String getTitleObjectFieldName() {
 		return "name";
+	}
+
+	public Map<String, Object> getVariables(
+		String contentType, ObjectDefinition objectDefinition,
+		boolean oldValues, JSONObject payloadJSONObject) {
+
+		Map<String, Object> variables = super.getVariables(
+			contentType, objectDefinition, oldValues, payloadJSONObject);
+
+		if (variables.containsKey("CProductId")) {
+			variables.put("productId", variables.get("CProductId"));
+		}
+
+		return variables;
 	}
 
 	@Override

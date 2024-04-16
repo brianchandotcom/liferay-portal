@@ -285,9 +285,11 @@ pre[class*='language-'] {
 		max-width: var(--container-max-lg);
 
 		h1 > a,
-		h2 > a {
+		h2 > a,
+		h3 > a {
 			color: #000;
 			font-weight: 700;
+			margin-top: 0.75rem;
 			text-decoration: none;
 		}
 
@@ -302,39 +304,9 @@ pre[class*='language-'] {
 		}
 	}
 
-	.learn-article-page-nav {
-		> ul {
-			align-items: flex-start;
-			display: flex;
-			flex-direction: column;
-			gap: var(--spacer-2);
-		}
-
-		> li {
-			align-items: center;
-			margin-left: 10px;
-			min-width: 100%;
-
-			.active {
-				border-left: 4px solid var(--color-brand-primary, #0b5fff);
-				color: var(--color-neutral-10, #282934) !important;
-				padding: 0 0 0 6px !important;
-			}
-
-			> a {
-				color: var(--color-neutral-6, #82828c) !important;
-				font-family: Source Sans 3;
-				font-size: 1rem;
-				font-style: normal;
-				font-weight: 600;
-				line-height: 1.5rem;
-				padding: 0 0 0 10px !important;
-
-				&:hover {
-					color: var(--color-neutral-10, #282934) !important;
-				}
-			}
-		}
+	.learn-article-wrapper {
+		display: flex;
+		justify-content: space-between;
 	}
 
 	.info-bar {
@@ -372,18 +344,37 @@ pre[class*='language-'] {
 		}
 	}
 
-	#articleTOC > li > a {
-		color: var(--color-neutral-6, #82828c);
-		font-family: Source Sans 3;
-		font-size: 1rem;
-		font-style: normal;
-		font-weight: 600;
-		line-height: 1.5rem;
-		padding: 0 0 0 10px;
+	#articleTOC {
+		align-items: flex-start;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		position: fixed;
 
-		&:hover {
-			background-color: transparent;
-			color: var(--color-neutral-10, #282934);
+		> li {
+			align-items: center;
+			margin-left: 10px;
+			min-width: 100%;
+
+			.active {
+				border-left: 4px solid var(--color-brand-primary, #0b5fff);
+				color: var(--color-neutral-10, #282934) !important;
+				padding: 0 0 0 6px !important;
+			}
+			> a {
+				color: var(--color-neutral-6, #82828c);
+				font-family: Source Sans 3;
+				font-size: 1rem;
+				font-style: normal;
+				font-weight: 600;
+				line-height: 1.5rem;
+				padding: 0 0 0 10px;
+
+				&:hover {
+					background-color: transparent;
+					color: var(--color-neutral-10, #282934);
+				}
+			}
 		}
 	}
 }

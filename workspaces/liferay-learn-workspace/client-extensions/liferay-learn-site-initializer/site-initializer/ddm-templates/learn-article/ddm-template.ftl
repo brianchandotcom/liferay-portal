@@ -47,7 +47,7 @@
 				<div class="align-items-baseline d-flex justify-content-between mb-3">
 					<ul
 						aria-label="breadcrumb navigation"
-						class="article-breadcrumb"
+						class="learn-article-breadcrumb"
 						role="navigation"
 					>
 						<li>

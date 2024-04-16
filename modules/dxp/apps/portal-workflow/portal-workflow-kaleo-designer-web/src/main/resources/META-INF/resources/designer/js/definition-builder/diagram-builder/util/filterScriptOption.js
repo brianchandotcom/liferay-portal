@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export function filterGroovyOption(
+export function filterScriptOption(
 	allowScriptContentToBeExecutedOrIncluded,
 	hadGroovyScriptBefore,
 	options
@@ -13,7 +13,9 @@ export function filterGroovyOption(
 		!allowScriptContentToBeExecutedOrIncluded &&
 		!hadGroovyScriptBefore
 	) {
-		return options.filter((option) => option.value !== 'groovy');
+		return options.filter(
+			(option) => option.value !== 'groovy' && option.value !== 'java'
+		);
 	}
 
 	return options;

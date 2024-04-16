@@ -11,7 +11,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import {DefinitionBuilderContext} from '../../../../../../DefinitionBuilderContext';
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
-import {filterGroovyOption} from '../../../../../util/filterGroovyOption';
+import {filterScriptOption} from '../../../../../util/filterScriptOption';
 import SidebarPanel from '../../../SidebarPanel';
 
 const scriptLanguageOptions = [
@@ -53,7 +53,7 @@ const ScriptedAssignment = ({setContentName}) => {
 		});
 	};
 
-	const filteredScriptLanguageOptions = filterGroovyOption(
+	const filteredScriptLanguageOptions = filterScriptOption(
 		allowScriptContentToBeExecutedOrIncluded,
 		hadGroovyScriptBefore,
 		scriptLanguageOptions

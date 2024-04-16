@@ -9,7 +9,7 @@ import React, {useContext, useState} from 'react';
 
 import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {DEFAULT_LANGUAGE} from '../../../source-builder/constants';
-import {filterGroovyOption} from '../../util/filterGroovyOption';
+import {filterScriptOption} from '../../util/filterScriptOption';
 
 const scriptLanguageOptions = [
 	{
@@ -37,7 +37,7 @@ const ScriptInput = ({
 		defaultScriptLanguage || DEFAULT_LANGUAGE
 	);
 
-	const filteredScriptLanguageOptions = filterGroovyOption(
+	const filteredScriptLanguageOptions = filterScriptOption(
 		allowScriptContentToBeExecutedOrIncluded,
 		hadGroovyScriptBefore,
 		scriptLanguageOptions

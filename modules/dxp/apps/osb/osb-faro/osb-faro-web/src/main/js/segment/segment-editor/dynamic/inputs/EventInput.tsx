@@ -71,6 +71,15 @@ const EventInput: React.FC<IEventInputProps> = ({
 		}
 	}, [valid]);
 
+	// TODO: useEffect below is temporary. Remove it when LPD-23023 is merged and before sending LPD-23024.
+
+	useEffect(() => {
+		onChange({
+			touched: {attribute: true, attributeValue: true},
+			valid: {attribute: true, attributeValue: true}
+		});
+	}, []);
+
 	const result = useQuery<
 		EventAttributeDefinitionsData,
 		EventAttributeDefinitionsVariables
@@ -191,6 +200,14 @@ const EventInput: React.FC<IEventInputProps> = ({
 					return (
 						<>
 							<Form.Group autoFit>
+								<Form.GroupItem
+									className='font-weight-semibold text-secondary'
+									label
+									shrink
+								>
+									{Liferay.Language.get('individual')}
+								</Form.GroupItem>
+
 								<OperatorDropdown />
 
 								<Form.GroupItem
@@ -230,32 +247,39 @@ const EventInput: React.FC<IEventInputProps> = ({
 								/>
 							</Form.Group>
 
-							<Form.Group autoFit>
-								<Form.GroupItem
-									className='conjunction'
-									label
-									shrink
-								>
-									{Liferay.Language.get('where-fragment')}
-								</Form.GroupItem>
+							{/* TODO: !type below is temporary. Remove it when LPD-23023 is merged and before sending LPD-23024. */}
 
-								<AttributeConjunctionInput
-									attributes={attributes}
-									conjunctionCriterion={getFilterCriterionIMap(
-										valueIMap,
-										1
-									).toJS()}
-									onChange={handleAttributeConjunctionChange}
-									touched={{
-										attribute: touched.attribute,
-										attributeValue: touched.attributeValue
-									}}
-									valid={{
-										attribute: valid.attribute,
-										attributeValue: valid.attributeValue
-									}}
-								/>
-							</Form.Group>
+							{!type && (
+								<Form.Group autoFit>
+									<Form.GroupItem
+										className='conjunction'
+										label
+										shrink
+									>
+										{Liferay.Language.get('where-fragment')}
+									</Form.GroupItem>
+
+									<AttributeConjunctionInput
+										attributes={attributes}
+										conjunctionCriterion={getFilterCriterionIMap(
+											valueIMap,
+											1
+										).toJS()}
+										onChange={
+											handleAttributeConjunctionChange
+										}
+										touched={{
+											attribute: touched.attribute,
+											attributeValue:
+												touched.attributeValue
+										}}
+										valid={{
+											attribute: valid.attribute,
+											attributeValue: valid.attributeValue
+										}}
+									/>
+								</Form.Group>
+							)}
 						</>
 					);
 				}}

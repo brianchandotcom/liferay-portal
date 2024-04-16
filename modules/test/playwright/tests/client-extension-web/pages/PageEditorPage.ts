@@ -27,7 +27,9 @@ export class PageEditorPage {
 			.getByRole('tab', {exact: true, name: 'Widgets'})
 			.click();
 
-		const categoryDropdown = this.page.getByRole('menuitem', {name: category});
+		const categoryDropdown = this.page.getByRole('menuitem', {
+			name: category,
+		});
 
 		if (!categoryDropdown.getAttribute('aria-expanded')) {
 			await categoryDropdown.click();

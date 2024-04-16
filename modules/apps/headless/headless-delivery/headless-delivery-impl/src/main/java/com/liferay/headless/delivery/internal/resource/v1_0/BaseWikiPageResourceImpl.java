@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PermissionServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -51,7 +52,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.permission.Permission;
-import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 
@@ -805,9 +805,8 @@ public abstract class BaseWikiPageResourceImpl
 		String resourceName = getPermissionCheckerResourceName(wikiPageId);
 		Long resourceId = getPermissionCheckerResourceId(wikiPageId);
 
-		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId,
-			getPermissionCheckerGroupId(wikiPageId));
+		PermissionServiceUtil.checkPermission(
+			getPermissionCheckerGroupId(wikiPageId), resourceName, resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
@@ -856,9 +855,8 @@ public abstract class BaseWikiPageResourceImpl
 		String resourceName = getPermissionCheckerResourceName(wikiPageId);
 		Long resourceId = getPermissionCheckerResourceId(wikiPageId);
 
-		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId,
-			getPermissionCheckerGroupId(wikiPageId));
+		PermissionServiceUtil.checkPermission(
+			getPermissionCheckerGroupId(wikiPageId), resourceName, resourceId);
 
 		resourcePermissionLocalService.updateResourcePermissions(
 			contextCompany.getCompanyId(),

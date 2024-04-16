@@ -51,7 +51,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.permission.Permission;
-import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 
@@ -1044,9 +1043,9 @@ public abstract class BaseObjectEntryResourceImpl
 		String resourceName = getPermissionCheckerResourceName(objectEntryId);
 		Long resourceId = getPermissionCheckerResourceId(objectEntryId);
 
-		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId,
-			getPermissionCheckerGroupId(objectEntryId));
+		PermissionServiceUtil.checkPermission(
+			getPermissionCheckerGroupId(objectEntryId), resourceName,
+			resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
@@ -1091,8 +1090,8 @@ public abstract class BaseObjectEntryResourceImpl
 		Long resourceId = getPermissionCheckerResourceId(objectEntryId);
 
 		PermissionServiceUtil.checkPermission(
-			getPermissionCheckerGroupId(objectEntryId),
-			resourceName, resourceId);
+			getPermissionCheckerGroupId(objectEntryId), resourceName,
+			resourceId);
 
 		resourcePermissionLocalService.updateResourcePermissions(
 			contextCompany.getCompanyId(),

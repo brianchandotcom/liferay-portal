@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PermissionServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -51,7 +52,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.permission.Permission;
-import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 
@@ -305,9 +305,8 @@ public abstract class BaseContentStructureResourceImpl
 
 		String portletName = getPermissionCheckerPortletName(assetLibraryId);
 
-		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService, portletName,
-			assetLibraryId, assetLibraryId);
+		PermissionServiceUtil.checkPermission(
+			assetLibraryId, portletName, assetLibraryId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
@@ -361,9 +360,8 @@ public abstract class BaseContentStructureResourceImpl
 
 		String portletName = getPermissionCheckerPortletName(assetLibraryId);
 
-		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService, portletName,
-			assetLibraryId, assetLibraryId);
+		PermissionServiceUtil.checkPermission(
+			assetLibraryId, portletName, assetLibraryId);
 
 		resourcePermissionLocalService.updateResourcePermissions(
 			contextCompany.getCompanyId(), assetLibraryId, portletName,
@@ -489,9 +487,9 @@ public abstract class BaseContentStructureResourceImpl
 			contentStructureId);
 		Long resourceId = getPermissionCheckerResourceId(contentStructureId);
 
-		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId,
-			getPermissionCheckerGroupId(contentStructureId));
+		PermissionServiceUtil.checkPermission(
+			getPermissionCheckerGroupId(contentStructureId), resourceName,
+			resourceId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
@@ -545,9 +543,9 @@ public abstract class BaseContentStructureResourceImpl
 			contentStructureId);
 		Long resourceId = getPermissionCheckerResourceId(contentStructureId);
 
-		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId,
-			getPermissionCheckerGroupId(contentStructureId));
+		PermissionServiceUtil.checkPermission(
+			getPermissionCheckerGroupId(contentStructureId), resourceName,
+			resourceId);
 
 		resourcePermissionLocalService.updateResourcePermissions(
 			contextCompany.getCompanyId(),
@@ -792,9 +790,7 @@ public abstract class BaseContentStructureResourceImpl
 
 		String portletName = getPermissionCheckerPortletName(siteId);
 
-		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService, portletName, siteId,
-			siteId);
+		PermissionServiceUtil.checkPermission(siteId, portletName, siteId);
 
 		return toPermissionPage(
 			HashMapBuilder.put(
@@ -846,9 +842,7 @@ public abstract class BaseContentStructureResourceImpl
 
 		String portletName = getPermissionCheckerPortletName(siteId);
 
-		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService, portletName, siteId,
-			siteId);
+		PermissionServiceUtil.checkPermission(siteId, portletName, siteId);
 
 		resourcePermissionLocalService.updateResourcePermissions(
 			contextCompany.getCompanyId(), siteId, portletName,

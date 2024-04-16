@@ -8,7 +8,9 @@ import isEqual from 'lodash.isequal';
 
 import loadClientExtensions from '../utils/client_extensions/loadClientExtensions';
 import loadEditorClientExtensions from '../utils/client_extensions/loadEditorClientExtensions';
+import DynamicInlineScroll from './DynamicInlineScroll.es';
 import DynamicSelect from './DynamicSelect';
+import AutoSize from './autosize/autosize.es';
 import BREAKPOINTS from './breakpoints';
 import {
 	component,
@@ -19,6 +21,8 @@ import {
 	getComponentCache,
 	initComponentCache,
 } from './component.es';
+import debounce from './debounce/debounce.es';
+import delegate from './delegate/delegate.es';
 import {
 	getLayoutIcons,
 	hideLayoutPane,
@@ -84,6 +88,7 @@ import createPortletURL from './util/portlet_url/create_portlet_url.es';
 import createRenderURL from './util/portlet_url/create_render_url.es';
 import createResourceURL from './util/portlet_url/create_resource_url.es';
 import removeEntitySelection from './util/remove_entity_selection';
+import runScriptsInElement from './util/run_scripts_in_element.es';
 import selectFolder from './util/select_folder';
 import {getSessionValue, setSessionValue} from './util/session.es';
 import sessionStorage from './util/session_storage';
@@ -96,6 +101,8 @@ import toggleDisabled from './util/toggle_disabled';
 import toggleRadio from './util/toggle_radio';
 import toggleSelectBox from './util/toggle_select_box';
 import zIndex from './zIndex';
+
+const PATH_CONTEXT = Liferay.ThemeDisplay.getPathContext();
 
 Liferay = window.Liferay || {};
 
@@ -155,15 +162,19 @@ Liferay.Portlet = Liferay.Portlet || {};
 Liferay.Portlet.minimize = minimizePortlet;
 
 Liferay.Portlet.openModal = (...args) => {
-	Liferay.Loader.require('frontend-js-web/index', ({openPortletModal}) => {
-		openPortletModal(...args);
-	});
+	import(
+		// eslint-disable-next-line lines-around-comment
+		/* webpackIgnore: true */
+		PATH_CONTEXT + '/o/frontend-js-web/__liferay__/index.js'
+	).then(({openPortletModal}) => openPortletModal(...args));
 };
 
 Liferay.Portlet.openWindow = (...args) => {
-	Liferay.Loader.require('frontend-js-web/index', ({openPortletWindow}) => {
-		openPortletWindow(...args);
-	});
+	import(
+		// eslint-disable-next-line lines-around-comment
+		/* webpackIgnore: true */
+		PATH_CONTEXT + '/o/frontend-js-web/__liferay__/index.js'
+	).then(({openPortletWindow}) => openPortletWindow(...args));
 };
 
 Liferay.SideNavigation = SideNavigation;
@@ -178,10 +189,29 @@ Liferay.Util.MAP_HTML_CHARS_ESCAPED = MAP_HTML_CHARS_ESCAPED;
 Liferay.Util.addParams = addParams;
 
 Liferay.Util.openAlertModal = (...args) => {
-	Liferay.Loader.require('frontend-js-web/index', ({openAlertModal}) => {
-		openAlertModal(...args);
-	});
+	import(
+		// eslint-disable-next-line lines-around-comment
+		/* webpackIgnore: true */
+		PATH_CONTEXT + '/o/frontend-js-web/__liferay__/index.js'
+	).then(({openAlertModal}) => openAlertModal(...args));
 };
+
+Liferay.Util.openSimpleInputModal = (...args) => {
+	import(
+		// eslint-disable-next-line lines-around-comment
+		/* webpackIgnore: true */
+		PATH_CONTEXT + '/o/frontend-js-web/__liferay__/index.js'
+	).then(({openSimpleInputModal}) => openSimpleInputModal(...args));
+};
+
+/**
+ * Utils added to global namespace to be consumed by portal-web
+ */
+Liferay.Util.AutoSize = AutoSize;
+Liferay.Util.debounce = debounce;
+Liferay.Util.delegate = delegate;
+Liferay.Util.DynamicInlineScroll = DynamicInlineScroll;
+Liferay.Util.runScriptsInElement = runScriptsInElement;
 
 /**
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -237,7 +267,8 @@ Liferay.Util.getFormElement = getFormElement;
 Liferay.Util.getLexiconIcon = getLexiconIcon;
 Liferay.Util.getLexiconIconTpl = getLexiconIconTpl;
 Liferay.Util.getOpener = getOpener;
-Liferay.Util.getPortletConfigurationIconAction = getPortletConfigurationIconAction;
+Liferay.Util.getPortletConfigurationIconAction =
+	getPortletConfigurationIconAction;
 
 /**
  * @deprecated As of Athanasius (7.3.x), replaced by `import {getPortletId} from 'frontend-js-web'`
@@ -297,33 +328,42 @@ Liferay.Util.toCharCode = toCharCode;
 Liferay.Util.toggleDisabled = toggleDisabled;
 
 Liferay.Util.openConfirmModal = (...args) => {
-	Liferay.Loader.require('frontend-js-web/index', ({openConfirmModal}) => {
-		openConfirmModal(...args);
-	});
+	import(
+		// eslint-disable-next-line lines-around-comment
+		/* webpackIgnore: true */
+		PATH_CONTEXT + '/o/frontend-js-web/__liferay__/index.js'
+	).then(({openConfirmModal}) => openConfirmModal(...args));
 };
 
 Liferay.Util.openModal = (...args) => {
-	Liferay.Loader.require('frontend-js-web/index', ({openModal}) => {
-		openModal(...args);
-	});
+	import(
+		// eslint-disable-next-line lines-around-comment
+		/* webpackIgnore: true */
+		PATH_CONTEXT + '/o/frontend-js-web/__liferay__/index.js'
+	).then(({openModal}) => openModal(...args));
 };
 
 Liferay.Util.openSelectionModal = (...args) => {
-	Liferay.Loader.require('frontend-js-web/index', ({openSelectionModal}) => {
-		openSelectionModal(...args);
-	});
+	import(
+		// eslint-disable-next-line lines-around-comment
+		/* webpackIgnore: true */
+		PATH_CONTEXT + '/o/frontend-js-web/__liferay__/index.js'
+	).then(({openSelectionModal}) => openSelectionModal(...args));
 };
 
 Liferay.Util.openToast = (...args) => {
-	Liferay.Loader.require('frontend-js-web/index', ({openToast}) => {
-		openToast(...args);
-	});
+	import(
+		// eslint-disable-next-line lines-around-comment
+		/* webpackIgnore: true */
+		PATH_CONTEXT + '/o/frontend-js-web/__liferay__/index.js'
+	).then(({openToast}) => openToast(...args));
 };
 
 Liferay.Util.openWindow = openWindow;
 Liferay.Util.removeEntitySelection = removeEntitySelection;
 Liferay.Util.selectFolder = selectFolder;
-Liferay.Util.setPortletConfigurationIconAction = setPortletConfigurationIconAction;
+Liferay.Util.setPortletConfigurationIconAction =
+	setPortletConfigurationIconAction;
 Liferay.Util.showCapsLock = showCapsLock;
 Liferay.Util.sub = sub;
 

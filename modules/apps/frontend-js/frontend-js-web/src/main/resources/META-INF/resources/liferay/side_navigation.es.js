@@ -811,7 +811,12 @@ SideNavigation.prototype = {
 	_subscribeReducedMotion() {
 		const instance = this;
 
-		Liferay.Loader.require('frontend-js-web/index', ({isReducedMotion}) => {
+		import(
+			// eslint-disable-next-line lines-around-comment
+			/* webpackIgnore: true */
+			themeDisplay.getPathContext() +
+				'/o/frontend-js-web/__liferay__/index.js'
+		).then(({isReducedMotion}) => {
 			instance.isReducedMotion = isReducedMotion;
 		});
 	},

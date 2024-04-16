@@ -3,15 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import Button, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import {ArrayHelpers} from 'formik';
+import {ArrayHelpers, useFormikContext} from 'formik';
 import React, {useCallback} from 'react';
 
 import PRMForm from '../../../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../../../common/components/PRMFormik';
 import ResumeCard from '../../../../../../../../common/components/ResumeCard';
 import LiferayPicklist from '../../../../../../../../common/interfaces/liferayPicklist';
+import MDFRequest from '../../../../../../../../common/interfaces/mdfRequest';
 import MDFRequestBudget from '../../../../../../../../common/interfaces/mdfRequestBudget';
 import getIntlNumberFormat from '../../../../../../../../common/utils/getIntlNumberFormat';
 import getPicklistOptions from '../../../../../../../../common/utils/getPicklistOptions';
@@ -25,6 +27,7 @@ interface IProps {
 	currency: LiferayPicklist;
 	currentActivityIndex: number;
 	expenseEntries: React.OptionHTMLAttributes<HTMLOptionElement>[];
+	isButtonClicked: boolean;
 	setFieldValue: (
 		field: string,
 		value: any,
@@ -39,6 +42,7 @@ const BudgetBreakdownSection = ({
 	currency,
 	currentActivityIndex,
 	expenseEntries,
+	isButtonClicked,
 	setFieldValue,
 }: IProps) => {
 	const {
@@ -51,6 +55,19 @@ const BudgetBreakdownSection = ({
 				`activities[${currentActivityIndex}].budgets[${currentBudgetIndex}].expense`,
 				expenseSelected
 			)
+	);
+
+	const {errors, values} = useFormikContext<MDFRequest>();
+
+	const hasBudgetBreakdownEmpty =
+		errors?.activities?.[currentActivityIndex] &&
+		Object.prototype.hasOwnProperty.call(
+			errors?.activities?.[currentActivityIndex],
+			'budgets'
+		);
+	const isEdit = Object.prototype.hasOwnProperty.call(
+		values?.activities[currentActivityIndex],
+		'id'
 	);
 
 	const budgetsAmount = useBudgetsAmount(
@@ -141,6 +158,16 @@ const BudgetBreakdownSection = ({
 					</span>
 					Add Expense
 				</Button>
+
+				{((hasBudgetBreakdownEmpty && isButtonClicked) || isEdit) && (
+					<ClayAlert
+						className="mt-1"
+						displayType="danger"
+						hideCloseIcon={true}
+					>
+						Please add expense before proceeding to the next step.
+					</ClayAlert>
+				)}
 			</div>
 
 			<div className="my-3">

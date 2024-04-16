@@ -179,10 +179,15 @@ public abstract class BaseRoutineEntity
 		}
 
 		try {
-			JSONObject jobParametersJSONObject = new JSONObject(jobParameters);
+			JSONArray jobParametersJSONArray = new JSONArray(jobParameters);
 
-			for (String key : jobParametersJSONObject.keySet()) {
-				_jobParameters.put(key, jobParametersJSONObject.getString(key));
+			for (int i = 0; i < jobParametersJSONArray.length(); i++) {
+				JSONObject jobParameterJSONObject =
+					jobParametersJSONArray.getJSONObject(i);
+
+				_jobParameters.put(
+					jobParameterJSONObject.getString("key"),
+					jobParameterJSONObject.getString("value"));
 			}
 		}
 		catch (JSONException jsonException) {

@@ -20,6 +20,10 @@ import {getLocalizedValue} from '../../utils/getLocalizedValue';
 const List = ({header, items, schema}) => {
 	const {selectedItemsKey} = useContext(FrontendDataSetContext);
 
+	if (!items?.length) {
+		return null;
+	}
+
 	return (
 		<ClayLayout.Sheet
 			className={classNames('list-sheet', {

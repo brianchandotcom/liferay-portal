@@ -140,6 +140,10 @@ function EmailsList({dataLoading, frontendDataSetContext, items}) {
 		return <ClayLoadingIndicator className="mt-7" />;
 	}
 
+	if (!items?.length) {
+		return null;
+	}
+
 	return (
 		<ClayList
 			className={classNames(

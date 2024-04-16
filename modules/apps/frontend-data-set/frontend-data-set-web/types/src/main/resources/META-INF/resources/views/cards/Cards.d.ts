@@ -19,5 +19,5 @@ declare const Cards: ({
 }: {
 	items: Array<any>;
 	schema: ICardSchema;
-}) => JSX.Element;
+}) => JSX.Element | null;
 export default Cards;

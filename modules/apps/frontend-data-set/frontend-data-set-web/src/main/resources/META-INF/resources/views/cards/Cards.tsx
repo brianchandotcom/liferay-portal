@@ -106,6 +106,10 @@ const Cards = ({items, schema}: {items: Array<any>; schema: ICardSchema}) => {
 		FrontendDataSetContext
 	);
 
+	if (!items?.length) {
+		return null;
+	}
+
 	return (
 		<div
 			className={classNames(

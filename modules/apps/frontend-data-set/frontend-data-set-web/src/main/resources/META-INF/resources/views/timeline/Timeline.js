@@ -41,6 +41,10 @@ TimelineEntry.propTypes = {
 TimelineEntry.defaultProps = {};
 
 function Timeline({frontendDataSetContext, items}) {
+	if (!items?.length) {
+		return null;
+	}
+
 	return (
 		<ClayList className={classNames('mb-0', 'timeline')}>
 			{items.map((item, i) => (

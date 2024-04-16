@@ -55,6 +55,10 @@ function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
 		return <ClayLoadingIndicator className="mt-7" />;
 	}
 
+	if (!items?.length) {
+		return null;
+	}
+
 	return (
 		<div className={`table-style-${style}`}>
 			<ClayTable borderless hover={false} responsive={false}>

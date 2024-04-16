@@ -8,7 +8,6 @@ package com.liferay.source.formatter.check;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
-import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.List;
@@ -30,27 +29,34 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
-		JavaClass javaClass = (JavaClass)javaTerm;
-
-		List<String> imports = javaClass.getImportNames();
+		List<String> imports = getImportNames(javaTerm);
 
 		boolean hasPetraStringStringBundler = imports.contains(
 			"com.liferay.petra.string.StringBundler");
 
-		String content = javaTerm.getContent();
+		String javaTermContent = javaTerm.getContent();
 
-		Matcher matcher = _stringBundlerConcatPattern.matcher(content);
+		Matcher matcher = _stringBundlerConcatPattern.matcher(javaTermContent);
 
 		while (matcher.find()) {
-			if (ToolsUtil.isInsideQuotes(content, matcher.start() + 1)) {
+			if (ToolsUtil.isInsideQuotes(
+					javaTermContent, matcher.start() + 1)) {
+
 				continue;
 			}
 
 			String stringBundlerConcatMethodCall = JavaSourceUtil.getMethodCall(
-				content, matcher.start());
+				javaTermContent, matcher.start());
 
 			List<String> parameterList = JavaSourceUtil.getParameterList(
 				stringBundlerConcatMethodCall);
+
+			if ((parameterList.size() == 1) &&
+				(javaTermContent.indexOf("... " + parameterList.get(0)) !=
+					-1)) {
+
+				continue;
+			}
 
 			if (parameterList.size() < 3) {
 				addMessage(
@@ -76,7 +82,7 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 						stringBundlerConcatMethodCall, parameter, newParameter);
 
 				return StringUtil.replace(
-					content, stringBundlerConcatMethodCall,
+					javaTermContent, stringBundlerConcatMethodCall,
 					newStringBundlerConcatMethodCall, matcher.start());
 			}
 		}
@@ -86,7 +92,7 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 
 	@Override
 	protected String[] getCheckableJavaTermNames() {
-		return new String[] {JAVA_CLASS};
+		return new String[] {JAVA_METHOD};
 	}
 
 	private String _removeUnnecessaryTypeCast(String parameter) {

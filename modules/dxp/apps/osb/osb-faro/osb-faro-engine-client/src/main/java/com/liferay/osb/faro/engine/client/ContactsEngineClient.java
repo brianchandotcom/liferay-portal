@@ -415,6 +415,10 @@ public interface ContactsEngineClient {
 
 	public PageVisited getPageVisited(FaroProject faroProject, String id);
 
+	public long getReportsExportCsvCount(
+			FaroProject faroProject, Map<String, List<String>> queryParameters)
+		throws Exception;
+
 	public Results<String> getSessionValues(
 		FaroProject faroProject, String channelId, String fieldName,
 		String filter, String query, int cur, int delta);

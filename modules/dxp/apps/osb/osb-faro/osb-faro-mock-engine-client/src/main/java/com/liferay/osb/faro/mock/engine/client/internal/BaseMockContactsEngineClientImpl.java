@@ -876,6 +876,14 @@ public abstract class BaseMockContactsEngineClientImpl
 		return contactsEngineClient.getPageVisited(faroProject, id);
 	}
 
+	public long getReportsExportCsvCount(
+			FaroProject faroProject, Map<String, List<String>> queryParameters)
+		throws Exception {
+
+		return contactsEngineClient.getReportsExportCsvCount(
+			faroProject, queryParameters);
+	}
+
 	@Override
 	public Results<String> getSessionValues(
 		FaroProject faroProject, String channelId, String fieldName,

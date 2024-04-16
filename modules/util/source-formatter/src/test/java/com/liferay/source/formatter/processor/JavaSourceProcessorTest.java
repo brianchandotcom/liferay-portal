@@ -802,10 +802,19 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testStringConcatenation() throws Exception {
 		test(
-			"StringConcatenation.testjava",
-			"When concatenating multiple literal strings, only the first " +
-				"literal string can start with ' '",
-			19);
+			SourceProcessorTestParameters.create(
+				"StringConcatenation.testjava"
+			).addExpectedMessage(
+				"When concatenating multiple literal strings, only the first " +
+					"literal string can start with ' '",
+				19
+			).addExpectedMessage(
+				"Use method 'StringBundler.concat' when concatenating more than 3 strings",
+				33
+			).addExpectedMessage(
+				"Do not use 'StringBundler.concat' when concatenating less than 3 elements",
+				41
+			));
 	}
 
 	@Test

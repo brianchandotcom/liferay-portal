@@ -12,7 +12,7 @@ import com.liferay.petra.string.StringBundler;
  */
 public class StringConcatenation {
 
-	public void method() {
+	public void method1() {
 		System.out.print(
 			StringBundler.concat(
 				"update PortletPreferenceValue set name =",
@@ -26,6 +26,25 @@ public class StringConcatenation {
 				"                \"tokenizer\": \"whitespace\",\n",
 				"                \"type\": \"custom\"\n", "            }\n",
 				"        }\n", "    }\n", "}"));
+	}
+
+	public void method2() {
+		System.out.print(
+			"${elExpression0.test}${elExpression0.test}" +
+				"${elExpression1.test}${elExpression1.test}" +
+					"${elExpression2.test}${elExpression2.test}" +
+						"${elExpression3.test}${elExpression3.test}");
+	}
+
+	public void method3() {
+		System.out.print(
+			StringBundler.concat(
+				"${elExpression0.test}${elExpression0.test}",
+				"${elExpression1.test}${elExpression1.test}"));
+	}
+
+	public void method4(String... strings) {
+		System.out.print(StringBundler.concat(strings));
 	}
 
 }

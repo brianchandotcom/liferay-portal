@@ -464,13 +464,6 @@ definition {
 	test CanViewImageWithTemplate {
 		var portalURL = PropsUtil.get("portal.url");
 
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Document",
 			displayPageTemplateEntryName = "Display Page Template Name",
@@ -478,44 +471,37 @@ definition {
 			subType = "Basic Document");
 
 		DisplayPageTemplate.addFragment(
-			collectionName = "Basic Components",
+			collectionName = "Content Display",
 			displayPageName = "Display Page Template Name",
-			fragmentName = "Image",
+			fragmentName = "Display Page Content",
 			siteURLKey = "site-name");
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+			assetType = "Document",
+			entryTitle = "Document_1",
+			groupName = "Site Name",
+			pageName = "Display Page Template Name",
+			siteURLKey = "site-name");
+
+		Button.clickPublish();
+
 		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitle = "Document_1",
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
 		DMDocument.editFriendlyURL(friendlyURLEdit = "document_1_edit");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-			displayPageName = "Display Page Template Name",
-			item = "Edit");
-
-		PageEditor.editFragmentImage(
-			fragmentName = "Image",
-			id = "image-square",
-			imageFileName = "DM Document Title");
-
-		Button.clickPublish();
-
-		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
-			assetType = "Document",
-			entryTitle = "DM Document Title",
-			groupName = "Site Name",
-			pageName = "Display Page Template Name",
-			siteURLKey = "site-name");
-
 		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/d/document_1_edit");
 
-		ContentPages.viewFragmentImage(
-			fragmentName = "image",
-			id = "image-square",
-			image = "document_1_edit");
+		ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
 	}
 
 }

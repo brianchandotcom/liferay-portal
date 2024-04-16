@@ -88,17 +88,20 @@ public class TestrayStatusMetricResourceImpl
 			params.add(testrayTeamId);
 		}
 
-		sb.append("GROUP BY ct.c_caseTypeId_, ct.name_ ORDER BY ct.name_ ");
-		sb.append("ASC LIMIT ? OFFSET ?");
+		sb.append("GROUP BY ct.c_caseTypeId_, ct.name_ ORDER BY ct.name_ ASC ");
+
+		String sql = StringUtil.replace(
+			sb.toString(), "[%COMPANY_ID%]",
+			String.valueOf(contextCompany.getCompanyId()));
+
+		long totalCount = TestrayUtil.getTotalCount(sql, params);
+
+		sql += " LIMIT ? OFFSET ?";
 
 		params.add(pagination.getPageSize());
 		params.add(pagination.getStartPosition());
 
-		List<Map<String, Object>> values = TestrayUtil.runSQL(
-			StringUtil.replace(
-				sb.toString(), "[%COMPANY_ID%]",
-				String.valueOf(contextCompany.getCompanyId())),
-			params);
+		List<Map<String, Object>> values = TestrayUtil.runSQL(sql, params);
 
 		return Page.of(
 			transform(
@@ -115,7 +118,8 @@ public class TestrayStatusMetricResourceImpl
 						_getTestrayStatusMetric(value));
 
 					return testrayCaseTypeMetric;
-				}));
+				}),
+			pagination, totalCount);
 	}
 
 	@Override
@@ -184,17 +188,21 @@ public class TestrayStatusMetricResourceImpl
 			params.add(testrayTeamId);
 		}
 
-		sb.append("GROUP BY co.c_componentId_, co.name_ ORDER BY co.name_ ");
-		sb.append("ASC LIMIT ? OFFSET ?");
+		sb.append(
+			"GROUP BY co.c_componentId_, co.name_ ORDER BY co.name_ ASC ");
+
+		String sql = StringUtil.replace(
+			sb.toString(), "[%COMPANY_ID%]",
+			String.valueOf(contextCompany.getCompanyId()));
+
+		long totalCount = TestrayUtil.getTotalCount(sql, params);
+
+		sql += " LIMIT ? OFFSET ?";
 
 		params.add(pagination.getPageSize());
 		params.add(pagination.getStartPosition());
 
-		List<Map<String, Object>> values = TestrayUtil.runSQL(
-			StringUtil.replace(
-				sb.toString(), "[%COMPANY_ID%]",
-				String.valueOf(contextCompany.getCompanyId())),
-			params);
+		List<Map<String, Object>> values = TestrayUtil.runSQL(sql, params);
 
 		return Page.of(
 			transform(
@@ -211,7 +219,8 @@ public class TestrayStatusMetricResourceImpl
 						_getTestrayStatusMetric(value));
 
 					return testrayComponentMetric;
-				}));
+				}),
+			pagination, totalCount);
 	}
 
 	@Override
@@ -283,17 +292,20 @@ public class TestrayStatusMetricResourceImpl
 			params.add(testrayTeamId);
 		}
 
-		sb.append("GROUP BY r.c_runId_, r.name_ ORDER BY r.number_ ASC LIMIT ");
-		sb.append("? OFFSET ?");
+		sb.append("GROUP BY r.c_runId_, r.name_ ORDER BY r.number_ ASC ");
+
+		String sql = StringUtil.replace(
+			sb.toString(), "[%COMPANY_ID%]",
+			String.valueOf(contextCompany.getCompanyId()));
+
+		long totalCount = TestrayUtil.getTotalCount(sql, params);
+
+		sql += " LIMIT ? OFFSET ?";
 
 		params.add(pagination.getPageSize());
 		params.add(pagination.getStartPosition());
 
-		List<Map<String, Object>> values = TestrayUtil.runSQL(
-			StringUtil.replace(
-				sb.toString(), "[%COMPANY_ID%]",
-				String.valueOf(contextCompany.getCompanyId())),
-			params);
+		List<Map<String, Object>> values = TestrayUtil.runSQL(sql, params);
 
 		return Page.of(
 			transform(
@@ -311,7 +323,8 @@ public class TestrayStatusMetricResourceImpl
 						_getTestrayStatusMetric(value));
 
 					return testrayRunMetric;
-				}));
+				}),
+			pagination, totalCount);
 	}
 
 	@Override
@@ -388,16 +401,20 @@ public class TestrayStatusMetricResourceImpl
 		sb.append("AND cr.r_componentToCaseResult_c_componentId  = ");
 		sb.append("co.c_componentId_ AND co.r_teamToComponents_c_teamId = ");
 		sb.append("t.c_teamId_ GROUP BY t.name_, t.c_teamId_ ORDER BY ");
-		sb.append("t.name_ ASC LIMIT ? OFFSET ?");
+		sb.append("t.name_ ASC ");
+
+		String sql = StringUtil.replace(
+			sb.toString(), "[%COMPANY_ID%]",
+			String.valueOf(contextCompany.getCompanyId()));
+
+		long totalCount = TestrayUtil.getTotalCount(sql, params);
+
+		sql += " LIMIT ? OFFSET ?";
 
 		params.add(pagination.getPageSize());
 		params.add(pagination.getStartPosition());
 
-		List<Map<String, Object>> values = TestrayUtil.runSQL(
-			StringUtil.replace(
-				sb.toString(), "[%COMPANY_ID%]",
-				String.valueOf(contextCompany.getCompanyId())),
-			params);
+		List<Map<String, Object>> values = TestrayUtil.runSQL(sql, params);
 
 		return Page.of(
 			transform(
@@ -414,7 +431,8 @@ public class TestrayStatusMetricResourceImpl
 						_getTestrayStatusMetric(value));
 
 					return testrayTeamMetric;
-				}));
+				}),
+			pagination, totalCount);
 	}
 
 	private TestrayStatusMetric _getTestrayStatusMetric(

@@ -4,4 +4,5 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.object.info.field.converter,\
 	com.liferay.object.info.field.type.util,\
-	com.liferay.object.info.item
+	com.liferay.object.info.item,\
+	com.liferay.object.info.item.provider.util

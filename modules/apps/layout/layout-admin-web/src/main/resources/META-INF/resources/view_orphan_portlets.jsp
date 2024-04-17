@@ -19,7 +19,7 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(orphanPortletsDisplayContext.getBackURL());
 portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
-renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
+renderResponse.setTitle(selLayout.getName(locale) + StringPool.SPACE + LanguageUtil.get(request, "orphan-widgets"));
 %>
 
 <clay:management-toolbar

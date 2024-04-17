@@ -1501,13 +1501,13 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private void _processLayoutUtilityPageTemplateEntry(
-			String externalReferenceCode, long groupId,
+			String externalReferenceCode, String friendlyURL, long groupId,
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 			LayoutsImportStrategy layoutsImportStrategy,
 			LayoutUtilityPageEntry layoutUtilityPageEntry, String name,
-			PageDefinition pageDefinition, boolean preserveItemIds, String type,
-			long userId, ZipEntry thumbnailZipEntry, String zipPath,
-			ZipFile zipFile)
+			PageDefinition pageDefinition, boolean preserveItemIds,
+			boolean privateLayout, String type, long userId,
+			ZipEntry thumbnailZipEntry, String zipPath, ZipFile zipFile)
 		throws Exception {
 
 		try {
@@ -1517,7 +1517,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				layoutUtilityPageEntry =
 					_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 						externalReferenceCode, groupId, 0, 0, false, name, type,
-						0, ServiceContextThreadLocal.getServiceContext());
+						0, friendlyURL, privateLayout,
+						ServiceContextThreadLocal.getServiceContext());
 
 				added = true;
 			}
@@ -2686,10 +2687,13 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 						_groupId);
 
 			_processLayoutUtilityPageTemplateEntry(
-				utilityPageTemplate.getExternalReferenceCode(), _groupId,
+				utilityPageTemplate.getExternalReferenceCode(),
+				utilityPageTemplate.getFriendlyURL(), _groupId,
 				_layoutsImporterResultEntries, _layoutsImportStrategy,
 				layoutUtilityPageEntry, utilityPageTemplate.getName(),
 				_utilityPageTemplateEntry.getPageDefinition(), _preserveItemIds,
+				GetterUtil.getBoolean(
+					utilityPageTemplate.getPrivateLayout(), true),
 				LayoutUtilityPageEntryTypeConverter.convertToInternalValue(
 					utilityPageTemplate.getTypeAsString()),
 				_userId, _utilityPageTemplateEntry.getThumbnailZipEntry(),

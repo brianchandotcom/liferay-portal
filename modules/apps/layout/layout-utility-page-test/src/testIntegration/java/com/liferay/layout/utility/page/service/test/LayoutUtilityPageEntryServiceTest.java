@@ -97,7 +97,7 @@ public class LayoutUtilityPageEntryServiceTest {
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
-				_serviceContext);
+				null, true, _serviceContext);
 
 		LayoutUtilityPageEntry copiedLayoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.copyLayoutUtilityPageEntry(
@@ -138,7 +138,7 @@ public class LayoutUtilityPageEntryServiceTest {
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
-				_serviceContext);
+				null, true, _serviceContext);
 
 		Repository repository = _portletFileRepository.addPortletRepository(
 			_group.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES,
@@ -190,7 +190,7 @@ public class LayoutUtilityPageEntryServiceTest {
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
-				_serviceContext);
+				null, true, _serviceContext);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
@@ -208,7 +208,7 @@ public class LayoutUtilityPageEntryServiceTest {
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
-				_serviceContext);
+				null, true, _serviceContext);
 
 		_resourcePermissionLocalService.addResourcePermission(
 			_group.getCompanyId(), Group.class.getName(),
@@ -246,7 +246,7 @@ public class LayoutUtilityPageEntryServiceTest {
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, false,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
-				_serviceContext);
+				null, true, _serviceContext);
 
 		_resourcePermissionLocalService.setResourcePermissions(
 			_group.getCompanyId(), LayoutUtilityPageEntry.class.getName(),
@@ -277,7 +277,7 @@ public class LayoutUtilityPageEntryServiceTest {
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
-				_serviceContext);
+				null, true, _serviceContext);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
@@ -296,12 +296,14 @@ public class LayoutUtilityPageEntryServiceTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry1 =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
-				RandomTestUtil.randomString(), type, 0, _serviceContext);
+				RandomTestUtil.randomString(), type, 0, null, true,
+				_serviceContext);
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry2 =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, false,
-				RandomTestUtil.randomString(), type, 0, _serviceContext);
+				RandomTestUtil.randomString(), type, 0, null, true,
+				_serviceContext);
 
 		_resourcePermissionLocalService.addResourcePermission(
 			_group.getCompanyId(), Group.class.getName(),
@@ -353,7 +355,7 @@ public class LayoutUtilityPageEntryServiceTest {
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
-				_serviceContext);
+				null, true, _serviceContext);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
@@ -371,7 +373,7 @@ public class LayoutUtilityPageEntryServiceTest {
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
-				_serviceContext);
+				null, true, _serviceContext);
 
 		_resourcePermissionLocalService.addResourcePermission(
 			_group.getCompanyId(), Group.class.getName(),
@@ -408,7 +410,7 @@ public class LayoutUtilityPageEntryServiceTest {
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
-				_serviceContext);
+				null, true, _serviceContext);
 
 		layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(

@@ -75,24 +75,25 @@ public class RESTClientHttpRequest implements HttpServletRequest {
 				HttpSession httpSession =
 					PortalSessionThreadLocal.getHttpSession();
 
-				if (httpSession != null) {
-					String csrfToken = (String)httpSession.getAttribute(
-						WebKeys.AUTHENTICATION_TOKEN + "#CSRF");
-
-					if (csrfToken != null) {
-						httpSession = httpServletRequest.getSession(false);
-
-						if (httpSession != null) {
-							httpSession.setAttribute(
-								WebKeys.AUTHENTICATION_TOKEN + "#CSRF",
-								csrfToken);
-						}
-					}
-
-					return csrfToken;
+				if (httpSession == null) {
+					return null;
 				}
 
-				return null;
+				String csrfToken = (String)httpSession.getAttribute(
+					WebKeys.AUTHENTICATION_TOKEN + "#CSRF");
+
+				if (csrfToken == null) {
+					return null;
+				}
+
+				httpSession = httpServletRequest.getSession(false);
+
+				if (httpSession != null) {
+					httpSession.setAttribute(
+						WebKeys.AUTHENTICATION_TOKEN + "#CSRF", csrfToken);
+				}
+
+				return csrfToken;
 			}
 		).build();
 		_httpServletRequest = httpServletRequest;

@@ -535,6 +535,15 @@ public class AMImageEntryLocalServiceWrapper
 			companyId, configurationUuid);
 	}
 
+	@Override
+	public int getPercentage(
+		long companyId, String configurationUuid,
+		int expectedAMImageEntriesCount) {
+
+		return _amImageEntryLocalService.getPercentage(
+			companyId, configurationUuid, expectedAMImageEntriesCount);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

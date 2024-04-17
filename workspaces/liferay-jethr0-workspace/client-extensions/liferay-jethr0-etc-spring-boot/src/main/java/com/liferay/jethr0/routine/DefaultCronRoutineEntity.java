@@ -10,7 +10,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class DefaultCronRoutineEntity extends BaseRoutineEntity {
+public class DefaultCronRoutineEntity extends BaseCronRoutineEntity {
 
 	protected DefaultCronRoutineEntity(JSONObject jsonObject) {
 		super(jsonObject);

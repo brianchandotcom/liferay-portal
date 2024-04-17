@@ -511,8 +511,7 @@ public class GetCollectionFieldMVCResourceCommand
 			Object value =
 				_fragmentEntryProcessorHelper.getMappedInfoItemFieldValue(
 					displayObjectJSONObject, infoField.getUniqueId(),
-					infoItemFieldValues,
-					fragmentEntryProcessorContext.getLocale());
+					fragmentEntryProcessorContext, infoItemFieldValues);
 
 			displayObjectJSONObject.put(
 				infoField.getName(), value

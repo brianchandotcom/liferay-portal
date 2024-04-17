@@ -338,10 +338,10 @@ public class UtilityPageTemplate implements Serializable {
 	@GraphQLName("Type")
 	public static enum Type {
 
-		CREATE_ACCOUNT("CreateAccount"), ERROR("Error"),
-		ERROR_CODE404("ErrorCode404"), ERROR_CODE500("ErrorCode500"),
-		FORGOT_PASSWORD("ForgotPassword"), LOGIN("Login"),
-		TERMS_OF_USE("TermsOfUse");
+		COOKIE_POLICY("CookiePolicy"), CREATE_ACCOUNT("CreateAccount"),
+		ERROR("Error"), ERROR_CODE404("ErrorCode404"),
+		ERROR_CODE500("ErrorCode500"), FORGOT_PASSWORD("ForgotPassword"),
+		LOGIN("Login"), TERMS_OF_USE("TermsOfUse");
 
 		@JsonCreator
 		public static Type create(String value) {

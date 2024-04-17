@@ -5,17 +5,14 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {
-					},
+					"layout": {},
 					"name": "Main Content Container"
 				},
 				"id": "af34d83b-d249-e8c2-a63b-a0b502d2c976",
 				"pageElements": [
 					{
 						"definition": {
-							"cssClasses": [
-								"learn-banner"
-							],
+							"cssClasses": ["learn-banner"],
 							"fragmentStyle": {
 								"marginBottom": "24px",
 								"paddingBottom": "4",
@@ -37,7 +34,7 @@
 							{
 								"definition": {
 									"fragmentStyle": {
-										"maxWidth": "var(--container-max-md)",
+										"maxWidth": "700px",
 										"textAlign": "center",
 										"textColor": "colorNeutral0"
 									},
@@ -63,8 +60,7 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {
-														},
+														"fragmentLink": {},
 														"text": {
 															"value_i18n": {
 																"en_US": "Search Results"
@@ -83,9 +79,7 @@
 									},
 									{
 										"definition": {
-											"cssClasses": [
-												"learn-search"
-											],
+											"cssClasses": ["learn-search"],
 											"fragmentStyle": {
 												"marginTop": "24px"
 											},
@@ -108,7 +102,7 @@
 					},
 					{
 						"definition": {
-							"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: var(--spacer-4);\n}",
+							"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: var(--spacer-5);\n}",
 							"fragmentStyle": {
 								"paddingBottom": "24px",
 								"paddingLeft": "24px",
@@ -128,14 +122,13 @@
 							{
 								"definition": {
 									"customCSS": ".[$FRAGMENT_CLASS$] {\nflex: 0 0 300px;\n}",
-									"fragmentStyle": {
-										"maxWidth": "300px"
-									},
+									"fragmentStyle": {"maxWidth": "300px"},
 									"indexed": true,
 									"layout": {
 										"contentDisplay": "FlexColumn",
 										"widthType": "Fixed"
-									}
+									},
+									"name": "Results Menu Container"
 								},
 								"id": "a21130b0-2f84-87ec-5b44-beb3f8eab633",
 								"pageElements": [
@@ -166,8 +159,8 @@
 													"widgetInstance": {
 														"widgetConfig": {
 															"displayStyle": "default",
-															"displayStyleGroupId": "20119",
-															"fields": "[{\"field\":\"\",\"label\":\"relevance\"},{\"field\":\"title+\",\"label\":\"Alphabetical (A-Z)\"},{\"field\":\"title-\",\"label\":\"Alphabetical (Z-A)\"},{\"field\":\"publishedDate-\",\"label\":\"published-date\"}]"
+															"fields": "[{\"field\":\"\",\"label\":\"relevance\"},{\"field\":\"title+\",\"label\":\"Alphabetical (A-Z)\"},{\"field\":\"title-\",\"label\":\"Alphabetical (Z-A)\"},{\"field\":\"publishedDate-\",\"label\":\"published-date\"}]",
+															"displayStyleGroupId": "20119"
 														},
 														"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
 													}
@@ -204,19 +197,19 @@
 												"definition": {
 													"widgetInstance": {
 														"widgetConfig": {
-															"displayStyle": "default",
-															"displayStyleGroupId": "20119",
-															"frequenciesVisible": "false",
+															"vocabularyIds": "93597,133267",
+															"displayStyle": "ddmTemplate_CATEGORY-FACET-VOCABULARY-FTL",
+															"maxTerms": "12",
 															"frequencyThreshold": "1",
-															"maxTerms": "50",
-															"order": "key:asc",
+															"frequenciesVisible": "true",
 															"parameterName": "capability",
-															"vocabularyIds": "32496,32376"
+															"displayStyleGroupId": "20119",
+															"order": "count:asc"
 														},
 														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 													}
 												},
-												"id": "52ad25f2-dd94-6f37-d173-4312fbc782a1",
+												"id": "d6f8fb87-882d-ef33-097d-112ed3de5705",
 												"type": "Widget"
 											}
 										],
@@ -248,14 +241,14 @@
 												"definition": {
 													"widgetInstance": {
 														"widgetConfig": {
+															"vocabularyIds": "32496,32435",
 															"displayStyle": "default",
-															"displayStyleGroupId": "20119",
-															"frequenciesVisible": "false",
-															"frequencyThreshold": "1",
 															"maxTerms": "50",
-															"order": "key:asc",
+															"frequencyThreshold": "1",
+															"frequenciesVisible": "false",
 															"parameterName": "feature",
-															"vocabularyIds": "32496,32435"
+															"displayStyleGroupId": "20119",
+															"order": "key:asc"
 														},
 														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 													}
@@ -292,14 +285,14 @@
 												"definition": {
 													"widgetInstance": {
 														"widgetConfig": {
+															"vocabularyIds": "32496,32425",
 															"displayStyle": "default",
-															"displayStyleGroupId": "20119",
-															"frequenciesVisible": "false",
-															"frequencyThreshold": "1",
 															"maxTerms": "50",
-															"order": "key:asc",
+															"frequencyThreshold": "1",
+															"frequenciesVisible": "false",
 															"parameterName": "deployment-approach",
-															"vocabularyIds": "32496,32425"
+															"displayStyleGroupId": "20119",
+															"order": "key:asc"
 														},
 														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 													}
@@ -320,23 +313,25 @@
 									},
 									"indexed": true,
 									"layout": {
-										"align": "Center",
+										"align": "Start",
 										"contentDisplay": "FlexColumn"
-									}
+									},
+									"name": "Results Content Container"
 								},
 								"id": "2befb3f2-edef-2e9a-9504-0972b3fe1478",
 								"pageElements": [
 									{
 										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] {\ntext-align:left;\n}",
 											"fragmentStyle": {
-												"maxWidth": "var(--container-max-md)",
+												"maxWidth": "50rem",
 												"width": "100%"
 											},
 											"widgetInstance": {
 												"widgetConfig": {
 													"displayInDocumentForm": "false",
 													"displayStyle": "ddmTemplate_LEARN_SEARCH_RESULTS",
-													"displayStyleGroupId": "32201",
+													"displayStyleGroupId": "32323",
 													"federatedSearchKey": "",
 													"fieldsToDisplay": "",
 													"highlightEnabled": "false",

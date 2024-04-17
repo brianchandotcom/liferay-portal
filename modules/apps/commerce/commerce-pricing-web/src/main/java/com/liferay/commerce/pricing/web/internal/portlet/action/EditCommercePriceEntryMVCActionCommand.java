@@ -181,7 +181,6 @@ public class EditCommercePriceEntryMVCActionCommand
 			actionRequest, "discountLevel3");
 		BigDecimal discountLevel4 = _commercePriceFormatter.parse(
 			actionRequest, "discountLevel4");
-
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
 		int displayDateDay = ParamUtil.getInteger(
@@ -218,10 +217,8 @@ public class EditCommercePriceEntryMVCActionCommand
 
 		boolean neverExpire = ParamUtil.getBoolean(
 			actionRequest, "neverExpire");
-
 		BigDecimal price = _commercePriceFormatter.parse(
 			actionRequest, "price");
-
 		boolean priceOnApplication = ParamUtil.getBoolean(
 			actionRequest, "priceOnApplication");
 

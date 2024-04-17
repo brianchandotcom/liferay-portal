@@ -512,7 +512,7 @@ definition {
 
 		var sideNavWidth = Css.getCssValue(
 			attribute = "width",
-			element = "//div[contains(@class,'product-menu-open')]");
+			element = "//nav[contains(@class,'product-menu-open')]");
 
 		AssertCssValue(
 			locator1 = "Home#SITE_WRAPPER",

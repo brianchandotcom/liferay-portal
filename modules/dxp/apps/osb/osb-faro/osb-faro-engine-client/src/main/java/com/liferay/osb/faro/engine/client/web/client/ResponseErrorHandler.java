@@ -9,11 +9,9 @@ import com.liferay.osb.faro.engine.client.exception.DuplicateEntryException;
 import com.liferay.osb.faro.engine.client.exception.FaroEngineClientException;
 import com.liferay.osb.faro.engine.client.exception.InvalidFilterException;
 import com.liferay.osb.faro.engine.client.exception.NoSuchEntryException;
+import com.liferay.portal.kernel.util.FileUtil;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import org.apache.http.HttpStatus;
 
@@ -37,34 +35,22 @@ public class ResponseErrorHandler extends DefaultResponseErrorHandler {
 			return;
 		}
 
-		try (InputStream inputStream = clientHttpResponse.getBody()) {
-			String input = null;
+		String response = new String(
+			FileUtil.getBytes(clientHttpResponse.getBody()));
 
-			BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(inputStream));
-
-			StringBuilder responseCreate = new StringBuilder();
-
-			while ((input = bufferedReader.readLine()) != null) {
-				responseCreate.append(input);
-			}
-
-			String response = responseCreate.toString();
-
-			if (statusCode == HttpStatus.SC_CONFLICT) {
-				throw new DuplicateEntryException(response);
-			}
-
-			if (statusCode == HttpStatus.SC_NOT_FOUND) {
-				throw new NoSuchEntryException(response);
-			}
-
-			if (statusCode == HttpStatus.SC_UNPROCESSABLE_ENTITY) {
-				throw new InvalidFilterException(response);
-			}
-
-			throw new FaroEngineClientException(response);
+		if (statusCode == HttpStatus.SC_CONFLICT) {
+			throw new DuplicateEntryException(response);
 		}
+
+		if (statusCode == HttpStatus.SC_NOT_FOUND) {
+			throw new NoSuchEntryException(response);
+		}
+
+		if (statusCode == HttpStatus.SC_UNPROCESSABLE_ENTITY) {
+			throw new InvalidFilterException(response);
+		}
+
+		throw new FaroEngineClientException(response);
 	}
 
 }

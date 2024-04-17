@@ -178,7 +178,7 @@ public class FragmentEntryProcessorHelperImpl
 
 		return getMappedInfoItemFieldValue(
 			editableValueJSONObject, infoItemMappedField.getFieldName(),
-			infoItemFieldValues, fragmentEntryProcessorContext.getLocale());
+			fragmentEntryProcessorContext, infoItemFieldValues);
 	}
 
 	@Override
@@ -259,7 +259,8 @@ public class FragmentEntryProcessorHelperImpl
 	@Override
 	public Object getMappedInfoItemFieldValue(
 		JSONObject editableValueJSONObject, String fieldName,
-		InfoItemFieldValues infoItemFieldValues, Locale locale) {
+		FragmentEntryProcessorContext fragmentEntryProcessorContext,
+		InfoItemFieldValues infoItemFieldValues) {
 
 		InfoFieldValue<Object> infoFieldValue =
 			infoItemFieldValues.getInfoFieldValue(fieldName);
@@ -287,7 +288,8 @@ public class FragmentEntryProcessorHelperImpl
 			}
 		}
 
-		Object value = infoFieldValue.getValue(locale);
+		Object value = infoFieldValue.getValue(
+			fragmentEntryProcessorContext.getLocale());
 
 		if (value == null) {
 			return StringPool.BLANK;
@@ -312,7 +314,8 @@ public class FragmentEntryProcessorHelperImpl
 						_getInfoCollectionTextFormatter(
 							firstItemClass.getName());
 
-				return infoCollectionTextFormatter.format(list, locale);
+				return infoCollectionTextFormatter.format(
+					list, fragmentEntryProcessorContext.getLocale());
 			}
 
 			value = _getSpecificIteration(list, configJSONObject);
@@ -323,13 +326,17 @@ public class FragmentEntryProcessorHelperImpl
 
 			return _getDateValue(
 				editableValueJSONObject, date,
-				_getShortTimeStylePattern(locale), locale);
+				_getShortTimeStylePattern(
+					fragmentEntryProcessorContext.getLocale()),
+				fragmentEntryProcessorContext.getLocale());
 		}
 		else if (value instanceof KeyLocalizedLabelPair) {
 			KeyLocalizedLabelPair keyLocalizedLabelPair =
 				(KeyLocalizedLabelPair)value;
 
-			return HtmlUtil.escape(keyLocalizedLabelPair.getLabel(locale));
+			return HtmlUtil.escape(
+				keyLocalizedLabelPair.getLabel(
+					fragmentEntryProcessorContext.getLocale()));
 		}
 		else if (value instanceof KeyValuePair) {
 			KeyValuePair keyValuePair = (KeyValuePair)value;
@@ -339,7 +346,8 @@ public class FragmentEntryProcessorHelperImpl
 		else if (value instanceof Labeled) {
 			Labeled labeledFieldValue = (Labeled)value;
 
-			return labeledFieldValue.getLabel(locale);
+			return labeledFieldValue.getLabel(
+				fragmentEntryProcessorContext.getLocale());
 		}
 		else if (value instanceof String) {
 			infoField = infoFieldValue.getInfoField();
@@ -356,8 +364,10 @@ public class FragmentEntryProcessorHelperImpl
 					Set<Locale> availableLocales =
 						infoLocalizedValue.getAvailableLocales();
 
-					if (availableLocales.contains(locale)) {
-						dateLocale = locale;
+					if (availableLocales.contains(
+							fragmentEntryProcessorContext.getLocale())) {
+
+						dateLocale = fragmentEntryProcessorContext.getLocale();
 					}
 				}
 
@@ -370,7 +380,9 @@ public class FragmentEntryProcessorHelperImpl
 
 					return _getDateValue(
 						editableValueJSONObject, date,
-						_getShortTimeStylePattern(locale), locale);
+						_getShortTimeStylePattern(
+							fragmentEntryProcessorContext.getLocale()),
+						fragmentEntryProcessorContext.getLocale());
 				}
 				catch (ParseException parseException1) {
 					if (_log.isDebugEnabled()) {
@@ -385,7 +397,9 @@ public class FragmentEntryProcessorHelperImpl
 						return _getDateValue(
 							editableValueJSONObject,
 							dateFormat.parse(value.toString()),
-							_getDefaultPattern(locale), locale);
+							_getDefaultPattern(
+								fragmentEntryProcessorContext.getLocale()),
+							fragmentEntryProcessorContext.getLocale());
 					}
 					catch (ParseException parseException2) {
 						if (_log.isDebugEnabled()) {
@@ -431,7 +445,8 @@ public class FragmentEntryProcessorHelperImpl
 					InfoTextFormatter.class, fieldValueClass.getName());
 
 		if (infoTextFormatter != null) {
-			return infoTextFormatter.format(value, locale);
+			return infoTextFormatter.format(
+				value, fragmentEntryProcessorContext.getLocale());
 		}
 
 		return value.toString();

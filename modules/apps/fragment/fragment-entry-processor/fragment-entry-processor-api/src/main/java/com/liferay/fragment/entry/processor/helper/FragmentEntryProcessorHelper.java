@@ -44,7 +44,8 @@ public interface FragmentEntryProcessorHelper {
 
 	public Object getMappedInfoItemFieldValue(
 		JSONObject editableValueJSONObject, String fieldName,
-		InfoItemFieldValues infoItemFieldValues, Locale locale);
+		FragmentEntryProcessorContext fragmentEntryProcessorContext,
+		InfoItemFieldValues infoItemFieldValues);
 
 	public boolean hasViewPermission(
 		JSONObject editableValueJSONObject,

@@ -6,6 +6,7 @@
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
+import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
 import {nodeDescription, nodeTypes} from '../nodes/utils';
 
@@ -24,9 +25,21 @@ const onDragStart = (event, nodeType, setElementRectangle) => {
 };
 
 export default function SidebarBody({children, displayDefaultContent = true}) {
+	const {
+		allowScriptContentToBeExecutedOrIncluded,
+		hadGroovyScriptBefore,
+	} = useContext(DefinitionBuilderContext);
 	const {setCollidingElements, setElementRectangle} = useContext(
 		DiagramBuilderContext
 	);
+
+	if (
+		Liferay.FeatureFlags['LPD-11179'] &&
+		!allowScriptContentToBeExecutedOrIncluded &&
+		!hadGroovyScriptBefore
+	) {
+		delete nodeTypes['condition'];
+	}
 
 	return (
 		<div className="sidebar-body">

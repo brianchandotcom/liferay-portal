@@ -7,25 +7,25 @@ import {resolveField} from '../../src/main/resources/META-INF/resources/utils/re
 
 const itemWithAudit = {
 	actions: {
-		permissions: {
-			method: 'GET',
-			href: 'http://localhost:8080/o/c/customobjects/38884/permissions',
+		delete: {
+			href: 'http://localhost:8080/o/c/customobjects/38884',
+			method: 'DELETE',
 		},
 		get: {
-			method: 'GET',
 			href: 'http://localhost:8080/o/c/customobjects/38884',
+			method: 'GET',
+		},
+		permissions: {
+			href: 'http://localhost:8080/o/c/customobjects/38884/permissions',
+			method: 'GET',
 		},
 		replace: {
-			method: 'PUT',
 			href: 'http://localhost:8080/o/c/customobjects/38884',
+			method: 'PUT',
 		},
 		update: {
+			href: 'http://localhost:8080/o/c/customobjects/38884',
 			method: 'PATCH',
-			href: 'http://localhost:8080/o/c/customobjects/38884',
-		},
-		delete: {
-			method: 'DELETE',
-			href: 'http://localhost:8080/o/c/customobjects/38884',
 		},
 	},
 	auditEvents: [
@@ -119,15 +119,12 @@ const itemWithAudit = {
 	},
 	dateCreated: '2024-04-12T08:28:45Z',
 	dateModified: '2024-04-16T13:50:57Z',
+	description: 'My custom object is custom',
+	description_i18n: {
+		en_US: 'My custom object is custom',
+	},
 	externalReferenceCode: '0b31f896-94e4-8519-ca5b-c74bb374036d',
 	id: 38884,
-	keywords: ['array', 'list', 'collection'],
-	status: {
-		code: 0,
-		label: 'approved',
-		label_i18n: 'Approved',
-	},
-	taxonomyCategoryBriefs: [],
 	image: {
 		id: 39346,
 		link: {
@@ -137,13 +134,7 @@ const itemWithAudit = {
 		},
 		name: 'trooper (1).png',
 	},
-	title_i18n: {
-		en_US: 'The first one',
-	},
-	description_i18n: {
-		en_US: 'My custom object is custom',
-	},
-	description: 'My custom object is custom',
+	keywords: ['array', 'list', 'collection'],
 	list: [
 		{
 			key: 'one',
@@ -154,21 +145,30 @@ const itemWithAudit = {
 			name: 'Two',
 		},
 	],
-	title: 'The first one',
 	nested: {
 		object: {
 			property: 'hello',
 		},
 	},
+	status: {
+		code: 0,
+		label: 'approved',
+		label_i18n: 'Approved',
+	},
+	taxonomyCategoryBriefs: [],
+	title: 'The first one',
+	title_i18n: {
+		en_US: 'The first one',
+	},
 };
 
 describe('resolveField', () => {
-	it('should be defined', () => {
+	it('is defined', () => {
 		expect(resolveField).toBeDefined();
 	});
 
 	describe('single property request', () => {
-		it('should return an object containing the name of the field requested, the item itself and the root property of the object requested', () => {
+		it('returns an object containing the name of the field requested, the item itself and the root property of the object requested', () => {
 			const given = 'title';
 
 			const expected = {
@@ -182,7 +182,7 @@ describe('resolveField', () => {
 	});
 
 	describe('simple nested property request', () => {
-		it('should return the requested object property as resolvedItem', () => {
+		it('returns the requested object property as resolvedItem', () => {
 			const given = 'creator.name';
 
 			const expected = {
@@ -194,7 +194,7 @@ describe('resolveField', () => {
 			expect(resolveField(given, itemWithAudit)).toEqual(expected);
 		});
 
-		it('should return the parent object when using a wildcard', () => {
+		it('returns the parent object when using a wildcard', () => {
 			const given = 'creator.*';
 
 			const expected = {
@@ -206,7 +206,7 @@ describe('resolveField', () => {
 			expect(resolveField(given, itemWithAudit)).toEqual(expected);
 		});
 
-		it('should return the parent of the deepest object property requested', () => {
+		it('returns the parent of the deepest object property requested', () => {
 			const given = 'nested.object.property';
 
 			const expected = {
@@ -220,7 +220,7 @@ describe('resolveField', () => {
 	});
 
 	describe('scalar arrays', () => {
-		it('should return the contents of the selected array', () => {
+		it('returns the contents of the selected array', () => {
 			const given = 'keywords';
 
 			const expected = {
@@ -239,7 +239,7 @@ describe('resolveField', () => {
 	});
 
 	describe('single field from a complex arrays', () => {
-		it('should return a collection of items with the specified property key', () => {
+		it('returns a collection of items with the specified property key', () => {
 			const given = 'list[]key';
 
 			const expected = {
@@ -253,7 +253,7 @@ describe('resolveField', () => {
 	});
 
 	describe('Extra complex cases', () => {
-		it('should parse selected object properties inside an array', () => {
+		it('parses selected object properties inside an array', () => {
 			const given = 'auditEvents[]creator.name';
 
 			const expected = {
@@ -269,7 +269,7 @@ describe('resolveField', () => {
 			expect(resolveField(given, itemWithAudit)).toEqual(expected);
 		});
 
-		it('should parse selected object properties inside a nested array', () => {
+		it('parses selected object properties inside a nested array', () => {
 			const given = 'auditEvents[]creator.userGroupBriefs[]name';
 
 			const expected = {
@@ -281,7 +281,7 @@ describe('resolveField', () => {
 			expect(resolveField(given, itemWithAudit)).toEqual(expected);
 		});
 
-		it('should not fail when no property matches the path', () => {
+		it('does not fail when no property matches the path', () => {
 			const given = 'auditEvents[]creator.randomProperty[]name';
 
 			const expected = {

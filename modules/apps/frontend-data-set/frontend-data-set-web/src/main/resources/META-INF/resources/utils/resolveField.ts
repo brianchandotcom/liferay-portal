@@ -44,10 +44,10 @@ export const resolveField = function resolveField(
 	const resolvedFieldname = itemPath[itemPath.length - 1];
 	let resolvedItem = undefined;
 
-	function flatten(obj: any) {
+	function flatten(field: Array<any>) {
 		const key = resolvedFieldname;
 
-		return obj.map((prop: any) => {
+		return field.map((prop: any) => {
 			if (!prop) {
 				return {[key]: undefined};
 			}
@@ -76,7 +76,7 @@ export const resolveField = function resolveField(
 			}, item) || {};
 
 		if (Array.isArray(resolvedItem)) {
-			resolvedItem = flatten(resolvedItem).flat();
+			resolvedItem = flatten(resolvedItem);
 		}
 	}
 	else {

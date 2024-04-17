@@ -150,6 +150,11 @@ public class LanguageTag extends IncludeTag {
 				WebKeys.THEME_DISPLAY);
 
 		formAction = themeDisplay.getPathMain() + "/portal/update_language";
+
+		formAction = HttpComponentsUtil.setParameter(
+			formAction, "redirect",
+			PortalUtil.getCurrentURL(httpServletRequest));
+
 		formAction = HttpComponentsUtil.setParameter(
 			formAction, "groupId", themeDisplay.getScopeGroupId());
 
@@ -157,10 +162,6 @@ public class LanguageTag extends IncludeTag {
 
 		formAction = HttpComponentsUtil.setParameter(
 			formAction, "layoutId", layout.getLayoutId());
-
-		formAction = HttpComponentsUtil.setParameter(
-			formAction, "redirect",
-			PortalUtil.getCurrentURL(httpServletRequest));
 
 		return formAction;
 	}

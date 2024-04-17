@@ -62,27 +62,27 @@ public abstract class BaseConfigurationFactory {
 				oAuth2ApplicationLocalService.deleteOAuth2Application(
 					oAuth2Application);
 
-				if (Validator.isNotNull(_configMapName)) {
-					PortalK8sConfigMapModifier portalK8sConfigMapModifier =
-						_portalK8sConfigMapModifierSnapshot.get();
-
-					portalK8sConfigMapModifier.modifyConfigMap(
-						configMapModel -> {
-							_extensionProperties.forEach(
-								configMapModel.data()::remove);
-
-							Map<String, String> labels =
-								configMapModel.labels();
-
-							labels.put(
-								"dxp.lxc.liferay.com/virtualInstanceId",
-								_virtualInstanceId);
-							labels.put(
-								"ext.lxc.liferay.com/projectName",
-								_projectName);
-						},
-						_configMapName);
+				if (Validator.isNull(_configMapName)) {
+					return;
 				}
+
+				PortalK8sConfigMapModifier portalK8sConfigMapModifier =
+					_portalK8sConfigMapModifierSnapshot.get();
+
+				portalK8sConfigMapModifier.modifyConfigMap(
+					configMapModel -> {
+						_extensionProperties.forEach(
+							configMapModel.data()::remove);
+
+						Map<String, String> labels = configMapModel.labels();
+
+						labels.put(
+							"dxp.lxc.liferay.com/virtualInstanceId",
+							_virtualInstanceId);
+						labels.put(
+							"ext.lxc.liferay.com/projectName", _projectName);
+					},
+					_configMapName);
 			});
 	}
 

@@ -28,6 +28,7 @@ public class JobAddLiferayEventHandler extends BaseLiferayEventHandler {
 		JobEntity jobEntity = jobEntityRepository.add(getJobJSONObject());
 
 		String currentJobName = jobEntity.getName();
+
 		String updatedJobName = JobUtil.getUpdateJobEntityName(currentJobName);
 
 		if (!currentJobName.equals(updatedJobName)) {

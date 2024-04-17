@@ -9,7 +9,6 @@ import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
-import com.liferay.jethr0.util.JobUtil;
 
 import org.json.JSONObject;
 

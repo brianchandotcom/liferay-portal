@@ -5,9 +5,6 @@
 
 package com.liferay.jethr0.util;
 
-import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.repository.JobEntityRepository;
-
 import java.util.Date;
 
 /**

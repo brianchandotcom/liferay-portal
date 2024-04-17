@@ -80,7 +80,15 @@ definition {
 	@disable-webdriver = "true"
 	@priority = 3
 	test CanGetExportTaskDataFromExportBatchContainingNoParameters {
-		task ("Given Student object definition with name created") {
+		task ("Given the initial count of exported object definitions") {
+			var exportTaskId = ObjectDefinitionAPI.getIdOfObjectDefinitionExportBatch();
+
+			var response = ExportTask.getExportTaskById(exportTaskId = ${exportTaskId});
+
+			var initialCount = JSONUtil.getWithJSONPath(${response}, "$..[?(@['executeStatus'] == 'COMPLETED')]['processedItemsCount']");
+		}
+
+		task ("And Given Student object definition with name created") {
 			ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "student",
 				en_US_plural_label = "students",
@@ -96,9 +104,11 @@ definition {
 			var response = ExportTask.getExportTaskById(exportTaskId = ${exportTaskId});
 		}
 
-		task ("Then processedItemsCount is 9 with executeStatus "COMPLETED"") {
+		task ("Then processedItemsCount is ${initialCount} + 1 with executeStatus "COMPLETED"") {
+			var expectedCount = ${initialCount} + 1;
+
 			ExportTask.assertProcessedItemsCountWithCompletedStatus(
-				expectedCount = 9,
+				expectedCount = ${expectedCount},
 				response = ${response});
 		}
 	}

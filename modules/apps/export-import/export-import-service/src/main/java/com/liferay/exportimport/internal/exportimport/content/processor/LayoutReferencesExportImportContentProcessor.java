@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -941,7 +942,10 @@ public class LayoutReferencesExportImportContentProcessor
 			url = content.substring(beginPos + offset, endPos);
 
 			endPos = StringUtil.indexOfAny(
-				url, FriendlyURLResolverRegistryUtil.getURLSeparators());
+				url,
+				ArrayUtil.remove(
+					FriendlyURLResolverRegistryUtil.getURLSeparators(),
+					VirtualLayoutConstants.CANONICAL_URL_SEPARATOR));
 
 			if (endPos != -1) {
 				url = url.substring(0, endPos);

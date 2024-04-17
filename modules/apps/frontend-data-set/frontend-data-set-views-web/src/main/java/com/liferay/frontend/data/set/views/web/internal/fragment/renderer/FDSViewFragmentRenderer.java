@@ -829,7 +829,10 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				fdsFieldObjectEntry.getProperties();
 
 			String[] fieldNameList = StringUtil.split(
-				String.valueOf(properties.get("name")), CharPool.PERIOD);
+				StringUtil.replace(
+					String.valueOf(properties.get("name")), "[]",
+					StringPool.PERIOD),
+				CharPool.PERIOD);
 
 			if (fieldNameList.length > 1) {
 				String[] fieldsName = new String[fieldNameList.length - 1];

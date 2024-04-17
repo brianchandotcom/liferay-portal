@@ -434,6 +434,11 @@ public interface AMImageEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPercentage(long companyId, String configurationUuid);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPercentage(
+		long companyId, String configurationUuid,
+		int expectedAMImageEntriesCount);
+
 	/**
 	 * @throws PortalException
 	 */

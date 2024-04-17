@@ -490,6 +490,14 @@ public class AMImageEntryLocalServiceUtil {
 		return getService().getPercentage(companyId, configurationUuid);
 	}
 
+	public static int getPercentage(
+		long companyId, String configurationUuid,
+		int expectedAMImageEntriesCount) {
+
+		return getService().getPercentage(
+			companyId, configurationUuid, expectedAMImageEntriesCount);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

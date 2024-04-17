@@ -1,0 +1,170 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-10588",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "PerformanceCookieEntry",
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"expiration": "",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_1",
+			"host": "Liferay",
+			"name": "__zlcmid",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "2 Years",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_2",
+			"host": "Liferay",
+			"name": "_ga",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "1 Minute",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_3",
+			"host": "Liferay",
+			"name": "_gat_gtag_UA_*",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "1 Day",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_4",
+			"host": "Liferay",
+			"name": "_gid",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "30 Minutes",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_5",
+			"host": "Liferay",
+			"name": "_hjAbsoluteSessionInProgress",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session Time",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_6",
+			"host": "Liferay",
+			"name": "_hjFirstSeen",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "30 Minutes",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_7",
+			"host": "Liferay",
+			"name": "_hjIncludedInPageviewSample",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "30 Minutes",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_8",
+			"host": "Liferay",
+			"name": "_hjIncludedInSessionSample",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "30 Minutes",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_9",
+			"host": "Liferay",
+			"name": "_hjSession",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_10",
+			"host": "Liferay",
+			"name": "_hjSessionUser",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_11",
+			"host": "Liferay",
+			"name": "ac_client_batch",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_12",
+			"host": "Liferay",
+			"name": "ac_client_channel_id",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_13",
+			"host": "Liferay",
+			"name": "ac_client_context",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_14",
+			"host": "Liferay",
+			"name": "ac_client_identity",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_15",
+			"host": "Liferay",
+			"name": "ac_client_previous_email_address_hash",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_16",
+			"host": "Liferay",
+			"name": "ac_client_storage_version",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_17",
+			"host": "Liferay",
+			"name": "ac_client_user_id",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_18",
+			"host": "Liferay",
+			"name": "ac_message_queue",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "PERFORMANCE_COOKIE_ENTRY_19",
+			"host": "Liferay",
+			"name": "ac_message_queue_identity",
+			"purpose": "",
+			"type": "First Party"
+		}
+	]
+}

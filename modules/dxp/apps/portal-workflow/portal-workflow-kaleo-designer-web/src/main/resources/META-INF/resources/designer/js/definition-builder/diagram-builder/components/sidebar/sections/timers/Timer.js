@@ -7,6 +7,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
+import {DefinitionBuilderContext} from '../../../../../DefinitionBuilderContext';
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import TimerAction from './TimerAction';
 import TimerDuration from './TimerDuration';
@@ -27,12 +28,54 @@ const Timer = ({
 	timerIdentifier,
 	timersIndex,
 }) => {
-	const {selectedItem} = useContext(DiagramBuilderContext);
+	const {
+		allowScriptContentToBeExecutedOrIncluded,
+		hadGroovyScriptBefore,
+	} = useContext(DefinitionBuilderContext);
+	const {functionActionExecutors, selectedItem} = useContext(
+		DiagramBuilderContext
+	);
 	const [actionSections, setActionSections] = useState(
 		timerActions?.length
 			? timerActions
 			: [{actionType: 'timerActions', identifier: `${Date.now()}-0`}]
 	);
+
+	useEffect(() => {
+		if (timerActions?.length) {
+			setActionSections(timerActions);
+
+			return;
+		}
+
+		if (
+			Liferay.FeatureFlags['LPD-11179'] &&
+			!allowScriptContentToBeExecutedOrIncluded &&
+			!hadGroovyScriptBefore &&
+			!functionActionExecutors.length
+		) {
+			setActionSections([
+				{
+					actionType: 'timerNotifications',
+					identifier: `${Date.now()}-0`,
+					recipients: {
+						assignmentType: ['user'],
+					},
+				},
+			]);
+
+			return;
+		}
+
+		setActionSections([
+			{actionType: 'timerActions', identifier: `${Date.now()}-0`},
+		]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [
+		allowScriptContentToBeExecutedOrIncluded,
+		functionActionExecutors.length,
+		hadGroovyScriptBefore,
+	]);
 
 	useEffect(() => {
 		if (actionSections.length) {

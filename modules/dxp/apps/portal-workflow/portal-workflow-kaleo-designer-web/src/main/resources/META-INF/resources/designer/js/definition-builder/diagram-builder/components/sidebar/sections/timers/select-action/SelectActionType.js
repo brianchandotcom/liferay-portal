@@ -4,7 +4,10 @@
  */
 
 import ClayForm, {ClaySelect} from '@clayui/form';
-import React from 'react';
+import React, {useContext} from 'react';
+
+import {DefinitionBuilderContext} from '../../../../../../DefinitionBuilderContext';
+import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 
 const options = [
 	{
@@ -30,6 +33,12 @@ const SelectActionType = ({
 	reassignments,
 	setActionSections,
 }) => {
+	const {
+		allowScriptContentToBeExecutedOrIncluded,
+		hadGroovyScriptBefore,
+	} = useContext(DefinitionBuilderContext);
+	const {functionActionExecutors} = useContext(DiagramBuilderContext);
+
 	options[2].disabled = reassignments;
 	function handleChange(value) {
 		setActionSections((previousSections) => {
@@ -44,6 +53,21 @@ const SelectActionType = ({
 		});
 	}
 
+	const getActionTypeOptions = () => {
+		if (
+			Liferay.FeatureFlags['LPD-11179'] &&
+			!allowScriptContentToBeExecutedOrIncluded &&
+			!hadGroovyScriptBefore &&
+			!functionActionExecutors.length
+		) {
+			return options.filter(
+				(option) => option.actionType !== 'timerActions'
+			);
+		}
+
+		return options;
+	};
+
 	return (
 		<ClayForm.Group>
 			<label htmlFor="action-type">{Liferay.Language.get('type')}</label>
@@ -56,7 +80,7 @@ const SelectActionType = ({
 					handleChange(event.target.value);
 				}}
 			>
-				{options.map((item) => (
+				{getActionTypeOptions().map((item) => (
 					<ClaySelect.Option
 						disabled={item.disabled}
 						key={item.actionType}

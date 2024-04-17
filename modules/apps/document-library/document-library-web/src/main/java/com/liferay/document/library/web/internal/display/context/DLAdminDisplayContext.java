@@ -552,7 +552,7 @@ public class DLAdminDisplayContext {
 			}
 
 			if ((_folder != null) && (_folderId != _rootFolderId) &&
-				(_rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+				!_isRepositoryRoot()) {
 
 				List<Long> ancestorFolderIds = _folder.getAncestorFolderIds();
 
@@ -567,6 +567,8 @@ public class DLAdminDisplayContext {
 	}
 
 	private void _computeRootFolder() {
+		_rootFolder = null;
+
 		_rootFolderId = _dlPortletInstanceSettings.getRootFolderId();
 		_rootFolderName = StringPool.BLANK;
 
@@ -577,26 +579,26 @@ public class DLAdminDisplayContext {
 		}
 
 		try {
-			Folder rootFolder = DLAppLocalServiceUtil.getFolder(_rootFolderId);
+			_rootFolder = DLAppLocalServiceUtil.getFolder(_rootFolderId);
 
-			_rootFolderName = rootFolder.getName();
+			_rootFolderName = _rootFolder.getName();
 
-			if (rootFolder.isRepositoryCapabilityProvided(
+			if (_rootFolder.isRepositoryCapabilityProvided(
 					TrashCapability.class)) {
 
 				TrashCapability trashCapability =
-					rootFolder.getRepositoryCapability(TrashCapability.class);
+					_rootFolder.getRepositoryCapability(TrashCapability.class);
 
-				_rootFolderInTrash = trashCapability.isInTrash(rootFolder);
+				_rootFolderInTrash = trashCapability.isInTrash(_rootFolder);
 
 				if (_rootFolderInTrash) {
 					_rootFolderName = _trashHelper.getOriginalTitle(
-						rootFolder.getName());
+						_rootFolder.getName());
 				}
 			}
 
 			DLFolderUtil.validateDepotFolder(
-				_rootFolderId, rootFolder.getGroupId(),
+				_rootFolderId, _rootFolder.getGroupId(),
 				_themeDisplay.getScopeGroupId());
 		}
 		catch (NoSuchFolderException noSuchFolderException) {
@@ -1200,6 +1202,16 @@ public class DLAdminDisplayContext {
 		return false;
 	}
 
+	private boolean _isRepositoryRoot() {
+		if ((_rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ||
+			((_rootFolder != null) && _rootFolder.isRoot())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _setFilterParameters(PortletURL portletURL) {
 		portletURL.setParameter(
 			"assetCategoryId", ArrayUtil.toStringArray(getAssetCategoryIds()));
@@ -1288,6 +1300,7 @@ public class DLAdminDisplayContext {
 	private final PortalPreferences _portalPreferences;
 	private PortletPreferences _portletPreferences;
 	private long _repositoryId;
+	private Folder _rootFolder;
 	private long _rootFolderId;
 	private boolean _rootFolderInTrash;
 	private String _rootFolderName;

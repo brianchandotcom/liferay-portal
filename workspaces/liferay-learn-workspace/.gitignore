@@ -1,4 +1,5 @@
 .DS_Store
+/.env
 /.idea
 /bundles
 /poshi/poshi-ext.properties

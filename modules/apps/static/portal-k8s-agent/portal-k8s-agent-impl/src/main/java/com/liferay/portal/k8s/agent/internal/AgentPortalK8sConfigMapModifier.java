@@ -160,6 +160,18 @@ public class AgentPortalK8sConfigMapModifier
 
 	@Override
 	public Result modifyConfigMap(
+		Consumer<ConfigMapModel> configMapModelConsumer, String configMapName) {
+
+		Result result = _modifyConfigMap(configMapModelConsumer, configMapName);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Modify config map result: " + result);
+		}
+
+		return result;
+	}
+
+	private Result _modifyConfigMap(
 		Consumer<PortalK8sConfigMapModifier.ConfigMapModel>
 			configMapModelConsumer,
 		String configMapName) {

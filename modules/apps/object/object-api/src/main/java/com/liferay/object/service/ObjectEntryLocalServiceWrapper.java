@@ -656,15 +656,15 @@ public class ObjectEntryLocalServiceWrapper
 	public java.util.List<java.util.Map<String, java.io.Serializable>>
 			getValuesList(
 				long groupId, long companyId, long userId,
-				long objectDefinitionId,
+				long objectDefinitionId, java.util.List<String> fields,
 				com.liferay.petra.sql.dsl.expression.Predicate predicate,
 				String search, int start, int end,
 				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getValuesList(
-			groupId, companyId, userId, objectDefinitionId, predicate, search,
-			start, end, sorts);
+			groupId, companyId, userId, objectDefinitionId, fields, predicate,
+			search, start, end, sorts);
 	}
 
 	@Override

@@ -586,6 +586,8 @@ definition {
 		var key_navTab = ${navTab};
 		var key_uploadFileName = ${uploadFileName};
 
+		AssertVisible(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		if (IsElementPresent(locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB")) {

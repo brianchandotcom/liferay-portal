@@ -260,6 +260,8 @@ definition {
 				navTab = ${navTab});
 		}
 		else {
+			WaitForVisible(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
 			ItemSelector.uploadFile(
 				invalidFileValidation = ${invalidFileValidation},
 				navTab = ${navTab},

@@ -2,5 +2,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:asset:asset-entry-rel-api")
 	testIntegrationImplementation project(":apps:asset:asset-test-util")
 	testIntegrationImplementation project(":apps:change-tracking:change-tracking-test-util")
+	testIntegrationImplementation project(":apps:friendly-url:friendly-url-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

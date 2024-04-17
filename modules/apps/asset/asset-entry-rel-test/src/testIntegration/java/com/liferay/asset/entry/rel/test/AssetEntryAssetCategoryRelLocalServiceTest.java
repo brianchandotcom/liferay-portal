@@ -8,9 +8,16 @@ package com.liferay.asset.entry.rel.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -37,7 +44,9 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 		new LiferayIntegrationTestRule();
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
 		_initialAssetEntryAssetCategoryRelsCount =
 			_assetEntryAssetCategoryRelLocalService.
 				getAssetEntryAssetCategoryRelsCount();
@@ -310,6 +319,25 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 				getAssetEntryAssetCategoryRelsCount(assetEntryId));
 	}
 
+	@FeatureFlags("LPD-11147")
+	@Test
+	public void testGetAssetEntryAssetCategoryRelsCountByClassNameId() {
+		long assetCategoryId = RandomTestUtil.randomLong();
+
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null, FriendlyURLEntry.class.getName());
+
+		_addAssetEntryAssetCategoryRel(
+			assetEntry.getEntryId(), assetCategoryId);
+
+		Assert.assertEquals(
+			_initialAssetEntryAssetCategoryRelsCount + 1,
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsCountByClassNameId(
+					assetCategoryId,
+					_portal.getClassNameId(FriendlyURLEntry.class)));
+	}
+
 	@Test
 	public void testGetAssetEntryPrimaryKeys() {
 		long assetEntryId1 = RandomTestUtil.randomLong();
@@ -360,6 +388,12 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 	private final List<AssetEntryAssetCategoryRel>
 		_assetEntryAssetCategoryRels = new ArrayList<>();
 
+	@DeleteAfterTestRun
+	private Group _group;
+
 	private int _initialAssetEntryAssetCategoryRelsCount;
+
+	@Inject
+	private Portal _portal;
 
 }

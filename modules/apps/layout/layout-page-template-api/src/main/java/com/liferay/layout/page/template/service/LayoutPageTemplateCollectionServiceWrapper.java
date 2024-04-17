@@ -33,27 +33,27 @@ public class LayoutPageTemplateCollectionServiceWrapper
 
 	@Override
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long groupId, long parentLayoutPageTemplateCollection, String name,
-			String description, int type,
+			long groupId, long parentLayoutPageTemplateCollectionId,
+			String name, String description, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutPageTemplateCollectionService.
 			addLayoutPageTemplateCollection(
-				groupId, parentLayoutPageTemplateCollection, name, description,
-				type, serviceContext);
+				groupId, parentLayoutPageTemplateCollectionId, name,
+				description, type, serviceContext);
 	}
 
 	@Override
 	public LayoutPageTemplateCollection copyLayoutPageTemplateCollection(
-			long groupId, long layoutPageTemplateCollectionId,
+			long groupId, long sourceLayoutPageTemplateCollectionId,
 			long layoutParentPageTemplateCollectionId, boolean copyPermissions,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws Exception {
 
 		return _layoutPageTemplateCollectionService.
 			copyLayoutPageTemplateCollection(
-				groupId, layoutPageTemplateCollectionId,
+				groupId, sourceLayoutPageTemplateCollectionId,
 				layoutParentPageTemplateCollectionId, copyPermissions,
 				serviceContext);
 	}

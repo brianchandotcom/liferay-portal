@@ -54,24 +54,26 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	}
 
 	public static LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long userId, long groupId, long parentLayoutPageTemplateCollection,
-			String name, String description, int type,
+			long userId, long groupId,
+			long parentLayoutPageTemplateCollectionId, String name,
+			String description, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addLayoutPageTemplateCollection(
-			userId, groupId, parentLayoutPageTemplateCollection, name,
+			userId, groupId, parentLayoutPageTemplateCollectionId, name,
 			description, type, serviceContext);
 	}
 
 	public static LayoutPageTemplateCollection copyLayoutPageTemplateCollection(
-			long userId, long groupId, long layoutPageTemplateCollectionId,
+			long userId, long groupId,
+			long sourceLayoutPageTemplateCollectionId,
 			long layoutParentPageTemplateCollectionId, boolean copyPermissions,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws Exception {
 
 		return getService().copyLayoutPageTemplateCollection(
-			userId, groupId, layoutPageTemplateCollectionId,
+			userId, groupId, sourceLayoutPageTemplateCollectionId,
 			layoutParentPageTemplateCollectionId, copyPermissions,
 			serviceContext);
 	}

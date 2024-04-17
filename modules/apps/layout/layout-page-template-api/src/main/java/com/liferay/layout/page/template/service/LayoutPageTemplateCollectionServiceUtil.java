@@ -31,24 +31,24 @@ public class LayoutPageTemplateCollectionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.layout.page.template.service.impl.LayoutPageTemplateCollectionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long groupId, long parentLayoutPageTemplateCollection, String name,
-			String description, int type,
+			long groupId, long parentLayoutPageTemplateCollectionId,
+			String name, String description, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addLayoutPageTemplateCollection(
-			groupId, parentLayoutPageTemplateCollection, name, description,
+			groupId, parentLayoutPageTemplateCollectionId, name, description,
 			type, serviceContext);
 	}
 
 	public static LayoutPageTemplateCollection copyLayoutPageTemplateCollection(
-			long groupId, long layoutPageTemplateCollectionId,
+			long groupId, long sourceLayoutPageTemplateCollectionId,
 			long layoutParentPageTemplateCollectionId, boolean copyPermissions,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws Exception {
 
 		return getService().copyLayoutPageTemplateCollection(
-			groupId, layoutPageTemplateCollectionId,
+			groupId, sourceLayoutPageTemplateCollectionId,
 			layoutParentPageTemplateCollectionId, copyPermissions,
 			serviceContext);
 	}

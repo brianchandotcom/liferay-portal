@@ -45,7 +45,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
 				addLayoutPageTemplateCollection(
 					HttpPrincipal httpPrincipal, long groupId,
-					long parentLayoutPageTemplateCollection, String name,
+					long parentLayoutPageTemplateCollectionId, String name,
 					String description, int type,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
@@ -58,7 +58,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				_addLayoutPageTemplateCollectionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, parentLayoutPageTemplateCollection, name,
+				methodKey, groupId, parentLayoutPageTemplateCollectionId, name,
 				description, type, serviceContext);
 
 			Object returnObj = null;
@@ -94,7 +94,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
 				copyLayoutPageTemplateCollection(
 					HttpPrincipal httpPrincipal, long groupId,
-					long layoutPageTemplateCollectionId,
+					long sourceLayoutPageTemplateCollectionId,
 					long layoutParentPageTemplateCollectionId,
 					boolean copyPermissions,
 					com.liferay.portal.kernel.service.ServiceContext
@@ -108,7 +108,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				_copyLayoutPageTemplateCollectionParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, layoutPageTemplateCollectionId,
+				methodKey, groupId, sourceLayoutPageTemplateCollectionId,
 				layoutParentPageTemplateCollectionId, copyPermissions,
 				serviceContext);
 

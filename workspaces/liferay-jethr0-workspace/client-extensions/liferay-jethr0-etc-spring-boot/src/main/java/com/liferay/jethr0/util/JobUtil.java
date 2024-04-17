@@ -15,33 +15,17 @@ import java.util.Date;
  */
 public class JobUtil {
 
-	public static void updateJobEntityName(
-		JobEntityRepository jobEntityRepository, JobEntity jobEntity) {
-
-		if (jobEntity == null) {
-			return;
-		}
-
-		String jobName = jobEntity.getName();
-
+	public static String getUpdateJobEntityName(String jobName) {
 		if (jobName == null) {
-			return;
+			return null;
 		}
 
-		if (jobName.contains("$(create_date)")) {
-			Date createdDate = jobEntity.getCreatedDate();
-
-			if (createdDate != null) {
-				jobName = jobName.replaceAll(
-					"\\$\\(create_date\\)", String.valueOf(createdDate));
-			}
+		if (jobName.contains("$(current_date)")) {
+			jobName = jobName.replaceAll(
+				"\\$\\(current_date\\)", String.valueOf(new Date()));
 		}
 
-		if (!jobName.equals(jobEntity.getName())) {
-			jobEntity.setName(jobName);
-
-			jobEntityRepository.update(jobEntity);
-		}
+		return jobName;
 	}
 
 }

@@ -30,8 +30,6 @@ public class JobUpdateLiferayEventHandler extends BaseLiferayEventHandler {
 		if (jobEntity != null) {
 			jobEntity.setJSONObject(jobJSONObject);
 
-			JobUtil.updateJobEntityName(jobEntityRepository, jobEntity);
-
 			JobQueue jobQueue = getJobQueue();
 
 			jobQueue.sort();

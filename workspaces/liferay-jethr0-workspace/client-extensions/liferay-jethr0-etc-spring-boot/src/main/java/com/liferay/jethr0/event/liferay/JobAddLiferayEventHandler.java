@@ -27,7 +27,14 @@ public class JobAddLiferayEventHandler extends BaseLiferayEventHandler {
 
 		JobEntity jobEntity = jobEntityRepository.add(getJobJSONObject());
 
-		JobUtil.updateJobEntityName(jobEntityRepository, jobEntity);
+		String currentJobName = jobEntity.getName();
+		String updatedJobName = JobUtil.getUpdateJobEntityName(currentJobName);
+
+		if (!currentJobName.equals(updatedJobName)) {
+			jobEntity.setName(updatedJobName);
+
+			jobEntityRepository.update(jobEntity);
+		}
 
 		for (JSONObject initialBuildJSONObject :
 				jobEntity.getInitialBuildJSONObjects()) {

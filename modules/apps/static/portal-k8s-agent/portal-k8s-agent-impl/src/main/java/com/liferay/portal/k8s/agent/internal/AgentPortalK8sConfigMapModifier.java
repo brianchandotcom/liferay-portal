@@ -217,7 +217,7 @@ public class AgentPortalK8sConfigMapModifier
 	}
 
 	private Map<String, String> _copy(Map<String, String> annotations) {
-		return new TreeMap<>(_nonnull(annotations));
+		return new TreeMap<>(_getMap(annotations));
 	}
 
 	private void _delete(ConfigMap configMap) {
@@ -288,10 +288,6 @@ public class AgentPortalK8sConfigMapModifier
 		return _configurationAdmin.getConfiguration(pid, StringPool.QUESTION);
 	}
 
-	private Map<String, String> _getMapImpl() {
-		return new TreeMap<>();
-	}
-
 	private String _getVirtualInstancePid(
 		org.apache.felix.configurator.impl.model.Config config,
 		String virtualInstanceId) {
@@ -352,14 +348,14 @@ public class AgentPortalK8sConfigMapModifier
 		if (configMap != null) {
 			ObjectMeta objectMeta = configMap.getMetadata();
 
-			Map<String, String> originalAnnotations = _nonnull(
+			Map<String, String> originalAnnotations = _getMap(
 				objectMeta.getAnnotations());
 
-			Map<String, String> originalBinaryData = _nonnull(
+			Map<String, String> originalBinaryData = _getMap(
 				configMap.getBinaryData());
 
-			Map<String, String> originalData = _nonnull(configMap.getData());
-			Map<String, String> originalLabels = _nonnull(
+			Map<String, String> originalData = _getMap(configMap.getData());
+			Map<String, String> originalLabels = _getMap(
 				objectMeta.getLabels());
 
 			Map<String, String> annotations = _copy(originalAnnotations);
@@ -438,10 +434,10 @@ public class AgentPortalK8sConfigMapModifier
 			return Result.UNCHANGED;
 		}
 
-		Map<String, String> annotations = _getMapImpl();
-		Map<String, String> binaryData = _getMapImpl();
-		Map<String, String> data = _getMapImpl();
-		Map<String, String> labels = _getMapImpl();
+		Map<String, String> annotations = new TreeMap<>();
+		Map<String, String> binaryData = new TreeMap<>();
+		Map<String, String> data = new TreeMap<>();
+		Map<String, String> labels = new TreeMap<>();
 
 		configMapModelConsumer.accept(
 			new ConfigMapModel() {
@@ -513,9 +509,9 @@ public class AgentPortalK8sConfigMapModifier
 		return Result.CREATED;
 	}
 
-	private Map<String, String> _nonnull(Map<String, String> map) {
+	private Map<String, String> _getMap(Map<String, String> map) {
 		if (map == null) {
-			map = _getMapImpl();
+			map = new TreeMap<>();
 		}
 
 		return map;

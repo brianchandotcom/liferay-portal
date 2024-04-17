@@ -143,8 +143,8 @@ public class TextDDMFormFieldTypeSettingsTest
 		Assert.assertNotNull(htmlAutocompleteAttribute.getLabel());
 		Assert.assertNotNull(
 			htmlAutocompleteAttribute.getProperty("invalidCharacters"));
-		Assert.assertTrue(htmlAutocompleteAttribute.isVisualProperty());
 		Assert.assertEquals("text", htmlAutocompleteAttribute.getType());
+		Assert.assertTrue(htmlAutocompleteAttribute.isVisualProperty());
 
 		DDMFormField indexTypeDDMFormField = ddmFormFieldsMap.get("indexType");
 

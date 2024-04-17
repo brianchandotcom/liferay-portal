@@ -228,6 +228,9 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		map.put(Field.CLASS_NAME_ID, "0");
 		map.put(Field.CLASS_PK, "0");
 		map.put(Field.COMPANY_ID, String.valueOf(fileEntry.getCompanyId()));
+		map.put(
+			Field.DEFAULT_LANGUAGE_ID,
+			LocaleUtil.toLanguageId(LocaleUtil.JAPAN));
 		map.put(Field.ENTRY_CLASS_NAME, DLFileEntry.class.getName());
 		map.put(
 			Field.ENTRY_CLASS_PK, String.valueOf(fileEntry.getFileEntryId()));

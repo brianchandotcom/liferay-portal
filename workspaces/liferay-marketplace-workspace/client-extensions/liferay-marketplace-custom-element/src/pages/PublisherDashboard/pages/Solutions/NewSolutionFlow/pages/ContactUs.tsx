@@ -6,24 +6,22 @@
 import Form from '../../../../../../components/MarketplaceForm';
 import i18n from '../../../../../../i18n';
 
-const ContactUs = () => {
-	return (
-		<div>
-			<h3>{i18n.translate('contact-us')}</h3>
+const ContactUs = () => (
+	<div>
+		<h3>{i18n.translate('contact-us')}</h3>
 
-			<hr />
+		<hr />
 
-			<Form.Label className="mt-3" htmlFor="email" required>
-				Email
-			</Form.Label>
+		<Form.Label className="mt-3" htmlFor="email" required>
+			Email
+		</Form.Label>
 
-			<Form.Input
-				name="email"
-				placeholder="name@yourdomain.com"
-				type="name@yourdomain.com"
-			/>
-		</div>
-	);
-};
+		<Form.Input
+			name="email"
+			placeholder="name@yourdomain.com"
+			type="name@yourdomain.com"
+		/>
+	</div>
+);
 
 export default ContactUs;

@@ -12,6 +12,17 @@ import Form from '../../../../../../components/MarketplaceForm';
 import i18n from '../../../../../../i18n';
 import {getIconSpriteMap} from '../../../../../../liferay/constants';
 
+const sourceItems = [
+	{
+		label: 'Category',
+		value: 'Category',
+	},
+	{
+		label: 'Tag',
+		value: 'Tag',
+	},
+];
+
 const Profile = () => {
 	const [value, setValue] = useState('');
 	const [items, setItems] = useState([
@@ -20,17 +31,6 @@ const Profile = () => {
 			value: 'Category',
 		},
 	]);
-
-	const sourceItems = [
-		{
-			label: 'Category',
-			value: 'Category',
-		},
-		{
-			label: 'Tag',
-			value: 'Tag',
-		},
-	];
 
 	return (
 		<div className="mb-4 solutions-form-profile">
@@ -67,6 +67,7 @@ const Profile = () => {
 			<Form.Label className="mt-5" htmlFor="name" required>
 				{i18n.translate('name')}
 			</Form.Label>
+
 			<Form.Input
 				name="name"
 				placeholder="Enter solution name"
@@ -76,6 +77,7 @@ const Profile = () => {
 			<Form.Label className="mt-5" htmlFor="description" required>
 				{i18n.translate('description')}
 			</Form.Label>
+
 			<Form.Input
 				component="textarea"
 				name="description"

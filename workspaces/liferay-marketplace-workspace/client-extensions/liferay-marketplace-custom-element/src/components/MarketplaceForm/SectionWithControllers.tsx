@@ -16,6 +16,14 @@ interface SectionWithControllersProps extends HTMLAttributes<HTMLDivElement> {
 	position: number;
 }
 
+const dropDownItems = [
+	{name: 'Move to Top'},
+	{name: 'Move Up'},
+	{name: 'Move Down'},
+	{name: 'Move to Bottom'},
+	{name: 'Delete'},
+];
+
 export function SectionWithControllers({
 	children,
 	index,
@@ -23,15 +31,7 @@ export function SectionWithControllers({
 	position,
 	...props
 }: SectionWithControllersProps) {
-	const [openBody, setOpenBody] = useState(false);
-
-	const dropDownItems = [
-		{name: 'Move to Top'},
-		{name: 'Move Up'},
-		{name: 'Move Down'},
-		{name: 'Move to Bottom'},
-		{name: 'Delete'},
-	];
+	const [collapsed, setCollapsed] = useState(false);
 
 	return (
 		<div className="marketplace-form-section mt-4 p-0" {...props}>
@@ -82,13 +82,13 @@ export function SectionWithControllers({
 						aria-labelledby="angle-right"
 						className="align-self-end d-flex"
 						displayType="unstyled"
-						onClick={() => setOpenBody(!openBody ? true : false)}
-						symbol={openBody ? 'angle-down' : 'angle-right'}
+						onClick={() => setCollapsed(!collapsed)}
+						symbol={collapsed ? 'angle-down' : 'angle-right'}
 					/>
 				</div>
 			</div>
 
-			{openBody && <div className="children-container">{children}</div>}
+			{collapsed && <div className="children-container">{children}</div>}
 		</div>
 	);
 }

@@ -15,6 +15,11 @@ import {SOLUTION_FLOW_ITEMS} from '../constants';
 
 import 'react-quill/dist/quill.snow.css';
 
+const button = {
+	back: 'Back',
+	continue: 'Continue',
+};
+
 const PublishSolutionForm = () => {
 	const {data: account} = useAccount();
 	const location = useLocation();
@@ -26,11 +31,6 @@ const PublishSolutionForm = () => {
 	);
 
 	const activeRoute = SOLUTION_FLOW_ITEMS[activeIndex];
-
-	const button = {
-		back: 'Back',
-		continue: 'Continue',
-	};
 
 	const onClickButton = (buttonName: string) => {
 		const isContinue = buttonName === button.continue;

@@ -5,6 +5,8 @@
 
 import i18n from '../../../../../i18n';
 
+export const MAX_SIZE_5MBS = 5_000_000;
+
 export const SOLUTION_FLOW_ITEMS = [
 	{
 		checked: false,

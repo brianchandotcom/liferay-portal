@@ -10,36 +10,35 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {useState} from 'react';
 
 import Form from '../../../../../../components/MarketplaceForm';
-import IconsBlock from './Blocks/IconBlock';
-import ImagesGrid from './Blocks/ImagesGrid';
-import SingleImage from './Blocks/SingleImage';
-import TextAndImages from './Blocks/TextAndImages';
-import TextAndVideos from './Blocks/TextAndVideo';
-import TextBlock from './Blocks/TextBlock';
-
-const items = [
-	{label: 'Choose an option'},
-	{label: 'Text & Images Block'},
-	{label: 'Text & Video Block'},
-	{label: 'Text Block'},
-	{label: 'Single Image Block'},
-	{label: 'Icons Block'},
-	{label: 'Images Grid Block'},
-];
+import IconsBlock from '../../components/Blocks/IconBlock';
+import ImagesGrid from '../../components/Blocks/ImagesGrid';
+import SingleImage from '../../components/Blocks/SingleImage';
+import TextAndImages from '../../components/Blocks/TextAndImages';
+import TextAndVideos from '../../components/Blocks/TextAndVideo';
+import TextBlock from '../../components/Blocks/TextBlock';
 
 const blocks = [
-	{name: 'Text Block', render: <TextBlock />},
-	{name: 'Text & Images Block', render: <TextAndImages />},
-	{name: 'Text & Video Block', render: <TextAndVideos />},
-	{name: 'Single Image Block', render: <SingleImage />},
-	{name: 'Images Grid Block', render: <ImagesGrid />},
-	{name: 'Icons Block', render: <IconsBlock />},
+	{name: 'Text Block', render: TextBlock},
+	{name: 'Text & Images Block', render: TextAndImages},
+	{name: 'Text & Video Block', render: TextAndVideos},
+	{name: 'Single Image Block', render: SingleImage},
+	{name: 'Images Grid Block', render: ImagesGrid},
+	{name: 'Icons Block', render: IconsBlock},
+];
+
+const items = [
+	{label: 'Choose an option', value: ''},
+	{label: 'Text & Images Block', value: 'text-images-block'},
+	{label: 'Text & Video Block', value: 'text-video-block'},
+	{label: 'Text Block', value: 'text-block'},
+	{label: 'Single Image Block', value: 'single-image-block'},
+	{label: 'Icons Block', value: 'icons-block'},
+	{label: 'Images Grid Block', value: 'images-grid-block'},
 ];
 
 const Details = () => {
 	const {observer, onOpenChange, open} = useModal();
-	const [selectedBlock, setSelectedBlock] = useState('Choose an option');
-	const [submit, setSubmit] = useState(false);
+	const [selectedBlock, setSelectedBlock] = useState('');
 	const [selectedBlockList, setSelectedBlockList] = useState<string[]>([]);
 
 	return (
@@ -48,25 +47,29 @@ const Details = () => {
 				Add a minimum of 2 blocks
 			</Form.Label>
 
-			{submit &&
-				selectedBlockList.map(
-					(selectedBlock: string, index: number) => {
-						return (
-							<Form.SectionWithControllers
-								index={index}
-								key={index}
-								name={selectedBlock}
-								position={selectedBlockList.length}
-							>
-								{blocks.map((block) => {
-									if (block.name === selectedBlock) {
-										return block.render;
-									}
-								})}
-							</Form.SectionWithControllers>
-						);
-					}
-				)}
+			{selectedBlockList.map((selectedBlock, index) => {
+				return (
+					<Form.SectionWithControllers
+						index={index}
+						key={index}
+						name={
+							items.find(({value}) => value === selectedBlock)
+								?.label ?? selectedBlock
+						}
+						position={selectedBlockList.length}
+					>
+						{blocks.map((block, index) => {
+							if (block.name === selectedBlock) {
+								const Component = block.render;
+
+								return <Component key={index} />;
+							}
+
+							return null;
+						})}
+					</Form.SectionWithControllers>
+				);
+			})}
 
 			<ClayButton
 				className="align-items-center content-block d-flex flex-row justify-content-center mt-4 w-100"
@@ -108,16 +111,17 @@ const Details = () => {
 
 						<ClaySelect
 							aria-label="Select Label"
-							id="mySelectId"
+							id="choose-block"
 							onChange={({target}) => {
 								setSelectedBlock(target.value);
 							}}
+							value={selectedBlock}
 						>
 							{items.map((item, index) => (
 								<ClaySelect.Option
 									key={index}
 									label={item.label}
-									value={item.label}
+									value={item.value}
 								/>
 							))}
 						</ClaySelect>
@@ -132,14 +136,10 @@ const Details = () => {
 							</ClayButton>
 
 							<ClayButton
-								disabled={
-									selectedBlock === 'Choose an option' ||
-									selectedBlock === ''
-								}
+								disabled={!selectedBlock}
 								displayType="primary"
 								onClick={() => {
 									onOpenChange(false);
-									setSubmit(true);
 									setSelectedBlockList([
 										...selectedBlockList,
 										selectedBlock,

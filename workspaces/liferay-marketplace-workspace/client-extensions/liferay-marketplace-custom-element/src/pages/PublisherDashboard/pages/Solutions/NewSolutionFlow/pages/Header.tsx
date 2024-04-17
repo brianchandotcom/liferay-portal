@@ -12,6 +12,7 @@ import {DropzoneUpload} from '../../../../../../components/DropzoneUpload/Dropzo
 import Form from '../../../../../../components/MarketplaceForm';
 import i18n from '../../../../../../i18n';
 import {ACCEPT_FILE_TYPES} from '../../../../../StorefrontPage/CustomizeAppStorefrontPage';
+import {MAX_SIZE_5MBS} from '../../constants';
 
 enum RadioOptions {
 	EMBED_VIDEO_URL = 'embed-video-url',
@@ -22,7 +23,7 @@ const Header = () => {
 	const [editorValue, setEditorValue] = useState('');
 	const [radioValue, setRadioValue] = useState('');
 
-	const handleUpload = (files: File[]) => <div>{files[0].name}</div>;
+	const handleUpload = (_files: File[]) => null;
 
 	return (
 		<div className="mb-4 solutions-form-header">
@@ -114,7 +115,7 @@ const Header = () => {
 						buttonText="Select a file"
 						description="Only gif, jpg, png are allowed. Max file size is 5MB "
 						maxFiles={5}
-						maxSize={5000000}
+						maxSize={MAX_SIZE_5MBS}
 						multiple={true}
 						onHandleUpload={handleUpload}
 						title="Drag and drop to upload or"

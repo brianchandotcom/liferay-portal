@@ -112,7 +112,7 @@
 
 				<c:choose>
 					<c:when test="<%= company.isSendPasswordResetLink() %>">
-						<liferay-ui:error exception="<%= AuthException.class %>" message="this-account-may-be-locked" />
+						<liferay-ui:error exception="<%= AuthException.class %>" message="authentication-failed-due-to-incorrect-credentials-or-account-lockout" />
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:error exception="<%= AuthException.class %>" message="authentication-failed" />
@@ -128,7 +128,7 @@
 
 				<c:choose>
 					<c:when test="<%= company.isSendPasswordResetLink() %>">
-						<liferay-ui:error exception="<%= UserLockoutException.PasswordPolicyLockout.class %>" message="this-account-may-be-locked" />
+						<liferay-ui:error exception="<%= UserLockoutException.PasswordPolicyLockout.class %>" message="authentication-failed-due-to-incorrect-credentials-or-account-lockout" />
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:error exception="<%= UserLockoutException.PasswordPolicyLockout.class %>" message="authentication-failed" />

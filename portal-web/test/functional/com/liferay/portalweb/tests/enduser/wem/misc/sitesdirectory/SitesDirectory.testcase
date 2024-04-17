@@ -3,7 +3,7 @@ definition {
 
 	property ci.retries.disabled = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Navigation";
+	property testray.main.component.name = "Sites Directory Widget";
 
 	setUp {
 		TestCase.setUpPortalInstance();

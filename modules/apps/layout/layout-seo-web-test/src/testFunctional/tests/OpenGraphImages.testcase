@@ -5,7 +5,7 @@ definition {
 	property portal.release = "true";
 	property portal.ssl.enabled = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "SEO";
+	property testray.main.component.name = "OpenGraph Tags";
 
 	setUp {
 		TestCase.setUpPortalInstance();

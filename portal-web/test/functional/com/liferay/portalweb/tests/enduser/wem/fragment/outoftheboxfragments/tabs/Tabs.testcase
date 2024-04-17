@@ -4,7 +4,7 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Fragments";
+	property testray.main.component.name = "Fragment Administration";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -99,7 +99,6 @@ definition {
 	test AddElementToEachPanelInMasterPageTemplate {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.main.component.name = "Master Page Templates";
 
 		task ("Add a custom master") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
@@ -241,7 +240,6 @@ definition {
 	test MoveDropZoneIntoPanel {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.main.component.name = "Master Page Templates";
 
 		task ("Add a custom master") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
@@ -480,7 +478,6 @@ definition {
 	test ViewInheriatedTabsWithoutDropzoneInContentPage {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.main.component.name = "Master Page Templates";
 
 		task ("Add a custom master") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(

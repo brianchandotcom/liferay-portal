@@ -5,7 +5,7 @@ definition {
 	property custom.properties = "locale.default.request=true${line.separator}locale.prepend.friendly.url.style=1";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "SEO";
+	property testray.main.component.name = "Page SEO Links";
 
 	setUp {
 		TestCase.setUpPortalInstance();

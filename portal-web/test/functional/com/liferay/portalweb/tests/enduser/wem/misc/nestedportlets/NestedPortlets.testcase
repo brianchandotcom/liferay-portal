@@ -1,11 +1,10 @@
-@component-name = "portal-util-misc"
+@component-name = "portal-wcm"
 definition {
 
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Nested Portlets";
-	property testray.main.component.name = "Nested Portlets";
+	property testray.main.component.name = "Nested Portlets Widget";
 
 	setUp {
 		task ("Set up instance and sign in") {

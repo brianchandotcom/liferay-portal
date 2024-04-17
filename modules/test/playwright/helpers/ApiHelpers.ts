@@ -230,6 +230,10 @@ export class DataApiHelpers extends ApiHelpers {
 	async clearData() {
 		for await (const item of this.data.reverse()) {
 			switch (item.type) {
+				case 'account':
+					await this.headlessAdminUser.deleteAccount(item.id);
+
+					break;
 				case 'catalog':
 					await this.headlessCommerceAdminCatalog.deleteCatalog(
 						item.id

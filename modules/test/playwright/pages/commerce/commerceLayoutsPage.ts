@@ -261,37 +261,44 @@ export class CommerceLayoutsPage {
 		]);
 	}
 
-	async goToPages(navigation: boolean = true) {
+	async goToPages(navigation: boolean = true, siteName?: string) {
 		if (navigation) {
 			await this.goto();
 		}
 
-		if (
-			(await this.closeProductMenuButton.isVisible()) &&
-			(await this.pagesMenuItem.isHidden())
-		) {
-			await this.siteBuilderMenuItem.click();
+		if (siteName) {
+			await this.page.goto(
+				`/group/${siteName}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet`
+			);
 		}
-		else if (await this.openProductMenuButton.isVisible()) {
-			await this.openProductMenuButton.click();
-
-			if (await this.pagesMenuItem.isHidden()) {
+		else {
+			if (
+				(await this.closeProductMenuButton.isVisible()) &&
+				(await this.pagesMenuItem.isHidden())
+			) {
 				await this.siteBuilderMenuItem.click();
 			}
-		}
+			else if (await this.openProductMenuButton.isVisible()) {
+				await this.openProductMenuButton.click();
 
-		await Promise.all([
-			this.pagesMenuItem.click(),
-			this.page.waitForResponse(
-				(resp) =>
-					resp.status() === 200 &&
-					resp
-						.url()
-						.includes(
-							'p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet'
-						)
-			),
-		]);
+				if (await this.pagesMenuItem.isHidden()) {
+					await this.siteBuilderMenuItem.click();
+				}
+			}
+
+			await Promise.all([
+				this.pagesMenuItem.click(),
+				this.page.waitForResponse(
+					(resp) =>
+						resp.status() === 200 &&
+						resp
+							.url()
+							.includes(
+								'p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet'
+							)
+				),
+			]);
+		}
 	}
 
 	async selectDisplayPageTemplatePreviewItem(itemName: string) {

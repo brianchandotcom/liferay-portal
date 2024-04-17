@@ -5,11 +5,15 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {commercePagesTest} from '../../fixtures/commercePagesTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 
-export const test = mergeTests(apiHelpersTest, commercePagesTest, loginTest());
+export const test = mergeTests(
+	dataApiHelpersTest,
+	commercePagesTest,
+	loginTest()
+);
 
 test('COMMERCE-11835 Account Supplier role user can upload diagram file/image', async ({
 	apiHelpers,
@@ -25,6 +29,8 @@ test('COMMERCE-11835 Account Supplier role user can upload diagram file/image', 
 		type: 'supplier',
 	});
 
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
 		accountId: account.id,
 	});
@@ -36,9 +42,6 @@ test('COMMERCE-11835 Account Supplier role user can upload diagram file/image', 
 
 	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
-		name: {
-			en_US: 'Product',
-		},
 		productType: 'diagram',
 	});
 
@@ -56,24 +59,11 @@ test('COMMERCE-11835 Account Supplier role user can upload diagram file/image', 
 		'test@liferay.com'
 	);
 
-	try {
-		await commerceAdminProductPage.gotoProduct(product.name['en_US']);
+	await commerceAdminProductPage.gotoProduct(product.name['en_US']);
+	await commerceAdminProductDetailsPage.goToProductDiagram();
+	await commerceAdminProductDetailsDiagramPage.goToDragAndDropImages();
 
-		await commerceAdminProductDetailsPage.goToProductDiagram();
-
-		await commerceAdminProductDetailsDiagramPage.goToDragAndDropImages();
-
-		await expect(
-			commerceAdminProductDetailsDiagramPage.dragAndDropImages
-		).toBeVisible({
-			timeout: 2000,
-		});
-	}
-	finally {
-		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
-		await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
-			product.productId
-		);
-		await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(catalog.id);
-	}
+	await expect(
+		commerceAdminProductDetailsDiagramPage.dragAndDropImages
+	).toBeVisible();
 });

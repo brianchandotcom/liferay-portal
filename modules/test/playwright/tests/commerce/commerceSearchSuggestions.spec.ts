@@ -7,9 +7,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../fixtures/commercePagesTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {getRandomInt} from '../../utils/getRandomInt';
@@ -17,7 +17,7 @@ import getRandomString from '../../utils/getRandomString';
 import {pageEditorPagesTest} from '../layout-content-page-editor-web/fixtures/pageEditorPagesTest';
 
 export const test = mergeTests(
-	apiHelpersTest,
+	dataApiHelpersTest,
 	applicationsMenuPageTest,
 	commercePagesTest,
 	featureFlagsTest({
@@ -31,16 +31,16 @@ test('LPD-18809 search suggestions should filter by product visibility with the 
 	apiHelpers,
 	applicationsMenuPage,
 	commerceLayoutsPage,
+	page,
 	searchBarPortletPage,
 }) => {
-
-	// setup
-
 	const site = await apiHelpers.headlessSite.createSite({
 		name: getRandomString(),
 	});
 
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		siteGroupId: site.id,
 	});
 
@@ -51,60 +51,38 @@ test('LPD-18809 search suggestions should filter by product visibility with the 
 	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
 		name: {
-			en_US: 'product' + getRandomInt(),
+			en_US: 'tprod' + getRandomInt(),
 		},
 		productChannelFilter: true,
 	});
 
-	// this is to verify that the search suggestions are still showing,
-	// channel filter is off for this so it will always show in the suggestions
-
 	const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
 		name: {
-			en_US: 'product' + getRandomInt(),
+			en_US: 'tprod' + getRandomInt(),
 		},
 	});
 
-	try {
+	await applicationsMenuPage.goToSite(site.name);
 
-		// create our page with a search bar portlet in it
+	await commerceLayoutsPage.goToPages(false, site.name);
+	await commerceLayoutsPage.createWidgetPage('Search Suggestions Page');
 
-		await applicationsMenuPage.goToSite(site.name);
+	await page.goto(`/web/${site.name}`);
 
-		await commerceLayoutsPage.goToPages(false);
-		await commerceLayoutsPage.createWidgetPage('Search Suggestions Page');
-		await commerceLayoutsPage.goToPages(false);
+	await searchBarPortletPage.addSearchBarWidget();
+	await searchBarPortletPage.openSearchBarConfiguration();
+	await searchBarPortletPage.replaceSuggestionsContributorWithCommerceContributor();
 
-		await commerceLayoutsPage.siteHomePageLink.click();
+	await page.reload();
 
-		await searchBarPortletPage.addSearchBarWidget();
-		await searchBarPortletPage.openSearchBarConfiguration();
-		await searchBarPortletPage.replaceSuggestionsContributorWithCommerceContributor();
+	await searchBarPortletPage.searchBarInput.click();
+	await searchBarPortletPage.searchBarInput.fill('tprod');
 
-		// now test the search bar suggestions results
-
-		await searchBarPortletPage.searchBarInput.click();
-		await searchBarPortletPage.searchBarInput.fill('product');
-		expect(
-			searchBarPortletPage.searchSuggestionMenuItem(product2.name.en_US)
-		).toBeVisible();
-		expect(
-			searchBarPortletPage.searchSuggestionMenuItem(product.name.en_US)
-		).not.toBeVisible();
-	}
-	finally {
-		await Promise.all([
-			apiHelpers.headlessCommerceAdminChannel.deleteChannel(channel.id),
-			apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
-				product.productId
-			),
-			apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
-				product2.productId
-			),
-		]);
-
-		await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(catalog.id),
-			await apiHelpers.headlessSite.deleteSite(site.id);
-	}
+	await expect(
+		searchBarPortletPage.searchSuggestionMenuItem(product2.name.en_US)
+	).toBeVisible();
+	await expect(
+		searchBarPortletPage.searchSuggestionMenuItem(product.name.en_US)
+	).not.toBeVisible();
 });

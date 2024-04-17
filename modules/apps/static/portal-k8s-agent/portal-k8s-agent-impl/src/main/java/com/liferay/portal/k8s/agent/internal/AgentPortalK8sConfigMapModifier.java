@@ -323,10 +323,8 @@ public class AgentPortalK8sConfigMapModifier
 
 				_log.debug(
 					StringBundler.concat(
-						"Current node ", localClusterNode.getClusterNodeId(),
-						" is ",
-						!_clusterMasterExecutor.isMaster() ? "not " : "",
-						"master"));
+						"Current Node: ", localClusterNode.getClusterNodeId(),
+						" Master: ", _clusterMasterExecutor.isMaster()));
 			}
 
 			if (AgentPortalK8sThreadLocal.isExecuteOnCurrentNode()) {

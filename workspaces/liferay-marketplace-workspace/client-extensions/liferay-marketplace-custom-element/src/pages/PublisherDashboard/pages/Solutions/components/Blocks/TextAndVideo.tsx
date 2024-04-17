@@ -5,7 +5,7 @@
 
 import ClayIcon from '@clayui/icon';
 
-import Form from '../../../../../../../components/MarketplaceForm';
+import Form from '../../../../../../components/MarketplaceForm';
 import TextBlock from './TextBlock';
 
 const TextAndVideos = () => (

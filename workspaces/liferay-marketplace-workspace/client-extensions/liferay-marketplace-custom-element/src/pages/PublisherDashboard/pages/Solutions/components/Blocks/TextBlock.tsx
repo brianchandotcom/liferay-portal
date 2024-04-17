@@ -5,8 +5,8 @@
 
 import ReactQuill from 'react-quill';
 
-import Form from '../../../../../../../components/MarketplaceForm';
-import i18n from '../../../../../../../i18n';
+import Form from '../../../../../../components/MarketplaceForm';
+import i18n from '../../../../../../i18n';
 
 const TextBlock = () => (
 	<div className="p-4">

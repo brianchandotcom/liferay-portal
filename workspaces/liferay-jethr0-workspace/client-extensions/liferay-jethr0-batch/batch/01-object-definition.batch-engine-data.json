@@ -1201,6 +1201,15 @@
 					"required": true,
 					"state": false,
 					"type": "String"
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"label": {
+						"en_US": "Scheduled"
+					},
+					"name": "scheduled",
+					"type": "Boolean"
 				}
 			],
 			"objectRelationships": [

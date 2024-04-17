@@ -68,18 +68,8 @@ public class TestrayStatusMetricResourceImpl
 		params.add(testrayBuildId);
 
 		if (Validator.isNotNull(testrayCasePriorities)) {
-			String[] testrayCasePrioritiesArray = StringUtil.split(
-				testrayCasePriorities);
-
 			sb.append("AND c.priority_ IN (");
-
-			for (String testrayCasePriority : testrayCasePrioritiesArray) {
-				sb.append("? ");
-				sb.append(", ");
-				params.add(testrayCasePriority);
-			}
-
-			sb.setIndex(sb.index() - 1);
+			sb.append(_interpolateParams(params, testrayCasePriorities));
 			sb.append(") ");
 		}
 
@@ -153,33 +143,14 @@ public class TestrayStatusMetricResourceImpl
 		params.add(testrayBuildId);
 
 		if (Validator.isNotNull(testrayCasePriorities)) {
-			String[] testrayCasePrioritiesArray = StringUtil.split(
-				testrayCasePriorities);
-
 			sb.append("AND c.priority_ IN (");
-
-			for (String testrayCasePriority : testrayCasePrioritiesArray) {
-				sb.append("? ");
-				sb.append(", ");
-				params.add(testrayCasePriority);
-			}
-
-			sb.setIndex(sb.index() - 1);
+			sb.append(_interpolateParams(params, testrayCasePriorities));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayCaseTypes)) {
-			String[] testrayCaseTypesArray = StringUtil.split(testrayCaseTypes);
-
 			sb.append("AND c.r_caseTypeToCases_c_caseTypeId IN (");
-
-			for (String testrayCaseType : testrayCaseTypesArray) {
-				sb.append("? ");
-				sb.append(", ");
-				params.add(testrayCaseType);
-			}
-
-			sb.setIndex(sb.index() - 1);
+			sb.append(_interpolateParams(params, testrayCaseTypes));
 			sb.append(") ");
 		}
 
@@ -257,33 +228,14 @@ public class TestrayStatusMetricResourceImpl
 		params.add(testrayBuildId);
 
 		if (Validator.isNotNull(testrayCasePriorities)) {
-			String[] testrayCasePrioritiesArray = StringUtil.split(
-				testrayCasePriorities);
-
 			sb.append("AND c.priority_ IN (");
-
-			for (String testrayCasePriority : testrayCasePrioritiesArray) {
-				sb.append("? ");
-				sb.append(", ");
-				params.add(testrayCasePriority);
-			}
-
-			sb.setIndex(sb.index() - 1);
+			sb.append(_interpolateParams(params, testrayCasePriorities));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayCaseTypes)) {
-			String[] testrayCaseTypesArray = StringUtil.split(testrayCaseTypes);
-
 			sb.append("AND c.r_caseTypeToCases_c_caseTypeId IN (");
-
-			for (String testrayCaseType : testrayCaseTypesArray) {
-				sb.append("? ");
-				sb.append(", ");
-				params.add(testrayCaseType);
-			}
-
-			sb.setIndex(sb.index() - 1);
+			sb.append(_interpolateParams(params, testrayCaseTypes));
 			sb.append(") ");
 		}
 
@@ -358,33 +310,14 @@ public class TestrayStatusMetricResourceImpl
 		params.add(testrayBuildId);
 
 		if (Validator.isNotNull(testrayCasePriorities)) {
-			String[] testrayCasePrioritiesArray = StringUtil.split(
-				testrayCasePriorities);
-
 			sb.append("AND c.priority_ IN (");
-
-			for (String testrayCasePriority : testrayCasePrioritiesArray) {
-				sb.append("? ");
-				sb.append(", ");
-				params.add(testrayCasePriority);
-			}
-
-			sb.setIndex(sb.index() - 1);
+			sb.append(_interpolateParams(params, testrayCasePriorities));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayCaseTypes)) {
-			String[] testrayCaseTypesArray = StringUtil.split(testrayCaseTypes);
-
 			sb.append("AND c.r_caseTypeToCases_c_caseTypeId IN (");
-
-			for (String testrayCaseType : testrayCaseTypesArray) {
-				sb.append("? ");
-				sb.append(", ");
-				params.add(testrayCaseType);
-			}
-
-			sb.setIndex(sb.index() - 1);
+			sb.append(_interpolateParams(params, testrayCaseTypes));
 			sb.append(") ");
 		}
 
@@ -451,6 +384,22 @@ public class TestrayStatusMetricResourceImpl
 			GetterUtil.getLong(map.get("UNTESTED")));
 
 		return testrayStatusMetric;
+	}
+
+	private String _interpolateParams(List<Object> params, String values) {
+		String[] valuesArray = StringUtil.split(values);
+
+		StringBundler sb = new StringBundler();
+
+		for (String value : valuesArray) {
+			sb.append("? ");
+			sb.append(", ");
+			params.add(value);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 }

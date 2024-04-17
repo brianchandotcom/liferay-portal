@@ -5,15 +5,21 @@
 
 package com.liferay.portal.k8s.agent.internal.scheduler;
 
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
+import com.liferay.portal.k8s.agent.custodian.VirtualInstanceCustodian;
+import com.liferay.portal.k8s.agent.internal.model.listener.VirtualHostModelListener;
 import com.liferay.portal.k8s.agent.internal.util.CompanyConfigMapUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -26,20 +32,21 @@ public class VirtualHostSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
 	@Override
-	public UnsafeConsumer<Long, Exception>
-		getCompanyJobExecutorUnsafeConsumer() {
-
-		return companyId -> CompanyConfigMapUtil.modifyConfigMap(
-			_companyLocalService.getCompanyById(companyId),
-			_portalK8sConfigMapModifier, _virtualHostLocalService);
-	}
-
-	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
-		return () -> _companyLocalService.forEachCompany(
-			company -> CompanyConfigMapUtil.modifyConfigMap(
-				company, _portalK8sConfigMapModifier,
-				_virtualHostLocalService));
+		return () -> {
+			List<Company> companies = _companyLocalService.getCompanies();
+
+			VirtualInstanceCustodian virtualInstanceCustodian =
+				_virtualInstanceCustodianSnapshot.get();
+
+			virtualInstanceCustodian.clean(
+				ListUtil.toList(companies, Company::getWebId));
+
+			companies.forEach(
+				company -> CompanyConfigMapUtil.modifyConfigMap(
+					company, _portalK8sConfigMapModifierSnapshot.get(),
+					_virtualHostLocalService));
+		};
 	}
 
 	@Override
@@ -48,11 +55,17 @@ public class VirtualHostSchedulerJobConfiguration
 			2, TimeUnit.MINUTE);
 	}
 
-	@Reference
-	private CompanyLocalService _companyLocalService;
+	private static final Snapshot<PortalK8sConfigMapModifier>
+		_portalK8sConfigMapModifierSnapshot = new Snapshot<>(
+			VirtualHostModelListener.class, PortalK8sConfigMapModifier.class,
+			null, true);
+	private static final Snapshot<VirtualInstanceCustodian>
+		_virtualInstanceCustodianSnapshot = new Snapshot<>(
+			VirtualHostModelListener.class, VirtualInstanceCustodian.class,
+			null, true);
 
 	@Reference
-	private PortalK8sConfigMapModifier _portalK8sConfigMapModifier;
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private VirtualHostLocalService _virtualHostLocalService;

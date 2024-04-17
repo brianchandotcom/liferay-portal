@@ -10,6 +10,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
+import com.liferay.portal.k8s.agent.custodian.VirtualInstanceCustodian;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalInetSocketAddressEventListener;
 import com.liferay.portal.util.PropsValues;
@@ -55,11 +57,36 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "service.ranking:Integer=-1",
-	service = PortalK8sConfigMapModifier.class
+	service = {PortalK8sConfigMapModifier.class, VirtualInstanceCustodian.class}
 )
 public class RoutesPortalK8sConfigMapModifier
-	implements PortalInetSocketAddressEventListener,
-			   PortalK8sConfigMapModifier {
+	implements PortalInetSocketAddressEventListener, PortalK8sConfigMapModifier,
+			   VirtualInstanceCustodian {
+
+	@Override
+	public void clean(List<String> virtualInstanceIds) {
+		Path liferayRoutesPath = _getLiferayRoutesPath();
+
+		if (liferayRoutesPath == null) {
+			return;
+		}
+
+		File liferayRoutesFile = liferayRoutesPath.toFile();
+
+		for (String directoryName : FileUtil.listDirs(liferayRoutesFile)) {
+			if (Objects.equals(directoryName, "default")) {
+				continue;
+			}
+
+			if (!virtualInstanceIds.contains(directoryName)) {
+				FileUtil.deltree(new File(liferayRoutesFile, directoryName));
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Custodian deleted " + directoryName);
+				}
+			}
+		}
+	}
 
 	@Override
 	public Result modifyConfigMap(

@@ -160,6 +160,10 @@
 					<name>Account Member</name>
 				</role>
 				<role>
+					<role-type>account</role-type>
+					<name>Order Manager</name>
+				</role>
+				<role>
 					<role-type>depot</role-type>
 					<name>Asset Library Administrator</name>
 				</role>

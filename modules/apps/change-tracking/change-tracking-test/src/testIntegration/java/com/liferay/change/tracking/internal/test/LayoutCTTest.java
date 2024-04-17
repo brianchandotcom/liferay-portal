@@ -21,6 +21,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.BulkLayoutConverter;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -128,6 +129,26 @@ public class LayoutCTTest {
 
 		Assert.assertEquals(
 			CTConstants.CT_CHANGE_TYPE_ADDITION, ctEntry.getChangeType());
+	}
+
+	@Test
+	public void testConvertPortletLayoutToContentLayout() throws Exception {
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		try (SafeCloseable safeCloseable1 =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			_bulkLayoutConverter.convertLayout(layout.getPlid());
+
+			layout = _layoutLocalService.fetchLayout(layout.getPlid());
+
+			Assert.assertTrue(layout.isTypeContent());
+		}
+
+		layout = _layoutLocalService.fetchLayout(layout.getPlid());
+
+		Assert.assertFalse(layout.isTypeContent());
 	}
 
 	@Test
@@ -1305,6 +1326,9 @@ public class LayoutCTTest {
 
 	@Inject
 	private static LayoutPermission _layoutPermission;
+
+	@Inject
+	private BulkLayoutConverter _bulkLayoutConverter;
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;

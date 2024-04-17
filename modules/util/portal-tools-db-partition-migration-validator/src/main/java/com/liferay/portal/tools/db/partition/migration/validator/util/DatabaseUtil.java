@@ -43,28 +43,23 @@ public class DatabaseUtil {
 		return liferayInstance;
 	}
 
-	public static String replaceSchemaName(String jdbcUrl, String schemaName) {
+	public static String replaceSchemaName(String jdbcURL, String schemaName) {
 		if (schemaName == null) {
-			return jdbcUrl;
+			return jdbcURL;
 		}
 
-		String replacedJdbcUrl;
-
-		int paramsIndex = jdbcUrl.indexOf("?");
+		int paramsIndex = jdbcURL.indexOf("?");
 
 		if (paramsIndex == -1) {
-			replacedJdbcUrl =
-				jdbcUrl.substring(0, jdbcUrl.lastIndexOf("/") + 1) + schemaName;
-		}
-		else {
-			String onlyUrl = jdbcUrl.substring(0, paramsIndex);
-
-			replacedJdbcUrl = StringBundler.concat(
-				jdbcUrl.substring(0, onlyUrl.lastIndexOf("/") + 1), schemaName,
-				jdbcUrl.substring(paramsIndex));
+			return jdbcURL.substring(0, jdbcURL.lastIndexOf("/") + 1) +
+				schemaName;
 		}
 
-		return replacedJdbcUrl;
+		String simplifiedURL = jdbcURL.substring(0, paramsIndex);
+
+		return StringBundler.concat(
+			jdbcURL.substring(0, simplifiedURL.lastIndexOf("/") + 1),
+			schemaName, jdbcURL.substring(paramsIndex));
 	}
 
 	private static List<Company> _getCompanies(Connection connection)

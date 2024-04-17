@@ -111,13 +111,13 @@ public class DBPartitionMigrationValidator {
 			_exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
 		}
 
-		String jdbcUrl = DatabaseUtil.replaceSchemaName(
+		String jdbcURL = DatabaseUtil.replaceSchemaName(
 			commandLine.getOptionValue("jdbc-url"),
 			commandLine.getOptionValue("schema-name"));
 
 		try {
 			_connection = DriverManager.getConnection(
-				jdbcUrl, commandLine.getOptionValue("user"),
+				jdbcURL, commandLine.getOptionValue("user"),
 				commandLine.getOptionValue("password"));
 		}
 		catch (SQLException sqlException) {

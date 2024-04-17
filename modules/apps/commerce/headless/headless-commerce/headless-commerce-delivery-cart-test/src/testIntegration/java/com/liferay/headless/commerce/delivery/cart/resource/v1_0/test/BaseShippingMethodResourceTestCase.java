@@ -182,6 +182,101 @@ public abstract class BaseShippingMethodResourceTestCase {
 	}
 
 	@Test
+	public void testGetCartByExternalReferenceCodeShippingMethodsPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetCartByExternalReferenceCodeShippingMethodsPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetCartByExternalReferenceCodeShippingMethodsPage_getIrrelevantExternalReferenceCode();
+
+		Page<ShippingMethod> page =
+			shippingMethodResource.
+				getCartByExternalReferenceCodeShippingMethodsPage(
+					externalReferenceCode);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantExternalReferenceCode != null) {
+			ShippingMethod irrelevantShippingMethod =
+				testGetCartByExternalReferenceCodeShippingMethodsPage_addShippingMethod(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantShippingMethod());
+
+			page =
+				shippingMethodResource.
+					getCartByExternalReferenceCodeShippingMethodsPage(
+						irrelevantExternalReferenceCode);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantShippingMethod,
+				(List<ShippingMethod>)page.getItems());
+			assertValid(
+				page,
+				testGetCartByExternalReferenceCodeShippingMethodsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
+		}
+
+		ShippingMethod shippingMethod1 =
+			testGetCartByExternalReferenceCodeShippingMethodsPage_addShippingMethod(
+				externalReferenceCode, randomShippingMethod());
+
+		ShippingMethod shippingMethod2 =
+			testGetCartByExternalReferenceCodeShippingMethodsPage_addShippingMethod(
+				externalReferenceCode, randomShippingMethod());
+
+		page =
+			shippingMethodResource.
+				getCartByExternalReferenceCodeShippingMethodsPage(
+					externalReferenceCode);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(shippingMethod1, (List<ShippingMethod>)page.getItems());
+		assertContains(shippingMethod2, (List<ShippingMethod>)page.getItems());
+		assertValid(
+			page,
+			testGetCartByExternalReferenceCodeShippingMethodsPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetCartByExternalReferenceCodeShippingMethodsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	protected ShippingMethod
+			testGetCartByExternalReferenceCodeShippingMethodsPage_addShippingMethod(
+				String externalReferenceCode, ShippingMethod shippingMethod)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetCartByExternalReferenceCodeShippingMethodsPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetCartByExternalReferenceCodeShippingMethodsPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetCartShippingMethodsPage() throws Exception {
 		Long cartId = testGetCartShippingMethodsPage_getCartId();
 		Long irrelevantCartId =

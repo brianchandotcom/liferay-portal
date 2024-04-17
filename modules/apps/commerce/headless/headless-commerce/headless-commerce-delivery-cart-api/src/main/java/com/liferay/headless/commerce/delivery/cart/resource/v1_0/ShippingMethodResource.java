@@ -47,6 +47,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ShippingMethodResource {
 
+	public Page<ShippingMethod>
+			getCartByExternalReferenceCodeShippingMethodsPage(
+				String externalReferenceCode)
+		throws Exception;
+
 	public Page<ShippingMethod> getCartShippingMethodsPage(Long cartId)
 		throws Exception;
 

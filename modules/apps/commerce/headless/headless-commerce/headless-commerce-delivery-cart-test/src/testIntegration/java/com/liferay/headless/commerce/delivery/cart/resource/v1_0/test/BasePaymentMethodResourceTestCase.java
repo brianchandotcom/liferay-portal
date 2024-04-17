@@ -183,6 +183,100 @@ public abstract class BasePaymentMethodResourceTestCase {
 	}
 
 	@Test
+	public void testGetCartByExternalReferenceCodePaymentMethodsPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetCartByExternalReferenceCodePaymentMethodsPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetCartByExternalReferenceCodePaymentMethodsPage_getIrrelevantExternalReferenceCode();
+
+		Page<PaymentMethod> page =
+			paymentMethodResource.
+				getCartByExternalReferenceCodePaymentMethodsPage(
+					externalReferenceCode);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantExternalReferenceCode != null) {
+			PaymentMethod irrelevantPaymentMethod =
+				testGetCartByExternalReferenceCodePaymentMethodsPage_addPaymentMethod(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantPaymentMethod());
+
+			page =
+				paymentMethodResource.
+					getCartByExternalReferenceCodePaymentMethodsPage(
+						irrelevantExternalReferenceCode);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantPaymentMethod, (List<PaymentMethod>)page.getItems());
+			assertValid(
+				page,
+				testGetCartByExternalReferenceCodePaymentMethodsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
+		}
+
+		PaymentMethod paymentMethod1 =
+			testGetCartByExternalReferenceCodePaymentMethodsPage_addPaymentMethod(
+				externalReferenceCode, randomPaymentMethod());
+
+		PaymentMethod paymentMethod2 =
+			testGetCartByExternalReferenceCodePaymentMethodsPage_addPaymentMethod(
+				externalReferenceCode, randomPaymentMethod());
+
+		page =
+			paymentMethodResource.
+				getCartByExternalReferenceCodePaymentMethodsPage(
+					externalReferenceCode);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(paymentMethod1, (List<PaymentMethod>)page.getItems());
+		assertContains(paymentMethod2, (List<PaymentMethod>)page.getItems());
+		assertValid(
+			page,
+			testGetCartByExternalReferenceCodePaymentMethodsPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetCartByExternalReferenceCodePaymentMethodsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	protected PaymentMethod
+			testGetCartByExternalReferenceCodePaymentMethodsPage_addPaymentMethod(
+				String externalReferenceCode, PaymentMethod paymentMethod)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetCartByExternalReferenceCodePaymentMethodsPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetCartByExternalReferenceCodePaymentMethodsPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetCartPaymentMethodsPage() throws Exception {
 		Long cartId = testGetCartPaymentMethodsPage_getCartId();
 		Long irrelevantCartId =

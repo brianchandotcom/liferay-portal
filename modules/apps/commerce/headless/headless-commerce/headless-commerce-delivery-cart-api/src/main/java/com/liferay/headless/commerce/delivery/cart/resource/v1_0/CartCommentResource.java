@@ -66,6 +66,14 @@ public interface CartCommentResource {
 	public Response putCartCommentBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public Page<CartComment> getCartByExternalReferenceCodeCommentsPage(
+			String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public CartComment postCartByExternalReferenceCodeComment(
+			String externalReferenceCode, CartComment cartComment)
+		throws Exception;
+
 	public Page<CartComment> getCartCommentsPage(
 			Long cartId, Pagination pagination)
 		throws Exception;

@@ -47,6 +47,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PaymentMethodResource {
 
+	public Page<PaymentMethod> getCartByExternalReferenceCodePaymentMethodsPage(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<PaymentMethod> getCartPaymentMethodsPage(Long cartId)
 		throws Exception;
 

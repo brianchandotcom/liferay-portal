@@ -280,8 +280,15 @@ public class AMImageEntryLocalServiceImpl
 	 */
 	@Override
 	public int getPercentage(long companyId, String configurationUuid) {
-		int expectedAMImageEntriesCount = getExpectedAMImageEntriesCount(
-			companyId);
+		return getPercentage(
+			companyId, configurationUuid,
+			getExpectedAMImageEntriesCount(companyId));
+	}
+
+	@Override
+	public int getPercentage(
+		long companyId, String configurationUuid,
+		int expectedAMImageEntriesCount) {
 
 		if (expectedAMImageEntriesCount == 0) {
 			return 0;

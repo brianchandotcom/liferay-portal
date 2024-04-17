@@ -24,37 +24,4 @@ public abstract class BaseLiferayEventHandler extends BaseEventHandler {
 		super(eventHandlerContext, messageJSONObject);
 	}
 
-	protected JSONObject getJobJSONObject() {
-		JSONObject messageJSONObject = getMessageJSONObject();
-
-		JSONObject objectEntryDTOJobJSONObject =
-			messageJSONObject.getJSONObject("objectEntryDTOJob");
-
-		JSONObject jobJSONObject = new JSONObject();
-
-		jobJSONObject.put(
-			"dateCreated",
-			StringUtil.toString(
-				new Date(objectEntryDTOJobJSONObject.getLong("dateCreated")))
-		).put(
-			"dateModified",
-			StringUtil.toString(
-				new Date(objectEntryDTOJobJSONObject.getLong("dateModified")))
-		).put(
-			"externalReferenceCode",
-			objectEntryDTOJobJSONObject.getString("externalReferenceCode")
-		).put(
-			"id", objectEntryDTOJobJSONObject.getLong("id")
-		);
-
-		JSONObject propertiesJSONObject =
-			objectEntryDTOJobJSONObject.getJSONObject("properties");
-
-		for (String key : propertiesJSONObject.keySet()) {
-			jobJSONObject.put(key, propertiesJSONObject.get(key));
-		}
-
-		return jobJSONObject;
-	}
-
 }

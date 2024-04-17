@@ -18,7 +18,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class JobAddLiferayEventHandler extends BaseLiferayEventHandler {
+public class AddJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 
 	@Override
 	public String process() {
@@ -56,7 +56,7 @@ public class JobAddLiferayEventHandler extends BaseLiferayEventHandler {
 		return jobEntity.toString();
 	}
 
-	protected JobAddLiferayEventHandler(
+	protected AddJobLiferayEventHandler(
 		EventHandlerContext eventHandlerContext, JSONObject jsonObject) {
 
 		super(eventHandlerContext, jsonObject);

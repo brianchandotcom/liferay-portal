@@ -15,24 +15,29 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class JobDeleteLiferayEventHandler extends BaseLiferayEventHandler {
+public class UpdateJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 
 	@Override
 	public String process() {
 		JobEntityRepository jobEntityRepository = getJobEntityRepository();
 
-		JobEntity jobEntity = jobEntityRepository.add(getJobJSONObject());
+		JSONObject jobJSONObject = getJobJSONObject();
+
+		JobEntity jobEntity = jobEntityRepository.getById(
+			jobJSONObject.getLong("id"));
 
 		if (jobEntity != null) {
+			jobEntity.setJSONObject(jobJSONObject);
+
 			JobQueue jobQueue = getJobQueue();
 
-			jobQueue.removeJobEntity(jobEntity);
+			jobQueue.sort();
 		}
 
 		return String.valueOf(jobEntity);
 	}
 
-	protected JobDeleteLiferayEventHandler(
+	protected UpdateJobLiferayEventHandler(
 		EventHandlerContext eventHandlerContext, JSONObject jsonObject) {
 
 		super(eventHandlerContext, jsonObject);

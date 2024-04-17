@@ -127,6 +127,25 @@ public abstract class BaseFailureMessageGenerator
 		return _getConsoleTextSnippet(consoleText, truncateTop, start, end);
 	}
 
+	protected String getConsoleTextSnippetByEnd(
+		String consoleText, boolean truncateTop, int end) {
+
+		if (end == -1) {
+			end = consoleText.length();
+		}
+
+		int start = getSnippetStart(consoleText, end);
+
+		return getConsoleTextSnippet(consoleText, truncateTop, start, end);
+	}
+
+	protected String getConsoleTextSnippetByStart(
+		String consoleText, int start) {
+
+		return _getConsoleTextSnippet(
+			consoleText, false, start, consoleText.length() - 1);
+	}
+
 	protected Element getConsoleTextSnippetElement(
 		String consoleText, boolean truncateTop, int start, int end) {
 

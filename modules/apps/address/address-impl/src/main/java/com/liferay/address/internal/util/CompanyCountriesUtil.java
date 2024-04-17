@@ -34,7 +34,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -186,11 +188,18 @@ public class CompanyCountriesUtil {
 						", regionId, languageId, title) VALUES (0, 0, ?, ?, ",
 						"?, ?, ?)"))) {
 
+			long startRegionId =
+				counterLocalService.increment(
+					Region.class.getName(), regionsJSONArray.length()) -
+						regionsJSONArray.length();
+
+			List<RegionLocalizationData> regionLocalizationDataList =
+				new ArrayList<>();
+
 			for (int i = 0; i < regionsJSONArray.length(); i++) {
 				JSONObject regionJSONObject = regionsJSONArray.getJSONObject(i);
 
-				long regionId = counterLocalService.increment(
-					Region.class.getName());
+				long regionId = startRegionId + i;
 
 				_addRegionBatch(
 					regionPreparedStatement, country.getCompanyId(),
@@ -206,25 +215,36 @@ public class CompanyCountriesUtil {
 							LanguageUtil.getCompanyAvailableLocales(
 								country.getCompanyId())) {
 
-						_addRegionLocalizationBatch(
-							regionLocalizationPreparedStatement,
-							country.getCompanyId(),
-							LanguageUtil.getLanguageId(locale), regionId,
-							counterLocalService.increment(
-								RegionLocalization.class.getName()),
-							regionJSONObject.getString("name"));
+						regionLocalizationDataList.add(
+							new RegionLocalizationData(
+								LanguageUtil.getLanguageId(locale), regionId,
+								regionJSONObject.getString("name")));
 					}
 				}
 				else {
 					for (String key : localizationsJSONObject.keySet()) {
-						_addRegionLocalizationBatch(
-							regionLocalizationPreparedStatement,
-							country.getCompanyId(), key, regionId,
-							counterLocalService.increment(
-								RegionLocalization.class.getName()),
-							localizationsJSONObject.getString(key));
+						regionLocalizationDataList.add(
+							new RegionLocalizationData(
+								key, regionId,
+								localizationsJSONObject.getString(key)));
 					}
 				}
+			}
+
+			long startRegionLocalizationId =
+				counterLocalService.increment(
+					RegionLocalization.class.getName(),
+					regionLocalizationDataList.size()) -
+						regionLocalizationDataList.size();
+
+			for (RegionLocalizationData regionLocalizationData :
+					regionLocalizationDataList) {
+
+				_addRegionLocalizationBatch(
+					regionLocalizationPreparedStatement, country.getCompanyId(),
+					regionLocalizationData._languageId,
+					regionLocalizationData._regionId,
+					startRegionLocalizationId++, regionLocalizationData._title);
 			}
 
 			regionPreparedStatement.executeBatch();
@@ -326,5 +346,21 @@ public class CompanyCountriesUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyCountriesUtil.class);
+
+	private static class RegionLocalizationData {
+
+		private RegionLocalizationData(
+			String languageId, long regionId, String title) {
+
+			_languageId = languageId;
+			_regionId = regionId;
+			_title = title;
+		}
+
+		private final String _languageId;
+		private final long _regionId;
+		private final String _title;
+
+	}
 
 }

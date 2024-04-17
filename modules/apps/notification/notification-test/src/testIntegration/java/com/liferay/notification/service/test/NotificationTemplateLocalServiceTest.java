@@ -74,12 +74,12 @@ public class NotificationTemplateLocalServiceTest {
 					Arrays.asList(
 						NotificationTemplateUtil.
 							createNotificationRecipientSetting(
-								NotificationRecipientSettingConstants.
-									NAME_ROLE_NAME,
+								notificationRecipientSettingName,
 								RandomTestUtil.randomString()),
 						NotificationTemplateUtil.
 							createNotificationRecipientSetting(
-								notificationRecipientSettingName,
+								NotificationRecipientSettingConstants.
+									NAME_ROLE_NAME,
 								RandomTestUtil.randomString())),
 					StringUtil.randomString(256),
 					NotificationConstants.TYPE_EMAIL)));
@@ -97,12 +97,12 @@ public class NotificationTemplateLocalServiceTest {
 					Arrays.asList(
 						NotificationTemplateUtil.
 							createNotificationRecipientSetting(
-								NotificationRecipientSettingConstants.
-									NAME_SINGLE_RECIPIENT,
+								notificationRecipientSettingName,
 								RandomTestUtil.randomString()),
 						NotificationTemplateUtil.
 							createNotificationRecipientSetting(
-								notificationRecipientSettingName,
+								NotificationRecipientSettingConstants.
+									NAME_SINGLE_RECIPIENT,
 								RandomTestUtil.randomString())),
 					StringUtil.randomString(256),
 					NotificationConstants.TYPE_USER_NOTIFICATION)));

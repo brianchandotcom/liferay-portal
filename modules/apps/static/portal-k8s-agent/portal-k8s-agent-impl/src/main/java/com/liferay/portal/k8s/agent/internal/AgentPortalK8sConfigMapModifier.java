@@ -136,9 +136,9 @@ public class AgentPortalK8sConfigMapModifier
 		).list();
 
 		for (ConfigMap configMap : configMapList.getItems()) {
-			ObjectMeta metadata = configMap.getMetadata();
+			ObjectMeta objectMeta = configMap.getMetadata();
 
-			Map<String, String> labels = metadata.getLabels();
+			Map<String, String> labels = objectMeta.getLabels();
 
 			String virtualInstanceId = labels.get(
 				"dxp.lxc.liferay.com/virtualInstanceId");

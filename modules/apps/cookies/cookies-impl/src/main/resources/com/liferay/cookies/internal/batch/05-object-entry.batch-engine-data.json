@@ -1,0 +1,98 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-10588",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "PersonalizationCookieEntry",
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"expiration": "",
+			"externalReferenceCode": "b739c129-37f0-4803-b498-dbcb18b8ec38",
+			"host": "Liferay",
+			"name": "FRAGMENTS_DISPLAY_STYLE_KEY",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "c1b7e721-78c7-452d-a56b-f568731c32ca",
+			"host": "Liferay",
+			"name": "_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet__fragment-collection_collectionId_open",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "611a7f86-3de5-487e-a755-abbfb204f779",
+			"host": "Liferay",
+			"name": "_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet__fragments-sidebar_active-tab-id",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "2171285c-08b1-4531-9067-7688eece3829",
+			"host": "Liferay",
+			"name": "_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet_scrollPosition",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "c2b23842-8703-464b-b94e-d037e9b87294",
+			"host": "Liferay",
+			"name": "_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet_sidebar-width",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "c4a26f89-3473-4767-92bb-0f9933770a7d",
+			"host": "Liferay",
+			"name": "_com_liferay_product_navigation_control_menu_web_portlet_ProductNavigationControlMenuPortlet_active-tab-id",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "524c3049-b6d0-488c-b8a1-777708af9527",
+			"host": "Liferay",
+			"name": "ab_test_variant_id",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "863e24f5-b14e-4ec9-9ab8-45f5a8e9a0c2",
+			"host": "Liferay",
+			"name": "portlet_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet___itemAdded",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "b9e9b45d-af18-461a-857c-35239d636471",
+			"host": "Liferay",
+			"name": "portlet_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet___scrollPosition",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "3850f785-6b1a-428f-a63f-5d934f9f5642",
+			"host": "Liferay",
+			"name": "portlet_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet___selectedMenuItemId",
+			"purpose": "",
+			"type": "First Party"
+		}
+	]
+}

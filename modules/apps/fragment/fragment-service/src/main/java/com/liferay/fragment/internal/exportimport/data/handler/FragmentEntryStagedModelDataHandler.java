@@ -16,11 +16,14 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -184,8 +187,20 @@ public class FragmentEntryStagedModelDataHandler
 			importedFragmentEntry.setFragmentEntryId(
 				existingFragmentEntry.getFragmentEntryId());
 
-			importedFragmentEntry = _stagedModelRepository.updateStagedModel(
-				portletDataContext, importedFragmentEntry);
+			Company company = _companyLocalService.getCompany(
+				existingFragmentEntry.getCompanyId());
+
+			try (AutoCloseable autoCloseable =
+					_layoutServiceContextHelper.getServiceContextAutoCloseable(
+						company)) {
+
+				importedFragmentEntry =
+					_stagedModelRepository.updateStagedModel(
+						portletDataContext, importedFragmentEntry);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
 		}
 
 		if ((fragmentEntry.getPreviewFileEntryId() == 0) &&
@@ -224,6 +239,9 @@ public class FragmentEntryStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryStagedModelDataHandler.class);
 
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
 	@Reference(target = "(content.processor.type=DLReferences)")
 	private ExportImportContentProcessor<String>
 		_dlReferencesExportImportContentProcessor;
@@ -233,6 +251,9 @@ public class FragmentEntryStagedModelDataHandler
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.fragment.model.FragmentEntry)",

@@ -160,10 +160,8 @@ public class LanguageTag extends IncludeTag {
 
 		Layout layout = themeDisplay.getLayout();
 
-		formAction = HttpComponentsUtil.setParameter(
+		return HttpComponentsUtil.setParameter(
 			formAction, "layoutId", layout.getLayoutId());
-
-		return formAction;
 	}
 
 	protected List<LanguageEntry> getLanguageEntries(

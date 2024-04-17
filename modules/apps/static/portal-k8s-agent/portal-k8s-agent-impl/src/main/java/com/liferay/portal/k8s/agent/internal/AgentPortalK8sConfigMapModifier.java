@@ -165,8 +165,8 @@ public class AgentPortalK8sConfigMapModifier
 		String configMapName) {
 
 		if (_clusterMasterExecutor.isEnabled() &&
-			!_clusterMasterExecutor.isMaster() &&
-			!AgentPortalK8sThreadLocal.isExecuteOnCurrentNode()) {
+			(!_clusterMasterExecutor.isMaster() ||
+			 !AgentPortalK8sThreadLocal.isExecuteOnCurrentNode())) {
 
 			return Result.UNCHANGED;
 		}

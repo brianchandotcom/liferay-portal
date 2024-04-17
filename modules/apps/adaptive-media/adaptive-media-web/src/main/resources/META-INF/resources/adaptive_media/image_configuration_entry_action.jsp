@@ -38,6 +38,8 @@ if (optimizeImageSingleBackgroundTasks != null) {
 }
 
 String entryUuid = String.valueOf(amImageConfigurationEntry.getUUID());
+
+int totalImages = (int)request.getAttribute(AMWebKeys.TOTAL_IMAGES);
 %>
 
 <liferay-ui:icon-menu
@@ -101,7 +103,7 @@ String entryUuid = String.valueOf(amImageConfigurationEntry.getUUID());
 	<%
 	String onClick = liferayPortletResponse.getNamespace() + "adaptRemaining('" + entryUuid + "', '" + optimizeImagesURL.toString() + "');";
 
-	int percentage = AMImageEntryLocalServiceUtil.getPercentage(themeDisplay.getCompanyId(), entryUuid);
+	int percentage = AMImageEntryLocalServiceUtil.getPercentage(themeDisplay.getCompanyId(), entryUuid, totalImages);
 	%>
 
 	<liferay-ui:icon

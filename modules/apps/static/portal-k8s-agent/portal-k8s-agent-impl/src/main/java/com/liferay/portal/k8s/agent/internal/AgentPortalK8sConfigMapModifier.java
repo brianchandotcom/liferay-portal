@@ -152,7 +152,7 @@ public class AgentPortalK8sConfigMapModifier
 				);
 
 				if (_log.isDebugEnabled()) {
-					_log.debug("Custodian deleted " + configMap);
+					_log.debug("Deleted custodian " + configMap);
 				}
 			}
 		}

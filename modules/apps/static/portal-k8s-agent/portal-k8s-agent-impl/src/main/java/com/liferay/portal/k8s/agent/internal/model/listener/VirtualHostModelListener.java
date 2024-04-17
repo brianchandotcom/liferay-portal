@@ -44,8 +44,8 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"After create virtual host ", virtualHost.getHostname(),
-					" for virtual instance ", company.getWebId()));
+					"Created virtual host ", virtualHost.getHostname(),
+					" for company ", company.getWebId()));
 		}
 
 		PortalK8sConfigMapModifier portalK8sConfigMapModifier =
@@ -74,8 +74,8 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"After remove virtual host ", virtualHost.getHostname(),
-					" for virtual instance ", company.getWebId()));
+					"Removed virtual host ", virtualHost.getHostname(),
+					" for company ", company.getWebId()));
 		}
 
 		PortalK8sConfigMapModifier portalK8sConfigMapModifier =
@@ -105,8 +105,8 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"After update virtual host ", virtualHost.getHostname(),
-					" for virtual instance ", company.getWebId()));
+					"Updated virtual host ", virtualHost.getHostname(),
+					" for company ", company.getWebId()));
 		}
 
 		PortalK8sConfigMapModifier portalK8sConfigMapModifier =

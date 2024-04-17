@@ -82,7 +82,7 @@ public class RoutesPortalK8sConfigMapModifier
 				FileUtil.deltree(new File(liferayRoutesFile, directoryName));
 
 				if (_log.isDebugEnabled()) {
-					_log.debug("Custodian deleted " + directoryName);
+					_log.debug("Deleted custodian " + directoryName);
 				}
 			}
 		}

@@ -85,7 +85,7 @@ body .ddm-user-view-content {
 }
 
 .portlet-forms .ddm-form-basic-info .ddm-form-name {
-	color: #000;
+	color: $black;
 	font-weight: 500;
 	margin-top: 40px;
 	padding: 0;
@@ -101,25 +101,25 @@ body .ddm-user-view-content {
 	word-break: normal;
 
 	.custom-control-label-text:disabled {
-		color: #6b6c7e;
+		color: $secondary;
 	}
 
 	.custom-radio
 		.custom-control-input:checked:disabled
 		~ .custom-control-label::before {
-		background-color: #0b5fff;
+		background-color: $primary;
 		border-color: #0043c5;
 	}
 
 	.custom-checkbox
 		.custom-control-input:checked:disabled
 		~ .custom-control-label::before {
-		background-color: #0b5fff;
+		background-color: $primary;
 		border-color: #0043c5;
 	}
 
 	.form-control:disabled {
-		color: #6b6c7e;
+		color: $secondary;
 	}
 
 	.form-control-feedback {
@@ -137,7 +137,7 @@ body .ddm-user-view-content {
 
 		td,
 		th {
-			color: #da1414;
+			color: $danger;
 		}
 	}
 
@@ -236,7 +236,7 @@ body .ddm-user-view-content {
 	}
 
 	.option-selected {
-		color: #6b6c7e;
+		color: $secondary;
 	}
 
 	.row {
@@ -295,7 +295,7 @@ body .ddm-user-view-content {
 }
 
 .liferay-ddm-form-field-paragraph {
-	color: #272833;
+	color: $dark;
 	font-size: 14px;
 	line-height: 16px;
 }
@@ -387,10 +387,10 @@ body .ddm-user-view-content {
 		}
 
 		.placeholder-dropdown-item {
-			color: #a7a9bc;
+			color: $secondary-l1;
 
 			&:hover {
-				color: #a7a9bc;
+				color: $secondary-l1;
 			}
 		}
 
@@ -400,7 +400,7 @@ body .ddm-user-view-content {
 	}
 
 	.select-arrow-down-container {
-		color: #6b6c7e;
+		color: $secondary;
 	}
 
 	.search-chosen {
@@ -447,7 +447,7 @@ body .ddm-user-view-content {
 	}
 
 	.drop-chosen {
-		background-color: #fff;
+		background-color: $white;
 		border-radius: 0 0 4px 4px;
 		box-shadow: 0 2px 14px 0 rgba(58, 75, 87, 0.1);
 		left: 0;
@@ -671,7 +671,7 @@ body .ddm-user-view-content {
 }
 
 .ddm-tooltip {
-	color: #a7a9bc;
+	color: $secondary-l1;
 	display: inline-block;
 	padding-left: 4px;
 }
@@ -688,7 +688,7 @@ div.ddm-tooltip-container {
 }
 
 p.ddm-label {
-	color: #272833;
+	color: $dark;
 	cursor: default;
 	display: inline-block;
 	font-size: 0.875rem;
@@ -700,7 +700,7 @@ p.ddm-label {
 
 legend .reference-mark,
 p .reference-mark {
-	color: #b95000;
+	color: $warning;
 	font-size: 6px;
 	margin: 4px 0 32px;
 	padding-left: 8px;

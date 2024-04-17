@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"@clayui/multi-select": "^3.113.0",
 		"@liferay/eslint-plugin": "1.5.0",
 		"@liferay/npm-scripts": "49.2.3"
 	},

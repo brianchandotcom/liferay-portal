@@ -8,13 +8,10 @@ import {ACCEPT_FILE_TYPES} from '../../../../../../StorefrontPage/CustomizeAppSt
 import TextBlock from './TextBlock';
 
 const TextAndImages = () => {
-	const handleUpload = (files: File[]) => {
-		// eslint-disable-next-line no-console
-		console.log('files', files);
-	};
+	const handleUpload = (files: File[]) => <div>{files[0].name}</div>;
 
 	return (
-		<div>
+		<>
 			<TextBlock />
 
 			<div className="d-flex p-4">
@@ -29,7 +26,7 @@ const TextAndImages = () => {
 					title="Drag and drop to upload or"
 				/>
 			</div>
-		</div>
+		</>
 	);
 };
 

@@ -7,10 +7,7 @@ import {DropzoneUpload} from '../../../../../../../components/DropzoneUpload/Dro
 import {ACCEPT_FILE_TYPES} from '../../../../../../StorefrontPage/CustomizeAppStorefrontPage';
 
 const SingleImage = () => {
-	const handleUpload = (files: File[]) => {
-		// eslint-disable-next-line no-console
-		console.log('files', files);
-	};
+	const handleUpload = (files: File[]) => <div>{files[0].name}</div>;
 
 	return (
 		<div className="d-flex p-4">

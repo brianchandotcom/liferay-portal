@@ -8,7 +8,7 @@ package com.liferay.portal.k8s.agent.internal.model.listener;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
-import com.liferay.portal.k8s.agent.internal.thread.local.AgentPortalK8sThreadLocal;
+import com.liferay.portal.k8s.agent.internal.threadlocal.AgentPortalK8sThreadLocal;
 import com.liferay.portal.k8s.agent.internal.util.CompanyConfigMapUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;

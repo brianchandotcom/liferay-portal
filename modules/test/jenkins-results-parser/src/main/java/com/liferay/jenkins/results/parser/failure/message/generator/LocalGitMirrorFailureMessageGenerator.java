@@ -16,6 +16,11 @@ public class LocalGitMirrorFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
+	public String getMessage(String consoleText) {
+		return "Unable to synchronize with local Git mirror.";
+	}
+
+	@Override
 	public Element getMessageElement(String consoleText) {
 		if (!consoleText.contains(_TOKEN_LOCAL_GIT_FAILURE_END) ||
 			!consoleText.contains(_TOKEN_LOCAL_GIT_FAILURE_START)) {
@@ -26,8 +31,8 @@ public class LocalGitMirrorFailureMessageGenerator
 		Element messageElement = Dom4JUtil.getNewElement("div");
 
 		Dom4JUtil.getNewElement(
-			"p", messageElement, "Unable to synchronize with ",
-			Dom4JUtil.getNewElement("strong", null, "local Git mirror"), ".");
+			"p", messageElement,
+			Dom4JUtil.getNewElement("strong", null, getMessage(consoleText)));
 
 		int end = consoleText.indexOf(_TOKEN_LOCAL_GIT_FAILURE_END);
 

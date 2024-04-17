@@ -48,13 +48,13 @@ public class TestrayStatusMetricResourceImpl
 		sb.append("select ct.c_caseTypeId_, ct.name_, COUNT(cr.dueStatus_) ");
 		sb.append("as TOTAL, SUM(CASE WHEN cr.dueStatus_ = 'BLOCKED' THEN 1 ");
 		sb.append("ELSE 0 END) as BLOCKED, SUM(CASE WHEN cr.dueStatus_ =  ");
-		sb.append("'FAILED' THEN 1 ELSE 0 END) as FAILED, ");
-		sb.append("SUM(CASE WHEN cr.dueStatus_ = 'INPROGRESS' THEN 1 ELSE 0 ");
-		sb.append("END) as INPROGRESS, SUM(CASE WHEN cr.dueStatus_ = ");
-		sb.append("'PASSED' THEN 1 ELSE 0 END) as PASSED, SUM(CASE WHEN ");
-		sb.append("cr.dueStatus_ = 'TESTFIX' THEN 1 ELSE 0 END) as TESTFIX, ");
-		sb.append("SUM(CASE WHEN cr.dueStatus_ = 'UNTESTED' THEN 1 ELSE 0 ");
-		sb.append("END) as UNTESTED FROM O_[%COMPANY_ID%]_Build b, ");
+		sb.append("'FAILED' THEN 1 ELSE 0 END) as FAILED, SUM(CASE WHEN ");
+		sb.append("cr.dueStatus_ = 'INPROGRESS' THEN 1 ELSE 0 END) as ");
+		sb.append("INPROGRESS, SUM(CASE WHEN cr.dueStatus_ = 'PASSED' THEN 1 ");
+		sb.append("ELSE 0 END) as PASSED, SUM(CASE WHEN cr.dueStatus_ = ");
+		sb.append("'TESTFIX' THEN 1 ELSE 0 END) as TESTFIX, SUM(CASE WHEN ");
+		sb.append("cr.dueStatus_ = 'UNTESTED' THEN 1 ELSE 0 END) as UNTESTED ");
+		sb.append("FROM O_[%COMPANY_ID%]_Build b, ");
 		sb.append("O_[%COMPANY_ID%]_CaseResult cr, O_[%COMPANY_ID%]_Case c, ");
 		sb.append("O_[%COMPANY_ID%]_CaseType ct, O_[%COMPANY_ID%]_Component ");
 		sb.append("co WHERE b.c_buildId_ = ? AND b.c_buildId_ = ");
@@ -120,18 +120,18 @@ public class TestrayStatusMetricResourceImpl
 				Pagination pagination)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("select co.c_componentId_, co.name_, COUNT(cr.dueStatus_) ");
 		sb.append("as TOTAL, SUM(CASE WHEN cr.dueStatus_ = 'BLOCKED' THEN 1 ");
 		sb.append("ELSE 0 END) as BLOCKED, SUM(CASE WHEN cr.dueStatus_ =  ");
-		sb.append("'FAILED' THEN 1 ELSE 0 END) as FAILED, ");
-		sb.append("SUM(CASE WHEN cr.dueStatus_ = 'INPROGRESS' THEN 1 ELSE 0 ");
-		sb.append("END) as INPROGRESS, SUM(CASE WHEN cr.dueStatus_ = ");
-		sb.append("'PASSED' THEN 1 ELSE 0 END) as PASSED, SUM(CASE WHEN ");
-		sb.append("cr.dueStatus_ = 'TESTFIX' THEN 1 ELSE 0 END) as TESTFIX, ");
-		sb.append("SUM(CASE WHEN cr.dueStatus_ = 'UNTESTED' THEN 1 ELSE 0 ");
-		sb.append("END) as UNTESTED FROM O_[%COMPANY_ID%]_Build b, ");
+		sb.append("'FAILED' THEN 1 ELSE 0 END) as FAILED, SUM(CASE WHEN ");
+		sb.append("cr.dueStatus_ = 'INPROGRESS' THEN 1 ELSE 0 END) as  ");
+		sb.append("INPROGRESS, SUM(CASE WHEN cr.dueStatus_ = 'PASSED' THEN 1 ");
+		sb.append("ELSE 0 END) as PASSED, SUM(CASE WHEN cr.dueStatus_ = ");
+		sb.append("'TESTFIX' THEN 1 ELSE 0 END) as TESTFIX, SUM(CASE WHEN ");
+		sb.append("cr.dueStatus_ = 'UNTESTED' THEN 1 ELSE 0 END) as UNTESTED ");
+		sb.append("FROM O_[%COMPANY_ID%]_Build b, ");
 		sb.append("O_[%COMPANY_ID%]_CaseResult cr, O_[%COMPANY_ID%]_Case c, ");
 		sb.append("O_[%COMPANY_ID%]_Component co WHERE b.c_buildId_ = ? AND ");
 		sb.append("b.c_buildId_  = cr.r_buildToCaseResult_c_buildId AND ");
@@ -202,13 +202,13 @@ public class TestrayStatusMetricResourceImpl
 				Pagination pagination)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(26);
 
 		sb.append("select r.c_runId_, r.name_, r.number_, ");
 		sb.append("COUNT(cr.dueStatus_) as TOTAL, SUM(CASE WHEN ");
-		sb.append("cr.dueStatus_ = 'BLOCKED' THEN 1 ELSE 0 END) as BLOCKED,");
-		sb.append(" SUM(CASE WHEN cr.dueStatus_ = 'FAILED' THEN 1 ELSE 0 END)");
-		sb.append(" as FAILED, SUM(CASE WHEN cr.dueStatus_ = 'INPROGRESS' ");
+		sb.append("cr.dueStatus_ = 'BLOCKED' THEN 1 ELSE 0 END) as BLOCKED, ");
+		sb.append("SUM(CASE WHEN cr.dueStatus_ = 'FAILED' THEN 1 ELSE 0 END) ");
+		sb.append("as FAILED, SUM(CASE WHEN cr.dueStatus_ = 'INPROGRESS' ");
 		sb.append("THEN 1 ELSE 0 END) as INPROGRESS, SUM(CASE WHEN ");
 		sb.append("cr.dueStatus_ = 'PASSED' THEN 1 ELSE 0 END) as PASSED, ");
 		sb.append("SUM(CASE WHEN cr.dueStatus_ = 'TESTFIX' THEN 1 ELSE 0 ");
@@ -287,7 +287,7 @@ public class TestrayStatusMetricResourceImpl
 				Pagination pagination)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("select t.c_teamId_ , t.name_, COUNT(cr.dueStatus_) as ");
 		sb.append("TOTAL, SUM(CASE WHEN cr.dueStatus_ = 'BLOCKED' THEN 1 ");

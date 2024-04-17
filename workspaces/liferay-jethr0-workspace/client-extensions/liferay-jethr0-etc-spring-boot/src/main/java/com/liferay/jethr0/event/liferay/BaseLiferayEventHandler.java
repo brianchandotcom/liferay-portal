@@ -7,9 +7,6 @@ package com.liferay.jethr0.event.liferay;
 
 import com.liferay.jethr0.event.BaseEventHandler;
 import com.liferay.jethr0.event.EventHandlerContext;
-import com.liferay.jethr0.util.StringUtil;
-
-import java.util.Date;
 
 import org.json.JSONObject;
 

@@ -7,7 +7,9 @@ package com.liferay.jethr0;
 
 import com.liferay.jethr0.event.EventHandler;
 import com.liferay.jethr0.event.liferay.LiferayEventHandlerFactory;
+
 import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,7 @@ public class Jethr0RestController {
 
 	@PostMapping("/object-actions")
 	public ResponseEntity<String> action(
-			@AuthenticationPrincipal Jwt jwt, @RequestBody String body) {
+		@AuthenticationPrincipal Jwt jwt, @RequestBody String body) {
 
 		try {
 			EventHandler eventHandler =

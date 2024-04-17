@@ -220,8 +220,7 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 
 		if (routineEntityId > 0) {
 			_routineEntityRepository.relateRoutineToJob(
-				_routineEntityRepository.getById(routineEntityId),
-				jobEntity);
+				_routineEntityRepository.getById(routineEntityId), jobEntity);
 		}
 
 		return _updateJobToBuildsRelationshipsFromDALO(jobEntity);

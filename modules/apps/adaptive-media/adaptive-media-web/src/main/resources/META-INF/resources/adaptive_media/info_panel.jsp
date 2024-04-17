@@ -19,6 +19,8 @@ if (ListUtil.isNotEmpty(selectedAMImageConfigurationEntries)) {
 
 	selectedConfigurationEntriesSize = selectedAMImageConfigurationEntries.size();
 }
+
+int totalImages = (int)request.getAttribute(AMWebKeys.TOTAL_IMAGES);
 %>
 
 <div class="sidebar-header">
@@ -92,8 +94,6 @@ if (ListUtil.isNotEmpty(selectedAMImageConfigurationEntries)) {
 
 							<%
 							int adaptedImages = AMImageEntryLocalServiceUtil.getAMImageEntriesCount(themeDisplay.getCompanyId(), amImageConfigurationEntry.getUUID());
-
-							int totalImages = AMImageEntryLocalServiceUtil.getExpectedAMImageEntriesCount(themeDisplay.getCompanyId());
 							%>
 
 							<%= Math.min(adaptedImages, totalImages) %>/<%= totalImages %>

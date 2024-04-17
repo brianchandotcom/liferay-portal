@@ -13,6 +13,8 @@ SearchContainer<?> amSearchContainer = new SearchContainer<>(renderRequest, rend
 amSearchContainer.setId("imageConfigurationEntries");
 amSearchContainer.setResultsAndTotal((List)request.getAttribute(AMWebKeys.CONFIGURATION_ENTRIES_LIST));
 amSearchContainer.setRowChecker(new ImageConfigurationEntriesChecker(liferayPortletResponse));
+
+int totalImages = (int)request.getAttribute(AMWebKeys.TOTAL_IMAGES);
 %>
 
 <clay:management-toolbar
@@ -20,7 +22,9 @@ amSearchContainer.setRowChecker(new ImageConfigurationEntriesChecker(liferayPort
 />
 
 <div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/adaptive_media/info_panel" var="sidebarPanelURL" />
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/adaptive_media/info_panel" var="sidebarPanelURL">
+		<portlet:param name="<%= AMWebKeys.TOTAL_IMAGES %>" value="<%= String.valueOf(totalImages) %>" />
+	</liferay-portlet:resourceURL>
 
 	<liferay-frontend:sidebar-panel
 		resourceURL="<%= sidebarPanelURL %>"
@@ -111,8 +115,6 @@ amSearchContainer.setRowChecker(new ImageConfigurationEntriesChecker(liferayPort
 						String uuid = String.valueOf(amImageConfigurationEntry.getUUID());
 
 						int adaptedImages = AMImageEntryLocalServiceUtil.getAMImageEntriesCount(themeDisplay.getCompanyId(), amImageConfigurationEntry.getUUID());
-
-						int totalImages = AMImageEntryLocalServiceUtil.getExpectedAMImageEntriesCount(themeDisplay.getCompanyId());
 						%>
 
 						<div id="<portlet:namespace />AdaptRemainingContainer_<%= rowId %>">

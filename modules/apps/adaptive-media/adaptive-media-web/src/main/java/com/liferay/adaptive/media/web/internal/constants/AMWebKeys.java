@@ -21,4 +21,6 @@ public class AMWebKeys {
 	public static final String SELECTED_CONFIGURATION_ENTRIES =
 		"SELECTED_CONFIGURATION_ENTRIES";
 
+	public static final String TOTAL_IMAGES = "TOTAL_IMAGES";
+
 }

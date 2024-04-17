@@ -35,6 +35,7 @@ dependencies {
 	compileOnly project(":apps:object:object-admin-rest-api")
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:object:object-dynamic-data-mapping-form-field-type-api")
+	compileOnly project(":apps:object:object-info-api")
 	compileOnly project(":apps:object:object-rest-api")
 	compileOnly project(":apps:object:object-scripting-api")
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")

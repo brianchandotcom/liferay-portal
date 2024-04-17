@@ -26,10 +26,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.math.BigDecimal;
 
@@ -52,7 +56,7 @@ public class CommerceOrderSystemObjectDefinitionManager
 	public long addBaseModel(User user, Map<String, Object> values)
 		throws Exception {
 
-		OrderResource orderResource = _buildOrderResource(user);
+		OrderResource orderResource = _buildOrderResource(false, user);
 
 		Order order = orderResource.postOrder(_toOrder(values));
 
@@ -208,6 +212,17 @@ public class CommerceOrderSystemObjectDefinitionManager
 	}
 
 	@Override
+	public Page<?> getPage(
+			User user, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		OrderResource orderResource = _buildOrderResource(true, user);
+
+		return orderResource.getOrdersPage(search, filter, pagination, sorts);
+	}
+
+	@Override
 	public Column<?, Long> getPrimaryKeyColumn() {
 		return CommerceOrderTable.INSTANCE.commerceOrderId;
 	}
@@ -232,7 +247,7 @@ public class CommerceOrderSystemObjectDefinitionManager
 			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
 
-		OrderResource orderResource = _buildOrderResource(user);
+		OrderResource orderResource = _buildOrderResource(false, user);
 
 		orderResource.patchOrder(primaryKey, _toOrder(values));
 
@@ -241,11 +256,13 @@ public class CommerceOrderSystemObjectDefinitionManager
 			values);
 	}
 
-	private OrderResource _buildOrderResource(User user) {
+	private OrderResource _buildOrderResource(
+		boolean checkPermissions, User user) {
+
 		OrderResource.Builder builder = _orderResourceFactory.create();
 
 		return builder.checkPermissions(
-			false
+			checkPermissions
 		).preferredLocale(
 			user.getLocale()
 		).user(

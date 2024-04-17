@@ -24,9 +24,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.math.BigDecimal;
 
@@ -48,7 +52,8 @@ public class CommerceOrderItemSystemObjectDefinitionManager
 	public long addBaseModel(User user, Map<String, Object> values)
 		throws Exception {
 
-		OrderItemResource orderItemResource = _buildOrderItemResource(user);
+		OrderItemResource orderItemResource = _buildOrderItemResource(
+			false, user);
 
 		OrderItem orderItem = orderItemResource.postOrderIdOrderItem(
 			GetterUtil.getLong(values.get("orderId")), _toOrderItem(values));
@@ -178,6 +183,19 @@ public class CommerceOrderItemSystemObjectDefinitionManager
 	}
 
 	@Override
+	public Page<?> getPage(
+			User user, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		OrderItemResource orderItemResource = _buildOrderItemResource(
+			true, user);
+
+		return orderItemResource.getOrderItemsPage(
+			search, filter, pagination, sorts);
+	}
+
+	@Override
 	public Column<?, Long> getPrimaryKeyColumn() {
 		return CommerceOrderItemTable.INSTANCE.commerceOrderItemId;
 	}
@@ -202,7 +220,8 @@ public class CommerceOrderItemSystemObjectDefinitionManager
 			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
 
-		OrderItemResource orderItemResource = _buildOrderItemResource(user);
+		OrderItemResource orderItemResource = _buildOrderItemResource(
+			false, user);
 
 		orderItemResource.patchOrderItem(primaryKey, _toOrderItem(values));
 
@@ -211,11 +230,13 @@ public class CommerceOrderItemSystemObjectDefinitionManager
 			values);
 	}
 
-	private OrderItemResource _buildOrderItemResource(User user) {
+	private OrderItemResource _buildOrderItemResource(
+		boolean checkPermissions, User user) {
+
 		OrderItemResource.Builder builder = _orderItemResourceFactory.create();
 
 		return builder.checkPermissions(
-			false
+			checkPermissions
 		).preferredLocale(
 			user.getLocale()
 		).user(

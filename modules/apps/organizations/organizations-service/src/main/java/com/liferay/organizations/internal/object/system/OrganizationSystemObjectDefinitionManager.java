@@ -19,9 +19,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.OrganizationTable;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +46,7 @@ public class OrganizationSystemObjectDefinitionManager
 		throws Exception {
 
 		OrganizationResource organizationResource = _buildOrganizationResource(
-			user);
+			false, user);
 
 		Organization organization = organizationResource.postOrganization(
 			_toOrganization(values));
@@ -139,6 +143,19 @@ public class OrganizationSystemObjectDefinitionManager
 	}
 
 	@Override
+	public Page<?> getPage(
+			User user, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		OrganizationResource organizationResource = _buildOrganizationResource(
+			true, user);
+
+		return organizationResource.getOrganizationsPage(
+			null, search, filter, pagination, sorts);
+	}
+
+	@Override
 	public Column<?, Long> getPrimaryKeyColumn() {
 		return OrganizationTable.INSTANCE.organizationId;
 	}
@@ -171,12 +188,14 @@ public class OrganizationSystemObjectDefinitionManager
 		throw new UnsupportedOperationException();
 	}
 
-	private OrganizationResource _buildOrganizationResource(User user) {
+	private OrganizationResource _buildOrganizationResource(
+		boolean checkPermissions, User user) {
+
 		OrganizationResource.Builder builder =
 			_organizationResourceFactory.create();
 
 		return builder.checkPermissions(
-			false
+			checkPermissions
 		).preferredLocale(
 			user.getLocale()
 		).user(

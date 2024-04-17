@@ -28,8 +28,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,7 +53,7 @@ public class CPDefinitionSystemObjectDefinitionManager
 	public long addBaseModel(User user, Map<String, Object> values)
 		throws Exception {
 
-		ProductResource productResource = _buildProductResource(user);
+		ProductResource productResource = _buildProductResource(false, user);
 
 		Product product = productResource.postProduct(_toProduct(values));
 
@@ -218,6 +222,18 @@ public class CPDefinitionSystemObjectDefinitionManager
 	}
 
 	@Override
+	public Page<?> getPage(
+			User user, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		ProductResource productResource = _buildProductResource(true, user);
+
+		return productResource.getProductsPage(
+			search, filter, pagination, sorts);
+	}
+
+	@Override
 	public Column<?, Long> getPrimaryKeyColumn() {
 		return CPDefinitionTable.INSTANCE.CPDefinitionId;
 	}
@@ -266,7 +282,7 @@ public class CPDefinitionSystemObjectDefinitionManager
 			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
 
-		ProductResource productResource = _buildProductResource(user);
+		ProductResource productResource = _buildProductResource(false, user);
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			primaryKey);
@@ -279,11 +295,13 @@ public class CPDefinitionSystemObjectDefinitionManager
 			values);
 	}
 
-	private ProductResource _buildProductResource(User user) {
+	private ProductResource _buildProductResource(
+		boolean checkPermissions, User user) {
+
 		ProductResource.Builder builder = _productResourceFactory.create();
 
 		return builder.checkPermissions(
-			false
+			checkPermissions
 		).preferredLocale(
 			user.getLocale()
 		).user(

@@ -22,9 +22,13 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +50,7 @@ public class UserSystemObjectDefinitionManager
 		throws Exception {
 
 		UserAccountResource userAccountResource = _buildUserAccountResource(
-			user);
+			false, user);
 
 		UserAccount userAccount = userAccountResource.postUserAccount(
 			_toUserAccount(values));
@@ -198,6 +202,19 @@ public class UserSystemObjectDefinitionManager
 	}
 
 	@Override
+	public Page<?> getPage(
+			User user, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		UserAccountResource userAccountResource = _buildUserAccountResource(
+			true, user);
+
+		return userAccountResource.getUserAccountsPage(
+			search, filter, pagination, sorts);
+	}
+
+	@Override
 	public Column<?, Long> getPrimaryKeyColumn() {
 		return UserTable.INSTANCE.userId;
 	}
@@ -255,7 +272,7 @@ public class UserSystemObjectDefinitionManager
 		throws Exception {
 
 		UserAccountResource userAccountResource = _buildUserAccountResource(
-			user);
+			false, user);
 
 		UserAccount userAccount = userAccountResource.patchUserAccount(
 			primaryKey, _toUserAccount(values));
@@ -264,12 +281,14 @@ public class UserSystemObjectDefinitionManager
 			UserAccount.class.getName(), userAccount, user, values);
 	}
 
-	private UserAccountResource _buildUserAccountResource(User user) {
+	private UserAccountResource _buildUserAccountResource(
+		boolean checkPermissions, User user) {
+
 		UserAccountResource.Builder builder =
 			_userAccountResourceFactory.create();
 
 		return builder.checkPermissions(
-			false
+			checkPermissions
 		).preferredLocale(
 			user.getLocale()
 		).user(

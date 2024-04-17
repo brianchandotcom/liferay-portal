@@ -23,8 +23,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +49,7 @@ public class CommercePricingClassSystemObjectDefinitionManager
 		throws Exception {
 
 		ProductGroupResource productGroupResource = _buildProductGroupResource(
-			user);
+			false, user);
 
 		ProductGroup productGroup = productGroupResource.postProductGroup(
 			_toProductGroup(values));
@@ -152,6 +156,19 @@ public class CommercePricingClassSystemObjectDefinitionManager
 	}
 
 	@Override
+	public Page<?> getPage(
+			User user, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		ProductGroupResource productGroupResource = _buildProductGroupResource(
+			true, user);
+
+		return productGroupResource.getProductGroupsPage(
+			search, filter, pagination, sorts);
+	}
+
+	@Override
 	public Column<?, Long> getPrimaryKeyColumn() {
 		return CommercePricingClassTable.INSTANCE.commercePricingClassId;
 	}
@@ -182,7 +199,7 @@ public class CommercePricingClassSystemObjectDefinitionManager
 		throws Exception {
 
 		ProductGroupResource productGroupResource = _buildProductGroupResource(
-			user);
+			false, user);
 
 		productGroupResource.patchProductGroup(
 			primaryKey, _toProductGroup(values));
@@ -192,12 +209,14 @@ public class CommercePricingClassSystemObjectDefinitionManager
 			values);
 	}
 
-	private ProductGroupResource _buildProductGroupResource(User user) {
+	private ProductGroupResource _buildProductGroupResource(
+		boolean checkPermissions, User user) {
+
 		ProductGroupResource.Builder builder =
 			_productGroupResourceFactory.create();
 
 		return builder.checkPermissions(
-			false
+			checkPermissions
 		).preferredLocale(
 			user.getLocale()
 		).user(

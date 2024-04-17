@@ -21,9 +21,13 @@ import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +47,7 @@ public class AccountEntrySystemObjectDefinitionManager
 	public long addBaseModel(User user, Map<String, Object> values)
 		throws Exception {
 
-		AccountResource accountResource = _buildAccountResource(user);
+		AccountResource accountResource = _buildAccountResource(false, user);
 
 		Account account = accountResource.postAccount(_toAccount(values));
 
@@ -148,6 +152,18 @@ public class AccountEntrySystemObjectDefinitionManager
 	}
 
 	@Override
+	public Page<?> getPage(
+			User user, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		AccountResource accountResource = _buildAccountResource(true, user);
+
+		return accountResource.getAccountsPage(
+			search, filter, pagination, sorts);
+	}
+
+	@Override
 	public Column<?, Long> getPrimaryKeyColumn() {
 		return AccountEntryTable.INSTANCE.accountEntryId;
 	}
@@ -177,7 +193,7 @@ public class AccountEntrySystemObjectDefinitionManager
 			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
 
-		AccountResource accountResource = _buildAccountResource(user);
+		AccountResource accountResource = _buildAccountResource(false, user);
 
 		Account account = accountResource.patchAccount(
 			primaryKey, _toAccount(values));
@@ -185,11 +201,13 @@ public class AccountEntrySystemObjectDefinitionManager
 		setExtendedProperties(Account.class.getName(), account, user, values);
 	}
 
-	private AccountResource _buildAccountResource(User user) {
+	private AccountResource _buildAccountResource(
+		boolean checkPermissions, User user) {
+
 		AccountResource.Builder builder = _accountResourceFactory.create();
 
 		return builder.checkPermissions(
-			false
+			checkPermissions
 		).preferredLocale(
 			user.getLocale()
 		).user(

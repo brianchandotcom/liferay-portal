@@ -1055,6 +1055,9 @@ definition {
 
 		for (var warehouse : list "Italy,United States - Northeast,United States - Southwest") {
 			var key_inventoryName = ${warehouse};
+
+			WaitForElementPresent(locator1 = "CommerceEntry#INVENTORY_INPUT");
+
 			var inventoryValue = selenium.getElementValue("CommerceEntry#INVENTORY_INPUT");
 
 			var quantity = ${quantity} + ${inventoryValue};

@@ -1570,7 +1570,9 @@ definition {
 
 			CommerceSKUs.generateAllSkuCombinations();
 
-			var skuCombinationName = selenium.getText("//div[(@class='dnd-td') and (contains(string(), 'VALUE1VALUE2') or contains(string(), 'VALUE2VALUE1'))]//..//div[(@class='dnd-td')][1]");
+			WaitForElementPresent(locator1 = "//div[(@class='dnd-tr')][2]/div[1]");
+
+			var skuCombinationName = selenium.getText("//div[(@class='dnd-tr')][2]/div[1]");
 
 			CommerceNavigator.gotoEntry(entryName = ${skuCombinationName});
 
@@ -1598,12 +1600,12 @@ definition {
 
 			FrontStore.addToCartFromProductDetails(
 				productName = "ABS Sensor",
-				productSku = "VALUE1VALUE2");
+				productSku = ${skuCombinationName});
 
 			CommerceNavigator.gotoMiniCart();
 
 			CommerceNavigator.editMiniCartItemQuantity(
-				cartItemSku = "VALUE1VALUE2",
+				cartItemSku = ${skuCombinationName},
 				productQuantity = 3);
 
 			CommerceCheckout.gotoCheckout();
@@ -1668,7 +1670,7 @@ definition {
 				productListPrice = "49.00",
 				productName = "ABS Sensor",
 				productQuantity = 3,
-				productSku = "VALUE1VALUE2",
+				productSku = ${skuCombinationName},
 				productTotalPrice = "147.00");
 
 			CommerceOrders.viewOrdersEntry(
@@ -1704,7 +1706,7 @@ definition {
 				productListPrice = "20.00",
 				productName = "ABS Sensor",
 				productQuantity = 3,
-				productSku = "VALUE1VALUE2",
+				productSku = ${skuCombinationName},
 				productTotalPrice = "60.00");
 
 			CommerceOrders.viewOrdersEntry(

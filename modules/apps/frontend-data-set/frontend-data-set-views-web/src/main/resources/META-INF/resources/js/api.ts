@@ -101,7 +101,10 @@ function getValidFields({
 				return;
 			}
 
-			if (propertyValue.extensions) {
+			if (
+				propertyValue.extensions &&
+				propertyValue.extensions['x-parent-map'] === 'properties'
+			) {
 				const parentSchemaName =
 					propertyKey.charAt(0).toUpperCase() + propertyKey.slice(1);
 				fields.push({

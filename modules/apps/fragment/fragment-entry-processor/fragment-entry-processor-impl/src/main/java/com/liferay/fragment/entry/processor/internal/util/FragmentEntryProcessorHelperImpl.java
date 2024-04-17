@@ -464,6 +464,10 @@ public class FragmentEntryProcessorHelperImpl
 		JSONObject editableValueJSONObject,
 		FragmentEntryProcessorContext fragmentEntryProcessorContext) {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-19955")) {
+			return true;
+		}
+
 		InfoItemMappedField infoItemMappedField = _getInfoItemMappedField(
 			editableValueJSONObject, fragmentEntryProcessorContext);
 
@@ -846,6 +850,10 @@ public class FragmentEntryProcessorHelperImpl
 	private boolean _hasViewPermission(
 		HttpServletRequest httpServletRequest,
 		InfoItemReference infoItemReference) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-19955")) {
+			return true;
+		}
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

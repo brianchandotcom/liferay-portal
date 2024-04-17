@@ -703,6 +703,145 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11254 and COMMERCE-11174. Order manager can manage orders' workflow on Save/Approve/Reject status"
+	@priority = 3
+	test CanOrderManagerManageOrderWorkflow {
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "SFCommerceOrders#CanOrderManagerManageOrderWorkflow";
+
+		task ("Given a buyer user and an order manager are created and associated with Minium site") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "false",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "false",
+				requireReset = "false",
+				userEmailAddress = "ordermanager@liferay.com",
+				userFirstName = "Order",
+				userLastName = "Manager",
+				userRole = "Order Manager",
+				userScreenName = "ordermanager",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And the admin enabled the 'Buyer Order Approval Workflow' for Minium Portal") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Workflow.setWorkflowToMiniumChannel(workflowDefinition = "Single Approver (Version 1)");
+		}
+
+		task ("When the buyer adds a product to the cart on Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+		}
+
+		task ("Then the order status is Draft") {
+			AssertElementPresent(
+				key_status = "Draft",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		}
+
+		task ("When the buyer reviews this order") {
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Review Order");
+
+			Button.click(button = "Submit");
+		}
+
+		task ("Then the order status is Pending") {
+			AssertElementPresent(
+				key_status = "Pending",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		}
+
+		task ("When the order manager goes to view this order in Pending Orders page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ordermanager@liferay.com",
+				userLoginFullName = "Order Manager");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/pending-orders");
+
+			Button.click(button = "View");
+		}
+
+		task ("Then the order manager can view the Save/Approve/Reject workflow status of the order") {
+			for (var workflowStatus : list "Save,Approve,Reject") {
+				AssertElementPresent(
+					key_text = ${workflowStatus},
+					locator1 = "Button#ANY");
+			}
+		}
+
+		task ("When the order manager rejects the order") {
+			Button.click(button = "Reject");
+
+			Button.clickDone();
+		}
+
+		task ("Then the order status is Pending") {
+			AssertElementPresent(
+				key_status = "Pending",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		}
+
+		task ("But if the buyer resubmits the order") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "buyer@liferay.com",
+				userLoginFullName = "Buyer User");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/pending-orders");
+
+			Button.click(button = "View");
+
+			Button.click(button = "Resubmit");
+
+			Button.clickDone();
+		}
+
+		task ("And the order manager approves the order") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ordermanager@liferay.com",
+				userLoginFullName = "Order Manager");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/pending-orders");
+
+			Button.click(button = "View");
+
+			Button.click(button = "Approve");
+
+			Button.clickDone();
+		}
+
+		task ("Then the order status is Approved") {
+			AssertElementPresent(
+				key_status = "Approved",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		}
+	}
+
 	@description = "COMMERCE-9877. A user can search orders by account name"
 	@priority = 5
 	test CanReturnOrdersBySearchForAccountName {

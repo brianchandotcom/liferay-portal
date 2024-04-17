@@ -28,7 +28,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 	@Override
 	public void onAfterRemove(Company company) throws ModelListenerException {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Removing company " + company.getWebId());
+			_log.debug("Removing virtual instance " + company.getWebId());
 		}
 
 		PortalK8sConfigMapModifier portalK8sConfigMapModifier =

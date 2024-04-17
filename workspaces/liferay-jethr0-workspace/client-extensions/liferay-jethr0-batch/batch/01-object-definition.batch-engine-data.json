@@ -962,7 +962,7 @@
 						"en_US": "Jethr0 Etc Spring Boot Job Add"
 					},
 					"name": "Jethr0EtcSpringBootJobAdd",
-					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-job-action",
+					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-object-actions",
 					"objectActionTriggerKey": "standalone",
 					"parameters": {
 					}
@@ -975,7 +975,7 @@
 						"en_US": "Jethr0 Etc Spring Boot Job Delete"
 					},
 					"name": "Jethr0EtcSpringBootJobDelete",
-					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-job-action",
+					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-object-actions",
 					"objectActionTriggerKey": "onAfterDelete",
 					"parameters": {
 					}
@@ -988,7 +988,7 @@
 						"en_US": "Jethr0 Etc Spring Boot Job Update"
 					},
 					"name": "Jethr0EtcSpringBootJobUpdate",
-					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-job-action",
+					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-object-actions",
 					"objectActionTriggerKey": "onAfterUpdate",
 					"parameters": {
 					}
@@ -1131,6 +1131,50 @@
 				"en_US": "Routine"
 			},
 			"name": "Routine",
+			"objectActions": [
+				{
+					"active": true,
+					"conditionExpression": "",
+					"description": "",
+					"errorMessage": {
+						"en_US": "Unable to trigger Jethr0EtcSpringBootRoutineAdd"
+					},
+					"label": {
+						"en_US": "Jethr0 Etc Spring Boot Routine Add"
+					},
+					"name": "Jethr0EtcSpringBootRoutineAdd",
+					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-object-actions",
+					"objectActionTriggerKey": "standalone",
+					"parameters": {
+					}
+				},
+				{
+					"active": true,
+					"conditionExpression": "",
+					"description": "",
+					"label": {
+						"en_US": "Jethr0 Etc Spring Boot Routine Delete"
+					},
+					"name": "Jethr0EtcSpringBootRoutineDelete",
+					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-object-actions",
+					"objectActionTriggerKey": "onAfterDelete",
+					"parameters": {
+					}
+				},
+				{
+					"active": true,
+					"conditionExpression": "",
+					"description": "",
+					"label": {
+						"en_US": "Jethr0 Etc Spring Boot Routine Update"
+					},
+					"name": "Jethr0EtcSpringBootRoutineUpdate",
+					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-object-actions",
+					"objectActionTriggerKey": "onAfterUpdate",
+					"parameters": {
+					}
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "String",

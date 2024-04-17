@@ -16,8 +16,6 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
-import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -78,24 +76,7 @@ public class IFrameCETPortlet extends BaseCETPortlet<IFrameCET> {
 
 		OutputData outputData = getOutputData(renderRequest);
 
-		ScriptData scriptData = new ScriptData();
-
-		AbsolutePortalURLBuilder absolutePortalURLBuilder =
-			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
-				_portal.getHttpServletRequest(renderRequest));
-
-		scriptData.append(
-			null,
-			new JSFragment(
-				"remoteProtocol();",
-				Arrays.asList(
-					ESImportUtil.getESImport(
-						absolutePortalURLBuilder,
-						"{remoteProtocol} from client-extension-web"))));
-
 		StringWriter stringWriter = new StringWriter();
-
-		scriptData.writeTo(stringWriter);
 
 		StringBuffer stringBuffer = stringWriter.getBuffer();
 
@@ -123,8 +104,6 @@ public class IFrameCETPortlet extends BaseCETPortlet<IFrameCET> {
 		printWriter.flush();
 	}
 
-	private final AbsolutePortalURLBuilderFactory
-		_absolutePortalURLBuilderFactory;
 	private final Portal _portal;
 	private final String _portletId;
 

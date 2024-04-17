@@ -95,34 +95,34 @@ public class ExpandoInfoDisplayFieldProviderTest {
 
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
 
-		Assert.assertTrue(availableLocales.contains(LocaleUtil.US));
 		Assert.assertTrue(availableLocales.contains(LocaleUtil.FRANCE));
+		Assert.assertTrue(availableLocales.contains(LocaleUtil.US));
 
 		Map<Locale, String[]> value = HashMapBuilder.put(
-			LocaleUtil.US, new String[] {"en-value-1", "en-value-2"}
-		).put(
 			LocaleUtil.FRANCE, new String[] {"fr-value-1", "fr-value-2"}
+		).put(
+			LocaleUtil.US, new String[] {"en-value-1", "en-value-2"}
 		).build();
 
 		ExpandoValue expandoValue = _addExpandoValue(expandoColumn, value);
-
-		Assert.assertEquals(
-			value.get(LocaleUtil.US),
-			expandoValue.getStringArray(LocaleUtil.US));
 
 		Assert.assertEquals(
 			value.get(LocaleUtil.FRANCE),
 			expandoValue.getStringArray(LocaleUtil.FRANCE));
 
 		Assert.assertEquals(
-			StringUtil.merge(
-				value.get(LocaleUtil.US), StringPool.COMMA_AND_SPACE),
-			_getValue(expandoColumn.getName(), LocaleUtil.US));
+			value.get(LocaleUtil.US),
+			expandoValue.getStringArray(LocaleUtil.US));
 
 		Assert.assertEquals(
 			StringUtil.merge(
 				value.get(LocaleUtil.FRANCE), StringPool.COMMA_AND_SPACE),
 			_getValue(expandoColumn.getName(), LocaleUtil.FRANCE));
+
+		Assert.assertEquals(
+			StringUtil.merge(
+				value.get(LocaleUtil.US), StringPool.COMMA_AND_SPACE),
+			_getValue(expandoColumn.getName(), LocaleUtil.US));
 	}
 
 	@Test
@@ -135,31 +135,31 @@ public class ExpandoInfoDisplayFieldProviderTest {
 
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
 
-		Assert.assertTrue(availableLocales.contains(LocaleUtil.US));
 		Assert.assertTrue(availableLocales.contains(LocaleUtil.FRANCE));
+		Assert.assertTrue(availableLocales.contains(LocaleUtil.US));
 
 		Map<Locale, String> value = HashMapBuilder.put(
-			LocaleUtil.US, "en-value-1"
-		).put(
 			LocaleUtil.FRANCE, "fr-value-1"
+		).put(
+			LocaleUtil.US, "en-value-1"
 		).build();
 
 		ExpandoValue expandoValue = _addExpandoValue(expandoColumn, value);
-
-		Assert.assertEquals(
-			value.get(LocaleUtil.US), expandoValue.getString(LocaleUtil.US));
 
 		Assert.assertEquals(
 			value.get(LocaleUtil.FRANCE),
 			expandoValue.getString(LocaleUtil.FRANCE));
 
 		Assert.assertEquals(
-			value.get(LocaleUtil.US),
-			_getValue(expandoColumn.getName(), LocaleUtil.US));
+			value.get(LocaleUtil.US), expandoValue.getString(LocaleUtil.US));
 
 		Assert.assertEquals(
 			value.get(LocaleUtil.FRANCE),
 			_getValue(expandoColumn.getName(), LocaleUtil.FRANCE));
+
+		Assert.assertEquals(
+			value.get(LocaleUtil.US),
+			_getValue(expandoColumn.getName(), LocaleUtil.US));
 	}
 
 	@Test

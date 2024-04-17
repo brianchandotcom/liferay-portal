@@ -50,7 +50,7 @@ public class SemanticVersioningFailureMessageGenerator
 				Dom4JUtil.getNewElement(
 					"strong", null,
 					getBaseBranchAnchorElement(build.getTopLevelBuild())),
-				getMessage(build)));
+				Dom4JUtil.toCodeSnippetElement(getMessage(build))));
 	}
 
 	private static final String _TOKEN_SEMVER_INCORRECT =

@@ -168,8 +168,9 @@ public class ExpandoInfoItemFieldReader implements InfoItemFieldReader {
 						(Map<Locale, String[]>)
 							_expandoBridge.getAttributeDefault(_attributeName);
 
-					attributeValue = values.getOrDefault(
-						locale, defaultValues.get(locale));
+					return StringUtil.merge(
+						values.getOrDefault(locale, defaultValues.get(locale)),
+						StringPool.COMMA_AND_SPACE);
 				}
 				else if (attributeType ==
 							ExpandoColumnConstants.STRING_LOCALIZED) {

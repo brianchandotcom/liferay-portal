@@ -122,9 +122,19 @@ public class DeepLTranslator implements Translator {
 	}
 
 	private String _getLanguageCode(String languageId) {
-		String[] parts = StringUtil.split(languageId, CharPool.UNDERLINE);
+		List<String> list = com.liferay.petra.string.StringUtil.split(
+			languageId, CharPool.UNDERLINE);
 
-		return StringUtil.toUpperCase(parts[0]);
+		String languageCode = list.get(0);
+
+		// LPD-23561. DeepL expects ISO-639 locale names.
+		// "in" was renamed to "id" in ISO-639:1989.
+
+		if (languageCode.equals("in")) {
+			StringUtil.toUpperCase("id");
+		}
+
+		return StringUtil.toUpperCase(languageCode);
 	}
 
 	private List<String> _getSupportedLanguageCodes(

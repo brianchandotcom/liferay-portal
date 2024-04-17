@@ -78,7 +78,6 @@ public class SamlSpIdpConnectionLocalServiceImpl
 		samlSpIdpConnection.setLdapImportEnabled(ldapImportEnabled);
 		samlSpIdpConnection.setMetadataUpdatedDate(new Date());
 		samlSpIdpConnection.setSamlIdpEntityId(samlIdpEntityId);
-		samlSpIdpConnection.setExpandoBridgeAttributes(serviceContext);
 
 		if ((metadataXmlInputStream == null) &&
 			Validator.isNotNull(metadataUrl)) {
@@ -113,6 +112,7 @@ public class SamlSpIdpConnectionLocalServiceImpl
 		samlSpIdpConnection.setUserAttributeMappings(userAttributeMappings);
 		samlSpIdpConnection.setUserIdentifierExpression(
 			userIdentifierExpression);
+		samlSpIdpConnection.setExpandoBridgeAttributes(serviceContext);
 
 		return samlSpIdpConnectionPersistence.update(samlSpIdpConnection);
 	}
@@ -243,7 +243,6 @@ public class SamlSpIdpConnectionLocalServiceImpl
 		samlSpIdpConnection.setMetadataUpdatedDate(new Date());
 		samlSpIdpConnection.setUnknownUsersAreStrangers(
 			unknownUsersAreStrangers);
-		samlSpIdpConnection.setExpandoBridgeAttributes(serviceContext);
 
 		if ((metadataXmlInputStream == null) &&
 			Validator.isNotNull(metadataUrl)) {
@@ -286,6 +285,7 @@ public class SamlSpIdpConnectionLocalServiceImpl
 		samlSpIdpConnection.setUserAttributeMappings(userAttributeMappings);
 		samlSpIdpConnection.setUserIdentifierExpression(
 			userIdentifierExpression);
+		samlSpIdpConnection.setExpandoBridgeAttributes(serviceContext);
 
 		return samlSpIdpConnectionPersistence.update(samlSpIdpConnection);
 	}

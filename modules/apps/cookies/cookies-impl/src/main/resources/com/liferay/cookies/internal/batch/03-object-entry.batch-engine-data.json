@@ -1,0 +1,164 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-10588",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "NecessaryCookieEntry",
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "a01f9aa5-7f03-4600-8d96-0fba22ec891e",
+			"host": "Liferay",
+			"name": "COMMERCE_CONTINUE_AS_GUEST",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "e640a012-4a2c-4413-ac2f-a4436080e637",
+			"host": "Liferay",
+			"name": "COMPANY_ID",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "5de342bd-1117-491a-9de9-7b88d9cf8d80",
+			"host": "Liferay",
+			"name": "CONSENT_TYPE_FUNCTIONAL",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "6aad0ec5-52c1-40f7-80f8-a45e448e61ba",
+			"host": "Liferay",
+			"name": "CONSENT_TYPE_NECESSARY",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "57a36b90-89d3-437c-8093-7eada10d4d5d",
+			"host": "Liferay",
+			"name": "CONSENT_TYPE_PERFORMANCE",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "796e7443-cbea-4779-85a5-580ed37ee316",
+			"host": "Liferay",
+			"name": "CONSENT_TYPE_PERSONALIZATION",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "0e86dedb-3cad-4d0d-b06e-606afdc13d33",
+			"host": "Liferay",
+			"name": "COOKIE_SUPPORT",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "15367faf-4404-4d79-a91c-bce191b25973",
+			"host": "Liferay",
+			"name": "HIGHLIGHTED_COMMENT_ID_KEY",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"collectedData": "User ID (Encrypted)",
+			"expiration": "365 Days",
+			"externalReferenceCode": "cf6fcb94-ca9b-4301-93a7-16ffaf1488cb",
+			"host": "Liferay",
+			"name": "ID",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session Time",
+			"externalReferenceCode": "9903020c-e43c-46fa-9ed5-828b1ac6d56c",
+			"host": "Liferay",
+			"name": "JSESSIONID",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"collectedData": "User ID",
+			"expiration": "Session time",
+			"externalReferenceCode": "c34913d5-f72f-4a9f-b9ad-dcc02a873a48",
+			"host": "Liferay",
+			"name": "LFR_SESSION_STATE_userID",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "4222c0a9-8877-4c4d-a8a7-d1e846b8bf4b",
+			"host": "Liferay",
+			"name": "SERVER_ID",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session Time",
+			"externalReferenceCode": "f60d0a0c-ba65-4b17-8c7d-c5b995447305",
+			"host": "Liferay",
+			"name": "access_token",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "9bfb8f39-0483-4a70-9e0f-b08c17b4b56c",
+			"host": "Liferay",
+			"name": "com.liferay.commerce.model.CommerceOrder#groupId",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session Time",
+			"externalReferenceCode": "ff2d8782-3198-4d36-817c-7cfeb6c02e11",
+			"host": "Liferay",
+			"name": "com.liferay.commerce.model.CommerceOrder#groupId",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "adfcd410-727d-4e25-b9ed-c472ccaa556f",
+			"host": "Liferay",
+			"name": "com.liferay.search.experiences.web_successMessage",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session Time",
+			"externalReferenceCode": "f26e0ecd-6682-44d2-ab76-ddaa9c13e054",
+			"host": "Liferay",
+			"name": "connect.sid",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "78b8182b-e9bf-457e-9afc-5c3fdd6485ed",
+			"host": "Liferay",
+			"name": "modalExperienceState",
+			"purpose": "",
+			"type": "First Party"
+		}
+	]
+}

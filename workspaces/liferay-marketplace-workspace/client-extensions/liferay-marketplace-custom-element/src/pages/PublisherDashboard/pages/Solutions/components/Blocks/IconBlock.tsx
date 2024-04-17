@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 
-import Form from '../../../../../../../components/MarketplaceForm';
+import Form from '../../../../../../components/MarketplaceForm';
 
 const IconsBlock = () => {
 	const {observer, onOpenChange, open} = useModal();

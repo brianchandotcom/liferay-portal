@@ -235,9 +235,11 @@ public class BatchEngineBrokerTest {
 			TestPropsValues.getUser());
 
 		ObjectEntry objectEntry = _addObjectEntry(
-			TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
-			TestPropsValues.getGroupId(), _objectDefinition1,
-			TestPropsValues.getUserId());
+			TestPropsValues.getCompanyId(),
+			_addDLFileEntry(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()),
+			RandomTestUtil.randomString(), TestPropsValues.getGroupId(),
+			_objectDefinition1, TestPropsValues.getUserId());
 
 		_addObjectEntryInDifferentCompany("TestObjectJSONT");
 
@@ -279,8 +281,7 @@ public class BatchEngineBrokerTest {
 				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
 				null),
 			_getCSVString(
-				_objectDefinition1.getCreateDate(), null,
-				"object_definition.csv", null,
+				_objectDefinition1.getCreateDate(), "object_definition.csv",
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition1.getModifiedDate()),
 			_objectDefinition1.getExternalReferenceCode());
@@ -318,13 +319,17 @@ public class BatchEngineBrokerTest {
 			"TestObjectCSV", ObjectDefinitionConstants.SCOPE_COMPANY,
 			TestPropsValues.getUser());
 
+		DLFileEntry dlFileEntry = _addDLFileEntry(
+			TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+
 		_addObjectEntryInDifferentCompany("TestObjectCSV");
 
 		try (FileInputStream fileInputStream = new FileInputStream(
-				_createImportFile(
-					RandomTestUtil.nextDate(), _OBJECT_ENTRY_ERC_1,
-					"object_entry.csv", null, RandomTestUtil.randomLong(),
-					RandomTestUtil.nextDate()))) {
+				_createCSVImportFile(
+					RandomTestUtil.nextDate(), dlFileEntry,
+					_objectDefinition1.getExternalReferenceCode(),
+					_OBJECT_ENTRY_ERC_1, "object_entry.csv", null,
+					RandomTestUtil.randomLong(), RandomTestUtil.nextDate()))) {
 
 			_executeImportTask(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
@@ -345,9 +350,10 @@ public class BatchEngineBrokerTest {
 				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
 				"C_TestObjectCSV"),
 			_getCSVString(
-				objectEntry.getCreateDate(), _OBJECT_ENTRY_ERC_1,
-				"object_entry.csv", null, objectEntry.getObjectEntryId(),
-				objectEntry.getModifiedDate()),
+				objectEntry.getCreateDate(), dlFileEntry,
+				_objectDefinition1.getExternalReferenceCode(),
+				_OBJECT_ENTRY_ERC_1, "object_entry.csv", null,
+				objectEntry.getObjectEntryId(), objectEntry.getModifiedDate()),
 			objectEntry.getExternalReferenceCode());
 	}
 
@@ -357,7 +363,7 @@ public class BatchEngineBrokerTest {
 			"TestObject", ObjectDefinitionConstants.SCOPE_COMPANY,
 			TestPropsValues.getUser());
 
-		File file = _createImportFile(
+		File file = _createJsonImportFile(
 			_addDLFileEntry(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()),
 			_objectDefinition1.getExternalReferenceCode(), _OBJECT_ENTRY_ERC_1,
@@ -464,7 +470,8 @@ public class BatchEngineBrokerTest {
 			TestPropsValues.getUser());
 
 		_testImportExportSiteScopeObjectEntryCSV(
-			TestPropsValues.getGroupId(), _OBJECT_ENTRY_ERC_1);
+			TestPropsValues.getGroupId(),
+			_objectDefinition1.getExternalReferenceCode(), _OBJECT_ENTRY_ERC_1);
 
 		// Global group
 
@@ -474,12 +481,14 @@ public class BatchEngineBrokerTest {
 		Group globalGroup = company.getGroup();
 
 		_testImportExportSiteScopeObjectEntryCSV(
-			globalGroup.getGroupId(), _OBJECT_ENTRY_ERC_3);
+			globalGroup.getGroupId(),
+			_objectDefinition1.getExternalReferenceCode(), _OBJECT_ENTRY_ERC_3);
 
 		// New group
 
 		_testImportExportSiteScopeObjectEntryCSV(
-			_group.getGroupId(), _OBJECT_ENTRY_ERC_2);
+			_group.getGroupId(), _objectDefinition1.getExternalReferenceCode(),
+			_OBJECT_ENTRY_ERC_2);
 	}
 
 	@Test
@@ -547,11 +556,10 @@ public class BatchEngineBrokerTest {
 	}
 
 	private ObjectEntry _addObjectEntry(
-			long companyId, String externalReferenceCode, long groupId,
+			long companyId, DLFileEntry dlFileEntry,
+			String externalReferenceCode, long groupId,
 			ObjectDefinition objectDefinition, long userId)
 		throws Exception {
-
-		DLFileEntry dlFileEntry = _addDLFileEntry(groupId, userId);
 
 		return _objectEntryLocalService.addOrUpdateObjectEntry(
 			externalReferenceCode, userId,
@@ -628,8 +636,10 @@ public class BatchEngineBrokerTest {
 				name, ObjectDefinitionConstants.SCOPE_COMPANY, user);
 
 			_addObjectEntry(
-				_company2.getCompanyId(), RandomTestUtil.randomString(),
-				_company2.getGroupId(), _objectDefinition2, user.getUserId());
+				_company2.getCompanyId(),
+				_addDLFileEntry(_company2.getGroupId(), user.getUserId()),
+				RandomTestUtil.randomString(), _company2.getGroupId(),
+				_objectDefinition2, user.getUserId());
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
@@ -733,8 +743,9 @@ public class BatchEngineBrokerTest {
 			).asText());
 	}
 
-	private File _createImportFile(
-			Date createDate, String externalReferenceCode, String fileName,
+	private File _createCSVImportFile(
+			Date createDate, DLFileEntry dlFileEntry,
+			String objectDefinitionERC, String objectEntryERC, String fileName,
 			Long groupId, long id, Date modifiedDate)
 		throws Exception {
 
@@ -743,16 +754,25 @@ public class BatchEngineBrokerTest {
 		_file.write(
 			file,
 			_getCSVString(
-				createDate, externalReferenceCode, fileName, groupId, id,
-				modifiedDate));
+				createDate, dlFileEntry, objectDefinitionERC, objectEntryERC,
+				fileName, groupId, id, modifiedDate));
 
 		return file;
 	}
 
-	private File _createImportFile(
-			DLFileEntry dlFileEntry,
-			String objectDefinitionExternalReferenceCode, String objectEntryERC,
-			String templateName)
+	private File _createImportFile(String extension, String fileName)
+		throws Exception {
+
+		File file = _file.createTempFile(extension);
+
+		Files.copy(_getInputStream(fileName), file.toPath());
+
+		return file;
+	}
+
+	private File _createJsonImportFile(
+			DLFileEntry dlFileEntry, String objectDefinitionERC,
+			String objectEntryERC, String templateName)
 		throws Exception {
 
 		File file = _file.createTempFile("json");
@@ -760,8 +780,8 @@ public class BatchEngineBrokerTest {
 		String template = StreamUtil.toString(_getInputStream(templateName));
 
 		Link link = LinkUtil.toLink(
-			_dlAppService, dlFileEntry, _dlURLHelper,
-			objectDefinitionExternalReferenceCode, objectEntryERC, _portal);
+			_dlAppService, dlFileEntry, _dlURLHelper, objectDefinitionERC,
+			objectEntryERC, _portal);
 
 		template = StringUtil.replace(
 			template,
@@ -775,16 +795,6 @@ public class BatchEngineBrokerTest {
 			});
 
 		_file.write(file, template);
-
-		return file;
-	}
-
-	private File _createImportFile(String extension, String fileName)
-		throws Exception {
-
-		File file = _file.createTempFile(extension);
-
-		Files.copy(_getInputStream(fileName), file.toPath());
 
 		return file;
 	}
@@ -892,9 +902,14 @@ public class BatchEngineBrokerTest {
 	}
 
 	private String _getCSVString(
-			Date createDate, String externalReferenceCode, String fileName,
+			Date createDate, DLFileEntry dlFileEntry,
+			String objectDefinitionERC, String objectEntryERC, String fileName,
 			Long groupId, long id, Date modifiedDate)
 		throws Exception {
+
+		Link link = LinkUtil.toLink(
+			_dlAppService, dlFileEntry, _dlURLHelper, objectDefinitionERC,
+			objectEntryERC, _portal);
 
 		String scopeKey = null;
 
@@ -907,12 +922,29 @@ public class BatchEngineBrokerTest {
 		return StringUtil.replace(
 			StreamUtil.toString(_getInputStream(fileName)),
 			new String[] {
+				"$[ATTACHMENT_FIELD_ID]", "$[ATTACHMENT_FIELD_LINK_HREF]",
+				"$[ATTACHMENT_FIELD_LINK_LABEL]", "$[ATTACHMENT_FIELD_NAME]",
 				"$[DATE_CREATED]", "$[DATE_MODIFIED]",
 				"$[EXTERNAL_REFERENCE_CODE]", "$[ID]", "$[SCOPE_KEY]"
 			},
 			new String[] {
+				String.valueOf(dlFileEntry.getFileEntryId()), link.getHref(),
+				link.getLabel(), dlFileEntry.getFileName(),
 				_toDateString(createDate), _toDateString(modifiedDate),
-				externalReferenceCode, String.valueOf(id), scopeKey
+				objectEntryERC, String.valueOf(id), scopeKey
+			});
+	}
+
+	private String _getCSVString(
+			Date createDate, String fileName, long id, Date modifiedDate)
+		throws Exception {
+
+		return StringUtil.replace(
+			StreamUtil.toString(_getInputStream(fileName)),
+			new String[] {"$[DATE_CREATED]", "$[DATE_MODIFIED]", "$[ID]"},
+			new String[] {
+				_toDateString(createDate), _toDateString(modifiedDate),
+				String.valueOf(id)
 			});
 	}
 
@@ -1383,8 +1415,10 @@ public class BatchEngineBrokerTest {
 		throws Exception {
 
 		ObjectEntry objectEntry = _addObjectEntry(
-			TestPropsValues.getCompanyId(), objectEntryERC, groupId,
-			_objectDefinition1, TestPropsValues.getUserId());
+			TestPropsValues.getCompanyId(),
+			_addDLFileEntry(groupId, TestPropsValues.getUserId()),
+			objectEntryERC, groupId, _objectDefinition1,
+			TestPropsValues.getUserId());
 
 		_objectMapper.setFilterProvider(
 			new SimpleFilterProvider() {
@@ -1414,14 +1448,17 @@ public class BatchEngineBrokerTest {
 	}
 
 	private void _testImportExportSiteScopeObjectEntryCSV(
-			long groupId, String objectEntryERC)
+			long groupId, String objectDefinitionERC, String objectEntryERC)
 		throws Exception {
 
+		DLFileEntry dlFileEntry = _addDLFileEntry(
+			groupId, TestPropsValues.getUserId());
+
 		try (FileInputStream fileInputStream = new FileInputStream(
-				_createImportFile(
-					RandomTestUtil.nextDate(), objectEntryERC,
-					"object_entry.csv", groupId, RandomTestUtil.randomLong(),
-					RandomTestUtil.nextDate()))) {
+				_createCSVImportFile(
+					RandomTestUtil.nextDate(), dlFileEntry, objectDefinitionERC,
+					objectEntryERC, "object_entry.csv", groupId,
+					RandomTestUtil.randomLong(), RandomTestUtil.nextDate()))) {
 
 			_executeImportTask(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
@@ -1442,9 +1479,9 @@ public class BatchEngineBrokerTest {
 				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
 				"C_TestObjectCSV"),
 			_getCSVString(
-				objectEntry.getCreateDate(), objectEntryERC, "object_entry.csv",
-				groupId, objectEntry.getObjectEntryId(),
-				objectEntry.getModifiedDate()),
+				objectEntry.getCreateDate(), dlFileEntry, objectDefinitionERC,
+				objectEntryERC, "object_entry.csv", groupId,
+				objectEntry.getObjectEntryId(), objectEntry.getModifiedDate()),
 			objectEntry.getExternalReferenceCode());
 	}
 
@@ -1452,7 +1489,7 @@ public class BatchEngineBrokerTest {
 			long groupId, String objectEntryERC)
 		throws Exception {
 
-		File file = _createImportFile(
+		File file = _createJsonImportFile(
 			_addDLFileEntry(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()),
 			_objectDefinition1.getExternalReferenceCode(), objectEntryERC,
@@ -1559,12 +1596,12 @@ public class BatchEngineBrokerTest {
 		Arrays.asList(
 			"dateCreated", "dateModified", "externalReferenceCode", "id",
 			"keywords", "scopeKey", "testAggregationField",
-			"testAutoIncrementField", "testBooleanField", "testDateField",
-			"testDateTimeField", "testDecimalField", "testEncryptedField",
-			"testFormulaField", "testIntegerField", "testLongIntegerField",
-			"testLongTextField", "testMultiselectPicklistField",
-			"testPicklistField", "testPrecisionDecimalField",
-			"testRichTextField", "testTextField");
+			"testAttachmentField", "testAutoIncrementField", "testBooleanField",
+			"testDateField", "testDateTimeField", "testDecimalField",
+			"testEncryptedField", "testFormulaField", "testIntegerField",
+			"testLongIntegerField", "testLongTextField",
+			"testMultiselectPicklistField", "testPicklistField",
+			"testPrecisionDecimalField", "testRichTextField", "testTextField");
 	private static final List<String> _objectEntryExportFieldNames =
 		Arrays.asList(
 			"actions", "dateCreated", "dateModified", "externalReferenceCode",
@@ -1576,10 +1613,10 @@ public class BatchEngineBrokerTest {
 	private static final List<String> _objectEntryImportCSVFieldNames =
 		Arrays.asList(
 			"dateCreated", "dateModified", "externalReferenceCode", "id",
-			"keywords", "scopeKey", "testAutoIncrementField",
-			"testBooleanField", "testDateField", "testDateTimeField",
-			"testDecimalField", "testEncryptedField", "testIntegerField",
-			"testLongIntegerField", "testLongTextField",
+			"keywords", "scopeKey", "testAttachmentField",
+			"testAutoIncrementField", "testBooleanField", "testDateField",
+			"testDateTimeField", "testDecimalField", "testEncryptedField",
+			"testIntegerField", "testLongIntegerField", "testLongTextField",
 			"testMultiselectPicklistField", "testPicklistField",
 			"testPrecisionDecimalField", "testRichTextField", "testTextField");
 	private static final List<String> _objectEntryImportFieldNames =

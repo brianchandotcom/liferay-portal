@@ -13,10 +13,12 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -55,7 +57,20 @@ public class MappingContentUtil {
 		return JSONUtil.put(
 			"key", infoField.getUniqueId()
 		).put(
-			"label", infoField.getLabel(locale)
+			"label",
+			() -> {
+				if (infoField.isMultivalued() &&
+					FeatureFlagManagerUtil.isEnabled("LPD-11377")) {
+
+					return LanguageUtil.format(
+						locale, "x-repeatable", infoField.getLabel(locale),
+						false);
+				}
+
+				return infoField.getLabel(locale);
+			}
+		).put(
+			"multivalued", infoField.isMultivalued()
 		).put(
 			"name", infoField.getName()
 		).put(

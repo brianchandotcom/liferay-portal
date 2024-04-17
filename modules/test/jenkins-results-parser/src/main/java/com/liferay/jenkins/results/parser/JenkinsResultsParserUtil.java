@@ -1686,7 +1686,7 @@ public class JenkinsResultsParserUtil {
 			}
 		}
 
-		return ciProperties.getProperty(key);
+		return getProperty(ciProperties, key);
 	}
 
 	public static String getCohortName() {

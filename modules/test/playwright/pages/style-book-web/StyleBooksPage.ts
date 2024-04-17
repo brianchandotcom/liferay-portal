@@ -36,7 +36,7 @@ export class StyleBooksPage {
 			)
 			.fill(styleBookName);
 
-		await this.page.getByTitle('Search', {exact: true}).click();
+		await this.page.getByTitle('Search for', {exact: true}).click();
 
 		await expect(
 			this.page.getByText(`1 Result Found for "${styleBookName}"`)

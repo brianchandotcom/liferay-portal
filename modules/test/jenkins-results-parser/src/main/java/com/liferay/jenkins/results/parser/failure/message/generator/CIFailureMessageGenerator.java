@@ -15,17 +15,19 @@ import org.dom4j.Element;
 public class CIFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessageElement(String consoleText) {
+	public String getMessage(String consoleText) {
 		int index = consoleText.indexOf(_TOKEN_CI_ERROR);
 
 		if (index == -1) {
 			return null;
 		}
 
-		String snippet = consoleText.substring(
-			index, consoleText.indexOf("\n", index));
+		return consoleText.substring(index, consoleText.indexOf("\n", index));
+	}
 
-		return Dom4JUtil.toCodeSnippetElement(snippet);
+	@Override
+	public Element getMessageElement(String consoleText) {
+		return Dom4JUtil.toCodeSnippetElement(getMessage(consoleText));
 	}
 
 	@Override

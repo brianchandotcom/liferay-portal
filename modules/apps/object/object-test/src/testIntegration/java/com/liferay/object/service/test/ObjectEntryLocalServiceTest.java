@@ -239,6 +239,10 @@ public class ObjectEntryLocalServiceTest {
 					ObjectFieldConstants.DB_TYPE_DATE, true, false, null,
 					"Birthday", "birthday", false),
 				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL,
+					ObjectFieldConstants.DB_TYPE_DOUBLE, true, false, null,
+					"BloodPressure", "bloodPressure", false),
+				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
 					"Email Address", "emailAddress",
@@ -476,6 +480,17 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		_assertCount(5);
+
+		_addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"bloodPressure", "12,8"
+			).put(
+				"emailAddressRequired", "diogo@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		_assertCount(6);
 
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.ExceedsIntegerSize.class,

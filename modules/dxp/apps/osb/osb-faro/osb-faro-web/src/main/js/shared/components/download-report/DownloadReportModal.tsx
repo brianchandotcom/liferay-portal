@@ -131,7 +131,7 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 
 				<ClayModal.Body>
 					{showDateRange && (
-						<ClayForm.Group>
+						<ClayForm.Group className='mb-0'>
 							<label htmlFor='timeRange'>
 								{requiredDateRange
 									? Liferay.Language.get('date-range')

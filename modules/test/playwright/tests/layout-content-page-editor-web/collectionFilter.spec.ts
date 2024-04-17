@@ -9,6 +9,7 @@ import {collectionPagesTest} from '../../fixtures/CollectionPageTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
@@ -25,6 +26,7 @@ export const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	journalPagesTest,
+	loginTest(),
 	pageEditorPagesTest
 );
 

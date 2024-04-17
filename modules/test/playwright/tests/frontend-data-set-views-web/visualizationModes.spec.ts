@@ -423,7 +423,8 @@ export const fragmentTest = mergeTests(
 		'LPS-164563': true,
 		'LPS-178052': true,
 	}),
-	isolatedSiteTest
+	isolatedSiteTest,
+	loginTest()
 );
 
 fragmentTest.describe('Visualization Modes in the fragment', () => {

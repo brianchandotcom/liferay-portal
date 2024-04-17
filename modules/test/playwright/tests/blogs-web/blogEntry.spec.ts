@@ -6,10 +6,11 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {blogsPagesTest} from './fixtures/blogsPagesTest';
 
-const baseTest = mergeTests(isolatedSiteTest, blogsPagesTest);
+const baseTest = mergeTests(isolatedSiteTest, blogsPagesTest, loginTest());
 
 const blogEntryAutoSaved = mergeTests(baseTest);
 

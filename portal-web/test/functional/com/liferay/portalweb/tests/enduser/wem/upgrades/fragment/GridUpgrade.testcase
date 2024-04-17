@@ -1,4 +1,4 @@
-@component-name = "portal-upgrades"
+@component-name = "portal-wcm"
 definition {
 
 	property ci.retries.disabled = "true";
@@ -6,8 +6,8 @@ definition {
 	property portal.upstream = "true";
 	property test.liferay.virtual.instance = "false";
 	property test.run.type = "single";
-	property testray.component.names = "Grid,Upgrades WEM";
-	property testray.main.component.name = "Upgrades WEM";
+	property testray.component.names = "Upgrades WEM";
+	property testray.main.component.name = "Page Editor";
 
 	setUp {
 		SignIn.signIn();

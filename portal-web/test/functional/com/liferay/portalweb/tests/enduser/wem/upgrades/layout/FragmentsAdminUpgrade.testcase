@@ -7,7 +7,7 @@ definition {
 	property test.liferay.virtual.instance = "false";
 	property test.run.type = "single";
 	property testray.component.names = "Upgrades WEM";
-	property testray.main.component.name = "Upgrades WEM";
+	property testray.main.component.name = "Fragment Administration";
 
 	setUp {
 		SignIn.signIn();

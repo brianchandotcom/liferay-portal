@@ -12,6 +12,7 @@ import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
@@ -32,6 +33,7 @@ import com.liferay.object.internal.system.info.collection.provider.SystemObjectE
 import com.liferay.object.internal.system.info.item.provider.SystemObjectEntryInfoItemDetailsProvider;
 import com.liferay.object.internal.system.info.item.provider.SystemObjectEntryInfoItemFieldValuesProvider;
 import com.liferay.object.internal.system.info.item.provider.SystemObjectEntryInfoItemFormProvider;
+import com.liferay.object.internal.system.info.item.provider.SystemObjectEntryInfoItemObjectProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrarHelper;
@@ -288,6 +290,23 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 					Constants.SERVICE_RANKING, 10
 				).put(
 					"company.id", objectDefinition.getCompanyId()
+				).put(
+					"item.class.name", itemClassName
+				).build());
+
+			_bundleContext.registerService(
+				InfoItemObjectProvider.class,
+				new SystemObjectEntryInfoItemObjectProvider(
+					_dtoConverterRegistry, systemObjectDefinitionManager),
+				HashMapDictionaryBuilder.<String, Object>put(
+					Constants.SERVICE_RANKING, 100
+				).put(
+					"company.id", objectDefinition.getCompanyId()
+				).put(
+					"info.item.identifier",
+					new String[] {
+						"com.liferay.info.item.ClassPKInfoItemIdentifier"
+					}
 				).put(
 					"item.class.name", itemClassName
 				).build());

@@ -809,10 +809,12 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 					"literal string can start with ' '",
 				19
 			).addExpectedMessage(
-				"Use method 'StringBundler.concat' when concatenating more than 3 strings",
+				"Use method 'StringBundler.concat' when concatenating more " +
+					"than 3 strings",
 				33
 			).addExpectedMessage(
-				"Do not use 'StringBundler.concat' when concatenating less than 3 elements",
+				"Do not use 'StringBundler.concat' when concatenating less " +
+					"than 3 elements",
 				41
 			));
 	}

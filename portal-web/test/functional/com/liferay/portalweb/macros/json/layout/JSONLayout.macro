@@ -162,6 +162,20 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro getLayoutIdByName(groupName = null, layoutName = null) {
+		if (!(isSet(groupId))) {
+			var groupId = JSONLayoutSetter.setGroupId(groupName = ${groupName});
+		}
+
+		var layoutId = JSONLayoutAPI._getLayoutIdByName(
+			groupId = ${groupId},
+			layoutName = ${layoutName},
+			privateLayout = "false");
+
+		return ${layoutId};
+	}
+
+	@summary = "Default summary"
 	macro getPageScopeIdByGroupName(groupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 

@@ -1203,10 +1203,14 @@ definition {
 				menuItem = "Configure",
 				pageName = 1);
 
+			var layoutId1 = JSONLayout.getLayoutIdByName(
+				groupName = "Export",
+				layoutName = 1);
+
 			AssertTextEquals(
 				inputFieldId = "friendlyURL",
 				locator1 = "TextInput#TEXT_INPUT_ID",
-				value1 = "/1");
+				value1 = "/${layoutId1}");
 		}
 
 		task ("And: Add a second page to the new site then verify that it has correct friendly URL") {
@@ -1220,10 +1224,14 @@ definition {
 				menuItem = "Configure",
 				pageName = 2);
 
+			var layoutId2 = JSONLayout.getLayoutIdByName(
+				groupName = "Export",
+				layoutName = 2);
+
 			AssertTextEquals(
 				inputFieldId = "friendlyURL",
 				locator1 = "TextInput#TEXT_INPUT_ID",
-				value1 = "/2");
+				value1 = "/${layoutId2}");
 		}
 
 		task ("And: Add a third page to the new site then verify that it has correct friendly URL") {

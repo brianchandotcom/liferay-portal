@@ -137,23 +137,27 @@ public class TestJSONMapAttribute implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@JsonAnyGetter
 	@Schema
 	@Valid
 	public Map<String, Object> getProperties1() {
-		if (_properties1Supplier != null) {
-			properties1 = _properties1Supplier.get();
-
-			_properties1Supplier = null;
-		}
+		properties1.forEach(
+			(key, value) -> {
+				if (value instanceof UnsafeSupplier<?, ?>) {
+					try {
+						properties1.put(
+							key, ((UnsafeSupplier<?, ?>)value).get());
+					}
+					catch (Throwable e) {
+						throw new RuntimeException(e);
+					}
+				}
+			});
 
 		return properties1;
 	}
 
 	public void setProperties1(Map<String, Object> properties1) {
 		this.properties1 = properties1;
-
-		_properties1Supplier = null;
 	}
 
 	@JsonIgnore
@@ -173,30 +177,32 @@ public class TestJSONMapAttribute implements Serializable {
 	}
 
 	@GraphQLField
+	@JsonAnyGetter
 	@JsonAnySetter
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> properties1 = new HashMap<>();
 
-	@JsonIgnore
-	private Supplier<Map<String, Object>> _properties1Supplier;
-
-	@JsonAnyGetter
 	@Schema
 	@Valid
 	public Map<String, Object> getProperties2() {
-		if (_properties2Supplier != null) {
-			properties2 = _properties2Supplier.get();
-
-			_properties2Supplier = null;
-		}
+		properties2.forEach(
+			(key, value) -> {
+				if (value instanceof UnsafeSupplier<?, ?>) {
+					try {
+						properties2.put(
+							key, ((UnsafeSupplier<?, ?>)value).get());
+					}
+					catch (Throwable e) {
+						throw new RuntimeException(e);
+					}
+				}
+			});
 
 		return properties2;
 	}
 
 	public void setProperties2(Map<String, Object> properties2) {
 		this.properties2 = properties2;
-
-		_properties2Supplier = null;
 	}
 
 	@JsonIgnore
@@ -216,12 +222,10 @@ public class TestJSONMapAttribute implements Serializable {
 	}
 
 	@GraphQLField
+	@JsonAnyGetter
 	@JsonAnySetter
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> properties2 = new HashMap<>();
-
-	@JsonIgnore
-	private Supplier<Map<String, Object>> _properties2Supplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -247,16 +251,36 @@ public class TestJSONMapAttribute implements Serializable {
 			return getName();
 		}
 		else {
-			Map<String, Object> properties1 = getProperties1();
-
 			if (properties1.containsKey(propertyName)) {
-				return properties1.get(propertyName);
+				Object object = properties1.get(propertyName);
+
+				if (object instanceof UnsafeSupplier<?, ?>) {
+					try {
+						object = ((UnsafeSupplier<?, ?>)object).get();
+						properties1.put(propertyName, object);
+					}
+					catch (Throwable e) {
+						throw new RuntimeException(e);
+					}
+				}
+
+				return object;
 			}
 
-			Map<String, Object> properties2 = getProperties2();
-
 			if (properties2.containsKey(propertyName)) {
-				return properties2.get(propertyName);
+				Object object = properties2.get(propertyName);
+
+				if (object instanceof UnsafeSupplier<?, ?>) {
+					try {
+						object = ((UnsafeSupplier<?, ?>)object).get();
+						properties2.put(propertyName, object);
+					}
+					catch (Throwable e) {
+						throw new RuntimeException(e);
+					}
+				}
+
+				return object;
 			}
 		}
 

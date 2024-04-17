@@ -21,27 +21,27 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    const buttons = document.querySelectorAll('.facet-term');
+	const buttons = document.querySelectorAll('.facet-term');
 
-    buttons.forEach(button => {
-        button.addEventListener('click', function(event) {
-            event.preventDefault();
+	buttons.forEach(button => {
+		button.addEventListener('click', function(event) {
+			event.preventDefault();
 
-            buttons.forEach(btn => {
-                btn.classList.remove('facet-term-selected');
-                btn.setAttribute('disabled', 'true');
-            });
+			buttons.forEach(btn => {
+				btn.classList.remove('facet-term-selected');
+				btn.setAttribute('disabled', 'true');
+			});
 
-            this.classList.add('facet-term-selected');
-            this.removeAttribute('disabled');
+			this.classList.add('facet-term-selected');
+			this.removeAttribute('disabled');
 
-            const categoryValue = this.getAttribute('data-term-id');
+			const categoryValue = this.getAttribute('data-term-id');
 
-            const currentURL = new URL(window.location.href);
-            currentURL.searchParams.set('category', categoryValue);
+			const currentURL = new URL(window.location.href);
+			currentURL.searchParams.set('category', categoryValue);
 
-            window.location.href = currentURL.toString();
-        });
-    });
+			window.location.href = currentURL.toString();
+		});
+	});
 });
 </script>

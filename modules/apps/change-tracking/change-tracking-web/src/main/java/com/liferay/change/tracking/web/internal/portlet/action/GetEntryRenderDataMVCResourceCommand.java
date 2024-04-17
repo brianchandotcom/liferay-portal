@@ -18,6 +18,7 @@ import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.DisplayContextImpl;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.diff.DiffHtml;
+import com.liferay.knowledge.base.model.KBArticleModel;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -1039,11 +1041,19 @@ public class GetEntryRenderDataMVCResourceCommand
 			groupId = groupedModel.getGroupId();
 		}
 
+		long classPK = ctEntry.getModelClassPK();
+
+		if (model instanceof KBArticleModel) {
+			Map<String, Object> modelAttributes = model.getModelAttributes();
+
+			classPK = GetterUtil.getLong(
+				modelAttributes.get("resourcePrimKey"));
+		}
+
 		WorkflowInstanceLink workflowInstanceLink =
 			_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
 				ctEntry.getCompanyId(), groupId,
-				_portal.getClassName(ctEntry.getModelClassNameId()),
-				ctEntry.getModelClassPK());
+				_portal.getClassName(ctEntry.getModelClassNameId()), classPK);
 
 		if (workflowInstanceLink == null) {
 			return new LinkedHashMap<>();

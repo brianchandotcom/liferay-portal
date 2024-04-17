@@ -51,7 +51,7 @@ test('allows renaming an experience', async ({
 	await expect(page.getByLabel('Experience: E1 edited')).toBeVisible();
 });
 
-test.skip('allows changing the segment of an existing experience', async ({
+test('allows changing the segment of an existing experience', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -135,7 +135,7 @@ test('creates new experiences as expected', async ({
 	await expect(page.getByText('Heading Example')).toBeVisible();
 });
 
-test.skip('keeps modal open when canceling segment creation', async ({
+test('keeps modal open when canceling segment creation', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,

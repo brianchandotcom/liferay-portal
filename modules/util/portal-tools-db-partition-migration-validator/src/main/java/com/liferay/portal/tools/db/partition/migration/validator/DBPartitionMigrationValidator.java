@@ -5,11 +5,16 @@
 
 package com.liferay.portal.tools.db.partition.migration.validator;
 
+import com.fasterxml.jackson.core.JacksonException;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
@@ -18,7 +23,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.migration.validator.util.DatabaseUtil;
 import com.liferay.portal.tools.db.partition.migration.validator.util.ValidatorUtil;
-import com.liferay.portal.tools.db.partition.migration.validator.util.VersionDeserializer;
 
 import java.io.File;
 import java.io.IOException;
@@ -360,5 +364,44 @@ public class DBPartitionMigrationValidator {
 	private static Connection _connection;
 	private static LiferayInstance _sourceLiferayInstance;
 	private static LiferayInstance _targetLiferayInstance;
+
+	private static class VersionDeserializer extends StdDeserializer<Version> {
+
+		public VersionDeserializer() {
+			this(null);
+		}
+
+		@Override
+		public Version deserialize(
+				JsonParser jsonParser,
+				DeserializationContext deserializationContext)
+			throws IOException, JacksonException {
+
+			JsonNode jsonNode = jsonParser.getCodec(
+			).readTree(
+				jsonParser
+			);
+
+			int major = (Integer)jsonNode.get(
+				"major"
+			).numberValue();
+			int micro = (Integer)jsonNode.get(
+				"micro"
+			).numberValue();
+			int minor = (Integer)jsonNode.get(
+				"minor"
+			).numberValue();
+			String qualifier = jsonNode.get(
+				"qualifier"
+			).asText();
+
+			return new Version(major, minor, micro, qualifier);
+		}
+
+		protected VersionDeserializer(Class<?> vc) {
+			super(vc);
+		}
+
+	}
 
 }

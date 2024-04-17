@@ -40,18 +40,26 @@ public class MultiselectPicklistFieldPredicateProvider
 		Object left, long objectDefinitionId,
 		BinaryExpression.Operation operation, Object right) {
 
-		if (!Objects.equals(operation, BinaryExpression.Operation.EQ)) {
-			throw new UnsupportedOperationException(
-				operation +
-					" is not supported in MultiselectPicklist Object Fields");
+		Expression<String> columnFieldExpression =
+			(Expression<String>)objectDefinitionColumnSupplier.apply(
+				String.valueOf(left));
+
+		if (Objects.equals(operation, BinaryExpression.Operation.EQ)) {
+			Expression<String> formatedColumnExpression =
+				DSLFunctionFactoryUtil.concat(
+					new Scalar<>(_SCALAR_EXPRESSION), columnFieldExpression,
+					new Scalar<>(_SCALAR_EXPRESSION));
+
+			return formatedColumnExpression.like(
+				_getFieldValueExpression(String.valueOf(right), null));
+		}
+		else if (Objects.equals(operation, BinaryExpression.Operation.NE)) {
+			return columnFieldExpression.neq(String.valueOf(right));
 		}
 
-		Expression<String> columnFieldExpression = _getFormatedColumnExpression(
-			(Expression<String>)objectDefinitionColumnSupplier.apply(
-				String.valueOf(left)));
-
-		return columnFieldExpression.like(
-			_getFieldValueExpression(null, right));
+		throw new UnsupportedOperationException(
+			operation +
+				" is not supported in MultiselectPicklist Object Fields");
 	}
 
 	@Override
@@ -62,7 +70,8 @@ public class MultiselectPicklistFieldPredicateProvider
 		return objectDefinitionColumnSupplier.apply(
 			fieldName
 		).like(
-			_getFieldValueExpression(MethodExpression.Type.CONTAINS, fieldValue)
+			_getFieldValueExpression(
+				String.valueOf(fieldValue), MethodExpression.Type.CONTAINS)
 		);
 	}
 
@@ -99,49 +108,46 @@ public class MultiselectPicklistFieldPredicateProvider
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
 		String fieldName, Object fieldValue) {
 
-		Expression<String> columnFieldExpression = _getFormatedColumnExpression(
-			(Expression<String>)objectDefinitionColumnSupplier.apply(
-				fieldName));
+		Expression<String> columnFieldExpression =
+			DSLFunctionFactoryUtil.concat(
+				new Scalar<>(_SCALAR_EXPRESSION),
+				(Expression<String>)objectDefinitionColumnSupplier.apply(
+					fieldName),
+				new Scalar<>(_SCALAR_EXPRESSION));
 
 		return columnFieldExpression.like(
 			_getFieldValueExpression(
-				MethodExpression.Type.STARTS_WITH, fieldValue));
+				String.valueOf(fieldValue), MethodExpression.Type.STARTS_WITH));
 	}
 
 	private Expression<String> _getFieldValueExpression(
-		MethodExpression.Type methodExpressionType, Object fieldValue) {
+		String fieldValue, MethodExpression.Type methodExpressionType) {
+
+		String expressionString = null;
 
 		if (Objects.equals(
 				methodExpressionType, MethodExpression.Type.CONTAINS)) {
 
-			return DSLFunctionFactoryUtil.concat(
-				new Scalar<>(StringPool.PERCENT),
-				new Scalar<>(fieldValue.toString()),
-				new Scalar<>(StringPool.PERCENT));
+			expressionString = StringBundler.concat(
+				StringPool.PERCENT, fieldValue, StringPool.PERCENT);
 		}
 		else if (Objects.equals(
 					methodExpressionType, MethodExpression.Type.STARTS_WITH)) {
 
-			return DSLFunctionFactoryUtil.concat(
-				new Scalar<>("%, " + fieldValue + "%, %"));
+			expressionString = StringBundler.concat(
+				StringPool.PERCENT, _SCALAR_EXPRESSION, fieldValue,
+				StringPool.PERCENT, _SCALAR_EXPRESSION, StringPool.PERCENT);
+		}
+		else {
+			expressionString = StringBundler.concat(
+				StringPool.PERCENT, _SCALAR_EXPRESSION, fieldValue,
+				_SCALAR_EXPRESSION, StringPool.PERCENT);
 		}
 
-		return DSLFunctionFactoryUtil.concat(
-			new Scalar<>("%, "), new Scalar<>(fieldValue.toString()),
-			new Scalar<>(", %"));
+		return new Scalar<>(expressionString);
 	}
 
-	private Expression<String> _getFormatedColumnExpression(
-		Expression<String> expression) {
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(StringPool.COMMA);
-		sb.append(StringPool.SPACE);
-
-		return DSLFunctionFactoryUtil.concat(
-			new Scalar<>(sb.toString()), expression,
-			new Scalar<>(sb.toString()));
-	}
+	private static final String _SCALAR_EXPRESSION =
+		StringPool.COMMA + StringPool.SPACE;
 
 }

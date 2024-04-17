@@ -18,7 +18,8 @@ export function getDTOFromMDFClaim(
 		convertedTotalClaimAmount:
 			mdfClaim.submitted === false
 				? 0
-				: mdfClaim.totalClaimAmount
+				: mdfRequest.currencyExchangeRate !== 0 &&
+				  mdfClaim.totalClaimAmount
 				? mdfClaim.totalClaimAmount / mdfRequest.currencyExchangeRate
 				: 0,
 		currency: mdfClaim.currency,

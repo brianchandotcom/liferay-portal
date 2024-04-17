@@ -20,7 +20,7 @@ const goalsSchema = object({
 	})
 		.default(undefined)
 		.test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
-	currencyExchangeRate: number().min(0).required(),
+	currencyExchangeRate: number().min(0).required('Required'),
 	liferayBusinessSalesGoals: array()
 		.min(1, 'Required')
 		.max(3, 'You have exceed the choose limit'),

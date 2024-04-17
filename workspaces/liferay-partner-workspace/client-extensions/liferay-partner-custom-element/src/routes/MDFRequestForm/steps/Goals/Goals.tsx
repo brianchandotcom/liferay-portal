@@ -61,9 +61,9 @@ const Goals = ({
 		companiesEntries,
 		fieldEntries[LiferayPicklistName.CURRENCIES],
 		!isObjectEmpty(values.currency) ? values.currency : undefined,
-		values.currencyExchangeRate && values.currencyExchangeRate !== 0
+		values.currencyExchangeRate !== 0 || values.submitted
 			? values.currencyExchangeRate
-			: 0,
+			: undefined,
 		fieldEntries[LiferayPicklistName.COUNTRIES],
 		!isObjectEmpty(values.partnerCountry)
 			? values.partnerCountry

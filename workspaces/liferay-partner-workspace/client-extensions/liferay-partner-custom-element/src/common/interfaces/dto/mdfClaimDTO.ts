@@ -8,9 +8,9 @@ import LiferayPicklist from '../liferayPicklist';
 import MDFClaim from '../mdfClaim';
 import MDFClaimDocument from '../mdfClaimDocument';
 import MDFClaimActivityDTO from './mdfClaimActivityDTO';
+import MDFRequestDTO from './mdfRequestDTO';
 
 export default interface MDFClaimDTO extends MDFClaim {
-	claimPaid?: number;
 	companyName?: string;
 	currency: LiferayPicklist;
 	externalReferenceCode?: string;
@@ -24,6 +24,7 @@ export default interface MDFClaimDTO extends MDFClaim {
 	paymentDate?: string;
 	r_accToMDFClms_accountEntry?: AccountEntry;
 	r_accToMDFClms_accountEntryId?: number;
+	r_mdfReqToMDFClms_c_mdfRequest?: MDFRequestDTO;
 	r_mdfReqToMDFClms_c_mdfRequestId: number;
 	totalClaimAmount?: number;
 }

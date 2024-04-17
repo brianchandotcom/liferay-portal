@@ -39,7 +39,7 @@ const MDFClaimManagerStatus = () => {
 		MDFClaimDTO
 	>(
 		mdfClaimId &&
-			`/o/${LiferayAPIs.OBJECT}/${ResourceName.MDF_CLAIM_DXP}/${mdfClaimId}`
+			`/o/${LiferayAPIs.OBJECT}/${ResourceName.MDF_CLAIM_DXP}/${mdfClaimId}?nestedFields=r_mdfReqToMDFClms_c_mdfRequest`
 	);
 	const [patchedStatus, setPatchedStatus] = useState<LiferayPicklist>();
 
@@ -83,6 +83,19 @@ const MDFClaimManagerStatus = () => {
 						}
 						onSubmit={async (values) => {
 							setIsSubmitting(true);
+
+							if (
+								mdfClaim?.r_mdfReqToMDFClms_c_mdfRequest
+									?.currencyExchangeRate &&
+								mdfClaim?.r_mdfReqToMDFClms_c_mdfRequest
+									?.currencyExchangeRate !== 0 &&
+								values.claimPaid
+							) {
+								values.convertedClaimPaid =
+									values.claimPaid /
+									mdfClaim?.r_mdfReqToMDFClms_c_mdfRequest
+										?.currencyExchangeRate;
+							}
 
 							const newClaimStatus = await patchClaimStatus(
 								displayModalStatus,

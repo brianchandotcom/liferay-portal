@@ -99,7 +99,7 @@ export default function useCompanyOptions(
 							name: currencyPicklist.label as string,
 					  }) ||
 							{},
-				currentCurrencyExchangeRate && currentCurrencyExchangeRate !== 0
+				currentCurrencyExchangeRate
 					? currentCurrencyExchangeRate
 					: (datedConversionRate &&
 							datedConversionRate.conversionRate) ||

@@ -548,10 +548,8 @@ public class DDMFormDisplayContext {
 
 		LocalizedValue body = ddmFormSuccessPageSettings.getBody();
 
-		return HtmlUtil.escape(
-			GetterUtil.getString(
-				body.getString(locale),
-				body.getString(body.getDefaultLocale())));
+		return GetterUtil.getString(
+			body.getString(locale), body.getString(body.getDefaultLocale()));
 	}
 
 	public String getSuccessPageTitle(Locale locale) throws PortalException {

@@ -44,7 +44,7 @@ definition {
 
 		task ("When I filter using the management bar") {
 			Click(
-				key_text = "Filter and Order",
+				key_text = "Filter",
 				locator1 = "Button#ANY_WITH_SPAN");
 
 			Click(

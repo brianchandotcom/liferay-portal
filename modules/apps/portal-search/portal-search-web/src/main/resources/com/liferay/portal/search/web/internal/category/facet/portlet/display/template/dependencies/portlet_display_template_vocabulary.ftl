@@ -11,7 +11,7 @@
 	<li class="treeview-item" role="none">
 		<#if name?has_content>
 			<div
-				aria-controls="${namespace}treeItem${id}"
+				aria-controls="${(termDisplayContexts?has_content)?then(namespace + 'treeItem' + id, '')}"
 				aria-expanded="true"
 				class="treeview-link ${cssClassTreeItem}"
 				data-target="#${namespace}treeItem${id}"
@@ -27,6 +27,7 @@
 								<@clay.button
 									aria\-controls="${namespace}treeItem${id}"
 									aria\-expanded="true"
+									aria\-label="${languageUtil.get(locale, 'toggle')}"
 									cssClass="btn btn-monospaced component-expander"
 									data\-target="#${namespace}treeItem${id}"
 									data\-toggle="collapse"
@@ -147,7 +148,7 @@
 					<@treeview_item
 						cssClassTreeItem="tree-item-vocabulary"
 						frequencyVisible=false
-						id=vocabularyName + vocabularyName?index
+						id=vocabularyName?replace("[^\\w]|_", '', 'r') + vocabularyName?index
 						name="${(vocabularyNames?size == 1)?then('', htmlUtil.escape(vocabularyName))}"
 						termDisplayContexts=assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts(vocabularyName)
 					/>

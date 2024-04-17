@@ -190,10 +190,6 @@ definition {
 		AssertClick(
 			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE",
 			value1 = "Select File");
-
-		// Pausing 2 seconds to ensure the upload iframe is loaded. See LPD-22308
-
-		Pause(value1 = 2000);
 	}
 
 	@summary = "Default summary"

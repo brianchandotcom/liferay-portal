@@ -15,5 +15,6 @@
 		<suppress checks="LibraryVulnerabilitiesCheck" files="org-quartz/build\.gradle" />
 		<suppress checks="LibraryVulnerabilitiesCheck" files="org-springframework-beans-3.0.7/build\.gradle" />
 		<suppress checks="LibraryVulnerabilitiesCheck" files="org-springframework-beans-4.3.30/build\.gradle" />
+		<suppress checks="LibraryVulnerabilitiesCheck" files="org-springframework-web-4.3.30/build\.gradle" />
 	</source-check>
 </suppressions>

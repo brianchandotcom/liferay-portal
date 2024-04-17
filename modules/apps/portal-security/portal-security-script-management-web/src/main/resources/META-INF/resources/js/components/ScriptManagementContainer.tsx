@@ -48,12 +48,45 @@ export default function ScriptManagementContainer({
 
 	const {observer, onClose} = useModal({
 		onClose: () => {
-			setShowGroovyScriptUsesModal(false);
+			setAllowScriptContent(true);
 			setGroovyScriptUses([]);
+			setShowGroovyScriptUsesModal(false);
 		},
 	});
 
-	const handleSaveSystemConfiguration = async () => {
+	const saveScriptManagementSystemConfiguration = async () => {
+		const editScriptManagementConfigurationResponse = await fetch(
+			createResourceURL(baseResourceURL, {
+				allowScriptContentToBeExecutedOrIncluded: allowScriptContent,
+				p_p_resource_id:
+					'/system_settings/edit_script_management_configuration',
+			}).toString()
+		);
+
+		openToast({
+			message: editScriptManagementConfigurationResponse.ok
+				? Liferay.Language.get('your-request-completed-successfully')
+				: Liferay.Language.get('an-error-occurred'),
+			type: editScriptManagementConfigurationResponse.ok
+				? 'success'
+				: 'danger',
+		});
+
+		if (
+			editScriptManagementConfigurationResponse.ok &&
+			!scriptManagementConfigurationDefined
+		) {
+			setIsScriptManagementConfigurationDefined(true);
+		}
+	};
+
+	const handleSubmitSystemConfiguration = async () => {
+		if (allowScriptContent) {
+			saveScriptManagementSystemConfiguration();
+
+			return;
+		}
+
 		const getGroovyScriptUsesResponse = await fetch(
 			createResourceURL(baseResourceURL, {
 				p_p_resource_id: '/system_settings/get_groovy_script_uses',
@@ -63,31 +96,7 @@ export default function ScriptManagementContainer({
 		const groovyScriptUsesResponse = (await getGroovyScriptUsesResponse.json()) as GroovyScriptUseItem[];
 
 		if (!groovyScriptUsesResponse.length) {
-			const editScriptManagementConfigurationResponse = await fetch(
-				createResourceURL(baseResourceURL, {
-					allowScriptContentToBeExecutedOrIncluded: allowScriptContent,
-					p_p_resource_id:
-						'/system_settings/edit_script_management_configuration',
-				}).toString()
-			);
-
-			openToast({
-				message: editScriptManagementConfigurationResponse.ok
-					? Liferay.Language.get(
-							'your-request-completed-successfully'
-					  )
-					: Liferay.Language.get('an-error-occurred'),
-				type: editScriptManagementConfigurationResponse.ok
-					? 'success'
-					: 'danger',
-			});
-
-			if (
-				editScriptManagementConfigurationResponse.ok &&
-				!scriptManagementConfigurationDefined
-			) {
-				setIsScriptManagementConfigurationDefined(true);
-			}
+			saveScriptManagementSystemConfiguration();
 
 			return;
 		}
@@ -136,7 +145,7 @@ export default function ScriptManagementContainer({
 				<ClayButton
 					displayType="primary"
 					onClick={() => {
-						handleSaveSystemConfiguration();
+						handleSubmitSystemConfiguration();
 					}}
 					type="submit"
 				>

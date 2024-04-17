@@ -13,7 +13,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.persistence.InMemoryOnlyConfigurationThreadLocal;
 import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
 import com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration;
-import com.liferay.portal.k8s.agent.internal.threadlocal.AgentPortalK8sThreadLocal;
 import com.liferay.portal.k8s.agent.mutator.PortalK8sConfigurationPropertiesMutator;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
@@ -130,13 +129,6 @@ public class AgentPortalK8sConfigMapModifier
 		Consumer<PortalK8sConfigMapModifier.ConfigMapModel>
 			configMapModelConsumer,
 		String configMapName) {
-
-		if (_clusterMasterExecutor.isEnabled() &&
-			(!_clusterMasterExecutor.isMaster() ||
-			 !AgentPortalK8sThreadLocal.isExecuteOnCurrentNode())) {
-
-			return Result.UNCHANGED;
-		}
 
 		Objects.requireNonNull(
 			configMapModelConsumer, "Config map model consumer is null");

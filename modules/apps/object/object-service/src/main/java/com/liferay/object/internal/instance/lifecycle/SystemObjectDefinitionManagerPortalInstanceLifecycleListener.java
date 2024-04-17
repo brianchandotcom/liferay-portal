@@ -6,6 +6,7 @@
 package com.liferay.object.internal.instance.lifecycle;
 
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
@@ -19,6 +20,7 @@ import com.liferay.object.internal.related.models.SystemObject1toMObjectRelatedM
 import com.liferay.object.internal.related.models.SystemObjectMtoMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.rest.context.path.RESTContextPathResolverImpl;
 import com.liferay.object.internal.system.info.collection.provider.SystemObjectEntrySingleFormVariationInfoCollectionProvider;
+import com.liferay.object.internal.system.info.item.provider.SystemObjectEntryInfoItemDetailsProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrarHelper;
@@ -55,6 +57,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -192,6 +195,17 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 					systemObjectDefinitionManager),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"class.name", objectDefinition.getClassName()
+				).put(
+					"company.id", objectDefinition.getCompanyId()
+				).put(
+					"item.class.name", itemClassName
+				).build());
+			_bundleContext.registerService(
+				InfoItemDetailsProvider.class,
+				new SystemObjectEntryInfoItemDetailsProvider(
+					itemClassName, objectDefinition),
+				HashMapDictionaryBuilder.<String, Object>put(
+					Constants.SERVICE_RANKING, 10
 				).put(
 					"company.id", objectDefinition.getCompanyId()
 				).put(

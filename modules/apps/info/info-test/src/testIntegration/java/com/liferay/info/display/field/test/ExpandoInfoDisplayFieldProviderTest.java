@@ -19,6 +19,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -33,6 +34,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -91,31 +93,36 @@ public class ExpandoInfoDisplayFieldProviderTest {
 			_expandoTable, "test-localized-string-array",
 			ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
 
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+
+		Assert.assertTrue(availableLocales.contains(LocaleUtil.US));
+		Assert.assertTrue(availableLocales.contains(LocaleUtil.FRANCE));
+
 		Map<Locale, String[]> value = HashMapBuilder.put(
-			LocaleUtil.ENGLISH, new String[] {"en-value-1", "en-value-2"}
+			LocaleUtil.US, new String[] {"en-value-1", "en-value-2"}
 		).put(
-			LocaleUtil.FRENCH, new String[] {"fr-value-1", "fr-value-2"}
+			LocaleUtil.FRANCE, new String[] {"fr-value-1", "fr-value-2"}
 		).build();
 
 		ExpandoValue expandoValue = _addExpandoValue(expandoColumn, value);
 
 		Assert.assertEquals(
-			value.get(LocaleUtil.ENGLISH),
-			expandoValue.getStringArray(LocaleUtil.ENGLISH));
+			value.get(LocaleUtil.US),
+			expandoValue.getStringArray(LocaleUtil.US));
 
 		Assert.assertEquals(
-			value.get(LocaleUtil.FRENCH),
-			expandoValue.getStringArray(LocaleUtil.FRENCH));
-
-		Assert.assertEquals(
-			StringUtil.merge(
-				value.get(LocaleUtil.ENGLISH), StringPool.COMMA_AND_SPACE),
-			_getValue(expandoColumn.getName(), LocaleUtil.ENGLISH));
+			value.get(LocaleUtil.FRANCE),
+			expandoValue.getStringArray(LocaleUtil.FRANCE));
 
 		Assert.assertEquals(
 			StringUtil.merge(
-				value.get(LocaleUtil.FRENCH), StringPool.COMMA_AND_SPACE),
-			_getValue(expandoColumn.getName(), LocaleUtil.FRENCH));
+				value.get(LocaleUtil.US), StringPool.COMMA_AND_SPACE),
+			_getValue(expandoColumn.getName(), LocaleUtil.US));
+
+		Assert.assertEquals(
+			StringUtil.merge(
+				value.get(LocaleUtil.FRANCE), StringPool.COMMA_AND_SPACE),
+			_getValue(expandoColumn.getName(), LocaleUtil.FRANCE));
 	}
 
 	@Test
@@ -126,29 +133,33 @@ public class ExpandoInfoDisplayFieldProviderTest {
 			_expandoTable, "test-localized-string",
 			ExpandoColumnConstants.STRING_LOCALIZED);
 
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+
+		Assert.assertTrue(availableLocales.contains(LocaleUtil.US));
+		Assert.assertTrue(availableLocales.contains(LocaleUtil.FRANCE));
+
 		Map<Locale, String> value = HashMapBuilder.put(
-			LocaleUtil.ENGLISH, "en-value-1"
+			LocaleUtil.US, "en-value-1"
 		).put(
-			LocaleUtil.FRENCH, "fr-value-1"
+			LocaleUtil.FRANCE, "fr-value-1"
 		).build();
 
 		ExpandoValue expandoValue = _addExpandoValue(expandoColumn, value);
 
 		Assert.assertEquals(
-			value.get(LocaleUtil.ENGLISH),
-			expandoValue.getString(LocaleUtil.ENGLISH));
+			value.get(LocaleUtil.US), expandoValue.getString(LocaleUtil.US));
 
 		Assert.assertEquals(
-			value.get(LocaleUtil.FRENCH),
-			expandoValue.getString(LocaleUtil.FRENCH));
+			value.get(LocaleUtil.FRANCE),
+			expandoValue.getString(LocaleUtil.FRANCE));
 
 		Assert.assertEquals(
-			value.get(LocaleUtil.ENGLISH),
-			_getValue(expandoColumn.getName(), LocaleUtil.ENGLISH));
+			value.get(LocaleUtil.US),
+			_getValue(expandoColumn.getName(), LocaleUtil.US));
 
 		Assert.assertEquals(
-			value.get(LocaleUtil.FRENCH),
-			_getValue(expandoColumn.getName(), LocaleUtil.FRENCH));
+			value.get(LocaleUtil.FRANCE),
+			_getValue(expandoColumn.getName(), LocaleUtil.FRANCE));
 	}
 
 	@Test

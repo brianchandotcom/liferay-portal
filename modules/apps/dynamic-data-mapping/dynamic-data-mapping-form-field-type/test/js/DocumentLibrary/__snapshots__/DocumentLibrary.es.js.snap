@@ -60,9 +60,9 @@ exports[`Field DocumentLibrary has a helptext 1`] = `
       class="form-feedback-group lfr-de__field-feedback"
     >
       <div
+        aria-live="assertive"
         class="form-feedback-item"
         id="uploadField_fieldError"
-        role="alert"
       >
         <span
           class="form-feedback-indicator inline-item-before"
@@ -161,9 +161,9 @@ exports[`Field DocumentLibrary has a label 1`] = `
       class="form-feedback-group lfr-de__field-feedback"
     >
       <div
+        aria-live="assertive"
         class="form-feedback-item"
         id="uploadField_fieldError"
-        role="alert"
       >
         <span
           class="form-feedback-indicator inline-item-before"
@@ -253,9 +253,9 @@ exports[`Field DocumentLibrary has a placeholder 1`] = `
       class="form-feedback-group lfr-de__field-feedback"
     >
       <div
+        aria-live="assertive"
         class="form-feedback-item"
         id="uploadField_fieldError"
-        role="alert"
       >
         <span
           class="form-feedback-indicator inline-item-before"
@@ -342,9 +342,9 @@ exports[`Field DocumentLibrary has a spritemap 1`] = `
       class="form-feedback-group lfr-de__field-feedback"
     >
       <div
+        aria-live="assertive"
         class="form-feedback-item"
         id="uploadField_fieldError"
-        role="alert"
       >
         <span
           class="form-feedback-indicator inline-item-before"
@@ -431,9 +431,9 @@ exports[`Field DocumentLibrary has a value 1`] = `
       class="form-feedback-group lfr-de__field-feedback"
     >
       <div
+        aria-live="assertive"
         class="form-feedback-item"
         id="uploadField_fieldError"
-        role="alert"
       >
         <span
           class="form-feedback-indicator inline-item-before"
@@ -521,9 +521,9 @@ exports[`Field DocumentLibrary has an id 1`] = `
       class="form-feedback-group lfr-de__field-feedback"
     >
       <div
+        aria-live="assertive"
         class="form-feedback-item"
         id="ID_fieldError"
-        role="alert"
       >
         <span
           class="form-feedback-indicator inline-item-before"
@@ -603,6 +603,16 @@ exports[`Field DocumentLibrary is not readOnly 1`] = `
       type="hidden"
       value="false"
     />
+    <div
+      aria-hidden="true"
+      class="form-feedback-group lfr-de__field-feedback"
+    >
+      <div
+        aria-live="assertive"
+        class="form-feedback-item"
+        id="uploadField_fieldError"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -668,9 +678,9 @@ exports[`Field DocumentLibrary is not required 1`] = `
       class="form-feedback-group lfr-de__field-feedback"
     >
       <div
+        aria-live="assertive"
         class="form-feedback-item"
         id="uploadField_fieldError"
-        role="alert"
       >
         <span
           class="form-feedback-indicator inline-item-before"
@@ -762,9 +772,9 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
       class="form-feedback-group lfr-de__field-feedback"
     >
       <div
+        aria-live="assertive"
         class="form-feedback-item"
         id="uploadField_fieldError"
-        role="alert"
       >
         <span
           class="form-feedback-indicator inline-item-before"

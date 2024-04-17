@@ -100,6 +100,7 @@ exports[`Options shows the options 1`] = `
                       title="Option 1"
                     >
                       <input
+                        aria-describedby="keyValueDisplayNameoption0_fieldError"
                         aria-invalid="true"
                         class="form-control ddm-field-text"
                         id="keyValueDisplayNameoption0"
@@ -114,6 +115,16 @@ exports[`Options shows the options 1`] = `
                       type="hidden"
                       value="false"
                     />
+                    <div
+                      aria-hidden="true"
+                      class="form-feedback-group lfr-de__field-feedback"
+                    >
+                      <div
+                        aria-live="assertive"
+                        class="form-feedback-item"
+                        id="keyValueDisplayNameoption0_fieldError"
+                      />
+                    </div>
                   </div>
                   <button
                     aria-label="remove-x-option"
@@ -134,6 +145,16 @@ exports[`Options shows the options 1`] = `
                     type="hidden"
                     value="false"
                   />
+                  <div
+                    aria-hidden="true"
+                    class="form-feedback-group lfr-de__field-feedback"
+                  >
+                    <div
+                      aria-live="assertive"
+                      class="form-feedback-item"
+                      id="option0_fieldError"
+                    />
+                  </div>
                 </div>
                 <label
                   class="mt-3"
@@ -156,6 +177,7 @@ exports[`Options shows the options 1`] = `
                       title="Option1"
                     >
                       <input
+                        aria-describedby="keyValueReferenceOption1_fieldError"
                         aria-invalid="true"
                         class="form-control ddm-field-text"
                         id="keyValueReferenceOption1"
@@ -169,12 +191,32 @@ exports[`Options shows the options 1`] = `
                       type="hidden"
                       value="false"
                     />
+                    <div
+                      aria-hidden="true"
+                      class="form-feedback-group lfr-de__field-feedback"
+                    >
+                      <div
+                        aria-live="assertive"
+                        class="form-feedback-item"
+                        id="keyValueReferenceOption1_fieldError"
+                      />
+                    </div>
                   </div>
                   <input
                     name="Option1_edited"
                     type="hidden"
                     value="false"
                   />
+                  <div
+                    aria-hidden="true"
+                    class="form-feedback-group lfr-de__field-feedback"
+                  >
+                    <div
+                      aria-live="assertive"
+                      class="form-feedback-item"
+                      id="Option1_fieldError"
+                    />
+                  </div>
                 </div>
                 <label
                   class="mt-3"
@@ -211,6 +253,7 @@ exports[`Options shows the options 1`] = `
                       title="Option1"
                     >
                       <input
+                        aria-describedby="keyValueNameOption1_fieldError"
                         aria-invalid="true"
                         class="form-control ddm-field-text"
                         id="keyValueNameOption1"
@@ -224,12 +267,32 @@ exports[`Options shows the options 1`] = `
                       type="hidden"
                       value="false"
                     />
+                    <div
+                      aria-hidden="true"
+                      class="form-feedback-group lfr-de__field-feedback"
+                    >
+                      <div
+                        aria-live="assertive"
+                        class="form-feedback-item"
+                        id="keyValueNameOption1_fieldError"
+                      />
+                    </div>
                   </div>
                   <input
                     name="Option1_edited"
                     type="hidden"
                     value="false"
                   />
+                  <div
+                    aria-hidden="true"
+                    class="form-feedback-group lfr-de__field-feedback"
+                  >
+                    <div
+                      aria-live="assertive"
+                      class="form-feedback-item"
+                      id="Option1_fieldError"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -326,6 +389,7 @@ exports[`Options shows the options 1`] = `
                       title="Option 2"
                     >
                       <input
+                        aria-describedby="keyValueDisplayNameoption1_fieldError"
                         aria-invalid="true"
                         class="form-control ddm-field-text"
                         id="keyValueDisplayNameoption1"
@@ -340,6 +404,16 @@ exports[`Options shows the options 1`] = `
                       type="hidden"
                       value="false"
                     />
+                    <div
+                      aria-hidden="true"
+                      class="form-feedback-group lfr-de__field-feedback"
+                    >
+                      <div
+                        aria-live="assertive"
+                        class="form-feedback-item"
+                        id="keyValueDisplayNameoption1_fieldError"
+                      />
+                    </div>
                   </div>
                   <button
                     aria-label="remove-x-option"
@@ -360,6 +434,16 @@ exports[`Options shows the options 1`] = `
                     type="hidden"
                     value="false"
                   />
+                  <div
+                    aria-hidden="true"
+                    class="form-feedback-group lfr-de__field-feedback"
+                  >
+                    <div
+                      aria-live="assertive"
+                      class="form-feedback-item"
+                      id="option1_fieldError"
+                    />
+                  </div>
                 </div>
                 <label
                   class="mt-3"
@@ -382,6 +466,7 @@ exports[`Options shows the options 1`] = `
                       title="Option2"
                     >
                       <input
+                        aria-describedby="keyValueReferenceOption2_fieldError"
                         aria-invalid="true"
                         class="form-control ddm-field-text"
                         id="keyValueReferenceOption2"
@@ -395,12 +480,32 @@ exports[`Options shows the options 1`] = `
                       type="hidden"
                       value="false"
                     />
+                    <div
+                      aria-hidden="true"
+                      class="form-feedback-group lfr-de__field-feedback"
+                    >
+                      <div
+                        aria-live="assertive"
+                        class="form-feedback-item"
+                        id="keyValueReferenceOption2_fieldError"
+                      />
+                    </div>
                   </div>
                   <input
                     name="Option2_edited"
                     type="hidden"
                     value="false"
                   />
+                  <div
+                    aria-hidden="true"
+                    class="form-feedback-group lfr-de__field-feedback"
+                  >
+                    <div
+                      aria-live="assertive"
+                      class="form-feedback-item"
+                      id="Option2_fieldError"
+                    />
+                  </div>
                 </div>
                 <label
                   class="mt-3"
@@ -437,6 +542,7 @@ exports[`Options shows the options 1`] = `
                       title="Option2"
                     >
                       <input
+                        aria-describedby="keyValueNameOption2_fieldError"
                         aria-invalid="true"
                         class="form-control ddm-field-text"
                         id="keyValueNameOption2"
@@ -450,12 +556,32 @@ exports[`Options shows the options 1`] = `
                       type="hidden"
                       value="false"
                     />
+                    <div
+                      aria-hidden="true"
+                      class="form-feedback-group lfr-de__field-feedback"
+                    >
+                      <div
+                        aria-live="assertive"
+                        class="form-feedback-item"
+                        id="keyValueNameOption2_fieldError"
+                      />
+                    </div>
                   </div>
                   <input
                     name="Option2_edited"
                     type="hidden"
                     value="false"
                   />
+                  <div
+                    aria-hidden="true"
+                    class="form-feedback-group lfr-de__field-feedback"
+                  >
+                    <div
+                      aria-live="assertive"
+                      class="form-feedback-item"
+                      id="Option2_fieldError"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -476,6 +602,16 @@ exports[`Options shows the options 1`] = `
       type="hidden"
       value="false"
     />
+    <div
+      aria-hidden="true"
+      class="form-feedback-group lfr-de__field-feedback"
+    >
+      <div
+        aria-live="assertive"
+        class="form-feedback-item"
+        id="options_fieldError"
+      />
+    </div>
   </div>
 </div>
 `;

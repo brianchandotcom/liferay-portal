@@ -33,6 +33,16 @@ exports[`ReactFieldBase does not render the add button when repeatable is true a
       type="hidden"
       value="false"
     />
+    <div
+      aria-hidden="true"
+      class="form-feedback-group lfr-de__field-feedback"
+    >
+      <div
+        aria-live="assertive"
+        class="form-feedback-item"
+        id="undefined_fieldError"
+      />
+    </div>
     <span
       class="sr-only"
       id="undefined_fieldDetails"
@@ -54,6 +64,16 @@ exports[`ReactFieldBase does not render the label if showLabel is false 1`] = `
       type="hidden"
       value="false"
     />
+    <div
+      aria-hidden="true"
+      class="form-feedback-group lfr-de__field-feedback"
+    >
+      <div
+        aria-live="assertive"
+        class="form-feedback-item"
+        id="undefined_fieldError"
+      />
+    </div>
     <span
       class="sr-only"
       id="undefined_fieldDetails"
@@ -80,6 +100,16 @@ exports[`ReactFieldBase renders the FieldBase with contentRenderer 1`] = `
       type="hidden"
       value="false"
     />
+    <div
+      aria-hidden="true"
+      class="form-feedback-group lfr-de__field-feedback"
+    >
+      <div
+        aria-live="assertive"
+        class="form-feedback-item"
+        id="undefined_fieldError"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -99,6 +129,11 @@ exports[`ReactFieldBase renders the FieldBase with help text 1`] = `
       aria-hidden="true"
       class="form-feedback-group lfr-de__field-feedback"
     >
+      <div
+        aria-live="assertive"
+        class="form-feedback-item"
+        id="undefined_fieldError"
+      />
       <div
         id="undefined_fieldHelp"
       >
@@ -126,6 +161,16 @@ exports[`ReactFieldBase renders the FieldBase with id 1`] = `
       type="hidden"
       value="false"
     />
+    <div
+      aria-hidden="true"
+      class="form-feedback-group lfr-de__field-feedback"
+    >
+      <div
+        aria-live="assertive"
+        class="form-feedback-item"
+        id="Id_fieldError"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -146,6 +191,16 @@ exports[`ReactFieldBase renders the FieldBase with label 1`] = `
       type="hidden"
       value="false"
     />
+    <div
+      aria-hidden="true"
+      class="form-feedback-group lfr-de__field-feedback"
+    >
+      <div
+        aria-live="assertive"
+        class="form-feedback-item"
+        id="undefined_fieldError"
+      />
+    </div>
     <span
       class="sr-only"
       id="undefined_fieldDetails"
@@ -183,6 +238,16 @@ exports[`ReactFieldBase renders the FieldBase with required 1`] = `
       type="hidden"
       value="false"
     />
+    <div
+      aria-hidden="true"
+      class="form-feedback-group lfr-de__field-feedback"
+    >
+      <div
+        aria-live="assertive"
+        class="form-feedback-item"
+        id="undefined_fieldError"
+      />
+    </div>
     <span
       class="sr-only"
       id="undefined_fieldDetails"
@@ -226,6 +291,16 @@ exports[`ReactFieldBase renders the add button when repeatable is true 1`] = `
       type="hidden"
       value="false"
     />
+    <div
+      aria-hidden="true"
+      class="form-feedback-group lfr-de__field-feedback"
+    >
+      <div
+        aria-live="assertive"
+        class="form-feedback-item"
+        id="undefined_fieldError"
+      />
+    </div>
     <span
       class="sr-only"
       id="undefined_fieldDetails"
@@ -247,6 +322,16 @@ exports[`ReactFieldBase renders the default markup 1`] = `
       type="hidden"
       value="false"
     />
+    <div
+      aria-hidden="true"
+      class="form-feedback-group lfr-de__field-feedback"
+    >
+      <div
+        aria-live="assertive"
+        class="form-feedback-item"
+        id="undefined_fieldError"
+      />
+    </div>
   </div>
 </div>
 `;

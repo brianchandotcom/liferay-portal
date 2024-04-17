@@ -31,6 +31,16 @@ exports[`Field Numeric Integer Input Mask toggle has an inputMaskFormat 1`] = `
       type="hidden"
       value="false"
     />
+    <div
+      aria-hidden="true"
+      class="form-feedback-group lfr-de__field-feedback"
+    >
+      <div
+        aria-live="assertive"
+        class="form-feedback-item"
+        id="numericField_fieldError"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -57,6 +67,16 @@ exports[`Field Numeric renders the default markup 1`] = `
       type="hidden"
       value="false"
     />
+    <div
+      aria-hidden="true"
+      class="form-feedback-group lfr-de__field-feedback"
+    >
+      <div
+        aria-live="assertive"
+        class="form-feedback-item"
+        id="undefined_fieldError"
+      />
+    </div>
   </div>
 </div>
 `;

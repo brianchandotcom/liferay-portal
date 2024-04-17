@@ -361,16 +361,20 @@ public class AgentPortalK8sConfigMapModifier
 			Map<String, String> originalAnnotations = _getMap(
 				objectMeta.getAnnotations());
 
+			Map<String, String> annotations = _copy(originalAnnotations);
+
 			Map<String, String> originalBinaryData = _getMap(
 				configMap.getBinaryData());
 
+			Map<String, String> binaryData = _copy(originalBinaryData);
+
 			Map<String, String> originalData = _getMap(configMap.getData());
+
+			Map<String, String> data = _copy(originalData);
+
 			Map<String, String> originalLabels = _getMap(
 				objectMeta.getLabels());
 
-			Map<String, String> annotations = _copy(originalAnnotations);
-			Map<String, String> binaryData = _copy(originalBinaryData);
-			Map<String, String> data = _copy(originalData);
 			Map<String, String> labels = _copy(originalLabels);
 
 			configMapModelConsumer.accept(

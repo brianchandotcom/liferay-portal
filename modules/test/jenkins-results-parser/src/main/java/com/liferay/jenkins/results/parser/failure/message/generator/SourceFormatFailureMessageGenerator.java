@@ -22,7 +22,7 @@ public class SourceFormatFailureMessageGenerator
 
 		int start = consoleText.lastIndexOf("format-source-files:");
 
-		if (consoleText.contains(_TOKEN_FORMATTING_ISSUES)) {
+		if (consoleText.contains(_TOKEN_FORMATTING_ISSUES) && (start == -1)) {
 			start = consoleText.lastIndexOf(_TOKEN_FORMATTING_ISSUES, start);
 		}
 

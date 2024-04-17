@@ -343,7 +343,7 @@ describe('Field Search Location', () => {
 		fireEvent.blur(country);
 
 		expect(
-			container.getElementsByClassName('form-feedback-group').length
+			container.getElementsByClassName('form-feedback-indicator').length
 		).toBe(2);
 	});
 
@@ -360,7 +360,7 @@ describe('Field Search Location', () => {
 		);
 
 		expect(
-			container.getElementsByClassName('form-feedback-group').length
+			container.getElementsByClassName('form-feedback-indicator').length
 		).toBe(5);
 	});
 });

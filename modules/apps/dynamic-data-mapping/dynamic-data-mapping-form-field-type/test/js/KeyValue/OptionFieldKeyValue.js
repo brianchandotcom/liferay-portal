@@ -223,7 +223,7 @@ describe('OptionFieldKeyValue', () => {
 		);
 
 		const OptionFieldKeyValueInput = container.querySelectorAll(
-			'[id*="keyValueName"]'
+			'[id*="keyValueName"]:not([id*="_fieldError"])'
 		);
 
 		expect(OptionFieldKeyValueInput.length).toBe(1);

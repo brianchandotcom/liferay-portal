@@ -7,6 +7,7 @@ package com.liferay.oauth2.provider.internal.configuration;
 
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
@@ -18,6 +19,7 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -51,26 +53,37 @@ public abstract class BaseConfigurationFactory {
 			log.debug("Deactivating " + oAuth2Application);
 		}
 
-		oAuth2ApplicationLocalService.deleteOAuth2Application(
-			oAuth2Application);
+		ConfigurationFactoryUtil.executeAsCompany(
+			companyLocalService,
+			HashMapBuilder.<String, Object>put(
+				"companyId", oAuth2Application.getCompanyId()
+			).build(),
+			companyId -> {
+				oAuth2ApplicationLocalService.deleteOAuth2Application(
+					oAuth2Application);
 
-		if (Validator.isNotNull(_configMapName)) {
-			PortalK8sConfigMapModifier portalK8sConfigMapModifier =
-				_portalK8sConfigMapModifierSnapshot.get();
+				if (Validator.isNotNull(_configMapName)) {
+					PortalK8sConfigMapModifier portalK8sConfigMapModifier =
+						_portalK8sConfigMapModifierSnapshot.get();
 
-			portalK8sConfigMapModifier.modifyConfigMap(
-				configMapModel -> {
-					_extensionProperties.forEach(configMapModel.data()::remove);
+					portalK8sConfigMapModifier.modifyConfigMap(
+						configMapModel -> {
+							_extensionProperties.forEach(
+								configMapModel.data()::remove);
 
-					Map<String, String> labels = configMapModel.labels();
+							Map<String, String> labels =
+								configMapModel.labels();
 
-					labels.put(
-						"dxp.lxc.liferay.com/virtualInstanceId",
-						_virtualInstanceId);
-					labels.put("ext.lxc.liferay.com/projectName", _projectName);
-				},
-				_configMapName);
-		}
+							labels.put(
+								"dxp.lxc.liferay.com/virtualInstanceId",
+								_virtualInstanceId);
+							labels.put(
+								"ext.lxc.liferay.com/projectName",
+								_projectName);
+						},
+						_configMapName);
+				}
+			});
 	}
 
 	protected String getHomePageURL(String homePageURL, String baseURL) {

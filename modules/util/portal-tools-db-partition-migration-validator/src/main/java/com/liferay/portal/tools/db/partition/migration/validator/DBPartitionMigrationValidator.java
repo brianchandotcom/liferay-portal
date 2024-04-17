@@ -17,7 +17,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.migration.validator.util.DatabaseUtil;
-import com.liferay.portal.tools.db.partition.migration.validator.util.Validator;
+import com.liferay.portal.tools.db.partition.migration.validator.util.ValidatorUtil;
 import com.liferay.portal.tools.db.partition.migration.validator.util.VersionDeserializer;
 
 import java.io.File;
@@ -280,7 +280,7 @@ public class DBPartitionMigrationValidator {
 			_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
 		}
 
-		Recorder recorder = Validator.validateDatabases(
+		Recorder recorder = ValidatorUtil.validateDatabases(
 			_sourceLiferayInstance, _targetLiferayInstance);
 
 		if (recorder.hasErrors() || recorder.hasWarnings()) {

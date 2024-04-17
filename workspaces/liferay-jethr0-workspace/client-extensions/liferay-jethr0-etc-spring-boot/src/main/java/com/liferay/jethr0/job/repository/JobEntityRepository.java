@@ -216,9 +216,13 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 
 	@Override
 	protected JobEntity updateRelationshipsFromDALO(JobEntity jobEntity) {
-		_routineEntityRepository.relateRoutineToJob(
-			_routineEntityRepository.getById(jobEntity.getRoutineEntityId()),
-			jobEntity);
+		long routineEntityId = jobEntity.getRoutineEntityId();
+
+		if (routineEntityId > 0) {
+			_routineEntityRepository.relateRoutineToJob(
+				_routineEntityRepository.getById(routineEntityId),
+				jobEntity);
+		}
 
 		return _updateJobToBuildsRelationshipsFromDALO(jobEntity);
 	}

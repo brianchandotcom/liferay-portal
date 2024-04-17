@@ -22,6 +22,7 @@ import {MDFClaimColumnKey} from '../../common/enums/mdfClaimColumnKey';
 import {ObjectActionName} from '../../common/enums/objectActionName';
 import {PermissionActionType} from '../../common/enums/permissionActionType';
 import {SortableTable} from '../../common/enums/sortableTable';
+import useDebounce from '../../common/hooks/useDebounce';
 import useIsChannel from '../../common/hooks/useIsChannel';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
@@ -61,13 +62,22 @@ const MDFClaimList = () => {
 	);
 
 	const pagination = usePagination(urlParams);
+
+	const [claimTableSort, setClaimTableSort] = useState<string>(
+		'dateCreated:desc'
+	);
+
+	const debouncedClaimTableSort = useDebounce(claimTableSort, 1000);
+
 	const {data, isValidating, mutate} = useGetListItemsFromMDFClaims(
+		debouncedClaimTableSort,
 		pagination.activePage,
 		pagination.activeDelta,
 		filtersTerm
 	);
 
 	const {data: dataCSV} = useGetListItemsFromMDFClaims(
+		null,
 		BASE_PAGE,
 		MAX_ITEMS,
 		filtersTerm
@@ -104,6 +114,7 @@ const MDFClaimList = () => {
 					<Table<MDFClaimListItem>
 						columns={columns}
 						rows={items}
+						setTableSort={setClaimTableSort}
 						sortable={[
 							SortableTable.DATE_SUBMITTED,
 							SortableTable.PARTNER,

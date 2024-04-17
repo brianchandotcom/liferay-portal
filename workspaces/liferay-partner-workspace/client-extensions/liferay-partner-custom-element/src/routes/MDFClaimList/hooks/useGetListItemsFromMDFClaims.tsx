@@ -16,13 +16,14 @@ import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
 import getMDFClaimAmountClaimedInfo from '../utils/getMDFBudgetInfos';
 
 export default function useGetListItemsFromMDFClaims(
+	claimTableSort: string | null,
 	page: number,
 	pageSize: number,
 	filtersTerm: string
 ) {
 	const swrResponse = useGet<LiferayItems<MDFClaimDTO[]>>(
 		filtersTerm &&
-			`/o/${LiferayAPIs.OBJECT}/mdfclaims?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=dateCreated:desc`
+			`/o/${LiferayAPIs.OBJECT}/mdfclaims?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=${claimTableSort}`
 	);
 
 	const listItems = useMemo(
@@ -33,7 +34,7 @@ export default function useGetListItemsFromMDFClaims(
 				),
 				[MDFClaimColumnKey.CLAIM_ID]: String(item.id),
 				[MDFClaimColumnKey.PARTNER]: item.companyName,
-				[MDFClaimColumnKey.STATUS]: item.mdfClaimStatus.name,
+				[MDFClaimColumnKey.CLAIM_STATUS]: item.mdfClaimStatus.name,
 				[MDFClaimColumnKey.TYPE]: item.partial ? 'Partial' : 'Full',
 				...getMDFClaimAmountClaimedInfo(
 					item.totalClaimAmount,

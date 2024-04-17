@@ -17,7 +17,7 @@ import TableColumn from '../../interfaces/tableColumn';
 
 import './index.css';
 
-import {useCallback, useState} from 'react';
+import {Dispatch, SetStateAction, useCallback, useState} from 'react';
 
 import {SortableTable} from '../../enums/sortableTable';
 
@@ -30,8 +30,10 @@ interface TableProps<T> {
 	columns: TableColumn<T>[];
 	customClickOnRow?: (item: T) => void;
 	rows: T[];
+	setTableSort?: Dispatch<SetStateAction<string>>;
 	sortable?: SortableTable[];
 	tableLayoutAuto: boolean;
+	tableSort?: string;
 }
 
 interface RowProps<T> {
@@ -107,30 +109,24 @@ const Table = <T extends BasicRow>({
 	columns,
 	customClickOnRow,
 	rows,
+	setTableSort = () => {},
 	sortable,
 	tableLayoutAuto,
 }: TableProps<T>) => {
 	const [sort, setSort] = useState<Sorting | null>(null);
-	const [items, setItems] = useState(rows);
+
+	const getColumnkeyFromObjectString = (columnKey: string) => {
+		const columnMap: {[key: string]: string} = {
+			CLAIM_STATUS: 'mdfClaimStatus',
+			DATE_SUBMITTED: 'submitDate',
+			PARTNER: 'companyName',
+			TYPE: 'partial',
+		};
+
+		return columnMap[columnKey];
+	};
 
 	const onSortChange = useCallback((sort: Sorting | null) => {
-		if (sort) {
-			setItems((items) =>
-				items.sort((a, b) => {
-					let cmp = new Intl.Collator('en', {numeric: true}).compare(
-						a[sort.column as string] as string,
-						b[sort.column as string] as string
-					);
-
-					if (sort.direction === 'descending') {
-						cmp *= -1;
-					}
-
-					return cmp;
-				})
-			);
-		}
-
 		setSort(sort);
 	}, []);
 
@@ -152,6 +148,19 @@ const Table = <T extends BasicRow>({
 							<Cell
 								className="align-baseline border-neutral-2 rounded-0 text-neutral-10"
 								key={column.columnKey}
+								onClickCapture={() => {
+									setTableSort((prevSort: string) => {
+										const sortOrder = prevSort.includes(
+											'asc'
+										)
+											? 'desc'
+											: 'asc';
+
+										return `${getColumnkeyFromObjectString(
+											column.columnKey
+										)}:${sortOrder}`;
+									});
+								}}
 								sortable={
 									sortable &&
 									sortable?.some((item) =>
@@ -165,7 +174,7 @@ const Table = <T extends BasicRow>({
 					}
 				</Head>
 
-				<Body align="left" defaultItems={items}>
+				<Body align="left" defaultItems={rows}>
 					{
 						((row: T, index: number) => {
 							return (

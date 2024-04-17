@@ -31,12 +31,12 @@ export default function getMDFClaimListColumns(
 		const options = actions?.reduce<DropdownOption[]>(
 			(previousValue, currentValue) => {
 				const currentMDFClaimHasValidStatusToEdit =
-					row[MDFClaimColumnKey.STATUS] === Status.DRAFT.name ||
-					row[MDFClaimColumnKey.STATUS] ===
+					row[MDFClaimColumnKey.CLAIM_STATUS] === Status.DRAFT.name ||
+					row[MDFClaimColumnKey.CLAIM_STATUS] ===
 						Status.REQUEST_MORE_INFO.name;
 
 				const currentMDFClaimHasValidStatusToDelete =
-					row[MDFClaimColumnKey.STATUS] === Status.DRAFT.name;
+					row[MDFClaimColumnKey.CLAIM_STATUS] === Status.DRAFT.name;
 
 				if (currentValue === PermissionActionType.VIEW) {
 					previousValue.push({
@@ -174,7 +174,7 @@ export default function getMDFClaimListColumns(
 			size: 'md',
 		},
 		{
-			columnKey: MDFClaimColumnKey.STATUS,
+			columnKey: MDFClaimColumnKey.CLAIM_STATUS,
 			label: 'Status',
 			render: (data?: string) => <StatusLabel status={data as string} />,
 		},

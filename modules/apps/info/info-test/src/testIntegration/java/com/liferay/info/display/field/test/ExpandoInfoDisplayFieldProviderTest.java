@@ -31,6 +31,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
@@ -71,7 +72,10 @@ public class ExpandoInfoDisplayFieldProviderTest {
 			"longitude", "0.5"
 		);
 
-		_addExpandoValue(expandoColumn, valueJSONObject.toString());
+		ExpandoValue expandoValue = _addExpandoValue(
+			expandoColumn, valueJSONObject.toString());
+
+		Assert.assertEquals(valueJSONObject.toString(), expandoValue.getData());
 
 		Assert.assertEquals(
 			valueJSONObject.getString("latitude") + StringPool.COMMA_AND_SPACE +
@@ -87,24 +91,30 @@ public class ExpandoInfoDisplayFieldProviderTest {
 			_expandoTable, "test-localized-string-array",
 			ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
 
-		ExpandoValue expandoValue = _addExpandoValue(
-			expandoColumn,
-			HashMapBuilder.put(
-				LocaleUtil.ENGLISH, new String[] {"en-value-1", "en-value-2"}
-			).put(
-				LocaleUtil.FRENCH, new String[] {"fr-value-1", "fr-value-2"}
-			).build());
+		Map<Locale, String[]> value = HashMapBuilder.put(
+			LocaleUtil.ENGLISH, new String[] {"en-value-1", "en-value-2"}
+		).put(
+			LocaleUtil.FRENCH, new String[] {"fr-value-1", "fr-value-2"}
+		).build();
+
+		ExpandoValue expandoValue = _addExpandoValue(expandoColumn, value);
+
+		Assert.assertEquals(
+			value.get(LocaleUtil.ENGLISH),
+			expandoValue.getStringArray(LocaleUtil.ENGLISH));
+
+		Assert.assertEquals(
+			value.get(LocaleUtil.FRENCH),
+			expandoValue.getStringArray(LocaleUtil.FRENCH));
 
 		Assert.assertEquals(
 			StringUtil.merge(
-				expandoValue.getStringArray(LocaleUtil.ENGLISH),
-				StringPool.COMMA_AND_SPACE),
+				value.get(LocaleUtil.ENGLISH), StringPool.COMMA_AND_SPACE),
 			_getValue(expandoColumn.getName(), LocaleUtil.ENGLISH));
 
 		Assert.assertEquals(
 			StringUtil.merge(
-				expandoValue.getStringArray(LocaleUtil.FRENCH),
-				StringPool.COMMA_AND_SPACE),
+				value.get(LocaleUtil.FRENCH), StringPool.COMMA_AND_SPACE),
 			_getValue(expandoColumn.getName(), LocaleUtil.FRENCH));
 	}
 
@@ -116,20 +126,28 @@ public class ExpandoInfoDisplayFieldProviderTest {
 			_expandoTable, "test-localized-string",
 			ExpandoColumnConstants.STRING_LOCALIZED);
 
-		ExpandoValue expandoValue = _addExpandoValue(
-			expandoColumn,
-			HashMapBuilder.put(
-				LocaleUtil.ENGLISH, "en-value-1"
-			).put(
-				LocaleUtil.FRENCH, "fr-value-1"
-			).build());
+		Map<Locale, String> value = HashMapBuilder.put(
+			LocaleUtil.ENGLISH, "en-value-1"
+		).put(
+			LocaleUtil.FRENCH, "fr-value-1"
+		).build();
+
+		ExpandoValue expandoValue = _addExpandoValue(expandoColumn, value);
 
 		Assert.assertEquals(
-			expandoValue.getString(LocaleUtil.ENGLISH),
+			value.get(LocaleUtil.ENGLISH),
+			expandoValue.getString(LocaleUtil.ENGLISH));
+
+		Assert.assertEquals(
+			value.get(LocaleUtil.FRENCH),
+			expandoValue.getString(LocaleUtil.FRENCH));
+
+		Assert.assertEquals(
+			value.get(LocaleUtil.ENGLISH),
 			_getValue(expandoColumn.getName(), LocaleUtil.ENGLISH));
 
 		Assert.assertEquals(
-			expandoValue.getString(LocaleUtil.FRENCH),
+			value.get(LocaleUtil.FRENCH),
 			_getValue(expandoColumn.getName(), LocaleUtil.FRENCH));
 	}
 
@@ -141,12 +159,14 @@ public class ExpandoInfoDisplayFieldProviderTest {
 			_expandoTable, "test-string-array",
 			ExpandoColumnConstants.STRING_ARRAY);
 
-		ExpandoValue expandoValue = _addExpandoValue(
-			expandoColumn, new String[] {"test-value-1", "test-value-2"});
+		String[] value = {"test-value-1", "test-value-2"};
+
+		ExpandoValue expandoValue = _addExpandoValue(expandoColumn, value);
+
+		Assert.assertArrayEquals(value, expandoValue.getStringArray());
 
 		Assert.assertEquals(
-			StringUtil.merge(
-				expandoValue.getStringArray(), StringPool.COMMA_AND_SPACE),
+			StringUtil.merge(value, StringPool.COMMA_AND_SPACE),
 			_getValue(expandoColumn.getName(), LocaleUtil.getDefault()));
 	}
 
@@ -155,8 +175,11 @@ public class ExpandoInfoDisplayFieldProviderTest {
 		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
 			_expandoTable, "test-string", ExpandoColumnConstants.STRING);
 
-		ExpandoValue expandoValue = _addExpandoValue(
-			expandoColumn, "test-value");
+		String value = "test-value";
+
+		ExpandoValue expandoValue = _addExpandoValue(expandoColumn, value);
+
+		Assert.assertEquals(value, expandoValue.getString());
 
 		Assert.assertEquals(
 			expandoValue.getString(),

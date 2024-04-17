@@ -11,9 +11,9 @@ export function detectGroovyScript(elements, setHasGroovyScript) {
 			const {data} = element;
 
 			if (
-				isConditionNode(element) ||
 				hasScriptActionsOrAssignments(data) ||
-				hasGroovyTimerActionOrReassignments(element)
+				hasScriptTimerActionOrReassignments(element) ||
+				isConditionNode(element)
 			) {
 				return true;
 			}
@@ -47,23 +47,26 @@ function hasScriptActionsOrAssignments(data) {
 	}
 }
 
-function hasGroovyTimerActionOrReassignments(element) {
+function hasScriptTimerActionOrReassignments(element) {
 	if (element.type === 'task' && element.data.taskTimers) {
 		const {reassignments, timerActions} = element.data.taskTimers;
 
-		const hasGroovyReassignments = !!reassignments.find((reassignment) => {
+		const hasScriptReassignments = !!reassignments.find((reassignment) => {
 			if (reassignment.scriptLanguage) {
 				return reassignment.scriptLanguage === 'groovy';
 			}
 		});
 
-		const hasGroovyTimerActions = !!timerActions.find((timerAction) => {
+		const hasScriptTimerActions = !!timerActions.find((timerAction) => {
 			if (timerAction?.scriptLanguage) {
-				return timerAction?.scriptLanguage.includes('groovy');
+				return (
+					timerAction?.scriptLanguage.includes('groovy') ||
+					timerAction?.scriptLanguage.includes('java')
+				);
 			}
 		});
 
-		return hasGroovyReassignments || hasGroovyTimerActions;
+		return hasScriptTimerActions || hasScriptReassignments;
 	}
 
 	return false;

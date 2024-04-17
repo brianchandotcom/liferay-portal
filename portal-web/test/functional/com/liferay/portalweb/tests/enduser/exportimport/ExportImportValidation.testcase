@@ -33,6 +33,10 @@ definition {
 		task ("When: Not set URL Pattern in System Settings") {
 			StagingNavigator.openToConfigInSystemSettings(portlet = "Export/Import, Staging");
 
+			AssertElementPresent(
+				checkboxName = "Validate Layout References",
+				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+
 			AssertTextEquals(
 				locator1 = "ExportImport#URL_PATTERN",
 				value1 = "");
@@ -165,6 +169,10 @@ definition {
 
 		task ("Given: Add multiple URL Pattern in System Settings") {
 			StagingNavigator.openToConfigInSystemSettings(portlet = "Export/Import, Staging");
+
+			AssertElementPresent(
+				checkboxName = "Validate Layout References",
+				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
 
 			ExportImport.configureURLPattern(urlPattern = "/dl/*");
 

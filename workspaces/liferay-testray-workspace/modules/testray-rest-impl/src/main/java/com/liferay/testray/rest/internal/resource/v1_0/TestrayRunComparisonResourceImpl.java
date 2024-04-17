@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.testray.rest.dto.v1_0.TestrayCaseResult;
+import com.liferay.testray.rest.dto.v1_0.TestrayCaseResultComparison;
 import com.liferay.testray.rest.dto.v1_0.TestrayRunComparison;
 import com.liferay.testray.rest.resource.v1_0.TestrayRunComparisonResource;
-import com.liferay.testray.rest.util.comparator.TestrayCaseResultComparator;
+import com.liferay.testray.rest.util.comparator.TestrayCaseResultComparisonComparator;
 
 import java.io.Serializable;
 
@@ -51,8 +51,8 @@ public class TestrayRunComparisonResourceImpl
 			Long testrayRunId1, Long testrayRunId2, Filter filter)
 		throws Exception {
 
-		List<TestrayCaseResult> testrayCaseResults =
-			_getMergedTestrayCaseResults(
+		List<TestrayCaseResultComparison> testrayCaseResultComparisons =
+			_getTestrayCaseResultComparisons(
 				ParamUtil.getString(contextHttpServletRequest, "filter"), null,
 				null, null, null, null, null, testrayRunId1, testrayRunId2);
 
@@ -62,9 +62,11 @@ public class TestrayRunComparisonResourceImpl
 			ListUtil.fromArray(
 				HashMapBuilder.<String, Object>put(
 					"Components",
-					_getTestrayComponentComparisons(testrayCaseResults)
+					_getTestrayComponentComparisons(
+						testrayCaseResultComparisons)
 				).put(
-					"Runs", _getTestrayRunComparisons(testrayCaseResults)
+					"Runs",
+					_getTestrayRunComparisons(testrayCaseResultComparisons)
 				).put(
 					"Teams",
 					_getTestrayTeamComparisons(
@@ -73,7 +75,7 @@ public class TestrayRunComparisonResourceImpl
 								"teamToComponents/", testrayRunId1,
 								testrayRunId2),
 							"c_teamId", "Team"),
-						testrayCaseResults)
+						testrayCaseResultComparisons)
 				).build()
 			).toArray());
 
@@ -94,21 +96,24 @@ public class TestrayRunComparisonResourceImpl
 				_getCaseFilterString(testrayRunId1, testrayRunId2), "c_caseId",
 				"Case");
 
-		List<TestrayCaseResult> testrayCaseResults =
-			_getMergedTestrayCaseResults(
+		List<TestrayCaseResultComparison> testrayCaseResultComparisons =
+			_getTestrayCaseResultComparisons(
 				ParamUtil.getString(contextHttpServletRequest, "filter"),
 				testrayCaseResultError1, testrayCaseResultError2,
 				testrayCaseResultIssue1, testrayCaseResultIssue2,
 				testrayCaseResultStatus1, testrayCaseResultStatus2,
 				testrayRunId1, testrayRunId2);
 
-		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
+		for (TestrayCaseResultComparison testrayCaseResultComparison :
+				testrayCaseResultComparisons) {
+
 			Map<String, Serializable> testrayCase = testrayCaseMap.get(
-				String.valueOf(testrayCaseResult.getTestrayCaseId()));
+				String.valueOf(testrayCaseResultComparison.getTestrayCaseId()));
 
-			testrayCaseResult.setName(String.valueOf(testrayCase.get("name")));
+			testrayCaseResultComparison.setName(
+				String.valueOf(testrayCase.get("name")));
 
-			testrayCaseResult.setPriority(
+			testrayCaseResultComparison.setPriority(
 				GetterUtil.getInteger(testrayCase.get("priority")));
 		}
 
@@ -117,14 +122,16 @@ public class TestrayRunComparisonResourceImpl
 		testrayRunComparison.setResults(
 			ListUtil.fromArray(
 				HashMapBuilder.<String, Object>put(
-					"Runs", _getTestrayRunComparisons(testrayCaseResults)
+					"Runs",
+					_getTestrayRunComparisons(testrayCaseResultComparisons)
 				).build()
 			).toArray());
-		testrayRunComparison.setTestrayCaseResults(
+		testrayRunComparison.setTestrayCaseResultComparisons(
 			ListUtil.sort(
-				testrayCaseResults, new TestrayCaseResultComparator()
+				testrayCaseResultComparisons,
+				new TestrayCaseResultComparisonComparator()
 			).toArray(
-				new TestrayCaseResult[0]
+				new TestrayCaseResultComparison[0]
 			));
 
 		return testrayRunComparison;
@@ -132,25 +139,25 @@ public class TestrayRunComparisonResourceImpl
 
 	private void _compareTestrayCaseResultStatus(
 		Map<String, Map<String, Integer>> entityComparisonsMap,
-		TestrayCaseResult testrayCaseResult) {
+		TestrayCaseResultComparison testrayCaseResultComparison) {
 
 		Map<String, Integer> map = entityComparisonsMap.get(
-			testrayCaseResult.getStatus1());
+			testrayCaseResultComparison.getStatus1());
 
 		if (map == null) {
 			map = new HashMap<>();
 
 			entityComparisonsMap.put(
-				String.valueOf(testrayCaseResult.getStatus1()), map);
+				String.valueOf(testrayCaseResultComparison.getStatus1()), map);
 		}
 
-		Integer count = map.get(testrayCaseResult.getStatus2());
+		Integer count = map.get(testrayCaseResultComparison.getStatus2());
 
 		if (count == null) {
 			count = 0;
 		}
 
-		map.put(testrayCaseResult.getStatus2(), count + 1);
+		map.put(testrayCaseResultComparison.getStatus2(), count + 1);
 	}
 
 	private String _getCaseFilterString(
@@ -184,7 +191,103 @@ public class TestrayRunComparisonResourceImpl
 		return sb.toString();
 	}
 
-	private List<TestrayCaseResult> _getMergedTestrayCaseResults(
+	private Map<String, Map<String, Serializable>> _getObjectEntriesMap(
+			String filterString, String key, String objectDefinitionShortName)
+		throws Exception {
+
+		Map<String, Map<String, Serializable>> map = new HashMap<>();
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				contextCompany.getCompanyId(),
+				"C_" + objectDefinitionShortName);
+
+		_objectEntryLocalService.getValuesList(
+			0, contextCompany.getCompanyId(), contextUser.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			_filterFactory.create(filterString, objectDefinition), null, -1, -1,
+			null
+		).forEach(
+			entry -> map.put(String.valueOf(entry.get(key)), entry)
+		);
+
+		return map;
+	}
+
+	private TestrayCaseResultComparison _getTestrayCaseResultComparison(
+		Map<String, Serializable> testrayCaseResultMap1,
+		Map<String, Serializable> testrayCaseResultMap2,
+		Map<String, Map<String, Serializable>> testrayComponentsMap) {
+
+		Map<String, Serializable> map = testrayCaseResultMap1;
+
+		if (testrayCaseResultMap1 == null) {
+			map = testrayCaseResultMap2;
+		}
+
+		TestrayCaseResultComparison testrayCaseResultComparison =
+			new TestrayCaseResultComparison();
+
+		testrayCaseResultComparison.setStatus1("DIDNOTRUN");
+		testrayCaseResultComparison.setStatus2("DIDNOTRUN");
+
+		if (testrayCaseResultMap1 != null) {
+			testrayCaseResultComparison.setError1(
+				GetterUtil.getString(testrayCaseResultMap1.get("errors")));
+			testrayCaseResultComparison.setIssue1(
+				GetterUtil.getString(testrayCaseResultMap1.get("issues")));
+			testrayCaseResultComparison.setId1(
+				GetterUtil.getLong(
+					testrayCaseResultMap1.get("c_caseResultId")));
+
+			String dueStatus = String.valueOf(
+				testrayCaseResultMap1.get("dueStatus"));
+
+			if (!Objects.equals(dueStatus, "UNTESTED")) {
+				testrayCaseResultComparison.setStatus1(dueStatus);
+			}
+		}
+
+		if (testrayCaseResultMap2 != null) {
+			testrayCaseResultComparison.setError2(
+				GetterUtil.getString(testrayCaseResultMap2.get("errors")));
+			testrayCaseResultComparison.setIssue2(
+				GetterUtil.getString(testrayCaseResultMap2.get("issues")));
+			testrayCaseResultComparison.setId2(
+				GetterUtil.getLong(
+					testrayCaseResultMap2.get("c_caseResultId")));
+
+			String dueStatus = String.valueOf(
+				testrayCaseResultMap2.get("dueStatus"));
+
+			if (!Objects.equals(dueStatus, "UNTESTED")) {
+				testrayCaseResultComparison.setStatus2(dueStatus);
+			}
+		}
+
+		testrayCaseResultComparison.setTestrayCaseId(
+			GetterUtil.getLong(map.get("r_caseToCaseResult_c_caseId")));
+		testrayCaseResultComparison.setTestrayComponentName(
+			String.valueOf(
+				testrayComponentsMap.get(
+					String.valueOf(
+						map.get("r_componentToCaseResult_c_componentId"))
+				).get(
+					"name"
+				)));
+		testrayCaseResultComparison.setTestrayTeamId(
+			GetterUtil.getLong(
+				testrayComponentsMap.get(
+					String.valueOf(
+						map.get("r_componentToCaseResult_c_componentId"))
+				).get(
+					"r_teamToComponents_c_teamId"
+				)));
+
+		return testrayCaseResultComparison;
+	}
+
+	private List<TestrayCaseResultComparison> _getTestrayCaseResultComparisons(
 			String filter, String testrayCaseResultError1,
 			String testrayCaseResultError2, String testrayCaseResultIssue1,
 			String testrayCaseResultIssue2, String testrayCaseResultStatus1,
@@ -192,7 +295,8 @@ public class TestrayRunComparisonResourceImpl
 			long testrayRunId2)
 		throws Exception {
 
-		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
+		List<TestrayCaseResultComparison> testrayCaseResultComparisons =
+			new ArrayList<>();
 
 		Map<String, Map<String, Serializable>> testrayCaseResultsMap1 =
 			_getObjectEntriesMap(
@@ -220,8 +324,8 @@ public class TestrayRunComparisonResourceImpl
 		for (Map.Entry<String, Map<String, Serializable>> entry :
 				testrayCaseResultsMap1.entrySet()) {
 
-			testrayCaseResults.add(
-				_mergeTestrayCaseResults(
+			testrayCaseResultComparisons.add(
+				_getTestrayCaseResultComparison(
 					entry.getValue(),
 					testrayCaseResultsMap2.remove(entry.getKey()),
 					testrayComponentsMap));
@@ -230,71 +334,53 @@ public class TestrayRunComparisonResourceImpl
 		for (Map.Entry<String, Map<String, Serializable>> entry :
 				testrayCaseResultsMap2.entrySet()) {
 
-			testrayCaseResults.add(
-				_mergeTestrayCaseResults(
+			testrayCaseResultComparisons.add(
+				_getTestrayCaseResultComparison(
 					null, entry.getValue(), testrayComponentsMap));
 		}
 
-		return testrayCaseResults;
-	}
-
-	private Map<String, Map<String, Serializable>> _getObjectEntriesMap(
-			String filterString, String key, String objectDefinitionShortName)
-		throws Exception {
-
-		Map<String, Map<String, Serializable>> map = new HashMap<>();
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				contextCompany.getCompanyId(),
-				"C_" + objectDefinitionShortName);
-
-		_objectEntryLocalService.getValuesList(
-			0, contextCompany.getCompanyId(), contextUser.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
-			_filterFactory.create(filterString, objectDefinition), null, -1, -1,
-			null
-		).forEach(
-			entry -> map.put(String.valueOf(entry.get(key)), entry)
-		);
-
-		return map;
+		return testrayCaseResultComparisons;
 	}
 
 	private Map<String, Map<String, Map<String, Integer>>>
 		_getTestrayComponentComparisons(
-			List<TestrayCaseResult> testrayCaseResults) {
+			List<TestrayCaseResultComparison> testrayCaseResultComparisons) {
 
 		Map<String, Map<String, Map<String, Integer>>>
 			testrayComponentComparisonsMap = new HashMap<>();
 
-		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
+		for (TestrayCaseResultComparison testrayCaseResultComparison :
+				testrayCaseResultComparisons) {
+
 			Map<String, Map<String, Integer>> entityComparisonsMap =
 				testrayComponentComparisonsMap.get(
-					testrayCaseResult.getTestrayComponentName());
+					testrayCaseResultComparison.getTestrayComponentName());
 
 			if (entityComparisonsMap == null) {
 				entityComparisonsMap = new HashMap<>();
 
 				testrayComponentComparisonsMap.put(
-					String.valueOf(testrayCaseResult.getTestrayComponentName()),
+					String.valueOf(
+						testrayCaseResultComparison.getTestrayComponentName()),
 					entityComparisonsMap);
 			}
 
 			_compareTestrayCaseResultStatus(
-				entityComparisonsMap, testrayCaseResult);
+				entityComparisonsMap, testrayCaseResultComparison);
 		}
 
 		return testrayComponentComparisonsMap;
 	}
 
 	private Map<String, Map<String, Integer>> _getTestrayRunComparisons(
-		List<TestrayCaseResult> testrayCaseResults) {
+		List<TestrayCaseResultComparison> testrayCaseResultComparisons) {
 
 		Map<String, Map<String, Integer>> map = new HashMap<>();
 
-		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
-			_compareTestrayCaseResultStatus(map, testrayCaseResult);
+		for (TestrayCaseResultComparison testrayCaseResultComparison :
+				testrayCaseResultComparisons) {
+
+			_compareTestrayCaseResultStatus(map, testrayCaseResultComparison);
 		}
 
 		return map;
@@ -303,14 +389,16 @@ public class TestrayRunComparisonResourceImpl
 	private Map<String, Map<String, Map<String, Integer>>>
 		_getTestrayTeamComparisons(
 			Map<String, Map<String, Serializable>> testrayTeamsMap,
-			List<TestrayCaseResult> testrayCaseResults) {
+			List<TestrayCaseResultComparison> testrayCaseResultComparisons) {
 
 		Map<String, Map<String, Map<String, Integer>>>
 			testrayTeamComparisonsMap = new HashMap<>();
 
-		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
+		for (TestrayCaseResultComparison testrayCaseResultComparison :
+				testrayCaseResultComparisons) {
+
 			Map<String, Serializable> testrayTeam = testrayTeamsMap.get(
-				String.valueOf(testrayCaseResult.getTestrayTeamId()));
+				String.valueOf(testrayCaseResultComparison.getTestrayTeamId()));
 
 			Map<String, Map<String, Integer>> testrayTeamComparison =
 				testrayTeamComparisonsMap.get(testrayTeam.get("name"));
@@ -324,7 +412,7 @@ public class TestrayRunComparisonResourceImpl
 			}
 
 			_compareTestrayCaseResultStatus(
-				testrayTeamComparison, testrayCaseResult);
+				testrayTeamComparison, testrayCaseResultComparison);
 		}
 
 		return testrayTeamComparisonsMap;
@@ -350,78 +438,6 @@ public class TestrayRunComparisonResourceImpl
 		}
 
 		return sb.toString();
-	}
-
-	private TestrayCaseResult _mergeTestrayCaseResults(
-		Map<String, Serializable> testrayCaseResultMap1,
-		Map<String, Serializable> testrayCaseResultMap2,
-		Map<String, Map<String, Serializable>> testrayComponentsMap) {
-
-		Map<String, Serializable> map = testrayCaseResultMap1;
-
-		if (testrayCaseResultMap1 == null) {
-			map = testrayCaseResultMap2;
-		}
-
-		TestrayCaseResult testrayCaseResult = new TestrayCaseResult();
-
-		testrayCaseResult.setStatus1("DIDNOTRUN");
-		testrayCaseResult.setStatus2("DIDNOTRUN");
-
-		if (testrayCaseResultMap1 != null) {
-			testrayCaseResult.setError1(
-				GetterUtil.getString(testrayCaseResultMap1.get("errors")));
-			testrayCaseResult.setIssue1(
-				GetterUtil.getString(testrayCaseResultMap1.get("issues")));
-			testrayCaseResult.setId1(
-				GetterUtil.getLong(
-					testrayCaseResultMap1.get("c_caseResultId")));
-
-			String dueStatus = String.valueOf(
-				testrayCaseResultMap1.get("dueStatus"));
-
-			if (!Objects.equals(dueStatus, "UNTESTED")) {
-				testrayCaseResult.setStatus1(dueStatus);
-			}
-		}
-
-		if (testrayCaseResultMap2 != null) {
-			testrayCaseResult.setError2(
-				GetterUtil.getString(testrayCaseResultMap2.get("errors")));
-			testrayCaseResult.setIssue2(
-				GetterUtil.getString(testrayCaseResultMap2.get("issues")));
-			testrayCaseResult.setId2(
-				GetterUtil.getLong(
-					testrayCaseResultMap2.get("c_caseResultId")));
-
-			String dueStatus = String.valueOf(
-				testrayCaseResultMap2.get("dueStatus"));
-
-			if (!Objects.equals(dueStatus, "UNTESTED")) {
-				testrayCaseResult.setStatus2(dueStatus);
-			}
-		}
-
-		testrayCaseResult.setTestrayCaseId(
-			GetterUtil.getLong(map.get("r_caseToCaseResult_c_caseId")));
-		testrayCaseResult.setTestrayComponentName(
-			String.valueOf(
-				testrayComponentsMap.get(
-					String.valueOf(
-						map.get("r_componentToCaseResult_c_componentId"))
-				).get(
-					"name"
-				)));
-		testrayCaseResult.setTestrayTeamId(
-			GetterUtil.getLong(
-				testrayComponentsMap.get(
-					String.valueOf(
-						map.get("r_componentToCaseResult_c_componentId"))
-				).get(
-					"r_teamToComponents_c_teamId"
-				)));
-
-		return testrayCaseResult;
 	}
 
 	@Reference(

@@ -38,8 +38,6 @@ definition {
 	@description = "Add site name translation in site settings."
 	@priority = 4
 	test AddSiteNameTranslations {
-		property testray.component.names = "Localization,Sites Administration";
-
 		task ("Add two localized site names") {
 			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");
 
@@ -113,7 +111,6 @@ definition {
 	@priority = 5
 	test ConfigureLanguagesOfSiteBasedOnSiteTemplate {
 		property portal.acceptance = "true";
-		property testray.component.names = "Site and Page Templates";
 
 		task ("Add a site template") {
 			SiteTemplates.addCP(
@@ -162,7 +159,6 @@ definition {
 	@priority = 5
 	test ConfigureSiteDefaultLanguage {
 		property portal.acceptance = "true";
-		property testray.component.names = "Site Localization";
 
 		task ("View default site language in Portal Settings") {
 			PortalSettings.gotoConfiguration(
@@ -210,7 +206,6 @@ definition {
 	@priority = 3
 	test LocalizeCountryName {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.component.names = "Users and Organizations";
 
 		task ("Add a new user") {
 			JSONUser.addUser(

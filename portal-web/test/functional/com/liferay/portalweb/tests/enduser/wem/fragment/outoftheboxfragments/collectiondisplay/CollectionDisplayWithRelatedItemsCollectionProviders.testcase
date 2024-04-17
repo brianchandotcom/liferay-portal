@@ -1357,7 +1357,6 @@ definition {
 	@priority = 5
 	test ViewRelatedAssetsInCollectionDisplay {
 		property portal.acceptance = "true";
-		property testray.component.names = "Display Page Templates,Fragments";
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 

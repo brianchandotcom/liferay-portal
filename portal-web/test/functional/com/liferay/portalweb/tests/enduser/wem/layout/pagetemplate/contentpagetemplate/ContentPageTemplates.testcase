@@ -28,7 +28,6 @@ definition {
 	@priority = 5
 	test ChangeEditableImage {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		task ("Add a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(

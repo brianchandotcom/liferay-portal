@@ -27,8 +27,6 @@ definition {
 	@description = "This is a test for LPS-131947. Collection Filters with category works in display page template."
 	@priority = 4
 	test FilterResultsOfCollectionDisplayByCategoryInDisplayPageTemplate {
-		property testray.component.names = "Display Page Templates,Fragments";
-
 		var groupId = JSONGroupSetter.setGroupId(groupName = ${randomSiteName});
 
 		task ("Add a vocabulary") {

@@ -4,7 +4,6 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Widget Page Templates";
 	property testray.main.component.name = "Widget Page Templates";
 
 	setUp {
@@ -48,7 +47,6 @@ definition {
 	@priority = 5
 	test AddPageBasedOnGlobalPageTemplate {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training,Widget Page Templates";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -358,7 +356,6 @@ definition {
 	test ImportLAR {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property testray.component.names = "Training";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -489,8 +486,6 @@ definition {
 	@description = "This is a test for LPS-145264. The changes on widget page template should be propagate to widget page when Inherit Changes is enabled."
 	@priority = 4
 	test PropagateChangesFromWidgetPageTemplate {
-		property testray.component.names = "Page Administration,Widget Page Templates";
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Given a page creator has a widget page template") {

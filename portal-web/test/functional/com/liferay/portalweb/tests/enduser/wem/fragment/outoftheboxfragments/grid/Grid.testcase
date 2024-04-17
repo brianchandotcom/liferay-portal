@@ -171,8 +171,6 @@ definition {
 	@description = "This is a test for LPS-108463. Assert no Container is outside when add a Grid element to content page template."
 	@priority = 4
 	test AddGridWithoutContainerInContentPageTemplate {
-		property testray.component.names = "Content Page Templates,Fragments";
-
 		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = "Test Site Name",
@@ -210,8 +208,6 @@ definition {
 	@description = "This is a test for LPS-108463. Assert no Container is outside when add a Grid element to display page template."
 	@priority = 4
 	test AddGridWithoutContainerInDisplayPageTemplate {
-		property testray.component.names = "Display Page Templates,Fragments";
-
 		task ("Add a display page") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",

@@ -4,7 +4,6 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Widget Pages";
 	property testray.main.component.name = "Widget Pages";
 
 	setUp {
@@ -34,7 +33,6 @@ definition {
 	@priority = 5
 	test ConfigureLookAndFeelOfWidget {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(

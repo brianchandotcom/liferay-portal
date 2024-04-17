@@ -100,8 +100,6 @@ definition {
 	@description = "This is a test for LPS-155247. The Related Assets Widget should display the assets related to all contents placed on display page template."
 	@priority = 4
 	test DisplayAllRelatedAssetsOnDisplayPageTemplate {
-		property testray.component.names = "Display Page Templates,Related Assets";
-
 		task ("Given a page designer has a displayed related assets on display page template with associated web content") {
 			task ("Add a web content") {
 				JSONWebcontent.addWebContent(
@@ -225,8 +223,6 @@ definition {
 	@priority = 3
 	@uitest
 	test DontShowFolders {
-		property testray.component.names = "Related Assets";
-
 		task ("Add two widget pages with one widget each") {
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -440,7 +436,6 @@ definition {
 	@uitest
 	test ShouldBeDisplayWithCategory {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property testray.component.names = "Categories,Staging,Related Assets,Web Content Administration";
 
 		task ("Add a public page with JSON") {
 			JSONLayout.addPublicLayout(

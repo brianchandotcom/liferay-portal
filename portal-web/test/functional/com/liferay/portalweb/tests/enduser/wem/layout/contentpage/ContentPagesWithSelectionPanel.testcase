@@ -811,7 +811,6 @@ definition {
 	@priority = 5
 	test PerformActionsOnMappedAssetViaMappingPanel {
 		property portal.acceptance = "true";
-		property testray.component.names = "Item Selector";
 
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -1108,7 +1107,6 @@ definition {
 	@priority = 5
 	test ViewDetailsOfMappedAssetsInMappingPanel {
 		property portal.acceptance = "true";
-		property testray.component.names = "Item Selector";
 
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
@@ -1309,8 +1307,6 @@ definition {
 	@description = "This is a test for LPS-122142. View the visual style of mapped editable field items in Selection panel of content page."
 	@priority = 4
 	test ViewVisualStyleOfMappedEditableFieldItems {
-		property testray.component.names = "Item Selector";
-
 		task ("Add a web content with basic web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",

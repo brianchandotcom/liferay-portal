@@ -58,8 +58,6 @@ definition {
 	@description = "View the widget template applied to Categories Navigation in staging and live site."
 	@priority = 3
 	test ViewWidgetTemplateAppliedToCategoriesNavigationInStagingAndLiveSite {
-		property testray.component.names = "Categories,Templates,Staging";
-
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name (Staging)",

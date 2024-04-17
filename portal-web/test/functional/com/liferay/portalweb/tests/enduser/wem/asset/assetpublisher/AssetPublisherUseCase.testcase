@@ -1114,7 +1114,6 @@ definition {
 	@priority = 5
 	test SetAsDefaultAssetPublisherForThisPage {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training,Web Content Administration";
 
 		task ("Set the Asset Publisher as default for this page") {
 			Navigator.gotoSitePage(

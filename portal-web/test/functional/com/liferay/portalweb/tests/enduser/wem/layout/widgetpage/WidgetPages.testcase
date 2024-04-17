@@ -29,7 +29,6 @@ definition {
 	@uitest
 	test AddAndDeleteWidget {
 		property portal.acceptance = "true";
-		property testray.component.names = "Web Content Display,Training";
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
@@ -63,7 +62,6 @@ definition {
 	@uitest
 	test AddPageBasedOnGlobalSearchTemplate {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		task ("Add a page based in global search template") {
 			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
@@ -128,7 +126,6 @@ definition {
 	@priority = 5
 	test ChangeLayoutTemplate {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
@@ -169,7 +166,6 @@ definition {
 	@uitest
 	test ConfigureEmbeddedAndPanelPage {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		task ("Add an embedded page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
@@ -399,7 +395,6 @@ definition {
 	@priority = 5
 	test EditPageViaControlMenu {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
@@ -456,7 +451,6 @@ definition {
 	@priority = 5
 	test EditViaPagesAdmin {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		task ("Add two widget pages") {
 			for (var i : list "1,2") {

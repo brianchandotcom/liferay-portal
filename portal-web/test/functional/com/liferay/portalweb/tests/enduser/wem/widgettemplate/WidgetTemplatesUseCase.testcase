@@ -27,7 +27,6 @@ definition {
 	@priority = 5
 	test ViewWidgetTemplateAppliedToBreadcrumb {
 		property portal.acceptance = "true";
-		property testray.component.names = "Breadcrumb,Templates";
 
 		task ("Add a Breadcrumb to page") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -62,8 +61,6 @@ definition {
 	@description = "View the widget template based on script file applied to RSS Publisher widget."
 	@priority = 3
 	test ViewWidgetTemplateBasedOnScriptFileAppliedToRSSPublisher {
-		property testray.component.names = "Templates,RSS";
-
 		task ("Add a RSS Publisher to page") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",
@@ -116,7 +113,6 @@ definition {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.component.names = "Asset Publisher,Templates";
 
 		task ("Execute reindex all search indexes") {
 			SearchAdministration.executeReindex();
@@ -177,8 +173,6 @@ definition {
 	@description = "View the widget template with corrupt script applied to RSS Publisher widget."
 	@priority = 3
 	test ViewWidgetTemplateWithCorruptScriptAppliedToRSSPublisher {
-		property testray.component.names = "Templates,RSS";
-
 		task ("Add a RSS Publisher to page") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",

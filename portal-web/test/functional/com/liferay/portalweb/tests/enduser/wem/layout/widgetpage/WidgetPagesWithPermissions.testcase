@@ -45,8 +45,6 @@ definition {
 	@description = "Cannot reset changes as user without permissions."
 	@priority = 3
 	test CannotResetChangesAsUserWithoutPermissions {
-		property testray.component.names = "Site and Page Templates";
-
 		var siteName = StringUtil.randomString(8);
 		var siteTemplateName = StringUtil.randomString(8);
 		var siteURLKey = StringUtil.toLowerCase(${siteName});
@@ -117,7 +115,6 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
 		property osgi.module.configurations = "promptEnabled=\"true\"";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property testray.component.names = "Message Boards";
 
 		task ("Add a private page") {
 			JSONLayout.addPrivateLayout(
@@ -211,7 +208,6 @@ definition {
 	@priority = 5
 	test CannotViewPrivateContentAndPageAsUserWithoutPermissions {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property testray.component.names = "Message Boards,Training";
 
 		task ("Add a private page") {
 			JSONLayout.addPrivateLayout(
@@ -307,7 +303,6 @@ definition {
 	test CannotViewPrivatePageAsUserWithoutPermissions {
 		property portal.acceptance = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property testray.component.names = "Permissions,Roles,Training";
 
 		var siteName = StringUtil.randomString(8);
 
@@ -456,7 +451,6 @@ definition {
 	@priority = 3
 	test ViewPrivateContentAndPageAsSiteMember {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property testray.component.names = "Message Boards";
 
 		task ("Assign the new user to site") {
 			JSONUser.addUserToSite(

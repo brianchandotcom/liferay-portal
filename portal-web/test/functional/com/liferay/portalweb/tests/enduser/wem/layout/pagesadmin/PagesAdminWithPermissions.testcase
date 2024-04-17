@@ -262,7 +262,6 @@ definition {
 	@priority = 5
 	test RemoveViewPermissionForGuest {
 		property portal.acceptance = "true";
-		property testray.component.names = "Roles";
 
 		task ("Add widget page") {
 			JSONLayout.addPublicLayout(

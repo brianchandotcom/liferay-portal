@@ -97,7 +97,6 @@ definition {
 	@priority = 5
 	test ExportImportSiteWithEmbeddedWCDInFragment {
 		property portal.acceptance = "true";
-		property testray.component.names = "Content Pages,Sites Administration";
 
 		task ("Add a fragment collection in site") {
 			JSONFragment.addFragmentCollection(

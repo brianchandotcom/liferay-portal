@@ -6,13 +6,19 @@
 package com.liferay.object.internal.instance.lifecycle;
 
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
+import com.liferay.object.configuration.ObjectConfiguration;
+import com.liferay.object.info.field.converter.ObjectFieldInfoFieldConverter;
 import com.liferay.object.internal.item.selector.SystemObjectEntryItemSelectorView;
 import com.liferay.object.internal.notification.handler.ObjectDefinitionNotificationHandler;
 import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionNotificationTermEvaluator;
@@ -21,15 +27,19 @@ import com.liferay.object.internal.related.models.SystemObjectMtoMObjectRelatedM
 import com.liferay.object.internal.rest.context.path.RESTContextPathResolverImpl;
 import com.liferay.object.internal.system.info.collection.provider.SystemObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.system.info.item.provider.SystemObjectEntryInfoItemDetailsProvider;
+import com.liferay.object.internal.system.info.item.provider.SystemObjectEntryInfoItemFormProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrarHelper;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
+import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -41,6 +51,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -55,6 +66,9 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
+
+import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -62,13 +76,17 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@Component(service = PortalInstanceLifecycleListener.class)
+@Component(
+	configurationPid = "com.liferay.object.configuration.ObjectConfiguration",
+	service = PortalInstanceLifecycleListener.class
+)
 public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener
 	implements EveryNodeEveryStartup {
@@ -87,10 +105,14 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Activate " + bundleContext);
 		}
+
+		modified(properties);
 
 		_bundleContext = bundleContext;
 
@@ -153,6 +175,12 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 		_serviceTrackerList.close();
 	}
 
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_objectConfiguration = ConfigurableUtil.createConfigurable(
+			ObjectConfiguration.class, properties);
+	}
+
 	private void _apply(
 		long companyId,
 		SystemObjectDefinitionManager systemObjectDefinitionManager) {
@@ -204,6 +232,29 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 				InfoItemDetailsProvider.class,
 				new SystemObjectEntryInfoItemDetailsProvider(
 					itemClassName, objectDefinition),
+				HashMapDictionaryBuilder.<String, Object>put(
+					Constants.SERVICE_RANKING, 10
+				).put(
+					"company.id", objectDefinition.getCompanyId()
+				).put(
+					"item.class.name", itemClassName
+				).build());
+			_bundleContext.registerService(
+				InfoItemFormProvider.class,
+				new SystemObjectEntryInfoItemFormProvider(
+					_displayPageInfoItemFieldSetProvider,
+					_infoItemFieldReaderFieldSetProvider, itemClassName,
+					_objectActionLocalService, objectDefinition,
+					_objectDefinitionLocalService,
+					new ObjectFieldInfoFieldConverter(
+						_listTypeEntryLocalService, _objectConfiguration,
+						_objectDefinitionLocalService, _objectFieldLocalService,
+						_objectFieldSettingLocalService,
+						_objectRelationshipLocalService,
+						_objectScopeProviderRegistry, _portal,
+						_restContextPathResolverRegistry, _userLocalService),
+					_objectFieldLocalService, _objectRelationshipLocalService,
+					_templateInfoItemFieldSetProvider),
 				HashMapDictionaryBuilder.<String, Object>put(
 					Constants.SERVICE_RANKING, 10
 				).put(
@@ -290,7 +341,15 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
+	private DisplayPageInfoItemFieldSetProvider
+		_displayPageInfoItemFieldSetProvider;
+
+	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private InfoItemFieldReaderFieldSetProvider
+		_infoItemFieldReaderFieldSetProvider;
 
 	@Reference
 	private ItemSelector _itemSelector;
@@ -300,7 +359,15 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 		_itemSelectorViewDescriptorRenderer;
 
 	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Reference
 	private ListTypeLocalService _listTypeLocalService;
+
+	@Reference
+	private ObjectActionLocalService _objectActionLocalService;
+
+	private volatile ObjectConfiguration _objectConfiguration;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
@@ -310,6 +377,9 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Reference
 	private ObjectFolderLocalService _objectFolderLocalService;
@@ -336,12 +406,18 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 	)
 	private Release _release;
 
+	@Reference
+	private RESTContextPathResolverRegistry _restContextPathResolverRegistry;
+
 	private ServiceTrackerList<SystemObjectDefinitionManager>
 		_serviceTrackerList;
 
 	@Reference
 	private SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
+
+	@Reference
+	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

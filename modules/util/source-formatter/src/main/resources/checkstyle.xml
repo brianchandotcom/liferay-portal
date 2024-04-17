@@ -29,6 +29,11 @@
 			<property name="description" value="Checks that the `default` is after all the cases in a `switch` statement." />
 			<property name="documentationLocation" value="coding/defaultcomeslast.html" />
 		</module>
+		<module name="EqualsHashCodeCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Checks that classes that either override `equals()` or `hashCode()` also overrides the other." />
+			<property name="documentationLocation" value="coding/equalshashcode.html" />
+		</module>
 		<module name="JavadocStyleCheck">
 			<property name="category" value="Javadoc" />
 			<property name="checkFirstSentence" value="false" />

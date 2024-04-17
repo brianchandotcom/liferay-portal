@@ -74,7 +74,7 @@ public class LayoutUtilityPageEntryUpgradeStepRegistratorTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				StringPool.BLANK, TestPropsValues.getUserId(),
 				_group.getGroupId(), 0, 0, false, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_STATUS, 0,
+				LayoutUtilityPageEntryConstants.TYPE_STATUS, 0, null, true,
 				_serviceContext);
 
 		Layout draftLayout = _layoutLocalService.fetchLayout(

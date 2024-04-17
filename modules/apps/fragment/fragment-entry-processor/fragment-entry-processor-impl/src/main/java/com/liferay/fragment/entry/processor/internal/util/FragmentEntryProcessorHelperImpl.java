@@ -7,6 +7,7 @@ package com.liferay.fragment.entry.processor.internal.util;
 
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
+import com.liferay.info.exception.InfoItemPermissionException;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
@@ -22,6 +23,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.info.type.KeyLocalizedLabelPair;
@@ -39,6 +41,8 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -47,6 +51,7 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -405,6 +410,50 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return value.toString();
+	}
+
+	@Override
+	public boolean hasViewPermission(
+		JSONObject editableValueJSONObject,
+		FragmentEntryProcessorContext fragmentEntryProcessorContext) {
+
+		InfoItemMappedField infoItemMappedField = _getInfoItemMappedField(
+			editableValueJSONObject, fragmentEntryProcessorContext);
+
+		if (infoItemMappedField == null) {
+			return true;
+		}
+
+		HttpServletRequest httpServletRequest =
+			fragmentEntryProcessorContext.getHttpServletRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			InfoItemPermissionProvider infoItemPermissionProvider =
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemPermissionProvider.class,
+					infoItemMappedField.getClassName());
+
+			if ((infoItemPermissionProvider != null) &&
+				!infoItemPermissionProvider.hasPermission(
+					themeDisplay.getPermissionChecker(),
+					infoItemMappedField.getObject(), ActionKeys.VIEW)) {
+
+				return false;
+			}
+
+			return true;
+		}
+		catch (InfoItemPermissionException infoItemPermissionException) {
+			_log.error(
+				"Unable to check display object permissions",
+				infoItemPermissionException);
+
+			return false;
+		}
 	}
 
 	@Override

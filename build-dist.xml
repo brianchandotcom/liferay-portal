@@ -1189,6 +1189,13 @@ org.apache.level=WARNING]]>
 		<replace
 			file="${app.server.tomcat.dir}/conf/server.xml"
 		>
+			<replacetoken><![CDATA[<Connector port="8080" protocol="HTTP/1.1"]]></replacetoken>
+			<replacevalue><![CDATA[<Connector maxThreads="75" port="8080" protocol="HTTP/1.1"]]></replacevalue>
+		</replace>
+
+		<replace
+			file="${app.server.tomcat.dir}/conf/server.xml"
+		>
 			<replacetoken><![CDATA[<Valve className="org.apache.catalina.valves.AccessLogValve"]]></replacetoken>
 			<replacevalue><![CDATA[<!-- <Valve className="org.apache.catalina.valves.AccessLogValve"]]></replacevalue>
 		</replace>
@@ -1200,13 +1207,6 @@ org.apache.level=WARNING]]>
 			<replacevalue><![CDATA[pattern="%h %l %u %t &quot;%r&quot; %s %b" />-->
 				<Valve className="org.apache.catalina.valves.ErrorReportValve" showReport="false" showServerInfo="false" />]]>
 			</replacevalue>
-		</replace>
-
-		<replace
-			file="${app.server.tomcat.dir}/conf/server.xml"
-		>
-			<replacetoken><![CDATA[<Connector port="8080" protocol="HTTP/1.1"]]></replacetoken>
-			<replacevalue><![CDATA[<Connector maxThreads="75" port="8080" protocol="HTTP/1.1"]]></replacevalue>
 		</replace>
 
 		<replace

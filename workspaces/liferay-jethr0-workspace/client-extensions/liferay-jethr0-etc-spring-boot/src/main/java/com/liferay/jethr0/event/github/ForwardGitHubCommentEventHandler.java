@@ -241,7 +241,7 @@ public class ForwardGitHubCommentEventHandler
 		JobEntityRepository jobEntityRepository = getJobEntityRepository();
 
 		JobEntity jobEntity = jobEntityRepository.create(
-			name, priority, null, JobEntity.State.OPENED, type);
+			null, name, null, priority, null, JobEntity.State.OPENED, type);
 
 		if (!(jobEntity instanceof ForwardPullRequestJobEntity)) {
 			return null;

@@ -326,6 +326,13 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	}
 
 	@Override
+	public void setParameters(Map<String, String> parameters) {
+		_parameters.clear();
+
+		_parameters.putAll(parameters);
+	}
+
+	@Override
 	public void setParameterValue(String name, String value) {
 		_parameters.put(name, value);
 	}

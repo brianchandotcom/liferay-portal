@@ -110,6 +110,8 @@ public interface JobEntity extends Entity {
 
 	public void setName(String name);
 
+	public void setParameters(Map<String, String> parameters);
+
 	public void setParameterValue(String name, String value);
 
 	public void setPriority(int priority);

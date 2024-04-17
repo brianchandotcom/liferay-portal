@@ -138,7 +138,7 @@ public class MergeGitHubCommentEventHandler
 			gitHubPullRequest.getNumber());
 
 		JobEntity jobEntity = jobEntityRepository.create(
-			jobName, 3, null, JobEntity.State.OPENED,
+			null, jobName, null, 3, null, JobEntity.State.OPENED,
 			JobEntity.Type.MERGE_PORTAL_SUBREPOSITORY);
 
 		if (!(jobEntity instanceof MergePortalSubrepositoryJobEntity)) {

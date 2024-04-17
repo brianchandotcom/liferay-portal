@@ -12,6 +12,7 @@ import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.dalo.JobEntityDALO;
 import com.liferay.jethr0.job.dalo.JobToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.job.queue.JobQueue;
+import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -24,6 +25,7 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,16 +53,38 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 	}
 
 	public JobEntity create(
-		String name, int priority, Date startDate, JobEntity.State state,
-		JobEntity.Type type) {
+		RoutineEntity routineEntity, String name,
+		Map<String, String> parameters, int priority, Date startDate,
+		JobEntity.State state, JobEntity.Type type) {
 
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put(
-			"name", name
-		).put(
-			"priority", priority
-		);
+		jsonObject.put("name", name);
+
+		if (parameters != null) {
+			JSONArray parametersJSONArray = new JSONArray();
+
+			for (Map.Entry<String, String> parameter : parameters.entrySet()) {
+				JSONObject parameterJSONObject = new JSONObject();
+
+				parameterJSONObject.put(
+					"key", parameter.getKey()
+				).put(
+					"value", parameter.getValue()
+				);
+
+				parametersJSONArray.put(parameterJSONObject);
+			}
+
+			jsonObject.put("parameters", parametersJSONArray.toString());
+		}
+
+		jsonObject.put("priority", priority);
+
+		if (routineEntity != null) {
+			jsonObject.put(
+				"r_routineToJobs_c_routineId", routineEntity.getId());
+		}
 
 		if (startDate != null) {
 			jsonObject.put("startDate", StringUtil.toString(startDate));

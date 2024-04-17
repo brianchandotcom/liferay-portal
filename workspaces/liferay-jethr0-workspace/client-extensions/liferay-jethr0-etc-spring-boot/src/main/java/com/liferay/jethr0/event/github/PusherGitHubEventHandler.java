@@ -64,7 +64,7 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 			gitBranchEntity.getShortBranchSHA(), "])");
 
 		JobEntity jobEntity = jobEntityRepository.create(
-			jobName, 3, null, JobEntity.State.OPENED,
+			null, jobName, null, 3, null, JobEntity.State.OPENED,
 			JobEntity.Type.MERGE_CENTRAL_SUBREPOSITORY);
 
 		if (!(jobEntity instanceof MergeCentralSubrepositoryJobEntity)) {
@@ -214,10 +214,11 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 		JobEntityRepository jobEntityRepository = getJobEntityRepository();
 
 		JobEntity jobEntity = jobEntityRepository.create(
+			null,
 			StringUtil.combine(
 				"Repository Archive (", gitBranchEntity.getRepositoryName(),
 				"/", gitBranchEntity.getBranchName(), ")"),
-			1, new Date(), JobEntity.State.OPENED,
+			null, 1, new Date(), JobEntity.State.OPENED,
 			JobEntity.Type.REPOSITORY_ARCHIVE);
 
 		if (!(jobEntity instanceof RepositoryArchiveJobEntity)) {

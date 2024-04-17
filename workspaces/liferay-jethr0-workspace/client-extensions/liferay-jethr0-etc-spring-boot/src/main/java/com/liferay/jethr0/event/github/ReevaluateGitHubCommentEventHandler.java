@@ -68,7 +68,8 @@ public class ReevaluateGitHubCommentEventHandler
 		JobEntityRepository jobEntityRepository = getJobEntityRepository();
 
 		JobEntity jobEntity = jobEntityRepository.create(
-			"ci:reevaluate:" + jenkinsBuildID, 3, null, JobEntity.State.OPENED,
+			null, "ci:reevaluate:" + jenkinsBuildID, null, 3, null,
+			JobEntity.State.OPENED,
 			JobEntity.Type.PORTAL_EVALUATE_PULL_REQUEST);
 
 		if (!(jobEntity instanceof PortalEvaluatePullRequestJobEntity)) {

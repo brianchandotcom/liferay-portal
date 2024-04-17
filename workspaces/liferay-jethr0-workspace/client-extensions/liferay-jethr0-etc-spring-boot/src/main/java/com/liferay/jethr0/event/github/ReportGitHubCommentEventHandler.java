@@ -72,7 +72,7 @@ public class ReportGitHubCommentEventHandler
 			gitHubPullRequest.getNumber(), " ", testrayBuildID);
 
 		JobEntity jobEntity = jobEntityRepository.create(
-			jobName, 3, null, JobEntity.State.OPENED,
+			null, jobName, null, 3, null, JobEntity.State.OPENED,
 			JobEntity.Type.GENERATE_TESTRAY_CSV);
 
 		if (!(jobEntity instanceof GenerateTestrayCSVJobEntity)) {

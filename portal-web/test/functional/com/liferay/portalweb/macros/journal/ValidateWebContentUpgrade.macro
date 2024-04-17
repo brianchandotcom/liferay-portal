@@ -115,13 +115,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		takeScreenshot();
-
 		WebContent.addWithStructureCP(
 			webContentText = "This is a Text field Edit",
 			webContentTitle = "Web Content Title Edit");
-
-		takeScreenshot();
 
 		PortletEntry.publish();
 

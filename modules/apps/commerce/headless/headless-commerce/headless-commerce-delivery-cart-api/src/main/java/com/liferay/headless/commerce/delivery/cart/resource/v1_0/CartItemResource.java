@@ -64,6 +64,14 @@ public interface CartItemResource {
 	public Response putCartItemBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public Page<CartItem> getCartByExternalReferenceCodeItemsPage(
+			String externalReferenceCode, Long skuId, Pagination pagination)
+		throws Exception;
+
+	public CartItem postCartByExternalReferenceCodeItem(
+			String externalReferenceCode, CartItem cartItem)
+		throws Exception;
+
 	public Page<CartItem> getCartItemsPage(
 			Long cartId, Long skuId, Pagination pagination)
 		throws Exception;

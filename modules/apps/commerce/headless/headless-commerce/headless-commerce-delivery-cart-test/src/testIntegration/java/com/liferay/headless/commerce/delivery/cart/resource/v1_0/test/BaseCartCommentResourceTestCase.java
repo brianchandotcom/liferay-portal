@@ -172,6 +172,7 @@ public abstract class BaseCartCommentResourceTestCase {
 
 		cartComment.setAuthor(regex);
 		cartComment.setContent(regex);
+		cartComment.setExternalReferenceCode(regex);
 
 		String json = CartCommentSerDes.toJSON(cartComment);
 
@@ -181,6 +182,7 @@ public abstract class BaseCartCommentResourceTestCase {
 
 		Assert.assertEquals(regex, cartComment.getAuthor());
 		Assert.assertEquals(regex, cartComment.getContent());
+		Assert.assertEquals(regex, cartComment.getExternalReferenceCode());
 	}
 
 	@Test
@@ -450,6 +452,215 @@ public abstract class BaseCartCommentResourceTestCase {
 	}
 
 	protected CartComment testPutCartComment_addCartComment() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetCartByExternalReferenceCodeCommentsPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetCartByExternalReferenceCodeCommentsPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetCartByExternalReferenceCodeCommentsPage_getIrrelevantExternalReferenceCode();
+
+		Page<CartComment> page =
+			cartCommentResource.getCartByExternalReferenceCodeCommentsPage(
+				externalReferenceCode, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantExternalReferenceCode != null) {
+			CartComment irrelevantCartComment =
+				testGetCartByExternalReferenceCodeCommentsPage_addCartComment(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantCartComment());
+
+			page =
+				cartCommentResource.getCartByExternalReferenceCodeCommentsPage(
+					irrelevantExternalReferenceCode,
+					Pagination.of(1, (int)totalCount + 1));
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantCartComment, (List<CartComment>)page.getItems());
+			assertValid(
+				page,
+				testGetCartByExternalReferenceCodeCommentsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
+		}
+
+		CartComment cartComment1 =
+			testGetCartByExternalReferenceCodeCommentsPage_addCartComment(
+				externalReferenceCode, randomCartComment());
+
+		CartComment cartComment2 =
+			testGetCartByExternalReferenceCodeCommentsPage_addCartComment(
+				externalReferenceCode, randomCartComment());
+
+		page = cartCommentResource.getCartByExternalReferenceCodeCommentsPage(
+			externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(cartComment1, (List<CartComment>)page.getItems());
+		assertContains(cartComment2, (List<CartComment>)page.getItems());
+		assertValid(
+			page,
+			testGetCartByExternalReferenceCodeCommentsPage_getExpectedActions(
+				externalReferenceCode));
+
+		cartCommentResource.deleteCartComment(cartComment1.getId());
+
+		cartCommentResource.deleteCartComment(cartComment2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetCartByExternalReferenceCodeCommentsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetCartByExternalReferenceCodeCommentsPageWithPagination()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetCartByExternalReferenceCodeCommentsPage_getExternalReferenceCode();
+
+		Page<CartComment> cartCommentPage =
+			cartCommentResource.getCartByExternalReferenceCodeCommentsPage(
+				externalReferenceCode, null);
+
+		int totalCount = GetterUtil.getInteger(cartCommentPage.getTotalCount());
+
+		CartComment cartComment1 =
+			testGetCartByExternalReferenceCodeCommentsPage_addCartComment(
+				externalReferenceCode, randomCartComment());
+
+		CartComment cartComment2 =
+			testGetCartByExternalReferenceCodeCommentsPage_addCartComment(
+				externalReferenceCode, randomCartComment());
+
+		CartComment cartComment3 =
+			testGetCartByExternalReferenceCodeCommentsPage_addCartComment(
+				externalReferenceCode, randomCartComment());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<CartComment> page1 =
+				cartCommentResource.getCartByExternalReferenceCodeCommentsPage(
+					externalReferenceCode,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(cartComment1, (List<CartComment>)page1.getItems());
+
+			Page<CartComment> page2 =
+				cartCommentResource.getCartByExternalReferenceCodeCommentsPage(
+					externalReferenceCode,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(cartComment2, (List<CartComment>)page2.getItems());
+
+			Page<CartComment> page3 =
+				cartCommentResource.getCartByExternalReferenceCodeCommentsPage(
+					externalReferenceCode,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(cartComment3, (List<CartComment>)page3.getItems());
+		}
+		else {
+			Page<CartComment> page1 =
+				cartCommentResource.getCartByExternalReferenceCodeCommentsPage(
+					externalReferenceCode, Pagination.of(1, totalCount + 2));
+
+			List<CartComment> cartComments1 =
+				(List<CartComment>)page1.getItems();
+
+			Assert.assertEquals(
+				cartComments1.toString(), totalCount + 2, cartComments1.size());
+
+			Page<CartComment> page2 =
+				cartCommentResource.getCartByExternalReferenceCodeCommentsPage(
+					externalReferenceCode, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<CartComment> cartComments2 =
+				(List<CartComment>)page2.getItems();
+
+			Assert.assertEquals(
+				cartComments2.toString(), 1, cartComments2.size());
+
+			Page<CartComment> page3 =
+				cartCommentResource.getCartByExternalReferenceCodeCommentsPage(
+					externalReferenceCode,
+					Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(cartComment1, (List<CartComment>)page3.getItems());
+			assertContains(cartComment2, (List<CartComment>)page3.getItems());
+			assertContains(cartComment3, (List<CartComment>)page3.getItems());
+		}
+	}
+
+	protected CartComment
+			testGetCartByExternalReferenceCodeCommentsPage_addCartComment(
+				String externalReferenceCode, CartComment cartComment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetCartByExternalReferenceCodeCommentsPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetCartByExternalReferenceCodeCommentsPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostCartByExternalReferenceCodeComment() throws Exception {
+		CartComment randomCartComment = randomCartComment();
+
+		CartComment postCartComment =
+			testPostCartByExternalReferenceCodeComment_addCartComment(
+				randomCartComment);
+
+		assertEquals(randomCartComment, postCartComment);
+		assertValid(postCartComment);
+	}
+
+	protected CartComment
+			testPostCartByExternalReferenceCodeComment_addCartComment(
+				CartComment cartComment)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -805,6 +1016,16 @@ public abstract class BaseCartCommentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (cartComment.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("orderId", additionalAssertFieldName)) {
 				if (cartComment.getOrderId() == null) {
 					valid = false;
@@ -953,6 +1174,19 @@ public abstract class BaseCartCommentResourceTestCase {
 			if (Objects.equals("content", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						cartComment1.getContent(), cartComment2.getContent())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						cartComment1.getExternalReferenceCode(),
+						cartComment2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1190,6 +1424,52 @@ public abstract class BaseCartCommentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = cartComment.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1251,6 +1531,8 @@ public abstract class BaseCartCommentResourceTestCase {
 			{
 				author = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				content = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				orderId = RandomTestUtil.randomLong();
 				restricted = RandomTestUtil.randomBoolean();

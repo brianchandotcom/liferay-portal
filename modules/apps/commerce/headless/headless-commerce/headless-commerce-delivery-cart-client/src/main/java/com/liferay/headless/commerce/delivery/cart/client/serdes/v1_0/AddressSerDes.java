@@ -100,6 +100,20 @@ public class AddressSerDes {
 			sb.append("\"");
 		}
 
+		if (address.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(address.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (address.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -327,6 +341,15 @@ public class AddressSerDes {
 			map.put("description", String.valueOf(address.getDescription()));
 		}
 
+		if (address.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(address.getExternalReferenceCode()));
+		}
+
 		if (address.getId() == null) {
 			map.put("id", null);
 		}
@@ -464,6 +487,14 @@ public class AddressSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					address.setDescription((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					address.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

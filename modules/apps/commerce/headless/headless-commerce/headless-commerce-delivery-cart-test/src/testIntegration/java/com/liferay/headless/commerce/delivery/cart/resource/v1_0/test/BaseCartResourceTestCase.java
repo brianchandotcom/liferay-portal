@@ -175,6 +175,7 @@ public abstract class BaseCartResourceTestCase {
 		cart.setAuthor(regex);
 		cart.setCouponCode(regex);
 		cart.setCurrencyCode(regex);
+		cart.setExternalReferenceCode(regex);
 		cart.setOrderTypeExternalReferenceCode(regex);
 		cart.setOrderUUID(regex);
 		cart.setPaymentMethod(regex);
@@ -196,6 +197,7 @@ public abstract class BaseCartResourceTestCase {
 		Assert.assertEquals(regex, cart.getAuthor());
 		Assert.assertEquals(regex, cart.getCouponCode());
 		Assert.assertEquals(regex, cart.getCurrencyCode());
+		Assert.assertEquals(regex, cart.getExternalReferenceCode());
 		Assert.assertEquals(regex, cart.getOrderTypeExternalReferenceCode());
 		Assert.assertEquals(regex, cart.getOrderUUID());
 		Assert.assertEquals(regex, cart.getPaymentMethod());
@@ -206,6 +208,286 @@ public abstract class BaseCartResourceTestCase {
 		Assert.assertEquals(regex, cart.getShippingMethod());
 		Assert.assertEquals(regex, cart.getShippingOption());
 		Assert.assertEquals(regex, cart.getStatus());
+	}
+
+	@Test
+	public void testDeleteCartByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Cart cart = testDeleteCartByExternalReferenceCode_addCart();
+
+		assertHttpResponseStatusCode(
+			204,
+			cartResource.deleteCartByExternalReferenceCodeHttpResponse(
+				cart.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			cartResource.getCartByExternalReferenceCodeHttpResponse(
+				cart.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			cartResource.getCartByExternalReferenceCodeHttpResponse(
+				cart.getExternalReferenceCode()));
+	}
+
+	protected Cart testDeleteCartByExternalReferenceCode_addCart()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetCartByExternalReferenceCode() throws Exception {
+		Cart postCart = testGetCartByExternalReferenceCode_addCart();
+
+		Cart getCart = cartResource.getCartByExternalReferenceCode(
+			postCart.getExternalReferenceCode());
+
+		assertEquals(postCart, getCart);
+		assertValid(getCart);
+	}
+
+	protected Cart testGetCartByExternalReferenceCode_addCart()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCartByExternalReferenceCode() throws Exception {
+		Cart cart = testGraphQLGetCartByExternalReferenceCode_addCart();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				cart,
+				CartSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"cartByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												cart.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/cartByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Assert.assertTrue(
+			equals(
+				cart,
+				CartSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryCart_v1_0",
+								new GraphQLField(
+									"cartByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													cart.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryCart_v1_0",
+						"Object/cartByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetCartByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"cartByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryCart_v1_0",
+						new GraphQLField(
+							"cartByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Cart testGraphQLGetCartByExternalReferenceCode_addCart()
+		throws Exception {
+
+		return testGraphQLCart_addCart();
+	}
+
+	@Test
+	public void testPatchCartByExternalReferenceCode() throws Exception {
+		Cart postCart = testPatchCartByExternalReferenceCode_addCart();
+
+		Cart randomPatchCart = randomPatchCart();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Cart patchCart = cartResource.patchCartByExternalReferenceCode(
+			postCart.getExternalReferenceCode(), randomPatchCart);
+
+		Cart expectedPatchCart = postCart.clone();
+
+		BeanTestUtil.copyProperties(randomPatchCart, expectedPatchCart);
+
+		Cart getCart = cartResource.getCartByExternalReferenceCode(
+			patchCart.getExternalReferenceCode());
+
+		assertEquals(expectedPatchCart, getCart);
+		assertValid(getCart);
+	}
+
+	protected Cart testPatchCartByExternalReferenceCode_addCart()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutCartByExternalReferenceCode() throws Exception {
+		Cart postCart = testPutCartByExternalReferenceCode_addCart();
+
+		Cart randomCart = randomCart();
+
+		Cart putCart = cartResource.putCartByExternalReferenceCode(
+			postCart.getExternalReferenceCode(), randomCart);
+
+		assertEquals(randomCart, putCart);
+		assertValid(putCart);
+
+		Cart getCart = cartResource.getCartByExternalReferenceCode(
+			putCart.getExternalReferenceCode());
+
+		assertEquals(randomCart, getCart);
+		assertValid(getCart);
+
+		Cart newCart = testPutCartByExternalReferenceCode_createCart();
+
+		putCart = cartResource.putCartByExternalReferenceCode(
+			newCart.getExternalReferenceCode(), newCart);
+
+		assertEquals(newCart, putCart);
+		assertValid(putCart);
+
+		getCart = cartResource.getCartByExternalReferenceCode(
+			putCart.getExternalReferenceCode());
+
+		assertEquals(newCart, getCart);
+
+		Assert.assertEquals(
+			newCart.getExternalReferenceCode(),
+			putCart.getExternalReferenceCode());
+	}
+
+	protected Cart testPutCartByExternalReferenceCode_createCart()
+		throws Exception {
+
+		return randomCart();
+	}
+
+	protected Cart testPutCartByExternalReferenceCode_addCart()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostCartByExternalReferenceCodeCheckout() throws Exception {
+		Cart randomCart = randomCart();
+
+		Cart postCart = testPostCartByExternalReferenceCodeCheckout_addCart(
+			randomCart);
+
+		assertEquals(randomCart, postCart);
+		assertValid(postCart);
+	}
+
+	protected Cart testPostCartByExternalReferenceCodeCheckout_addCart(
+			Cart cart)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostCartByExternalReferenceCodeCouponCode()
+		throws Exception {
+
+		Cart randomCart = randomCart();
+
+		Cart postCart = testPostCartByExternalReferenceCodeCouponCode_addCart(
+			randomCart);
+
+		assertEquals(randomCart, postCart);
+		assertValid(postCart);
+	}
+
+	protected Cart testPostCartByExternalReferenceCodeCouponCode_addCart(
+			Cart cart)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetCartByExternalReferenceCodePaymentUrl()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	@Test
@@ -845,6 +1127,16 @@ public abstract class BaseCartResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (cart.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"lastPriceUpdateDate", additionalAssertFieldName)) {
 
 				if (cart.getLastPriceUpdateDate() == null) {
@@ -1274,6 +1566,19 @@ public abstract class BaseCartResourceTestCase {
 			if (Objects.equals("errorMessages", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						cart1.getErrorMessages(), cart2.getErrorMessages())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						cart1.getExternalReferenceCode(),
+						cart2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1895,6 +2200,52 @@ public abstract class BaseCartResourceTestCase {
 		if (entityFieldName.equals("errorMessages")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = cart.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("id")) {
@@ -2533,6 +2884,8 @@ public abstract class BaseCartResourceTestCase {
 					RandomTestUtil.randomString());
 				createDate = RandomTestUtil.nextDate();
 				currencyCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				lastPriceUpdateDate = RandomTestUtil.nextDate();

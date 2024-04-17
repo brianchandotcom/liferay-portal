@@ -216,6 +216,20 @@ public class CartSerDes {
 			sb.append("]");
 		}
 
+		if (cart.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cart.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (cart.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -623,6 +637,15 @@ public class CartSerDes {
 			map.put("errorMessages", String.valueOf(cart.getErrorMessages()));
 		}
 
+		if (cart.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(cart.getExternalReferenceCode()));
+		}
+
 		if (cart.getId() == null) {
 			map.put("id", null);
 		}
@@ -906,6 +929,13 @@ public class CartSerDes {
 				if (jsonParserFieldValue != null) {
 					cart.setErrorMessages(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					cart.setExternalReferenceCode((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

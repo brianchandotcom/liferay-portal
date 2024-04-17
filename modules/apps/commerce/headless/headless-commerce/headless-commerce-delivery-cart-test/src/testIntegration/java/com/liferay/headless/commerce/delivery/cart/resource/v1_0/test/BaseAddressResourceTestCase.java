@@ -171,6 +171,7 @@ public abstract class BaseAddressResourceTestCase {
 		address.setCountry(regex);
 		address.setCountryISOCode(regex);
 		address.setDescription(regex);
+		address.setExternalReferenceCode(regex);
 		address.setName(regex);
 		address.setPhoneNumber(regex);
 		address.setRegion(regex);
@@ -192,6 +193,7 @@ public abstract class BaseAddressResourceTestCase {
 		Assert.assertEquals(regex, address.getCountry());
 		Assert.assertEquals(regex, address.getCountryISOCode());
 		Assert.assertEquals(regex, address.getDescription());
+		Assert.assertEquals(regex, address.getExternalReferenceCode());
 		Assert.assertEquals(regex, address.getName());
 		Assert.assertEquals(regex, address.getPhoneNumber());
 		Assert.assertEquals(regex, address.getRegion());
@@ -202,6 +204,310 @@ public abstract class BaseAddressResourceTestCase {
 		Assert.assertEquals(regex, address.getType());
 		Assert.assertEquals(regex, address.getVatNumber());
 		Assert.assertEquals(regex, address.getZip());
+	}
+
+	@Test
+	public void testGetCartByExternalReferenceCodeBillingAddres()
+		throws Exception {
+
+		Address postAddress =
+			testGetCartByExternalReferenceCodeBillingAddres_addAddress();
+
+		Address getAddress =
+			addressResource.getCartByExternalReferenceCodeBillingAddres(
+				testGetCartByExternalReferenceCodeBillingAddres_getExternalReferenceCode(
+					postAddress));
+
+		assertEquals(postAddress, getAddress);
+		assertValid(getAddress);
+	}
+
+	protected String
+			testGetCartByExternalReferenceCodeBillingAddres_getExternalReferenceCode(
+				Address address)
+		throws Exception {
+
+		return address.getExternalReferenceCode();
+	}
+
+	protected Address
+			testGetCartByExternalReferenceCodeBillingAddres_addAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCartByExternalReferenceCodeBillingAddres()
+		throws Exception {
+
+		Address address =
+			testGraphQLGetCartByExternalReferenceCodeBillingAddres_addAddress();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				address,
+				AddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"cartByExternalReferenceCodeBillingAddres",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												testGraphQLGetCartByExternalReferenceCodeBillingAddres_getExternalReferenceCode(
+													address) + "\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/cartByExternalReferenceCodeBillingAddres"))));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Assert.assertTrue(
+			equals(
+				address,
+				AddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryCart_v1_0",
+								new GraphQLField(
+									"cartByExternalReferenceCodeBillingAddres",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													testGraphQLGetCartByExternalReferenceCodeBillingAddres_getExternalReferenceCode(
+														address) + "\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryCart_v1_0",
+						"Object/cartByExternalReferenceCodeBillingAddres"))));
+	}
+
+	protected String
+			testGraphQLGetCartByExternalReferenceCodeBillingAddres_getExternalReferenceCode(
+				Address address)
+		throws Exception {
+
+		return address.getExternalReferenceCode();
+	}
+
+	@Test
+	public void testGraphQLGetCartByExternalReferenceCodeBillingAddresNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"cartByExternalReferenceCodeBillingAddres",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryCart_v1_0",
+						new GraphQLField(
+							"cartByExternalReferenceCodeBillingAddres",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Address
+			testGraphQLGetCartByExternalReferenceCodeBillingAddres_addAddress()
+		throws Exception {
+
+		return testGraphQLAddress_addAddress();
+	}
+
+	@Test
+	public void testGetCartByExternalReferenceCodeShippingAddres()
+		throws Exception {
+
+		Address postAddress =
+			testGetCartByExternalReferenceCodeShippingAddres_addAddress();
+
+		Address getAddress =
+			addressResource.getCartByExternalReferenceCodeShippingAddres(
+				testGetCartByExternalReferenceCodeShippingAddres_getExternalReferenceCode(
+					postAddress));
+
+		assertEquals(postAddress, getAddress);
+		assertValid(getAddress);
+	}
+
+	protected String
+			testGetCartByExternalReferenceCodeShippingAddres_getExternalReferenceCode(
+				Address address)
+		throws Exception {
+
+		return address.getExternalReferenceCode();
+	}
+
+	protected Address
+			testGetCartByExternalReferenceCodeShippingAddres_addAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCartByExternalReferenceCodeShippingAddres()
+		throws Exception {
+
+		Address address =
+			testGraphQLGetCartByExternalReferenceCodeShippingAddres_addAddress();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				address,
+				AddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"cartByExternalReferenceCodeShippingAddres",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												testGraphQLGetCartByExternalReferenceCodeShippingAddres_getExternalReferenceCode(
+													address) + "\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/cartByExternalReferenceCodeShippingAddres"))));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Assert.assertTrue(
+			equals(
+				address,
+				AddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryCart_v1_0",
+								new GraphQLField(
+									"cartByExternalReferenceCodeShippingAddres",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													testGraphQLGetCartByExternalReferenceCodeShippingAddres_getExternalReferenceCode(
+														address) + "\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryCart_v1_0",
+						"Object/cartByExternalReferenceCodeShippingAddres"))));
+	}
+
+	protected String
+			testGraphQLGetCartByExternalReferenceCodeShippingAddres_getExternalReferenceCode(
+				Address address)
+		throws Exception {
+
+		return address.getExternalReferenceCode();
+	}
+
+	@Test
+	public void testGraphQLGetCartByExternalReferenceCodeShippingAddresNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"cartByExternalReferenceCodeShippingAddres",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryCart_v1_0",
+						new GraphQLField(
+							"cartByExternalReferenceCodeShippingAddres",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Address
+			testGraphQLGetCartByExternalReferenceCodeShippingAddres_addAddress()
+		throws Exception {
+
+		return testGraphQLAddress_addAddress();
 	}
 
 	@Test
@@ -561,6 +867,16 @@ public abstract class BaseAddressResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (address.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("latitude", additionalAssertFieldName)) {
 				if (address.getLatitude() == null) {
 					valid = false;
@@ -815,6 +1131,19 @@ public abstract class BaseAddressResourceTestCase {
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						address1.getDescription(), address2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						address1.getExternalReferenceCode(),
+						address2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1206,6 +1535,52 @@ public abstract class BaseAddressResourceTestCase {
 
 		if (entityFieldName.equals("description")) {
 			Object object = address.getDescription();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = address.getExternalReferenceCode();
 
 			String value = String.valueOf(object);
 
@@ -1782,6 +2157,8 @@ public abstract class BaseAddressResourceTestCase {
 				countryISOCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				latitude = RandomTestUtil.randomDouble();

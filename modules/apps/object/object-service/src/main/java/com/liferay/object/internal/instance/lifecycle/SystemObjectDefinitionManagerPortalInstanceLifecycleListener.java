@@ -5,6 +5,7 @@
 
 package com.liferay.object.internal.instance.lifecycle;
 
+import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
@@ -17,6 +18,7 @@ import com.liferay.object.internal.notification.term.contributor.ObjectDefinitio
 import com.liferay.object.internal.related.models.SystemObject1toMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.related.models.SystemObjectMtoMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.rest.context.path.RESTContextPathResolverImpl;
+import com.liferay.object.internal.system.info.collection.provider.SystemObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrarHelper;
@@ -36,6 +38,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -177,6 +180,23 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 							companyId, objectFolder.getObjectFolderId(),
 							systemObjectDefinitionManager);
 			}
+
+			String itemClassName =
+				objectDefinition.getClassName() + StringPool.POUND +
+					objectDefinition.getObjectDefinitionId();
+
+			_bundleContext.registerService(
+				InfoCollectionProvider.class,
+				new SystemObjectEntrySingleFormVariationInfoCollectionProvider(
+					itemClassName, objectDefinition,
+					systemObjectDefinitionManager),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"class.name", objectDefinition.getClassName()
+				).put(
+					"company.id", objectDefinition.getCompanyId()
+				).put(
+					"item.class.name", itemClassName
+				).build());
 
 			_bundleContext.registerService(
 				ItemSelectorView.class,

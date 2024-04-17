@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "Validates data persistence and that the basic portal functionalities are working correctly after an upgrade is executed with DB Partition enabled"
+	@summary = "Validates data persistence and that the basic portal functionalities are working correctly after an upgrade is executed with database partitioning enabled"
 	macro viewUpgradeDBPartition() {
 		SignOut.signOut();
 

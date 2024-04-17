@@ -5,9 +5,12 @@
 
 package com.liferay.object.internal.instance.lifecycle;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorView;
@@ -27,6 +30,7 @@ import com.liferay.object.internal.related.models.SystemObjectMtoMObjectRelatedM
 import com.liferay.object.internal.rest.context.path.RESTContextPathResolverImpl;
 import com.liferay.object.internal.system.info.collection.provider.SystemObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.system.info.item.provider.SystemObjectEntryInfoItemDetailsProvider;
+import com.liferay.object.internal.system.info.item.provider.SystemObjectEntryInfoItemFieldValuesProvider;
 import com.liferay.object.internal.system.info.item.provider.SystemObjectEntryInfoItemFormProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
@@ -34,6 +38,7 @@ import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrarHel
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
 import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -66,6 +71,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.Map;
@@ -239,6 +245,35 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 				).put(
 					"item.class.name", itemClassName
 				).build());
+
+			ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter =
+				new ObjectFieldInfoFieldConverter(
+					_listTypeEntryLocalService, _objectConfiguration,
+					_objectDefinitionLocalService, _objectFieldLocalService,
+					_objectFieldSettingLocalService,
+					_objectRelationshipLocalService,
+					_objectScopeProviderRegistry, _portal,
+					_restContextPathResolverRegistry, _userLocalService);
+
+			_bundleContext.registerService(
+				InfoItemFieldValuesProvider.class,
+				new SystemObjectEntryInfoItemFieldValuesProvider(
+					_displayPageInfoItemFieldSetProvider, _dlAppLocalService,
+					_dlURLHelper, _dtoConverterRegistry,
+					_extensionProviderRegistry,
+					_infoItemFieldReaderFieldSetProvider, itemClassName,
+					_listTypeEntryLocalService, _objectActionLocalService,
+					objectDefinition, _objectDefinitionLocalService,
+					_objectEntryLocalService, _objectEntryManagerRegistry,
+					objectFieldInfoFieldConverter, _objectFieldLocalService,
+					_objectRelationshipLocalService,
+					_objectScopeProviderRegistry, systemObjectDefinitionManager,
+					_templateInfoItemFieldSetProvider),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"company.id", objectDefinition.getCompanyId()
+				).put(
+					"item.class.name", itemClassName
+				).build());
 			_bundleContext.registerService(
 				InfoItemFormProvider.class,
 				new SystemObjectEntryInfoItemFormProvider(
@@ -246,14 +281,8 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 					_infoItemFieldReaderFieldSetProvider, itemClassName,
 					_objectActionLocalService, objectDefinition,
 					_objectDefinitionLocalService,
-					new ObjectFieldInfoFieldConverter(
-						_listTypeEntryLocalService, _objectConfiguration,
-						_objectDefinitionLocalService, _objectFieldLocalService,
-						_objectFieldSettingLocalService,
-						_objectRelationshipLocalService,
-						_objectScopeProviderRegistry, _portal,
-						_restContextPathResolverRegistry, _userLocalService),
-					_objectFieldLocalService, _objectRelationshipLocalService,
+					objectFieldInfoFieldConverter, _objectFieldLocalService,
+					_objectRelationshipLocalService,
 					_templateInfoItemFieldSetProvider),
 				HashMapDictionaryBuilder.<String, Object>put(
 					Constants.SERVICE_RANKING, 10
@@ -345,7 +374,16 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 		_displayPageInfoItemFieldSetProvider;
 
 	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLURLHelper _dlURLHelper;
+
+	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private ExtensionProviderRegistry _extensionProviderRegistry;
 
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
@@ -374,6 +412,9 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

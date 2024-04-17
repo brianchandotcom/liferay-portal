@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * @author Luis Ortiz
  */
-public class Validator {
+public class ValidatorUtil {
 
 	public static Recorder validateDatabases(
 		LiferayInstance sourceLiferayInstance,

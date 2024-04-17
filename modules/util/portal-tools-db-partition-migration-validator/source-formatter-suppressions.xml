@@ -3,6 +3,6 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/portal/tools/db/partition/migration/validator/util/DatabaseUtil\.java" />
-		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/portal/tools/db/partition/migration/validator/util/Validator\.java" />
+		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/portal/tools/db/partition/migration/validator/util/ValidatorUtil\.java" />
 	</checkstyle>
 </suppressions>

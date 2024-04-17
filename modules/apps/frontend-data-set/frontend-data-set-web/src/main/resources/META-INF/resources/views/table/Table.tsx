@@ -182,7 +182,7 @@ const ItemCells = ({
 						itemData={item}
 						itemId={itemId}
 						itemInlineChanges={itemInlineChanges}
-						key={valuePath ? valuePath.join('_') : field.label}
+						key={field.fieldName}
 						rootPropertyName={
 							localizedValue?.rootPropertyName ?? undefined
 						}

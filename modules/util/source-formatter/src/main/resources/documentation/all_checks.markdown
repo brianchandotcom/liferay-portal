@@ -70,6 +70,7 @@ EmptyConstructorCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prev
 EnumConstantDividerCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Find unnecessary empty lines between enum constants. |
 EnumConstantOrderCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Checks the order of enum constants. |
 EqualClauseIfStatementsCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Finds consecutive if-statements with identical clauses. |
+[EqualsHashCodeCheck](https://checkstyle.sourceforge.io/checks/coding/equalshashcode.html) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks that classes that either override `equals()` or `hashCode()` also overrides the other. |
 [ExceptionCheck](check/exception_check.markdown#exceptioncheck) | [Performance](performance_checks.markdown#performance-checks) | .java | Finds private methods that throw unnecessary exception. |
 [ExceptionMessageCheck](check/message_check.markdown#messagecheck) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Validates messages that are passed to exceptions. |
 ExceptionPrintStackTraceCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Avoid using printStackTrace. |

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 
 import java.nio.charset.StandardCharsets;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Luis Miguel Barcos
@@ -45,7 +45,14 @@ public class HTTPTestUtil {
 	}
 
 	public static JSONObject invokeToJSONObject(
-			String body, String endpoint, HashMap<String, String> headers,
+			String body, String endpoint, Http.Method httpMethod)
+		throws Exception {
+
+		return invokeToJSONObject(body, endpoint, null, httpMethod);
+	}
+
+	public static JSONObject invokeToJSONObject(
+			String body, String endpoint, Map<String, String> headers,
 			Http.Method httpMethod)
 		throws Exception {
 
@@ -53,15 +60,15 @@ public class HTTPTestUtil {
 			invokeToString(body, endpoint, headers, httpMethod));
 	}
 
-	public static JSONObject invokeToJSONObject(
+	public static String invokeToString(
 			String body, String endpoint, Http.Method httpMethod)
 		throws Exception {
 
-		return invokeToJSONObject(body, endpoint, null, httpMethod);
+		return invokeToString(body, endpoint, null, httpMethod);
 	}
 
 	public static String invokeToString(
-			String body, String endpoint, HashMap<String, String> headers,
+			String body, String endpoint, Map<String, String> headers,
 			Http.Method httpMethod)
 		throws Exception {
 
@@ -69,13 +76,6 @@ public class HTTPTestUtil {
 			body, endpoint, headers, httpMethod);
 
 		return HttpUtil.URLtoString(options);
-	}
-
-	public static String invokeToString(
-			String body, String endpoint, Http.Method httpMethod)
-		throws Exception {
-
-		return invokeToString(body, endpoint, null, httpMethod);
 	}
 
 	public static class HTTPTestUtilCustomizer {
@@ -121,7 +121,7 @@ public class HTTPTestUtil {
 	}
 
 	private static Http.Options _getHttpOptions(
-		String body, String endpoint, HashMap<String, String> headers,
+		String body, String endpoint, Map<String, String> headers,
 		Http.Method httpMethod) {
 
 		Http.Options options = new Http.Options();

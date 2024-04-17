@@ -5,30 +5,26 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {
-					},
+					"layout": {},
 					"name": "Main Content Container"
 				},
 				"id": "af34d83b-d249-e8c2-a63b-a0b502d2c976",
 				"pageElements": [
 					{
 						"definition": {
-							"cssClasses": [
-								"learn-banner"
-							],
+							"cssClasses": ["learn-banner"],
 							"fragmentStyle": {
-								"marginBottom": "24px",
 								"paddingBottom": "4",
 								"paddingLeft": "4",
 								"paddingRight": "4",
-								"paddingTop": "5"
+								"paddingTop": "4"
 							},
 							"indexed": true,
 							"layout": {
 								"paddingBottom": 2,
 								"paddingLeft": 2,
 								"paddingRight": 2,
-								"paddingTop": 4
+								"paddingTop": 2
 							},
 							"name": "Header Container"
 						},
@@ -42,9 +38,7 @@
 										"textColor": "colorNeutral0"
 									},
 									"indexed": true,
-									"layout": {
-										"widthType": "Fixed"
-									},
+									"layout": {"widthType": "Fixed"},
 									"name": "Search Container"
 								},
 								"id": "cb99f884-29fd-0921-3b57-cc4dd8f7cede",
@@ -63,8 +57,7 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {
-														},
+														"fragmentLink": {},
 														"text": {
 															"value_i18n": {
 																"en_US": "Search Results"
@@ -83,21 +76,69 @@
 									},
 									{
 										"definition": {
-											"cssClasses": [
-												"learn-search"
-											],
+											"cssClasses": ["learn-search"],
 											"fragmentStyle": {
+												"marginBottom": "24px",
 												"marginTop": "24px"
 											},
 											"widgetInstance": {
 												"widgetConfig": {
-													"destination": "/search",
-													"searchScope": "this-site"
+													"searchScope": "this-site",
+													"destination": "/search"
 												},
 												"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
 											}
 										},
 										"id": "456d5c0d-b28e-3f95-8139-ae1e48230c5d",
+										"type": "Widget"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginTop": "-25px",
+								"textAlign": "center"
+							},
+							"indexed": true,
+							"layout": {},
+							"name": "Tabs Container"
+						},
+						"id": "0cf3f6d4-5c95-d78f-c94a-8a1cab615128",
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {"maxWidth": "700px"},
+									"indexed": true,
+									"layout": {"widthType": "Fixed"}
+								},
+								"id": "445dc07f-7102-6437-bce7-c5b5ff6f8dcc",
+								"pageElements": [
+									{
+										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] {\n.tab-list {\n\t  display: flex;\n\t\tborder-radius: 99px;\n    background: var(--Neutral-01, #F7F7F8);\n    height: 52px;\n\t\talign-items:center;\n\t\tpadding: 4px 6px;\n\t}\n\t\n\t.facet-value{\n\t  flex:1;\n\t}\n\t\n\t.facet-term-selected {\n\t  width: 100%;\n    text-align: center;\n\t\tborder-radius: 99px;\n    background: var(--Action-Primary-Active-Lighten, #E6EDFB);\n    padding: 8px;\n\t\topacity: 1;\n\t}\n\t\n\t.term-text {\n\t\tcolor: var(--Neutral-10, #282934);\n    font-size: 14px;\n    font-style: normal;\n    font-weight: 600;\n\t}\n\t\n\t.facet-term-unselected .term-text {\n\t\topacity: 0.8;\n\t}\n\t\n\t.term-count {\n\t   border-radius: 12px;\n     background: var(--Status-Info-Info, #2E5AAC);\n\t\t color: var(--Neutral-00, #FFF);\n\t\t padding: 2px 5px;\n\t\t font-size: 13px;\n\t}\n}",
+											"fragmentStyle": {
+												"textColor": "colorNeutral10"
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"vocabularyIds": "146867",
+													"displayStyle": "ddmTemplate_LEARN_SEARCH_FILTER_TABS",
+													"maxTerms": "10",
+													"frequencyThreshold": "1",
+													"frequenciesVisible": "true",
+													"parameterName": "category",
+													"displayStyleGroupId": "32323",
+													"order": "count:desc"
+												},
+												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+											}
+										},
+										"id": "fb898e16-d12e-a0bf-263e-c6190f6482f9",
 										"type": "Widget"
 									}
 								],

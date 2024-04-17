@@ -288,14 +288,6 @@ public class AgentPortalK8sConfigMapModifier
 		return _configurationAdmin.getConfiguration(pid, StringPool.QUESTION);
 	}
 
-	private Map<String, String> _getMap(Map<String, String> map) {
-		if (map == null) {
-			map = new TreeMap<>();
-		}
-
-		return map;
-	}
-
 	private String _getVirtualInstancePid(
 		org.apache.felix.configurator.impl.model.Config config,
 		String virtualInstanceId) {
@@ -515,6 +507,14 @@ public class AgentPortalK8sConfigMapModifier
 		}
 
 		return Result.CREATED;
+	}
+
+	private Map<String, String> _getMap(Map<String, String> map) {
+		if (map == null) {
+			map = new TreeMap<>();
+		}
+
+		return map;
 	}
 
 	private void _processConfiguration(

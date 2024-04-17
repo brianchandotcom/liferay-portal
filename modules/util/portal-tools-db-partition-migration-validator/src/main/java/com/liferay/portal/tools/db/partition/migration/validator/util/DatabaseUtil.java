@@ -118,8 +118,8 @@ public class DatabaseUtil {
 			while (resultSet.next()) {
 				if (companyId > 0) {
 					throw new UnsupportedOperationException(
-						"Source multi company or target with DB Partitioning " +
-							"disabled environments are not supported");
+						"Database schema has to be a single company or " +
+							"database partitioning has to be enabled");
 				}
 
 				companyId = resultSet.getLong(1);

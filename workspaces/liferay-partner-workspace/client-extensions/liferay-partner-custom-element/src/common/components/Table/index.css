@@ -1,9 +1,9 @@
-.autofit-row {
-	width: min-content;
-}
-
 .autofit-col-expand {
 	min-inline-size: min-content;
+}
+
+.autofit-row {
+	width: min-content;
 }
 
 .lexicon-icon-order-arrow {

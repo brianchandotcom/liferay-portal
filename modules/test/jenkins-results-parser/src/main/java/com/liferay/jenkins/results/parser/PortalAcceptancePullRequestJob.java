@@ -64,7 +64,11 @@ public class PortalAcceptancePullRequestJob
 	protected Set<String> getRawBatchNames() {
 		Set<String> batchNames = super.getRawBatchNames();
 
-		if (_isRelevantTestSuite() && _isPortalWebOnly()) {
+		if (_areFilesInDirectoryOnly("modules")) {
+			batchNames.remove("semantic-versioning-jdk8");
+		}
+
+		if (_isRelevantTestSuite() && _areFilesInDirectoryOnly("portal-web")) {
 			String[] portalWebOnlyBatchNameMarkers = {
 				"compile-jsp", "functional", "portal-web", "source-format"
 			};
@@ -89,15 +93,15 @@ public class PortalAcceptancePullRequestJob
 		return batchNames;
 	}
 
-	private boolean _isPortalWebOnly() {
+	private boolean _areFilesInDirectoryOnly(String directoryName) {
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-		File portalWebDirectory = new File(
-			gitWorkingDirectory.getWorkingDirectory(), "portal-web");
+		File directory = new File(
+			gitWorkingDirectory.getWorkingDirectory(), directoryName);
 
 		for (File modifiedFile : gitWorkingDirectory.getModifiedFilesList()) {
 			if (!JenkinsResultsParserUtil.isFileInDirectory(
-					portalWebDirectory, modifiedFile)) {
+					directory, modifiedFile)) {
 
 				return false;
 			}

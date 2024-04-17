@@ -25,6 +25,8 @@ export {default as FDS_EVENT} from './utils/eventsDefinitions';
 // Frontend Data Set Constants
 
 export {
+	FDS_ARRAY_FIELD_NAME_DELIMITER,
+	FDS_ARRAY_FIELD_NAME_PARENT_SUFFIX,
 	FDS_NESTED_FIELD_NAME_DELIMITER,
 	FDS_NESTED_FIELD_NAME_PARENT_SUFFIX,
 } from './constants';

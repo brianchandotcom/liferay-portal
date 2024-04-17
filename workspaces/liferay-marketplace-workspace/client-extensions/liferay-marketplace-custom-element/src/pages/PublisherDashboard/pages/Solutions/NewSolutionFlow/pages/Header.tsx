@@ -22,10 +22,7 @@ const Header = () => {
 	const [editorValue, setEditorValue] = useState('');
 	const [radioValue, setRadioValue] = useState('');
 
-	const handleUpload = (files: File[]) => {
-		// eslint-disable-next-line no-console
-		console.log('files', files);
-	};
+	const handleUpload = (files: File[]) => <div>{files[0].name}</div>;
 
 	return (
 		<div className="mb-4 solutions-form-header">

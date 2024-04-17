@@ -2,13 +2,6 @@
 	width: 600px;
 
 	.solutions-form {
-		.rich-text-editor {
-			.ql-container {
-				border-radius: 4px;
-				height: 100px;
-			}
-		}
-
 		&-details {
 			.content-block {
 				background-color: #fbfcfe;
@@ -22,15 +15,6 @@
 					border: 1px solid #0053f0;
 					color: #0053f0;
 				}
-			}
-		}
-
-		&-header {
-			.video-player {
-				background-color: #f1f2f5;
-				border-radius: 8px;
-				height: 130px;
-				width: 230px;
 			}
 		}
 
@@ -58,6 +42,20 @@
 				height: 70px;
 				width: 70px;
 			}
+		}
+
+		.rich-text-editor {
+			.ql-container {
+				border-radius: 4px;
+				height: 100px;
+			}
+		}
+
+		.video-player {
+			background-color: #f1f2f5;
+			border-radius: 8px;
+			height: 130px;
+			width: 230px;
 		}
 	}
 }

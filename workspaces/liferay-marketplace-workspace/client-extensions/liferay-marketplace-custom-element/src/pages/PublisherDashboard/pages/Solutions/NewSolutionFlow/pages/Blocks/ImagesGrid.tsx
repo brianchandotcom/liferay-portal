@@ -8,13 +8,10 @@ import Form from '../../../../../../../components/MarketplaceForm';
 import {ACCEPT_FILE_TYPES} from '../../../../../../StorefrontPage/CustomizeAppStorefrontPage';
 
 const ImagesGrid = () => {
-	const handleUpload = (files: File[]) => {
-		// eslint-disable-next-line no-console
-		console.log('files', files);
-	};
+	const handleUpload = (files: File[]) => <div>{files[0].name}</div>;
 
 	return (
-		<div>
+		<>
 			<Form.Label className="mt-1 p-4" htmlFor="description">
 				Add up to 6 images
 			</Form.Label>
@@ -31,7 +28,7 @@ const ImagesGrid = () => {
 					title="Drag and drop to upload or"
 				/>
 			</div>
-		</div>
+		</>
 	);
 };
 

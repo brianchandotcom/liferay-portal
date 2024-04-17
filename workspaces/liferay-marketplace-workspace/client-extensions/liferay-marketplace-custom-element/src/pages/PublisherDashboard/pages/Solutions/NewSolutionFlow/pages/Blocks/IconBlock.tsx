@@ -13,7 +13,7 @@ const IconsBlock = () => {
 	const {observer, onOpenChange, open} = useModal();
 
 	return (
-		<div className="icons-block mb-2 p-4">
+		<div className="mb-2 p-4">
 			<Form.Label className="mt-1" htmlFor="description">
 				Add up to 8 icons
 			</Form.Label>

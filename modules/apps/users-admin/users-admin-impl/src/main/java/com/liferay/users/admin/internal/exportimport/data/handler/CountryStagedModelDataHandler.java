@@ -104,8 +104,8 @@ public class CountryStagedModelDataHandler
 		}
 		else {
 			importedCountry = _countryLocalService.updateCountry(
-				country.getCountryId(), country.getA2(), country.getA3(),
-				country.isActive(), country.isBillingAllowed(),
+				existingCountry.getCountryId(), country.getA2(),
+				country.getA3(), country.isActive(), country.isBillingAllowed(),
 				country.getIdd(), country.getName(), country.getNumber(),
 				country.getPosition(), country.isShippingAllowed(),
 				country.isSubjectToVAT());

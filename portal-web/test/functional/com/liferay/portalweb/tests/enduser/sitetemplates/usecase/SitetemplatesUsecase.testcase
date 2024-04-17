@@ -1283,6 +1283,39 @@ definition {
 				depth = 1,
 				pageNameList = "Home,1,2,Hello");
 		}
+
+		task ("And: The friendly URLs are correct") {
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = 1);
+
+			AssertTextEquals(
+				inputFieldId = "friendlyURL",
+				locator1 = "TextInput#TEXT_INPUT_ID",
+				value1 = "/${layoutId1}");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "new-site");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = 2);
+
+			AssertTextEquals(
+				inputFieldId = "friendlyURL",
+				locator1 = "TextInput#TEXT_INPUT_ID",
+				value1 = "/${layoutId2}");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "new-site");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Hello");
+
+			AssertTextEquals(
+				inputFieldId = "friendlyURL",
+				locator1 = "TextInput#TEXT_INPUT_ID",
+				value1 = "/hello");
+		}
 	}
 
 	@description = "This is a use case for LPS-107677. Additional info button should not be present on a newly imported site when it has no difference compared to the site template it was created from."

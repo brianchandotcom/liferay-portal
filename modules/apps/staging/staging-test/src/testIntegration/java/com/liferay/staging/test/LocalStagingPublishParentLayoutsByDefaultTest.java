@@ -427,6 +427,12 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 			parentLayout.getUuid(), liveGroup.getGroupId(),
 			parentLayout.isPrivateLayout());
 
+		Assert.assertNull(
+			liveParentLayout.getTypeSettingsProperties(
+			).getProperty(
+				"column-1"
+			));
+
 		liveChildLayout = LayoutLocalServiceUtil.fetchLayout(
 			childLayout.getUuid(), liveGroup.getGroupId(),
 			childLayout.isPrivateLayout());
@@ -437,12 +443,6 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 				"column-1"
 			).contains(
 				JournalContentPortletKeys.JOURNAL_CONTENT
-			));
-
-		Assert.assertNull(
-			liveParentLayout.getTypeSettingsProperties(
-			).getProperty(
-				"column-1"
 			));
 	}
 

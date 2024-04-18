@@ -44,7 +44,6 @@
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
-		"storybook": "liferay-npm-scripts storybook",
 		"test": "liferay-npm-scripts test"
 	},
 	"version": "3.0.85"

@@ -38,8 +38,8 @@ definition {
 
 	@summary = "Default summary"
 	macro viewMatchingCalendarIndexesInPartitionedDatabase() {
-		var baseSchemaIndex = SQL.executeSQLStatement(sqlStatement = "SHOW INDEX FROM lportal.Calendar;");
-		var partitionSchemaIndex = SQL.executeSQLStatement(sqlStatement = "SHOW INDEX FROM lpartition_42638.Calendar;");
+		var baseSchemaIndex = SQL.executeSQLStatement(sqlStatement = "SELECT index_name, GROUP_CONCAT(column_name ORDER BY seq_in_index) FROM information_schema.statistics WHERE index_schema = 'lportal' and table_name = 'Calendar' GROUP BY index_name;");
+		var partitionSchemaIndex = SQL.executeSQLStatement(sqlStatement = "SELECT index_name, GROUP_CONCAT(column_name ORDER BY seq_in_index) FROM information_schema.statistics WHERE index_schema = 'lpartition_42638' and table_name = 'Calendar' GROUP BY index_name;");
 
 		if (${baseSchemaIndex} == ${partitionSchemaIndex}) {
 			echo("Calendar Index matches: ${baseSchemaIndex}");

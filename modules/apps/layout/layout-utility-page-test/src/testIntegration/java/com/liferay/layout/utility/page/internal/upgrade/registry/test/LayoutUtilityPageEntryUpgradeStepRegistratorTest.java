@@ -6,6 +6,7 @@
 package com.liferay.layout.utility.page.internal.upgrade.registry.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
@@ -94,6 +95,13 @@ public class LayoutUtilityPageEntryUpgradeStepRegistratorTest {
 
 		layout = _layoutLocalService.updateLayout(layout);
 
+		Layout sameLayoutIdLayout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		sameLayoutIdLayout.setLayoutId(layout.getLayoutId());
+
+		sameLayoutIdLayout = _layoutLocalService.updateLayout(
+			sameLayoutIdLayout);
+
 		_runUpgrade();
 
 		Layout updatedDraftLayout = _layoutLocalService.fetchLayout(
@@ -105,6 +113,8 @@ public class LayoutUtilityPageEntryUpgradeStepRegistratorTest {
 		Layout updatedLayout = _layoutLocalService.fetchLayout(
 			layout.getPlid());
 
+		Assert.assertNotEquals(
+			updatedLayout.getLayoutId(), sameLayoutIdLayout.getLayoutId());
 		Assert.assertFalse(updatedLayout.isPrivateLayout());
 		Assert.assertTrue(updatedLayout.isTypeUtility());
 	}

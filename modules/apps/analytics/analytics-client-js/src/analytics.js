@@ -29,12 +29,7 @@ import {
 import {getContexts, setContexts} from './utils/contexts';
 import {normalizeEvent} from './utils/events';
 import hash from './utils/hash';
-import {
-	getItem,
-	getItemFromCookiesOrLocalStorage,
-	removeItem,
-	setItem,
-} from './utils/storage';
+import {getItem, removeItem, setItem} from './utils/storage';
 import {upgradeStorage} from './utils/storage_version';
 import {isValidEvent} from './utils/validators';
 
@@ -319,7 +314,7 @@ class Analytics {
 		const userId = getItem(STORAGE_KEY_USER_ID);
 
 		if (userId) {
-			setItem(STORAGE_KEY_USER_ID, userId, false);
+			this._setCookie(STORAGE_KEY_USER_ID, userId);
 		}
 	}
 
@@ -371,12 +366,12 @@ class Analytics {
 	 * @returns {Promise} A promise resolved with the stored or generated userId
 	 */
 	_getUserId() {
+		let userId = getItem(STORAGE_KEY_USER_ID);
+
 		const {emailAddressHashed} = this.config.identity;
-		const previousEmailAddressHashed = getItemFromCookiesOrLocalStorage(
+		const previousEmailAddressHashed = getItem(
 			STORAGE_KEY_PREV_EMAIL_ADDRESS_HASHED
 		);
-
-		let userId = getItemFromCookiesOrLocalStorage(STORAGE_KEY_USER_ID);
 
 		if (!userId) {
 			userId = this._generateUserId();
@@ -390,11 +385,7 @@ class Analytics {
 				userId = this._generateUserId();
 			}
 
-			setItem(
-				STORAGE_KEY_PREV_EMAIL_ADDRESS_HASHED,
-				emailAddressHashed,
-				false
-			);
+			setItem(STORAGE_KEY_PREV_EMAIL_ADDRESS_HASHED, emailAddressHashed);
 		}
 
 		return userId;
@@ -409,7 +400,8 @@ class Analytics {
 	_generateUserId() {
 		const userId = uuidv4();
 
-		setItem(STORAGE_KEY_USER_ID, userId, false);
+		setItem(STORAGE_KEY_USER_ID, userId);
+		this._setCookie(STORAGE_KEY_USER_ID, userId);
 
 		removeItem(STORAGE_KEY_IDENTITY);
 
@@ -439,13 +431,8 @@ class Analytics {
 			identity,
 			userId
 		);
-
-		const storedIdentityHash = getItemFromCookiesOrLocalStorage(
-			STORAGE_KEY_IDENTITY
-		);
-		const storedChannelId = getItemFromCookiesOrLocalStorage(
-			STORAGE_KEY_CHANNEL_ID
-		);
+		const storedIdentityHash = getItem(STORAGE_KEY_IDENTITY);
+		const storedChannelId = getItem(STORAGE_KEY_CHANNEL_ID);
 
 		if (
 			identityHash !== storedIdentityHash ||
@@ -453,8 +440,8 @@ class Analytics {
 		) {
 			const {emailAddressHashed} = identity;
 
-			setItem(STORAGE_KEY_CHANNEL_ID, channelId, false);
-			setItem(STORAGE_KEY_IDENTITY, identityHash, false);
+			setItem(STORAGE_KEY_CHANNEL_ID, channelId);
+			setItem(STORAGE_KEY_IDENTITY, identityHash);
 
 			instance[STORAGE_KEY_MESSAGE_IDENTITY].addItem({
 				channelId,
@@ -464,6 +451,39 @@ class Analytics {
 				userId,
 			});
 		}
+	}
+
+	/**
+	 * Sets a browser cookie
+	 * @protected
+	 */
+	_setCookie(key, data) {
+		const Liferay = window.Liferay;
+		const expires = new Date();
+
+		expires.setDate(expires.getDate() + 365);
+
+		// Checks if the client is being loaded with the Liferay global
+		// variable and if there is a Cookie method because the client
+		// is Liferay Portal agnostic and may have versions that do not
+		// yet have the Cookie method.
+
+		if (Liferay?.Util?.Cookie) {
+			Liferay.Util.Cookie.set(
+				key,
+				data,
+				Liferay.Util.Cookie.TYPES.PERSONALIZATION,
+				{
+					expires,
+					secure: true,
+				}
+			);
+		}
+		else {
+			document.cookie = `${key}=${data}; expires=${expires.toUTCString()}; path=/; Secure`;
+		}
+
+		return;
 	}
 
 	/**

@@ -13,7 +13,6 @@ import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.Cu
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CurrencyResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -47,8 +46,6 @@ public class CurrencyResourceImpl extends BaseCurrencyResourceImpl {
 
 	@Override
 	public void deleteCurrency(Long id) throws Exception {
-		_checkFeatureFlag();
-
 		_commerceCurrencyService.deleteCommerceCurrency(id);
 	}
 
@@ -56,8 +53,6 @@ public class CurrencyResourceImpl extends BaseCurrencyResourceImpl {
 	public Page<Currency> getCurrenciesPage(
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
-
-		_checkFeatureFlag();
 
 		return SearchUtil.search(
 			Collections.emptyMap(),
@@ -74,8 +69,6 @@ public class CurrencyResourceImpl extends BaseCurrencyResourceImpl {
 
 	@Override
 	public Currency getCurrency(Long id) throws Exception {
-		_checkFeatureFlag();
-
 		return _toCurrency(_commerceCurrencyService.getCommerceCurrency(id));
 	}
 
@@ -88,8 +81,6 @@ public class CurrencyResourceImpl extends BaseCurrencyResourceImpl {
 
 	@Override
 	public Currency patchCurrency(Long id, Currency currency) throws Exception {
-		_checkFeatureFlag();
-
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyService.getCommerceCurrency(id);
 
@@ -137,8 +128,6 @@ public class CurrencyResourceImpl extends BaseCurrencyResourceImpl {
 
 	@Override
 	public Currency postCurrency(Currency currency) throws Exception {
-		_checkFeatureFlag();
-
 		Map<Locale, String> formatPatternMap = LanguageUtils.getLocalizedMap(
 			currency.getFormatPattern());
 
@@ -162,12 +151,6 @@ public class CurrencyResourceImpl extends BaseCurrencyResourceImpl {
 				GetterUtil.getBoolean(currency.getPrimary()),
 				GetterUtil.getDouble(currency.getPriority()),
 				GetterUtil.getBoolean(currency.getActive())));
-	}
-
-	private void _checkFeatureFlag() throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled("COMMERCE-12170")) {
-			throw new UnsupportedOperationException();
-		}
 	}
 
 	private Currency _toCurrency(CommerceCurrency commerceCurrency)

@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.internal.spi.model.query.contributor.GroupIdQueryPreFilterContributor;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -45,6 +46,8 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 		).getGroupIds(
 			Mockito.anyLong(), Mockito.eq(false)
 		);
+
+		contributor = new GroupIdQueryPreFilterContributor();
 	}
 
 	@Test
@@ -82,6 +85,33 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 						booleanFilter.getMustNotBooleanClauses());
 					assertEmptyClauses(booleanFilter.getShouldBooleanClauses());
 				}));
+	}
+
+	@Test
+	public void testNumberOfTermsGreaterThanTheMaximumAllowed() {
+		long[] inactiveGroupIds = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+		addDocuments(inactiveGroupIds);
+
+		Mockito.doReturn(
+			ListUtil.fromArray(inactiveGroupIds)
+		).when(
+			groupLocalService
+		).getGroupIds(
+			Mockito.anyLong(), Mockito.eq(false)
+		);
+
+		setMaxTermsCount(10);
+
+		assertNumberOfMustNotBooleanClauses(1);
+
+		setMaxTermsCount(5);
+
+		assertNumberOfMustNotBooleanClauses(2);
+
+		setMaxTermsCount(3);
+
+		assertNumberOfMustNotBooleanClauses(4);
 	}
 
 	@Test
@@ -136,6 +166,22 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 		Assert.assertEquals(clauses.toString(), 0, clauses.size());
 	}
 
+	protected void assertNumberOfMustNotBooleanClauses(int expected) {
+		assertSearch(
+			indexingTestHelper -> indexingTestHelper.define(
+				searchContext -> {
+					searchContext.setGroupIds(new long[] {0});
+
+					BooleanFilter booleanFilter = (BooleanFilter)createFilter(
+						searchContext);
+
+					Assert.assertEquals(
+						expected,
+						booleanFilter.getMustNotBooleanClauses(
+						).size());
+				}));
+	}
+
 	protected void assertSearch(long scopeGroupId, String expected) {
 		assertSearch(
 			indexingTestHelper -> {
@@ -159,9 +205,6 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 	}
 
 	protected Filter createFilter(SearchContext searchContext) {
-		GroupIdQueryPreFilterContributor contributor =
-			new GroupIdQueryPreFilterContributor();
-
 		ReflectionTestUtil.setFieldValue(
 			contributor, "_groupLocalService", groupLocalService);
 
@@ -172,10 +215,16 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 		return booleanFilter;
 	}
 
+	protected void setMaxTermsCount(int maxTermsCount) {
+		ReflectionTestUtil.setFieldValue(
+			contributor, "_MAX_TERMS_COUNT", maxTermsCount);
+	}
+
 	protected static final long INACTIVE_GROUP_ID1 = 4L;
 
 	protected static final long INACTIVE_GROUP_ID2 = 5L;
 
+	protected GroupIdQueryPreFilterContributor contributor;
 	protected GroupLocalService groupLocalService = Mockito.mock(
 		GroupLocalService.class);
 

@@ -19,8 +19,10 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.structure.DeletedLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -54,6 +56,8 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.sites.kernel.util.Sites;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -267,6 +271,13 @@ public class ResetPrototypeMVCActionCommandTest {
 		LayoutStructure layoutStructure = _getLayoutStructure(
 			layout.getGroupId(), draftLayout, segmentsExperienceId);
 
+		List<DeletedLayoutStructureItem> deletedLayoutStructureItems =
+			layoutStructure.getDeletedLayoutStructureItems();
+
+		Assert.assertEquals(
+			deletedLayoutStructureItems.toString(), 0,
+			deletedLayoutStructureItems.size());
+
 		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
 			layoutStructure.getFragmentLayoutStructureItems();
 
@@ -274,22 +285,18 @@ public class ResetPrototypeMVCActionCommandTest {
 			fragmentLayoutStructureItems.toString(), 1,
 			fragmentLayoutStructureItems.size());
 
-		for (Map.Entry<Long, LayoutStructureItem> entry :
-				fragmentLayoutStructureItems.entrySet()) {
+		List<String> deletedItemIds = new ArrayList<>();
 
-			long fragmentEntryLinkId = entry.getKey();
+		for (LayoutStructureItem layoutStructureItem :
+				fragmentLayoutStructureItems.values()) {
 
-			_fragmentEntryLinkService.deleteFragmentEntryLink(
-				fragmentEntryLinkId);
+			ContentLayoutTestUtil.markItemForDeletionFromLayout(
+				layoutStructureItem.getItemId(), draftLayout, StringPool.BLANK);
 
-			LayoutStructureItem layoutStructureItem = entry.getValue();
-
-			layoutStructure.deleteLayoutStructureItem(
-				layoutStructureItem.getItemId());
+			deletedItemIds.add(layoutStructureItem.getItemId());
 		}
 
-		_updateLayoutPageTemplateStructureRel(
-			draftLayout, segmentsExperienceId, layoutStructure.toString());
+		draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
 
 		ContentLayoutTestUtil.publishLayout(
 			_layoutLocalService.getLayout(draftLayout.getPlid()), layout);
@@ -297,16 +304,25 @@ public class ResetPrototypeMVCActionCommandTest {
 		layout = _layoutLocalService.getLayout(layout.getPlid());
 
 		layoutStructure = _getLayoutStructure(
-			layout.getGroupId(), layout,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid()));
+			layout.getGroupId(), layout, segmentsExperienceId);
+
+		Assert.assertArrayEquals(
+			deletedItemIds.toArray(new String[0]),
+			TransformUtil.transformToArray(
+				layoutStructure.getDeletedLayoutStructureItems(),
+				deletedLayoutStructureItem ->
+					deletedLayoutStructureItem.getItemId(),
+				String.class));
 
 		fragmentLayoutStructureItems =
 			layoutStructure.getFragmentLayoutStructureItems();
 
-		Assert.assertEquals(
-			fragmentLayoutStructureItems.toString(), 0,
-			fragmentLayoutStructureItems.size());
+		Assert.assertArrayEquals(
+			deletedItemIds.toArray(new String[0]),
+			TransformUtil.transformToArray(
+				fragmentLayoutStructureItems.values(),
+				layoutStructureItem -> layoutStructureItem.getItemId(),
+				String.class));
 
 		return layout;
 	}
@@ -319,29 +335,6 @@ public class ResetPrototypeMVCActionCommandTest {
 			linkEnabled, linkEnabled);
 
 		Thread.sleep(2000);
-	}
-
-	private void _updateLayoutPageTemplateStructureRel(
-			Layout layout, long segmentsExperienceId, String data)
-		throws Exception {
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(), layout.getPlid());
-
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
-			_layoutPageTemplateStructureRelLocalService.
-				fetchLayoutPageTemplateStructureRel(
-					layoutPageTemplateStructure.
-						getLayoutPageTemplateStructureId(),
-					segmentsExperienceId);
-
-		_layoutPageTemplateStructureRelLocalService.
-			updateLayoutPageTemplateStructureRel(
-				layoutPageTemplateStructureRel.
-					getLayoutPageTemplateStructureId(),
-				segmentsExperienceId, data);
 	}
 
 	@Inject

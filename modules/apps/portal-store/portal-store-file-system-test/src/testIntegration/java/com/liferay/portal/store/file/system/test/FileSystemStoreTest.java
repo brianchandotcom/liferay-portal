@@ -23,6 +23,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.File;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -71,6 +75,47 @@ public class FileSystemStoreTest extends BaseStoreTestCase {
 
 	@Test
 	public void testDeleteDirectoryWithSlash() throws Exception {
+		_testDeleteDirectoryWithSlash();
+	}
+
+	@Test
+	public void testDeleteDirectoryWithSlashWithSymbolicLinkRootDir()
+		throws Exception {
+
+		Files.move(
+			Paths.get(_rootDir), Paths.get(_rootDir + "-target"),
+			StandardCopyOption.REPLACE_EXISTING);
+
+		Files.createSymbolicLink(
+			Paths.get(_rootDir), Paths.get(_rootDir + "-target"));
+
+		Assert.assertTrue(Files.isSymbolicLink(Paths.get(_rootDir)));
+
+		File targetRootDir = new File(_rootDir + "-target");
+
+		Assert.assertTrue(targetRootDir.exists());
+		Assert.assertTrue(targetRootDir.isDirectory());
+
+		File[] targetRootDirFiles = targetRootDir.listFiles();
+
+		Assert.assertTrue(targetRootDirFiles.length > 0);
+
+		try {
+			_testDeleteDirectoryWithSlash();
+		}
+		finally {
+			Files.move(
+				Paths.get(_rootDir + "-target"), Paths.get(_rootDir),
+				StandardCopyOption.REPLACE_EXISTING);
+		}
+	}
+
+	@Override
+	protected Store getStore() {
+		return _store;
+	}
+
+	private void _testDeleteDirectoryWithSlash() throws Exception {
 		File rootDirFile = new File(_rootDir);
 
 		Assert.assertTrue(rootDirFile.exists());
@@ -97,11 +142,6 @@ public class FileSystemStoreTest extends BaseStoreTestCase {
 		_store.deleteDirectory(companyId, repositoryId, StringPool.SLASH);
 
 		Assert.assertArrayEquals(originalFiles, rootDirFile.listFiles());
-	}
-
-	@Override
-	protected Store getStore() {
-		return _store;
 	}
 
 	private static Configuration _configuration;

@@ -9,12 +9,14 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {accountsPagesTest} from '../../fixtures/accountsPagesTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 
 export const test = mergeTests(
 	accountsPagesTest,
 	apiHelpersTest,
+	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-10855': true,
 	}),
@@ -34,33 +36,30 @@ test('LPD-18485 Update account contact information fields', async ({
 		type: 'business',
 	});
 
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
 	await accountsPage.goto();
 
-	try {
-		await (await accountsPage.accountsTableRowLink(account.name)).click();
-		await editAccountPage.contactLink.click();
-		await editAccountContactPage.contactInformationLink.click();
-		await editAccountContactInformationPage.updateContactInformation(
-			'facebookInput',
-			'jabberInput',
-			'skypeInput',
-			'smsInput',
-			'twitterInput'
-		);
+	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await editAccountPage.contactLink.click();
+	await editAccountContactPage.contactInformationLink.click();
+	await editAccountContactInformationPage.updateContactInformation(
+		'facebookInput',
+		'jabberInput',
+		'skypeInput',
+		'smsInput',
+		'twitterInput'
+	);
 
-		await expect(
-			page.getByText('Success:Your request completed successfully.')
-		).toBeVisible();
+	await expect(
+		page.getByText('Success:Your request completed successfully.')
+	).toBeVisible();
 
-		await page.reload();
+	await page.reload();
 
-		await expect(
-			editAccountContactInformationPage.facebookInput
-		).toHaveValue('facebookInput');
-	}
-	finally {
-		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
-	}
+	await expect(editAccountContactInformationPage.facebookInput).toHaveValue(
+		'facebookInput'
+	);
 });
 
 test('LPD-18484 Add account contact address', async ({
@@ -76,25 +75,22 @@ test('LPD-18484 Add account contact address', async ({
 		type: 'business',
 	});
 
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
 	await accountsPage.goto();
 
-	try {
-		await (await accountsPage.accountsTableRowLink(account.name)).click();
-		await editAccountPage.contactLink.click();
-		await accountContactAddressPage.addAddressesButton.click();
-		await editAccountContactAddressPage.updateAddress('address1', 'city');
+	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await editAccountPage.contactLink.click();
+	await accountContactAddressPage.addAddressesButton.click();
+	await editAccountContactAddressPage.updateAddress('address1', 'city');
 
-		await expect(
-			page.getByText('Success:Your request completed successfully.')
-		).toBeVisible();
+	await expect(
+		page.getByText('Success:Your request completed successfully.')
+	).toBeVisible();
 
-		await expect(
-			await editAccountContactAddressPage.addressDisplay('address1city')
-		).toBeVisible();
-	}
-	finally {
-		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
-	}
+	await expect(
+		await editAccountContactAddressPage.addressDisplay('address1city')
+	).toBeVisible();
 });
 
 test('LPD-18482 Add account phone', async ({
@@ -111,26 +107,21 @@ test('LPD-18482 Add account phone', async ({
 		type: 'business',
 	});
 
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
 	await accountsPage.goto();
 
-	try {
-		await (await accountsPage.accountsTableRowLink(account.name)).click();
-		await editAccountPage.contactLink.click();
-		await editAccountContactPage.contactInformationLink.click();
-		await editAccountContactInformationPage.addPhoneNumbersButton.click();
-		await editAccountPhonePage.updatePhoneNumber('111-111-1111');
+	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await editAccountPage.contactLink.click();
+	await editAccountContactPage.contactInformationLink.click();
+	await editAccountContactInformationPage.addPhoneNumbersButton.click();
+	await editAccountPhonePage.updatePhoneNumber('111-111-1111');
 
-		await expect(
-			page.getByText('Success:Your request completed successfully.')
-		).toBeVisible();
+	await expect(
+		page.getByText('Success:Your request completed successfully.')
+	).toBeVisible();
 
-		await expect(
-			page.getByRole('cell', {name: '111-111-1111'})
-		).toBeVisible();
-	}
-	finally {
-		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
-	}
+	await expect(page.getByRole('cell', {name: '111-111-1111'})).toBeVisible();
 });
 
 test('LPD-18483 Add account email address', async ({
@@ -147,28 +138,25 @@ test('LPD-18483 Add account email address', async ({
 		type: 'business',
 	});
 
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
 	await accountsPage.goto();
 
-	try {
-		await (await accountsPage.accountsTableRowLink(account.name)).click();
-		await editAccountPage.contactLink.click();
-		await editAccountContactPage.contactInformationLink.click();
-		await editAccountContactInformationPage.addEmailAddressesButton.click();
-		await editAccountEmailAddressPage.updateEmailAddress(
-			'emailAddress@liferay.com'
-		);
+	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await editAccountPage.contactLink.click();
+	await editAccountContactPage.contactInformationLink.click();
+	await editAccountContactInformationPage.addEmailAddressesButton.click();
+	await editAccountEmailAddressPage.updateEmailAddress(
+		'emailAddress@liferay.com'
+	);
 
-		await expect(
-			page.getByText('Success:Your request completed successfully.')
-		).toBeVisible();
+	await expect(
+		page.getByText('Success:Your request completed successfully.')
+	).toBeVisible();
 
-		await expect(
-			page.getByRole('cell', {name: 'emailAddress@liferay.com'})
-		).toBeVisible();
-	}
-	finally {
-		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
-	}
+	await expect(
+		page.getByRole('cell', {name: 'emailAddress@liferay.com'})
+	).toBeVisible();
 });
 
 test('LPD-18484 Add account website', async ({
@@ -185,24 +173,21 @@ test('LPD-18484 Add account website', async ({
 		type: 'business',
 	});
 
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
 	await accountsPage.goto();
 
-	try {
-		await (await accountsPage.accountsTableRowLink(account.name)).click();
-		await editAccountPage.contactLink.click();
-		await editAccountContactPage.contactInformationLink.click();
-		await editAccountContactInformationPage.addWebsitesButton.click();
-		await editAccountWebsitePage.updateWebsite('https://www.website.com');
+	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await editAccountPage.contactLink.click();
+	await editAccountContactPage.contactInformationLink.click();
+	await editAccountContactInformationPage.addWebsitesButton.click();
+	await editAccountWebsitePage.updateWebsite('https://www.website.com');
 
-		await expect(
-			page.getByText('Success:Your request completed successfully.')
-		).toBeVisible();
+	await expect(
+		page.getByText('Success:Your request completed successfully.')
+	).toBeVisible();
 
-		await expect(
-			page.getByRole('cell', {name: 'https://www.website.com'})
-		).toBeVisible();
-	}
-	finally {
-		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
-	}
+	await expect(
+		page.getByRole('cell', {name: 'https://www.website.com'})
+	).toBeVisible();
 });

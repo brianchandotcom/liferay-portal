@@ -9,9 +9,15 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 
-export const test = mergeTests(apiHelpersTest, commercePagesTest, loginTest());
+export const test = mergeTests(
+	apiHelpersTest,
+	commercePagesTest,
+	dataApiHelpersTest,
+	loginTest()
+);
 
 test('LPD-3272 Enable product versioning and verify a new product version is created after updating the sku', async ({
 	apiHelpers,
@@ -60,6 +66,5 @@ test('LPD-3272 Enable product versioning and verify a new product version is cre
 		1
 	);
 
-	await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(catalog.id);
 	await commerceCatalogSystemSettingsPage.toggleProductVersioning();
 });

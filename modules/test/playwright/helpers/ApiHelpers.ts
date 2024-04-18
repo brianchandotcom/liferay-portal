@@ -19,6 +19,7 @@ import {HeadlessChangeTrackingApiHelper} from './HeadlessChangeTrackingApiHelper
 import {HeadlessCommerceAdminCatalogApiHelper} from './HeadlessCommerceAdminCatalogApiHelper';
 import {HeadlessCommerceAdminChannelApiHelper} from './HeadlessCommerceAdminChannelApiHelper';
 import {HeadlessCommerceAdminInventoryApiHelper} from './HeadlessCommerceAdminInventoryApiHelper';
+import {HeadlessCommerceAdminOrderApiHelper} from './HeadlessCommerceAdminOrderApiHelper';
 import {HeadlessCommerceAdminPaymentApiHelper} from './HeadlessCommerceAdminPaymentApiHelper';
 import {HeadlessCommerceDeliveryCartApiHelper} from './HeadlessCommerceDeliveryCartApiHelper';
 import {HeadlessCommerceDeliveryCatalogApiHelper} from './HeadlessCommerceDeliveryCatalogApiHelper';
@@ -61,6 +62,7 @@ export class ApiHelpers {
 	readonly headlessCommerceAdminCatalog: HeadlessCommerceAdminCatalogApiHelper;
 	readonly headlessCommerceAdminChannel: HeadlessCommerceAdminChannelApiHelper;
 	readonly headlessCommerceAdminInventoryApiHelper: HeadlessCommerceAdminInventoryApiHelper;
+	readonly headlessCommerceAdminOrder: HeadlessCommerceAdminOrderApiHelper;
 	readonly headlessCommerceAdminPaymentApiHelper: HeadlessCommerceAdminPaymentApiHelper;
 	readonly headlessCommerceDeliveryCatalog: HeadlessCommerceDeliveryCatalogApiHelper;
 	readonly headlessCommerceDeliveryCart: HeadlessCommerceDeliveryCartApiHelper;
@@ -99,6 +101,8 @@ export class ApiHelpers {
 			new HeadlessCommerceAdminChannelApiHelper(this);
 		this.headlessCommerceAdminInventoryApiHelper =
 			new HeadlessCommerceAdminInventoryApiHelper(this);
+		this.headlessCommerceAdminOrder =
+			new HeadlessCommerceAdminOrderApiHelper(this);
 		this.headlessCommerceAdminPaymentApiHelper =
 			new HeadlessCommerceAdminPaymentApiHelper(this);
 		this.headlessCommerceDeliveryCatalog =
@@ -252,6 +256,22 @@ export class DataApiHelpers extends ApiHelpers {
 					);
 
 					break;
+				case 'optionCategory':
+					await this.headlessCommerceAdminCatalog.deleteOptionCategory(
+						item.id
+					);
+
+					break;
+				case 'order':
+					await this.headlessCommerceAdminOrder.deleteOrder(item.id);
+
+					break;
+				case 'payment':
+					await this.headlessCommerceAdminPaymentApiHelper.deletePayment(
+						item.id
+					);
+
+					break;
 				case 'product':
 					await this.headlessCommerceAdminCatalog.deleteProduct(
 						item.id
@@ -264,6 +284,18 @@ export class DataApiHelpers extends ApiHelpers {
 					break;
 				case 'skuUnitOfMeasure':
 					await this.headlessCommerceAdminCatalog.deleteSkuUnitOfMeasure(
+						item.id
+					);
+
+					break;
+				case 'specification':
+					await this.headlessCommerceAdminCatalog.deleteSpecification(
+						item.id
+					);
+
+					break;
+				case 'warehouse':
+					await this.headlessCommerceAdminInventoryApiHelper.deleteWarehouse(
 						item.id
 					);
 

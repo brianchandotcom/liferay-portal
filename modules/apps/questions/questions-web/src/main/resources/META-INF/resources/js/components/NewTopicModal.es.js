@@ -91,6 +91,13 @@ export default function NewTopicModal({
 		}
 	};
 
+	const handleSubmit = (event) => {
+		event.preventDefault();
+
+		createTopic();
+		close();
+	};
+
 	const {observer, onClose: close} = useModal({
 		onClose,
 	});
@@ -103,8 +110,8 @@ export default function NewTopicModal({
 						{Liferay.Language.get('new-topic')}
 					</ClayModal.Header>
 
-					<ClayModal.Body>
-						<ClayForm>
+					<ClayForm onSubmit={handleSubmit}>
+						<ClayModal.Body>
 							<ClayForm.Group className="form-group-sm">
 								<label htmlFor="basicInput">
 									{Liferay.Language.get('topic-name')}
@@ -133,33 +140,35 @@ export default function NewTopicModal({
 									ref={topicDescriptionRef}
 								/>
 							</ClayForm.Group>
-						</ClayForm>
-					</ClayModal.Body>
+						</ClayModal.Body>
 
-					<ClayModal.Footer
-						last={
-							<ClayButton.Group spaced>
-								<ClayButton
-									aria-label={Liferay.Language.get('cancel')}
-									displayType="secondary"
-									onClick={close}
-								>
-									{Liferay.Language.get('cancel')}
-								</ClayButton>
+						<ClayModal.Footer
+							last={
+								<ClayButton.Group spaced>
+									<ClayButton
+										aria-label={Liferay.Language.get(
+											'cancel'
+										)}
+										displayType="secondary"
+										onClick={close}
+									>
+										{Liferay.Language.get('cancel')}
+									</ClayButton>
 
-								<ClayButton
-									aria-label={Liferay.Language.get('create')}
-									displayType="primary"
-									onClick={() => {
-										createTopic();
-										close();
-									}}
-								>
-									{Liferay.Language.get('create')}
-								</ClayButton>
-							</ClayButton.Group>
-						}
-					/>
+									<ClayButton
+										aria-label={Liferay.Language.get(
+											'create'
+										)}
+										displayType="primary"
+										onClick={handleSubmit}
+										type="submit"
+									>
+										{Liferay.Language.get('create')}
+									</ClayButton>
+								</ClayButton.Group>
+							}
+						/>
+					</ClayForm>
 				</ClayModal>
 			)}
 		</>

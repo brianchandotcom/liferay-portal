@@ -6,7 +6,6 @@
 import {
 	getItem,
 	getStorageSizeInKb,
-	removeItem,
 	setItem,
 	verifyStorageLimitForKey,
 } from '../../src/utils/storage';
@@ -15,14 +14,14 @@ const STORAGE_KEY = 'some-key';
 
 describe('Storage Utils', () => {
 	beforeEach(() => {
-		removeItem(STORAGE_KEY);
+		localStorage.removeItem(STORAGE_KEY);
 	});
 
 	describe('getItem', () => {
-		it('Retrieves an item from Cookie', () => {
+		it('Retrieves an item from localStorage', () => {
 			const expected = {name: 'foo'};
 
-			setItem(STORAGE_KEY, expected);
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(expected));
 
 			expect(getItem(STORAGE_KEY)).toEqual(expected);
 		});
@@ -31,23 +30,24 @@ describe('Storage Utils', () => {
 	describe('getStorageSizeInKb', () => {
 		it('Calculates the kilobyte size of a string', () => {
 			const expected = 0.0234375;
-
 			expect(getStorageSizeInKb('0123456789')).toEqual(expected);
 		});
 	});
 
 	describe('setItem', () => {
-		it('Sets an item in Cookie', () => {
+		it('Sets an item in localStorage', () => {
 			const expected = {name: 'foo'};
 
 			setItem(STORAGE_KEY, expected);
 
-			expect(getItem(STORAGE_KEY)).toEqual(expected);
+			expect(JSON.parse(localStorage.getItem(STORAGE_KEY))).toEqual(
+				expected
+			);
 		});
 	});
 
 	describe('verifyStorageLimitForKey', () => {
-		it('Removes items in a Cookie queue if the storage limit is exceeded', async () => {
+		it('Removes items in a localStorage queue if the storage limit is exceeded', async () => {
 			const queue = [{name: 'foo'}, {name: 'bar'}, {name: 'baz'}];
 			const mockStorageLimit = 0.05;
 
@@ -60,7 +60,7 @@ describe('Storage Utils', () => {
 			);
 		});
 
-		it('Does not change items in a Cookie queue if the storage limit is not exceeded', async () => {
+		it('Does not change items in a localStorage queue if the storage limit is not exceeded', async () => {
 			const queue = [{name: 'foo'}, {name: 'bar'}, {name: 'baz'}];
 			const mockStorageLimit = 100;
 

@@ -61,6 +61,22 @@ describe('BaseCreateMessageQueue', () => {
 	it('On Flush', async () => {
 		expect(baseCreateMessageQueue.getItems().length).toEqual(0);
 
+		setItem(STORAGE_KEY_CONTEXTS, [['context', {}]]);
+
+		await baseCreateMessageQueue.addItem(
+			getDummyEvent(1, {
+				contextHash: 'context',
+			})
+		);
+
+		const messages = await Promise.all(baseCreateMessageQueue.onFlush());
+
+		expect(messages.length).toEqual(1);
+	});
+
+	it('On Flush should return messages grouped by contexts', async () => {
+		expect(baseCreateMessageQueue.getItems().length).toEqual(0);
+
 		setItem(STORAGE_KEY_CONTEXTS, [
 			['context', {}],
 			['context2', {}],
@@ -78,23 +94,8 @@ describe('BaseCreateMessageQueue', () => {
 			})
 		);
 
-		expect(baseCreateMessageQueue.getItems()).toEqual([
-			{
-				applicationId: 'test',
-				contextHash: 'context',
-				eventId: '1',
-				properties: {a: 1, b: 2, c: 3},
-			},
-			{
-				applicationId: 'test',
-				contextHash: 'context2',
-				eventId: '2',
-				properties: {a: 1, b: 2, c: 3},
-			},
-		]);
+		const messages = await Promise.all(baseCreateMessageQueue.onFlush());
 
-		await Promise.all(baseCreateMessageQueue.onFlush());
-
-		expect(baseCreateMessageQueue.getItems().length).toEqual(0);
+		expect(messages.length).toEqual(2);
 	});
 });

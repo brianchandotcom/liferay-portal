@@ -447,11 +447,11 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 				layout.getCompanyId(), themeId);
 
 			_layoutLocalService.updateLookAndFeel(
-				groupId, true, draftLayout.getLayoutId(), themeId,
+				groupId, false, draftLayout.getLayoutId(), themeId,
 				colorSchemeId, StringPool.BLANK);
 
 			layout = _layoutLocalService.updateLookAndFeel(
-				groupId, true, layout.getLayoutId(), themeId, colorSchemeId,
+				groupId, false, layout.getLayoutId(), themeId, colorSchemeId,
 				StringPool.BLANK);
 		}
 

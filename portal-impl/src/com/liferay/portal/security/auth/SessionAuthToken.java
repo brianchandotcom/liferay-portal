@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -98,7 +99,11 @@ public class SessionAuthToken implements AuthToken {
 			return;
 		}
 
+		boolean skipMerge = MergeLayoutPrototypesThreadLocal.isSkipMerge();
+
 		try {
+			MergeLayoutPrototypesThreadLocal.setSkipMerge(true);
+
 			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 			LayoutTypePortlet layoutTypePortlet =
@@ -114,6 +119,9 @@ public class SessionAuthToken implements AuthToken {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
+		}
+		finally {
+			MergeLayoutPrototypesThreadLocal.setSkipMerge(skipMerge);
 		}
 
 		liferayPortletURL.setParameter(

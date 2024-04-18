@@ -956,12 +956,12 @@
 					"conditionExpression": "",
 					"description": "",
 					"errorMessage": {
-						"en_US": "Unable to trigger Jethr0EtcSpringBootJobAdd"
+						"en_US": "Unable to trigger Jethr0EtcSpringBootAddJob"
 					},
 					"label": {
-						"en_US": "Jethr0 Etc Spring Boot Job Add"
+						"en_US": "Jethr0 Etc Spring Boot Add Job"
 					},
-					"name": "Jethr0EtcSpringBootJobAdd",
+					"name": "Jethr0EtcSpringBootAddJob",
 					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-object-actions",
 					"objectActionTriggerKey": "standalone",
 					"parameters": {
@@ -972,9 +972,9 @@
 					"conditionExpression": "",
 					"description": "",
 					"label": {
-						"en_US": "Jethr0 Etc Spring Boot Job Delete"
+						"en_US": "Jethr0 Etc Spring Boot Delete Job"
 					},
-					"name": "Jethr0EtcSpringBootJobDelete",
+					"name": "Jethr0EtcSpringBootDeleteJob",
 					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-object-actions",
 					"objectActionTriggerKey": "onAfterDelete",
 					"parameters": {
@@ -985,9 +985,9 @@
 					"conditionExpression": "",
 					"description": "",
 					"label": {
-						"en_US": "Jethr0 Etc Spring Boot Job Update"
+						"en_US": "Jethr0 Etc Spring Boot Update Job"
 					},
-					"name": "Jethr0EtcSpringBootJobUpdate",
+					"name": "Jethr0EtcSpringBootUpdateJob",
 					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-object-actions",
 					"objectActionTriggerKey": "onAfterUpdate",
 					"parameters": {
@@ -1137,12 +1137,12 @@
 					"conditionExpression": "",
 					"description": "",
 					"errorMessage": {
-						"en_US": "Unable to trigger Jethr0EtcSpringBootRoutineAdd"
+						"en_US": "Unable to trigger Jethr0EtcSpringBootAddRoutine"
 					},
 					"label": {
-						"en_US": "Jethr0 Etc Spring Boot Routine Add"
+						"en_US": "Jethr0 Etc Spring Boot Add Routine"
 					},
-					"name": "Jethr0EtcSpringBootRoutineAdd",
+					"name": "Jethr0EtcSpringBootAddRoutine",
 					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-object-actions",
 					"objectActionTriggerKey": "standalone",
 					"parameters": {
@@ -1153,9 +1153,9 @@
 					"conditionExpression": "",
 					"description": "",
 					"label": {
-						"en_US": "Jethr0 Etc Spring Boot Routine Delete"
+						"en_US": "Jethr0 Etc Spring Boot Delete Routine"
 					},
-					"name": "Jethr0EtcSpringBootRoutineDelete",
+					"name": "Jethr0EtcSpringBootDeleteRoutine",
 					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-object-actions",
 					"objectActionTriggerKey": "onAfterDelete",
 					"parameters": {
@@ -1166,9 +1166,9 @@
 					"conditionExpression": "",
 					"description": "",
 					"label": {
-						"en_US": "Jethr0 Etc Spring Boot Routine Update"
+						"en_US": "Jethr0 Etc Spring Boot Update Routine"
 					},
-					"name": "Jethr0EtcSpringBootRoutineUpdate",
+					"name": "Jethr0EtcSpringBootUpdateRoutine",
 					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-object-actions",
 					"objectActionTriggerKey": "onAfterUpdate",
 					"parameters": {

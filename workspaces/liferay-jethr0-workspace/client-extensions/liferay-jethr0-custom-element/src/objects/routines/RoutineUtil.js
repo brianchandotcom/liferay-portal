@@ -25,7 +25,7 @@ export async function createRoutine({data, redirect}) {
 	await liferayRequest({
 		headers,
 		method: 'PUT',
-		urlPath: `/o/c/routines/${routinesResult.id}/object-actions/Jethr0EtcSpringBootRoutineAdd`,
+		urlPath: `/o/c/routines/${routinesResult.id}/object-actions/Jethr0EtcSpringBootAddRoutine`,
 	});
 
 	if (routinesResult && redirect) {

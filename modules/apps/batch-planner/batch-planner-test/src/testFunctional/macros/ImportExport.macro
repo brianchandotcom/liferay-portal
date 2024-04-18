@@ -463,6 +463,17 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro resetDefaultValues() {
+		if (IsElementPresent(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS")) {
+			Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Reset Default Values");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	@summary = "Default summary"
 	macro saveAsTemplate(templateName = null) {
 		WaitForElementPresent(
 			key_text = "Save as Template",
@@ -505,6 +516,17 @@ definition {
 		Button.click(button = "Start Import");
 
 		WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+	}
+
+	@summary = "Default summary"
+	macro tearDownSettingsConfigurations() {
+		StagingNavigator.openToConfigInInstanceSettings(portlet = "Export/Import, Staging");
+
+		ImportExport.resetDefaultValues();
+
+		StagingNavigator.openToConfigInSystemSettings(portlet = "Export/Import, Staging");
+
+		ImportExport.resetDefaultValues();
 	}
 
 	@summary = "Default summary"

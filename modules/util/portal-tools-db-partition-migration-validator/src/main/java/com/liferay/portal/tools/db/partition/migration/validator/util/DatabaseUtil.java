@@ -51,11 +51,11 @@ public class DatabaseUtil {
 				schemaName;
 		}
 
-		String simplifiedURL = jdbcURL.substring(0, paramsIndex);
+		String jdbcURLBase = jdbcURL.substring(0, paramsIndex);
 
 		return StringBundler.concat(
-			jdbcURL.substring(0, simplifiedURL.lastIndexOf("/") + 1),
-			schemaName, jdbcURL.substring(paramsIndex));
+			jdbcURL.substring(0, jdbcURLBase.lastIndexOf("/") + 1), schemaName,
+			jdbcURL.substring(paramsIndex));
 	}
 
 	private static List<Company> _getCompanies(Connection connection)

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.utility.page.create.account.test;
+package com.liferay.layout.utility.page.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRendererRegistryUtil;
@@ -23,7 +23,7 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlags("LPD-6378")
 @RunWith(Arquillian.class)
-public class CreateAccountLayoutUtilityPageEntryViewRendererTest {
+public class LayoutUtilityPageEntryViewRendererRegistryUtilTest {
 
 	@ClassRule
 	@Rule
@@ -31,11 +31,19 @@ public class CreateAccountLayoutUtilityPageEntryViewRendererTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testLayoutUtilityPageEntryViewRendererHasBeenRegistered() {
+	public void testGetLayoutUtilityPageEntryViewRenderer() {
 		Assert.assertNotNull(
 			LayoutUtilityPageEntryViewRendererRegistryUtil.
 				getLayoutUtilityPageEntryViewRenderer(
 					LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT));
+		Assert.assertNotNull(
+			LayoutUtilityPageEntryViewRendererRegistryUtil.
+				getLayoutUtilityPageEntryViewRenderer(
+					LayoutUtilityPageEntryConstants.TYPE_LOGIN));
+		Assert.assertNotNull(
+			LayoutUtilityPageEntryViewRendererRegistryUtil.
+				getLayoutUtilityPageEntryViewRenderer(
+					LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD));
 	}
 
 }

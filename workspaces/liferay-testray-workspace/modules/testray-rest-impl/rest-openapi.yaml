@@ -116,6 +116,12 @@ components:
                 testrayTeamName:
                     type: string
             type: object
+        TestrayTestFlow:
+            properties:
+                testraySubtasksAmount:
+                    format: int32
+                    type: integer
+            type: object
         TestrayTestSuite:
             properties:
                 caseAmount:
@@ -455,3 +461,23 @@ paths:
                     description:
                         Invalid answer provided
             tags: ["TestrayTestSuite"]
+    "/testray-testflow/{testrayTaskId}":
+        post:
+            operationId: postTestrayTestFlow
+            parameters:
+                - in: path
+                  name: testrayTaskId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TestrayTestFlow"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TestrayTestFlow"
+            tags: ["TestrayTestFlow"]

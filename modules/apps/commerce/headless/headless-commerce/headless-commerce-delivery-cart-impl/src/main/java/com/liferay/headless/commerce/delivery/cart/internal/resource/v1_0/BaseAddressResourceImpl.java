@@ -9,7 +9,6 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Address;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.AddressResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -17,8 +16,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
@@ -192,13 +189,6 @@ public abstract class BaseAddressResourceImpl implements AddressResource {
 
 	public void setContextHttpServletRequest(
 		HttpServletRequest contextHttpServletRequest) {
-
-		if ((contextHttpServletRequest != null) &&
-			(contextHttpServletRequest.getAttribute(WebKeys.CTX) == null)) {
-
-			contextHttpServletRequest.setAttribute(
-				WebKeys.CTX, ServletContextPool.get(StringPool.BLANK));
-		}
 
 		this.contextHttpServletRequest = contextHttpServletRequest;
 	}

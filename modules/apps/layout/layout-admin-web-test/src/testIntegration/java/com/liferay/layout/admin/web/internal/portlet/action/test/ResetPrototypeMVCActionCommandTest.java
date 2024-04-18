@@ -89,7 +89,7 @@ public class ResetPrototypeMVCActionCommandTest {
 		_layoutSetPrototypeGroup = _layoutSetPrototype.getGroup();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId());
+			_layoutSetPrototypeGroup.getGroupId());
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class ResetPrototypeMVCActionCommandTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
-				_group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
+				_layoutSetPrototypeGroup.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
 				segmentsExperienceId, layout.getPlid(), fragmentEntry.getCss(),
 				fragmentEntry.getHtml(), fragmentEntry.getJs(),
 				fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
@@ -236,12 +236,13 @@ public class ResetPrototypeMVCActionCommandTest {
 	private FragmentEntry _addFragmentEntry() throws Exception {
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(),
+				_layoutSetPrototypeGroup.getGroupId(),
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				_serviceContext);
 
 		return _fragmentEntryLocalService.addFragmentEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _layoutSetPrototypeGroup.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(), null,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			"Fragment Entry HTML", StringPool.BLANK, false, null, null, 0,
@@ -255,7 +256,7 @@ public class ResetPrototypeMVCActionCommandTest {
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomString(), null, null,
 			LayoutConstants.TYPE_CONTENT, false, StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext());
+			_serviceContext);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 

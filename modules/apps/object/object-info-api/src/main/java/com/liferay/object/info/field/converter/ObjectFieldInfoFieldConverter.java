@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.web.internal.info.field.converter;
+package com.liferay.object.info.field.converter;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.FileInfoFieldType;
@@ -17,6 +17,7 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
@@ -32,7 +33,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.web.internal.configuration.util.ObjectConfigurationUtil;
 import com.liferay.object.web.internal.util.ObjectFieldDBTypeUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
@@ -61,6 +61,7 @@ public class ObjectFieldInfoFieldConverter {
 
 	public ObjectFieldInfoFieldConverter(
 		ListTypeEntryLocalService listTypeEntryLocalService,
+		ObjectConfiguration objectConfiguration,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectFieldSettingLocalService objectFieldSettingLocalService,
@@ -70,6 +71,7 @@ public class ObjectFieldInfoFieldConverter {
 		UserLocalService userLocalService) {
 
 		_listTypeEntryLocalService = listTypeEntryLocalService;
+		_objectConfiguration = objectConfiguration;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectFieldSettingLocalService = objectFieldSettingLocalService;
@@ -319,7 +321,7 @@ public class ObjectFieldInfoFieldConverter {
 				objectField.getObjectFieldId(), "maximumFileSize");
 
 		long maximumFileSizeForGuestUsers =
-			ObjectConfigurationUtil.maximumFileSizeForGuestUsers();
+			_objectConfiguration.maximumFileSizeForGuestUsers();
 
 		if (objectFieldSetting == null) {
 			return maximumFileSizeForGuestUsers;
@@ -450,6 +452,7 @@ public class ObjectFieldInfoFieldConverter {
 		ObjectFieldInfoFieldConverter.class);
 
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
+	private final ObjectConfiguration _objectConfiguration;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectFieldSettingLocalService

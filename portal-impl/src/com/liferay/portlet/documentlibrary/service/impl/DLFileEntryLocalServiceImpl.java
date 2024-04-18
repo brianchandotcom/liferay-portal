@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
+import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.InvalidLockException;
 import com.liferay.portal.kernel.lock.Lock;
@@ -246,9 +247,20 @@ public class DLFileEntryLocalServiceImpl
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), folderId,
 			fileEntryTypeId);
 
+		String actualExtension = null;
+
+		if (inputStream instanceof ByteArrayFileInputStream) {
+			ByteArrayFileInputStream inputByteArrayFileInputStream =
+				(ByteArrayFileInputStream)inputStream;
+
+			File inputFile = inputByteArrayFileInputStream.getFile();
+
+			actualExtension = FileUtil.getExtension(inputFile.getName());
+		}
+
 		_validateFile(
 			groupId, folderId, 0, fileEntryTypeId, fileName, extension, title,
-			displayDate, expirationDate);
+			displayDate, expirationDate, actualExtension);
 
 		long fileEntryId = counterLocalService.increment();
 
@@ -3671,10 +3683,21 @@ public class DLFileEntryLocalServiceImpl
 
 			Date date = new Date();
 
+			String actualExtension = null;
+
+			if (inputStream instanceof ByteArrayFileInputStream) {
+				ByteArrayFileInputStream inputByteArrayFileInputStream =
+					(ByteArrayFileInputStream)inputStream;
+
+				File inputFile = inputByteArrayFileInputStream.getFile();
+
+				actualExtension = FileUtil.getExtension(inputFile.getName());
+			}
+
 			_validateFile(
 				dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
 				dlFileEntry.getFileEntryId(), fileEntryTypeId, fileName,
-				extension, title, displayDate, expirationDate);
+				extension, title, displayDate, expirationDate, actualExtension);
 
 			// File version
 
@@ -3837,7 +3860,7 @@ public class DLFileEntryLocalServiceImpl
 	private void _validateFile(
 			long groupId, long folderId, long fileEntryId, long fileEntryTypeId,
 			String fileName, String extension, String title, Date displayDate,
-			Date expirationDate)
+			Date expirationDate, String actualExtension)
 		throws PortalException {
 
 		DLValidatorUtil.validateFileName(fileName);
@@ -3849,7 +3872,7 @@ public class DLFileEntryLocalServiceImpl
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_SYSTEM) ||
 			Validator.isNotNull(extension)) {
 
-			_validateFileExtension(fileName, extension);
+			_validateFileExtension(fileName, extension, actualExtension);
 		}
 
 		validateFile(groupId, folderId, fileEntryId, fileName, title);
@@ -3891,7 +3914,8 @@ public class DLFileEntryLocalServiceImpl
 				folderId));
 	}
 
-	private void _validateFileExtension(String fileName, String extension)
+	private void _validateFileExtension(
+			String fileName, String extension, String actualExtension)
 		throws PortalException {
 
 		if (!DLAppHelperThreadLocal.isEnabled()) {
@@ -3902,6 +3926,15 @@ public class DLFileEntryLocalServiceImpl
 
 		if (Validator.isNull(extension)) {
 			return;
+		}
+
+		if (Validator.isNotNull(actualExtension) &&
+			!extension.equals(actualExtension)) {
+
+			throw new FileExtensionException.MismatchExtension(
+				StringBundler.concat(
+					"Extension ", extension, " of file ", fileName,
+					" should match original exception ", actualExtension));
 		}
 
 		int maxLength = ModelHintsUtil.getMaxLength(

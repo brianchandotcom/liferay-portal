@@ -82,7 +82,7 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 	1. Go to `liferay-sample-workspace/client-extensions/liferay-sample-etc-cron` and type `./gradlew bootRun` to start Spring Boot.
 
-- *liferay-sample-etc-frontend-3*
+- *liferay-sample-etc-frontend*
 
 	Share code through an import map client extension.
 

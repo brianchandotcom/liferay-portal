@@ -191,6 +191,8 @@ definition {
 	macro gotoSidebarTab(tabName = null) {
 		var key_tabName = ${tabName};
 
+		WaitForVisible(locator1 = "Sidebar#TAB");
+
 		if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB")) {
 			Click(locator1 = "Sidebar#TAB");
 		}

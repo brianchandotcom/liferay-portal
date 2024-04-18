@@ -12,12 +12,7 @@ import {
 	STORAGE_KEY_IDENTITY,
 	STORAGE_KEY_USER_ID,
 } from '../src/utils/constants';
-import {
-	getItem,
-	getItemFromCookiesOrLocalStorage,
-	removeItem,
-	setItem,
-} from '../src/utils/storage';
+import {getItem} from '../src/utils/storage';
 import {sendDummyEvents, trackDummyEvents, wait} from './helpers';
 
 const ANALYTICS_IDENTITY = {email: 'foo@bar.com'};
@@ -30,32 +25,6 @@ const INITIAL_CONFIG = {
 	flushInterval: FLUSH_INTERVAL,
 };
 
-const localStorageMock = (function () {
-	const store = {};
-
-	return {
-		getItem(key) {
-			return store[key];
-		},
-		removeItem(key) {
-			delete localStorage[key];
-		},
-		setItem(key, value) {
-			store[key] = value;
-		},
-	};
-})();
-
-Object.defineProperty(window, 'localStorage', {value: localStorageMock});
-
-jest.mock('../src/utils/storage', () => ({
-	...jest.requireActual('../src/utils/storage'),
-	getItem: jest.fn(),
-	getItemFromCookiesOrLocalStorage: jest.fn(),
-	removeItem: jest.fn(),
-	setItem: jest.fn(),
-}));
-
 describe('Analytics', () => {
 	let Analytics;
 
@@ -64,15 +33,8 @@ describe('Analytics', () => {
 
 		Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
-		getItem.mockImplementation(localStorageMock.getItem);
-		setItem.mockImplementation(localStorageMock.setItem);
-		getItemFromCookiesOrLocalStorage.mockImplementation(
-			localStorageMock.getItem
-		);
-		removeItem.mockImplementation(localStorageMock.removeItem);
-
-		localStorageMock.removeItem(STORAGE_KEY_EVENTS);
-		localStorageMock.removeItem(STORAGE_KEY_USER_ID);
+		localStorage.removeItem(STORAGE_KEY_EVENTS);
+		localStorage.removeItem(STORAGE_KEY_USER_ID);
 	});
 
 	afterEach(() => {
@@ -336,7 +298,7 @@ describe('Analytics', () => {
 			]);
 		});
 
-		it('persists the given events to the Cookie', async () => {
+		it('persists the given events to the LocalStorage', async () => {
 			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 			const eventsNumber = 5;
 
@@ -495,7 +457,7 @@ describe('Analytics', () => {
 			]);
 		});
 
-		it('persists the given events to the Cookie', async () => {
+		it('persists the given events to the LocalStorage', async () => {
 			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 			const eventsNumber = 5;
 

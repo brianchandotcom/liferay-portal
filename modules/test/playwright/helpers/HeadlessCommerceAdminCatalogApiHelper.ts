@@ -138,6 +138,18 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
+	async getOptionCategories() {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/optionCategories`
+		);
+	}
+
+	async getOptions() {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/options`
+		);
+	}
+
 	async getProduct(productId: number) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}?nestedFields=skus`
@@ -159,6 +171,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 	async getSpecification(specificationId: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/specifications/${specificationId}`
+		);
+	}
+
+	async getSpecifications() {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/specifications`
 		);
 	}
 
@@ -264,6 +282,13 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 			}
 		);
 
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: postOptionCategory.id,
+				type: 'optionCategory',
+			});
+		}
+
 		return postOptionCategory;
 	}
 
@@ -355,8 +380,10 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		specificationTitle: string = 'Specification' + getRandomInt(),
 		optionCategory?: DataObject
 	) {
+		let postSpecification;
+
 		if (typeof optionCategory !== 'undefined') {
-			return this.apiHelpers.post(
+			postSpecification = await this.apiHelpers.post(
 				`${this.apiHelpers.baseUrl}${this.basePath}/specifications`,
 				{
 					data: {
@@ -371,19 +398,29 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 				}
 			);
 		}
-
-		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/specifications`,
-			{
-				data: {
-					facetable,
-					key: specificationTitle,
-					priority,
-					title: {
-						en_US: specificationTitle,
+		else {
+			postSpecification = await this.apiHelpers.post(
+				`${this.apiHelpers.baseUrl}${this.basePath}/specifications`,
+				{
+					data: {
+						facetable,
+						key: specificationTitle,
+						priority,
+						title: {
+							en_US: specificationTitle,
+						},
 					},
-				},
-			}
-		);
+				}
+			);
+		}
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: postSpecification.id,
+				type: 'specification',
+			});
+		}
+
+		return postSpecification;
 	}
 }

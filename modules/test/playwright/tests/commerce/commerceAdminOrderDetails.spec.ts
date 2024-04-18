@@ -9,11 +9,17 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {commercePagesTest} from '../../fixtures/commercePagesTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 
-export const test = mergeTests(apiHelpersTest, commercePagesTest, loginTest());
+export const test = mergeTests(
+	apiHelpersTest,
+	commercePagesTest,
+	dataApiHelpersTest,
+	loginTest()
+);
 
-test('LPD-15231 escape account name on admin order details page', async ({
+test('LPD-15231 Escape account name on admin order details page', async ({
 	apiHelpers,
 	commerceAdminOrderDetailsPage,
 	commerceAdminOrdersPage,
@@ -33,6 +39,8 @@ test('LPD-15231 escape account name on admin order details page', async ({
 		name: '<img src="x" onError="alert(document.location)">',
 	});
 
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
 	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
 		account.id,
 		['test@liferay.com']
@@ -45,24 +53,15 @@ test('LPD-15231 escape account name on admin order details page', async ({
 		channel.id
 	);
 
-	try {
-		await commerceAdminOrdersPage.goto();
+	await commerceAdminOrdersPage.goto();
 
-		await (
-			await commerceAdminOrdersPage.ordersTableRowLink(cart.id)
-		).click();
+	await (await commerceAdminOrdersPage.ordersTableRowLink(cart.id)).click();
 
-		await expect(
-			commerceAdminOrderDetailsPage.headerDetailsTitle
-		).toBeVisible();
+	await expect(
+		commerceAdminOrderDetailsPage.headerDetailsTitle
+	).toBeVisible();
 
-		await expect(
-			commerceAdminOrderDetailsPage.commerceOrderAccountEntryName
-		).toHaveText(account.name);
-	}
-	finally {
-		await apiHelpers.headlessCommerceAdminChannel.deleteChannel(channel.id);
-
-		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
-	}
+	await expect(
+		commerceAdminOrderDetailsPage.commerceOrderAccountEntryName
+	).toHaveText(account.name);
 });

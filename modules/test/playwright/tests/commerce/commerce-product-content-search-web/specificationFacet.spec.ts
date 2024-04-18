@@ -9,52 +9,17 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 
-export const test = mergeTests(apiHelpersTest, commercePagesTest, loginTest());
+export const test = mergeTests(
+	apiHelpersTest,
+	commercePagesTest,
+	dataApiHelpersTest,
+	loginTest()
+);
 
-const data = [];
-
-test.afterEach(async ({apiHelpers}) => {
-	for await (const item of data.reverse()) {
-		switch (item.type) {
-			case 'catalog':
-				await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(
-					item.id
-				);
-
-				break;
-			case 'channel':
-				await apiHelpers.headlessCommerceAdminChannel.deleteChannel(
-					item.id
-				);
-
-				break;
-			case 'optionCategory':
-				apiHelpers.headlessCommerceAdminCatalog.deleteOptionCategory(
-					item.id
-				);
-
-				break;
-			case 'product':
-				await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
-					item.id
-				);
-
-				break;
-			case 'specification':
-				await apiHelpers.headlessCommerceAdminCatalog.deleteSpecification(
-					item.id
-				);
-
-				break;
-			default:
-				break;
-		}
-	}
-});
-
-test('can sort specifications by specification group and label priority', async ({
+test('LPD-13560 Can sort specifications by specification group and label priority', async ({
 	apiHelpers,
 	commerceLayoutsPage,
 	specificationFacetsPage,
@@ -71,12 +36,10 @@ test('can sort specifications by specification group and label priority', async 
 		'guest'
 	);
 
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+	await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: 'Specification Facet Channel',
 		siteGroupId: site.id,
 	});
-
-	data.push({id: channel.id, type: 'channel'});
 
 	const optionCategory1 =
 		await apiHelpers.headlessCommerceAdminCatalog.postOptionCategory(
@@ -84,15 +47,11 @@ test('can sort specifications by specification group and label priority', async 
 			1
 		);
 
-	data.push({id: optionCategory1.id, type: 'optionCategory'});
-
 	const optionCategory2 =
 		await apiHelpers.headlessCommerceAdminCatalog.postOptionCategory(
 			'Material',
 			0
 		);
-
-	data.push({id: optionCategory2.id, type: 'optionCategory'});
 
 	const specification1 =
 		await apiHelpers.headlessCommerceAdminCatalog.postSpecification(
@@ -109,8 +68,6 @@ test('can sort specifications by specification group and label priority', async 
 			}
 		);
 
-	data.push({id: specification1.id, type: 'specification'});
-
 	const specification2 =
 		await apiHelpers.headlessCommerceAdminCatalog.postSpecification(
 			true,
@@ -126,15 +83,11 @@ test('can sort specifications by specification group and label priority', async 
 			}
 		);
 
-	data.push({id: specification2.id, type: 'specification'});
-
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
 		name: 'Specification Facet Catalog',
 	});
 
-	data.push({id: catalog.id, type: 'catalog'});
-
-	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+	await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
 		name: {
 			en_US: 'Product1',
@@ -149,9 +102,7 @@ test('can sort specifications by specification group and label priority', async 
 		],
 	});
 
-	data.push({id: product1.productId, type: 'product'});
-
-	const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+	await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
 		name: {
 			en_US: 'Product2',
@@ -165,8 +116,6 @@ test('can sort specifications by specification group and label priority', async 
 			},
 		],
 	});
-
-	data.push({id: product2.productId, type: 'product'});
 
 	await specificationFacetsPage.reloadPage();
 

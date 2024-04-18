@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ApiHelpers} from './ApiHelpers';
+import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 type TPayment = {
 	amount?: number;
@@ -42,7 +42,7 @@ export class HeadlessCommerceAdminPaymentApiHelper {
 	}
 
 	async postPayment(payment: TPayment) {
-		return await this.apiHelpers.post(
+		payment = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/payments`,
 			{
 				data: {
@@ -58,5 +58,11 @@ export class HeadlessCommerceAdminPaymentApiHelper {
 				},
 			}
 		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({id: payment.id, type: 'payment'});
+		}
+
+		return payment;
 	}
 }

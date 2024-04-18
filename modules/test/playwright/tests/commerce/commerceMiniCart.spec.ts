@@ -27,7 +27,7 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test('mini cart bundle with UOM', async ({
+test('COMMERCE-12316 Mini cart bundle with UOM', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	commerceAdminProductPage,
@@ -303,7 +303,7 @@ test('mini cart bundle with UOM', async ({
 	).toBeVisible();
 });
 
-test('LPD-3496 mini cart bundle without enough quantity', async ({
+test('LPD-3496 Mini cart bundle without enough quantity', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	commerceAdminProductPage,

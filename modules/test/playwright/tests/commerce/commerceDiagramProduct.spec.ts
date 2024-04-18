@@ -10,8 +10,8 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 
 export const test = mergeTests(
-	dataApiHelpersTest,
 	commercePagesTest,
+	dataApiHelpersTest,
 	loginTest()
 );
 

@@ -8,91 +8,46 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
+import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	commercePagesTest,
+	dataApiHelpersTest,
 	loginTest(),
 	notificationPagesTest
 );
 
-const data = [];
-
-test.afterEach(async ({apiHelpers}) => {
-	for await (const item of data.reverse()) {
-		switch (item.type) {
-			case 'account':
-				await apiHelpers.headlessAdminUser.deleteAccount(item.id);
-
-				break;
-			case 'catalog':
-				await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(
-					item.id
-				);
-
-				break;
-			case 'channel':
-				await apiHelpers.headlessCommerceAdminChannel.deleteChannel(
-					item.id
-				);
-
-				break;
-			case 'product':
-				await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
-					item.id
-				);
-
-				break;
-			case 'site':
-				await apiHelpers.headlessSite.deleteSite(item.id);
-
-				break;
-			case 'warehouse':
-				await apiHelpers.headlessCommerceAdminInventoryApiHelper.deleteWarehouse(
-					item.id
-				);
-
-				break;
-			default:
-				break;
-		}
-	}
-});
-
-test('Edit pending order item with UOM', async ({
+test('LPD-13627 Edit pending order item with UOM', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	commerceLayoutsPage,
+	page,
 	pendingOrdersPage,
 }) => {
 	const site = await apiHelpers.headlessSite.createSite({
 		name: 'Edit pending order',
 	});
 
-	data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: 'Edit pending order Channel',
 		siteGroupId: site.id,
 	});
 
-	data.push({id: channel.id, type: 'channel'});
-
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
 		name: 'Edit pending order Catalog',
 	});
-
-	data.push({id: catalog.id, type: 'catalog'});
 
 	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
 		name: {en_US: 'Product1'},
 	});
-
-	data.push({id: product1.productId, type: 'product'});
 
 	const sku1 = product1.skus[0];
 
@@ -109,11 +64,11 @@ test('Edit pending order item with UOM', async ({
 		);
 
 	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: 'Edit pending order account',
+		name: getRandomString(),
 		type: 'person',
 	});
 
-	data.push({id: account.id, type: 'account'});
+	apiHelpers.data.push({id: account.id, type: 'account'});
 
 	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
 		account.id,
@@ -140,9 +95,8 @@ test('Edit pending order item with UOM', async ({
 
 	await commerceLayoutsPage.goToPages(false);
 	await commerceLayoutsPage.createWidgetPage('Pending Orders Page');
-	await commerceLayoutsPage.goToPages(false);
 
-	await commerceLayoutsPage.siteHomePageLink.click();
+	await page.goto(`/web/${site.name}`);
 
 	await pendingOrdersPage.addPendingOrdersWidget();
 
@@ -153,37 +107,32 @@ test('Edit pending order item with UOM', async ({
 	await expect(pendingOrdersPage.orderItemActionsButtonEdit).toBeVisible();
 });
 
-test('Edit pending order item without UOM', async ({
+test('LPD-13627 Edit pending order item without UOM', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	commerceLayoutsPage,
+	page,
 	pendingOrdersPage,
 }) => {
 	const site = await apiHelpers.headlessSite.createSite({
 		name: 'Edit pending order',
 	});
 
-	data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: 'Edit pending order Channel',
 		siteGroupId: site.id,
 	});
 
-	data.push({id: channel.id, type: 'channel'});
-
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
 		name: 'Edit pending order Catalog',
 	});
-
-	data.push({id: catalog.id, type: 'catalog'});
 
 	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
 		name: {en_US: 'Product1'},
 	});
-
-	data.push({id: product1.productId, type: 'product'});
 
 	const product1Skus = await apiHelpers.headlessCommerceAdminCatalog
 		.getProduct(product1.productId)
@@ -194,11 +143,11 @@ test('Edit pending order item without UOM', async ({
 	const sku1 = product1Skus[0];
 
 	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: 'Edit pending order account',
+		name: getRandomString(),
 		type: 'person',
 	});
 
-	data.push({id: account.id, type: 'account'});
+	apiHelpers.data.push({id: account.id, type: 'account'});
 
 	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
 		account.id,
@@ -224,9 +173,8 @@ test('Edit pending order item without UOM', async ({
 
 	await commerceLayoutsPage.goToPages(false);
 	await commerceLayoutsPage.createWidgetPage('Pending Orders Page');
-	await commerceLayoutsPage.goToPages(false);
 
-	await commerceLayoutsPage.siteHomePageLink.click();
+	await page.goto(`/web/${site.name}`);
 
 	await pendingOrdersPage.addPendingOrdersWidget();
 
@@ -237,7 +185,7 @@ test('Edit pending order item without UOM', async ({
 	await expect(pendingOrdersPage.orderItemActionsButtonEdit).toHaveCount(0);
 });
 
-test('LPD-4174 Sales agent can recieve email notifications for new orders placed to their accounts', async ({
+test('LPD-4174 Sales agent can receive email notifications for new orders placed to their accounts', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	checkoutPage,
@@ -246,19 +194,19 @@ test('LPD-4174 Sales agent can recieve email notifications for new orders placed
 	queuePage,
 }) => {
 	const site = await apiHelpers.headlessSite.createSite({
-		name: 'Sales agent can recieve email notifications Site',
+		name: 'Sales agent can receive email notifications Site',
 		templateKey: 'minium-initializer',
 		templateType: 'site-initializer',
 	});
 
-	data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: 'Sales agent can recieve email notifications account',
+		name: 'Sales agent can receive email notifications account',
 		type: 'business',
 	});
 
-	data.push({id: account.id, type: 'account'});
+	apiHelpers.data.push({id: account.id, type: 'account'});
 
 	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
 		account.id,
@@ -280,7 +228,7 @@ test('LPD-4174 Sales agent can recieve email notifications for new orders placed
 	const notificationTemplate =
 		await apiHelpers.notification.postNotificationTemplate({
 			editorType: 'richText',
-			name: 'Sales agent can recieve email notifications Template',
+			name: 'Sales agent can receive email notifications Template',
 			recipientType: 'email',
 			recipients: [
 				{
@@ -294,7 +242,7 @@ test('LPD-4174 Sales agent can recieve email notifications for new orders placed
 				},
 			],
 			subject: {
-				en_US: 'Sales agent can recieve email notifications',
+				en_US: 'Sales agent can receive email notifications',
 			},
 			type: 'email',
 		});
@@ -317,7 +265,7 @@ test('LPD-4174 Sales agent can recieve email notifications for new orders placed
 		);
 
 	await applicationsMenuPage.goToSite(
-		'Sales agent can recieve email notifications Site'
+		'Sales agent can receive email notifications Site'
 	);
 
 	await commerceMiniCartPage.miniCartButton.click();
@@ -340,57 +288,104 @@ test('LPD-4174 Sales agent can recieve email notifications for new orders placed
 
 	await applicationsMenuPage.goToQueue();
 
-	await expect(queuePage.pageTitle).toBeVisible();
-	await expect(
-		page.getByText('Sales agent can recieve email notifications')
-	).toHaveCount(1);
+	try {
+		await expect(queuePage.pageTitle).toBeVisible();
+		await expect(
+			page.getByText('Sales agent can receive email notifications')
+		).toHaveCount(1);
+	}
+	finally {
+		const orders =
+			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
 
-	const notificationQueueEntry =
-		await apiHelpers.notification.getNotificationQueueEntriesPage(
-			'Sales agent can recieve email notifications'
+		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+
+		const notificationQueueEntry =
+			await apiHelpers.notification.getNotificationQueueEntriesPage(
+				'Sales agent can receive email notifications'
+			);
+
+		await apiHelpers.notification.deleteNotificationQueueEntry(
+			notificationQueueEntry.items[0].id
 		);
 
-	await apiHelpers.notification.deleteNotificationQueueEntry(
-		notificationQueueEntry.items[0].id
-	);
-
-	await apiHelpers.objectAdmin.deleteObjectAction(objectAction.id);
-	await apiHelpers.notification.deleteNotificationTemplate(
-		notificationTemplate.id
-	);
-
-	const channels =
-		await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
-			'Sales agent can recieve email notifications'
+		await apiHelpers.objectAdmin.deleteObjectAction(objectAction.id);
+		await apiHelpers.notification.deleteNotificationTemplate(
+			notificationTemplate.id
 		);
 
-	data.push({id: channels.items[0].id, type: 'channel'});
+		const channels =
+			await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
+				'Sales agent can receive email notifications'
+			);
 
-	const catalogs =
-		await apiHelpers.headlessCommerceAdminCatalog.getCatalogsPage(
-			'Sales agent can recieve email notifications'
-		);
+		apiHelpers.data.push({id: channels.items[0].id, type: 'channel'});
 
-	data.push({id: catalogs.items[0].id, type: 'catalog'});
+		const catalogs =
+			await apiHelpers.headlessCommerceAdminCatalog.getCatalogsPage(
+				'Sales agent can receive email notifications'
+			);
 
-	const products =
-		await apiHelpers.headlessCommerceAdminCatalog.getProductsPage(50, '');
+		apiHelpers.data.push({id: catalogs.items[0].id, type: 'catalog'});
 
-	for (let i = 0; i < products.totalCount; i++) {
-		if (products.items[i].catalogId === catalogs.items[0].id) {
-			data.push({id: products.items[i].productId, type: 'product'});
+		const products =
+			await apiHelpers.headlessCommerceAdminCatalog.getProductsPage(
+				50,
+				''
+			);
+
+		for (let i = 0; i < products.totalCount; i++) {
+			if (products.items[i].catalogId === catalogs.items[0].id) {
+				apiHelpers.data.push({
+					id: products.items[i].productId,
+					type: 'product',
+				});
+			}
 		}
+
+		const options =
+			await apiHelpers.headlessCommerceAdminCatalog.getOptions();
+
+		for (let i = 0; i < options.totalCount; i++) {
+			apiHelpers.data.push({
+				id: options.items[i].id,
+				type: 'option',
+			});
+		}
+
+		const optionCategories =
+			await apiHelpers.headlessCommerceAdminCatalog.getOptionCategories();
+
+		for (let i = 0; i < optionCategories.totalCount; i++) {
+			apiHelpers.data.push({
+				id: optionCategories.items[i].id,
+				type: 'optionCategory',
+			});
+		}
+
+		const specifications =
+			await apiHelpers.headlessCommerceAdminCatalog.getSpecifications();
+
+		for (let i = 0; i < specifications.totalCount; i++) {
+			apiHelpers.data.push({
+				id: specifications.items[i].id,
+				type: 'specification',
+			});
+		}
+
+		const warehouses =
+			await apiHelpers.headlessCommerceAdminInventoryApiHelper.getWarehousesPage();
+
+		for (let i = 0; i < warehouses.totalCount; i++) {
+			apiHelpers.data.push({
+				id: warehouses.items[i].id,
+				type: 'warehouse',
+			});
+		}
+
+		await apiHelpers.headlessAdminUser.deleteRoleUserAccountAssociation(
+			roles.items[0].id,
+			user.id
+		);
 	}
-
-	const warehouses =
-		await apiHelpers.headlessCommerceAdminInventoryApiHelper.getWarehousesPage();
-
-	for (let i = 0; i < warehouses.totalCount; i++) {
-		data.push({id: warehouses.items[i].id, type: 'warehouse'});
-	}
-
-	await apiHelpers.headlessAdminUser.deleteRoleUserAccountAssociation(
-		roles.items[0].id,
-		user.id
-	);
 });

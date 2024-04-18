@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ApiHelpers} from './ApiHelpers';
+import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 type TCartItem = {
 	options?: string;
@@ -25,10 +25,10 @@ type TCart = {
 };
 
 export class HeadlessCommerceDeliveryCartApiHelper {
-	readonly apiHelpers: ApiHelpers;
+	readonly apiHelpers: ApiHelpers | DataApiHelpers;
 	readonly basePath: string;
 
-	constructor(apiHelpers: ApiHelpers) {
+	constructor(apiHelpers: ApiHelpers | DataApiHelpers) {
 		this.apiHelpers = apiHelpers;
 		this.basePath = 'headless-commerce-delivery-cart/v1.0/';
 	}
@@ -40,9 +40,18 @@ export class HeadlessCommerceDeliveryCartApiHelper {
 	}
 
 	async postCart(cart: TCart, channelId: number): Promise<TCart> {
-		return await this.apiHelpers.post(
+		const postCart = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/channels/${channelId}/carts?nestedFields=cartItems`,
 			{data: {accountId: 0, cartItems: [], currencyCode: 'USD', ...cart}}
 		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: postCart.id,
+				type: 'order',
+			});
+		}
+
+		return postCart;
 	}
 }

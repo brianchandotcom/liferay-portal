@@ -1328,6 +1328,240 @@ public interface DLFileVersionPersistence
 	public int countByF_S(long fileEntryId, int status);
 
 	/**
+	 * Returns all the document library file versions where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @return the matching document library file versions
+	 */
+	public java.util.List<DLFileVersion> findByF_ST(
+		long fileEntryId, int status);
+
+	/**
+	 * Returns a range of all the document library file versions where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @return the range of matching document library file versions
+	 */
+	public java.util.List<DLFileVersion> findByF_ST(
+		long fileEntryId, int status, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the document library file versions where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file versions
+	 */
+	public java.util.List<DLFileVersion> findByF_ST(
+		long fileEntryId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the document library file versions where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching document library file versions
+	 */
+	public java.util.List<DLFileVersion> findByF_ST(
+		long fileEntryId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file version
+	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
+	 */
+	public DLFileVersion findByF_ST_First(
+			long fileEntryId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
+				orderByComparator)
+		throws NoSuchFileVersionException;
+
+	/**
+	 * Returns the first document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 */
+	public DLFileVersion fetchByF_ST_First(
+		long fileEntryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
+			orderByComparator);
+
+	/**
+	 * Returns the last document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file version
+	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
+	 */
+	public DLFileVersion findByF_ST_Last(
+			long fileEntryId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
+				orderByComparator)
+		throws NoSuchFileVersionException;
+
+	/**
+	 * Returns the last document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 */
+	public DLFileVersion fetchByF_ST_Last(
+		long fileEntryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
+			orderByComparator);
+
+	/**
+	 * Returns the document library file versions before and after the current document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * @param fileVersionId the primary key of the current document library file version
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next document library file version
+	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
+	 */
+	public DLFileVersion[] findByF_ST_PrevAndNext(
+			long fileVersionId, long fileEntryId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
+				orderByComparator)
+		throws NoSuchFileVersionException;
+
+	/**
+	 * Returns all the document library file versions where fileEntryId = &#63; and status = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param statuses the statuses
+	 * @return the matching document library file versions
+	 */
+	public java.util.List<DLFileVersion> findByF_ST(
+		long fileEntryId, int[] statuses);
+
+	/**
+	 * Returns a range of all the document library file versions where fileEntryId = &#63; and status = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param statuses the statuses
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @return the range of matching document library file versions
+	 */
+	public java.util.List<DLFileVersion> findByF_ST(
+		long fileEntryId, int[] statuses, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the document library file versions where fileEntryId = &#63; and status = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param statuses the statuses
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file versions
+	 */
+	public java.util.List<DLFileVersion> findByF_ST(
+		long fileEntryId, int[] statuses, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the document library file versions where fileEntryId = &#63; and status = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param statuses the statuses
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching document library file versions
+	 */
+	public java.util.List<DLFileVersion> findByF_ST(
+		long fileEntryId, int[] statuses, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Removes all the document library file versions where fileEntryId = &#63; and status = &#63; from the database.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 */
+	public void removeByF_ST(long fileEntryId, int status);
+
+	/**
+	 * Returns the number of document library file versions where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @return the number of matching document library file versions
+	 */
+	public int countByF_ST(long fileEntryId, int status);
+
+	/**
+	 * Returns the number of document library file versions where fileEntryId = &#63; and status = any &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param statuses the statuses
+	 * @return the number of matching document library file versions
+	 */
+	public int countByF_ST(long fileEntryId, int[] statuses);
+
+	/**
 	 * Returns all the document library file versions where displayDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param displayDate the display date

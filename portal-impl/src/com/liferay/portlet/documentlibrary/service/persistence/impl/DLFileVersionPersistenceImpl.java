@@ -30,12 +30,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
@@ -4996,6 +4998,844 @@ public class DLFileVersionPersistenceImpl
 	private static final String _FINDER_COLUMN_F_S_STATUS_2 =
 		"dlFileVersion.status = ?";
 
+	private FinderPath _finderPathWithPaginationFindByF_ST;
+	private FinderPath _finderPathWithoutPaginationFindByF_ST;
+	private FinderPath _finderPathCountByF_ST;
+	private FinderPath _finderPathWithPaginationCountByF_ST;
+
+	/**
+	 * Returns all the document library file versions where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @return the matching document library file versions
+	 */
+	@Override
+	public List<DLFileVersion> findByF_ST(long fileEntryId, int status) {
+		return findByF_ST(
+			fileEntryId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the document library file versions where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @return the range of matching document library file versions
+	 */
+	@Override
+	public List<DLFileVersion> findByF_ST(
+		long fileEntryId, int status, int start, int end) {
+
+		return findByF_ST(fileEntryId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file versions where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file versions
+	 */
+	@Override
+	public List<DLFileVersion> findByF_ST(
+		long fileEntryId, int status, int start, int end,
+		OrderByComparator<DLFileVersion> orderByComparator) {
+
+		return findByF_ST(
+			fileEntryId, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file versions where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching document library file versions
+	 */
+	@Override
+	public List<DLFileVersion> findByF_ST(
+		long fileEntryId, int status, int start, int end,
+		OrderByComparator<DLFileVersion> orderByComparator,
+		boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					DLFileVersion.class)) {
+
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
+
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByF_ST;
+					finderArgs = new Object[] {fileEntryId, status};
+				}
+			}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByF_ST;
+				finderArgs = new Object[] {
+					fileEntryId, status, start, end, orderByComparator
+				};
+			}
+
+			List<DLFileVersion> list = null;
+
+			if (useFinderCache) {
+				list = (List<DLFileVersion>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
+
+				if ((list != null) && !list.isEmpty()) {
+					for (DLFileVersion dlFileVersion : list) {
+						if ((fileEntryId != dlFileVersion.getFileEntryId()) ||
+							(status != dlFileVersion.getStatus())) {
+
+							list = null;
+
+							break;
+						}
+					}
+				}
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
+				}
+
+				sb.append(_SQL_SELECT_DLFILEVERSION_WHERE);
+
+				sb.append(_FINDER_COLUMN_F_ST_FILEENTRYID_2);
+
+				sb.append(_FINDER_COLUMN_F_ST_STATUS_2);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(DLFileVersionModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(fileEntryId);
+
+					queryPos.add(status);
+
+					list = (List<DLFileVersion>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
+	}
+
+	/**
+	 * Returns the first document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file version
+	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
+	 */
+	@Override
+	public DLFileVersion findByF_ST_First(
+			long fileEntryId, int status,
+			OrderByComparator<DLFileVersion> orderByComparator)
+		throws NoSuchFileVersionException {
+
+		DLFileVersion dlFileVersion = fetchByF_ST_First(
+			fileEntryId, status, orderByComparator);
+
+		if (dlFileVersion != null) {
+			return dlFileVersion;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("fileEntryId=");
+		sb.append(fileEntryId);
+
+		sb.append(", status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchFileVersionException(sb.toString());
+	}
+
+	/**
+	 * Returns the first document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 */
+	@Override
+	public DLFileVersion fetchByF_ST_First(
+		long fileEntryId, int status,
+		OrderByComparator<DLFileVersion> orderByComparator) {
+
+		List<DLFileVersion> list = findByF_ST(
+			fileEntryId, status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file version
+	 * @throws NoSuchFileVersionException if a matching document library file version could not be found
+	 */
+	@Override
+	public DLFileVersion findByF_ST_Last(
+			long fileEntryId, int status,
+			OrderByComparator<DLFileVersion> orderByComparator)
+		throws NoSuchFileVersionException {
+
+		DLFileVersion dlFileVersion = fetchByF_ST_Last(
+			fileEntryId, status, orderByComparator);
+
+		if (dlFileVersion != null) {
+			return dlFileVersion;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("fileEntryId=");
+		sb.append(fileEntryId);
+
+		sb.append(", status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchFileVersionException(sb.toString());
+	}
+
+	/**
+	 * Returns the last document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 */
+	@Override
+	public DLFileVersion fetchByF_ST_Last(
+		long fileEntryId, int status,
+		OrderByComparator<DLFileVersion> orderByComparator) {
+
+		int count = countByF_ST(fileEntryId, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<DLFileVersion> list = findByF_ST(
+			fileEntryId, status, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the document library file versions before and after the current document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * @param fileVersionId the primary key of the current document library file version
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next document library file version
+	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
+	 */
+	@Override
+	public DLFileVersion[] findByF_ST_PrevAndNext(
+			long fileVersionId, long fileEntryId, int status,
+			OrderByComparator<DLFileVersion> orderByComparator)
+		throws NoSuchFileVersionException {
+
+		DLFileVersion dlFileVersion = findByPrimaryKey(fileVersionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DLFileVersion[] array = new DLFileVersionImpl[3];
+
+			array[0] = getByF_ST_PrevAndNext(
+				session, dlFileVersion, fileEntryId, status, orderByComparator,
+				true);
+
+			array[1] = dlFileVersion;
+
+			array[2] = getByF_ST_PrevAndNext(
+				session, dlFileVersion, fileEntryId, status, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DLFileVersion getByF_ST_PrevAndNext(
+		Session session, DLFileVersion dlFileVersion, long fileEntryId,
+		int status, OrderByComparator<DLFileVersion> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_DLFILEVERSION_WHERE);
+
+		sb.append(_FINDER_COLUMN_F_ST_FILEENTRYID_2);
+
+		sb.append(_FINDER_COLUMN_F_ST_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(DLFileVersionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(fileEntryId);
+
+		queryPos.add(status);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						dlFileVersion)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<DLFileVersion> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the document library file versions where fileEntryId = &#63; and status = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param statuses the statuses
+	 * @return the matching document library file versions
+	 */
+	@Override
+	public List<DLFileVersion> findByF_ST(long fileEntryId, int[] statuses) {
+		return findByF_ST(
+			fileEntryId, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the document library file versions where fileEntryId = &#63; and status = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param statuses the statuses
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @return the range of matching document library file versions
+	 */
+	@Override
+	public List<DLFileVersion> findByF_ST(
+		long fileEntryId, int[] statuses, int start, int end) {
+
+		return findByF_ST(fileEntryId, statuses, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file versions where fileEntryId = &#63; and status = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param statuses the statuses
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file versions
+	 */
+	@Override
+	public List<DLFileVersion> findByF_ST(
+		long fileEntryId, int[] statuses, int start, int end,
+		OrderByComparator<DLFileVersion> orderByComparator) {
+
+		return findByF_ST(
+			fileEntryId, statuses, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file versions where fileEntryId = &#63; and status = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param statuses the statuses
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching document library file versions
+	 */
+	@Override
+	public List<DLFileVersion> findByF_ST(
+		long fileEntryId, int[] statuses, int start, int end,
+		OrderByComparator<DLFileVersion> orderByComparator,
+		boolean useFinderCache) {
+
+		if (statuses == null) {
+			statuses = new int[0];
+		}
+		else if (statuses.length > 1) {
+			statuses = ArrayUtil.sortedUnique(statuses);
+		}
+
+		if (statuses.length == 1) {
+			return findByF_ST(
+				fileEntryId, statuses[0], start, end, orderByComparator);
+		}
+
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					DLFileVersion.class)) {
+
+			Object[] finderArgs = null;
+
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+
+				if (useFinderCache) {
+					finderArgs = new Object[] {
+						fileEntryId, StringUtil.merge(statuses)
+					};
+				}
+			}
+			else if (useFinderCache) {
+				finderArgs = new Object[] {
+					fileEntryId, StringUtil.merge(statuses), start, end,
+					orderByComparator
+				};
+			}
+
+			List<DLFileVersion> list = null;
+
+			if (useFinderCache) {
+				list = (List<DLFileVersion>)FinderCacheUtil.getResult(
+					_finderPathWithPaginationFindByF_ST, finderArgs, this);
+
+				if ((list != null) && !list.isEmpty()) {
+					for (DLFileVersion dlFileVersion : list) {
+						if ((fileEntryId != dlFileVersion.getFileEntryId()) ||
+							!ArrayUtil.contains(
+								statuses, dlFileVersion.getStatus())) {
+
+							list = null;
+
+							break;
+						}
+					}
+				}
+			}
+
+			if (list == null) {
+				StringBundler sb = new StringBundler();
+
+				sb.append(_SQL_SELECT_DLFILEVERSION_WHERE);
+
+				sb.append(_FINDER_COLUMN_F_ST_FILEENTRYID_2);
+
+				if (statuses.length > 0) {
+					sb.append("(");
+
+					sb.append(_FINDER_COLUMN_F_ST_STATUS_7);
+
+					sb.append(StringUtil.merge(statuses));
+
+					sb.append(")");
+
+					sb.append(")");
+				}
+
+				sb.setStringAt(
+					removeConjunction(sb.stringAt(sb.index() - 1)),
+					sb.index() - 1);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(DLFileVersionModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(fileEntryId);
+
+					list = (List<DLFileVersion>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathWithPaginationFindByF_ST, finderArgs,
+							list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
+	}
+
+	/**
+	 * Removes all the document library file versions where fileEntryId = &#63; and status = &#63; from the database.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 */
+	@Override
+	public void removeByF_ST(long fileEntryId, int status) {
+		for (DLFileVersion dlFileVersion :
+				findByF_ST(
+					fileEntryId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(dlFileVersion);
+		}
+	}
+
+	/**
+	 * Returns the number of document library file versions where fileEntryId = &#63; and status = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param status the status
+	 * @return the number of matching document library file versions
+	 */
+	@Override
+	public int countByF_ST(long fileEntryId, int status) {
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					DLFileVersion.class)) {
+
+			FinderPath finderPath = _finderPathCountByF_ST;
+
+			Object[] finderArgs = new Object[] {fileEntryId, status};
+
+			Long count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(_SQL_COUNT_DLFILEVERSION_WHERE);
+
+				sb.append(_FINDER_COLUMN_F_ST_FILEENTRYID_2);
+
+				sb.append(_FINDER_COLUMN_F_ST_STATUS_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(fileEntryId);
+
+					queryPos.add(status);
+
+					count = (Long)query.uniqueResult();
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	/**
+	 * Returns the number of document library file versions where fileEntryId = &#63; and status = any &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param statuses the statuses
+	 * @return the number of matching document library file versions
+	 */
+	@Override
+	public int countByF_ST(long fileEntryId, int[] statuses) {
+		if (statuses == null) {
+			statuses = new int[0];
+		}
+		else if (statuses.length > 1) {
+			statuses = ArrayUtil.sortedUnique(statuses);
+		}
+
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					DLFileVersion.class)) {
+
+			Object[] finderArgs = new Object[] {
+				fileEntryId, StringUtil.merge(statuses)
+			};
+
+			Long count = (Long)FinderCacheUtil.getResult(
+				_finderPathWithPaginationCountByF_ST, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler();
+
+				sb.append(_SQL_COUNT_DLFILEVERSION_WHERE);
+
+				sb.append(_FINDER_COLUMN_F_ST_FILEENTRYID_2);
+
+				if (statuses.length > 0) {
+					sb.append("(");
+
+					sb.append(_FINDER_COLUMN_F_ST_STATUS_7);
+
+					sb.append(StringUtil.merge(statuses));
+
+					sb.append(")");
+
+					sb.append(")");
+				}
+
+				sb.setStringAt(
+					removeConjunction(sb.stringAt(sb.index() - 1)),
+					sb.index() - 1);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(fileEntryId);
+
+					count = (Long)query.uniqueResult();
+
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationCountByF_ST, finderArgs,
+						count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	private static final String _FINDER_COLUMN_F_ST_FILEENTRYID_2 =
+		"dlFileVersion.fileEntryId = ? AND ";
+
+	private static final String _FINDER_COLUMN_F_ST_STATUS_2 =
+		"dlFileVersion.status = ?";
+
+	private static final String _FINDER_COLUMN_F_ST_STATUS_7 =
+		"dlFileVersion.status IN (";
+
 	private FinderPath _finderPathWithPaginationFindByLtD_S;
 	private FinderPath _finderPathWithPaginationCountByLtD_S;
 
@@ -7928,6 +8768,30 @@ public class DLFileVersionPersistenceImpl
 
 		_finderPathCountByF_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_S",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"fileEntryId", "status"}, false);
+
+		_finderPathWithPaginationFindByF_ST = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByF_ST",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"fileEntryId", "status"}, true);
+
+		_finderPathWithoutPaginationFindByF_ST = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByF_ST",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"fileEntryId", "status"}, true);
+
+		_finderPathCountByF_ST = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_ST",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"fileEntryId", "status"}, false);
+
+		_finderPathWithPaginationCountByF_ST = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByF_ST",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"fileEntryId", "status"}, false);
 

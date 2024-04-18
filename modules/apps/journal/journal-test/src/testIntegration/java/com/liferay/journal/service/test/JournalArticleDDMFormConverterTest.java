@@ -85,7 +85,7 @@ public class JournalArticleDDMFormConverterTest {
 				_group.getGroupId(),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-				_readFileToString("dependencies/journal_content.xml"),
+				_readFileToString("dependencies/journal_article_content.xml"),
 				dataDefinition.getDataDefinitionKey(), null, LocaleUtil.US);
 
 		DDMFormValues ddmFormValues = journalArticle.getDDMFormValues();
@@ -140,7 +140,7 @@ public class JournalArticleDDMFormConverterTest {
 				_group.getGroupId(),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-				_readFileToString("dependencies/journal_content.xml"),
+				_readFileToString("dependencies/journal_article_content.xml"),
 				dataDefinition.getDataDefinitionKey(), null, LocaleUtil.US);
 
 		DDMFormValues ddmFormValues = journalArticle.getDDMFormValues();
@@ -195,7 +195,8 @@ public class JournalArticleDDMFormConverterTest {
 				_group.getGroupId(),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-				_readFileToString("dependencies/updated_journal_content.xml"),
+				_readFileToString(
+					"dependencies/updated_journal_article_content.xml"),
 				dataDefinition.getDataDefinitionKey(), null, LocaleUtil.US);
 
 		DDMFormValues ddmFormValues = journalArticle.getDDMFormValues();

@@ -154,7 +154,7 @@ public class JournalTransformerTest {
 		_journalArticle = JournalTestUtil.addArticleWithXMLContent(
 			_group.getGroupId(),
 			StringUtil.replace(
-				_read("journal_content.xml"),
+				_read("journal_article_content.xml"),
 				new String[] {"[$FIELD_SET_NAME$]"},
 				new String[] {"FieldsGroup19507604"}),
 			dataDefinition.getDataDefinitionKey(), null);
@@ -191,7 +191,7 @@ public class JournalTransformerTest {
 		_journalArticle = JournalTestUtil.addArticleWithXMLContent(
 			_group.getGroupId(),
 			StringUtil.replace(
-				_read("journal_content.xml"),
+				_read("journal_article_content.xml"),
 				new String[] {"[$FIELD_SET_NAME$]"},
 				new String[] {"birthdayFieldSet"}),
 			dataDefinition.getDataDefinitionKey(), null);
@@ -540,7 +540,9 @@ public class JournalTransformerTest {
 		JournalArticle journalArticle =
 			JournalTestUtil.addArticleWithXMLContent(
 				_group.getGroupId(),
-				_read("journal_content_with_select_field_single_selection.xml"),
+				_read(
+					"journal_article_content" +
+						"_with_select_field_single_selection.xml"),
 				dataDefinition.getDataDefinitionKey(), null);
 
 		Assert.assertEquals(
@@ -562,7 +564,9 @@ public class JournalTransformerTest {
 
 		journalArticle = JournalTestUtil.addArticleWithXMLContent(
 			_group.getGroupId(),
-			_read("journal_content_with_select_field_multiple_selection.xml"),
+			_read(
+				"journal_article_content" +
+					"_with_select_field_multiple_selection.xml"),
 			dataDefinition.getDataDefinitionKey(), null);
 
 		Assert.assertEquals(

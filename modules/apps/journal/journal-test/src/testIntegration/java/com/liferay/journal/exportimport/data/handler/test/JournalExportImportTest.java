@@ -146,7 +146,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			group, parentLayout.getPlid());
 
 		String content = StringUtil.replace(
-			_read("journal_content.xml"),
+			_read("journal_article_content.xml"),
 			new String[] {"[$GROUP_NAME$]", "[[$LAYOUT_FRIENDLY_URL$]$]"},
 			new String[] {
 				StringUtil.toLowerCase(group.getName("en_US")),
@@ -199,7 +199,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			group, parentLayout.getPlid());
 
 		String content = StringUtil.replace(
-			_read("journal_content.xml"),
+			_read("journal_article_content.xml"),
 			new String[] {"[$GROUP_NAME$]", "[[$LAYOUT_FRIENDLY_URL$]$]"},
 			new String[] {
 				StringUtil.toLowerCase(group.getName("en_US")),
@@ -295,7 +295,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 				group.getGroupId(), "journal", dataDefinition);
 
 		String xml = _readFileToString(
-			"dependencies/complex_journal_content.xml");
+			"dependencies/complex_journal_article_content.xml");
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),

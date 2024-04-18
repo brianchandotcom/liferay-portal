@@ -1,47 +1,42 @@
-<ul class="list-unstyled tab-list">
-			<#if entries?has_content>
-				<#list entries as entry>
-					<li class="facet-value">
-						<@clay.button
-							cssClass="facet-term btn-unstyled ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} term-name"
-							data\-term\-id="${entry.getFilterValue()}"
-							disabled="true"
-							displayType="link"
-							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
-						>
-							<span class="term-text">${htmlUtil.escape(entry.getBucketText())}</span>
-							<#if entry.isFrequencyVisible()>
-								<span class="term-count">${entry.getFrequency()}</span>
-							</#if>
-						</@clay.button>
-					</li>
-				</#list>
-			</#if>
-</ul>
+<#if entries?has_content>
+	<#assign totalCount = 0 />
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-	const buttons = document.querySelectorAll('.facet-term');
+	<#list assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts() as bucket>
+		<#assign totalCount = totalCount + bucket.getCount() />
+	</#list>
 
-	buttons.forEach(button => {
-		button.addEventListener('click', function(event) {
-			event.preventDefault();
+	<ul class="list-unstyled tab-list">
+		<li class="facet-value">
+			<@clay.button
+				cssClass="facet-clear btn-unstyled ${assetCategoriesSearchFacetDisplayContext.isNothingSelected()?then('facet-term-selected', 'facet-term-unselected')}"
+				displayType="link"
+				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+				value="clear"
+			>
+				<span class="term-text">${languageUtil.get(locale, "all-results", "All Results")}</span>
 
-			buttons.forEach(btn => {
-				btn.classList.remove('facet-term-selected');
-				btn.setAttribute('disabled', 'true');
-			});
+				<#if entry.isFrequencyVisible()>
+					<span class="term-count">${totalCount}</span>
+				</#if>
+			</@clay.button>
+		</li>
 
-			this.classList.add('facet-term-selected');
-			this.removeAttribute('disabled');
+		<#list entries as entry>
+			<li class="facet-value">
+				<@clay.button
+					cssClass="facet-term btn-unstyled ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} term-name"
+					data\-term\-id="${entry.getFilterValue()}"
+					disabled="true"
+					displayType="link"
+					onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+				>
+					<span class="term-text">${htmlUtil.escape(entry.getBucketText())}</span>
 
-			const categoryValue = this.getAttribute('data-term-id');
-
-			const currentURL = new URL(window.location.href);
-			currentURL.searchParams.set('category', categoryValue);
-
-			window.location.href = currentURL.toString();
-		});
-	});
-});
-</script>
+					<#if entry.isFrequencyVisible()>
+						<span class="term-count">${entry.getFrequency()}</span>
+					</#if>
+				</@clay.button>
+			</li>
+		</#list>
+	</ul>
+</#if>

@@ -32,10 +32,6 @@ definition {
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			// Pausing 10 seconds to ensure Structures Builder sidebar is loaded. See LPD-22490
-
-			Pause(value1 = 10000);
-
 			PortletEntry.changeLocale(locale = "en-US");
 
 			DataEngine.editFieldLabel(

@@ -14,7 +14,7 @@ const Actions = (props) => {
 	const {selectedItem} = useContext(DiagramBuilderContext);
 	const {
 		allowScriptContentToBeExecutedOrIncluded,
-		hasGroovyScript,
+		hasGroovyOrJavaScript,
 		scriptManagementConfigurationPortletURL,
 	} = useContext(DefinitionBuilderContext);
 
@@ -48,7 +48,7 @@ const Actions = (props) => {
 		<>
 			{Liferay.FeatureFlags['LPD-11179'] &&
 				!allowScriptContentToBeExecutedOrIncluded &&
-				hasGroovyScript && (
+				hasGroovyOrJavaScript && (
 					<DisabledGroovyScriptAlert
 						scriptManagementConfigurationPortletURL={
 							scriptManagementConfigurationPortletURL

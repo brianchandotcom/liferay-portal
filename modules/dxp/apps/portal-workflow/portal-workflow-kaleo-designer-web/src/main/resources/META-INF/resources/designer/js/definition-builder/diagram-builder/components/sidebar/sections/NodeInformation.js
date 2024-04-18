@@ -20,7 +20,7 @@ export default function NodeInformation({errors, setErrors}) {
 	const {
 		allowScriptContentToBeExecutedOrIncluded,
 		elements,
-		hasGroovyScript,
+		hasGroovyOrJavaScript,
 		scriptManagementConfigurationPortletURL,
 		selectedLanguageId,
 	} = useContext(DefinitionBuilderContext);
@@ -35,7 +35,7 @@ export default function NodeInformation({errors, setErrors}) {
 		<>
 			{Liferay.FeatureFlags['LPD-11179'] &&
 				!allowScriptContentToBeExecutedOrIncluded &&
-				hasGroovyScript &&
+				hasGroovyOrJavaScript &&
 				selectedItem &&
 				selectedItem.type === 'condition' && (
 					<DisabledGroovyScriptAlert

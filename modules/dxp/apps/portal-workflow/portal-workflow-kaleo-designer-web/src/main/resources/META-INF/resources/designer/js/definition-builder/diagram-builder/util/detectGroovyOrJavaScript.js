@@ -5,7 +5,7 @@
 
 import {isNode} from 'react-flow-renderer';
 
-export function detectGroovyScript(elements, setHasGroovyScript) {
+export function detectGroovyOrJavaScript(elements, setHasGroovyOrJavaScript) {
 	const hasGroovyScript = elements.find((element) => {
 		if (isNode(element)) {
 			const {data} = element;
@@ -22,7 +22,7 @@ export function detectGroovyScript(elements, setHasGroovyScript) {
 		}
 	});
 
-	setHasGroovyScript(hasGroovyScript);
+	setHasGroovyOrJavaScript(hasGroovyScript);
 
 	return hasGroovyScript;
 }

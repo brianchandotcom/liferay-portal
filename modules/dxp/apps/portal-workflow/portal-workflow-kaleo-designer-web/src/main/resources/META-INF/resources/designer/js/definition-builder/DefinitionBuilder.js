@@ -34,7 +34,7 @@ export default function DefinitionBuilder(props) {
 		hadGroovyOrJavaScriptBefore,
 		setHadGroovyOrJavaScriptBefore,
 	] = useState(false);
-	const [hasGroovyScript, setHasGroovyScript] = useState(false);
+	const [hasGroovyOrJavaScript, setHasGroovyOrJavaScript] = useState(false);
 	const [selectedLanguageId, setSelectedLanguageId] = useState('');
 	const [showDefinitionInfo, setShowDefinitionInfo] = useState(false);
 	const [sourceView, setSourceView] = useState(false);
@@ -59,7 +59,7 @@ export default function DefinitionBuilder(props) {
 		elements,
 		functionActionExecutors: props.functionActionExecutors,
 		hadGroovyOrJavaScriptBefore,
-		hasGroovyScript,
+		hasGroovyOrJavaScript,
 		scriptManagementConfigurationPortletURL:
 			props.scriptManagementConfigurationPortletURL,
 		selectedLanguageId,
@@ -77,7 +77,7 @@ export default function DefinitionBuilder(props) {
 		setDeserialize,
 		setElements,
 		setHadGroovyOrJavaScriptBefore,
-		setHasGroovyScript,
+		setHasGroovyOrJavaScript,
 		setSelectedLanguageId,
 		setShowAlert,
 		setShowDefinitionInfo,

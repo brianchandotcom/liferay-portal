@@ -42,7 +42,7 @@ const SelectAssignment = ({section, setSection, setSections}) => {
 	const {
 		allowScriptContentToBeExecutedOrIncluded,
 		hadGroovyOrJavaScriptBefore,
-		hasGroovyScript,
+		hasGroovyOrJavaScript,
 		scriptManagementConfigurationPortletURL,
 	} = useContext(DefinitionBuilderContext);
 
@@ -64,7 +64,7 @@ const SelectAssignment = ({section, setSection, setSections}) => {
 		<>
 			{Liferay.FeatureFlags['LPD-11179'] &&
 				!allowScriptContentToBeExecutedOrIncluded &&
-				hasGroovyScript && (
+				hasGroovyOrJavaScript && (
 					<DisabledGroovyScriptAlert
 						scriptManagementConfigurationPortletURL={
 							scriptManagementConfigurationPortletURL

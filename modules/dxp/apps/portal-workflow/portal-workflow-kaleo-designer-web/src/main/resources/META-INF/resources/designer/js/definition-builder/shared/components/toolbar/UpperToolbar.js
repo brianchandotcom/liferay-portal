@@ -16,7 +16,7 @@ import {isEdge, isNode} from 'react-flow-renderer';
 
 import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {defaultLanguageId} from '../../../constants';
-import {detectGroovyScript} from '../../../diagram-builder/util/detectGroovyScript';
+import {detectGroovyOrJavaScript} from '../../../diagram-builder/util/detectGroovyOrJavaScript';
 import {xmlNamespace} from '../../../source-builder/constants';
 import DeserializeUtil from '../../../source-builder/deserializeUtil';
 import {serializeDefinition} from '../../../source-builder/serializeUtil';
@@ -59,7 +59,7 @@ export default function UpperToolbar({
 		setDeserialize,
 		setElements,
 		setHadGroovyOrJavaScriptBefore,
-		setHasGroovyScript,
+		setHasGroovyOrJavaScript,
 		setSelectedLanguageId,
 		setShowAlert,
 		setShowDefinitionInfo,
@@ -198,7 +198,7 @@ export default function UpperToolbar({
 		if (
 			Liferay.FeatureFlags['LPD-11179'] &&
 			!allowScriptContentToBeExecutedOrIncluded &&
-			detectGroovyScript(elements, setHasGroovyScript)
+			detectGroovyOrJavaScript(elements, setHasGroovyOrJavaScript)
 		) {
 			setShowGroovyScriptWarningModal(true);
 
@@ -288,7 +288,7 @@ export default function UpperToolbar({
 		if (
 			Liferay.FeatureFlags['LPD-11179'] &&
 			!allowScriptContentToBeExecutedOrIncluded &&
-			detectGroovyScript(elements, setHasGroovyScript)
+			detectGroovyOrJavaScript(elements, setHasGroovyOrJavaScript)
 		) {
 			setShowGroovyScriptWarningModal(true);
 

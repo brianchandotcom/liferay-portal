@@ -30,7 +30,7 @@ import {isIdDuplicated} from './components/sidebar/utils';
 import edgeTypes from './components/transitions/Edge';
 import FloatingConnectionLine from './components/transitions/FloatingConnectionLine';
 import getCollidingElements from './util/collisionDetection';
-import {detectGroovyScript} from './util/detectGroovyScript';
+import {detectGroovyOrJavaScript} from './util/detectGroovyOrJavaScript';
 import populateAssignmentsData from './util/populateAssignmentsData';
 import populateNotificationsData from './util/populateNotificationsData';
 
@@ -67,7 +67,7 @@ export default function DiagramBuilder() {
 		setDeserialize,
 		setElements,
 		setHadGroovyOrJavaScriptBefore,
-		setHasGroovyScript,
+		setHasGroovyOrJavaScript,
 		setShowDefinitionInfo,
 		statuses,
 		version,
@@ -350,12 +350,12 @@ export default function DiagramBuilder() {
 				Liferay.FeatureFlags['LPD-11179'] &&
 				!allowScriptContentToBeExecutedOrIncluded
 			) {
-				const hasGroovyScript = detectGroovyScript(
+				const hasGroovyOrJavaScript = detectGroovyOrJavaScript(
 					elements,
-					setHasGroovyScript
+					setHasGroovyOrJavaScript
 				);
 
-				if (hasGroovyScript && !hadGroovyOrJavaScriptBefore) {
+				if (hasGroovyOrJavaScript && !hadGroovyOrJavaScriptBefore) {
 					setHadGroovyOrJavaScriptBefore(true);
 				}
 			}
@@ -412,13 +412,13 @@ export default function DiagramBuilder() {
 							Liferay.FeatureFlags['LPD-11179'] &&
 							!allowScriptContentToBeExecutedOrIncluded
 						) {
-							const hasGroovyScript = detectGroovyScript(
+							const hasGroovyOrJavaScript = detectGroovyOrJavaScript(
 								elements,
-								setHasGroovyScript
+								setHasGroovyOrJavaScript
 							);
 
 							if (
-								hasGroovyScript &&
+								hasGroovyOrJavaScript &&
 								!hadGroovyOrJavaScriptBefore
 							) {
 								setHadGroovyOrJavaScriptBefore(true);

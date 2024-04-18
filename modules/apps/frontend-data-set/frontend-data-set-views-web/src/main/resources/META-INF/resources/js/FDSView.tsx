@@ -19,7 +19,6 @@ import Sorting from './fds_view/Sorting';
 import SortingDeprecated from './fds_view/SortingDeprecated';
 import Filters from './fds_view/filters/Filters';
 import VisualizationModes from './fds_view/visualization_modes/VisualizationModes';
-import {Fields} from './fds_view/visualization_modes/table/Table';
 import {API_URL, OBJECT_RELATIONSHIP} from './utils/constants';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 

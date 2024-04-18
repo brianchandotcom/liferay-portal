@@ -9,7 +9,7 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.migration.validator.Company;
-import com.liferay.portal.tools.db.partition.migration.validator.LiferayInstance;
+import com.liferay.portal.tools.db.partition.migration.validator.LiferayDatabase;
 import com.liferay.portal.tools.db.partition.migration.validator.Recorder;
 import com.liferay.portal.tools.db.partition.migration.validator.Release;
 
@@ -36,8 +36,8 @@ public class ValidatorUtilTest extends ValidatorUtil {
 	public void setUp() {
 		System.setOut(new PrintStream(_byteArrayOutputStream));
 
-		_init(_sourceLiferayInstance);
-		_init(_targetLiferayInstance);
+		_init(_sourceLiferayDatabase);
+		_init(_targetLiferayDatabase);
 	}
 
 	@After
@@ -46,7 +46,7 @@ public class ValidatorUtilTest extends ValidatorUtil {
 	}
 
 	@Test
-	public void testValidateCompanyExistingName() throws Exception {
+	public void testValidateCompany() throws Exception {
 		Company company = new Company(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
@@ -58,33 +58,33 @@ public class ValidatorUtilTest extends ValidatorUtil {
 				Arrays.asList(
 					"[ERROR] Company ID " + company.getCompanyId() +
 						" already exists in the target database")));
-
 		_testValidateCompany(
 			true, true, false, true, company,
 			() -> _assertValidateDatabases(
 				false, true,
 				Arrays.asList(
 					"[WARN] Company name ", company.getCompanyName(),
-					" already exists in the target database. Please ",
-					"change it during migration.")));
-
+					" already exists in the target database. You must set a ",
+					"different value in ",
+					"DBPartitionInsertVirtualInstanceConfiguration.config.")));
 		_testValidateCompany(
 			false, true, true, true, company,
 			() -> _assertValidateDatabases(
 				false, true,
 				Arrays.asList(
 					"[WARN] Virtual host ", company.getVirtualHostName(),
-					" already exists in the target database. Please ",
-					"change it during migration.")));
-
+					" already exists in the target database. You must set a ",
+					"different value in ",
+					"DBPartitionInsertVirtualInstanceConfiguration.config.")));
 		_testValidateCompany(
 			true, true, true, false, company,
 			() -> _assertValidateDatabases(
 				false, true,
 				Arrays.asList(
 					"[WARN] Web ID ", company.getWebId(),
-					" already exists in the target database. Please ",
-					"change it during migration.")));
+					" already exists in the target database. You must set a ",
+					"different value in ",
+					"DBPartitionInsertVirtualInstanceConfiguration.config.")));
 	}
 
 	@Test
@@ -100,7 +100,6 @@ public class ValidatorUtilTest extends ValidatorUtil {
 					"[WARN] Table table2 is not present in the target database",
 					"[WARN] Table table4 is not present in the source " +
 						"database")));
-
 		_testValidatePartitionedTables(
 			new ArrayList<>(Arrays.asList("table1", "table3", "table4")),
 			new ArrayList<>(
@@ -112,7 +111,6 @@ public class ValidatorUtilTest extends ValidatorUtil {
 					"[WARN] Table table2 is not present in the source database",
 					"[WARN] Table table5 is not present in the source " +
 						"database")));
-
 		_testValidatePartitionedTables(
 			new ArrayList<>(
 				Arrays.asList(
@@ -128,9 +126,9 @@ public class ValidatorUtilTest extends ValidatorUtil {
 
 	@Test
 	public void testValidateReleaseMissingSourceModules() {
-		List<Release> sourceReleases = _getReleases();
-
 		List<Release> targetReleases = new ArrayList<>();
+
+		List<Release> sourceReleases = _getReleases();
 
 		for (Release release : sourceReleases) {
 			if (!Objects.equals(release.getServletContextName(), "module1")) {
@@ -138,8 +136,8 @@ public class ValidatorUtilTest extends ValidatorUtil {
 			}
 		}
 
-		_sourceLiferayInstance.setReleases(sourceReleases);
-		_targetLiferayInstance.setReleases(targetReleases);
+		_sourceLiferayDatabase.setReleases(sourceReleases);
+		_targetLiferayDatabase.setReleases(targetReleases);
 
 		_assertValidateDatabases(
 			false, true,
@@ -156,7 +154,6 @@ public class ValidatorUtilTest extends ValidatorUtil {
 				Arrays.asList(
 					"[WARN] Module module1 is not present in the source " +
 						"database")));
-
 		_testValidateReleaseMissingTargetModule(
 			"module2.service",
 			() -> _assertValidateDatabases(
@@ -180,7 +177,6 @@ public class ValidatorUtilTest extends ValidatorUtil {
 						"the source database",
 					"[ERROR] Module module2 has a failed release state in " +
 						"the source database")));
-
 		_testValidateReleaseState(
 			new ArrayList<>(), failedServletContextNames,
 			() -> _assertValidateDatabases(
@@ -201,7 +197,6 @@ public class ValidatorUtilTest extends ValidatorUtil {
 				Arrays.asList(
 					"[ERROR] Module module2.service needs to be verified in " +
 						"the source database before the migration")));
-
 		_testValidateReleaseUnverifiedModule(
 			"module2", false,
 			() -> _assertValidateDatabases(
@@ -220,7 +215,6 @@ public class ValidatorUtilTest extends ValidatorUtil {
 				Arrays.asList(
 					"[ERROR] Module module2.service needs to be upgraded in " +
 						"the target database before the migration")));
-
 		_testValidateReleaseVersionModule(
 			"10.0.0", "module1",
 			() -> _assertValidateDatabases(
@@ -234,7 +228,7 @@ public class ValidatorUtilTest extends ValidatorUtil {
 		boolean hasErrors, boolean hasWarnings, List<String> messages) {
 
 		Recorder recorder = validateDatabases(
-			_sourceLiferayInstance, _targetLiferayInstance);
+			_sourceLiferayDatabase, _targetLiferayDatabase);
 
 		Assert.assertEquals(hasErrors, recorder.hasErrors());
 		Assert.assertEquals(hasWarnings, recorder.hasWarnings());
@@ -263,35 +257,35 @@ public class ValidatorUtilTest extends ValidatorUtil {
 			new Release(Version.parseVersion("5.1.0"), "module2", 0, true));
 	}
 
-	private void _init(LiferayInstance liferayInstance) {
-		liferayInstance.setCompanies(new ArrayList<>());
-		liferayInstance.setExportedCompanyId(RandomTestUtil.randomLong());
-		liferayInstance.setExportedCompanyDefault(true);
-		liferayInstance.setReleases(new ArrayList<>());
-		liferayInstance.setTableNames(new ArrayList<>());
+	private void _init(LiferayDatabase liferayDatabase) {
+		liferayDatabase.setCompanies(new ArrayList<>());
+		liferayDatabase.setExportedCompanyId(RandomTestUtil.randomLong());
+		liferayDatabase.setExportedCompanyDefault(true);
+		liferayDatabase.setReleases(new ArrayList<>());
+		liferayDatabase.setTableNames(new ArrayList<>());
 	}
 
 	private void _testValidateCompany(
-			boolean changeHost, boolean changeId, boolean changeName,
+			boolean changeVirtualHostname, boolean changeCompanyId, boolean changeName,
 			boolean changeWebId, Company sourceCompany,
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		_sourceLiferayInstance.setCompanies(
+		_sourceLiferayDatabase.setCompanies(
 			Collections.singletonList(sourceCompany));
-		_sourceLiferayInstance.setExportedCompanyId(
+		_sourceLiferayDatabase.setExportedCompanyId(
 			sourceCompany.getCompanyId());
 
 		Company targetCompany = new Company(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
-		if (!changeHost) {
+		if (!changeVirtualHostname) {
 			targetCompany.setVirtualHostName(
 				sourceCompany.getVirtualHostName());
 		}
 
-		if (!changeId) {
+		if (!changeCompanyId) {
 			targetCompany.setCompanyId(sourceCompany.getCompanyId());
 		}
 
@@ -303,7 +297,7 @@ public class ValidatorUtilTest extends ValidatorUtil {
 			targetCompany.setWebId(sourceCompany.getWebId());
 		}
 
-		_targetLiferayInstance.setCompanies(
+		_targetLiferayDatabase.setCompanies(
 			Collections.singletonList(targetCompany));
 
 		unsafeRunnable.run();
@@ -314,8 +308,8 @@ public class ValidatorUtilTest extends ValidatorUtil {
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		_sourceLiferayInstance.setTableNames(sourceTableNames);
-		_targetLiferayInstance.setTableNames(targetTableNames);
+		_sourceLiferayDatabase.setTableNames(sourceTableNames);
+		_targetLiferayDatabase.setTableNames(targetTableNames);
 
 		unsafeRunnable.run();
 	}
@@ -339,8 +333,8 @@ public class ValidatorUtilTest extends ValidatorUtil {
 			}
 		}
 
-		_sourceLiferayInstance.setReleases(sourceReleases);
-		_targetLiferayInstance.setReleases(targetReleases);
+		_sourceLiferayDatabase.setReleases(sourceReleases);
+		_targetLiferayDatabase.setReleases(targetReleases);
 
 		unsafeRunnable.run();
 	}
@@ -378,8 +372,8 @@ public class ValidatorUtilTest extends ValidatorUtil {
 			targetReleases.add(release);
 		}
 
-		_sourceLiferayInstance.setReleases(sourceReleases);
-		_targetLiferayInstance.setReleases(targetReleases);
+		_sourceLiferayDatabase.setReleases(sourceReleases);
+		_targetLiferayDatabase.setReleases(targetReleases);
 
 		unsafeRunnable.run();
 	}
@@ -405,8 +399,8 @@ public class ValidatorUtilTest extends ValidatorUtil {
 			targetReleases.add(release);
 		}
 
-		_sourceLiferayInstance.setReleases(sourceReleases);
-		_targetLiferayInstance.setReleases(targetReleases);
+		_sourceLiferayDatabase.setReleases(sourceReleases);
+		_targetLiferayDatabase.setReleases(targetReleases);
 
 		unsafeRunnable.run();
 	}
@@ -418,7 +412,7 @@ public class ValidatorUtilTest extends ValidatorUtil {
 
 		List<Release> sourceReleases = _getReleases();
 
-		_sourceLiferayInstance.setReleases(sourceReleases);
+		_sourceLiferayDatabase.setReleases(sourceReleases);
 
 		List<Release> targetReleases = new ArrayList<>();
 
@@ -435,7 +429,7 @@ public class ValidatorUtilTest extends ValidatorUtil {
 			targetReleases.add(release);
 		}
 
-		_targetLiferayInstance.setReleases(targetReleases);
+		_targetLiferayDatabase.setReleases(targetReleases);
 
 		unsafeRunnable.run();
 	}
@@ -443,9 +437,9 @@ public class ValidatorUtilTest extends ValidatorUtil {
 	private final ByteArrayOutputStream _byteArrayOutputStream =
 		new ByteArrayOutputStream();
 	private final PrintStream _originalOut = System.out;
-	private final LiferayInstance _sourceLiferayInstance =
-		new LiferayInstance();
-	private final LiferayInstance _targetLiferayInstance =
-		new LiferayInstance();
+	private final LiferayDatabase _sourceLiferayDatabase =
+		new LiferayDatabase();
+	private final LiferayDatabase _targetLiferayDatabase =
+		new LiferayDatabase();
 
 }

@@ -19,6 +19,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 	<portlet:actionURL name="/cp_definitions/edit_cp_definition" var="editProductDefinitionAttachmentsActionURL" />
 
 	<aui:form action="<%= editProductDefinitionAttachmentsActionURL %>" cssClass="pt-4" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateAttachments" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="cpDefinitionId" type="hidden" value="<%= cpAttachmentFileEntriesDisplayContext.getCPDefinitionId() %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />

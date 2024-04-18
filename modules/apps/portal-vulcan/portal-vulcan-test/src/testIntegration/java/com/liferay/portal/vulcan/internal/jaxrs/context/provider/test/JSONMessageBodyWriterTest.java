@@ -125,7 +125,20 @@ public class JSONMessageBodyWriterTest {
 			"property1UnsafeSupplier should have been computed",
 			_property1UnsafeSupplierComputed);
 		Assert.assertFalse(
-			"property1UnsafeSupplier should not have been computed",
+			"property2UnsafeSupplier should not have been computed",
+			_property2UnsafeSupplierComputed);
+
+		_property1UnsafeSupplierComputed = false;
+		_property2UnsafeSupplierComputed = false;
+
+		HTTPTestUtil.invokeToJSONObject(
+			null, "test-vulcan/test-class?fields=testClass", Http.Method.GET);
+
+		Assert.assertTrue(
+			"property1UnsafeSupplier should have been computed",
+			_property1UnsafeSupplierComputed);
+		Assert.assertTrue(
+			"property2UnsafeSupplier should have been computed",
 			_property2UnsafeSupplierComputed);
 
 		_property1UnsafeSupplierComputed = false;
@@ -136,11 +149,27 @@ public class JSONMessageBodyWriterTest {
 			"test-vulcan/test-class?restrictFields=property1UnsafeSupplier",
 			Http.Method.GET);
 
+		Assert.assertTrue(
+			"property1UnsafeSupplier should have been computed",
+			_property1UnsafeSupplierComputed);
+		Assert.assertTrue(
+			"property2UnsafeSupplier should have been computed",
+			_property2UnsafeSupplierComputed);
+
+		_property1UnsafeSupplierComputed = false;
+		_property2UnsafeSupplierComputed = false;
+
+		HTTPTestUtil.invokeToJSONObject(
+			null,
+			"test-vulcan/test-class?restrictFields=property1UnsafeSupplier," +
+				"testClass",
+			Http.Method.GET);
+
 		Assert.assertFalse(
 			"property1UnsafeSupplier should not have been computed",
 			_property1UnsafeSupplierComputed);
 		Assert.assertTrue(
-			"property1UnsafeSupplier should have been computed",
+			"property2UnsafeSupplier should have been computed",
 			_property2UnsafeSupplierComputed);
 
 		_property1UnsafeSupplierComputed = false;
@@ -153,7 +182,7 @@ public class JSONMessageBodyWriterTest {
 			"property1UnsafeSupplier should have been computed",
 			_property1UnsafeSupplierComputed);
 		Assert.assertTrue(
-			"property1UnsafeSupplier should have been computed",
+			"property2UnsafeSupplier should have been computed",
 			_property2UnsafeSupplierComputed);
 	}
 

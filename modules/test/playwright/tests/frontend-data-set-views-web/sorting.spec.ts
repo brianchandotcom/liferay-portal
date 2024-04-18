@@ -52,8 +52,8 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: sortingDataSetERC});
 });
 
-test.describe('Data Set Sorting', () => {
-	test('In the New Sort modal, the Order Type input only appears when default is checked', async ({
+test.describe('Configure sorting in Data Set Manager', () => {
+	test('In the New Sort modal, the Order Type input only appears when default is checked @LPD-19465', async ({
 		page,
 		sortingPage,
 	}) => {
@@ -77,7 +77,7 @@ test.describe('Data Set Sorting', () => {
 		});
 	});
 
-	test('Sorting can be created, edited, and deleted', async ({
+	test('Sorting can be created, edited, and deleted @LPD-19465', async ({
 		page,
 		sortingPage,
 	}) => {

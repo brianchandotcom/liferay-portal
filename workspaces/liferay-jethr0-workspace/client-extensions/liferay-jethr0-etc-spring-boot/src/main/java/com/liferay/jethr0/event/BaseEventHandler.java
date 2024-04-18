@@ -23,6 +23,8 @@ import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
+import com.liferay.jethr0.routine.scheduler.RoutineEntityScheduler;
 import com.liferay.jethr0.util.StringUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -108,6 +110,14 @@ public abstract class BaseEventHandler implements EventHandler {
 
 	protected JSONObject getMessageJSONObject() {
 		return _messageJSONObject;
+	}
+
+	protected RoutineEntityRepository getRoutineEntityRepository() {
+		return _eventHandlerContext.getRoutineEntityRepository();
+	}
+
+	protected RoutineEntityScheduler getRoutineEntityScheduler() {
+		return _eventHandlerContext.getRoutineEntityScheduler();
 	}
 
 	protected void updateJRPStatus(

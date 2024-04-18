@@ -6,6 +6,9 @@
 package com.liferay.jethr0.event.liferay;
 
 import com.liferay.jethr0.event.EventHandlerContext;
+import com.liferay.jethr0.routine.RoutineEntity;
+import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
+import com.liferay.jethr0.routine.scheduler.RoutineEntityScheduler;
 
 import org.json.JSONObject;
 
@@ -17,7 +20,17 @@ public class AddRoutineLiferayEventHandler
 
 	@Override
 	public String process() {
-		return String.valueOf(getRoutineJSONObject());
+		RoutineEntityRepository routineEntityRepository =
+			getRoutineEntityRepository();
+		RoutineEntityScheduler routineEntityScheduler =
+			getRoutineEntityScheduler();
+
+		RoutineEntity routineEntity = routineEntityRepository.add(
+			getRoutineJSONObject());
+
+		routineEntityScheduler.scheduleRoutineEntity(routineEntity);
+
+		return String.valueOf(routineEntity);
 	}
 
 	protected AddRoutineLiferayEventHandler(

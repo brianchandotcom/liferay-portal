@@ -20,6 +20,8 @@ import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
+import com.liferay.jethr0.routine.scheduler.RoutineEntityScheduler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -91,6 +93,14 @@ public class EventHandlerContext {
 		return _liferayPortalURL;
 	}
 
+	public RoutineEntityRepository getRoutineEntityRepository() {
+		return _routineEntityRepository;
+	}
+
+	public RoutineEntityScheduler getRoutineEntityScheduler() {
+		return _routineEntityScheduler;
+	}
+
 	public void setJenkinsEventProcessor(
 		JenkinsEventProcessor jenkinsEventProcessor) {
 
@@ -152,5 +162,11 @@ public class EventHandlerContext {
 		"${com.liferay.lxc.dxp.server.protocol}://${com.liferay.lxc.dxp.main.domain}"
 	)
 	private String _liferayPortalURL;
+
+	@Autowired
+	private RoutineEntityRepository _routineEntityRepository;
+
+	@Autowired
+	private RoutineEntityScheduler _routineEntityScheduler;
 
 }

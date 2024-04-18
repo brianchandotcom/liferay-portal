@@ -7,8 +7,22 @@ import {delegate} from 'frontend-js-web';
 
 export default function ({namespace}) {
 	const requestQuote = document.getElementById(`${namespace}requestQuote`);
+	const orderTransition = document.getElementById(
+		`${namespace}orderTransition`
+	);
 
 	let delegateHandler = null;
+
+	if (orderTransition) {
+		delegateHandler = delegate(
+			orderTransition,
+			'click',
+			'.transition-link',
+			(event) => {
+				window[`${namespace}transition`](event);
+			}
+		);
+	}
 
 	if (requestQuote) {
 		delegateHandler = delegate(

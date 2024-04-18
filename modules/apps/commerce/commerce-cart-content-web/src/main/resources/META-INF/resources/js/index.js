@@ -4,7 +4,7 @@
  */
 
 export {default as cartView} from './cart/view';
-export {default as cartMiniTransition} from './cart_mini/transition';
+export {default as cartTransition} from './transition';
 export {default as cartMiniView} from './cart_mini/view';
 export {default as cartTotalRequestQuote} from './cart_total/requestQuote';
 export {default as cartTotalView} from './cart_total/view';

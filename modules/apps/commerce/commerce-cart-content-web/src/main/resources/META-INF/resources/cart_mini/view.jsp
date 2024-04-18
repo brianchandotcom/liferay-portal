@@ -292,7 +292,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		</li>
 	</ul>
 
-	<%@ include file="/cart_mini/transition.jspf" %>
+	<%@ include file="/common/transition.jspf" %>
 </liferay-ddm:template-renderer>
 
 <liferay-frontend:component

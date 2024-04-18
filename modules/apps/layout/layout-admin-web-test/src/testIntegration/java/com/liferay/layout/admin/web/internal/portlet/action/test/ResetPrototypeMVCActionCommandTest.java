@@ -127,47 +127,10 @@ public class ResetPrototypeMVCActionCommandTest {
 			_layoutLocalService.fetchLayoutByFriendlyURL(
 				_group.getGroupId(), false, layout.getFriendlyURL());
 
-		long segmentsExperienceId =
-			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
-				groupPublishedLayout.getPlid());
+		Assert.assertNotNull(groupPublishedLayout);
 
-		LayoutStructure layoutStructure = _getLayoutStructure(
-			_group.getGroupId(), groupPublishedLayout, segmentsExperienceId);
-
-		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
-			layoutStructure.getFragmentLayoutStructureItems();
-
-		Assert.assertEquals(
-			fragmentLayoutStructureItems.toString(), 1,
-			fragmentLayoutStructureItems.size());
-
-		for (Map.Entry<Long, LayoutStructureItem> entry :
-				fragmentLayoutStructureItems.entrySet()) {
-
-			long fragmentEntryLinkId = entry.getKey();
-
-			_fragmentEntryLinkService.deleteFragmentEntryLink(
-				fragmentEntryLinkId);
-
-			LayoutStructureItem layoutStructureItem = entry.getValue();
-
-			layoutStructure.deleteLayoutStructureItem(
-				layoutStructureItem.getItemId());
-		}
-
-		_updateLayoutPageTemplateStructureRel(
-			groupPublishedLayout, segmentsExperienceId,
-			layoutStructure.toString());
-
-		layoutStructure = _getLayoutStructure(
-			_group.getGroupId(), groupPublishedLayout, segmentsExperienceId);
-
-		fragmentLayoutStructureItems =
-			layoutStructure.getFragmentLayoutStructureItems();
-
-		Assert.assertEquals(
-			fragmentLayoutStructureItems.toString(), 0,
-			fragmentLayoutStructureItems.size());
+		groupPublishedLayout = _removeFragmentEntryLinkAndGetLayout(
+			groupPublishedLayout);
 
 		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
@@ -181,14 +144,14 @@ public class ResetPrototypeMVCActionCommandTest {
 		groupPublishedLayout = _layoutLocalService.getLayout(
 			groupPublishedLayout.getPlid());
 
-		segmentsExperienceId =
+		long segmentsExperienceId =
 			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
 				groupPublishedLayout.getPlid());
 
-		layoutStructure = _getLayoutStructure(
+		LayoutStructure layoutStructure = _getLayoutStructure(
 			_group.getGroupId(), groupPublishedLayout, segmentsExperienceId);
 
-		fragmentLayoutStructureItems =
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
 			layoutStructure.getFragmentLayoutStructureItems();
 
 		Assert.assertEquals(
@@ -288,6 +251,53 @@ public class ResetPrototypeMVCActionCommandTest {
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
+	}
+
+	private Layout _removeFragmentEntryLinkAndGetLayout(Layout layout)
+		throws Exception {
+
+		long segmentsExperienceId =
+			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		LayoutStructure layoutStructure = _getLayoutStructure(
+			layout.getGroupId(), layout, segmentsExperienceId);
+
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+			layoutStructure.getFragmentLayoutStructureItems();
+
+		Assert.assertEquals(
+			fragmentLayoutStructureItems.toString(), 1,
+			fragmentLayoutStructureItems.size());
+
+		for (Map.Entry<Long, LayoutStructureItem> entry :
+				fragmentLayoutStructureItems.entrySet()) {
+
+			long fragmentEntryLinkId = entry.getKey();
+
+			_fragmentEntryLinkService.deleteFragmentEntryLink(
+				fragmentEntryLinkId);
+
+			LayoutStructureItem layoutStructureItem = entry.getValue();
+
+			layoutStructure.deleteLayoutStructureItem(
+				layoutStructureItem.getItemId());
+		}
+
+		_updateLayoutPageTemplateStructureRel(
+			layout, segmentsExperienceId, layoutStructure.toString());
+
+		layoutStructure = _getLayoutStructure(
+			_group.getGroupId(), layout, segmentsExperienceId);
+
+		fragmentLayoutStructureItems =
+			layoutStructure.getFragmentLayoutStructureItems();
+
+		Assert.assertEquals(
+			fragmentLayoutStructureItems.toString(), 0,
+			fragmentLayoutStructureItems.size());
+
+		return _layoutLocalService.getLayout(layout.getPlid());
 	}
 
 	private void _setLinkEnabled(boolean linkEnabled) throws Exception {

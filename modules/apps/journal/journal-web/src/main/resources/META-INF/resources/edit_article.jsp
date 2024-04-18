@@ -114,26 +114,26 @@ journalEditArticleDisplayContext.setViewAttributes();
 											%>'
 										/>
 									</div>
-								</c:if>
 
-								<div class="autofit-col c-ml-2">
-									<react:component
-										module="{TranslationFilter} from journal-web"
-										props='<%=
-											HashMapBuilder.<String, Object>put(
-												"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
-											).put(
-												"fields", journalEditArticleDisplayContext.getFieldMap()
-											).put(
-												"locales", journalEditArticleDisplayContext.getLocales()
-											).put(
-												"namespace", liferayPortletResponse.getNamespace()
-											).put(
-												"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
-											).build()
-										%>'
-									/>
-								</div>
+									<div class="autofit-col c-ml-2">
+										<react:component
+											module="{TranslationFilter} from journal-web"
+											props='<%=
+												HashMapBuilder.<String, Object>put(
+													"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
+												).put(
+													"fields", journalEditArticleDisplayContext.getFieldMap()
+												).put(
+													"locales", journalEditArticleDisplayContext.getLocales()
+												).put(
+													"namespace", liferayPortletResponse.getNamespace()
+												).put(
+													"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
+												).build()
+											%>'
+										/>
+									</div>
+								</c:if>
 							</div>
 						</c:when>
 						<c:otherwise>

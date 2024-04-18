@@ -463,7 +463,7 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 				"publishParentLayoutsByDefault", false
 			).build());
 
-		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.background.task.internal.messaging." +
 					"BackgroundTaskMessageListener",
 				LoggerTestUtil.ERROR)) {
@@ -499,7 +499,7 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 
 			StagingUtil.publishToLive(_mockPortletRequest);
 
-			List<LogEntry> logEntries = logCapture1.getLogEntries();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			LogEntry logEntry = logEntries.get(0);
 

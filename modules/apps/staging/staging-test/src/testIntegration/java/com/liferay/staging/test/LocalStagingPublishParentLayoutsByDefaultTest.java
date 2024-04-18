@@ -122,20 +122,22 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 			stagingGroup.getGroupId(), content,
 			dataDefinition.getDataDefinitionKey(), null);
 
+		StagingUtil.addModelToChangesetCollection(journalArticle);
+
+		_mockPortletRequest = new MockPortletRequest();
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, childLayout);
-
 		mockHttpServletRequest.setParameter(
 			"doAsGroupId", String.valueOf(stagingGroup.getGroupId()));
 
-		ThemeDisplay themeDisplay = _getThemeDisplay(stagingGroup);
-
-		_mockPortletRequest = new MockPortletRequest();
-
 		_mockPortletRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
+
+		ThemeDisplay themeDisplay = _getThemeDisplay(stagingGroup);
+
 		_mockPortletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		_mockPortletRequest.setParameter(
@@ -162,8 +164,6 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			themeDisplay.getCompanyId(), JournalPortletKeys.JOURNAL);
 
-		StagingUtil.addModelToChangesetCollection(journalArticle);
-
 		StagingUtil.publishToLive(_mockPortletRequest, portlet);
 
 		Assert.assertEquals(
@@ -176,7 +176,6 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 				journalArticle.getUuid(), liveGroup.getGroupId());
 
 		Assert.assertNotNull(groupJournalArticle);
-
 		Assert.assertEquals(content, groupJournalArticle.getContent());
 	}
 

@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.test.performance.PerformanceTestTimer;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
-import com.liferay.portal.kernel.test.util.ItemCountPerformanceTestTimer;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -39,6 +39,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.nio.file.Path;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -502,5 +504,57 @@ public class ExportImportTaskResourcePerformanceTest {
 
 	@Inject
 	private UserService _userService;
+
+	private class ItemCountPerformanceTestTimer extends PerformanceTestTimer {
+
+		public ItemCountPerformanceTestTimer(
+			int count, String name, long maxTime) {
+
+			this(
+				count, getInvokerName(null, name), System.currentTimeMillis(),
+				maxTime, null);
+		}
+
+		public ItemCountPerformanceTestTimer(
+			int count, String name, long maxTime, Path logFilePath) {
+
+			this(
+				count, getInvokerName(null, name), System.currentTimeMillis(),
+				maxTime, logFilePath);
+		}
+
+		@Override
+		public void close() {
+			long delta = System.currentTimeMillis() - startTime;
+
+			double speed =
+				(delta > 0) ? (double)(_count * 1000) / (double)delta :
+					Double.NaN;
+
+			log(
+				StringBundler.concat(
+					"Completed ", name, " in ", delta, " ms, speed: ",
+					String.format("%.2f", speed), " items/s"));
+
+			Assert.assertTrue(
+				StringBundler.concat(
+					"Completed in ", delta,
+					"ms, but the expected completion time should be less than ",
+					maxTime, "ms"),
+				delta < maxTime);
+		}
+
+		protected ItemCountPerformanceTestTimer(
+			int count, String name, long startTime, long maxTime,
+			Path logFilePath) {
+
+			super(name, startTime, maxTime, logFilePath);
+
+			_count = count;
+		}
+
+		private int _count;
+
+	}
 
 }

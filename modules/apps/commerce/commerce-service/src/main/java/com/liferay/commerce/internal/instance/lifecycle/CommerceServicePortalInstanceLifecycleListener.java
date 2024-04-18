@@ -6,11 +6,19 @@
 package com.liferay.commerce.internal.instance.lifecycle;
 
 import com.liferay.commerce.helper.CommerceSAPHelper;
+import com.liferay.commerce.util.CommerceAccountRoleHelper;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,10 +36,41 @@ public class CommerceServicePortalInstanceLifecycleListener
 
 		_commerceSAPHelper.addCommerceDefaultSAPEntries(
 			company.getCompanyId(), user.getUserId());
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAttribute("forceReloadPermissions", Boolean.TRUE);
+		serviceContext.setCompanyId(company.getCompanyId());
+		serviceContext.setUserId(_getAdminUserId(company.getCompanyId()));
+		serviceContext.setUuid(PortalUUIDUtil.generate());
+
+		_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
+	}
+
+	private long _getAdminUserId(long companyId) throws Exception {
+		Role role = _roleLocalService.getRole(
+			companyId, RoleConstants.ADMINISTRATOR);
+
+		long[] userIds = _userLocalService.getRoleUserIds(role.getRoleId());
+
+		if (userIds.length == 0) {
+			throw new NoSuchUserException(
+				StringBundler.concat(
+					"No user exists in company ", companyId, " with role ",
+					role.getName()));
+		}
+
+		return userIds[0];
 	}
 
 	@Reference
+	private CommerceAccountRoleHelper _commerceAccountRoleHelper;
+
+	@Reference
 	private CommerceSAPHelper _commerceSAPHelper;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

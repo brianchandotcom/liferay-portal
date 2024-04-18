@@ -344,7 +344,7 @@
 			"DBType": "String",
 			"businessType": "Aggregation",
 			"externalReferenceCode": "bae66d68-c947-4534-84e5-aafd380842b1",
-			"indexed": true,
+			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "MDF Claim Activities Count"

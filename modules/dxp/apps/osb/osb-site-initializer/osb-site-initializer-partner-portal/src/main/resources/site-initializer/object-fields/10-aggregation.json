@@ -4,7 +4,7 @@
 			"DBType": "String",
 			"businessType": "Aggregation",
 			"externalReferenceCode": "42ae3c76-3488-435a-bc43-d20d0a25fb2d",
-			"indexed": true,
+			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Total Claimed Request"
@@ -32,7 +32,7 @@
 			"DBType": "String",
 			"businessType": "Aggregation",
 			"externalReferenceCode": "7809ed6c-0ed0-11ee-be56-0242ac120002",
-			"indexed": true,
+			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Total Paid Amount"

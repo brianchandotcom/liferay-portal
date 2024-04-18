@@ -40,44 +40,60 @@
 
 <div class="learn-article-nav">
 	<#if navigationMenuItems[productJSONObject.getString("title")]?has_content && navigationMenuItems[productJSONObject.getString("title")].title?has_content>
-		<div class="dropdown learn-article-nav-root">
-			<div
-				class="learn-article-nav-item"
-				data-toggle="liferay-dropdown"
-			>
-				<span
-					class="learn-article-nav-text"
-					id="dropdown-products"
-				>
-					<img
-						class="lexicon-icon lexicon-icon-caret-bottom product-icon"
-						role="presentation"
-						src='${navigationMenuItems[productJSONObject.getString("title")].image}'
-						viewBox="0 0 512 512"
-					/>
+		<div
+			class="dropdown learn-article-nav-root"
+			data-toggle="liferay-dropdown"
+		>
+			<div class="learn-article-nav-item">
+				<div id="dropdown-product">
+					<div class="learn-article-nav-image">
+						<img
+							class="lexicon-icon lexicon-icon-caret-bottom product-icon"
+							role="presentation"
+							src='${navigationMenuItems[productJSONObject.getString("title")].image}'
+							viewBox="0 0 512 512"
+						/>
+					</div>
 
-					<span>${navigationMenuItems[productJSONObject.getString("title")].title}</span>
-				</span>
+					<span class="learn-article-nav-text">${navigationMenuItems[productJSONObject.getString("title")].title}</span>
+				</div>
+
+				<div id="dropdown-icon">
+					<svg
+						class="lexicon-icon lexicon-icon-caret-bottom"
+						role="presentation"
+						viewBox="0 0 512 512"
+					>
+						<use xlink:href="/o/admin-theme/images/clay/icons.svg#caret-bottom"></use>
+					</svg>
+				</div>
 			</div>
 
 			<div class="dropdown-menu">
 				<#list navigationMenuItems as key, value>
-					<a
-						class="learn-article-nav-item"
+					<div
+						class="dropdown-item learn-article-nav-item"
 						href="/w/${navigationMenuItems[key].url}/index"
 						tabindex="4"
 					>
-						<span class="learn-article-nav-text">
-							<img
-								class="lexicon-icon lexicon-icon-caret-bottom product-icon mt-0 mr-2"
-								role="presentation"
-								src="${value.image}"height: 25px; margin-left: 5px; max-width: none; width: 25px;
-								viewBox="0 0 512 512"
-							/>
+						<div id="dropdown-product">
+							<div class="learn-article-nav-image">
+								<img
+									class="lexicon-icon lexicon-icon-caret-bottom product-icon mt-0 mr-2"
+									role="presentation"
+									src="${value.image}"height: 25px; margin-left: 5px; max-width: none; width: 25px;
+									viewBox="0 0 512 512"
+								/>
+							</div>
 
-							<span>${value.title}</span>
-						</span>
-					</a>
+							<span class="learn-article-nav-text">${value.title}</span>
+						</div>
+						<#if navigationMenuItems[productJSONObject.getString("title")].url == value.url>
+							<div>
+								<@clay["icon"] symbol="check" />
+							</div>
+						</#if>
+					</div>
 				</#list>
 			</div>
 		</div>
@@ -85,21 +101,24 @@
 
 	<div class="learn-article-nav-content">
 		<#if parentJSONObject?has_content>
-			<a
-				class="learn-article-nav-item learn-article-nav-parent"
-				href='${parentJSONObject.getString("url")}'
-				id="parentTitle"
-			>
-				<svg
-					class="lexicon-icon lexicon-icon-angle-left"
-					role="presentation"
-					viewBox="0 0 512 512"
-				>
-					<use xlink:href="#angle-left" />
-				</svg>
+			<div class="learn-article-nav-item learn-article-nav-parent">
+				<div class="m-2">
+					<a
+						href='${parentJSONObject.getString("url")}'
+						id="parentTitle"
+					>
+						<svg
+							class="lexicon-icon lexicon-icon-angle-left"
+							role="presentation"
+							viewBox="0 0 512 512"
+						>
+							<use xlink:href="/o/admin-theme/images/clay/icons.svg#angle-left"></use>
+						</svg>
+					</a>
+				</div>
 
 				<span>${parentJSONObject.getString("title")}</span>
-			</a>
+			</div>
 		</#if>
 
 		<#if childrenJSONArray.length() gt 0>
@@ -110,8 +129,9 @@
 							class="liferay-nav-item"
 							href="${childrenJSONArray.getJSONObject(i).url}"
 						>
-							<span>${childrenJSONArray.getJSONObject(i).getString("title")}</span>
 						</a>
+
+						<span>${childrenJSONArray.getJSONObject(i).getString("title")}</span>
 					</li>
 				</#list>
 			</ul>

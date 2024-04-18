@@ -7,9 +7,12 @@ package com.liferay.portal.store.file.system.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Props;
@@ -18,10 +21,14 @@ import com.liferay.portal.store.test.util.BaseStoreTestCase;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.io.File;
+
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.service.cm.Configuration;
@@ -60,6 +67,36 @@ public class FileSystemStoreTest extends BaseStoreTestCase {
 		ConfigurationTestUtil.deleteConfiguration(_configuration);
 
 		FileUtil.deltree(_rootDir);
+	}
+
+	@Test
+	public void testDeleteDirectoryWithSlash() throws Exception {
+		File rootDirFile = new File(_rootDir);
+
+		Assert.assertTrue(rootDirFile.exists());
+		Assert.assertTrue(rootDirFile.isDirectory());
+
+		File[] originalFiles = rootDirFile.listFiles();
+
+		Assert.assertTrue(originalFiles.length > 0);
+
+		long companyId = RandomTestUtil.nextLong();
+		long repositoryId = RandomTestUtil.nextLong();
+
+		_store.addFile(
+			companyId, repositoryId, "testFile", Store.VERSION_DEFAULT,
+			new UnsyncByteArrayInputStream(new byte[] {0}));
+
+		File testFile = new File(
+			_rootDir,
+			StringBundler.concat(
+				companyId, StringPool.SLASH, repositoryId, "/testFile"));
+
+		Assert.assertTrue(testFile.exists());
+
+		_store.deleteDirectory(companyId, repositoryId, StringPool.SLASH);
+
+		Assert.assertArrayEquals(originalFiles, rootDirFile.listFiles());
 	}
 
 	@Override

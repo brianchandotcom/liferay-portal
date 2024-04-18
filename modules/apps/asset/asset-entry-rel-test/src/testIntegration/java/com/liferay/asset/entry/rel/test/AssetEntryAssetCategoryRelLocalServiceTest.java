@@ -322,10 +322,9 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 	@FeatureFlags("LPD-11147")
 	@Test
 	public void testGetAssetEntryAssetCategoryRelsCountByClassNameId() {
-		long assetCategoryId = RandomTestUtil.randomLong();
-
 		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
 			_group.getGroupId(), null, FriendlyURLEntry.class.getName());
+		long assetCategoryId = RandomTestUtil.randomLong();
 
 		_addAssetEntryAssetCategoryRel(
 			assetEntry.getEntryId(), assetCategoryId);

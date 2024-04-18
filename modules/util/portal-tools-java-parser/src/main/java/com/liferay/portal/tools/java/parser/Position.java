@@ -5,6 +5,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import java.util.Objects;
+
 /**
  * @author Hugo Huijser
  */
@@ -51,6 +53,11 @@ public class Position implements Comparable<Position> {
 
 	public int getLinePosition() {
 		return _linePosition;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(_lineNumber, _linePosition);
 	}
 
 	private final int _lineNumber;

@@ -447,6 +447,13 @@ public class NestedSetsTreeManagerTest {
 		}
 
 		@Override
+		public int hashCode() {
+			String string = toString();
+
+			return string.hashCode();
+		}
+
+		@Override
 		public void setNestedSetsTreeNodeLeft(long nestedSetsTreeNodeLeft) {
 			_nestedSetsTreeNodeLeft = nestedSetsTreeNodeLeft;
 		}

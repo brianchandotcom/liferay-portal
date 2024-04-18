@@ -1,13 +1,11 @@
-[#if themeDisplay?has_content]
-	[#assign
-		displayPortalURLs = (themeDisplay.getURLCurrent()?split("dxp-release-notes/"))!
+[#if themeDisplay?has_content]	
+	[#assign displayPortalURLs = (themeDisplay.getURLCurrent()?split("dxp-release-notes/"))! /]
 
-		currentDisplayPaths = (displayPortalURLs?last?split("/"))!
+	[#assign currentDisplayPaths = (displayPortalURLs?last?split("/"))! /]
+	
+	[#assign currentTabId = (currentDisplayPaths?first)! /]
 
-		currentTabId = (currentDisplayPaths?first)!
-
-		currentDisplayIds = (displayPortalURLs?last?split(currentTabId)?last)!
-	/]
+	[#assign currentDisplayIds = (displayPortalURLs?last?split(currentTabId)?last)! /]
 [/#if]
 
 [#macro tab key label]

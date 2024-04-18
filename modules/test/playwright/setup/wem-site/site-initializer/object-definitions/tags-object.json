@@ -1,0 +1,154 @@
+{
+	"externalReferenceCode": "tags-object-1234",
+	"label": {
+		"en_US": "Tags Object"
+	},
+	"name": "TagsObject",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Author"
+			},
+			"localized": false,
+			"name": "creator",
+			"required": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "Date",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Create Date"
+			},
+			"localized": false,
+			"name": "createDate",
+			"required": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "External Reference Code"
+			},
+			"localized": false,
+			"name": "externalReferenceCode",
+			"required": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "ID"
+			},
+			"localized": false,
+			"name": "id",
+			"required": false,
+			"system": true,
+			"type": "Long"
+		},
+		{
+			"DBType": "Date",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Modified Date"
+			},
+			"localized": false,
+			"name": "modifiedDate",
+			"required": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Status"
+			},
+			"localized": false,
+			"name": "status",
+			"required": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Name"
+			},
+			"localized": false,
+			"name": "name",
+			"required": false,
+			"system": false,
+			"type": "String"
+		}
+	],
+	"objectLayouts": [
+		{
+			"defaultObjectLayout": true,
+			"name": {
+				"en_US": "Layout Name"
+			},
+			"objectLayoutTabs": [
+				{
+					"name": {
+						"en_US": "Field Tab"
+					},
+					"objectLayoutBoxes": [
+						{
+							"collapsable": false,
+							"name": {
+								"en_US": "Block 1"
+							},
+							"objectLayoutRows": [
+								{
+									"objectLayoutColumns": [
+										{
+											"objectFieldName": "name",
+											"priority": 0,
+											"size": 12
+										}
+									],
+									"priority": 0
+								}
+							],
+							"priority": 0,
+							"type": "regular"
+						},
+						{
+							"collapsable": false,
+							"name": {
+								"en_US": "Categorization"
+							},
+							"objectLayoutRows": [
+							],
+							"priority": 0,
+							"type": "categorization"
+						}
+					],
+					"priority": 0
+				}
+			]
+		}
+	],
+	"panelAppOrder": "100",
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "TagsObjects"
+	},
+	"scope": "site"
+}

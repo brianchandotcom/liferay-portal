@@ -168,9 +168,7 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 				Collections.emptyList(), false, true, null,
 				new ServiceContext());
 
-		oAuth2Application = oAuth2ApplicationLocalService.updateScopeAliases(
-			oAuth2Application.getUserId(), oAuth2Application.getUserName(),
-			oAuth2Application.getOAuth2ApplicationId(), scopeAliasesList);
+		updateScopes(oAuth2Application, scopeAliasesList);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

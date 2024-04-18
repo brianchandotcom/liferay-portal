@@ -22,17 +22,13 @@ distZip {
 	filesMatching("**/*.jar") {
 		it.path = it.name
 	}
-
-	rename("(.*)-(.*)(.jar)", "\$1\$3")
 }
 
 distributions {
 	main {
 		contents {
-			into("/") {
-				from "README.markdown"
-				from "scripts"
-			}
+			from "scripts"
+			into "/"
 		}
 	}
 }

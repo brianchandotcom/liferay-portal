@@ -28,7 +28,7 @@ class TestrayRunImpl extends Rest<RunForm, TestrayRun> {
 			}),
 			nestedFields: 'build.routine,build.projectToBuilds',
 			transformData: (run) => {
-				const environmentValues = run.name.split('|');
+				const environmentValues = run.testrayRunName.split('|');
 
 				const [
 					applicationServer,

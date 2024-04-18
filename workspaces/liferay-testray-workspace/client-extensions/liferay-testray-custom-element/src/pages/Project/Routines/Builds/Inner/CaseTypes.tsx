@@ -3,21 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useOutletContext} from 'react-router-dom';
-import {TestrayBuild, testrayCaseTypeImpl} from '~/services/rest';
+import {useParams} from 'react-router-dom';
 
 import Container from '../../../../../components/Layout/Container';
 import ListView from '../../../../../components/ListView';
 import ProgressBar from '../../../../../components/ProgressBar';
-import SearchBuilder from '../../../../../core/SearchBuilder';
 import i18n from '../../../../../i18n';
 
-type OutletContext = {
-	testrayBuild: TestrayBuild;
-};
-
 const CaseTypes = () => {
-	const {testrayBuild} = useOutletContext<OutletContext>();
+	const {buildId} = useParams();
 
 	return (
 		<Container className="mt-4">
@@ -29,7 +23,7 @@ const CaseTypes = () => {
 						test_fix: false,
 						untested: false,
 					},
-					columnsFixed: ['name'],
+					columnsFixed: ['testrayCaseTypeName'],
 					sort: {
 						direction: 'ASC',
 						key: 'name',
@@ -40,41 +34,31 @@ const CaseTypes = () => {
 					filterSchema: 'buildCaseTypes',
 					title: i18n.translate('case-types'),
 				}}
-				resource={testrayCaseTypeImpl.resource}
+				resource={`/testray-status-metrics/by-testray-buildId/${buildId}/testray-case-types-metrics`}
 				tableProps={{
 					columns: [
 						{
 							clickable: true,
-							key: 'name',
+							key: 'testrayCaseTypeName',
 							size: 'md',
 							value: i18n.translate('test-type'),
 						},
 						{
 							clickable: true,
-							key: 'total',
-							render: (_, caseType) =>
-								[
-									caseType?.caseResultBlocked,
-									caseType?.caseResultFailed,
-									caseType?.caseResultInProgress,
-									caseType?.caseResultIncomplete,
-									caseType?.caseResultPassed,
-									caseType?.caseResultTestFix,
-									caseType?.caseResultUntested,
-								].reduce(
-									(prevCount, currentCount) =>
-										prevCount + currentCount
-								),
+							key: 'testrayStatusMetric',
+							render: ({total}) => total,
 							value: i18n.translate('total'),
 						},
 						{
 							clickable: true,
-							key: 'caseResultFailed',
+							key: 'testrayStatusMetric',
+							render: ({failed}) => failed,
 							value: i18n.translate('failed'),
 						},
 						{
 							clickable: true,
-							key: 'caseResultBlocked',
+							key: 'testrayStatusMetric',
+							render: ({blocked}) => blocked,
 							value: i18n.translate('blocked'),
 						},
 						{
@@ -84,55 +68,58 @@ const CaseTypes = () => {
 						},
 						{
 							clickable: true,
-							key: 'caseResultInProgress',
+							key: 'testrayStatusMetric',
+							render: ({inProgress}) => inProgress,
 							value: i18n.translate('in-progress'),
 						},
 						{
 							clickable: true,
-							key: 'caseResultPassed',
+							key: 'testrayStatusMetric',
+							render: ({passed}) => passed,
 							value: i18n.translate('passed'),
 						},
 						{
 							clickable: true,
-							key: 'caseResultTestFix',
+							key: 'testrayStatusMetric',
+							render: ({testfix}) => testfix,
 							value: i18n.translate('test-fix'),
 						},
 						{
-							key: 'metrics',
-							render: (_, caseType) => (
+							key: 'testrayStatusMetric',
+							render: (testrayStatusMetric) => (
 								<ProgressBar
+									chartOrder={[
+										'passed',
+										'failed',
+										'blocked',
+										'test_fix',
+										'incomplete',
+									]}
 									items={{
-										blocked: caseType?.caseResultBlocked,
-										failed: caseType?.caseResultFailed,
+										blocked: testrayStatusMetric?.blocked,
+										failed: testrayStatusMetric?.failed,
 										incomplete:
-											caseType?.caseResultIncomplete,
-										passed: caseType?.caseResultPassed,
-										test_fix: caseType?.caseResultTestFix,
+											testrayStatusMetric?.untested +
+											testrayStatusMetric?.inProgress,
+										passed: testrayStatusMetric?.passed,
+										test_fix: testrayStatusMetric?.testfix,
 									}}
 								/>
 							),
 							size: 'sm',
 							value: i18n.translate('metrics'),
+							width: '300',
 						},
 					],
-					navigateTo: (caseType) =>
+					navigateTo: ({testrayCaseTypeId}) =>
 						`..?${new URLSearchParams({
 							filter: JSON.stringify({
 								'caseToCaseResult/r_caseTypeToCases_c_caseTypeId': [
-									caseType.id,
+									testrayCaseTypeId,
 								],
 							}),
 							filterSchema: 'buildResults',
 						})}`,
-				}}
-				transformData={(response) =>
-					testrayCaseTypeImpl.transformDataFromList(response)
-				}
-				variables={{
-					filter: SearchBuilder.eq(
-						'caseTypeToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
-						testrayBuild.id
-					),
 				}}
 			/>
 		</Container>

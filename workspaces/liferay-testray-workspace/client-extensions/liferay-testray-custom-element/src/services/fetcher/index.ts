@@ -32,7 +32,10 @@ function changeResource(resource: RequestInfo) {
 		return `${liferayHost}/o/dispatch-rest/v1.0${resource}`;
 	}
 
-	if (resource.toString().startsWith('/testray-run-comparisons')) {
+	if (
+		resource.toString().startsWith('/testray-run-comparisons') ||
+		resource.toString().startsWith('/testray-status-metrics')
+	) {
 		return `${liferayHost}/o/testray-rest/v1.0${resource}`;
 	}
 

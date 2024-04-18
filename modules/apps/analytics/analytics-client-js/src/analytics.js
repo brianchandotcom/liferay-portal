@@ -27,6 +27,7 @@ import {
 	VALIDATION_CONTEXT_VALUE_MAXIMUM_LENGTH,
 } from './utils/constants';
 import {getContexts, setContexts} from './utils/contexts';
+import {removeCookiesFromUserBrowser} from './utils/cookies';
 import {normalizeEvent} from './utils/events';
 import hash from './utils/hash';
 import {getItem, removeItem, setItem} from './utils/storage';
@@ -70,6 +71,8 @@ class Analytics {
 		});
 
 		instance.version = ANALYTICS_CLIENT_VERSION;
+
+		removeCookiesFromUserBrowser();
 
 		// Register initial middlewares
 

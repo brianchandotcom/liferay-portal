@@ -55,7 +55,6 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 		Ticket ticket = ticketResource.getUserAccountEmailVerificationTicket(
 			testGetUserAccountEmailVerificationTicket_getUserAccountId());
 
-		Assert.assertNotNull(ticket);
 		assertValid(ticket);
 
 		User requestingUser = _addUser(RandomTestUtil.randomString());
@@ -71,7 +70,6 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 		Ticket ticket = ticketResource.getUserAccountPasswordResetTicket(
 			testGetUserAccountPasswordResetTicket_getUserAccountId());
 
-		Assert.assertNotNull(ticket);
 		assertValid(ticket);
 
 		User requestingUser = _addUser(RandomTestUtil.randomString());
@@ -85,7 +83,7 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 	public void testGraphQLGetUserAccountEmailVerificationTicket()
 		throws Exception {
 
-		Assert.assertNotNull(
+		assertValid(
 			TicketSerDes.toDTO(
 				JSONUtil.getValueAsString(
 					invokeGraphQLQuery(
@@ -98,6 +96,22 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 							getGraphQLFields())),
 					"JSONObject/data",
 					"Object/userAccountEmailVerificationTicket")));
+
+		assertValid(
+			TicketSerDes.toDTO(
+				JSONUtil.getValueAsString(
+					invokeGraphQLQuery(
+						new GraphQLField(
+							"headlessAdminUser_v1_0",
+							new GraphQLField(
+								"userAccountEmailVerificationTicket",
+								new HashMapBuilder<>().<String, Object>put(
+									"userAccountId",
+									testGraphQLGetUserAccountEmailVerificationTicket_getUserAccountId()
+								).build(),
+								getGraphQLFields()))),
+					"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+					"Object/userAccountEmailVerificationTicket")));
 	}
 
 	@Override
@@ -105,7 +119,7 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 	public void testGraphQLGetUserAccountPasswordResetTicket()
 		throws Exception {
 
-		Assert.assertNotNull(
+		assertValid(
 			TicketSerDes.toDTO(
 				JSONUtil.getValueAsString(
 					invokeGraphQLQuery(
@@ -117,6 +131,22 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 							).build(),
 							getGraphQLFields())),
 					"JSONObject/data",
+					"Object/userAccountPasswordResetTicket")));
+
+		assertValid(
+			TicketSerDes.toDTO(
+				JSONUtil.getValueAsString(
+					invokeGraphQLQuery(
+						new GraphQLField(
+							"headlessAdminUser_v1_0",
+							new GraphQLField(
+								"userAccountPasswordResetTicket",
+								new HashMapBuilder<>().<String, Object>put(
+									"userAccountId",
+									testGraphQLGetUserAccountPasswordResetTicket_getUserAccountId()
+								).build(),
+								getGraphQLFields()))),
+					"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
 					"Object/userAccountPasswordResetTicket")));
 	}
 
@@ -245,7 +275,6 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 
 		Ticket ticket = unsafeFunction.apply(_user.getUserId());
 
-		Assert.assertNotNull(ticket);
 		assertValid(ticket);
 	}
 

@@ -313,7 +313,7 @@ LPS42924Check | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-c
 [LambdaCheck](check/lambda_check.markdown#lambdacheck) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that `lambda` statements are as simple as possible. |
 LanguageKeysCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java, .js or .jsx | Finds missing language keys in `Language.properties`. |
 LibraryVulnerabilitiesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .gradle, .gradle, .gradle, .gradle, .json, .json, .properties, .properties, .xml or .xml | Checks the introduction of libraries and third party components with known vulnerabilities |
-ListStylingCheck | [Styling](styling_checks.markdown#styling-checks) | | Applies rules to enforce consistency in code style. |
+ListStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .list | Applies rules to enforce consistency in code style. |
 [ListUtilCheck](check/list_util_check.markdown#listutilcheck) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for utilization of class `ListUtil`. |
 LiteralStringEqualsCheck | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where `Objects.equals` should be used. |
 [LocalFinalVariableNameCheck](https://checkstyle.sourceforge.io/checks/naming/localfinalvariablename.html) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that local final variable names conform to a specified pattern. |

@@ -1513,7 +1513,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _validateFileName(String sourceFileName, String extension)
-		throws FileNameExtensionException {
+		throws PortalException {
 
 		if (Validator.isNotNull(extension) &&
 			(Validator.isNull(sourceFileName) ||
@@ -1521,6 +1521,12 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			throw new FileNameExtensionException(
 				"The file name cannot be empty or without extension");
+		}
+
+		if (Validator.isNotNull(extension) &&
+			!extension.equals(FileUtil.getExtension(sourceFileName))) {
+
+			throw new FileExtensionException.MismatchExtension();
 		}
 	}
 

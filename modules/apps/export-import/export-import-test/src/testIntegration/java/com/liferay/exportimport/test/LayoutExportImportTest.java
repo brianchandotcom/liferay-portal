@@ -878,8 +878,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	/**
-	 * LPD-6808 Test if the link is correct between parent and child layouts.
-	 * Export/import parent layout first, and then the child layout.
+	 * LPD-6808
 	 */
 	@Test
 	public void testPublishParentLayoutsByDefaultConfigurationPublishParentLayoutFirstThenChildLayout()

@@ -1,124 +1,84 @@
 {
-	"pageElement": {
-		"pageElements": [
-			{
-				"definition": {
-					"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: var(--spacer-4);\n}",
-					"fragmentStyle": {
-					},
-					"indexed": true,
-					"layout": {
-						"contentDisplay": "FlexRow",
-						"widthType": "Fixed"
-					}
-				},
-				"pageElements": [
-					{
-						"definition": {
-							"fragmentStyle": {
-								"maxWidth": "300px"
-							},
-							"indexed": true,
-							"layout": {
-								"widthType": "Fixed"
-							}
-						},
-						"pageElements": [
-							{
-								"definition": {
-									"fragment": {
-										"key": "BASIC_COMPONENT-html"
-									},
-									"fragmentConfig": {
-									},
-									"fragmentFields": [
-										{
-											"id": "element-html",
-											"value": {
-												"html": {
-													"mapping": {
-														"fieldKey": "_ddmTemplate_LEARN-ARTICLE-NAV",
-														"itemReference": {
-															"contextSource": "DisplayPageItem"
-														}
-													}
-												}
-											}
-										}
-									],
-									"indexed": true
-								},
-								"type": "Fragment"
-							}
-						],
-						"type": "Section"
-					},
-					{
-						"definition": {
-							"fragmentStyle": {
-								"width": "100%"
-							},
-							"indexed": true,
-							"layout": {
-								"contentDisplay": "FlexRow",
-								"justifyContent": "Center",
-								"widthType": "Fixed"
-							}
-						},
-						"pageElements": [
-							{
-								"definition": {
-									"fragmentStyle": {
-										"maxWidth": "var(--container-max-lg)",
-										"width": "100%"
-									},
-									"indexed": true,
-									"layout": {
-									}
-								},
-								"pageElements": [
-									{
-										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-html"
-											},
-											"fragmentConfig": {
-											},
-											"fragmentFields": [
-												{
-													"id": "element-html",
-													"value": {
-														"html": {
-															"mapping": {
-																"fieldKey": "_ddmTemplate_LEARN-ARTICLE",
-																"itemReference": {
-																	"contextSource": "DisplayPageItem"
-																}
-															}
-														}
-													}
-												}
-											],
-											"indexed": true
-										},
-										"type": "Fragment"
-									}
-								],
-								"type": "Section"
-							}
-						],
-						"type": "Section"
-					}
-				],
-				"type": "Section"
-			}
-		],
-		"type": "Root"
-	},
-	"settings": {
-		"masterPage": {
-			"key": "liferay-learn"
-		}
-	},
-	"version": 1.0
+    "pageElement": {
+        "pageElements": [
+            {
+                "definition": {
+                    "fragmentStyle": {
+                        "marginLeft": "3",
+                        "marginRight": "3",
+                        "marginTop": "3"
+                    },
+                    "indexed": true,
+                    "layout": {
+                        "contentDisplay": "FlexRow",
+                        "marginLeft": 1,
+                        "marginRight": 1,
+                        "marginTop": 1
+                    }
+                },
+                "pageElements": [
+                    {
+                        "definition": {
+                            "fragment": {"key": "BASIC_COMPONENT-html"},
+                            "fragmentConfig": {},
+                            "fragmentFields": [
+                                {
+                                    "id": "element-html",
+                                    "value": {
+                                        "html": {
+                                            "mapping": {
+                                                "fieldKey": "_ddmTemplate_LEARN_ARTICLE_NAV",
+                                                "itemReference": {
+                                                    "contextSource": "DisplayPageItem"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            "indexed": true
+                        },
+                        "type": "Fragment"
+                    },
+                    {
+                        "definition": {
+                            "fragment": {"key": "BASIC_COMPONENT-html"},
+                            "fragmentConfig": {},
+                            "fragmentFields": [
+                                {
+                                    "id": "element-html",
+                                    "value": {
+                                        "html": {
+                                            "mapping": {
+                                                "fieldKey": "_ddmTemplate_LEARN_ARTICLE",
+                                                "itemReference": {
+                                                    "contextSource": "DisplayPageItem"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            "indexed": true
+                        },
+                        "type": "Fragment"
+                    }
+                ],
+                "type": "Section"
+            }
+        ],
+        "type": "Root"
+    },
+    "settings": {
+        "colorSchemeName": "01",
+        "masterPage": {"key": "liferay-learn"},
+        "themeName": "Dialect",
+        "themeSettings": {
+            "lfr-theme:regular:show-header-search": "false",
+            "lfr-theme:regular:show-header": "false",
+            "lfr-theme:regular:show-footer": "false",
+            "lfr-theme:regular:wrap-widget-page-content": "false"
+        }
+    },
+    "version": 1.0
 }

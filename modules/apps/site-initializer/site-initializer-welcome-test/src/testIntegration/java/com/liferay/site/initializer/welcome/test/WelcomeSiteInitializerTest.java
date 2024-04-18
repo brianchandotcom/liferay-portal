@@ -70,12 +70,6 @@ public class WelcomeSiteInitializerTest {
 		siteInitializer.initialize(_group.getGroupId());
 
 		_assertLayoutUtilityPageEntry(
-			"Sign In", "com_liferay_login_web_portlet_LoginPortlet",
-			_layoutUtilityPageEntryLocalService.
-				fetchDefaultLayoutUtilityPageEntry(
-					_group.getGroupId(),
-					LayoutUtilityPageEntryConstants.TYPE_LOGIN));
-		_assertLayoutUtilityPageEntry(
 			"Create Account",
 			"com_liferay_login_web_portlet_CreateAccountPortlet",
 			_layoutUtilityPageEntryLocalService.
@@ -89,6 +83,12 @@ public class WelcomeSiteInitializerTest {
 				fetchDefaultLayoutUtilityPageEntry(
 					_group.getGroupId(),
 					LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD));
+		_assertLayoutUtilityPageEntry(
+			"Sign In", "com_liferay_login_web_portlet_LoginPortlet",
+			_layoutUtilityPageEntryLocalService.
+				fetchDefaultLayoutUtilityPageEntry(
+					_group.getGroupId(),
+					LayoutUtilityPageEntryConstants.TYPE_LOGIN));
 	}
 
 	private void _assertLayoutUtilityPageEntry(

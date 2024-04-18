@@ -11,7 +11,7 @@ that they only contain data associated with their proper company ID.
 ## Usage
 
 ```
-java -jar com.liferay.portal.tools.db.partition.schema.validator.jar -d databaseName -u databaseUser -p dabatabasePassword 
+java -jar com.liferay.portal.tools.db.partition.schema.validator.jar -d xyz123 -p xyz123 -u xyz123 
 ```
 
 Options:

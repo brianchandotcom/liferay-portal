@@ -129,7 +129,7 @@ public class ResetPrototypeMVCActionCommandTest {
 
 		Assert.assertNotNull(groupPublishedLayout);
 
-		groupPublishedLayout = _removeFragmentEntryLinkAndGetLayout(
+		groupPublishedLayout = _removeFragmentEntryPublishAndGetLayout(
 			groupPublishedLayout);
 
 		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
@@ -253,15 +253,19 @@ public class ResetPrototypeMVCActionCommandTest {
 		return themeDisplay;
 	}
 
-	private Layout _removeFragmentEntryLinkAndGetLayout(Layout layout)
+	private Layout _removeFragmentEntryPublishAndGetLayout(Layout layout)
 		throws Exception {
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
 		long segmentsExperienceId =
-			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
 
 		LayoutStructure layoutStructure = _getLayoutStructure(
-			layout.getGroupId(), layout, segmentsExperienceId);
+			layout.getGroupId(), draftLayout, segmentsExperienceId);
 
 		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
 			layoutStructure.getFragmentLayoutStructureItems();
@@ -285,10 +289,17 @@ public class ResetPrototypeMVCActionCommandTest {
 		}
 
 		_updateLayoutPageTemplateStructureRel(
-			layout, segmentsExperienceId, layoutStructure.toString());
+			draftLayout, segmentsExperienceId, layoutStructure.toString());
+
+		ContentLayoutTestUtil.publishLayout(
+			_layoutLocalService.getLayout(draftLayout.getPlid()), layout);
+
+		layout = _layoutLocalService.getLayout(layout.getPlid());
 
 		layoutStructure = _getLayoutStructure(
-			_group.getGroupId(), layout, segmentsExperienceId);
+			layout.getGroupId(), layout,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()));
 
 		fragmentLayoutStructureItems =
 			layoutStructure.getFragmentLayoutStructureItems();
@@ -297,7 +308,7 @@ public class ResetPrototypeMVCActionCommandTest {
 			fragmentLayoutStructureItems.toString(), 0,
 			fragmentLayoutStructureItems.size());
 
-		return _layoutLocalService.getLayout(layout.getPlid());
+		return layout;
 	}
 
 	private void _setLinkEnabled(boolean linkEnabled) throws Exception {

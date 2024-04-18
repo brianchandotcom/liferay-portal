@@ -2230,6 +2230,13 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
+	public Date getLastSeenDate(FaroProject faroProject) {
+		return get(
+			faroProject, Rels.PROJECTS_LAST_SEEN_DATE,
+			faroProject.getProjectId(), Date.class);
+	}
+
+	@Override
 	public Results<PageVisited> getPagesVisited(
 		FaroProject faroProject, String channelId, String ownerId,
 		String ownerType, String query, String interestName, Date startDate,

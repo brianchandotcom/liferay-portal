@@ -129,33 +129,34 @@ export default function TranslationFilter({
 
 	return (
 		<>
-			<Picker
-				active={active}
-				as={Trigger}
-				disabled={defaultLanguageId === selectedLanguageId}
-				id="picker"
-				onActiveChange={(active: boolean) => {
-					if (active) {
-						updateTranslations();
-					}
+			{selectedLanguageId !== defaultLanguageId && (
+				<Picker
+					active={active}
+					as={Trigger}
+					id="picker"
+					onActiveChange={(active: boolean) => {
+						if (active) {
+							updateTranslations();
+						}
 
-					setActive(active);
-				}}
-				onSelectionChange={handleSelection}
-				selectedKey={selectedKey}
-			>
-				<Option key="all-fields">
-					{Liferay.Language.get('all-fields')}
-				</Option>
+						setActive(active);
+					}}
+					onSelectionChange={handleSelection}
+					selectedKey={selectedKey}
+				>
+					<Option key="all-fields">
+						{Liferay.Language.get('all-fields')}
+					</Option>
 
-				<Option key="translated">
-					{Liferay.Language.get('translated')}
-				</Option>
+					<Option key="translated">
+						{Liferay.Language.get('translated')}
+					</Option>
 
-				<Option key="untranslated">
-					{Liferay.Language.get('untranslated')}
-				</Option>
-			</Picker>
+					<Option key="untranslated">
+						{Liferay.Language.get('untranslated')}
+					</Option>
+				</Picker>
+			)}
 		</>
 	);
 }

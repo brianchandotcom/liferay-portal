@@ -173,8 +173,8 @@ public class ReportController extends BaseFaroController {
 		if (!_csvExportTypes.contains(type)) {
 			return _reportControllerResponseFactory.create(
 				"The \"type\" query parameter must be either \"blog\", " +
-					"\"document\", \"form\", \"individual\", \"journal\", or " +
-						"\"page\".",
+					"\"document\", \"event\", \"form\", \"individual\", " +
+						"\"journal\", or \"page\".",
 				Response.Status.BAD_REQUEST);
 		}
 
@@ -290,7 +290,7 @@ public class ReportController extends BaseFaroController {
 		ReportController.class);
 
 	private static final Set<String> _csvExportTypes = SetUtil.fromArray(
-		"blog", "document", "form", "individual", "journal", "page");
+		"blog", "document", "event", "form", "individual", "journal", "page");
 	private static final DateTimeFormatter _dateDateTimeFormatter =
 		DateTimeFormatter.ofPattern(_ISO_8601_DATE_FORMAT);
 	private static final DateTimeFormatter _dateTimeDateTimeFormatter =

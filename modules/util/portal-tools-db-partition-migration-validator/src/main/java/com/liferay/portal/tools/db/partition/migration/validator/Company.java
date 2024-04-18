@@ -16,13 +16,13 @@ public class Company {
 	}
 
 	public Company(
-		long companyId, String companyName, String virtualHost, String webId) {
+		long companyId, String companyName, String virtualHostName,
+		String webId) {
 
 		_companyId = companyId;
 		_companyName = companyName;
+		_virtualHostName = virtualHostName;
 		_webId = webId;
-
-		_virtualHostName = virtualHost;
 	}
 
 	@Override

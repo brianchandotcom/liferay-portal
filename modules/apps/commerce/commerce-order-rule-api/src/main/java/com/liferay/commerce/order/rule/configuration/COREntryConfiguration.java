@@ -28,7 +28,4 @@ public interface COREntryConfiguration {
 	)
 	public int checkInterval();
 
-	@Meta.AD(deflt = "false", name = "enabled", required = false)
-	public boolean enabled();
-
 }

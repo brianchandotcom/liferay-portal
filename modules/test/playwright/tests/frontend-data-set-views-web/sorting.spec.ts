@@ -54,8 +54,6 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 });
 
 test.describe('Data Set Sorting', () => {
-	test.slow();
-
 	test('In the New Sort modal, the Order Type input only appears when default is checked', async ({
 		page,
 		sortingPage,

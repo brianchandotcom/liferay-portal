@@ -60,9 +60,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -318,13 +320,16 @@ public class ProjectController extends BaseFaroController {
 			@DefaultValue("true") @QueryParam("deleteData") boolean deleteData)
 		throws Exception {
 
+		FaroProject faroProject =
+			_faroProjectLocalService.fetchFaroProjectByGroupId(groupId);
+
+		_validateLastSeenDate(faroProject);
+
 		_contactsCardTemplateLocalService.deleteContactsCardTemplates(groupId);
 		_contactsLayoutTemplateLocalService.deleteContactsLayoutTemplates(
 			groupId);
 
-		contactsEngineClient.deleteProject(
-			_faroProjectLocalService.fetchFaroProjectByGroupId(groupId),
-			deleteData);
+		contactsEngineClient.deleteProject(faroProject, deleteData);
 
 		return new ProjectDisplay(
 			_faroProjectLocalService.deleteFaroProjectByGroupId(groupId));
@@ -1024,6 +1029,13 @@ public class ProjectController extends BaseFaroController {
 		return projectDisplay;
 	}
 
+	private String _getDeletionFailedErrorMessage(User user) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", user.getLocale(), getClass());
+
+		return language.get(resourceBundle, "deletion-failed");
+	}
+
 	private String _getTimeZoneIdErrorMessage(User user) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", user.getLocale(), getClass());
@@ -1194,6 +1206,21 @@ public class ProjectController extends BaseFaroController {
 					"incidentReportEmailAddresses",
 					_getIncidentReportEmailAddressesErrorMessage());
 			}
+		}
+	}
+
+	private void _validateLastSeenDate(FaroProject faroProject) {
+		Date lastSeenDate = contactsEngineClient.getLastSeenDate(faroProject);
+
+		Calendar calendar = new GregorianCalendar();
+
+		calendar.setTime(new Date());
+
+		calendar.add(Calendar.DATE, -3);
+
+		if (lastSeenDate.after(calendar.getTime())) {
+			throw new FaroValidationException(
+				"lastSeenDate", _getDeletionFailedErrorMessage(getUser()));
 		}
 	}
 

@@ -1,8 +1,8 @@
 <#assign
+	featureAvailability = ""
 	journalArticleId = .vars["reserved-article-id"].data
 	moreInfoURLs = []
 	productCapabilities = ""
-	releaseStatusCurrent = ""
 	releaseStatusPrevious = ""
 	restArticle = restClient.get("/headless-delivery/v1.0/sites/${groupId}/structured-contents/by-key/${journalArticleId}?nestedFields=embeddedTaxonomyCategory")
 	ticketURLs = []
@@ -45,8 +45,8 @@
 
 	<#if stringUtil.equals(taxonomyVocabularyName, "Product Capabilities")>
 		<#assign productCapabilities = productCapabilities + "<span class=\"font-weight-normal label label-secondary label-tonal-info m-0 px-2 text-paragraph-sm\">${taxonomyCategoryBrief.taxonomyCategoryName}</span>" />
-	<#elseif stringUtil.equals(taxonomyVocabularyName, "Release Status Current")>
-		<#assign releaseStatusCurrent = taxonomyCategoryBrief.taxonomyCategoryName />
+	<#elseif stringUtil.equals(taxonomyVocabularyName, "Feature Availability")>
+		<#assign featureAvailability = taxonomyCategoryBrief.taxonomyCategoryName />
 	<#elseif stringUtil.equals(taxonomyVocabularyName, "Release Status Previous")>
 		<#assign releaseStatusPrevious = taxonomyCategoryBrief.taxonomyCategoryName />
 	</#if>
@@ -79,7 +79,7 @@
 		->
 	</#if>
 
-	<span class="release-status-current">
-		${releaseStatusCurrent}
+	<span class="feature-availability">
+		${featureAvailability}
 	</span>
 </div>

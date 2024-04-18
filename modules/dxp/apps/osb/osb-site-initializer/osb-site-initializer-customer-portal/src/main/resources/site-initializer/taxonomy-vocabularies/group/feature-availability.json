@@ -6,10 +6,10 @@
 			"type": "StructuredContent"
 		}
 	],
-	"externalReferenceCode": "RELEASES-STATUS-CURRENT",
-	"name": "Release Status Current",
+	"externalReferenceCode": "FEATURE-AVAILABILITY",
+	"name": "Feature Availability",
 	"name_i18n": {
-		"en_US": "Release Status Current"
+		"en_US": "Feature Availability"
 	},
 	"viewableBy": "Anyone"
 }

@@ -8,17 +8,25 @@ import Job from '../jobs/Job';
 import Routine from './Routine';
 
 export async function createRoutine({data, redirect}) {
+	const headers = {
+		'Content-Type': 'application/json',
+		'accept': 'application/json',
+	};
+
 	const routinesResponse = await liferayRequest({
 		body: JSON.stringify(data),
-		headers: {
-			'Content-Type': 'application/json',
-			'accept': 'application/json',
-		},
+		headers,
 		method: 'POST',
 		urlPath: '/o/c/routines',
 	});
 
 	const routinesResult = JSON.parse(await routinesResponse.text());
+
+	await liferayRequest({
+		headers,
+		method: 'PUT',
+		urlPath: `/o/c/routines/${routinesResult.id}/object-actions/Jethr0EtcSpringBootRoutineAdd`,
+	});
 
 	if (routinesResult && redirect) {
 		redirect(routinesResult);

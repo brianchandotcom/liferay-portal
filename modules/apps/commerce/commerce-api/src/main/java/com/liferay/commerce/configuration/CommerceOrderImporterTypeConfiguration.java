@@ -23,9 +23,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CommerceOrderImporterTypeConfiguration {
 
-	@Meta.AD(deflt = "false", name = "enabled", required = false)
-	public boolean enabled();
-
 	@Meta.AD(deflt = ",", name = "csv-separator", required = false)
 	public String csvSeparator();
 

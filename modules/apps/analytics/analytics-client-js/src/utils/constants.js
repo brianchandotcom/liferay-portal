@@ -5,7 +5,7 @@
 
 // AC Version
 
-export const ANALYTICS_CLIENT_VERSION = '1.2.0';
+export const ANALYTICS_CLIENT_VERSION = '1.1.8';
 
 // Application ID
 

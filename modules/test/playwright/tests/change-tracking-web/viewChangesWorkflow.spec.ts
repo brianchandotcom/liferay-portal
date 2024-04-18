@@ -109,3 +109,37 @@ test('LPD-22673 View Usages link is added to workflow info display', async ({
 
 	await expect(page.getByText(`Usages: ${journalName}`)).toBeVisible();
 });
+
+test('LPD-23331 Workflow data is displayed when workflow task is approved', async ({
+	changeTrackingPage,
+	ctCollection,
+	page,
+	workflowTasksPage,
+}) => {
+	const displayData = [
+		'Status',
+		'Assigned to',
+		'Task Name',
+		'Create Date',
+		'Due Date',
+		'Usages',
+	];
+
+	await workflowTasksPage.goToAssignedToMyRoles();
+
+	await workflowTasksPage.assignToMe(journalName);
+
+	await workflowTasksPage.approve(journalName);
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	await changeTrackingPage.reviewChange(journalName);
+
+	await changeTrackingPage.viewDisplayTab('Workflow');
+
+	await changeTrackingPage.selectTab('Workflow');
+
+	for (const data of displayData) {
+		await expect(page.getByText(data, {exact: true})).toBeVisible();
+	}
+});

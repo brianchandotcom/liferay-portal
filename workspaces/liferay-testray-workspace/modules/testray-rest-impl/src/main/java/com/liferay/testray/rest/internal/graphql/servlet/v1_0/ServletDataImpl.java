@@ -7,10 +7,12 @@ import com.liferay.testray.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayBuildAutofillResourceImpl;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayRunComparisonResourceImpl;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayStatusMetricResourceImpl;
+import com.liferay.testray.rest.internal.resource.v1_0.TestrayTestFlowResourceImpl;
 import com.liferay.testray.rest.internal.resource.v1_0.TestrayTestSuiteResourceImpl;
 import com.liferay.testray.rest.resource.v1_0.TestrayBuildAutofillResource;
 import com.liferay.testray.rest.resource.v1_0.TestrayRunComparisonResource;
 import com.liferay.testray.rest.resource.v1_0.TestrayStatusMetricResource;
+import com.liferay.testray.rest.resource.v1_0.TestrayTestFlowResource;
 import com.liferay.testray.rest.resource.v1_0.TestrayTestSuiteResource;
 
 import java.util.HashMap;
@@ -37,6 +39,8 @@ public class ServletDataImpl implements ServletData {
 	public void activate(BundleContext bundleContext) {
 		Mutation.setTestrayBuildAutofillResourceComponentServiceObjects(
 			_testrayBuildAutofillResourceComponentServiceObjects);
+		Mutation.setTestrayTestFlowResourceComponentServiceObjects(
+			_testrayTestFlowResourceComponentServiceObjects);
 		Mutation.setTestrayTestSuiteResourceComponentServiceObjects(
 			_testrayTestSuiteResourceComponentServiceObjects);
 
@@ -91,6 +95,16 @@ public class ServletDataImpl implements ServletData {
 							TestrayBuildAutofillResourceImpl.class,
 							"postTestrayBuildAutofillBatch"));
 					put(
+						"mutation#createTestrayTestFlow",
+						new ObjectValuePair<>(
+							TestrayTestFlowResourceImpl.class,
+							"postTestrayTestFlow"));
+					put(
+						"mutation#createTestrayTestFlowBatch",
+						new ObjectValuePair<>(
+							TestrayTestFlowResourceImpl.class,
+							"postTestrayTestFlowBatch"));
+					put(
 						"mutation#createTestrayTestSuite",
 						new ObjectValuePair<>(
 							TestrayTestSuiteResourceImpl.class,
@@ -137,6 +151,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TestrayBuildAutofillResource>
 		_testrayBuildAutofillResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<TestrayTestFlowResource>
+		_testrayTestFlowResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TestrayTestSuiteResource>

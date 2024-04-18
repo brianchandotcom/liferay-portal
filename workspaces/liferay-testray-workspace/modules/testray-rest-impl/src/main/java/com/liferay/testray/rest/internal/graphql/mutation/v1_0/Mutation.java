@@ -12,8 +12,10 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.testray.rest.dto.v1_0.TestrayBuildAutofill;
+import com.liferay.testray.rest.dto.v1_0.TestrayTestFlow;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestSuite;
 import com.liferay.testray.rest.resource.v1_0.TestrayBuildAutofillResource;
+import com.liferay.testray.rest.resource.v1_0.TestrayTestFlowResource;
 import com.liferay.testray.rest.resource.v1_0.TestrayTestSuiteResource;
 
 import java.util.function.BiFunction;
@@ -41,6 +43,14 @@ public class Mutation {
 
 		_testrayBuildAutofillResourceComponentServiceObjects =
 			testrayBuildAutofillResourceComponentServiceObjects;
+	}
+
+	public static void setTestrayTestFlowResourceComponentServiceObjects(
+		ComponentServiceObjects<TestrayTestFlowResource>
+			testrayTestFlowResourceComponentServiceObjects) {
+
+		_testrayTestFlowResourceComponentServiceObjects =
+			testrayTestFlowResourceComponentServiceObjects;
 	}
 
 	public static void setTestrayTestSuiteResourceComponentServiceObjects(
@@ -79,6 +89,33 @@ public class Mutation {
 			testrayBuildAutofillResource ->
 				testrayBuildAutofillResource.postTestrayBuildAutofillBatch(
 					testrayBuildId1, testrayBuildId2, callbackURL, object));
+	}
+
+	@GraphQLField
+	public TestrayTestFlow createTestrayTestFlow(
+			@GraphQLName("testrayTaskId") Long testrayTaskId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_testrayTestFlowResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			testrayTestFlowResource ->
+				testrayTestFlowResource.postTestrayTestFlow(testrayTaskId));
+	}
+
+	@GraphQLField
+	public Response createTestrayTestFlowBatch(
+			@GraphQLName("testrayTaskId") Long testrayTaskId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_testrayTestFlowResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			testrayTestFlowResource ->
+				testrayTestFlowResource.postTestrayTestFlowBatch(
+					testrayTaskId, callbackURL, object));
 	}
 
 	@GraphQLField
@@ -172,6 +209,28 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			TestrayTestFlowResource testrayTestFlowResource)
+		throws Exception {
+
+		testrayTestFlowResource.setContextAcceptLanguage(_acceptLanguage);
+		testrayTestFlowResource.setContextCompany(_company);
+		testrayTestFlowResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		testrayTestFlowResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		testrayTestFlowResource.setContextUriInfo(_uriInfo);
+		testrayTestFlowResource.setContextUser(_user);
+		testrayTestFlowResource.setGroupLocalService(_groupLocalService);
+		testrayTestFlowResource.setRoleLocalService(_roleLocalService);
+
+		testrayTestFlowResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		testrayTestFlowResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
 			TestrayTestSuiteResource testrayTestSuiteResource)
 		throws Exception {
 
@@ -195,6 +254,8 @@ public class Mutation {
 
 	private static ComponentServiceObjects<TestrayBuildAutofillResource>
 		_testrayBuildAutofillResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TestrayTestFlowResource>
+		_testrayTestFlowResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TestrayTestSuiteResource>
 		_testrayTestSuiteResourceComponentServiceObjects;
 

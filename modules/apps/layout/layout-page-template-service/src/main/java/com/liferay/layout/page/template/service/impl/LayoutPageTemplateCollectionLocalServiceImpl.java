@@ -51,10 +51,9 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long userId, long groupId, 
-			long parentLayoutPageTemplateCollectionId,
-			String name, String description, int type,
-			ServiceContext serviceContext)
+			long userId, long groupId,
+			long parentLayoutPageTemplateCollectionId, String name,
+			String description, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template collection

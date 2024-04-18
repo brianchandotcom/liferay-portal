@@ -199,8 +199,8 @@ public class APIEndpointRelevantObjectEntryModelListener
 				_objectEntryLocalService.getValuesList(
 					objectEntry.getGroupId(), objectEntry.getCompanyId(),
 					objectEntry.getUserId(),
-					objectEntry.getObjectDefinitionId(), predicate, null, -1,
-					-1, null);
+					objectEntry.getObjectDefinitionId(), null, predicate, null,
+					-1, -1, null);
 
 			if (!valuesList.isEmpty()) {
 				throw new ObjectEntryValuesException.InvalidObjectField(

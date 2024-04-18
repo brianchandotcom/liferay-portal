@@ -2505,7 +2505,7 @@ public class ObjectEntryLocalServiceTest {
 		List<Map<String, Serializable>> valuesList =
 			_objectEntryLocalService.getValuesList(
 				0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), null, null,
+				_objectDefinition.getObjectDefinitionId(), null, null, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(valuesList.toString(), 0, valuesList.size());
@@ -2527,7 +2527,7 @@ public class ObjectEntryLocalServiceTest {
 
 		valuesList = _objectEntryLocalService.getValuesList(
 			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), null, null,
+			_objectDefinition.getObjectDefinitionId(), null, null, null,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(valuesList.toString(), 1, valuesList.size());
@@ -2551,7 +2551,7 @@ public class ObjectEntryLocalServiceTest {
 
 		valuesList = _objectEntryLocalService.getValuesList(
 			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), null, null,
+			_objectDefinition.getObjectDefinitionId(), null, null, null,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(valuesList.toString(), 2, valuesList.size());
@@ -2576,7 +2576,7 @@ public class ObjectEntryLocalServiceTest {
 
 		valuesList = _objectEntryLocalService.getValuesList(
 			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), null, null,
+			_objectDefinition.getObjectDefinitionId(), null, null, null,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(valuesList.toString(), 3, valuesList.size());
@@ -2592,7 +2592,7 @@ public class ObjectEntryLocalServiceTest {
 		valuesList = _objectEntryLocalService.getValuesList(
 			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			_irrelevantObjectDefinition.getObjectDefinitionId(), null, null,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(valuesList.toString(), 0, valuesList.size());
 
@@ -2620,7 +2620,7 @@ public class ObjectEntryLocalServiceTest {
 
 		valuesList = _objectEntryLocalService.getValuesList(
 			0, TestPropsValues.getCompanyId(), user.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), null, null,
+			_objectDefinition.getObjectDefinitionId(), null, null, null,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(valuesList.toString(), 1, valuesList.size());
@@ -2644,7 +2644,7 @@ public class ObjectEntryLocalServiceTest {
 
 		valuesList = _objectEntryLocalService.getValuesList(
 			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), predicate, null,
+			_objectDefinition.getObjectDefinitionId(), null, predicate, null,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(valuesList.toString(), 2, valuesList.size());
@@ -2660,7 +2660,7 @@ public class ObjectEntryLocalServiceTest {
 
 		valuesList = _objectEntryLocalService.getValuesList(
 			0, TestPropsValues.getCompanyId(), user.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), predicate, null,
+			_objectDefinition.getObjectDefinitionId(), null, predicate, null,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(valuesList.toString(), 1, valuesList.size());

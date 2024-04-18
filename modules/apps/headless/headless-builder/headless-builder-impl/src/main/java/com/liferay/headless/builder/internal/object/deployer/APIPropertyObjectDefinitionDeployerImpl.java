@@ -133,7 +133,7 @@ public class APIPropertyObjectDefinitionDeployerImpl
 			_objectEntryLocalService.getValuesList(
 				GroupThreadLocal.getGroupId(), objectDefinition.getCompanyId(),
 				objectDefinition.getUserId(),
-				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId(), null,
 				_filterFactory.create("type eq null", objectDefinition), null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 

@@ -232,7 +232,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 					_objectEntryLocalService.getValuesList(
 						objectEntry.getGroupId(), objectEntry.getCompanyId(),
 						objectEntry.getUserId(),
-						objectEntry.getObjectDefinitionId(),
+						objectEntry.getObjectDefinitionId(), null,
 						_filterFactory.create(
 							StringBundler.concat(
 								"id ne '", objectEntry.getObjectEntryId(),

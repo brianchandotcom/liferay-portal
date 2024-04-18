@@ -1459,7 +1459,17 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			else {
 				fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
-				_validateFileName(sourceFileName, fileEntry.getExtension());
+				if (Validator.isNotNull(
+						uploadPortletRequest.getFileName("file"))) {
+
+					_validateFileName(
+						sourceFileName,
+						FileUtil.getExtension(
+							uploadPortletRequest.getFileName("file")));
+				}
+				else {
+					_validateFileName(sourceFileName, fileEntry.getExtension());
+				}
 
 				if (cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
 

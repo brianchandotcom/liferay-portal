@@ -43,5 +43,9 @@ export class ViewPage {
 		await tabLink.click();
 
 		await tabLink.and(this.page.locator('.active')).waitFor();
+
+		await expect(
+			this.pageContainer.locator('.loading-animation')
+		).not.toBeInViewport();
 	}
 }

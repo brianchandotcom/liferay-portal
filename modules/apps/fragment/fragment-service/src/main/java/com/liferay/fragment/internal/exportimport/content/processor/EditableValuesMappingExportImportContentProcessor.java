@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.template.model.TemplateEntry;
@@ -118,11 +120,14 @@ public class EditableValuesMappingExportImportContentProcessor
 		String mappedField = editableJSONObject.getString(
 			"mappedField", editableJSONObject.getString("fieldId"));
 
-		if (!mappedField.startsWith(_DDM_TEMPLATE)) {
+		if (!mappedField.startsWith(
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+
 			return;
 		}
 
-		String ddmTemplateKey = mappedField.substring(_DDM_TEMPLATE.length());
+		String ddmTemplateKey = mappedField.substring(
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX.length());
 
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			portletDataContext.getScopeGroupId(),
@@ -338,9 +343,11 @@ public class EditableValuesMappingExportImportContentProcessor
 					"fieldId", _TEMPLATE + importedTemplateEntryId);
 			}
 		}
-		else if (mappedField.startsWith(_DDM_TEMPLATE)) {
+		else if (mappedField.startsWith(
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+
 			String ddmTemplateKey = mappedField.substring(
-				_DDM_TEMPLATE.length());
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX.length());
 
 			Map<String, String> ddmTemplateKeys =
 				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
@@ -351,11 +358,15 @@ public class EditableValuesMappingExportImportContentProcessor
 
 			if (editableJSONObject.has("mappedField")) {
 				editableJSONObject.put(
-					"mappedField", _DDM_TEMPLATE + importedDDMTemplateKey);
+					"mappedField",
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+						importedDDMTemplateKey);
 			}
 			else {
 				editableJSONObject.put(
-					"fieldId", _DDM_TEMPLATE + importedDDMTemplateKey);
+					"fieldId",
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+						importedDDMTemplateKey);
 			}
 		}
 
@@ -401,9 +412,9 @@ public class EditableValuesMappingExportImportContentProcessor
 		}
 	}
 
-	private static final String _DDM_TEMPLATE = "ddmTemplate_";
-
-	private static final String _TEMPLATE = "ddmTemplate__ddmTemplate_";
+	private static final String _TEMPLATE =
+		PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + StringPool.UNDERLINE +
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditableValuesMappingExportImportContentProcessor.class);

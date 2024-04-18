@@ -1,7 +1,6 @@
 {
 	"configuration": {
 		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
-		"multiCompany": true,
 		"parameters": {
 			"containsHeaders": "true",
 			"createStrategy": "UPSERT",
@@ -9,9 +8,7 @@
 			"importStrategy": "ON_ERROR_FAIL",
 			"updateStrategy": "UPDATE"
 		},
-		"taskItemDelegateName": "FunctionalCookieEntry",
-		"userId": 0,
-		"version": "v1.0"
+		"taskItemDelegateName": "FunctionalCookieEntry"
 	},
 	"items": [
 		{

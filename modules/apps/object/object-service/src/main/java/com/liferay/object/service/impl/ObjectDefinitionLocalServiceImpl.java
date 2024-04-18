@@ -1324,16 +1324,15 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Override
 	public void updateUserIds(long companyId, long oldUserId, long newUserId) {
-
-		for (ObjectDefinition objectDefinition : getObjectDefinitions(
-			companyId, oldUserId)) {
+		for (ObjectDefinition objectDefinition :
+				getObjectDefinitions(companyId, oldUserId)) {
 
 			objectDefinition.setUserId(newUserId);
 
 			updateObjectDefinition(objectDefinition);
 		}
-
 	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;

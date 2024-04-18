@@ -40,7 +40,7 @@ const BaseActionsInfo = ({
 }) => {
 	const {
 		allowScriptContentToBeExecutedOrIncluded,
-		hadGroovyScriptBefore,
+		hadGroovyOrJavaScriptBefore,
 	} = useContext(DefinitionBuilderContext);
 
 	useEffect(() => {
@@ -60,7 +60,7 @@ const BaseActionsInfo = ({
 
 	const filteredActionTypes = filterScriptOption(
 		allowScriptContentToBeExecutedOrIncluded,
-		hadGroovyScriptBefore,
+		hadGroovyOrJavaScriptBefore,
 		actionTypes
 	);
 

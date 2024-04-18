@@ -30,7 +30,7 @@ const Timer = ({
 }) => {
 	const {
 		allowScriptContentToBeExecutedOrIncluded,
-		hadGroovyScriptBefore,
+		hadGroovyOrJavaScriptBefore,
 	} = useContext(DefinitionBuilderContext);
 	const {functionActionExecutors, selectedItem} = useContext(
 		DiagramBuilderContext
@@ -51,7 +51,7 @@ const Timer = ({
 		if (
 			Liferay.FeatureFlags['LPD-11179'] &&
 			!allowScriptContentToBeExecutedOrIncluded &&
-			!hadGroovyScriptBefore &&
+			!hadGroovyOrJavaScriptBefore &&
 			!functionActionExecutors.length
 		) {
 			setActionSections([
@@ -74,7 +74,7 @@ const Timer = ({
 	}, [
 		allowScriptContentToBeExecutedOrIncluded,
 		functionActionExecutors.length,
-		hadGroovyScriptBefore,
+		hadGroovyOrJavaScriptBefore,
 	]);
 
 	useEffect(() => {

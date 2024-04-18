@@ -55,7 +55,7 @@ export default function DiagramBuilder() {
 		deserialize,
 		elements,
 		functionActionExecutors,
-		hadGroovyScriptBefore,
+		hadGroovyOrJavaScriptBefore,
 		selectedLanguageId,
 		setActive,
 		setBlockingError,
@@ -66,7 +66,7 @@ export default function DiagramBuilder() {
 		setDefinitionTitleTranslations,
 		setDeserialize,
 		setElements,
-		setHadGroovyScriptBefore,
+		setHadGroovyOrJavaScriptBefore,
 		setHasGroovyScript,
 		setShowDefinitionInfo,
 		statuses,
@@ -355,8 +355,8 @@ export default function DiagramBuilder() {
 					setHasGroovyScript
 				);
 
-				if (hasGroovyScript && !hadGroovyScriptBefore) {
-					setHadGroovyScriptBefore(true);
+				if (hasGroovyScript && !hadGroovyOrJavaScriptBefore) {
+					setHadGroovyOrJavaScriptBefore(true);
 				}
 			}
 
@@ -417,8 +417,11 @@ export default function DiagramBuilder() {
 								setHasGroovyScript
 							);
 
-							if (hasGroovyScript && !hadGroovyScriptBefore) {
-								setHadGroovyScriptBefore(true);
+							if (
+								hasGroovyScript &&
+								!hadGroovyOrJavaScriptBefore
+							) {
+								setHadGroovyOrJavaScriptBefore(true);
 							}
 						}
 

@@ -30,7 +30,7 @@ const ScriptInput = ({
 }) => {
 	const {
 		allowScriptContentToBeExecutedOrIncluded,
-		hadGroovyScriptBefore,
+		hadGroovyOrJavaScriptBefore,
 	} = useContext(DefinitionBuilderContext);
 	const [script, setScript] = useState(inputValue);
 	const [scriptLanguage, setScriptLanguage] = useState(
@@ -39,7 +39,7 @@ const ScriptInput = ({
 
 	const filteredScriptLanguageOptions = filterScriptOption(
 		allowScriptContentToBeExecutedOrIncluded,
-		hadGroovyScriptBefore,
+		hadGroovyOrJavaScriptBefore,
 		scriptLanguageOptions
 	);
 

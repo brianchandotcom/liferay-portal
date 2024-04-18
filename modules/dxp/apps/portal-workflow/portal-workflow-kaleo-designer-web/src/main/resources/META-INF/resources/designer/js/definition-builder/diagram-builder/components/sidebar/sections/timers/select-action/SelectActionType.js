@@ -35,7 +35,7 @@ const SelectActionType = ({
 }) => {
 	const {
 		allowScriptContentToBeExecutedOrIncluded,
-		hadGroovyScriptBefore,
+		hadGroovyOrJavaScriptBefore,
 	} = useContext(DefinitionBuilderContext);
 	const {functionActionExecutors} = useContext(DiagramBuilderContext);
 
@@ -57,7 +57,7 @@ const SelectActionType = ({
 		if (
 			Liferay.FeatureFlags['LPD-11179'] &&
 			!allowScriptContentToBeExecutedOrIncluded &&
-			!hadGroovyScriptBefore &&
+			!hadGroovyOrJavaScriptBefore &&
 			!functionActionExecutors.length
 		) {
 			return options.filter(

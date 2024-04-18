@@ -41,7 +41,7 @@ const options = [
 const SelectAssignment = ({section, setSection, setSections}) => {
 	const {
 		allowScriptContentToBeExecutedOrIncluded,
-		hadGroovyScriptBefore,
+		hadGroovyOrJavaScriptBefore,
 		hasGroovyScript,
 		scriptManagementConfigurationPortletURL,
 	} = useContext(DefinitionBuilderContext);
@@ -50,7 +50,7 @@ const SelectAssignment = ({section, setSection, setSections}) => {
 		if (
 			Liferay.FeatureFlags['LPD-11179'] &&
 			!allowScriptContentToBeExecutedOrIncluded &&
-			!hadGroovyScriptBefore
+			!hadGroovyOrJavaScriptBefore
 		) {
 			return options.filter(
 				(option) => option.assignmentType !== 'scriptedAssignment'

@@ -27,7 +27,7 @@ const onDragStart = (event, nodeType, setElementRectangle) => {
 export default function SidebarBody({children, displayDefaultContent = true}) {
 	const {
 		allowScriptContentToBeExecutedOrIncluded,
-		hadGroovyScriptBefore,
+		hadGroovyOrJavaScriptBefore,
 	} = useContext(DefinitionBuilderContext);
 	const {setCollidingElements, setElementRectangle} = useContext(
 		DiagramBuilderContext
@@ -36,7 +36,7 @@ export default function SidebarBody({children, displayDefaultContent = true}) {
 	if (
 		Liferay.FeatureFlags['LPD-11179'] &&
 		!allowScriptContentToBeExecutedOrIncluded &&
-		!hadGroovyScriptBefore
+		!hadGroovyOrJavaScriptBefore
 	) {
 		delete nodeTypes['condition'];
 	}

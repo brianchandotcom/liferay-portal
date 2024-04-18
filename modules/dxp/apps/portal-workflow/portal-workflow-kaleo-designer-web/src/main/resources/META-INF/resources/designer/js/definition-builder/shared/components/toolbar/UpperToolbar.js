@@ -58,7 +58,7 @@ export default function UpperToolbar({
 		setDefinitionTitleTranslations,
 		setDeserialize,
 		setElements,
-		setHadGroovyScriptBefore,
+		setHadGroovyOrJavaScriptBefore,
 		setHasGroovyScript,
 		setSelectedLanguageId,
 		setShowAlert,
@@ -247,7 +247,7 @@ export default function UpperToolbar({
 					Liferay.FeatureFlags['LPD-11179'] &&
 					!allowScriptContentToBeExecutedOrIncluded
 				) {
-					setHadGroovyScriptBefore(false);
+					setHadGroovyOrJavaScriptBefore(false);
 				}
 
 				response.json().then(({name, version}) => {
@@ -327,7 +327,7 @@ export default function UpperToolbar({
 					Liferay.FeatureFlags['LPD-11179'] &&
 					!allowScriptContentToBeExecutedOrIncluded
 				) {
-					setHadGroovyScriptBefore(false);
+					setHadGroovyOrJavaScriptBefore(false);
 				}
 
 				response.json().then(({name, version}) => {

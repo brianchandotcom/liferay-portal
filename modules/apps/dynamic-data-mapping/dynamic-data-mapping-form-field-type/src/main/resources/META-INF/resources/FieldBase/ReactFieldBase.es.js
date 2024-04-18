@@ -202,6 +202,7 @@ export default function FieldBase({
 	itemPath,
 	label,
 	localizedValue = {},
+	localizedValueEdited,
 	name,
 	nestedFields,
 	onClick,
@@ -258,6 +259,7 @@ export default function FieldBase({
 				<input
 					data-field-name={`${fieldName}${instanceId}`}
 					data-languageid={locale}
+					data-translated={!!localizedValueEdited[editingLanguageId]}
 					key={locale}
 					name={name.replace(editingLanguageId, locale)}
 					type="hidden"
@@ -265,7 +267,15 @@ export default function FieldBase({
 				/>
 			);
 		});
-	}, [localizedValue, editingLanguageId, fieldName, instanceId, name, type]);
+	}, [
+		localizedValue,
+		localizedValueEdited,
+		editingLanguageId,
+		fieldName,
+		instanceId,
+		name,
+		type,
+	]);
 
 	const renderLabel =
 		(label && showLabel) || hideField || repeatable || required || tooltip;

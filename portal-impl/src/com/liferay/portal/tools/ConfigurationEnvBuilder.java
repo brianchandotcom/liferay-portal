@@ -570,6 +570,13 @@ public class ConfigurationEnvBuilder {
 			return Objects.equals(name, attributeDef.name);
 		}
 
+		@Override
+		public int hashCode() {
+			String string = toJSONObject().toString();
+
+			return string.hashCode();
+		}
+
 		protected boolean isArray() {
 			return Objects.equals(type, "array");
 		}

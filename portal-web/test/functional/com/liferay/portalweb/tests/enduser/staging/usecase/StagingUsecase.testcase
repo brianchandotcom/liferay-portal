@@ -2307,6 +2307,8 @@ definition {
 				category = "Publishing",
 				portlet = "Staging");
 
+			Staging.viewProcessResult(failureExpected = "true");
+
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Summary",
 				rowEntry = "Publication Name");

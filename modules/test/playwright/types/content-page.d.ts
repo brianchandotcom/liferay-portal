@@ -12,8 +12,10 @@ type CollectionConfig = {
 };
 
 type FragmentField = {
-	value: {
-		text: {
+	id?: string;
+	value?: {
+		fragmentLink?: Record<string, string>;
+		text?: {
 			mapping: {
 				fieldKey: string;
 				itemReference: {
@@ -21,6 +23,13 @@ type FragmentField = {
 				};
 			};
 		};
+	};
+};
+
+type FormConfig = {
+	formReference: {
+		className: string;
+		classType: number;
 	};
 };
 
@@ -35,10 +44,11 @@ type PageDefinition = {
 type PageElement = {
 	definition?: {
 		collectionConfig?: CollectionConfig;
+		formConfig?: FormConfig;
 		fragment?: {
 			key: string;
 		};
-		fragmentConfig?: Record<string, string>;
+		fragmentConfig?: Record<string, any>;
 		fragmentFields?: FragmentField[];
 		layout?: {};
 		listStyle?: string;

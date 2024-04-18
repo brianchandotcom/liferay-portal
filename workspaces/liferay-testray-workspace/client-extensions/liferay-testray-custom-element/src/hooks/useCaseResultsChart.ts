@@ -4,59 +4,28 @@
  */
 
 import {useEffect, useMemo, useState} from 'react';
-import {useLocation, useSearchParams} from 'react-router-dom';
-import {APIParametersOptions} from '~/core/Rest';
-import SearchBuilder from '~/core/SearchBuilder';
+import {useLocation} from 'react-router-dom';
 import i18n from '~/i18n';
-import {FilterSchema, filterSchema as filterSchemas} from '~/schema/filter';
-import {
-	APIResponse,
-	testrayCaseResultImpl,
-	testrayCaseTypeImpl,
-	testrayComponentImpl,
-	testrayRunImpl,
-	testrayTeamImpl,
-} from '~/services/rest';
+import {APIResponse} from '~/services/rest';
 import {chartColors} from '~/util/constants';
 import {getRandom} from '~/util/mock';
 
 import {useFetch} from './useFetch';
 
-type TestrayChartResources = {
-	'case-types': {
-		fetchParameters: APIParametersOptions;
-		url: string;
-	};
-	'components': {
-		fetchParameters: APIParametersOptions;
-		url: string;
-	};
-	'runs': {
-		fetchParameters: APIParametersOptions;
-		url: string;
-	};
-	'teams': {
-		fetchParameters: APIParametersOptions;
-		url: string;
-	};
-};
-
 enum statususes {
-	PASSED = 'caseResultPassed',
-	FAILED = 'caseResultFailed',
-	BLOCKED = 'caseResultBlocked',
-	TEST_FIX = 'caseResultTestFix',
-	INCOMPLETE = 'caseResultIncomplete',
+	PASSED = 'passed',
+	FAILED = 'failed',
+	BLOCKED = 'blocked',
+	TEST_FIX = 'testfix',
+	INCOMPLETE = 'incomplete',
 }
 
-const caseTypesFields =
-	'caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultPassed,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultBlocked,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultFailed,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultIncomplete,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultTestFix, name';
-
-const fields =
-	'caseResultBlocked,caseResultFailed,caseResultIncomplete,caseResultPassed,caseResultTestFix,name';
-
-const teamsFields =
-	'name,teamToComponents.caseResultBlocked,teamToComponents.caseResultFailed,teamToComponents.caseResultIncomplete,teamToComponents.caseResultPassed,teamToComponents.caseResultTestFix';
+const ColumnName = {
+	'case-types': 'testrayCaseTypeName',
+	'components': 'testrayComponentName',
+	'runs': 'testrayRunName',
+	'teams': 'testrayTeamName',
+};
 
 const chartSelectData = [
 	{label: i18n.translate('runs'), value: 'runs'},
@@ -69,9 +38,6 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 	const [entity, setEntity] = useState('');
 	const {pathname} = useLocation();
 
-	const [searchParams] = useSearchParams();
-	const filter = searchParams.get('filter');
-
 	useEffect(() => {
 		const path = pathname.split('/').at(-1) as string;
 
@@ -82,145 +48,38 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 		setEntity('');
 	}, [pathname]);
 
-	const resources: TestrayChartResources = useMemo(
-		() => ({
-			'case-types': {
-				fetchParameters: {
-					fields: caseTypesFields,
-					filter: SearchBuilder.eq(
-						'caseTypeToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
-						buildId
-					),
-				},
-				url: testrayCaseTypeImpl.resource,
-			},
-			'components': {
-				fetchParameters: {
-					fields,
-					filter: SearchBuilder.eq(
-						'componentToCaseResult/r_buildToCaseResult_c_buildId',
-						buildId
-					),
-				},
-				url: testrayComponentImpl.resource,
-			},
-			'runs': {
-				fetchParameters: {
-					fields,
-					filter: SearchBuilder.eq('buildId', buildId),
-				},
-				url: testrayRunImpl.resource,
-			},
-			'teams': {
-				fetchParameters: {
-					fields: teamsFields,
-					filter: SearchBuilder.eq(
-						'teamToComponents/componentToCaseResult/r_buildToCaseResult_c_buildId',
-						buildId
-					),
-				},
-				url: testrayTeamImpl.resource,
-			},
-		}),
-		[buildId]
-	);
-
-	const filterSchema = (filterSchemas as any)[
-		searchParams.get('filterSchema') || ''
-	] as FilterSchema;
-
-	const filterVariables = useMemo(
-		() => ({
-			appliedFilter: filter ? JSON.parse(filter) : '',
-			defaultFilter:
-				resources[entity as keyof TestrayChartResources]
-					?.fetchParameters?.filter || '',
-			filterSchema,
-		}),
-		[resources, entity, filterSchema, filter]
-	);
-
 	const {data, loading} = useFetch<APIResponse<any>>(
-		resources[entity as keyof TestrayChartResources]?.url,
+		`/testray-status-metrics/by-testray-buildId/${buildId}/testray-${entity}-metrics`,
 		{
 			params: {
-				fields:
-					resources[entity as keyof TestrayChartResources]
-						?.fetchParameters.fields,
-				filter: SearchBuilder.createFilter(filterVariables),
-			},
-			swrConfig: {
-				shouldFetch: !!entity,
+				pageSize: -1,
 			},
 		}
 	);
+
 	const responseItems = useMemo(() => data?.items || [], [data?.items]);
 
-	const chartData = useMemo(
-		() =>
-			Object.entries(statususes).map(([key, value]) => [
+	const chartData = useMemo(() => {
+		return Object.entries(statususes).map(([key, value]) => {
+			return [
 				key,
-				...responseItems
-					.flatMap((caseResult) => {
-						if (caseResult.teamToComponents) {
-							return caseResult.teamToComponents.reduce(
-								(accumulator: any, component: any) => {
-									accumulator.caseResultBlocked +=
-										Number(component?.caseResultBlocked) ||
-										0;
+				...responseItems.map(({testrayStatusMetric}) =>
+					key === 'INCOMPLETE'
+						? (testrayStatusMetric.untested || 0) +
+						  (testrayStatusMetric.inProgress || 0)
+						: testrayStatusMetric[value] ?? getRandom(1000)
+				),
+			];
+		});
+	}, [responseItems]);
 
-									accumulator.caseResultFailed +=
-										Number(component?.caseResultFailed) ||
-										0;
-
-									accumulator.caseResultUntested +=
-										Number(
-											component?.caseResultUntested &&
-												component?.caseResultInProgress
-										) || 0;
-
-									accumulator.caseResultPassed +=
-										Number(component?.caseResultPassed) ||
-										0;
-
-									accumulator.caseResultTestFix +=
-										Number(component?.caseResultTestFix) ||
-										0;
-
-									return accumulator;
-								},
-								{
-									caseResultBlocked: 0,
-									caseResultFailed: 0,
-									caseResultInProgress: 0,
-									caseResultPassed: 0,
-									caseResultTestFix: 0,
-									caseResultUntested: 0,
-								}
-							);
-						}
-
-						if (caseResult.caseTypeToCases) {
-							return {
-								...testrayCaseResultImpl.normalizeCaseResultAggregation(
-									caseResult?.caseTypeToCases?.[0]
-										?.caseToBuildsCases?.[0]
-										?.r_buildToBuildsCases_c_build
-								),
-							};
-						}
-
-						return caseResult;
-					})
-
-					.map((caseResult) => caseResult[value] ?? getRandom(1000)),
-			]),
-		[responseItems]
+	const columnNames = useMemo(
+		() =>
+			responseItems.map(
+				(item) => item[ColumnName[entity as keyof typeof ColumnName]]
+			),
+		[entity, responseItems]
 	);
-
-	const columnNames = useMemo(() => responseItems.map((item) => item.name), [
-		responseItems,
-	]);
 
 	return {
 		chart: {

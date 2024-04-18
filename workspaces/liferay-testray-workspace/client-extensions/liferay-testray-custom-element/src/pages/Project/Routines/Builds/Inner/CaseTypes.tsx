@@ -63,7 +63,8 @@ const CaseTypes = () => {
 						},
 						{
 							clickable: true,
-							key: 'caseResultUntested',
+							key: 'testrayStatusMetric',
+							render: ({untested}) => untested,
 							value: i18n.translate('untested'),
 						},
 						{

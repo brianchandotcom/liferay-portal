@@ -18,6 +18,7 @@ import useGetProductByOrderId from '../../../../../../../hooks/useGetProductByOr
 import useMarketplaceSpringBootOAuth2 from '../../../../../../../hooks/useMarketplaceSpringBootOAuth2';
 import {Liferay} from '../../../../../../../liferay/liferay';
 import zodSchema from '../../../../../../../schema/zod';
+import {getValueFromDeliverySpecifications} from '../../../../../../../utils/util';
 import ProductCard from '../../../../../../GetApp/components/ProductCard/ProductCard';
 import StepWizard from '../../../../../../GetApp/components/StepWizard/StepWizard';
 import {formatDate} from '../../../../../../PublisherDashboard/PublisherDashboardPageUtil';
@@ -131,6 +132,7 @@ const CreateLicense = () => {
 		register,
 		required: true,
 	};
+
 	const handleNextButton = useCallback(
 		async (form: z.infer<typeof zodSchema.generateLicenseKey>) => {
 			setLoading(true);
@@ -146,6 +148,14 @@ const CreateLicense = () => {
 							orderId: orderId as string,
 							productPurchaseKey: form.subscription
 								?.productPurchasedKey as string,
+							productVersion:
+								form.subscription?.productVersion ||
+								getValueFromDeliverySpecifications(
+									(product as DeliveryProduct)
+										?.productSpecifications,
+									'latest-version'
+								) ||
+								'1.0.0',
 						},
 						skuId: form.subscription?.skuId as number,
 						type: form.subscription?.name as string,
@@ -183,7 +193,7 @@ const CreateLicense = () => {
 
 			setLoading(false);
 		},
-		[marketplaceSpringBootOAuth2, orderId, product?.name, navigate]
+		[marketplaceSpringBootOAuth2, orderId, product, navigate]
 	);
 
 	const buttonsInfo = useMemo(

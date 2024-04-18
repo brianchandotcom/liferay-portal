@@ -80,6 +80,7 @@ const zodSchema = {
 			.object({
 				name: z.string(),
 				productPurchasedKey: z.string(),
+				productVersion: z.string(),
 				skuId: z.number(),
 			})
 			.optional(),

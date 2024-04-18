@@ -29,6 +29,7 @@ const SelectSubscription = ({
 	const {
 		data: subscriptions = [],
 		isLoading,
+		isValidating,
 	} = useSWR(`/subcriptions/${orderId}`, () =>
 		marketplaceSpringBootOAuth2.getSubscriptions(orderId)
 	);
@@ -37,7 +38,7 @@ const SelectSubscription = ({
 		<div className="mb-4 mt-3">
 			<p>Generate licenses with a selected subscription term.</p>
 
-			{isLoading && <ClayLoadingIndicator />}
+			{(isLoading || isValidating) && <ClayLoadingIndicator />}
 
 			<RadioCardList
 				contentList={subscriptions.map((licenseKey, index) => {

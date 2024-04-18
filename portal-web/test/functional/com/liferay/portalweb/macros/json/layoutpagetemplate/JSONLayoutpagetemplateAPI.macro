@@ -53,7 +53,7 @@ definition {
 			${portalURL}/api/jsonws/layout.layoutpagetemplatecollection/add-layout-page-template-collection \
 				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
-				-d parentLayoutPageTemplateCollection=0 \
+				-d parentLayoutPageTemplateCollectionId=0 \
 				-d name=${layoutPageTemplateCollectionName} \
 				-d description=${description} \
 				-d type=${type} \

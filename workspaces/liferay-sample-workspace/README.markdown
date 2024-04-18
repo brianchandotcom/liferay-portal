@@ -132,7 +132,7 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 - *liferay-sample-js-import-maps-entry*
 
-	Deploy jQuery library and make it usable through the import map.
+	Make jQuery available via JavaScript import maps.
 
 - *liferay-sample-site-initializer*
 

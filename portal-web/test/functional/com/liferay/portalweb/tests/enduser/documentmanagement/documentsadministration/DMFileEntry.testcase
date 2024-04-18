@@ -1454,22 +1454,6 @@ definition {
 		DMDocument.assertFileNameFromTempFolder(fileName = "Document_3.doc");
 	}
 
-	@description = "This ensures that the document file name will be applied to the downloaded file name."
-	@priority = 5
-	@refactordone
-	test CanDownloadWithCustomFileName {
-		property portal.acceptance = "true";
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentFileName = "document_1_Edit.jpg",
-			dmDocumentTitle = "DM Document Title",
-			fileExtensionMismatch = "true");
-	}
-
 	@priority = 5
 	@refactordone
 	test CanDownloadWithSpecialCharactersInTitle {
@@ -2520,6 +2504,22 @@ definition {
 			enableExpirationDate = "true",
 			increaseMinutes = 1,
 			invalidExpirationDate = "true");
+	}
+
+	@description = "This ensures that a document cannot be published if its file extension is different than its file name extension."
+	@priority = 5
+	@refactordone
+	test CannotPublishWithFileExtensionDifferentThanFileNameExtension {
+		property portal.acceptance = "true";
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentFileName = "document_1_Edit.jpg",
+			dmDocumentTitle = "DM Document Title",
+			fileExtensionMismatch = "true");
 	}
 
 	@description = "This is a use case for LPS-114470. Validate crafted or corrupted files cannot cause out of memory errors."

@@ -17,10 +17,9 @@ export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	dataSetsPageTest,
 	featureFlagsTest({
-		'LPD-10735': false,
+		'LPD-19465': true,
 		'LPS-164563': true,
 		'LPS-178052': true,
-		'LPS-186871': true,
 	}),
 	sortingPageTest,
 	loginTest(),

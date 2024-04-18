@@ -8,11 +8,11 @@
 			"type": "boolean"
 		},
 		"externalReferenceCode": {
-			"title": "The external reference code Schema",
+			"title": "The externalReferenceCode Schema",
 			"type": "string"
 		},
 		"friendlyURL": {
-			"title": "The friendly URL Schema",
+			"title": "The friendlyURL Schema",
 			"type": "string"
 		},
 		"name": {

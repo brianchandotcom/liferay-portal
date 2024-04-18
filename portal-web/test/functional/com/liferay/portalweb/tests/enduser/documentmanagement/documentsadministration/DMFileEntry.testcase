@@ -1466,17 +1466,8 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.txt",
 			dmDocumentFileName = "document_1_Edit.jpg",
-			dmDocumentTitle = "DM Document Title");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.downloadCP(
-			dmDocumentSize = "259 B",
-			dmDocumentTitle = "DM Document Title");
-
-		AssertTextNotPresent(value1 = "The requested resource could not be found.");
-
-		DMDocument.assertFileNameFromTempFolder(fileName = "document_1_Edit.jpg");
+			dmDocumentTitle = "DM Document Title",
+			fileExtensionMismatch = "true");
 	}
 
 	@priority = 5

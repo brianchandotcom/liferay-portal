@@ -76,10 +76,6 @@ class Analytics {
 
 		instance.version = ANALYTICS_CLIENT_VERSION;
 
-		//  Instanciates 3rd party cookie manager
-
-		ENV.Analytics.getCookieManager = () => config.cookieManager;
-
 		// Register initial middlewares
 
 		middlewares.forEach((middleware) =>
@@ -129,10 +125,6 @@ class Analytics {
 		ENV.Analytics = self;
 		ENV.Analytics.create = Analytics.create;
 		ENV.Analytics.dispose = Analytics.dispose;
-
-		// It needs to instanciate after new Analytics instance
-
-		ENV.Analytics.getCookieManager = () => config.cookieManager;
 
 		let email = '';
 		let name = '';
@@ -381,14 +373,10 @@ class Analytics {
 	_getUserId() {
 		const {emailAddressHashed} = this.config.identity;
 		const previousEmailAddressHashed = getItemFromCookiesOrLocalStorage(
-			STORAGE_KEY_PREV_EMAIL_ADDRESS_HASHED,
-			false
+			STORAGE_KEY_PREV_EMAIL_ADDRESS_HASHED
 		);
 
-		let userId = getItemFromCookiesOrLocalStorage(
-			STORAGE_KEY_USER_ID,
-			false
-		);
+		let userId = getItemFromCookiesOrLocalStorage(STORAGE_KEY_USER_ID);
 
 		if (!userId) {
 			userId = this._generateUserId();
@@ -453,12 +441,10 @@ class Analytics {
 		);
 
 		const storedIdentityHash = getItemFromCookiesOrLocalStorage(
-			STORAGE_KEY_IDENTITY,
-			false
+			STORAGE_KEY_IDENTITY
 		);
 		const storedChannelId = getItemFromCookiesOrLocalStorage(
-			STORAGE_KEY_CHANNEL_ID,
-			false
+			STORAGE_KEY_CHANNEL_ID
 		);
 
 		if (
@@ -523,11 +509,10 @@ class Analytics {
 	}
 }
 
-// Exposes Analytics to the global scope
+// Exposes Analytics.create to the global scope
 
 ENV.Analytics = {
 	create: Analytics.create,
-	getCookieManager: Analytics.getCookieManager,
 };
 
 export {Analytics};

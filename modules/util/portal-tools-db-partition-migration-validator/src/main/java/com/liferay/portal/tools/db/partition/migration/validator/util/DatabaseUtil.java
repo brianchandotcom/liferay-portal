@@ -29,16 +29,12 @@ public class DatabaseUtil {
 
 		LiferayInstance liferayInstance = new LiferayInstance();
 
+		liferayInstance.setCompanies(_getCompanies(connection));
 		liferayInstance.setExportedCompanyId(_getExportedCompanyId(connection));
-
 		liferayInstance.setExportedCompanyDefault(
 			_isDefaultCompany(connection));
-
-		liferayInstance.setTableNames(_getPartitionedTableNames(connection));
-
 		liferayInstance.setReleases(_getReleases(connection));
-
-		liferayInstance.setCompanies(_getCompanies(connection));
+		liferayInstance.setTableNames(_getPartitionedTableNames(connection));
 
 		return liferayInstance;
 	}

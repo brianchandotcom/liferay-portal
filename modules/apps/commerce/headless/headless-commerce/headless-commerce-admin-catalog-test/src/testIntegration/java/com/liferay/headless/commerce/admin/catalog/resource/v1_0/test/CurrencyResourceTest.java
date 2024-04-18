@@ -15,7 +15,6 @@ import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
@@ -30,7 +29,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Zoltán Takács
  */
-@FeatureFlags("COMMERCE-12170")
 @RunWith(Arquillian.class)
 public class CurrencyResourceTest extends BaseCurrencyResourceTestCase {
 

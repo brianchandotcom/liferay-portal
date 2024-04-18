@@ -142,6 +142,10 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 	Extend a theme's CSS with a CSS that uses `unstyled` as its base theme.
 
+- *liferay-sample-theme-css-3*
+
+	Extend a theme's CSS with CSS that uses a frontend-token-definition.json file.
+
 - *liferay-sample-theme-favicon*
 
 	Replace a theme's favicon.

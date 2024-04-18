@@ -5,8 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ICreationAction, IItemAction} from '../utils/types';
-import {ViewPage} from './view/ViewPage';
+import {ICreationAction, IItemAction} from '../../../utils/types';
+import {ViewPage} from '../ViewPage';
 
 export class ActionsPage {
 	readonly creationActionsTab: Locator;

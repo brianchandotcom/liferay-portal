@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {ActionsPage} from '../pages/ActionsPage';
+import {ActionsPage} from '../pages/view/tabs/ActionsPage';
 
 const actionsPageTest = test.extend<{
 	actionsPage: ActionsPage;

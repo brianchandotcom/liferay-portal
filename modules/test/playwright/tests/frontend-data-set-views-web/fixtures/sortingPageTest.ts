@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {SortingPage} from '../pages/SortingPage';
+import {SortingPage} from '../pages/view/tabs/SortingPage';
 
 const sortingPageTest = test.extend<{
 	sortingPage: SortingPage;

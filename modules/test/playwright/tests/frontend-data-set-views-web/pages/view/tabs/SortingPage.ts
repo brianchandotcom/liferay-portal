@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ViewPage} from './view/ViewPage';
+import {ViewPage} from '../ViewPage';
 
 export class SortingPage {
 	readonly addSortingButton: Locator;

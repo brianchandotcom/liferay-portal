@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {SettingsPage} from '../pages/SettingsPage';
+import {SettingsPage} from '../pages/view/tabs/SettingsPage';
 
 const settingsPageTest = test.extend<{
 	settingsPage: SettingsPage;

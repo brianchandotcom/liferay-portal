@@ -27,7 +27,7 @@ export const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('LPD-18809 search suggestions should filter by product visibility with the Commerce Contributor', async ({
+test('LPD-18809 Search suggestions should filter by product visibility with the Commerce Contributor', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	commerceLayoutsPage,
@@ -65,7 +65,7 @@ test('LPD-18809 search suggestions should filter by product visibility with the 
 
 	await applicationsMenuPage.goToSite(site.name);
 
-	await commerceLayoutsPage.goToPages(false, site.name);
+	await commerceLayoutsPage.goToPages(false);
 	await commerceLayoutsPage.createWidgetPage('Search Suggestions Page');
 
 	await page.goto(`/web/${site.name}`);

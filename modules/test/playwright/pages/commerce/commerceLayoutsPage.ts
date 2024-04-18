@@ -139,6 +139,10 @@ export class CommerceLayoutsPage {
 		await source.focus();
 		await source.press('Enter');
 		await source.press('Enter');
+
+		await this.page
+			.getByRole('menuitem', {exact: true, name: 'Product'})
+			.click();
 	}
 
 	async addWidgetToPage(widgetName: string) {

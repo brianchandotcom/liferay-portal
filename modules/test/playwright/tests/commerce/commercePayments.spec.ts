@@ -8,80 +8,33 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../fixtures/commercePagesTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	commercePagesTest,
+	dataApiHelpersTest,
+	featureFlagsTest({
+		'COMMERCE-12754': true,
+	}),
 	loginTest()
 );
 
-const data = [];
-
-test.afterEach(async ({apiHelpers}) => {
-	for await (const item of data.reverse()) {
-		switch (item.type) {
-			case 'account':
-				await apiHelpers.headlessAdminUser.deleteAccount(item.id);
-
-				break;
-			case 'cart':
-				await apiHelpers.headlessCommerceDeliveryCart.deleteCart(
-					item.id
-				);
-
-				break;
-			case 'catalog':
-				await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(
-					item.id
-				);
-
-				break;
-			case 'channel':
-				await apiHelpers.headlessCommerceAdminChannel.deleteChannel(
-					item.id
-				);
-
-				break;
-			case 'payment':
-				await apiHelpers.headlessCommerceAdminPaymentApiHelper.deletePayment(
-					item.id
-				);
-
-				break;
-			case 'product':
-				await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
-					item.id
-				);
-
-				break;
-			case 'site':
-				await apiHelpers.headlessSite.deleteSite(item.id);
-
-				break;
-			default:
-				break;
-		}
-	}
-
-	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-12754', false);
-});
-
-test('can view payments list admin page', async ({
+test('LPD-5742 Can view payments list admin page', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	commercePaymentsPage,
 	page,
 }) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-12754', true);
-
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		name: 'Payment account',
 		type: 'person',
 	});
 
-	data.push({id: account.id, type: 'account'});
+	apiHelpers.data.push({id: account.id, type: 'account'});
 
 	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
 		account.id,
@@ -92,27 +45,21 @@ test('can view payments list admin page', async ({
 		name: 'Payment Site',
 	});
 
-	data.push({id: site.id, type: 'site'});
+	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: 'Payment Channel',
 		siteGroupId: site.id,
 	});
 
-	data.push({id: channel.id, type: 'channel'});
-
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
 		name: 'Payment Catalog',
 	});
-
-	data.push({id: catalog.id, type: 'catalog'});
 
 	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
 		name: {en_US: 'Product'},
 	});
-
-	data.push({id: product.productId, type: 'product'});
 
 	const sku = product.skus[0];
 
@@ -131,15 +78,11 @@ test('can view payments list admin page', async ({
 		channel.id
 	);
 
-	data.push({id: cart.id, type: 'cart'});
-
 	const payment =
 		await apiHelpers.headlessCommerceAdminPaymentApiHelper.postPayment({
 			amount: 10,
 			relatedItemId: cart.id,
 		});
-
-	data.push({id: payment.id, type: 'payment'});
 
 	await apiHelpers.headlessCommerceAdminPaymentApiHelper.patchPayment(
 		{
@@ -151,7 +94,7 @@ test('can view payments list admin page', async ({
 
 	await applicationsMenuPage.goToPayments();
 
-	await expect(page.getByText(payment.id).first()).toBeVisible();
+	await expect(page.getByText(payment.id.toString()).first()).toBeVisible();
 
 	await commercePaymentsPage.makeRefundButton.click();
 	await commercePaymentsPage.reasonInput.selectOption('product-defect');
@@ -166,7 +109,7 @@ test('can view payments list admin page', async ({
 		await commercePaymentsPage.headerDetailsTitle.textContent()
 	).trim();
 
-	data.push({id: refundId, type: 'payment'});
+	apiHelpers.data.push({id: refundId, type: 'payment'});
 
 	await commercePaymentsPage.amountInput.fill('0');
 	await commercePaymentsPage.saveButton.click();

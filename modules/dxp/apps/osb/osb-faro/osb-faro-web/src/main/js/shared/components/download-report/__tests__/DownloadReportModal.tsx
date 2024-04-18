@@ -1,18 +1,18 @@
 import ClayForm from '@clayui/form';
 import client from 'shared/apollo/client';
 import mockStore from 'test/mock-store';
-import moment, {Moment} from 'moment';
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import {ApolloProvider} from '@apollo/react-hooks';
 import {Checkbox, Containers, formatContainers} from '../DownloadPDFReport';
+import {CSVType, useDownloadCSV} from '../utils';
 import {DownloadReportButton} from '../DownloadReportButton';
 import {DownloadReportModal, ReportType} from '../DownloadReportModal';
 import {MockedProvider} from '@apollo/react-testing';
 import {mockPreferenceReq} from 'test/graphql-data';
-import {MomentDateRange} from 'shared/components/DateRangeInput';
 import {Provider} from 'react-redux';
+import {RangeSelectors} from 'shared/types';
 import {sub} from 'shared/util/lang';
 import {useModal} from '@clayui/modal';
 
@@ -33,29 +33,51 @@ jest.mock('shared/hooks/useTimeZone', () => ({
 	useTimeZone: () => ({timeZoneId: 'UTC'})
 }));
 
-const WrapperCSVComponent = props => (
-	<WrapperComponent
-		{...props}
-		alertMessage={
-			sub(
-				Liferay.Language.get(
-					'the-x-file-is-being-generated-and-your-download-will-start-soon'
-				),
-				['CSV']
-			) as string
-		}
-		infoMessage={
-			sub(
-				Liferay.Language.get(
-					'the-x-list-will-be-downloaded-respecting-the-current-ordering,-filter,-and-search-results.-please-verify-if-the-desired-changes-are-applied'
-				),
-				[Liferay.Language.get('individuals')]
-			) as string
-		}
-		requiredDateRange
-		type={ReportType.CSV}
-	/>
-);
+interface IWrapperCSVComponentProps extends React.HTMLAttributes<HTMLElement> {
+	type: CSVType;
+}
+
+let CSV_URL = '';
+
+const WrapperCSVComponent: React.FC<IWrapperCSVComponentProps> = ({
+	type,
+	...props
+}) => {
+	const generateURL = useDownloadCSV({
+		assetId: '123',
+		assetType: 'myAssetType',
+		type
+	});
+
+	return (
+		<WrapperComponent
+			{...props}
+			alertMessage={
+				sub(
+					Liferay.Language.get(
+						'the-x-file-is-being-generated-and-your-download-will-start-soon'
+					),
+					['CSV']
+				) as string
+			}
+			infoMessage={
+				sub(
+					Liferay.Language.get(
+						'the-x-list-will-be-downloaded-respecting-the-current-ordering,-filter,-and-search-results.-please-verify-if-the-desired-changes-are-applied'
+					),
+					[Liferay.Language.get('individuals')]
+				) as string
+			}
+			onSubmit={rangeSelectors => {
+				const url = generateURL(rangeSelectors);
+
+				CSV_URL = url;
+			}}
+			requiredDateRange
+			type={ReportType.CSV}
+		/>
+	);
+};
 
 const WrapperPDFomponent = ({children, ...otherProps}) => (
 	<WrapperComponent
@@ -70,6 +92,7 @@ const WrapperPDFomponent = ({children, ...otherProps}) => (
 		infoMessage={Liferay.Language.get(
 			'the-dashboard-will-be-downloaded-exactly-as-it-is-displayed-on-your-screen.-please-verify-if-the-desired-tabs-and-filters-are-selected-before-downloading'
 		)}
+		onSubmit={jest.fn()}
 		type={ReportType.PDF}
 		{...otherProps}
 	>
@@ -77,11 +100,10 @@ const WrapperPDFomponent = ({children, ...otherProps}) => (
 	</WrapperComponent>
 );
 
-interface IWrapperComponent extends React.HTMLAttributes<HTMLElement> {
+interface IWrapperComponent {
 	alertMessage: string;
-	date?: MomentDateRange;
 	infoMessage: string;
-	minDate?: Moment;
+	onSubmit: (rangeSelectors: RangeSelectors) => void;
 	requiredDateRange?: boolean;
 	type: ReportType;
 }
@@ -90,6 +112,7 @@ const WrapperComponent: React.FC<IWrapperComponent> = ({
 	alertMessage,
 	children,
 	infoMessage,
+	onSubmit,
 	requiredDateRange = false,
 	type,
 	...otherProps
@@ -109,7 +132,7 @@ const WrapperComponent: React.FC<IWrapperComponent> = ({
 								infoMessage={infoMessage}
 								observer={observer}
 								onClose={jest.fn()}
-								onSubmit={jest.fn()}
+								onSubmit={onSubmit}
 								requiredDateRange={requiredDateRange}
 								type={type}
 							>
@@ -128,6 +151,26 @@ const WrapperComponent: React.FC<IWrapperComponent> = ({
 	);
 };
 
+const generateURLToDownloadCSVSetup = (type: CSVType) => {
+	const {getByRole, getByTestId} = render(
+		<WrapperCSVComponent type={type} />
+	);
+
+	fireEvent.click(
+		getByRole('button', {
+			name: /download report/i
+		})
+	);
+
+	act(() => {
+		jest.runAllTimers();
+	});
+
+	const submitButton = getByTestId('submit');
+
+	fireEvent.click(submitButton);
+};
+
 describe('DownloadReportModal CSV', () => {
 	afterEach(() => {
 		jest.clearAllTimers();
@@ -136,6 +179,8 @@ describe('DownloadReportModal CSV', () => {
 	});
 
 	beforeAll(() => {
+		CSV_URL = '';
+
 		jest.useFakeTimers();
 
 		// @ts-ignore
@@ -148,11 +193,7 @@ describe('DownloadReportModal CSV', () => {
 
 	it('renders component', () => {
 		const {getByRole, getByTestId, getByText} = render(
-			<WrapperCSVComponent
-				date={{end: moment(0), start: moment(0)}}
-				maxDate={moment(0)}
-				minDate={moment(0).subtract(1, 'year')}
-			/>
+			<WrapperCSVComponent type={CSVType.Blog} />
 		);
 
 		fireEvent.click(
@@ -181,6 +222,23 @@ describe('DownloadReportModal CSV', () => {
 
 		expect(getByTestId('cancel')).toBeInTheDocument();
 		expect(getByTestId('submit')).toBeInTheDocument();
+	});
+
+	it.each`
+		name
+		${CSVType.Blog}
+		${CSVType.Document}
+		${CSVType.Event}
+		${CSVType.Forms}
+		${CSVType.Individual}
+		${CSVType.Journal}
+		${CSVType.Page}
+	`('generate a link to download CSV report for type $name', ({name}) => {
+		generateURLToDownloadCSVSetup(name);
+
+		expect(CSV_URL).toEqual(
+			`/o/faro/main/2000/reports/export/csv/${name}?channelId=456&rangeKey=30&assetId=123&assetType=myAssetType`
+		);
 	});
 });
 
@@ -234,11 +292,7 @@ describe('DownloadReportModal PDF', () => {
 		];
 
 		const {getByRole, getByTestId, getByText} = render(
-			<WrapperPDFomponent
-				date={{end: moment(0), start: moment(0)}}
-				maxDate={moment(0)}
-				minDate={moment(0).subtract(1, 'year')}
-			>
+			<WrapperPDFomponent>
 				<ClayForm.Group>
 					<label>{Liferay.Language.get('select-reports')}</label>
 

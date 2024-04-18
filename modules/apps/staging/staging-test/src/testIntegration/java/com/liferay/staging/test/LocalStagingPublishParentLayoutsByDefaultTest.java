@@ -104,12 +104,6 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 		Layout childLayout = LayoutTestUtil.addTypePortletLayout(
 			stagingGroup, parentLayout.getPlid());
 
-		DataDefinition dataDefinition =
-			DataDefinitionTestUtil.addDataDefinition(
-				"journal", _dataDefinitionResourceFactory,
-				stagingGroup.getGroupId(), _read("data_definition.json"),
-				TestPropsValues.getUser());
-
 		String content = StringUtil.replace(
 			_read("journal_content.xml"), new String[] {"[$GROUP_NAME]"},
 			new String[] {
@@ -122,6 +116,12 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 			childLayout.getFriendlyURL(
 			).toLowerCase()
 		);
+
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory,
+				stagingGroup.getGroupId(), _read("data_definition.json"),
+				TestPropsValues.getUser());
 
 		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
 			stagingGroup.getGroupId(), content,

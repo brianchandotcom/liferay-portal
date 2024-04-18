@@ -145,11 +145,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		Layout childLayout = LayoutTestUtil.addTypePortletLayout(
 			group, parentLayout.getPlid());
 
-		DataDefinition dataDefinition =
-			DataDefinitionTestUtil.addDataDefinition(
-				"journal", _dataDefinitionResourceFactory, groupId,
-				_read("data_definition.json"), TestPropsValues.getUser());
-
 		String content = StringUtil.replace(
 			_read("journal_content.xml"), new String[] {"[$GROUP_NAME]"},
 			new String[] {
@@ -162,6 +157,11 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			childLayout.getFriendlyURL(
 			).toLowerCase()
 		);
+
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory, groupId,
+				_read("data_definition.json"), TestPropsValues.getUser());
 
 		JournalTestUtil.addArticleWithXMLContent(
 			groupId, content, dataDefinition.getDataDefinitionKey(), null);
@@ -203,11 +203,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		Layout childLayout = LayoutTestUtil.addTypePortletLayout(
 			group, parentLayout.getPlid());
 
-		DataDefinition dataDefinition =
-			DataDefinitionTestUtil.addDataDefinition(
-				"journal", _dataDefinitionResourceFactory, groupId,
-				_read("data_definition.json"), TestPropsValues.getUser());
-
 		String content = StringUtil.replace(
 			_read("journal_content.xml"), new String[] {"[$GROUP_NAME]"},
 			new String[] {
@@ -220,6 +215,11 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			childLayout.getFriendlyURL(
 			).toLowerCase()
 		);
+
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory, groupId,
+				_read("data_definition.json"), TestPropsValues.getUser());
 
 		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
 			groupId, content, dataDefinition.getDataDefinitionKey(), null);

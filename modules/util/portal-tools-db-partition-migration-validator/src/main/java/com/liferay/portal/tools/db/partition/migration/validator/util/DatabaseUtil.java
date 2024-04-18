@@ -110,7 +110,7 @@ public class DatabaseUtil {
 				if (companyId > 0) {
 					throw new UnsupportedOperationException(
 						"Database schema has to be a single company or " +
-							"database partitioning has to be enabled");
+							"database partitioning must be enabled");
 				}
 
 				companyId = resultSet.getLong(1);

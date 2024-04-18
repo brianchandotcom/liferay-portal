@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.testray.rest.dto.v1_0.TestrayCaseResultComparison;
 import com.liferay.testray.rest.dto.v1_0.TestrayRunComparison;
 import com.liferay.testray.rest.resource.v1_0.TestrayRunComparisonResource;
-import com.liferay.testray.rest.util.comparator.TestrayCaseResultComparisonComparator;
+import com.liferay.testray.rest.internal.util.comparator.TestrayCaseResultComparisonComparator;
 
 import java.io.Serializable;
 

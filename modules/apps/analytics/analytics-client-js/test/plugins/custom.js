@@ -7,36 +7,38 @@ import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
 
 import AnalyticsClient from '../../src/analytics';
+import {
+	getItem,
+	getItemFromCookiesOrLocalStorage,
+	removeItem,
+	setItem,
+} from '../../src/utils/storage';
 
 const localStorageMock = (function () {
 	const store = {};
 
 	return {
 		getItem(key) {
-			return JSON.parse(decodeURIComponent(store[key]));
+			return store[key];
 		},
 		removeItem(key) {
 			delete localStorage[key];
 		},
-		setItem(key, value, encode) {
-			const newValue = JSON.stringify(value);
-
-			store[key] = encode ? encodeURIComponent(newValue) : newValue;
+		setItem(key, value) {
+			store[key] = value;
 		},
 	};
 })();
 
-const INITIAL_CONFIG = {
-	cookieManager: {
-		actions: {
-			getItem: localStorageMock.getItem,
-			removeItem: localStorageMock.removeItem,
-			setItem: localStorageMock.setItem,
-		},
-	},
-};
-
 Object.defineProperty(window, 'localStorage', {value: localStorageMock});
+
+jest.mock('../../src/utils/storage', () => ({
+	...jest.requireActual('../../src/utils/storage'),
+	getItem: jest.fn(),
+	getItemFromCookiesOrLocalStorage: jest.fn(),
+	removeItem: jest.fn(),
+	setItem: jest.fn(),
+}));
 
 const applicationId = 'Custom';
 
@@ -112,7 +114,14 @@ describe('Custom Asset Plugin', () => {
 
 		fetchMock.mock('*', () => 200);
 
-		Analytics = AnalyticsClient.create(INITIAL_CONFIG);
+		getItem.mockImplementation(localStorageMock.getItem);
+		setItem.mockImplementation(localStorageMock.setItem);
+		getItemFromCookiesOrLocalStorage.mockImplementation(
+			localStorageMock.getItem
+		);
+		removeItem.mockImplementation(localStorageMock.removeItem);
+
+		Analytics = AnalyticsClient.create();
 	});
 
 	afterEach(() => {

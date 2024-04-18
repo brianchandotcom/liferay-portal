@@ -12,45 +12,49 @@ import {
 	STORAGE_KEY_IDENTITY,
 	STORAGE_KEY_USER_ID,
 } from '../src/utils/constants';
-import {getItem, removeItem} from '../src/utils/storage';
+import {
+	getItem,
+	getItemFromCookiesOrLocalStorage,
+	removeItem,
+	setItem,
+} from '../src/utils/storage';
 import {sendDummyEvents, trackDummyEvents, wait} from './helpers';
-
-const localStorageMock = (function () {
-	const store = {};
-
-	return {
-		getItem(key) {
-			return JSON.parse(decodeURIComponent(store[key]));
-		},
-		removeItem(key) {
-			delete localStorage[key];
-		},
-		setItem(key, value, encode) {
-			const newValue = JSON.stringify(value);
-
-			store[key] = encode ? encodeURIComponent(newValue) : newValue;
-		},
-	};
-})();
 
 const ANALYTICS_IDENTITY = {email: 'foo@bar.com'};
 const ENDPOINT_URL = 'https://ac-server.io';
 const FLUSH_INTERVAL = 100;
 const INITIAL_CONFIG = {
 	channelId: '4321',
-	cookieManager: {
-		actions: {
-			getItem: localStorageMock.getItem,
-			removeItem: localStorageMock.removeItem,
-			setItem: localStorageMock.setItem,
-		},
-	},
 	dataSourceId: '1234',
 	endpointUrl: ENDPOINT_URL,
 	flushInterval: FLUSH_INTERVAL,
 };
 
+const localStorageMock = (function () {
+	const store = {};
+
+	return {
+		getItem(key) {
+			return store[key];
+		},
+		removeItem(key) {
+			delete localStorage[key];
+		},
+		setItem(key, value) {
+			store[key] = value;
+		},
+	};
+})();
+
 Object.defineProperty(window, 'localStorage', {value: localStorageMock});
+
+jest.mock('../src/utils/storage', () => ({
+	...jest.requireActual('../src/utils/storage'),
+	getItem: jest.fn(),
+	getItemFromCookiesOrLocalStorage: jest.fn(),
+	removeItem: jest.fn(),
+	setItem: jest.fn(),
+}));
 
 describe('Analytics', () => {
 	let Analytics;
@@ -60,8 +64,15 @@ describe('Analytics', () => {
 
 		Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
-		removeItem(STORAGE_KEY_EVENTS);
-		removeItem(STORAGE_KEY_USER_ID);
+		getItem.mockImplementation(localStorageMock.getItem);
+		setItem.mockImplementation(localStorageMock.setItem);
+		getItemFromCookiesOrLocalStorage.mockImplementation(
+			localStorageMock.getItem
+		);
+		removeItem.mockImplementation(localStorageMock.removeItem);
+
+		localStorageMock.removeItem(STORAGE_KEY_EVENTS);
+		localStorageMock.removeItem(STORAGE_KEY_USER_ID);
 	});
 
 	afterEach(() => {

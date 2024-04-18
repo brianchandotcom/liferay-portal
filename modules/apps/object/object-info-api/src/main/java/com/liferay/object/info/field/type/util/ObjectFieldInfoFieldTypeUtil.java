@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.web.internal.util;
+package com.liferay.object.info.field.type.util;
 
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
@@ -25,7 +25,7 @@ import java.util.Objects;
 /**
  * @author Eudaldo Alonso
  */
-public class ObjectFieldDBTypeUtil {
+public class ObjectFieldInfoFieldTypeUtil {
 
 	public static InfoFieldType getInfoFieldType(ObjectField objectField) {
 		if (Objects.equals(

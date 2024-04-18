@@ -109,14 +109,12 @@ public class GroupIdQueryPreFilterContributor
 
 		TermsFilter groupIdTermsFilter = new TermsFilter(Field.GROUP_ID);
 
-		int maxTermsCount = 65536;
-
-		if ((inactiveGroupIds.size() > maxTermsCount) && !_isSolr()) {
+		if ((inactiveGroupIds.size() > _MAX_TERMS_COUNT) && !_isSolr()) {
 			for (int i = 0; i < inactiveGroupIds.size(); i++) {
 				groupIdTermsFilter.addValue(
 					String.valueOf(inactiveGroupIds.get(i)));
 
-				if (((i + 1) % maxTermsCount) == 0) {
+				if (((i + 1) % _MAX_TERMS_COUNT) == 0) {
 					booleanFilter.add(
 						groupIdTermsFilter, BooleanClauseOccur.MUST_NOT);
 
@@ -156,6 +154,8 @@ public class GroupIdQueryPreFilterContributor
 	private boolean _isSolr() {
 		return Objects.equals(_searchEngine.getVendor(), "Solr");
 	}
+
+	private static final Integer _MAX_TERMS_COUNT = 65536;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

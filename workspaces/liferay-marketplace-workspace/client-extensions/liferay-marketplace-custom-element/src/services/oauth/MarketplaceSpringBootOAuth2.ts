@@ -59,6 +59,7 @@ type LicenseTypePayload = {
 		macAddresses: string;
 		orderId: string;
 		productPurchaseKey: string;
+		productVersion: string;
 	};
 	skuId: number;
 	type: string;
@@ -69,6 +70,7 @@ export type SubscriptionsType = {
 	name: string;
 	perpetual: boolean;
 	productPurchasedKey: string;
+	productVersion: string;
 	provisionedCount: number;
 	purchasedCount: number;
 	startDate: string;

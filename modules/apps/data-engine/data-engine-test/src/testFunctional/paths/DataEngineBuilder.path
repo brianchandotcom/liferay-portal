@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>OPTION_REFERENCE_ERROR</td>
-	<td>xpath=(//div[contains(@class,'ddm-option-entry')])[${index}]//div[contains(@class,'form-feedback-item')]</td>
+	<td>xpath=(//div[contains(@class,'ddm-option-entry')])[${index}]//div[contains(@class,'form-feedback-item') and text()='${assertErrorMessage}']</td>
 	<td></td>
 </tr>
 <tr>

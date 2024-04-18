@@ -10,7 +10,6 @@ import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -18,6 +17,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -51,6 +50,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionResponse;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.sites.kernel.util.Sites;
 
@@ -96,36 +96,30 @@ public class ResetPrototypeMVCActionCommandTest {
 	public void testResetLayoutPrototype() throws Exception {
 		_setLinkEnabled(true);
 
-		Layout layout = _addLayout(_layoutSetPrototypeGroup.getGroupId());
+		Layout layout = _layoutLocalService.addLayout(
+			TestPropsValues.getUserId(), _layoutSetPrototypeGroup.getGroupId(),
+			true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), null, null,
+			LayoutConstants.TYPE_CONTENT, false, StringPool.BLANK,
+			_serviceContext);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
 
 		FragmentEntry fragmentEntry = _addFragmentEntry();
 
-		long segmentsExperienceId =
-			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), draftLayout,
+			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(), null,
+			0,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()));
 
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkService.addFragmentEntryLink(
-				_layoutSetPrototypeGroup.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
-				segmentsExperienceId, layout.getPlid(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
-				null, fragmentEntry.getType(), _serviceContext);
-
-		LayoutStructure layoutStructure = _getLayoutStructure(
-			_layoutSetPrototypeGroup.getGroupId(), layout,
-			segmentsExperienceId);
-
-		LayoutStructureItem containerStyledLayoutStructureItem =
-			layoutStructure.addContainerStyledLayoutStructureItem(
-				layoutStructure.getMainItemId(), 0);
-
-		layoutStructure.addFragmentStyledLayoutStructureItem(
-			fragmentEntryLink.getFragmentEntryLinkId(),
-			containerStyledLayoutStructureItem.getItemId(), 0);
-
-		_updateLayoutPageTemplateStructureRel(
-			layout, segmentsExperienceId, layoutStructure.toString());
+		ContentLayoutTestUtil.publishLayout(
+			_layoutLocalService.getLayout(draftLayout.getPlid()), layout);
 
 		propagateChanges(_group);
 
@@ -133,11 +127,11 @@ public class ResetPrototypeMVCActionCommandTest {
 			_layoutLocalService.fetchLayoutByFriendlyURL(
 				_group.getGroupId(), false, layout.getFriendlyURL());
 
-		segmentsExperienceId =
+		long segmentsExperienceId =
 			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
 				groupPublishedLayout.getPlid());
 
-		layoutStructure = _getLayoutStructure(
+		LayoutStructure layoutStructure = _getLayoutStructure(
 			_group.getGroupId(), groupPublishedLayout, segmentsExperienceId);
 
 		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
@@ -250,28 +244,6 @@ public class ResetPrototypeMVCActionCommandTest {
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 
-	private Layout _addLayout(long groupId) throws Exception {
-		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), groupId, true,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), null, null,
-			LayoutConstants.TYPE_CONTENT, false, StringPool.BLANK,
-			_serviceContext);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		UnicodeProperties unicodeProperties =
-			layout.getTypeSettingsProperties();
-
-		unicodeProperties.setProperty("published", Boolean.TRUE.toString());
-
-		draftLayout.setTypeSettingsProperties(unicodeProperties);
-
-		_layoutLocalService.updateLayout(draftLayout);
-
-		return layout;
-	}
-
 	private LayoutStructure _getLayoutStructure(
 		long groupId, Layout layout, long segmentsExperienceId) {
 
@@ -379,6 +351,9 @@ public class ResetPrototypeMVCActionCommandTest {
 
 	@Inject(filter = "mvc.command.name=/layout_admin/reset_prototype")
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
 

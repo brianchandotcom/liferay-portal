@@ -18,7 +18,9 @@ export default function useTranslationProgress({
 	const [defaultLanguageId, setDefaultLanguageId] = useState(
 		initialDefaultLanguageId
 	);
-	const [fields, setFields] = useState(initialFields);
+	const [fields, setFields] = useState({
+		titleMapAsXML: initialFields.titleMapAsXML,
+	} as Record<string, Field>);
 	const [translations, setTranslations] = useState(
 		fieldToTranslations(initialFields)
 	);

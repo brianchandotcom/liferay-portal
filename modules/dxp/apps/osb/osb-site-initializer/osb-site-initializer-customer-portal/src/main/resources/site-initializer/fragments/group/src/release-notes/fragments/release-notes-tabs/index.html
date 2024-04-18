@@ -1,8 +1,8 @@
-[#if themeDisplay?has_content]	
+[#if themeDisplay?has_content]
 	[#assign displayPortalURLs = (themeDisplay.getURLCurrent()?split("dxp-release-notes/"))! /]
 
 	[#assign currentDisplayPaths = (displayPortalURLs?last?split("/"))! /]
-	
+
 	[#assign currentTabId = (currentDisplayPaths?first)! /]
 
 	[#assign currentDisplayIds = (displayPortalURLs?last?split(currentTabId)?last)! /]

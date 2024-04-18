@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
@@ -74,6 +75,7 @@ import java.net.URL;
 
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -153,22 +155,27 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				TransactionInvokerUtil.invoke(
 					_transactionConfig, cpDefinitionConfigurationCallable);
 
-				String redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition.getCPDefinitionId(),
-					CPDefinitionScreenNavigationConstants.
-						CATEGORY_KEY_CONFIGURATION);
-
-				sendRedirect(actionRequest, actionResponse, redirect);
+				sendRedirect(
+					actionRequest, actionResponse,
+					getSaveAndContinueRedirect(
+						actionRequest, cpDefinition.getCPDefinitionId(),
+						CPDefinitionScreenNavigationConstants.
+							CATEGORY_KEY_CONFIGURATION));
 			}
 			else if (cmd.equals("updateSubscriptionInfo")) {
-				updateSubscriptionInfo(actionRequest, cpDefinition);
+				Callable<Object> cpDefinitionSubscriptionInfoCallable =
+					new CPDefinitionSubscriptionInfoCallable(
+						actionRequest, cpDefinition);
 
-				String redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition.getCPDefinitionId(),
-					CPDefinitionScreenNavigationConstants.
-						CATEGORY_KEY_SUBSCRIPTION);
+				TransactionInvokerUtil.invoke(
+					_transactionConfig, cpDefinitionSubscriptionInfoCallable);
 
-				sendRedirect(actionRequest, actionResponse, redirect);
+				sendRedirect(
+					actionRequest, actionResponse,
+					getSaveAndContinueRedirect(
+						actionRequest, cpDefinition.getCPDefinitionId(),
+						CPDefinitionScreenNavigationConstants.
+							CATEGORY_KEY_SUBSCRIPTION));
 			}
 			else if (cmd.equals("updateVisibility")) {
 				Callable<Object> cpDefinitionVisibilityCallable =
@@ -178,25 +185,29 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				TransactionInvokerUtil.invoke(
 					_transactionConfig, cpDefinitionVisibilityCallable);
 
-				String redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition.getCPDefinitionId(),
-					CPDefinitionScreenNavigationConstants.
-						CATEGORY_KEY_VISIBILITY);
+				sendRedirect(
+					actionRequest, actionResponse,
+					getSaveAndContinueRedirect(
+						actionRequest, cpDefinition.getCPDefinitionId(),
+						CPDefinitionScreenNavigationConstants.
+							CATEGORY_KEY_VISIBILITY));
+			}
+			else if (cmd.equals("updateAttachments") ||
+					 cmd.equals("updateInstances") ||
+					 cmd.equals("updateLinks") ||
+					 cmd.equals("updateOptionRels") ||
+					 cmd.equals("updateProductGroups")) {
 
-				sendRedirect(actionRequest, actionResponse, redirect);
+				Callable<CPDefinition> cpDefinitionUpdateCallable =
+					new CPDefinitionUpdateCallable(actionRequest, cpDefinition);
+
+				cpDefinition = TransactionInvokerUtil.invoke(
+					_transactionConfig, cpDefinitionUpdateCallable);
+
+				_sendRedirect(actionRequest, actionResponse, cpDefinition);
 			}
 			else {
-				URL redirectURL = new URL(
-					ParamUtil.getString(actionRequest, "redirect"));
-
-				Map<String, String> queryMap = _getQueryMap(
-					cpDefinition.getCPDefinitionId(), redirectURL.getQuery());
-
-				String redirect = getSaveAndContinueRedirect(
-					actionRequest, Long.valueOf(queryMap.get("cpDefinitionId")),
-					queryMap.get("screenNavigationCategoryKey"));
-
-				sendRedirect(actionRequest, actionResponse, redirect);
+				_sendRedirect(actionRequest, actionResponse, cpDefinition);
 			}
 		}
 		catch (Throwable throwable) {
@@ -265,80 +276,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		).setParameter(
 			"screenNavigationCategoryKey", screenNavigationCategoryKey
 		).buildString();
-	}
-
-	protected void updateShippingInfo(
-			ActionRequest actionRequest, long cpDefinitionId)
-		throws PortalException {
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPDefinition.class.getName(), actionRequest);
-
-		boolean shippable = ParamUtil.getBoolean(actionRequest, "shippable");
-		boolean freeShipping = ParamUtil.getBoolean(
-			actionRequest, "freeShipping");
-		boolean shipSeparately = ParamUtil.getBoolean(
-			actionRequest, "shipSeparately");
-		double shippingExtraPrice = ParamUtil.getDouble(
-			actionRequest, "shippingExtraPrice");
-		double width = ParamUtil.getDouble(actionRequest, "width");
-		double height = ParamUtil.getDouble(actionRequest, "height");
-		double depth = ParamUtil.getDouble(actionRequest, "depth");
-		double weight = ParamUtil.getDouble(actionRequest, "weight");
-
-		_cpDefinitionService.updateShippingInfo(
-			cpDefinitionId, shippable, freeShipping, shipSeparately,
-			shippingExtraPrice, width, height, depth, weight, serviceContext);
-	}
-
-	protected void updateSubscriptionInfo(
-			ActionRequest actionRequest, CPDefinition cpDefinition)
-		throws PortalException {
-
-		if (cpDefinition == null) {
-			return;
-		}
-
-		boolean subscriptionEnabled = ParamUtil.getBoolean(
-			actionRequest, "subscriptionEnabled");
-		int subscriptionLength = ParamUtil.getInteger(
-			actionRequest, "subscriptionLength");
-
-		String subscriptionType = ParamUtil.getString(
-			actionRequest, "subscriptionType");
-
-		UnicodeProperties subscriptionTypeSettingsUnicodeProperties =
-			PropertiesParamUtil.getProperties(
-				actionRequest,
-				"subscriptionTypeSettings--" + subscriptionType + "--");
-
-		long maxSubscriptionCycles = ParamUtil.getLong(
-			actionRequest, "maxSubscriptionCycles");
-		boolean deliverySubscriptionEnabled = ParamUtil.getBoolean(
-			actionRequest, "deliverySubscriptionEnabled");
-		int deliverySubscriptionLength = ParamUtil.getInteger(
-			actionRequest, "deliverySubscriptionLength");
-
-		String deliverySubscriptionType = ParamUtil.getString(
-			actionRequest, "deliverySubscriptionType");
-
-		UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties =
-			PropertiesParamUtil.getProperties(
-				actionRequest,
-				"deliverySubscriptionTypeSettings--" +
-					deliverySubscriptionType + "--");
-
-		long deliveryMaxSubscriptionCycles = ParamUtil.getLong(
-			actionRequest, "deliveryMaxSubscriptionCycles");
-
-		_cpDefinitionService.updateSubscriptionInfo(
-			cpDefinition.getCPDefinitionId(), subscriptionEnabled,
-			subscriptionLength, subscriptionType,
-			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
-			deliverySubscriptionEnabled, deliverySubscriptionLength,
-			deliverySubscriptionType,
-			deliverySubscriptionTypeSettingsUnicodeProperties,
-			deliveryMaxSubscriptionCycles);
 	}
 
 	private void _deleteAccountGroup(
@@ -478,6 +415,24 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		indexer.reindex(cpDefinition);
 	}
 
+	private void _sendRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			CPDefinition cpDefinition)
+		throws Exception {
+
+		URL redirectURL = new URL(
+			ParamUtil.getString(actionRequest, "redirect"));
+
+		Map<String, String> queryMap = _getQueryMap(
+			cpDefinition.getCPDefinitionId(), redirectURL.getQuery());
+
+		sendRedirect(
+			actionRequest, actionResponse,
+			getSaveAndContinueRedirect(
+				actionRequest, Long.valueOf(queryMap.get("cpDefinitionId")),
+				queryMap.get("screenNavigationCategoryKey")));
+	}
+
 	private CPDefinition _updateCPDefinition(
 			ActionRequest actionRequest, CPDefinition cpDefinition)
 		throws Exception {
@@ -588,6 +543,71 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		return cpDefinition;
 	}
 
+	private CPDefinition _updateCPDefinition(
+			CPDefinition cpDefinition, ServiceContext serviceContext)
+		throws Exception {
+
+		Date displayDate = cpDefinition.getDisplayDate();
+
+		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
+			displayDate.getTime());
+
+		int displayDateHour = displayCalendar.get(Calendar.HOUR);
+		int displayDateAmPm = displayCalendar.get(Calendar.AM_PM);
+
+		if (displayDateAmPm == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		int expirationDateMonth = 0;
+		int expirationDateDay = 0;
+		int expirationDateYear = 0;
+		int expirationDateHour = 0;
+		int expirationDateMinute = 0;
+		boolean neverExpire = true;
+
+		if (cpDefinition.getExpirationDate() != null) {
+			Date expirationDate = cpDefinition.getExpirationDate();
+
+			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
+				expirationDate.getTime());
+
+			expirationDateMonth = expirationCalendar.get(Calendar.MONTH);
+
+			expirationDateDay = expirationCalendar.get(Calendar.DAY_OF_MONTH);
+
+			expirationDateYear = expirationCalendar.get(Calendar.YEAR);
+
+			expirationDateHour = expirationCalendar.get(Calendar.HOUR);
+
+			expirationDateMinute = expirationCalendar.get(Calendar.MINUTE);
+
+			int expirationDateAmPm = expirationCalendar.get(Calendar.AM_PM);
+
+			if (expirationDateAmPm == Calendar.PM) {
+				expirationDateHour += 12;
+			}
+
+			neverExpire = false;
+		}
+
+		return _cpDefinitionService.updateCPDefinition(
+			cpDefinition.getCPDefinitionId(), cpDefinition.getNameMap(),
+			cpDefinition.getShortDescriptionMap(),
+			cpDefinition.getDescriptionMap(), cpDefinition.getUrlTitleMap(),
+			cpDefinition.getMetaTitleMap(),
+			cpDefinition.getMetaDescriptionMap(),
+			cpDefinition.getMetaKeywordsMap(),
+			cpDefinition.isIgnoreSKUCombinations(),
+			cpDefinition.getDDMStructureKey(), cpDefinition.isPublished(),
+			displayCalendar.get(Calendar.MONTH),
+			displayCalendar.get(Calendar.DAY_OF_MONTH),
+			displayCalendar.get(Calendar.YEAR), displayDateHour,
+			displayCalendar.get(Calendar.MINUTE), expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
+	}
+
 	private void _updateCPDefinitionInventory(
 			ActionRequest actionRequest, long cpDefinitionId)
 		throws Exception {
@@ -642,6 +662,80 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		_cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(
 			cpdAvailabilityEstimateEntryId, cpDefinitionId,
 			commerceAvailabilityEstimateId);
+	}
+
+	private void _updateShippingInfo(
+			ActionRequest actionRequest, long cpDefinitionId)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CPDefinition.class.getName(), actionRequest);
+
+		boolean shippable = ParamUtil.getBoolean(actionRequest, "shippable");
+		boolean freeShipping = ParamUtil.getBoolean(
+			actionRequest, "freeShipping");
+		boolean shipSeparately = ParamUtil.getBoolean(
+			actionRequest, "shipSeparately");
+		double shippingExtraPrice = ParamUtil.getDouble(
+			actionRequest, "shippingExtraPrice");
+		double width = ParamUtil.getDouble(actionRequest, "width");
+		double height = ParamUtil.getDouble(actionRequest, "height");
+		double depth = ParamUtil.getDouble(actionRequest, "depth");
+		double weight = ParamUtil.getDouble(actionRequest, "weight");
+
+		_cpDefinitionService.updateShippingInfo(
+			cpDefinitionId, shippable, freeShipping, shipSeparately,
+			shippingExtraPrice, width, height, depth, weight, serviceContext);
+	}
+
+	private void _updateSubscriptionInfo(
+			ActionRequest actionRequest, CPDefinition cpDefinition)
+		throws Exception {
+
+		if (cpDefinition == null) {
+			return;
+		}
+
+		boolean subscriptionEnabled = ParamUtil.getBoolean(
+			actionRequest, "subscriptionEnabled");
+		int subscriptionLength = ParamUtil.getInteger(
+			actionRequest, "subscriptionLength");
+
+		String subscriptionType = ParamUtil.getString(
+			actionRequest, "subscriptionType");
+
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest,
+				"subscriptionTypeSettings--" + subscriptionType + "--");
+
+		long maxSubscriptionCycles = ParamUtil.getLong(
+			actionRequest, "maxSubscriptionCycles");
+		boolean deliverySubscriptionEnabled = ParamUtil.getBoolean(
+			actionRequest, "deliverySubscriptionEnabled");
+		int deliverySubscriptionLength = ParamUtil.getInteger(
+			actionRequest, "deliverySubscriptionLength");
+
+		String deliverySubscriptionType = ParamUtil.getString(
+			actionRequest, "deliverySubscriptionType");
+
+		UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest,
+				"deliverySubscriptionTypeSettings--" +
+					deliverySubscriptionType + "--");
+
+		long deliveryMaxSubscriptionCycles = ParamUtil.getLong(
+			actionRequest, "deliveryMaxSubscriptionCycles");
+
+		_cpDefinitionService.updateSubscriptionInfo(
+			cpDefinition.getCPDefinitionId(), subscriptionEnabled,
+			subscriptionLength, subscriptionType,
+			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
+			deliverySubscriptionEnabled, deliverySubscriptionLength,
+			deliverySubscriptionType,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
+			deliveryMaxSubscriptionCycles);
 	}
 
 	private void _updateTaxCategoryInfo(
@@ -773,13 +867,71 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			long cpDefinitionId = _cpDefinition.getCPDefinitionId();
 
 			_updateCPDefinitionInventory(_actionRequest, cpDefinitionId);
-			updateShippingInfo(_actionRequest, cpDefinitionId);
+			_updateShippingInfo(_actionRequest, cpDefinitionId);
 			_updateTaxCategoryInfo(_actionRequest, cpDefinitionId);
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				CPDefinition.class.getName(), _actionRequest);
+
+			_updateCPDefinition(_cpDefinition, serviceContext);
 
 			return null;
 		}
 
 		private CPDefinitionConfigurationCallable(
+			ActionRequest actionRequest, CPDefinition cpDefinition) {
+
+			_actionRequest = actionRequest;
+			_cpDefinition = cpDefinition;
+		}
+
+		private final ActionRequest _actionRequest;
+		private final CPDefinition _cpDefinition;
+
+	}
+
+	private class CPDefinitionSubscriptionInfoCallable
+		implements Callable<Object> {
+
+		@Override
+		public Object call() throws Exception {
+			if (_cpDefinition == null) {
+				return null;
+			}
+
+			_updateSubscriptionInfo(_actionRequest, _cpDefinition);
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				CPDefinition.class.getName(), _actionRequest);
+
+			_updateCPDefinition(_cpDefinition, serviceContext);
+
+			return null;
+		}
+
+		private CPDefinitionSubscriptionInfoCallable(
+			ActionRequest actionRequest, CPDefinition cpDefinition) {
+
+			_actionRequest = actionRequest;
+			_cpDefinition = cpDefinition;
+		}
+
+		private final ActionRequest _actionRequest;
+		private final CPDefinition _cpDefinition;
+
+	}
+
+	private class CPDefinitionUpdateCallable implements Callable<CPDefinition> {
+
+		@Override
+		public CPDefinition call() throws Exception {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				CPDefinition.class.getName(), _actionRequest);
+
+			return _updateCPDefinition(_cpDefinition, serviceContext);
+		}
+
+		private CPDefinitionUpdateCallable(
 			ActionRequest actionRequest, CPDefinition cpDefinition) {
 
 			_actionRequest = actionRequest;
@@ -801,6 +953,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			_updateVisibility(
 				_actionRequest, _cpDefinition.getCPDefinitionId());
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				CPDefinition.class.getName(), _actionRequest);
+
+			_updateCPDefinition(_cpDefinition, serviceContext);
 
 			return null;
 		}

@@ -19,6 +19,7 @@ CProduct cProduct = cpDefinition.getCProduct();
 	<div class="pt-4" id="<portlet:namespace />productPricingClassRelsContainer"><portlet:actionURL name="/cp_definitions/edit_cp_definition" var="editProductDefinitionProductGroupsActionURL" />
 
 		<aui:form action="<%= editProductDefinitionProductGroupsActionURL %>" method="post" name="fm">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateProductGroups" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionPricingClassDisplayContext.getCPDefinitionId() %>" />
 			<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />

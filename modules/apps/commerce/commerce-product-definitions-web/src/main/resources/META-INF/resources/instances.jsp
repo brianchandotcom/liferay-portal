@@ -16,6 +16,7 @@ CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)re
 		<portlet:actionURL name="/cp_definitions/edit_cp_definition" var="editProductDefinitionInstancesActionURL" />
 
 		<aui:form action="<%= editProductDefinitionInstancesActionURL %>" method="post" name="fm">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateInstances" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="cpDefinitionId" type="hidden" value="<%= cpInstanceDisplayContext.getCPDefinitionId() %>" />
 			<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />

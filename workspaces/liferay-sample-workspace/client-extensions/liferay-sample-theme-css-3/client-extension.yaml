@@ -1,9 +1,9 @@
 assemble:
     - from: build/buildTheme/img
       into: static/img
-liferay-sample-theme-frontend-token-definition:
+liferay-sample-theme-css-3:
     clayURL: css/clay.css
     frontendTokenDefinitionJSON: src/frontend-token-definition.json
     mainURL: css/main.css
-    name: Liferay Sample Theme Frontend Token Definition
+    name: Liferay Sample Theme CSS 3
     type: themeCSS

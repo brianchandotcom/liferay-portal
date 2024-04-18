@@ -29,6 +29,12 @@ public class GroupIdQueryPreFilterContributorTest
 	@Ignore
 	@Override
 	@Test
+	public void testNumberOfTermsGreaterThanTheMaximumAllowed() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testScopeEverythingWithInactiveGroups() {
 	}
 

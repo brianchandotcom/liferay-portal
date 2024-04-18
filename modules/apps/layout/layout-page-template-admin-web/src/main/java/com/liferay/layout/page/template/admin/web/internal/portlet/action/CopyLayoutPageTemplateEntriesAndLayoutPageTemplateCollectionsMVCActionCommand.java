@@ -133,10 +133,9 @@ public class
 			Layout targetLayout = _layoutLocalService.getLayout(
 				layoutPageTemplateEntry.getPlid());
 
+			_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
 			_layoutCopyHelper.copyLayoutContent(
 				sourceLayout, targetLayout.fetchDraftLayout());
-
-			_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
 		}
 
 		return null;

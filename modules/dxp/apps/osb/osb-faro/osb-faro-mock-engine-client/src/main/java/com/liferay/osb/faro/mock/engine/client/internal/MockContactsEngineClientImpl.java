@@ -120,6 +120,11 @@ public class MockContactsEngineClientImpl
 	}
 
 	@Override
+	public Date getLastSeenDate(FaroProject faroProject) {
+		return contactsEngineClient.getLastSeenDate(faroProject);
+	}
+
+	@Override
 	public Results<Individual> getSimilarIndividuals(
 		FaroProject faroProject, String individualId, String query,
 		List<String> fields, int cur, int delta,

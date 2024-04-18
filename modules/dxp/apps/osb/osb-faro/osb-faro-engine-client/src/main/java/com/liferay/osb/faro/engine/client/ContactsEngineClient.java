@@ -407,6 +407,8 @@ public interface ContactsEngineClient {
 		String ownerType, String name, String query, String expand, int cur,
 		int delta, List<OrderByField> orderByFields);
 
+	public Date getLastSeenDate(FaroProject faroProject);
+
 	public Results<PageVisited> getPagesVisited(
 		FaroProject faroProject, String channelId, String ownerId,
 		String ownerType, String query, String interestName, Date startDate,

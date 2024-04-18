@@ -174,10 +174,6 @@ public class CSVCommerceOrderImporterTypeImpl
 	public boolean isActive(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		if (!_commerceOrderImporterTypeConfiguration.enabled()) {
-			return false;
-		}
-
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
 				commerceOrder.getGroupId());

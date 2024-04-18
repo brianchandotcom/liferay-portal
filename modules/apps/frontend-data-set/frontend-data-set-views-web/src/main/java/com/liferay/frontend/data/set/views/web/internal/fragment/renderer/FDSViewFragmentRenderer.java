@@ -974,7 +974,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 
-				if (!FeatureFlagManagerUtil.isEnabled("LPD-19465")) {
+				if (FeatureFlagManagerUtil.isEnabled("LPD-19465")) {
 					return JSONUtil.put(
 						"direction", properties.get("orderType")
 					).put(

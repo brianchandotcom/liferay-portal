@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -19,6 +20,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -107,13 +109,9 @@ public class GroupIdQueryPreFilterContributor
 
 		TermsFilter groupIdTermsFilter = new TermsFilter(Field.GROUP_ID);
 
-		int maxTermsCount = 65536; //Could be set by a config
+		int maxTermsCount = 65536;
 
-		if (inactiveGroupIds.size() <= maxTermsCount) {
-			groupIdTermsFilter.addValues(
-				ArrayUtil.toStringArray(inactiveGroupIds.toArray(new Long[0])));
-		}
-		else {
+		if ((inactiveGroupIds.size() > maxTermsCount) && !_isSolr()) {
 			for (int i = 0; i < inactiveGroupIds.size(); i++) {
 				groupIdTermsFilter.addValue(
 					String.valueOf(inactiveGroupIds.get(i)));
@@ -125,6 +123,10 @@ public class GroupIdQueryPreFilterContributor
 					groupIdTermsFilter = new TermsFilter(Field.GROUP_ID);
 				}
 			}
+		}
+		else {
+			groupIdTermsFilter.addValues(
+				ArrayUtil.toStringArray(inactiveGroupIds.toArray(new Long[0])));
 		}
 
 		if (!groupIdTermsFilter.isEmpty()) {
@@ -151,7 +153,14 @@ public class GroupIdQueryPreFilterContributor
 		}
 	}
 
+	private boolean _isSolr() {
+		return Objects.equals(_searchEngine.getVendor(), "Solr");
+	}
+
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private SearchEngine _searchEngine;
 
 }

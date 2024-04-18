@@ -56,13 +56,13 @@ public class ValidatorUtil {
 	private static Map<String, Release> _getReleasesMap(
 		LiferayInstance liferayInstance) {
 
-		Map<String, Release> releasesMap = new HashMap<>();
+		Map<String, Release> releases = new HashMap<>();
 
 		for (Release release : liferayInstance.getReleases()) {
-			releasesMap.put(release.getServletContextName(), release);
+			releases.put(release.getServletContextName(), release);
 		}
 
-		return releasesMap;
+		return releases;
 	}
 
 	private static void _validateCompany(

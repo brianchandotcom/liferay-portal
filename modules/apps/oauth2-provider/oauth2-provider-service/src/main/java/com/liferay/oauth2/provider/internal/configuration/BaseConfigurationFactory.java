@@ -6,7 +6,10 @@
 package com.liferay.oauth2.provider.internal.configuration;
 
 import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
+import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -24,6 +27,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.Application;
@@ -177,6 +181,44 @@ public abstract class BaseConfigurationFactory {
 			_configMapName);
 	}
 
+	protected void updateScopes(
+			OAuth2Application oAuth2Application, List<String> scopeAliasesList)
+		throws Exception {
+
+		boolean update = true;
+
+		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
+			oAuth2ApplicationScopeAliasesLocalService.
+				fetchOAuth2ApplicationScopeAliases(
+					oAuth2Application.getOAuth2ApplicationId(),
+					scopeAliasesList);
+
+		if (oAuth2ApplicationScopeAliases != null) {
+			List<String> currentScopeAliasesList =
+				oAuth2ApplicationScopeAliasesLocalService.getScopeAliasesList(
+					oAuth2ApplicationScopeAliases.
+						getOAuth2ApplicationScopeAliasesId());
+
+			if (currentScopeAliasesList.containsAll(scopeAliasesList) &&
+				(currentScopeAliasesList.size() == scopeAliasesList.size())) {
+
+				update = false;
+			}
+		}
+
+		if (update) {
+
+			// Make sure all scopes are registered
+
+			scopeLocator.getLiferayOAuth2Scopes(
+				oAuth2Application.getCompanyId());
+
+			oAuth2ApplicationLocalService.updateScopeAliases(
+				oAuth2Application.getUserId(), oAuth2Application.getUserName(),
+				oAuth2Application.getOAuth2ApplicationId(), scopeAliasesList);
+		}
+	}
+
 	@Reference(policyOption = ReferencePolicyOption.GREEDY)
 	protected Collection<Application> applications;
 
@@ -190,6 +232,13 @@ public abstract class BaseConfigurationFactory {
 
 	@Reference
 	protected OAuth2ApplicationLocalService oAuth2ApplicationLocalService;
+
+	@Reference
+	protected OAuth2ApplicationScopeAliasesLocalService
+		oAuth2ApplicationScopeAliasesLocalService;
+
+	@Reference
+	protected ScopeLocator scopeLocator;
 
 	@Reference
 	protected UserLocalService userLocalService;

@@ -367,6 +367,12 @@ public class DLFileVersionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByF_SArrayable() throws Exception {
+		_persistence.countByF_S(
+			RandomTestUtil.nextLong(), new int[] {RandomTestUtil.nextInt(), 0});
+	}
+
+	@Test
 	public void testCountByLtD_S() throws Exception {
 		_persistence.countByLtD_S(
 			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());

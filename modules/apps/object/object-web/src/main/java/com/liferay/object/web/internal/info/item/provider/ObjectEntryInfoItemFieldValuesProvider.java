@@ -27,6 +27,7 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.info.field.converter.ObjectFieldInfoFieldConverter;
+import com.liferay.object.info.field.type.util.ObjectFieldInfoFieldTypeUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -43,7 +44,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
 import com.liferay.object.web.internal.model.ProxyObjectEntry;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
-import com.liferay.object.web.internal.util.ObjectFieldDBTypeUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -577,7 +577,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		}
 
 		if (Objects.equals(
-				ObjectFieldDBTypeUtil.getInfoFieldType(objectField),
+				ObjectFieldInfoFieldTypeUtil.getInfoFieldType(objectField),
 				ImageInfoFieldType.INSTANCE)) {
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(

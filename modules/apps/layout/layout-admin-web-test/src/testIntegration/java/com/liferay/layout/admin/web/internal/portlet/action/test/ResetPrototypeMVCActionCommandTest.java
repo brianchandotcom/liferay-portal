@@ -233,13 +233,6 @@ public class ResetPrototypeMVCActionCommandTest {
 		Assert.assertEquals(0, mergeFailCount);
 	}
 
-	protected Layout propagateChanges(Layout layout) throws Exception {
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
-
-		return LayoutLocalServiceUtil.getLayout(layout.getPlid());
-	}
-
 	private FragmentEntry _addFragmentEntry() throws Exception {
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(

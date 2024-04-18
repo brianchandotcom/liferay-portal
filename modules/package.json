@@ -24,7 +24,6 @@
 		"webpack": "5.89.0"
 	},
 	"scripts": {
-		"cacheClean": "liferay-npm-scripts cache --clean",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
 		"types": "liferay-npm-scripts types"

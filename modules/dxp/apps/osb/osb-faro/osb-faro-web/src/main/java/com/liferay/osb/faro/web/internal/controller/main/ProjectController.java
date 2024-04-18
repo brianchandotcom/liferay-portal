@@ -1212,6 +1212,10 @@ public class ProjectController extends BaseFaroController {
 	private void _validateLastSeenDate(FaroProject faroProject) {
 		Date lastSeenDate = contactsEngineClient.getLastSeenDate(faroProject);
 
+		if (Objects.isNull(lastSeenDate)) {
+			return;
+		}
+
 		Calendar calendar = new GregorianCalendar();
 
 		calendar.setTime(new Date());

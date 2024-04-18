@@ -5,6 +5,8 @@
 
 package com.liferay.jethr0.util;
 
+import java.text.SimpleDateFormat;
+
 import java.util.Date;
 
 /**
@@ -19,10 +21,13 @@ public class JobUtil {
 
 		if (jobName.contains("$(current_date)")) {
 			jobName = jobName.replaceAll(
-				"\\$\\(current_date\\)", String.valueOf(new Date()));
+				"\\$\\(current_date\\)", _simpleDateFormat.format(new Date()));
 		}
 
 		return jobName;
 	}
+
+	private static final SimpleDateFormat _simpleDateFormat =
+		new SimpleDateFormat("MM/dd/yyyy, hh:mm:ss a");
 
 }

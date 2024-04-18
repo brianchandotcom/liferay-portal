@@ -62,10 +62,7 @@ const BaseEditor = forwardRef(
 		}, []);
 
 		useEffect(() => {
-			if (
-				!Liferay.FeatureFlags['LPS-186870'] ||
-				!initialConfig.editorTransformerURLs
-			) {
+			if (!initialConfig.editorTransformerURLs) {
 				return;
 			}
 

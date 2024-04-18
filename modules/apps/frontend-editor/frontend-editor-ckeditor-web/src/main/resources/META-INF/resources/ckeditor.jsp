@@ -730,7 +730,7 @@ name = HtmlUtil.escapeJS(name);
 
 		var editorTransformerURLs = config.editorTransformerURLs;
 
-		if (Liferay.FeatureFlags['LPS-186870'] && editorTransformerURLs) {
+		if (editorTransformerURLs) {
 			var loadingIndicator = document.createElement('span');
 
 			loadingIndicator.classList.add('loading-animation');

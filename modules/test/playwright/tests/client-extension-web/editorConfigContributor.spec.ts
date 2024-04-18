@@ -24,7 +24,6 @@ export const test = mergeTests(
 	editorSamplesPageTest,
 	featureFlagsTest({
 		'LPS-178052': true,
-		'LPS-186870': true,
 	}),
 	isolatedSiteTest,
 	loginTest()

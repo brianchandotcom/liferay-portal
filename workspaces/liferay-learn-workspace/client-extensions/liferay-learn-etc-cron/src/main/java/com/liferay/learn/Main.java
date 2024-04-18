@@ -1055,6 +1055,24 @@ public class Main {
 
 		List<Long> taxonomyCategoryIds = new ArrayList<>();
 
+		try {
+			TaxonomyVocabulary taxonomyVocabulary =
+				_taxonomyVocabularyResource.
+					getSiteTaxonomyVocabularyByExternalReferenceCode(
+						_liferaySiteId, "RESOURCE_TYPE");
+
+			TaxonomyCategory taxonomyCategory =
+				_taxonomyCategoryResource.
+					getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+						taxonomyVocabulary.getId(), "OFFICIAL_DOCUMENTATION");
+
+			taxonomyCategoryIds.add(
+				GetterUtil.getLong(taxonomyCategory.getId()));
+		}
+		catch (Exception exception) {
+			_error(exception.getMessage());
+		}
+
 		for (Object taxonomyCategoryNameObject :
 				(ArrayList)taxonomyCategoryNames) {
 
@@ -1219,6 +1237,29 @@ public class Main {
 		).endpoint(
 			_liferayURL
 		).build();
+	}
+
+	private boolean _isShowChildrenCardsBoolean(File file) throws Exception {
+		SnakeYamlFrontMatterVisitor snakeYamlFrontMatterVisitor =
+			new SnakeYamlFrontMatterVisitor();
+
+		snakeYamlFrontMatterVisitor.visit(
+			_parser.parse(
+				FileUtils.readFileToString(file, StandardCharsets.UTF_8)));
+
+		Map<String, Object> data = snakeYamlFrontMatterVisitor.getData();
+
+		if ((data == null) || !data.containsKey("show-children-cards") ||
+			!StringUtil.equals(
+				data.get(
+					"show-children-cards"
+				).toString(),
+				"false")) {
+
+			return true;
+		}
+
+		return GetterUtil.getBoolean(data.get("show-children-cards"));
 	}
 
 	private void _loadTaxonomyCategories(
@@ -1407,6 +1448,14 @@ public class Main {
 							_getNavigationJSONObject(englishFile)));
 				}
 			};
+		ContentFieldValue englishShowChildrenCardsContentFieldValue =
+			new ContentFieldValue() {
+				{
+					setData(
+						() -> String.valueOf(
+							_isShowChildrenCardsBoolean(englishFile)));
+				}
+			};
 		String englishTitle = _getTitle(englishText);
 
 		File japaneseFile = new File(
@@ -1476,6 +1525,29 @@ public class Main {
 									}
 								).build());
 							setName(() -> "navigation");
+						}
+					},
+					new ContentField() {
+						{
+							setContentFieldValue(
+								() ->
+									englishShowChildrenCardsContentFieldValue);
+							setContentFieldValue_i18n(
+								() -> HashMapBuilder.put(
+									"en-US",
+									englishShowChildrenCardsContentFieldValue
+								).put(
+									"ja-JP",
+									new ContentFieldValue() {
+										{
+											setData(
+												() -> String.valueOf(
+													_isShowChildrenCardsBoolean(
+														japaneseFile)));
+										}
+									}
+								).build());
+							setName(() -> "showChildrenCards");
 						}
 					}
 				});

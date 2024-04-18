@@ -408,7 +408,7 @@
 			"DBType": "String",
 			"businessType": "Aggregation",
 			"externalReferenceCode": "2cb7e162-a1f5-461c-aee6-61d896572005",
-			"indexed": true,
+			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "MDF Activities Count"

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="JournalArticle45391501" index-type="keyword" instance-id="olTvPKq0" name="JournalArticle45391501" type="journal_article">
+		<dynamic-content language-id="en_US"><![CDATA[[$JOURNAL_REF_JSON_1$]]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="JournalArticle45391501" index-type="keyword" instance-id="ataddg9c" name="JournalArticle45391501" type="journal_article">
+		<dynamic-content language-id="en_US"><![CDATA[[$JOURNAL_REF_JSON_2$]]]></dynamic-content>
+	</dynamic-element>
+</root>

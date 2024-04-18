@@ -1,0 +1,78 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"contentType": "journal",
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"dataType": "journal-article",
+				"fieldNamespace": "",
+				"fieldReference": "JournalArticle45391501",
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": ""
+			},
+			"fieldType": "journal_article",
+			"indexType": "keyword",
+			"indexable": true,
+			"label": {
+				"en_US": "Web Content"
+			},
+			"localizable": true,
+			"name": "JournalArticle45391501",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		}
+	],
+	"dataDefinitionKey": "33221",
+	"defaultDataLayout": {
+		"dataLayoutFields": {
+		},
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"JournalArticle45391501"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"en_US": ""
+				},
+				"title": {
+					"en_US": ""
+				}
+			}
+		],
+		"dataRules": [
+		],
+		"description": {
+		},
+		"name": {
+			"en_US": "TestStruct"
+		},
+		"paginationMode": "single-page"
+	},
+	"defaultLanguageId": "en_US",
+	"description": {
+	},
+	"name": {
+		"en_US": "TestStruct"
+	},
+	"storageType": "default"
+}

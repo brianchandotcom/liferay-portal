@@ -7,70 +7,7 @@ import {useParams} from 'react-router-dom';
 import Container from '~/components/Layout/Container';
 import ListView from '~/components/ListView';
 import ProgressBar from '~/components/ProgressBar';
-import SearchBuilder from '~/core/SearchBuilder';
 import i18n from '~/i18n';
-import {TestrayComponent} from '~/services/rest';
-import {testrayTeamImpl} from '~/services/rest/TestrayTeam';
-import {CaseResultStatuses} from '~/util/constants';
-
-type ProgressBarResults = {
-	blocked: number;
-	failed: number;
-	incomplete: number;
-	passed: number;
-	test_fix: number;
-};
-
-const getTotalResults = (components: TestrayComponent[]): number =>
-	components.reduce(
-		(previousValue, currentValue) =>
-			previousValue +
-			Number(currentValue?.caseResultBlocked) +
-			Number(currentValue?.caseResultFailed) +
-			Number(currentValue?.caseResultInProgress) +
-			Number(currentValue?.caseResultPassed) +
-			Number(currentValue?.caseResultTestFix) +
-			Number(currentValue?.caseResultUntested),
-		0
-	);
-
-const getProgressBarResults = (
-	components: TestrayComponent[]
-): ProgressBarResults =>
-	components.reduce(
-		(previousValue, currentValue) => {
-			previousValue.blocked +=
-				Number(currentValue?.caseResultBlocked) || 0;
-			previousValue.failed += Number(currentValue?.caseResultFailed) || 0;
-			previousValue.incomplete +=
-				Number(
-					currentValue?.caseResultUntested &&
-						currentValue?.caseResultInProgress
-				) || 0;
-			previousValue.passed += Number(currentValue?.caseResultPassed) || 0;
-			previousValue.test_fix +=
-				Number(currentValue?.caseResultTestFix) || 0;
-
-			return previousValue;
-		},
-		{
-			blocked: 0,
-			failed: 0,
-			incomplete: 0,
-			passed: 0,
-			test_fix: 0,
-		}
-	);
-
-const getStatusesResults = (
-	components: TestrayComponent[],
-	caseResultStatus: CaseResultStatuses
-): number =>
-	components.reduce(
-		(previousValue, currentValue) =>
-			previousValue + Number(currentValue[caseResultStatus]) || 0,
-		0
-	);
 
 const Teams = () => {
 	const {buildId} = useParams();
@@ -85,98 +22,68 @@ const Teams = () => {
 						test_fix: false,
 						untested: false,
 					},
-					columnsFixed: ['name'],
+					columnsFixed: ['testrayTeamName'],
 				}}
 				managementToolbarProps={{
 					applyFilters: true,
 					filterSchema: 'buildTeams',
 					title: i18n.translate('teams'),
 				}}
-				resource={testrayTeamImpl.resource}
+				resource={`/testray-status-metrics/by-testray-buildId/${buildId}/testray-teams-metrics`}
 				tableProps={{
 					columns: [
 						{
 							clickable: true,
-							key: 'name',
+							key: 'testrayTeamName',
 							size: 'md',
 							value: i18n.translate('team'),
 						},
 						{
 							clickable: true,
-							key: 'untested',
-							render: (_, {teamToComponents}) =>
-								getStatusesResults(
-									teamToComponents,
-									CaseResultStatuses.UNTESTED
-								),
+							key: 'testrayStatusMetric',
+							render: ({untested}) => untested,
 
 							value: i18n.translate('untested'),
 						},
 						{
 							clickable: true,
-							key: 'in_progress',
-							render: (_, {teamToComponents}) =>
-								getStatusesResults(
-									teamToComponents,
-									CaseResultStatuses.INPROGRESS
-								),
-
+							key: 'testrayStatusMetric',
+							render: ({inProgress}) => inProgress,
 							value: i18n.translate('in-progress'),
 						},
 						{
 							clickable: true,
-							key: 'passed',
-							render: (_, {teamToComponents}) =>
-								getStatusesResults(
-									teamToComponents,
-									CaseResultStatuses.PASSED
-								),
+							key: 'testrayStatusMetric',
+							render: ({passed}) => passed,
 							value: i18n.translate('passed'),
 						},
 						{
 							clickable: true,
-							key: 'failed',
-							render: (_, {teamToComponents}) =>
-								getStatusesResults(
-									teamToComponents,
-									CaseResultStatuses.FAILED
-								),
-
+							key: 'testrayStatusMetric',
+							render: ({failed}) => failed,
 							value: i18n.translate('failed'),
 						},
 						{
 							clickable: true,
-							key: 'blocked',
-							render: (_, {teamToComponents}) =>
-								getStatusesResults(
-									teamToComponents,
-									CaseResultStatuses.BLOCKED
-								),
-
+							key: 'testrayStatusMetric',
+							render: ({blocked}) => blocked,
 							value: i18n.translate('blocked'),
 						},
 						{
 							clickable: true,
-							key: 'test_fix',
-							render: (_, {teamToComponents}) =>
-								getStatusesResults(
-									teamToComponents,
-									CaseResultStatuses.TEST_FIX
-								),
-
+							key: 'testrayStatusMetric',
+							render: ({testfix}) => testfix,
 							value: i18n.translate('test-fix'),
 						},
 						{
 							clickable: true,
-							key: 'total',
-							render: (_, {teamToComponents}) =>
-								getTotalResults(teamToComponents),
-
+							key: 'testrayStatusMetric',
+							render: ({total}) => total,
 							value: i18n.translate('total'),
 						},
 						{
-							key: 'metrics',
-							render: (_, {teamToComponents}) => (
+							key: 'testrayStatusMetric',
+							render: (testrayStatusMetric) => (
 								<ProgressBar
 									chartOrder={[
 										'passed',
@@ -185,33 +92,32 @@ const Teams = () => {
 										'test_fix',
 										'incomplete',
 									]}
-									items={getProgressBarResults(
-										teamToComponents
-									)}
+									items={{
+										blocked: testrayStatusMetric?.blocked,
+										failed: testrayStatusMetric?.failed,
+										incomplete:
+											testrayStatusMetric?.untested +
+											testrayStatusMetric?.inProgress,
+										passed: testrayStatusMetric?.passed,
+										test_fix: testrayStatusMetric?.testfix,
+									}}
 								/>
 							),
-
 							size: 'sm',
 							value: i18n.translate('metrics'),
 							width: '300',
 						},
 					],
 
-					navigateTo: (team) =>
+					navigateTo: ({testrayTeamId}) =>
 						`..?${new URLSearchParams({
 							filter: JSON.stringify({
 								'componentToCaseResult/r_teamToComponents_c_teamId': [
-									team.id,
+									testrayTeamId,
 								],
 							}),
 							filterSchema: 'buildResults',
 						})}`,
-				}}
-				variables={{
-					filter: SearchBuilder.eq(
-						'teamToComponents/componentToCaseResult/r_buildToCaseResult_c_buildId',
-						buildId as string
-					),
 				}}
 			/>
 		</Container>

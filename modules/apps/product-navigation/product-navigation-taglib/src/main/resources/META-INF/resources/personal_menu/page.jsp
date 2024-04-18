@@ -42,6 +42,10 @@ if (size != null) {
 		border-radius: 5000px;
 	}
 
+	div.personal-menu-dropdown .btn > span.sticker-user-icon {
+		pointer-events: none;
+	}
+
 	div.personal-menu-dropdown .dropdown-item {
 		color: #6B6C7E;
 	}

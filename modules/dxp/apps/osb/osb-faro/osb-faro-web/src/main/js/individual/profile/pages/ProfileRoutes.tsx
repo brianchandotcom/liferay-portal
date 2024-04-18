@@ -8,6 +8,7 @@ import React, {lazy, Suspense, useContext} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import {ChannelContext} from 'shared/context/channel';
 import {compose, withIndividual} from 'shared/hoc';
+import {CSVType} from 'shared/components/download-report/utils';
 import {getMatchedRoute, Routes} from 'shared/util/router';
 import {Switch, withRouter} from 'react-router-dom';
 import {useDataSource} from 'shared/hooks/useDataSource';
@@ -111,7 +112,7 @@ export const IndividualProfileRoutes = ({
 						<DownloadCSVReport
 							assetType='event'
 							disabled={dataSourceStates.empty}
-							type='individual'
+							type={CSVType.Event}
 							typeLang={Liferay.Language.get('events')}
 						/>
 					</div>

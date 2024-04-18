@@ -8,6 +8,7 @@ import React, {lazy, Suspense} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
+import {CSVType} from 'shared/components/download-report/utils';
 import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
 import {Router} from 'shared/types';
 import {Switch, useParams} from 'react-router-dom';
@@ -109,7 +110,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadCSVReport
 							disabled={dataSourceStates.empty}
-							type='blog'
+							type={CSVType.Blog}
 							typeLang={Liferay.Language.get('blogs')}
 						/>
 					</div>
@@ -121,7 +122,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadCSVReport
 							disabled={dataSourceStates.empty}
-							type='document'
+							type={CSVType.Document}
 							typeLang={Liferay.Language.get(
 								'documents-and-media'
 							)}
@@ -134,7 +135,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadCSVReport
 							disabled={dataSourceStates.empty}
-							type='form'
+							type={CSVType.Forms}
 							typeLang={Liferay.Language.get('forms')}
 						/>
 					</div>
@@ -145,7 +146,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadCSVReport
 							disabled={dataSourceStates.empty}
-							type='journal'
+							type={CSVType.Journal}
 							typeLang={Liferay.Language.get('web-content')}
 						/>
 					</div>

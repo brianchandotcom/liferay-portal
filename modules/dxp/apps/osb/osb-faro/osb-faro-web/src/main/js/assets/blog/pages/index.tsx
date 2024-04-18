@@ -10,6 +10,7 @@ import getCN from 'classnames';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useState} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
+import {CSVType} from 'shared/components/download-report/utils';
 import {ENABLE_GLOBAL_FILTER} from 'shared/util/constants';
 import {getMatchedRoute, Routes} from 'shared/util/router';
 import {pickBy} from 'lodash';
@@ -125,7 +126,7 @@ const Blog: React.FC<{
 							assetId={assetId}
 							assetType='blog'
 							disabled={dataSourceStates.empty}
-							type='individual'
+							type={CSVType.Individual}
 							typeLang={Liferay.Language.get('blogs')}
 						/>
 					</div>

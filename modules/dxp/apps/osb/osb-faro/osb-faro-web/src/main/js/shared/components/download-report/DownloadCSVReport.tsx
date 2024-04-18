@@ -1,9 +1,9 @@
 import React from 'react';
+import {CSVType, useDownloadCSV} from './utils';
 import {DownloadReportButton} from './DownloadReportButton';
 import {DownloadReportModal, ReportType} from './DownloadReportModal';
 import {sub} from 'shared/util/lang';
 import {toLocale} from 'shared/util/numbers';
-import {useDownloadCSV} from './utils';
 import {useModal} from '@clayui/modal';
 import {useUnsafeQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
@@ -11,7 +11,7 @@ export interface IDownloadReport {
 	assetId?: string;
 	assetType?: string;
 	disabled: boolean;
-	type: string;
+	type: CSVType;
 	typeLang: string;
 }
 
@@ -22,7 +22,7 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 	type,
 	typeLang
 }) => {
-	const {onClick} = useDownloadCSV({assetId, assetType, type});
+	const generateURL = useDownloadCSV({assetId, assetType, type});
 	const {observer, onOpenChange, open} = useModal();
 	const rangeSelectors = useUnsafeQueryRangeSelectors();
 
@@ -53,7 +53,13 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 					}
 					observer={observer}
 					onClose={() => onOpenChange(false)}
-					onSubmit={onClick}
+					onSubmit={rangeSelectors => {
+						const url = generateURL(rangeSelectors);
+						const a = document.createElement('a');
+
+						a.href = url;
+						a.click();
+					}}
 					rangeSelectors={rangeSelectors}
 					type={ReportType.CSV}
 				/>

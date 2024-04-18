@@ -12,6 +12,7 @@ import React, {lazy, Suspense} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
+import {CSVType} from 'shared/components/download-report/utils';
 import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
 import {Switch, useParams} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
@@ -135,7 +136,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 						{matchedRoute === Routes.SITES_TOUCHPOINTS && (
 							<DownloadCSVReport
 								disabled={dataSourceStates.empty}
-								type='page'
+								type={CSVType.Page}
 								typeLang={Liferay.Language.get('pages')}
 							/>
 						)}

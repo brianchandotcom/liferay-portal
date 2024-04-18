@@ -12,6 +12,7 @@ import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useEffect, useState} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import TextTruncate from 'shared/components/TextTruncate';
+import {CSVType} from 'shared/components/download-report/utils';
 import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {getMatchedRoute, Routes} from 'shared/util/router';
 import {pickBy} from 'lodash';
@@ -141,7 +142,7 @@ function TouchpointRoutes({className, router}) {
 							assetId={decodedTouchpoint}
 							assetType='page'
 							disabled={dataSourceStates.empty}
-							type='individual'
+							type={CSVType.Individual}
 						/>
 					</div>
 				</BasePage.SubHeader>

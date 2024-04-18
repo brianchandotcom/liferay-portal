@@ -215,6 +215,16 @@ export function generateReport({
 	});
 }
 
+export enum CSVType {
+	Individual = 'individual',
+	Blog = 'blog',
+	Document = 'document',
+	Forms = 'forms',
+	Journal = 'journal',
+	Event = 'event',
+	Page = 'page'
+}
+
 export function useDownloadCSV({
 	assetId,
 	assetType,
@@ -222,59 +232,52 @@ export function useDownloadCSV({
 }: {
 	assetId?: string;
 	assetType?: string;
-	type: string;
+	type: CSVType;
 }) {
 	const {channelId, groupId, title} = useParams();
 
-	return {
-		onClick: initialRangeSelectors => {
-			const rangeSelectors =
-				initialRangeSelectors || DEFAULT_RANGE_SELECTORS;
-			const searchParams = new URLSearchParams(location.search);
+	return initialRangeSelectors => {
+		const rangeSelectors = initialRangeSelectors || DEFAULT_RANGE_SELECTORS;
+		const searchParams = new URLSearchParams(location.search);
 
-			const field = searchParams.get('field');
-			const query = searchParams.get('query');
-			const sortOrder = searchParams.get('sortOrder');
+		const field = searchParams.get('field');
+		const query = searchParams.get('query');
+		const sortOrder = searchParams.get('sortOrder');
 
-			const a = document.createElement('a');
+		let url = `/o/faro/main/${groupId}/reports/export/csv/${type}?channelId=${channelId}`;
 
-			let url = `/o/faro/main/${groupId}/reports/export/csv/${type}?channelId=${channelId}`;
-
-			if (rangeSelectors.rangeKey === RangeKeyTimeRanges.CustomRange) {
-				url += '&rangeKey=CUSTOM';
-				url += `&fromDate=${formatDate(rangeSelectors?.rangeStart)}`;
-				url += `&toDate=${formatDate(rangeSelectors?.rangeEnd)}`;
-			} else {
-				url += `&rangeKey=${rangeSelectors.rangeKey}`;
-			}
-
-			if (assetId) {
-				url += `&assetId=${encodeURIComponent(assetId)}`;
-			}
-
-			if (title) {
-				url += `&assetTitle=${title}`;
-			}
-
-			if (assetType) {
-				url += `&assetType=${assetType}`;
-			}
-
-			if (field && sortOrder) {
-				const orderByFields = JSON.stringify(
-					buildOrderByFields({field, sortOrder}, INDIVIDUALS)
-				);
-
-				url += `&orderByFields=${encodeURIComponent(orderByFields)}`;
-			}
-
-			if (query) {
-				url += `&query=${query}`;
-			}
-
-			a.href = url;
-
-			a.click();
+		if (rangeSelectors.rangeKey === RangeKeyTimeRanges.CustomRange) {
+			url += '&rangeKey=CUSTOM';
+			url += `&fromDate=${formatDate(rangeSelectors?.rangeStart)}`;
+			url += `&toDate=${formatDate(rangeSelectors?.rangeEnd)}`;
+		} else {
+			url += `&rangeKey=${rangeSelectors.rangeKey}`;
 		}
+
+		if (assetId) {
+			url += `&assetId=${encodeURIComponent(assetId)}`;
+		}
+
+		if (title) {
+			url += `&assetTitle=${title}`;
+		}
+
+		if (assetType) {
+			url += `&assetType=${assetType}`;
+		}
+
+		if (field && sortOrder) {
+			const orderByFields = JSON.stringify(
+				buildOrderByFields({field, sortOrder}, INDIVIDUALS)
+			);
+
+			url += `&orderByFields=${encodeURIComponent(orderByFields)}`;
+		}
+
+		if (query) {
+			url += `&query=${query}`;
+		}
+
+		return url;
 	};
 }

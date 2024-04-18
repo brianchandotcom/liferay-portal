@@ -4,11 +4,11 @@ import ClayModal, {useModal} from '@clayui/modal';
 import React from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
+import {CSVType, useDownloadCSV} from './utils';
 import {DownloadReportButton} from './DownloadReportButton';
 import {sub} from 'shared/util/lang';
 import {toLocale} from 'shared/util/numbers';
 import {useDispatch} from 'react-redux';
-import {useDownloadCSV} from './utils';
 
 interface IDownloadIndividualReportModal {
 	disabled: boolean;
@@ -18,7 +18,7 @@ export const DownloadIndividualReportModal: React.FC<IDownloadIndividualReportMo
 	disabled
 }) => {
 	const dispatch = useDispatch();
-	const {onClick} = useDownloadCSV({type: 'individual'});
+	const generateURL = useDownloadCSV({type: CSVType.Individual});
 	const {observer, onOpenChange, open} = useModal();
 
 	return (
@@ -47,7 +47,11 @@ export const DownloadIndividualReportModal: React.FC<IDownloadIndividualReportMo
 							})
 						);
 
-						onClick(null);
+						const a = document.createElement('a');
+						const url = generateURL(null);
+
+						a.href = url;
+						a.click();
 					}}
 				/>
 			)}

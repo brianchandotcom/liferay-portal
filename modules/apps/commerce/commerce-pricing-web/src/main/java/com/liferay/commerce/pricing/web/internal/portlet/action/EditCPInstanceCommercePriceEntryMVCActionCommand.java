@@ -218,6 +218,7 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 
 		boolean neverExpire = ParamUtil.getBoolean(
 			actionRequest, "neverExpire");
+
 		BigDecimal price = _commercePriceFormatter.parse(
 			actionRequest, "price");
 		boolean priceOnApplication = ParamUtil.getBoolean(

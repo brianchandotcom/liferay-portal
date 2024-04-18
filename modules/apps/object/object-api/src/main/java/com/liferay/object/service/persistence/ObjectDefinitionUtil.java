@@ -1638,6 +1638,276 @@ public class ObjectDefinitionUtil {
 	}
 
 	/**
+	 * Returns all the object definitions where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the matching object definitions
+	 */
+	public static List<ObjectDefinition> findByC_U(
+		long companyId, long userId) {
+
+		return getPersistence().findByC_U(companyId, userId);
+	}
+
+	/**
+	 * Returns a range of all the object definitions where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of object definitions
+	 * @param end the upper bound of the range of object definitions (not inclusive)
+	 * @return the range of matching object definitions
+	 */
+	public static List<ObjectDefinition> findByC_U(
+		long companyId, long userId, int start, int end) {
+
+		return getPersistence().findByC_U(companyId, userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object definitions where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of object definitions
+	 * @param end the upper bound of the range of object definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object definitions
+	 */
+	public static List<ObjectDefinition> findByC_U(
+		long companyId, long userId, int start, int end,
+		OrderByComparator<ObjectDefinition> orderByComparator) {
+
+		return getPersistence().findByC_U(
+			companyId, userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the object definitions where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of object definitions
+	 * @param end the upper bound of the range of object definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object definitions
+	 */
+	public static List<ObjectDefinition> findByC_U(
+		long companyId, long userId, int start, int end,
+		OrderByComparator<ObjectDefinition> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_U(
+			companyId, userId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first object definition in the ordered set where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object definition
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
+	 */
+	public static ObjectDefinition findByC_U_First(
+			long companyId, long userId,
+			OrderByComparator<ObjectDefinition> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
+
+		return getPersistence().findByC_U_First(
+			companyId, userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first object definition in the ordered set where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object definition, or <code>null</code> if a matching object definition could not be found
+	 */
+	public static ObjectDefinition fetchByC_U_First(
+		long companyId, long userId,
+		OrderByComparator<ObjectDefinition> orderByComparator) {
+
+		return getPersistence().fetchByC_U_First(
+			companyId, userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object definition in the ordered set where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object definition
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
+	 */
+	public static ObjectDefinition findByC_U_Last(
+			long companyId, long userId,
+			OrderByComparator<ObjectDefinition> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
+
+		return getPersistence().findByC_U_Last(
+			companyId, userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object definition in the ordered set where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
+	 */
+	public static ObjectDefinition fetchByC_U_Last(
+		long companyId, long userId,
+		OrderByComparator<ObjectDefinition> orderByComparator) {
+
+		return getPersistence().fetchByC_U_Last(
+			companyId, userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the object definitions before and after the current object definition in the ordered set where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param objectDefinitionId the primary key of the current object definition
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object definition
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
+	 */
+	public static ObjectDefinition[] findByC_U_PrevAndNext(
+			long objectDefinitionId, long companyId, long userId,
+			OrderByComparator<ObjectDefinition> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
+
+		return getPersistence().findByC_U_PrevAndNext(
+			objectDefinitionId, companyId, userId, orderByComparator);
+	}
+
+	/**
+	 * Returns all the object definitions that the user has permission to view where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the matching object definitions that the user has permission to view
+	 */
+	public static List<ObjectDefinition> filterFindByC_U(
+		long companyId, long userId) {
+
+		return getPersistence().filterFindByC_U(companyId, userId);
+	}
+
+	/**
+	 * Returns a range of all the object definitions that the user has permission to view where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of object definitions
+	 * @param end the upper bound of the range of object definitions (not inclusive)
+	 * @return the range of matching object definitions that the user has permission to view
+	 */
+	public static List<ObjectDefinition> filterFindByC_U(
+		long companyId, long userId, int start, int end) {
+
+		return getPersistence().filterFindByC_U(companyId, userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object definitions that the user has permissions to view where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of object definitions
+	 * @param end the upper bound of the range of object definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object definitions that the user has permission to view
+	 */
+	public static List<ObjectDefinition> filterFindByC_U(
+		long companyId, long userId, int start, int end,
+		OrderByComparator<ObjectDefinition> orderByComparator) {
+
+		return getPersistence().filterFindByC_U(
+			companyId, userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the object definitions before and after the current object definition in the ordered set of object definitions that the user has permission to view where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param objectDefinitionId the primary key of the current object definition
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object definition
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
+	 */
+	public static ObjectDefinition[] filterFindByC_U_PrevAndNext(
+			long objectDefinitionId, long companyId, long userId,
+			OrderByComparator<ObjectDefinition> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
+
+		return getPersistence().filterFindByC_U_PrevAndNext(
+			objectDefinitionId, companyId, userId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the object definitions where companyId = &#63; and userId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 */
+	public static void removeByC_U(long companyId, long userId) {
+		getPersistence().removeByC_U(companyId, userId);
+	}
+
+	/**
+	 * Returns the number of object definitions where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the number of matching object definitions
+	 */
+	public static int countByC_U(long companyId, long userId) {
+		return getPersistence().countByC_U(companyId, userId);
+	}
+
+	/**
+	 * Returns the number of object definitions that the user has permission to view where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the number of matching object definitions that the user has permission to view
+	 */
+	public static int filterCountByC_U(long companyId, long userId) {
+		return getPersistence().filterCountByC_U(companyId, userId);
+	}
+
+	/**
 	 * Returns all the object definitions where companyId = &#63; and rootObjectDefinitionId = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -2318,276 +2588,6 @@ public class ObjectDefinitionUtil {
 	 */
 	public static int filterCountByC_S(long companyId, int status) {
 		return getPersistence().filterCountByC_S(companyId, status);
-	}
-
-	/**
-	 * Returns all the object definitions where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @return the matching object definitions
-	 */
-	public static List<ObjectDefinition> findByC_U(
-		long companyId, long userId) {
-
-		return getPersistence().findByC_U(companyId, userId);
-	}
-
-	/**
-	 * Returns a range of all the object definitions where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of object definitions
-	 * @param end the upper bound of the range of object definitions (not inclusive)
-	 * @return the range of matching object definitions
-	 */
-	public static List<ObjectDefinition> findByC_U(
-		long companyId, long userId, int start, int end) {
-
-		return getPersistence().findByC_U(companyId, userId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object definitions where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of object definitions
-	 * @param end the upper bound of the range of object definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object definitions
-	 */
-	public static List<ObjectDefinition> findByC_U(
-		long companyId, long userId, int start, int end,
-		OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().findByC_U(
-			companyId, userId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the object definitions where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of object definitions
-	 * @param end the upper bound of the range of object definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching object definitions
-	 */
-	public static List<ObjectDefinition> findByC_U(
-		long companyId, long userId, int start, int end,
-		OrderByComparator<ObjectDefinition> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findByC_U(
-			companyId, userId, start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns the first object definition in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching object definition
-	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
-	 */
-	public static ObjectDefinition findByC_U_First(
-			long companyId, long userId,
-			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().findByC_U_First(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the first object definition in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching object definition, or <code>null</code> if a matching object definition could not be found
-	 */
-	public static ObjectDefinition fetchByC_U_First(
-		long companyId, long userId,
-		OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().fetchByC_U_First(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition
-	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
-	 */
-	public static ObjectDefinition findByC_U_Last(
-			long companyId, long userId,
-			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().findByC_U_Last(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
-	 */
-	public static ObjectDefinition fetchByC_U_Last(
-		long companyId, long userId,
-		OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().fetchByC_U_Last(
-			companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns the object definitions before and after the current object definition in the ordered set where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param objectDefinitionId the primary key of the current object definition
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object definition
-	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
-	 */
-	public static ObjectDefinition[] findByC_U_PrevAndNext(
-			long objectDefinitionId, long companyId, long userId,
-			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().findByC_U_PrevAndNext(
-			objectDefinitionId, companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Returns all the object definitions that the user has permission to view where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @return the matching object definitions that the user has permission to view
-	 */
-	public static List<ObjectDefinition> filterFindByC_U(
-		long companyId, long userId) {
-
-		return getPersistence().filterFindByC_U(companyId, userId);
-	}
-
-	/**
-	 * Returns a range of all the object definitions that the user has permission to view where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of object definitions
-	 * @param end the upper bound of the range of object definitions (not inclusive)
-	 * @return the range of matching object definitions that the user has permission to view
-	 */
-	public static List<ObjectDefinition> filterFindByC_U(
-		long companyId, long userId, int start, int end) {
-
-		return getPersistence().filterFindByC_U(companyId, userId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object definitions that the user has permissions to view where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of object definitions
-	 * @param end the upper bound of the range of object definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object definitions that the user has permission to view
-	 */
-	public static List<ObjectDefinition> filterFindByC_U(
-		long companyId, long userId, int start, int end,
-		OrderByComparator<ObjectDefinition> orderByComparator) {
-
-		return getPersistence().filterFindByC_U(
-			companyId, userId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the object definitions before and after the current object definition in the ordered set of object definitions that the user has permission to view where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param objectDefinitionId the primary key of the current object definition
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next object definition
-	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
-	 */
-	public static ObjectDefinition[] filterFindByC_U_PrevAndNext(
-			long objectDefinitionId, long companyId, long userId,
-			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
-
-		return getPersistence().filterFindByC_U_PrevAndNext(
-			objectDefinitionId, companyId, userId, orderByComparator);
-	}
-
-	/**
-	 * Removes all the object definitions where companyId = &#63; and userId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 */
-	public static void removeByC_U(long companyId, long userId) {
-		getPersistence().removeByC_U(companyId, userId);
-	}
-
-	/**
-	 * Returns the number of object definitions where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @return the number of matching object definitions
-	 */
-	public static int countByC_U(long companyId, long userId) {
-		return getPersistence().countByC_U(companyId, userId);
-	}
-
-	/**
-	 * Returns the number of object definitions that the user has permission to view where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @return the number of matching object definitions that the user has permission to view
-	 */
-	public static int filterCountByC_U(long companyId, long userId) {
-		return getPersistence().filterCountByC_U(companyId, userId);
 	}
 
 	/**

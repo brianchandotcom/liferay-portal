@@ -763,6 +763,12 @@ public class ObjectDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public void updateUserIds(long companyId, long oldUserId, long newUserId) {
+		_objectDefinitionLocalService.updateUserIds(
+			companyId, oldUserId, newUserId);
+	}
+
+	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _objectDefinitionLocalService.getBasePersistence();
 	}

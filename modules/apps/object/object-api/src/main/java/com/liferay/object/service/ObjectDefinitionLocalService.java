@@ -484,4 +484,6 @@ public interface ObjectDefinitionLocalService
 			long objectDefinitionId, long titleObjectFieldId)
 		throws PortalException;
 
+	public void updateUserIds(long companyId, long oldUserId, long newUserId);
+
 }

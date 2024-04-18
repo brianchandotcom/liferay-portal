@@ -1323,8 +1323,7 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public void updateUserIds(long companyId, long oldUserId, long newUserId)
-		throws PortalException {
+	public void updateUserIds(long companyId, long oldUserId, long newUserId) {
 
 		for (ObjectDefinition objectDefinition : getObjectDefinitions(
 			companyId, oldUserId)) {

@@ -647,6 +647,12 @@ public class ObjectDefinitionLocalServiceUtil {
 			objectDefinitionId, titleObjectFieldId);
 	}
 
+	public static void updateUserIds(
+		long companyId, long oldUserId, long newUserId) {
+
+		getService().updateUserIds(companyId, oldUserId, newUserId);
+	}
+
 	public static ObjectDefinitionLocalService getService() {
 		return _service;
 	}

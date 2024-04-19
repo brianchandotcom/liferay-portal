@@ -281,3 +281,5 @@ export function useDownloadCSV({
 		return url;
 	};
 }
+
+export const MAX_CSV_ENTRIES = 10000;

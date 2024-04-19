@@ -149,8 +149,8 @@ public class GoogleCloudTranslator implements Translator {
 
 		String languageCode = list.get(0);
 
-		// LPD-23561. GoogleCloud expects ISO-639 locale names.
-		// "in" was renamed to "id" in ISO-639:1989.
+		// Google Cloud expects ISO-639 language codes. ISO-639:1989 renamed
+		// "in" to "id." See LPD-23561.
 
 		if (languageCode.equals("in")) {
 			return "id";

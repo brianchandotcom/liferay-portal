@@ -127,8 +127,8 @@ public class DeepLTranslator implements Translator {
 
 		String languageCode = list.get(0);
 
-		// LPD-23561. DeepL expects ISO-639 locale names.
-		// "in" was renamed to "id" in ISO-639:1989.
+		// DeepL expects ISO-639 language codes. ISO-639:1989 renamed "in" to
+		// "id." See LPD-23561.
 
 		if (languageCode.equals("in")) {
 			StringUtil.toUpperCase("id");

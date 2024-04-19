@@ -5731,6 +5731,8 @@ ${custom.upgrade.properties}</echo>
 								</elseif>
 							</if>
 
+							<lstopwatch action="start" name="rebuild-database-${database.type}" />
+
 							<execute>
 								<![CDATA[
 									chmod 755 ${create.sh.file.path} ${create.sql.file.path}
@@ -5741,6 +5743,8 @@ ${custom.upgrade.properties}</echo>
 									docker exec ${database.host} /bin/bash /tmp/create.sh
 								]]>
 							</execute>
+
+							<lstopwatch action="total" name="rebuild-database-${database.type}" />
 
 							<delete file="${create.sh.file.path}" />
 						</then>

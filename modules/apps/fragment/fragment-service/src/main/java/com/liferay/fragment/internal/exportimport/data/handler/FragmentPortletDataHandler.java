@@ -19,8 +19,10 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -161,9 +163,15 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 
 		List<Element> fragmentEntryElements = fragmentEntriesElement.elements();
 
-		for (Element fragmentEntryElement : fragmentEntryElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, fragmentEntryElement);
+		try (AutoCloseable autoCloseable =
+				_layoutServiceContextHelper.getServiceContextAutoCloseable(
+					_companyLocalService.getCompany(
+						portletDataContext.getCompanyId()))) {
+
+			for (Element fragmentEntryElement : fragmentEntryElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, fragmentEntryElement);
+			}
 		}
 
 		return null;
@@ -201,6 +209,9 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 		fragmentEntryExportActionableDynamicQuery.performCount();
 	}
 
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
 	@Reference(
 		target = "(model.class.name=com.liferay.fragment.model.FragmentCollection)",
 		unbind = "-"
@@ -214,6 +225,9 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 	)
 	private StagedModelRepository<FragmentEntry>
 		_fragmentEntryStagedModelRepository;
+
+	@Reference
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

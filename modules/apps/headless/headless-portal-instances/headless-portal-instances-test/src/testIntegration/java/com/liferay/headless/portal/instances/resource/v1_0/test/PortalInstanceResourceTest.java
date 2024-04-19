@@ -304,41 +304,41 @@ public class PortalInstanceResourceTest
 
 		if (changeActive) {
 			Assert.assertNotEquals(
-				patchPortalInstance.getActive(), portalInstance.getActive());
+				portalInstance.getActive(), patchPortalInstance.getActive());
 		}
 		else {
 			Assert.assertEquals(
-				patchPortalInstance.getActive(), portalInstance.getActive());
+				portalInstance.getActive(), patchPortalInstance.getActive());
 		}
 
 		if (changeCompanyId) {
 			Assert.assertNotEquals(
-				patchPortalInstance.getCompanyId(),
-				portalInstance.getCompanyId());
+				portalInstance.getCompanyId(),
+				patchPortalInstance.getCompanyId());
 		}
 		else {
 			Assert.assertEquals(
-				patchPortalInstance.getCompanyId(),
-				portalInstance.getCompanyId());
+				portalInstance.getCompanyId(),
+				patchPortalInstance.getCompanyId());
 		}
 
 		Assert.assertEquals(
-			patchPortalInstance.getDomain(), portalInstance.getDomain());
+			portalInstance.getDomain(), patchPortalInstance.getDomain());
 
 		if (changePortletInstanceId) {
 			Assert.assertNotEquals(
-				patchPortalInstance.getPortalInstanceId(),
-				portalInstance.getPortalInstanceId());
+				portalInstance.getPortalInstanceId(),
+				patchPortalInstance.getPortalInstanceId());
 		}
 		else {
 			Assert.assertEquals(
-				patchPortalInstance.getPortalInstanceId(),
-				portalInstance.getPortalInstanceId());
+				portalInstance.getPortalInstanceId(),
+				patchPortalInstance.getPortalInstanceId());
 		}
 
 		Assert.assertEquals(
-			patchPortalInstance.getVirtualHost(),
-			portalInstance.getVirtualHost());
+			portalInstance.getVirtualHost(),
+			patchPortalInstance.getVirtualHost());
 	}
 
 	private void _testPatchPortalInstanceChangeActive() throws Exception {

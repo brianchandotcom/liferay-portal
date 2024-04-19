@@ -39,6 +39,10 @@
 									}
 								}
 							],
+							"fragmentStyle": {
+								"marginRight": "3",
+								"maxWidth": "336px"
+							},
 							"indexed": true
 						},
 						"type": "Fragment"

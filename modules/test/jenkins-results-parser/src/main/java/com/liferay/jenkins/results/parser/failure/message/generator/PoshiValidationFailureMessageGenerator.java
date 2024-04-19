@@ -19,18 +19,23 @@ public class PoshiValidationFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessageElement(String consoleText) {
+	public String getMessage(String consoleText) {
 		Matcher poshiFailureMatcher = _poshiFailurePattern.matcher(consoleText);
 
 		if (!poshiFailureMatcher.find()) {
 			return null;
 		}
 
+		return poshiFailureMatcher.group(1);
+	}
+
+	@Override
+	public Element getMessageElement(String consoleText) {
 		return Dom4JUtil.getNewElement(
 			"div", null,
 			Dom4JUtil.getNewElement(
 				"p", null, "POSHI Validation Failure",
-				Dom4JUtil.toCodeSnippetElement(poshiFailureMatcher.group(1))));
+				Dom4JUtil.toCodeSnippetElement(getMessage(consoleText))));
 	}
 
 	private static final Pattern _poshiFailurePattern = Pattern.compile(

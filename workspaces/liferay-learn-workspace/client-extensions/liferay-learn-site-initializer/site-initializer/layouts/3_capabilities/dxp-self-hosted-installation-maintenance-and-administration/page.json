@@ -1,0 +1,19 @@
+{
+	"friendlyURL": "/capabilities/dxp-self-hosted-installation-maintenance-and-administration",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "DXP Self-Hosted Installation, Maintenance, and Administration"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "content"
+}

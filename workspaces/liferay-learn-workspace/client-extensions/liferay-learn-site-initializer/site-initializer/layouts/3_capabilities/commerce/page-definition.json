@@ -68,7 +68,7 @@
 																"fieldKey": "AssetCategory_vocabulary",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": "[$CAPABILITY#CLOUD$]"
+																	"classPK": "[$CAPABILITY#COMMERCE$]"
 																}
 															}
 														}
@@ -131,7 +131,7 @@
 																			},
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/cloud-svg?imagePreview=1"
+																					"en_US": "/documents/d/liferay-learn/commerce-svg?imagePreview=1"
 																				}
 																			}
 																		},
@@ -165,13 +165,13 @@
 																},
 																"text": {
 																	"defaultFragmentInlineValue": {
-																		"value": "Cloud"
+																		"value": "Commerce"
 																	},
 																	"mapping": {
 																		"fieldKey": "AssetCategory_name",
 																		"itemReference": {
 																			"className": "com.liferay.asset.kernel.model.AssetCategory",
-																			"classPK": "[$CAPABILITY#CLOUD$]"
+																			"classPK": "[$CAPABILITY#COMMERCE$]"
 																		}
 																	}
 																}
@@ -254,13 +254,13 @@
 										},
 										"text": {
 											"defaultFragmentInlineValue": {
-												"value": "<p>Liferay Cloud Platform provides the infrastructure and tooling necessary to simplify, secure, and deliver applications on Liferay DXP when using the SaaS or PaaS deployment approaches. Using Liferay’s Cloud infrastructure provides a secure, reliable, and scalable platform for building Liferay solutions.<p>The Liferay Cloud Platform includes DevOps CI/CD tools, automated backups, real-time logs, and much more.<div>Check these articles for an introduction:<ul><li><a href=/w/liferay-cloud/getting-started>Getting Started - Liferay Cloud</a><li><a href=/w/liferay-cloud/getting-started/development-requirements>Development Requirements</a><li><a href=/w/liferay-cloud/getting-started/configuring-your-github-repository>Configuring Your Github Repository</a><li><a href=/w/liferay-cloud/updating-services-in-liferay-paas/overview-of-the-liferay-cloud-deployment-workflow>Overview of the Liferay Cloud Deployment Workflow</a><li><a href=/w/liferay-cloud/updating-services-in-liferay-paas/deploying-changes-via-the-liferay-cloud-console>Deploying Changes via the Liferay Cloud Console</a></ul></div>"
+												"value": "<p>Liferay DXP includes robust e-commerce capabilities. Liferay’s commerce capabilities integrate content management, digital asset management, and comprehensive commerce functionalities, empowering you to deliver diverse online shopping experiences.<p>Use Liferay’s Commerce features to set up a storefront, add and manage products and catalogs, configure multiple channels for sales, configure multiple forms of payment, and much more.<div>Check these articles for an introduction:<ul><li><a href=/w/commerce/starting-a-store/introduction-to-liferay-commerce>Introduction to Liferay Commerce</a><li><a href=/w/commerce/starting-a-store/store-setup-overview>Store Setup Overview</a><li><a href=/w/commerce/starting-a-store/introduction-to-the-admin-account>Introduction to the Admin Account</a><li><a href=/w/commerce/product-management/creating-and-managing-products/products/products-overview>Products Overview</a><li><a href=/w/commerce/product-management/catalogs>Catalogs</a> </ul></div>"
 											},
 											"mapping": {
 												"fieldKey": "AssetCategory_description",
 												"itemReference": {
 													"className": "com.liferay.asset.kernel.model.AssetCategory",
-													"classPK": "[$CAPABILITY#CLOUD$]"
+													"classPK": "[$CAPABILITY#COMMERCE$]"
 												}
 											}
 										}

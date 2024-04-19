@@ -68,7 +68,7 @@
 																"fieldKey": "AssetCategory_vocabulary",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": "[$CAPABILITY#CLOUD$]"
+																	"classPK": "[$CAPABILITY#SEARCH$]"
 																}
 															}
 														}
@@ -131,7 +131,7 @@
 																			},
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/cloud-svg?imagePreview=1"
+																					"en_US": "/documents/d/liferay-learn/search-svg?imagePreview=1"
 																				}
 																			}
 																		},
@@ -165,13 +165,13 @@
 																},
 																"text": {
 																	"defaultFragmentInlineValue": {
-																		"value": "Cloud"
+																		"value": "Search"
 																	},
 																	"mapping": {
 																		"fieldKey": "AssetCategory_name",
 																		"itemReference": {
 																			"className": "com.liferay.asset.kernel.model.AssetCategory",
-																			"classPK": "[$CAPABILITY#CLOUD$]"
+																			"classPK": "[$CAPABILITY#SEARCH$]"
 																		}
 																	}
 																}
@@ -254,13 +254,13 @@
 										},
 										"text": {
 											"defaultFragmentInlineValue": {
-												"value": "<p>Liferay Cloud Platform provides the infrastructure and tooling necessary to simplify, secure, and deliver applications on Liferay DXP when using the SaaS or PaaS deployment approaches. Using Liferay’s Cloud infrastructure provides a secure, reliable, and scalable platform for building Liferay solutions.<p>The Liferay Cloud Platform includes DevOps CI/CD tools, automated backups, real-time logs, and much more.<div>Check these articles for an introduction:<ul><li><a href=/w/liferay-cloud/getting-started>Getting Started - Liferay Cloud</a><li><a href=/w/liferay-cloud/getting-started/development-requirements>Development Requirements</a><li><a href=/w/liferay-cloud/getting-started/configuring-your-github-repository>Configuring Your Github Repository</a><li><a href=/w/liferay-cloud/updating-services-in-liferay-paas/overview-of-the-liferay-cloud-deployment-workflow>Overview of the Liferay Cloud Deployment Workflow</a><li><a href=/w/liferay-cloud/updating-services-in-liferay-paas/deploying-changes-via-the-liferay-cloud-console>Deploying Changes via the Liferay Cloud Console</a></ul></div>"
+												"value": "<p>Liferay Search is a fundamental component of Liferay DXP. Search obviously powers search results for your sites, but can also be tailored and configured to do much more! Use Search to build dynamic navigation menus based on categories, boost search results for important content, or use it to present a dynamic content experience for users.<p>Search features include Full-text Search, Indexing of all content types, Search Pages and Widgets, Search Results, and more.<div>Check these articles for an introduction:<ul><li><a href=/w/dxp/using-search/getting-started/search-overview>Search Overview</a><li><a href=/w/dxp/using-search/getting-started/searching-for-content>Searching for Content</a><li><a href=/w/dxp/using-search/search-pages-and-widgets/search-results/search-results>Search Results</a><li><a href=/w/dxp/using-search/search-pages-and-widgets>Search Pages and Widgets</a><li><a href=/w/dxp/using-search/installing-and-upgrading-a-search-engine/elasticsearch>Elasticsearch</a></ul></div>"
 											},
 											"mapping": {
 												"fieldKey": "AssetCategory_description",
 												"itemReference": {
 													"className": "com.liferay.asset.kernel.model.AssetCategory",
-													"classPK": "[$CAPABILITY#CLOUD$]"
+													"classPK": "[$CAPABILITY#SEARCH$]"
 												}
 											}
 										}

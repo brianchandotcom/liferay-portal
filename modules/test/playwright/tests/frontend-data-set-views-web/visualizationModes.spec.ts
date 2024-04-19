@@ -14,6 +14,7 @@ import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersT
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
+import saveFromModal from './utils/saveFromModal';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
@@ -54,6 +55,7 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 
 test.describe('Visualization Modes in Data Set Manager', () => {
 	test('Configure cards visualization mode @LPD-10735', async ({
+		page,
 		visualizationModesPage,
 	}) => {
 		await test.step('Navigate to cards visualization mode page', async () => {
@@ -103,7 +105,9 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				visualizationModesPage.page.getByLabel(fieldName)
 			).toBeChecked();
 
-			await visualizationModesPage.saveFieldSelection();
+			await saveFromModal({
+				page,
+			});
 
 			const assignedFieldLocator =
 				await visualizationModesPage.getAssignedFieldLocator({
@@ -139,7 +143,9 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				visualizationModesPage.page.getByLabel(newFieldName)
 			).toBeChecked();
 
-			await visualizationModesPage.saveFieldSelection();
+			await saveFromModal({
+				page,
+			});
 
 			const assignedFieldLocator =
 				await visualizationModesPage.getAssignedFieldLocator({
@@ -152,6 +158,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 	});
 
 	test('Configure list visualization mode @LPD-10735', async ({
+		page,
 		visualizationModesPage,
 	}) => {
 		await test.step('Navigate to list visualization mode page', async () => {
@@ -201,7 +208,9 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				visualizationModesPage.page.getByLabel(fieldName)
 			).toBeChecked();
 
-			await visualizationModesPage.saveFieldSelection();
+			await saveFromModal({
+				page,
+			});
 
 			const assignedFieldLocator =
 				await visualizationModesPage.getAssignedFieldLocator({
@@ -237,7 +246,9 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				visualizationModesPage.page.getByLabel(newFieldName)
 			).toBeChecked();
 
-			await visualizationModesPage.saveFieldSelection();
+			await saveFromModal({
+				page,
+			});
 
 			const assignedFieldLocator =
 				await visualizationModesPage.getAssignedFieldLocator({
@@ -250,6 +261,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 	});
 
 	test('Configure table visualization mode @LPD-11049', async ({
+		page,
 		visualizationModesPage,
 	}) => {
 		const SAMPLE_SCALAR_FIELD = 'id';
@@ -280,7 +292,9 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				SAMPLE_OBJECT_CHILD_FIELD
 			);
 
-			await visualizationModesPage.saveAddFieldsModal();
+			await saveFromModal({
+				page,
+			});
 		});
 
 		await test.step('Check if field defaults are correct', async () => {
@@ -336,7 +350,9 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 			await expect(sortableInput).not.toBeChecked();
 
-			await visualizationModesPage.saveAddFieldsModal();
+			await saveFromModal({
+				page,
+			});
 
 			await expect(
 				visualizationModesPage
@@ -375,6 +391,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 	});
 
 	test('Configure table visualization mode with scalar array fields @LPD-11769', async ({
+		page,
 		visualizationModesPage,
 	}) => {
 		const SAMPLE_SCALAR_ARRAY_FIELD = 'keywords';
@@ -400,7 +417,9 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				SAMPLE_SCALAR_ARRAY_FIELD
 			);
 
-			await visualizationModesPage.saveAddFieldsModal();
+			await saveFromModal({
+				page,
+			});
 		});
 
 		await test.step('Check if field shows the correct type', async () => {

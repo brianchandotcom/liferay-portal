@@ -8,9 +8,9 @@ import {Locator, Page} from '@playwright/test';
 import {ViewPage} from '../ViewPage';
 
 export class SortingPage {
-	readonly addSortingButton: Locator;
+	private readonly addSortingButton: Locator;
 	readonly sortingTable: Locator;
-	readonly addSortingDialog: {
+	private readonly addSortingDialog: {
 		cancelButton: Locator;
 		defaultCheckbox: Locator;
 		labelInput: Locator;
@@ -18,7 +18,7 @@ export class SortingPage {
 		sortByInput: Locator;
 	};
 	readonly page: Page;
-	readonly viewPage: ViewPage;
+	private readonly viewPage: ViewPage;
 
 	constructor(page: Page) {
 		this.addSortingButton = page.getByLabel('New Sort');
@@ -51,9 +51,5 @@ export class SortingPage {
 
 	async openAddSortingModal() {
 		await this.addSortingButton.click();
-	}
-
-	async saveAddSortingModal() {
-		await this.addSortingDialog.saveButton.click();
 	}
 }

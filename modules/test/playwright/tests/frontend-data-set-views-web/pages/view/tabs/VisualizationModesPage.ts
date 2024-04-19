@@ -20,8 +20,6 @@ export class VisualizationModesPage {
 	readonly fieldSelectModalContainer: Locator;
 	readonly listVisualizationModeContainer: Locator;
 	readonly page: Page;
-	private tableVisualizationModeContainer: Locator;
-	private readonly toastContainer: Locator;
 	private readonly viewPage: ViewPage;
 
 	constructor(page: Page) {
@@ -41,10 +39,6 @@ export class VisualizationModesPage {
 		);
 		this.fieldSelectModalContainer = page.locator('.field-select-modal');
 		this.page = page;
-		this.tableVisualizationModeContainer = page.locator(
-			'.orderable-table-sheet'
-		);
-		this.toastContainer = page.locator('.alert-container');
 		this.viewPage = new ViewPage(page);
 	}
 
@@ -181,35 +175,5 @@ export class VisualizationModesPage {
 		});
 
 		await tab.click();
-	}
-
-	async saveAddFieldsModal() {
-		await this.addFieldsDialog.saveButton.click();
-	}
-
-	async saveFieldSelection() {
-
-		// Modal for field selection must be open.
-
-		await this.page
-			.getByRole('button', {
-				exact: true,
-				name: 'Save',
-			})
-			.click();
-
-		await expect(this.fieldSelectModalContainer).not.toBeInViewport();
-
-		await expect(this.toastContainer).toBeInViewport();
-
-		await this.page.getByText('Success').waitFor();
-
-		await this.toastContainer
-			.getByRole('button', {
-				name: 'Close',
-			})
-			.click();
-
-		await expect(this.toastContainer).toBeHidden();
 	}
 }

@@ -12,6 +12,7 @@ import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersT
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
 import {sortingPageTest} from './fixtures/sortingPageTest';
 import {viewsPageTest} from './fixtures/viewsPageTest';
+import saveFromModal from './utils/saveFromModal';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
@@ -105,8 +106,10 @@ test.describe('Configure sorting in Data Set Manager', () => {
 			await expect(page.getByLabel('Order Type')).toBeVisible();
 		});
 
-		await test.step('Save modal', async () => {
-			await sortingPage.saveAddSortingModal();
+		await test.step('Save changes', async () => {
+			await saveFromModal({
+				page,
+			});
 		});
 
 		await test.step('New sort is displayed on the table', async () => {
@@ -134,8 +137,10 @@ test.describe('Configure sorting in Data Set Manager', () => {
 			await page.getByLabel('Use as Default Sorting').setChecked(false);
 		});
 
-		await test.step('Save modal', async () => {
-			await sortingPage.saveAddSortingModal();
+		await test.step('Save changes', async () => {
+			await saveFromModal({
+				page,
+			});
 		});
 
 		await test.step('Edited sort is updated on the table', async () => {

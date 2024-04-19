@@ -15,6 +15,6 @@ export const MAX_LENGTH = 65;
 
 export const MIN_LENGTH = 3;
 
-export const NOT_FOUND_GIF = `${IMAGES_PATH}/states/search_state.gif`;
+export const NOT_FOUND_GIF = `${IMAGES_PATH}/states/search_state.svg`;
 
 export const SPRITEMAP = IMAGES_PATH + '/clay/icons.svg';

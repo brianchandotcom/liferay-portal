@@ -593,7 +593,7 @@ const FrontendDataSet = ({
 						}
 						imgSrc={
 							themeDisplay.getPathThemeImages() +
-							(emptyState?.image ?? '/states/search_state.gif')
+							(emptyState?.image ?? '/states/search_state.svg')
 						}
 						title={
 							emptyState?.title ??

@@ -1024,7 +1024,7 @@ export default function ChangeTrackingRenderView({
 					description={Liferay.Language.get(
 						'there-are-no-changes-to-display-in-this-view'
 					)}
-					imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+					imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.svg`}
 					title={Liferay.Language.get('no-results-found')}
 				/>
 			);

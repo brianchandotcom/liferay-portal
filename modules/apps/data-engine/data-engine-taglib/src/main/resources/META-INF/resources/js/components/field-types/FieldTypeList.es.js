@@ -136,7 +136,7 @@ const FieldTypeList = ({
 					Liferay.Language.get('there-are-no-results-for-x'),
 					[keywords]
 				)}
-				imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+				imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.svg`}
 				small
 				title={Liferay.Language.get('no-results-found')}
 			/>

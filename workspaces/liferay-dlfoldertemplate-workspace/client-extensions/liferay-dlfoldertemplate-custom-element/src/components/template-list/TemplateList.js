@@ -304,8 +304,8 @@ const TemplateList = () => {
 				<ClayEmptyState
 					description={null}
 					imgProps={{alt: 'Alternative Text', title: 'Hello World!'}}
-					imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.gif`}
-					imgSrcReducedMotion={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state_reduced_motion.gif`}
+					imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.svg`}
+					imgSrcReducedMotion={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state_reduced_motion.svg`}
 					title="No Templates Found"
 				>
 					{Liferay.ThemeDisplay.isSignedIn() && (

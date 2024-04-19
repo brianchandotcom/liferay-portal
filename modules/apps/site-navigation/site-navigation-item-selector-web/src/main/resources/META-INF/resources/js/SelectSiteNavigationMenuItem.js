@@ -142,7 +142,7 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 					description={Liferay.Language.get(
 						'try-again-with-a-different-search'
 					)}
-					imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+					imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.svg`}
 					small
 					title={Liferay.Language.get('no-results-found')}
 				/>

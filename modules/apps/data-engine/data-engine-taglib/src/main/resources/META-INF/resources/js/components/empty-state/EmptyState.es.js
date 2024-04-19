@@ -39,7 +39,7 @@ const EmptyState = ({emptyState, keywords = '', small = false}) => {
 			description={description}
 			imgSrc={
 				isSearch
-					? `${themeDisplay.getPathThemeImages()}/states/search_state.gif`
+					? `${themeDisplay.getPathThemeImages()}/states/search_state.svg`
 					: `${themeDisplay.getPathThemeImages()}/states/empty_state.gif`
 			}
 			small={small}

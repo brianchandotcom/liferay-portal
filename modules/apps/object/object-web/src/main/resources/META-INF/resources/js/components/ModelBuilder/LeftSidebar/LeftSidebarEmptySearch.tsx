@@ -13,7 +13,7 @@ export function LeftSidebarEmptySearch() {
 				description={Liferay.Language.get(
 					'try-again-with-a-different-search'
 				)}
-				imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.gif`}
+				imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.svg`}
 				small
 				title={Liferay.Language.get('no-results-found')}
 			/>

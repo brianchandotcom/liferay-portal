@@ -82,7 +82,7 @@ const SearchResult = ({filteredItems, handleOnclickItem, keyword}) => {
 				),
 				[keyword]
 			)}
-			imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+			imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.svg`}
 			small
 			title={Liferay.Language.get('no-results-found')}
 		/>

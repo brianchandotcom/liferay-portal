@@ -15,7 +15,7 @@ export const States = {
 	 * When the filters or search results return zero results.
 	 */
 
-	EMPTY_SEARCH: `${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.gif`,
+	EMPTY_SEARCH: `${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.svg`,
 
 	/**
 	 * When there are no elements in the data set at a certain level

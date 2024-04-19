@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
+import com.liferay.jenkins.results.parser.Dom4JUtil;
+
 import org.dom4j.Element;
 
 /**
@@ -14,7 +16,7 @@ public class JenkinsSourceFormatFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessageElement(String consoleText) {
+	public String getMessage(String consoleText) {
 		if (!consoleText.contains(_TOKEN_PLEASE_RUN_FORMAT_SOURCE)) {
 			return null;
 		}
@@ -23,7 +25,12 @@ public class JenkinsSourceFormatFailureMessageGenerator
 
 		start = consoleText.lastIndexOf("\n", start);
 
-		return getConsoleTextSnippetElementByStart(consoleText, start);
+		return getConsoleTextSnippetByStart(consoleText, start);
+	}
+
+	@Override
+	public Element getMessageElement(String consoleText) {
+		return Dom4JUtil.toCodeSnippetElement(getMessage(consoleText));
 	}
 
 	private static final String _TOKEN_PLEASE_RUN_FORMAT_SOURCE =

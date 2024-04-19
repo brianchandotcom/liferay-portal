@@ -248,7 +248,7 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 		});
 
 	const objectAction =
-		await apiHelpers.objectAdmin.postObjectDefinitionByExternalRefernceCodeObjectAction(
+		await apiHelpers.objectAdmin.postObjectActionByExternalReferenceCode(
 			'L_COMMERCE_ORDER',
 			{
 				active: true,

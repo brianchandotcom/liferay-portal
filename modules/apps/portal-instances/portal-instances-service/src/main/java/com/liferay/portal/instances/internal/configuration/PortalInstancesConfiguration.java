@@ -22,6 +22,27 @@ public interface PortalInstancesConfiguration {
 	@Meta.AD(deflt = "true", required = false, type = Meta.Type.Boolean)
 	public boolean active();
 
+	@Meta.AD(required = false, type = Meta.Type.String)
+	public String defaultAdminPassword();
+
+	@Meta.AD(required = false, type = Meta.Type.String)
+	public String defaultAdminScreenName();
+
+	@Meta.AD(required = false, type = Meta.Type.String)
+	public String defaultAdminEmailAddress();
+
+	@Meta.AD(required = false, type = Meta.Type.String)
+	public String defaultAdminFirstName();
+
+	@Meta.AD(required = false, type = Meta.Type.String)
+	public String defaultAdminMiddleName();
+
+	@Meta.AD(required = false, type = Meta.Type.String)
+	public String defaultAdminLastName();
+
+	@Meta.AD(deflt = "10", required = false, type = Meta.Type.Long)
+	public long delay();
+
 	@Meta.AD(required = false, type = Meta.Type.Integer)
 	public int maxUsers();
 

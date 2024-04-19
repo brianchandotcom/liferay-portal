@@ -91,12 +91,6 @@ public class DropZoneDocumentFragmentEntryProcessor
 			return;
 		}
 
-		if (httpServletRequest != null) {
-			httpServletRequest.setAttribute(
-				InfoDisplayWebKeys.INFO_FORM,
-				fragmentEntryProcessorContext.getInfoForm());
-		}
-
 		List<String> dropZoneItemIds = layoutStructureItem.getChildrenItemIds();
 
 		if (fragmentEntryProcessorContext.isEditMode()) {
@@ -173,6 +167,12 @@ public class DropZoneDocumentFragmentEntryProcessor
 			}
 
 			return;
+		}
+
+		if (httpServletRequest != null) {
+			httpServletRequest.setAttribute(
+				InfoDisplayWebKeys.INFO_FORM,
+				fragmentEntryProcessorContext.getInfoForm());
 		}
 
 		for (int i = 0; i < elements.size(); i++) {

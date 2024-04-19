@@ -4461,7 +4461,11 @@ public class PortalImpl implements Portal {
 				PropsKeys.
 					SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED)) {
 
-			groups.addAll(GroupLocalServiceUtil.getUserSitesGroups(userId));
+			User user = UserLocalServiceUtil.fetchUser(userId);
+
+			if (user != null) {
+				groups.addAll(GroupLocalServiceUtil.getUserSitesGroups(userId));
+			}
 		}
 
 		// Ancestor sites and global site

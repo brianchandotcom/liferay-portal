@@ -198,18 +198,19 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			<#assign jsonMapPropertyNames = jsonMapPropertyNames + [propertyName] />
 
 			public ${propertyType} get${capitalizedPropertyName}() {
-				${propertyName}.forEach(
+				${propertyName}.replaceAll(
 					(key, value) -> {
-						if (value instanceof UnsafeSupplier<?, ?>){
-							try {
-								${propertyName}.put(
-									key, ((UnsafeSupplier<?, ?>) value).get());
-							}
-							catch (Throwable e) {
-								throw new RuntimeException(e);
-							}
+						if (!(value instanceof UnsafeSupplier<?, ?>)) {
+							return value;
 						}
-					});
+						try {
+							return ((UnsafeSupplier<?, ?>)value).get();
+						}
+						catch (Throwable throwable) {
+							throw new RuntimeException(throwable);
+						}
+					}
+				);
 
 				return ${propertyName};
 			}

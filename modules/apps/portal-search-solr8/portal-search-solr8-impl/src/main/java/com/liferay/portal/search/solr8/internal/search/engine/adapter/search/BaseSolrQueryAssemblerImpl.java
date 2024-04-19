@@ -90,11 +90,10 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 			return;
 		}
 
-		org.apache.lucene.search.Query filterQuery = translate(booleanClause);
-
 		filterQueries.add(
 			StringBundler.concat(
-				"{!tag=", tag, StringPool.CLOSE_CURLY_BRACE, filterQuery));
+				"{!tag=", tag, StringPool.CLOSE_CURLY_BRACE,
+				translate(booleanClause)));
 	}
 
 	@Deactivate

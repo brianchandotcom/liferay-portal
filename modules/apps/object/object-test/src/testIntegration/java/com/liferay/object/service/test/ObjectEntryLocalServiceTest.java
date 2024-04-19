@@ -2671,6 +2671,22 @@ public class ObjectEntryLocalServiceTest {
 
 		PermissionThreadLocal.setPermissionChecker(originalPermissionChecker);
 		PrincipalThreadLocal.setName(originalName);
+
+		// Set fields as query parameter
+
+		List<String> fields = Arrays.asList(
+			"emailAddressRequired", "firstName");
+
+		valuesList = _objectEntryLocalService.getValuesList(
+			0, TestPropsValues.getCompanyId(), user.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), fields, null, null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(valuesList.toString(), 3, valuesList.size());
+
+		_assertObjectEntryValues(9, values1, valuesList.get(0), fields);
+		_assertObjectEntryValues(9, values2, valuesList.get(1), fields);
+		_assertObjectEntryValues(9, values3, valuesList.get(2), fields);
 	}
 
 	@Test
@@ -3364,19 +3380,28 @@ public class ObjectEntryLocalServiceTest {
 		Map<String, Serializable> actualValues, List<String> fields) {
 
 		Assert.assertEquals(
-			expectedValues.get("emailAddressDomain"),
-			actualValues.get("emailAddressDomain"));
-		Assert.assertEquals(
-			expectedValues.get("emailAddressRequired"),
-			actualValues.get("emailAddressRequired"));
-		Assert.assertEquals(
-			expectedValues.get("firstName"), actualValues.get("firstName"));
-		Assert.assertEquals(
-			expectedValues.get("listTypeEntryKeyRequired"),
-			actualValues.get("listTypeEntryKeyRequired"));
-
-		Assert.assertEquals(
 			actualValues.toString(), expectedValuesSize, actualValues.size());
+
+		if (fields == null) {
+			Assert.assertEquals(
+				expectedValues.get("emailAddressDomain"),
+				actualValues.get("emailAddressDomain"));
+			Assert.assertEquals(
+				expectedValues.get("emailAddressRequired"),
+				actualValues.get("emailAddressRequired"));
+			Assert.assertEquals(
+				expectedValues.get("firstName"), actualValues.get("firstName"));
+			Assert.assertEquals(
+				expectedValues.get("listTypeEntryKeyRequired"),
+				actualValues.get("listTypeEntryKeyRequired"));
+
+			return;
+		}
+
+		for (String field : fields) {
+			Assert.assertEquals(
+				expectedValues.get(field), actualValues.get(field));
+		}
 	}
 
 	private void _assertObjectValidationRuleResult(

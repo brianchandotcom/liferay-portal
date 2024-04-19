@@ -92,6 +92,16 @@ public class CategorySerDes {
 			sb.append(category.getSiteId());
 		}
 
+		if (category.getTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"title\": ");
+
+			sb.append(_toJSON(category.getTitle()));
+		}
+
 		if (category.getVocabulary() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -154,6 +164,13 @@ public class CategorySerDes {
 			map.put("siteId", String.valueOf(category.getSiteId()));
 		}
 
+		if (category.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put("title", String.valueOf(category.getTitle()));
+		}
+
 		if (category.getVocabulary() == null) {
 			map.put("vocabulary", null);
 		}
@@ -201,6 +218,13 @@ public class CategorySerDes {
 				if (jsonParserFieldValue != null) {
 					category.setSiteId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				if (jsonParserFieldValue != null) {
+					category.setTitle(
+						(Map)CategorySerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "vocabulary")) {

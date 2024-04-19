@@ -170,6 +170,47 @@ public class Category implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
+	@Schema(description = "Category Title")
+	public String getTitle() {
+		if (_titleSupplier != null) {
+			title = _titleSupplier.get();
+
+			_titleSupplier = null;
+		}
+
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+
+		_titleSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTitle(
+		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
+
+		_titleSupplier = () -> {
+			try {
+				return titleUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "Category Title")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String title;
+
+	@JsonIgnore
+	private Supplier<String> _titleSupplier;
+
 	@Schema(example = "Default Vocabulary")
 	public String getVocabulary() {
 		if (_vocabularySupplier != null) {
@@ -276,6 +317,22 @@ public class Category implements Serializable {
 			sb.append("\"siteId\": ");
 
 			sb.append(siteId);
+		}
+
+		String title = getTitle();
+
+		if (title != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"title\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(title));
+
+			sb.append("\"");
 		}
 
 		String vocabulary = getVocabulary();

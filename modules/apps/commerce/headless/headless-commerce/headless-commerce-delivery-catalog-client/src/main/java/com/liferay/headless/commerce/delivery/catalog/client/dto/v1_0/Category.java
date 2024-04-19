@@ -84,6 +84,27 @@ public class Category implements Cloneable, Serializable {
 
 	protected Long siteId;
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setTitle(
+		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
+
+		try {
+			title = titleUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String title;
+
 	public String getVocabulary() {
 		return vocabulary;
 	}

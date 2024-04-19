@@ -12,12 +12,16 @@ import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
 export class PagesAdminPage {
 	readonly configurationSaveButton: Locator;
+	readonly javaScriptClientExtensionsTab: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
 		this.configurationSaveButton = page.getByRole('button', {
 			exact: true,
 			name: 'Save',
+		});
+		this.javaScriptClientExtensionsTab = page.getByRole('tab', {
+			name: 'JavaScript',
 		});
 		this.page = page;
 	}
@@ -41,7 +45,7 @@ export class PagesAdminPage {
 	async selectJavaScriptClientExtension(clientExtensionName: string) {
 		await this.gotoPagesConfiguration();
 
-		await this.page.getByRole('tab', {name: 'JavaScript'}).click();
+		await this.javaScriptClientExtensionsTab.click();
 
 		await this.page
 			.getByRole('button', {name: 'Add JavaScript Client Extensions'})

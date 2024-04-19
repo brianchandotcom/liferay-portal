@@ -2017,11 +2017,13 @@ public class DLFileEntryLocalServiceImpl
 
 		// File entry
 
-		if (status == WorkflowConstants.STATUS_APPROVED) {
+		if ((status == WorkflowConstants.STATUS_APPROVED) ||
+			(status == WorkflowConstants.STATUS_SCHEDULED)) {
+
 			int compare = DLUtil.compareVersions(
 				dlFileEntry.getVersion(), dlFileVersion.getVersion());
 
-			if (compare <= 0) {
+			if ((compare <= 0) || (oldStatus != status)) {
 				dlFileEntry.setModifiedDate(dlFileVersion.getModifiedDate());
 				dlFileEntry.setFileName(dlFileVersion.getFileName());
 				dlFileEntry.setExtension(dlFileVersion.getExtension());

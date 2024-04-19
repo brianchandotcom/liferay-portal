@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.Dom4JUtil;
 
 import org.dom4j.Element;
 
@@ -16,7 +17,7 @@ public class InvalidGitCommitSHAFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessageElement(Build build) {
+	public String getMessage(Build build) {
 		String consoleText = build.getConsoleText();
 
 		if (!consoleText.contains(_TOKEN_WAS_NOT_FOUND_IN_BRANCH)) {
@@ -29,7 +30,12 @@ public class InvalidGitCommitSHAFailureMessageGenerator
 
 		int end = consoleText.indexOf("\n", start);
 
-		return getConsoleTextSnippetElement(consoleText, false, start, end);
+		return getConsoleTextSnippet(consoleText, false, start, end);
+	}
+
+	@Override
+	public Element getMessageElement(Build build) {
+		return Dom4JUtil.toCodeSnippetElement(getMessage(build));
 	}
 
 	private static final String _TOKEN_SHA = "SHA";

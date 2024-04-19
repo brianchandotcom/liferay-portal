@@ -169,10 +169,6 @@ const ListView: React.FC<ListViewProps> = ({
 		const appliedFilters: {[key: string]: string} =
 			filterVariables.appliedFilter;
 
-		if (!Object.keys(appliedFilters).length) {
-			return null;
-		}
-
 		const filters: {[key: string]: string | undefined} = {};
 
 		Object.entries(appliedFilters).forEach(([key, value]) => {

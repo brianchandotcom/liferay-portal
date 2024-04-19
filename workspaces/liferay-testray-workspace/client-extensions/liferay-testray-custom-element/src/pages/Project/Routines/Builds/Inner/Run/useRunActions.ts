@@ -26,10 +26,10 @@ const useRunActions = () => {
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id}, mutate) =>
+			action: ({testrayRunId}, mutate) =>
 				testrayRunImpl
-					.removeResource(id)
-					?.then(() => removeItemFromList(mutate, id))
+					.removeResource(testrayRunId)
+					?.then(() => removeItemFromList(mutate, testrayRunId))
 					.then(modal.onSave)
 					.catch(modal.onError),
 			icon: 'trash',
@@ -37,8 +37,8 @@ const useRunActions = () => {
 			permission: 'DELETE',
 		},
 		{
-			action: ({id}) => {
-				setRunA(id);
+			action: ({testrayRunId}) => {
+				setRunA(testrayRunId);
 
 				return Liferay.Util.openToast({
 					message: i18n.translate('run-a-successfully-added'),
@@ -48,8 +48,8 @@ const useRunActions = () => {
 			name: i18n.translate('select-run-a'),
 		},
 		{
-			action: ({id}) => {
-				setRunB(id);
+			action: ({testrayRunId}) => {
+				setRunB(testrayRunId);
 
 				return Liferay.Util.openToast({
 					message: i18n.translate('run-b-successfully-added'),

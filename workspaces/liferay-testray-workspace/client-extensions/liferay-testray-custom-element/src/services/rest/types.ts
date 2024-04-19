@@ -301,6 +301,7 @@ export type TestrayRun = {
 	r_buildToRuns_c_build?: TestrayBuild;
 	runId?: number;
 	status: string;
+	testrayRunId: number;
 	testrayRunName: string;
 } & CaseResultAggregation;
 

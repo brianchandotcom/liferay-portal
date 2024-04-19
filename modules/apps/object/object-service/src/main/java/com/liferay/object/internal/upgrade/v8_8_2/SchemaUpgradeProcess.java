@@ -9,6 +9,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,8 +25,13 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 				SQLTransformer.transform(
 					StringBundler.concat(
 						"select ObjectField.dbColumnName, ",
-						"ObjectField.dbTableName from ObjectField where ",
-						"ObjectField.businessType ='",
+						"ObjectField.dbTableName from ObjectField inner join ",
+						"ObjectDefinition on ",
+						"ObjectDefinition.objectDefinitionId = ",
+						"ObjectField.objectDefinitionId where ",
+						"ObjectDefinition.status = ",
+						WorkflowConstants.STATUS_APPROVED,
+						" and ObjectField.businessType ='",
 						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, "'")));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 

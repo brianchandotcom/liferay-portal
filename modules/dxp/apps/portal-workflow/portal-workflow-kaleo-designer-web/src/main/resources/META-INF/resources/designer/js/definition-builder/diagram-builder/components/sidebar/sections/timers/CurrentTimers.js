@@ -101,12 +101,14 @@ const CurrentTimers = ({setContentName, taskTimers}) => {
 				</ClayLink>
 
 				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('delete-timers')}
 					className="delete-button text-secondary trash-button"
 					displayType="unstyled"
 					onClick={() =>
 						deleteCurrentTimer(section.identifier, index)
 					}
 					symbol="trash"
+					title={Liferay.Language.get('delete-timers')}
 				/>
 			</ClayLayout.Row>
 		</ClayLayout.ContentCol>

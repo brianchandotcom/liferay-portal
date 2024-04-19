@@ -43,10 +43,12 @@ const CurrentNotifications = ({notifications, setContentName}) => {
 				</ClayLink>
 
 				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('delete-notifications')}
 					className="delete-button text-secondary trash-button"
 					displayType="unstyled"
 					onClick={deleteCurrentNotifications}
 					symbol="trash"
+					title={Liferay.Language.get('delete-notifications')}
 				/>
 			</ClayLayout.Row>
 		</ClayLayout.ContentCol>

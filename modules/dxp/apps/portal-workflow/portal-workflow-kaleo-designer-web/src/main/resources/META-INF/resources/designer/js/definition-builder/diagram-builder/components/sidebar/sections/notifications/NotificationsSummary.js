@@ -18,9 +18,11 @@ const NotificationsSummary = ({setContentName}) => {
 		<SidebarPanel panelTitle={Liferay.Language.get('notifications')}>
 			{!selectedItem?.data.notifications ? (
 				<ClayButton
+					aria-label={Liferay.Language.get('new-notification')}
 					className="mr-3"
 					displayType="secondary"
 					onClick={() => setContentName('notifications')}
+					title={Liferay.Language.get('new-notification')}
 				>
 					{Liferay.Language.get('new')}
 				</ClayButton>

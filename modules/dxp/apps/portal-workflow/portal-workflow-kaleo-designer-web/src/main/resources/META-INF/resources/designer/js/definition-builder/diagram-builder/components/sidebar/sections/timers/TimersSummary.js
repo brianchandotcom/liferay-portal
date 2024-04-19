@@ -18,11 +18,13 @@ const TimersSummary = ({setContentName}) => {
 		<SidebarPanel panelTitle={Liferay.Language.get('timers')}>
 			{!selectedItem?.data.taskTimers ? (
 				<ClayButton
+					aria-label={Liferay.Language.get('new-timer')}
 					className="mr-3"
 					displayType="secondary"
 					onClick={() => {
 						setContentName('timers');
 					}}
+					title={Liferay.Language.get('new-timer')}
 				>
 					{Liferay.Language.get('new')}
 				</ClayButton>

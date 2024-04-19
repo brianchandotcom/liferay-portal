@@ -18,9 +18,11 @@ const ActionsSummary = ({setContentName}) => {
 		<SidebarPanel panelTitle={Liferay.Language.get('actions')}>
 			{!selectedItem?.data?.actions ? (
 				<ClayButton
+					aria-label={Liferay.Language.get('new-action')}
 					className="mr-3"
 					displayType="secondary"
 					onClick={() => setContentName('actions')}
+					title={Liferay.Language.get('new-action')}
 				>
 					{Liferay.Language.get('new')}
 				</ClayButton>

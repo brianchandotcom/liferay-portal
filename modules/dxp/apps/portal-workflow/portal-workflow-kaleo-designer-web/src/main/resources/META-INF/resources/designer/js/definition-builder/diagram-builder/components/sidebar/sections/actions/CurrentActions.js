@@ -43,10 +43,12 @@ const CurrentActions = ({actions, setContentName}) => {
 				</ClayLink>
 
 				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('delete-actions')}
 					className="delete-button text-secondary trash-button"
 					displayType="unstyled"
 					onClick={deleteCurrentActions}
 					symbol="trash"
+					title={Liferay.Language.get('delete-actions')}
 				/>
 			</ClayLayout.Row>
 		</ClayLayout.ContentCol>

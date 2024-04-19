@@ -728,7 +728,7 @@ definition {
 
 		task ("When the user clicks on Close button") {
 			Click(
-				key_modalTitle = "Delete action?",
+				key_modalTitle = "Delete Action",
 				locator1 = "Button#CLOSE_MODAL");
 		}
 

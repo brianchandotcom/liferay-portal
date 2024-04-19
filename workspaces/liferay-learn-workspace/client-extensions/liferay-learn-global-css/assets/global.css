@@ -636,7 +636,7 @@ pre[class*='language-'] {
 	}
 
 	p {
-		font-size: var(--text-paragraph-font-size,1rem);
+		font-size: var(--text-paragraph-font-size, 1rem);
 		line-height: 24px;
 	}
 }

@@ -276,7 +276,7 @@ public class ExportImportTaskResourcePerformanceTest {
 		return sb.toString();
 	}
 
-	private String _getHttpResponseContent(String url) throws IOException {
+	private String _invoke(String url) throws IOException {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
@@ -367,7 +367,7 @@ public class ExportImportTaskResourcePerformanceTest {
 
 			while (true) {
 				exportTask = ExportTaskSerDes.toDTO(
-					_getHttpResponseContent(
+					_invoke(
 						"http://localhost:8080/o/headless-batch-engine/v1.0" +
 							"/export-task/by-external-reference-code/" +
 								externalReferenceCode));
@@ -462,7 +462,7 @@ public class ExportImportTaskResourcePerformanceTest {
 
 			while (true) {
 				importTask = ImportTaskSerDes.toDTO(
-					_getHttpResponseContent(
+					_invoke(
 						"http://localhost:8080/o/headless-batch-engine/v1.0" +
 							"/import-task/by-external-reference-code/" +
 								externalReferenceCode));

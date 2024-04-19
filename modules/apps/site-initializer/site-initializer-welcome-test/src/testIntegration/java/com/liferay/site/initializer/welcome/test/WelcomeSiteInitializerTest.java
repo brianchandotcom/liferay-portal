@@ -29,6 +29,7 @@ import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -57,6 +58,11 @@ public class WelcomeSiteInitializerTest {
 			_group.getGroupId());
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test

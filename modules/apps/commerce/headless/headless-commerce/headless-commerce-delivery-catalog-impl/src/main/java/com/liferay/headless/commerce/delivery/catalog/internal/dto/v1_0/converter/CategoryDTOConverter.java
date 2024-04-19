@@ -42,6 +42,9 @@ public class CategoryDTOConverter
 				setId(assetCategory::getCategoryId);
 				setName(assetCategory::getName);
 				setSiteId(assetCategory::getGroupId);
+				setTitle(
+					() -> assetCategory.getTitle(
+						dtoConverterContext.getLocale()));
 				setVocabulary(
 					() -> {
 						AssetVocabulary assetVocabulary =

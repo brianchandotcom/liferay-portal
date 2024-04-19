@@ -629,6 +629,24 @@ pre[class*='language-'] {
 		right: 0;
 		top: 238px;
 	}
+
+	h1 {
+		font-size: 3rem;
+		font-weight: 600;
+	}
+
+	p {
+		font-size: var(--text-paragraph-font-size,1rem);
+		line-height: 24px;
+	}
+}
+
+.learn-category {
+	a {
+		color: var(--color-neutral-10, #282934);
+		font-weight: 600;
+		text-decoration: underline;
+	}
 }
 
 .learn-search {

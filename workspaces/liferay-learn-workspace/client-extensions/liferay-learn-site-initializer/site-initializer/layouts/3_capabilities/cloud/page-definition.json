@@ -1,6 +1,5 @@
 {
 	"pageElement": {
-		"id": "17d745a6-04e6-61aa-5a32-a0baffc83ba6",
 		"pageElements": [
 			{
 				"definition": {
@@ -13,7 +12,6 @@
 					"layout": {
 					}
 				},
-				"id": "5e4067ca-ee7f-3fb6-e1bc-bac083e8af6a",
 				"pageElements": [
 					{
 						"definition": {
@@ -34,7 +32,6 @@
 								"widthType": "Fixed"
 							}
 						},
-						"id": "a2e684d8-a0f0-de45-2150-2cf3f3f1e3d6",
 						"pageElements": [
 							{
 								"definition": {
@@ -46,7 +43,6 @@
 									"layout": {
 									}
 								},
-								"id": "7c5d2d5c-085c-ceb1-bdef-bb3cbc8728e1",
 								"pageElements": [
 									{
 										"definition": {
@@ -81,12 +77,13 @@
 											],
 											"fragmentStyle": {
 												"backgroundColor": "",
+												"fontSize": "1rem",
+												"fontWeight": "600",
 												"marginBottom": "3",
 												"textColor": ""
 											},
 											"indexed": true
 										},
-										"id": "a3aa5ede-aa92-c166-9d6b-c044d9ad3342",
 										"type": "Fragment"
 									},
 									{
@@ -97,40 +94,57 @@
 												"contentDisplay": "FlexRow"
 											}
 										},
-										"id": "829a0030-1415-8a86-e2cb-acd9f19eca09",
 										"pageElements": [
 											{
 												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-image"
+													"fragmentStyle": {
+														"backgroundColor": "var(--color-brand-primary-lighten-5, #e7efff);",
+														"borderRadius": "10px",
+														"paddingBottom": "6px",
+														"paddingLeft": "6px",
+														"paddingRight": "6px",
+														"paddingTop": "6px"
 													},
-													"fragmentConfig": {
-														"imageSize": "w-100"
-													},
-													"fragmentFields": [
-														{
-															"id": "image-square",
-															"value": {
-																"fragmentImage": {
-																	"url": {
-																		"mapping": {
-																			"fieldKey": "AssetCategory_mainImage",
-																			"itemReference": {
-																				"className": "com.liferay.asset.kernel.model.AssetCategory",
-																				"classPK": "[$CAPABILITY#CLOUD$]"
+													"indexed": true,
+													"layout": {
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-100"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"description": {
+																				"value_i18n": {
+																					"en_US": ""
+																				}
+																			},
+																			"url": {
+																				"value_i18n": {
+																					"en_US": "/documents/d/liferay-learn/cloud-svg?imagePreview=1"
+																				}
 																			}
+																		},
+																		"fragmentLink": {
 																		}
 																	}
-																},
-																"fragmentLink": {
 																}
-															}
-														}
-													],
-													"indexed": true
-												},
-												"id": "882602c2-4383-395b-ee3d-fa1a94c7bd05",
-												"type": "Fragment"
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
 											},
 											{
 												"definition": {
@@ -168,7 +182,6 @@
 													},
 													"indexed": true
 												},
-												"id": "addaf9f7-a3c8-1d02-5f10-84aa9aec610e",
 												"type": "Fragment"
 											}
 										],
@@ -188,7 +201,6 @@
 												"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
 											}
 										},
-										"id": "e18900ab-3cd8-fe27-1968-7c9c85e6ad3f",
 										"type": "Widget"
 									}
 								],
@@ -202,6 +214,9 @@
 			},
 			{
 				"definition": {
+					"cssClasses": [
+						"learn-category"
+					],
 					"fragmentStyle": {
 						"maxWidth": "var(--container-max-xl)",
 						"paddingBottom": "4",
@@ -218,7 +233,6 @@
 						"widthType": "Fixed"
 					}
 				},
-				"id": "0ccfedcb-fca3-8031-d484-d3a7dba01abe",
 				"pageElements": [
 					{
 						"definition": {
@@ -256,7 +270,6 @@
 							},
 							"indexed": true
 						},
-						"id": "f3cf16d9-94a1-a42e-caa5-6316381b40e1",
 						"type": "Fragment"
 					}
 				],
@@ -281,7 +294,6 @@
 						"widthType": "Fixed"
 					}
 				},
-				"id": "6d1e43b9-559d-e30d-f3ee-dbfe7c80aa9f",
 				"pageElements": [
 					{
 						"definition": {
@@ -294,7 +306,6 @@
 								"widthType": "Fixed"
 							}
 						},
-						"id": "ef2e1723-47e5-429f-f5e2-e78f14f55f7c",
 						"pageElements": [
 							{
 								"definition": {
@@ -316,7 +327,6 @@
 										"paddingTop": 1
 									}
 								},
-								"id": "c7c45add-deaf-0519-f24b-76ce23f2a256",
 								"pageElements": [
 									{
 										"definition": {
@@ -334,7 +344,6 @@
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
 										},
-										"id": "d9920c3f-9441-a6af-0fbf-6c508511fd5f",
 										"type": "Widget"
 									}
 								],
@@ -360,7 +369,6 @@
 										"paddingTop": 1
 									}
 								},
-								"id": "5b92cb37-37d6-ea5f-3a03-e8286e078115",
 								"pageElements": [
 									{
 										"definition": {
@@ -378,7 +386,6 @@
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
 										},
-										"id": "430555bf-f976-d3aa-8822-1e8cb817512f",
 										"type": "Widget"
 									}
 								],
@@ -399,7 +406,6 @@
 								"widthType": "Fixed"
 							}
 						},
-						"id": "03444246-630e-ba17-fc6b-9feb46c515ac",
 						"pageElements": [
 							{
 								"definition": {
@@ -411,7 +417,6 @@
 									"layout": {
 									}
 								},
-								"id": "4b1723a0-8ed2-e235-ae60-03b2465ab6cc",
 								"pageElements": [
 									{
 										"definition": {
@@ -433,7 +438,6 @@
 												"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
 											}
 										},
-										"id": "82f24110-29cf-6036-642a-bf626407e891",
 										"type": "Widget"
 									},
 									{
@@ -462,7 +466,6 @@
 												"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet"
 											}
 										},
-										"id": "ef7d492b-90a0-27a2-7350-6c93cc3c074a",
 										"type": "Widget"
 									},
 									{
@@ -479,7 +482,6 @@
 												"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
 											}
 										},
-										"id": "99603735-4d0b-92cf-4333-f4ae35eac2df",
 										"type": "Widget"
 									}
 								],
@@ -495,9 +497,11 @@
 		"type": "Root"
 	},
 	"settings": {
+		"colorSchemeName": "01",
 		"masterPage": {
 			"key": "liferay-learn"
-		}
+		},
+		"themeName": "Dialect"
 	},
 	"version": 1.0
 }

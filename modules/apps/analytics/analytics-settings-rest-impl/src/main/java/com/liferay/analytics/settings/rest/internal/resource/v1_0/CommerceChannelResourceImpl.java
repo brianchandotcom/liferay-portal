@@ -16,6 +16,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -24,9 +25,12 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -66,7 +70,7 @@ public class CommerceChannelResourceImpl
 		return Page.of(
 			transform(
 				_groupService.search(
-					contextCompany.getCompanyId(), _classNameIds, keywords,
+					contextCompany.getCompanyId(), _getClassNameIds(), keywords,
 					_getParams(), pagination.getStartPosition(),
 					pagination.getEndPosition(),
 					SortUtil.getIgnoreCaseOrderByComparator(
@@ -79,18 +83,20 @@ public class CommerceChannelResourceImpl
 					group)),
 			pagination,
 			_groupService.searchCount(
-				contextCompany.getCompanyId(), _classNameIds, keywords,
+				contextCompany.getCompanyId(), _getClassNameIds(), keywords,
 				_getParams()));
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_classNameIds = new long[] {
-			_portal.getClassNameId(
-				"com.liferay.commerce.product.model.CommerceChannel")
-		};
-
 		_analyticsCloudClient = new AnalyticsCloudClient(_http);
+	}
+
+	private long[] _getClassNameIds() {
+		return _companyClassNameIds.computeIfAbsent(
+			CompanyThreadLocal.getCompanyId(),
+			key -> transformToLongArray(
+				_classNames, className -> _portal.getClassNameId(className)));
 	}
 
 	private LinkedHashMap<String, Object> _getParams() {
@@ -99,13 +105,18 @@ public class CommerceChannelResourceImpl
 		).build();
 	}
 
+	private static final List<String> _classNames = Arrays.asList(
+		"com.liferay.commerce.product.model.CommerceChannel");
+
 	private AnalyticsCloudClient _analyticsCloudClient;
-	private long[] _classNameIds;
 
 	@Reference(
 		target = "(component.name=com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.CommerceChannelDTOConverter)"
 	)
 	private DTOConverter<Group, CommerceChannel> _commerceChannelDTOConverter;
+
+	private final Map<Long, long[]> _companyClassNameIds =
+		new ConcurrentHashMap<>();
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

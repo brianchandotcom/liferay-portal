@@ -132,7 +132,9 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 							channel.getChannelId(), contextUser.getCompanyId()),
 						commerceChannelId -> _groupLocalService.fetchGroup(
 							contextUser.getCompanyId(),
-							_commerceChannelClassNameId, commerceChannelId),
+							_portal.getClassNameId(
+								_CLASS_NAME_COMMERCE_CHANNEL),
+							commerceChannelId),
 						Group.class),
 					_configurationProvider.getCompanyConfiguration(
 						AnalyticsConfiguration.class,
@@ -169,7 +171,8 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 				transform(
 					dataSource.getCommerceChannelIds(),
 					commerceChannelId -> _groupLocalService.fetchGroup(
-						contextUser.getCompanyId(), _commerceChannelClassNameId,
+						contextUser.getCompanyId(),
+						_portal.getClassNameId(_CLASS_NAME_COMMERCE_CHANNEL),
 						commerceChannelId),
 					Group.class),
 				_configurationProvider.getCompanyConfiguration(
@@ -235,9 +238,6 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 	@Activate
 	protected void activate() {
-		_commerceChannelClassNameId = _portal.getClassNameId(
-			"com.liferay.commerce.product.model.CommerceChannel");
-
 		_analyticsCloudClient = new AnalyticsCloudClient(_http);
 	}
 
@@ -257,6 +257,9 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 		throw new RuntimeException("Unable to get analytics data source");
 	}
 
+	private static final String _CLASS_NAME_COMMERCE_CHANNEL =
+		"com.liferay.commerce.product.model.CommerceChannel";
+
 	private AnalyticsCloudClient _analyticsCloudClient;
 
 	@Reference
@@ -266,8 +269,6 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 		target = "(component.name=com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.ChannelDTOConverter)"
 	)
 	private DTOConverter<AnalyticsChannel, Channel> _channelDTOConverter;
-
-	private long _commerceChannelClassNameId;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

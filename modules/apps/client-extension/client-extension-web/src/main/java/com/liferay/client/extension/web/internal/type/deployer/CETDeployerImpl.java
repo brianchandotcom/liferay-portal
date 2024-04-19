@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -212,7 +211,7 @@ public class CETDeployerImpl implements CETDeployer {
 			_register(
 				Portlet.class,
 				new IFrameCETPortlet(
-					iFrameCET, _absolutePortalURLBuilderFactory, portletId,
+					iFrameCET, portletId,
 					_portal)));
 
 		return serviceRegistrations;
@@ -258,9 +257,6 @@ public class CETDeployerImpl implements CETDeployer {
 	private static final Snapshot<CommerceCETDeployer>
 		_commerceCETDeployerSnapshot = new Snapshot<>(
 			CETDeployer.class, CommerceCETDeployer.class);
-
-	@Reference
-	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	private BundleContext _bundleContext;
 

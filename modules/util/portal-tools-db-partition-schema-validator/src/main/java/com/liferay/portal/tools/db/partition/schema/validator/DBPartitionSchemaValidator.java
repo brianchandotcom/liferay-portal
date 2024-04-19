@@ -188,8 +188,7 @@ public class DBPartitionSchemaValidator {
 		options.addOption("j", "jdbc-url", true, "Set the JDBC URL.");
 		options.addRequiredOption(
 			"p", "password", true, "Set the database user password.");
-		options.addOption(
-			"s", "schema-prefix", true, "Set the schema prefix.");
+		options.addOption("s", "schema-prefix", true, "Set the schema prefix.");
 		options.addRequiredOption(
 			"t", "db-type", true, "Set the database type [mysql, postgresql].");
 		options.addRequiredOption(

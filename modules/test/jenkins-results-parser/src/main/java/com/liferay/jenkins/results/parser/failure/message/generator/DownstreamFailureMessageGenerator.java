@@ -16,12 +16,17 @@ public class DownstreamFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessageElement(String consoleText) {
+	public String getMessage(String consoleText) {
 		if (consoleText.contains("Downstream jobs FAILED.")) {
-			return Dom4JUtil.toCodeSnippetElement("Downstream jobs FAILED.");
+			return "Downstream jobs FAILED.";
 		}
 
 		return null;
+	}
+
+	@Override
+	public Element getMessageElement(String consoleText) {
+		return Dom4JUtil.toCodeSnippetElement(getMessage(consoleText));
 	}
 
 }

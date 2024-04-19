@@ -122,8 +122,7 @@ public class DeepLTranslator implements Translator {
 	}
 
 	private String _getLanguageCode(String languageId) {
-		List<String> list = com.liferay.petra.string.StringUtil.split(
-			languageId, CharPool.UNDERLINE);
+		List<String> list = StringUtil.split(languageId, CharPool.UNDERLINE);
 
 		String languageCode = list.get(0);
 

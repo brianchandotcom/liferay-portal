@@ -420,7 +420,7 @@ public class ExportImportTaskResourcePerformanceTest {
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
-			_log.info("ClassName: " + className);
+			_log.info("Class name: " + className);
 		}
 
 		Map<String, String> classNamePartsMap = _splitClassName(className);

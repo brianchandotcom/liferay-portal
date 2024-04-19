@@ -5,8 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-export class ActionNotificationPage {
-	readonly divSectionActionNotification: Locator;
+export class NotificationSectionPage {
 	readonly inputActionType: Locator;
 	readonly inputNotificationDescription: Locator;
 	readonly inputNotificationName: Locator;
@@ -17,16 +16,12 @@ export class ActionNotificationPage {
 	readonly inputNotificationTypeUser: Locator;
 	readonly inputRecipientType: Locator;
 	readonly inputRoleName: Locator;
+	readonly inputRoleType: Locator;
 	readonly inputScript: Locator;
 	readonly inputScriptLanguage: Locator;
 	readonly page: Page;
 
 	constructor(page: Page, index: number) {
-		this.divSectionActionNotification = page
-			.getByText(
-				'TypeActionNotificationReassignmentName*DescriptionTemplate LanguageFreeMarkerTex'
-			)
-			.nth(index);
 		this.inputActionType = page.locator('#action-type').nth(index);
 		this.inputNotificationDescription = page
 			.locator('#notificationDescription')
@@ -53,12 +48,13 @@ export class ActionNotificationPage {
 		});
 		this.inputRecipientType = page.locator('#recipient-type').nth(index);
 		this.inputRoleName = page.locator('#role-name');
+		this.inputRoleType = page.locator('#role-type');
 		this.inputScriptLanguage = page.locator('#script-language');
 		this.inputScript = page.locator('#nodeScript');
 		this.page = page;
 	}
 
-	async assertActionTimerNotification(
+	async assertNotificationSectionFields(
 		index: number,
 		{
 			notificationDescription,
@@ -89,33 +85,45 @@ export class ActionNotificationPage {
 
 		if (recipientType === 'role') {
 			await expect(this.inputRoleName).toHaveValue(
-				(recipientTypeData as RoleRecipientType).roleName
+				(recipientTypeData as Role).roleName
+			);
+		}
+		else if (recipientType === 'roleType') {
+			await expect(this.inputRoleName).toHaveValue(
+				(recipientTypeData as RoleType).roleName
+			);
+			await expect(this.inputRoleType).toHaveValue(
+				(recipientTypeData as RoleType).roleType
 			);
 		}
 		else if (recipientType === 'scriptedRecipient') {
-			const script = (recipientTypeData as ScriptRecipientType).script;
+			const script = (recipientTypeData as ScriptedRecipient).script;
 
 			await expect(this.inputScript).toHaveValue(
 				new RegExp(`^(${script}|${script}\\n?)$`)
 			);
 			await expect(this.inputScriptLanguage).toHaveValue(
-				(recipientTypeData as ScriptRecipientType).scriptLanguage
+				(recipientTypeData as ScriptedRecipient).scriptLanguage
 			);
 		}
 	}
 
-	async fillActionNotificationFields({
-		notificationDescription,
-		notificationName,
-		notificationTypeEmail,
-		notificationTypeUser,
-		recipientType,
-		recipientTypeData,
-		template,
-		templateLanguage,
-	}: Notification) {
-		await this.inputActionType.selectOption('timerNotifications');
-
+	async fillNotificationSectionFields(
+		isTimer: boolean,
+		{
+			notificationDescription,
+			notificationName,
+			notificationTypeEmail,
+			notificationTypeUser,
+			recipientType,
+			recipientTypeData,
+			template,
+			templateLanguage,
+		}: Notification
+	) {
+		if (isTimer) {
+			await this.inputActionType.selectOption('timerNotifications');
+		}
 		await this.inputNotificationDescription.fill(notificationDescription);
 		await this.inputNotificationName.fill(notificationName);
 		await this.inputNotificationTemplate.fill(template);
@@ -132,7 +140,6 @@ export class ActionNotificationPage {
 		if (notificationTypeUser) {
 			await this.inputNotificationTypeUser.check();
 		}
-		await this.divSectionActionNotification.click();
 
 		await this.inputRecipientType.selectOption(recipientType);
 
@@ -141,17 +148,33 @@ export class ActionNotificationPage {
 
 			await this.page
 				.getByRole('menuitem', {
-					name: (recipientTypeData as RoleRecipientType)?.roleName,
+					name: (recipientTypeData as Role)?.roleName,
+				})
+				.click();
+		}
+		else if (recipientType === 'roleType') {
+			await this.inputRoleType.click();
+
+			await this.page
+				.getByRole('menuitem', {
+					name: (recipientTypeData as RoleType)?.roleType,
+				})
+				.click();
+			await this.inputRoleName.click();
+
+			await this.page
+				.getByRole('menuitem', {
+					name: (recipientTypeData as RoleType)?.roleName,
 				})
 				.click();
 		}
 		else if (recipientType === 'scriptedRecipient') {
 			await this.inputScriptLanguage.selectOption(
-				(recipientTypeData as ScriptRecipientType)?.scriptLanguage
+				(recipientTypeData as ScriptedRecipient)?.scriptLanguage
 			);
 
 			await this.inputScript.fill(
-				(recipientTypeData as ScriptRecipientType)?.script
+				(recipientTypeData as ScriptedRecipient)?.script
 			);
 		}
 	}

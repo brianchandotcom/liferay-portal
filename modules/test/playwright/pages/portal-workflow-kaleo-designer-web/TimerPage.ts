@@ -5,11 +5,11 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ActionNotificationPage} from './ActionNotificationPage';
 import {ActionReassignmentPage} from './ActionReassignmentPage';
+import {NotificationSectionPage} from './NotificationSectionPage';
 
 export class TimerPage {
-	actionNotificationPage: ActionNotificationPage;
+	notificationSectionPage: NotificationSectionPage;
 	actionReassignmentPage: ActionReassignmentPage;
 	addActionButton: Locator;
 	readonly inputTimerDescription: Locator;
@@ -39,14 +39,14 @@ export class TimerPage {
 		await this.addActionButton.click();
 	}
 
-	async assertActionTimerNotifications(notifications: Notification[]) {
+	async assertTimerActionNotificationFields(notifications: Notification[]) {
 		for (let index = 0; index < notifications.length; index++) {
-			this.actionNotificationPage = new ActionNotificationPage(
+			this.notificationSectionPage = new NotificationSectionPage(
 				this.page,
 				index
 			);
 
-			await this.actionNotificationPage.assertActionTimerNotification(
+			await this.notificationSectionPage.assertNotificationSectionFields(
 				index,
 				notifications[index]
 			);
@@ -57,12 +57,13 @@ export class TimerPage {
 		index: number,
 		notification: Notification
 	) {
-		this.actionNotificationPage = new ActionNotificationPage(
+		this.notificationSectionPage = new NotificationSectionPage(
 			this.page,
 			index
 		);
 
-		await this.actionNotificationPage.fillActionNotificationFields(
+		await this.notificationSectionPage.fillNotificationSectionFields(
+			true,
 			notification
 		);
 	}

@@ -6,19 +6,40 @@
 import {Locator, Page} from '@playwright/test';
 
 import {getRandomInt} from '../../utils/getRandomInt';
+import {NotificationSectionPage} from './NotificationSectionPage';
 import {TimerPage} from './TimerPage';
 
 export class NodePropertiesSidebarPage {
+	readonly addNotificationButton: Locator;
 	readonly addTimerButton: Locator;
+	readonly deleteNotificationsButton: Locator;
+	readonly notificationPage: NotificationSectionPage;
 	readonly timerPage: TimerPage;
 
 	constructor(page: Page) {
+		this.addNotificationButton = page
+			.getByRole('tablist')
+			.filter({hasText: 'Notifications'})
+			.getByRole('button', {name: 'New'})
+			.first();
 		this.addTimerButton = page
 			.getByRole('tablist')
 			.filter({hasText: 'Timers'})
 			.getByRole('button', {name: 'New'})
 			.first();
+		this.deleteNotificationsButton = page.locator(
+			'button[title="Delete Notifications"]'
+		);
+		this.notificationPage = new NotificationSectionPage(page, 0);
 		this.timerPage = new TimerPage(page);
+	}
+
+	async createNotification(notification: Notification) {
+		await this.addNotificationButton.click();
+		await this.notificationPage.fillNotificationSectionFields(
+			false,
+			notification
+		);
 	}
 
 	async createTimerNotification(notifications: Notification[]) {
@@ -53,5 +74,9 @@ export class NodePropertiesSidebarPage {
 		);
 
 		await this.timerPage.fillTimerActionReassignmentRoleType(roleTypes);
+	}
+
+	async deleteNotifications() {
+		await this.deleteNotificationsButton.click();
 	}
 }

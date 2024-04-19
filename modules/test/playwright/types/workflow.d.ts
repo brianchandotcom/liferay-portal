@@ -9,12 +9,12 @@ interface Notification {
 	notificationTypeEmail: boolean;
 	notificationTypeUser: boolean;
 	recipientType: string;
-	recipientTypeData: RoleRecipientType | ScriptRecipientType;
+	recipientTypeData: Role | RoleType | ScriptedRecipient;
 	template: string;
 	templateLanguage: string;
 }
 
-interface RoleRecipientType {
+interface Role {
 	roleName: string;
 }
 
@@ -24,7 +24,7 @@ interface RoleType {
 	roleType: string;
 }
 
-interface ScriptRecipientType {
+interface ScriptedRecipient {
 	script: string;
 	scriptLanguage: string;
 }

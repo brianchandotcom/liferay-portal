@@ -8,6 +8,7 @@ import {test} from '@playwright/test';
 import {ActionReassignmentPage} from '../pages/portal-workflow-kaleo-designer-web/ActionReassignmentPage';
 import {DiagramViewPage} from '../pages/portal-workflow-kaleo-designer-web/DiagramViewPage';
 import {NodePropertiesSidebarPage} from '../pages/portal-workflow-kaleo-designer-web/NodePropertiesSidebarPage';
+import {NotificationSectionPage} from '../pages/portal-workflow-kaleo-designer-web/NotificationSectionPage';
 import {ProcessBuilderPage} from '../pages/portal-workflow-kaleo-designer-web/ProcessBuilderPage';
 import {SourceViewPage} from '../pages/portal-workflow-kaleo-designer-web/SourceViewPage';
 import {TimerPage} from '../pages/portal-workflow-kaleo-designer-web/TimerPage';
@@ -18,6 +19,7 @@ const workflowPagesTest = test.extend<{
 	actionReassignmentPage: ActionReassignmentPage;
 	diagramViewPage: DiagramViewPage;
 	nodePropertiesSidebarPage: NodePropertiesSidebarPage;
+	notificationSectionPage: NotificationSectionPage;
 	processBuilderPage: ProcessBuilderPage;
 	sourceViewPage: SourceViewPage;
 	timerPage: TimerPage;
@@ -32,6 +34,9 @@ const workflowPagesTest = test.extend<{
 	},
 	nodePropertiesSidebarPage: async ({page}, use) => {
 		await use(new NodePropertiesSidebarPage(page));
+	},
+	notificationSectionPage: async ({page}, use) => {
+		await use(new NotificationSectionPage(page, 0));
 	},
 	processBuilderPage: async ({page}, use) => {
 		await use(new ProcessBuilderPage(page));

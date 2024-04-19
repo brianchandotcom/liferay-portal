@@ -107,7 +107,7 @@ test('LPD-16281 can create timer notifications', async ({
 
 	await timerOption.click();
 
-	await timerPage.assertActionTimerNotifications(timerNotifications);
+	await timerPage.assertTimerActionNotificationFields(timerNotifications);
 
 	await diagramViewPage.saveWorkflowDefinition();
 
@@ -123,7 +123,7 @@ test('LPD-16281 can create timer notifications', async ({
 
 	await timerOption.click();
 
-	await timerPage.assertActionTimerNotifications(timerNotifications);
+	await timerPage.assertTimerActionNotificationFields(timerNotifications);
 });
 
 test('LPD-21221 can create timer reassignments role type reassignment type', async ({

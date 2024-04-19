@@ -35,7 +35,9 @@ const expect = baseExpect.extend({
 
 test('can GET with API Filter', async ({apiHelpers}) => {
 	const objectDefinition =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition();
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			status: {code: 0},
+		});
 
 	const apiApplication = await apiHelpers.apiBuilder.postApiApplication({
 		apiApplicationToAPIEndpoints: [

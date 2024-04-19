@@ -69,7 +69,8 @@ public interface RoutineEntity extends Entity {
 
 	public enum Type {
 
-		CRON("cron", "Cron"), MANUAL("manual", "Manual");
+		CRON("cron", "Cron"), MANUAL("manual", "Manual"),
+		UPSTREAM_BRANCH_CRON("upstreamBranchCron", "Upstream Branch Cron");
 
 		public static Type get(Object picklistValue) {
 			return _types.get(

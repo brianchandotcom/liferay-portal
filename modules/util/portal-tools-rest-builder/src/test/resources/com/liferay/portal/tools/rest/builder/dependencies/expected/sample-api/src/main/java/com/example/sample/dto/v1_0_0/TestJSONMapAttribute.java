@@ -140,16 +140,17 @@ public class TestJSONMapAttribute implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, Object> getProperties1() {
-		properties1.forEach(
+		properties1.replaceAll(
 			(key, value) -> {
-				if (value instanceof UnsafeSupplier<?, ?>) {
-					try {
-						properties1.put(
-							key, ((UnsafeSupplier<?, ?>)value).get());
-					}
-					catch (Throwable e) {
-						throw new RuntimeException(e);
-					}
+				if (!(value instanceof UnsafeSupplier<?, ?>)) {
+					return value;
+				}
+
+				try {
+					return ((UnsafeSupplier<?, ?>)value).get();
+				}
+				catch (Throwable throwable) {
+					throw new RuntimeException(throwable);
 				}
 			});
 
@@ -185,16 +186,17 @@ public class TestJSONMapAttribute implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, Object> getProperties2() {
-		properties2.forEach(
+		properties2.replaceAll(
 			(key, value) -> {
-				if (value instanceof UnsafeSupplier<?, ?>) {
-					try {
-						properties2.put(
-							key, ((UnsafeSupplier<?, ?>)value).get());
-					}
-					catch (Throwable e) {
-						throw new RuntimeException(e);
-					}
+				if (!(value instanceof UnsafeSupplier<?, ?>)) {
+					return value;
+				}
+
+				try {
+					return ((UnsafeSupplier<?, ?>)value).get();
+				}
+				catch (Throwable throwable) {
+					throw new RuntimeException(throwable);
 				}
 			});
 

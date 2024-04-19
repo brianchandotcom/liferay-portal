@@ -203,6 +203,21 @@ public class RoleEmailProvider implements EmailProvider {
 					continue;
 				}
 
+				if (StringUtil.equals(
+						role.getName(), RoleConstants.ORGANIZATION_USER)) {
+
+					Group group = _groupLocalService.fetchGroup(groupId);
+
+					for (User user :
+							_userLocalService.getOrganizationUsers(
+								group.getClassPK())) {
+
+						emailAddresses.add(user.getEmailAddress());
+					}
+
+					continue;
+				}
+
 				for (UserGroupRole userGroupRole :
 						_userGroupRoleLocalService.
 							getUserGroupRolesByGroupAndRole(

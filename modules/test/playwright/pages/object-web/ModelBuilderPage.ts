@@ -188,8 +188,8 @@ export class ModelBuilderPage {
 	}
 
 	async createObjectRelationship(
-		objectDefinitionId1: string,
-		objectDefinitionId2: string,
+		objectDefinitionId1: number,
+		objectDefinitionId2: number,
 		objectRelationshipLabel: string,
 		type: string
 	) {
@@ -235,7 +235,7 @@ export class ModelBuilderPage {
 	};
 
 	getObjectDefinitionNodeRelationshipHandle(
-		objectDefinitionExternalReferenceCode: string,
+		objectDefinitionId: number,
 		position: string
 	) {
 		let dataHandled = 'fixedRightHandle';
@@ -245,7 +245,7 @@ export class ModelBuilderPage {
 		}
 
 		return this.page.locator(
-			`div[data-handleid="${objectDefinitionExternalReferenceCode}_${position}"]:not([data-handleid="${dataHandled}"])`
+			`div[data-handleid="${objectDefinitionId}_${position}"]:not([data-handleid="${dataHandled}"])`
 		);
 	}
 

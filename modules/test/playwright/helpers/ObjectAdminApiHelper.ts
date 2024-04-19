@@ -124,7 +124,7 @@ export class ObjectAdminApiHelper {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions`,
 			{data: requestBody}
-		);
+		) as Promise<ObjectDefinition>;
 	}
 
 	async postRandomObjectFolder(): Promise<ObjectFolder> {

@@ -81,14 +81,14 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 			ColumnDescriptor.from(
 				fieldName, index,
 				object -> {
-					Object property = _getProperty(
+					Object value = _getValue(
 						fieldName, object, propertiesObjectValuePair);
 
-					if (property == null) {
+					if (value == null) {
 						return StringPool.BLANK;
 					}
 
-					return CSVUtil.encode(property);
+					return CSVUtil.encode(value);
 				})
 		};
 	}
@@ -103,14 +103,14 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 		attachmentColumnDescriptors[0] = ColumnDescriptor.from(
 			fieldName + ".id", index++,
 			object -> {
-				Object property = _getProperty(
+				Object value = _getValue(
 					fieldName, object, propertiesObjectValuePair);
 
-				if (property == null) {
+				if (value == null) {
 					return StringPool.BLANK;
 				}
 
-				FileEntry fileEntry = (FileEntry)property;
+				FileEntry fileEntry = (FileEntry)value;
 
 				return fileEntry.getId();
 			});
@@ -118,14 +118,14 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 		attachmentColumnDescriptors[1] = ColumnDescriptor.from(
 			fieldName + ".link.href", index++,
 			object -> {
-				Object property = _getProperty(
+				Object value = _getValue(
 					fieldName, object, propertiesObjectValuePair);
 
-				if (property == null) {
+				if (value == null) {
 					return StringPool.BLANK;
 				}
 
-				FileEntry fileEntry = (FileEntry)property;
+				FileEntry fileEntry = (FileEntry)value;
 
 				Link link = fileEntry.getLink();
 
@@ -135,14 +135,14 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 		attachmentColumnDescriptors[2] = ColumnDescriptor.from(
 			fieldName + ".link.label", index++,
 			object -> {
-				Object property = _getProperty(
+				Object value = _getValue(
 					fieldName, object, propertiesObjectValuePair);
 
-				if (property == null) {
+				if (value == null) {
 					return StringPool.BLANK;
 				}
 
-				FileEntry fileEntry = (FileEntry)property;
+				FileEntry fileEntry = (FileEntry)value;
 
 				Link link = fileEntry.getLink();
 
@@ -152,14 +152,14 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 		attachmentColumnDescriptors[3] = ColumnDescriptor.from(
 			fieldName + ".name", index,
 			object -> {
-				Object property = _getProperty(
+				Object value = _getValue(
 					fieldName, object, propertiesObjectValuePair);
 
-				if (property == null) {
+				if (value == null) {
 					return StringPool.BLANK;
 				}
 
-				FileEntry fileEntry = (FileEntry)property;
+				FileEntry fileEntry = (FileEntry)value;
 
 				return fileEntry.getName();
 			});
@@ -205,31 +205,31 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 				StringBundler.concat(fieldName, ".key_", listTypeEntriesIndex),
 				index++,
 				object -> {
-					Object property = _getProperty(
+					Object value = _getValue(
 						fieldName, object, propertiesObjectValuePair);
 
-					if (property == null) {
+					if (value == null) {
 						return StringPool.BLANK;
 					}
 
 					return _getMultiselectListEntryValue(
 						listTypeEntriesLambdaIndex, "key",
-						(List<ListEntry>)property);
+						(List<ListEntry>)value);
 				});
 			multiselectPicklistColumnDescriptors[i + 1] = ColumnDescriptor.from(
 				StringBundler.concat(fieldName, ".name_", listTypeEntriesIndex),
 				index++,
 				object -> {
-					Object property = _getProperty(
+					Object value = _getValue(
 						fieldName, object, propertiesObjectValuePair);
 
-					if (property == null) {
+					if (value == null) {
 						return StringPool.BLANK;
 					}
 
 					return _getMultiselectListEntryValue(
 						listTypeEntriesLambdaIndex, "name",
-						(List<ListEntry>)property);
+						(List<ListEntry>)value);
 				});
 
 			listTypeEntriesIndex++;
@@ -247,14 +247,14 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 		picklistColumnDescriptors[0] = ColumnDescriptor.from(
 			fieldName + ".key", index++,
 			object -> {
-				Object property = _getProperty(
+				Object value = _getValue(
 					fieldName, object, propertiesObjectValuePair);
 
-				if (property == null) {
+				if (value == null) {
 					return StringPool.BLANK;
 				}
 
-				ListEntry listEntry = (ListEntry)property;
+				ListEntry listEntry = (ListEntry)value;
 
 				return listEntry.getKey();
 			});
@@ -262,14 +262,14 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 		picklistColumnDescriptors[1] = ColumnDescriptor.from(
 			fieldName + ".name", index,
 			object -> {
-				Object property = _getProperty(
+				Object value = _getValue(
 					fieldName, object, propertiesObjectValuePair);
 
-				if (property == null) {
+				if (value == null) {
 					return StringPool.BLANK;
 				}
 
-				ListEntry listEntry = (ListEntry)property;
+				ListEntry listEntry = (ListEntry)value;
 
 				return listEntry.getName();
 			});
@@ -277,25 +277,25 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 		return picklistColumnDescriptors;
 	}
 
-	private Object _getProperty(
+	private Object _getValue(
 			String fieldName, Object object,
 			ObjectValuePair<Field, Method> objectValuePair)
 		throws ReflectiveOperationException {
 
-		Method method = objectValuePair.getValue();
+		Map<?, ?> map = null;
 
-		Map<?, ?> propertiesMap = null;
+		Method method = objectValuePair.getValue();
 
 		if (method == null) {
 			Field field = objectValuePair.getKey();
 
-			propertiesMap = (Map<?, ?>)field.get(object);
+			map = (Map<?, ?>)field.get(object);
 		}
 		else {
-			propertiesMap = (Map<?, ?>)method.invoke(object);
+			map = (Map<?, ?>)method.invoke(object);
 		}
 
-		return propertiesMap.get(fieldName);
+		return map.get(fieldName);
 	}
 
 	@Reference

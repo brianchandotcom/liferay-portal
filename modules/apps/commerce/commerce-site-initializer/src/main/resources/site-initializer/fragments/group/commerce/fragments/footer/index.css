@@ -1,0 +1,12 @@
+#commerce-footer {
+	background-color: #f1f2f5;
+	border-top: 1px solid #e7e7ed;
+}
+
+#commerce-footer .commerce-footer-social {
+	gap: 3px;
+}
+
+#commerce-footer .commerce-footer-legal .btn:not(:first-child) {
+	border-left: 2px solid var(--gray-300);
+}

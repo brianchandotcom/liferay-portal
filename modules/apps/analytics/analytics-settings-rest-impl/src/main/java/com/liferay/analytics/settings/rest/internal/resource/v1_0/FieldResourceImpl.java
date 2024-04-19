@@ -420,7 +420,6 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 						() ->
 							ArrayUtil.contains(syncedNames, names[index]) ||
 							ArrayUtil.contains(requiredNames, names[index]));
-
 					setType(() -> types[index]);
 				}
 			};

@@ -589,7 +589,6 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 				return new ExpandoField[0];
 			});
-
 		dxpEntity.setFields(
 			() -> {
 				if (fields != null) {
@@ -598,7 +597,6 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 				return new Field[0];
 			});
-
 		dxpEntity.setId(() -> id);
 		dxpEntity.setModifiedDate(() -> modifiedDate);
 		dxpEntity.setType(() -> type);

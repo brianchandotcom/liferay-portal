@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -207,6 +208,8 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 	protected Filter createFilter(SearchContext searchContext) {
 		ReflectionTestUtil.setFieldValue(
 			contributor, "_groupLocalService", groupLocalService);
+		ReflectionTestUtil.setFieldValue(
+			contributor, "_searchEngine", searchEngine);
 
 		BooleanFilter booleanFilter = new BooleanFilter();
 
@@ -227,5 +230,6 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 	protected GroupIdQueryPreFilterContributor contributor;
 	protected GroupLocalService groupLocalService = Mockito.mock(
 		GroupLocalService.class);
+	protected SearchEngine searchEngine = Mockito.mock(SearchEngine.class);
 
 }

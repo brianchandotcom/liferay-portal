@@ -68,7 +68,7 @@
 																"fieldKey": "AssetCategory_vocabulary",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": "[$CAPABILITY#CLOUD$]"
+																	"classPK": "[$CAPABILITY#SECURITY$]"
 																}
 															}
 														}
@@ -131,7 +131,7 @@
 																			},
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/cloud-svg?imagePreview=1"
+																					"en_US": "/documents/d/liferay-learn/security-svg?imagePreview=1"
 																				}
 																			}
 																		},
@@ -165,13 +165,13 @@
 																},
 																"text": {
 																	"defaultFragmentInlineValue": {
-																		"value": "Cloud"
+																		"value": "Security"
 																	},
 																	"mapping": {
 																		"fieldKey": "AssetCategory_name",
 																		"itemReference": {
 																			"className": "com.liferay.asset.kernel.model.AssetCategory",
-																			"classPK": "[$CAPABILITY#CLOUD$]"
+																			"classPK": "[$CAPABILITY#SECURITY$]"
 																		}
 																	}
 																}
@@ -254,13 +254,13 @@
 										},
 										"text": {
 											"defaultFragmentInlineValue": {
-												"value": "<p>Liferay Cloud Platform provides the infrastructure and tooling necessary to simplify, secure, and deliver applications on Liferay DXP when using the SaaS or PaaS deployment approaches. Using Liferay’s Cloud infrastructure provides a secure, reliable, and scalable platform for building Liferay solutions.<p>The Liferay Cloud Platform includes DevOps CI/CD tools, automated backups, real-time logs, and much more.<div>Check these articles for an introduction:<ul><li><a href=/w/liferay-cloud/getting-started>Getting Started - Liferay Cloud</a><li><a href=/w/liferay-cloud/getting-started/development-requirements>Development Requirements</a><li><a href=/w/liferay-cloud/getting-started/configuring-your-github-repository>Configuring Your Github Repository</a><li><a href=/w/liferay-cloud/updating-services-in-liferay-paas/overview-of-the-liferay-cloud-deployment-workflow>Overview of the Liferay Cloud Deployment Workflow</a><li><a href=/w/liferay-cloud/updating-services-in-liferay-paas/deploying-changes-via-the-liferay-cloud-console>Deploying Changes via the Liferay Cloud Console</a></ul></div>"
+												"value": "<p>Liferay DXP is built with security in mind. A variety of standards based authentication methods and integrations can be used to ensure secure access to a site and its resources.<p>Robust role-based access control with permissions gives you fine grained control over what authenticated and unauthenticated users can access, share, or edit. Liferay DXP’s web services also have a multi-layered and configurable approach to security and authorization.<div>Check these articles for an introduction:<ul><li><a href=/w/dxp/users-and-permissions/users/understanding-users>Understanding Users</a><li><a href=/w/dxp/users-and-permissions/roles-and-permissions/understanding-roles-and-permissions>Understanding Roles and Permissions</a><li><a href=/w/dxp/installation-and-upgrades/securing-liferay>Securing Liferay</a><li><a href=/w/dxp/installation-and-upgrades/securing-liferay/authentication-basics>Authentication Basics</a></ul></div>"
 											},
 											"mapping": {
 												"fieldKey": "AssetCategory_description",
 												"itemReference": {
 													"className": "com.liferay.asset.kernel.model.AssetCategory",
-													"classPK": "[$CAPABILITY#CLOUD$]"
+													"classPK": "[$CAPABILITY#SECURITY$]"
 												}
 											}
 										}

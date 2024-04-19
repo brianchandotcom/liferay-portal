@@ -68,7 +68,7 @@
 																"fieldKey": "AssetCategory_vocabulary",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": "[$CAPABILITY#CLOUD$]"
+																	"classPK": "[$CAPABILITY#DIGITAL-ASSET-MANAGEMENT$]"
 																}
 															}
 														}
@@ -131,7 +131,7 @@
 																			},
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/cloud-svg?imagePreview=1"
+																					"en_US": "/documents/d/liferay-learn/digital_ams-svg?imagePreview=1"
 																				}
 																			}
 																		},
@@ -165,13 +165,13 @@
 																},
 																"text": {
 																	"defaultFragmentInlineValue": {
-																		"value": "Cloud"
+																		"value": "Digital Asset Management"
 																	},
 																	"mapping": {
 																		"fieldKey": "AssetCategory_name",
 																		"itemReference": {
 																			"className": "com.liferay.asset.kernel.model.AssetCategory",
-																			"classPK": "[$CAPABILITY#CLOUD$]"
+																			"classPK": "[$CAPABILITY#DIGITAL-ASSET-MANAGEMENT$]"
 																		}
 																	}
 																}
@@ -254,13 +254,13 @@
 										},
 										"text": {
 											"defaultFragmentInlineValue": {
-												"value": "<p>Liferay Cloud Platform provides the infrastructure and tooling necessary to simplify, secure, and deliver applications on Liferay DXP when using the SaaS or PaaS deployment approaches. Using Liferay’s Cloud infrastructure provides a secure, reliable, and scalable platform for building Liferay solutions.<p>The Liferay Cloud Platform includes DevOps CI/CD tools, automated backups, real-time logs, and much more.<div>Check these articles for an introduction:<ul><li><a href=/w/liferay-cloud/getting-started>Getting Started - Liferay Cloud</a><li><a href=/w/liferay-cloud/getting-started/development-requirements>Development Requirements</a><li><a href=/w/liferay-cloud/getting-started/configuring-your-github-repository>Configuring Your Github Repository</a><li><a href=/w/liferay-cloud/updating-services-in-liferay-paas/overview-of-the-liferay-cloud-deployment-workflow>Overview of the Liferay Cloud Deployment Workflow</a><li><a href=/w/liferay-cloud/updating-services-in-liferay-paas/deploying-changes-via-the-liferay-cloud-console>Deploying Changes via the Liferay Cloud Console</a></ul></div>"
+												"value": "<p>Liferay’s Digital Asset Management (DAM) tools simplify the organization and management of digital assets. Assets include images, videos, presentations, documents, and much more. <p>Additionally, the Asset Library feature enables you to manage and publish assets in one central repository for use across multiple distinct sites.<div>Check these articles for an introduction:<ul><li><a href=/w/dxp/content-authoring-and-management/asset-libraries>Asset Libraries</a><li><a href=/w/dxp/content-authoring-and-management/documents-and-media>Documents and Media</a><li><a href=/w/dxp/content-authoring-and-management/documents-and-media/uploading-and-managing/uploading-files>Uploading Files</a><li><a href=/w/dxp/system-administration/file-storage>File Storage</a><li><a href=/w/dxp/content-authoring-and-management/documents-and-media/publishing-and-sharing/using-adaptive-media>Using Adaptive Media</a><li><a href=/web/guest/w/dxp/content-authoring-and-management/documents-and-media/uploading-and-managing/managing-metadata/defining-document-types>Defining Document Types</a></ul></div>"
 											},
 											"mapping": {
 												"fieldKey": "AssetCategory_description",
 												"itemReference": {
 													"className": "com.liferay.asset.kernel.model.AssetCategory",
-													"classPK": "[$CAPABILITY#CLOUD$]"
+													"classPK": "[$CAPABILITY#DIGITAL-ASSET-MANAGEMENT$]"
 												}
 											}
 										}

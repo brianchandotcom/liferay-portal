@@ -28,6 +28,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
@@ -214,6 +215,50 @@ public class Category implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
+	@Schema(
+		example = "{en_US=Category Title EN, hr_HR=Category Title HR, hu_HU=Category Title HU}"
+	)
+	@Valid
+	public Map<String, String> getTitle() {
+		if (_titleSupplier != null) {
+			title = _titleSupplier.get();
+
+			_titleSupplier = null;
+		}
+
+		return title;
+	}
+
+	public void setTitle(Map<String, String> title) {
+		this.title = title;
+
+		_titleSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTitle(
+		UnsafeSupplier<Map<String, String>, Exception> titleUnsafeSupplier) {
+
+		_titleSupplier = () -> {
+			try {
+				return titleUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> title;
+
+	@JsonIgnore
+	private Supplier<Map<String, String>> _titleSupplier;
+
 	@Schema(example = "Default Vocabulary")
 	public String getVocabulary() {
 		if (_vocabularySupplier != null) {
@@ -336,6 +381,18 @@ public class Category implements Serializable {
 			sb.append("\"siteId\": ");
 
 			sb.append(siteId);
+		}
+
+		Map<String, String> title = getTitle();
+
+		if (title != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"title\": ");
+
+			sb.append(_toJSON(title));
 		}
 
 		String vocabulary = getVocabulary();

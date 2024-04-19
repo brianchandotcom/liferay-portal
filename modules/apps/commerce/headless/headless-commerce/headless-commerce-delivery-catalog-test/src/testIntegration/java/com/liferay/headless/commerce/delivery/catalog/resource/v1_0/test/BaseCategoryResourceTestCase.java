@@ -170,6 +170,7 @@ public abstract class BaseCategoryResourceTestCase {
 		Category category = randomCategory();
 
 		category.setName(regex);
+		category.setTitle(regex);
 		category.setVocabulary(regex);
 
 		String json = CategorySerDes.toJSON(category);
@@ -179,6 +180,7 @@ public abstract class BaseCategoryResourceTestCase {
 		category = CategorySerDes.toDTO(json);
 
 		Assert.assertEquals(regex, category.getName());
+		Assert.assertEquals(regex, category.getTitle());
 		Assert.assertEquals(regex, category.getVocabulary());
 	}
 
@@ -457,6 +459,14 @@ public abstract class BaseCategoryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("title", additionalAssertFieldName)) {
+				if (category.getTitle() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("vocabulary", additionalAssertFieldName)) {
 				if (category.getVocabulary() == null) {
 					valid = false;
@@ -598,6 +608,16 @@ public abstract class BaseCategoryResourceTestCase {
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						category1.getName(), category2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("title", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						category1.getTitle(), category2.getTitle())) {
 
 					return false;
 				}
@@ -778,6 +798,52 @@ public abstract class BaseCategoryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("title")) {
+			Object object = category.getTitle();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("vocabulary")) {
 			Object object = category.getVocabulary();
 
@@ -871,6 +937,7 @@ public abstract class BaseCategoryResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				siteId = testGroup.getGroupId();
+				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				vocabulary = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}

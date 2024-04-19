@@ -37,6 +37,7 @@ import {APIResponse, Results} from '../../services/rest';
 import {SortDirection} from '../../types';
 import {PAGINATION} from '../../util/constants';
 import EmptyState from '../EmptyState';
+import {RendererFields} from '../Form/Renderer';
 import Loading from '../Loading';
 import ManagementToolbar, {ManagementToolbarProps} from '../ManagementToolbar';
 import Table, {TableProps} from '../Table';
@@ -164,33 +165,55 @@ const ListView: React.FC<ListViewProps> = ({
 		return sort.key ? `${sort.key}:${sort.direction.toLowerCase()}` : '';
 	};
 
+	const filter = useMemo(() => {
+		const appliedFilters: {[key: string]: string} =
+			filterVariables.appliedFilter;
+
+		if (!Object.keys(appliedFilters).length) {
+			return null;
+		}
+
+		const filters: {[key: string]: string | undefined} = {};
+
+		Object.entries(appliedFilters).forEach(([key, value]) => {
+			const matchingField = filterSchema.fields.find(
+				(field) => field.name === key && field.isCustomFilter
+			) as RendererFields;
+
+			if (matchingField) {
+				filters[key] = SearchBuilder.createCustomFilter(
+					matchingField,
+					value
+				);
+
+				delete appliedFilters[key];
+			}
+		});
+
+		const filterVariablesCopy = {
+			...filterVariables,
+			appliedFilter: {...appliedFilters},
+		};
+
+		const baseFilter = onApplyFilterMemo
+			? onApplyFilterMemo(filterVariablesCopy)
+			: SearchBuilder.createFilter(filterVariablesCopy) || '';
+
+		const filter = {filter: baseFilter, ...filters};
+
+		return filter;
+	}, [filterSchema?.fields, filterVariables, onApplyFilterMemo]);
+
 	const getURLSearchParams = useCallback(
 		() => ({
-			filter: onApplyFilterMemo
-				? onApplyFilterMemo(filterVariables)
-				: SearchBuilder.createFilter(filterVariables) || '',
+			...filter,
 			forceRefetch,
 			page: listViewContext.page,
 			pageSize: listViewContext.pageSize,
 			sort: buildSort(sort),
-			testrayCasePriorities: Array.isArray(
-				filterVariables.appliedFilter?.testrayCasePriorities
-			)
-				? filterVariables.appliedFilter?.testrayCasePriorities?.map(
-						({value}) => value
-				  )
-				: [],
-			testrayTeamId: Array.isArray(
-				filterVariables.appliedFilter?.testrayTeamId
-			)
-				? filterVariables.appliedFilter?.testrayTeamId?.map(
-						({value}) => value
-				  )
-				: [],
 		}),
 		[
-			onApplyFilterMemo,
-			filterVariables,
+			filter,
 			forceRefetch,
 			listViewContext.page,
 			listViewContext.pageSize,
@@ -213,6 +236,7 @@ const ListView: React.FC<ListViewProps> = ({
 		page = 1,
 		pageSize,
 		results,
+		testrayCaseResults,
 		totalCount = 0,
 	} = response || {};
 
@@ -221,11 +245,13 @@ const ListView: React.FC<ListViewProps> = ({
 		[results, title]
 	);
 
-	const itemsMemoized = useMemo(() => (results ? matrixData : items), [
-		items,
-		matrixData,
-		results,
-	]);
+	const itemsMemoized = useMemo(() => {
+		if (results && !testrayCaseResults) {
+			return matrixData;
+		}
+
+		return testrayCaseResults || items;
+	}, [items, matrixData, results, testrayCaseResults]);
 
 	const isCompareRunsMatrix = title === 'Runs';
 
@@ -341,7 +367,7 @@ const ListView: React.FC<ListViewProps> = ({
 
 				dispatch({payload: page, type: ListViewTypes.SET_PAGE});
 			}}
-			totalItems={totalCount}
+			totalItems={totalCount || testrayCaseResults?.length || 0}
 		/>
 	);
 
@@ -377,7 +403,7 @@ const ListView: React.FC<ListViewProps> = ({
 					mutate,
 				})}
 
-			{!!items.length && (
+			{!!items.length || !!testrayCaseResults?.length ? (
 				<>
 					{pagination?.displayTop && (
 						<div className="mt-4">{Pagination}</div>
@@ -403,15 +429,16 @@ const ListView: React.FC<ListViewProps> = ({
 
 					{Pagination}
 				</>
-			)}
+			) : null}
 
 			{results &&
+				!testrayCaseResults &&
 				(isCompareRunsMatrix ? (
 					<ClayLayout.Col lg={12} md={12}>
 						<TableChart matrixData={itemsMemoized} title={title} />
 					</ClayLayout.Col>
 				) : (
-					<div className="d-flex flex-wrap justify-content-around">
+					<div className="d-flex flex-wrap">
 						{Object.entries(itemsMemoized).map(
 							([name, data], index) => (
 								<div className="my-4" key={index}>

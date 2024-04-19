@@ -96,6 +96,22 @@ const formattedColumnName = (columnName: string) => {
 const TableChart: React.FC<TableChartProps> = ({matrixData, title}) => {
 	const {runA: runAId, runB: runBId} = useParams();
 
+	const getURLParams = (
+		columnsDueStatus: CaseResultStatuses[],
+		verticalColumnIndex: number,
+		horizontalColumnIndex: number
+	) => {
+		const urlParams = {
+			testrayCaseResultStatus1: [columnsDueStatus[verticalColumnIndex]],
+			testrayCaseResultStatus2: [columnsDueStatus[horizontalColumnIndex]],
+		};
+
+		return new URLSearchParams({
+			filter: JSON.stringify(urlParams),
+			filterSchema: 'compareRunsCases',
+		});
+	};
+
 	return (
 		<table className="table table-borderless table-sm tr-table-chart">
 			<thead>
@@ -134,6 +150,12 @@ const TableChart: React.FC<TableChartProps> = ({matrixData, title}) => {
 
 						{columns.map(
 							(horizontalColumnName, horizontalColumnIndex) => {
+								const params = getURLParams(
+									columnsDueStatus,
+									verticalColumnIndex,
+									horizontalColumnIndex
+								);
+
 								const verticalName = formattedColumnName(
 									verticalColumnName
 								);
@@ -160,7 +182,7 @@ const TableChart: React.FC<TableChartProps> = ({matrixData, title}) => {
 									>
 										<Link
 											className="font-weight-bold"
-											to={`/compare-runs/${runAId}/${runBId}/cases?dueStatusA=${columnsDueStatus[verticalColumnIndex]}&dueStatusB=${columnsDueStatus[horizontalColumnIndex]}`}
+											to={`/compare-runs/${runAId}/${runBId}/details?${params}`}
 										>
 											{value}
 										</Link>

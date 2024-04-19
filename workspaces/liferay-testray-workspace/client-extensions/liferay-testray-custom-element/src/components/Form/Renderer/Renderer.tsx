@@ -14,6 +14,7 @@ type RenderedFieldOptions = string[] | {label: string; value: string}[];
 
 export type RendererFields = {
 	disabled?: boolean;
+	isCustomFilter?: boolean;
 	label: string;
 	name: string;
 	operator?: Operators;
@@ -21,6 +22,7 @@ export type RendererFields = {
 	options?: RenderedFieldOptions;
 	placeholder?: string;
 	removeQuoteMark?: boolean;
+	requestOperator?: string;
 	type:
 		| 'autocomplete'
 		| 'checkbox'

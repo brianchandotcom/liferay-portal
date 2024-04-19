@@ -72,21 +72,6 @@ export default class SearchBuilder {
 		return '';
 	}
 
-	static equal(key: Key, values: Value[]) {
-		if (values) {
-			const operator = `${key} = ({values})`;
-
-			return operator
-				.replace(
-					'{values}',
-					values.map((value) => `'${value}'`).join(',')
-				)
-				.trim();
-		}
-
-		return '';
-	}
-
 	/**
 	 * @description Not equal
 	 * @example addressLocality ne 'London'
@@ -138,6 +123,32 @@ export default class SearchBuilder {
 		}
 
 		return _filter;
+	}
+
+	static createCustomFilter(schema: RendererFields, filter: any) {
+		const customOperator = schema?.operator;
+		const requestOperator = schema?.requestOperator as string;
+
+		if (customOperator && SearchBuilder[customOperator]) {
+			if (Array.isArray(filter)) {
+				const filters = filter
+					.map((item) =>
+						typeof item === 'object' ? item.value : item
+					)
+					.join(',');
+
+				return SearchBuilder[customOperator](requestOperator, filters);
+			}
+			else if (typeof filter === 'object' && 'value' in filter) {
+				return SearchBuilder[customOperator](
+					requestOperator,
+					filter.value
+				);
+			}
+			else {
+				return SearchBuilder[customOperator](requestOperator, filter);
+			}
+		}
 	}
 
 	static createFilter({
@@ -198,29 +209,12 @@ export default class SearchBuilder {
 			}
 			else {
 				if (Array.isArray(value)) {
-					if (
-						schema?.name?.includes('testrayCasePriorities') ||
-						schema?.name?.includes('testrayTeamId')
-					) {
-						searchCondition = SearchBuilder.equal(
-							key,
-							value.map((_value) =>
-								typeof _value === 'object'
-									? _value.value
-									: _value
-							)
-						);
-					}
-					else {
-						searchCondition = SearchBuilder.in(
-							key,
-							value.map((_value) =>
-								typeof _value === 'object'
-									? _value.value
-									: _value
-							)
-						);
-					}
+					searchCondition = SearchBuilder.in(
+						key,
+						value.map((_value) =>
+							typeof _value === 'object' ? _value.value : _value
+						)
+					);
 				}
 				else {
 					searchCondition = SearchBuilder.eq(key, value);

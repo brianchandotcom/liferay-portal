@@ -87,6 +87,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -1689,6 +1690,68 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.getObjectDefinitionId(), values, serviceContext);
 
 		_assertCount(8);
+
+		// Object validation error message must be in the same language as the user
+
+		ObjectValidationRule objectValidationRule7 = _addObjectValidationRule(
+			ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
+			HashMapBuilder.put(
+				LocaleUtil.CHINA, RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			"invalidFields = true;");
+
+		User user = TestPropsValues.getUser();
+
+		user = _userLocalService.updateLanguageId(
+			user.getUserId(), LanguageUtil.getLanguageId(LocaleUtil.CHINA));
+
+		try {
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"birthday", "2000-12-25"
+				).put(
+					"date", tomorrowLocalDate.toString()
+				).put(
+					"emailAddressRequired", "bob@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).put(
+					"time", timeString
+				).build());
+
+			_assertCount(9);
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			ObjectValidationRuleEngineException
+				objectValidationRuleEngineException =
+					(ObjectValidationRuleEngineException)
+						modelListenerException.getCause();
+
+			List<ObjectValidationRuleResult> objectValidationRuleResults =
+				objectValidationRuleEngineException.
+					getObjectValidationRuleResults();
+
+			Assert.assertEquals(
+				objectValidationRuleResults.toString(), 1,
+				objectValidationRuleResults.size());
+
+			_assertObjectValidationRuleResult(
+				objectValidationRule7.getErrorLabel(user.getLanguageId()), null,
+				objectValidationRuleResults.get(0));
+		}
+		finally {
+			objectValidationRule7.setActive(false);
+
+			_objectValidationRuleLocalService.updateObjectValidationRule(
+				objectValidationRule7);
+
+			_userLocalService.updateLanguageId(
+				user.getUserId(), LanguageUtil.getLanguageId(LocaleUtil.US));
+		}
 	}
 
 	@Test

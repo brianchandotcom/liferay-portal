@@ -16,7 +16,7 @@ public class ClosedChannelExceptionFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessageElement(String consoleText) {
+	public String getMessage(String consoleText) {
 		if (!(consoleText.contains(_TOKEN_CLOSED_CHANNEL_EXCEPTION) &&
 			  consoleText.contains(_TOKEN_REQUEST_ABORTED_EXCEPTION))) {
 
@@ -33,6 +33,11 @@ public class ClosedChannelExceptionFailureMessageGenerator
 
 		end = consoleText.lastIndexOf("\n", end);
 
+		return getConsoleTextSnippet(consoleText, true, start, end);
+	}
+
+	@Override
+	public Element getMessageElement(String consoleText) {
 		return Dom4JUtil.getNewElement(
 			"div", null,
 			Dom4JUtil.getNewElement(
@@ -40,7 +45,7 @@ public class ClosedChannelExceptionFailureMessageGenerator
 				Dom4JUtil.getNewAnchorElement(
 					"https://issues.liferay.com/browse/LRCI-1422", null,
 					"ClosedChannelException")),
-			getConsoleTextSnippetElement(consoleText, true, start, end));
+			Dom4JUtil.toCodeSnippetElement(getMessage(consoleText)));
 	}
 
 	private static final String _TOKEN_CLOSED_CHANNEL_EXCEPTION =

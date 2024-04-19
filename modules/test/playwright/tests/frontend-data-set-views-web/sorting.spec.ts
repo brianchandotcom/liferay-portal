@@ -18,7 +18,6 @@ export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	dataSetsPageTest,
 	featureFlagsTest({
-		'LPD-19465': true,
 		'LPS-164563': true,
 		'LPS-178052': true,
 	}),

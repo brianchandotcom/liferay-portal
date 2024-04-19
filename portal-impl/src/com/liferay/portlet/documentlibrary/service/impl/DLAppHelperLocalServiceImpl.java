@@ -677,7 +677,8 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
-		if (newStatus == WorkflowConstants.STATUS_APPROVED) {
+		if ((newStatus == WorkflowConstants.STATUS_APPROVED) ||
+			(newStatus == WorkflowConstants.STATUS_SCHEDULED)) {
 
 			// Asset
 

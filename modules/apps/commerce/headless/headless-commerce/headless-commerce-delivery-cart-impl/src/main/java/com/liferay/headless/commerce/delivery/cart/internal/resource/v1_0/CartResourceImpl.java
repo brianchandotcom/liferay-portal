@@ -599,8 +599,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 	private Cart _checkoutOrder(CommerceOrder commerceOrder) throws Exception {
 		Cart cart = _toCart(commerceOrder);
-		CommerceOrder finalCommerceOrder = commerceOrder;
 
+		CommerceOrder finalCommerceOrder = commerceOrder;
 		Cart finalCart = cart;
 
 		cart.setCartItems(
@@ -806,8 +806,6 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 				boolean finalCartItemValid = cartItemValid;
 
-				cartItem.setValid(() -> finalCartItemValid);
-
 				cart.setValid(() -> finalCartItemValid);
 
 				cartItem.setErrorMessages(
@@ -815,6 +813,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 						commerceOrderItemValidatorResults,
 						CommerceOrderValidatorResult::getLocalizedMessage,
 						String.class));
+				cartItem.setValid(() -> finalCartItemValid);
 			}
 
 			cartItems.add(cartItem);

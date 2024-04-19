@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.render.PortletRenderUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -99,7 +100,7 @@ public class PortletRegistryImpl implements PortletRegistry {
 				PortletIdCodec.decodeUserId(portletName),
 				fragmentEntryLink.getNamespace() + element.attr("id"));
 
-			portletIds.add(portletId);
+			portletIds.add(_portal.getJsSafePortletId(portletId));
 		}
 
 		Matcher liferayPortletRuntimeMatcher =
@@ -128,7 +129,7 @@ public class PortletRegistryImpl implements PortletRegistry {
 					instanceId, "fragmentEntryLinkNamespace",
 					fragmentEntryLink.getNamespace()));
 
-			portletIds.add(portletId);
+			portletIds.add(_portal.getJsSafePortletId(portletId));
 		}
 
 		return portletIds;
@@ -256,6 +257,9 @@ public class PortletRegistryImpl implements PortletRegistry {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

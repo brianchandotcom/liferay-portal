@@ -20,6 +20,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 
@@ -29,8 +30,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -74,12 +75,6 @@ public class AssetEntityAnalyticsBatchEngineTaskItemDelegate
 					contextCompany.getCompanyId(), parameters)));
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_classNameIds = TransformUtil.transform(
-			_classNames, className -> _portal.getClassNameId(className));
-	}
-
 	private Predicate _buildPredicate(
 			long companyId, Map<String, Serializable> parameters)
 		throws Exception {
@@ -88,8 +83,7 @@ public class AssetEntityAnalyticsBatchEngineTaskItemDelegate
 			AssetEntryTable.INSTANCE, companyId, parameters);
 
 		return predicate.and(
-			AssetEntryTable.INSTANCE.classNameId.in(
-				_classNameIds.toArray(new Long[0])));
+			AssetEntryTable.INSTANCE.classNameId.in(_getClassNameIds()));
 	}
 
 	private DSLQuery _createCountDSLQuery(
@@ -120,6 +114,14 @@ public class AssetEntityAnalyticsBatchEngineTaskItemDelegate
 		);
 	}
 
+	private Long[] _getClassNameIds() {
+		return _companyClassNameIds.computeIfAbsent(
+			CompanyThreadLocal.getCompanyId(),
+			key -> TransformUtil.transformToArray(
+				_classNames, className -> _portal.getClassNameId(className),
+				Long.class));
+	}
+
 	private static final List<String> _classNames = Arrays.asList(
 		"com.liferay.document.library.kernel.model.DLFileEntry",
 		"com.liferay.blogs.model.BlogsEntry",
@@ -134,7 +136,8 @@ public class AssetEntityAnalyticsBatchEngineTaskItemDelegate
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
-	private List<Long> _classNameIds;
+	private final Map<Long, Long[]> _companyClassNameIds =
+		new ConcurrentHashMap<>();
 
 	@Reference
 	private Portal _portal;

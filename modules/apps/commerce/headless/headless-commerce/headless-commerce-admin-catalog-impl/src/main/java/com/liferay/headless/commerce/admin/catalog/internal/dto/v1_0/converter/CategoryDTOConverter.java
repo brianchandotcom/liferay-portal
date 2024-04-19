@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
+import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -45,6 +46,9 @@ public class CategoryDTOConverter
 				setId(assetCategory::getCategoryId);
 				setName(assetCategory::getName);
 				setSiteId(assetCategory::getGroupId);
+				setTitle(
+					() -> LanguageUtils.getLanguageIdMap(
+						assetCategory.getTitleMap()));
 				setVocabulary(
 					() -> {
 						AssetVocabulary assetVocabulary =

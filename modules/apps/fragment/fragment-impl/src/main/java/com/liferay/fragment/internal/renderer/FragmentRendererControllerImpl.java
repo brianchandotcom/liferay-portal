@@ -100,7 +100,11 @@ public class FragmentRendererControllerImpl
 					httpServletResponse, unsyncStringWriter));
 		}
 		catch (Exception exception) {
-			Throwable throwable = exception.getCause();
+			Throwable throwable = exception;
+
+			if (throwable.getCause() != null) {
+				throwable = throwable.getCause();
+			}
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(

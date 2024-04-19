@@ -19,13 +19,11 @@ export function DisabledGroovyScriptAlert({
 			displayType="warning"
 			title="Warning"
 		>
-			{Liferay.Language.get(
-				'groovy-script-validations-are-deactivated-for-your-instance'
-			)}
+			{Liferay.Language.get('scripts-are-deactivated-in-your-instance')}
 			&nbsp;
 			<a href={scriptManagementConfigurationPortletURL} target="_blank">
 				{Liferay.Language.get(
-					'go-to-system-settings-security-tools-script-management-to-allow-administrators-to-execute-groovy-code'
+					'go-to-system-settings-security-tools-script-management-to-enable-script-execution-for-administrators'
 				)}
 			</a>
 		</ClayAlert>

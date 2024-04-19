@@ -25,7 +25,7 @@ export function GroovyScriptWarningModal({
 
 			<ClayModal.Body>
 				{Liferay.Language.get(
-					'workflow-definitions-that-include-groovy-scripts-are-deactivated-for-your-instance'
+					'scripts-are-deactivated-in-your-instance'
 				)}
 				&nbsp;
 				<a
@@ -33,7 +33,7 @@ export function GroovyScriptWarningModal({
 					target="_blank"
 				>
 					{Liferay.Language.get(
-						'go-to-system-settings-security-tools-script-management-to-allow-administrators-to-execute-groovy-code'
+						'go-to-system-settings-security-tools-script-management-to-enable-script-execution-for-administrators'
 					)}
 				</a>
 			</ClayModal.Body>

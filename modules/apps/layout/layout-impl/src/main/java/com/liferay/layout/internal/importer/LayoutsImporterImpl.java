@@ -82,6 +82,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.util.CheckUnlockedLayoutThreadLocal;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.layout.util.constants.LayoutStructureConstants;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -1849,16 +1850,21 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			jsonObject.toString(),
 			ServiceContextThreadLocal.getServiceContext());
 
-		for (FragmentEntryLink fragmentEntryLink :
-				_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-					layout.getGroupId(), layout.getPlid())) {
+		try (AutoCloseable autoCloseable =
+				_layoutServiceContextHelper.getServiceContextAutoCloseable(
+					layout)) {
 
-			for (FragmentEntryLinkListener fragmentEntryLinkListener :
-					_fragmentEntryLinkListenerRegistry.
-						getFragmentEntryLinkListeners()) {
+			for (FragmentEntryLink fragmentEntryLink :
+					_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+						layout.getGroupId(), layout.getPlid())) {
 
-				fragmentEntryLinkListener.onAddFragmentEntryLink(
-					fragmentEntryLink);
+				for (FragmentEntryLinkListener fragmentEntryLinkListener :
+						_fragmentEntryLinkListenerRegistry.
+							getFragmentEntryLinkListeners()) {
+
+					fragmentEntryLinkListener.onAddFragmentEntryLink(
+						fragmentEntryLink);
+				}
 			}
 		}
 	}
@@ -2241,6 +2247,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	private final EnumMap<PageElement.Type, LayoutStructureItemImporter>
 		_layoutStructureItemImporters = new EnumMap<>(PageElement.Type.class);

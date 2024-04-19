@@ -332,8 +332,8 @@ public class ExportImportTaskResourcePerformanceTest {
 
 		Map<String, String> classNamePartsMap = _splitClassName(className);
 
-		try (ItemCountPerformanceTimer itemCountPerformanceTimer =
-				new ItemCountPerformanceTimer(
+		try (TestEntityPerformanceTimer itemCountPerformanceTimer =
+				new TestEntityPerformanceTimer(
 					count, className + "#export", maxExportTime)) {
 
 			httpInvoker = HttpInvoker.newHttpInvoker();
@@ -385,8 +385,8 @@ public class ExportImportTaskResourcePerformanceTest {
 			}
 		}
 
-		try (ItemCountPerformanceTimer itemCountPerformanceTimer =
-				new ItemCountPerformanceTimer(
+		try (TestEntityPerformanceTimer itemCountPerformanceTimer =
+				new TestEntityPerformanceTimer(
 					count, className + "#download", maxDownloadTime)) {
 
 			httpInvoker = HttpInvoker.newHttpInvoker();
@@ -428,7 +428,7 @@ public class ExportImportTaskResourcePerformanceTest {
 		String json = _createBatchJSON(
 			classNamePartsMap.get("className"), count);
 
-		try (Closeable closeable = new ItemCountPerformanceTimer(
+		try (Closeable closeable = new TestEntityPerformanceTimer(
 				count, className, maxTime)) {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -501,15 +501,17 @@ public class ExportImportTaskResourcePerformanceTest {
 	@Inject
 	private UserService _userService;
 
-	private class ItemCountPerformanceTimer extends PerformanceTimer {
+	private class TestEntityPerformanceTimer extends PerformanceTimer {
 
-		public ItemCountPerformanceTimer(int count, String name, long maxTime) {
+		public TestEntityPerformanceTimer(
+			int count, String name, long maxTime) {
+
 			this(
 				count, getInvokerName(null, name), System.currentTimeMillis(),
 				maxTime, null);
 		}
 
-		public ItemCountPerformanceTimer(
+		public TestEntityPerformanceTimer(
 			int count, String name, long maxTime, Path logFilePath) {
 
 			this(
@@ -538,7 +540,7 @@ public class ExportImportTaskResourcePerformanceTest {
 				delta < maxTime);
 		}
 
-		protected ItemCountPerformanceTimer(
+		protected TestEntityPerformanceTimer(
 			int count, String name, long startTime, long maxTime,
 			Path logFilePath) {
 

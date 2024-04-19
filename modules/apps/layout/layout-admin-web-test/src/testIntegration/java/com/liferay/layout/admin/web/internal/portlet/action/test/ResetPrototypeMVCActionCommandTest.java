@@ -360,7 +360,9 @@ public class ResetPrototypeMVCActionCommandTest {
 	private LayoutPageTemplateStructureRelLocalService
 		_layoutPageTemplateStructureRelLocalService;
 
+	@DeleteAfterTestRun
 	private LayoutSetPrototype _layoutSetPrototype;
+
 	private Group _layoutSetPrototypeGroup;
 
 	@Inject(filter = "mvc.command.name=/layout_admin/reset_prototype")

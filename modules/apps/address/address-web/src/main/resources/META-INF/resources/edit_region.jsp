@@ -67,9 +67,7 @@ renderResponse.setTitle((region == null) ? LanguageUtil.get(request, "add-region
 </liferay-frontend:edit-form>
 
 <c:if test="<%= region == null %>">
-	<aui:script require="frontend-js-web/index as frontendJsWeb">
-		var {debounce} = frontendJsWeb;
-
+	<aui:script sandbox="<%= true %>">
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
@@ -87,7 +85,10 @@ renderResponse.setTitle((region == null) ? LanguageUtil.get(request, "add-region
 					nameInput.value = value;
 				};
 
-				titleInput.addEventListener('input', debounce(handleOnTitleInput, 200));
+				titleInput.addEventListener(
+					'input',
+					Liferay.Util.debounce(handleOnTitleInput, 200)
+				);
 			}
 		}
 	</aui:script>

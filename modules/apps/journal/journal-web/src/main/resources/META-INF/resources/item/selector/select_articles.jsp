@@ -453,10 +453,8 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 		</aui:script>
 	</c:when>
 	<c:otherwise>
-		<aui:script require="frontend-js-web/index as frontendJsWeb">
-			var {delegate} = frontendJsWeb;
-
-			var selectItemHandler = delegate(
+		<aui:script sandbox="<%= true %>">
+			var selectItemHandler = Liferay.Util.delegate(
 				document.querySelector('#<portlet:namespace />articlesContainer'),
 				'click',
 				'.entry',

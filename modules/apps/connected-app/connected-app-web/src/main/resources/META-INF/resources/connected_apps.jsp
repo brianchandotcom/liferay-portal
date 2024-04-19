@@ -76,14 +76,12 @@
 	</div>
 </div>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	var {delegate} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	var connectedAppKeyInput = document.querySelector(
 		'[name=<portlet:namespace />connectedAppKey]'
 	);
 
-	delegate(
+	Liferay.Util.delegate(
 		document.getElementById('<portlet:namespace />connectedApp'),
 		'click',
 		'[data-key]',

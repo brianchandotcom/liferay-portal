@@ -35,10 +35,8 @@
 			</liferay-frontend:edit-form-footer>
 		</liferay-frontend:edit-form>
 
-		<aui:script require="frontend-js-web/index as frontendJsWeb">
-			var {delegate} = frontendJsWeb;
-
-			delegate(
+		<aui:script sandbox="<%= true %>">
+			Liferay.Util.delegate(
 				document.getElementById('<portlet:namespace />fm'),
 				'change',
 				'input[type=checkbox]',

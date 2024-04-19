@@ -179,9 +179,7 @@ int yearlyType = ParamUtil.getInteger(request, "yearlyType");
 	</div>
 </aui:fieldset>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	var {delegate} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	var tables = document.querySelectorAll(
 		'#<portlet:namespace />recurrenceTypeDailyTable, #<portlet:namespace />recurrenceTypeMonthlyTable, #<portlet:namespace />recurrenceTypeNeverTable, #<portlet:namespace />recurrenceTypeWeeklyTable, #<portlet:namespace />recurrenceTypeYearlyTable'
 	);
@@ -191,7 +189,7 @@ int yearlyType = ParamUtil.getInteger(request, "yearlyType");
 	);
 
 	if (eventsContainer) {
-		delegate(eventsContainer, 'change', '.field', (event) => {
+		Liferay.Util.delegate(eventsContainer, 'change', '.field', (event) => {
 			var tableId = event.delegateTarget.id + 'Table';
 
 			Array.prototype.forEach.call(tables, (table) => {

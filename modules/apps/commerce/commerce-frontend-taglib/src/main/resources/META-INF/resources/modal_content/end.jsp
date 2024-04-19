@@ -24,9 +24,7 @@
 	</c:if>
 </div>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	var {debounce} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	function closeModal(isSuccessful) {
 		var eventDetail = {};
 
@@ -106,7 +104,10 @@
 			iframeContent.style.marginBottom = iframeFooter.offsetHeight + 'px';
 		}
 
-		var debouncedAdjustBottomSpace = debounce(adjustBottomSpace, 300);
+		var debouncedAdjustBottomSpace = Liferay.Util.debounce(
+			adjustBottomSpace,
+			300
+		);
 
 		adjustBottomSpace();
 

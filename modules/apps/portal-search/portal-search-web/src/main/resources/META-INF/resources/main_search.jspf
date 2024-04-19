@@ -98,62 +98,65 @@ Hits hits = searchDisplayContext.getHits();
 	</clay:col>
 </clay:row>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	var {delegate} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	var facetNavigation = document.getElementById(
 		'<portlet:namespace />facetNavigation'
 	);
 
 	if (facetNavigation) {
-		delegate(facetNavigation, 'click', '.facet-value a', (event) => {
-			event.preventDefault();
+		Liferay.Util.delegate(
+			facetNavigation,
+			'click',
+			'.facet-value a',
+			(event) => {
+				event.preventDefault();
 
-			var target = event.delegateTarget;
+				var target = event.delegateTarget;
 
-			if (!target.classList.contains('active')) {
-				target.classList.add('active');
+				if (!target.classList.contains('active')) {
+					target.classList.add('active');
 
-				var searchFacet = target.closest('.search-facet');
+					var searchFacet = target.closest('.search-facet');
 
-				var facetValueSiblings = Array.prototype.filter.call(
-					target.parentNode.children,
-					(child) => {
-						return child !== target;
-					}
-				);
-
-				facetValueSiblings.forEach((facet) => {
-					facet.classList.remove('active');
-				});
-
-				var form = document.<portlet:namespace />fm;
-
-				var field = Liferay.Util.getFormElement(
-					form,
-					searchFacet.dataset.facetfieldname
-				);
-
-				if (field) {
-					field.value = target.dataset.value;
-
-					var fieldSelection = Liferay.Util.getFormElement(
-						form,
-						searchFacet.dataset.facetfieldname + 'selection'
+					var facetValueSiblings = Array.prototype.filter.call(
+						target.parentNode.children,
+						(child) => {
+							return child !== target;
+						}
 					);
 
-					if (fieldSelection) {
-						fieldSelection.value = target.dataset.selection;
-					}
-
-					Liferay.Util.postForm(form, {
-						data: {
-							<%= SearchContainer.DEFAULT_CUR_PARAM %>: 1,
-						},
+					facetValueSiblings.forEach((facet) => {
+						facet.classList.remove('active');
 					});
+
+					var form = document.<portlet:namespace />fm;
+
+					var field = Liferay.Util.getFormElement(
+						form,
+						searchFacet.dataset.facetfieldname
+					);
+
+					if (field) {
+						field.value = target.dataset.value;
+
+						var fieldSelection = Liferay.Util.getFormElement(
+							form,
+							searchFacet.dataset.facetfieldname + 'selection'
+						);
+
+						if (fieldSelection) {
+							fieldSelection.value = target.dataset.selection;
+						}
+
+						Liferay.Util.postForm(form, {
+							data: {
+								<%= SearchContainer.DEFAULT_CUR_PARAM %>: 1,
+							},
+						});
+					}
 				}
 			}
-		});
+		);
 	}
 
 	var searchResultsContainer = document.getElementById(
@@ -161,27 +164,32 @@ Hits hits = searchDisplayContext.getHits();
 	);
 
 	if (searchResultsContainer) {
-		delegate(searchResultsContainer, 'click', '.expand-details', (event) => {
-			var target = event.delegateTarget;
+		Liferay.Util.delegate(
+			searchResultsContainer,
+			'click',
+			'.expand-details',
+			(event) => {
+				var target = event.delegateTarget;
 
-			var targetSiblings = Array.prototype.filter.call(
-				target.parentNode.children,
-				(child) => {
-					return (
-						child !== target &&
-						child.classList.contains('table-details')
-					);
-				}
-			);
+				var targetSiblings = Array.prototype.filter.call(
+					target.parentNode.children,
+					(child) => {
+						return (
+							child !== target &&
+							child.classList.contains('table-details')
+						);
+					}
+				);
 
-			targetSiblings.forEach((sibling) => {
-				if (sibling.classList.contains('hide')) {
-					sibling.classList.remove('hide');
-				}
-				else {
-					sibling.classList.add('hide');
-				}
-			});
-		});
+				targetSiblings.forEach((sibling) => {
+					if (sibling.classList.contains('hide')) {
+						sibling.classList.remove('hide');
+					}
+					else {
+						sibling.classList.add('hide');
+					}
+				});
+			}
+		);
 	}
 </aui:script>

@@ -382,21 +382,22 @@ if (deliveryMaxSubscriptionCycles > 0) {
 />
 </commerce-ui:panel>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	const {createPortletURL} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	Liferay.provide(window, '<portlet:namespace />selectSubscriptionType', () => {
-		const portletURL = createPortletURL('<%= currentURLObj %>', {
-			subscriptionLength: document.getElementById(
-				'<portlet:namespace />subscriptionLength'
-			).value,
-			subscriptionType: document.getElementById(
-				'<portlet:namespace />subscriptionType'
-			).value,
-			maxSubscriptionCycles: document.getElementById(
-				'<portlet:namespace />maxSubscriptionCycles'
-			).value,
-		});
+		const portletURL = Liferay.Util.PortletURL.createPortletURL(
+			'<%= currentURLObj %>',
+			{
+				subscriptionLength: document.getElementById(
+					'<portlet:namespace />subscriptionLength'
+				).value,
+				subscriptionType: document.getElementById(
+					'<portlet:namespace />subscriptionType'
+				).value,
+				maxSubscriptionCycles: document.getElementById(
+					'<portlet:namespace />maxSubscriptionCycles'
+				).value,
+			}
+		);
 
 		window.location.replace(portletURL.toString());
 	});
@@ -405,17 +406,20 @@ if (deliveryMaxSubscriptionCycles > 0) {
 		window,
 		'<portlet:namespace />selectDeliverySubscriptionType',
 		() => {
-			const portletURL = createPortletURL('<%= currentURLObj %>', {
-				deliverySubscriptionLength: document.getElementById(
-					'<portlet:namespace />deliverySubscriptionLength'
-				).value,
-				deliverySubscriptionType: document.getElementById(
-					'<portlet:namespace />deliverySubscriptionType'
-				).value,
-				deliveryMaxSubscriptionCycles: document.getElementById(
-					'<portlet:namespace />deliveryMaxSubscriptionCycles'
-				).value,
-			});
+			const portletURL = Liferay.Util.PortletURL.createPortletURL(
+				'<%= currentURLObj %>',
+				{
+					deliverySubscriptionLength: document.getElementById(
+						'<portlet:namespace />deliverySubscriptionLength'
+					).value,
+					deliverySubscriptionType: document.getElementById(
+						'<portlet:namespace />deliverySubscriptionType'
+					).value,
+					deliveryMaxSubscriptionCycles: document.getElementById(
+						'<portlet:namespace />deliveryMaxSubscriptionCycles'
+					).value,
+				}
+			);
 
 			window.location.replace(portletURL.toString());
 		}

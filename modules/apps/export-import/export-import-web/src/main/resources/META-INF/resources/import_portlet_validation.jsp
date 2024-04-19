@@ -114,9 +114,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	</aui:script>
 </aui:form>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	var {runScriptsInElement} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	var continueButton = document.getElementById(
 		'<portlet:namespace />continueButton'
 	);
@@ -137,7 +135,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				.then((response) => {
 					exportImportOptions.innerHTML = response;
 
-					runScriptsInElement(exportImportOptions);
+					Liferay.Util.runScriptsInElement(exportImportOptions);
 				});
 		});
 	}

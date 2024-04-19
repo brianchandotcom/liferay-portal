@@ -199,23 +199,28 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 	<%@ include file="/commerce_discounts/rules.jspf" %>
 </aui:form>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	const {createPortletURL} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	Liferay.provide(window, '<portlet:namespace />selectType', () => {
-		const portletURL = createPortletURL('<%= currentURLObj %>', {
-			usePercentage: document.getElementById(
-				'<portlet:namespace />usePercentage'
-			).value,
-		});
+		const portletURL = Liferay.Util.PortletURL.createPortletURL(
+			'<%= currentURLObj %>',
+			{
+				usePercentage: document.getElementById(
+					'<portlet:namespace />usePercentage'
+				).value,
+			}
+		);
 
 		window.location.replace(portletURL.toString());
 	});
 
 	Liferay.provide(window, '<portlet:namespace />selectTarget', () => {
-		const portletURL = createPortletURL('<%= currentURLObj %>', {
-			target: document.getElementById('<portlet:namespace />target').value,
-		});
+		const portletURL = Liferay.Util.PortletURL.createPortletURL(
+			'<%= currentURLObj %>',
+			{
+				target: document.getElementById('<portlet:namespace />target')
+					.value,
+			}
+		);
 
 		window.location.replace(portletURL.toString());
 	});

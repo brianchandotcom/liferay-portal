@@ -95,9 +95,7 @@ if (accountRole != null) {
 </liferay-frontend:edit-form>
 
 <c:if test="<%= role == null %>">
-	<aui:script require="frontend-js-web/index as frontendJsWeb">
-		var {debounce} = frontendJsWeb;
-
+	<aui:script sandbox="<%= true %>">
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
@@ -115,7 +113,10 @@ if (accountRole != null) {
 					nameInput.value = value;
 				};
 
-				titleInput.addEventListener('input', debounce(handleOnTitleInput, 200));
+				titleInput.addEventListener(
+					'input',
+					Liferay.Util.debounce(handleOnTitleInput, 200)
+				);
 			}
 		}
 	</aui:script>

@@ -68,10 +68,8 @@ RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext = (RoleIte
 
 <c:choose>
 	<c:when test="<%= roleItemSelectorViewDisplayContext.getItemSelectorCriterion() instanceof RoleItemSelectorCriterion %>">
-		<aui:script require="frontend-js-web/index as frontendJsWeb">
-			var {delegate} = frontendJsWeb;
-
-			var selectItemHandler = delegate(
+		<aui:script sandbox="<%= true %>">
+			var selectItemHandler = Liferay.Util.delegate(
 				document.getElementById('<portlet:namespace />roleSelectorWrapper'),
 				'change',
 				'.entry input',

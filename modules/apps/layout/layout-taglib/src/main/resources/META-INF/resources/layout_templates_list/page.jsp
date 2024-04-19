@@ -60,10 +60,8 @@ List<LayoutTemplate> layoutTemplates = (List<LayoutTemplate>)request.getAttribut
 	</ul>
 </div>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	const {delegate} = frontendJsWeb;
-
-	const delegateHandler = delegate(
+<aui:script sandbox="<%= true %>">
+	const delegateHandler = Liferay.Util.delegate(
 		document.querySelector(
 			'.<portlet:namespace />layout-template-list.lfr-page-layouts'
 		),

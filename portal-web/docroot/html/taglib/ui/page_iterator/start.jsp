@@ -447,12 +447,10 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 </c:if>
 
 <c:if test="<%= pages > initialPages %>">
-	<aui:script require="frontend-js-web/index as frontendJsWeb">
-		var {DynamicInlineScroll} = frontendJsWeb;
-
+	<aui:script sandbox="<%= true %>">
 		Liferay.component(
 			'<%= randomNamespace %>dynamicInlineScroll',
-			new DynamicInlineScroll(
+			new Liferay.Util.DynamicInlineScroll(
 				{
 					cur: '<%= cur %>',
 					curParam: '<%= curParam %>',

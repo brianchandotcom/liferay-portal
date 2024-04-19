@@ -59,12 +59,10 @@ DepotAdminSelectRoleDisplayContext depotAdminSelectRoleDisplayContext = (DepotAd
 				/>
 			</liferay-ui:search-container>
 
-			<aui:script require="frontend-js-web/index as frontendJsWeb">
-				var {delegate} = frontendJsWeb;
-
+			<aui:script sandbox="<%= true %>">
 				var form = document.<portlet:namespace />selectDepotRoleFm;
 
-				delegate(form, 'click', '.group-selector-button', (event) => {
+				Liferay.Util.delegate(form, 'click', '.group-selector-button', (event) => {
 					Liferay.Util.postForm(form, {
 						data: {
 							groupId: event.delegateTarget.dataset.groupid,

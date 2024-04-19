@@ -35,9 +35,7 @@ CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWeb
 </commerce-ui:panel>
 
 <c:if test="<%= cpOptionCategory == null %>">
-	<aui:script require="frontend-js-web/index as frontendJsWeb">
-		var {debounce} = frontendJsWeb;
-
+	<aui:script sandbox="<%= true %>">
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		var keyInput = form.querySelector('#<portlet:namespace />key');
@@ -47,6 +45,9 @@ CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWeb
 			keyInput.value = titleInput.value;
 		};
 
-		titleInput.addEventListener('input', debounce(handleOnTitleInput, 200));
+		titleInput.addEventListener(
+			'input',
+			Liferay.Util.debounce(handleOnTitleInput, 200)
+		);
 	</aui:script>
 </c:if>

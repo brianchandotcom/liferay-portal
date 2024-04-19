@@ -365,29 +365,31 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 	</aui:form>
 </liferay-frontend:side-panel-content>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	const {createPortletURL} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	Liferay.provide(window, '<portlet:namespace />selectCollectionProvider', () => {
-		const portletURL = createPortletURL('<%= currentURLObj %>', {
-			description: document.getElementById('<portlet:namespace />description')
-				.value,
-			facetable: document.getElementById('<portlet:namespace />facetable')
-				.checked,
-			infoItemServiceKey: document.getElementById(
-				'<portlet:namespace />infoItemServiceKey'
-			).value,
-			name: document.getElementById('<portlet:namespace />name').value,
-			priceType: document.getElementById('<portlet:namespace />priceType')
-				.value,
-			priority: document.getElementById('<portlet:namespace />priority')
-				.value,
-			required: document.getElementById('<portlet:namespace />required')
-				.checked,
-			skuContributor: document.getElementById(
-				'<portlet:namespace />skuContributor'
-			).checked,
-		});
+		const portletURL = Liferay.Util.PortletURL.createPortletURL(
+			'<%= currentURLObj %>',
+			{
+				description: document.getElementById(
+					'<portlet:namespace />description'
+				).value,
+				facetable: document.getElementById('<portlet:namespace />facetable')
+					.checked,
+				infoItemServiceKey: document.getElementById(
+					'<portlet:namespace />infoItemServiceKey'
+				).value,
+				name: document.getElementById('<portlet:namespace />name').value,
+				priceType: document.getElementById('<portlet:namespace />priceType')
+					.value,
+				priority: document.getElementById('<portlet:namespace />priority')
+					.value,
+				required: document.getElementById('<portlet:namespace />required')
+					.checked,
+				skuContributor: document.getElementById(
+					'<portlet:namespace />skuContributor'
+				).checked,
+			}
+		);
 
 		window.location.replace(portletURL.toString());
 	});

@@ -338,9 +338,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 	</div>
 </div>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	var {debounce} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	var commerceHeader = document.querySelector('.commerce-header');
 	var pageHeader = document.querySelector('.page-header');
 
@@ -350,7 +348,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 		pageHeader.style.top = distanceFromTop + 'px';
 	}
 
-	var debouncedUpdateMenuDistanceFromTop = debounce(
+	var debouncedUpdateMenuDistanceFromTop = Liferay.Util.debounce(
 		updateMenuDistanceFromTop,
 		200
 	);

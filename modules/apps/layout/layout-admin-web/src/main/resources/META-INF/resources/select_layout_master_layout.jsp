@@ -54,14 +54,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 	</clay:sheet>
 </clay:container-fluid>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	var {delegate} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	var layoutPageTemplateEntries = document.getElementById(
 		'<portlet:namespace />layoutPageTemplateEntries'
 	);
 
-	var addLayoutActionOptionQueryClickHandler = delegate(
+	var addLayoutActionOptionQueryClickHandler = Liferay.Util.delegate(
 		layoutPageTemplateEntries,
 		'click',
 		'.add-layout-action-option',

@@ -141,10 +141,8 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", assignScopesTreeDisplayC
 	</clay:sheet>
 </clay:container-fluid>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb" sandbox="<%= true %>">
-	const {delegate} = frontendJsWeb;
-
-	delegate(
+<aui:script sandbox="<%= true %>">
+	Liferay.Util.delegate(
 		document.body,
 		'click',
 		'input[name="<portlet:namespace />scopeAliases"]',

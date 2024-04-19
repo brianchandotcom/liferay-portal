@@ -181,8 +181,6 @@ const ListView: React.FC<ListViewProps> = ({
 					matchingField,
 					value
 				);
-
-				delete appliedFilters[key];
 			}
 		});
 

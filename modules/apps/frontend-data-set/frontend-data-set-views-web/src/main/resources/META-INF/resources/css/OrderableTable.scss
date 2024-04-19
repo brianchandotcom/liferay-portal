@@ -27,6 +27,10 @@ html#{$cadmin-selector} .cadmin {
 
 		.orderable-table-row.dragging {
 			opacity: 0.5;
+
+			td.drag-handle-cell {
+				background-color: #528eff !important;
+			}
 		}
 
 		.sheet-header {

@@ -52,6 +52,7 @@ const Row = ({
 	index,
 	item,
 	onDragCrossover,
+	onDrop,
 	query,
 }: {
 	actions?: Array<IAction>;
@@ -59,6 +60,7 @@ const Row = ({
 	index: number;
 	item: any;
 	onDragCrossover: Function;
+	onDrop: Function;
 	query: string;
 }) => {
 	const tableRowRef = useRef<HTMLTableRowElement>(null);
@@ -72,6 +74,63 @@ const Row = ({
 			type: ROW_DRAGGABLE,
 		},
 	});
+
+	const onBlur = () => {
+		const currentRow = tableRowRef?.current;
+
+		if (currentRow) {
+			const dragging = currentRow.classList.contains('dragging');
+
+			if (dragging) {
+				currentRow.classList.remove('dragging');
+				onDrop();
+			}
+		}
+	};
+
+	const onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+		const currentRow = tableRowRef?.current;
+
+		if (currentRow) {
+			const dragging = currentRow.classList.contains('dragging');
+
+			if (event.key === 'Enter') {
+				if (!dragging) {
+					currentRow.classList.add('dragging');
+
+					const draggedIndex = index;
+					const targetIndex = index;
+
+					onDragCrossover({draggedIndex, targetIndex});
+				}
+				else {
+					currentRow.classList.remove('dragging');
+					onDrop();
+				}
+			}
+			else if (event.key === 'ArrowDown' && dragging) {
+				const draggedIndex = index;
+				const targetIndex = index + 1;
+
+				onDragCrossover({draggedIndex, targetIndex});
+			}
+			else if (event.key === 'ArrowUp' && dragging) {
+				const draggedIndex = index;
+				const targetIndex = index - 1;
+
+				if (targetIndex >= 0) {
+					onDragCrossover({draggedIndex, targetIndex});
+				}
+			}
+			else if (
+				(event.key === 'Escape' || event.key === 'Tab') &&
+				dragging
+			) {
+				currentRow.classList.remove('dragging');
+				onDrop();
+			}
+		}
+	};
 
 	const [, dropRef] = useDrop({
 		accept: ROW_DRAGGABLE,
@@ -124,12 +183,22 @@ const Row = ({
 			ref={tableRowRef}
 		>
 			<ClayTable.Cell className="drag-handle-cell">
+				{tableRowRef?.current?.classList.contains('dragging') ? (
+					<span aria-live="assertive" className="sr-only">
+						{Liferay.Language.get(
+							'use-up-and-down-arrows-to-move-the-field-and-press-enter-to-place-it-in-desired-position'
+						)}
+					</span>
+				) : null}
+
 				<ClayButtonWithIcon
 					aria-label={Liferay.Util.sub(
 						Liferay.Language.get('drag-x'),
 						item.label || Liferay.Language.get('item')
 					)}
 					displayType={null}
+					onBlur={onBlur}
+					onKeyDown={onKeyDown}
 					size="sm"
 					symbol="drag"
 				/>
@@ -263,6 +332,7 @@ const Table = ({
 						item={item}
 						key={item.id || index}
 						onDragCrossover={onDragCrossover}
+						onDrop={onDrop}
 						query={query}
 					/>
 				))}
@@ -396,13 +466,15 @@ const OrderableTable = ({
 							}) => {
 								const orderedItems = [...items];
 
-								orderedItems.splice(draggedIndex, 1);
+								if (draggedIndex !== targetIndex) {
+									orderedItems.splice(draggedIndex, 1);
 
-								orderedItems.splice(
-									targetIndex,
-									0,
-									items[draggedIndex]
-								);
+									orderedItems.splice(
+										targetIndex,
+										0,
+										items[draggedIndex]
+									);
+								}
 
 								setItems(orderedItems);
 							}}

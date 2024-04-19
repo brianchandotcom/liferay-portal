@@ -77,14 +77,6 @@ public class CommerceShippingMethodFDSDataProvider
 			String commerceShippingName = commerceShippingEngine.getName(
 				themeDisplay.getLocale());
 
-			if (commerceShippingMethod != null) {
-				commerceShippingDescription =
-					commerceShippingMethod.getDescription(
-						themeDisplay.getLocale());
-				commerceShippingName = commerceShippingMethod.getName(
-					themeDisplay.getLocale());
-			}
-
 			shippingMethods.add(
 				new ShippingMethod(
 					commerceShippingDescription, entry.getKey(),

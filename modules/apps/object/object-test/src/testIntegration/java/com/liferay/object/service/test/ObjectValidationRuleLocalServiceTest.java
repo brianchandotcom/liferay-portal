@@ -28,14 +28,23 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.object.validation.rule.setting.builder.ObjectValidationRuleSettingBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -551,6 +560,64 @@ public class ObjectValidationRuleLocalServiceTest {
 	}
 
 	@Test
+	public void testGetErrorLabel() throws Exception {
+		ObjectValidationRule objectValidationRule = _addObjectValidationRule(
+			ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
+			HashMapBuilder.put(
+				LocaleUtil.BRAZIL, RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			StringPool.BLANK,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"invalidFields = true;");
+
+		User user = UserTestUtil.addUser();
+
+		user = _userLocalService.updateLanguageId(
+			user.getUserId(), LanguageUtil.getLanguageId(LocaleUtil.BRAZIL));
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		PrincipalThreadLocal.setName(user.getUserId());
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			user.getUserId(), _objectDefinition.getObjectDefinitionId());
+
+		try {
+			_objectEntryLocalService.addObjectEntry(
+				user.getUserId(), 0, _objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectField", RandomTestUtil.randomString()
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			ObjectValidationRuleEngineException
+				objectValidationRuleEngineException =
+					(ObjectValidationRuleEngineException)
+						modelListenerException.getCause();
+
+			List<ObjectValidationRuleResult> objectValidationRuleResults =
+				objectValidationRuleEngineException.
+					getObjectValidationRuleResults();
+
+			Assert.assertEquals(
+				objectValidationRuleResults.toString(), 1,
+				objectValidationRuleResults.size());
+
+			Assert.assertEquals(
+				objectValidationRule.getErrorLabel(user.getLanguageId()),
+				objectValidationRuleResults.get(
+					0
+				).getErrorMessage());
+		}
+	}
+
+	@Test
 	public void testUpdateObjectValidationRule() throws Exception {
 		ObjectValidationRule objectValidationRule = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM, _VALID_DDM_SCRIPT);
@@ -796,5 +863,8 @@ public class ObjectValidationRuleLocalServiceTest {
 
 	@Inject
 	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

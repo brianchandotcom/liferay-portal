@@ -14,7 +14,7 @@ describe('EmptyState', () => {
 		expect(queryByText('No results found')).toBeTruthy();
 		expect(queryByText('Sorry, there are no results found')).toBeTruthy();
 		expect(container.querySelector('img')?.src).toBe(
-			'http://localhost:3000/states/empty_state.gif'
+			'http://localhost:3000/states/empty_state.svg'
 		);
 		expect(asFragment()).toMatchSnapshot();
 	});

@@ -31,7 +31,7 @@ public class EmptyFDSDisplayContext {
 			LanguageUtil.get(
 				_httpServletRequest, "start-creating-one-to-show-your-data")
 		).put(
-			"image", "/states/empty_state.gif"
+			"image", "/states/empty_state.svg"
 		).put(
 			"title",
 			LanguageUtil.get(_httpServletRequest, "no-data-sets-created")

@@ -5,7 +5,7 @@
 
 const IMAGES_PATH = Liferay.ThemeDisplay.getPathThemeImages();
 
-export const EMPTY_STATE_GIF = `${IMAGES_PATH}/states/empty_state.gif`;
+export const EMPTY_STATE_GIF = `${IMAGES_PATH}/states/empty_state.svg`;
 
 export const ERROR_MESSAGE = Liferay.Language.get(
 	'an-unexpected-system-error-occurred'

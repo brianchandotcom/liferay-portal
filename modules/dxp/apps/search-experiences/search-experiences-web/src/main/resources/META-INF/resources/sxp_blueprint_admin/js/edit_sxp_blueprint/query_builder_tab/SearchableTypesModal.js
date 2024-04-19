@@ -180,7 +180,7 @@ function SearchableTypesModal({
 						description={Liferay.Language.get(
 							'an-error-has-occurred-and-we-were-unable-to-load-the-results'
 						)}
-						imgSrc="/o/admin-theme/images/states/empty_state.gif"
+						imgSrc="/o/admin-theme/images/states/empty_state.svg"
 						title={Liferay.Language.get('no-items-were-found')}
 					>
 						<ClayButton

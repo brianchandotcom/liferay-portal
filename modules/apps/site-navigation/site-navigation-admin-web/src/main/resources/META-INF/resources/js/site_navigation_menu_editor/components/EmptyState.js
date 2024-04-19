@@ -15,7 +15,7 @@ export function EmptyState() {
 			description={Liferay.Language.get(
 				'fortunately-it-is-very-easy-to-add-new-ones'
 			)}
-			imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+			imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.svg`}
 			title={Liferay.Language.get('no-element-yet')}
 		>
 			<AddItemDropDown

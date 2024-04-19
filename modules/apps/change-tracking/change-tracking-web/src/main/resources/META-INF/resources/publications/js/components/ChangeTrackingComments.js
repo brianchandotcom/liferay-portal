@@ -280,7 +280,7 @@ export default function ChangeTrackingComments({
 			return (
 				<ClayEmptyState
 					description={Liferay.Language.get('no-comments-yet')}
-					imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+					imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.svg`}
 					small
 					title={Liferay.Language.get('no-results-found')}
 				/>

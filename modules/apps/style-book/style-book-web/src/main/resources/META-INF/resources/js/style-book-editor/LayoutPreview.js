@@ -92,7 +92,7 @@ export default React.memo(function LayoutPreview() {
 						description={Liferay.Language.get(
 							'you-cannot-preview-the-style-book-because-your-site-is-empty'
 						)}
-						imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+						imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.svg`}
 						title={Liferay.Language.get('no-results-found')}
 					/>
 				)}

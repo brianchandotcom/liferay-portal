@@ -131,7 +131,7 @@ const SelectSXPBlueprintModal = ({
 						alt: Liferay.Language.get('unable-to-load-content'),
 						title: Liferay.Language.get('unable-to-load-content'),
 					}}
-					imgSrc="/o/admin-theme/images/states/empty_state.gif"
+					imgSrc="/o/admin-theme/images/states/empty_state.svg"
 					title={Liferay.Language.get('unable-to-load-content')}
 				/>
 			);
@@ -245,7 +245,7 @@ const SelectSXPBlueprintModal = ({
 					alt: Liferay.Language.get('no-results-found'),
 					title: Liferay.Language.get('no-results-found'),
 				}}
-				imgSrc="/o/admin-theme/images/states/empty_state.gif"
+				imgSrc="/o/admin-theme/images/states/empty_state.svg"
 				title={Liferay.Language.get('no-results-found')}
 			/>
 		);

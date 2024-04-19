@@ -156,7 +156,7 @@ export default function PreviewSXPElementModal({
 								description={Liferay.Language.get(
 									'json-may-be-incorrect-and-we-were-unable-to-load-a-preview-of-the-configuration'
 								)}
-								imgSrc="/o/admin-theme/images/states/empty_state.gif"
+								imgSrc="/o/admin-theme/images/states/empty_state.svg"
 								title={Liferay.Language.get(
 									'unable-to-load-preview'
 								)}

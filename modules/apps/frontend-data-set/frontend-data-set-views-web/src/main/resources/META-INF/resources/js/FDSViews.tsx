@@ -326,7 +326,7 @@ const FDSViews = ({
 					description: Liferay.Language.get(
 						'start-creating-one-to-show-your-data'
 					),
-					image: '/states/empty_state.gif',
+					image: '/states/empty_state.svg',
 					title: Liferay.Language.get('no-views-created'),
 				}}
 				header={{

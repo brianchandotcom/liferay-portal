@@ -110,7 +110,7 @@ const EmptyState = () => {
 			<ClayEmptyState
 				className="mt-0"
 				description={Liferay.Language.get('there-are-no-pages')}
-				imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+				imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.svg`}
 				title={Liferay.Language.get('no-results-found')}
 			/>
 		</ClayLayout.Sheet>

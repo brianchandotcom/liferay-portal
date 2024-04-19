@@ -164,7 +164,7 @@ export default function FieldSetList({searchTerm}) {
 							description={Liferay.Language.get(
 								'there-are-no-fieldsets-description'
 							)}
-							imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+							imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.svg`}
 							small
 							title={Liferay.Language.get(
 								'there-are-no-fieldsets'

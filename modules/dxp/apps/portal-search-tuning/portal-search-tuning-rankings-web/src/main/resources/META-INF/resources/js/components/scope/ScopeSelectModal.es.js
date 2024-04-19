@@ -73,7 +73,7 @@ const ScopeSelectModal = ({
 						alt: Liferay.Language.get('unable-to-load-content'),
 						title: Liferay.Language.get('unable-to-load-content'),
 					}}
-					imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+					imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.svg`}
 					title={Liferay.Language.get('unable-to-load-content')}
 				/>
 			);
@@ -163,7 +163,7 @@ const ScopeSelectModal = ({
 					alt: Liferay.Language.get('no-results-found'),
 					title: Liferay.Language.get('no-results-found'),
 				}}
-				imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+				imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.svg`}
 				title={Liferay.Language.get('no-results-found')}
 			/>
 		);

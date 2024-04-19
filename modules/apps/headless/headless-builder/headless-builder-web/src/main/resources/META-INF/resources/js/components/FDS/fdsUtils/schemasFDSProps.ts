@@ -17,7 +17,7 @@ export function getAPISchemasFDSProps(
 		apiURL: urlPath,
 		emptyState: {
 			description: '',
-			image: '/states/empty_state.gif',
+			image: '/states/empty_state.svg',
 			title: Liferay.Language.get('no-api-schema-found'),
 		},
 		id: portletId,

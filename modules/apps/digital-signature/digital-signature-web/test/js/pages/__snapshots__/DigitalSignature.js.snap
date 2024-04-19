@@ -192,12 +192,12 @@ exports[`DigitalSignature renders 1`] = `
             <img
               alt=""
               class="aspect-ratio-item aspect-ratio-item-fluid d-none-c-prefers-reduced-motion"
-              src="http://localhost:8080/o/admin-theme/images/states/empty_state.gif"
+              src="http://localhost:8080/o/admin-theme/images/states/empty_state.svg"
             />
             <img
               alt=""
               class="aspect-ratio-item aspect-ratio-item-fluid d-block-c-prefers-reduced-motion"
-              src="/o/admin-theme/images/states/empty_state_reduced_motion.gif"
+              src="/o/admin-theme/images/states/empty_state_reduced_motion.svg"
             />
           </div>
         </div>

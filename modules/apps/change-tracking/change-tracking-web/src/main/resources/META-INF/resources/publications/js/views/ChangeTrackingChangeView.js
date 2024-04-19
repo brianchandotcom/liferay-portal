@@ -415,7 +415,7 @@ export default function ChangeTrackingChangeView({
 									description={Liferay.Language.get(
 										'no-changes-were-found'
 									)}
-									imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+									imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.svg`}
 									title={Liferay.Language.get(
 										'no-results-found'
 									)}

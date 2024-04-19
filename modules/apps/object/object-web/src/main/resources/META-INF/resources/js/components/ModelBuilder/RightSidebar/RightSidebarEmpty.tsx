@@ -15,7 +15,7 @@ export function RightSidebarEmpty() {
 				description={Liferay.Language.get(
 					'select-an-object-or-relationship-to-activate-this-panel'
 				)}
-				imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+				imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.svg`}
 				small
 				title={Liferay.Language.get('select-an-object-or-relationship')}
 			/>

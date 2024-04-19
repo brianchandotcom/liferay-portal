@@ -20,7 +20,7 @@ export default function RulesEmptyState() {
 					description={Liferay.Language.get(
 						'fortunately-it-is-very-easy-to-add-new-ones'
 					)}
-					imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+					imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.svg`}
 					small
 					title={Liferay.Language.get('no-rules-yet')}
 				/>

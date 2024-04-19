@@ -11,7 +11,7 @@ export default function SuggestionsPanel({items}) {
 	return items?.length ? null : (
 		<ClayEmptyState
 			description=""
-			imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+			imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.svg`}
 			small
 			title={Liferay.Language.get('there-are-no-suggestions')}
 		/>

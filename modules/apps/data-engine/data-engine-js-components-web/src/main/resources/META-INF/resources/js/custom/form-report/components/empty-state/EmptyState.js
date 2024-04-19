@@ -15,7 +15,7 @@ export default function EmptyState({
 	return (
 		<ClayEmptyState
 			description={description}
-			imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+			imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.svg`}
 			title={title}
 		/>
 	);

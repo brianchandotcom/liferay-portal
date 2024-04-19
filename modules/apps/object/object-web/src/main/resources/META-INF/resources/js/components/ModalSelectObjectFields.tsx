@@ -224,7 +224,7 @@ function ModalSelectObjectFields<T extends ModalItem>() {
 									'there-are-no-fields-in-this-definition'
 								)
 							}
-							imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+							imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.svg`}
 							small
 							title={
 								emptyState?.title ??

@@ -75,9 +75,13 @@ export class ObjectAdminApiHelper {
 		);
 	}
 
-	async postRandomObjectDefinition(
-		objectFolderExternalReferenceCode?: string
-	) {
+	async postRandomObjectDefinition({
+		objectFolderExternalReferenceCode,
+		status,
+	}: {
+		objectFolderExternalReferenceCode?: string;
+		status: {code: number};
+	}) {
 		const objectDefinitionExternalReferenceCode =
 			'ObjectDefinition' + getRandomInt();
 
@@ -109,7 +113,7 @@ export class ObjectAdminApiHelper {
 				en_US: objectDefinitionExternalReferenceCode,
 			},
 			scope: 'company',
-			status: {code: 0},
+			status,
 		};
 
 		if (objectFolderExternalReferenceCode) {

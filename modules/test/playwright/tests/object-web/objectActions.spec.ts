@@ -43,7 +43,10 @@ test.describe('manage object actions through object actions tab', () => {
 		}
 
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition('default');
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
 
 		await viewObjectDefinitionsPage.goto();
 

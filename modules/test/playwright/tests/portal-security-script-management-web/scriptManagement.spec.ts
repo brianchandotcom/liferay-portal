@@ -45,9 +45,10 @@ test.describe('Script management container', () => {
 		scriptManagementPage,
 	}) => {
 		const objectDefinition =
-			(await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				'default'
-			)) as ObjectDefinition;
+			(await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			})) as ObjectDefinition;
 
 		createdEntities.objectDefinitionsIds.push(objectDefinition.id);
 
@@ -92,9 +93,10 @@ test.describe('Script management container', () => {
 		scriptManagementPage,
 	}) => {
 		const objectDefinition =
-			(await apiHelpers.objectAdmin.postRandomObjectDefinition(
-				'default'
-			)) as ObjectDefinition;
+			(await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			})) as ObjectDefinition;
 
 		createdEntities.objectDefinitionsIds.push(objectDefinition.id);
 

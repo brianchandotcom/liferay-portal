@@ -226,13 +226,17 @@ test('object definitions from a deleted folder are moved to the default folder',
 	const objectFolder = await apiHelpers.objectAdmin.postRandomObjectFolder();
 
 	const objectDefinition1 =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition(
-			objectFolder.externalReferenceCode
-		);
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFolderExternalReferenceCode:
+				objectFolder.externalReferenceCode,
+			status: {code: 0},
+		});
 	const objectDefinition2 =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition(
-			objectFolder.externalReferenceCode
-		);
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFolderExternalReferenceCode:
+				objectFolder.externalReferenceCode,
+			status: {code: 0},
+		});
 
 	await viewObjectDefinitionsPage.goto();
 

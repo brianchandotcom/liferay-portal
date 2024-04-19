@@ -6,7 +6,6 @@
 package com.liferay.jethr0.routine;
 
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -31,16 +30,6 @@ public abstract class BaseRoutineEntity
 	extends BaseEntity implements RoutineEntity {
 
 	@Override
-	public void addGitBranchEntities(Set<GitBranchEntity> gitBranchEntities) {
-		_gitBranchEntities.addAll(gitBranchEntities);
-	}
-
-	@Override
-	public void addGitBranchEntity(GitBranchEntity gitBranchEntity) {
-		addGitBranchEntities(Collections.singleton(gitBranchEntity));
-	}
-
-	@Override
 	public void addJobEntities(Set<JobEntity> jobEntities) {
 		_jobEntities.addAll(jobEntities);
 	}
@@ -48,11 +37,6 @@ public abstract class BaseRoutineEntity
 	@Override
 	public void addJobEntity(JobEntity jobEntity) {
 		addJobEntities(Collections.singleton(jobEntity));
-	}
-
-	@Override
-	public Set<GitBranchEntity> getGitBranchEntities() {
-		return _gitBranchEntities;
 	}
 
 	@Override
@@ -117,18 +101,6 @@ public abstract class BaseRoutineEntity
 	@Override
 	public Type getType() {
 		return _type;
-	}
-
-	@Override
-	public void removeGitBranchEntities(
-		Set<GitBranchEntity> gitBranchEntities) {
-
-		_gitBranchEntities.removeAll(gitBranchEntities);
-	}
-
-	@Override
-	public void removeGitBranchEntity(GitBranchEntity gitBranchEntity) {
-		_gitBranchEntities.remove(gitBranchEntity);
 	}
 
 	@Override
@@ -237,7 +209,6 @@ public abstract class BaseRoutineEntity
 
 	private static final Log _log = LogFactory.getLog(BaseRoutineEntity.class);
 
-	private final Set<GitBranchEntity> _gitBranchEntities = new HashSet<>();
 	private final Set<JobEntity> _jobEntities = new HashSet<>();
 	private String _jobName;
 	private Map<String, String> _jobParameters;

@@ -87,6 +87,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -1565,9 +1566,71 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(5);
 
-		// Names must be equals
+		// Must match user locale
 
 		ObjectValidationRule objectValidationRule6 = _addObjectValidationRule(
+			ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
+			HashMapBuilder.put(
+				LocaleUtil.CHINA, RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			"invalidFields = true;");
+
+		User user = TestPropsValues.getUser();
+
+		user = _userLocalService.updateLanguageId(
+			user.getUserId(), LanguageUtil.getLanguageId(LocaleUtil.CHINA));
+
+		values = HashMapBuilder.<String, Serializable>put(
+			"birthday", "2000-12-25"
+		).put(
+			"date", tomorrowLocalDate.toString()
+		).put(
+			"emailAddressRequired", "bob@liferay.com"
+		).put(
+			"listTypeEntryKeyRequired", "listTypeEntryKey1"
+		).put(
+			"time", timeString
+		).build();
+
+		try {
+			_addObjectEntry(values);
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			ObjectValidationRuleEngineException
+				objectValidationRuleEngineException =
+					(ObjectValidationRuleEngineException)
+						modelListenerException.getCause();
+
+			List<ObjectValidationRuleResult> objectValidationRuleResults =
+				objectValidationRuleEngineException.
+					getObjectValidationRuleResults();
+
+			Assert.assertEquals(
+				objectValidationRuleResults.toString(), 1,
+				objectValidationRuleResults.size());
+
+			_assertObjectValidationRuleResult(
+				objectValidationRule6.getErrorLabel(user.getLanguageId()), null,
+				objectValidationRuleResults.get(0));
+		}
+
+		// Disable object validation rule 6
+
+		objectValidationRule6.setActive(false);
+
+		_objectValidationRuleLocalService.updateObjectValidationRule(
+			objectValidationRule6);
+
+		_userLocalService.updateLanguageId(
+			user.getUserId(), LanguageUtil.getLanguageId(LocaleUtil.US));
+
+		// Names must be equals
+
+		ObjectValidationRule objectValidationRule7 = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap("Names must be equals"),
 			"equals(lastName, middleName)");
@@ -1643,16 +1706,16 @@ public class ObjectEntryLocalServiceTest {
 				objectValidationRule5.getErrorLabel(LocaleUtil.getDefault()),
 				null, objectValidationRuleResults.get(3));
 			_assertObjectValidationRuleResult(
-				objectValidationRule6.getErrorLabel(LocaleUtil.getDefault()),
+				objectValidationRule7.getErrorLabel(LocaleUtil.getDefault()),
 				null, objectValidationRuleResults.get(4));
 		}
 
-		// Disable object validation rule 6
+		// Disable object validation rule 7
 
-		objectValidationRule6.setActive(false);
+		objectValidationRule7.setActive(false);
 
 		_objectValidationRuleLocalService.updateObjectValidationRule(
-			objectValidationRule6);
+			objectValidationRule7);
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(

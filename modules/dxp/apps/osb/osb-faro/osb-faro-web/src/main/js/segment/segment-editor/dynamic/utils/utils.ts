@@ -382,7 +382,7 @@ export const convertEventToProperty = (
 		entityName: Liferay.Language.get('event'),
 		id,
 		label: displayName || name,
-		name: id,
+		name,
 		propertyKey: 'event',
 		type: PropertyTypes.Event
 	});

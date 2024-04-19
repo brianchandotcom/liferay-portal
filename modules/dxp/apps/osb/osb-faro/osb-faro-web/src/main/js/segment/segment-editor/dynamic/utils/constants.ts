@@ -527,7 +527,7 @@ export const TIME_CONJUNCTION_OPTIONS = [
 ];
 
 export const ACTIVITY_KEY = 'activityKey';
-export const EVENT_KEY = 'eventDefinitionId';
+export const EVENT_KEY = 'eventId';
 
 export const TIME_PERIOD_OPTIONS = [
 	{

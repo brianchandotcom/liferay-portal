@@ -84,7 +84,10 @@ export const referencedPropertiesReducer = (
 					payload
 				);
 			} else if (payload.propertyKey === 'event') {
-				return state.setIn([payload.propertyKey, payload.id], payload);
+				return state.setIn(
+					[payload.propertyKey, payload.name],
+					payload
+				);
 			}
 
 			return state;

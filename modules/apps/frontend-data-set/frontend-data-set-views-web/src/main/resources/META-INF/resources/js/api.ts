@@ -103,18 +103,25 @@ function getValidFields({
 				propertyValue.extensions &&
 				propertyValue.extensions['x-parent-map'] === 'properties'
 			) {
-				const parentSchemaName =
-					propertyKey.charAt(0).toUpperCase() + propertyKey.slice(1);
-				fields.push({
-					children: getValidFields({
-						contextPath: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_DELIMITER}`,
-						schemaName: parentSchemaName,
-						schemas,
-					}),
-					label: propertyKey,
-					name: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_PARENT_SUFFIX}`,
-					type: schemas[parentSchemaName]?.type || 'object',
+				const schemaNames = Object.keys(schemas);
+				const parentSchemaName = schemaNames.filter((schemaName) => {
+					return (
+						schemaName.toLowerCase() ===
+						propertyKey.toLocaleLowerCase()
+					);
 				});
+
+				parentSchemaName.length &&
+					fields.push({
+						children: getValidFields({
+							contextPath: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_DELIMITER}`,
+							schemaName: parentSchemaName[0],
+							schemas,
+						}),
+						label: propertyKey,
+						name: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_PARENT_SUFFIX}`,
+						type: schemas[parentSchemaName[0]]?.type || 'object',
+					});
 
 				return;
 			}

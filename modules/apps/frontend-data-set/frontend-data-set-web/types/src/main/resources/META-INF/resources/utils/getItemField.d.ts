@@ -13,6 +13,10 @@
  * item: {a: {b: {c: [1, 2, 3]}}}
  * returns: [1, 2, 3]
  *
+ * path: 'a.b*'
+ * item: {a: {b: {c: [1, 2, 3]}}}
+ * returns: {c: [1, 2, 3]}
+ *
  * path: 'a[].b.c'
  * item: {a: [{b: {c: 1, d: 3}}, {b: {c: 2, d: 3}}, {b: {c: 3, d: 3}}]}
  * returns: [{c:1}, {c: 2}, {c: 3}]

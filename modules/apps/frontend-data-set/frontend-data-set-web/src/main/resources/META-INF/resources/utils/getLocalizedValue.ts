@@ -3,7 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {resolveField} from './resolveField';
+import {
+	FDS_ARRAY_FIELD_NAME_DELIMITER,
+	FDS_ARRAY_FIELD_NAME_PARENT_SUFFIX,
+	FDS_NESTED_FIELD_NAME_DELIMITER,
+	FDS_NESTED_FIELD_NAME_PARENT_SUFFIX,
+} from '../constants';
+import {getItemField} from './getItemField';
 export interface ILocalizedItemDetails {
 	rootPropertyName: string;
 	value: string;
@@ -32,18 +38,54 @@ function getLanguageKey(data: any): string {
 	return languageKey;
 }
 
+function getFieldName(
+	fieldname: string | Array<string>
+): string | Array<string> {
+	if (
+		Array.isArray(fieldname) ||
+		!!(
+			!fieldname.includes(FDS_ARRAY_FIELD_NAME_DELIMITER) &&
+			!fieldname.includes(FDS_NESTED_FIELD_NAME_DELIMITER)
+		)
+	) {
+		return fieldname;
+	}
+	else {
+		const itemPath = fieldname
+			.replace(/\[\]/g, '.')
+			.split(FDS_NESTED_FIELD_NAME_DELIMITER);
+
+		if (
+			fieldname.includes(FDS_ARRAY_FIELD_NAME_PARENT_SUFFIX) ||
+			fieldname.includes(FDS_NESTED_FIELD_NAME_PARENT_SUFFIX)
+		) {
+			itemPath.pop();
+		}
+
+		return itemPath[itemPath.length - 1];
+	}
+}
+
+function getRootPropertyName(fieldname: string | Array<string>): string {
+	return Array.isArray(fieldname)
+		? fieldname[0]
+		: fieldname
+				.replace(/\[\]/g, '.')
+				.split(FDS_NESTED_FIELD_NAME_DELIMITER)[0];
+}
+
 export function getLocalizedValue(
 	item: any,
-	fieldName: string | Array<string>
+	fieldname: string | Array<string>
 ): ILocalizedItemDetails | null {
-	if (!fieldName) {
+	if (!fieldname) {
 		return null;
 	}
 
-	const {resolvedFieldname, resolvedItem, rootPropertyName} = resolveField(
-		fieldName,
-		item
-	);
+	const resolvedFieldname = getFieldName(fieldname);
+	const resolvedItem: any =
+		typeof fieldname === 'string' ? getItemField(fieldname, item) : item;
+	const rootPropertyName = getRootPropertyName(fieldname);
 
 	const i18nFieldName = `${resolvedFieldname}_i18n`;
 	let navigatedValue = resolvedItem;
@@ -112,7 +154,7 @@ export function getLocalizedValue(
 		}
 	}
 
-	if (fieldName !== resolvedFieldname) {
+	if (fieldname !== resolvedFieldname) {
 		valuePath.unshift(rootPropertyName);
 	}
 

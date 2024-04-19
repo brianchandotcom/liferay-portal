@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {resolveField} from '../../src/main/resources/META-INF/resources/utils/resolveField';
+import {getItemField} from '../../src/main/resources/META-INF/resources/utils/getItemField';
 
 const itemWithAudit = {
 	actions: {
@@ -164,20 +164,16 @@ const itemWithAudit = {
 
 describe('resolveField', () => {
 	it('is defined', () => {
-		expect(resolveField).toBeDefined();
+		expect(getItemField).toBeDefined();
 	});
 
 	describe('single property request', () => {
 		it('returns an object containing the name of the field requested, the item itself and the root property of the object requested', () => {
 			const given = 'title';
 
-			const expected = {
-				resolvedFieldname: 'title',
-				resolvedItem: itemWithAudit,
-				rootPropertyName: 'title',
-			};
+			const expected = itemWithAudit;
 
-			expect(resolveField(given, itemWithAudit)).toEqual(expected);
+			expect(getItemField(given, itemWithAudit)).toEqual(expected);
 		});
 	});
 
@@ -185,37 +181,25 @@ describe('resolveField', () => {
 		it('returns the requested object property as resolvedItem', () => {
 			const given = 'creator.name';
 
-			const expected = {
-				resolvedFieldname: 'name',
-				resolvedItem: itemWithAudit.creator,
-				rootPropertyName: 'creator',
-			};
+			const expected = itemWithAudit.creator;
 
-			expect(resolveField(given, itemWithAudit)).toEqual(expected);
+			expect(getItemField(given, itemWithAudit)).toEqual(expected);
 		});
 
 		it('returns the parent object when using a wildcard', () => {
 			const given = 'creator.*';
 
-			const expected = {
-				resolvedFieldname: 'creator',
-				resolvedItem: itemWithAudit,
-				rootPropertyName: 'creator',
-			};
+			const expected = itemWithAudit;
 
-			expect(resolveField(given, itemWithAudit)).toEqual(expected);
+			expect(getItemField(given, itemWithAudit)).toEqual(expected);
 		});
 
 		it('returns the parent of the deepest object property requested', () => {
 			const given = 'nested.object.property';
 
-			const expected = {
-				resolvedFieldname: 'property',
-				resolvedItem: itemWithAudit.nested.object,
-				rootPropertyName: 'nested',
-			};
+			const expected = itemWithAudit.nested.object;
 
-			expect(resolveField(given, itemWithAudit)).toEqual(expected);
+			expect(getItemField(given, itemWithAudit)).toEqual(expected);
 		});
 	});
 
@@ -223,18 +207,14 @@ describe('resolveField', () => {
 		it('returns the contents of the selected array', () => {
 			const given = 'keywords';
 
-			const expected = {
-				resolvedFieldname: 'keywords',
-				resolvedItem: itemWithAudit,
-				rootPropertyName: 'keywords',
-			};
+			const expected = itemWithAudit;
 
 			// NOTE: We are requesting a field of type scalar Array. But it will be treated as
 			// if it was a single property request
 			// it will be resolved as itemWithAudit.keywords -> ['array', 'list', 'collection']
 			// by getLocalizedValue
 
-			expect(resolveField(given, itemWithAudit)).toEqual(expected);
+			expect(getItemField(given, itemWithAudit)).toEqual(expected);
 		});
 	});
 
@@ -242,13 +222,9 @@ describe('resolveField', () => {
 		it('returns a collection of items with the specified property key', () => {
 			const given = 'list[]key';
 
-			const expected = {
-				resolvedFieldname: 'key',
-				resolvedItem: [{key: 'one'}, {key: 'two'}],
-				rootPropertyName: 'list',
-			};
+			const expected = [{key: 'one'}, {key: 'two'}];
 
-			expect(resolveField(given, itemWithAudit)).toEqual(expected);
+			expect(getItemField(given, itemWithAudit)).toEqual(expected);
 		});
 	});
 
@@ -256,45 +232,33 @@ describe('resolveField', () => {
 		it('parses selected object properties inside an array', () => {
 			const given = 'auditEvents[]creator.name';
 
-			const expected = {
-				resolvedFieldname: 'name',
-				resolvedItem: [
-					{name: 'Test Test'},
-					{name: 'Test Test'},
-					{name: 'Test Test'},
-				],
-				rootPropertyName: 'auditEvents',
-			};
+			const expected = [
+				{name: 'Test Test'},
+				{name: 'Test Test'},
+				{name: 'Test Test'},
+			];
 
-			expect(resolveField(given, itemWithAudit)).toEqual(expected);
+			expect(getItemField(given, itemWithAudit)).toEqual(expected);
 		});
 
 		it('parses selected object properties inside a nested array', () => {
 			const given = 'auditEvents[]creator.userGroupBriefs[]name';
 
-			const expected = {
-				resolvedFieldname: 'name',
-				resolvedItem: [{name: 'A team name'}],
-				rootPropertyName: 'auditEvents',
-			};
+			const expected = [{name: 'A team name'}];
 
-			expect(resolveField(given, itemWithAudit)).toEqual(expected);
+			expect(getItemField(given, itemWithAudit)).toEqual(expected);
 		});
 
 		it('does not fail when no property matches the path', () => {
 			const given = 'auditEvents[]creator.randomProperty[]name';
 
-			const expected = {
-				resolvedFieldname: 'name',
-				resolvedItem: [
-					{name: undefined},
-					{name: undefined},
-					{name: undefined},
-				],
-				rootPropertyName: 'auditEvents',
-			};
+			const expected = [
+				{name: undefined},
+				{name: undefined},
+				{name: undefined},
+			];
 
-			expect(resolveField(given, itemWithAudit)).toEqual(expected);
+			expect(getItemField(given, itemWithAudit)).toEqual(expected);
 		});
 	});
 });

@@ -8,7 +8,7 @@
 			"id":20123,
 			"name":"Test Test"
 		},
-		"externalReferenceCode":"$[OBJECT_ENTRY_ERC]",
+		"externalReferenceCode":"[$OBJECT_ENTRY_ERC$]",
 		"keywords":[
 
 		],
@@ -18,12 +18,12 @@
 			"label_i18n":"Approved"
 		},
 		"testAttachmentField":{
-			"id":$[ATTACHMENT_ID],
+			"id":[$ATTACHMENT_ID$],
 			"link":{
-			   "href":"$[ATTACHMENT_HREF]",
-			   "label":"$[ATTACHMENT_LABEL]"
+			   "href":"[$ATTACHMENT_HREF$]",
+			   "label":"[$ATTACHMENT_LABEL$]"
 			},
-			"name":"$[ATTACHMENT_NAME]"
+			"name":"[$ATTACHMENT_NAME$]"
 		},
 		"testBooleanField":true,
 		"testDateField":"2022-01-01T00:00:00Z",

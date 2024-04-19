@@ -1,2 +1,2 @@
 accountEntryRestrictedObjectFieldName,dateCreated,dateModified,defaultLanguageId,externalReferenceCode,id,name,objectFolderExternalReferenceCode,panelAppOrder,panelCategoryKey,restContextPath,rootObjectDefinitionExternalReferenceCode,scope,storageType,titleObjectFieldName
-"",$[DATE_CREATED],$[DATE_MODIFIED],en_US,TEST-OBJECT-DEFINITION-1,$[ID],TestObjectCSV,default,,,/o/c/testobjectcsvs,,company,default,id
+"",[$DATE_CREATED$],[$DATE_MODIFIED$],en_US,TEST-OBJECT-DEFINITION-1,[$ID$],TestObjectCSV,default,,,/o/c/testobjectcsvs,,company,default,id

@@ -786,8 +786,9 @@ public class BatchEngineBrokerTest {
 		template = StringUtil.replace(
 			template,
 			new String[] {
-				"$[ATTACHMENT_HREF]", "$[ATTACHMENT_ID]", "$[ATTACHMENT_LABEL]",
-				"$[ATTACHMENT_NAME]", "$[OBJECT_ENTRY_ERC]"
+				"[$ATTACHMENT_HREF$]", "[$ATTACHMENT_ID$]",
+				"[$ATTACHMENT_LABEL$]", "[$ATTACHMENT_NAME$]",
+				"[$OBJECT_ENTRY_ERC$]"
 			},
 			new String[] {
 				link.getHref(), String.valueOf(dlFileEntry.getFileEntryId()),
@@ -922,10 +923,10 @@ public class BatchEngineBrokerTest {
 		return StringUtil.replace(
 			StreamUtil.toString(_getInputStream(fileName)),
 			new String[] {
-				"$[ATTACHMENT_FIELD_ID]", "$[ATTACHMENT_FIELD_LINK_HREF]",
-				"$[ATTACHMENT_FIELD_LINK_LABEL]", "$[ATTACHMENT_FIELD_NAME]",
-				"$[DATE_CREATED]", "$[DATE_MODIFIED]",
-				"$[EXTERNAL_REFERENCE_CODE]", "$[ID]", "$[SCOPE_KEY]"
+				"[$ATTACHMENT_FIELD_ID$]", "[$ATTACHMENT_FIELD_LINK_HREF$]",
+				"[$ATTACHMENT_FIELD_LINK_LABEL$]", "[$ATTACHMENT_FIELD_NAME$]",
+				"[$DATE_CREATED$]", "[$DATE_MODIFIED$]",
+				"[$EXTERNAL_REFERENCE_CODE$]", "[$ID$]", "[$SCOPE_KEY$]"
 			},
 			new String[] {
 				String.valueOf(dlFileEntry.getFileEntryId()), link.getHref(),
@@ -941,7 +942,7 @@ public class BatchEngineBrokerTest {
 
 		return StringUtil.replace(
 			StreamUtil.toString(_getInputStream(fileName)),
-			new String[] {"$[DATE_CREATED]", "$[DATE_MODIFIED]", "$[ID]"},
+			new String[] {"[$DATE_CREATED$]", "[$DATE_MODIFIED$]", "[$ID$]"},
 			new String[] {
 				_toDateString(createDate), _toDateString(modifiedDate),
 				String.valueOf(id)

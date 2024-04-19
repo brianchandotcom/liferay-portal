@@ -6,7 +6,6 @@
 package com.liferay.jethr0.routine;
 
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.util.EntityUtil;
 
@@ -21,15 +20,9 @@ import org.json.JSONObject;
  */
 public interface RoutineEntity extends Entity {
 
-	public void addGitBranchEntities(Set<GitBranchEntity> gitBranchEntities);
-
-	public void addGitBranchEntity(GitBranchEntity gitBranchEntity);
-
 	public void addJobEntities(Set<JobEntity> jobEntities);
 
 	public void addJobEntity(JobEntity jobEntity);
-
-	public Set<GitBranchEntity> getGitBranchEntities();
 
 	public Set<JobEntity> getJobEntities();
 
@@ -46,10 +39,6 @@ public interface RoutineEntity extends Entity {
 	public String getName();
 
 	public Type getType();
-
-	public void removeGitBranchEntities(Set<GitBranchEntity> gitBranchEntities);
-
-	public void removeGitBranchEntity(GitBranchEntity gitBranchEntity);
 
 	public void removeJobEntities(Set<JobEntity> jobEntities);
 

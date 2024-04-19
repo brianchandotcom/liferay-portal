@@ -4,7 +4,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import React from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
-import {CSVType, useDownloadCSV} from './utils';
+import {CSVType, MAX_CSV_ENTRIES, useDownloadCSV} from './utils';
 import {DownloadReportButton} from './DownloadReportButton';
 import {sub} from 'shared/util/lang';
 import {toLocale} from 'shared/util/numbers';
@@ -79,7 +79,7 @@ export const Modal = ({observer, onClose, onSubmit}) => (
 							Liferay.Language.get(
 								'this-list-will-be-downloaded-respecting-the-current-ordering-and-search-results'
 							),
-							[toLocale(10000)]
+							[toLocale(MAX_CSV_ENTRIES)]
 						) as string
 					}
 				</p>

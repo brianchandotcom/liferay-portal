@@ -110,7 +110,6 @@ export const IndividualProfileRoutes = ({
 				<BasePage.SubHeader>
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadCSVReport
-							assetType='event'
 							disabled={dataSourceStates.empty}
 							type={CSVType.Event}
 							typeLang={Liferay.Language.get('events')}

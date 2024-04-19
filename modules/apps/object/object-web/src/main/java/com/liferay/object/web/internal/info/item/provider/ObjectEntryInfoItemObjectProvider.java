@@ -104,12 +104,14 @@ public class ObjectEntryInfoItemObjectProvider
 					_objectDefinition, group.getGroupKey());
 
 			if (objectEntry != null) {
-				ObjectEntry nextObjectEntry = ObjectEntryUtil.toObjectEntry(
-					_objectDefinition.getObjectDefinitionId(), objectEntry);
+				ObjectEntry serviceBuilderObjectEntry =
+					ObjectEntryUtil.toObjectEntry(
+						_objectDefinition.getObjectDefinitionId(), objectEntry);
 
-				objectEntries.put(ercInfoItemIdentifier, nextObjectEntry);
+				objectEntries.put(
+					ercInfoItemIdentifier, serviceBuilderObjectEntry);
 
-				return nextObjectEntry;
+				return serviceBuilderObjectEntry;
 			}
 		}
 		catch (Exception exception) {

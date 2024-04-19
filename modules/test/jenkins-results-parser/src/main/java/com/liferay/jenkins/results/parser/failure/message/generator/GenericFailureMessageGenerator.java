@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
+import com.liferay.jenkins.results.parser.Dom4JUtil;
+
 import org.dom4j.Element;
 
 /**
@@ -14,26 +16,31 @@ public class GenericFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
+	public String getMessage(String consoleText) {
+		String message = getExceptionSnippet(consoleText);
+
+		if (message != null) {
+			return message;
+		}
+
+		message = getMergeTestResultsSnippet(consoleText);
+
+		if (message != null) {
+			return message;
+		}
+
+		message = getBuildFailedSnippet(consoleText);
+
+		if (message != null) {
+			return message;
+		}
+
+		return getConsoleTextSnippetByEnd(consoleText, true, -1);
+	}
+
+	@Override
 	public Element getMessageElement(String consoleText) {
-		Element message = getExceptionSnippetElement(consoleText);
-
-		if (message != null) {
-			return message;
-		}
-
-		message = getMergeTestResultsSnippetElement(consoleText);
-
-		if (message != null) {
-			return message;
-		}
-
-		message = getBuildFailedSnippetElement(consoleText);
-
-		if (message != null) {
-			return message;
-		}
-
-		return getConsoleTextSnippetElementByEnd(consoleText, true, -1);
+		return Dom4JUtil.toCodeSnippetElement(getMessage(consoleText));
 	}
 
 	@Override

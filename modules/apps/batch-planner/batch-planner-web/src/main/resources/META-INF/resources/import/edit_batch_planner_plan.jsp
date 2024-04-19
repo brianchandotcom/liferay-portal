@@ -96,7 +96,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 								/>
 							</clay:alert>
 
-							<div class="mt-2">
+							<div class="d-none mt-2">
 								<clay:checkbox
 									checked="<%= false %>"
 									disabled="<%= true %>"

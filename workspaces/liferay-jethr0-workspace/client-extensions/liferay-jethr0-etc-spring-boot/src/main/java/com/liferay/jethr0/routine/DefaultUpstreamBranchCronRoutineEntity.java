@@ -5,15 +5,16 @@
 
 package com.liferay.jethr0.routine;
 
-import com.liferay.jethr0.git.branch.GitBranchEntity;
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public interface UpstreamBranchCronRoutineEntity extends CronRoutineEntity {
+public class DefaultUpstreamBranchCronRoutineEntity
+	extends BaseUpstreamBranchCronRoutineEntity {
 
-	public GitBranchEntity getGitBranchEntity();
-
-	public void setGitBranchEntity(GitBranchEntity gitBranchEntity);
+	protected DefaultUpstreamBranchCronRoutineEntity(JSONObject jsonObject) {
+		super(jsonObject);
+	}
 
 }

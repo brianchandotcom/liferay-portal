@@ -25,6 +25,9 @@ public class RoutineEntityFactory extends BaseEntityFactory<RoutineEntity> {
 		if (type == RoutineEntity.Type.CRON) {
 			return new DefaultCronRoutineEntity(jsonObject);
 		}
+		else if (type == RoutineEntity.Type.UPSTREAM_BRANCH_CRON) {
+			return new UpstreamBranchCronRoutineEntity(jsonObject);
+		}
 
 		return new ManualRoutineEntity(jsonObject);
 	}

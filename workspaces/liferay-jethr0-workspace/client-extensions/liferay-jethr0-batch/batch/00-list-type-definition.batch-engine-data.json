@@ -725,6 +725,14 @@
 					"name_i18n": {
 						"en-US": "Manual"
 					}
+				},
+				{
+					"externalReferenceCode": "upstreamBranchCron",
+					"key": "upstreamBranchCron",
+					"name": "Upstream Branch Cron",
+					"name_i18n": {
+						"en-US": "Upstream Branch Cron"
+					}
 				}
 			],
 			"name": "routineType",

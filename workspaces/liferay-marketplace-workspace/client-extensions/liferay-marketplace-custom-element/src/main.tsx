@@ -24,6 +24,9 @@ class WebComponent extends HTMLElement {
 						contactSupportUrl:
 							this.getAttribute('contactSupportUrl') || '',
 						eulaBaseURL: this.getAttribute('eulaBaseURL') || '',
+						featureFlags: (this.getAttribute('featureFlags') ?? '')
+							.split(',')
+							.map((featureflag) => featureflag.trim()),
 						marketoFormId: this.getAttribute('marketoFormId') || '',
 					}}
 				>

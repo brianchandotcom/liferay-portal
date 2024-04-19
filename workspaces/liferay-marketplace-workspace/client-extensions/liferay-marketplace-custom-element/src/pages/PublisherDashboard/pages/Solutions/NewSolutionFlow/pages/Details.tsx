@@ -18,12 +18,12 @@ import TextAndVideos from '../../components/Blocks/TextAndVideo';
 import TextBlock from '../../components/Blocks/TextBlock';
 
 const blocks = [
-	{name: 'Text Block', render: TextBlock},
-	{name: 'Text & Images Block', render: TextAndImages},
-	{name: 'Text & Video Block', render: TextAndVideos},
-	{name: 'Single Image Block', render: SingleImage},
-	{name: 'Images Grid Block', render: ImagesGrid},
-	{name: 'Icons Block', render: IconsBlock},
+	{name: 'text-block', render: TextBlock},
+	{name: 'text-images-block', render: TextAndImages},
+	{name: 'text-video-block', render: TextAndVideos},
+	{name: 'single-image-block', render: SingleImage},
+	{name: 'images-grid-block', render: ImagesGrid},
+	{name: 'icons-block', render: IconsBlock},
 ];
 
 const items = [

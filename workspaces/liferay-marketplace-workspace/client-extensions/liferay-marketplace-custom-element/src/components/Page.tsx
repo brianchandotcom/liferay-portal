@@ -40,10 +40,10 @@ const PageRenderer: React.FC<PageRendererProps> = ({
 
 type PageProps = {
 	children: any;
-	description: string;
+	description?: string;
 	pageRendererProps?: Omit<ComponentProps<typeof PageRenderer>, 'children'>;
 	rightButton?: ReactNode;
-	title: string;
+	title?: string;
 };
 
 const Page: React.FC<PageProps> = ({
@@ -55,8 +55,9 @@ const Page: React.FC<PageProps> = ({
 }) => (
 	<div className="w-100">
 		<div className="align-items-center d-flex justify-content-between">
-			<Header description={description} title={title} />
-
+			{(title || description) && (
+				<Header description={description} title={title} />
+			)}
 			{rightButton}
 		</div>
 

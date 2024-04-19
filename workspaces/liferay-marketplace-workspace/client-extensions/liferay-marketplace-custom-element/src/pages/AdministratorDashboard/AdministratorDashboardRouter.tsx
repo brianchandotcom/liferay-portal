@@ -12,6 +12,7 @@ import App from '../PublisherDashboard/pages/Apps/App';
 import Apps from './pages/Apps';
 import Metrics from './pages/Metrics';
 import PublisherRequest from './pages/PublisherRequest';
+import Trial from './pages/Trial';
 
 const AdministratorDashboardRouter = () => (
 	<HashRouter>
@@ -23,6 +24,7 @@ const AdministratorDashboardRouter = () => (
 					element={<PublisherRequest />}
 					path="publisher-request"
 				/>
+				<Route element={<Trial />} path="trial" />
 
 				<Route path="apps">
 					<Route element={<Apps />} index />

@@ -43,3 +43,18 @@
 		}
 	}
 }
+
+.tiral {
+	&-card {
+		background: #fbfcfe;
+		border: 2px solid #eef3fd;
+		border-radius: 10px;
+		flex: 1 1 auto;
+		transition: all ease-in-out 0.3s;
+
+		&:hover {
+			background: #f0f5ff;
+			border: 2px solid #80acff;
+		}
+	}
+}

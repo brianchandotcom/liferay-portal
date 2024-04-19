@@ -161,6 +161,12 @@ type AccountRole = {
 	roleId: number;
 };
 
+type Availability = {
+	active: boolean;
+	available: number;
+	max: number;
+};
+
 type BillingAddress = {
 	city?: string;
 	country?: string;

@@ -63,7 +63,7 @@ const useAnalyticsViewsMetrics = () => {
 		},
 		visitorsMetric:
 			viewsMetricResult?.results
-				.map(
+				?.map(
 					({
 						metrics: {
 							viewsMetric: {value},

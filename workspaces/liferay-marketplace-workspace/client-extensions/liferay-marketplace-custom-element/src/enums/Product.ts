@@ -14,3 +14,8 @@ export enum PRODUCT_WORKFLOW_STATUS_CODE {
 	APPROVED = 0,
 	DRAFT = 2,
 }
+
+export enum ORDER_STATUS {
+	APPROVED = 0,
+	HOLD = 20,
+}

@@ -14,9 +14,11 @@ export default {
 	'account-name': 'Account Name',
 	'accounts': 'Accounts',
 	'activation-status': 'Activation Status',
+	'active': 'Active',
 	'add-packages': 'Add Package(s)',
 	'additional-apps-requested': 'Additional Apps Requested',
 	'address': 'Address',
+	'all-orders': 'All Orders',
 	'all-published-apps': 'All Published Apps',
 	'amount': 'Amount',
 	'an-administrator-of-the-marketplace-will-review-your-request-shortly-if-you-have-questions-regarding-your-submission-please-email':
@@ -32,6 +34,7 @@ export default {
 		'apply to your use of this service. The name on your Liferay account will be used in this Liferay Marketplace Publisher Profile. It may appear where you contribute and be changed at any time',
 	'apps': 'Apps',
 	'aprove': 'Aprove',
+	'available': 'Available',
 	'back': 'Back',
 	'back-to-apps': 'Back to Apps',
 	'back-to-my-apps': 'Back to My Apps',
@@ -84,6 +87,7 @@ export default {
 		'Customize storefront solutions details',
 	'dashboard': 'Dashboard',
 	'deactivate': 'Deactivate',
+	'deactivated': 'Deactivated',
 	'decline': 'Decline',
 	'define-contact-us-information-for-your-solution-this-will-inform-users-about-this-versions-updates-on-the-storefront':
 		'Define contact us information for your solution. This will inform users about this version’s updates on the storefront.',
@@ -126,6 +130,7 @@ export default {
 	'environment': 'Environment',
 	'environment-type': 'Environment Type',
 	'expiration-date': 'Expiration Date',
+	'expired': 'Expired',
 	'explore-over-800-apps-available-in-the-liferay-marketplace-from-a-variety-of-publishers-apps-allow-you-to-accelerate-your-liferay-development-get-to-market-faster':
 		'Explore over 800 apps available in the Liferay Marketplace from a variety of publishers. Apps allow you to accelerate your Liferay development get to market faster.',
 	'extension-optional': 'Extension (optional)',
@@ -138,6 +143,7 @@ export default {
 	'go-to-console': 'Go to Console',
 	'go-to-dxp': 'Go to DXP',
 	'go-to-marketplace': 'Go to Marketplace',
+	'go-to-trial': 'Go to Trial',
 	'host-name': 'Host Name',
 	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':
 		'I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation key.',
@@ -196,6 +202,7 @@ export default {
 	'no-results-found': 'No results found',
 	'not-seeing-a-specific-project': 'Not seeing a specific Project?',
 	'number-of-cpus': 'Number of CPUs',
+	'on-hold': 'On Hold',
 	'only-jar-war-files-are-allowed-max-file-size-is-500mb':
 		'Only JAR, WAR files are allowed. Max file size is 500MB.',
 	'only-zip-files-are-allowed-max-file-size-is-500-mb':
@@ -233,6 +240,7 @@ export default {
 	'ram': 'RAM',
 	'ram-in-gbs': 'RAM in GBs',
 	'recent-published-apps': 'Recent Published Apps',
+	'recent-trials': 'Recent Trials',
 	'remove-a-version': 'Remove a Version',
 	'request-a-marketplace-publisher-account':
 		'Request a Marketplace Publisher Account',
@@ -242,6 +250,7 @@ export default {
 	'request-sent-successfully': 'Request sent successfully',
 	'requester': 'Requester',
 	'resource-requirements': 'Resource Requirements',
+	'resources': 'Resources',
 	'return-to-marketplace': 'Return to Marketplace',
 	'review-and-accept-the-legal-agreement-between-you-and-liferay-before-proceeding-you-are-about-to-create-a-new-solution-submission':
 		'Review and accept the legal agreement between you and Liferay before proceeding, You are about to create a new solution submission.',
@@ -306,7 +315,10 @@ export default {
 		'This key is expired and cannot be downloaded.',
 	'this-order-must-be-completed-before-downloading-this-app.':
 		'This order must be completed before downloading this app.',
-	'total': 'Total',
+	'trial': 'Trial',
+	'trial-esources': 'Trial Resources',
+	'trial-status': 'Trial Status',
+	'trials': 'Trials',
 	'type': 'Type',
 	'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard':
 		'Unable to download your license file.  Please try again and/or contact support via the manage menu on the dashboard.',

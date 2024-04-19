@@ -19,6 +19,11 @@ export const initialAdministratorDashboardNavigationItems: DashboardListItems[] 
 		symbol: 'grid',
 	},
 	{
+		itemTitle: i18n.translate('trials'),
+		path: '/trial',
+		symbol: 'squares-clock',
+	},
+	{
 		itemTitle: i18n.translate('publisher-requests'),
 		path: '/publisher-request',
 		symbol: 'envelope-closed',

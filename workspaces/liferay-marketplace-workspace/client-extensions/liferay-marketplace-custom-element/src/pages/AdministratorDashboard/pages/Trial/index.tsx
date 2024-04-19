@@ -1,0 +1,133 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
+import classNames from 'classnames';
+
+import Page from '../../../../components/Page';
+import i18n from '../../../../i18n';
+import InfoCard from '../../components/InfoCard';
+import useTrialMetrics from '../../hooks/useTrialMetrics';
+import TrialOrderTab from './TrialOrderTab';
+
+const Trial = () => {
+	const {
+		availability,
+		error,
+		expired,
+		isLoading,
+		orderTableData,
+		orders,
+	} = useTrialMetrics('week');
+
+	return (
+		<Page pageRendererProps={{error, isLoading}}>
+			<div className="d-flex flex-column">
+				<div className="d-flex info-container justify-content-between mb-6">
+					<div
+						className={classNames(
+							`p-4 d-flex flex-column tiral-card w-100`
+						)}
+					>
+						<div className="align-items-start d-flex justify-content-between">
+							<h1>{i18n.translate('trial-esources')}</h1>
+							<ClayLabel
+								displayType={
+									availability.active ? 'success' : 'danger'
+								}
+							>
+								{i18n.translate(
+									availability.active
+										? 'active'
+										: 'deactivated'
+								)}
+							</ClayLabel>
+						</div>
+
+						<div className="d-flex justify-content-between mt-3 w-100">
+							<div className="d-flex">
+								<div className="d-flex flex-column mr-3">
+									<span className="font-weight-lighter text-black-50">
+										{i18n.translate('resources')}
+									</span>
+
+									<h2 className="align-items-center d-flex justify-content-center my-0">
+										{availability?.resourcesAvailable}
+									</h2>
+								</div>
+								<span className="align-items-end d-flex">
+									<ClayIcon
+										className="text-primary"
+										fontSize={32}
+										symbol="sheets"
+									/>
+								</span>
+							</div>
+							<div className="d-flex">
+								<div className="d-flex flex-column mr-3">
+									<span className="font-weight-lighter text-black-50">
+										{i18n.translate('Available')}
+									</span>
+
+									<h2 className="align-items-center d-flex justify-content-center my-0">
+										{availability?.available}
+									</h2>
+								</div>
+								<span className="align-items-end d-flex">
+									<ClayIcon
+										className="text-primary"
+										fontSize={32}
+										symbol="plus-squares"
+									/>
+								</span>
+							</div>
+							<div className="d-flex">
+								<div className="d-flex flex-column mr-3">
+									<span className="font-weight-lighter text-black-50">
+										{i18n.translate('on-hold')}
+									</span>
+
+									<h2 className="align-items-center d-flex justify-content-center my-0">
+										{availability?.queue}
+									</h2>
+								</div>
+								<span className="align-items-end d-flex">
+									<ClayIcon
+										className="text-primary"
+										fontSize={32}
+										symbol="squares-clock"
+									/>
+								</span>
+							</div>
+						</div>
+					</div>
+					<InfoCard
+						className="col-2"
+						growth={orders.growth}
+						growthContext={`+${orders?.lastPeriod} this week`}
+						symbol="shopping-cart"
+						title={i18n.translate('all-orders')}
+						value={orders.totalCount}
+					/>
+					<InfoCard
+						className="col-2"
+						growth={expired.growth}
+						growthContext={`+${expired?.lastPeriod} this week`}
+						symbol="date-time"
+						title={i18n.translate('expired')}
+						value={expired.totalCount}
+					/>
+				</div>
+
+				<div className="border d-flex flex-column justify-content-center p-6 rounded-lg">
+					<TrialOrderTab items={orderTableData?.items || []} />
+				</div>
+			</div>
+		</Page>
+	);
+};
+
+export default Trial;

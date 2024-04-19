@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.Dom4JUtil;
 
 import org.dom4j.Element;
 
@@ -15,7 +16,7 @@ import org.dom4j.Element;
 public class PMDFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessageElement(Build build) {
+	public String getMessage(Build build) {
 		String consoleText = build.getConsoleText();
 
 		if (!consoleText.contains(_TOKEN_PMD_VIOLATIONS_WERE_FOUND)) {
@@ -26,7 +27,12 @@ public class PMDFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 		start = consoleText.lastIndexOf("\n", start);
 
-		return getConsoleTextSnippetElementByStart(consoleText, start);
+		return getConsoleTextSnippetByStart(consoleText, start);
+	}
+
+	@Override
+	public Element getMessageElement(Build build) {
+		return Dom4JUtil.toCodeSnippetElement(getMessage(build));
 	}
 
 	private static final String _TOKEN_PMD_VIOLATIONS_WERE_FOUND =

@@ -83,9 +83,7 @@ Country country = CountryLocalServiceUtil.fetchCountry(countryId);
 </liferay-frontend:edit-form>
 
 <c:if test="<%= country == null %>">
-	<aui:script require="frontend-js-web/index as frontendJsWeb">
-		var {debounce} = frontendJsWeb;
-
+	<aui:script sandbox="<%= true %>">
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
@@ -103,7 +101,10 @@ Country country = CountryLocalServiceUtil.fetchCountry(countryId);
 					nameInput.value = value;
 				};
 
-				titleInput.addEventListener('input', debounce(handleOnTitleInput, 200));
+				titleInput.addEventListener(
+					'input',
+					Liferay.Util.debounce(handleOnTitleInput, 200)
+				);
 			}
 		}
 	</aui:script>

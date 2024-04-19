@@ -7,9 +7,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	var {runScriptsInElement} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	function handleIframeMessage(event) {
 		if (event.data) {
 			var virtualDocument = document.createElement('html');
@@ -22,7 +20,7 @@
 
 			portletBody.appendChild(body);
 
-			runScriptsInElement(body);
+			Liferay.Util.runScriptsInElement(body);
 		}
 	}
 

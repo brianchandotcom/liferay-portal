@@ -151,25 +151,28 @@ else {
 				/>
 			</liferay-ui:search-container>
 
-			<aui:script require="frontend-js-web/index as frontendJsWeb">
-				var {delegate} = frontendJsWeb;
-
+			<aui:script sandbox="<%= true %>">
 				var form = document.<portlet:namespace />selectOrganizationRoleFm;
 
-				delegate(form, 'click', '.organization-selector-button', (event) => {
-					Liferay.Util.postForm(form, {
-						data: {
-							organizationId: event.delegateTarget.dataset.organizationid,
-						},
+				Liferay.Util.delegate(
+					form,
+					'click',
+					'.organization-selector-button',
+					(event) => {
+						Liferay.Util.postForm(form, {
+							data: {
+								organizationId: event.delegateTarget.dataset.organizationid,
+							},
 
-						<%
-						portletURL.setParameter("resetCur", Boolean.TRUE.toString());
-						portletURL.setParameter("step", "2");
-						%>
+							<%
+							portletURL.setParameter("resetCur", Boolean.TRUE.toString());
+							portletURL.setParameter("step", "2");
+							%>
 
-						url: '<%= portletURL.toString() %>',
-					});
-				});
+							url: '<%= portletURL.toString() %>',
+						});
+					}
+				);
 			</aui:script>
 		</c:when>
 		<c:when test="<%= step == 2 %>">

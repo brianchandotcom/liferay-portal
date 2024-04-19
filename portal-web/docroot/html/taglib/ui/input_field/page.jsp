@@ -591,9 +591,7 @@ if (hints != null) {
 	</c:choose>
 </c:if>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	const {delegate} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	var state = null;
 	var textarea = document.querySelector('textarea#<portlet:namespace /><%= id %>')
 	var counterWrapper = document.querySelector('#<portlet:namespace /><%= id %>_counterWrapper')
@@ -610,7 +608,7 @@ if (hints != null) {
 		setCounter(textarea);
 	}
 
-	var onKeydownHandler = delegate(
+	var onKeydownHandler = Liferay.Util.delegate(
 		document.body,
 		'keyup',
 		'textarea[id=<portlet:namespace /><%= id %>]',

@@ -64,10 +64,8 @@ AssetDisplayPagesItemSelectorCustomViewDisplayContext assetDisplayPagesItemSelec
 	</liferay-ui:search-container>
 </clay:container-fluid>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	var {delegate} = frontendJsWeb;
-
-	var selectItemHandler = delegate(
+<aui:script sandbox="<%= true %>">
+	var selectItemHandler = Liferay.Util.delegate(
 		document.querySelector('#<portlet:namespace />displayPages'),
 		'click',
 		'.layout-page-template-entry',

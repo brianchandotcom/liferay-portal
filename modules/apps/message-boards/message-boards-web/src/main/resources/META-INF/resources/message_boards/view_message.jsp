@@ -52,9 +52,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 	</div>
 </div>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	var {runScriptsInElement} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	window['<portlet:namespace />addReplyToMessage'] = function (messageId, quote) {
 		var addQuickReplyContainer = document.querySelector(
 			'#<portlet:namespace />addReplyToMessage' + messageId + ' .panel'
@@ -93,7 +91,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 				.then((response) => {
 					addQuickReplyContainer.innerHTML = response;
 
-					runScriptsInElement(addQuickReplyContainer);
+					Liferay.Util.runScriptsInElement(addQuickReplyContainer);
 
 					addQuickReplyContainer.classList.remove('hide');
 					addQuickReplyLoadingMask.classList.add('hide');

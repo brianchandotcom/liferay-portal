@@ -37,9 +37,7 @@
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	var {delegate} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	var articlePreview = document.getElementById(
 		'<portlet:namespace />articlePreview'
 	);
@@ -47,23 +45,28 @@
 		'<portlet:namespace />assetEntryId'
 	);
 
-	delegate(articlePreview, 'click', '.web-content-selector', (event) => {
-		event.preventDefault();
+	Liferay.Util.delegate(
+		articlePreview,
+		'click',
+		'.web-content-selector',
+		(event) => {
+			event.preventDefault();
 
-		Liferay.Util.openSelectionModal({
-			onSelect: function (data) {
-				if (data.value && data.value.length) {
-					const selectedItem = JSON.parse(data.value);
-					retrieveWebContent(selectedItem.classPK);
-				}
-			},
-			selectEventName: '<portlet:namespace />selectedItem',
-			title: '<liferay-ui:message key="select-web-content" />',
-			url: '<%= journalContentDisplayContext.getItemSelectorURL() %>',
-		});
-	});
+			Liferay.Util.openSelectionModal({
+				onSelect: function (data) {
+					if (data.value && data.value.length) {
+						const selectedItem = JSON.parse(data.value);
+						retrieveWebContent(selectedItem.classPK);
+					}
+				},
+				selectEventName: '<portlet:namespace />selectedItem',
+				title: '<liferay-ui:message key="select-web-content" />',
+				url: '<%= journalContentDisplayContext.getItemSelectorURL() %>',
+			});
+		}
+	);
 
-	delegate(articlePreview, 'click', '.selector-button', (event) => {
+	Liferay.Util.delegate(articlePreview, 'click', '.selector-button', (event) => {
 		event.preventDefault();
 		retrieveWebContent(-1);
 	});

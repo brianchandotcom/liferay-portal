@@ -233,15 +233,13 @@ else {
 
 					</c:if>
 
-					<aui:script position="inline" require="frontend-js-web/index as frontendJsWeb">
-						var {delegate, runScriptsInElement} = frontendJsWeb;
-
+					<aui:script position="inline" sandbox="<%= true %>">
 						var documentTypeMenuList = document.querySelector(
 							'#<portlet:namespace />documentTypeSelector .lfr-menu-list'
 						);
 
 						if (documentTypeMenuList) {
-							delegate(documentTypeMenuList, 'click', 'li a', (event) => {
+							Liferay.Util.delegate(documentTypeMenuList, 'click', 'li a', (event) => {
 								event.preventDefault();
 
 								Liferay.Util.fetch(event.delegateTarget.getAttribute('href'))
@@ -256,7 +254,9 @@ else {
 										if (commonFileMetadataContainer) {
 											commonFileMetadataContainer.innerHTML = response;
 
-											runScriptsInElement(commonFileMetadataContainer);
+											Liferay.Util.runScriptsInElement(
+												commonFileMetadataContainer
+											);
 										}
 
 										var fileNodes = document.querySelectorAll(

@@ -63,10 +63,8 @@
 	}
 </aui:script>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	var {delegate} = frontendJsWeb;
-
-	delegate(
+<aui:script sandbox="<%= true %>">
+	Liferay.Util.delegate(
 		document,
 		'focusin',
 		'.portlet',
@@ -75,7 +73,7 @@
 		}
 	);
 
-	delegate(
+	Liferay.Util.delegate(
 		document,
 		'focusout',
 		'.portlet',

@@ -200,9 +200,7 @@ if (portletTitleBasedNavigation) {
 	/>
 </div>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	var {delegate} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	var compareVersionsButton = document.getElementById(
 		'<portlet:namespace />compare'
 	);
@@ -268,7 +266,7 @@ if (portletTitleBasedNavigation) {
 
 	<portlet:namespace />initRowsChecked();
 
-	delegate(
+	Liferay.Util.delegate(
 		document.body,
 		'click',
 		'input[name=<portlet:namespace />rowIds]',

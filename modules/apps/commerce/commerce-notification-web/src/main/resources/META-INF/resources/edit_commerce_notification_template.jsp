@@ -200,21 +200,23 @@ if (commerceNotificationTemplate != null) {
 	</aui:form>
 </liferay-frontend:side-panel-content>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	const {createPortletURL} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	Liferay.provide(window, '<portlet:namespace />selectType', () => {
-		const portletURL = createPortletURL('<%= currentURLObj %>', {
-			bcc: document.getElementById('<portlet:namespace />bcc').value,
-			cc: document.getElementById('<portlet:namespace />cc').value,
-			description: document.getElementById('<portlet:namespace />description')
-				.value,
-			from: document.getElementById('<portlet:namespace />from').value,
-			fromName: document.getElementById('<portlet:namespace />fromName')
-				.value,
-			name: document.getElementById('<portlet:namespace />name').value,
-			type: document.getElementById('<portlet:namespace />type').value,
-		});
+		const portletURL = Liferay.Util.PortletURL.createPortletURL(
+			'<%= currentURLObj %>',
+			{
+				bcc: document.getElementById('<portlet:namespace />bcc').value,
+				cc: document.getElementById('<portlet:namespace />cc').value,
+				description: document.getElementById(
+					'<portlet:namespace />description'
+				).value,
+				from: document.getElementById('<portlet:namespace />from').value,
+				fromName: document.getElementById('<portlet:namespace />fromName')
+					.value,
+				name: document.getElementById('<portlet:namespace />name').value,
+				type: document.getElementById('<portlet:namespace />type').value,
+			}
+		);
 
 		window.location.replace(portletURL.toString());
 	});

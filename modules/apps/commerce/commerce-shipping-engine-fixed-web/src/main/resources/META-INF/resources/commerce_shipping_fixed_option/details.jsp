@@ -53,9 +53,7 @@ if (commerceShippingFixedOption != null) {
 </aui:form>
 
 <c:if test="<%= commerceShippingFixedOption == null %>">
-	<aui:script require="frontend-js-web/index as frontendJsWeb">
-		var {debounce} = frontendJsWeb;
-
+	<aui:script sandbox="<%= true %>">
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		var keyInput = form.querySelector('#<portlet:namespace />key');
@@ -65,6 +63,9 @@ if (commerceShippingFixedOption != null) {
 			keyInput.value = titleInput.value;
 		};
 
-		titleInput.addEventListener('input', debounce(handleOnTitleInput, 200));
+		titleInput.addEventListener(
+			'input',
+			Liferay.Util.debounce(handleOnTitleInput, 200)
+		);
 	</aui:script>
 </c:if>

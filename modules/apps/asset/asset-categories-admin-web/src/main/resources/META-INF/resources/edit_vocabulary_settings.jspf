@@ -110,7 +110,7 @@ long[] selectedClassTypePKs = editVocabularySettingsDisplayContext.getSelectedCl
 	<aui:input name="indexes" type="hidden" value="<%= StringUtil.merge(indexes) %>" />
 </liferay-frontend:fieldset>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
+<aui:script sandbox="<%= true %>">
 	let autoFields = null;
 
 	AUI().use('liferay-auto-fields', (A) => {
@@ -135,25 +135,28 @@ long[] selectedClassTypePKs = editVocabularySettingsDisplayContext.getSelectedCl
 		extraFields.setData('autoFieldsInstance', autoFields);
 	});
 
-	const {delegate} = frontendJsWeb;
-
 	const form = document.getElementById('<portlet:namespace />fm');
 
-	delegate(form, 'change', '.vocabulary-asset-type-select', (event) => {
-		const target = event.delegateTarget;
+	Liferay.Util.delegate(
+		form,
+		'change',
+		'.vocabulary-asset-type-select',
+		(event) => {
+			const target = event.delegateTarget;
 
-		const row = target.closest('.lfr-form-row');
+			const row = target.closest('.lfr-form-row');
 
-		row.querySelectorAll('.subtype-select').forEach((child) => {
-			child.classList.add('hide');
-		});
+			row.querySelectorAll('.subtype-select').forEach((child) => {
+				child.classList.add('hide');
+			});
 
-		const select = row.querySelector('[name*=subtype' + target.value + ']');
+			const select = row.querySelector('[name*=subtype' + target.value + ']');
 
-		if (select) {
-			select.closest('.subtype-select').classList.remove('hide');
+			if (select) {
+				select.closest('.subtype-select').classList.remove('hide');
+			}
+
+			autoFields.save(A.one('#<portlet:namespace />fm'));
 		}
-
-		autoFields.save(A.one('#<portlet:namespace />fm'));
-	});
+	);
 </aui:script>

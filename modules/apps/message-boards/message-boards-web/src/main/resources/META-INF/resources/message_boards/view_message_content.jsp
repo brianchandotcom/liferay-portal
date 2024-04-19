@@ -290,9 +290,7 @@ if (portletTitleBasedNavigation) {
 	</c:if>
 </div>
 
-<aui:script require="frontend-js-web/index as frontendJsWeb">
-	var {runScriptsInElement} = frontendJsWeb;
-
+<aui:script sandbox="<%= true %>">
 	var moreMessagesButton = document.getElementById(
 		'<portlet:namespace />moreMessages'
 	);

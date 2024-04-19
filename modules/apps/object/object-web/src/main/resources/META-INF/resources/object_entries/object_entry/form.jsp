@@ -61,9 +61,7 @@ portletDisplay.setURLBack(backURL);
 </liferay-frontend:edit-form>
 
 <c:if test="<%= !objectEntryDisplayContext.isReadOnly() %>">
-	<aui:script require="frontend-js-web/index as frontendJsWeb">
-		const {createPortletURL} = frontendJsWeb;
-
+	<aui:script sandbox="<%= true %>">
 		function <portlet:namespace />getExternalReferenceCode() {
 			return String(
 				'<%= (objectEntry == null) ? "" : objectEntry.getExternalReferenceCode() %>'
@@ -228,7 +226,7 @@ portletDisplay.setURLBack(backURL);
 									});
 
 									response.json().then((payload) => {
-										const portletURL = createPortletURL(
+										const portletURL = Liferay.Util.PortletURL.createPortletURL(
 											'<%= currentURLObj %>',
 											{
 												externalReferenceCode:

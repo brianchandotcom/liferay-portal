@@ -21,18 +21,22 @@
 
 </aui:select>
 
-<aui:script require="users-admin-web/js/UserNameFields.es as UserNameFields">
-	var component = Liferay.component(
-		'<portlet:namespace />UserNameFields',
-		new UserNameFields.default(
-			{
-				baseURL: '<%= HtmlUtil.escapeJS(themeDisplay.getURLCurrent()) %>',
-				formNode: <portlet:namespace />fm,
-				languageIdSelectNode: '#<portlet:namespace />languageId',
-				portletNamespace: '<portlet:namespace />',
-				userNameFieldsNode: <portlet:namespace />userNameFields
-			}
-		)
+<aui:script>
+	import(themeDisplay.getPathContext() + '/o/users-admin-web/__liferay__/index.js').then(
+		({UserNameFields}) => {
+			Liferay.component(
+				'<portlet:namespace />UserNameFields',
+				new UserNameFields(
+					{
+						baseURL: '<%= HtmlUtil.escapeJS(themeDisplay.getURLCurrent()) %>',
+						formNode: <portlet:namespace />fm,
+						languageIdSelectNode: '#<portlet:namespace />languageId',
+						portletNamespace: '<portlet:namespace />',
+						userNameFieldsNode: <portlet:namespace />userNameFields
+					}
+				)
+			);
+		}
 	);
 </aui:script>
 

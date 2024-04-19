@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.Dom4JUtil;
 
 import org.dom4j.Element;
 
@@ -16,18 +17,7 @@ public class PlaywrightCompilationFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessageElement(Build build) {
-		String jobVariant = build.getJobVariant();
-
-		if (!jobVariant.contains("playwright-compile")) {
-			return null;
-		}
-
-		return getMessageElement(build.getConsoleText());
-	}
-
-	@Override
-	public Element getMessageElement(String consoleText) {
+	public String getMessage(String consoleText) {
 		int end = consoleText.indexOf(_TOKEN_END_SNIPPET);
 
 		end = consoleText.lastIndexOf("\n", end);
@@ -48,7 +38,23 @@ public class PlaywrightCompilationFailureMessageGenerator
 
 		start = consoleText.lastIndexOf("\n", start);
 
-		return getConsoleTextSnippetElement(consoleText, true, start, end);
+		return getConsoleTextSnippet(consoleText, true, start, end);
+	}
+
+	@Override
+	public Element getMessageElement(Build build) {
+		String jobVariant = build.getJobVariant();
+
+		if (!jobVariant.contains("playwright-compile")) {
+			return null;
+		}
+
+		return getMessageElement(build.getConsoleText());
+	}
+
+	@Override
+	public Element getMessageElement(String consoleText) {
+		return Dom4JUtil.toCodeSnippetElement(getMessage(consoleText));
 	}
 
 	private static final String _TOKEN_END_SNIPPET =

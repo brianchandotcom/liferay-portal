@@ -66,7 +66,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * @author István András Dézsi
+ * @author Alberto Chaparro
  * @generated
  */
 @Generated("")

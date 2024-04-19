@@ -122,9 +122,9 @@ public class DeepLTranslator implements Translator {
 	}
 
 	private String _getLanguageCode(String languageId) {
-		List<String> list = StringUtil.split(languageId, CharPool.UNDERLINE);
+		List<String> parts = StringUtil.split(languageId, CharPool.UNDERLINE);
 
-		String languageCode = list.get(0);
+		String languageCode = parts.get(0);
 
 		// DeepL expects ISO-639 language codes. ISO-639:1989 renamed "in" to
 		// "id." See LPD-23561.

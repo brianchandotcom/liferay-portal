@@ -6,20 +6,6 @@
 import {getRandomInt} from '../utils/getRandomInt';
 import {ApiHelpers} from './ApiHelpers';
 
-type TObjectAction = {
-	active?: boolean;
-	id?: number;
-	label: {
-		[key: string]: string;
-	};
-	name: string;
-	objectActionExecutorKey: string;
-	objectActionTriggerKey: string;
-	parameters: {
-		[key: string]: number;
-	};
-};
-
 export class ObjectAdminApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -60,11 +46,11 @@ export class ObjectAdminApiHelper {
 		);
 	}
 
-	async postObjectDefinitionByExternalRefernceCodeObjectAction(
+	async postObjectActionByExternalReferenceCode(
 		externalReferenceCode: string,
-		objectAction?: TObjectAction
-	): Promise<TObjectAction> {
-		return this.apiHelpers.post(
+		objectAction?: Partial<ObjectAction>
+	): Promise<ObjectAction> {
+		return this.apiHelpers.post<Partial<ObjectAction>>(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${externalReferenceCode}/object-actions`,
 			{data: objectAction}
 		);
@@ -76,6 +62,16 @@ export class ObjectAdminApiHelper {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${objectRelationship.objectDefinitionExternalReferenceCode1}/object-relationships`,
 			{data: objectRelationship}
+		);
+	}
+
+	async postObjectValidation(
+		objectDefinitionExternalReferenceCode: string,
+		objectValidation: ObjectValidation
+	) {
+		return this.apiHelpers.post<ObjectValidation>(
+			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${objectDefinitionExternalReferenceCode}/object-validation-rules`,
+			{data: objectValidation}
 		);
 	}
 

@@ -45,6 +45,44 @@ interface NameValueObject {
 	value: string;
 }
 
+interface ObjectAction {
+	active: boolean;
+	conditionExpression?: string;
+	description?: string;
+	errorMessage: LocalizedValue<string>;
+	id?: number;
+	label: LocalizedValue<string>;
+	name: string;
+	objectActionExecutorKey: string;
+	objectActionTriggerKey: string;
+	objectDefinitionId?: number;
+	objectDefinitionsRelationshipsURL: string;
+	parameters: ObjectActionParameters;
+	script?: string;
+	system: boolean;
+}
+
+interface ObjectActionParameters {
+	lineCount?: number;
+	notificationTemplateExternalReferenceCode?: string;
+	notificationTemplateId?: number;
+	objectDefinitionExternalReferenceCode?: string;
+	objectDefinitionId?: number;
+	predefinedValues?: PredefinedValue[];
+	relatedObjectEntries?: boolean;
+	script?: string;
+	secret?: string;
+	system?: boolean;
+	url?: string;
+}
+
+interface PredefinedValue {
+	businessType: ObjectFieldBusinessTypeName;
+	inputAsValue: boolean;
+	label: LocalizedValue<string>;
+	name: string;
+	value: string;
+}
 interface ObjectDefinition {
 	accountEntryRestricted: boolean;
 	accountEntryRestrictedObjectFieldId: string;
@@ -269,6 +307,28 @@ type ObjectRelationshipType = 'manyToMany' | 'oneToMany' | 'oneToOne';
 interface ObjectState {
 	key: string;
 	objectStateTransitions: {key: string}[];
+}
+
+interface ObjectValidation {
+	active: boolean;
+	description?: string;
+	engine: string;
+	engineLabel: string;
+	errorLabel: LocalizedValue<string>;
+	id?: number;
+	lineCount?: number;
+	name: LocalizedValue<string>;
+	objectValidationRuleSettings?: ObjectValidationRuleSetting[];
+	outputType?: string;
+	script: string;
+	system?: boolean;
+}
+
+interface ObjectValidationRuleSetting {
+	name:
+		| 'compositeKeyObjectFieldExternalReferenceCode'
+		| 'outputObjectFieldExternalReferenceCode';
+	value: string;
 }
 
 interface PickListItem {

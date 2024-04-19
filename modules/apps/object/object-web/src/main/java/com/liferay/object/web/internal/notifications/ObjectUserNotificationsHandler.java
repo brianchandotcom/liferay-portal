@@ -69,7 +69,7 @@ public class ObjectUserNotificationsHandler
 
 			return PortletURLBuilder.create(
 				requestBackedPortletURLFactory.createActionURL(
-					ConfigurationAdminPortletKeys.SYSTEM_SETTINGS)
+					ConfigurationAdminPortletKeys.INSTANCE_SETTINGS)
 			).setMVCRenderCommandName(
 				"/configuration_admin/edit_configuration"
 			).setRedirect(

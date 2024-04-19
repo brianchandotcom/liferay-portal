@@ -19,7 +19,7 @@ public class PoshiTestFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessageElement(String consoleText) {
+	public String getMessage(String consoleText) {
 		Matcher poshiTestFailureMatcher = _poshiTestFailurePattern.matcher(
 			consoleText);
 
@@ -39,12 +39,26 @@ public class PoshiTestFailureMessageGenerator
 
 		start = consoleText.lastIndexOf("\n", start);
 
+		return getConsoleTextSnippet(consoleText, true, start, end);
+	}
+
+	@Override
+	public Element getMessageElement(String consoleText) {
+		Matcher poshiTestFailureMatcher = _poshiTestFailurePattern.matcher(
+			consoleText);
+
+		if (!poshiTestFailureMatcher.find()) {
+			return null;
+		}
+
+		String failedPoshiTaskToken = poshiTestFailureMatcher.group(1);
+
 		return Dom4JUtil.getNewElement(
 			"div", null,
 			Dom4JUtil.getNewElement(
 				"p", null, "POSHI Test Failure: ",
 				Dom4JUtil.getNewElement("strong", null, failedPoshiTaskToken)),
-			getConsoleTextSnippetElement(consoleText, true, start, end));
+			Dom4JUtil.toCodeSnippetElement(getMessage(consoleText)));
 	}
 
 	private static final String _TOKEN_JAVA_LANG_EXCEPTION =

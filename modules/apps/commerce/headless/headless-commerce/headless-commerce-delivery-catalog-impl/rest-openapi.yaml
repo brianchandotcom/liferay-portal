@@ -223,6 +223,11 @@ components:
                 siteId:
                     format: int64
                     type: integer
+                title:
+                    description:
+                        Category Title
+                    readOnly: true
+                    type: string
                 vocabulary:
                     example: Default Vocabulary
                     readOnly: true

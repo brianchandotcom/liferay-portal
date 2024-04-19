@@ -411,6 +411,14 @@ components:
                 siteId:
                     format: int64
                     type: integer
+                title:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: Category Title EN
+                        hr_HR: Category Title HR
+                        hu_HU: Category Title HU
+                    type: object
                 vocabulary:
                     example: Default Vocabulary
                     readOnly: true

@@ -1039,95 +1039,101 @@ public class GetEntryRenderDataMVCResourceCommand
 			groupId = groupedModel.getGroupId();
 		}
 
-		WorkflowInstanceLink workflowInstanceLink =
-			_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
-				ctEntry.getCompanyId(), groupId,
-				_portal.getClassName(ctEntry.getModelClassNameId()),
-				ctEntry.getModelClassPK());
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctEntry.getCtCollectionId())) {
 
-		if (workflowInstanceLink == null) {
-			return new LinkedHashMap<>();
-		}
+			WorkflowInstanceLink workflowInstanceLink =
+				_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
+					ctEntry.getCompanyId(), groupId,
+					_portal.getClassName(ctEntry.getModelClassNameId()),
+					ctEntry.getModelClassPK());
 
-		List<WorkflowTask> workflowTasks =
-			_workflowTaskManager.getWorkflowTasksByWorkflowInstance(
-				ctEntry.getCompanyId(), null,
-				workflowInstanceLink.getWorkflowInstanceId(), false, 0, 1,
-				null);
-
-		if (workflowTasks.isEmpty()) {
-			return new LinkedHashMap<>();
-		}
-
-		Format format = FastDateFormatFactoryUtil.getDateTime(
-			themeDisplay.getLocale(), themeDisplay.getTimeZone());
-		WorkflowTask workflowTask = workflowTasks.get(0);
-
-		return LinkedHashMapBuilder.put(
-			"status",
-			() -> {
-				Map<String, Object> modelAttributes =
-					model.getModelAttributes();
-
-				return String.valueOf(modelAttributes.get("status"));
+			if (workflowInstanceLink == null) {
+				return new LinkedHashMap<>();
 			}
-		).put(
-			"assigned-to",
-			() -> {
-				if (!workflowTask.isAssignedToSingleUser()) {
-					return _language.get(themeDisplay.getLocale(), "nobody");
+
+			List<WorkflowTask> workflowTasks =
+				_workflowTaskManager.getWorkflowTasksByWorkflowInstance(
+					ctEntry.getCompanyId(), null,
+					workflowInstanceLink.getWorkflowInstanceId(), false, 0, 1,
+					null);
+
+			if (workflowTasks.isEmpty()) {
+				return new LinkedHashMap<>();
+			}
+
+			Format format = FastDateFormatFactoryUtil.getDateTime(
+				themeDisplay.getLocale(), themeDisplay.getTimeZone());
+			WorkflowTask workflowTask = workflowTasks.get(0);
+
+			return LinkedHashMapBuilder.put(
+				"status",
+				() -> {
+					Map<String, Object> modelAttributes =
+						model.getModelAttributes();
+
+					return String.valueOf(modelAttributes.get("status"));
 				}
+			).put(
+				"assigned-to",
+				() -> {
+					if (!workflowTask.isAssignedToSingleUser()) {
+						return _language.get(
+							themeDisplay.getLocale(), "nobody");
+					}
 
-				return _portal.getUserName(
-					workflowTask.getAssigneeUserId(),
-					String.valueOf(workflowTask.getAssigneeUserId()));
-			}
-		).put(
-			"task-name", workflowTask.getLabel(themeDisplay.getLocale())
-		).put(
-			"create-date", format.format(workflowTask.getCreateDate())
-		).put(
-			"due-date",
-			() -> {
-				if (workflowTask.getDueDate() != null) {
-					return format.format(workflowTask.getDueDate());
+					return _portal.getUserName(
+						workflowTask.getAssigneeUserId(),
+						String.valueOf(workflowTask.getAssigneeUserId()));
 				}
+			).put(
+				"task-name", workflowTask.getLabel(themeDisplay.getLocale())
+			).put(
+				"create-date", format.format(workflowTask.getCreateDate())
+			).put(
+				"due-date",
+				() -> {
+					if (workflowTask.getDueDate() != null) {
+						return format.format(workflowTask.getDueDate());
+					}
 
-				return _language.get(themeDisplay.getLocale(), "never");
-			}
-		).put(
-			"usages",
-			() -> {
-				HttpServletRequest httpServletRequest =
-					themeDisplay.getRequest();
+					return _language.get(themeDisplay.getLocale(), "never");
+				}
+			).put(
+				"usages",
+				() -> {
+					HttpServletRequest httpServletRequest =
+						themeDisplay.getRequest();
 
-				return PortletURLBuilder.create(
-					PortletURLFactoryUtil.create(
-						httpServletRequest, PortletKeys.MY_WORKFLOW_TASK,
-						PortletRequest.RENDER_PHASE)
-				).setMVCPath(
-					"/view_layout_classed_model_usages.jsp"
-				).setRedirect(
-					PortletURLBuilder.create(
+					return PortletURLBuilder.create(
 						PortletURLFactoryUtil.create(
-							httpServletRequest, CTPortletKeys.PUBLICATIONS,
+							httpServletRequest, PortletKeys.MY_WORKFLOW_TASK,
 							PortletRequest.RENDER_PHASE)
-					).setMVCRenderCommandName(
-						"/change_tracking/view_change"
+					).setMVCPath(
+						"/view_layout_classed_model_usages.jsp"
+					).setRedirect(
+						PortletURLBuilder.create(
+							PortletURLFactoryUtil.create(
+								httpServletRequest, CTPortletKeys.PUBLICATIONS,
+								PortletRequest.RENDER_PHASE)
+						).setMVCRenderCommandName(
+							"/change_tracking/view_change"
+						).setParameter(
+							"ctCollectionId", ctEntry.getCtCollectionId()
+						).setParameter(
+							"ctEntryId", ctEntry.getCtEntryId()
+						).buildString()
 					).setParameter(
-						"ctCollectionId", ctEntry.getCtCollectionId()
+						"className", workflowInstanceLink.getClassName()
 					).setParameter(
-						"ctEntryId", ctEntry.getCtEntryId()
-					).buildString()
-				).setParameter(
-					"className", workflowInstanceLink.getClassName()
-				).setParameter(
-					"classPK", workflowInstanceLink.getClassPK()
-				).setParameter(
-					"workflowTaskId", workflowTask.getWorkflowTaskId()
-				).buildString();
-			}
-		).build();
+						"classPK", workflowInstanceLink.getClassPK()
+					).setParameter(
+						"workflowTaskId", workflowTask.getWorkflowTaskId()
+					).buildString();
+				}
+			).build();
+		}
 	}
 
 	private String _getWorkflowViewHTML(

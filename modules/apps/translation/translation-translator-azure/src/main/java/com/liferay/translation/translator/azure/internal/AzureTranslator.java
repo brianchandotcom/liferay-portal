@@ -5,9 +5,7 @@
 
 package com.liferay.translation.translator.azure.internal;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -19,6 +17,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.url.URLBuilder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.translation.translator.BaseTranslator;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
 import com.liferay.translation.translator.azure.internal.configuration.AzureTranslatorConfiguration;
@@ -26,7 +25,6 @@ import com.liferay.translation.translator.azure.internal.configuration.AzureTran
 import java.io.IOException;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.translation.translator.azure.internal.configuration.AzureTranslatorConfiguration",
 	service = Translator.class
 )
-public class AzureTranslator implements Translator {
+public class AzureTranslator extends BaseTranslator {
 
 	@Override
 	public boolean isEnabled(long companyId) throws ConfigurationException {
@@ -85,10 +83,10 @@ public class AzureTranslator implements Translator {
 					"api-version", "3.0"
 				).addParameter(
 					"from",
-					_getLanguageCode(translatorPacket.getSourceLanguageId())
+					getLanguageCode(translatorPacket.getSourceLanguageId())
 				).addParameter(
 					"to",
-					_getLanguageCode(translatorPacket.getTargetLanguageId())
+					getLanguageCode(translatorPacket.getTargetLanguageId())
 				).build());
 			options.setPost(true);
 
@@ -137,21 +135,6 @@ public class AzureTranslator implements Translator {
 		catch (IOException ioException) {
 			throw new PortalException(ioException);
 		}
-	}
-
-	private String _getLanguageCode(String languageId) {
-		List<String> parts = StringUtil.split(languageId, CharPool.UNDERLINE);
-
-		String languageCode = parts.get(0);
-
-		// Azure expects ISO-639 language codes. ISO-639:1989 renamed "in" to
-		// "id." See LPD-23561.
-
-		if (languageCode.equals("in")) {
-			return "id";
-		}
-
-		return languageCode;
 	}
 
 	private Map<String, String> _getTranslatedFieldsMap(

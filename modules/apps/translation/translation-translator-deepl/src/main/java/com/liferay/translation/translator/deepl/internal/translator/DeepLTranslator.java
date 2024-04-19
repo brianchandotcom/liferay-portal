@@ -5,7 +5,6 @@
 
 package com.liferay.translation.translator.deepl.internal.translator;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.translation.exception.TranslatorException;
+import com.liferay.translation.translator.BaseTranslator;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
 import com.liferay.translation.translator.deepl.internal.configuration.DeepLTranslatorConfiguration;
@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.translation.translator.deepl.internal.configuration.DeepLTranslatorConfiguration",
 	service = Translator.class
 )
-public class DeepLTranslator implements Translator {
+public class DeepLTranslator extends BaseTranslator {
 
 	@Override
 	public boolean isEnabled(long companyId) throws ConfigurationException {
@@ -73,7 +73,7 @@ public class DeepLTranslator implements Translator {
 		List<String> supportedLanguageCodes = _getSupportedLanguageCodes(
 			deepLTranslatorConfiguration);
 
-		String targetLanguageCode = _getLanguageCode(
+		String targetLanguageCode = getLanguageCode(
 			translatorPacket.getTargetLanguageId());
 
 		if (!supportedLanguageCodes.contains(targetLanguageCode)) {
@@ -88,7 +88,7 @@ public class DeepLTranslator implements Translator {
 		Map<String, String> translatedFieldsMap = _translate(
 			deepLTranslatorConfiguration, translatorPacket.getFieldsMap(),
 			translatorPacket.getHTMLMap(),
-			_getLanguageCode(translatorPacket.getSourceLanguageId()),
+			getLanguageCode(translatorPacket.getSourceLanguageId()),
 			targetLanguageCode);
 
 		return new TranslatorPacket() {
@@ -119,21 +119,6 @@ public class DeepLTranslator implements Translator {
 			}
 
 		};
-	}
-
-	private String _getLanguageCode(String languageId) {
-		List<String> parts = StringUtil.split(languageId, CharPool.UNDERLINE);
-
-		String languageCode = parts.get(0);
-
-		// DeepL expects ISO-639 language codes. ISO-639:1989 renamed "in" to
-		// "id." See LPD-23561.
-
-		if (languageCode.equals("in")) {
-			StringUtil.toUpperCase("id");
-		}
-
-		return StringUtil.toUpperCase(languageCode);
 	}
 
 	private List<String> _getSupportedLanguageCodes(

@@ -12,8 +12,6 @@ import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
 
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -21,6 +19,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.translation.exception.TranslatorException;
+import com.liferay.translation.translator.BaseTranslator;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
 import com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration;
@@ -47,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration",
 	service = Translator.class
 )
-public class GoogleCloudTranslator implements Translator {
+public class GoogleCloudTranslator extends BaseTranslator {
 
 	@Override
 	public boolean isEnabled(long companyId) throws ConfigurationException {
@@ -79,9 +78,9 @@ public class GoogleCloudTranslator implements Translator {
 			return translatorPacket;
 		}
 
-		String sourceLanguageCode = _getLanguageCode(
+		String sourceLanguageCode = getLanguageCode(
 			translatorPacket.getSourceLanguageId());
-		String targetLanguageCode = _getLanguageCode(
+		String targetLanguageCode = getLanguageCode(
 			translatorPacket.getTargetLanguageId());
 
 		Translate translate = _getTranslate(googleCloudTranslatorConfiguration);
@@ -142,21 +141,6 @@ public class GoogleCloudTranslator implements Translator {
 			}
 
 		};
-	}
-
-	private String _getLanguageCode(String languageId) {
-		List<String> parts = StringUtil.split(languageId, CharPool.UNDERLINE);
-
-		String languageCode = parts.get(0);
-
-		// Google Cloud expects ISO-639 language codes. ISO-639:1989 renamed
-		// "in" to "id." See LPD-23561.
-
-		if (languageCode.equals("in")) {
-			return "id";
-		}
-
-		return languageCode;
 	}
 
 	private Translate _getTranslate(

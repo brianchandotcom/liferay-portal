@@ -80,9 +80,9 @@ const CompareRunsOutlet = () => {
 							title: i18n.translate('components'),
 						},
 						{
-							active: pathname.endsWith('/cases'),
-							path: 'cases',
-							title: i18n.translate('cases'),
+							active: pathname.endsWith('/details'),
+							path: 'details',
+							title: i18n.translate('details'),
 						},
 					].map((tab, index) => (
 						<ClayTabs.Item

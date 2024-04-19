@@ -319,7 +319,7 @@ const TestrayRoute = () => (
 							path="components"
 						/>
 
-						<Route element={<CompareRunsCases />} path="cases" />
+						<Route element={<CompareRunsCases />} path="details" />
 
 						<Route element={<CompareRunsTeams />} path="teams" />
 					</Route>

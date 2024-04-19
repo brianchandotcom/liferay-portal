@@ -85,7 +85,7 @@ const CompareRunDetails: React.FC<CompareRunsDetailsProps> = ({runs = []}) => {
 						managementToolbarProps={{
 							applyFilters: true,
 							display: {columns: false},
-							filterSchema: 'compareRunsTeamsAndComponents',
+							filterSchema: 'compareRunsCases',
 							visible: false,
 						}}
 						matrixProps={{title: 'Runs'}}

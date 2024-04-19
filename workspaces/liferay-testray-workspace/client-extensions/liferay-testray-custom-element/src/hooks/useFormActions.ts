@@ -137,7 +137,7 @@ const useFormActions = (): Form => {
 					value = [
 						{
 							label: options.item(options.selectedIndex).label,
-							value: Number(value),
+							value: Number(value) || value,
 						},
 					];
 				}

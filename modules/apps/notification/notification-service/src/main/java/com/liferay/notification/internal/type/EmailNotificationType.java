@@ -7,6 +7,7 @@ package com.liferay.notification.internal.type;
 
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -467,6 +468,7 @@ public class EmailNotificationType extends BaseNotificationType {
 			new RoleEmailProvider(
 				_accountEntryLocalService,
 				_accountEntryOrganizationRelLocalService,
+				_accountEntryUserRelLocalService, _groupLocalService,
 				_objectDefinitionLocalService, _objectFieldLocalService,
 				_organizationLocalService, _roleLocalService,
 				_userGroupRoleLocalService, _userLocalService));
@@ -708,6 +710,9 @@ public class EmailNotificationType extends BaseNotificationType {
 	@Reference
 	private AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
+
+	@Reference
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	private final Map<String, EmailProvider> _emailProviders = new HashMap<>();
 

@@ -5,10 +5,13 @@
 
 package com.liferay.notification.internal.type.email.provider;
 
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
+import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.object.model.ObjectDefinition;
@@ -18,11 +21,13 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
@@ -47,6 +52,8 @@ public class RoleEmailProvider implements EmailProvider {
 		AccountEntryLocalService accountEntryLocalService,
 		AccountEntryOrganizationRelLocalService
 			accountEntryOrganizationRelLocalService,
+		AccountEntryUserRelLocalService accountEntryUserRelLocalService,
+		GroupLocalService groupLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
 		OrganizationLocalService organizationLocalService,
@@ -57,6 +64,8 @@ public class RoleEmailProvider implements EmailProvider {
 		_accountEntryLocalService = accountEntryLocalService;
 		_accountEntryOrganizationRelLocalService =
 			accountEntryOrganizationRelLocalService;
+		_accountEntryUserRelLocalService = accountEntryUserRelLocalService;
+		_groupLocalService = groupLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_organizationLocalService = organizationLocalService;
@@ -161,27 +170,46 @@ public class RoleEmailProvider implements EmailProvider {
 				continue;
 			}
 
-			if ((role.getType() == RoleConstants.TYPE_ACCOUNT) ||
-				(role.getType() == RoleConstants.TYPE_ORGANIZATION)) {
-
-				for (long groupId : groupIdsMap.get(role.getType())) {
-					for (UserGroupRole userGroupRole :
-							_userGroupRoleLocalService.
-								getUserGroupRolesByGroupAndRole(
-									groupId, role.getRoleId())) {
-
-						User user = userGroupRole.getUser();
-
-						emailAddresses.add(user.getEmailAddress());
-					}
-				}
-			}
-			else {
+			if (role.getType() == RoleConstants.TYPE_REGULAR) {
 				List<User> users = _userLocalService.getRoleUsers(
 					role.getRoleId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null);
 
 				for (User user : users) {
+					emailAddresses.add(user.getEmailAddress());
+				}
+
+				continue;
+			}
+
+			for (long groupId : groupIdsMap.get(role.getType())) {
+				if (StringUtil.equals(
+						role.getName(),
+						AccountRoleConstants.
+							REQUIRED_ROLE_NAME_ACCOUNT_MEMBER)) {
+
+					Group group = _groupLocalService.fetchGroup(groupId);
+
+					for (AccountEntryUserRel accountEntryUserRel :
+							_accountEntryUserRelLocalService.
+								getAccountEntryUserRelsByAccountEntryId(
+									group.getClassPK())) {
+
+						User user = accountEntryUserRel.getUser();
+
+						emailAddresses.add(user.getEmailAddress());
+					}
+
+					continue;
+				}
+
+				for (UserGroupRole userGroupRole :
+						_userGroupRoleLocalService.
+							getUserGroupRolesByGroupAndRole(
+								groupId, role.getRoleId())) {
+
+					User user = userGroupRole.getUser();
+
 					emailAddresses.add(user.getEmailAddress());
 				}
 			}
@@ -193,6 +221,9 @@ public class RoleEmailProvider implements EmailProvider {
 	private final AccountEntryLocalService _accountEntryLocalService;
 	private final AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
+	private final AccountEntryUserRelLocalService
+		_accountEntryUserRelLocalService;
+	private final GroupLocalService _groupLocalService;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final OrganizationLocalService _organizationLocalService;

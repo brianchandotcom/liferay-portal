@@ -491,7 +491,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				account.getDefaultShippingAccountAddressId(),
 				accountEntry.getDefaultShippingAddressId()));
 		accountEntry.setEmailAddress(_getEmailAddress(account, accountEntry));
-		accountEntry.setName(account.getName());
+		accountEntry.setName(
+			GetterUtil.get(account.getName(), accountEntry.getName()));
 		accountEntry.setTaxIdNumber(
 			GetterUtil.get(account.getTaxId(), accountEntry.getTaxIdNumber()));
 		accountEntry.setStatus(

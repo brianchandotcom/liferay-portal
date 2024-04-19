@@ -64,11 +64,11 @@ public class PortalAcceptancePullRequestJob
 	protected Set<String> getRawBatchNames() {
 		Set<String> batchNames = super.getRawBatchNames();
 
-		if (_checkAllFilesInDirectory("modules")) {
+		if (_hasOnlyFilesInDirectory("modules")) {
 			batchNames.remove("semantic-versioning-jdk8");
 		}
 
-		if (_isRelevantTestSuite() && _checkAllFilesInDirectory("portal-web")) {
+		if (_isRelevantTestSuite() && _hasOnlyFilesInDirectory("portal-web")) {
 			String[] portalWebOnlyBatchNameMarkers = {
 				"compile-jsp", "functional", "portal-web", "source-format"
 			};
@@ -93,7 +93,7 @@ public class PortalAcceptancePullRequestJob
 		return batchNames;
 	}
 
-	private boolean _checkAllFilesInDirectory(String directoryName) {
+	private boolean _hasOnlyFilesInDirectory(String directoryName) {
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
 		File directory = new File(

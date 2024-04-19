@@ -1,4 +1,6 @@
 liferay-marketplace-custom-element:
+    properties:
+        featureFlags: LPD-20229
     urls:
         - http://localhost:5173/@vite/client
         - http://localhost:5173/@vite/refresh.ts

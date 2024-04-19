@@ -10,10 +10,10 @@ import {useNavigate, useOutletContext} from 'react-router-dom';
 import useSWR from 'swr';
 
 import Page from '../../../../components/Page';
+import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import SearchBuilder from '../../../../core/SearchBuilder';
 import {useAccount} from '../../../../hooks/data/useAccounts';
 import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
-import {isCloudEnvironment} from '../../../../utils/util';
 import PublishedSolutionsTable from './PublishedSolutionsTable';
 
 const Solutions = () => {
@@ -21,6 +21,7 @@ const Solutions = () => {
 	const {catalogId} = useOutletContext<any>();
 	const {data: supplierAccount} = useAccount();
 	const navigate = useNavigate();
+	const {properties} = useMarketplaceContext();
 
 	const {
 		data: publishedSolutionsTable = {},
@@ -58,7 +59,7 @@ const Solutions = () => {
 			description="Manage and publish solutions on the Marketplace"
 			pageRendererProps={{error, isLoading}}
 			rightButton={
-				!isCloudEnvironment() && (
+				properties.featureFlags?.includes('LPD-20229') && (
 					<ClayButton
 						disabled={!(catalogId && catalogId > 0)}
 						onClick={() => navigate('/solution/publisher')}

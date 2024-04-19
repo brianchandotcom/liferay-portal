@@ -264,6 +264,7 @@ type DefaultProperties = {
 	cloudBaseURL: string;
 	contactSupportUrl: string;
 	eulaBaseURL: string;
+	featureFlags?: string[];
 	marketoFormId: string;
 };
 

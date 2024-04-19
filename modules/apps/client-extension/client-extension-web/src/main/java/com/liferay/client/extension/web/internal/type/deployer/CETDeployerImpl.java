@@ -210,9 +210,7 @@ public class CETDeployerImpl implements CETDeployer {
 		serviceRegistrations.add(
 			_register(
 				Portlet.class,
-				new IFrameCETPortlet(
-					iFrameCET, portletId,
-					_portal)));
+				new IFrameCETPortlet(iFrameCET, portletId, _portal)));
 
 		return serviceRegistrations;
 	}

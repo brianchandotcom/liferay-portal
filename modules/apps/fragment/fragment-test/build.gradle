@@ -7,6 +7,7 @@ dependencies {
 	testIntegrationImplementation group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	testIntegrationImplementation group: "org.jsoup", name: "jsoup", version: "1.15.3"
 	testIntegrationImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testIntegrationImplementation project(":apps:asset:asset-link-api")
 	testIntegrationImplementation project(":apps:change-tracking:change-tracking-test-util")
 	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
 	testIntegrationImplementation project(":apps:fragment:fragment-api")
@@ -14,6 +15,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:fragment:fragment-service")
 	testIntegrationImplementation project(":apps:info:info-api")
 	testIntegrationImplementation project(":apps:item-selector:item-selector-api")
+	testIntegrationImplementation project(":apps:layout:layout-api")
 	testIntegrationImplementation project(":apps:layout:layout-display-page-api")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-api")
 	testIntegrationImplementation project(":apps:layout:layout-test-util")

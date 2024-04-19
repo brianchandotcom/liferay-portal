@@ -227,9 +227,9 @@ public class ExportImportTaskResourcePerformanceTest {
 	}
 
 	private String _createBatchJSON(String className, int count) {
-		StringBundler batchJsonSB = new StringBundler();
+		StringBundler sb = new StringBundler();
 
-		batchJsonSB.append(StringPool.OPEN_BRACKET);
+		sb.append(StringPool.OPEN_BRACKET);
 
 		for (int i = 0; i < count; i++) {
 			String alternateName = RandomTestUtil.randomString(
@@ -264,16 +264,16 @@ public class ExportImportTaskResourcePerformanceTest {
 						8, UniqueStringRandomizerBumper.INSTANCE),
 					true, ""));
 
-			batchJsonSB.append(json);
+			sb.append(json);
 
 			if (i < (count - 1)) {
-				batchJsonSB.append(StringPool.COMMA);
+				sb.append(StringPool.COMMA);
 			}
 		}
 
-		batchJsonSB.append(StringPool.CLOSE_BRACKET);
+		sb.append(StringPool.CLOSE_BRACKET);
 
-		return batchJsonSB.toString();
+		return sb.toString();
 	}
 
 	private String _getHttpResponseContent(String url) throws IOException {

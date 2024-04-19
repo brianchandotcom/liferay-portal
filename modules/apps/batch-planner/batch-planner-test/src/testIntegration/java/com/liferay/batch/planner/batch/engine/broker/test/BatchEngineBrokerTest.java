@@ -363,7 +363,7 @@ public class BatchEngineBrokerTest {
 			"TestObject", ObjectDefinitionConstants.SCOPE_COMPANY,
 			TestPropsValues.getUser());
 
-		File file = _createJsonImportFile(
+		File file = _createJSONImportFile(
 			_addDLFileEntry(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()),
 			_objectDefinition1.getExternalReferenceCode(), _OBJECT_ENTRY_ERC_1,
@@ -770,7 +770,7 @@ public class BatchEngineBrokerTest {
 		return file;
 	}
 
-	private File _createJsonImportFile(
+	private File _createJSONImportFile(
 			DLFileEntry dlFileEntry, String objectDefinitionERC,
 			String objectEntryERC, String templateName)
 		throws Exception {
@@ -1489,7 +1489,7 @@ public class BatchEngineBrokerTest {
 			long groupId, String objectEntryERC)
 		throws Exception {
 
-		File file = _createJsonImportFile(
+		File file = _createJSONImportFile(
 			_addDLFileEntry(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()),
 			_objectDefinition1.getExternalReferenceCode(), objectEntryERC,

@@ -387,7 +387,7 @@ public class PortalInstanceResourceTest
 
 		String firstName = RandomTestUtil.randomString();
 		String lastName = RandomTestUtil.randomString();
-		String email = firstName + "@liferay.com";
+		String email = StringUtil.toLowerCase(firstName + "@liferay.com");
 
 		randomPortalInstance.setAdmin(
 			Admin.toDTO(

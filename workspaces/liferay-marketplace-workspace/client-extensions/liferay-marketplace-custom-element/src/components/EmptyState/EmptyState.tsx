@@ -36,7 +36,7 @@ export const States = {
 	 * The user has emptied the dataset for a good cause.
 	 * For example, all the notifications have been addressed, resulting in a clean state.
 	 */
-	SUCCESS: `${Liferay.ThemeDisplay.getPathThemeImages()}/states/success_state.gif`,
+	SUCCESS: `${Liferay.ThemeDisplay.getPathThemeImages()}/states/success_state.svg`,
 };
 
 export type EmptyStateProps = {

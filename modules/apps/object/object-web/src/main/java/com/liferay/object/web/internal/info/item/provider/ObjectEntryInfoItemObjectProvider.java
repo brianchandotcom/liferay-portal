@@ -145,7 +145,8 @@ public class ObjectEntryInfoItemObjectProvider
 		return objectEntries;
 	}
 
-	private static final String _OBJECT_ENTRIES = "OBJECT_ENTRIES";
+	private static final String _OBJECT_ENTRIES =
+		ObjectEntryInfoItemObjectProvider.class.getName() + "#OBJECT_ENTRIES";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryInfoItemObjectProvider.class);

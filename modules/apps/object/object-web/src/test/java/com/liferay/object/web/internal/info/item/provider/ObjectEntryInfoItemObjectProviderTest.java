@@ -450,7 +450,8 @@ public class ObjectEntryInfoItemObjectProviderTest {
 		return proxyObjectEntry;
 	}
 
-	private static final String _OBJECT_ENTRIES_KEY = "OBJECT_ENTRIES";
+	private static final String _OBJECT_ENTRIES =
+		ObjectEntryInfoItemObjectProvider.class.getName() + "#OBJECT_ENTRIES";
 
 	private static final MockedStatic<ObjectEntryUtil>
 		_objectEntryUtilMockedStatic = Mockito.mockStatic(

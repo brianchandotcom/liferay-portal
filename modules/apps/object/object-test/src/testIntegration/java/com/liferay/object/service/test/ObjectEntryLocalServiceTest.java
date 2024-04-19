@@ -1696,7 +1696,7 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddOrUpdateObjectEntry() throws Exception {
+	public void testAddOrUpdateObjectEntryWithObjectActions() throws Exception {
 		_assertCount(0);
 
 		Map<String, Serializable> values =
@@ -3203,7 +3203,7 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateObjectEntryWithActions() throws Exception {
+	public void testAddOrUpdateObjectEntry() throws Exception {
 		ObjectDefinition publishedObjectDefinition =
 			_publishCustomObjectDefinition(
 				false,

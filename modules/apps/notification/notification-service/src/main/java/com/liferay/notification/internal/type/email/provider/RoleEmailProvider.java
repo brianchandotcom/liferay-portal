@@ -8,7 +8,6 @@ package com.liferay.notification.internal.type.email.provider;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
-import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
@@ -151,8 +149,7 @@ public class RoleEmailProvider implements EmailProvider {
 	}
 
 	private String _getEmailAddresses(
-			long companyId, Map<Integer, long[]> groupIdsMap, Object value)
-		throws PortalException {
+		long companyId, Map<Integer, long[]> groupIdsMap, Object value) {
 
 		Set<String> emailAddresses = new HashSet<>();
 
@@ -171,61 +168,57 @@ public class RoleEmailProvider implements EmailProvider {
 			}
 
 			if (role.getType() == RoleConstants.TYPE_REGULAR) {
-				List<User> users = _userLocalService.getRoleUsers(
-					role.getRoleId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null);
-
-				for (User user : users) {
-					emailAddresses.add(user.getEmailAddress());
-				}
+				ListUtil.isNotEmptyForEach(
+					_userLocalService.getRoleUsers(
+						role.getRoleId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+						null),
+					user -> emailAddresses.add(user.getEmailAddress()));
 
 				continue;
 			}
 
 			for (long groupId : groupIdsMap.get(role.getType())) {
-				if (StringUtil.equals(
-						role.getName(),
+				String roleName = role.getName();
+
+				if (roleName.equals(
 						AccountRoleConstants.
 							REQUIRED_ROLE_NAME_ACCOUNT_MEMBER)) {
 
 					Group group = _groupLocalService.fetchGroup(groupId);
 
-					for (AccountEntryUserRel accountEntryUserRel :
-							_accountEntryUserRelLocalService.
-								getAccountEntryUserRelsByAccountEntryId(
-									group.getClassPK())) {
+					ListUtil.isNotEmptyForEach(
+						_accountEntryUserRelLocalService.
+							getAccountEntryUserRelsByAccountEntryId(
+								group.getClassPK()),
+						accountEntryUserRel -> {
+							User user = accountEntryUserRel.fetchUser();
 
-						User user = accountEntryUserRel.getUser();
-
-						emailAddresses.add(user.getEmailAddress());
-					}
-
-					continue;
+							if (user != null) {
+								emailAddresses.add(user.getEmailAddress());
+							}
+						});
 				}
-
-				if (StringUtil.equals(
-						role.getName(), RoleConstants.ORGANIZATION_USER)) {
-
+				else if (roleName.equals(RoleConstants.ORGANIZATION_USER)) {
 					Group group = _groupLocalService.fetchGroup(groupId);
 
-					for (User user :
-							_userLocalService.getOrganizationUsers(
-								group.getClassPK())) {
-
-						emailAddresses.add(user.getEmailAddress());
-					}
-
-					continue;
+					ListUtil.isNotEmptyForEach(
+						_userLocalService.getOrganizationUsers(
+							group.getClassPK()),
+						user -> emailAddresses.add(user.getEmailAddress()));
 				}
-
-				for (UserGroupRole userGroupRole :
+				else {
+					ListUtil.isNotEmptyForEach(
 						_userGroupRoleLocalService.
 							getUserGroupRolesByGroupAndRole(
-								groupId, role.getRoleId())) {
+								groupId, role.getRoleId()),
+						userGroupRole -> {
+							User user = _userLocalService.fetchUser(
+								userGroupRole.getUserId());
 
-					User user = userGroupRole.getUser();
-
-					emailAddresses.add(user.getEmailAddress());
+							if (user != null) {
+								emailAddresses.add(user.getEmailAddress());
+							}
+						});
 				}
 			}
 		}

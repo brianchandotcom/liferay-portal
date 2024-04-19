@@ -18,7 +18,7 @@ import {
  * path: 'a.b.c'
  * item: {a: {b: {c: [1, 2, 3]}}}
  * returns: [1, 2, 3]
- * 
+ *
  * path: 'a.b*'
  * item: {a: {b: {c: [1, 2, 3]}}}
  * returns: {c: [1, 2, 3]}

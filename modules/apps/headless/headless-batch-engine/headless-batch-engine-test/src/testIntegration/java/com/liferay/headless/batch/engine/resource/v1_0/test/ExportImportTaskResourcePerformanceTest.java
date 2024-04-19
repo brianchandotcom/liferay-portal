@@ -276,6 +276,17 @@ public class ExportImportTaskResourcePerformanceTest {
 		return sb.toString();
 	}
 
+	private TestEntityBatchEngineTaskItemDelegate
+		_getTestEntityBatchEngineTaskItemDelegate() {
+
+		return (TestEntityBatchEngineTaskItemDelegate)
+			_batchEngineTaskItemDelegateRegistry.getBatchEngineTaskItemDelegate(
+				0,
+				"com.liferay.headless.batch.engine.resource.v1_0.test." +
+					"TestEntity",
+				"export-import-task-resource-performance-test-entities");
+	}
+
 	private String _invoke(String url) throws IOException {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
@@ -288,17 +299,6 @@ public class ExportImportTaskResourcePerformanceTest {
 		Assert.assertEquals(200, response.getStatusCode());
 
 		return response.getContent();
-	}
-
-	private TestEntityBatchEngineTaskItemDelegate
-		_getTestEntityBatchEngineTaskItemDelegate() {
-
-		return (TestEntityBatchEngineTaskItemDelegate)
-			_batchEngineTaskItemDelegateRegistry.getBatchEngineTaskItemDelegate(
-				0,
-				"com.liferay.headless.batch.engine.resource.v1_0.test." +
-					"TestEntity",
-				"export-import-task-resource-performance-test-entities");
 	}
 
 	private Map<String, String> _splitClassName(String className) {

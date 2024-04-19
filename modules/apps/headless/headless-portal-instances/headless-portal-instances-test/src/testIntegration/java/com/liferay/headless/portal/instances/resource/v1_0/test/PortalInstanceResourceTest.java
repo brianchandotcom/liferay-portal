@@ -154,8 +154,7 @@ public class PortalInstanceResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"active", "admin", "companyId", "domain", "portalInstanceId",
-			"siteInitializerKey", "virtualHost"
+			"active", "companyId", "domain", "portalInstanceId", "virtualHost"
 		};
 	}
 

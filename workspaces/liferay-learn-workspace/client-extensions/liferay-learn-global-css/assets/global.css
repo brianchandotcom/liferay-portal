@@ -641,12 +641,10 @@ pre[class*='language-'] {
 	}
 }
 
-.learn-category {
-	a {
-		color: var(--color-neutral-10, #282934);
-		font-weight: 600;
-		text-decoration: underline;
-	}
+.learn-category a {
+	color: var(--color-neutral-10, #282934);
+	font-weight: 600;
+	text-decoration: underline;
 }
 
 .learn-search {

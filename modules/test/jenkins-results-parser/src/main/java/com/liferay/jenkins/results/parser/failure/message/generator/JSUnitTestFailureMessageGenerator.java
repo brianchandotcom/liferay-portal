@@ -22,6 +22,41 @@ public class JSUnitTestFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
+	public String getMessage(String consoleText) {
+		Matcher packageFailureMatcher = _packageFailurePattern.matcher(
+			consoleText);
+
+		if (!packageFailureMatcher.find()) {
+			return null;
+		}
+
+		List<String> packageFailureList = new ArrayList<>();
+
+		while (packageFailureMatcher.find()) {
+			String packageFailure = packageFailureMatcher.group(0);
+
+			if (!packageFailureList.contains(packageFailure)) {
+				packageFailureList.add(packageFailure);
+			}
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Build completed with ");
+		sb.append(packageFailureList.size());
+		sb.append(" failures");
+
+		int i = 0;
+
+		while (i <= 7) {
+			sb.append("\n* " + packageFailureList.get(i));
+			i++;
+		}
+
+		return sb.toString();
+	}
+
+	@Override
 	public Element getMessageElement(String consoleText) {
 		Matcher packageFailureMatcher = _packageFailurePattern.matcher(
 			consoleText);

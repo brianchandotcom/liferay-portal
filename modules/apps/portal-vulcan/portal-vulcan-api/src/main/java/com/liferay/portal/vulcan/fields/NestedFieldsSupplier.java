@@ -97,8 +97,8 @@ public class NestedFieldsSupplier<T> {
 			return null;
 		}
 
-		Map<String, UnsafeSupplier<Object, Exception>> nestedFieldValues =
-			new HashMap<>();
+		Map<String, UnsafeSupplier<Object, Exception>>
+			nestedFieldUnsafeSuppliers = new HashMap<>();
 
 		nestedFieldsContext.incrementCurrentDepth();
 
@@ -113,7 +113,7 @@ public class NestedFieldsSupplier<T> {
 				continue;
 			}
 
-			nestedFieldValues.put(
+			nestedFieldUnsafeSuppliers.put(
 				fieldName,
 				() -> {
 					NestedFieldsContext oldNestedFieldsContext =
@@ -133,7 +133,7 @@ public class NestedFieldsSupplier<T> {
 
 		nestedFieldsContext.decrementCurrentDepth();
 
-		return nestedFieldValues;
+		return nestedFieldUnsafeSuppliers;
 	}
 
 	private static boolean _mustProcessNestedFields(

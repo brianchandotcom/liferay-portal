@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Activate;
@@ -36,14 +37,30 @@ import org.osgi.service.component.annotations.Reference;
 public class PortalInstancesConfigurationFactory {
 
 	@Activate
-	protected void activate(Map<String, Object> properties)
-		throws PortalException {
-
+	protected void activate(Map<String, Object> properties) {
 		PortalInstancesConfiguration portalInstancesConfiguration =
 			ConfigurableUtil.createConfigurable(
 				PortalInstancesConfiguration.class, properties);
 
 		String webId = _getWebId(properties);
+
+		_portalInstancesExecutor.schedule(
+			() -> {
+				try {
+					_addInstance(portalInstancesConfiguration, webId);
+				}
+				catch (PortalException portalException) {
+					throw new RuntimeException(portalException);
+				}
+			},
+			portalInstancesConfiguration.delay(), TimeUnit.SECONDS);
+	}
+
+	private void _addInstance(
+			PortalInstancesConfiguration portalInstancesConfiguration,
+			String webId)
+		throws PortalException {
+
 		String virtualHostname = portalInstancesConfiguration.virtualHostname();
 		String mx = portalInstancesConfiguration.mx();
 		int maxUsers = portalInstancesConfiguration.maxUsers();
@@ -62,8 +79,13 @@ public class PortalInstancesConfigurationFactory {
 
 		if (company == null) {
 			company = _companyLocalService.addCompany(
-				null, webId, virtualHostname, mx, maxUsers, active, null, null,
-				null, null, null, null);
+				null, webId, virtualHostname, mx, maxUsers, active,
+				portalInstancesConfiguration.defaultAdminPassword(),
+				portalInstancesConfiguration.defaultAdminScreenName(),
+				portalInstancesConfiguration.defaultAdminEmailAddress(),
+				portalInstancesConfiguration.defaultAdminFirstName(),
+				portalInstancesConfiguration.defaultAdminMiddleName(),
+				portalInstancesConfiguration.defaultAdminLastName());
 
 			try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setWithSafeCloseable(
@@ -109,6 +131,9 @@ public class PortalInstancesConfigurationFactory {
 
 	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
+	private PortalInstancesExecutor _portalInstancesExecutor;
 
 	@Reference
 	private PortalInstancesLocalService _portalInstancesLocalService;

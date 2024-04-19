@@ -16,6 +16,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -177,11 +178,17 @@ public class DropZoneDocumentFragmentEntryProcessor
 		for (int i = 0; i < elements.size(); i++) {
 			Element element = elements.get(i);
 
-			String dropZoneHTML = _fragmentDropZoneRenderer.renderDropZone(
-				fragmentEntryProcessorContext.getHttpServletRequest(),
-				fragmentEntryProcessorContext.getHttpServletResponse(),
-				dropZoneItemIds.get(i), fragmentEntryProcessorContext.getMode(),
-				true);
+			String dropZoneHTML = StringPool.BLANK;
+
+			if (ListUtil.isNotEmpty(dropZoneItemIds) &&
+				(dropZoneItemIds.size() < i)) {
+
+				dropZoneHTML = _fragmentDropZoneRenderer.renderDropZone(
+					fragmentEntryProcessorContext.getHttpServletRequest(),
+					fragmentEntryProcessorContext.getHttpServletResponse(),
+					dropZoneItemIds.get(i),
+					fragmentEntryProcessorContext.getMode(), true);
+			}
 
 			Element dropZoneElement = new Element("div");
 

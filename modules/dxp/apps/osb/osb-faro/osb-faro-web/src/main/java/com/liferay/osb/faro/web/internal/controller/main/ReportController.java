@@ -218,6 +218,102 @@ public class ReportController extends BaseFaroController {
 		).build();
 	}
 
+	@GET
+	@Path("/export/csv/{type}/count")
+	public Object getCsvCount(
+			@QueryParam("assetId") String assetId,
+			@QueryParam("assetTitle") String assetTitle,
+			@QueryParam("assetType") String assetType,
+			@QueryParam("channelId") String channelId,
+			@QueryParam("fromDate") String fromDateString,
+			@PathParam("groupId") long groupId,
+			@QueryParam("query") String query,
+			@QueryParam("rangeKey") String rangeKey,
+			@QueryParam("toDate") String toDateString,
+			@PathParam("type") String type)
+		throws Exception {
+
+		if (!_csvExportTypes.contains(type)) {
+			return _reportControllerResponseFactory.create(
+				"The \"type\" query parameter must be either \"blog\", " +
+					"\"document\", \"form\", \"individual\", \"journal\", or " +
+						"\"page\".",
+				Response.Status.BAD_REQUEST);
+		}
+
+		HashMapBuilder.HashMapWrapper<String, List<String>> hashMapWrapper =
+			HashMapBuilder.<String, List<String>>put(
+				"assetId", Collections.singletonList(assetId)
+			).put(
+				"assetType", Collections.singletonList(assetType)
+			).put(
+				"channelId", Collections.singletonList(channelId)
+			).put(
+				"query", Collections.singletonList(query)
+			);
+
+		if (!StringUtil.equals(type, "individual") ||
+			Validator.isNotNull(assetType)) {
+
+			if (StringUtil.equalsIgnoreCase(rangeKey, "CUSTOM")) {
+				if (Validator.isBlank(fromDateString) ||
+					Validator.isBlank(toDateString)) {
+
+					return _reportControllerResponseFactory.create(
+						"The \"fromDate\" and \"toDate\" query parameters " +
+							"are mandatory and must be ISO 8601 compliant " +
+								_ISO_8601_DATE_FORMAT,
+						Response.Status.BAD_REQUEST);
+				}
+
+				LocalDateTime fromLocalDateTime;
+				LocalDateTime toLocalDateTime;
+
+				try {
+					fromLocalDateTime = _toUTCLocalDateTime(
+						fromDateString, LocalTime.MIN);
+					toLocalDateTime = _toUTCLocalDateTime(
+						toDateString, LocalTime.MAX);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+
+					return _reportControllerResponseFactory.create(
+						"Both dates in range must be ISO 8601 compliant " +
+							_ISO_8601_DATE_FORMAT,
+						Response.Status.BAD_REQUEST);
+				}
+
+				if (fromLocalDateTime.isAfter(toLocalDateTime)) {
+					return _reportControllerResponseFactory.create(
+						"The \"fromDate\" cannot be after \"toDate\"",
+						Response.Status.BAD_REQUEST);
+				}
+
+				hashMapWrapper = hashMapWrapper.put(
+					"fromDate",
+					Collections.singletonList(
+						fromLocalDateTime.format(_dateTimeDateTimeFormatter))
+				).put(
+					"toDate",
+					Collections.singletonList(
+						toLocalDateTime.format(_dateTimeDateTimeFormatter))
+				);
+			}
+			else {
+				hashMapWrapper = hashMapWrapper.put(
+					"rangeKey", Collections.singletonList(rangeKey));
+			}
+		}
+
+		Map<String, List<String>> queryParameters = hashMapWrapper.build();
+
+		return contactsEngineClient.getReportsExportCsvCount(
+			faroProjectLocalService.getFaroProjectByGroupId(groupId),
+			String.format("/reports/export/csv/%s/count", type),
+			queryParameters);
+	}
+
 	private LocalDateTime _toUTCLocalDateTime(
 		String dateString, LocalTime localTime) {
 

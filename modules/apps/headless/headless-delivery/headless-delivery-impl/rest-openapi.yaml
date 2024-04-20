@@ -5447,21 +5447,11 @@ components:
                     description:
                         The utility page template external reference code.
                     type: string
-                friendlyURL:
-                    # @review
-                    description:
-                        The utility page template friendly URL.
-                    type: string
                 name:
                     # @review
                     description:
                         The utility page template name.
                     type: string
-                privateLayout:
-                    # @review
-                    description:
-                        Specifies if the utility page template layout should be private.
-                    type: boolean
                 type:
                     # @review
                     description:

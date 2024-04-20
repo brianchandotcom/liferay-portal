@@ -145,47 +145,6 @@ public class UtilityPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The utility page template friendly URL.")
-	public String getFriendlyURL() {
-		if (_friendlyURLSupplier != null) {
-			friendlyURL = _friendlyURLSupplier.get();
-
-			_friendlyURLSupplier = null;
-		}
-
-		return friendlyURL;
-	}
-
-	public void setFriendlyURL(String friendlyURL) {
-		this.friendlyURL = friendlyURL;
-
-		_friendlyURLSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setFriendlyURL(
-		UnsafeSupplier<String, Exception> friendlyURLUnsafeSupplier) {
-
-		_friendlyURLSupplier = () -> {
-			try {
-				return friendlyURLUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The utility page template friendly URL.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String friendlyURL;
-
-	@JsonIgnore
-	private Supplier<String> _friendlyURLSupplier;
-
 	@Schema(description = "The utility page template name.")
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -224,51 +183,6 @@ public class UtilityPageTemplate implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
-
-	@Schema(
-		description = "Specifies if the utility page template layout should be private."
-	)
-	public Boolean getPrivateLayout() {
-		if (_privateLayoutSupplier != null) {
-			privateLayout = _privateLayoutSupplier.get();
-
-			_privateLayoutSupplier = null;
-		}
-
-		return privateLayout;
-	}
-
-	public void setPrivateLayout(Boolean privateLayout) {
-		this.privateLayout = privateLayout;
-
-		_privateLayoutSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setPrivateLayout(
-		UnsafeSupplier<Boolean, Exception> privateLayoutUnsafeSupplier) {
-
-		_privateLayoutSupplier = () -> {
-			try {
-				return privateLayoutUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "Specifies if the utility page template layout should be private."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean privateLayout;
-
-	@JsonIgnore
-	private Supplier<Boolean> _privateLayoutSupplier;
 
 	@JsonGetter("type")
 	@Schema(description = "The utility page template type.")
@@ -377,22 +291,6 @@ public class UtilityPageTemplate implements Serializable {
 			sb.append("\"");
 		}
 
-		String friendlyURL = getFriendlyURL();
-
-		if (friendlyURL != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"friendlyURL\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(friendlyURL));
-
-			sb.append("\"");
-		}
-
 		String name = getName();
 
 		if (name != null) {
@@ -407,18 +305,6 @@ public class UtilityPageTemplate implements Serializable {
 			sb.append(_escape(name));
 
 			sb.append("\"");
-		}
-
-		Boolean privateLayout = getPrivateLayout();
-
-		if (privateLayout != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"privateLayout\": ");
-
-			sb.append(privateLayout);
 		}
 
 		Type type = getType();
@@ -452,10 +338,10 @@ public class UtilityPageTemplate implements Serializable {
 	@GraphQLName("Type")
 	public static enum Type {
 
-		COOKIE_POLICY("CookiePolicy"), CREATE_ACCOUNT("CreateAccount"),
-		ERROR("Error"), ERROR_CODE404("ErrorCode404"),
-		ERROR_CODE500("ErrorCode500"), FORGOT_PASSWORD("ForgotPassword"),
-		LOGIN("Login"), TERMS_OF_USE("TermsOfUse");
+		CREATE_ACCOUNT("CreateAccount"), ERROR("Error"),
+		ERROR_CODE404("ErrorCode404"), ERROR_CODE500("ErrorCode500"),
+		FORGOT_PASSWORD("ForgotPassword"), LOGIN("Login"),
+		TERMS_OF_USE("TermsOfUse");
 
 		@JsonCreator
 		public static Type create(String value) {

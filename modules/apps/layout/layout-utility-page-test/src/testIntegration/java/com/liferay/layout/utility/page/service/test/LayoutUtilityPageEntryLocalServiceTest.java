@@ -66,7 +66,7 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				null, _group.getGroupId(), 0, 0, true,
 				"Test Layout Utility Page", RandomTestUtil.randomString(), 0,
-				null, true, _serviceContext);
+				_serviceContext);
 
 		Assert.assertEquals(
 			"test-layout-utility-page",
@@ -76,7 +76,7 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				"ERC", _group.getGroupId(), 0, 0, true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
-				null, true, _serviceContext);
+				_serviceContext);
 
 		Assert.assertEquals(
 			"ERC", layoutUtilityPageEntry.getExternalReferenceCode());

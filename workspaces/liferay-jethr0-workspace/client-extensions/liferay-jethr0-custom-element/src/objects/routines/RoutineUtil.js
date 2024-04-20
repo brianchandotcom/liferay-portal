@@ -23,13 +23,17 @@ export async function createRoutine({data, redirect}) {
 
 	const routinesResult = JSON.parse(await routinesResponse.text());
 
-	if ((data.type === 'upstreamBranchCron') && data.upstreamGitBranch) {
+	if (data.type === 'upstreamBranchCron' && data.upstreamGitBranch) {
 		const routinesToGitBranchesResponse = await liferayRequest({
 			body: JSON.stringify(data),
 			headers,
 			method: 'PUT',
 			urlPath: `/o/c/gitbranches/${data.upstreamGitBranch.id}/routinesToGitBranches/${routinesResult.id}`,
 		});
+
+		routinesResult.gitBranch = JSON.parse(
+			await routinesToGitBranchesResponse.text()
+		);
 	}
 
 	await liferayRequest({
@@ -123,10 +127,13 @@ export async function getRoutineById({id, setRoutine}) {
 		if (routine.type.key === 'upstreamBranchCron') {
 			const gitBranchesResponse = await liferayRequest({
 				method: 'GET',
-				urlPath: '/o/c/routines/' + routine.id + '/routinesToGitBranches',
+				urlPath:
+					'/o/c/routines/' + routine.id + '/routinesToGitBranches',
 			});
 
-			const gitBranchesResult = JSON.parse(await gitBranchesResponse.text());
+			const gitBranchesResult = JSON.parse(
+				await gitBranchesResponse.text()
+			);
 
 			for (const gitBranch of gitBranchesResult.items) {
 				routine.upstreamGitBranch = new GitBranch(gitBranch);

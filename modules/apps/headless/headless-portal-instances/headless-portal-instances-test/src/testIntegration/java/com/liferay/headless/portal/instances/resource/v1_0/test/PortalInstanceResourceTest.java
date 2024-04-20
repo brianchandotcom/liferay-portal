@@ -271,9 +271,6 @@ public class PortalInstanceResourceTest
 	}
 
 	private void _testDeletePortalInstanceNonexistent() throws Exception {
-
-		// Nonexistent key
-
 		String portalInstanceId = RandomTestUtil.randomString();
 
 		try {

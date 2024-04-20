@@ -2277,6 +2277,17 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
+	public long getReportsExportCsvCount(
+			FaroProject faroProject, String path,
+			Map<String, List<String>> queryParameters)
+		throws Exception {
+
+		return get(
+			faroProject, Collections.emptyMap(), path, queryParameters,
+			Long.class);
+	}
+
+	@Override
 	public Results<String> getSessionValues(
 		FaroProject faroProject, String channelId, String fieldName,
 		String filter, String query, int cur, int delta) {

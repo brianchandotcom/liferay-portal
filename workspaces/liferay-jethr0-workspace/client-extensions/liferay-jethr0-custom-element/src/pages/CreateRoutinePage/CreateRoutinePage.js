@@ -20,6 +20,7 @@ import {
 	createRoutine,
 	getRoutineTypes,
 } from '../../objects/routines/RoutineUtil';
+import {getUpstreamGitBranches} from '../../objects/gitbranches/GitBranchUtil';
 
 function CreateRoutinePage() {
 	const [jobDefinitionKey, setJobDefinitionKey] = useState('default');
@@ -31,6 +32,8 @@ function CreateRoutinePage() {
 	const [routineName, setRoutineName] = useState(null);
 	const [routineTypeKey, setRoutineTypeKey] = useState('manual');
 	const [routineTypes, setRoutineTypes] = useState(null);
+	const [upstreamGitBranchURL, setUpstreamGitBranchURL] = useState('https://github.com/liferay/liferay-portal/tree/master');
+	const [upstreamGitBranches, setUpstreamGitBranches] = useState(null);
 
 	function redirectToRoutinePage(data) {
 		if (data !== null && data.id !== null) {
@@ -46,6 +49,12 @@ function CreateRoutinePage() {
 
 	if (!routineTypes) {
 		getRoutineTypes({setRoutineTypes});
+
+		return;
+	}
+
+	if (!upstreamGitBranches) {
+		getUpstreamGitBranches({setUpstreamGitBranches});
 
 		return;
 	}
@@ -113,6 +122,25 @@ function CreateRoutinePage() {
 		});
 	}
 
+	let upstreamGitBranch = null;
+
+	for (const candidateUpstreamGitBranch of upstreamGitBranches) {
+		if (candidateUpstreamGitBranch.branchURL === upstreamGitBranchURL) {
+			upstreamGitBranch = candidateUpstreamGitBranch;
+		}
+	}
+
+	let upstreamGitBranchOptions = [];
+
+	if (upstreamGitBranches) {
+		upstreamGitBranchOptions = upstreamGitBranches.map((upstreamGitBranch) => {
+			return {
+				label: upstreamGitBranch.branchURL,
+				value: upstreamGitBranch.branchURL,
+			};
+		});
+	}
+
 	const routineData = {
 		cron: routineCron,
 		jobName,
@@ -121,6 +149,7 @@ function CreateRoutinePage() {
 		jobType: jobDefinition.key,
 		name: routineName,
 		type: routineTypeKey,
+		upstreamGitBranch
 	};
 
 	return (
@@ -148,7 +177,7 @@ function CreateRoutinePage() {
 					/>
 				</ClayForm.Group>
 
-				{routineTypeKey === 'cron' && (
+				{((routineTypeKey === 'cron') || (routineTypeKey === 'upstreamBranchCron')) && (
 					<ClayForm.Group>
 						<label htmlFor="routineCron">Routine Cron</label>
 
@@ -160,6 +189,22 @@ function CreateRoutinePage() {
 							placeholder="Insert your cron here (e.g. 5 4 * * *)"
 							type="text"
 							value={routineCron}
+						/>
+					</ClayForm.Group>
+				)}
+
+				{routineTypeKey === 'upstreamBranchCron' && (
+					<ClayForm.Group>
+						<label htmlFor="upstreamGitBranchURL">Upstream Branch</label>
+
+						<Jethr0SelectWithOption
+							aria-label="Upstream Git Branch"
+							id="upstreamGitBranchURL"
+							onChange={(event) => {
+								setUpstreamGitBranchURL(event.target.value);
+							}}
+							options={upstreamGitBranchOptions}
+							value={upstreamGitBranchURL}
 						/>
 					</ClayForm.Group>
 				)}

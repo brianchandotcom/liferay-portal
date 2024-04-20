@@ -245,6 +245,11 @@
 			<message key="assert.add.information" value="Add ''{0}'' as extra parameter at the beginning of the ''Assert.assertEquals'' call to provide more information to the test. See LPS-70411." />
 			<message key="assert.use.boolean" value="Use ''Assert.assert{0}'' instead of ''Assert.assertEquals'' when assert boolean" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.AssertFailCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Checks that calls to `Assert.fail` can be only used inside a try block as the last statement." />
+			<message key="assert.fail.avoid" value="''Assert.fail'' can be only used inside a try block as the last statement" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.AssignAsUsedCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds cases where an assign statement can be inlined or moved closer to where it is used." />

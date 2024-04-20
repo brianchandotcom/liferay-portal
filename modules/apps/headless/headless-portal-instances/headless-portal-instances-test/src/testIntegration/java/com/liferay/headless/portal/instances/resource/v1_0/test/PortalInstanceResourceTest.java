@@ -56,8 +56,8 @@ public class PortalInstanceResourceTest
 	@Override
 	@Test
 	public void testDeletePortalInstance() throws Exception {
-		_testDeletePortalInstanceNonexistent();
 		_testDeletePortalInstanceExisting();
+		_testDeletePortalInstanceNonexistent();
 	}
 
 	@Override

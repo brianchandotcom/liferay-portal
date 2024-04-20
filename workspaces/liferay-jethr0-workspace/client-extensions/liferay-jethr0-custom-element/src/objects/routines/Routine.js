@@ -26,5 +26,6 @@ export default class Routine {
 		this.type = type;
 	}
 
+	upstreamGitBranch;
 	jobs = [];
 }

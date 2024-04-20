@@ -8,7 +8,6 @@ package com.liferay.cookies.banner.web.internal.display.context;
 import com.liferay.cookies.banner.web.internal.constants.CookiesBannerPortletKeys;
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -92,9 +91,7 @@ public class CookiesBannerDisplayContext
 		String privacyPolicyLink =
 			cookiesBannerConfiguration.privacyPolicyLink();
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10588") &&
-			Validator.isNotNull(privacyPolicyLink)) {
-
+		if (Validator.isNotNull(privacyPolicyLink)) {
 			return privacyPolicyLink;
 		}
 

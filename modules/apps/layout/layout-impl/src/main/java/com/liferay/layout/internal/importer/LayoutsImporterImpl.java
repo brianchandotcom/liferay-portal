@@ -749,16 +749,13 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				continue;
 			}
 
-			if ((!FeatureFlagManagerUtil.isEnabled("LPD-6378") &&
-				 ((utilityPageTemplate.getType() ==
-					 UtilityPageTemplate.Type.CREATE_ACCOUNT) ||
-				  (utilityPageTemplate.getType() ==
-					  UtilityPageTemplate.Type.FORGOT_PASSWORD) ||
-				  (utilityPageTemplate.getType() ==
-					  UtilityPageTemplate.Type.LOGIN))) ||
-				(!FeatureFlagManagerUtil.isEnabled("LPD-10588") &&
+			if (!FeatureFlagManagerUtil.isEnabled("LPD-6378") &&
+				((utilityPageTemplate.getType() ==
+					UtilityPageTemplate.Type.CREATE_ACCOUNT) ||
 				 (utilityPageTemplate.getType() ==
-					 UtilityPageTemplate.Type.COOKIE_POLICY))) {
+					 UtilityPageTemplate.Type.FORGOT_PASSWORD) ||
+				 (utilityPageTemplate.getType() ==
+					 UtilityPageTemplate.Type.LOGIN))) {
 
 				continue;
 			}

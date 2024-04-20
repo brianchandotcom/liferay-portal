@@ -15,12 +15,12 @@ import Jethr0Input from '../../components/Jethr0Input/Jethr0Input';
 import Jethr0JobParameterFields from '../../components/Jethr0JobParameterFields/Jethr0JobParameterFields';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0SelectWithOption from '../../components/Jethr0SelectWithOption/Jethr0SelectWithOption';
+import {getUpstreamGitBranches} from '../../objects/gitbranches/GitBranchUtil';
 import {getJobDefinitions} from '../../objects/jobdefinitions/JobDefinitionUtil';
 import {
 	createRoutine,
 	getRoutineTypes,
 } from '../../objects/routines/RoutineUtil';
-import {getUpstreamGitBranches} from '../../objects/gitbranches/GitBranchUtil';
 
 function CreateRoutinePage() {
 	const [jobDefinitionKey, setJobDefinitionKey] = useState('default');
@@ -32,7 +32,9 @@ function CreateRoutinePage() {
 	const [routineName, setRoutineName] = useState(null);
 	const [routineTypeKey, setRoutineTypeKey] = useState('manual');
 	const [routineTypes, setRoutineTypes] = useState(null);
-	const [upstreamGitBranchURL, setUpstreamGitBranchURL] = useState('https://github.com/liferay/liferay-portal/tree/master');
+	const [upstreamGitBranchURL, setUpstreamGitBranchURL] = useState(
+		'https://github.com/liferay/liferay-portal/tree/master'
+	);
 	const [upstreamGitBranches, setUpstreamGitBranches] = useState(null);
 
 	function redirectToRoutinePage(data) {
@@ -133,12 +135,14 @@ function CreateRoutinePage() {
 	let upstreamGitBranchOptions = [];
 
 	if (upstreamGitBranches) {
-		upstreamGitBranchOptions = upstreamGitBranches.map((upstreamGitBranch) => {
-			return {
-				label: upstreamGitBranch.branchURL,
-				value: upstreamGitBranch.branchURL,
-			};
-		});
+		upstreamGitBranchOptions = upstreamGitBranches.map(
+			(upstreamGitBranch) => {
+				return {
+					label: upstreamGitBranch.branchURL,
+					value: upstreamGitBranch.branchURL,
+				};
+			}
+		);
 	}
 
 	const routineData = {
@@ -149,7 +153,7 @@ function CreateRoutinePage() {
 		jobType: jobDefinition.key,
 		name: routineName,
 		type: routineTypeKey,
-		upstreamGitBranch
+		upstreamGitBranch,
 	};
 
 	return (
@@ -177,7 +181,8 @@ function CreateRoutinePage() {
 					/>
 				</ClayForm.Group>
 
-				{((routineTypeKey === 'cron') || (routineTypeKey === 'upstreamBranchCron')) && (
+				{(routineTypeKey === 'cron' ||
+					routineTypeKey === 'upstreamBranchCron') && (
 					<ClayForm.Group>
 						<label htmlFor="routineCron">Routine Cron</label>
 
@@ -195,7 +200,9 @@ function CreateRoutinePage() {
 
 				{routineTypeKey === 'upstreamBranchCron' && (
 					<ClayForm.Group>
-						<label htmlFor="upstreamGitBranchURL">Upstream Branch</label>
+						<label htmlFor="upstreamGitBranchURL">
+							Upstream Branch
+						</label>
 
 						<Jethr0SelectWithOption
 							aria-label="Upstream Git Branch"

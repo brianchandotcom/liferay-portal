@@ -12,6 +12,7 @@ import com.liferay.headless.portal.instances.client.pagination.Page;
 import com.liferay.headless.portal.instances.client.problem.Problem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -19,7 +20,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
@@ -369,9 +369,7 @@ public class PortalInstanceResourceTest
 		_testPatchPortalInstace(portalInstance, false, false, true);
 	}
 
-	private void _testPatchPortalInstanceUpdateVirtualHost()
-		throws Exception {
-
+	private void _testPatchPortalInstanceUpdateVirtualHost() throws Exception {
 		PortalInstance portalInstance = _copyPortalInstance(
 			false, false, false, false, true);
 
@@ -389,14 +387,11 @@ public class PortalInstanceResourceTest
 		randomPortalInstance.setAdmin(
 			Admin.toDTO(
 				JSONUtil.put(
-					"emailAddress",
-					emailAddress
+					"emailAddress", emailAddress
 				).put(
-					"familyName",
-					RandomTestUtil.randomString()
+					"familyName", RandomTestUtil.randomString()
 				).put(
-					"givenName",
-					firstName
+					"givenName", firstName
 				).toString()));
 
 		PortalInstance postPortalInstance =

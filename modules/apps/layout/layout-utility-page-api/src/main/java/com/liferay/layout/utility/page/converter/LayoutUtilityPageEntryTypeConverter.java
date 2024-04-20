@@ -37,8 +37,6 @@ public class LayoutUtilityPageEntryTypeConverter {
 
 	private static final Map<String, String> _externalToInternalValuesMap =
 		HashMapBuilder.put(
-			"CookiePolicy", LayoutUtilityPageEntryConstants.TYPE_COOKIE_POLICY
-		).put(
 			"CreateAccount", LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT
 		).put(
 			"Error", LayoutUtilityPageEntryConstants.TYPE_STATUS

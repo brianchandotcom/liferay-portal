@@ -201,7 +201,7 @@ public class ObjectDefinitionResourceImpl
 			objectDefinition.getRootObjectDefinitionExternalReferenceCode();
 
 		if (Validator.isNotNull(rootObjectDefinitionExternalReferenceCode)) {
-			objectDefinition.setStatus((Status)null);
+			objectDefinition.setStatus(() -> null);
 
 			_validateRootObjectDefinition(
 				WorkflowConstants.STATUS_DRAFT,

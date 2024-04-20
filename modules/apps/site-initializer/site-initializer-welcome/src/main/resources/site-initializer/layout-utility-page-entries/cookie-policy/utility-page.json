@@ -1,8 +1,6 @@
 {
 	"defaultTemplate": false,
 	"externalReferenceCode": "LFR-COOKIE-POLICY",
-	"friendlyURL": "/cookie-policy",
 	"name": "Cookie Policy",
-	"privateLayout": false,
 	"type": "CookiePolicy"
 }

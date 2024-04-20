@@ -314,8 +314,8 @@ public class ContentLayoutTypeControllerTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
 				false, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0, null,
-				true, ServiceContextThreadLocal.getServiceContext());
+				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
+				ServiceContextThreadLocal.getServiceContext());
 
 		return _layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid());
 	}

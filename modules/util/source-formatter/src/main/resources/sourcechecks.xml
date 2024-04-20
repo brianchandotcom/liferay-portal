@@ -846,7 +846,6 @@
 		<check name="JavaUpgradeAlterColumnCallsOrderCheck">
 			<category name="Styling" />
 			<description name="Sorts method calls for altering table columns." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaUpgradeClassCheck">
 			<category name="Bug Prevention" />

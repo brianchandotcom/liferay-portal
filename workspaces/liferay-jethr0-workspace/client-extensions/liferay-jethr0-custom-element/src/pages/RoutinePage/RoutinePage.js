@@ -146,6 +146,14 @@ function RoutineInformation({routine}) {
 					fieldType="DATE"
 					fieldValue={routine.dateModified}
 				/>
+				{routine?.upstreamGitBranch &&
+					<Jethr0InformationField
+						fieldLabel="Upstream Branch"
+						fieldType="URL"
+						fieldURLValue={'/#/upstream-branches/' + routine.upstreamGitBranch.id}
+						fieldValue={routine.upstreamGitBranch.branchRepositoryName + '/' + routine.upstreamGitBranch.branchName}
+					/>
+				}
 				{jobDefinition.jobDefinitionParameters &&
 					jobParameters?.map((jobParameter) => {
 						let parameter;

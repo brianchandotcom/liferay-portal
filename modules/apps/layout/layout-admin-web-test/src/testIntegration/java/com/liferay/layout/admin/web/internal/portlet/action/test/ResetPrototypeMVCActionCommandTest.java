@@ -32,8 +32,8 @@ import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
@@ -129,7 +129,7 @@ public class ResetPrototypeMVCActionCommandTest {
 		ContentLayoutTestUtil.publishLayout(
 			_layoutLocalService.getLayout(draftLayout.getPlid()), layout);
 
-		propagateChanges(_group);
+		_propagateChanges(_group);
 
 		Layout groupPublishedLayout =
 			_layoutLocalService.fetchLayoutByFriendlyURL(
@@ -165,37 +165,6 @@ public class ResetPrototypeMVCActionCommandTest {
 		Assert.assertEquals(
 			fragmentLayoutStructureItems.toString(), 1,
 			fragmentLayoutStructureItems.size());
-	}
-
-	protected void propagateChanges(Group group) throws Exception {
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			group.getGroupId(), false);
-
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
-
-		_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
-
-		Thread.sleep(2000);
-
-		LayoutSetPrototype layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.
-				getLayoutSetPrototypeByUuidAndCompanyId(
-					layoutSet.getLayoutSetPrototypeUuid(),
-					layoutSet.getCompanyId());
-
-		LayoutSet layoutSetPrototypeLayoutSet =
-			layoutSetPrototype.getLayoutSet();
-
-		UnicodeProperties layoutSetPrototypeSettingsUnicodeProperties =
-			layoutSetPrototypeLayoutSet.getSettingsProperties();
-
-		int mergeFailCount = GetterUtil.getInteger(
-			layoutSetPrototypeSettingsUnicodeProperties.getProperty(
-				Sites.MERGE_FAIL_COUNT));
-
-		Assert.assertEquals(0, mergeFailCount);
 	}
 
 	private FragmentEntry _addFragmentEntry() throws Exception {
@@ -259,6 +228,37 @@ public class ResetPrototypeMVCActionCommandTest {
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
+	}
+
+	private void _propagateChanges(Group group) throws Exception {
+		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
+
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+			group.getGroupId(), false);
+
+		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
+
+		_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+
+		Thread.sleep(2000);
+
+		LayoutSetPrototype layoutSetPrototype =
+			_layoutSetPrototypeLocalService.
+				getLayoutSetPrototypeByUuidAndCompanyId(
+					layoutSet.getLayoutSetPrototypeUuid(),
+					layoutSet.getCompanyId());
+
+		LayoutSet layoutSetPrototypeLayoutSet =
+			layoutSetPrototype.getLayoutSet();
+
+		UnicodeProperties layoutSetPrototypeSettingsUnicodeProperties =
+			layoutSetPrototypeLayoutSet.getSettingsProperties();
+
+		int mergeFailCount = GetterUtil.getInteger(
+			layoutSetPrototypeSettingsUnicodeProperties.getProperty(
+				Sites.MERGE_FAIL_COUNT));
+
+		Assert.assertEquals(0, mergeFailCount);
 	}
 
 	private Layout _removeFragmentEntryPublishAndGetLayout(Layout layout)
@@ -354,10 +354,16 @@ public class ResetPrototypeMVCActionCommandTest {
 	private LayoutPageTemplateStructureRelLocalService
 		_layoutPageTemplateStructureRelLocalService;
 
+	@Inject
+	private LayoutSetLocalService _layoutSetLocalService;
+
 	@DeleteAfterTestRun
 	private LayoutSetPrototype _layoutSetPrototype;
 
 	private Group _layoutSetPrototypeGroup;
+
+	@Inject
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 	@Inject(filter = "mvc.command.name=/layout_admin/reset_prototype")
 	private MVCActionCommand _mvcActionCommand;

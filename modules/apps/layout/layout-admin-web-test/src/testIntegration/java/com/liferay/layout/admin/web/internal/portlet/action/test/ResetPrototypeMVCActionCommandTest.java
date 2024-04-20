@@ -94,12 +94,16 @@ public class ResetPrototypeMVCActionCommandTest {
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_layoutSetPrototypeGroup.getGroupId());
+
+		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
+
+		_sites.updateLayoutSetPrototypesLinks(
+			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
+			true);
 	}
 
 	@Test
 	public void testResetLayoutPrototype() throws Exception {
-		_setLinkEnabled(true);
-
 		Layout layout = _layoutLocalService.addLayout(
 			TestPropsValues.getUserId(), _layoutSetPrototypeGroup.getGroupId(),
 			true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
@@ -325,16 +329,6 @@ public class ResetPrototypeMVCActionCommandTest {
 				String.class));
 
 		return layout;
-	}
-
-	private void _setLinkEnabled(boolean linkEnabled) throws Exception {
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
-		_sites.updateLayoutSetPrototypesLinks(
-			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0,
-			linkEnabled, linkEnabled);
-
-		Thread.sleep(2000);
 	}
 
 	@Inject

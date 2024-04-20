@@ -31,9 +31,7 @@ public interface CookiesBannerConfiguration {
 	public LocalizedValuesMap content();
 
 	@ExtendedAttributeDefinition(requiredInput = true)
-	@Meta.AD(
-		deflt = "/cookie-policy", name = "privacy-policy-link", required = false
-	)
+	@Meta.AD(name = "privacy-policy-link", required = false)
 	public String privacyPolicyLink();
 
 	@ExtendedAttributeDefinition(requiredInput = true)

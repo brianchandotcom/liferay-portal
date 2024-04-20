@@ -39,9 +39,7 @@ public interface CookiesConsentConfiguration {
 	public LocalizedValuesMap description();
 
 	@ExtendedAttributeDefinition(requiredInput = true)
-	@Meta.AD(
-		deflt = "/cookie-policy", name = "cookie-policy-link", required = false
-	)
+	@Meta.AD(name = "cookie-policy-link", required = false)
 	public String cookiePolicyLink();
 
 	@ExtendedAttributeDefinition(requiredInput = true)

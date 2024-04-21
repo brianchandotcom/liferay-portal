@@ -7,7 +7,7 @@ import {Root, createRoot} from 'react-dom/client';
 
 import AppRoutes, {RouteType} from './Routes';
 
-import './index.scss';
+import './main.scss';
 import Providers from './providers';
 
 class WebComponent extends HTMLElement {

@@ -46,7 +46,7 @@ type TypeNextStepBody = {
 	[key in string]?: ReactNode;
 };
 
-export function NextSteps({
+export default function NextSteps({
 	children,
 	onClickContinue,
 	showBackButton,

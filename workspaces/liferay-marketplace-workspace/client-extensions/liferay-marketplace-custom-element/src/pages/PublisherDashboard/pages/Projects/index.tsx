@@ -15,7 +15,7 @@ import {DashboardTable} from '../../../../components/DashboardTable/DashboardTab
 import Page from '../../../../components/Page';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import HeadlessCommerceDeliveryOrder from '../../../../services/rest/HeadlessCommerceDeliveryOrder';
-import {NextSteps} from '../../../NextSteps';
+import NextSteps from '../../../NextSteps';
 import {ProjectsTableRow} from './ProjectsTableRow';
 
 const projectsTableHeaders = [

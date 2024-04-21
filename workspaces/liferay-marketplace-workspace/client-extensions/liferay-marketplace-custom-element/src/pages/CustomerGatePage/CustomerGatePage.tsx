@@ -21,7 +21,7 @@ type Steps = {
 	page: 'onboarding' | 'customerGateForm';
 };
 
-export function CustomerGatePage() {
+export default function CustomerGatePage() {
 	const [step, setStep] = useState<Steps>({page: 'onboarding'});
 	const {myUserAccount} = useMarketplaceContext();
 

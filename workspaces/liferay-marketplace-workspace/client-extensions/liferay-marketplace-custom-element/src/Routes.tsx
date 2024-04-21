@@ -48,9 +48,7 @@ export default function AppRoutes({path}: AppRoutesProps) {
 
 	return (
 		<Suspense
-			fallback={
-				<Loading displayType="secondary" shape="squares"></Loading>
-			}
+			fallback={<Loading displayType="secondary" shape="squares" />}
 		>
 			<Route />
 		</Suspense>

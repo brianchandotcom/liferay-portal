@@ -40,10 +40,10 @@ const Apps = () => {
 
 			return {
 				...order,
-				name: placeOrderItem.name,
-				productId: order.placedOrderItems[0].productId,
-				thumbnail: placeOrderItem.thumbnail,
-				type: placeOrderItem.subscription
+				name: placeOrderItem?.name,
+				productId: order.placedOrderItems[0]?.productId,
+				thumbnail: placeOrderItem?.thumbnail,
+				type: placeOrderItem?.subscription
 					? 'Subscription'
 					: 'Perpetual',
 				virtualURL: placeOrderItem?.virtualItemURLs,

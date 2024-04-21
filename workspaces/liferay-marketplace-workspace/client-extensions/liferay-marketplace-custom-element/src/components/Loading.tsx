@@ -4,17 +4,21 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {ComponentProps} from 'react';
 
-type LoadingProps = {
-	className?: string;
-};
+type LoadingProps = ComponentProps<typeof ClayLoadingIndicator>;
 
-const Loading: React.FC<LoadingProps> = ({className}) => (
+const Loading: React.FC<LoadingProps> = ({
+	displayType = 'primary',
+	shape = 'squares',
+	size = 'lg',
+	...props
+}) => (
 	<ClayLoadingIndicator
-		className={className}
-		displayType="primary"
-		shape="squares"
-		size="lg"
+		displayType={displayType}
+		shape={shape}
+		size={size}
+		{...props}
 	/>
 );
 

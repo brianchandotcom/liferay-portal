@@ -3,7 +3,7 @@ assemble:
       into: static
 liferay-marketplace-custom-element:
     cssURLs:
-        - "**/*.css"
+        - "**/index*.css"
     friendlyURLMapping: liferay-marketplace-custom-element
     htmlElementName: liferay-marketplace-custom-element
     instanceable: false
@@ -15,5 +15,5 @@ liferay-marketplace-custom-element:
         marketoFormId: 3738
     type: customElement
     urls:
-        - "*.js"
+        - "main-*.js"
     useESM: true

@@ -5,7 +5,7 @@
 
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import {defineConfig} from 'vite';
+import {defineConfig, splitVendorChunkPlugin} from 'vite';
 
 export default defineConfig({
 	build: {
@@ -14,24 +14,16 @@ export default defineConfig({
 			output: {
 				assetFileNames: 'assets/[name][extname]',
 				chunkFileNames: '[name]-[hash].js',
-				entryFileNames: '[name]-[hash].js',
+				entryFileNames: 'main-[hash].js',
 			},
 		},
 	},
 	experimental: {
 		renderBuiltUrl(filename: string) {
-			if (
-				filename.endsWith('.css') ||
-				filename.endsWith('.png') ||
-				filename.endsWith('.svg')
-			) {
-				return `/o/liferay-marketplace-custom-element/${filename}`;
-			}
-
-			return filename;
+			return `/o/liferay-marketplace-custom-element/${filename}`;
 		},
 	},
-	plugins: [react()],
+	plugins: [react(), splitVendorChunkPlugin()],
 	resolve: {
 		alias: {
 			'~': path.resolve(__dirname, './src/'),

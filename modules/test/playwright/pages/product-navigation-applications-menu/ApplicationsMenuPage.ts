@@ -20,6 +20,7 @@ export class ApplicationsMenuPage {
 	private readonly controlPanelButton: Locator;
 	private readonly dataMigrationCenterMenuItem: Locator;
 	private readonly dataSetManagerMenuItem: Locator;
+	private readonly defaultPermissionsLink: Locator;
 	private readonly gogoShellItem: Locator;
 	private readonly homePage: HomePage;
 	private readonly instanceSettingsMenuItem: Locator;
@@ -87,6 +88,10 @@ export class ApplicationsMenuPage {
 		this.dataSetManagerMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Data Sets',
+		});
+		this.defaultPermissionsLink = page.getByRole('link', {
+			exact: true,
+			name: 'Default Permissions',
 		});
 		this.instanceSettingsMenuItem = page.getByRole('menuitem', {
 			exact: true,
@@ -188,6 +193,11 @@ export class ApplicationsMenuPage {
 	async goToDataMigrationCenter() {
 		await this.goToApplicationsMenu();
 		await this.dataMigrationCenterMenuItem.click();
+	}
+
+	async goToDefaultPermissions() {
+		await this.goToInstanceSettings();
+		await this.defaultPermissionsLink.click();
 	}
 
 	async goToAPIBuilder() {

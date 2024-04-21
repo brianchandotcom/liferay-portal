@@ -8,11 +8,6 @@ import ClayIcon from '@clayui/icon';
 import {useEffect, useState} from 'react';
 import {useNavigate, useOutletContext} from 'react-router-dom';
 
-import creditCartIcon from '../../../../assets/icons/credit_card_icon.svg';
-import downloadIcon from '../../../../assets/icons/download_icon.svg';
-import locationIcon from '../../../../assets/icons/location_icon.svg';
-import phoneIcon from '../../../../assets/icons/phone_icon.svg';
-import userIcon from '../../../../assets/icons/user_icon.svg';
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
 import {getAccountPostalAddressesByAccountId} from '../../../../utils/api';
 import {getCustomFieldValue} from '../../../../utils/customFieldUtil';
@@ -149,9 +144,9 @@ function AccountDetailsPage({
 
 					<div className="account-details-body-container">
 						<DetailedCard
-							cardIcon={userIcon}
 							cardIconAltText="Profile Icon"
 							cardTitle="Profile"
+							clayIcon="user"
 						>
 							<table className="account-details-body-table">
 								<tr className="account-details-body-table-row">
@@ -200,9 +195,9 @@ function AccountDetailsPage({
 						</DetailedCard>
 
 						<DetailedCard
-							cardIcon={phoneIcon}
 							cardIconAltText="Contact Icon"
 							cardTitle="Contact"
+							clayIcon="phone"
 						>
 							<table className="account-details-body-table">
 								<tr className="account-details-body-table-row">
@@ -256,9 +251,9 @@ function AccountDetailsPage({
 						</DetailedCard>
 
 						<DetailedCard
-							cardIcon={locationIcon}
 							cardIconAltText="Address Icon"
 							cardTitle="Address"
+							clayIcon="geolocation"
 						>
 							<table className="account-details-body-table">
 								{selectedAccountAddress?.map((address, i) => (
@@ -296,7 +291,10 @@ function AccountDetailsPage({
 									</th>
 
 									<td className="account-details-body-table-description">
-										<img src={downloadIcon} />
+										<ClayIcon
+											color="black"
+											symbol="download"
+										/>
 									</td>
 								</tr>
 
@@ -304,16 +302,19 @@ function AccountDetailsPage({
 									<th>Liferay Publisher agreement</th>
 
 									<td className="account-details-body-table-description">
-										<img src={downloadIcon} />
+										<ClayIcon
+											color="black"
+											symbol="download"
+										/>
 									</td>
 								</tr>
 							</table>
 						</DetailedCard>
 
 						<DetailedCard
-							cardIcon={creditCartIcon}
 							cardIconAltText="Payment Icon"
 							cardTitle="Payment "
+							clayIcon="credit-card"
 						>
 							{getCustomFieldValue(
 								selectedAccount.customFields ?? [],

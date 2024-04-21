@@ -32,6 +32,7 @@ import {config as lockedItemsConfig} from './tests/locked-items-web/config';
 import {config as loginWebConfig} from './tests/login-web/config';
 import {config as objectWebConfig} from './tests/object-web/config';
 import {config as osbFaroWebConfig} from './tests/osb-faro-web/config';
+import {config as portalDefaultPermissionsWebConfig} from './tests/portal-default-permissions-web/config';
 import {config as portalSearchWebConfig} from './tests/portal-search-web/config';
 import {config as portalSecurityScriptManagementWeb} from './tests/portal-security-script-management-web/config';
 import {config as portalWorkflowKaleoDesignerWebConfig} from './tests/portal-workflow-kaleo-designer-web/config';
@@ -76,6 +77,7 @@ export default defineConfig({
 		loginWebConfig,
 		objectWebConfig,
 		osbFaroWebConfig,
+		portalDefaultPermissionsWebConfig,
 		portalSearchWebConfig,
 		portalSecurityScriptManagementWeb,
 		portalWorkflowKaleoDesignerWebConfig,

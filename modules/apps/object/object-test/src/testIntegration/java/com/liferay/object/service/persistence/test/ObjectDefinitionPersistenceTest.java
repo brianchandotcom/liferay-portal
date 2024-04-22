@@ -162,6 +162,9 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setEnableComments(RandomTestUtil.randomBoolean());
 
+		newObjectDefinition.setEnableIndexedSearch(
+			RandomTestUtil.randomBoolean());
+
 		newObjectDefinition.setEnableLocalization(
 			RandomTestUtil.randomBoolean());
 
@@ -265,6 +268,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableComments(),
 			newObjectDefinition.isEnableComments());
+		Assert.assertEquals(
+			existingObjectDefinition.isEnableIndexedSearch(),
+			newObjectDefinition.isEnableIndexedSearch());
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableLocalization(),
 			newObjectDefinition.isEnableLocalization());
@@ -498,13 +504,13 @@ public class ObjectDefinitionPersistenceTest {
 			"rootObjectDefinitionId", true, "titleObjectFieldId", true,
 			"accountEntryRestricted", true, "active", true, "dbTableName", true,
 			"label", true, "className", true, "enableCategorization", true,
-			"enableComments", true, "enableLocalization", true,
-			"enableObjectEntryDraft", true, "enableObjectEntryHistory", true,
-			"modifiable", true, "name", true, "panelAppOrder", true,
-			"panelCategoryKey", true, "pkObjectFieldDBColumnName", true,
-			"pkObjectFieldName", true, "pluralLabel", true, "portlet", true,
-			"scope", true, "storageType", true, "system", true, "version", true,
-			"status", true);
+			"enableComments", true, "enableIndexedSearch", true,
+			"enableLocalization", true, "enableObjectEntryDraft", true,
+			"enableObjectEntryHistory", true, "modifiable", true, "name", true,
+			"panelAppOrder", true, "panelCategoryKey", true,
+			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
+			"pluralLabel", true, "portlet", true, "scope", true, "storageType",
+			true, "system", true, "version", true, "status", true);
 	}
 
 	@Test
@@ -858,6 +864,8 @@ public class ObjectDefinitionPersistenceTest {
 			RandomTestUtil.randomBoolean());
 
 		objectDefinition.setEnableComments(RandomTestUtil.randomBoolean());
+
+		objectDefinition.setEnableIndexedSearch(RandomTestUtil.randomBoolean());
 
 		objectDefinition.setEnableLocalization(RandomTestUtil.randomBoolean());
 

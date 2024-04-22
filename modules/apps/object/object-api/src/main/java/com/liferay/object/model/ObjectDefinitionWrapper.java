@@ -58,6 +58,7 @@ public class ObjectDefinitionWrapper
 		attributes.put("className", getClassName());
 		attributes.put("enableCategorization", isEnableCategorization());
 		attributes.put("enableComments", isEnableComments());
+		attributes.put("enableIndexedSearch", isEnableIndexedSearch());
 		attributes.put("enableLocalization", isEnableLocalization());
 		attributes.put("enableObjectEntryDraft", isEnableObjectEntryDraft());
 		attributes.put(
@@ -213,6 +214,13 @@ public class ObjectDefinitionWrapper
 
 		if (enableComments != null) {
 			setEnableComments(enableComments);
+		}
+
+		Boolean enableIndexedSearch = (Boolean)attributes.get(
+			"enableIndexedSearch");
+
+		if (enableIndexedSearch != null) {
+			setEnableIndexedSearch(enableIndexedSearch);
 		}
 
 		Boolean enableLocalization = (Boolean)attributes.get(
@@ -434,6 +442,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public boolean getEnableComments() {
 		return model.getEnableComments();
+	}
+
+	/**
+	 * Returns the enable indexed search of this object definition.
+	 *
+	 * @return the enable indexed search of this object definition
+	 */
+	@Override
+	public boolean getEnableIndexedSearch() {
+		return model.getEnableIndexedSearch();
 	}
 
 	/**
@@ -959,6 +977,16 @@ public class ObjectDefinitionWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this object definition is enable indexed search.
+	 *
+	 * @return <code>true</code> if this object definition is enable indexed search; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isEnableIndexedSearch() {
+		return model.isEnableIndexedSearch();
+	}
+
+	/**
 	 * Returns <code>true</code> if this object definition is enable localization.
 	 *
 	 * @return <code>true</code> if this object definition is enable localization; <code>false</code> otherwise
@@ -1164,6 +1192,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setEnableComments(boolean enableComments) {
 		model.setEnableComments(enableComments);
+	}
+
+	/**
+	 * Sets whether this object definition is enable indexed search.
+	 *
+	 * @param enableIndexedSearch the enable indexed search of this object definition
+	 */
+	@Override
+	public void setEnableIndexedSearch(boolean enableIndexedSearch) {
+		model.setEnableIndexedSearch(enableIndexedSearch);
 	}
 
 	/**

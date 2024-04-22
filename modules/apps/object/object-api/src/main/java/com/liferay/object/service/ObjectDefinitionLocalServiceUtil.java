@@ -39,7 +39,8 @@ public class ObjectDefinitionLocalServiceUtil {
 	 */
 	public static ObjectDefinition addCustomObjectDefinition(
 			long userId, long objectFolderId, boolean enableComments,
-			boolean enableLocalization, boolean enableObjectEntryDraft,
+			boolean enableIndexedSearch, boolean enableLocalization,
+			boolean enableObjectEntryDraft,
 			Map<java.util.Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey,
 			Map<java.util.Locale, String> pluralLabelMap, boolean portlet,
@@ -48,10 +49,10 @@ public class ObjectDefinitionLocalServiceUtil {
 		throws PortalException {
 
 		return getService().addCustomObjectDefinition(
-			userId, objectFolderId, enableComments, enableLocalization,
-			enableObjectEntryDraft, labelMap, name, panelAppOrder,
-			panelCategoryKey, pluralLabelMap, portlet, scope, storageType,
-			objectFields);
+			userId, objectFolderId, enableComments, enableIndexedSearch,
+			enableLocalization, enableObjectEntryDraft, labelMap, name,
+			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
+			storageType, objectFields);
 	}
 
 	/**
@@ -93,9 +94,10 @@ public class ObjectDefinitionLocalServiceUtil {
 	public static ObjectDefinition addSystemObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
 			String className, String dbTableName, boolean enableComments,
-			Map<java.util.Locale, String> labelMap, boolean modifiable,
-			String name, String panelAppOrder, String panelCategoryKey,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			boolean enableIndexedSearch, Map<java.util.Locale, String> labelMap,
+			boolean modifiable, String name, String panelAppOrder,
+			String panelCategoryKey, String pkObjectFieldDBColumnName,
+			String pkObjectFieldName,
 			Map<java.util.Locale, String> pluralLabelMap, boolean portlet,
 			String scope, String titleObjectFieldName, int version, int status,
 			List<com.liferay.object.model.ObjectField> objectFields)
@@ -103,10 +105,11 @@ public class ObjectDefinitionLocalServiceUtil {
 
 		return getService().addSystemObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, className,
-			dbTableName, enableComments, labelMap, modifiable, name,
-			panelAppOrder, panelCategoryKey, pkObjectFieldDBColumnName,
-			pkObjectFieldName, pluralLabelMap, portlet, scope,
-			titleObjectFieldName, version, status, objectFields);
+			dbTableName, enableComments, enableIndexedSearch, labelMap,
+			modifiable, name, panelAppOrder, panelCategoryKey,
+			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap,
+			portlet, scope, titleObjectFieldName, version, status,
+			objectFields);
 	}
 
 	public static void bindObjectDefinitions(long[] objectRelationshipIds)
@@ -560,8 +563,9 @@ public class ObjectDefinitionLocalServiceUtil {
 			long descriptionObjectFieldId, long objectFolderId,
 			long titleObjectFieldId, boolean accountEntryRestricted,
 			boolean active, boolean enableCategorization,
-			boolean enableComments, boolean enableLocalization,
-			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
+			boolean enableComments, boolean enableIndexedSearch,
+			boolean enableLocalization, boolean enableObjectEntryDraft,
+			boolean enableObjectEntryHistory,
 			Map<java.util.Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey, boolean portlet,
 			Map<java.util.Locale, String> pluralLabelMap, String scope,
@@ -572,10 +576,10 @@ public class ObjectDefinitionLocalServiceUtil {
 			externalReferenceCode, objectDefinitionId,
 			accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
 			objectFolderId, titleObjectFieldId, accountEntryRestricted, active,
-			enableCategorization, enableComments, enableLocalization,
-			enableObjectEntryDraft, enableObjectEntryHistory, labelMap, name,
-			panelAppOrder, panelCategoryKey, portlet, pluralLabelMap, scope,
-			status);
+			enableCategorization, enableComments, enableIndexedSearch,
+			enableLocalization, enableObjectEntryDraft,
+			enableObjectEntryHistory, labelMap, name, panelAppOrder,
+			panelCategoryKey, portlet, pluralLabelMap, scope, status);
 	}
 
 	public static ObjectDefinition updateExternalReferenceCode(

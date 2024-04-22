@@ -33,7 +33,8 @@ public class ObjectDefinitionServiceUtil {
 	 */
 	public static ObjectDefinition addCustomObjectDefinition(
 			long objectFolderId, boolean enableComments,
-			boolean enableLocalization, boolean enableObjectEntryDraft,
+			boolean enableIndexedSearch, boolean enableLocalization,
+			boolean enableObjectEntryDraft,
 			Map<java.util.Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey,
 			Map<java.util.Locale, String> pluralLabelMap, boolean portlet,
@@ -42,10 +43,10 @@ public class ObjectDefinitionServiceUtil {
 		throws PortalException {
 
 		return getService().addCustomObjectDefinition(
-			objectFolderId, enableComments, enableLocalization,
-			enableObjectEntryDraft, labelMap, name, panelAppOrder,
-			panelCategoryKey, pluralLabelMap, portlet, scope, storageType,
-			objectFields);
+			objectFolderId, enableComments, enableIndexedSearch,
+			enableLocalization, enableObjectEntryDraft, labelMap, name,
+			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
+			storageType, objectFields);
 	}
 
 	public static ObjectDefinition addObjectDefinition(
@@ -59,8 +60,9 @@ public class ObjectDefinitionServiceUtil {
 
 	public static ObjectDefinition addSystemObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
-			boolean enableComments, Map<java.util.Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
+			boolean enableComments, boolean enableIndexedSearch,
+			Map<java.util.Locale, String> labelMap, String name,
+			String panelAppOrder, String panelCategoryKey,
 			Map<java.util.Locale, String> pluralLabelMap, boolean portlet,
 			String scope,
 			List<com.liferay.object.model.ObjectField> objectFields)
@@ -68,8 +70,8 @@ public class ObjectDefinitionServiceUtil {
 
 		return getService().addSystemObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, enableComments,
-			labelMap, name, panelAppOrder, panelCategoryKey, pluralLabelMap,
-			portlet, scope, objectFields);
+			enableIndexedSearch, labelMap, name, panelAppOrder,
+			panelCategoryKey, pluralLabelMap, portlet, scope, objectFields);
 	}
 
 	public static ObjectDefinition deleteObjectDefinition(
@@ -152,8 +154,9 @@ public class ObjectDefinitionServiceUtil {
 			long descriptionObjectFieldId, long objectFolderId,
 			long titleObjectFieldId, boolean accountEntryRestricted,
 			boolean active, boolean enableCategorization,
-			boolean enableComments, boolean enableLocalization,
-			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
+			boolean enableComments, boolean enableIndexedSearch,
+			boolean enableLocalization, boolean enableObjectEntryDraft,
+			boolean enableObjectEntryHistory,
 			Map<java.util.Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey, boolean portlet,
 			Map<java.util.Locale, String> pluralLabelMap, String scope,
@@ -164,10 +167,10 @@ public class ObjectDefinitionServiceUtil {
 			externalReferenceCode, objectDefinitionId,
 			accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
 			objectFolderId, titleObjectFieldId, accountEntryRestricted, active,
-			enableCategorization, enableComments, enableLocalization,
-			enableObjectEntryDraft, enableObjectEntryHistory, labelMap, name,
-			panelAppOrder, panelCategoryKey, portlet, pluralLabelMap, scope,
-			status);
+			enableCategorization, enableComments, enableIndexedSearch,
+			enableLocalization, enableObjectEntryDraft,
+			enableObjectEntryHistory, labelMap, name, panelAppOrder,
+			panelCategoryKey, portlet, pluralLabelMap, scope, status);
 	}
 
 	public static ObjectDefinition updateExternalReferenceCode(

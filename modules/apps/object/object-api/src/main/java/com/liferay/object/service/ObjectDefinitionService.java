@@ -47,11 +47,11 @@ public interface ObjectDefinitionService extends BaseService {
 	 */
 	public ObjectDefinition addCustomObjectDefinition(
 			long objectFolderId, boolean enableComments,
-			boolean enableLocalization, boolean enableObjectEntryDraft,
-			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
-			boolean portlet, String scope, String storageType,
-			List<ObjectField> objectFields)
+			boolean enableIndexedSearch, boolean enableLocalization,
+			boolean enableObjectEntryDraft, Map<Locale, String> labelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
+			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
+			String storageType, List<ObjectField> objectFields)
 		throws PortalException;
 
 	public ObjectDefinition addObjectDefinition(
@@ -61,10 +61,10 @@ public interface ObjectDefinitionService extends BaseService {
 
 	public ObjectDefinition addSystemObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
-			boolean enableComments, Map<Locale, String> labelMap, String name,
-			String panelAppOrder, String panelCategoryKey,
-			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
-			List<ObjectField> objectFields)
+			boolean enableComments, boolean enableIndexedSearch,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
+			boolean portlet, String scope, List<ObjectField> objectFields)
 		throws PortalException;
 
 	public ObjectDefinition deleteObjectDefinition(long objectDefinitionId)
@@ -118,11 +118,12 @@ public interface ObjectDefinitionService extends BaseService {
 			long descriptionObjectFieldId, long objectFolderId,
 			long titleObjectFieldId, boolean accountEntryRestricted,
 			boolean active, boolean enableCategorization,
-			boolean enableComments, boolean enableLocalization,
-			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
-			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, boolean portlet,
-			Map<Locale, String> pluralLabelMap, String scope, int status)
+			boolean enableComments, boolean enableIndexedSearch,
+			boolean enableLocalization, boolean enableObjectEntryDraft,
+			boolean enableObjectEntryHistory, Map<Locale, String> labelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
+			boolean portlet, Map<Locale, String> pluralLabelMap, String scope,
+			int status)
 		throws PortalException;
 
 	public ObjectDefinition updateExternalReferenceCode(

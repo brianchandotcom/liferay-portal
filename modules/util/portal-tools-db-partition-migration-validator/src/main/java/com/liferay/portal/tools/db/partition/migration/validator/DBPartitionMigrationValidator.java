@@ -317,18 +317,17 @@ public class DBPartitionMigrationValidator {
 			}
 		}
 
+		DefaultPrettyPrinter defaultPrettyPrinter = new DefaultPrettyPrinter();
+
+		defaultPrettyPrinter.indentArraysWith(
+			DefaultIndenter.SYSTEM_LINEFEED_INSTANCE);
+
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				enable(SerializationFeature.INDENT_OUTPUT);
 				setDateFormat(new ISO8601DateFormat());
-				setDefaultPrettyPrinter(
-					new DefaultPrettyPrinter() {
-						{
-							indentArraysWith(
-								DefaultIndenter.SYSTEM_LINEFEED_INSTANCE);
-						}
-					});
+				setDefaultPrettyPrinter(defaultPrettyPrinter);
 			}
 		};
 

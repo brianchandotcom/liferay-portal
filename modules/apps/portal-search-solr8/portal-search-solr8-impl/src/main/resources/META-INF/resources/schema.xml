@@ -700,7 +700,7 @@
 		<field indexed="true" name="defaultLanguageId" stored="true" type="string" />
 		<field indexed="true" name="description" stored="true" termPositions="true" termVectors="true" type="text" />
 		<field indexed="true" name="destinationURL" stored="true" type="text" />
-		<field indexed="true" name="destinationURLParts" stored="true" type="text" />
+		<field indexed="true" multiValued="true" name="destinationURLParts" stored="true" type="text" />
 		<field indexed="true" name="discussion" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="displayDate" stored="true" type="string" />
 		<field indexed="true" name="emailAddress" stored="true" type="string" />
@@ -736,7 +736,7 @@
 		<field indexed="true" multiValued="true" name="organizationIds" stored="true" type="string" />
 		<field indexed="true" name="parentCategoryId" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="parentCategoryIds" stored="true" type="string" />
-		<field indexed="true" name="path" stored="true" type="string" />
+		<field indexed="true" multiValued="true" name="path" stored="true" type="string" />
 		<field indexed="true" name="portletId" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="priority" stored="true" type="double" />
 		<field docValues="true" indexed="true" name="publishDate" stored="true" type="string" />
@@ -757,7 +757,7 @@
 		<field indexed="true" name="screenName.text" stored="false" type="text_lowercase" />
 		<field indexed="true" name="size" stored="true" type="string" />
 		<field indexed="true" name="sourceURL" stored="true" type="text" />
-		<field indexed="true" name="sourceURLParts" stored="true" type="text" />
+		<field indexed="true" multiValued="true" name="sourceURLParts" stored="true" type="text" />
 		<field indexed="true" name="spellCheckWeight" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="spellCheckWord" stored="true" type="textSpell" />
 		<field docValues="true" indexed="true" name="startTime" stored="true" type="long" />
@@ -769,7 +769,7 @@
 		<field indexed="true" multiValued="true" name="treePath" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="type" stored="true" type="string" />
 		<field indexed="true" name="uid" stored="true" type="string" />
-		<field indexed="true" name="urlParts" stored="true" type="text" />
+		<field indexed="true" multiValued="true" name="urlParts" stored="true" type="text" />
 		<field docValues="true" indexed="true" name="userGroupId" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="userGroupIds" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="userGroupRoleIds" stored="true" type="string" />

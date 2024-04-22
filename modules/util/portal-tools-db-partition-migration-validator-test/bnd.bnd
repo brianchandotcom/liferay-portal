@@ -1,0 +1,15 @@
+Bundle-Name: Liferay Portal Tools DB Partition Migration Validator Test
+Bundle-SymbolicName: com.liferay.portal.tools.db.partition.migration.validator.test
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.google.protobuf.*,\
+	\
+	!com.mchange.v2.c3p0.*,\
+	\
+	!com.oracle.bmc.*,\
+	\
+	*
+-includeresource:\
+	@com.liferay.portal.tools.db.partition.migration.validator.jar!/com/liferay/portal/tools/db/partition/migration/validator/*.class,\
+	@com.liferay.portal.tools.db.partition.migration.validator.jar!/org/apache/commons/cli/*.class
+-removeheaders: Require-Capability

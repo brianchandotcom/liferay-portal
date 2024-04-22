@@ -11,11 +11,15 @@ source .env
 if [[ -z "${LIFERAY_LEARN_DIR}" ]]
 then
 
-	default=/home/me/dev/projects/liferay-learn
+	default=../../../liferay-learn
 
-	echo "Please enter the value for 'LIFERAY_LEARN_DIR': [$default]"
-		read -p "> " LIFERAY_LEARN_DIR
-			LIFERAY_LEARN_DIR=${LIFERAY_LEARN_DIR:-$default}
+	echo "Please enter the value for 'LIFERAY_LEARN_DIR': [${default}]"
+
+	read -p "> " LIFERAY_LEARN_DIR
+
+	LIFERAY_LEARN_DIR="${LIFERAY_LEARN_DIR:-${default}}"
+
+	LIFERAY_LEARN_DIR="$(readlink -f ${LIFERAY_LEARN_DIR})"
 
 	echo "LIFERAY_LEARN_DIR=${LIFERAY_LEARN_DIR}" >> .env
 

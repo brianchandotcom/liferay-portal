@@ -14,17 +14,26 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.audit.AuditMessage;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.security.audit.AuditMessageProcessor;
+import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -40,6 +49,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
@@ -67,28 +77,65 @@ public class UserModelListenerTest {
 
 		Bundle bundle = FrameworkUtil.getBundle(UserModelListenerTest.class);
 
-		BundleContext bundleContext = bundle.getBundleContext();
+		_bundleContext = bundle.getBundleContext();
 
-		_serviceRegistration = bundleContext.registerService(
-			SystemObjectDefinitionManager.class,
-			new TestSystemObjectDefinitionManager(
-				ObjectEntry.class, _OBJECT_DEFINITION_NAME,
-				StringBundler.concat(
-					"/o/", RandomTestUtil.randomString(), StringPool.SLASH,
-					RandomTestUtil.randomString())),
-			new HashMapDictionary<>());
+		_systemObjectDefinitionManagerServiceRegistration =
+			_bundleContext.registerService(
+				SystemObjectDefinitionManager.class,
+				new TestSystemObjectDefinitionManager(
+					ObjectEntry.class, _OBJECT_DEFINITION_NAME,
+					StringBundler.concat(
+						"/o/", RandomTestUtil.randomString(), StringPool.SLASH,
+						RandomTestUtil.randomString())),
+				new HashMapDictionary<>());
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
+		if (_auditMessageProcessorServiceRegistration != null) {
+			_auditMessageProcessorServiceRegistration.unregister();
+		}
+
+		if (_systemObjectDefinitionManagerServiceRegistration != null) {
+			_systemObjectDefinitionManagerServiceRegistration.unregister();
 		}
 
 		_objectDefinitionLocalService.deleteCompanyObjectDefinitions(
 			_company.getCompanyId());
 
 		_companyLocalService.deleteCompany(_company.getCompanyId());
+	}
+
+	@Test
+	public void testOnAfterRemove() throws Exception {
+		BundleActivator bundleActivator =
+			new UserLocalServiceTestBundleActivator();
+
+		bundleActivator.start(_bundleContext);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.createObjectDefinition(RandomTestUtil.randomLong());
+
+		User user = UserTestUtil.addUser();
+
+		objectDefinition.setCompanyId(user.getCompanyId());
+		objectDefinition.setUserId(user.getUserId());
+
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		_userLocalService.deleteUser(user);
+
+		objectDefinition = _objectDefinitionLocalService.getObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
+
+		User defaultServiceAccountUser =
+			_userLocalService.fetchUserByScreenName(
+				TestPropsValues.getCompanyId(), "default-service-account");
+
+		Assert.assertEquals(
+			defaultServiceAccountUser.getUserId(),
+			objectDefinition.getUserId());
 	}
 
 	@Test
@@ -139,6 +186,9 @@ public class UserModelListenerTest {
 	private static final String _OBJECT_DEFINITION_NAME =
 		ObjectDefinitionTestUtil.getRandomName();
 
+	private ServiceRegistration<AuditMessageProcessor>
+		_auditMessageProcessorServiceRegistration;
+	private BundleContext _bundleContext;
 	private Company _company;
 
 	@Inject
@@ -154,6 +204,57 @@ public class UserModelListenerTest {
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	private ServiceRegistration<SystemObjectDefinitionManager>
-		_serviceRegistration;
+		_systemObjectDefinitionManagerServiceRegistration;
+
+	@Inject
+	private UserLocalService _userLocalService;
+
+	private static class TestAuditMessageProcessor
+		implements AuditMessageProcessor {
+
+		@Override
+		public void process(AuditMessage auditMessage) {
+			Assert.assertNotNull(auditMessage);
+
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
+
+			String authType = String.valueOf(
+				additionalInfoJSONObject.get("authType"));
+
+			Assert.assertEquals("emailAddress", authType);
+
+			String reason = String.valueOf(
+				additionalInfoJSONObject.get("reason"));
+
+			Assert.assertEquals("User does not exist", reason);
+
+			Assert.assertEquals(
+				EventTypes.LOGIN_DNE, auditMessage.getEventType());
+		}
+
+	}
+
+	private class UserLocalServiceTestBundleActivator
+		implements BundleActivator {
+
+		@Override
+		public void start(BundleContext bundleContext) {
+			AuditMessageProcessor auditMessageProcessor =
+				new TestAuditMessageProcessor();
+
+			_auditMessageProcessorServiceRegistration =
+				_bundleContext.registerService(
+					AuditMessageProcessor.class, auditMessageProcessor,
+					HashMapDictionaryBuilder.<String, Object>put(
+						"eventTypes", EventTypes.LOGIN_DNE
+					).build());
+		}
+
+		@Override
+		public void stop(BundleContext bundleContext) {
+			_auditMessageProcessorServiceRegistration.unregister();
+		}
+	}
 
 }

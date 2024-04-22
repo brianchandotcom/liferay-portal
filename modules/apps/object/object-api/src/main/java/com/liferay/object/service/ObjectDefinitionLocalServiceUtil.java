@@ -641,6 +641,13 @@ public class ObjectDefinitionLocalServiceUtil {
 			objectDefinitionId, titleObjectFieldId);
 	}
 
+	public static void updateUserId(
+			long companyId, long oldUserId, long newUserId)
+		throws PortalException {
+
+		getService().updateUserId(companyId, oldUserId, newUserId);
+	}
+
 	public static ObjectDefinitionLocalService getService() {
 		return _service;
 	}

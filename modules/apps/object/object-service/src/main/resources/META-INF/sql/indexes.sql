@@ -13,6 +13,7 @@ create index IX_66A8EEB3 on ObjectDefinition (companyId, rootObjectDefinitionId)
 create index IX_7D686D13 on ObjectDefinition (companyId, status, active_);
 create index IX_12BECBE8 on ObjectDefinition (companyId, system_, modifiable);
 create index IX_F8B95773 on ObjectDefinition (companyId, system_, status, active_);
+create index IX_86E0480A on ObjectDefinition (companyId, userId);
 create index IX_8D232754 on ObjectDefinition (objectFolderId);
 create index IX_55C39BCE on ObjectDefinition (system_, status);
 create index IX_7B61F95C on ObjectDefinition (uuid_[$COLUMN_LENGTH:75$]);

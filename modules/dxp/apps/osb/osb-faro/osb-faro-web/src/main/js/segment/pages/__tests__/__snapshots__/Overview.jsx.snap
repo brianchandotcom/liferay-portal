@@ -10,7 +10,7 @@ exports[`SegmentOverview should render 1`] = `
     >
       <div
         class="card card-root segment-profile-card-root"
-        id="segmentMembershipCardRoot"
+        id="container.report.segmentMembershipCard"
       >
         <div
           class="card-header"
@@ -54,7 +54,7 @@ exports[`SegmentOverview should render 1`] = `
       </div>
       <div
         class="card card-root interests-card-root"
-        id="topInterestsCardRoot"
+        id="container.report.topInterestsCard"
         style="min-height: 536px;"
       >
         <div
@@ -106,7 +106,7 @@ exports[`SegmentOverview should render 1`] = `
       </div>
       <div
         class="card card-root distribution-card-root"
-        id="distributionBreakdownCardRoot"
+        id="container.report.distributionBreakdownCard"
         style="min-height: 536px;"
       >
         <div
@@ -228,7 +228,7 @@ exports[`SegmentOverview should render 1`] = `
     >
       <div
         class="card card-root composition-card-root"
-        id="segmentCompositionCardRoot"
+        id="container.report.segmentCompositionCard"
       >
         <div
           class="card-header"

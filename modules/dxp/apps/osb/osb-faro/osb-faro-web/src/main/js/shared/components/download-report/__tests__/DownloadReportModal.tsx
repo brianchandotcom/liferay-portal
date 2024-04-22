@@ -98,7 +98,7 @@ const WrapperPDFomponent = ({children, ...otherProps}) => (
 			) as string
 		}
 		infoMessage={Liferay.Language.get(
-			'the-dashboard-will-be-downloaded-exactly-as-it-is-displayed-on-your-screen.-please-verify-if-the-desired-tabs-and-filters-are-selected-before-downloading'
+			'the-dashboard-will-be-downloaded-exactly-as-it-is-displayed-on-your-screen.-please-verify-if-the-desired-tabs-and-filters-are-selected-before-proceeding'
 		)}
 		onSubmit={jest.fn()}
 		type={ReportType.PDF}
@@ -348,7 +348,7 @@ describe('DownloadReportModal PDF', () => {
 
 		expect(
 			getByText(
-				'The dashboard will be downloaded exactly as it is displayed on your screen. Please verify if the desired tabs and filters are selected before downloading.'
+				'The dashboard will be downloaded exactly as it is displayed on your screen. Please verify if the desired tabs and filters are selected before proceeding.'
 			)
 		);
 

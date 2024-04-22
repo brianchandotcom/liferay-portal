@@ -4,7 +4,7 @@ exports[`TopPagesCard renders 1`] = `
 <div>
   <div
     class="card card-root"
-    id="topPagesCardRoot"
+    id="container.report.topPagesCard"
   >
     <div
       class="card-header align-items-center d-flex justify-content-between"

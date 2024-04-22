@@ -15,7 +15,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root analytics-metrics-card"
-          id="siteActivityCardRoot"
+          id="container.report.siteActivityCard"
           style="min-height: 605px;"
         >
           <div
@@ -83,7 +83,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root top-pages-card-root table-tabs-root"
-          id="topPagesCardRoot"
+          id="container.report.topPagesCard"
         >
           <div
             class="card-header align-items-center d-flex justify-content-between"
@@ -183,7 +183,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root acquisitions-card-root table-tabs-root"
-          id="acquisitionsCardRoot"
+          id="container.report.acquisitionsCard"
         >
           <div
             class="card-header align-items-center d-flex justify-content-between"
@@ -271,7 +271,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root visitors-by-time-card"
-          id="visitorsByTimeCardRoot"
+          id="container.report.visitorsByTimeCard"
         >
           <div
             class="card-header align-items-center d-flex justify-content-between"
@@ -301,7 +301,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root search-terms-card-root"
-          id="searchTermsCardRoot"
+          id="container.report.searchTermsCard"
         >
           <div
             class="card-header align-items-center d-flex justify-content-between"
@@ -353,7 +353,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root interests-card-root"
-          id="interestsCardRoot"
+          id="container.report.interestsCard"
         >
           <div
             class="card-header align-items-center d-flex justify-content-between"
@@ -429,7 +429,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root analytics-locations-card"
-          id="sessionsByLocationCardRoot"
+          id="container.report.sessionsByLocationCard"
           style="min-height: 536px;"
         >
           <div
@@ -464,7 +464,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root analytics-devices-card"
-          id="sessionTechnologyCardRoot"
+          id="container.report.sessionTechnologyCard"
           style="min-height: 536px;"
         >
           <div
@@ -503,7 +503,7 @@ exports[`Sites Dashboard Overview render 1`] = `
       >
         <div
           class="card card-root cohort-analysis-card-root"
-          id="cohortAnalysisCardRoot"
+          id="container.report.cohortAnalysisCard"
         >
           <div
             aria-hidden="true"

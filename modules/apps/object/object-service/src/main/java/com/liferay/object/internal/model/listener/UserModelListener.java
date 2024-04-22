@@ -10,10 +10,12 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
@@ -28,6 +30,30 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ModelListener.class)
 public class UserModelListener extends BaseModelListener<User> {
+
+	@Override
+	public void onAfterRemove(User user) throws ModelListenerException {
+		if (Objects.equals(user.getScreenName(), "default-service-account")) {
+			return;
+		}
+
+		User defaultServiceAccountUser =
+			_userLocalService.fetchUserByScreenName(
+				user.getCompanyId(), "default-service-account");
+
+		if (defaultServiceAccountUser == null) {
+			return;
+		}
+
+		try {
+			_objectDefinitionLocalService.updateUserId(
+				user.getCompanyId(), user.getUserId(),
+				defaultServiceAccountUser.getUserId());
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
+	}
 
 	@Override
 	public void onAfterUpdate(User originalUser, User user)
@@ -85,5 +111,8 @@ public class UserModelListener extends BaseModelListener<User> {
 	@Reference
 	private SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

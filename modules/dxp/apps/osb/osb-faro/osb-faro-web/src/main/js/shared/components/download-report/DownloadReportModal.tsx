@@ -13,6 +13,7 @@ import {spritemap} from 'shared/util/constants';
 import {Text} from '@clayui/core';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
+import {useLoadingObserver} from 'shared/hooks/useLoadingObserver';
 
 export enum ReportType {
 	CSV = 'CSV',
@@ -53,6 +54,8 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 		initialRangeSelectors
 	);
 
+	const loadingObserver = useLoadingObserver();
+
 	return (
 		<ClayModal observer={observer}>
 			<ClayForm
@@ -86,24 +89,9 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 							)
 						);
 
-						const observer = new MutationObserver(() => {
-							const loadingElement = document.querySelectorAll(
-								'.page-container .loading-animation'
-							);
-
-							if (!loadingElement.length) {
-								observer.disconnect();
-
-								onSubmit();
-							}
-						});
-
-						observer.observe(document.body, {
-							attributes: true,
-							characterData: true,
-							childList: true,
-							subtree: true
-						});
+						if (!loadingObserver) {
+							onSubmit();
+						}
 					} else {
 						onSubmit();
 					}

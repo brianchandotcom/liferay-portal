@@ -7,7 +7,7 @@ import {addDays} from 'date-fns';
 import useSWR from 'swr';
 
 import SearchBuilder from '../../../core/SearchBuilder';
-import {ORDER_STATUS} from '../../../enums/Order';
+import {ORDER_STATUS, ORDER_TYPES} from '../../../enums/Order';
 import useMarketplaceSpringBootOAuth2 from '../../../hooks/useMarketplaceSpringBootOAuth2';
 import HeadlessCommerceAdminOrderImpl from '../../../services/rest/HeadlessCommerceAdminOrder';
 
@@ -43,7 +43,7 @@ const useTrialMetrics = (param: FilterType) => {
 			fields:
 				'id,account,orderStatusInfo,createDate,customFields,name,accountId',
 			filter: new SearchBuilder()
-				.eq('orderTypeExternalReferenceCode', 'SOLUTIONS7')
+				.eq('orderTypeExternalReferenceCode', ORDER_TYPES.SOLUTIONS7)
 				.build(),
 			nestedFields: 'account,orderItems',
 			pageSize: '15',
@@ -54,7 +54,7 @@ const useTrialMetrics = (param: FilterType) => {
 			filter: new SearchBuilder()
 				.gt('createDate', lastPeriod.toISOString())
 				.and()
-				.eq('orderTypeExternalReferenceCode', 'SOLUTIONS7')
+				.eq('orderTypeExternalReferenceCode', ORDER_TYPES.SOLUTIONS7)
 				.build(),
 			pageSize: '-1',
 			sort: 'createDate:desc',
@@ -62,7 +62,7 @@ const useTrialMetrics = (param: FilterType) => {
 		new URLSearchParams({
 			fields: 'orderStatus,customFields',
 			filter: new SearchBuilder()
-				.eq('orderTypeExternalReferenceCode', 'SOLUTIONS7')
+				.eq('orderTypeExternalReferenceCode', ORDER_TYPES.SOLUTIONS7)
 				.and()
 				.lt('createDate', lastPeriod.toISOString())
 				.and()
@@ -75,14 +75,14 @@ const useTrialMetrics = (param: FilterType) => {
 		new URLSearchParams({
 			fields: 'orderStatus',
 			filter: new SearchBuilder()
-				.eq('orderTypeExternalReferenceCode', 'SOLUTIONS7')
+				.eq('orderTypeExternalReferenceCode', ORDER_TYPES.SOLUTIONS7)
 				.build(),
 			pageSize: '-1',
 		}),
 	];
 
 	const {data: trialDataResponse = [], error, isLoading} = useSWR<any>(
-		'administrator-dashboard/metrics/analytics',
+		'administrator-dashboard/metrics/trial',
 		() =>
 			Promise.all([
 				marketplaceSpringBootOAuth2.getTrialAvailability(),
@@ -100,20 +100,19 @@ const useTrialMetrics = (param: FilterType) => {
 		ordersTrial,
 	] = trialDataResponse;
 
-	const getExiredQuantity = (orderLastPeriod: Order[]) => {
-		return orderLastPeriod?.filter(
+	const getExiredQuantity = (orderLastPeriod: Order[]) =>
+		orderLastPeriod?.filter(
 			(order: Order) =>
 				new Date() >
 				new Date(order?.customFields?.['trial-end-date'] as string)
 		).length;
-	};
 
 	const resourcesAvailable = `${
 		availabilityResponse?.max - availabilityResponse?.available
 	} / ${availabilityResponse?.max}`;
 
-	const queue = ordersTrial?.items?.filter(
-		(order: Order) => order.orderStatus === ORDER_STATUS.HOLD
+	const onHold = ordersTrial?.items?.filter(
+		(order: Order) => order.orderStatus === ORDER_STATUS.ON_HOLD
 	).length;
 
 	const expiredTrialsLastPeriod = getExiredQuantity(orderLastPeriod?.items);
@@ -139,7 +138,7 @@ const useTrialMetrics = (param: FilterType) => {
 	return {
 		availability: {
 			...availabilityResponse,
-			queue,
+			onHold,
 			resourcesAvailable,
 		},
 		error,

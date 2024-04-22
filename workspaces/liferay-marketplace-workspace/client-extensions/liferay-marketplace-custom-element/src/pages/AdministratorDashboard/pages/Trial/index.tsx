@@ -91,7 +91,7 @@ const Trial = () => {
 									</span>
 
 									<h2 className="align-items-center d-flex justify-content-center my-0">
-										{availability?.queue}
+										{availability?.onHold}
 									</h2>
 								</div>
 								<span className="align-items-end d-flex">

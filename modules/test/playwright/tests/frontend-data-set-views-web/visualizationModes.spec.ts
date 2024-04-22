@@ -424,7 +424,7 @@ export const fragmentTest = mergeTests(
 	}),
 	loginTest(),
 	dataSetManagerSetupTest,
-	isolatedSiteTest,
+	isolatedSiteTest
 );
 
 fragmentTest.describe('Visualization Modes in the fragment', () => {

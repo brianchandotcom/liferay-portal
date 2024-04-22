@@ -8,6 +8,7 @@ package com.liferay.object.web.internal.info.item.updater;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
+import com.liferay.object.info.item.util.ObjectEntryInfoItemUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
@@ -95,7 +96,7 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 									serviceContext.getAssetCategoryIds()));
 						}
 					},
-					ObjectEntryUtil.getScopeKey(
+					ObjectEntryInfoItemUtil.getScopeKey(
 						objectEntry.getGroupId(), _objectDefinition,
 						_objectScopeProviderRegistry)));
 		}

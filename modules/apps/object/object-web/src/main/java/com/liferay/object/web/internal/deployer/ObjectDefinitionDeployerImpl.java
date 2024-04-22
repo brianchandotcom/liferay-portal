@@ -105,7 +105,6 @@ import com.liferay.object.web.internal.object.entries.portlet.action.UploadAttac
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -117,7 +116,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -318,11 +316,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				InfoItemFieldValuesProvider.class,
 				new ObjectEntryInfoItemFieldValuesProvider(
-					_companyLocalService, _displayPageInfoItemFieldSetProvider,
-					_dlAppLocalService, _dlURLHelper,
-					_infoItemFieldReaderFieldSetProvider, _jsonFactory,
-					_objectActionLocalService, objectDefinition,
-					_objectDefinitionLocalService,
+					_displayPageInfoItemFieldSetProvider, _dlAppLocalService,
+					_dlURLHelper, _infoItemFieldReaderFieldSetProvider,
+					_listTypeEntryLocalService, _objectActionLocalService,
+					objectDefinition, _objectDefinitionLocalService,
 					objectFieldInfoFieldConverter, _objectEntryLocalService,
 					_objectEntryManagerRegistry, _objectFieldLocalService,
 					_objectRelationshipLocalService,
@@ -641,9 +638,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			new AttachmentUploadResponseHandler();
 	private BundleContext _bundleContext;
 
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
 	@Reference(target = "(upload.response.handler.system.default=true)")
 	private UploadResponseHandler _defaultUploadResponseHandler;
 
@@ -683,9 +677,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>
 		_itemSelectorViewDescriptorRenderer;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

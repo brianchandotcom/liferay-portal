@@ -9,7 +9,6 @@ import SearchBuilder from '../../core/SearchBuilder';
 import i18n from '../../i18n';
 import {State} from '../../pages/Standalone/Teams/TeamsFormModal';
 import yupSchema from '../../schema/yup';
-import {testrayCaseResultImpl} from './TestrayCaseResult';
 import {APIResponse, TestrayComponent} from './types';
 
 type Component = typeof yupSchema.component.__outputType;
@@ -30,9 +29,6 @@ class TestrayComponentImpl extends Rest<Component, TestrayComponent> {
 			nestedFields: 'project,team',
 			transformData: (testrayComponent) => ({
 				...testrayComponent,
-				...testrayCaseResultImpl.normalizeCaseResultAggregation(
-					testrayComponent
-				),
 				project: testrayComponent?.r_projectToComponents_c_project,
 				team: testrayComponent?.r_teamToComponents_c_team,
 				teamId: testrayComponent?.r_teamToComponents_c_teamId,

@@ -110,6 +110,10 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 	Serve global JavaScript on a page.
 
+- *liferay-sample-global-js-2*
+
+	Serve global JavaScript with attributes on a page.
+
 - *liferay-sample-iframe-1*
 
 	Add an IFrame widget with an interactive counter app.

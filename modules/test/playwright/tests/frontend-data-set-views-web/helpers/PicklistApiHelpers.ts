@@ -15,7 +15,7 @@ export class PicklistApiHelpers extends ApiHelpers {
 			},
 		};
 
-		return this.post(url, data);
+		return this.post(url, {data});
 	}
 
 	async getPicklist(name: string) {
@@ -45,6 +45,6 @@ export class PicklistApiHelpers extends ApiHelpers {
 			},
 		};
 
-		return this.post(url, data);
+		return this.post(url, {data});
 	}
 }

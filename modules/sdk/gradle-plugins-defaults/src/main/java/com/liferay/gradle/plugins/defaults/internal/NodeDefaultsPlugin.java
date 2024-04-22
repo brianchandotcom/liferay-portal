@@ -29,6 +29,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.util.VersionNumber;
 
 /**
  * @author Andrea Di Giorgi
@@ -58,7 +59,18 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	}
 
 	private void _configureNode(Project project, String portalVersion) {
-		if (PortalTools.PORTAL_VERSION_7_0_X.equals(portalVersion)) {
+		VersionNumber versionNumber = VersionNumber.parse(
+			GradleUtil.getProperty(
+				project, "release.info.version", (String)null));
+
+		if (versionNumber.compareTo(VersionNumber.parse("7.4.3.118")) >= 0) {
+			NodeExtension nodeExtension = GradleUtil.getExtension(
+				project, NodeExtension.class);
+
+			nodeExtension.setNodeVersion("20.12.2");
+			nodeExtension.setNpmVersion("10.5.0");
+		}
+		else if (PortalTools.PORTAL_VERSION_7_0_X.equals(portalVersion)) {
 			NodeExtension nodeExtension = GradleUtil.getExtension(
 				project, NodeExtension.class);
 

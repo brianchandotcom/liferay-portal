@@ -6,9 +6,11 @@
 package com.liferay.info.test.util.model;
 
 import com.liferay.info.field.InfoField;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Lourdes Fernández Besada
@@ -16,7 +18,15 @@ import java.util.Map;
 public class MockObject {
 
 	public MockObject(long classPK) {
+		this(classPK, true, true);
+	}
+
+	public MockObject(
+		long classPK, boolean updatePermission, boolean viewPermission) {
+
 		_classPK = classPK;
+		_updatePermission = updatePermission;
+		_viewPermission = viewPermission;
 	}
 
 	public void addInfoField(InfoField infoField, Object value) {
@@ -31,7 +41,21 @@ public class MockObject {
 		return _infoFieldsMap;
 	}
 
+	public boolean hasPermission(String actionId) {
+		if (Objects.equals(ActionKeys.VIEW, actionId)) {
+			return _viewPermission;
+		}
+
+		if (Objects.equals(ActionKeys.UPDATE, actionId)) {
+			return _updatePermission;
+		}
+
+		return false;
+	}
+
 	private final long _classPK;
 	private final Map<InfoField<?>, Object> _infoFieldsMap = new HashMap<>();
+	private final boolean _updatePermission;
+	private final boolean _viewPermission;
 
 }

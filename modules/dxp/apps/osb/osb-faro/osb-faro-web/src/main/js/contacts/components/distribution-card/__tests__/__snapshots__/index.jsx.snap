@@ -4,7 +4,7 @@ exports[`DistributionCard renders /w AddPropertyForm 1`] = `
 <div>
   <div
     class="card card-root distribution-card-root"
-    id="distributionBreakdownCardRoot"
+    id="container.report.distributionBreakdownCard"
     style="min-height: 536px;"
   >
     <div
@@ -179,7 +179,7 @@ exports[`DistributionCard renders 1`] = `
 <div>
   <div
     class="card card-root distribution-card-root"
-    id="distributionBreakdownCardRoot"
+    id="container.report.distributionBreakdownCard"
     style="min-height: 536px;"
   >
     <div
@@ -269,7 +269,7 @@ exports[`DistributionCard renders empty state via props with noResultsRenderer 1
 <div>
   <div
     class="card card-root distribution-card-root"
-    id="distributionBreakdownCardRoot"
+    id="container.report.distributionBreakdownCard"
     style="min-height: 536px;"
   >
     <div
@@ -363,7 +363,7 @@ exports[`DistributionCard renders w/ showAddDataSource 1`] = `
 <div>
   <div
     class="card card-root distribution-card-root"
-    id="distributionBreakdownCardRoot"
+    id="container.report.distributionBreakdownCard"
     style="min-height: 536px;"
   >
     <div

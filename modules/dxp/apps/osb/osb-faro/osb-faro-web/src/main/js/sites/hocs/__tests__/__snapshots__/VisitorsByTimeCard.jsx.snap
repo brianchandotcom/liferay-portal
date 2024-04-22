@@ -4,7 +4,7 @@ exports[`VisitorsByTimeCard render 1`] = `
 <div>
   <div
     class="card card-root"
-    id="visitorsByTimeCardRoot"
+    id="container.report.visitorsByTimeCard"
   >
     <div
       class="card-header align-items-center d-flex justify-content-between"

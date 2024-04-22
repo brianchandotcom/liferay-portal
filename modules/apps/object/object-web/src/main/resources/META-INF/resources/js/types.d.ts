@@ -197,6 +197,7 @@ interface ObjectDefinition {
 	defaultLanguageId: Liferay.Language.Locale;
 	enableCategorization: boolean;
 	enableComments: boolean;
+	enableIndexedSearch: boolean;
 	enableLocalization: boolean;
 	enableObjectEntryDraft: boolean;
 	enableObjectEntryHistory: boolean;

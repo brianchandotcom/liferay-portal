@@ -34,8 +34,13 @@ import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.provider.LayoutStructureProvider;
@@ -51,7 +56,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.exception.InfoFormException;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -509,6 +513,63 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
+	public void testRenderEditionForm() throws Exception {
+		MockObject mockObject = new MockObject(RandomTestUtil.randomLong());
+
+		InfoField<TextInfoFieldType> infoField1 = _getInfoField(false);
+
+		String infoField1Value = RandomTestUtil.randomString();
+
+		mockObject.addInfoField(infoField1, infoField1Value);
+
+		InfoField<TextInfoFieldType> infoField2 = _getInfoField(false);
+
+		String infoField2Value = RandomTestUtil.randomString();
+
+		mockObject.addInfoField(infoField2, infoField2Value);
+
+		try (MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoField1, infoField2)
+						).build(),
+						mockObject, _portal, _displayPageInfoItemCapability,
+						_editPageInfoItemCapability)) {
+
+			Layout layout = _addDisplayPageWithFormAndGetLayout(
+				infoField1, infoField2);
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(
+					layout,
+					mockInfoServiceRegistrationHolder.
+						getMockObjectLayoutDisplayPageObjectProvider());
+
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
+
+			RenderLayoutStructureTag renderLayoutStructureTag =
+				_getRenderLayoutStructureTagDefaultSegmentsExperience(
+					layout, mockHttpServletRequest, mockHttpServletResponse);
+
+			renderLayoutStructureTag.doTag(
+				mockHttpServletRequest, mockHttpServletResponse);
+
+			String content = mockHttpServletResponse.getContentAsString();
+
+			Assert.assertFalse(
+				content.contains("<fieldset disabled=\"disabled\">"));
+
+			_assertInfoFieldInput(infoField1, content, infoField1Value);
+			_assertInfoFieldInput(infoField2, content, infoField2Value);
+
+			_assertInputJSONObject(content, infoField1, infoField2);
+		}
+	}
+
+	@Test
 	public void testRenderFormWithInfoFormException() throws Exception {
 		InfoField<TextInfoFieldType> infoField = _getInfoField(false);
 
@@ -854,6 +915,27 @@ public class RenderLayoutStructureTagTest {
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
 	}
 
+	private Layout _addDisplayPageWithFormAndGetLayout(InfoField... infoFields)
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				_group.getGroupId(), 0,
+				_portal.getClassNameId(MockObject.class.getName()), 0,
+				RandomTestUtil.randomString(), 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		ContentLayoutTestUtil.addFormToPublishedLayout(
+			false,
+			String.valueOf(_portal.getClassNameId(MockObject.class.getName())),
+			"0", layout, _layoutStructureProvider, infoFields);
+
+		return _layoutLocalService.getLayout(layout.getPlid());
+	}
+
 	private void _addFragmentEntryLinks(
 			Layout layout, String parentItemId, long segmentsExperienceId)
 		throws Exception {
@@ -943,10 +1025,18 @@ public class RenderLayoutStructureTagTest {
 		Assert.assertTrue(content.contains(expectedInfoFieldInput));
 	}
 
+	private void _assertInfoFieldInput(
+		InfoField<TextInfoFieldType> infoField, String content, String value) {
+
+		_assertInfoFieldInput(infoField, content);
+
+		Assert.assertTrue(content.contains(value));
+	}
+
 	private void _assertInfoFieldInputJSONObject(
 			InfoField<TextInfoFieldType> infoField, String jsonString,
 			Locale locale)
-		throws JSONException {
+		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(jsonString);
 
@@ -1024,12 +1114,24 @@ public class RenderLayoutStructureTagTest {
 	private MockHttpServletRequest _getMockHttpServletRequest(Layout layout)
 		throws Exception {
 
+		return _getMockHttpServletRequest(layout, null);
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequest(
+			Layout layout,
+			LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider)
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			ContentLayoutTestUtil.getMockHttpServletRequest(
 				_companyLocalService.getCompany(layout.getCompanyId()), _group,
 				layout);
 
 		mockHttpServletRequest.setMethod(HttpMethods.GET);
+
+		mockHttpServletRequest.setAttribute(
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+			layoutDisplayPageObjectProvider);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)mockHttpServletRequest.getAttribute(
@@ -1093,6 +1195,11 @@ public class RenderLayoutStructureTagTest {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject(
+		filter = "info.item.capability.key=" + DisplayPageInfoItemCapability.KEY
+	)
+	private InfoItemCapability _displayPageInfoItemCapability;
+
+	@Inject(
 		filter = "info.item.capability.key=" + EditPageInfoItemCapability.KEY
 	)
 	private InfoItemCapability _editPageInfoItemCapability;
@@ -1114,6 +1221,9 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Inject
 	private LayoutPageTemplateStructureLocalService

@@ -15,10 +15,10 @@ import {
 } from 'shared/actions/preferences';
 import {Alert} from 'shared/types';
 import {connect, ConnectedProps} from 'react-redux';
-import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {DistributionTab} from 'shared/util/records';
 import {List, Map} from 'immutable';
 import {PreferencesScopes} from 'shared/util/constants';
+import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {RootState} from 'shared/store';
 
 const connector = connect(
@@ -182,7 +182,7 @@ class DistributionCard extends React.Component<
 		return (
 			<Card
 				className='distribution-card-root'
-				id={Containers.DistributionBreakdownCard}
+				id={ReportContainer.DistributionBreakdownCard}
 				minHeight={536}
 			>
 				{error && !showAddProperty && (

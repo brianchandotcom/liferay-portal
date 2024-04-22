@@ -17,7 +17,7 @@ dependencies {
 	compileOnly group: "org.springframework", name: "spring-aop", version: "5.3.33"
 	compileOnly group: "org.springframework", name: "spring-context", version: "5.3.33"
 	compileOnly group: "org.springframework", name: "spring-core", version: "5.3.33"
-	compileOnly group: "org.springframework", name: "spring-web", version: "5.3.33"
+	compileOnly group: "org.springframework", name: "spring-web", version: "5.3.34"
 	compileOnly project(":apps:bean-portlet:bean-portlet-extension-api")
 	compileOnly project(":apps:bean-portlet:bean-portlet-registration-api")
 	compileOnly project(":core:petra:petra-function")

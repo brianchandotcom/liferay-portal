@@ -12,7 +12,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly group: "org.springframework", name: "spring-context", version: "5.3.33"
 	compileOnly group: "org.springframework", name: "spring-core", version: "5.3.33"
-	compileOnly group: "org.springframework", name: "spring-web", version: "5.3.33"
+	compileOnly group: "org.springframework", name: "spring-web", version: "5.3.34"
 	compileOnly project(":apps:static:portal-file-install:portal-file-install-api")
 	compileOnly project(":apps:static:portal-osgi-web:portal-osgi-web-wab-generator-api")
 	compileOnly project(":core:petra:petra-string")

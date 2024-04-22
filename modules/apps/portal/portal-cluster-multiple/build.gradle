@@ -22,7 +22,7 @@ dependencies {
 	testImplementation group: "javax.portlet", name: "portlet-api", version: "3.0.1"
 	testImplementation group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	testImplementation group: "org.aspectj", name: "aspectjweaver", version: "1.8.9"
-	testImplementation group: "org.springframework", name: "spring-web", version: "5.3.33"
+	testImplementation group: "org.springframework", name: "spring-web", version: "5.3.34"
 	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	testImplementation project(":core:petra:petra-process")
 }

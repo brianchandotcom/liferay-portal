@@ -7,7 +7,7 @@ dependencies {
 	testIntegrationImplementation group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	testIntegrationImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	testIntegrationImplementation group: "org.springframework", name: "spring-web", version: "5.3.33"
+	testIntegrationImplementation group: "org.springframework", name: "spring-web", version: "5.3.34"
 	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	testIntegrationImplementation project(":apps:layout:layout-test-util")
 	testIntegrationImplementation project(":apps:portal:portal-upload-test-util")

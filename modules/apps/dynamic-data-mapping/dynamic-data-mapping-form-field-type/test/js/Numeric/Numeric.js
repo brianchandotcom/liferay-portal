@@ -30,6 +30,22 @@ describe('Field Numeric', () => {
 		expect(container).toMatchSnapshot();
 	});
 
+	it('does not render html autocomplete attribute', () => {
+		render(<Numeric />);
+
+		expect(
+			document.querySelector('.form-control').hasAttribute('autocomplete')
+		).toBe(false);
+	});
+
+	it('renders the html autocomplete attribute', () => {
+		render(<Numeric htmlAutocompleteAttribute="name" />);
+
+		expect(
+			document.querySelector('.form-control').getAttribute('autocomplete')
+		).toBe('name');
+	});
+
 	it('has a name', () => {
 		const {container} = render(<Numeric name="numericField" />);
 

@@ -175,6 +175,35 @@ describe('Field Text', () => {
 		expect(container).toMatchSnapshot();
 	});
 
+	it('does not render html autocomplete attribute', () => {
+		const {container} = render(<TextWithProvider {...defaultTextConfig} />);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		const textInputTag = container.querySelector('.ddm-field-text');
+
+		expect(textInputTag.hasAttribute('autocomplete')).toBe(false);
+	});
+
+	it('renders html autocomplete attribute', () => {
+		const {container} = render(
+			<TextWithProvider
+				{...defaultTextConfig}
+				htmlAutocompleteAttribute="name"
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		const textInputTag = container.querySelector('.ddm-field-text');
+
+		expect(textInputTag.getAttribute('autocomplete')).toBe('name');
+	});
+
 	it('renders autocomplete dropdown menu', () => {
 		const onChange = jest.fn();
 

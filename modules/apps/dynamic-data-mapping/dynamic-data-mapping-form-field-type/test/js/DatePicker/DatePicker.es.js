@@ -20,6 +20,22 @@ describe('DatePicker', () => {
 		).toHaveTextContent('Type something');
 	});
 
+	it('does not render the html autocomplete attribute', () => {
+		render(<DatePicker />);
+
+		expect(
+			document.querySelector('.form-control').hasAttribute('autocomplete')
+		).toBe(false);
+	});
+
+	it('renders the html autocomplete attribute', () => {
+		render(<DatePicker htmlAutocompleteAttribute="name" />);
+
+		expect(
+			document.querySelector('.form-control').getAttribute('autocomplete')
+		).toBe('name');
+	});
+
 	it('renders the label', () => {
 		render(<DatePicker label="Date picker" />);
 

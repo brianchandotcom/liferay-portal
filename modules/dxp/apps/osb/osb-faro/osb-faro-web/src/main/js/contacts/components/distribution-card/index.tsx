@@ -182,8 +182,8 @@ class DistributionCard extends React.Component<
 		return (
 			<Card
 				className='distribution-card-root'
-				id={ReportContainer.DistributionBreakdownCard}
 				minHeight={536}
+				reportContainer={ReportContainer.DistributionBreakdownCard}
 			>
 				{error && !showAddProperty && (
 					<ErrorDisplay

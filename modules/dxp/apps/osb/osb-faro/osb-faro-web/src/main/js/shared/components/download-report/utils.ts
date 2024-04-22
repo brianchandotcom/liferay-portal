@@ -76,9 +76,7 @@ export function generateReport({
 	const promises: Promise<void>[] = [];
 
 	containers.map(({id, layout}) => {
-		const containerElement = document.querySelector(
-			`#${id}`
-		) as HTMLElement;
+		const containerElement = document.getElementById(id);
 
 		if (!containerElement) {
 			throw new Error(`container not found! ID: ${id}`);

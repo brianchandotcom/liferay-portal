@@ -8,6 +8,7 @@ import {getMetricsChartData} from './util';
 import {Interval, RangeSelectors, Router} from 'shared/types';
 import {Metric} from './metrics';
 import {RawFilters} from 'shared/util/filter';
+import {ReportContainer} from '../download-report/DownloadPDFReport';
 
 const initialState = {
 	activeItemIndex: 0,
@@ -38,6 +39,7 @@ export interface ICommonMetricProps {
 export interface IGenericMetricBaseCardProps {
 	label: string;
 	legacyDropdownRangeKey?: boolean;
+	reportContainer?: ReportContainer;
 	showIntervals?: boolean;
 }
 
@@ -66,6 +68,7 @@ function MetricBaseCard<TChartData>({
 	id,
 	metrics,
 	queries,
+	reportContainer,
 	showIntervals = false,
 	variables
 }: IMetricBaseCardProps<TChartData>): React.ReactElement {
@@ -103,6 +106,7 @@ function MetricBaseCard<TChartData>({
 					label={label}
 					legacyDropdownRangeKey={legacyDropdownRangeKey}
 					minHeight={605}
+					reportContainer={reportContainer}
 					showInterval={showIntervals}
 				>
 					{({filters, interval, rangeSelectors}) => {

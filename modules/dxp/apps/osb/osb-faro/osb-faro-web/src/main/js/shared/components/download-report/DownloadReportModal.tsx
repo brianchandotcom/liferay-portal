@@ -97,73 +97,75 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 					}
 				}}
 			>
-				<ClayModal.Header>
-					{Liferay.Language.get('download-report')}
-				</ClayModal.Header>
+				<div className='modal-content'>
+					<ClayModal.Header>
+						{Liferay.Language.get('download-report')}
+					</ClayModal.Header>
 
-				{openAlert && (
-					<ClayAlert
-						onClose={() => setOpenAlert(false)}
-						spritemap={spritemap}
-						title={Liferay.Language.get('info')}
-						variant='stripe'
-					>
-						{infoMessage}
-					</ClayAlert>
-				)}
-
-				<ClayModal.Body>
-					{showDateRange && (
-						<ClayForm.Group className='mb-0'>
-							<label htmlFor='timeRange'>
-								{requiredDateRange
-									? Liferay.Language.get('date-range')
-									: Liferay.Language.get(
-											'date-range-optional'
-									  )}
-							</label>
-
-							<p>
-								<Text size={3}>
-									{Liferay.Language.get(
-										'only-select-a-date-range-if-you-want-to-modify-the-current-date-filter'
-									)}
-								</Text>
-							</p>
-
-							<DropdownRangeKey
-								alignmentPosition={Align.BottomLeft}
-								legacy={false}
-								onRangeSelectorChange={setRangeSelectors}
-								rangeSelectors={rangeSelectors}
-							/>
-						</ClayForm.Group>
+					{openAlert && (
+						<ClayAlert
+							onClose={() => setOpenAlert(false)}
+							spritemap={spritemap}
+							title={Liferay.Language.get('info')}
+							variant='stripe'
+						>
+							{infoMessage}
+						</ClayAlert>
 					)}
 
-					{children}
-				</ClayModal.Body>
+					<ClayModal.Body>
+						{showDateRange && (
+							<ClayForm.Group className='mb-0'>
+								<label htmlFor='timeRange'>
+									{requiredDateRange
+										? Liferay.Language.get('date-range')
+										: Liferay.Language.get(
+												'date-range-optional'
+										  )}
+								</label>
 
-				<ClayModal.Footer
-					last={
-						<ClayButton.Group spaced>
-							<ClayButton
-								data-testid='cancel'
-								displayType='secondary'
-								onClick={onClose}
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
+								<p>
+									<Text size={3}>
+										{Liferay.Language.get(
+											'only-select-a-date-range-if-you-want-to-modify-the-current-date-filter'
+										)}
+									</Text>
+								</p>
 
-							<ClayButton
-								data-testid='submit'
-								disabled={disabled || submitDisabled}
-								type='submit'
-							>
-								{Liferay.Language.get('download')}
-							</ClayButton>
-						</ClayButton.Group>
-					}
-				/>
+								<DropdownRangeKey
+									alignmentPosition={Align.BottomLeft}
+									legacy={false}
+									onRangeSelectorChange={setRangeSelectors}
+									rangeSelectors={rangeSelectors}
+								/>
+							</ClayForm.Group>
+						)}
+
+						{children}
+					</ClayModal.Body>
+
+					<ClayModal.Footer
+						last={
+							<ClayButton.Group spaced>
+								<ClayButton
+									data-testid='cancel'
+									displayType='secondary'
+									onClick={onClose}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
+
+								<ClayButton
+									data-testid='submit'
+									disabled={disabled || submitDisabled}
+									type='submit'
+								>
+									{Liferay.Language.get('download')}
+								</ClayButton>
+							</ClayButton.Group>
+						}
+					/>
+				</div>
 			</ClayForm>
 		</ClayModal>
 	);

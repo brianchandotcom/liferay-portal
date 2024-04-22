@@ -6,13 +6,13 @@ import React from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {compositionListColumns} from 'shared/util/table-columns';
 import {CompositionTypes} from 'shared/util/constants';
-import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {
 	getMapResultToProps,
 	mapCardPropsToOptions
 } from 'contacts/hoc/mappers/interests-query';
 import {graphql} from '@apollo/react-hoc';
 import {PAGES, Routes, setUriQueryValue, toRoute} from 'shared/util/router';
+import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {withTableData} from 'shared/hoc';
 
 const withData = () =>
@@ -75,8 +75,8 @@ const TableWithData = withTableData(withData, {
 const InterestsCard = ({channelId, groupId, id}) => (
 	<Card
 		className='interests-card-root'
-		id={Containers.TopInterestsCard}
 		minHeight={536}
+		reportContainer={ReportContainer.TopInterestsCard}
 	>
 		<Card.Header>
 			<Card.Title>{Liferay.Language.get('top-interests')}</Card.Title>

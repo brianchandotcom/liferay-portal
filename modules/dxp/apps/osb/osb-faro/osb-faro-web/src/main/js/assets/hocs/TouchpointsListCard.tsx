@@ -5,12 +5,12 @@ import React from 'react';
 import TouchpointsListCard from 'assets/components/TouchpointsListCard';
 import URLConstants from 'shared/util/url-constants';
 import {compose} from 'redux';
-import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {graphql} from '@apollo/react-hoc';
 import {
 	mapPropsToOptions,
 	mapResultToProps
 } from './mappers/touchpoint-list-query';
+import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {withEmpty} from 'cerebro-shared/hocs/utils';
 import {withError, withLoading} from 'shared/hoc';
 
@@ -58,10 +58,10 @@ const TouchpointListWithBaseCard: React.FC<ITouchpointsListCardProps> = ({
 }) => (
 	<BaseCard
 		className='analytics-touchpoints-list-card'
-		id={Containers.AssetAppearsOnCard}
 		label={label}
 		legacyDropdownRangeKey={legacyDropdownRangeKey}
 		minHeight={536}
+		reportContainer={ReportContainer.AssetAppearsOnCard}
 	>
 		{({filters, rangeSelectors, router}) => (
 			<TouchpointListWithData

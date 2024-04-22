@@ -1,5 +1,7 @@
 import getCN from 'classnames';
-import React from 'react';
+import React, {useEffect} from 'react';
+import {ReportContainer} from './download-report/DownloadPDFReport';
+import {useDownloadReportContext} from './download-report/DownloadReportContext';
 
 interface ICardBodyProps extends React.HTMLAttributes<HTMLElement> {
 	alignCenter?: boolean;
@@ -41,6 +43,7 @@ interface ICardProps extends React.HTMLAttributes<HTMLElement> {
 	horizontal?: boolean;
 	minHeight?: number;
 	pageDisplay?: boolean;
+	reportContainer?: ReportContainer;
 	testId?: string;
 }
 
@@ -53,11 +56,19 @@ const Card: React.FC<ICardProps> & {
 	children,
 	className,
 	horizontal = false,
-	id,
 	minHeight,
 	pageDisplay = false,
+	reportContainer,
 	testId
 }) => {
+	const {setReportContainer} = useDownloadReportContext();
+
+	useEffect(() => {
+		if (reportContainer) {
+			setReportContainer(reportContainer);
+		}
+	}, [reportContainer]);
+
 	const classes = getCN('card', 'card-root', className, {
 		horizontal,
 		'page-display': pageDisplay
@@ -67,7 +78,7 @@ const Card: React.FC<ICardProps> & {
 		<div
 			className={classes}
 			data-testid={testId}
-			id={id}
+			id={reportContainer}
 			style={minHeight && {minHeight: `${minHeight}px`}}
 		>
 			{children}

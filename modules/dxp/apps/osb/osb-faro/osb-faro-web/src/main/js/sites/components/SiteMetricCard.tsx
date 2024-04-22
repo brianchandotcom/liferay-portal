@@ -9,8 +9,8 @@ import {
 	SessionDurationMetric,
 	SessionsPerVisitorMetric
 } from 'shared/components/metric-card/metrics';
-import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {getSiteMetricsChartData} from 'shared/components/metric-card/util';
+import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {
 	SitesMetricQuery,
 	SitesTabsQuery
@@ -33,13 +33,13 @@ const SitesMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
 		<MetricBaseCard<TChartData>
 			chartDataMapFn={getSiteMetricsChartData}
 			{...props}
-			id={Containers.SiteActivityCard}
 			metrics={metrics}
 			queries={{
 				MetricQuery: SitesMetricQuery,
 				name: 'site',
 				TabsQuery: SitesTabsQuery
 			}}
+			reportContainer={ReportContainer.SiteActivityCard}
 			variables={commonVariables => ({
 				...commonVariables,
 				channelId

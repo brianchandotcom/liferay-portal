@@ -13,13 +13,13 @@ import ReactDOMServer from 'react-dom/server';
 import URLConstants from 'shared/util/url-constants';
 import VisitorsByTimeQuery from 'shared/queries/VisitorsByTimeQuery';
 import {compose} from 'shared/hoc';
-import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {graphql} from '@apollo/react-hoc';
 import {IBasePageContext} from 'shared/types';
 import {
 	mapPropsToOptions,
 	mapResultToProps
 } from './mappers/visitors-by-time-query';
+import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {sub} from 'shared/util/lang';
 import {withEmpty, withError, withLoading} from 'shared/hoc';
 
@@ -113,9 +113,9 @@ const VisitorsByTimeCard: React.FC<IVisitorsByTimeCardProps> = ({
 	return (
 		<CardWithRangeKey
 			className={className}
-			id={Containers.VisitorsByTimeCard}
 			label={label}
 			legacyDropdownRangeKey={false}
+			reportContainer={ReportContainer.VisitorsByTimeCard}
 		>
 			{({rangeSelectors}) => (
 				<Card.Body>

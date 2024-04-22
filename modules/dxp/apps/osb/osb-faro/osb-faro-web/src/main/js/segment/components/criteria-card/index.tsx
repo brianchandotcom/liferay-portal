@@ -75,7 +75,7 @@ class CriteriaCard extends React.Component<
 		return (
 			<Card
 				className='criteria-card-root'
-				id={
+				reportContainer={
 					segment.segmentType === SegmentTypes.Dynamic &&
 					ReportContainer.SegmentCriteriaCard
 				}

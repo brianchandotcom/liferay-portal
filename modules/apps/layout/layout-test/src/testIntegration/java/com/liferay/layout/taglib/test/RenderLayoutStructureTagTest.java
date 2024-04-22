@@ -671,19 +671,7 @@ public class RenderLayoutStructureTagTest {
 			_assertInfoFieldInput(infoField, content);
 			_assertInfoFieldInput(readOnlyInfoField, content);
 
-			Matcher matcher = _inputJSONObjectPattern.matcher(content);
-
-			Assert.assertTrue(matcher.find());
-
-			Locale locale = _portal.getSiteDefaultLocale(_group);
-
-			_assertInfoFieldInputJSONObject(
-				infoField, matcher.group(1), locale);
-
-			Assert.assertTrue(matcher.find());
-
-			_assertInfoFieldInputJSONObject(
-				readOnlyInfoField, matcher.group(1), locale);
+			_assertInputJSONObject(content, infoField, readOnlyInfoField);
 		}
 	}
 
@@ -967,6 +955,21 @@ public class RenderLayoutStructureTagTest {
 		Assert.assertEquals(
 			infoField.isReadOnly(), jsonObject.getBoolean("readOnly"));
 		Assert.assertEquals("text", jsonObject.getString("type"));
+	}
+
+	private void _assertInputJSONObject(String content, InfoField... infoFields)
+		throws Exception {
+
+		Matcher matcher = _inputJSONObjectPattern.matcher(content);
+
+		Locale locale = _portal.getSiteDefaultLocale(_group);
+
+		for (InfoField infoField : infoFields) {
+			Assert.assertTrue(matcher.find());
+
+			_assertInfoFieldInputJSONObject(
+				infoField, matcher.group(1), locale);
+		}
 	}
 
 	private void _createLayoutStructure(

@@ -880,6 +880,23 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	private void _deleteFileEntry(long fileEntryId) throws PortalException {
+
+		// File shortcuts
+
+		_dlFileShortcutLocalService.deleteFileShortcuts(fileEntryId);
+
+		// Asset
+
+		_assetEntryLocalService.deleteEntry(
+			DLFileEntryConstants.getClassName(), fileEntryId);
+
+		// Ratings
+
+		_ratingsStatsLocalService.deleteStats(
+			DLFileEntryConstants.getClassName(), fileEntryId);
+	}
+
 	private boolean _isAddDraftAssetEntry(DLFileVersion dlFileVersion) {
 		String version = dlFileVersion.getVersion();
 
@@ -903,23 +920,6 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		return true;
-	}
-
-	private void _deleteFileEntry(long fileEntryId) throws PortalException {
-
-		// File shortcuts
-
-		_dlFileShortcutLocalService.deleteFileShortcuts(fileEntryId);
-
-		// Asset
-
-		_assetEntryLocalService.deleteEntry(
-			DLFileEntryConstants.getClassName(), fileEntryId);
-
-		// Ratings
-
-		_ratingsStatsLocalService.deleteStats(
-			DLFileEntryConstants.getClassName(), fileEntryId);
 	}
 
 	private static final int[] _ASSET_ENTRY_CREATION_STATUSES = {

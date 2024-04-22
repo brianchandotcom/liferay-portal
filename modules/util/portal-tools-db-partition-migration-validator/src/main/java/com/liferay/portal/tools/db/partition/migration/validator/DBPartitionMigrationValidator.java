@@ -51,26 +51,19 @@ import org.apache.commons.cli.ParseException;
 public class DBPartitionMigrationValidator {
 
 	public static void main(String[] args) {
-		if ((args.length != 0) &&
-			(args[0].equals("-h") || args[0].equals("-help") ||
-			 args[0].equals("--help"))) {
-
+		if ((args.length != 0) && args[0].equals("--help")) {
 			_printHelp();
 
 			return;
 		}
 
 		for (String arg : args) {
-			if (arg.equals("-e") || arg.equals("-export") ||
-				arg.equals("--export")) {
-
+			if (arg.equals("--export")) {
 				_export(ArrayUtil.remove(args, arg));
 
 				_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
 			}
-			else if (arg.equals("-v") || arg.equals("-validate") ||
-					 arg.equals("--validate")) {
-
+			else if (arg.equals("--validate")) {
 				_validate(ArrayUtil.remove(args, arg));
 
 				_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
@@ -149,14 +142,18 @@ public class DBPartitionMigrationValidator {
 	private static Options _getExportOptions() {
 		Options options = new Options();
 
-		options.addOption("d", "output-dir", true, "Set the output directory.");
-		options.addRequiredOption("j", "jdbc-url", true, "Set the JDBC URL.");
-		options.addRequiredOption(
-			"p", "password", true, "Set the database user password.");
 		options.addOption(
-			"s", "schema-name", true, "Set the database schema name.");
+			null, "output-dir", true,
+			"Set the output directory. (Optional. Default value: ./exports).");
+		options.addRequiredOption(null, "jdbc-url", true, "Set the JDBC URL.");
 		options.addRequiredOption(
-			"u", "user", true, "Set the database user name.");
+			null, "password", true, "Set the database user password.");
+		options.addOption(
+			null, "schema-name", true,
+			"Set the database schema name. (Optional. Default value: default " +
+				"schema).");
+		options.addRequiredOption(
+			null, "user", true, "Set the database user name.");
 
 		return options;
 	}
@@ -164,14 +161,14 @@ public class DBPartitionMigrationValidator {
 	private static Options _getMainOptions() {
 		Options options = new Options();
 
-		options.addOption("h", "help", false, "Print help message.");
+		options.addOption(null, "help", false, "Print help message.");
 
 		OptionGroup optionGroup = new OptionGroup();
 
 		optionGroup.addOption(
-			new Option("e", "export", false, "Export database."));
+			new Option(null, "export", false, "Export database."));
 		optionGroup.addOption(
-			new Option("v", "validate", false, "Validate two databases."));
+			new Option(null, "validate", false, "Validate two databases."));
 
 		options.addOptionGroup(optionGroup);
 
@@ -182,9 +179,9 @@ public class DBPartitionMigrationValidator {
 		Options options = new Options();
 
 		options.addRequiredOption(
-			"s", "source-file", true, "Set the path to the source file.");
+			null, "source-file", true, "Set the path to the source file.");
 		options.addRequiredOption(
-			"t", "target-file", true, "Set the path to the target file.");
+			null, "target-file", true, "Set the path to the target file.");
 
 		return options;
 	}
@@ -197,7 +194,7 @@ public class DBPartitionMigrationValidator {
 		helpFormatter.printUsage(
 			printWriter, _HELP_WIDTH,
 			"./db_partition_migration_validator.sh <operation-mode> " +
-				"<operation-parameters>");
+				"[operation-parameters]");
 		helpFormatter.printWrapped(
 			printWriter, _HELP_WIDTH, "\nOperation mode:");
 		helpFormatter.printOptions(

@@ -11,16 +11,16 @@ that they only contain data associated with their proper company ID.
 ## Usage
 
 ```
-java -jar com.liferay.portal.tools.db.partition.schema.validator.jar -d xyz123 -p xyz123 -u xyz123 
+java -jar com.liferay.portal.tools.db.partition.schema.validator.jar --db-name xyz123 --password xyz123 --user xyz123 
 ```
 
 Options:
 
-- `-a`, `--debug` Print all log traces.
-- `-d`, `--db-name <arg>` Set the database name.
-- `-h`, `--help` Print help message.
-- `-j`, `--jdbc-url <arg>` Set the JDBC URL.
-- `-p`, `--password <arg>` Set the database user password.
-- `-s`, `--schema-prefix <arg>` Set the schema prefix.
-- `-t`, `--db-type <mysql|postgresql>` Set the database type.
-- `-u`, `--user <arg>` Set the database user name.
+- `--debug` Print all log traces. (Optional).
+- `--db-name <arg>` Set the database name.
+- `--help` Print help message. (Optional).
+- `--jdbc-url <arg>` Set the JDBC URL. (Optional. Default value: default URL for db-name pointing to localhost).
+- `--password <arg>` Set the database user password.
+- `--schema-prefix <arg>` Set the schema prefix. (Optional. Default value: lpartition_).
+- `--db-type <mysql|postgresql>` Set the database type.
+- `--user <arg>` Set the database user name.

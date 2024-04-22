@@ -335,8 +335,10 @@ export default function FieldBase({
 			const repeatableFields = [];
 
 			visitor.visitFields((field) => {
-				const fieldFieldsets = field.name.match(FIELDSET_REGEX);
-				const fieldsetRepeatIndexes = field.name.match(
+				const fieldName = field.name ?? field.fieldName;
+
+				const fieldFieldsets = fieldName.match(FIELDSET_REGEX);
+				const fieldsetRepeatIndexes = fieldName.match(
 					FIELDSET_REPEAT_INDEX_REGEX
 				);
 

@@ -14,7 +14,6 @@ import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import Table from 'shared/components/table';
 import URLConstants from 'shared/util/url-constants';
 import {ApolloError} from 'apollo-client';
-import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {ENTRANCES_METRIC, EXIT_RATE_METRIC} from 'shared/util/pagination';
 import {getSafeRangeSelectors} from 'shared/util/util';
 import {metricsListColumns} from 'shared/util/table-columns';
@@ -22,6 +21,7 @@ import {NameCell} from 'shared/components/table/cell-components';
 import {OrderByDirections} from 'shared/util/constants';
 import {pickBy} from 'lodash';
 import {RangeSelectors} from 'shared/types';
+import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {setUriQueryValues} from 'shared/util/router';
 import {useQuery} from '@apollo/react-hooks';
 
@@ -104,9 +104,9 @@ const TopPagesCard: React.FC<ITopPagesCardProps> = ({
 }) => (
 	<CardWithRangeKey
 		className={className}
-		id={Containers.TopPagesCard}
 		label={label}
 		legacyDropdownRangeKey={legacyDropdownRangeKey}
+		reportContainer={ReportContainer.TopPagesCard}
 	>
 		{({rangeSelectors}) => (
 			<TopPagesCardWithData

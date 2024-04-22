@@ -3,6 +3,7 @@ import React from 'react';
 import {compose} from 'redux';
 import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
+import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {withRangeKey} from 'shared/hoc';
 import {WithRangeKeyProps} from 'shared/hoc/WithRangeKey';
 
@@ -13,21 +14,22 @@ interface ICardWithRangeKeyProps
 	label: string;
 	legacyDropdownRangeKey: boolean;
 	rangeKeys?: Array<RangeKeyTimeRanges>;
+	reportContainer: ReportContainer;
 }
 
 const CardWithRangeKey = compose(withRangeKey)(
 	({
 		children,
 		className,
-		id,
 		label,
 		legacyDropdownRangeKey = true,
 		onRangeSelectorsChange,
 		rangeKeys,
 		rangeSelectors,
+		reportContainer,
 		...otherProps
 	}: ICardWithRangeKeyProps) => (
-		<Card className={className} id={id}>
+		<Card className={className} reportContainer={reportContainer}>
 			<Card.Header className='align-items-center d-flex justify-content-between'>
 				<Card.Title>{label}</Card.Title>
 

@@ -2,10 +2,10 @@ import getLocationsMapper, {
 	getLocationsMapperCountries
 } from 'cerebro-shared/hocs/mappers/locations';
 import URLConstants from 'shared/util/url-constants';
-import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {GEOLOCATION_FRAGMENT} from 'shared/queries/fragments';
 import {gql} from 'apollo-boost';
 import {graphql} from '@apollo/react-hoc';
+import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {withLocationsCard} from 'cerebro-shared/hocs/LocationsCard';
 
 const GEOLOCATION_QUERY = gql`
@@ -68,7 +68,7 @@ export default withLocationsCard(
 			'learn-more-about-submissions-by-location'
 		),
 		documentationUrl: URLConstants.SitesDashboardFormsSubmissionsByLocation,
-		id: Containers.SubmissionsByLocationCard,
+		reportContainer: ReportContainer.SubmissionsByLocationCard,
 		title: Liferay.Language.get(
 			'there-are-no-submissions-on-the-selected-period'
 		)

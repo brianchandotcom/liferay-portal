@@ -1,9 +1,9 @@
 import getDevicesMapper from 'cerebro-shared/hocs/mappers/devices';
 import URLConstants from 'shared/util/url-constants';
 import {BROWSER_FRAGMENT, DEVICE_FRAGMENT} from 'shared/queries/fragments';
-import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {gql} from 'apollo-boost';
 import {graphql} from '@apollo/react-hoc';
+import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {withDevicesCard} from 'shared/hoc/DevicesCard';
 
 const BROWSER_DEVICE_QUERY = gql`
@@ -61,6 +61,6 @@ export default withDevicesCard(withDocumentsAndMediaDevices, {
 	),
 	documentationUrl:
 		URLConstants.SitesDashboardDocumentsAndMediaViewsByTechnology,
-	id: Containers.DownloadsByTechnologyCard,
+	reportContainer: ReportContainer.DownloadsByTechnologyCard,
 	title: Liferay.Language.get('there-are-no-downloads-on-the-selected-period')
 });

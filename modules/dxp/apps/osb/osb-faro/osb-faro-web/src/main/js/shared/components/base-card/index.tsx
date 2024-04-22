@@ -4,6 +4,7 @@ import HeaderDefault, {BaseCardHeaderDefaultIProps} from './HeaderDefault';
 import React, {useContext, useState} from 'react';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
 import {RangeSelectors} from 'shared/types';
+import {ReportContainer} from '../download-report/DownloadPDFReport';
 import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 interface BaseCardIProps extends React.HTMLAttributes<HTMLElement> {
@@ -14,6 +15,7 @@ interface BaseCardIProps extends React.HTMLAttributes<HTMLElement> {
 	label: string;
 	legacyDropdownRangeKey: boolean;
 	minHeight?: number;
+	reportContainer?: ReportContainer;
 	showInterval?: boolean;
 }
 
@@ -26,6 +28,7 @@ const BaseCard: React.FC<BaseCardIProps> = ({
 	label,
 	legacyDropdownRangeKey = true,
 	minHeight,
+	reportContainer,
 	showInterval = false
 }) => {
 	const context = useContext(BasePage.Context);
@@ -50,7 +53,12 @@ const BaseCard: React.FC<BaseCardIProps> = ({
 	};
 
 	return (
-		<Card className={className} id={id} minHeight={minHeight}>
+		<Card
+			className={className}
+			id={id}
+			minHeight={minHeight}
+			reportContainer={reportContainer}
+		>
 			<Header
 				{...otherProps}
 				label={label}

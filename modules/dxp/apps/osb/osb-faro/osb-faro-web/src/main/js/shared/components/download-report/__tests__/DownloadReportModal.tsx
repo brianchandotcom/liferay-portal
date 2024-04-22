@@ -5,7 +5,11 @@ import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import {ApolloProvider} from '@apollo/react-hooks';
-import {Checkbox, Containers, formatContainers} from '../DownloadPDFReport';
+import {
+	Checkbox,
+	formattedContainers,
+	ReportContainer
+} from '../DownloadPDFReport';
 import {createMemoryHistory} from 'history';
 import {CSVType, useDownloadCSV} from '../utils';
 import {DownloadReportButton} from '../DownloadReportButton';
@@ -275,33 +279,33 @@ describe('DownloadReportModal PDF', () => {
 
 	it('renders component', async () => {
 		const containers = [
-			Containers.AcquisitionsCard,
-			Containers.ActiveIndividualsCard,
-			Containers.AssetAppearsOnCard,
-			Containers.AudienceCard,
-			Containers.CohortAnalysisCard,
-			Containers.CurrentTotalsCard,
-			Containers.DistributionBreakdownCard,
-			Containers.DownloadsByLocationCard,
-			Containers.DownloadsByTechnologyCard,
-			Containers.EnrichedProfilesCard,
-			Containers.InterestsCard,
-			Containers.SearchTermsCard,
-			Containers.SegmentCompositionCard,
-			Containers.SegmentCriteriaCard,
-			Containers.SegmentMembershipCard,
-			Containers.SessionsByLocationCard,
-			Containers.SessionTechnologyCard,
-			Containers.SiteActivityCard,
-			Containers.SubmissionsByLocationCard,
-			Containers.SubmissionsByTechnologyCard,
-			Containers.TopInterestsAsOfYesterdayCard,
-			Containers.TopInterestsCard,
-			Containers.TopPagesCard,
-			Containers.ViewsByLocationCard,
-			Containers.ViewsByTechnologyCard,
-			Containers.VisitorsBehaviorCard,
-			Containers.VisitorsByTimeCard
+			ReportContainer.AcquisitionsCard,
+			ReportContainer.ActiveIndividualsCard,
+			ReportContainer.AssetAppearsOnCard,
+			ReportContainer.AudienceCard,
+			ReportContainer.CohortAnalysisCard,
+			ReportContainer.CurrentTotalsCard,
+			ReportContainer.DistributionBreakdownCard,
+			ReportContainer.DownloadsByLocationCard,
+			ReportContainer.DownloadsByTechnologyCard,
+			ReportContainer.EnrichedProfilesCard,
+			ReportContainer.InterestsCard,
+			ReportContainer.SearchTermsCard,
+			ReportContainer.SegmentCompositionCard,
+			ReportContainer.SegmentCriteriaCard,
+			ReportContainer.SegmentMembershipCard,
+			ReportContainer.SessionsByLocationCard,
+			ReportContainer.SessionTechnologyCard,
+			ReportContainer.SiteActivityCard,
+			ReportContainer.SubmissionsByLocationCard,
+			ReportContainer.SubmissionsByTechnologyCard,
+			ReportContainer.TopInterestsAsOfYesterdayCard,
+			ReportContainer.TopInterestsCard,
+			ReportContainer.TopPagesCard,
+			ReportContainer.ViewsByLocationCard,
+			ReportContainer.ViewsByTechnologyCard,
+			ReportContainer.VisitorsBehaviorCard,
+			ReportContainer.VisitorsByTimeCard
 		];
 
 		const {container, getByRole, getByTestId, getByText} = render(
@@ -309,7 +313,7 @@ describe('DownloadReportModal PDF', () => {
 				<ClayForm.Group>
 					<label>{Liferay.Language.get('select-reports')}</label>
 
-					{Object.values(formatContainers(containers)).map(
+					{Object.values(formattedContainers(containers)).map(
 						({id, label}) => (
 							<Checkbox
 								key={id}

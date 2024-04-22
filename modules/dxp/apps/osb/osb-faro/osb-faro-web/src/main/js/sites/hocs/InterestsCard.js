@@ -7,12 +7,12 @@ import React from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {compositionListColumns} from 'shared/util/table-columns';
 import {CompositionTypes, RangeKeyTimeRanges} from 'shared/util/constants';
-import {Containers} from 'shared/components/download-report/DownloadPDFReport';
 import {
 	getMapResultToProps,
 	mapCardPropsToOptions
 } from './mappers/composition-query';
 import {graphql} from '@apollo/react-hoc';
+import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
 import {useParams} from 'react-router-dom';
 import {withTableData} from 'shared/hoc';
@@ -71,10 +71,10 @@ const InterestsCard = () => {
 	return (
 		<CardWithRangeKey
 			className='interests-card-root'
-			id={Containers.InterestsCard}
 			label={Liferay.Language.get('interests')}
 			legacyDropdownRangeKey={false}
 			rangeKeys={rangeKeys}
+			reportContainer={ReportContainer.InterestsCard}
 		>
 			{({rangeSelectors}) => (
 				<>

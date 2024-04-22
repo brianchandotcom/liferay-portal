@@ -1,161 +1,162 @@
 import ClayForm, {ClayCheckbox} from '@clayui/form';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {DownloadReportButton} from './DownloadReportButton';
 import {DownloadReportModal} from './DownloadReportModal';
 import {generateReport} from './utils';
 import {sub} from 'shared/util/lang';
+import {Text} from '@clayui/core';
+import {useDownloadReportContext} from './DownloadReportContext';
 import {useModal} from '@clayui/modal';
 
-export enum Containers {
-	AcquisitionsCard = 'acquisitionsCardRoot',
-	ActiveIndividualsCard = 'activeIndividualsCardRoot',
-	AssetAppearsOnCard = 'assetAppearsOnCardRoot',
-	AudienceCard = 'audienceCardRoot',
-	CohortAnalysisCard = 'cohortAnalysisCardRoot',
-	CurrentTotalsCard = 'currentTotalsCardRoot',
-	DistributionBreakdownCard = 'distributionBreakdownCardRoot',
-	DownloadsByLocationCard = 'downloadsByLocationCardRoot',
-	DownloadsByTechnologyCard = 'downloadsByTechnologyCardRoot',
-	EnrichedProfilesCard = 'enrichedProfilesCardRoot',
-	InterestsCard = 'interestsCardRoot',
-	SearchTermsCard = 'searchTermsCardRoot',
-	SegmentCompositionCard = 'segmentCompositionCardRoot',
-	SegmentCriteriaCard = 'segmentCriteriaCardRoot',
-	SegmentMembershipCard = 'segmentMembershipCardRoot',
-	SessionsByLocationCard = 'sessionsByLocationCardRoot',
-	SessionTechnologyCard = 'sessionTechnologyCardRoot',
-	SiteActivityCard = 'siteActivityCardRoot',
-	SubmissionsByLocationCard = 'submissionsByLocationCardRoot',
-	SubmissionsByTechnologyCard = 'submissionsByTechnologyCardRoot',
-	TopInterestsAsOfYesterdayCard = 'topInterestsAsOfYesterdayCardRoot',
-	TopInterestsCard = 'topInterestsCardRoot',
-	TopPagesCard = 'topPagesCardRoot',
-	ViewsByLocationCard = 'viewsByLocationCardRoot',
-	ViewsByTechnologyCard = 'viewsByTechnologyCardRoot',
-	VisitorsBehaviorCard = 'visitorsBehaviorCardRoot',
-	VisitorsByTimeCard = 'visitorsByTimeCardRoot'
+export enum ReportContainer {
+	AcquisitionsCard = 'container.report.acquisitionsCard',
+	ActiveIndividualsCard = 'container.report.activeIndividualsCard',
+	AssetAppearsOnCard = 'container.report.assetAppearsOnCard',
+	AudienceCard = 'container.report.audienceCard',
+	CohortAnalysisCard = 'container.report.cohortAnalysisCard',
+	CurrentTotalsCard = 'container.report.currentTotalsCard',
+	DistributionBreakdownCard = 'container.report.distributionBreakdownCard',
+	DownloadsByLocationCard = 'container.report.downloadsByLocationCard',
+	DownloadsByTechnologyCard = 'container.report.downloadsByTechnologyCard',
+	EnrichedProfilesCard = 'container.report.enrichedProfilesCard',
+	InterestsCard = 'container.report.interestsCard',
+	SearchTermsCard = 'container.report.searchTermsCard',
+	SegmentCompositionCard = 'container.report.segmentCompositionCard',
+	SegmentCriteriaCard = 'container.report.segmentCriteriaCard',
+	SegmentMembershipCard = 'container.report.segmentMembershipCard',
+	SessionsByLocationCard = 'container.report.sessionsByLocationCard',
+	SessionTechnologyCard = 'container.report.sessionTechnologyCard',
+	SiteActivityCard = 'container.report.siteActivityCard',
+	SubmissionsByLocationCard = 'container.report.submissionsByLocationCard',
+	SubmissionsByTechnologyCard = 'container.report.submissionsByTechnologyCard',
+	TopInterestsAsOfYesterdayCard = 'container.report.topInterestsAsOfYesterdayCard',
+	TopInterestsCard = 'container.report.topInterestsCard',
+	TopPagesCard = 'container.report.topPagesCard',
+	ViewsByLocationCard = 'container.report.viewsByLocationCard',
+	ViewsByTechnologyCard = 'container.report.viewsByTechnologyCard',
+	VisitorsBehaviorCard = 'container.report.visitorsBehaviorCard',
+	VisitorsByTimeCard = 'container.report.visitorsByTimeCard'
 }
 
-export const CONTAINERS: {[key in Containers]: TContainer} = {
-	[Containers.AcquisitionsCard]: {
+export const CONTAINERS: {[key in ReportContainer]: TReportContainer} = {
+	[ReportContainer.AcquisitionsCard]: {
 		label: Liferay.Language.get('acquisitions'),
 		layout: 2
 	},
-	[Containers.ActiveIndividualsCard]: {
+	[ReportContainer.ActiveIndividualsCard]: {
 		label: Liferay.Language.get('active-individuals'),
 		layout: 1
 	},
-	[Containers.AssetAppearsOnCard]: {
+	[ReportContainer.AssetAppearsOnCard]: {
 		label: Liferay.Language.get('asset-appears-on'),
 		layout: 1
 	},
-	[Containers.AudienceCard]: {
+	[ReportContainer.AudienceCard]: {
 		label: Liferay.Language.get('audience'),
 		layout: 1
 	},
-	[Containers.CohortAnalysisCard]: {
+	[ReportContainer.CohortAnalysisCard]: {
 		label: Liferay.Language.get('cohort-analysis'),
 		layout: 1
 	},
-	[Containers.CurrentTotalsCard]: {
+	[ReportContainer.CurrentTotalsCard]: {
 		label: Liferay.Language.get('current-totals'),
 		layout: 1
 	},
-	[Containers.DistributionBreakdownCard]: {
+	[ReportContainer.DistributionBreakdownCard]: {
 		label: Liferay.Language.get('distribution-breakdown'),
 		layout: 1
 	},
-	[Containers.DownloadsByLocationCard]: {
+	[ReportContainer.DownloadsByLocationCard]: {
 		label: Liferay.Language.get('downloads-by-location'),
 		layout: 2
 	},
-	[Containers.DownloadsByTechnologyCard]: {
+	[ReportContainer.DownloadsByTechnologyCard]: {
 		label: Liferay.Language.get('downloads-by-technology'),
 		layout: 2
 	},
-	[Containers.EnrichedProfilesCard]: {
+	[ReportContainer.EnrichedProfilesCard]: {
 		label: Liferay.Language.get('enriched-profiles'),
 		layout: 2
 	},
-	[Containers.InterestsCard]: {
+	[ReportContainer.InterestsCard]: {
 		label: Liferay.Language.get('interests'),
 		layout: 3
 	},
-	[Containers.SearchTermsCard]: {
+	[ReportContainer.SearchTermsCard]: {
 		label: Liferay.Language.get('search-terms'),
 		layout: 3
 	},
-	[Containers.SegmentCompositionCard]: {
+	[ReportContainer.SegmentCompositionCard]: {
 		label: Liferay.Language.get('segment-composition'),
 		layout: 2
 	},
-	[Containers.SegmentCriteriaCard]: {
+	[ReportContainer.SegmentCriteriaCard]: {
 		label: Liferay.Language.get('segment-criteria'),
 		layout: 2
 	},
-	[Containers.SegmentMembershipCard]: {
+	[ReportContainer.SegmentMembershipCard]: {
 		label: Liferay.Language.get('segment-membership'),
 		layout: 1
 	},
-	[Containers.SessionsByLocationCard]: {
+	[ReportContainer.SessionsByLocationCard]: {
 		label: Liferay.Language.get('sessions-by-location'),
 		layout: 2
 	},
-	[Containers.SessionTechnologyCard]: {
+	[ReportContainer.SessionTechnologyCard]: {
 		label: Liferay.Language.get('session-technology'),
 		layout: 2
 	},
-	[Containers.SiteActivityCard]: {
+	[ReportContainer.SiteActivityCard]: {
 		label: Liferay.Language.get('site-activity'),
 		layout: 1
 	},
-	[Containers.SubmissionsByLocationCard]: {
+	[ReportContainer.SubmissionsByLocationCard]: {
 		label: Liferay.Language.get('submissions-by-location'),
 		layout: 2
 	},
-	[Containers.SubmissionsByTechnologyCard]: {
+	[ReportContainer.SubmissionsByTechnologyCard]: {
 		label: Liferay.Language.get('submissions-by-technology'),
 		layout: 2
 	},
-	[Containers.TopInterestsCard]: {
+	[ReportContainer.TopInterestsCard]: {
 		label: Liferay.Language.get('top-interests'),
 		layout: 2
 	},
-	[Containers.TopInterestsAsOfYesterdayCard]: {
+	[ReportContainer.TopInterestsAsOfYesterdayCard]: {
 		label: Liferay.Language.get('top-interests-as-of-yesterday'),
 		layout: 1
 	},
-	[Containers.TopPagesCard]: {
+	[ReportContainer.TopPagesCard]: {
 		label: Liferay.Language.get('top-pages'),
 		layout: 2
 	},
-	[Containers.ViewsByLocationCard]: {
+	[ReportContainer.ViewsByLocationCard]: {
 		label: Liferay.Language.get('views-by-location'),
 		layout: 2
 	},
-	[Containers.ViewsByTechnologyCard]: {
+	[ReportContainer.ViewsByTechnologyCard]: {
 		label: Liferay.Language.get('views-by-technology'),
 		layout: 2
 	},
-	[Containers.VisitorsBehaviorCard]: {
+	[ReportContainer.VisitorsBehaviorCard]: {
 		label: Liferay.Language.get('visitors-behavior'),
 		layout: 1
 	},
-	[Containers.VisitorsByTimeCard]: {
+	[ReportContainer.VisitorsByTimeCard]: {
 		label: Liferay.Language.get('visitors-by-day-and-time'),
 		layout: 3
 	}
 };
 
-export type TContainer = {label: string; layout: 1 | 2 | 3};
-export type TransformedContainer = TContainer & {
+export type TReportContainer = {label: string; layout: 1 | 2 | 3};
+export type TransformedContainer = TReportContainer & {
 	checked: boolean;
-	id: Containers;
+	id: ReportContainer;
 };
 
 export interface IDownloadReport {
 	disabled: boolean;
-	containers: Containers[];
 	showDateRange?: boolean;
 	subtitle: string;
 	title: string;
@@ -163,14 +164,16 @@ export interface IDownloadReport {
 }
 
 type ContainerList = {
-	[key in Containers]: TransformedContainer;
+	[key in ReportContainer]: TransformedContainer;
 };
 
-export const formatContainers = (containers: Containers[]): ContainerList =>
-	containers.reduce((acc, id) => {
+export const formattedContainers = (
+	reportContainers: ReportContainer[]
+): ContainerList =>
+	reportContainers.reduce((acc, id) => {
 		acc[id] = {
 			...CONTAINERS[id],
-			checked: false,
+			checked: true,
 			id
 		};
 
@@ -178,7 +181,6 @@ export const formatContainers = (containers: Containers[]): ContainerList =>
 	}, {} as ContainerList);
 
 const DownloadPDFReport: React.FC<IDownloadReport> = ({
-	containers: initialContainers,
 	disabled,
 	showDateRange,
 	subtitle,
@@ -187,9 +189,14 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 }) => {
 	const [loading, setLoading] = useState(false);
 	const {observer, onOpenChange, open} = useModal();
-	const [containers, setContainers] = useState<ContainerList>(() =>
-		formatContainers(initialContainers)
-	);
+	const {reportContainers} = useDownloadReportContext();
+	const [containers, setContainers] = useState<ContainerList | {}>({});
+
+	useEffect(() => {
+		if (open) {
+			setContainers(formattedContainers(reportContainers));
+		}
+	}, [open, reportContainers]);
 
 	const filteredContainers = useMemo(
 		() => Object.values(containers).filter(({checked}) => checked),
@@ -216,7 +223,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 					}
 					disabled={!filteredContainers.length}
 					infoMessage={Liferay.Language.get(
-						'the-dashboard-will-be-downloaded-exactly-as-it-is-displayed-on-your-screen.-please-verify-if-the-desired-tabs-and-filters-are-selected-before-downloading'
+						'the-dashboard-will-be-downloaded-exactly-as-it-is-displayed-on-your-screen.-please-verify-if-the-desired-tabs-and-filters-are-selected-before-proceeding'
 					)}
 					observer={observer}
 					onClose={() => onOpenChange(false)}
@@ -236,7 +243,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 								url
 							}).then(() => {
 								setContainers(
-									formatContainers(initialContainers)
+									formattedContainers(reportContainers)
 								);
 								setLoading(false);
 							});
@@ -244,8 +251,20 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 					}}
 					showDateRange={showDateRange}
 				>
-					<ClayForm.Group>
-						<label>{Liferay.Language.get('select-reports')}</label>
+					<ClayForm.Group className='mt-3'>
+						<label>
+							<Text size={3}>
+								{Liferay.Language.get('select-reports')}
+							</Text>
+						</label>
+
+						<p>
+							<Text size={3}>
+								{Liferay.Language.get(
+									'select-the-reports-to-be-exported-as-a-single-PDF-file'
+								)}
+							</Text>
+						</p>
 
 						{Object.values(containers).map(({id, label}) => (
 							<Checkbox
@@ -270,7 +289,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 };
 
 export const Checkbox = ({label, onChange}) => {
-	const [checked, setChecked] = useState(false);
+	const [checked, setChecked] = useState(true);
 
 	return (
 		<ClayCheckbox

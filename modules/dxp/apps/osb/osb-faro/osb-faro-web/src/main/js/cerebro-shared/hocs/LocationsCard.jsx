@@ -15,7 +15,7 @@ import {withEmpty, withError, withLoading} from 'shared/hoc/util';
 const withLocationsCard = (
 	withLocations,
 	withCountries,
-	{documentationTitle, documentationUrl, id, title}
+	{documentationTitle, documentationUrl, reportContainer, title}
 ) => {
 	const LocationsGeoMap = compose(
 		withLocations(),
@@ -63,10 +63,10 @@ const withLocationsCard = (
 	}) => (
 		<BaseCard
 			className={className}
-			id={id}
 			label={label}
 			legacyDropdownRangeKey={legacyDropdownRangeKey}
 			minHeight={536}
+			reportContainer={reportContainer}
 		>
 			{({filters, interval, rangeSelectors, router}) => (
 				<Card.Body>

@@ -75,7 +75,9 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			return;
 		}
 
-		_reindexLayout(layout);
+		if (layout.isTypeContent() && !layout.isTypeUtility()) {
+			_reindexLayout(layout);
+		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry(layout);
@@ -95,11 +97,9 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	public void onAfterUpdate(Layout originalLayout, Layout layout)
 		throws ModelListenerException {
 
-		if (!layout.isTypeContent()) {
-			return;
+		if (layout.isTypeContent() && !layout.isTypeUtility()) {
+			_reindexLayout(layout);
 		}
-
-		_reindexLayout(layout);
 	}
 
 	@Override

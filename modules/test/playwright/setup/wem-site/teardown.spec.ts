@@ -6,8 +6,8 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {backendPageTest} from '../../fixtures/backendPageTest';
-import {WEM_SITE_ERC} from '../../fixtures/wemSiteTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
+import {WEM_SITE_ERC} from './constants';
 
 export const test = mergeTests(backendPageTest);
 

@@ -6,9 +6,8 @@
 import {mergeTests} from '@playwright/test';
 
 import {ApiHelpers} from '../helpers/ApiHelpers';
+import {WEM_SITE_ERC} from '../setup/wem-site/constants';
 import {backendPageTest} from './backendPageTest';
-
-const WEM_SITE_ERC = 'wem-site-erc';
 
 const test = mergeTests(backendPageTest);
 

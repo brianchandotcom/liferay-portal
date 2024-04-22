@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {wemSiteTest} from '../../fixtures/wemSiteTest';
+import {TAGS_OBJECT_ERC} from '../../setup/wem-site/constants';
 import getRandomString from '../../utils/getRandomString';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import getFormContainerDefinition from './utils/getFormContainerDefinition';
@@ -37,7 +38,7 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 	const {id: objectId} =
 		await apiHelpers.object.getObjectEntryByExternalReferenceCode(
 			OBJECT_DEFINITION_PATH,
-			'tags-object-1234'
+			TAGS_OBJECT_ERC
 		);
 
 	// Create a Form Container with a Tags fragment and Submit fragment

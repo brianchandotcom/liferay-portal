@@ -1172,7 +1172,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private Transition _toTransition(String name) {
-		return new Transition() {
+		Transition transition = new Transition() {
 			{
 				setLabel(
 					() -> _language.get(
@@ -1180,9 +1180,12 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 							contextAcceptLanguage.getPreferredLocale(),
 							InstanceResourceImpl.class),
 						name));
-				setName(() -> name);
 			}
 		};
+
+		transition.setName(() -> name);
+
+		return transition;
 	}
 
 	private Transition[] _toTransitions(Instance instance) {

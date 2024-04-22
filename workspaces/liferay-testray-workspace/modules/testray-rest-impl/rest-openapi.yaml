@@ -269,7 +269,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: testrayTeamId
+                  name: testrayTeamIds
                   schema:
                       type: string
             responses:
@@ -313,7 +313,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: testrayTeamId
+                  name: testrayTeamIds
                   schema:
                       type: string
             responses:
@@ -357,7 +357,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: testrayTeamId
+                  name: testrayTeamIds
                   schema:
                       type: string
             responses:
@@ -406,7 +406,7 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: testrayTeamId
+                  name: testrayTeamIds
                   schema:
                       type: string
             responses:

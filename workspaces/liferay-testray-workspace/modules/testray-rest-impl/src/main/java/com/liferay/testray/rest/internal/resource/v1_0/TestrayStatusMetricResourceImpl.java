@@ -29,19 +29,15 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Nilton Vieira
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/testray-status-metric.properties",
-	scope = ServiceScope.PROTOTYPE, service = TestrayStatusMetricResource.class
-)
+@Component(properties = "OSGI-INF/liferay/rest/v1_0/testray-status-metric.properties", scope = ServiceScope.PROTOTYPE, service = TestrayStatusMetricResource.class)
 public class TestrayStatusMetricResourceImpl
-	extends BaseTestrayStatusMetricResourceImpl {
+		extends BaseTestrayStatusMetricResourceImpl {
 
 	@Override
-	public Page<TestrayCaseTypeMetric>
-			getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayCaseTypesMetricsPage(
-				Long testrayBuildId, String testrayCasePriorities,
-				String testrayTeamId, Pagination pagination)
-		throws Exception {
+	public Page<TestrayCaseTypeMetric> getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayCaseTypesMetricsPage(
+			Long testrayBuildId, String testrayCasePriorities,
+			String testrayTeamIds, Pagination pagination)
+			throws Exception {
 
 		StringBundler sb = new StringBundler(24);
 
@@ -73,17 +69,17 @@ public class TestrayStatusMetricResourceImpl
 			sb.append(") ");
 		}
 
-		if (Validator.isNotNull(testrayTeamId)) {
+		if (Validator.isNotNull(testrayTeamIds)) {
 			sb.append("and co.r_teamToComponents_c_teamId in (");
-			sb.append(_interpolateParams(params, testrayTeamId));
+			sb.append(_interpolateParams(params, testrayTeamIds));
 			sb.append(") ");
 		}
 
 		sb.append("group by ct.c_caseTypeId_, ct.name_ order by ct.name_ asc ");
 
 		String sql = StringUtil.replace(
-			sb.toString(), "[%COMPANY_ID%]",
-			String.valueOf(contextCompany.getCompanyId()));
+				sb.toString(), "[%COMPANY_ID%]",
+				String.valueOf(contextCompany.getCompanyId()));
 
 		long totalCount = TestrayUtil.getTotalCount(sql, params);
 
@@ -95,31 +91,29 @@ public class TestrayStatusMetricResourceImpl
 		List<Map<String, Object>> values = TestrayUtil.runSQL(sql, params);
 
 		return Page.of(
-			transform(
-				values,
-				value -> {
-					TestrayCaseTypeMetric testrayCaseTypeMetric =
-						new TestrayCaseTypeMetric();
+				transform(
+						values,
+						value -> {
+							TestrayCaseTypeMetric testrayCaseTypeMetric = new TestrayCaseTypeMetric();
 
-					testrayCaseTypeMetric.setTestrayCaseTypeId(
-						GetterUtil.getLong(value.get("c_caseTypeId_")));
-					testrayCaseTypeMetric.setTestrayCaseTypeName(
-						GetterUtil.getString(value.get("name_")));
-					testrayCaseTypeMetric.setTestrayStatusMetric(
-						_getTestrayStatusMetric(value));
+							testrayCaseTypeMetric.setTestrayCaseTypeId(
+									GetterUtil.getLong(value.get("c_caseTypeId_")));
+							testrayCaseTypeMetric.setTestrayCaseTypeName(
+									GetterUtil.getString(value.get("name_")));
+							testrayCaseTypeMetric.setTestrayStatusMetric(
+									_getTestrayStatusMetric(value));
 
-					return testrayCaseTypeMetric;
-				}),
-			pagination, totalCount);
+							return testrayCaseTypeMetric;
+						}),
+				pagination, totalCount);
 	}
 
 	@Override
-	public Page<TestrayComponentMetric>
-			getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayComponentsMetricsPage(
-				Long testrayBuildId, String testrayCasePriorities,
-				String testrayCaseTypes, String testrayTeamId,
-				Pagination pagination)
-		throws Exception {
+	public Page<TestrayComponentMetric> getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayComponentsMetricsPage(
+			Long testrayBuildId, String testrayCasePriorities,
+			String testrayCaseTypes, String testrayTeamIds,
+			Pagination pagination)
+			throws Exception {
 
 		StringBundler sb = new StringBundler(25);
 
@@ -155,18 +149,18 @@ public class TestrayStatusMetricResourceImpl
 			sb.append(") ");
 		}
 
-		if (Validator.isNotNull(testrayTeamId)) {
+		if (Validator.isNotNull(testrayTeamIds)) {
 			sb.append("and co.r_teamToComponents_c_teamId in (");
-			sb.append(_interpolateParams(params, testrayTeamId));
+			sb.append(_interpolateParams(params, testrayTeamIds));
 			sb.append(") ");
 		}
 
 		sb.append(
-			"group by co.c_componentId_, co.name_ order by co.name_ asc ");
+				"group by co.c_componentId_, co.name_ order by co.name_ asc ");
 
 		String sql = StringUtil.replace(
-			sb.toString(), "[%COMPANY_ID%]",
-			String.valueOf(contextCompany.getCompanyId()));
+				sb.toString(), "[%COMPANY_ID%]",
+				String.valueOf(contextCompany.getCompanyId()));
 
 		long totalCount = TestrayUtil.getTotalCount(sql, params);
 
@@ -178,31 +172,29 @@ public class TestrayStatusMetricResourceImpl
 		List<Map<String, Object>> values = TestrayUtil.runSQL(sql, params);
 
 		return Page.of(
-			transform(
-				values,
-				value -> {
-					TestrayComponentMetric testrayComponentMetric =
-						new TestrayComponentMetric();
+				transform(
+						values,
+						value -> {
+							TestrayComponentMetric testrayComponentMetric = new TestrayComponentMetric();
 
-					testrayComponentMetric.setTestrayComponentId(
-						GetterUtil.getLong(value.get("c_componentId_")));
-					testrayComponentMetric.setTestrayComponentName(
-						GetterUtil.getString(value.get("name_")));
-					testrayComponentMetric.setTestrayStatusMetric(
-						_getTestrayStatusMetric(value));
+							testrayComponentMetric.setTestrayComponentId(
+									GetterUtil.getLong(value.get("c_componentId_")));
+							testrayComponentMetric.setTestrayComponentName(
+									GetterUtil.getString(value.get("name_")));
+							testrayComponentMetric.setTestrayStatusMetric(
+									_getTestrayStatusMetric(value));
 
-					return testrayComponentMetric;
-				}),
-			pagination, totalCount);
+							return testrayComponentMetric;
+						}),
+				pagination, totalCount);
 	}
 
 	@Override
-	public Page<TestrayRunMetric>
-			getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayRunsMetricsPage(
-				Long testrayBuildId, String testrayCasePriorities,
-				String testrayCaseTypes, String testrayTeamId,
-				Pagination pagination)
-		throws Exception {
+	public Page<TestrayRunMetric> getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayRunsMetricsPage(
+			Long testrayBuildId, String testrayCasePriorities,
+			String testrayCaseTypes, String testrayTeamIds,
+			Pagination pagination)
+			throws Exception {
 
 		StringBundler sb = new StringBundler(28);
 
@@ -241,17 +233,17 @@ public class TestrayStatusMetricResourceImpl
 			sb.append(") ");
 		}
 
-		if (Validator.isNotNull(testrayTeamId)) {
+		if (Validator.isNotNull(testrayTeamIds)) {
 			sb.append("and co.r_teamToComponents_c_teamId in (");
-			sb.append(_interpolateParams(params, testrayTeamId));
+			sb.append(_interpolateParams(params, testrayTeamIds));
 			sb.append(") ");
 		}
 
 		sb.append("group by r.c_runId_, r.name_ order by r.number_ asc ");
 
 		String sql = StringUtil.replace(
-			sb.toString(), "[%COMPANY_ID%]",
-			String.valueOf(contextCompany.getCompanyId()));
+				sb.toString(), "[%COMPANY_ID%]",
+				String.valueOf(contextCompany.getCompanyId()));
 
 		long totalCount = TestrayUtil.getTotalCount(sql, params);
 
@@ -263,32 +255,31 @@ public class TestrayStatusMetricResourceImpl
 		List<Map<String, Object>> values = TestrayUtil.runSQL(sql, params);
 
 		return Page.of(
-			transform(
-				values,
-				value -> {
-					TestrayRunMetric testrayRunMetric = new TestrayRunMetric();
+				transform(
+						values,
+						value -> {
+							TestrayRunMetric testrayRunMetric = new TestrayRunMetric();
 
-					testrayRunMetric.setTestrayRunId(
-						GetterUtil.getLong(value.get("c_runId_")));
-					testrayRunMetric.setTestrayRunName(
-						GetterUtil.getString(value.get("name_")));
-					testrayRunMetric.setTestrayRunNumber(
-						GetterUtil.getLong(value.get("number_")));
-					testrayRunMetric.setTestrayStatusMetric(
-						_getTestrayStatusMetric(value));
+							testrayRunMetric.setTestrayRunId(
+									GetterUtil.getLong(value.get("c_runId_")));
+							testrayRunMetric.setTestrayRunName(
+									GetterUtil.getString(value.get("name_")));
+							testrayRunMetric.setTestrayRunNumber(
+									GetterUtil.getLong(value.get("number_")));
+							testrayRunMetric.setTestrayStatusMetric(
+									_getTestrayStatusMetric(value));
 
-					return testrayRunMetric;
-				}),
-			pagination, totalCount);
+							return testrayRunMetric;
+						}),
+				pagination, totalCount);
 	}
 
 	@Override
-	public Page<TestrayTeamMetric>
-			getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayTeamsMetricsPage(
-				Long testrayBuildId, String testrayCasePriorities,
-				String testrayCaseTypes, Long testrayRunId,
-				String testrayTeamId, Pagination pagination)
-		throws Exception {
+	public Page<TestrayTeamMetric> getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayTeamsMetricsPage(
+			Long testrayBuildId, String testrayCasePriorities,
+			String testrayCaseTypes, Long testrayRunId,
+			String testrayTeamIds, Pagination pagination)
+			throws Exception {
 
 		StringBundler sb = new StringBundler(29);
 
@@ -329,9 +320,9 @@ public class TestrayStatusMetricResourceImpl
 			params.add(testrayRunId);
 		}
 
-		if (Validator.isNotNull(testrayTeamId)) {
+		if (Validator.isNotNull(testrayTeamIds)) {
 			sb.append("and t.c_teamId_ in (");
-			sb.append(_interpolateParams(params, testrayTeamId));
+			sb.append(_interpolateParams(params, testrayTeamIds));
 			sb.append(") ");
 		}
 
@@ -341,8 +332,8 @@ public class TestrayStatusMetricResourceImpl
 		sb.append("t.name_ asc ");
 
 		String sql = StringUtil.replace(
-			sb.toString(), "[%COMPANY_ID%]",
-			String.valueOf(contextCompany.getCompanyId()));
+				sb.toString(), "[%COMPANY_ID%]",
+				String.valueOf(contextCompany.getCompanyId()));
 
 		long totalCount = TestrayUtil.getTotalCount(sql, params);
 
@@ -354,38 +345,37 @@ public class TestrayStatusMetricResourceImpl
 		List<Map<String, Object>> values = TestrayUtil.runSQL(sql, params);
 
 		return Page.of(
-			transform(
-				values,
-				value -> {
-					TestrayTeamMetric testrayTeamMetric =
-						new TestrayTeamMetric();
+				transform(
+						values,
+						value -> {
+							TestrayTeamMetric testrayTeamMetric = new TestrayTeamMetric();
 
-					testrayTeamMetric.setTestrayTeamId(
-						GetterUtil.getLong(value.get("c_teamId_")));
-					testrayTeamMetric.setTestrayTeamName(
-						GetterUtil.getString(value.get("name_")));
-					testrayTeamMetric.setTestrayStatusMetric(
-						_getTestrayStatusMetric(value));
+							testrayTeamMetric.setTestrayTeamId(
+									GetterUtil.getLong(value.get("c_teamId_")));
+							testrayTeamMetric.setTestrayTeamName(
+									GetterUtil.getString(value.get("name_")));
+							testrayTeamMetric.setTestrayStatusMetric(
+									_getTestrayStatusMetric(value));
 
-					return testrayTeamMetric;
-				}),
-			pagination, totalCount);
+							return testrayTeamMetric;
+						}),
+				pagination, totalCount);
 	}
 
 	private TestrayStatusMetric _getTestrayStatusMetric(
-		Map<String, Object> map) {
+			Map<String, Object> map) {
 
 		TestrayStatusMetric testrayStatusMetric = new TestrayStatusMetric();
 
 		testrayStatusMetric.setBlocked(GetterUtil.getLong(map.get("blocked")));
 		testrayStatusMetric.setFailed(GetterUtil.getLong(map.get("failed")));
 		testrayStatusMetric.setInProgress(
-			GetterUtil.getLong(map.get("inprogress")));
+				GetterUtil.getLong(map.get("inprogress")));
 		testrayStatusMetric.setPassed(GetterUtil.getLong(map.get("passed")));
 		testrayStatusMetric.setTestfix(GetterUtil.getLong(map.get("testfix")));
 		testrayStatusMetric.setTotal(GetterUtil.getLong(map.get("total")));
 		testrayStatusMetric.setUntested(
-			GetterUtil.getLong(map.get("untested")));
+				GetterUtil.getLong(map.get("untested")));
 
 		return testrayStatusMetric;
 	}

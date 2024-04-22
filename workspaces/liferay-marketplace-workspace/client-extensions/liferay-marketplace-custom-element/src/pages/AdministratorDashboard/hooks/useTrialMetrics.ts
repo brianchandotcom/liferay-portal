@@ -127,9 +127,15 @@ const useTrialMetrics = (param: FilterType) => {
 	) => {
 		const newOrders = lastPeriodValue - beforeLastPeriodvalue;
 
+		let growth = Number(((newOrders / lastPeriodValue) * 100).toFixed(3));
+
+		if (Number.isNaN(growth)) {
+			growth = 0;
+		}
+
 		return {
 			beforeLastPeriod: beforeLastPeriodvalue,
-			growth: Number(((newOrders / lastPeriodValue) * 100).toFixed(3)),
+			growth,
 			lastPeriod: lastPeriodValue,
 			totalCount: lastPeriodValue,
 		};

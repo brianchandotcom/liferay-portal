@@ -75,11 +75,17 @@ const useOrderMetrics = (param: FilterType) => {
 
 		const newOrders = response[1].totalCount - response[2].totalCount;
 
+		let growth = Number(
+			((newOrders / response[1].totalCount) * 100).toFixed(2)
+		);
+
+		if (Number.isNaN(growth)) {
+			growth = 0;
+		}
+
 		return {
 			beforeLastPeriod: response[2].totalCount,
-			growth: Number(
-				((newOrders / response[1].totalCount) * 100).toFixed(2)
-			),
+			growth,
 			lastPeriod: response[1].totalCount,
 			paidAmount: paidAppsAmount,
 			param,

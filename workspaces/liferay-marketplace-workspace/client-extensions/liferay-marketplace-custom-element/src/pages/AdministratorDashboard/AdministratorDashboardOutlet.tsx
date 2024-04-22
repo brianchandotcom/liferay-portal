@@ -5,23 +5,21 @@
 
 import {Outlet} from 'react-router-dom';
 
-import {DashboardNavigationList} from '../../components/DashboardNavigation/DashboardNavigationList';
+import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {initialAdministratorDashboardNavigationItems} from './AdministratorDashboardPageUtil';
 
 const AdministratorDashboardOutlet = () => (
 	<div className="d-flex">
 		<div className="d-flex dashboard-navigation-container">
 			<div className="dashboard-navigation-body">
-				{initialAdministratorDashboardNavigationItems.map(
-					(dashboardNavigation, index) => (
-						<DashboardNavigationList
-							dashboardNavigation={dashboardNavigation}
-							key={index}
-						/>
-					)
-				)}
+				<DashboardNavigation
+					dashboardNavigationItems={
+						initialAdministratorDashboardNavigationItems
+					}
+				/>
 			</div>
 		</div>
+
 		<span className="h-vh-100 ml-6 w-100">
 			<Outlet />
 		</span>

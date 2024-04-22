@@ -99,11 +99,12 @@ const TrialTable: React.FC<TrialTableProps> = ({items}) => {
 						key: 'createDate',
 						render: (createDate) => (
 							<span className="ml-2 text-capitalize text-nowrap">
-								{formatDistance(
-									new Date(createDate),
-									Date.now(),
-									{addSuffix: true}
-								)}
+								{createDate &&
+									formatDistance(
+										new Date(createDate),
+										Date.now(),
+										{addSuffix: true}
+									)}
 							</span>
 						),
 						title: i18n.translate('created-at'),
@@ -112,11 +113,14 @@ const TrialTable: React.FC<TrialTableProps> = ({items}) => {
 						key: 'customFields',
 						render: (customFields) => (
 							<span className="ml-2 text-capitalize text-nowrap">
-								{formatDistance(
-									new Date(customFields['trial-start-date']),
-									Date.now(),
-									{addSuffix: true}
-								)}
+								{customFields['trial-start-date'] &&
+									formatDistance(
+										new Date(
+											customFields['trial-start-date']
+										),
+										Date.now(),
+										{addSuffix: true}
+									)}
 							</span>
 						),
 						title: i18n.translate('start-date'),
@@ -125,11 +129,14 @@ const TrialTable: React.FC<TrialTableProps> = ({items}) => {
 						key: 'customFields',
 						render: (customFields) => (
 							<span className="ml-2 text-capitalize text-nowrap">
-								{formatDistance(
-									new Date(customFields['trial-end-date']),
-									Date.now(),
-									{addSuffix: true}
-								)}
+								{customFields['trial-end-date'] &&
+									formatDistance(
+										new Date(
+											customFields['trial-end-date']
+										),
+										Date.now(),
+										{addSuffix: true}
+									)}
 							</span>
 						),
 						title: i18n.translate('expiration-date'),

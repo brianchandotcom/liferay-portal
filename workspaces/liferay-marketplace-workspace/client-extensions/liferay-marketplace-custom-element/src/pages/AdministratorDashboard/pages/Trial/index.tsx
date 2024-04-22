@@ -16,7 +16,6 @@ import TrialTable from './TrialTable';
 const Trial = () => {
 	const {
 		availability,
-		error,
 		expired,
 		isLoading,
 		orderTableData,
@@ -24,7 +23,7 @@ const Trial = () => {
 	} = useTrialMetrics('week');
 
 	return (
-		<Page pageRendererProps={{error, isLoading}}>
+		<Page pageRendererProps={{isLoading}}>
 			<div className="d-flex flex-column">
 				<div className="d-flex info-container justify-content-between mb-6">
 					<div

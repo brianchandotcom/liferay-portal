@@ -165,9 +165,20 @@ export default class MarketplaceSpringBootOAuth2 extends OAuth2Client {
 	}
 
 	async getTrialAvailability(): Promise<Availability> {
-		const response = await this.oAuth2Client.fetch('/trial/provisioning');
+		try {
+			const response = await this.oAuth2Client.fetch(
+				'/trial/provisioning'
+			);
 
-		return response.json();
+			return response.json();
+		}
+		catch {
+			return {
+				active: false,
+				available: 0,
+				max: 0,
+			};
+		}
 	}
 
 	async getSubscriptions(orderId: number): Promise<SubscriptionsType[]> {

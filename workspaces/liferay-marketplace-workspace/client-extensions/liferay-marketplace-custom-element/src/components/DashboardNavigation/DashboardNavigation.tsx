@@ -20,7 +20,7 @@ export type DashboardListItems = {
 export type DashboardNavigationProps = {
 	accountAppsNumber?: number;
 	accountIcon?: string;
-	accountsSearch: ReturnType<typeof useAccounts>;
+	accountsSearch?: ReturnType<typeof useAccounts>;
 	currentAccount?: Account;
 	dashboardNavigationItems: DashboardListItems[];
 };

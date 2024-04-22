@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="liferay-adyen-workspace.client-extensions.liferay-adyen-commerce-payment-integration" target="1.8" />
+      <module name="liferay-adyen-workspace.client-extensions.liferay-adyen-commerce-payment-integration.main" target="1.8" />
+      <module name="liferay-adyen-workspace.client-extensions.liferay-adyen-commerce-payment-integration.test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

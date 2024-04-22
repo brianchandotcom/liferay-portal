@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/liferay-adyen-workspace" />
+    <file type="web" url="file://$PROJECT_DIR$/liferay-clarity-workspace" />
+    <file type="web" url="file://$PROJECT_DIR$/liferay-customer-workspace" />
+    <file type="web" url="file://$PROJECT_DIR$/liferay-dlfoldertemplate-workspace" />
+    <file type="web" url="file://$PROJECT_DIR$/liferay-dotcom-workspace" />
+    <file type="web" url="file://$PROJECT_DIR$/liferay-evp-workspace" />
+    <file type="web" url="file://$PROJECT_DIR$/liferay-jethr0-workspace" />
+    <file type="web" url="file://$PROJECT_DIR$/liferay-learn-workspace" />
+    <file type="web" url="file://$PROJECT_DIR$/liferay-marketplace-workspace" />
+    <file type="web" url="file://$PROJECT_DIR$/liferay-partner-workspace" />
+    <file type="web" url="file://$PROJECT_DIR$/liferay-sample-workspace" />
+    <file type="web" url="file://$PROJECT_DIR$/liferay-stripe-workspace" />
+    <file type="web" url="file://$PROJECT_DIR$/liferay-testray-workspace" />
+    <file type="web" url="file://$PROJECT_DIR$/liferay-ticket-workspace" />
+    <file type="web" url="file://$PROJECT_DIR$/liferay-tryitnow-workspace" />
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="zulu-11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

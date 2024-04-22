@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/liferay-adyen-workspace" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/liferay-adyen-workspace" />
+            <option value="$PROJECT_DIR$/liferay-adyen-workspace/client-extensions" />
+            <option value="$PROJECT_DIR$/liferay-adyen-workspace/client-extensions/liferay-adyen-payment-integration" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/liferay-clarity-workspace" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/liferay-clarity-workspace" />
+            <option value="$PROJECT_DIR$/liferay-clarity-workspace/client-extensions" />
+            <option value="$PROJECT_DIR$/liferay-clarity-workspace/client-extensions/liferay-clarity-batch" />
+            <option value="$PROJECT_DIR$/liferay-clarity-workspace/client-extensions/liferay-clarity-etc-spring-boot" />
+            <option value="$PROJECT_DIR$/liferay-clarity-workspace/poshi" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/liferay-customer-workspace" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/liferay-customer-workspace" />
+            <option value="$PROJECT_DIR$/liferay-customer-workspace/client-extensions" />
+            <option value="$PROJECT_DIR$/liferay-customer-workspace/client-extensions/liferay-customer-etc-cron" />
+            <option value="$PROJECT_DIR$/liferay-customer-workspace/client-extensions/liferay-customer-etc-spring-boot" />
+            <option value="$PROJECT_DIR$/liferay-customer-workspace/poshi" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/liferay-dlfoldertemplate-workspace" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/liferay-dlfoldertemplate-workspace" />
+            <option value="$PROJECT_DIR$/liferay-dlfoldertemplate-workspace/client-extensions" />
+            <option value="$PROJECT_DIR$/liferay-dlfoldertemplate-workspace/client-extensions/liferay-dlfoldertemplate-batch" />
+            <option value="$PROJECT_DIR$/liferay-dlfoldertemplate-workspace/client-extensions/liferay-dlfoldertemplate-custom-element" />
+            <option value="$PROJECT_DIR$/liferay-dlfoldertemplate-workspace/client-extensions/liferay-dlfoldertemplate-etc-node" />
+            <option value="$PROJECT_DIR$/liferay-dlfoldertemplate-workspace/poshi" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/liferay-dotcom-workspace" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/liferay-dotcom-workspace" />
+            <option value="$PROJECT_DIR$/liferay-dotcom-workspace/client-extensions" />
+            <option value="$PROJECT_DIR$/liferay-dotcom-workspace/client-extensions/liferay-dotcom-global-css" />
+            <option value="$PROJECT_DIR$/liferay-dotcom-workspace/client-extensions/liferay-dotcom-js-import-maps-entry" />
+            <option value="$PROJECT_DIR$/liferay-dotcom-workspace/client-extensions/liferay-dotcom-site-initializer-code" />
+            <option value="$PROJECT_DIR$/liferay-dotcom-workspace/client-extensions/liferay-dotcom-site-initializer-content" />
+            <option value="$PROJECT_DIR$/liferay-dotcom-workspace/client-extensions/liferay-dotcom-static-content" />
+            <option value="$PROJECT_DIR$/liferay-dotcom-workspace/client-extensions/liferay-dotcom-theme-favicon" />
+            <option value="$PROJECT_DIR$/liferay-dotcom-workspace/poshi" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/liferay-evp-workspace" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/liferay-evp-workspace" />
+            <option value="$PROJECT_DIR$/liferay-evp-workspace/client-extensions" />
+            <option value="$PROJECT_DIR$/liferay-evp-workspace/client-extensions/liferay-evp-etc-spring-boot" />
+            <option value="$PROJECT_DIR$/liferay-evp-workspace/poshi" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/liferay-jethr0-workspace" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/liferay-jethr0-workspace" />
+            <option value="$PROJECT_DIR$/liferay-jethr0-workspace/client-extensions" />
+            <option value="$PROJECT_DIR$/liferay-jethr0-workspace/client-extensions/liferay-jethr0-batch" />
+            <option value="$PROJECT_DIR$/liferay-jethr0-workspace/client-extensions/liferay-jethr0-custom-element" />
+            <option value="$PROJECT_DIR$/liferay-jethr0-workspace/client-extensions/liferay-jethr0-etc-spring-boot" />
+            <option value="$PROJECT_DIR$/liferay-jethr0-workspace/client-extensions/liferay-jethr0-sidecar-jms-master" />
+            <option value="$PROJECT_DIR$/liferay-jethr0-workspace/poshi" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/liferay-learn-workspace" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/liferay-learn-workspace" />
+            <option value="$PROJECT_DIR$/liferay-learn-workspace/client-extensions" />
+            <option value="$PROJECT_DIR$/liferay-learn-workspace/client-extensions/liferay-learn-etc-cron" />
+            <option value="$PROJECT_DIR$/liferay-learn-workspace/client-extensions/liferay-learn-global-css" />
+            <option value="$PROJECT_DIR$/liferay-learn-workspace/client-extensions/liferay-learn-global-js" />
+            <option value="$PROJECT_DIR$/liferay-learn-workspace/client-extensions/liferay-learn-site-initializer" />
+            <option value="$PROJECT_DIR$/liferay-learn-workspace/client-extensions/liferay-learn-static-content" />
+            <option value="$PROJECT_DIR$/liferay-learn-workspace/client-extensions/liferay-learn-theme-spritemap" />
+            <option value="$PROJECT_DIR$/liferay-learn-workspace/poshi" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/liferay-marketplace-workspace" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/liferay-marketplace-workspace" />
+            <option value="$PROJECT_DIR$/liferay-marketplace-workspace/client-extensions" />
+            <option value="$PROJECT_DIR$/liferay-marketplace-workspace/client-extensions/liferay-marketplace-custom-element" />
+            <option value="$PROJECT_DIR$/liferay-marketplace-workspace/client-extensions/liferay-marketplace-etc-node" />
+            <option value="$PROJECT_DIR$/liferay-marketplace-workspace/client-extensions/liferay-marketplace-etc-spring-boot" />
+            <option value="$PROJECT_DIR$/liferay-marketplace-workspace/client-extensions/liferay-marketplace-theme-css" />
+            <option value="$PROJECT_DIR$/liferay-marketplace-workspace/poshi" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/liferay-partner-workspace" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/liferay-partner-workspace" />
+            <option value="$PROJECT_DIR$/liferay-partner-workspace/client-extensions" />
+            <option value="$PROJECT_DIR$/liferay-partner-workspace/client-extensions/liferay-partner-custom-element" />
+            <option value="$PROJECT_DIR$/liferay-partner-workspace/client-extensions/liferay-partner-etc-cron" />
+            <option value="$PROJECT_DIR$/liferay-partner-workspace/client-extensions/liferay-partner-etc-spring-boot" />
+            <option value="$PROJECT_DIR$/liferay-partner-workspace/poshi" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/liferay-sample-workspace" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/liferay-sample-workspace" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-batch" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-commerce-checkout-step" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-commerce-payment-integration" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-commerce-shipping-engine" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-custom-element-1" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-custom-element-2" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-custom-element-3" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-custom-element-4" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-custom-element-5" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-editor-config-contributor" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-etc-cron" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-etc-frontend" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-etc-node" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-etc-spring-boot" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-fds-cell-renderer" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-fds-filter" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-global-css" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-global-js-1" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-global-js-2" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-iframe-1" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-iframe-2" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-instance-settings" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-js-import-maps-entry" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-site-initializer" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-static-content" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-theme-css-1" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-theme-css-2" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-theme-css-3" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-theme-favicon" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-theme-spritemap-1" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/client-extensions/liferay-sample-theme-spritemap-2" />
+            <option value="$PROJECT_DIR$/liferay-sample-workspace/poshi" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/liferay-stripe-workspace" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/liferay-stripe-workspace" />
+            <option value="$PROJECT_DIR$/liferay-stripe-workspace/client-extensions" />
+            <option value="$PROJECT_DIR$/liferay-stripe-workspace/client-extensions/liferay-stripe-commerce-payment-integration" />
+            <option value="$PROJECT_DIR$/liferay-stripe-workspace/poshi" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/liferay-testray-workspace" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/liferay-testray-workspace" />
+            <option value="$PROJECT_DIR$/liferay-testray-workspace/client-extensions" />
+            <option value="$PROJECT_DIR$/liferay-testray-workspace/client-extensions/liferay-testray-custom-element" />
+            <option value="$PROJECT_DIR$/liferay-testray-workspace/client-extensions/liferay-testray-etc-cron" />
+            <option value="$PROJECT_DIR$/liferay-testray-workspace/client-extensions/liferay-testray-etc-jira" />
+            <option value="$PROJECT_DIR$/liferay-testray-workspace/client-extensions/liferay-testray-site-initializer" />
+            <option value="$PROJECT_DIR$/liferay-testray-workspace/modules" />
+            <option value="$PROJECT_DIR$/liferay-testray-workspace/modules/testray-rest-api" />
+            <option value="$PROJECT_DIR$/liferay-testray-workspace/modules/testray-rest-impl" />
+            <option value="$PROJECT_DIR$/liferay-testray-workspace/poshi" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/liferay-ticket-workspace" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/liferay-ticket-workspace" />
+            <option value="$PROJECT_DIR$/liferay-ticket-workspace/client-extensions" />
+            <option value="$PROJECT_DIR$/liferay-ticket-workspace/client-extensions/liferay-ticket-batch" />
+            <option value="$PROJECT_DIR$/liferay-ticket-workspace/client-extensions/liferay-ticket-custom-element" />
+            <option value="$PROJECT_DIR$/liferay-ticket-workspace/client-extensions/liferay-ticket-etc-cron" />
+            <option value="$PROJECT_DIR$/liferay-ticket-workspace/client-extensions/liferay-ticket-etc-spring-boot" />
+            <option value="$PROJECT_DIR$/liferay-ticket-workspace/client-extensions/liferay-ticket-theme-css" />
+            <option value="$PROJECT_DIR$/liferay-ticket-workspace/poshi" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/liferay-tryitnow-workspace" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/liferay-tryitnow-workspace" />
+            <option value="$PROJECT_DIR$/liferay-tryitnow-workspace/client-extensions" />
+            <option value="$PROJECT_DIR$/liferay-tryitnow-workspace/client-extensions/liferay-tryitnow-batch" />
+            <option value="$PROJECT_DIR$/liferay-tryitnow-workspace/client-extensions/liferay-tryitnow-site-initializer" />
+            <option value="$PROJECT_DIR$/liferay-tryitnow-workspace/poshi" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

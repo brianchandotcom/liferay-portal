@@ -1,10 +1,49 @@
 name: liferaylearn
-
 services:
-    liferay:
-        container_name: liferay
-        build: docker/liferay
+    caddy:
+        container_name: caddy
+        image: liferay/caddy
+        ports:
+            - "127.0.0.1:8000:80"
+        volumes:
+            - shared-data:/public_html/images
+    database:
+        command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --character-set-filesystem=utf8 --max_allowed_packet=32M
+        container_name: database
         environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+            MYSQL_DATABASE: lportal
+        healthcheck:
+            interval: 5s
+            retries: 10
+            start_period: 5s
+            test: mysql -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD --protocol tcp -e 'select 1' 2>&1 | grep -qvF "Can't connect"
+        image: mysql:5.7
+        ports:
+            - 127.0.0.1:3307:3306
+    deploy:
+        build: docker/deploy
+        container_name: deploy
+        depends_on:
+            liferay:
+                condition: service_healthy
+        env_file: ./.env
+        environment:
+            - JAVA_VERSION=zulu11
+        volumes:
+            - ./:/mnt/liferay-learn-workspace
+            - ${LIFERAY_LEARN_DIR}:/mnt/liferay-learn
+            - home-liferay:/home/liferay
+            - shared-data:/opt/liferay/osgi/client-extensions
+            - shared-data:/public_html/images
+    liferay:
+        build: docker/liferay
+        container_name: liferay
+        depends_on:
+            database:
+                condition: service_healthy
+        environment:
+            - JAVA_VERSION=zulu11
             - LIFERAY_PASSWORDS_PERIOD_DEFAULT_PERIOD_POLICY_PERIOD_CHANGE_PERIOD_REQUIRED=false
             - LIFERAY_USERS_PERIOD_REMINDER_PERIOD_QUERIES_PERIOD_ENABLED=false
             - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_DRIVER_UPPERCASEC_LASS_UPPERCASEN_AME=com.mysql.cj.jdbc.Driver
@@ -15,56 +54,17 @@ services:
             - LIFERAY_WEB_PERIOD_SERVER_PERIOD_PROTOCOL=http"
             - LIFERAY_WORKSPACE_ENVIRONMENT=local
             - LOCAL_STACK=true
-            - JAVA_VERSION=zulu11
+        healthcheck:
+            interval: 1m
+            retries: 8
+            start_period: 2m
+            test: curl -fsS "http://localhost:8080/c/portal/layout"
+            timeout: 1m
         ports:
             - 127.0.0.1:8081:8080
         volumes:
             - liferay-data:/opt/liferay/data
             - shared-data:/opt/liferay/osgi/client-extensions
-        depends_on:
-            database:
-                condition: service_healthy
-    caddy:
-        container_name: caddy
-        image: liferay/caddy
-        ports:
-            - '127.0.0.1:8000:80'
-        volumes:
-            - shared-data:/public_html/images
-    database:
-        command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --character-set-filesystem=utf8 --max_allowed_packet=32M
-        container_name: database
-        image: mysql:5.7
-        environment:
-            MYSQL_DATABASE: lportal
-            MYSQL_ALLOW_EMPTY_PASSWORD: 1
-        ports:
-            - 127.0.0.1:3307:3306
-        ulimits:
-            nproc: 65535
-            nofile:
-                soft: 20000
-                hard: 40000
-        healthcheck:
-            test: mysql -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD --protocol tcp -e 'select 1' 2>&1 | grep -qvF "Can't connect"
-            interval: 5s
-            retries: 10
-            start_period: 5s
-    deploy:
-        container_name: deploy
-        build: docker/deploy
-        env_file: ./.env
-        environment:
-            - JAVA_VERSION=zulu11
-        volumes:
-            - ./:/mnt/liferay-learn-workspace
-            - ${LIFERAY_LEARN_DIR}:/mnt/liferay-learn
-            - home-liferay:/home/liferay
-            - shared-data:/opt/liferay/osgi/client-extensions
-            - shared-data:/public_html/images
-        depends_on:
-            liferay:
-                condition: service_healthy
 volumes:
     home-liferay:
     liferay-data:

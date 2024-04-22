@@ -837,9 +837,11 @@ public class ServiceRegistry {
 			if (!listenerSnapshot.isEmpty()) {
 				Map<BundleContextImpl, Set<Map.Entry<ServiceListener, FilteredServiceListener>>> adaptedListenerSnapshot = new HashMap<>();
 
-				for (Map.Entry<BundleContextImpl, CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener>> entry : listenerSnapshot.entrySet()) {
-					adaptedListenerSnapshot.put(entry.getKey(), entry.getValue().entrySet());
-				}
+				listenerSnapshot.forEach(
+					(key, value) -> {
+						adaptedListenerSnapshot.put(key, value.entrySet());
+					}
+				);
 
 				Map<BundleContext, Collection<ListenerInfo>> listeners = new ShrinkableValueCollectionMap<BundleContext, ListenerInfo>(adaptedListenerSnapshot);
 
@@ -883,36 +885,32 @@ public class ServiceRegistry {
 		}
 
 		try {
-			for (Map.Entry<BundleContextImpl, CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener>> bundleContextEntry :
-					listenerSnapshot.entrySet()) {
-
-				CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener> map = bundleContextEntry.getValue();
-
-				for (FilteredServiceListener filteredServiceListener : map.values()) {
-					try {
-						filteredServiceListener.serviceChanged(event);
-					}
-					catch (Throwable t) {
-						if (debug.DEBUG_GENERAL) {
-							Debug.println(
-								"Exception in bottom level event dispatcher: " +
-									t.getMessage());
-
-							Debug.printStackTrace(t);
+			listenerSnapshot.forEach(
+				(key, value) -> {
+					for (FilteredServiceListener filteredServiceListener : value.values()) {
+						try {
+							filteredServiceListener.serviceChanged(event);
 						}
+						catch (Throwable t) {
+							if (debug.DEBUG_GENERAL) {
+								Debug.println(
+									"Exception in bottom level event dispatcher: " +
+										t.getMessage());
 
-						container.handleRuntimeError(t);
+								Debug.printStackTrace(t);
+							}
 
-						EquinoxEventPublisher equinoxEventPublisher =
-							container.getEventPublisher();
+							container.handleRuntimeError(t);
 
-						BundleContextImpl bundleContextImpl = bundleContextEntry.getKey();
+							EquinoxEventPublisher equinoxEventPublisher =
+								container.getEventPublisher();
 
-						equinoxEventPublisher.publishFrameworkEvent(
-							FrameworkEvent.ERROR, bundleContextImpl.getBundle(), t);
+							equinoxEventPublisher.publishFrameworkEvent(
+								FrameworkEvent.ERROR, key.getBundle(), t);
+						}
 					}
 				}
-			}
+			);
 		}
 		finally {
 			if (previousTCCL != null) {

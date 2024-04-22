@@ -74,6 +74,8 @@ test('Add the frontend data set sample widget', async ({
 		await expect(
 			filterDropdown.getByText('Client Extension')
 		).toBeInViewport();
+
+		filterButton.click();
 	});
 
 	await test.step('Assert that the filter client extension is working', async () => {

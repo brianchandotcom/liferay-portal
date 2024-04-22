@@ -146,10 +146,10 @@ public class UtilityPageTemplate implements Cloneable, Serializable {
 
 	public static enum Type {
 
-		CREATE_ACCOUNT("CreateAccount"), ERROR("Error"),
-		ERROR_CODE404("ErrorCode404"), ERROR_CODE500("ErrorCode500"),
-		FORGOT_PASSWORD("ForgotPassword"), LOGIN("Login"),
-		TERMS_OF_USE("TermsOfUse");
+		COOKIE_POLICY("CookiePolicy"), CREATE_ACCOUNT("CreateAccount"),
+		ERROR("Error"), ERROR_CODE404("ErrorCode404"),
+		ERROR_CODE500("ErrorCode500"), FORGOT_PASSWORD("ForgotPassword"),
+		LOGIN("Login"), TERMS_OF_USE("TermsOfUse");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

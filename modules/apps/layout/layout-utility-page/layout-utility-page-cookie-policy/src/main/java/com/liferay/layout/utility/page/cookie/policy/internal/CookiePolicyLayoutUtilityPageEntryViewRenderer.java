@@ -7,6 +7,7 @@ package com.liferay.layout.utility.page.cookie.policy.internal;
 
 import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
@@ -32,6 +33,11 @@ public class CookiePolicyLayoutUtilityPageEntryViewRenderer
 	@Override
 	public String getType() {
 		return LayoutUtilityPageEntryConstants.TYPE_COOKIE_POLICY;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return FeatureFlagManagerUtil.isEnabled("LPD-10588");
 	}
 
 	@Reference

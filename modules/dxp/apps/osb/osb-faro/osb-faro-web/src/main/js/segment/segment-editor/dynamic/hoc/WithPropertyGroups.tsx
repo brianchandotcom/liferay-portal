@@ -11,7 +11,6 @@ import {
 } from '../utils/utils';
 import {createInterestProperty} from '../utils/utils';
 import {
-	DEVELOPER_MODE,
 	ENABLE_ACCOUNTS,
 	FieldContexts,
 	FieldOwnerTypes
@@ -61,23 +60,20 @@ const fetchPropertyGroups = ({groupId}: {groupId: string}): Promise<any> =>
 		}),
 		API.interests.searchKeywords({delta: MAX_DELTA, groupId}),
 		Promise.resolve(SESSION_PROPERTIES),
-		// TODO: LRAC-8210 Remove for release 3.1
-		DEVELOPER_MODE
-			? client.query({
-					fetchPolicy: 'network-only',
-					query: EventDefinitionsQuery,
-					variables: {
-						eventType: EventTypes.Custom,
-						hidden: false,
-						page: 0,
-						size: MAX_DELTA,
-						sort: {
-							column: NAME,
-							type: OrderByDirections.Ascending
-						}
-					}
-			  })
-			: Promise.resolve([]),
+		client.query({
+			fetchPolicy: 'network-only',
+			query: EventDefinitionsQuery,
+			variables: {
+				eventType: EventTypes.Custom,
+				hidden: false,
+				page: 0,
+				size: MAX_DELTA,
+				sort: {
+					column: NAME,
+					type: OrderByDirections.Ascending
+				}
+			}
+		}),
 		Promise.resolve(WEB_BEHAVIORS)
 	]);
 
@@ -141,22 +137,19 @@ const mapResultToProps = ([
 				propertySubgroups: List(
 					[
 						new PropertySubgroup({
-							// TODO: LRAC-8210 Remove for release 3.1
-							label: DEVELOPER_MODE
-								? Liferay.Language.get('default-events')
-								: null,
+							label: Liferay.Language.get('default-events'),
+
 							properties: webBehaviors
 						}),
-						// TODO: LRAC-8210 Remove for release 3.1
-						DEVELOPER_MODE &&
-							new PropertySubgroup({
-								label: Liferay.Language.get('custom-events'),
-								properties: List(
-									eventProperties?.data?.eventDefinitions?.eventDefinitions?.map(
-										convertEventToProperty
-									)
+
+						new PropertySubgroup({
+							label: Liferay.Language.get('custom-events'),
+							properties: List(
+								eventProperties?.data?.eventDefinitions?.eventDefinitions?.map(
+									convertEventToProperty
 								)
-							})
+							)
+						})
 					].filter(Boolean)
 				)
 			}),

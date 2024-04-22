@@ -199,6 +199,31 @@ public class PortletRegistryImplTest {
 				PortletIdCodec.decodeUserId(portletName), null));
 	}
 
+	@Test
+	public void testGetFragmentEntryLinkPortletIdsWithSpecialCharacters() {
+		String instanceId = RandomTestUtil.randomString();
+		String portletName = RandomTestUtil.randomString();
+		String namespace = RandomTestUtil.randomString();
+		String specialCharacters = "-. ";
+
+		_assertGetFragmentEntryLinkPortletIds(
+			_getFragmentEntryLink(
+				StringBundler.concat(
+					"<div class=\"fragment_1\">", RandomTestUtil.randomString(),
+					"[@liferay_portlet[\"runtime\"]",
+					RandomTestUtil.randomString(),
+					" instanceId=\"fragmentEntryLinkNamespace-", instanceId,
+					specialCharacters, "\"", RandomTestUtil.randomString(),
+					" portletName=\"", portletName, "\"",
+					RandomTestUtil.randomString(), "/]",
+					RandomTestUtil.randomString(), "</div>"),
+				namespace),
+			PortletIdCodec.encode(
+				PortletIdCodec.decodePortletName(portletName),
+				PortletIdCodec.decodeUserId(portletName),
+				namespace + instanceId));
+	}
+
 	private void _assertGetFragmentEntryLinkPortletIds(
 		FragmentEntryLink fragmentEntryLink, String... portletIds) {
 

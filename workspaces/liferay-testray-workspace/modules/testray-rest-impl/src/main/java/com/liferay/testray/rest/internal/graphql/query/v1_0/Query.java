@@ -121,7 +121,7 @@ public class Query {
 				@GraphQLName("testrayBuildId") Long testrayBuildId,
 				@GraphQLName("testrayCasePriorities") String
 					testrayCasePriorities,
-				@GraphQLName("testrayTeamId") Long testrayTeamId,
+				@GraphQLName("testrayTeamId") String testrayTeamId,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 		throws Exception {
@@ -148,7 +148,7 @@ public class Query {
 				@GraphQLName("testrayCasePriorities") String
 					testrayCasePriorities,
 				@GraphQLName("testrayCaseTypes") String testrayCaseTypes,
-				@GraphQLName("testrayTeamId") Long testrayTeamId,
+				@GraphQLName("testrayTeamId") String testrayTeamId,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 		throws Exception {
@@ -175,7 +175,7 @@ public class Query {
 				@GraphQLName("testrayCasePriorities") String
 					testrayCasePriorities,
 				@GraphQLName("testrayCaseTypes") String testrayCaseTypes,
-				@GraphQLName("testrayTeamId") Long testrayTeamId,
+				@GraphQLName("testrayTeamId") String testrayTeamId,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 		throws Exception {
@@ -203,7 +203,7 @@ public class Query {
 					testrayCasePriorities,
 				@GraphQLName("testrayCaseTypes") String testrayCaseTypes,
 				@GraphQLName("testrayRunId") Long testrayRunId,
-				@GraphQLName("testrayTeamId") Long testrayTeamId,
+				@GraphQLName("testrayTeamId") String testrayTeamId,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 		throws Exception {

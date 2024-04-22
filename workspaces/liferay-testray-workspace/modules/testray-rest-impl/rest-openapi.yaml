@@ -271,8 +271,7 @@ paths:
                 - in: query
                   name: testrayTeamId
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -316,8 +315,7 @@ paths:
                 - in: query
                   name: testrayTeamId
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -361,8 +359,7 @@ paths:
                 - in: query
                   name: testrayTeamId
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -411,8 +408,7 @@ paths:
                 - in: query
                   name: testrayTeamId
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:

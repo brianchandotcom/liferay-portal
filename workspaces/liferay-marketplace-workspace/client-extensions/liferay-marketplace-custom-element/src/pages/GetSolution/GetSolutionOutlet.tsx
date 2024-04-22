@@ -5,16 +5,24 @@
 
 import ClayLink from '@clayui/link';
 import ClaySticker from '@clayui/sticker';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useForm} from 'react-hook-form';
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
+import {z} from 'zod';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import zodSchema, {zodResolver} from '../../schema/zod';
+import fetcher from '../../services/fetcher';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 import {postOrder} from '../../utils/api';
 import {StepWizardRevamp} from '../GetApp/components/StepWizard/StepWizard';
-import useAccountForm from './hooks/useAccountForm';
 
 type GetSolutionOutletProps = {
 	product: DeliveryProduct;
+};
+
+export type UserForm = z.infer<typeof zodSchema.accountCreator> & {
+	accountSelected: Account | undefined;
 };
 
 const productCustomFields = [
@@ -59,12 +67,65 @@ const getIcon = (image = '') => {
 };
 
 const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
-	const {channel} = useMarketplaceContext();
-	const accountForm = useAccountForm();
-	const account = accountForm.watch('accountSelected');
+	const marketplaceContext = useMarketplaceContext();
+
+	const {channel, myUserAccount} = marketplaceContext;
+
+	const accountBriefs = useMemo(() => myUserAccount?.accountBriefs || [], [
+		myUserAccount?.accountBriefs,
+	]);
+
+	const [accounts, setAccounts] = useState<any[]>([]);
+	const [account, setSelectedAccount] = useState<any>(null);
+
 	const sku = product?.skus?.[0]?.id;
 	const navigate = useNavigate();
 	const location = useLocation();
+
+	const accountForm = useForm<UserForm>({
+		defaultValues: {
+			companyName: '',
+			country: '',
+			emailAddress: myUserAccount.emailAddress,
+			extension: '',
+			familyName: myUserAccount.familyName,
+			givenName: myUserAccount.givenName,
+			phone: {code: '+1', flag: 'en-us'},
+			phoneNumber: undefined,
+		},
+		mode: 'all',
+		resolver: zodResolver(zodSchema.accountCreator),
+	});
+
+	const {setValue} = accountForm;
+
+	const fetchAccount = useCallback(async () => {
+		const fetchedAccounts = [];
+
+		for (const accountBrief of accountBriefs) {
+			const accountInfo = await fetcher(
+				`o/headless-admin-user/v1.0/accounts/${Number(
+					accountBrief.id
+				)}?nestedFields=accountUserAccounts`
+			);
+
+			fetchedAccounts.push(accountInfo);
+		}
+
+		return fetchedAccounts;
+	}, [accountBriefs]);
+
+	useEffect(() => {
+		(async () => {
+			const userAccounts = await fetchAccount();
+
+			if (userAccounts.length === 1) {
+				setSelectedAccount(userAccounts[0]);
+			}
+
+			setAccounts(userAccounts);
+		})();
+	}, [fetchAccount, myUserAccount, setValue]);
 
 	const customFields =
 		product?.customFields?.filter((item) =>
@@ -132,8 +193,7 @@ const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 
 			<div className="align-items-center d-flex flex-column justify-content-center purchased-solutions-container">
 				<div className="border d-flex flex-column justify-content-center p-6 purchased-solutions-body rounded">
-					{accountForm.accountQuantity >
-						accountForm.SINGLE_ACCOUNT && (
+					{accounts.length > 1 && (
 						<div className="d-flex justify-content-center mb-5">
 							<StepWizardRevamp
 								className="col-8"
@@ -149,9 +209,13 @@ const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 					<Outlet
 						context={{
 							accountForm,
+							accountSelected: account,
+							accounts,
 							navigate,
 							onSubmit,
 							product,
+							setAccounts,
+							setSelectedAccount,
 						}}
 					/>
 				</div>

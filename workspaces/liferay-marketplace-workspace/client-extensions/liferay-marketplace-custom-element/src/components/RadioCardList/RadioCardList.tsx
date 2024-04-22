@@ -7,15 +7,7 @@ import {ReactNode} from 'react';
 
 import RadioCard from './components/RadioCard';
 
-interface RadioCardListProps<T> {
-	contentList: RadioCardContent<T>[];
-	customization?: boolean;
-	leftRadio?: boolean;
-	onSelect: (value: RadioOption<T>) => void;
-	showImage?: boolean;
-}
-
-export interface RadioCardContent<T = any> {
+type RadioCardContent<T = any> = {
 	children?: ReactNode;
 	description?: ReactNode;
 	disabled?: boolean;
@@ -26,7 +18,15 @@ export interface RadioCardContent<T = any> {
 	selected: boolean;
 	title: ReactNode;
 	value: T;
-}
+};
+
+type RadioCardListProps<T> = {
+	contentList: RadioCardContent<T>[];
+	customization?: boolean;
+	leftRadio?: boolean;
+	onSelect: (value: RadioOption<T>) => void;
+	showImage?: boolean;
+};
 
 const RadioCardList = <T extends unknown>({
 	contentList,

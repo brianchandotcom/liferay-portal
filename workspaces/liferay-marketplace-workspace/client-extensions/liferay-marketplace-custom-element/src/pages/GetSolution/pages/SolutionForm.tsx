@@ -9,7 +9,11 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {useLayoutEffect, useState} from 'react';
-import {useNavigate, useOutletContext} from 'react-router-dom';
+import {
+	NavigateFunction,
+	useNavigate,
+	useOutletContext,
+} from 'react-router-dom';
 import {z} from 'zod';
 
 import {Header} from '../../../components/Header/Header';
@@ -26,13 +30,12 @@ import {usePurchasedOrders} from '../../CustomerDashboard/usePurchasedOrders';
 
 export type UserForm = z.infer<typeof zodSchema.accountCreator>;
 
-enum AccountQuantities {
-	SINGLE = 1,
-	NO_ACCOUNT = 0,
-}
-
 const AccountForm = () => {
 	const {properties} = useMarketplaceContext();
+	const {accountSelected, accounts} = useOutletContext<{
+		accountSelected: Account;
+		accounts: Account[];
+	}>();
 	const {data: commerceRegionsResponse} = useCommerceRegions(
 		new URLSearchParams({fields: 'name,title_i18n', pageSize: '-1'})
 	);
@@ -59,7 +62,7 @@ const AccountForm = () => {
 		isLoading,
 		isValidating,
 	} = usePurchasedOrders({
-		accountId: accountForm.accountSelected?.id,
+		accountId: accountSelected?.id,
 		channelId: Liferay.CommerceContext.commerceChannelId,
 		orderTypeExternalReferenceCodes: ['SOLUTION30', 'SOLUTIONS7'],
 		page: 1,
@@ -113,6 +116,8 @@ const AccountForm = () => {
 			</div>
 		);
 	}
+
+	const singleAccount = accounts.length === 1;
 
 	return (
 		<div className="align-items-center d-flex flex-column justify-content-center">
@@ -317,10 +322,7 @@ const AccountForm = () => {
 						<ClayButton
 							displayType="unstyled"
 							onClick={() => {
-								if (
-									AccountQuantities.SINGLE ===
-									accountForm.accountQuantity
-								) {
+								if (singleAccount) {
 									Liferay.Util.navigate(
 										`${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}/solutions-marketplace`
 									);
@@ -329,10 +331,7 @@ const AccountForm = () => {
 								navigate('/');
 							}}
 						>
-							{AccountQuantities.SINGLE ===
-							accountForm.accountQuantity
-								? 'Cancel'
-								: 'Back'}
+							{singleAccount ? 'Cancel' : 'Back'}
 						</ClayButton>
 
 						<ClayButton
@@ -353,13 +352,17 @@ const AccountForm = () => {
 };
 
 const GetSolutionForm = () => {
-	const {accountForm, navigate} = useOutletContext<any>();
+	const {accountSelected, accounts, navigate} = useOutletContext<{
+		accountSelected?: Account;
+		accounts: Account[];
+		navigate: NavigateFunction;
+	}>();
 
 	useLayoutEffect(() => {
-		if (accountForm.accountQuantity > 1 && !accountForm.accountSelected) {
+		if (accounts.length > 1 && !accountSelected) {
 			navigate('/', {replace: true});
 		}
-	}, [accountForm.accountQuantity, accountForm.accountSelected, navigate]);
+	}, [accountSelected, accounts.length, navigate]);
 
 	return <AccountForm />;
 };

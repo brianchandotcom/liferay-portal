@@ -32,6 +32,12 @@ test('Add the frontend data set sample widget', async ({
 	page,
 	site,
 }) => {
+	const clientExtensionMenuItem = page.getByRole('menuitem', {
+		name: 'Client Extension',
+	});
+
+	const filterButton = page.locator('.filters-dropdown').getByText('Filter');
+
 	let layout: Layout;
 
 	await test.step('Create a content site and the frontend data set sample widget', async () => {
@@ -59,34 +65,16 @@ test('Add the frontend data set sample widget', async ({
 
 		await tabHeading.click();
 
-		const filterButton = page
-			.locator('.filters-dropdown')
-			.getByText('Filter');
-
 		await expect(filterButton).toBeInViewport();
 
 		filterButton.click();
 
-		const filterDropdown = page.locator('.dropdown-menu', {
-			hasText: 'Filters',
-		});
-
-		await expect(
-			filterDropdown.getByText('Client Extension')
-		).toBeInViewport();
+		await expect(clientExtensionMenuItem).toBeInViewport();
 
 		filterButton.click();
 	});
 
 	await test.step('Assert that the filter client extension is working', async () => {
-		const filterButton = page
-			.locator('.filters-dropdown')
-			.getByText('Filter');
-
-		const clientExtensionMenuItem = page.getByRole('menuitem', {
-			name: 'Client Extension',
-		});
-
 		await expect(filterButton).toBeInViewport();
 
 		await clickAndExpectToBeVisible({

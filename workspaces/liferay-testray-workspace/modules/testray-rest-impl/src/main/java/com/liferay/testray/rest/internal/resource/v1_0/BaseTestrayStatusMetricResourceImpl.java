@@ -71,7 +71,7 @@ public abstract class BaseTestrayStatusMetricResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "testrayTeamId"
+				name = "testrayTeamIds"
 			)
 		}
 	)
@@ -98,8 +98,8 @@ public abstract class BaseTestrayStatusMetricResourceImpl
 				@javax.ws.rs.QueryParam("testrayCasePriorities")
 				String testrayCasePriorities,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.ws.rs.QueryParam("testrayTeamId")
-				String testrayTeamId,
+				@javax.ws.rs.QueryParam("testrayTeamIds")
+				String testrayTeamIds,
 				@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
@@ -135,7 +135,7 @@ public abstract class BaseTestrayStatusMetricResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "testrayTeamId"
+				name = "testrayTeamIds"
 			)
 		}
 	)
@@ -165,8 +165,8 @@ public abstract class BaseTestrayStatusMetricResourceImpl
 				@javax.ws.rs.QueryParam("testrayCaseTypes")
 				String testrayCaseTypes,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.ws.rs.QueryParam("testrayTeamId")
-				String testrayTeamId,
+				@javax.ws.rs.QueryParam("testrayTeamIds")
+				String testrayTeamIds,
 				@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
@@ -202,7 +202,7 @@ public abstract class BaseTestrayStatusMetricResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "testrayTeamId"
+				name = "testrayTeamIds"
 			)
 		}
 	)
@@ -232,8 +232,8 @@ public abstract class BaseTestrayStatusMetricResourceImpl
 				@javax.ws.rs.QueryParam("testrayCaseTypes")
 				String testrayCaseTypes,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.ws.rs.QueryParam("testrayTeamId")
-				String testrayTeamId,
+				@javax.ws.rs.QueryParam("testrayTeamIds")
+				String testrayTeamIds,
 				@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
@@ -273,7 +273,7 @@ public abstract class BaseTestrayStatusMetricResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "testrayTeamId"
+				name = "testrayTeamIds"
 			)
 		}
 	)
@@ -306,8 +306,8 @@ public abstract class BaseTestrayStatusMetricResourceImpl
 				@javax.ws.rs.QueryParam("testrayRunId")
 				Long testrayRunId,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.ws.rs.QueryParam("testrayTeamId")
-				String testrayTeamId,
+				@javax.ws.rs.QueryParam("testrayTeamIds")
+				String testrayTeamIds,
 				@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 

@@ -20,7 +20,9 @@ export class KnowledgeBasePage {
 			name: 'Basic Article',
 		});
 		this.foldersAndArticlesButton = page.getByLabel('Folders and Articles');
-		this.newButton = page.getByLabel('New', {exact: true});
+		this.newButton = page
+			.locator('.management-bar')
+			.getByText('New', {exact: true});
 		this.page = page;
 		this.selectAllCheckBox = page.getByLabel(
 			'Select All Items on the Page'

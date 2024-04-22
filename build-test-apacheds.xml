@@ -77,7 +77,7 @@
 
 			<exec dir="${liferay.ldap.dependency.dir}" executable="/bin/bash">
 				<arg value="-c" />
-				<arg value="ldapadd -v -H ldap://0.0.0.0:10389 -c -x -D uid=admin,ou=system -w secret -f ${ldifName}.ldif" />
+				<arg value="ldapadd -c -D uid=admin,ou=system -f ${ldifName}.ldif -H ldap://0.0.0.0:10389 -v -w secret -x" />
 			</exec>
 		</sequential>
 	</macrodef>

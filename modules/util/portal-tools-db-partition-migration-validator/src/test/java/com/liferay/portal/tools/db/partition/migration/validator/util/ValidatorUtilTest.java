@@ -30,7 +30,7 @@ import org.junit.Test;
 /**
  * @author Luis Ortiz
  */
-public class ValidatorUtilTest extends ValidatorUtil {
+public class ValidatorUtilTest {
 
 	@Before
 	public void setUp() {
@@ -227,7 +227,7 @@ public class ValidatorUtilTest extends ValidatorUtil {
 	private void _assertValidateDatabases(
 		boolean hasErrors, boolean hasWarnings, List<String> messages) {
 
-		Recorder recorder = validateDatabases(
+		Recorder recorder = ValidatorUtil.validateDatabases(
 			_sourceLiferayDatabase, _targetLiferayDatabase);
 
 		Assert.assertEquals(hasErrors, recorder.hasErrors());

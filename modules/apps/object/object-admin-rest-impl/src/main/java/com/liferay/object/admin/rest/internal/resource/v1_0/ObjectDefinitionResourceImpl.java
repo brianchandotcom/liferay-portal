@@ -224,6 +224,8 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.
 							getObjectFolderExternalReferenceCode()),
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
+					GetterUtil.getBoolean(
+						objectDefinition.getEnableIndexedSearch()),
 					LocalizedMapUtil.getLocalizedMap(
 						objectDefinition.getLabel()),
 					objectDefinition.getName(),
@@ -255,6 +257,8 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.
 							getObjectFolderExternalReferenceCode()),
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
+					GetterUtil.getBoolean(
+						objectDefinition.getEnableIndexedSearch(), true),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableLocalization()),
 					GetterUtil.getBoolean(
@@ -515,6 +519,8 @@ public class ObjectDefinitionResourceImpl
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableCategorization(), true),
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
+					GetterUtil.getBoolean(
+						objectDefinition.getEnableIndexedSearch()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableLocalization()),
 					GetterUtil.getBoolean(

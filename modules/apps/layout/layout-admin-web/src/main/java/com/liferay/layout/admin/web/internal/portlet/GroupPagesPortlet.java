@@ -7,6 +7,7 @@ package com.liferay.layout.admin.web.internal.portlet;
 
 import com.liferay.application.list.GroupProvider;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
+import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
@@ -256,6 +257,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 	@Override
 	protected boolean isSessionErrorException(Throwable throwable) {
 		if (throwable instanceof AssetCategoryException ||
+			throwable instanceof AssetTagException ||
 			throwable instanceof DDMFormValuesValidationException ||
 			throwable instanceof DuplicateFriendlyURLEntryException ||
 			throwable instanceof

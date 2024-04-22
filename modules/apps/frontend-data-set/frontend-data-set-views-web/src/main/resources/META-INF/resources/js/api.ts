@@ -111,7 +111,7 @@ function getValidFields({
 					);
 				});
 
-				parentSchemaName.length &&
+				if (parentSchemaName.length) {
 					fields.push({
 						children: getValidFields({
 							contextPath: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_DELIMITER}`,
@@ -123,7 +123,8 @@ function getValidFields({
 						type: schemas[parentSchemaName[0]]?.type || 'object',
 					});
 
-				return;
+					return;
+				}
 			}
 
 			fields.push({

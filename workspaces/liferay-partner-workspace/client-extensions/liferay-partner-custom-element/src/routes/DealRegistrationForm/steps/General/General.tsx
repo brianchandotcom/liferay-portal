@@ -210,6 +210,13 @@ const General = ({
 				</PRMForm.Group>
 
 				<PRMForm.Section title="Primary Prospect Contact">
+					<PRMFormik.Field
+						component={PRMForm.InputText}
+						label="Title"
+						name="primaryProspect.title"
+						required
+					/>
+
 					<PRMForm.Group>
 						<PRMFormik.Field
 							component={PRMForm.InputText}

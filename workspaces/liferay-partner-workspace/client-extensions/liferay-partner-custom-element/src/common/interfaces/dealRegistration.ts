@@ -16,6 +16,7 @@ interface PrimaryProspect {
 	jobRole: LiferayPicklist;
 	lastName: string;
 	phone: string;
+	title: string;
 }
 
 interface Prospect {

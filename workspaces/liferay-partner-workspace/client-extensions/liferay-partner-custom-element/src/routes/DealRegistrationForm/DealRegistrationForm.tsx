@@ -39,6 +39,7 @@ const initialFormValues: DealRegistration = {
 		jobRole: {},
 		lastName: '',
 		phone: '',
+		title: '',
 	},
 	projectCategories: [],
 	projectNeed: [],

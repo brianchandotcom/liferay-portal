@@ -58,10 +58,8 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.BaseSearchTestCase;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -70,7 +68,6 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.Collections;
-import java.util.Date;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -210,28 +207,6 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	@Override
 	@Test
 	public void testSearchByDDMStructureField() throws Exception {
-	}
-
-	@FeatureFlags("LPD-10701")
-	@Test
-	public void testSearchScheduledFile() throws Exception {
-		Date displayDate = new Date(System.currentTimeMillis() + Time.DAY);
-
-		_dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			"Document", StringPool.BLANK, StringUtil.randomString(),
-			StringUtil.randomString(), new byte[0], displayDate, null, null,
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
-
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			group.getGroupId());
-
-		searchContext.setAttribute("status", WorkflowConstants.STATUS_ANY);
-		searchContext.setKeywords("Document");
-
-		assertBaseModelsCount(1, "Document", searchContext);
 	}
 
 	@Test

@@ -174,14 +174,15 @@ public class PlacedOrderItemResourceImpl
 			PlacedOrderItem[] parentOrderItemPlacedOrderItems =
 				parentOrderItem.getPlacedOrderItems();
 
-			if (parentOrderItemPlacedOrderItems == null) {
-				parentOrderItem.setPlacedOrderItems(
-					() -> new PlacedOrderItem[0]);
-			}
-
 			parentOrderItem.setPlacedOrderItems(
-				() -> ArrayUtil.append(
-					parentOrderItemPlacedOrderItems, placedOrderItem));
+				() -> {
+					if (parentOrderItemPlacedOrderItems == null) {
+						return new PlacedOrderItem[] {placedOrderItem};
+					}
+
+					return ArrayUtil.append(
+						parentOrderItemPlacedOrderItems, placedOrderItem);
+				});
 
 			placedOrderItemMap.remove(placedOrderItem.getId());
 		}

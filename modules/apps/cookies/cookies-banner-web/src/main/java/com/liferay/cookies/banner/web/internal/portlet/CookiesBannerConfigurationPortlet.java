@@ -9,6 +9,7 @@ import com.liferay.cookies.banner.web.internal.constants.CookiesBannerPortletKey
 import com.liferay.cookies.banner.web.internal.constants.CookiesBannerWebKeys;
 import com.liferay.cookies.banner.web.internal.display.context.CookiesBannerConfigurationDisplayContext;
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
+import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import java.io.IOException;
@@ -56,7 +57,8 @@ public class CookiesBannerConfigurationPortlet extends MVCPortlet {
 		CookiesBannerConfigurationDisplayContext
 			cookiesBannerConfigurationDisplayContext =
 				new CookiesBannerConfigurationDisplayContext(
-					_cookiesConfigurationProvider, renderRequest,
+					_cookiesConfigurationProvider,
+					_layoutUtilityPageEntryLayoutProvider, renderRequest,
 					renderResponse);
 
 		renderRequest.setAttribute(
@@ -68,5 +70,9 @@ public class CookiesBannerConfigurationPortlet extends MVCPortlet {
 
 	@Reference
 	private CookiesConfigurationProvider _cookiesConfigurationProvider;
+
+	@Reference
+	private LayoutUtilityPageEntryLayoutProvider
+		_layoutUtilityPageEntryLayoutProvider;
 
 }

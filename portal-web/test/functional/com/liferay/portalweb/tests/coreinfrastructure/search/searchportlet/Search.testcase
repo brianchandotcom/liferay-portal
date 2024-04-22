@@ -3086,7 +3086,7 @@ definition {
 			fragmentName = "Banner Center");
 
 		PageEditorMapping.mapEditableTextToField(
-			field = "Title",
+			field = "title",
 			fragmentName = "Heading",
 			id = "element-text");
 

@@ -6,21 +6,29 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayLink from '@clayui/link';
-import {useEffect, useLayoutEffect, useState} from 'react';
+import {Dispatch, useLayoutEffect} from 'react';
 import {useNavigate, useOutletContext} from 'react-router-dom';
 
 import {Header} from '../../../components/Header/Header';
 import {getSiteURL} from '../../../components/InviteMemberModal/services';
-import RadioCardList, {
-	RadioCardContent,
-} from '../../../components/RadioCardList/RadioCardList';
+import RadioCardList from '../../../components/RadioCardList/RadioCardList';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 
 const GetSolutionAccount = () => {
-	const {accountForm} = useOutletContext<any>();
+	const {
+		accountForm,
+		accountSelected,
+		accounts,
+		setSelectedAccount,
+	} = useOutletContext<{
+		accountForm: any;
+		accountSelected?: Account;
+		accounts: Account[];
+		setAccounts: Dispatch<Account[]>;
+		setSelectedAccount: Dispatch<Account>;
+	}>();
 	const navigate = useNavigate();
-	const accountSelected = accountForm.watch('accountSelected');
 	const emailAddress = accountForm.watch('emailAddress');
 
 	useLayoutEffect(() => {
@@ -28,33 +36,6 @@ const GetSolutionAccount = () => {
 			navigate('/form', {replace: true});
 		}
 	}, [accountForm.accountQuantity, accountForm.accountSelected, navigate]);
-
-	const [accounts, setAccounts] = useState<RadioCardContent<Account>[]>([]);
-
-	useEffect(() => {
-		setAccounts(
-			accountForm.accounts.map((account: Account) => ({
-				id: account.id,
-				imageURL: account.logoURL,
-				selected:
-					accountSelected?.externalReferenceCode ===
-					account.externalReferenceCode,
-				title: account.name,
-				value: account,
-			}))
-		);
-	}, [accountForm.accounts, accountSelected?.externalReferenceCode]);
-
-	const handleSelectAccount = (radioOption: RadioOption<Account>) => {
-		accountForm.setValue('accountSelected', radioOption.value);
-
-		setAccounts((previousValue) =>
-			previousValue.map((account, index) => ({
-				...account,
-				selected: index === radioOption.index,
-			}))
-		);
-	};
 
 	const handleNextStep = () => navigate('form');
 
@@ -75,9 +56,19 @@ const GetSolutionAccount = () => {
 			<ClayForm className="mt-4">
 				<ClayForm.Group>
 					<RadioCardList
-						contentList={accounts}
+						contentList={accounts.map((account) => ({
+							id: account.id,
+							imageURL: account.logoURL,
+							selected:
+								accountSelected?.externalReferenceCode ===
+								account.externalReferenceCode,
+							title: account.name,
+							value: account,
+						}))}
 						leftRadio
-						onSelect={handleSelectAccount}
+						onSelect={(radioOption) =>
+							setSelectedAccount(radioOption.value)
+						}
 						showImage
 					/>
 

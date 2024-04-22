@@ -127,6 +127,8 @@ public class ObjectDefinitionUtil {
 					serviceBuilderObjectDefinition::isEnableCategorization);
 				setEnableComments(
 					serviceBuilderObjectDefinition::isEnableComments);
+				setEnableIndexedSearch(
+					serviceBuilderObjectDefinition::isEnableIndexedSearch);
 				setEnableLocalization(
 					serviceBuilderObjectDefinition::isEnableLocalization);
 				setEnableObjectEntryDraft(

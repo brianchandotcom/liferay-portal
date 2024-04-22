@@ -22,6 +22,7 @@ import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
+import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
@@ -57,6 +58,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -186,6 +188,31 @@ public class LayoutStructureRenderer {
 			 infoPermissionProvider.hasAddPermission(
 				 _themeDisplay.getScopeGroupId(),
 				 _themeDisplay.getPermissionChecker()))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasUpdatePermission(
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider)
+		throws Exception {
+
+		InfoItemServiceRegistry infoItemServiceRegistry =
+			ServletContextUtil.getInfoItemServiceRegistry();
+
+		InfoItemPermissionProvider infoItemPermissionProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemPermissionProvider.class,
+				layoutDisplayPageObjectProvider.getClassName());
+
+		if ((infoItemPermissionProvider == null) ||
+			((_themeDisplay != null) &&
+			 infoItemPermissionProvider.hasPermission(
+				 _themeDisplay.getPermissionChecker(),
+				 layoutDisplayPageObjectProvider.getDisplayObject(),
+				 ActionKeys.UPDATE))) {
 
 			return true;
 		}
@@ -927,6 +954,8 @@ public class LayoutStructureRenderer {
 					LayoutDisplayPageWebKeys.
 						LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
+		boolean readOnly = false;
+
 		if ((layoutDisplayPageObjectProvider != null) &&
 			(layoutDisplayPageObjectProvider.getClassNameId() ==
 				formStyledLayoutStructureItem.getClassNameId())) {
@@ -940,6 +969,10 @@ public class LayoutStructureRenderer {
 			jspWriter.write(" value=\"");
 			jspWriter.write(
 				layoutDisplayPageObjectProvider.getExternalReferenceCode());
+
+			if (!_hasUpdatePermission(layoutDisplayPageObjectProvider)) {
+				readOnly = true;
+			}
 		}
 
 		jspWriter.write(
@@ -1003,10 +1036,18 @@ public class LayoutStructureRenderer {
 			_httpServletRequest,
 			"infoFormParameterMap" + formStyledLayoutStructureItem.getItemId());
 
+		if (readOnly) {
+			jspWriter.write("<fieldset disabled=\"disabled\">");
+		}
+
 		_renderLayoutStructure(
 			formStyledLayoutStructureItem.getChildrenItemIds(), infoForm);
 
 		SessionMessages.remove(_httpServletRequest, "infoFormParameterMap");
+
+		if (readOnly) {
+			jspWriter.write("</fieldset>");
+		}
 
 		jspWriter.write("</form>");
 	}

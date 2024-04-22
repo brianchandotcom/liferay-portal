@@ -470,12 +470,12 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 					portletDataContext, articleElement);
 			}
 
-			Map<String, String> postProcessArticles =
+			Map<String, String> postProcessArticleUuids =
 				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					JournalArticle.class + ".postProcess");
+					JournalArticle.class + ".postProcessArticleUuids");
 
 			for (Map.Entry<String, String> entry :
-					postProcessArticles.entrySet()) {
+					postProcessArticleUuids.entrySet()) {
 
 				portletDataContext.removePrimaryKey(entry.getValue());
 			}
@@ -483,11 +483,11 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			for (Element articleElement : articleElements) {
 				String uuid = articleElement.attributeValue("uuid");
 
-				if (!postProcessArticles.containsKey(uuid)) {
+				if (!postProcessArticleUuids.containsKey(uuid)) {
 					continue;
 				}
 
-				postProcessArticles.remove(uuid);
+				postProcessArticleUuids.remove(uuid);
 
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, articleElement);

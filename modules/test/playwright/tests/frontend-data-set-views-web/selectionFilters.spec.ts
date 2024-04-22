@@ -9,9 +9,9 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
+import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
 import {picklistApiHelpersTest} from './fixtures/picklistApiHelpersTest';
-import { dataSetManagerSetupTest } from './fixtures/dataSetManagerSetupTest';
 
 const SELECTION_FILTER_NAME = 'Selection filter';
 const PICKLIST_VALUE_KEY = 'sampleValue';

@@ -403,7 +403,7 @@ function AddFDSFilterModalContent({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				{Liferay.FeatureFlags['LPD-10754'] &&
+				{Liferay.FeatureFlags['LPD-10754'] && (
 					<ClayLayout.SheetSection className="mb-4">
 						<h3 className="sheet-subtitle">
 							{Liferay.Language.get('configuration')}
@@ -415,7 +415,7 @@ function AddFDSFilterModalContent({
 							)}
 						</ClayForm.Text>
 					</ClayLayout.SheetSection>
-				}
+				)}
 
 				<ClayForm.Group>
 					<InputLocalized

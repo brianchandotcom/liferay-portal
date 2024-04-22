@@ -61,6 +61,125 @@ public class DLFileEntrySearchByStatusTest {
 	}
 
 	@Test
+	public void testSearchFileAnyStatus() throws Exception {
+		String titlePrefix = "Document ";
+
+		_dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			titlePrefix + StringUtil.randomString(), StringPool.BLANK,
+			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
+			null, null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Date displayDate = new Date(System.currentTimeMillis() + Time.DAY);
+
+		_dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			titlePrefix + StringUtil.randomString(), StringPool.BLANK,
+			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
+			displayDate, null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			_group.getGroupId());
+
+		searchContext.setAttribute("status", WorkflowConstants.STATUS_ANY);
+		searchContext.setKeywords(titlePrefix);
+
+		Indexer<DLFileEntry> indexer = _indexerRegistry.getIndexer(
+			DLFileEntry.class);
+
+		Hits hits = indexer.search(searchContext);
+
+		Assert.assertEquals(
+			searchContext.getAttribute("queryString") + "->" + hits, 2,
+			hits.getLength());
+	}
+
+	@Test
+	public void testSearchFileApprovedStatus() throws Exception {
+		String titlePrefix = "Document ";
+
+		_dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			titlePrefix + StringUtil.randomString(), StringPool.BLANK,
+			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
+			null, null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Date displayDate = new Date(System.currentTimeMillis() + Time.DAY);
+
+		_dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			titlePrefix + StringUtil.randomString(), StringPool.BLANK,
+			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
+			displayDate, null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			_group.getGroupId());
+
+		searchContext.setAttribute("status", WorkflowConstants.STATUS_APPROVED);
+		searchContext.setKeywords(titlePrefix);
+
+		Indexer<DLFileEntry> indexer = _indexerRegistry.getIndexer(
+			DLFileEntry.class);
+
+		Hits hits = indexer.search(searchContext);
+
+		Assert.assertEquals(
+			searchContext.getAttribute("queryString") + "->" + hits, 1,
+			hits.getLength());
+	}
+
+	@Test
+	public void testSearchFileNoStatusOnlyApproved() throws Exception {
+		String titlePrefix = "Document ";
+
+		_dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			titlePrefix + StringUtil.randomString(), StringPool.BLANK,
+			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
+			null, null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Date displayDate = new Date(System.currentTimeMillis() + Time.DAY);
+
+		_dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			titlePrefix + StringUtil.randomString(), StringPool.BLANK,
+			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
+			displayDate, null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			_group.getGroupId());
+
+		searchContext.setKeywords(titlePrefix);
+
+		Indexer<DLFileEntry> indexer = _indexerRegistry.getIndexer(
+			DLFileEntry.class);
+
+		Hits hits = indexer.search(searchContext);
+
+		Assert.assertEquals(
+			searchContext.getAttribute("queryString") + "->" + hits, 1,
+			hits.getLength());
+	}
+
+	@Test
 	public void testSearchScheduledFile() throws Exception {
 		Date displayDate = new Date(System.currentTimeMillis() + Time.DAY);
 

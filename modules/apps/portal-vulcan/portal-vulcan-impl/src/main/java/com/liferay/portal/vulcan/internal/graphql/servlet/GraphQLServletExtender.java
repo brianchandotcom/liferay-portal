@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -2476,7 +2477,9 @@ public class GraphQLServletExtender {
 
 			if ((throwable != null) &&
 				(throwable.getCause() instanceof NotFoundException ||
-				 throwable.getCause() instanceof NoSuchModelException)) {
+				 throwable.getCause() instanceof NoSuchModelException ||
+				 throwable.getCause() instanceof
+					 PrincipalException.MustHavePermission)) {
 
 				return true;
 			}

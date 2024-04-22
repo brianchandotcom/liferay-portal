@@ -152,6 +152,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 import org.hamcrest.CoreMatchers;
@@ -5010,37 +5011,12 @@ public class ObjectEntryResourceTest {
 
 	@Test
 	public void testGetObjectEntryWithActions() throws Exception {
-		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_objectDefinition1.getObjectDefinitionId(), true, StringPool.BLANK,
-			RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_GROOVY,
-			ObjectActionTriggerConstants.KEY_STANDALONE,
-			new UnicodeProperties(), false);
+		_testGetObjectEntryWithActions(
+			_addObjectAction(_objectDefinition1), _objectDefinition1);
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_1, "value"
-			).toString(),
-			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
-
-		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
-
-		JSONObject actionJSONObject = actionsJSONObject.getJSONObject(
-			objectAction.getName());
-
-		Assert.assertEquals(
-			StringBundler.concat(
-				"http://localhost:8080/o",
-				_objectDefinition1.getRESTContextPath(),
-				"/by-external-reference-code/",
-				jsonObject.getString("externalReferenceCode"),
-				"/object-actions/", objectAction.getName()),
-			actionJSONObject.getString("href"));
-		Assert.assertEquals("PUT", actionJSONObject.getString("method"));
+		_testGetObjectEntryWithActions(
+			_addObjectAction(_siteScopedObjectDefinition1),
+			_siteScopedObjectDefinition1);
 	}
 
 	@FeatureFlags("LPS-174455")
@@ -8800,6 +8776,21 @@ public class ObjectEntryResourceTest {
 				className));
 	}
 
+	private ObjectAction _addObjectAction(ObjectDefinition objectDefinition)
+		throws Exception {
+
+		return _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_STANDALONE,
+			new UnicodeProperties(), false);
+	}
+
 	private ObjectRelationship _addObjectRelationshipAndRelateObjectEntries(
 			ObjectDefinition objectDefinition1,
 			ObjectDefinition objectDefinition2, long primaryKey1,
@@ -9387,6 +9378,47 @@ public class ObjectEntryResourceTest {
 		_assertNestedFieldsInRelationships(
 			0, GetterUtil.getInteger(nestedFieldDepth, 1), itemJSONObject,
 			expectedFieldName, objectFieldNamesAndObjectFieldValues, type);
+	}
+
+	private void _testGetObjectEntryWithActions(
+			ObjectAction objectAction, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, "value"
+			).toString(),
+			_getEndpoint(TestPropsValues.getGroupId(), objectDefinition),
+			Http.Method.POST);
+
+		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
+
+		JSONObject actionJSONObject = actionsJSONObject.getJSONObject(
+			objectAction.getName());
+
+		if (Objects.equals(objectDefinition.getScope(), "site")) {
+			Assert.assertEquals(
+				StringBundler.concat(
+					"http://localhost:8080/o",
+					objectDefinition.getRESTContextPath(), "/scopes/",
+					TestPropsValues.getGroupId(),
+					"/by-external-reference-code/",
+					jsonObject.getString("externalReferenceCode"),
+					"/object-actions/", objectAction.getName()),
+				actionJSONObject.getString("href"));
+		}
+		else {
+			Assert.assertEquals(
+				StringBundler.concat(
+					"http://localhost:8080/o",
+					objectDefinition.getRESTContextPath(),
+					"/by-external-reference-code/",
+					jsonObject.getString("externalReferenceCode"),
+					"/object-actions/", objectAction.getName()),
+				actionJSONObject.getString("href"));
+		}
+
+		Assert.assertEquals("PUT", actionJSONObject.getString("method"));
 	}
 
 	private void _testPatchPutCustomObjectEntryExternalReferenceCode(

@@ -170,7 +170,7 @@ public class ObjectEntryDTOConverter
 					dtoConverterContext, map.get("key"),
 					objectField.getListTypeDefinitionId()));
 
-			objectEntry.setProperties(properties);
+			objectEntry.setProperties(() -> properties);
 		}
 
 		return objectEntry;

@@ -5,6 +5,7 @@ import RouteNotFound from 'shared/components/RouteNotFound';
 import {ChannelContext} from 'shared/context/channel';
 import {connect} from 'react-redux';
 import {DEVELOPER_MODE, ENABLE_ACCOUNTS} from 'shared/util/constants';
+import {DownloadReportProvider} from 'shared/components/download-report/DownloadReportContext';
 import {Routes} from 'shared/util/router';
 import {Switch, withRouter} from 'react-router-dom';
 import {withOnboarding, withUnassignedSegments} from 'shared/hoc';
@@ -275,39 +276,48 @@ const ROUTES = [
 }))
 export default class AppSidebarRoutes extends React.PureComponent {
 	static contextType = ChannelContext;
+
 	render() {
 		const {currentUser, groupId} = this.props;
 		const {selectedChannel} = this.context;
 
 		return (
-			<Suspense fallback={<Loading />}>
-				<Switch>
-					{!selectedChannel && (
-						<BundleRouter
-							componentProps={{currentUser, groupId}}
-							data={NoPropertiesAvailable}
-							exact={false}
-							path={Routes.WORKSPACE_WITH_ID}
-						/>
-					)}
+			<DownloadReportProvider>
+				<Suspense fallback={<Loading />}>
+					<Switch>
+						{!selectedChannel && (
+							<BundleRouter
+								componentProps={{currentUser, groupId}}
+								data={NoPropertiesAvailable}
+								exact={false}
+								path={Routes.WORKSPACE_WITH_ID}
+							/>
+						)}
 
-					{ROUTES.map(({data, exact = true, path, ...otherProps}) => (
-						<BundleRouter
-							{...otherProps}
-							data={data}
-							exact={exact}
-							key={path}
-							path={path}
-						/>
-					))}
+						{ROUTES.map(
+							({data, exact = true, path, ...otherProps}) => (
+								<BundleRouter
+									{...otherProps}
+									data={data}
+									exact={exact}
+									key={path}
+									path={path}
+								/>
+							)
+						)}
 
-					{DEVELOPER_MODE && (
-						<BundleRouter data={UIKit} exact path={Routes.UI_KIT} />
-					)}
+						{DEVELOPER_MODE && (
+							<BundleRouter
+								data={UIKit}
+								exact
+								path={Routes.UI_KIT}
+							/>
+						)}
 
-					<RouteNotFound />
-				</Switch>
-			</Suspense>
+						<RouteNotFound />
+					</Switch>
+				</Suspense>
+			</DownloadReportProvider>
 		);
 	}
 }

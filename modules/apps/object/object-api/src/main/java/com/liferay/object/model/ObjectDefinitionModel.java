@@ -502,6 +502,27 @@ public interface ObjectDefinitionModel
 	public void setEnableComments(boolean enableComments);
 
 	/**
+	 * Returns the enable indexed search of this object definition.
+	 *
+	 * @return the enable indexed search of this object definition
+	 */
+	public boolean getEnableIndexedSearch();
+
+	/**
+	 * Returns <code>true</code> if this object definition is enable indexed search.
+	 *
+	 * @return <code>true</code> if this object definition is enable indexed search; <code>false</code> otherwise
+	 */
+	public boolean isEnableIndexedSearch();
+
+	/**
+	 * Sets whether this object definition is enable indexed search.
+	 *
+	 * @param enableIndexedSearch the enable indexed search of this object definition
+	 */
+	public void setEnableIndexedSearch(boolean enableIndexedSearch);
+
+	/**
 	 * Returns the enable localization of this object definition.
 	 *
 	 * @return the enable localization of this object definition

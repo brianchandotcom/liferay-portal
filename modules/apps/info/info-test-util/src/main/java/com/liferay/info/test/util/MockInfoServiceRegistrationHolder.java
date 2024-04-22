@@ -19,10 +19,14 @@ import com.liferay.info.test.util.info.item.provider.MockInfoItemDetailsProvider
 import com.liferay.info.test.util.info.item.provider.MockInfoItemFieldValuesProvider;
 import com.liferay.info.test.util.info.item.provider.MockInfoItemFormProvider;
 import com.liferay.info.test.util.info.item.provider.MockInfoItemPermissionProvider;
+import com.liferay.info.test.util.layout.display.page.MockObjectLayoutDisplayPageObjectProvider;
+import com.liferay.info.test.util.layout.display.page.MockObjectLayoutDisplayPageProvider;
 import com.liferay.info.test.util.model.MockObject;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 
@@ -37,7 +41,7 @@ import org.osgi.framework.ServiceRegistration;
 public class MockInfoServiceRegistrationHolder implements AutoCloseable {
 
 	public MockInfoServiceRegistrationHolder(
-		InfoFieldSet infoFieldSet, MockObject mockObject,
+		InfoFieldSet infoFieldSet, MockObject mockObject, Portal portal,
 		InfoItemCapability... infoItemCapabilities) {
 
 		Bundle bundle = FrameworkUtil.getBundle(
@@ -52,6 +56,13 @@ public class MockInfoServiceRegistrationHolder implements AutoCloseable {
 
 		_mockInfoItemPermissionProvider = new MockInfoItemPermissionProvider(
 			mockObject);
+
+		_mockObjectLayoutDisplayPageObjectProvider =
+			new MockObjectLayoutDisplayPageObjectProvider(mockObject, portal);
+
+		_mockObjectLayoutDisplayPageProvider =
+			new MockObjectLayoutDisplayPageProvider(
+				_mockObjectLayoutDisplayPageObjectProvider);
 
 		_serviceRegistrations = ListUtil.fromArray(
 			bundleContext.registerService(
@@ -86,15 +97,21 @@ public class MockInfoServiceRegistrationHolder implements AutoCloseable {
 				_mockInfoItemPermissionProvider,
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.class.name", MockObject.class.getName()
+				).build()),
+			bundleContext.registerService(
+				LayoutDisplayPageProvider.class,
+				_mockObjectLayoutDisplayPageProvider,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"item.class.name", MockObject.class.getName()
 				).build()));
 	}
 
 	public MockInfoServiceRegistrationHolder(
-		InfoFieldSet infoFieldSet,
+		InfoFieldSet infoFieldSet, Portal portal,
 		InfoItemCapability... infoItemCapabilities) {
 
 		this(
-			infoFieldSet, new MockObject(RandomTestUtil.randomLong()),
+			infoFieldSet, new MockObject(RandomTestUtil.randomLong()), portal,
 			infoItemCapabilities);
 	}
 
@@ -135,6 +152,18 @@ public class MockInfoServiceRegistrationHolder implements AutoCloseable {
 		return _mockInfoItemPermissionProvider;
 	}
 
+	public MockObjectLayoutDisplayPageObjectProvider
+		getMockObjectLayoutDisplayPageObjectProvider() {
+
+		return _mockObjectLayoutDisplayPageObjectProvider;
+	}
+
+	public MockObjectLayoutDisplayPageProvider
+		getMockObjectLayoutDisplayPageProvider() {
+
+		return _mockObjectLayoutDisplayPageProvider;
+	}
+
 	public List<ServiceRegistration<?>> getServiceRegistrations() {
 		return _serviceRegistrations;
 	}
@@ -151,6 +180,10 @@ public class MockInfoServiceRegistrationHolder implements AutoCloseable {
 	private final MockInfoItemFormProvider _mockInfoItemFormProvider;
 	private final MockInfoItemPermissionProvider
 		_mockInfoItemPermissionProvider;
+	private final MockObjectLayoutDisplayPageObjectProvider
+		_mockObjectLayoutDisplayPageObjectProvider;
+	private final MockObjectLayoutDisplayPageProvider
+		_mockObjectLayoutDisplayPageProvider;
 	private final List<ServiceRegistration<?>> _serviceRegistrations;
 
 }

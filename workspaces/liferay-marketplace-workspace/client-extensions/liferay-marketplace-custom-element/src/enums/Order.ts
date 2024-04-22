@@ -5,5 +5,10 @@
 
 export enum ORDER_STATUS {
 	APPROVED = 0,
-	HOLD = 20,
+	ON_HOLD = 20,
+}
+
+export enum ORDER_TYPES {
+	SOLUTIONS7 = 'SOLUTIONS7',
+	SOLUTIONS30 = 'SOLUTIONS30',
 }

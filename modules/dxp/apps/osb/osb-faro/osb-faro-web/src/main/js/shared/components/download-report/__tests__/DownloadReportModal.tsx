@@ -6,15 +6,19 @@ import ReactDOM from 'react-dom';
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import {ApolloProvider} from '@apollo/react-hooks';
 import {Checkbox, Containers, formatContainers} from '../DownloadPDFReport';
+import {createMemoryHistory} from 'history';
 import {CSVType, useDownloadCSV} from '../utils';
 import {DownloadReportButton} from '../DownloadReportButton';
 import {DownloadReportModal, ReportType} from '../DownloadReportModal';
 import {MockedProvider} from '@apollo/react-testing';
-import {mockPreferenceReq} from 'test/graphql-data';
+import {mockPreferenceReq, mockTimeRangeReq} from 'test/graphql-data';
 import {Provider} from 'react-redux';
+import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {RangeSelectors} from 'shared/types';
+import {Router} from 'react-router-dom';
 import {sub} from 'shared/util/lang';
 import {useModal} from '@clayui/modal';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -24,7 +28,7 @@ jest.mock('react-router-dom', () => ({
 		channelId: '456',
 		groupId: '2000',
 		query: {
-			rangeKey: '30'
+			rangeKey: RangeKeyTimeRanges.Last30Days
 		}
 	})
 }));
@@ -119,27 +123,32 @@ const WrapperComponent: React.FC<IWrapperComponent> = ({
 }) => {
 	const [visible, setVisible] = useState(false);
 	const {observer} = useModal({onClose: () => setVisible(false)});
+	const history = createMemoryHistory();
 
 	return (
 		<>
 			{visible && (
 				<ApolloProvider client={client}>
-					<MockedProvider mocks={[mockPreferenceReq()]}>
-						<Provider store={mockStore()}>
-							<DownloadReportModal
-								{...otherProps}
-								alertMessage={alertMessage}
-								infoMessage={infoMessage}
-								observer={observer}
-								onClose={jest.fn()}
-								onSubmit={onSubmit}
-								requiredDateRange={requiredDateRange}
-								type={type}
-							>
-								{children}
-							</DownloadReportModal>
-						</Provider>
-					</MockedProvider>
+					<Router history={history}>
+						<MockedProvider
+							mocks={[mockTimeRangeReq(), mockPreferenceReq()]}
+						>
+							<Provider store={mockStore()}>
+								<DownloadReportModal
+									{...otherProps}
+									alertMessage={alertMessage}
+									infoMessage={infoMessage}
+									observer={observer}
+									onClose={jest.fn()}
+									onSubmit={onSubmit}
+									requiredDateRange={requiredDateRange}
+									type={type}
+								>
+									{children}
+								</DownloadReportModal>
+							</Provider>
+						</MockedProvider>
+					</Router>
 				</ApolloProvider>
 			)}
 
@@ -151,7 +160,7 @@ const WrapperComponent: React.FC<IWrapperComponent> = ({
 	);
 };
 
-const generateURLToDownloadCSVSetup = (type: CSVType) => {
+const generateCSVURL = (type: CSVType) => {
 	const {getByRole, getByTestId} = render(
 		<WrapperCSVComponent type={type} />
 	);
@@ -191,8 +200,8 @@ describe('DownloadReportModal CSV', () => {
 		jest.useRealTimers();
 	});
 
-	it('renders component', () => {
-		const {getByRole, getByTestId, getByText} = render(
+	it('renders component', async () => {
+		const {container, getByRole, getByTestId, getByText} = render(
 			<WrapperCSVComponent type={CSVType.Blog} />
 		);
 
@@ -205,6 +214,10 @@ describe('DownloadReportModal CSV', () => {
 		act(() => {
 			jest.runAllTimers();
 		});
+
+		await waitForLoadingToBeRemoved(container);
+
+		expect(getByText('Select Date Range')).toBeInTheDocument();
 
 		expect(
 			getByRole('heading', {
@@ -234,7 +247,7 @@ describe('DownloadReportModal CSV', () => {
 		${CSVType.Journal}
 		${CSVType.Page}
 	`('generate a link to download CSV report for type $name', ({name}) => {
-		generateURLToDownloadCSVSetup(name);
+		generateCSVURL(name);
 
 		expect(CSV_URL).toEqual(
 			`/o/faro/main/2000/reports/export/csv/${name}?channelId=456&rangeKey=30&assetId=123&assetType=myAssetType`
@@ -260,7 +273,7 @@ describe('DownloadReportModal PDF', () => {
 		jest.useRealTimers();
 	});
 
-	it('renders component', () => {
+	it('renders component', async () => {
 		const containers = [
 			Containers.AcquisitionsCard,
 			Containers.ActiveIndividualsCard,
@@ -291,7 +304,7 @@ describe('DownloadReportModal PDF', () => {
 			Containers.VisitorsByTimeCard
 		];
 
-		const {getByRole, getByTestId, getByText} = render(
+		const {container, getByRole, getByTestId, getByText} = render(
 			<WrapperPDFomponent>
 				<ClayForm.Group>
 					<label>{Liferay.Language.get('select-reports')}</label>
@@ -318,6 +331,10 @@ describe('DownloadReportModal PDF', () => {
 		act(() => {
 			jest.runAllTimers();
 		});
+
+		await waitForLoadingToBeRemoved(container);
+
+		expect(getByText('Select Date Range')).toBeInTheDocument();
 
 		expect(
 			getByRole('heading', {

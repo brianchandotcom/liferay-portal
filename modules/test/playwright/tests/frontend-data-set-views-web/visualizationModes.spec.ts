@@ -419,7 +419,6 @@ export const fragmentTest = mergeTests(
 	dataSetManagerApiHelpersTest,
 	fdsFragmentPageTest,
 	featureFlagsTest({
-		'LPD-10735': true,
 		'LPS-164563': true,
 		'LPS-178052': true,
 	}),

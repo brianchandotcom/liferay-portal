@@ -9,7 +9,6 @@ import {SWRConfig} from 'swr';
 
 import MarketplaceContextProvider from './context/MarketplaceContext';
 import {getIconSpriteMap} from './liferay/constants';
-import {AppContextProvider} from './manage-app-state/AppManageState';
 import SWRCacheProvider from './services/SWRCacheProvider';
 
 type ProviderProps = {
@@ -26,11 +25,9 @@ const Providers: React.FC<ProviderProps> = ({children, properties}) => (
 		}}
 	>
 		<MarketplaceContextProvider properties={properties}>
-			<AppContextProvider>
-				<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
-					{children}
-				</ClayIconSpriteContext.Provider>
-			</AppContextProvider>
+			<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
+				{children}
+			</ClayIconSpriteContext.Provider>
 		</MarketplaceContextProvider>
 	</SWRConfig>
 );

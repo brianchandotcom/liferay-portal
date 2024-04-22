@@ -7,7 +7,7 @@ import React, {Suspense} from 'react';
 
 import Loading from './components/Loading';
 
-const Routes = {
+const lazyRoutes = {
 	'administrator-dashboard': React.lazy(
 		() =>
 			import(
@@ -33,14 +33,15 @@ const Routes = {
 	),
 } as const;
 
-export type RouteType = keyof typeof Routes;
+export type RouteType = keyof typeof lazyRoutes;
 
 type AppRoutesProps = {
 	path: RouteType;
+	properties: DefaultProperties;
 };
 
-export default function AppRoutes({path}: AppRoutesProps) {
-	const Route = Routes[path];
+export default function Routes({path, properties}: AppRoutesProps) {
+	const Route = lazyRoutes[path] as React.FC<{properties: DefaultProperties}>;
 
 	if (!Route) {
 		return <h1>Page not found</h1>;
@@ -50,7 +51,7 @@ export default function AppRoutes({path}: AppRoutesProps) {
 		<Suspense
 			fallback={<Loading displayType="secondary" shape="squares" />}
 		>
-			<Route />
+			<Route properties={properties} />
 		</Suspense>
 	);
 }

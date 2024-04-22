@@ -1298,6 +1298,20 @@ public class ObjectDefinitionLocalServiceImpl
 		return objectDefinitionPersistence.update(objectDefinition);
 	}
 
+	@Override
+	public void updateUserId(long companyId, long oldUserId, long newUserId)
+		throws PortalException {
+
+		for (ObjectDefinition objectDefinition : objectDefinitionPersistence.findByC_U(
+			companyId, oldUserId)) {
+
+			objectDefinition.setUserId(newUserId);
+
+			objectDefinitionPersistence.update(objectDefinition);
+		}
+
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;

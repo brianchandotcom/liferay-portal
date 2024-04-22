@@ -957,18 +957,20 @@ public class DefaultObjectEntryManagerImplTest
 				dtoConverterContext, _objectDefinition2,
 				new ObjectEntry() {
 					{
-						properties = Collections.singletonMap(
-							"dateTimeObjectFieldName", localDateTime);
+						properties = HashMapBuilder.<String, Object>put(
+							"dateTimeObjectFieldName", localDateTime
+						).build();
 					}
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY),
 			new ObjectEntry() {
 				{
-					properties = Collections.singletonMap(
+					properties = HashMapBuilder.<String, Object>put(
 						"dateTimeObjectFieldName",
 						localDateTime.format(
 							DateTimeFormatter.ofPattern(
-								"yyyy-MM-dd'T'HH:mm:ss.SSS")));
+								"yyyy-MM-dd'T'HH:mm:ss.SSS"))
+					).build();
 				}
 			});
 
@@ -997,15 +999,17 @@ public class DefaultObjectEntryManagerImplTest
 				_objectDefinition2,
 				new ObjectEntry() {
 					{
-						properties = Collections.singletonMap(
-							"dateTimeUTCObjectFieldName", localDateTime);
+						properties = HashMapBuilder.<String, Object>put(
+							"dateTimeUTCObjectFieldName", localDateTime
+						).build();
 					}
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY),
 			new ObjectEntry() {
 				{
-					properties = Collections.singletonMap(
-						"dateTimeUTCObjectFieldName", dateTimeString1);
+					properties = HashMapBuilder.<String, Object>put(
+						"dateTimeUTCObjectFieldName", dateTimeString1
+					).build();
 				}
 			});
 
@@ -1020,8 +1024,9 @@ public class DefaultObjectEntryManagerImplTest
 			dtoConverterContext, _objectDefinition2,
 			new ObjectEntry() {
 				{
-					properties = Collections.singletonMap(
-						"dateTimeUTCObjectFieldName", dateTimeString2);
+					properties = HashMapBuilder.<String, Object>put(
+						"dateTimeUTCObjectFieldName", dateTimeString2
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);

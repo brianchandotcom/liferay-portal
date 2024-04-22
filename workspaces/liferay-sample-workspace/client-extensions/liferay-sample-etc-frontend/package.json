@@ -8,5 +8,6 @@
 	"scripts": {
 		"build": "webpack",
 		"start": "webpack-dev-server"
-	}
+	},
+	"version": "0.1.0"
 }

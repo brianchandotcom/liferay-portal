@@ -104,6 +104,30 @@ export function ConfigurationContainer({
 
 			<ClayForm.Group>
 				<Toggle
+					disabled={disabled || values.active}
+					label={sub(
+						Liferay.Language.get('enable-x'),
+						Liferay.Language.get('indexed-search')
+					)}
+					name="enableIndexedSearch"
+					onBlur={(event) => {
+						event.stopPropagation();
+
+						if (onSubmit) {
+							onSubmit();
+						}
+					}}
+					onToggle={() =>
+						setValues({
+							enableIndexedSearch: !values.enableIndexedSearch,
+						})
+					}
+					toggled={values.enableIndexedSearch}
+				/>
+			</ClayForm.Group>
+
+			<ClayForm.Group>
+				<Toggle
 					disabled={isLinkedObjectDefinition || isReadOnly}
 					label={sub(
 						Liferay.Language.get('enable-x'),

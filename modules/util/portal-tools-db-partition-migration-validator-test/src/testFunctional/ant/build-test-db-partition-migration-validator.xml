@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-tools-db-partition-migration-validator" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="../../../../../../build-test.xml" />
+
+	<macrodef name="clean-script">
+		<sequential>
+			<delete failonerror="false" file="${project.dir}/modules/util/portal-tools-db-partition-migration-validator-test/src/testFunctional/ant/db-partition-migration-validator.log" />
+
+			<replace
+				file="${liferay.home}/tools/portal-tools-db-partition-migration-validator/db_partition_migration_validator.sh"
+				token="exit 0"
+				value=""
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="modify-script-exit-code">
+		<sequential>
+			<echo append="true" file="${liferay.home}/tools/portal-tools-db-partition-migration-validator/db_partition_migration_validator.sh">
+				<![CDATA[
+exit 0
+                ]]>
+			</echo>
+
+			<chmod
+				file="${liferay.home}/tools/portal-tools-db-partition-migration-validator/db_partition_migration_validator.sh"
+				perm="a+x"
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-script-extraction">
+		<attribute default="lportal" name="database.schema.name" />
+		<attribute default="" name="database.schema.password" />
+
+		<sequential>
+			<get-database-property property.name="database.host" />
+			<if>
+				<equals arg1="${database.host}" arg2="localhost_mysql" />
+				<then>
+					<property name="custom.database.url" value="localhost:3307" />
+				</then>
+				<else>
+					<property name="custom.database.url" value="${database.host}" />
+				</else>
+			</if>
+
+			<exec dir="${liferay.home}/tools/portal-tools-db-partition-migration-validator" executable="/bin/bash" failonerror="false" output="db-partition-migration-validator.log">
+				<arg value="${liferay.home}/tools/portal-tools-db-partition-migration-validator/db_partition_migration_validator.sh" />
+				<arg value="--export" />
+				<arg value="--jdbc-url" />
+				<arg value="jdbc:mysql://${custom.database.url}/${database.source.name}?characterEncoding=UTF-8&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true&amp;serverTimezone=GMT&amp;useFastDateParsing=false&amp;useUnicode=true" />
+				<arg value="--user" />
+				<arg value="${database.mysql.username}" />
+				<arg value="--password" />
+				<arg value="${database.schema.password}" />
+				<arg value="--schema-name" />
+				<arg value="${database.schema.name}" />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-script-validation">
+		<attribute default="" name="source.file.path" />
+		<attribute default="" name="target.file.path" />
+
+		<sequential>
+			<exec dir="${liferay.home}/tools/portal-tools-db-partition-migration-validator" executable="/bin/bash" failonerror="false" output="db-partition-migration-validator.log">
+				<arg value="${liferay.home}/tools/portal-tools-db-partition-migration-validator/db_partition_migration_validator.sh" />
+				<arg value="--validate" />
+				<arg value="--source-file" />
+				<arg value="${source.file.path}" />
+				<arg value="--target-file" />
+				<arg value="${target.file.path}" />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<target name="clean-db-partition-migration-validator-tool">
+		<clean-script />
+	</target>
+
+	<target name="execute-db-partition-migration-validator-tool-extraction-mode">
+		<if>
+			<not>
+				<isset property="ignore.migration.errors" />
+			</not>
+			<then>
+				<get-testcase-property property.name="ignore.migration.errors" />
+			</then>
+		</if>
+
+		<if>
+			<and>
+				<isset property="ignore.migration.errors" />
+				<equals arg1="${ignore.migration.errors}" arg2="true" />
+			</and>
+			<then>
+				<modify-script-exit-code />
+
+				<run-script-extraction database.schema.name="${database.schema.name}" database.schema.password="${database.schema.password}" />
+			</then>
+			<else>
+				<run-script-extraction database.schema.name="${database.schema.name}" database.schema.password="${database.schema.password}" />
+			</else>
+		</if>
+
+		<print-file file.name="modules/util/portal-tools-db-partition-migration-validator-test/src/testFunctional/ant/db-partition-migration-validator.log" />
+	</target>
+
+	<target name="execute-db-partition-migration-validator-tool-validation-mode">
+		<if>
+			<not>
+				<isset property="ignore.migration.errors" />
+			</not>
+			<then>
+				<get-testcase-property property.name="ignore.migration.errors" />
+			</then>
+		</if>
+
+		<if>
+			<and>
+				<isset property="ignore.migration.errors" />
+				<equals arg1="${ignore.migration.errors}" arg2="true" />
+			</and>
+			<then>
+				<modify-script-exit-code />
+
+				<run-script-validation source.file.path="${source.file.path}" target.file.path="${target.file.path}" />
+			</then>
+			<else>
+				<run-script-validation source.file.path="${source.file.path}" target.file.path="${target.file.path}" />
+			</else>
+		</if>
+
+		<print-file file.name="modules/util/portal-tools-db-partition-migration-validator-test/src/testFunctional/ant/db-partition-migration-validator.log" />
+	</target>
+</project>

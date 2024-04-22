@@ -1,0 +1,177 @@
+@component-name = "portal-database-partitioning"
+definition {
+
+	property app.server.types = "tomcat";
+	property ci.retries.disabled = "true";
+	property database.partition.enabled = "false";
+	property database.types = "mysql";
+	property liferay.online.properties = "true";
+	property osgi.modules.includes = "portal-tools-db-partition-migration-validator";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Database Partitioning";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		DBPartitionMigrationValidatorTool.clean(hardClean = "true");
+	}
+
+	@priority = 4
+	test ValidateErrorAndWarningDuringValidation {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property liferay.online.properties = "false";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("The database are set and we start a new database with database partitioning enabled") {
+			Portlet.shutdownServer();
+
+			TestCase.updatePortalProperties(newProperty = "database.partition.enabled=true");
+
+			Portlet.startServer(keepOsGiState = "true");
+
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			var newCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+		}
+
+		task ("When run the migration tool to export the partition, the tool should run successfully") {
+			var sourceSchemaName = StringUtil.concat("lpartition_", ${newCompanyId});
+
+			DBPartitionMigrationValidatorTool.execute(
+				databaseSchemaName = ${sourceSchemaName},
+				databaseSchemaPassword = "");
+
+			var sourceFilePath = DBPartitionMigrationValidatorTool.getGeneratedFile();
+
+			DBPartitionMigrationValidatorTool.clean();
+		}
+
+		task ("When run the migration tool to export the target database, then the tool should run successfully") {
+			DBPartitionMigrationValidatorTool.execute(
+				databaseSchemaName = "lportal",
+				databaseSchemaPassword = "");
+
+			var targetFilePath = DBPartitionMigrationValidatorTool.getGeneratedFile();
+
+			DBPartitionMigrationValidatorTool.clean();
+		}
+
+		task ("When run the migration tool to validate previous exports, then the tool should run with errors") {
+			DBPartitionMigrationValidatorTool.executeValidation(
+				ignoreErrors = "true",
+				sourceFilePath = ${sourceFilePath},
+				targetFilePath = ${targetFilePath});
+		}
+
+		task ("Then the tool stops immediately with some ERROR and WARN console messages") {
+			DBPartitionMigrationValidatorTool.validateOutput(outputMessage = "[ERROR] Company ID ${newCompanyId} already exists in the target database");
+
+			DBPartitionMigrationValidatorTool.validateOutput(outputMessage = "[WARN] Company name www.able.com already exists in the target database. You must set a different value in DBPartitionInsertVirtualInstanceConfiguration.config.");
+
+			DBPartitionMigrationValidatorTool.validateOutput(outputMessage = "[WARN] Virtual host www.able.com already exists in the target database. You must set a different value in DBPartitionInsertVirtualInstanceConfiguration.config.");
+
+			DBPartitionMigrationValidatorTool.validateOutput(outputMessage = "[WARN] Web ID www.able.com already exists in the target database. You must set a different value in DBPartitionInsertVirtualInstanceConfiguration.config.");
+
+			DBPartitionMigrationValidatorTool.clean();
+		}
+	}
+
+	@priority = 4
+	test ValidateSuccessfulExportAndValidation {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property liferay.online.properties = "false";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("And the source and target database are set") {
+			Portlet.shutdownServer();
+
+			TestCase.updatePortalProperties(newProperty = "database.partition.enabled=true");
+
+			Portlet.startServer(keepOsGiState = "true");
+
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			var newCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+
+			Portlet.shutdownServer();
+
+			DBPartitionMigrationValidatorTool.generateTargetDatabase();
+		}
+
+		task ("When run the migration tool to export the source database, then the tool should run successfully") {
+			var sourceSchemaName = StringUtil.concat("lpartition_", ${newCompanyId});
+
+			DBPartitionMigrationValidatorTool.execute(
+				databaseSchemaName = ${sourceSchemaName},
+				databaseSchemaPassword = "");
+
+			var sourceFilePath = DBPartitionMigrationValidatorTool.getGeneratedFile();
+
+			DBPartitionMigrationValidatorTool.clean();
+		}
+
+		task ("When run the migration tool to export the target database, then the tool should run successfully") {
+			DBPartitionMigrationValidatorTool.execute(
+				databaseSchemaName = "lportal_target",
+				databaseSchemaPassword = "");
+
+			var targetFilePath = DBPartitionMigrationValidatorTool.getGeneratedFile();
+
+			DBPartitionMigrationValidatorTool.clean();
+		}
+
+		task ("When run the migration tool to validate previous exports, then the tool should run successfully") {
+			DBPartitionMigrationValidatorTool.executeValidation(
+				ignoreErrors = "false",
+				sourceFilePath = ${sourceFilePath},
+				targetFilePath = ${targetFilePath});
+		}
+	}
+
+	@priority = 5
+	test ValidateWrongExportWhenNonPartitionedSourceDBHaveMultipleInstancesAdded {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property liferay.online.properties = "false";
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("The database is set and we add a new virtual instance without database partitioning enabled") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(keepOsGiState = "true");
+
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+		}
+
+		task ("When the database is set from non partitioned environment with multiple companies defined") {
+			DBPartitionMigrationValidatorTool.execute(
+				databaseSchemaName = "lportal",
+				databaseSchemaPassword = "",
+				ignoreErrors = "true");
+		}
+
+		task ("Then the tool stops immediately with a console message as: Database schema has to have a single company or database partitioning must be enabled") {
+			DBPartitionMigrationValidatorTool.validateOutput(outputMessage = "UnsupportedOperationException: Database schema has to have a single company or database partitioning must be enabled");
+		}
+	}
+
+}

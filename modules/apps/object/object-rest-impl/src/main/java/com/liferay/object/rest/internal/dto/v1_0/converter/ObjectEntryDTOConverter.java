@@ -445,6 +445,7 @@ public class ObjectEntryDTOConverter
 		if (dlFileEntry == null) {
 			return fileEntry;
 		}
+
 		if (FeatureFlagManagerUtil.isEnabled(
 				objectDefinition.getCompanyId(), "LPS-174455")) {
 
@@ -465,28 +466,28 @@ public class ObjectEntryDTOConverter
 										NAME_FILE_SOURCE,
 									objectField))) {
 
-						return null;
-					}
+							return null;
+						}
 
-					Folder folder = new Folder();
+						Folder folder = new Folder();
 
-					long folderId = dlFileEntry.getFolderId();
+						long folderId = dlFileEntry.getFolderId();
 
-					folder.setExternalReferenceCode(
-						() -> {
-							if (folderId == 0) {
-								return null;
-							}
+						folder.setExternalReferenceCode(
+							() -> {
+								if (folderId == 0) {
+									return null;
+								}
 
-							DLFolder dlFolder = dlFileEntry.getFolder();
+								DLFolder dlFolder = dlFileEntry.getFolder();
 
-							return dlFolder.getExternalReferenceCode();
-						});
+								return dlFolder.getExternalReferenceCode();
+							});
 
 						folder.setSiteId(dlFileEntry::getGroupId);
 
-					return folder;
-				}));
+						return folder;
+					}));
 		}
 
 		fileEntry.setId(dlFileEntry::getFileEntryId);

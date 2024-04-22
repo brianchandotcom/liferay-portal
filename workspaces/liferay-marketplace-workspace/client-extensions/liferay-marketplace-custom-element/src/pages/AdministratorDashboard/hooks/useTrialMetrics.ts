@@ -7,6 +7,7 @@ import {addDays} from 'date-fns';
 import useSWR from 'swr';
 
 import SearchBuilder from '../../../core/SearchBuilder';
+import {ORDER_STATUS} from '../../../enums/Order';
 import useMarketplaceSpringBootOAuth2 from '../../../hooks/useMarketplaceSpringBootOAuth2';
 import HeadlessCommerceAdminOrderImpl from '../../../services/rest/HeadlessCommerceAdminOrder';
 
@@ -23,15 +24,14 @@ type FilterType = 'month' | 'q1' | 'q2' | 'q3' | 'q4' | 'week';
 
 const useTrialMetrics = (param: FilterType) => {
 	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
-	const currentTime = new Date();
 
 	const beforeLastPeriod = addDays(
-		currentTime,
+		new Date(),
 		-METRIC_PARAMETER[param as keyof typeof METRIC_PARAMETER] * 2
 	);
 
 	const lastPeriod = addDays(
-		currentTime,
+		new Date(),
 		-METRIC_PARAMETER[param as keyof typeof METRIC_PARAMETER]
 	);
 
@@ -100,7 +100,7 @@ const useTrialMetrics = (param: FilterType) => {
 		ordersTrial,
 	] = trialDataResponse;
 
-	const getExiredQuantity = (orderLastPeriod: any) => {
+	const getExiredQuantity = (orderLastPeriod: Order[]) => {
 		return orderLastPeriod?.filter(
 			(order: Order) =>
 				new Date() >
@@ -113,7 +113,7 @@ const useTrialMetrics = (param: FilterType) => {
 	} / ${availabilityResponse?.max}`;
 
 	const queue = ordersTrial?.items?.filter(
-		(order: Order) => order.orderStatus === 20
+		(order: Order) => order.orderStatus === ORDER_STATUS.HOLD
 	).length;
 
 	const expiredTrialsLastPeriod = getExiredQuantity(orderLastPeriod?.items);

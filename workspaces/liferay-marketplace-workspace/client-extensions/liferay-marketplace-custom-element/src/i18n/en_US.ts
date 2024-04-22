@@ -315,8 +315,9 @@ export default {
 		'This key is expired and cannot be downloaded.',
 	'this-order-must-be-completed-before-downloading-this-app.':
 		'This order must be completed before downloading this app.',
+	'total': 'Total',
 	'trial': 'Trial',
-	'trial-esources': 'Trial Resources',
+	'trial-resources': 'Trial Resources',
 	'trial-status': 'Trial Status',
 	'trials': 'Trials',
 	'type': 'Type',

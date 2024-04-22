@@ -11,7 +11,7 @@ import Page from '../../../../components/Page';
 import i18n from '../../../../i18n';
 import InfoCard from '../../components/InfoCard';
 import useTrialMetrics from '../../hooks/useTrialMetrics';
-import TrialOrderTab from './TrialOrderTab';
+import TrialTable from './TrialTable';
 
 const Trial = () => {
 	const {
@@ -29,11 +29,11 @@ const Trial = () => {
 				<div className="d-flex info-container justify-content-between mb-6">
 					<div
 						className={classNames(
-							`p-4 d-flex flex-column tiral-card w-100`
+							'p-4 d-flex flex-column trial-card w-100'
 						)}
 					>
 						<div className="align-items-start d-flex justify-content-between">
-							<h1>{i18n.translate('trial-esources')}</h1>
+							<h1>{i18n.translate('trial-resources')}</h1>
 							<ClayLabel
 								displayType={
 									availability.active ? 'success' : 'danger'
@@ -69,7 +69,7 @@ const Trial = () => {
 							<div className="d-flex">
 								<div className="d-flex flex-column mr-3">
 									<span className="font-weight-lighter text-black-50">
-										{i18n.translate('Available')}
+										{i18n.translate('available')}
 									</span>
 
 									<h2 className="align-items-center d-flex justify-content-center my-0">
@@ -112,6 +112,7 @@ const Trial = () => {
 						title={i18n.translate('all-orders')}
 						value={orders.totalCount}
 					/>
+
 					<InfoCard
 						className="col-2"
 						growth={expired.growth}
@@ -123,7 +124,7 @@ const Trial = () => {
 				</div>
 
 				<div className="border d-flex flex-column justify-content-center p-6 rounded-lg">
-					<TrialOrderTab items={orderTableData?.items || []} />
+					<TrialTable items={orderTableData?.items || []} />
 				</div>
 			</div>
 		</Page>

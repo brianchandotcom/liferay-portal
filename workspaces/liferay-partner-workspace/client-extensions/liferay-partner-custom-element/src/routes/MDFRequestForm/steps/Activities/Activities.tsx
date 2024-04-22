@@ -119,7 +119,7 @@ const Activities = ({
 
 	const onRemove = (index: number) => {
 		setFieldValue(`activities[${index}].removed`, true);
-		
+
 		arrayHelpers.remove(index);
 	};
 

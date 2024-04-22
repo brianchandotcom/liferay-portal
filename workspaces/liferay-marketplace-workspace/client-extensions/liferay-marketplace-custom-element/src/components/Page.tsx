@@ -55,7 +55,7 @@ const Page: React.FC<PageProps> = ({
 }) => (
 	<div className="w-100">
 		<div className="align-items-center d-flex justify-content-between">
-			{(title || description) && (
+			{(description || title) && (
 				<Header description={description} title={title} />
 			)}
 			{rightButton}

@@ -14,15 +14,23 @@ import {DashboardEmptyTable} from '../../../../../components/DashboardTable/Dash
 import Table from '../../../../../components/Table/Table';
 import i18n from '../../../../../i18n';
 
-type AppsTableProps = {
+type TrialTableProps = {
 	items: Order[];
 };
 
-const ORDER_STATUS = {
+type DropDownItems = {
+	id: number;
+	name: string;
+	onClick: (item?: Order) => void;
+};
+
+const ORDER_STATUS_LABEL = {
 	completed: 'success',
 	pending: 'info',
 	processing: 'secondary',
 };
+
+const CONSOLE_CLOUD_URL = 'https://console.liferay.cloud';
 
 const itemsDropdown = [
 	{
@@ -34,11 +42,11 @@ const itemsDropdown = [
 	{
 		id: 2,
 		name: i18n.translate('go-to-console'),
-		onClick: () => window.open('https://console.liferay.cloud'),
+		onClick: () => window.open(CONSOLE_CLOUD_URL),
 	},
 ];
 
-const TrialOrderTab: React.FC<AppsTableProps> = ({items}) => {
+const TrialTable: React.FC<TrialTableProps> = ({items}) => {
 	if (!items.length) {
 		return (
 			<DashboardEmptyTable
@@ -77,8 +85,8 @@ const TrialOrderTab: React.FC<AppsTableProps> = ({items}) => {
 							<ClayLabel
 								className="text-nowrap"
 								displayType={
-									ORDER_STATUS[
-										orderStatusInfo?.label as keyof typeof ORDER_STATUS
+									ORDER_STATUS_LABEL[
+										orderStatusInfo?.label as keyof typeof ORDER_STATUS_LABEL
 									] as Status
 								}
 							>
@@ -146,16 +154,20 @@ const TrialOrderTab: React.FC<AppsTableProps> = ({items}) => {
 									}
 								>
 									<DropDown.ItemList items={itemsDropdown}>
-										{(item: any) => (
-											<DropDown.Item
-												key={item.name}
-												onClick={() => {
-													item.onClick(order);
-												}}
-											>
-												{item?.name}
-											</DropDown.Item>
-										)}
+										{(dropDownItem: unknown) => {
+											const item = dropDownItem as DropDownItems;
+
+											return (
+												<DropDown.Item
+													key={item.name}
+													onClick={() => {
+														item.onClick(order);
+													}}
+												>
+													{item?.name}
+												</DropDown.Item>
+											);
+										}}
 									</DropDown.ItemList>
 								</DropDown>
 							);
@@ -169,4 +181,4 @@ const TrialOrderTab: React.FC<AppsTableProps> = ({items}) => {
 	);
 };
 
-export default TrialOrderTab;
+export default TrialTable;

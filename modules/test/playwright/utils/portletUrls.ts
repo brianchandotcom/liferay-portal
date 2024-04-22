@@ -20,7 +20,7 @@ export const PORTLET_URLS = {
 	lockedItems:
 		'/~/control_panel/manage?p_p_id=com_liferay_locked_items_web_internal_portlet_LockedItemsPortlet',
 	modelBuilder:
-		'/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&p_p_auth=PIIQWucT&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_mvcRenderCommandName=%2Fobject_definitions%2Fview_model_builder',
+		'/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_mvcRenderCommandName=/object_definitions/view_model_builder',
 	myWorkflowTasks:
 		'/~/control_panel/manage?p_p_id=com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet',
 	navigationMenus:

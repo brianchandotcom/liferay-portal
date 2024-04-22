@@ -12,8 +12,6 @@ import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
 
-const objectRelationshipRandomNumber = Math.floor(Math.random() * 99);
-
 test.describe('Manage object relationships through Model Builder', () => {
 	test('can create relationship by dragging node handles', async ({
 		apiHelpers,
@@ -110,7 +108,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 		const objectRelationshipLabel =
 			'objectRelationshipLabel' + getRandomInt();
 		const objectRelationshipName =
-			'objectRelationshipName' + objectRelationshipRandomNumber;
+			'objectRelationshipName' + Math.floor(Math.random() * 99);
 
 		const objectRelationshipData: Partial<ObjectRelationship> = {
 			label: {

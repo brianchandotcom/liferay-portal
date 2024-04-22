@@ -13,6 +13,7 @@ export class ModelBuilderPage {
 	readonly createNewObjectDefinitionButton: Locator;
 	readonly deleteObjectRelationshipButton: Locator;
 	readonly fitViewButton: Locator;
+	readonly goToFolderButton: Locator;
 	readonly leftSidebarItems: Locator;
 	readonly newObjectFieldSelectBusinessType: Locator;
 	readonly newObjectFieldLabel: Locator;
@@ -46,6 +47,10 @@ export class ModelBuilderPage {
 		this.fitViewButton = page.locator(
 			'button.react-flow__controls-button.react-flow__controls-fitview'
 		);
+		this.goToFolderButton = page.getByRole('button', {
+			exact: true,
+			name: 'Go to Folder',
+		});
 		this.leftSidebarItems = page.locator(
 			'li.treeview-item div.autofit-col'
 		);
@@ -105,6 +110,10 @@ export class ModelBuilderPage {
 
 	async clickFitViewButton() {
 		this.fitViewButton.click({force: true});
+	}
+
+	async clickGoToFolderButton() {
+		this.goToFolderButton.click();
 	}
 
 	async clickObjectRelationshipEdge(objectRelationshipLabel: string) {
@@ -206,6 +215,14 @@ export class ModelBuilderPage {
 		);
 		await this.modalDeleteObjectRelationshipConfirmationButton.click();
 	}
+
+	getLinkedObjectDefinitionIconLocator = (objectDefinitionLabel: string) => {
+		return this.objectDefinitionNodes
+			.filter({
+				hasText: objectDefinitionLabel,
+			})
+			.locator('svg.lexicon-icon-link');
+	};
 
 	getObjectDefinitionNodeRelationshipHandle(
 		objectDefinitionExternalReferenceCode: string,

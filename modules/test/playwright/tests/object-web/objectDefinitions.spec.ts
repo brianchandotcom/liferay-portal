@@ -89,6 +89,89 @@ test.describe('Manage object definitions through Model Builder', () => {
 		);
 	});
 
+	test('linked object definitions are created when object definitions are related and put into different folders', async ({
+		apiHelpers,
+		modelBuilderPage,
+	}) => {
+		const objectFolder =
+			await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition(
+				objectFolder.externalReferenceCode
+			);
+
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition('default');
+
+		const objectRelationshipLabel =
+			'objectRelationshipLabel' + getRandomInt();
+		const objectRelationshipName =
+			'objectRelationshipName' + Math.floor(Math.random() * 99);
+
+		const objectRelationshipData: Partial<ObjectRelationship> = {
+			label: {
+				en_US: objectRelationshipLabel,
+			},
+			name: objectRelationshipName,
+			objectDefinitionExternalReferenceCode1:
+				objectDefinition1.externalReferenceCode,
+			objectDefinitionExternalReferenceCode2:
+				objectDefinition2.externalReferenceCode,
+			objectDefinitionId1: objectDefinition1.id,
+			objectDefinitionId2: objectDefinition2.id,
+			objectDefinitionName2: objectDefinition2.name,
+			type: 'oneToMany' as ObjectRelationshipType,
+		};
+
+		await apiHelpers.objectAdmin.postObjectRelationship(
+			objectRelationshipData
+		);
+
+		await modelBuilderPage.goto({objectFolderName: 'Default'});
+
+		await expect(
+			modelBuilderPage.getLinkedObjectDefinitionIconLocator(
+				objectDefinition1.name
+			)
+		).toBeVisible();
+
+		await expect(
+			modelBuilderPage.getLinkedObjectDefinitionIconLocator(
+				objectDefinition2.name
+			)
+		).toBeHidden();
+
+		await modelBuilderPage.leftSidebarItems
+			.filter({hasText: objectFolder.name})
+			.hover();
+
+		await modelBuilderPage.clickGoToFolderButton();
+
+		await expect(
+			modelBuilderPage.getLinkedObjectDefinitionIconLocator(
+				objectDefinition1.name
+			)
+		).toBeHidden();
+
+		await expect(
+			modelBuilderPage.getLinkedObjectDefinitionIconLocator(
+				objectDefinition2.name
+			)
+		).toBeVisible();
+
+		// Clean up
+
+		await apiHelpers.objectAdmin.deleteObjectDefinition(
+			objectDefinition1.id
+		);
+		await apiHelpers.objectAdmin.deleteObjectDefinition(
+			objectDefinition2.id
+		);
+
+		await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
+	});
+
 	test('show object definition details in "RightSidebar" after create object definition', async ({
 		apiHelpers,
 		modalAddObjectDefinitionPage,

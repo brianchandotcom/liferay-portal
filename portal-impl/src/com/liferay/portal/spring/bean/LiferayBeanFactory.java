@@ -5,6 +5,8 @@
 
 package com.liferay.portal.spring.bean;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.spring.aop.BaseServiceBeanAutoProxyCreator;
 
 import java.beans.PropertyDescriptor;
@@ -47,6 +49,12 @@ public class LiferayBeanFactory extends DefaultListableBeanFactory {
 	protected void invokeCustomInitMethod(
 			String beanName, Object bean, RootBeanDefinition rootBeanDefinition)
 		throws Throwable {
+
+		if (!_SPRING_BEANFACTORY_STRICT_LIFECYCLE_ENABLED) {
+			super.invokeCustomInitMethod(beanName, bean, rootBeanDefinition);
+
+			return;
+		}
 
 		Method initMethod = _getMethod(
 			bean.getClass(), rootBeanDefinition.getInitMethodName());
@@ -169,6 +177,13 @@ public class LiferayBeanFactory extends DefaultListableBeanFactory {
 	protected void registerDisposableBeanIfNecessary(
 		String beanName, Object bean, RootBeanDefinition rootBeanDefinition) {
 
+		if (!_SPRING_BEANFACTORY_STRICT_LIFECYCLE_ENABLED) {
+			super.registerDisposableBeanIfNecessary(
+				beanName, bean, rootBeanDefinition);
+
+			return;
+		}
+
 		String destroyMethodName = rootBeanDefinition.getDestroyMethodName();
 
 		if (destroyMethodName == null) {
@@ -232,6 +247,11 @@ public class LiferayBeanFactory extends DefaultListableBeanFactory {
 
 		return true;
 	}
+
+	private static final boolean _SPRING_BEANFACTORY_STRICT_LIFECYCLE_ENABLED =
+		GetterUtil.getBoolean(
+			SystemProperties.get("spring.beanfactory.strict.lifecycle.enabled"),
+			true);
 
 	private boolean _postProcessPropertyValues;
 

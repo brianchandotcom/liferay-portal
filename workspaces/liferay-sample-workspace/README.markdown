@@ -106,7 +106,7 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 	Serve global CSS on a page.
 
-- *liferay-sample-global-js*
+- *liferay-sample-global-js-1*
 
 	Serve global JavaScript on a page.
 

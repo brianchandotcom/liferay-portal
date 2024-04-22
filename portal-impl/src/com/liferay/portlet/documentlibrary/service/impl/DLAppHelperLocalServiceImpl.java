@@ -469,7 +469,7 @@ public class DLAppHelperLocalServiceImpl
 				visible = true;
 			}
 			else {
-				addDraftAssetEntry = _addDraftAssetEntry(dlFileVersion);
+				addDraftAssetEntry = _isAddDraftAssetEntry(dlFileVersion);
 			}
 		}
 		else {
@@ -880,7 +880,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
-	private boolean _addDraftAssetEntry(DLFileVersion dlFileVersion) {
+	private boolean _isAddDraftAssetEntry(DLFileVersion dlFileVersion) {
 		String version = dlFileVersion.getVersion();
 
 		if (version.equals(DLFileEntryConstants.VERSION_DEFAULT)) {

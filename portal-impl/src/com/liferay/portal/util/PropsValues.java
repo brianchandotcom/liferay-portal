@@ -2197,6 +2197,11 @@ public class PropsValues {
 	public static String SOCIAL_ACTIVITY_SETS_SELECTOR = GetterUtil.getString(
 		PropsUtil.get(PropsKeys.SOCIAL_ACTIVITY_SETS_SELECTOR));
 
+	public static boolean SPRING_BEANFACTORY_STRICT_LIFECYCLE_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.SPRING_BEANFACTORY_STRICT_LIFECYCLE_ENABLED));
+
 	public static final String[] SPRING_CONFIGS = PropsUtil.getArray(
 		PropsKeys.SPRING_CONFIGS);
 

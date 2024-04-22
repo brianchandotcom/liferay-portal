@@ -125,6 +125,17 @@ export default class SearchBuilder {
 		return _filter;
 	}
 
+	static formatValuesToString(values: Value[]) {
+		if (values) {
+			return values
+				.map((value) => `${value}`)
+				.join(',')
+				.trim();
+		}
+
+		return '';
+	}
+
 	static createCustomFilter(schema: RendererFields, filter: any) {
 		const customOperator = schema?.operator;
 		const requestOperator = schema?.requestOperator as string;
@@ -149,6 +160,12 @@ export default class SearchBuilder {
 				return SearchBuilder[customOperator](requestOperator, filter);
 			}
 		}
+
+		return this.formatValuesToString(
+			filter.map((_value: any) =>
+				typeof _value === 'object' ? _value.value : _value
+			)
+		);
 	}
 
 	static createFilter({

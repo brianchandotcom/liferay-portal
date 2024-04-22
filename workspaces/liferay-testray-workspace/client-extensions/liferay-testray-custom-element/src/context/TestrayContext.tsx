@@ -135,7 +135,7 @@ const TestrayContextProvider: React.FC<{
 }> = ({children}) => {
 	const [autoFillBuildValue, setAutoFillBuildValue] = useStorage<{
 		autoFillBuild: AutofillBuild;
-	}>(STORAGE_KEYS.COMPARE_RUNS, {
+	}>(STORAGE_KEYS.AUTO_FILL, {
 		initialValue: initialState,
 		storageType: 'temporary',
 	});

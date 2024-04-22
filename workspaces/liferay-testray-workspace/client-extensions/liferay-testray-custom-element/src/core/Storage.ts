@@ -8,6 +8,7 @@ import {StorageType} from '~/services/rest';
 import {CONSENT_TYPE} from '~/util/enum';
 
 export enum STORAGE_KEYS {
+	AUTO_FILL = '@testray/auto-fill',
 	COMPARE_RUNS = '@testray/compare-runs',
 	FILTER_SCHEMA = '@testray/filter-schema',
 	EXPORT_CASE_IDS = '@testray/export-case-ids',

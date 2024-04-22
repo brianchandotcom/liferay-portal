@@ -242,12 +242,13 @@ const filterSchema = {
 	buildCaseTypes: {
 		fields: [
 			overrides(baseFilters.priority, {
-				name: 'caseTypeToCases/priority',
+				isCustomFilter: true,
+				name: 'testrayCasePriorities',
 				removeQuoteMark: true,
 			}),
 			overrides(baseFilters.team, {
-				name:
-					'caseTypeToCases/componentToCases/r_teamToComponents_c_teamId',
+				isCustomFilter: true,
+				name: 'testrayTeamId',
 				type: 'multiselect',
 			}),
 		] as RendererFields[],
@@ -256,18 +257,23 @@ const filterSchema = {
 	buildComponents: {
 		fields: [
 			overrides(baseFilters.priority, {
-				name: 'componentToCases/priority',
+				isCustomFilter: true,
+				name: 'testrayCasePriorities',
 				removeQuoteMark: true,
 				type: 'select',
 			}),
 			overrides(baseFilters.caseType, {
-				name: 'componentToCases/caseTypeId',
+				isCustomFilter: true,
+				name: 'testrayCaseTypes',
 			}),
 			overrides(baseFilters.team, {
+				isCustomFilter: true,
+				name: 'testrayTeamId',
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.run, {
-				name: 'componentToCaseResult/r_runToCaseResult_c_runId',
+				isCustomFilter: true,
+				name: 'testrayRunId',
 				transformData(item) {
 					return dataToOptions(
 						transformData<TestrayRun>(item),
@@ -433,16 +439,19 @@ const filterSchema = {
 	buildRuns: {
 		fields: [
 			overrides(baseFilters.priority, {
-				name: 'runToCaseResult/caseToCaseResult/priority',
+				isCustomFilter: true,
+				name: 'testrayCasePriorities',
 				removeQuoteMark: true,
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.caseType, {
-				name: 'runToCaseResult/caseToCaseResult/caseTypeToCases/id',
+				isCustomFilter: true,
+				name: 'testrayCaseTypes',
 			}),
 			overrides(baseFilters.team, {
-				name:
-					'runToCaseResult/componentToCaseResult/r_teamToComponents_c_teamId',
+				isCustomFilter: true,
+				name: 'testrayTeamId',
+				type: 'multiselect',
 			}),
 		] as RendererFields[],
 		name: 'buildRuns',
@@ -450,16 +459,22 @@ const filterSchema = {
 	buildTeams: {
 		fields: [
 			overrides(baseFilters.priority, {
-				name: 'teamToComponents/componentToCases/priority',
+				isCustomFilter: true,
+				name: 'testrayCasePriorities',
 				removeQuoteMark: true,
 			}),
 			overrides(baseFilters.caseType, {
-				name: 'teamToComponents/componentToCases/caseTypeToCases/id',
+				isCustomFilter: true,
+				name: 'testrayCaseTypes',
 			}),
-			overrides(baseFilters.team, {name: 'id', type: 'multiselect'}),
+			overrides(baseFilters.team, {
+				isCustomFilter: true,
+				name: 'testrayTeamId',
+				type: 'multiselect',
+			}),
 			overrides(baseFilters.run, {
-				name:
-					'teamToComponents/componentToCaseResult/runToCaseResult/id',
+				isCustomFilter: true,
+				name: 'testrayRunId',
 			}),
 		] as RendererFields[],
 		name: 'buildTeams',

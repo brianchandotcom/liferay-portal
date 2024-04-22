@@ -91,27 +91,33 @@ function ManagementToolbar({
 	const searchButtonRef = useRef();
 
 	const updatedFilterDropdownItems = useMemo(() => {
-		const updateFilterDropdownItems = () => {
-			filterDropdownItems?.forEach((filterDropdownItem) => {
-				filterDropdownItem.items?.forEach((item) => {
-					if (item.href) {
-						const url = new URL(item.href);
+		if (filterDropdownItems) {
+			return filterDropdownItems.map((filterDropdownItem) => {
+				return {
+					...filterDropdownItem,
+					items: filterDropdownItem.items?.map((item) => {
+						let itemHref = item.href;
 
-						const resetCurParam = `_${url.searchParams.get(
-							'p_p_id'
-						)}_resetCur`;
+						if (itemHref) {
+							const url = new URL(itemHref);
 
-						url.searchParams.set(resetCurParam, 'true');
+							const resetCurParam = `_${url.searchParams.get(
+								'p_p_id'
+							)}_resetCur`;
 
-						item.href = url.href;
-					}
-				});
+							url.searchParams.set(resetCurParam, 'true');
+
+							itemHref = url.href;
+						}
+
+						return {
+							...item,
+							href: itemHref,
+						};
+					}),
+				};
 			});
-
-			return filterDropdownItems;
-		};
-
-		updateFilterDropdownItems();
+		}
 	}, [filterDropdownItems]);
 
 	useEffect(() => {

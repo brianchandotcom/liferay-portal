@@ -5,8 +5,9 @@ import CriteriaView from './CriteriaView';
 import getCN from 'classnames';
 import Label from 'shared/components/Label';
 import React from 'react';
-import {Containers} from 'shared/components/download-report/DownloadPDFReport';
+import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {Segment} from 'shared/util/records';
+import {SegmentTypes} from 'shared/util/constants';
 import {translateQueryToCriteria} from 'segment/segment-editor/dynamic/utils/odata';
 import {withReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
 
@@ -65,7 +66,7 @@ class CriteriaCard extends React.Component<
 
 	render() {
 		const {
-			props: {criteriaString, includeAnonymousUsers, timeZoneId},
+			props: {criteriaString, includeAnonymousUsers, segment, timeZoneId},
 			state: {expand, truncate}
 		} = this;
 
@@ -74,7 +75,10 @@ class CriteriaCard extends React.Component<
 		return (
 			<Card
 				className='criteria-card-root'
-				id={Containers.SegmentCriteriaCard}
+				id={
+					segment.segmentType === SegmentTypes.Dynamic &&
+					ReportContainer.SegmentCriteriaCard
+				}
 			>
 				<Card.Header>
 					<Card.Title>

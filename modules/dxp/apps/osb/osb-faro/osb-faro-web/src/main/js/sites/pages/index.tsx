@@ -3,9 +3,7 @@ import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
 import ClayLink from '@clayui/link';
 import DownloadCSVReport from 'shared/components/download-report/DownloadCSVReport';
-import DownloadPDFReport, {
-	Containers
-} from 'shared/components/download-report/DownloadPDFReport';
+import DownloadPDFReport from 'shared/components/download-report/DownloadPDFReport';
 import getCN from 'classnames';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense} from 'react';
@@ -116,17 +114,6 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 					<div className='d-flex justify-content-end w-100'>
 						{matchedRoute === Routes.SITES && (
 							<DownloadPDFReport
-								containers={[
-									Containers.SiteActivityCard,
-									Containers.TopPagesCard,
-									Containers.AcquisitionsCard,
-									Containers.VisitorsByTimeCard,
-									Containers.SearchTermsCard,
-									Containers.InterestsCard,
-									Containers.SessionsByLocationCard,
-									Containers.SessionTechnologyCard,
-									Containers.CohortAnalysisCard
-								]}
 								disabled={dataSourceStates.empty}
 								subtitle={selectedChannelName}
 								title={Liferay.Language.get('sites-dashboard')}

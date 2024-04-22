@@ -159,6 +159,19 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "Title",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Title"
+			},
+			"name": "title",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
 			"externalReferenceCode": "FirstName",
 			"indexed": true,
 			"indexedAsKeyword": false,

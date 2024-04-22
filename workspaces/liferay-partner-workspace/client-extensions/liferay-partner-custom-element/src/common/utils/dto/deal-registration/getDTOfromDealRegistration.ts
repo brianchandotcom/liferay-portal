@@ -61,6 +61,7 @@ export function getDTOFromDealRegistration(
 		prospectStateCode: dealRegistration.prospect.state.key,
 		r_accToDealRegs_accountEntryId: dealRegistration.partnerAccount.id,
 		r_actToDealRegs_c_activityId: dealRegistration.mdfActivityAssociated.id,
+		title: dealRegistration.primaryProspect.title,
 	};
 
 	if (apiOption === ResourceName.LEAD_NOTIFICATION) {

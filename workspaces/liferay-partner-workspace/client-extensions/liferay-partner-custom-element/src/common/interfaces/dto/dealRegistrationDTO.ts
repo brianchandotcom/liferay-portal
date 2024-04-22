@@ -70,5 +70,6 @@ export default interface DealRegistrationDTO
 	r_actToDealRegs_c_activityId?: number;
 	stage?: string;
 	subscriptionArr?: number;
+	title?: string;
 	type?: string;
 }

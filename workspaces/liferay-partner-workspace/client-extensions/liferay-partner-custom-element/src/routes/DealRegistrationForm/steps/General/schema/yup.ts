@@ -60,6 +60,10 @@ const generalSchema = object({
 			.trim()
 			.matches(phoneRegex, 'Phone number is not valid')
 			.required('Required'),
+		title: string()
+			.trim()
+			.max(128, 'reached max characters')
+			.required('Required'),
 	}),
 	projectCategories: array().min(1, 'Required'),
 	projectNeed: array().min(1, 'Required'),

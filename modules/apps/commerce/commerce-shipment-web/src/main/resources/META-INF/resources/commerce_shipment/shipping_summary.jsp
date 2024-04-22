@@ -159,7 +159,7 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 					title='<%= LanguageUtil.get(request, "shipping-address") %>'
 				>
 					<div class="item">
-						<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(commerceShipmentDisplayContext.getDescriptiveShippingAddress())) %>
+						<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(commerceShipmentDisplayContext.getDescriptiveShippingAddress(locale))) %>
 					</div>
 				</commerce-ui:info-box>
 

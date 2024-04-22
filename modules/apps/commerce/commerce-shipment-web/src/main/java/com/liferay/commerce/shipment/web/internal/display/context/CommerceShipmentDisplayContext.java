@@ -199,7 +199,9 @@ public class CommerceShipmentDisplayContext
 			cpRequestHelper.getCompanyId(), true);
 	}
 
-	public String getDescriptiveShippingAddress() throws PortalException {
+	public String getDescriptiveShippingAddress(Locale locale)
+		throws PortalException {
+
 		CommerceShipment commerceShipment = getCommerceShipment();
 
 		if (commerceShipment.getCommerceAddressId() == 0) {
@@ -213,7 +215,7 @@ public class CommerceShipmentDisplayContext
 		}
 
 		return _commerceAddressFormatter.getDescriptiveAddress(
-			commerceAddress, true);
+			commerceAddress, true, locale);
 	}
 
 	public String getFDSName() throws PortalException {

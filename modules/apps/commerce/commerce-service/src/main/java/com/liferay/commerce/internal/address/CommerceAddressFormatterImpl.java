@@ -14,6 +14,8 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Locale;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -23,7 +25,8 @@ import org.osgi.service.component.annotations.Component;
 public class CommerceAddressFormatterImpl implements CommerceAddressFormatter {
 
 	@Override
-	public String getBasicAddress(CommerceAddress commerceAddress)
+	public String getBasicAddress(
+			CommerceAddress commerceAddress, Locale locale)
 		throws PortalException {
 
 		StringBundler sb = new StringBundler(14);
@@ -57,7 +60,7 @@ public class CommerceAddressFormatterImpl implements CommerceAddressFormatter {
 		Country country = commerceAddress.getCountry();
 
 		if (country != null) {
-			sb.append(country.getName());
+			sb.append(country.getName(locale));
 			sb.append(StringPool.NEW_LINE);
 		}
 
@@ -66,7 +69,8 @@ public class CommerceAddressFormatterImpl implements CommerceAddressFormatter {
 
 	@Override
 	public String getDescriptiveAddress(
-			CommerceAddress commerceAddress, boolean showDescription)
+			CommerceAddress commerceAddress, boolean showDescription,
+			Locale locale)
 		throws PortalException {
 
 		StringBundler sb = new StringBundler(8);
@@ -79,7 +83,7 @@ public class CommerceAddressFormatterImpl implements CommerceAddressFormatter {
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		sb.append(getBasicAddress(commerceAddress));
+		sb.append(getBasicAddress(commerceAddress, locale));
 
 		String description = commerceAddress.getDescription();
 

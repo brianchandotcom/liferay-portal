@@ -81,6 +81,8 @@ components:
                     type: boolean
                 enableComments:
                     type: boolean
+                enableIndexedSearch:
+                    type: boolean
                 enableLocalization:
                     type: boolean
                 enableObjectEntryDraft:

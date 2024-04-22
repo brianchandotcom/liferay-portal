@@ -98,9 +98,9 @@ test('Add the frontend data set sample widget', async ({
 
 		await expect(filterInput).toBeInViewport();
 
-		filterInput.fill("title eq 'Sample2'");
+		filterInput.fill("title eq 'Sample97'");
 
-		await expect(filterInput).toHaveValue("title eq 'Sample2'");
+		await expect(filterInput).toHaveValue("title eq 'Sample97'");
 
 		const submitButton = page.getByRole('button', {name: 'Submit'});
 
@@ -108,7 +108,7 @@ test('Add the frontend data set sample widget', async ({
 
 		await submitButton.click();
 
-		await expect(page.getByText('Sample2', {exact: true})).toBeVisible();
+		await expect(page.getByText('Sample97', {exact: true})).toBeVisible();
 
 		const rowCount = await page.locator('.dnd-tbody > .dnd-tr').count();
 

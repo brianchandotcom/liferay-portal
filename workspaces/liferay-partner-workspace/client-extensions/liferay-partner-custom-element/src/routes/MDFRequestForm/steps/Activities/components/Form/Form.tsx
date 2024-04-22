@@ -207,6 +207,7 @@ const Form = ({
 					fieldEntries[LiferayPicklistName.BUDGET_EXPENSES]
 				}
 				isButtonClicked={isButtonClicked}
+				isEdit={Boolean(currentActivity.id)}
 				name={`activities[${currentActivityIndex}].budgets`}
 				setFieldValue={setFieldValue}
 			/>

@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -474,23 +475,18 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
 					JournalArticle.class + ".postProcessArticleUuids");
 
-			for (Map.Entry<String, String> entry :
-					postProcessArticleUuids.entrySet()) {
+			Collection<String> articleModelPaths =
+				postProcessArticleUuids.values();
 
-				portletDataContext.removePrimaryKey(entry.getValue());
-			}
+			articleModelPaths.forEach(portletDataContext::removePrimaryKey);
 
 			for (Element articleElement : articleElements) {
 				String uuid = articleElement.attributeValue("uuid");
 
-				if (!postProcessArticleUuids.containsKey(uuid)) {
-					continue;
+				if (postProcessArticleUuids.remove(uuid) != null) {
+					StagedModelDataHandlerUtil.importStagedModel(
+						portletDataContext, articleElement);
 				}
-
-				postProcessArticleUuids.remove(uuid);
-
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, articleElement);
 			}
 
 			_journalContent.clearCache();

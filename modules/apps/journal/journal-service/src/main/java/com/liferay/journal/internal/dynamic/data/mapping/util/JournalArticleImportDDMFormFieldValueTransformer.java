@@ -113,13 +113,9 @@ public class JournalArticleImportDDMFormFieldValueTransformer
 								JournalArticle.class +
 									".postProcessArticleUuids");
 
-					if (!postProcessArticleUuids.containsKey(
-							_stagedModel.getUuid())) {
-
-						postProcessArticleUuids.put(
-							_stagedModel.getUuid(),
-							ExportImportPathUtil.getModelPath(_stagedModel));
-					}
+					postProcessArticleUuids.computeIfAbsent(
+						_stagedModel.getUuid(),
+						key -> ExportImportPathUtil.getModelPath(_stagedModel));
 				}
 
 				continue;

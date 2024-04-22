@@ -54,6 +54,7 @@
 		<suppress checks="StaticVariableNameCheck" files="util-slf4j/src/org/slf4j/impl/StaticLoggerBinder\.java" />
 		<suppress checks="TryWithResourcesCheck" files="portal-impl/src/com/liferay/portal/db/index/IndexUpdaterUtil\.java" />
 		<suppress checks="UnprocessedExceptionCheck" files="portal-impl/src/com/liferay/portal/log/Log4jLogFactoryImpl\.java" />
+		<suppress checks="UnprocessedExceptionCheck" files="portal-impl/src/com/liferay/portal/spring/bean/LiferayBeanFactory\.java" />
 		<suppress checks="UnprocessedExceptionCheck" files="portal-kernel/src/com/liferay/portal/kernel/module/service/Snapshot\.java" />
 		<suppress checks="URLInputStreamCheck" files="portal-impl/src/com/liferay/portal/db/DBResourceUtil\.java" />
 		<suppress checks="URLInputStreamCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/PropertiesUtil.java" />

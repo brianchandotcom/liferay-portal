@@ -5,4 +5,5 @@ Export-Package:\
 	com.liferay.info.test.util,\
 	com.liferay.info.test.util.info.item.creator,\
 	com.liferay.info.test.util.info.item.provider,\
+	com.liferay.info.test.util.layout.display.page,\
 	com.liferay.info.test.util.model

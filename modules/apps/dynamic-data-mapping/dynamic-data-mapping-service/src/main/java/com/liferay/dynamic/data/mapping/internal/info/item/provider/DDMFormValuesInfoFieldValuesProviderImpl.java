@@ -365,6 +365,13 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 						).build()));
 			}
 
+			if (Objects.equals(
+					ddmFormFieldValue.getType(),
+					DDMFormFieldTypeConstants.TEXT)) {
+
+				return valueString;
+			}
+
 			return SanitizerUtil.sanitize(
 				groupedModel.getCompanyId(), groupedModel.getGroupId(),
 				groupedModel.getUserId(), groupedModel.getModelClassName(),

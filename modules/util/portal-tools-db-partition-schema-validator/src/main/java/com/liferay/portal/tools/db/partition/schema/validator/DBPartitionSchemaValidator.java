@@ -33,9 +33,7 @@ public class DBPartitionSchemaValidator {
 	public static void main(String[] args) throws Exception {
 		Options options = _getOptions();
 
-		if ((args.length != 0) &&
-			(args[0].equals("-h") || args[0].endsWith("help"))) {
-
+		if ((args.length != 0) && args[0].equals("--help")) {
 			HelpFormatter helpFormatter = new HelpFormatter();
 
 			helpFormatter.printHelp(
@@ -181,18 +179,20 @@ public class DBPartitionSchemaValidator {
 	private static Options _getOptions() {
 		Options options = new Options();
 
-		options.addOption("a", "debug", false, "Print all log traces.");
+		options.addOption(null, "debug", false, "Print all log traces.");
 		options.addRequiredOption(
-			"d", "db-name", true, "Set the database name.");
-		options.addOption("h", "help", false, "Print help message.");
-		options.addOption("j", "jdbc-url", true, "Set the JDBC URL.");
+			null, "db-name", true, "Set the database name.");
+		options.addOption(null, "help", false, "Print help message.");
+		options.addOption(null, "jdbc-url", true, "Set the JDBC URL.");
 		options.addRequiredOption(
-			"p", "password", true, "Set the database user password.");
-		options.addOption("s", "schema-prefix", true, "Set the schema prefix.");
+			null, "password", true, "Set the database user password.");
+		options.addOption(
+			null, "schema-prefix", true, "Set the schema prefix.");
 		options.addRequiredOption(
-			"t", "db-type", true, "Set the database type [mysql, postgresql].");
+			null, "db-type", true,
+			"Set the database type [mysql, postgresql].");
 		options.addRequiredOption(
-			"u", "user", true, "Set the database user name.");
+			null, "user", true, "Set the database user name.");
 
 		return options;
 	}

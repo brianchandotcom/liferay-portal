@@ -6,7 +6,7 @@ workspaces/liferay-sample-workspace/client-extensions/liferay-sample-custom-elem
 workspaces/liferay-sample-workspace/client-extensions/liferay-sample-editor-config-contributor
 workspaces/liferay-sample-workspace/client-extensions/liferay-sample-etc-frontend
 workspaces/liferay-sample-workspace/client-extensions/liferay-sample-global-css
-workspaces/liferay-sample-workspace/client-extensions/liferay-sample-global-js
+workspaces/liferay-sample-workspace/client-extensions/liferay-sample-global-js-1
 workspaces/liferay-sample-workspace/client-extensions/liferay-sample-iframe-1
 workspaces/liferay-sample-workspace/client-extensions/liferay-sample-iframe-2
 workspaces/liferay-sample-workspace/client-extensions/liferay-sample-js-import-maps-entry

@@ -24,7 +24,6 @@ page import="com.liferay.client.extension.type.JSImportMapsEntryCET" %><%@
 page import="com.liferay.client.extension.type.StaticContentCET" %><%@
 page import="com.liferay.client.extension.type.ThemeCSSCET" %><%@
 page import="com.liferay.client.extension.type.ThemeFaviconCET" %><%@
-page import="com.liferay.client.extension.type.ThemeJSCET" %><%@
 page import="com.liferay.client.extension.type.ThemeSpritemapCET" %><%@
 page import="com.liferay.client.extension.type.annotation.CETProperty" %><%@
 page import="com.liferay.client.extension.web.internal.constants.ClientExtensionAdminFDSNames" %><%@

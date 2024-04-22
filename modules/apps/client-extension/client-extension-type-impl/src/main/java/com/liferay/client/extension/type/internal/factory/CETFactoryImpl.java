@@ -265,18 +265,11 @@ public class CETFactoryImpl implements CETFactory {
 			ClientExtensionEntryConstants.TYPE_THEME_CSS,
 			new ThemeCSSCETImplFactoryImpl(_jsonFactory)
 		).put(
-			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP,
-			new ThemeSpritemapCETImplFactoryImpl()
-		).put(
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
 			new ThemeFaviconCETImplFactoryImpl()
-
-		// TODO
-
-		/*).put(
-			ClientExtensionEntryConstants.TYPE_THEME_JS,
-			new ThemeJSCETImplFactoryImpl()*/
-
+		).put(
+			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP,
+			new ThemeSpritemapCETImplFactoryImpl()
 		).build();
 
 		_types = Collections.unmodifiableSortedSet(

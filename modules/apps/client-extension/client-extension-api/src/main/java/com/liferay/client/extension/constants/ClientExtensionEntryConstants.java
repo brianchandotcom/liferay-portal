@@ -36,8 +36,6 @@ public class ClientExtensionEntryConstants {
 
 	public static final String TYPE_THEME_FAVICON = "themeFavicon";
 
-	public static final String TYPE_THEME_JS = "themeJS";
-
 	public static final String TYPE_THEME_SPRITEMAP = "themeSpritemap";
 
 }

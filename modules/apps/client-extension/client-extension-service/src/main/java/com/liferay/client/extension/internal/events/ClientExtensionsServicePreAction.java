@@ -11,7 +11,6 @@ import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.ThemeCSSCET;
 import com.liferay.client.extension.type.ThemeFaviconCET;
-import com.liferay.client.extension.type.ThemeJSCET;
 import com.liferay.client.extension.type.ThemeSpritemapCET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.petra.string.StringBundler;
@@ -94,12 +93,6 @@ public class ClientExtensionsServicePreAction extends Action {
 
 		if (themeSpritemapCET != null) {
 			themeDisplay.setPathThemeSpritemap(themeSpritemapCET.getURL());
-		}
-
-		ThemeJSCET themeJSCET = _getThemeJSCET(layout);
-
-		if (themeJSCET != null) {
-			themeDisplay.setMainJSURL(themeJSCET.getURL());
 		}
 	}
 
@@ -214,34 +207,6 @@ public class ClientExtensionsServicePreAction extends Action {
 		ThemeFaviconCET themeFaviconCET = (ThemeFaviconCET)cet;
 
 		return themeFaviconCET.getURL();
-	}
-
-	private ThemeJSCET _getThemeJSCET(Layout layout) {
-		CET cet = _getCET(
-			_portal.getClassNameId(Layout.class), layout.getPlid(),
-			layout.getCompanyId(), ClientExtensionEntryConstants.TYPE_THEME_JS);
-
-		if (cet == null) {
-			cet = _getCET(
-				_portal.getClassNameId(Layout.class),
-				layout.getMasterLayoutPlid(), layout.getCompanyId(),
-				ClientExtensionEntryConstants.TYPE_THEME_JS);
-		}
-
-		if (cet == null) {
-			LayoutSet layoutSet = layout.getLayoutSet();
-
-			cet = _getCET(
-				_portal.getClassNameId(LayoutSet.class),
-				layoutSet.getLayoutSetId(), layout.getCompanyId(),
-				ClientExtensionEntryConstants.TYPE_THEME_JS);
-		}
-
-		if (cet != null) {
-			return (ThemeJSCET)cet;
-		}
-
-		return null;
 	}
 
 	private ThemeSpritemapCET _getThemeSpritemapCET(Layout layout) {

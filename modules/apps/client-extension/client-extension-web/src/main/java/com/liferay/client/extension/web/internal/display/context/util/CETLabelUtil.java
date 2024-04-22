@@ -105,11 +105,6 @@ public class CETLabelUtil {
 			return "theme-favicon";
 		}
 		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_THEME_JS)) {
-
-			return "theme-js";
-		}
-		else if (Objects.equals(
 					type, ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP)) {
 
 			return "theme-svg";

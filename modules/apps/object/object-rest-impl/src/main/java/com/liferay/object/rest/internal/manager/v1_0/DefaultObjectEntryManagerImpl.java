@@ -1599,6 +1599,50 @@ public class DefaultObjectEntryManagerImpl
 					serviceBuilderObjectEntry, dtoConverterContext.getUriInfo())
 			).build();
 
+			boolean siteScoped = Objects.equals(
+				objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+			HashMap<String, String> templateParameterMap = HashMapBuilder.put(
+				() -> {
+					if (siteScoped) {
+						return "scopeKey";
+					}
+
+					return null;
+				},
+				() -> {
+					if (siteScoped) {
+						return String.valueOf(
+							serviceBuilderObjectEntry.getGroupId());
+					}
+
+					return null;
+				}
+			).put(
+				() -> {
+					if (siteScoped) {
+						return "externalReferenceCode";
+					}
+
+					return "objectEntryExternalReferenceCode";
+				},
+				serviceBuilderObjectEntry.getExternalReferenceCode()
+			).build();
+
+			String methodName = null;
+
+			if (siteScoped) {
+				methodName =
+					"putScopeScopeKeyByExternalReferenceCodeObjectAction" +
+						"ObjectActionName";
+			}
+			else {
+				methodName =
+					"putByExternalReferenceCodeObjectEntryExternal" +
+						"ReferenceCodeObjectActionObjectActionName";
+			}
+
 			for (ObjectAction objectAction :
 					_objectActionLocalService.getObjectActions(
 						objectDefinition.getObjectDefinitionId(),
@@ -1607,15 +1651,12 @@ public class DefaultObjectEntryManagerImpl
 				actions.put(
 					objectAction.getName(),
 					_addAction(
-						objectAction.getName(),
-						"putByExternalReferenceCodeObjectEntryExternal" +
-							"ReferenceCodeObjectActionObjectActionName",
+						objectAction.getName(), methodName,
 						serviceBuilderObjectEntry,
-						HashMapBuilder.put(
-							"objectActionName", objectAction.getName()
+						HashMapBuilder.create(
+							templateParameterMap
 						).put(
-							"objectEntryExternalReferenceCode",
-							serviceBuilderObjectEntry.getExternalReferenceCode()
+							"objectActionName", objectAction.getName()
 						).build(),
 						dtoConverterContext.getUriInfo()));
 			}

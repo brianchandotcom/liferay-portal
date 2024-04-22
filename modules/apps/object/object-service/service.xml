@@ -95,6 +95,7 @@
 		<column name="className" type="String" />
 		<column name="enableCategorization" type="boolean" />
 		<column name="enableComments" type="boolean" />
+		<column name="enableIndexedSearch" type="boolean" />
 		<column name="enableLocalization" type="boolean" />
 		<column name="enableObjectEntryDraft" type="boolean" />
 		<column name="enableObjectEntryHistory" type="boolean" />

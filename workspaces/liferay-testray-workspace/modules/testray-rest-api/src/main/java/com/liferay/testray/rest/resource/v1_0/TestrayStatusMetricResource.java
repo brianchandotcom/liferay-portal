@@ -46,20 +46,20 @@ public interface TestrayStatusMetricResource {
 	public Page<TestrayCaseTypeMetric>
 			getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayCaseTypesMetricsPage(
 				Long testrayBuildId, String testrayCasePriorities,
-				String testrayTeamId, Pagination pagination)
+				String testrayTeamIds, Pagination pagination)
 		throws Exception;
 
 	public Page<TestrayComponentMetric>
 			getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayComponentsMetricsPage(
 				Long testrayBuildId, String testrayCasePriorities,
-				String testrayCaseTypes, String testrayTeamId,
+				String testrayCaseTypes, String testrayTeamIds,
 				Pagination pagination)
 		throws Exception;
 
 	public Page<TestrayRunMetric>
 			getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayRunsMetricsPage(
 				Long testrayBuildId, String testrayCasePriorities,
-				String testrayCaseTypes, String testrayTeamId,
+				String testrayCaseTypes, String testrayTeamIds,
 				Pagination pagination)
 		throws Exception;
 
@@ -67,7 +67,7 @@ public interface TestrayStatusMetricResource {
 			getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayTeamsMetricsPage(
 				Long testrayBuildId, String testrayCasePriorities,
 				String testrayCaseTypes, Long testrayRunId,
-				String testrayTeamId, Pagination pagination)
+				String testrayTeamIds, Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

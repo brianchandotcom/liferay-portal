@@ -113,7 +113,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayStatusMetricByTestrayBuildIdTestrayBuildTestrayCaseTypesMetrics(page: ___, pageSize: ___, testrayBuildId: ___, testrayCasePriorities: ___, testrayTeamId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayStatusMetricByTestrayBuildIdTestrayBuildTestrayCaseTypesMetrics(page: ___, pageSize: ___, testrayBuildId: ___, testrayCasePriorities: ___, testrayTeamIds: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public TestrayStatusMetricPage
@@ -121,7 +121,7 @@ public class Query {
 				@GraphQLName("testrayBuildId") Long testrayBuildId,
 				@GraphQLName("testrayCasePriorities") String
 					testrayCasePriorities,
-				@GraphQLName("testrayTeamId") String testrayTeamId,
+				@GraphQLName("testrayTeamIds") String testrayTeamIds,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 		throws Exception {
@@ -132,14 +132,14 @@ public class Query {
 			testrayStatusMetricResource -> new TestrayStatusMetricPage(
 				testrayStatusMetricResource.
 					getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayCaseTypesMetricsPage(
-						testrayBuildId, testrayCasePriorities, testrayTeamId,
+						testrayBuildId, testrayCasePriorities, testrayTeamIds,
 						Pagination.of(page, pageSize))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayStatusMetricByTestrayBuildIdTestrayBuildTestrayComponentsMetrics(page: ___, pageSize: ___, testrayBuildId: ___, testrayCasePriorities: ___, testrayCaseTypes: ___, testrayTeamId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayStatusMetricByTestrayBuildIdTestrayBuildTestrayComponentsMetrics(page: ___, pageSize: ___, testrayBuildId: ___, testrayCasePriorities: ___, testrayCaseTypes: ___, testrayTeamIds: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public TestrayStatusMetricPage
@@ -148,7 +148,7 @@ public class Query {
 				@GraphQLName("testrayCasePriorities") String
 					testrayCasePriorities,
 				@GraphQLName("testrayCaseTypes") String testrayCaseTypes,
-				@GraphQLName("testrayTeamId") String testrayTeamId,
+				@GraphQLName("testrayTeamIds") String testrayTeamIds,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 		throws Exception {
@@ -160,13 +160,13 @@ public class Query {
 				testrayStatusMetricResource.
 					getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayComponentsMetricsPage(
 						testrayBuildId, testrayCasePriorities, testrayCaseTypes,
-						testrayTeamId, Pagination.of(page, pageSize))));
+						testrayTeamIds, Pagination.of(page, pageSize))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayStatusMetricByTestrayBuildIdTestrayBuildTestrayRunsMetrics(page: ___, pageSize: ___, testrayBuildId: ___, testrayCasePriorities: ___, testrayCaseTypes: ___, testrayTeamId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayStatusMetricByTestrayBuildIdTestrayBuildTestrayRunsMetrics(page: ___, pageSize: ___, testrayBuildId: ___, testrayCasePriorities: ___, testrayCaseTypes: ___, testrayTeamIds: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public TestrayStatusMetricPage
@@ -175,7 +175,7 @@ public class Query {
 				@GraphQLName("testrayCasePriorities") String
 					testrayCasePriorities,
 				@GraphQLName("testrayCaseTypes") String testrayCaseTypes,
-				@GraphQLName("testrayTeamId") String testrayTeamId,
+				@GraphQLName("testrayTeamIds") String testrayTeamIds,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 		throws Exception {
@@ -187,13 +187,13 @@ public class Query {
 				testrayStatusMetricResource.
 					getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayRunsMetricsPage(
 						testrayBuildId, testrayCasePriorities, testrayCaseTypes,
-						testrayTeamId, Pagination.of(page, pageSize))));
+						testrayTeamIds, Pagination.of(page, pageSize))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayStatusMetricByTestrayBuildIdTestrayBuildTestrayTeamsMetrics(page: ___, pageSize: ___, testrayBuildId: ___, testrayCasePriorities: ___, testrayCaseTypes: ___, testrayRunId: ___, testrayTeamId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayStatusMetricByTestrayBuildIdTestrayBuildTestrayTeamsMetrics(page: ___, pageSize: ___, testrayBuildId: ___, testrayCasePriorities: ___, testrayCaseTypes: ___, testrayRunId: ___, testrayTeamIds: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public TestrayStatusMetricPage
@@ -203,7 +203,7 @@ public class Query {
 					testrayCasePriorities,
 				@GraphQLName("testrayCaseTypes") String testrayCaseTypes,
 				@GraphQLName("testrayRunId") Long testrayRunId,
-				@GraphQLName("testrayTeamId") String testrayTeamId,
+				@GraphQLName("testrayTeamIds") String testrayTeamIds,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 		throws Exception {
@@ -215,7 +215,7 @@ public class Query {
 				testrayStatusMetricResource.
 					getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayTeamsMetricsPage(
 						testrayBuildId, testrayCasePriorities, testrayCaseTypes,
-						testrayRunId, testrayTeamId,
+						testrayRunId, testrayTeamIds,
 						Pagination.of(page, pageSize))));
 	}
 

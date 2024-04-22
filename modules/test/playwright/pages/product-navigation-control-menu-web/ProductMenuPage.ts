@@ -9,6 +9,7 @@ import {Locator, Page} from '@playwright/test';
 
 export class ProductMenuPage {
 	readonly contentAndDataButton: Locator;
+	readonly formsButton: Locator;
 	readonly page: Page;
 	readonly pagesButton: Locator;
 	readonly productMenuButton: Locator;
@@ -21,6 +22,10 @@ export class ProductMenuPage {
 		this.contentAndDataButton = page.getByRole('menuitem', {
 			name: 'Content & Data',
 		});
+		this.formsButton = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Forms',
+		});
 		this.pagesButton = page.getByRole('menuitem', {name: 'Pages'});
 		this.productMenuButton = page.getByLabel('Open Product Menu');
 		this.productMenuHeader = page.locator(
@@ -32,6 +37,11 @@ export class ProductMenuPage {
 		this.webContentButton = page.getByRole('menuitem', {
 			name: 'Web Content',
 		});
+	}
+
+	async goToForms() {
+		await this.contentAndDataButton.click();
+		await this.formsButton.click();
 	}
 
 	async goToWebContent() {

@@ -15,25 +15,23 @@ function main {
 	mysql -u root -h database -s -N -e "UPDATE lportal.Group_ SET externalReferenceCode='LIFERAY_LEARN'
 		WHERE groupKey = 'Guest'"
 
-	rsync -a --exclude={'.gradle','*/node_modules*/'} /mnt/liferay-learn-workspace "${HOME}"
+	rsync -a -p --exclude={'.gradle','*/node_modules*/'} /mnt/liferay-learn-workspace "${HOME}"
 
-	cd "$HOME"/liferay-learn-workspace || exit
+	cd "${HOME}"/liferay-learn-workspace || exit
 
 	./gradlew -Pliferay.workspace.home.dir=/opt/liferay clean deploy
 
-	rsync -a --exclude={'.gradle','*/node_modules*/'} /mnt/liferay-learn "${HOME}"
+	rsync -a -p --exclude={'.gradle','*/node_modules*/'} /mnt/liferay-learn "${HOME}"
 
-	cd "$HOME"/liferay-learn || exit
+	cd "${HOME}"/liferay-learn || exit
 
 	./generate_docs.sh
 
-	rsync -a "$HOME"/liferay-learn/site/images /public_html
+	rsync -a -p "${HOME}"/liferay-learn/site/images /public_html
 
 	export LIFERAY_LEARN_ETC_CRON_LIFERAY_SITE_FRIENDLY_URL_PATH=guest
-
 	export LIFERAY_LEARN_ETC_CRON_LIFERAY_URL=http://liferay:8080
-
-	export LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR=$HOME/liferay-learn
+	export LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR=${HOME}/liferay-learn
 
 	LIFERAY_LEARN_ETC_CRON_LIFERAY_OAUTH_CLIENT_ID=$(mysql -u root -h database -s -N -e \
 		"SELECT clientId FROM lportal.OAuth2Application WHERE externalReferenceCode=
@@ -47,7 +45,7 @@ function main {
 
 	export LIFERAY_LEARN_ETC_CRON_LIFERAY_OAUTH_CLIENT_SECRET
 
-	cd "$HOME"/liferay-learn-workspace/client-extensions/liferay-learn-etc-cron || exit
+	cd "${HOME}"/liferay-learn-workspace/client-extensions/liferay-learn-etc-cron || exit
 
 	../../gradlew run
 }

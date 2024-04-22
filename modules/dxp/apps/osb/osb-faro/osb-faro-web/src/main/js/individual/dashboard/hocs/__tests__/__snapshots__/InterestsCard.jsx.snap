@@ -4,7 +4,7 @@ exports[`InterestsCard renders 1`] = `
 <div>
   <div
     class="card card-root interests-card-root"
-    id="topInterestsAsOfYesterdayCardRoot"
+    id="container.report.topInterestsAsOfYesterdayCard"
     style="min-height: 536px;"
   >
     <div
@@ -381,7 +381,7 @@ exports[`InterestsCard renders with empty data 1`] = `
 <div>
   <div
     class="card card-root interests-card-root"
-    id="topInterestsAsOfYesterdayCardRoot"
+    id="container.report.topInterestsAsOfYesterdayCard"
     style="min-height: 536px;"
   >
     <div

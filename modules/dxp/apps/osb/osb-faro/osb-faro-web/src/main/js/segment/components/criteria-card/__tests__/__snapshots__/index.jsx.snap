@@ -4,7 +4,6 @@ exports[`CriteriaCard should render 1`] = `
 <div>
   <div
     class="card card-root criteria-card-root"
-    id="segmentCriteriaCardRoot"
   >
     <div
       class="card-header"

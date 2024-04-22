@@ -4,7 +4,7 @@ exports[`AcquisitionsCard renders 1`] = `
 <div>
   <div
     class="card card-root"
-    id="acquisitionsCardRoot"
+    id="container.report.acquisitionsCard"
   >
     <div
       class="card-header align-items-center d-flex justify-content-between"

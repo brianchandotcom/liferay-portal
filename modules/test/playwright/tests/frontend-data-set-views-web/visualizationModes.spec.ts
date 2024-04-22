@@ -422,8 +422,9 @@ export const fragmentTest = mergeTests(
 		'LPS-164563': true,
 		'LPS-178052': true,
 	}),
+	loginTest(),
+	dataSetManagerSetupTest,
 	isolatedSiteTest,
-	loginTest()
 );
 
 fragmentTest.describe('Visualization Modes in the fragment', () => {
@@ -675,7 +676,7 @@ fragmentTest.describe('Visualization Modes in the fragment', () => {
 							.first()
 							.locator('.dnd-td')
 							.allInnerTexts()
-					).toEqual(['["one","two","three"]', '']);
+					).toEqual(['one, two, three', '']);
 				}
 			);
 		}

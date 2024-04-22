@@ -14,6 +14,7 @@ import menu from '../../assets/images/menu.svg';
 import {GateCard} from '../../components/Card/GateCard';
 import {Header} from '../../components/Header/Header';
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import withProviders from '../../hoc/withProviders';
 import i18n from '../../i18n';
 import CreateCustomerAccountForm from './CustomerForm';
 
@@ -21,11 +22,9 @@ type Steps = {
 	page: 'onboarding' | 'customerGateForm';
 };
 
-export default function CustomerGatePage() {
+function CustomerGatePage() {
 	const [step, setStep] = useState<Steps>({page: 'onboarding'});
 	const {myUserAccount} = useMarketplaceContext();
-
-	const {origin} = window.location;
 
 	if (step.page === 'onboarding') {
 		return (
@@ -77,7 +76,7 @@ export default function CustomerGatePage() {
 						<div>
 							<ClayLink
 								className="customer-gate-page-link"
-								href={`${origin}/c/portal/login`}
+								href="/c/portal/login"
 							>
 								{i18n.translate(
 									'learn-more-about-becoming-a-liferay-customer'
@@ -92,3 +91,5 @@ export default function CustomerGatePage() {
 
 	return <CreateCustomerAccountForm setStep={setStep} user={myUserAccount} />;
 }
+
+export default withProviders(CustomerGatePage);

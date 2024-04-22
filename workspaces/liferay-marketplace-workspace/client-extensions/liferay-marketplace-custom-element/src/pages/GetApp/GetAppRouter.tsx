@@ -5,6 +5,7 @@
 
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
+import withProviders from '../../hoc/withProviders';
 import GetAppContextProvider from './GetAppContextProvider';
 import GetAppOutlet from './GetAppOutlet';
 import GetAppPage from './pages/Account';
@@ -38,4 +39,4 @@ const GetAppRouter = () => (
 	</HashRouter>
 );
 
-export default GetAppRouter;
+export default withProviders(GetAppRouter);

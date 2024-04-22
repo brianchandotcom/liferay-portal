@@ -5,21 +5,17 @@
 
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
+import withProviders from '../../hoc/withProviders';
 import {PublisherGatePage} from './PublisherGatePage';
 import PublisherGateSteps from './components/PublisherGateSteps';
 
-const PublisherGateRouter = () => {
-	return (
-		<HashRouter>
-			<Routes>
-				<Route element={<PublisherGatePage />} index />
-				<Route
-					element={<PublisherGateSteps />}
-					path="request-account"
-				/>
-			</Routes>
-		</HashRouter>
-	);
-};
+const PublisherGateRouter = () => (
+	<HashRouter>
+		<Routes>
+			<Route element={<PublisherGatePage />} index />
+			<Route element={<PublisherGateSteps />} path="request-account" />
+		</Routes>
+	</HashRouter>
+);
 
-export default PublisherGateRouter;
+export default withProviders(PublisherGateRouter);

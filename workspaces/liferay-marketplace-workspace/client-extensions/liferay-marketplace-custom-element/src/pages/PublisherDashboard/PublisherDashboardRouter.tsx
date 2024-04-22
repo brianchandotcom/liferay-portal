@@ -6,10 +6,12 @@
 import {useEffect} from 'react';
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
+import withProviders from '../../hoc/withProviders';
 import {useAccount} from '../../hooks/data/useAccounts';
 import {useCatalogs} from '../../hooks/data/useCatalogs';
 import {useSupplierAccounts} from '../../hooks/data/useSupplierAccounts';
 import {Liferay} from '../../liferay/liferay';
+import {AppContextProvider} from '../../manage-app-state/AppManageState';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 import SolutionsDetails from '../CustomerDashboard/pages/Solutions/ReviewAndSubmitSolutions/SolutionsDetails';
 import PublishedDashboardOutlet from './PublisherDashboardOutlet';
@@ -63,17 +65,21 @@ const PublisherDashboardRouter = () => {
 		<HashRouter>
 			<Routes>
 				<Route
-					element={<AppCreationFlow catalogId={String(catalogId)} />}
+					element={
+						<AppContextProvider>
+							<AppCreationFlow catalogId={String(catalogId)} />
+						</AppContextProvider>
+					}
 					path="app/create"
 				/>
 
 				<Route element={<PublishSolutionForm />} path="solution">
-					<Route element={<Create />} path="publisher" />
-					<Route element={<Header />} path="header" />
-					<Route element={<Details />} path="details" />
-					<Route element={<Profile />} path="profile" />
-					<Route element={<ContactUs />} path="contact" />
 					<Route element={<CompanyProfile />} path="company" />
+					<Route element={<ContactUs />} path="contact" />
+					<Route element={<Create />} path="publisher" />
+					<Route element={<Details />} path="details" />
+					<Route element={<Header />} path="header" />
+					<Route element={<Profile />} path="profile" />
 					<Route element={<Submit />} path="submit" />
 				</Route>
 
@@ -102,4 +108,4 @@ const PublisherDashboardRouter = () => {
 	);
 };
 
-export default PublisherDashboardRouter;
+export default withProviders(PublisherDashboardRouter);

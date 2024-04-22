@@ -8,6 +8,7 @@ import {HashRouter, Route, Routes} from 'react-router-dom';
 import AdministratorDashboardOutlet from './AdministratorDashboardOutlet';
 
 import './index.scss';
+import withProviders from '../../hoc/withProviders';
 import App from '../PublisherDashboard/pages/Apps/App';
 import Apps from './pages/Apps';
 import Metrics from './pages/Metrics';
@@ -40,4 +41,4 @@ const AdministratorDashboardRouter = () => (
 	</HashRouter>
 );
 
-export default AdministratorDashboardRouter;
+export default withProviders(AdministratorDashboardRouter);

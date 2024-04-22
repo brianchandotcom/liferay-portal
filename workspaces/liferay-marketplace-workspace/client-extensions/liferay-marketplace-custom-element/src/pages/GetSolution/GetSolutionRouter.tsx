@@ -9,6 +9,7 @@ import './index.scss';
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 
+import withProviders from '../../hoc/withProviders';
 import {useDeliveryProduct} from '../../hooks/data/useProduct';
 import GetSolutionOutlet from './GetSolutionOutlet';
 import SolutionAccount from './pages/SolutionAccount';
@@ -58,4 +59,4 @@ const GetSolutionRouter = () => {
 	);
 };
 
-export default GetSolutionRouter;
+export default withProviders(GetSolutionRouter);

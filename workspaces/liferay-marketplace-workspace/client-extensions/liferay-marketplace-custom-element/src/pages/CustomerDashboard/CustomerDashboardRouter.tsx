@@ -5,6 +5,7 @@
 
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
+import withProviders from '../../hoc/withProviders';
 import CustomerDashboardOutlet from './CustomerDashboardOutlet';
 import Apps from './pages/Apps';
 import App from './pages/Apps/App/App';
@@ -35,4 +36,4 @@ const CustomerDashboardRouter = () => (
 	</HashRouter>
 );
 
-export default CustomerDashboardRouter;
+export default withProviders(CustomerDashboardRouter);

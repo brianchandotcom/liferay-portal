@@ -23,6 +23,7 @@ import './NextSteps.scss';
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 
+import withProviders from '../../hoc/withProviders';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 import {PaymentStatus} from '../GetApp/enums/PaymentStatus';
 import getProductPriceModel from '../GetApp/utils/getProductPriceModel';
@@ -46,7 +47,7 @@ type TypeNextStepBody = {
 	[key in string]?: ReactNode;
 };
 
-export default function NextSteps({
+export function NextSteps({
 	children,
 	onClickContinue,
 	showBackButton,
@@ -246,3 +247,5 @@ export default function NextSteps({
 		</div>
 	);
 }
+
+export default withProviders(NextSteps);

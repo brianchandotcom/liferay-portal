@@ -107,13 +107,16 @@ public class JournalArticleImportDDMFormFieldValueTransformer
 				if ((originalArticlePrimaryKey != 0) ||
 					(originalClassPK != 0)) {
 
-					Map<String, String> postProcess =
+					Map<String, String> postProcessArticleUuids =
 						(Map<String, String>)
 							_portletDataContext.getNewPrimaryKeysMap(
-								JournalArticle.class + ".postProcess");
+								JournalArticle.class +
+									".postProcessArticleUuids");
 
-					if (!postProcess.containsKey(_stagedModel.getUuid())) {
-						postProcess.put(
+					if (!postProcessArticleUuids.containsKey(
+							_stagedModel.getUuid())) {
+
+						postProcessArticleUuids.put(
 							_stagedModel.getUuid(),
 							ExportImportPathUtil.getModelPath(_stagedModel));
 					}

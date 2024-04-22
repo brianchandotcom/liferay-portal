@@ -6,14 +6,13 @@
 import ClayAlert from '@clayui/alert';
 import Button, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import {ArrayHelpers, useFormikContext} from 'formik';
+import {ArrayHelpers} from 'formik';
 import React, {useCallback} from 'react';
 
 import PRMForm from '../../../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../../../common/components/PRMFormik';
 import ResumeCard from '../../../../../../../../common/components/ResumeCard';
 import LiferayPicklist from '../../../../../../../../common/interfaces/liferayPicklist';
-import MDFRequest from '../../../../../../../../common/interfaces/mdfRequest';
 import MDFRequestBudget from '../../../../../../../../common/interfaces/mdfRequestBudget';
 import getIntlNumberFormat from '../../../../../../../../common/utils/getIntlNumberFormat';
 import getPicklistOptions from '../../../../../../../../common/utils/getPicklistOptions';
@@ -28,6 +27,7 @@ interface IProps {
 	currentActivityIndex: number;
 	expenseEntries: React.OptionHTMLAttributes<HTMLOptionElement>[];
 	isButtonClicked: boolean;
+	isEdit: boolean;
 	setFieldValue: (
 		field: string,
 		value: any,
@@ -43,6 +43,7 @@ const BudgetBreakdownSection = ({
 	currentActivityIndex,
 	expenseEntries,
 	isButtonClicked,
+	isEdit,
 	setFieldValue,
 }: IProps) => {
 	const {
@@ -55,19 +56,6 @@ const BudgetBreakdownSection = ({
 				`activities[${currentActivityIndex}].budgets[${currentBudgetIndex}].expense`,
 				expenseSelected
 			)
-	);
-
-	const {errors, values} = useFormikContext<MDFRequest>();
-
-	const hasBudgetBreakdownEmpty =
-		errors?.activities?.[currentActivityIndex] &&
-		Object.prototype.hasOwnProperty.call(
-			errors?.activities?.[currentActivityIndex],
-			'budgets'
-		);
-	const isEdit = Object.prototype.hasOwnProperty.call(
-		values?.activities[currentActivityIndex],
-		'id'
 	);
 
 	const budgetsAmount = useBudgetsAmount(
@@ -159,9 +147,10 @@ const BudgetBreakdownSection = ({
 					Add Expense
 				</Button>
 
-				{((hasBudgetBreakdownEmpty && isButtonClicked) || isEdit) && (
+				{((!budgetsAmount && isButtonClicked) ||
+					(!budgetsAmount && isEdit)) && (
 					<ClayAlert
-						className="mt-1"
+						className="mt-2"
 						displayType="danger"
 						hideCloseIcon={true}
 					>

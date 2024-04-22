@@ -570,6 +570,66 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
+	public void testRenderEditionFormWithoutUpdatePermission()
+		throws Exception {
+
+		MockObject mockObject = new MockObject(
+			RandomTestUtil.randomLong(), false, true);
+
+		InfoField<TextInfoFieldType> infoField1 = _getInfoField(false);
+
+		String infoField1Value = RandomTestUtil.randomString();
+
+		mockObject.addInfoField(infoField1, infoField1Value);
+
+		InfoField<TextInfoFieldType> infoField2 = _getInfoField(false);
+
+		String infoField2Value = RandomTestUtil.randomString();
+
+		mockObject.addInfoField(infoField2, infoField2Value);
+
+		try (MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoField1, infoField2)
+						).build(),
+						mockObject, _portal, _displayPageInfoItemCapability,
+						_editPageInfoItemCapability)) {
+
+			Layout layout = _addDisplayPageWithFormAndGetLayout(
+				infoField1, infoField2);
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(
+					layout,
+					mockInfoServiceRegistrationHolder.
+						getMockObjectLayoutDisplayPageObjectProvider());
+
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
+
+			RenderLayoutStructureTag renderLayoutStructureTag =
+				_getRenderLayoutStructureTagDefaultSegmentsExperience(
+					layout, mockHttpServletRequest, mockHttpServletResponse);
+
+			renderLayoutStructureTag.doTag(
+				mockHttpServletRequest, mockHttpServletResponse);
+
+			String content = mockHttpServletResponse.getContentAsString();
+
+			Assert.assertTrue(
+				content.contains("<fieldset disabled=\"disabled\">"));
+
+			_assertInfoFieldInput(infoField1, content, infoField1Value);
+			_assertInfoFieldInput(infoField2, content, infoField2Value);
+
+			_assertInputJSONObject(content, infoField1, infoField2);
+		}
+	}
+
+	@Test
 	public void testRenderFormWithInfoFormException() throws Exception {
 		InfoField<TextInfoFieldType> infoField = _getInfoField(false);
 

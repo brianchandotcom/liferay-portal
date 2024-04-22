@@ -114,7 +114,7 @@ public class EditInfoItemStrutsActionValidationTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(infoField)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -149,7 +149,7 @@ public class EditInfoItemStrutsActionValidationTest {
 					new MockInfoServiceRegistrationHolder(
 						InfoFieldSet.builder(
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -215,7 +215,7 @@ public class EditInfoItemStrutsActionValidationTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(infoField)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -286,7 +286,7 @@ public class EditInfoItemStrutsActionValidationTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(infoField)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -334,7 +334,7 @@ public class EditInfoItemStrutsActionValidationTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(infoField)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			_stagingLocalService.enableLocalStaging(
 				TestPropsValues.getUserId(), _group, false, false,
@@ -379,7 +379,7 @@ public class EditInfoItemStrutsActionValidationTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(infoField)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			MockInfoItemCreator mockInfoItemCreator =
 				mockInfoServiceRegistrationHolder.getMockInfoItemCreator();
@@ -428,7 +428,7 @@ public class EditInfoItemStrutsActionValidationTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(infoField)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			MockInfoItemCreator mockInfoItemCreator =
 				mockInfoServiceRegistrationHolder.getMockInfoItemCreator();
@@ -483,7 +483,7 @@ public class EditInfoItemStrutsActionValidationTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(infoField)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 

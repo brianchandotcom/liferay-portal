@@ -163,7 +163,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(allInfoFields)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
@@ -216,7 +216,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(_INFO_FIELDS)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
@@ -267,7 +267,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(_INFO_FIELDS)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
@@ -354,7 +354,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(allInfoFields)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
@@ -412,7 +412,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(_INFO_FIELDS)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			long classNameId = _portal.getClassNameId(
 				MockObject.class.getName());
@@ -466,7 +466,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(_INFO_FIELDS)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			long classNameId = _portal.getClassNameId(
 				MockObject.class.getName());

@@ -519,7 +519,7 @@ public class RenderLayoutStructureTagTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(infoField)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -574,7 +574,7 @@ public class RenderLayoutStructureTagTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(infoField)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -638,7 +638,7 @@ public class RenderLayoutStructureTagTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(infoField, readOnlyInfoField)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -698,7 +698,7 @@ public class RenderLayoutStructureTagTest {
 						).infoFieldSetEntries(
 							ListUtil.fromArray(infoField)
 						).build(),
-						_editPageInfoItemCapability)) {
+						_portal, _editPageInfoItemCapability)) {
 
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 

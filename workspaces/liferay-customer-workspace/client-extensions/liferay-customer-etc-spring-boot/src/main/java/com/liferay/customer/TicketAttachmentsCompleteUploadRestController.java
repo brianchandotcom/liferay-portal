@@ -5,8 +5,8 @@
 
 package com.liferay.customer;
 
-import com.liferay.customer.object.model.TicketAttachment;
-import com.liferay.customer.object.service.TicketAttachmentWebService;
+import com.liferay.customer.model.TicketAttachment;
+import com.liferay.customer.service.TicketAttachmentWebService;
 import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskUser;
 import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskWebService;
 import com.liferay.petra.string.CharPool;

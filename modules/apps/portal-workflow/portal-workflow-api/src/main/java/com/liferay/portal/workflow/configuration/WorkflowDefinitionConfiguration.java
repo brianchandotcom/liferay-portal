@@ -7,6 +7,7 @@ package com.liferay.portal.workflow.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -28,5 +29,13 @@ public interface WorkflowDefinitionConfiguration {
 		required = false
 	)
 	public boolean companyAdministratorCanPublish();
+
+	@ExtendedAttributeDefinition(featureFlagKey = "LPD-23210")
+	@Meta.AD(
+		deflt = "false",
+		description = "notifications-must-honor-site-membership-rule-description",
+		name = "notifications-must-honor-site-membership-rule", required = false
+	)
+	public boolean preventNotifyingAncestorSites();
 
 }

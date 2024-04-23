@@ -8,7 +8,9 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.notification.recipien
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
@@ -35,6 +38,7 @@ import com.liferay.portal.workflow.kaleo.runtime.util.validator.GroupAwareRoleVa
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -42,12 +46,14 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
 @Component(
+	configurationPid = "com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration",
 	property = "recipient.type=ROLE",
 	service = NotificationRecipientBuilder.class
 )
@@ -85,9 +91,14 @@ public class RoleNotificationRecipientBuilder
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	@Modified
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, GroupAwareRoleValidator.class);
+		_workflowDefinitionConfiguration = ConfigurableUtil.createConfigurable(
+			WorkflowDefinitionConfiguration.class, properties);
 	}
 
 	protected void addRoleRecipientAddresses(
@@ -170,7 +181,7 @@ public class RoleNotificationRecipientBuilder
 				groupIds.addAll(_getAncestorOrganizationGroupIds(group, role));
 			}
 
-			if (group.isSite()) {
+			if (group.isSite() && !_preventNotifyingAncestorSites()) {
 				groupIds.addAll(_getAncestorGroupIds(group, role));
 			}
 
@@ -293,6 +304,17 @@ public class RoleNotificationRecipientBuilder
 		return false;
 	}
 
-	private ServiceTrackerList<GroupAwareRoleValidator> _serviceTrackerList;
+	private boolean _preventNotifyingAncestorSites() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-23210")) {
+			return false;
+		}
+
+		return _workflowDefinitionConfiguration.preventNotifyingAncestorSites();
+	}
+
+	private volatile ServiceTrackerList<GroupAwareRoleValidator>
+		_serviceTrackerList;
+	private volatile WorkflowDefinitionConfiguration
+		_workflowDefinitionConfiguration;
 
 }

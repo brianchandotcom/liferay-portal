@@ -24,6 +24,7 @@ export const ACTION_TYPES: {[key: string]: ActionType} = {
 export enum EntityType {
 	Assets = 'assets',
 	Attributes = 'attributes',
+	CustomEvents = 'custom-events',
 	Groups = 'groups',
 	Organizations = 'organizations',
 	Roles = 'roles',
@@ -130,6 +131,9 @@ const createReferencedEntitiesIMapFromSegment = (
 		[EntityType.Attributes]: referencedObjects.get(
 			EntityType.Attributes,
 			Map({})
+		),
+		[EntityType.CustomEvents]: referencedObjects.get(
+			EntityType.CustomEvents
 		),
 		[EntityType.Groups]: referencedObjects.get(EntityType.Groups),
 		[EntityType.Organizations]: referencedObjects.get(

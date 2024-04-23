@@ -324,8 +324,8 @@ public class FreemarkerFragmentEntryProcessorTest {
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addDynamicAssetListEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				"Collection Title",
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), "Collection Title",
 				_getTypeSettings(
 					_group.getGroupId(), journalArticle.getClassNameId()),
 				serviceContext);

@@ -79,8 +79,8 @@ public class AddAssetListEntryVariationMVCActionCommandTest {
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), RandomTestUtil.randomString(),
 				AssetListEntryTypeConstants.TYPE_MANUAL,
 				defaultSegmentsEntryUnicodeProperties.toString(),
 				ServiceContextTestUtil.getServiceContext());

@@ -32,7 +32,8 @@ public class AssetListTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return AssetListEntryLocalServiceUtil.addAssetListEntry(
-			TestPropsValues.getUserId(), groupId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), groupId,
+			RandomTestUtil.randomString(),
 			AssetListEntryTypeConstants.TYPE_MANUAL, serviceContext);
 	}
 
@@ -43,8 +44,8 @@ public class AssetListTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return AssetListEntryLocalServiceUtil.addAssetListEntry(
-			TestPropsValues.getUserId(), groupId, title,
-			AssetListEntryTypeConstants.TYPE_MANUAL, serviceContext);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), groupId,
+			title, AssetListEntryTypeConstants.TYPE_MANUAL, serviceContext);
 	}
 
 	public static AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(

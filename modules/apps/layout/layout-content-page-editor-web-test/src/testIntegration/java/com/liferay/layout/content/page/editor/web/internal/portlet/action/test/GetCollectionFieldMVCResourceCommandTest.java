@@ -235,8 +235,9 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addDynamicAssetListEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				"Collection Title", _getTypeSettings(), _serviceContext);
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), "Collection Title", _getTypeSettings(),
+				_serviceContext);
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
@@ -292,8 +293,9 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addDynamicAssetListEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				"Collection Title", _getTypeSettings(), _serviceContext);
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), "Collection Title", _getTypeSettings(),
+				_serviceContext);
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
@@ -366,9 +368,9 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				"Manual title", AssetListEntryTypeConstants.TYPE_MANUAL, null,
-				_serviceContext);
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), "Manual title",
+				AssetListEntryTypeConstants.TYPE_MANUAL, null, _serviceContext);
 
 		BlogsEntry blogsEntry1 = _addBlogsEntry();
 		BlogsEntry blogsEntry2 = _addBlogsEntry();

@@ -303,22 +303,22 @@ public class TrialRestController extends BaseRestController {
 
 		Admin admin = new Admin();
 
-		admin.setEmailAddress(emailAddress);
+		admin.setEmailAddress(() -> emailAddress);
 		admin.setFamilyName(
-			jwt.getClaim(
+			() -> jwt.getClaim(
 				"username"
 			).toString());
 		admin.setGivenName(
-			jwt.getClaim(
+			() -> jwt.getClaim(
 				"username"
 			).toString());
 
 		String domain = orderId + "." + _TRIAL_DXP_DOMAIN;
 
-		portalInstance.setAdmin(admin);
-		portalInstance.setDomain("lxc.app");
-		portalInstance.setPortalInstanceId(domain);
-		portalInstance.setVirtualHost(domain);
+		portalInstance.setAdmin(() -> admin);
+		portalInstance.setDomain(() -> "lxc.app");
+		portalInstance.setPortalInstanceId(() -> domain);
+		portalInstance.setVirtualHost(() -> domain);
 
 		portalInstance = _getPortalInstanceResource().postPortalInstance(
 			portalInstance);
@@ -345,7 +345,7 @@ public class TrialRestController extends BaseRestController {
 		long orderId = jsonObject.getLong("classPK");
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Provision order " + orderId);
+			_log.info("Provisioning trial " + orderId);
 		}
 
 		if (_orderResource.getOrdersPage(
@@ -383,20 +383,17 @@ public class TrialRestController extends BaseRestController {
 			jwt, modelDTOOrderJSONObject.getString("creatorEmailAddress"),
 			orderId);
 
-		JSONObject environmentProjectJSONObject =
-			_consoleService.postEnvironmentProject("ext" + orderId);
+		try {
+			_consoleService.setupCloudProjectInstallation(
+				portalInstance.getVirtualHost(), orderId);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to setup Cloud Installation for order " + orderId);
+			_log.error(exception);
 
-		_consoleService.inviteProject(
-			_marketplaceTrialAdminEmail,
-			environmentProjectJSONObject.getString("projectId"), "admin");
-
-		_consoleService.setupLinkBetweenPortalInstanceAndExtensionEnvironment(
-			portalInstance.getVirtualHost(),
-			environmentProjectJSONObject.getString("id"));
-
-		_consoleService.deployApp(
-			String.valueOf(orderId),
-			environmentProjectJSONObject.getString("projectId"));
+			return;
+		}
 
 		_updateOrder(
 			HashMapBuilder.put(
@@ -432,8 +429,9 @@ public class TrialRestController extends BaseRestController {
 
 		Order order = new Order();
 
-		order.setCustomFields(customFields);
-		order.setOrderStatus(orderStatus);
+		order.setCustomFields(() -> customFields);
+
+		order.setOrderStatus(() -> orderStatus);
 
 		_orderResource.patchOrder(orderId, order);
 	}

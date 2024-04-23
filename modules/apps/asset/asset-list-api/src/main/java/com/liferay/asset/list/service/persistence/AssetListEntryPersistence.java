@@ -2984,6 +2984,59 @@ public interface AssetListEntryPersistence
 		String assetEntryType);
 
 	/**
+	 * Returns the asset list entry where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching asset list entry
+	 * @throws NoSuchEntryException if a matching asset list entry could not be found
+	 */
+	public AssetListEntry findByERC_G(
+			String externalReferenceCode, long groupId)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the asset list entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
+	 */
+	public AssetListEntry fetchByERC_G(
+		String externalReferenceCode, long groupId);
+
+	/**
+	 * Returns the asset list entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
+	 */
+	public AssetListEntry fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache);
+
+	/**
+	 * Removes the asset list entry where externalReferenceCode = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the asset list entry that was removed
+	 */
+	public AssetListEntry removeByERC_G(
+			String externalReferenceCode, long groupId)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the number of asset list entries where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the number of matching asset list entries
+	 */
+	public int countByERC_G(String externalReferenceCode, long groupId);
+
+	/**
 	 * Caches the asset list entry in the entity cache if it is enabled.
 	 *
 	 * @param assetListEntry the asset list entry

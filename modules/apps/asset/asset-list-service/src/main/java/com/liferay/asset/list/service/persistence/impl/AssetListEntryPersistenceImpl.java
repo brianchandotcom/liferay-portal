@@ -5,6 +5,7 @@
 
 package com.liferay.asset.list.service.persistence.impl;
 
+import com.liferay.asset.list.exception.DuplicateAssetListEntryExternalReferenceCodeException;
 import com.liferay.asset.list.exception.NoSuchEntryException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryTable;
@@ -27,15 +28,21 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -13490,6 +13497,273 @@ public class AssetListEntryPersistenceImpl
 		_FINDER_COLUMN_G_LIKET_AES_AET_ASSETENTRYTYPE_3 =
 			"(assetListEntry.assetEntryType IS NULL OR assetListEntry.assetEntryType = '')";
 
+	private FinderPath _finderPathFetchByERC_G;
+	private FinderPath _finderPathCountByERC_G;
+
+	/**
+	 * Returns the asset list entry where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching asset list entry
+	 * @throws NoSuchEntryException if a matching asset list entry could not be found
+	 */
+	@Override
+	public AssetListEntry findByERC_G(
+			String externalReferenceCode, long groupId)
+		throws NoSuchEntryException {
+
+		AssetListEntry assetListEntry = fetchByERC_G(
+			externalReferenceCode, groupId);
+
+		if (assetListEntry == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", groupId=");
+			sb.append(groupId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchEntryException(sb.toString());
+		}
+
+		return assetListEntry;
+	}
+
+	/**
+	 * Returns the asset list entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
+	 */
+	@Override
+	public AssetListEntry fetchByERC_G(
+		String externalReferenceCode, long groupId) {
+
+		return fetchByERC_G(externalReferenceCode, groupId, true);
+	}
+
+	/**
+	 * Returns the asset list entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
+	 */
+	@Override
+	public AssetListEntry fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AssetListEntry.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			Object[] finderArgs = null;
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {externalReferenceCode, groupId};
+			}
+
+			Object result = null;
+
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByERC_G, finderArgs, this);
+			}
+
+			if (result instanceof AssetListEntry) {
+				AssetListEntry assetListEntry = (AssetListEntry)result;
+
+				if (!Objects.equals(
+						externalReferenceCode,
+						assetListEntry.getExternalReferenceCode()) ||
+					(groupId != assetListEntry.getGroupId())) {
+
+					result = null;
+				}
+			}
+
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(_SQL_SELECT_ASSETLISTENTRY_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(groupId);
+
+					List<AssetListEntry> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByERC_G, finderArgs, list);
+						}
+					}
+					else {
+						AssetListEntry assetListEntry = list.get(0);
+
+						result = assetListEntry;
+
+						cacheResult(assetListEntry);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (AssetListEntry)result;
+			}
+		}
+	}
+
+	/**
+	 * Removes the asset list entry where externalReferenceCode = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the asset list entry that was removed
+	 */
+	@Override
+	public AssetListEntry removeByERC_G(
+			String externalReferenceCode, long groupId)
+		throws NoSuchEntryException {
+
+		AssetListEntry assetListEntry = findByERC_G(
+			externalReferenceCode, groupId);
+
+		return remove(assetListEntry);
+	}
+
+	/**
+	 * Returns the number of asset list entries where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the number of matching asset list entries
+	 */
+	@Override
+	public int countByERC_G(String externalReferenceCode, long groupId) {
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					AssetListEntry.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			FinderPath finderPath = _finderPathCountByERC_G;
+
+			Object[] finderArgs = new Object[] {externalReferenceCode, groupId};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(_SQL_COUNT_ASSETLISTENTRY_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(groupId);
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2 =
+		"assetListEntry.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3 =
+		"(assetListEntry.externalReferenceCode IS NULL OR assetListEntry.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_G_GROUPID_2 =
+		"assetListEntry.groupId = ?";
+
 	public AssetListEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -13540,6 +13814,14 @@ public class AssetListEntryPersistenceImpl
 				_finderPathFetchByG_T,
 				new Object[] {
 					assetListEntry.getGroupId(), assetListEntry.getTitle()
+				},
+				assetListEntry);
+
+			finderCache.putResult(
+				_finderPathFetchByERC_G,
+				new Object[] {
+					assetListEntry.getExternalReferenceCode(),
+					assetListEntry.getGroupId()
 				},
 				assetListEntry);
 		}
@@ -13654,6 +13936,16 @@ public class AssetListEntryPersistenceImpl
 			finderCache.putResult(_finderPathCountByG_T, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByG_T, args, assetListEntryModelImpl);
+
+			args = new Object[] {
+				assetListEntryModelImpl.getExternalReferenceCode(),
+				assetListEntryModelImpl.getGroupId()
+			};
+
+			finderCache.putResult(
+				_finderPathCountByERC_G, args, Long.valueOf(1));
+			finderCache.putResult(
+				_finderPathFetchByERC_G, args, assetListEntryModelImpl);
 		}
 	}
 
@@ -13795,6 +14087,69 @@ public class AssetListEntryPersistenceImpl
 			String uuid = PortalUUIDUtil.generate();
 
 			assetListEntry.setUuid(uuid);
+		}
+
+		if (Validator.isNull(assetListEntry.getExternalReferenceCode())) {
+			assetListEntry.setExternalReferenceCode(assetListEntry.getUuid());
+		}
+		else {
+			if (!Objects.equals(
+					assetListEntryModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					assetListEntry.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = assetListEntry.getCompanyId();
+
+					long groupId = assetListEntry.getGroupId();
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = assetListEntry.getPrimaryKey();
+					}
+
+					try {
+						assetListEntry.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								AssetListEntry.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								assetListEntry.getExternalReferenceCode(),
+								null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
+			AssetListEntry ercAssetListEntry = fetchByERC_G(
+				assetListEntry.getExternalReferenceCode(),
+				assetListEntry.getGroupId());
+
+			if (isNew) {
+				if (ercAssetListEntry != null) {
+					throw new DuplicateAssetListEntryExternalReferenceCodeException(
+						"Duplicate asset list entry with external reference code " +
+							assetListEntry.getExternalReferenceCode() +
+								" and group " + assetListEntry.getGroupId());
+				}
+			}
+			else {
+				if ((ercAssetListEntry != null) &&
+					(assetListEntry.getAssetListEntryId() !=
+						ercAssetListEntry.getAssetListEntryId())) {
+
+					throw new DuplicateAssetListEntryExternalReferenceCodeException(
+						"Duplicate asset list entry with external reference code " +
+							assetListEntry.getExternalReferenceCode() +
+								" and group " + assetListEntry.getGroupId());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -14340,6 +14695,7 @@ public class AssetListEntryPersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("externalReferenceCode");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
@@ -14369,6 +14725,9 @@ public class AssetListEntryPersistenceImpl
 			new String[] {"groupId", "assetListEntryKey"});
 
 		_uniqueIndexColumnNames.add(new String[] {"groupId", "title"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"externalReferenceCode", "groupId"});
 	}
 
 	/**
@@ -14615,6 +14974,16 @@ public class AssetListEntryPersistenceImpl
 				"groupId", "title", "assetEntrySubtype", "assetEntryType"
 			},
 			false);
+
+		_finderPathFetchByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, true);
+
+		_finderPathCountByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, false);
 
 		AssetListEntryUtil.setPersistence(this);
 	}

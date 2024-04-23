@@ -261,6 +261,23 @@ public abstract class AssetListEntryLocalServiceBaseImpl
 		return assetListEntryPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	@Override
+	public AssetListEntry fetchAssetListEntryByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return assetListEntryPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
+	public AssetListEntry getAssetListEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return assetListEntryPersistence.findByERC_G(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the asset list entry with the primary key.
 	 *

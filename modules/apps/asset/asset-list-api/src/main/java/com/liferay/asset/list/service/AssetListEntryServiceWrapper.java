@@ -50,32 +50,36 @@ public class AssetListEntryServiceWrapper
 
 	@Override
 	public AssetListEntry addAssetListEntry(
-			long groupId, String title, int type,
+			String externalReferenceCode, long groupId, String title, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetListEntryService.addAssetListEntry(
-			groupId, title, type, serviceContext);
+			externalReferenceCode, groupId, title, type, serviceContext);
 	}
 
 	@Override
 	public AssetListEntry addDynamicAssetListEntry(
-			long groupId, String title, String typeSettings,
+			String externalReferenceCode, long groupId, String title,
+			String typeSettings,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetListEntryService.addDynamicAssetListEntry(
-			groupId, title, typeSettings, serviceContext);
+			externalReferenceCode, groupId, title, typeSettings,
+			serviceContext);
 	}
 
 	@Override
 	public AssetListEntry addManualAssetListEntry(
-			long groupId, String title, long[] assetEntryIds,
+			String externalReferenceCode, long groupId, String title,
+			long[] assetEntryIds,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetListEntryService.addManualAssetListEntry(
-			groupId, title, assetEntryIds, serviceContext);
+			externalReferenceCode, groupId, title, assetEntryIds,
+			serviceContext);
 	}
 
 	@Override

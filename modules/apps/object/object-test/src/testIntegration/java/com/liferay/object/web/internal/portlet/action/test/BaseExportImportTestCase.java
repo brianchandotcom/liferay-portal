@@ -52,6 +52,23 @@ public abstract class BaseExportImportTestCase {
 			String externalReferenceCode, String name)
 		throws Exception {
 
+		Class<?> clazz = getClazz();
+
+		String actualJsonString = StringUtil.read(
+			clazz.getResourceAsStream("dependencies/" + actualFileName));
+
+		String expectedJsonString = StringUtil.read(
+			clazz.getResourceAsStream("dependencies/" + expectedFileName));
+
+		testExportImportJSONString(
+			actualJsonString, expectedJsonString, externalReferenceCode, name);
+	}
+
+	public void testExportImportJSONString(
+			String actualJSONString, String expectedJSONString,
+			String externalReferenceCode, String name)
+		throws Exception {
+
 		// MVCActionCommand
 
 		MVCActionCommand mvcActionCommand = getMVCActionCommand();
@@ -59,13 +76,10 @@ public abstract class BaseExportImportTestCase {
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
 			new MockMultipartHttpServletRequest();
 
-		Class<?> clazz = getClazz();
-
-		byte[] bytes = _file.getBytes(
-			clazz.getResourceAsStream("dependencies/" + actualFileName));
+		byte[] bytes = actualJSONString.getBytes();
 
 		mockMultipartHttpServletRequest.addFile(
-			new MockMultipartFile(actualFileName, bytes));
+			new MockMultipartFile("import-file.json", bytes));
 
 		mockMultipartHttpServletRequest.setCharacterEncoding(StringPool.UTF8);
 
@@ -74,7 +88,7 @@ public abstract class BaseExportImportTestCase {
 		String start = StringBundler.concat(
 			StringPool.DOUBLE_DASH, boundary,
 			"\r\nContent-Disposition:form-data;name=\"", getJSONName(),
-			"\";filename=\"", actualFileName,
+			"\";filename=\"import-file.json",
 			"\";\r\nContent-type:application/json\r\n\r\n");
 		String end = StringBundler.concat(
 			"\r\n--", boundary, StringPool.DOUBLE_DASH);
@@ -146,8 +160,7 @@ public abstract class BaseExportImportTestCase {
 			mockLiferayResourceRequest, mockLiferayResourceResponse);
 
 		JSONAssert.assertEquals(
-			StringUtil.read(
-				clazz.getResourceAsStream("dependencies/" + expectedFileName)),
+			expectedJSONString,
 			String.valueOf(
 				mockLiferayResourceResponse.getPortletOutputStream()),
 			JSONCompareMode.LENIENT);

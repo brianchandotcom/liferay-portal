@@ -11,6 +11,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -45,6 +46,12 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 		_objectDefinitionResource = builder.user(
 			user
 		).build();
+
+		Class<?> clazz = getClazz();
+
+		_baseObjectDefinitionJSONString = StringUtil.read(
+			clazz.getResourceAsStream(
+				"dependencies/base-test-object-definition.json"));
 	}
 
 	@Test
@@ -60,6 +67,11 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 		testExportImport(
 			"test-object-definition.json", "test-object-definition.json", null,
 			"TestObjectDefinition");
+
+		testExportImportJSONString(
+			_baseObjectDefinitionJSONString,
+			_baseObjectDefinitionJSONString, null,
+			"TestObjectDefinitionJSON");
 	}
 
 	@Override
@@ -110,6 +122,8 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 
 		return items.get(0);
 	}
+
+	private String _baseObjectDefinitionJSONString;
 
 	@Inject(
 		filter = "mvc.command.name=/object_definitions/import_object_definition"

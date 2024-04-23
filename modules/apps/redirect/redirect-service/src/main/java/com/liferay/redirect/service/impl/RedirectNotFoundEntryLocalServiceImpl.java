@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.SQLStateAcceptor;
 import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -52,6 +53,8 @@ public class RedirectNotFoundEntryLocalServiceImpl
 	)
 	public RedirectNotFoundEntry addOrUpdateRedirectNotFoundEntry(
 		Group group, String url) {
+
+		url = _friendlyURLNormalizer.normalizeWithEncoding(url);
 
 		RedirectNotFoundEntry redirectNotFoundEntry =
 			redirectNotFoundEntryPersistence.fetchByG_U(
@@ -196,6 +199,9 @@ public class RedirectNotFoundEntryLocalServiceImpl
 
 		return redirectNotFoundEntriesDynamicQuery;
 	}
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private Portal _portal;

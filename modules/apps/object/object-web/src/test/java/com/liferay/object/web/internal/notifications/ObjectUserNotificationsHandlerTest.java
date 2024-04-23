@@ -6,6 +6,7 @@
 package com.liferay.object.web.internal.notifications;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringPool;
@@ -164,6 +165,12 @@ public class ObjectUserNotificationsHandlerTest {
 			Assert.assertEquals(
 				"/configuration_admin/edit_configuration",
 				mockLiferayPortletURL.getParameter("mvcRenderCommandName"));
+
+			Mockito.verify(
+				_requestBackedPortletURLFactory
+			).createActionURL(
+				ConfigurationAdminPortletKeys.INSTANCE_SETTINGS
+			);
 		}
 	}
 

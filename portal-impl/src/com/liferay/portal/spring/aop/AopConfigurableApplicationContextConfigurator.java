@@ -8,7 +8,6 @@ package com.liferay.portal.spring.aop;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl;
 import com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper;
-import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -18,7 +17,6 @@ import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.spring.hibernate.PortletTransactionManager;
-import com.liferay.portal.spring.transaction.CounterTransactionExecutor;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionInvokerImpl;
@@ -59,10 +57,6 @@ public class AopConfigurableApplicationContextConfigurator
 
 		@Override
 		public boolean match(Class<?> beanClass, String beanName) {
-			if (_counterMatcher) {
-				return beanName.equals(_COUNTER_SERVICE_BEAN_NAME);
-			}
-
 			if (!beanName.equals(_COUNTER_SERVICE_BEAN_NAME) &&
 				beanName.endsWith(_SERVICE_SUFFIX)) {
 
@@ -72,16 +66,10 @@ public class AopConfigurableApplicationContextConfigurator
 			return false;
 		}
 
-		private ServiceBeanMatcher(boolean counterMatcher) {
-			_counterMatcher = counterMatcher;
-		}
-
 		private static final String _COUNTER_SERVICE_BEAN_NAME =
 			"com.liferay.counter.kernel.service.CounterLocalService";
 
 		private static final String _SERVICE_SUFFIX = "Service";
-
-		private final boolean _counterMatcher;
 
 	}
 
@@ -129,17 +117,6 @@ public class AopConfigurableApplicationContextConfigurator
 
 				transactionInvokerUtil.setTransactionInvoker(
 					transactionInvokerImpl);
-
-				CounterServiceBeanAutoProxyCreator
-					counterServiceBeanAutoProxyCreator =
-						new CounterServiceBeanAutoProxyCreator(
-							_classLoader,
-							configurableListableBeanFactory.getBean(
-								"counterTransactionExecutor",
-								CounterTransactionExecutor.class));
-
-				configurableListableBeanFactory.addBeanPostProcessor(
-					counterServiceBeanAutoProxyCreator);
 			}
 
 			// Service AOP
@@ -274,32 +251,6 @@ public class AopConfigurableApplicationContextConfigurator
 
 	}
 
-	private static class CounterServiceBeanAutoProxyCreator
-		extends BaseServiceBeanAutoProxyCreator {
-
-		@Override
-		protected AopInvocationHandler createAopInvocationHandler(Object bean) {
-			return new AopInvocationHandler(
-				bean, _emptyChainableMethodAdvices,
-				_counterTransactionExecutor);
-		}
-
-		private CounterServiceBeanAutoProxyCreator(
-			ClassLoader classLoader,
-			CounterTransactionExecutor counterTransactionExecutor) {
-
-			super(new ServiceBeanMatcher(true), classLoader);
-
-			_counterTransactionExecutor = counterTransactionExecutor;
-		}
-
-		private static final ChainableMethodAdvice[]
-			_emptyChainableMethodAdvices = new ChainableMethodAdvice[0];
-
-		private final CounterTransactionExecutor _counterTransactionExecutor;
-
-	}
-
 	private static class ServiceBeanAutoProxyCreator
 		extends BaseServiceBeanAutoProxyCreator {
 
@@ -324,7 +275,7 @@ public class AopConfigurableApplicationContextConfigurator
 		private ServiceBeanAutoProxyCreator(
 			ClassLoader classLoader, TransactionExecutor transactionExecutor) {
 
-			super(new ServiceBeanMatcher(false), classLoader);
+			super(new ServiceBeanMatcher(), classLoader);
 
 			_transactionExecutor = transactionExecutor;
 		}

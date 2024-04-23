@@ -28,11 +28,6 @@ import java.util.Map;
 public enum Isolation {
 
 	/**
-	 * Use the isolation level of the counter service, as defined by the portal
-	 * properties.
-	 */
-	COUNTER(TransactionDefinition.ISOLATION_COUNTER),
-	/**
 	 * Use the default isolation level of the underlying data store.
 	 */
 	DEFAULT(TransactionDefinition.ISOLATION_DEFAULT),

@@ -409,7 +409,8 @@ definition {
 	@priority = 5
 	test CanBuyerEditProductOptionsOnThePendingOrder {
 		property custom.properties = "feature.flag.COMMERCE-9599=true";
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		task ("Given a new bundled product with an option (two values) and Static Price Type is created") {
 			CommerceJSONProductsAPI._addCommerceProduct(

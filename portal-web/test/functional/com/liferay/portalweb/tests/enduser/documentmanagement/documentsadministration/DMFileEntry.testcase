@@ -3000,66 +3000,6 @@ definition {
 		DMDocument.viewCardTitle(dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This case covers LPS-177597. It ensures that the expired document can be restored."
-	@priority = 3
-	test CanRestoreExpiredDocument {
-		property custom.properties = "company.default.time.zone=America/Los_Angeles";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		DMDocument.updateCheckInterval(fieldValue = 1);
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.txt",
-			groupName = "Guest",
-			mimeType = "text/plain",
-			sourceFileName = "Document_1.txt");
-
-		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "Document_1.txt",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMDocument.setExpirationDate(
-			enableExpirationDate = "true",
-			increaseMinutes = 1);
-
-		// We need to wait for the system time to pass by 1 minute in order to verify the document is expired. There is currently no easy way to manipulate the system time in CI for automation. 2 minutes is the shortest value we can set while ensuring the stability of the test. See LPS-192588.
-
-		Pause(value1 = 60000);
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.viewStatus(
-			dmDocumentStatus = "Expired",
-			dmDocumentTitle = "Document_1.txt");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.deleteCP(dmDocumentTitle = "Document_1.txt");
-
-		// We need to wait for the system time to pass by 1 minute in order to verify the document is not restored automatically. There is currently no easy way to manipulate the system time in CI for automation. 2 minutes is the shortest value we can set while ensuring the stability of the test. See LPS-192588.
-
-		Pause(value1 = 60000);
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.viewNoEntry(rowEntry = "Document_1.txt");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
-
-		RecycleBin.restoreCP(
-			assetName = "Document_1.txt",
-			assetType = "Document");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.viewStatus(
-			dmDocumentStatus = "Expired",
-			dmDocumentTitle = "Document_1.txt");
-	}
-
 	@description = "This test checks if file uploads can be restricted to .doc format."
 	@priority = 4
 	@refactordone

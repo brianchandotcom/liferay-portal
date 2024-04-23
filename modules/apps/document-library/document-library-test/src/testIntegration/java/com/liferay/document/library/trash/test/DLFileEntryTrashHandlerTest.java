@@ -59,6 +59,8 @@ import com.liferay.trash.test.util.WhenIsMoveableFromTrashBaseModel;
 import com.liferay.trash.test.util.WhenIsRestorableBaseModel;
 import com.liferay.trash.test.util.WhenIsUpdatableBaseModel;
 
+import java.util.Collections;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -210,6 +212,33 @@ public class DLFileEntryTrashHandlerTest
 		Assert.assertEquals(
 			DLUtil.getSanitizedFileName(title, dlFileVersion.getExtension()),
 			dlFileVersion.getFileName());
+	}
+
+	@Test
+	public void testRestoreExpiredFileEntry() throws Exception {
+		DLFileEntry dlFileEntry = (DLFileEntry)addBaseModelWithWorkflow(
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		dlFileEntry = DLFileEntryLocalServiceUtil.updateStatus(
+			dlFileEntry.getUserId(), dlFileEntry, dlFileEntry.getFileVersion(),
+			WorkflowConstants.STATUS_EXPIRED,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()),
+			Collections.emptyMap());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED, dlFileEntry.getStatus());
+
+		moveBaseModelToTrash(dlFileEntry.getFileEntryId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_IN_TRASH, dlFileEntry.getStatus());
+
+		moveBaseModelFromTrash(
+			dlFileEntry, group,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED, dlFileEntry.getStatus());
 	}
 
 	@Override

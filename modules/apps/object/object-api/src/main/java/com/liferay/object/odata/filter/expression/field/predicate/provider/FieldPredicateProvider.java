@@ -6,7 +6,6 @@
 package com.liferay.object.odata.filter.expression.field.predicate.provider;
 
 import com.liferay.petra.sql.dsl.Column;
-import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 
@@ -18,61 +17,21 @@ import java.util.function.Function;
  */
 public interface FieldPredicateProvider {
 
-	public default Predicate getBinaryExpressionPredicate(
-		Expression<?> objectDefinitionColumnSupplierExpression,
-		BinaryExpression.Operation operation, Object fieldValue) {
-
-		return null;
-	}
-
-	public default Predicate getBinaryExpressionPredicate(
+	public Predicate getBinaryExpressionPredicate(
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
 		Object left, long objectDefinitionId,
-		BinaryExpression.Operation operation, Object right) {
+		BinaryExpression.Operation operation, Object right);
 
-		return null;
-	}
-
-	public default Predicate getContainsPredicate(
-		Expression<?> objectDefinitionColumnSupplierExpression,
-		Object fieldValue) {
-
-		return null;
-	}
-
-	public default Predicate getContainsPredicate(
+	public Predicate getContainsPredicate(
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
-		Object fieldValue) {
+		String fieldName, Object fieldValue);
 
-		return null;
-	}
-
-	public default Predicate getInPredicate(
-		Expression<?> objectDefinitionColumnSupplierExpression,
-		List<Object> rights) {
-
-		return null;
-	}
-
-	public default Predicate getInPredicate(
+	public Predicate getInPredicate(
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
-		List<Object> rights) {
+		Object left, List<Object> rights);
 
-		return null;
-	}
-
-	public default Predicate getStartsWithPredicate(
-		Expression<?> objectDefinitionColumnSupplierExpression,
-		Object fieldValue) {
-
-		return null;
-	}
-
-	public default Predicate getStartsWithPredicate(
+	public Predicate getStartsWithPredicate(
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
-		Object fieldValue) {
-
-		return null;
-	}
+		String fieldName, Object fieldValue);
 
 }

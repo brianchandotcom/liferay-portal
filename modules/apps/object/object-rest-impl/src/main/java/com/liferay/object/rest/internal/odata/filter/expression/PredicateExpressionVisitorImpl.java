@@ -371,28 +371,14 @@ public class PredicateExpressionVisitorImpl
 		ObjectDefinition objectDefinition) {
 
 		FieldPredicateProvider fieldPredicateProvider =
-			_serviceTrackerMap.getService(String.valueOf(fieldName));
+			_getFieldPredicateProvider(
+				String.valueOf(fieldName), objectDefinition);
 
 		if (fieldPredicateProvider != null) {
 			return fieldPredicateProvider.getContainsPredicate(
-				name -> _getColumn(name, objectDefinition), fieldValue);
-		}
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			objectDefinition.getObjectDefinitionId(),
-			String.valueOf(fieldName));
-
-		if (objectField != null) {
-			fieldPredicateProvider = _serviceTrackerMap.getService(
-				objectField.getBusinessType());
-
-			if (fieldPredicateProvider != null) {
-				Object value = _getValue(
-					fieldName, objectDefinition, fieldValue);
-
-				return fieldPredicateProvider.getContainsPredicate(
-					_getColumn(fieldName, objectDefinition), value);
-			}
+				name -> _getColumn(name, objectDefinition),
+				String.valueOf(fieldName),
+				_getValue(fieldName, objectDefinition, fieldValue));
 		}
 
 		return _contains(
@@ -428,17 +414,6 @@ public class PredicateExpressionVisitorImpl
 			entityField.getFilterableName(null));
 	}
 
-	private com.liferay.petra.sql.dsl.expression.Expression<String>
-		_getDSLExpression(Object fieldName, ObjectDefinition objectDefinition) {
-
-		EntityField entityField = _getEntityField(fieldName, objectDefinition);
-
-		return (com.liferay.petra.sql.dsl.expression.Expression<String>)
-			_objectFieldLocalService.getColumn(
-				objectDefinition.getObjectDefinitionId(),
-				entityField.getFilterableName(null));
-	}
-
 	private EntityField _getEntityField(
 		Object fieldName, ObjectDefinition objectDefinition) {
 
@@ -457,28 +432,35 @@ public class PredicateExpressionVisitorImpl
 		return entityModel.getEntityFieldsMap();
 	}
 
+	private FieldPredicateProvider _getFieldPredicateProvider(
+		String fieldName, ObjectDefinition objectDefinition) {
+
+		FieldPredicateProvider fieldPredicateProvider =
+			_serviceTrackerMap.getService(fieldName);
+
+		if (fieldPredicateProvider != null) {
+			return fieldPredicateProvider;
+		}
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinition.getObjectDefinitionId(), fieldName);
+
+		if (objectField != null) {
+			return _serviceTrackerMap.getService(objectField.getBusinessType());
+		}
+
+		return null;
+	}
+
 	private Predicate _getInPredicate(
 		Object left, ObjectDefinition objectDefinition, List<Object> rights) {
 
 		FieldPredicateProvider fieldPredicateProvider =
-			_serviceTrackerMap.getService(String.valueOf(left));
+			_getFieldPredicateProvider(String.valueOf(left), objectDefinition);
 
 		if (fieldPredicateProvider != null) {
 			return fieldPredicateProvider.getInPredicate(
-				name -> _getColumn(name, objectDefinition), rights);
-		}
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			objectDefinition.getObjectDefinitionId(), String.valueOf(left));
-
-		if (objectField != null) {
-			fieldPredicateProvider = _serviceTrackerMap.getService(
-				objectField.getBusinessType());
-
-			if (fieldPredicateProvider != null) {
-				return fieldPredicateProvider.getInPredicate(
-					_getDSLExpression(left, objectDefinition), rights);
-			}
+				name -> _getColumn(name, objectDefinition), left, rights);
 		}
 
 		return _getColumn(
@@ -627,41 +609,15 @@ public class PredicateExpressionVisitorImpl
 				Predicate.withParentheses((Predicate)right));
 		}
 		else {
-			FieldPredicateProvider fieldPredicateProvider = null;
+			FieldPredicateProvider fieldPredicateProvider =
+				_getFieldPredicateProvider(
+					String.valueOf(left), objectDefinition);
 
-			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-				objectDefinition.getObjectDefinitionId(), String.valueOf(left));
-
-			if (objectField == null) {
-				fieldPredicateProvider = _serviceTrackerMap.getService(
-					String.valueOf(left));
-
-				if (fieldPredicateProvider != null) {
-					predicate =
-						fieldPredicateProvider.getBinaryExpressionPredicate(
-							name -> _getColumn(name, objectDefinition), left,
-							objectDefinition.getObjectDefinitionId(), operation,
-							right);
-				}
-			}
-			else {
-				fieldPredicateProvider = _serviceTrackerMap.getService(
-					objectField.getBusinessType());
-
-				if (fieldPredicateProvider != null) {
-					Object object = _getValue(left, objectDefinition, right);
-
-					if (operation instanceof BinaryExpression.Operation) {
-						predicate =
-							fieldPredicateProvider.getBinaryExpressionPredicate(
-								_getDSLExpression(left, objectDefinition),
-								operation, object);
-					}
-					else {
-						predicate = fieldPredicateProvider.getContainsPredicate(
-							_getColumn(left, objectDefinition), object);
-					}
-				}
+			if (fieldPredicateProvider != null) {
+				predicate = fieldPredicateProvider.getBinaryExpressionPredicate(
+					name -> _getColumn(name, objectDefinition), left,
+					objectDefinition.getObjectDefinitionId(), operation,
+					_getValue(left, objectDefinition, right));
 			}
 		}
 
@@ -801,24 +757,13 @@ public class PredicateExpressionVisitorImpl
 		ObjectDefinition objectDefinition) {
 
 		FieldPredicateProvider fieldPredicateProvider =
-			_serviceTrackerMap.getService(String.valueOf(fieldName));
+			_getFieldPredicateProvider(
+				String.valueOf(fieldName), objectDefinition);
 
 		if (fieldPredicateProvider != null) {
 			return fieldPredicateProvider.getStartsWithPredicate(
-				name -> _getColumn(name, objectDefinition), fieldValue);
-		}
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			objectDefinition.getObjectDefinitionId(),
-			String.valueOf(fieldName));
-
-		fieldPredicateProvider = _serviceTrackerMap.getService(
-			objectField.getBusinessType());
-
-		if (fieldPredicateProvider != null) {
-			return fieldPredicateProvider.getStartsWithPredicate(
-				_getDSLExpression(fieldName, objectDefinition),
-				_getValue(fieldName, objectDefinition, fieldValue));
+				name -> _getColumn(name, objectDefinition),
+				String.valueOf(fieldName), fieldValue);
 		}
 
 		return _startsWith(

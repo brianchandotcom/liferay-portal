@@ -47,7 +47,7 @@ public class KeywordsFieldPredicateProvider implements FieldPredicateProvider {
 	@Override
 	public Predicate getContainsPredicate(
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
-		Object fieldValue) {
+		String fieldName, Object fieldValue) {
 
 		return _getKeywordsPredicate(
 			objectDefinitionColumnSupplier,
@@ -58,7 +58,7 @@ public class KeywordsFieldPredicateProvider implements FieldPredicateProvider {
 	@Override
 	public Predicate getInPredicate(
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
-		List<Object> rights) {
+		Object left, List<Object> rights) {
 
 		return _getKeywordsPredicate(
 			objectDefinitionColumnSupplier,
@@ -70,7 +70,7 @@ public class KeywordsFieldPredicateProvider implements FieldPredicateProvider {
 	@Override
 	public Predicate getStartsWithPredicate(
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
-		Object fieldValue) {
+		String fieldName, Object fieldValue) {
 
 		return _getKeywordsPredicate(
 			objectDefinitionColumnSupplier,

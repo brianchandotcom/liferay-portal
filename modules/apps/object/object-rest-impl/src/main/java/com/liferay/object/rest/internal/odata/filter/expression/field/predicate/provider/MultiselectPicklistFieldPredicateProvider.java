@@ -7,6 +7,7 @@ package com.liferay.object.rest.internal.odata.filter.expression.field.predicate
 
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.odata.filter.expression.field.predicate.provider.FieldPredicateProvider;
+import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -19,6 +20,7 @@ import com.liferay.portal.odata.filter.expression.MethodExpression;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,8 +36,9 @@ public class MultiselectPicklistFieldPredicateProvider
 
 	@Override
 	public Predicate getBinaryExpressionPredicate(
-		Expression<?> objectDefinitionColumnSupplierExpression,
-		BinaryExpression.Operation operation, Object fieldValue) {
+		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
+		Object left, long objectDefinitionId,
+		BinaryExpression.Operation operation, Object right) {
 
 		if (!Objects.equals(operation, BinaryExpression.Operation.EQ)) {
 			throw new UnsupportedOperationException(
@@ -44,26 +47,29 @@ public class MultiselectPicklistFieldPredicateProvider
 		}
 
 		Expression<String> columnFieldExpression = _getFormatedColumnExpression(
-			(Expression<String>)objectDefinitionColumnSupplierExpression);
+			(Expression<String>)objectDefinitionColumnSupplier.apply(
+				String.valueOf(left)));
 
 		return columnFieldExpression.like(
-			_getFieldValueExpression(null, fieldValue));
+			_getFieldValueExpression(null, right));
 	}
 
 	@Override
 	public Predicate getContainsPredicate(
-		Expression<?> objectDefinitionColumnSupplierExpression,
-		Object fieldValue) {
+		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
+		String fieldName, Object fieldValue) {
 
-		return objectDefinitionColumnSupplierExpression.like(
-			_getFieldValueExpression(
-				MethodExpression.Type.CONTAINS, fieldValue));
+		return objectDefinitionColumnSupplier.apply(
+			fieldName
+		).like(
+			_getFieldValueExpression(MethodExpression.Type.CONTAINS, fieldValue)
+		);
 	}
 
 	@Override
 	public Predicate getInPredicate(
-		Expression<?> objectDefinitionColumnSupplierExpression,
-		List<Object> rights) {
+		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
+		Object left, List<Object> rights) {
 
 		if (ListUtil.isEmpty(rights)) {
 			return null;
@@ -74,13 +80,13 @@ public class MultiselectPicklistFieldPredicateProvider
 		for (Object right : rights) {
 			if (predicate == null) {
 				predicate = getBinaryExpressionPredicate(
-					objectDefinitionColumnSupplierExpression,
+					objectDefinitionColumnSupplier, left, 0,
 					BinaryExpression.Operation.EQ, right);
 			}
 			else {
 				predicate = predicate.or(
 					getBinaryExpressionPredicate(
-						objectDefinitionColumnSupplierExpression,
+						objectDefinitionColumnSupplier, left, 0,
 						BinaryExpression.Operation.EQ, right));
 			}
 		}
@@ -90,11 +96,12 @@ public class MultiselectPicklistFieldPredicateProvider
 
 	@Override
 	public Predicate getStartsWithPredicate(
-		Expression<?> objectDefinitionColumnSupplierExpression,
-		Object fieldValue) {
+		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
+		String fieldName, Object fieldValue) {
 
 		Expression<String> columnFieldExpression = _getFormatedColumnExpression(
-			(Expression<String>)objectDefinitionColumnSupplierExpression);
+			(Expression<String>)objectDefinitionColumnSupplier.apply(
+				fieldName));
 
 		return columnFieldExpression.like(
 			_getFieldValueExpression(

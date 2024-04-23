@@ -47,7 +47,7 @@ public class TaxonomyCategoryIdsFieldPredicateProvider
 	@Override
 	public Predicate getContainsPredicate(
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
-		Object fieldValue) {
+		String fieldName, Object fieldValue) {
 
 		throw new UnsupportedOperationException(
 			"Unsupported method getContainsPredicate for taxonomyCategoryIds");
@@ -56,7 +56,7 @@ public class TaxonomyCategoryIdsFieldPredicateProvider
 	@Override
 	public Predicate getInPredicate(
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
-		List<Object> rights) {
+		Object left, List<Object> rights) {
 
 		return _getTaxonomyCategoryIdsPredicate(
 			objectDefinitionColumnSupplier,
@@ -69,7 +69,7 @@ public class TaxonomyCategoryIdsFieldPredicateProvider
 	@Override
 	public Predicate getStartsWithPredicate(
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
-		Object fieldValue) {
+		String fieldName, Object fieldValue) {
 
 		throw new UnsupportedOperationException(
 			"Unsupported method getStartsWithPredicate for " +

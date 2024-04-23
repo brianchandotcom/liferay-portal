@@ -8,7 +8,7 @@
 	<ul class="list-unstyled tab-list">
 		<li class="facet-value">
 			<@clay.button
-				cssClass="facet-clear btn-unstyled ${assetCategoriesSearchFacetDisplayContext.isNothingSelected()?then('facet-term-selected', 'facet-term-unselected')}"
+				cssClass="facet-clear btn-unstyled ${assetCategoriesSearchFacetDisplayContext.isNothingSelected()?then('selected-tab-btn', '')}"
 				displayType="link"
 				onClick="Liferay.Search.FacetUtil.clearSelections(event);"
 				value="clear"
@@ -24,11 +24,11 @@
 		<#list entries as entry>
 			<li class="facet-value">
 				<@clay.button
-					cssClass="facet-term btn-unstyled ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} term-name"
+					cssClass="facet-term btn-unstyled term-name ${(entry.isSelected())?then('selected-tab-btn', '')}"
 					data\-term\-id="${entry.getFilterValue()}"
 					disabled="true"
 					displayType="link"
-					onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+					onClick="${namespace}updateSelection(event)"
 				>
 					<span class="term-text">${htmlUtil.escape(entry.getBucketText())}</span>
 
@@ -40,3 +40,17 @@
 		</#list>
 	</ul>
 </#if>
+
+<@liferay_aui.script>
+	function ${namespace}updateSelection(event) {
+		const form = event.currentTarget.form;
+
+		if (!form) {
+			return;
+		}
+
+		Liferay.Search.FacetUtil.selectTerms(form, []);
+
+		Liferay.Search.FacetUtil.changeSelection(event);
+	}
+</@>

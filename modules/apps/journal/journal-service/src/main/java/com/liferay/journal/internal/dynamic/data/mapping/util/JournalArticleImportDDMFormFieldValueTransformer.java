@@ -111,7 +111,7 @@ public class JournalArticleImportDDMFormFieldValueTransformer
 						(Map<String, String>)
 							_portletDataContext.getNewPrimaryKeysMap(
 								JournalArticle.class +
-									".postProcessArticleUuids");
+									".postProcessArticleUuid");
 
 					postProcessArticleUuids.computeIfAbsent(
 						_stagedModel.getUuid(),

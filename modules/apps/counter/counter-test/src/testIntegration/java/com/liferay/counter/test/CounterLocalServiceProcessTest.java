@@ -56,7 +56,7 @@ import org.junit.runner.RunWith;
  * @author Shuyang Zhou
  */
 @RunWith(Arquillian.class)
-public class CounterLocalServiceTest {
+public class CounterLocalServiceProcessTest {
 
 	@ClassRule
 	@Rule
@@ -127,7 +127,7 @@ public class CounterLocalServiceTest {
 		builder.setRuntimeClassPath(
 			_prependClassPath(
 				portalProcessConfig.getRuntimeClassPath(),
-				CounterLocalServiceTest.class,
+				CounterLocalServiceProcessTest.class,
 				LiferayIntegrationTestRule.class));
 
 		ProcessConfig processConfig = builder.build();
@@ -192,7 +192,7 @@ public class CounterLocalServiceTest {
 	}
 
 	private static final String _COUNTER_NAME =
-		CounterLocalServiceTest.class.getName();
+		CounterLocalServiceProcessTest.class.getName();
 
 	private static final int _INCREMENT_COUNT = 10000;
 

@@ -124,6 +124,7 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
@@ -198,6 +199,8 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup(
 			_company.getCompanyId(), _companyAdminUser.getUserId(), 0);
+
+		_childGroup = GroupTestUtil.addGroup(_group.getGroupId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group, _companyAdminUser.getUserId());
@@ -1019,6 +1022,47 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, fileVersion.getStatus());
+	}
+
+	@FeatureFlags("LPD-23210")
+	@Test
+	public void testPreventNotifyingAncestorSites() throws Exception {
+
+		// Notifiy ancestor sites
+
+		_activateWorkflow(
+			0, BlogsEntry.class.getName(), 0, 0, _SITE_MEMBER_SINGLE_APPROVER,
+			1);
+
+		User childSiteMemberUser = _createUser(
+			RoleConstants.SITE_MEMBER, _childGroup);
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_childGroup.getGroupId());
+
+		BlogsEntry blogsEntry = _addBlogsEntry();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, blogsEntry.getStatus());
+
+		_checkUserNotificationEventsByUsers(
+			1, childSiteMemberUser, _siteMemberUser);
+
+		// Prevent notifiying ancestor sites
+
+		ConfigurationTestUtil.saveConfiguration(
+			_configuration,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"preventNotifyingAncestorSites", true
+			).build());
+
+		blogsEntry = _addBlogsEntry();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, blogsEntry.getStatus());
+
+		_checkUserNotificationEventsByUsers(1, childSiteMemberUser);
+		_checkUserNotificationEventsByUsers(0, _siteMemberUser);
 	}
 
 	@Test
@@ -2185,6 +2229,9 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@DeleteAfterTestRun
+	private Group _childGroup;
 
 	@Inject
 	private CommerceChannelLocalService _commerceChannelLocalService;

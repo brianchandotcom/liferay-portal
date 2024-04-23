@@ -143,6 +143,18 @@ public class TemplateEntryLocalServiceImpl
 		return templateEntryPersistence.update(templateEntry);
 	}
 
+	@Override
+	public TemplateEntry updateTemplateEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		TemplateEntry templateEntry = templateEntryPersistence.findByERC_G(
+			externalReferenceCode, groupId);
+
+		return templateEntryLocalService.updateTemplateEntry(
+			templateEntry.getTemplateEntryId());
+	}
+
 	@Reference
 	private UserLocalService _userLocalService;
 

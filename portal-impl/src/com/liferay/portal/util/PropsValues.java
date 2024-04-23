@@ -2330,9 +2330,6 @@ public class PropsValues {
 	public static int THREAD_DUMP_SPEED_THRESHOLD = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.THREAD_DUMP_SPEED_THRESHOLD));
 
-	public static int TRANSACTION_ISOLATION_COUNTER = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.TRANSACTION_ISOLATION_COUNTER));
-
 	public static int TRANSACTION_ISOLATION_PORTAL = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.TRANSACTION_ISOLATION_PORTAL));
 

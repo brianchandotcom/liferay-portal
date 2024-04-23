@@ -2646,9 +2646,6 @@ public interface PropsKeys {
 
 	public static final String TIME_ZONES = "time.zones";
 
-	public static final String TRANSACTION_ISOLATION_COUNTER =
-		"transaction.isolation.counter";
-
 	public static final String TRANSACTION_ISOLATION_PORTAL =
 		"transaction.isolation.portal";
 

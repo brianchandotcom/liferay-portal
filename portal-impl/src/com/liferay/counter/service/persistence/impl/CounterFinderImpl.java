@@ -164,14 +164,18 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 		synchronized (counterRegister) {
 			Session session = null;
 
-			try {
-				session = openSession();
+			try (Connection connection = getConnection()) {
+				connection.setAutoCommit(false);
+
+				session = _sessionFactory.openNewSession(connection);
 
 				Counter counter = (Counter)session.get(CounterImpl.class, name);
 
 				session.delete(counter);
 
 				session.flush();
+
+				connection.commit();
 			}
 			catch (ObjectNotFoundException objectNotFoundException) {
 				if (_log.isDebugEnabled()) {
@@ -301,10 +305,6 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 		return rangeSize.intValue();
 	}
 
-	protected Session openSession() throws ORMException {
-		return _sessionFactory.openSession();
-	}
-
 	protected SystemException processException(Exception exception) {
 		if (!(exception instanceof ORMException)) {
 			_log.error("Caught unexpected exception", exception);
@@ -407,8 +407,10 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 
 		Session session = null;
 
-		try {
-			session = openSession();
+		try (Connection connection = getConnection()) {
+			connection.setAutoCommit(false);
+
+			session = _sessionFactory.openNewSession(connection);
 
 			Counter counter = (Counter)session.get(
 				CounterImpl.class, counterName, LockMode.UPGRADE);
@@ -428,6 +430,8 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 			session.saveOrUpdate(counter);
 
 			session.flush();
+
+			connection.commit();
 
 			return counterHolder;
 		}

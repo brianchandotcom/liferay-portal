@@ -5,6 +5,7 @@
 
 package com.liferay.portal.spring.transaction;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleManager;
 
 import org.springframework.transaction.PlatformTransactionManager;
@@ -13,7 +14,7 @@ import org.springframework.transaction.PlatformTransactionManager;
  * @author Michael C. Han
  * @author Shuyang Zhou
  */
-public class DefaultTransactionExecutor extends BaseTransactionExecutor {
+public class DefaultTransactionExecutor implements TransactionExecutor {
 
 	public DefaultTransactionExecutor(
 		PlatformTransactionManager platformTransactionManager) {
@@ -53,6 +54,31 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 			transactionStatusAdapter.reportLifecycleListenerThrowables(
 				transactionManagerThrowable);
 		}
+	}
+
+	@Override
+	public <T> T execute(
+			TransactionAttributeAdapter transactionAttributeAdapter,
+			UnsafeSupplier<T, Throwable> unsafeSupplier)
+		throws Throwable {
+
+		TransactionStatusAdapter transactionStatusAdapter = start(
+			transactionAttributeAdapter);
+
+		T returnValue = null;
+
+		try {
+			returnValue = unsafeSupplier.get();
+		}
+		catch (Throwable throwable) {
+			rollback(
+				throwable, transactionAttributeAdapter,
+				transactionStatusAdapter);
+		}
+
+		commit(transactionAttributeAdapter, transactionStatusAdapter);
+
+		return returnValue;
 	}
 
 	@Override

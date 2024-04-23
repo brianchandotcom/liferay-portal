@@ -51,34 +51,16 @@ public interface CounterLocalService extends BaseLocalService {
 	 */
 	public String getOSGiServiceIdentifier();
 
-	@Transactional(
-		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW
-	)
 	public long increment();
 
-	@Transactional(
-		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW
-	)
 	public long increment(String name);
 
-	@Transactional(
-		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW
-	)
 	public long increment(String name, int size);
 
-	@Transactional(
-		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW
-	)
 	public void rename(String oldName, String newName);
 
-	@Transactional(
-		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW
-	)
 	public void reset(String name);
 
-	@Transactional(
-		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW
-	)
 	public void reset(String name, long size);
 
 }

@@ -38,11 +38,7 @@ public class TransactionAttributeBuilder {
 		RuleBasedTransactionAttribute ruleBasedTransactionAttribute =
 			new RuleBasedTransactionAttribute();
 
-		if (isolation.value() == TransactionDefinition.ISOLATION_COUNTER) {
-			ruleBasedTransactionAttribute.setIsolationLevel(
-				PropsValues.TRANSACTION_ISOLATION_COUNTER);
-		}
-		else if (isolation.value() == TransactionDefinition.ISOLATION_PORTAL) {
+		if (isolation.value() == TransactionDefinition.ISOLATION_PORTAL) {
 			ruleBasedTransactionAttribute.setIsolationLevel(
 				PropsValues.TRANSACTION_ISOLATION_PORTAL);
 		}

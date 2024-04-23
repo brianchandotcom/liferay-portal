@@ -27,7 +27,7 @@ public class ObjectActionMDFClaimStatusManagementRestController
 		JSONObject jsonObject = new JSONObject(json);
 
 		JSONObject mdfClaimJSONObject = jsonObject.getJSONObject(
-			"originalObjectEntryDTOMDFClaim");
+			"objectEntryDTOMDFClaim");
 
 		JSONObject mdfClaimPropertiesJSONObject =
 			mdfClaimJSONObject.getJSONObject("properties");

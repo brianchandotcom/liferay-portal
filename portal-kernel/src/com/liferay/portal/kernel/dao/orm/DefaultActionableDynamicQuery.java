@@ -6,11 +6,13 @@
 package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -274,15 +276,22 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 					DefaultActionableDynamicQuery.class.getName());
 
 			if (_parallel && (executorService != null)) {
+				long companyId = CompanyThreadLocal.getCompanyId();
+
 				List<Future<Void>> futures = new ArrayList<>(objects.size());
 
 				for (final Object object : objects) {
 					futures.add(
 						executorService.submit(
 							() -> {
-								performAction(object);
+								try (SafeCloseable safeCloseable =
+										CompanyThreadLocal.setWithSafeCloseable(
+											companyId)) {
 
-								return null;
+									performAction(object);
+
+									return null;
+								}
 							}));
 				}
 

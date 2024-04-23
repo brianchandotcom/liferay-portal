@@ -24,6 +24,7 @@ import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -223,12 +224,38 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 			fragmentEntry.getTypeOptions(), fragmentEntry.getStatus());
 	}
 
-	private static final String _CONFIGURATION = StringBundler.concat(
-		"{\"fieldSets\": [{\"fields\": [{\"dataType\": \"int\",",
-		"\"defaultValue\": \"4\",\"label\": \"number-of-slides\",\"name\": ",
-		"\"numberOfSlides\",\"type\": \"text\",\"typeOptions\": ",
-		"{\"validation\": {\"max\": 4,\"min\": 1,\"type\": ",
-		"\"number\"}}}],\"label\": \"Configuration\"}]}");
+	private static final String _CONFIGURATION = JSONUtil.put(
+		"fieldSets",
+		JSONUtil.put(
+			JSONUtil.put(
+				"fields",
+				JSONUtil.put(
+					JSONUtil.put(
+						"dataType", "int"
+					).put(
+						"defaultValue", "4"
+					).put(
+						"label", "number-of-slides"
+					).put(
+						"name", "numberOfSlides"
+					).put(
+						"type", "text"
+					).put(
+						"typeOptions",
+						JSONUtil.put(
+							"validation",
+							JSONUtil.put(
+								"max", 4
+							).put(
+								"min", 1
+							).put(
+								"type", "number"
+							))
+					))
+			).put(
+				"label", "Configuration"
+			))
+	).toString();
 
 	private static final String _HTML = StringBundler.concat(
 		"[#list 0..configuration.numberOfSlides-1 as i]\n",

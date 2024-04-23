@@ -209,18 +209,8 @@ export const fragmentTest = mergeTests(
 
 fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 	fragmentTest(
-		'Default Visualization Mode is not configured (no field for any section). Use Table as default',
-		async ({
-			apiHelpers,
-			dataSetManagerApiHelpers,
-			fdsFragmentPage,
-			page,
-			site,
-		}) => {
-			await test.step('Create random data (fields) for other Data Sets', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewFields({});
-			});
-
+		'Default Visualization Mode is not configured (no field for any section). FDS does not appear.',
+		async ({apiHelpers, fdsFragmentPage, page, site}) => {
 			const layout = await fragmentTest.step(
 				'Create a new page',
 				async () => {
@@ -245,16 +235,10 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				}
 			);
 
-			fragmentTest.step('Empty Data Set is in the page', async () => {
-				await expect(page.locator('.data-set-wrapper')).toBeVisible();
-
-				expect(
-					await page
-						.locator('.dnd-tbody > div')
-						.first()
-						.locator('.dnd-td')
-						.allInnerTexts()
-				).toEqual([]);
+			fragmentTest.step('No Data Set is in the page', async () => {
+				await expect(
+					page.locator('.data-set-wrapper')
+				).not.toBeVisible();
 			});
 		}
 	);

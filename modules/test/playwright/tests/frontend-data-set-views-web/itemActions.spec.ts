@@ -137,7 +137,22 @@ export const fragmentTest = mergeTests(
 fragmentTest.describe('Item Actions in the fragment', () => {
 	fragmentTest(
 		'Item Action button does not appear if there is no item action',
-		async ({apiHelpers, fdsFragmentPage, site}) => {
+		async ({
+			apiHelpers,
+			dataSetManagerApiHelpers,
+			fdsFragmentPage,
+			site,
+		}) => {
+			await fragmentTest.step('Create table field', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewFields({
+					label_i18n: {en_US: 'Id'},
+					name: 'id',
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'string',
+				});
+			});
+
 			const layout = await fragmentTest.step(
 				'Create a new page',
 				async () => {

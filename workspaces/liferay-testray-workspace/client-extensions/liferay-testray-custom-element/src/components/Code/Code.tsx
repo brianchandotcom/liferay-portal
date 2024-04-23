@@ -7,12 +7,16 @@ import classNames from 'classnames';
 
 type CodeProps = React.HTMLAttributes<HTMLElement>;
 
-const Code: React.FC<CodeProps> = ({children, className}) => {
+const Code: React.FC<CodeProps> = ({children, className, title}) => {
 	if (!children) {
 		return null;
 	}
 
-	return <code className={classNames('tr-code', className)}>{children}</code>;
+	return (
+		<code className={classNames('tr-code', className)} title={title}>
+			{children}
+		</code>
+	);
 };
 
 export default Code;

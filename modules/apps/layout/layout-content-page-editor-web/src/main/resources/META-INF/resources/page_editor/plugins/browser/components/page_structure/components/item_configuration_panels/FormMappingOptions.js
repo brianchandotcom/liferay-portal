@@ -5,7 +5,7 @@
 
 import {useControlledState} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
 import {FORM_MAPPING_SOURCES} from '../../../../../../app/config/constants/formMappingSources';
@@ -17,36 +17,7 @@ export default function FormMappingOptions({
 	item,
 	onValueSelect,
 }) {
-	let formTypes = [
-		{
-			label: Liferay.Language.get('none'),
-			value: '0',
-		},
-		...config.formTypes
-			.filter((formType) => !formType.isRestricted)
-			.map((formType) => ({
-				...formType,
-				subtypes: formType.subtypes.filter(
-					(subtype) => !subtype.isRestricted
-				),
-			})),
-	];
-
-	if (config.layoutType === LAYOUT_TYPES.display) {
-		formTypes = formTypes.map((formType) => {
-			if (formType.value === config.selectedMappingTypes.type.id) {
-				return {
-					...formType,
-					label: sub(
-						Liferay.Language.get('x-default'),
-						config.selectedMappingTypes.type.label
-					),
-				};
-			}
-
-			return formType;
-		});
-	}
+	const formTypes = useMemo(() => getTypes(), []);
 
 	const [classNameId, setClassNameId] = useControlledState(
 		item.config.classNameId
@@ -121,4 +92,39 @@ export default function FormMappingOptions({
 			)}
 		</>
 	);
+}
+
+function getTypes() {
+	let formTypes = [
+		{
+			label: Liferay.Language.get('none'),
+			value: '0',
+		},
+		...config.formTypes
+			.filter((formType) => !formType.isRestricted)
+			.map((formType) => ({
+				...formType,
+				subtypes: formType.subtypes.filter(
+					(subtype) => !subtype.isRestricted
+				),
+			})),
+	];
+
+	if (config.layoutType === LAYOUT_TYPES.display) {
+		formTypes = formTypes.map((formType) => {
+			if (formType.value === config.selectedMappingTypes.type.id) {
+				return {
+					...formType,
+					label: sub(
+						Liferay.Language.get('x-default'),
+						config.selectedMappingTypes.type.label
+					),
+				};
+			}
+
+			return formType;
+		});
+	}
+
+	return formTypes;
 }

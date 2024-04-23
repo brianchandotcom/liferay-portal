@@ -159,18 +159,20 @@ public class AssetListEntryLocalServiceImpl
 
 	@Override
 	public AssetListEntry addAssetListEntry(
-			long userId, long groupId, String title, int type,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			String title, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addAssetListEntry(
-			userId, groupId, title, type, null, serviceContext);
+			externalReferenceCode, userId, groupId, title, type, null,
+			serviceContext);
 	}
 
 	@Override
 	public AssetListEntry addAssetListEntry(
-			long userId, long groupId, String title, int type,
-			String typeSettings, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			String title, int type, String typeSettings,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Asset list entry
@@ -185,6 +187,7 @@ public class AssetListEntryLocalServiceImpl
 			assetListEntryId);
 
 		assetListEntry.setUuid(serviceContext.getUuid());
+		assetListEntry.setExternalReferenceCode(externalReferenceCode);
 		assetListEntry.setGroupId(groupId);
 		assetListEntry.setCompanyId(user.getCompanyId());
 		assetListEntry.setUserId(user.getUserId());

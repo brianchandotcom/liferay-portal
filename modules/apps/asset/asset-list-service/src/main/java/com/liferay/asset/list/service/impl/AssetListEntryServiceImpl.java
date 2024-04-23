@@ -67,7 +67,8 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 
 	@Override
 	public AssetListEntry addAssetListEntry(
-			long groupId, String title, int type, ServiceContext serviceContext)
+			String externalReferenceCode, long groupId, String title, int type,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -75,7 +76,7 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 			AssetListActionKeys.ADD_ASSET_LIST_ENTRY);
 
 		return assetListEntryLocalService.addAssetListEntry(
-			getUserId(), groupId, title, type, serviceContext);
+			null, getUserId(), groupId, title, type, serviceContext);
 	}
 
 	@Override

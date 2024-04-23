@@ -11,6 +11,7 @@ import {ViewObjectDefinitionsPage} from './ViewObjectDefinitionsPage';
 export class ModelBuilderPage {
 	readonly addObjectFieldButton: Locator;
 	readonly createNewObjectDefinitionButton: Locator;
+	readonly deleteObjectDefinitionOption: Locator;
 	readonly deleteObjectRelationshipButton: Locator;
 	readonly editObjectFolderDetailsButton: Locator;
 	readonly fitViewButton: Locator;
@@ -21,6 +22,8 @@ export class ModelBuilderPage {
 	readonly newObjectFieldName: Locator;
 	readonly newObjectFieldSaveButton: Locator;
 	readonly newObjectFieldSelectPicklist: Locator;
+	readonly modalDeleteObjectDefinitionConfirmationButton: Locator;
+	readonly modalDeleteObjectDefinitionTextField: Locator;
 	readonly modalDeleteObjectRelationshipConfirmationButton: Locator;
 	readonly modalDeleteObjectRelationshipTextField: Locator;
 	readonly newObjectRelationshipLabel: Locator;
@@ -43,6 +46,9 @@ export class ModelBuilderPage {
 		});
 		this.createNewObjectDefinitionButton =
 			page.getByText('Create New Object');
+		this.deleteObjectDefinitionOption = page.getByRole('menuitem', {
+			name: 'Delete Object',
+		});
 		this.deleteObjectRelationshipButton = page.getByLabel(
 			'Delete Relationship'
 		);
@@ -57,7 +63,14 @@ export class ModelBuilderPage {
 			name: 'Go to Folder',
 		});
 		this.leftSidebarItems = page.locator(
-			'li.treeview-item div.autofit-col'
+			'li.treeview-item div.autofit-row'
+		);
+		this.modalDeleteObjectDefinitionConfirmationButton = page.getByRole(
+			'button',
+			{exact: true, name: 'Delete'}
+		);
+		this.modalDeleteObjectDefinitionTextField = page.getByPlaceholder(
+			'Confirm Object Definition Name'
 		);
 		this.modalDeleteObjectRelationshipConfirmationButton = page.getByRole(
 			'button',
@@ -114,6 +127,10 @@ export class ModelBuilderPage {
 		this.toggleSidebarsButton = page.getByLabel('Toggle Sidebars');
 	}
 
+	async clickDeleteObjectDefinition() {
+		this.deleteObjectDefinitionOption.click();
+	}
+
 	async clickDeleteObjectRelationshipButton() {
 		this.deleteObjectRelationshipButton.click();
 	}
@@ -124,6 +141,28 @@ export class ModelBuilderPage {
 
 	async clickGoToFolderButton() {
 		this.goToFolderButton.click();
+	}
+
+	async clickLeftSideBarItem(objectDefinitionLabel: string) {
+		await this.leftSidebarItems
+			.filter({hasText: objectDefinitionLabel})
+			.click();
+	}
+
+	async clickObjectDefinitionActionsButton(objectDefinitionLabel: string) {
+		await this.objectDefinitionNodes
+			.filter({hasText: objectDefinitionLabel})
+			.getByLabel('Show Actions')
+			.click();
+	}
+
+	async clickObjectDefinitionActionsButtonInLeftSidebar(
+		objectDefinitionLabel: string
+	) {
+		await this.leftSidebarItems
+			.filter({hasText: objectDefinitionLabel})
+			.getByLabel('Actions')
+			.click();
 	}
 
 	async clickObjectRelationshipEdge(objectRelationshipLabel: string) {
@@ -215,6 +254,15 @@ export class ModelBuilderPage {
 		const response = await responsePromise;
 
 		return response.json();
+	}
+
+	async deleteObjectDefinition(objectDefinitionName: string) {
+		await this.deleteObjectDefinitionOption.click();
+		await this.modalDeleteObjectDefinitionTextField.click();
+		await this.modalDeleteObjectDefinitionTextField.fill(
+			objectDefinitionName
+		);
+		await this.modalDeleteObjectDefinitionConfirmationButton.click();
 	}
 
 	async deleteObjectRelationship(objectRelationshipName: string) {

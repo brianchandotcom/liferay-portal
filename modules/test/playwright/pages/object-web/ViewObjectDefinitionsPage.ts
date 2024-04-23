@@ -15,6 +15,7 @@ export class ViewObjectDefinitionsPage {
 	readonly createObjectFolderButton: Locator;
 	readonly confirmObjectFolderNameInput: Locator;
 	readonly defaultObjectFolder: Locator;
+	readonly deleteObjectDefinitionOption: Locator;
 	readonly deleteObjectFolderButton: Locator;
 	readonly frontendDataSetEntries: Locator;
 	readonly objectFolderActions: Locator;
@@ -41,6 +42,9 @@ export class ViewObjectDefinitionsPage {
 		this.defaultObjectFolder = page
 			.getByRole('listitem')
 			.filter({hasText: 'Default'});
+		this.deleteObjectDefinitionOption = page.getByRole('menuitem', {
+			name: 'Delete',
+		});
 		this.deleteObjectFolderButton = page.getByRole('button', {
 			name: 'Delete',
 		});
@@ -73,6 +77,10 @@ export class ViewObjectDefinitionsPage {
 
 	async clickEditObjectDefinitionLink(objectDefinitionName: string) {
 		await this.page.getByRole('link', {name: objectDefinitionName}).click();
+	}
+
+	async clickDeleteObjectDefinition() {
+		await this.deleteObjectDefinitionOption.click();
 	}
 
 	async createObjectFolder(objectFolderLabel: string) {

@@ -458,6 +458,12 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 
 		httpServletRequest.removeAttribute(
 			"liferay-ui:icon-menu:showWhenSingleIcon");
+		httpServletRequest.removeAttribute(
+			"liferay-ui:icon-menu:triggerAriaLabel");
+		httpServletRequest.removeAttribute(
+			"liferay-ui:icon-menu:triggerCssClass");
+		httpServletRequest.removeAttribute("liferay-ui:icon-menu:triggerLabel");
+		httpServletRequest.removeAttribute("liferay-ui:icon-menu:triggerType");
 
 		return EVAL_PAGE;
 	}

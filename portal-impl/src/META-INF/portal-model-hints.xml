@@ -1166,7 +1166,7 @@
 		<field name="portalPreferencesId" type="long" />
 		<field name="index" type="int" />
 		<field name="key" type="String">
-			<hint name="max-length">255</hint>
+			<hint name="max-length">1024</hint>
 		</field>
 		<field name="largeValue" type="String">
 			<hint-collection name="CLOB" />

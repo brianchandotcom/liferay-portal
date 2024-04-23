@@ -83,6 +83,11 @@ public class MBMessageCTDisplayRenderer
 	}
 
 	@Override
+	public boolean isHideable(MBMessage mbMessage) {
+		return mbMessage.isDiscussion();
+	}
+
+	@Override
 	public String renderPreview(DisplayContext<MBMessage> displayContext) {
 		MBMessage mbMessage = displayContext.getModel();
 

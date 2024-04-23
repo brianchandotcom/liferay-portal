@@ -7,6 +7,7 @@ package com.liferay.message.boards.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBThread;
@@ -70,6 +71,17 @@ public class MBThreadCTDisplayRenderer extends BaseCTDisplayRenderer<MBThread> {
 	@Override
 	public String getTitle(Locale locale, MBThread mbThread) {
 		return mbThread.getTitle();
+	}
+
+	@Override
+	public boolean isHideable(MBThread mbThread) {
+		if (mbThread.getCategoryId() ==
+				MBCategoryConstants.DISCUSSION_CATEGORY_ID) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

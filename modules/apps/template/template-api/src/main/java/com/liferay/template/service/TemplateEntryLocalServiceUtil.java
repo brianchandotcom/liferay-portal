@@ -36,14 +36,15 @@ public class TemplateEntryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.template.service.impl.TemplateEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static TemplateEntry addTemplateEntry(
-			long userId, long groupId, long ddmTemplateId,
-			String infoItemClassName, String infoItemFormVariationKey,
+			String externalReferenceCode, long userId, long groupId,
+			long ddmTemplateId, String infoItemClassName,
+			String infoItemFormVariationKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addTemplateEntry(
-			userId, groupId, ddmTemplateId, infoItemClassName,
-			infoItemFormVariationKey, serviceContext);
+			externalReferenceCode, userId, groupId, ddmTemplateId,
+			infoItemClassName, infoItemFormVariationKey, serviceContext);
 	}
 
 	/**
@@ -105,6 +106,12 @@ public class TemplateEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deleteTemplateEntry(templateEntryId);
+	}
+
+	public static TemplateEntry deleteTemplateEntry(
+		String externalReferenceCode, long groupId) {
+
+		return getService().deleteTemplateEntry(externalReferenceCode, groupId);
 	}
 
 	/**
@@ -210,6 +217,12 @@ public class TemplateEntryLocalServiceUtil {
 
 	public static TemplateEntry fetchTemplateEntry(long templateEntryId) {
 		return getService().fetchTemplateEntry(templateEntryId);
+	}
+
+	public static TemplateEntry fetchTemplateEntry(
+		String externalReferenceCode, long groupId) {
+
+		return getService().fetchTemplateEntry(externalReferenceCode, groupId);
 	}
 
 	public static TemplateEntry fetchTemplateEntryByDDMTemplateId(
@@ -409,6 +422,13 @@ public class TemplateEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().updateTemplateEntry(templateEntryId);
+	}
+
+	public static TemplateEntry updateTemplateEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().updateTemplateEntry(externalReferenceCode, groupId);
 	}
 
 	/**

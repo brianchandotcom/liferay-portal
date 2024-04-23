@@ -34,14 +34,15 @@ public class TemplateEntryLocalServiceWrapper
 
 	@Override
 	public TemplateEntry addTemplateEntry(
-			long userId, long groupId, long ddmTemplateId,
-			String infoItemClassName, String infoItemFormVariationKey,
+			String externalReferenceCode, long userId, long groupId,
+			long ddmTemplateId, String infoItemClassName,
+			String infoItemFormVariationKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _templateEntryLocalService.addTemplateEntry(
-			userId, groupId, ddmTemplateId, infoItemClassName,
-			infoItemFormVariationKey, serviceContext);
+			externalReferenceCode, userId, groupId, ddmTemplateId,
+			infoItemClassName, infoItemFormVariationKey, serviceContext);
 	}
 
 	/**
@@ -108,6 +109,14 @@ public class TemplateEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _templateEntryLocalService.deleteTemplateEntry(templateEntryId);
+	}
+
+	@Override
+	public TemplateEntry deleteTemplateEntry(
+		String externalReferenceCode, long groupId) {
+
+		return _templateEntryLocalService.deleteTemplateEntry(
+			externalReferenceCode, groupId);
 	}
 
 	/**
@@ -231,6 +240,14 @@ public class TemplateEntryLocalServiceWrapper
 	@Override
 	public TemplateEntry fetchTemplateEntry(long templateEntryId) {
 		return _templateEntryLocalService.fetchTemplateEntry(templateEntryId);
+	}
+
+	@Override
+	public TemplateEntry fetchTemplateEntry(
+		String externalReferenceCode, long groupId) {
+
+		return _templateEntryLocalService.fetchTemplateEntry(
+			externalReferenceCode, groupId);
 	}
 
 	@Override
@@ -461,6 +478,15 @@ public class TemplateEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _templateEntryLocalService.updateTemplateEntry(templateEntryId);
+	}
+
+	@Override
+	public TemplateEntry updateTemplateEntry(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _templateEntryLocalService.updateTemplateEntry(
+			externalReferenceCode, groupId);
 	}
 
 	/**

@@ -62,9 +62,9 @@ public interface TemplateEntryLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.template.service.impl.TemplateEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the template entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link TemplateEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public TemplateEntry addTemplateEntry(
-			long userId, long groupId, long ddmTemplateId,
-			String infoItemClassName, String infoItemFormVariationKey,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long ddmTemplateId, String infoItemClassName,
+			String infoItemFormVariationKey, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -116,6 +116,9 @@ public interface TemplateEntryLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public TemplateEntry deleteTemplateEntry(long templateEntryId)
 		throws PortalException;
+
+	public TemplateEntry deleteTemplateEntry(
+		String externalReferenceCode, long groupId);
 
 	/**
 	 * Deletes the template entry from the database. Also notifies the appropriate model listeners.
@@ -204,6 +207,10 @@ public interface TemplateEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TemplateEntry fetchTemplateEntry(long templateEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TemplateEntry fetchTemplateEntry(
+		String externalReferenceCode, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TemplateEntry fetchTemplateEntryByDDMTemplateId(long ddmTemplateId);
@@ -348,6 +355,10 @@ public interface TemplateEntryLocalService
 		throws PortalException;
 
 	public TemplateEntry updateTemplateEntry(long templateEntryId)
+		throws PortalException;
+
+	public TemplateEntry updateTemplateEntry(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

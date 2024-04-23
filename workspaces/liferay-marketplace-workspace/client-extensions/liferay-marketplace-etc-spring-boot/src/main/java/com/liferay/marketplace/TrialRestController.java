@@ -97,22 +97,22 @@ public class TrialRestController extends BaseRestController {
 	}
 
 	@GetMapping("availability")
-	private JSONObject _getAvailabilityJSONObject() throws Exception {
+	private String _getAvailabilityJSONObject() throws Exception {
 		com.liferay.headless.portal.instances.client.pagination.Page
 			<PortalInstance> portalInstancesPage = _getPortalInstancesPage();
 
 		return new JSONObject(
 		).put(
 			"active",
-			_TRIAL_MAX_INSTANCES_IN_PROGRESS -
-				portalInstancesPage.getTotalCount()
-		).put(
-			"available",
 			_TRIAL_MAX_INSTANCES_IN_PROGRESS >
 				portalInstancesPage.getTotalCount()
 		).put(
+			"available",
+			_TRIAL_MAX_INSTANCES_IN_PROGRESS -
+				portalInstancesPage.getTotalCount()
+		).put(
 			"max", _TRIAL_MAX_INSTANCES_IN_PROGRESS
-		);
+		).toString();
 	}
 
 	private String _getOAuthAuthorization() throws Exception {

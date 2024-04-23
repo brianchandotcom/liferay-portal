@@ -218,7 +218,7 @@
 														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
-														"textType": "text-paragraph-sm"
+														"textType": "text-paragraph"
 													},
 													"fragmentFields": [
 														{
@@ -251,7 +251,7 @@
 														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
-														"textType": "text-paragraph-sm"
+														"textType": "text-paragraph"
 													},
 													"fragmentFields": [
 														{
@@ -284,7 +284,7 @@
 														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
-														"textType": "text-paragraph-sm"
+														"textType": "text-paragraph"
 													},
 													"fragmentFields": [
 														{

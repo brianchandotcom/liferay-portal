@@ -55,6 +55,7 @@
 	},
 	{
 		"actionIds": [
+			"ACCESS",
 			"VIEW"
 		],
 		"primKey": "0",
@@ -64,6 +65,7 @@
 	},
 	{
 		"actionIds": [
+			"ACCESS",
 			"VIEW"
 		],
 		"primKey": "0",
@@ -191,6 +193,26 @@
 		"primKey": "0",
 		"resourceName": "com_liferay_users_admin_web_portlet_UsersAdminPortlet",
 		"roleName": "M2H8 Ticket Solvers",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ACCESS",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.journal.model.JournalFolder",
+		"roleName": "M2H8 Ticket Solvers",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ACCESS",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.journal.model.JournalFolder",
+		"roleName": "M2H8 Petitionaries",
 		"scope": "1"
 	}
 ]

@@ -108,21 +108,16 @@ export async function generateNewTicket() {
 }
 
 export async function updateTicketStatus(ticket: Ticket) {
-	ticket.payload.ticketStatus =
-		LIST_TYPE_DEFINITIONS[J3Y7_STATUSES].entriesMap[ticket.ticketStatus];
-
-	if (!ticket.payload.r_userToJ3Y7Ticket_userId) {
-		delete ticket.payload.r_userToJ3Y7Ticket_userId;
-	}
-
-	if (!ticket.payload.r_j3y7TicketToJ3Y7Tickets_c_j3y7TicketId) {
-		delete ticket.payload.r_j3y7TicketToJ3Y7Tickets_c_j3y7TicketId;
-	}
-
 	const result = await request(
 		`/o/c/j3y7tickets/${ticket.id}`,
-		'PUT',
-		JSON.stringify(ticket.payload)
+		'PATCH',
+		JSON.stringify({
+			id: ticket.id,
+			ticketStatus:
+				LIST_TYPE_DEFINITIONS[J3Y7_STATUSES].entriesMap[
+					ticket.ticketStatus
+				],
+		})
 	);
 
 	if (result.ok) {

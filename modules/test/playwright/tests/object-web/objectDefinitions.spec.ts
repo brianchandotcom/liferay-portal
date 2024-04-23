@@ -266,4 +266,150 @@ test.describe('Manage object definitions through Model Builder', () => {
 			objectDefinition.id
 		);
 	});
+
+	test('can delete an published object definition by model builder', async ({
+		apiHelpers,
+		modalAddObjectDefinitionPage,
+		modelBuilderPage,
+	}) => {
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		await modelBuilderPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderPage.createNewObjectDefinitionButton.click();
+
+		const objectDefinition2 =
+			await modalAddObjectDefinitionPage.createObjectDefinition(
+				'ObjectDefinition' + getRandomInt()
+			);
+
+		await modelBuilderPage.clickToggleSidebarsButton();
+
+		await modelBuilderPage.clickFitViewButton();
+
+		await modelBuilderPage.clickObjectDefinitionActionsButton(
+			objectDefinition1.label['en_US']
+		);
+
+		await modelBuilderPage.deleteObjectDefinition(objectDefinition1.name);
+
+		await expect(
+			modelBuilderPage.objectDefinitionNodes.filter({
+				hasText: objectDefinition2.label['en_US'],
+			})
+		).toBeVisible();
+
+		await expect(
+			modelBuilderPage.objectDefinitionNodes.filter({
+				hasText: objectDefinition1.label['en_US'],
+			})
+		).toBeHidden();
+
+		// Clean up
+
+		await apiHelpers.objectAdmin.deleteObjectDefinition(
+			objectDefinition2.id
+		);
+	});
+
+	test('can delete an object definition by model builder leftsidebar', async ({
+		apiHelpers,
+		modelBuilderPage,
+	}) => {
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 2},
+			});
+
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 2},
+			});
+
+		await modelBuilderPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderPage.clickLeftSideBarItem(
+			objectDefinition1.label['en_US']
+		);
+
+		await modelBuilderPage.clickObjectDefinitionActionsButtonInLeftSidebar(
+			objectDefinition1.label['en_US']
+		);
+
+		await modelBuilderPage.clickDeleteObjectDefinition();
+
+		await expect(
+			modelBuilderPage.leftSidebarItems.filter({
+				hasText: objectDefinition2.label['en_US'],
+			})
+		).toBeVisible();
+
+		await expect(
+			modelBuilderPage.leftSidebarItems.filter({
+				hasText: objectDefinition1.label['en_US'],
+			})
+		).toBeHidden();
+
+		// Clean up
+
+		await apiHelpers.objectAdmin.deleteObjectDefinition(
+			objectDefinition2.id
+		);
+	});
+});
+
+test.describe('Manage object definitions through View Object Definitions', () => {
+	test('can delete an object definition by FDS action', async ({
+		apiHelpers,
+		page,
+		viewObjectDefinitionsPage,
+	}) => {
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 2},
+			});
+
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 2},
+			});
+
+		await viewObjectDefinitionsPage.goto();
+
+		await page.locator('.dnd-td.item-actions').first().waitFor();
+
+		await page
+			.locator('.dnd-td.item-actions')
+			.last()
+			.locator('.dropdown-toggle')
+			.click();
+
+		await viewObjectDefinitionsPage.clickDeleteObjectDefinition();
+
+		await expect(
+			viewObjectDefinitionsPage.frontendDataSetEntries.filter({
+				hasText: objectDefinition1.label['en_US'],
+			})
+		).toBeVisible();
+
+		await expect(
+			viewObjectDefinitionsPage.frontendDataSetEntries.filter({
+				hasText: objectDefinition2.label['en_US'],
+			})
+		).toBeHidden();
+
+		// Clean up
+
+		await apiHelpers.objectAdmin.deleteObjectDefinition(
+			objectDefinition1.id
+		);
+	});
 });

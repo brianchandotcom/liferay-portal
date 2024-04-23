@@ -57,10 +57,26 @@ public class TemplateEntryLocalServiceImpl
 	}
 
 	@Override
-	public TemplateEntry deleteTemplateEntry(long templateEntryId)
-		throws PortalException {
+	public TemplateEntry deleteTemplateEntry(long templateEntryId) {
+		TemplateEntry templateEntry =
+			templateEntryPersistence.fetchByPrimaryKey(templateEntryId);
 
-		return templateEntryPersistence.remove(templateEntryId);
+		return templateEntryLocalService.deleteTemplateEntry(templateEntry);
+	}
+
+	@Override
+	public TemplateEntry deleteTemplateEntry(
+		String externalReferenceCode, long groupId) {
+
+		TemplateEntry templateEntry = templateEntryPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+
+		return templateEntryLocalService.deleteTemplateEntry(templateEntry);
+	}
+
+	@Override
+	public TemplateEntry deleteTemplateEntry(TemplateEntry templateEntry) {
+		return templateEntryPersistence.remove(templateEntry);
 	}
 
 	@Override

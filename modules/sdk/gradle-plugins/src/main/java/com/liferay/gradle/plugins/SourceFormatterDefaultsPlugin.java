@@ -7,13 +7,10 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.NodePlugin;
-import com.liferay.gradle.plugins.python.PythonPlugin;
 import com.liferay.gradle.plugins.source.formatter.FormatSourceTask;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.Validator;
-
-import com.pswidersk.gradle.python.VenvTask;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -84,19 +81,6 @@ public class SourceFormatterDefaultsPlugin
 				}
 
 			});
-
-		pluginContainer.withType(
-			PythonPlugin.class,
-			new Action<PythonPlugin>() {
-
-				@Override
-				public void execute(PythonPlugin pythonPlugin) {
-					_configurePluginPython(
-						project, checkSourceFormattingTaskProvider,
-						formatSourceTaskProvider);
-				}
-
-			});
 	}
 
 	@Override
@@ -155,45 +139,6 @@ public class SourceFormatterDefaultsPlugin
 					});
 			}
 		}
-	}
-
-	private void _configurePluginPython(
-		Project project,
-		final TaskProvider<FormatSourceTask> checkSourceFormattingTaskProvider,
-		final TaskProvider<FormatSourceTask> formatSourceTaskProvider) {
-
-		TaskProvider<VenvTask> checkPythonFormattingTaskProvider =
-			GradleUtil.getTaskProvider(
-				project, PythonPlugin.CHECK_PYTHON_FORMATTING_TASK_NAME,
-				VenvTask.class);
-		TaskProvider<VenvTask> formatPythonTaskProvider =
-			GradleUtil.getTaskProvider(
-				project, PythonPlugin.FORMAT_PYTHON_TASK_NAME, VenvTask.class);
-
-		checkPythonFormattingTaskProvider.configure(
-			new Action<VenvTask>() {
-
-				@Override
-				public void execute(VenvTask checkPythonFormattingTask) {
-					checkPythonFormattingTask.finalizedBy(
-						checkSourceFormattingTaskProvider);
-
-					checkPythonFormattingTask.setEnabled(false);
-				}
-
-			});
-
-		formatPythonTaskProvider.configure(
-			new Action<VenvTask>() {
-
-				@Override
-				public void execute(VenvTask formatPythonTask) {
-					formatPythonTask.finalizedBy(formatSourceTaskProvider);
-
-					formatPythonTask.setEnabled(false);
-				}
-
-			});
 	}
 
 	private void _configureTaskFormatSource(FormatSourceTask formatSourceTask) {

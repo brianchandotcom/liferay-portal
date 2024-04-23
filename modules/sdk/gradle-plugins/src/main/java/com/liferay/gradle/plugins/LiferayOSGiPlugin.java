@@ -40,7 +40,6 @@ import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.task.DownloadNodeModuleTask;
 import com.liferay.gradle.plugins.node.task.NpmInstallTask;
-import com.liferay.gradle.plugins.python.PythonPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.task.DirectDeployTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
@@ -385,7 +384,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, JspCPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
-		GradleUtil.applyPlugin(project, PythonPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, TLDDocBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);

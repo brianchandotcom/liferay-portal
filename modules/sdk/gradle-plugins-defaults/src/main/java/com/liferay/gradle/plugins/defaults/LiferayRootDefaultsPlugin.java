@@ -9,7 +9,6 @@ import com.liferay.gradle.plugins.SourceFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.python.PythonPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 
 import java.io.File;
@@ -30,7 +29,6 @@ public class LiferayRootDefaultsPlugin implements Plugin<Project> {
 			GradleUtil.applyPlugin(project, LiferayAppDefaultsPlugin.class);
 		}
 
-		GradleUtil.applyPlugin(project, PythonPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 		SourceFormatterDefaultsPlugin.INSTANCE.apply(project);
 

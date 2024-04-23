@@ -17,9 +17,9 @@ const headlessDeliveryAPIs = [
 ];
 
 const testrayRestAPIs = [
+	'testray-build-autofill',
 	'testray-run-comparisons',
 	'testray-status-metrics',
-	'testray-build-autofill',
 ];
 
 function changeResource(resource: RequestInfo) {

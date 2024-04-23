@@ -8,6 +8,7 @@ package com.liferay.jethr0.git.branch;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.routine.RoutineEntity;
 
 import java.io.IOException;
 
@@ -29,6 +30,10 @@ public interface GitBranchEntity extends Entity {
 
 	public void addJobEntity(JobEntity jobEntity);
 
+	public void addRoutineEntities(Set<RoutineEntity> routineEntities);
+
+	public void addRoutineEntity(RoutineEntity routineEntity);
+
 	public String getBranchName();
 
 	public String getBranchSHA();
@@ -48,6 +53,8 @@ public interface GitBranchEntity extends Entity {
 
 	public String getRepositoryName();
 
+	public Set<RoutineEntity> getRoutineEntities();
+
 	public String getShortBranchSHA();
 
 	public String getShortUpstreamBranchSHA();
@@ -65,6 +72,10 @@ public interface GitBranchEntity extends Entity {
 	public void removeJobEntities(Set<JobEntity> jobEntities);
 
 	public void removeJobEntity(JobEntity jobEntity);
+
+	public void removeRoutineEntities(Set<RoutineEntity> routineEntities);
+
+	public void removeRoutineEntity(RoutineEntity routineEntity);
 
 	public void setBranchSHA(String branchSHA);
 

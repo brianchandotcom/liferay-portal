@@ -7,13 +7,21 @@ package com.liferay.jethr0.routine;
 
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 
+import java.util.Set;
+
 /**
  * @author Michael Hashimoto
  */
 public interface UpstreamBranchCronRoutineEntity extends CronRoutineEntity {
 
-	public GitBranchEntity getGitBranchEntity();
+	public void addGitBranchEntities(Set<GitBranchEntity> gitBranchEntities);
 
-	public void setGitBranchEntity(GitBranchEntity gitBranchEntity);
+	public void addGitBranchEntity(GitBranchEntity gitBranchEntity);
+
+	public Set<GitBranchEntity> getGitBranchEntities();
+
+	public void removeGitBranchEntities(Set<GitBranchEntity> gitBranchEntities);
+
+	public void removeGitBranchEntity(GitBranchEntity gitBranchEntity);
 
 }

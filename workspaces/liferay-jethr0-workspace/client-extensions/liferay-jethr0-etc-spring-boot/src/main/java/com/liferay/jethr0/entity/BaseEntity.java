@@ -11,6 +11,7 @@ import com.liferay.jethr0.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -126,6 +127,12 @@ public abstract class BaseEntity implements Entity {
 	}
 
 	protected void addRelatedEntities(Collection<? extends Entity> entities) {
+		if (entities == null) {
+			return;
+		}
+
+		entities.removeAll(Collections.singleton(null));
+
 		for (Entity entity : entities) {
 			addRelatedEntity(entity);
 		}
@@ -149,6 +156,12 @@ public abstract class BaseEntity implements Entity {
 	}
 
 	protected void removeRelatedEntities(Set<? extends Entity> entities) {
+		if (entities == null) {
+			return;
+		}
+
+		entities.removeAll(Collections.singleton(null));
+
 		for (Entity entity : entities) {
 			removeRelatedEntity(entity);
 		}

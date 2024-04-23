@@ -57,6 +57,8 @@ public class EntityInitializer {
 		_jobPrioritizerEntityRepository.setJobComparatorEntityRepository(
 			_jobComparatorEntityRepository);
 
+		_routineEntityRepository.setGitBranchEntityRepository(
+			_gitBranchEntityRepository);
 		_routineEntityRepository.setJobEntityRepository(_jobEntityRepository);
 
 		_buildEntityRepository.initialize();

@@ -358,6 +358,14 @@ public class AssetListEntryLocalServiceImpl
 	}
 
 	@Override
+	public AssetListEntry fetchTemplateEntry(
+		String externalReferenceCode, long groupId) {
+
+		return assetListEntryPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public List<AssetListEntry> getAssetListEntries(long groupId) {
 		return assetListEntryPersistence.findByGroupId(groupId);
 	}

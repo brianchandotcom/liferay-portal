@@ -30,8 +30,7 @@ definition {
 	@description = "COMMERCE-12610. As a buyer, I can assert the bundled product works with all types of the options"
 	@priority = 5
 	test CanAssertAllTypesOfOptionsWorkWithProductOptions {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		task ("Given a new bundled product with all types of options is created") {
 			CommerceJSONProductsAPI._addCommerceProduct(
@@ -283,8 +282,7 @@ definition {
 	test CanAssertAllTypesOfPricingWorkWithProductOptions {
 		property osgi.module.configuration.file.names = "com.liferay.commerce.configuration.CommercePriceConfiguration.config";
 		property osgi.module.configurations = "displayDiscountLevels=B\"true\"";
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		task ("Given a new bundled product with an option(five values) and Dynamic Price Type is created") {
 			CommerceJSONProductsAPI._addCommerceProduct(

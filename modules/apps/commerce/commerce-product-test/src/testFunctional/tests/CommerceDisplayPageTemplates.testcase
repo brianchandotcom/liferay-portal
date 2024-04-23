@@ -908,8 +908,7 @@ definition {
 	@description = "This is a test for COMMERCE-7277 Verify mapped Display Page and Schedule related fields to fragments are visible in Store Fronts"
 	@priority = 5
 	test CanMapDisplayPageAndScheduleFieldsToFragments {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		task ("Given a new product created") {
 			CommerceJSONProductsAPI._addCommerceProduct(

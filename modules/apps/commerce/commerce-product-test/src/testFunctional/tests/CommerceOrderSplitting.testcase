@@ -1458,7 +1458,6 @@ definition {
 	@priority = 4
 	test CanCreateOrderUsingProductBundleCorrectly {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

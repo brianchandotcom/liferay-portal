@@ -5,12 +5,13 @@
 
 import {useControlledState} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
 import {FORM_MAPPING_SOURCES} from '../../../../../../app/config/constants/formMappingSources';
 import {LAYOUT_TYPES} from '../../../../../../app/config/constants/layoutTypes';
 import {config} from '../../../../../../app/config/index';
+import {openInfoFieldSelector} from '../../../../../../common/openInfoFieldSelector';
 
 export default function FormMappingOptions({
 	hideLabel = false,
@@ -27,6 +28,36 @@ export default function FormMappingOptions({
 	);
 
 	const selectedType = formTypes.find(({value}) => value === classNameId);
+
+	const onSelect = useCallback(
+		(classNameId, classTypeId) => {
+			const type = formTypes.find(({value}) => value === classNameId);
+
+			const resetMapping = () => {
+				setClassNameId(item.config.classNameId);
+				setClassTypeId(item.config.classTypeId);
+			};
+
+			const saveMapping = () =>
+				onValueSelect({
+					classNameId,
+					classTypeId,
+					formConfig: FORM_MAPPING_SOURCES.otherContentType,
+				});
+
+			if (Liferay.FeatureFlags['LPD-20213'] && classNameId !== '0') {
+				openInfoFieldSelector({
+					itemType: type.className,
+					onCancel: resetMapping,
+					onSave: saveMapping,
+				});
+			}
+			else {
+				saveMapping();
+			}
+		},
+		[formTypes, item, onValueSelect, setClassNameId, setClassTypeId]
+	);
 
 	return (
 		<>
@@ -53,11 +84,7 @@ export default function FormMappingOptions({
 						return;
 					}
 
-					onValueSelect({
-						classNameId,
-						classTypeId,
-						formConfig: FORM_MAPPING_SOURCES.otherContentType,
-					});
+					onSelect(classNameId, classTypeId);
 				}}
 				value={classNameId}
 			/>
@@ -81,11 +108,7 @@ export default function FormMappingOptions({
 					onValueSelect={(_name, classTypeId) => {
 						setClassTypeId(classTypeId);
 
-						onValueSelect({
-							classNameId,
-							classTypeId,
-							formConfig: FORM_MAPPING_SOURCES.otherContentType,
-						});
+						onSelect(classNameId, classTypeId);
 					}}
 					value={classTypeId}
 				/>

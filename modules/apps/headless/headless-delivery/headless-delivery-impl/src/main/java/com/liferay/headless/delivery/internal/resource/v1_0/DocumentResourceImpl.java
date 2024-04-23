@@ -736,7 +736,8 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			for (DLFileEntryType dlFileEntryType :
 					_dlFileEntryTypeLocalService.getFolderFileEntryTypes(
 						_siteConnectedGroupGroupProvider.
-							getAncestorSiteAndDepotGroupIds(groupId, true),
+							getCurrentAndAncestorSiteAndDepotGroupIds(
+								groupId, true),
 						documentFolderId, true)) {
 
 				if (name.equals(

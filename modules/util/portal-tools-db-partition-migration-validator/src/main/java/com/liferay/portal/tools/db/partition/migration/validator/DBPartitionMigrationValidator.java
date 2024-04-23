@@ -144,14 +144,14 @@ public class DBPartitionMigrationValidator {
 
 		options.addOption(
 			null, "output-dir", true,
-			"Set the output directory. (Optional. Default value: ./exports).");
+			"Set the output directory. (Optional, default: `./exports`).");
 		options.addRequiredOption(null, "jdbc-url", true, "Set the JDBC URL.");
 		options.addRequiredOption(
 			null, "password", true, "Set the database user password.");
 		options.addOption(
 			null, "schema-name", true,
-			"Set the database schema name. (Optional. Default value: default " +
-				"schema).");
+			"Set the database schema name. (Optional, default: JDBC URL " +
+				"schema name).");
 		options.addRequiredOption(
 			null, "user", true, "Set the database user name.");
 

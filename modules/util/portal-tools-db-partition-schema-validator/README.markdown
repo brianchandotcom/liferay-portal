@@ -18,9 +18,9 @@ Options:
 
 - `--debug` Print all log traces. (Optional).
 - `--db-name <arg>` Set the database name.
-- `--help` Print help message. (Optional).
-- `--jdbc-url <arg>` Set the JDBC URL. (Optional. Default value: default URL for db-name pointing to localhost).
+- `--help` Print help message.
+- `--jdbc-url <arg>` Set the JDBC URL. (Optional, default: localhost JDBC URL with no parameters).
 - `--password <arg>` Set the database user password.
-- `--schema-prefix <arg>` Set the schema prefix. (Optional. Default value: lpartition_).
+- `--schema-prefix <arg>` Set the schema prefix. (Optional, default: `lpartition_`).
 - `--db-type <mysql|postgresql>` Set the database type.
 - `--user <arg>` Set the database user name.

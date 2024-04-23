@@ -267,8 +267,7 @@ Liferay.Util.getFormElement = getFormElement;
 Liferay.Util.getLexiconIcon = getLexiconIcon;
 Liferay.Util.getLexiconIconTpl = getLexiconIconTpl;
 Liferay.Util.getOpener = getOpener;
-Liferay.Util.getPortletConfigurationIconAction =
-	getPortletConfigurationIconAction;
+Liferay.Util.getPortletConfigurationIconAction = getPortletConfigurationIconAction;
 
 /**
  * @deprecated As of Athanasius (7.3.x), replaced by `import {getPortletId} from 'frontend-js-web'`
@@ -362,8 +361,7 @@ Liferay.Util.openToast = (...args) => {
 Liferay.Util.openWindow = openWindow;
 Liferay.Util.removeEntitySelection = removeEntitySelection;
 Liferay.Util.selectFolder = selectFolder;
-Liferay.Util.setPortletConfigurationIconAction =
-	setPortletConfigurationIconAction;
+Liferay.Util.setPortletConfigurationIconAction = setPortletConfigurationIconAction;
 Liferay.Util.showCapsLock = showCapsLock;
 Liferay.Util.sub = sub;
 

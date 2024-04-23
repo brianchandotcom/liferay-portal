@@ -13,7 +13,7 @@ export default function useIsChannel() {
 	);
 
 	const isChannel =
-		(userAccount && Boolean(userAccount?.organizationBriefs.length))
+		userAccount && Boolean(userAccount?.organizationBriefs.length);
 
 	return {isChannel};
 }

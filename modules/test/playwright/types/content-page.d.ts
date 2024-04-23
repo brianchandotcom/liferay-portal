@@ -26,6 +26,7 @@ type FragmentField = {
 
 type Layout = {
 	friendlyUrlPath: string;
+	id: number;
 };
 
 type PageDefinition = {

@@ -5,13 +5,20 @@
 
 package com.liferay.item.selector.taglib.internal.display.context;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.processor.ImageProcessorUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -80,6 +87,21 @@ public class RepositoryEntryBrowserDisplayContext {
 		return StringPool.BLANK;
 	}
 
+	public boolean hasGuestViewPermission(FileEntry fileEntry)
+		throws PortalException {
+
+		if (_guestRole == null) {
+			_guestRole = RoleLocalServiceUtil.getRole(
+				fileEntry.getCompanyId(), RoleConstants.GUEST);
+		}
+
+		return ResourcePermissionLocalServiceUtil.hasResourcePermission(
+			fileEntry.getCompanyId(), DLFileEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(fileEntry.getFileEntryId()), _guestRole.getRoleId(),
+			ActionKeys.VIEW);
+	}
+
 	public boolean isPreviewable(FileVersion fileVersion) {
 		if (fileVersion == null) {
 			return false;
@@ -135,6 +157,7 @@ public class RepositoryEntryBrowserDisplayContext {
 		return group;
 	}
 
+	private Role _guestRole;
 	private final HttpServletRequest _httpServletRequest;
 	private Boolean _searchEverywhere;
 

@@ -248,7 +248,7 @@ const filterSchema = {
 			}),
 			overrides(baseFilters.team, {
 				isCustomFilter: true,
-				name: 'testrayTeamId',
+				name: 'testrayTeamIds',
 				type: 'multiselect',
 			}),
 		] as RendererFields[],
@@ -268,7 +268,7 @@ const filterSchema = {
 			}),
 			overrides(baseFilters.team, {
 				isCustomFilter: true,
-				name: 'testrayTeamId',
+				name: 'testrayTeamIds',
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.run, {
@@ -450,7 +450,7 @@ const filterSchema = {
 			}),
 			overrides(baseFilters.team, {
 				isCustomFilter: true,
-				name: 'testrayTeamId',
+				name: 'testrayTeamIds',
 				type: 'multiselect',
 			}),
 		] as RendererFields[],
@@ -469,7 +469,7 @@ const filterSchema = {
 			}),
 			overrides(baseFilters.team, {
 				isCustomFilter: true,
-				name: 'testrayTeamId',
+				name: 'testrayTeamIds',
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.run, {

@@ -114,7 +114,8 @@ public class UserModelListenerTest {
 		bundleActivator.start(_bundleContext);
 
 		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.createObjectDefinition(RandomTestUtil.randomLong());
+			_objectDefinitionLocalService.createObjectDefinition(
+				RandomTestUtil.randomLong());
 
 		User user = UserTestUtil.addUser();
 
@@ -240,12 +241,10 @@ public class UserModelListenerTest {
 
 		@Override
 		public void start(BundleContext bundleContext) {
-			AuditMessageProcessor auditMessageProcessor =
-				new TestAuditMessageProcessor();
-
 			_auditMessageProcessorServiceRegistration =
 				_bundleContext.registerService(
-					AuditMessageProcessor.class, auditMessageProcessor,
+					AuditMessageProcessor.class,
+					new TestAuditMessageProcessor(),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"eventTypes", EventTypes.LOGIN_DNE
 					).build());
@@ -255,6 +254,7 @@ public class UserModelListenerTest {
 		public void stop(BundleContext bundleContext) {
 			_auditMessageProcessorServiceRegistration.unregister();
 		}
+
 	}
 
 }

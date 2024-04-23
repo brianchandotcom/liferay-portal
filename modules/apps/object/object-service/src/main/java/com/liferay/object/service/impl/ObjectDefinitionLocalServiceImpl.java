@@ -1302,14 +1302,13 @@ public class ObjectDefinitionLocalServiceImpl
 	public void updateUserId(long companyId, long oldUserId, long newUserId)
 		throws PortalException {
 
-		for (ObjectDefinition objectDefinition : objectDefinitionPersistence.findByC_U(
-			companyId, oldUserId)) {
+		for (ObjectDefinition objectDefinition :
+				objectDefinitionPersistence.findByC_U(companyId, oldUserId)) {
 
 			objectDefinition.setUserId(newUserId);
 
 			objectDefinitionPersistence.update(objectDefinition);
 		}
-
 	}
 
 	@Activate

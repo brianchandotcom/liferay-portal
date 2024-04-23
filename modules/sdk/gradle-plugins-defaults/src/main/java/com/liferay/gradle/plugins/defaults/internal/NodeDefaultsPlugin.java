@@ -63,12 +63,12 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 			GradleUtil.getProperty(
 				project, "release.info.version", (String)null));
 
-		if (versionNumber.compareTo(VersionNumber.parse("7.4.3.118")) >= 0) {
+		if (versionNumber.compareTo(VersionNumber.parse("7.4.3.117")) <= 0) {
 			NodeExtension nodeExtension = GradleUtil.getExtension(
 				project, NodeExtension.class);
 
-			nodeExtension.setNodeVersion("20.12.2");
-			nodeExtension.setNpmVersion("10.5.0");
+			nodeExtension.setNodeVersion("16.13.0");
+			nodeExtension.setNpmVersion("8.1.0");
 		}
 		else if (PortalTools.PORTAL_VERSION_7_0_X.equals(portalVersion)) {
 			NodeExtension nodeExtension = GradleUtil.getExtension(

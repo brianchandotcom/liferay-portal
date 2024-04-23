@@ -13,7 +13,7 @@ import classNames from 'classnames';
 import {debounce, fetch, getOpener, openToast, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-export function SelectLayoutTree({
+export default function SelectLayoutTree({
 	checkDisplayPage,
 	config,
 	filter,

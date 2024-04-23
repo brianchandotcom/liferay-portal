@@ -6,7 +6,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export function CommerceStatusDataRenderer(props) {
+export default function CommerceStatusDataRenderer(props) {
 	const getLabelType = (label) => {
 		switch (label) {
 			case 'approved':

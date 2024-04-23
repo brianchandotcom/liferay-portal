@@ -4,7 +4,7 @@
  */
 
 import {CommerceReturnItemPicklistDataRenderer} from './CommerceReturnItemPicklistDataRenderer';
-import {CommerceStatusDataRenderer} from './CommerceStatusDataRenderer';
+import CommerceStatusDataRenderer from './CommerceStatusDataRenderer';
 
 export default function propsTransformer({...otherProps}) {
 	return {

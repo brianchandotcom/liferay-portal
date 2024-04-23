@@ -6,7 +6,7 @@
 import {fetch, openConfirmModal, openToast, sub} from 'frontend-js-web';
 
 import {CommerceReturnStatusDataRenderer} from './CommerceReturnStatusDataRenderer';
-import {CommerceStatusDataRenderer} from './CommerceStatusDataRenderer';
+import CommerceStatusDataRenderer from './CommerceStatusDataRenderer';
 
 export default function propsTransformer({...otherProps}) {
 	const handleDelete = (confirm, itemData, loadData) => {

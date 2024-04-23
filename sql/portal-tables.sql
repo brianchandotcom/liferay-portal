@@ -973,7 +973,7 @@ create table PortalPreferenceValue (
 	companyId LONG,
 	portalPreferencesId LONG,
 	index_ INTEGER,
-	key_ VARCHAR(255) null,
+	key_ VARCHAR(1024) null,
 	largeValue TEXT null,
 	namespace VARCHAR(255) null,
 	smallValue VARCHAR(255) null

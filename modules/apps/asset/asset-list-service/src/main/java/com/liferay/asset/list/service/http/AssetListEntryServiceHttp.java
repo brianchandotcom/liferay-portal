@@ -120,7 +120,8 @@ public class AssetListEntryServiceHttp {
 	}
 
 	public static com.liferay.asset.list.model.AssetListEntry addAssetListEntry(
-			HttpPrincipal httpPrincipal, long groupId, String title, int type,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long groupId, String title, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -130,7 +131,8 @@ public class AssetListEntryServiceHttp {
 				_addAssetListEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, title, type, serviceContext);
+				methodKey, externalReferenceCode, groupId, title, type,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -162,8 +164,8 @@ public class AssetListEntryServiceHttp {
 
 	public static com.liferay.asset.list.model.AssetListEntry
 			addDynamicAssetListEntry(
-				HttpPrincipal httpPrincipal, long groupId, String title,
-				String typeSettings,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long groupId, String title, String typeSettings,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -173,7 +175,8 @@ public class AssetListEntryServiceHttp {
 				_addDynamicAssetListEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, title, typeSettings, serviceContext);
+				methodKey, externalReferenceCode, groupId, title, typeSettings,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -205,8 +208,8 @@ public class AssetListEntryServiceHttp {
 
 	public static com.liferay.asset.list.model.AssetListEntry
 			addManualAssetListEntry(
-				HttpPrincipal httpPrincipal, long groupId, String title,
-				long[] assetEntryIds,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long groupId, String title, long[] assetEntryIds,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -216,7 +219,8 @@ public class AssetListEntryServiceHttp {
 				_addManualAssetListEntryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, title, assetEntryIds, serviceContext);
+				methodKey, externalReferenceCode, groupId, title, assetEntryIds,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -1297,17 +1301,17 @@ public class AssetListEntryServiceHttp {
 		};
 	private static final Class<?>[] _addAssetListEntryParameterTypes2 =
 		new Class[] {
-			long.class, String.class, int.class,
+			String.class, long.class, String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addDynamicAssetListEntryParameterTypes3 =
 		new Class[] {
-			long.class, String.class, String.class,
+			String.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addManualAssetListEntryParameterTypes4 =
 		new Class[] {
-			long.class, String.class, long[].class,
+			String.class, long.class, String.class, long[].class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteAssetEntrySelectionParameterTypes5 =

@@ -87,23 +87,24 @@ public interface AssetListEntryLocalService
 	public AssetListEntry addAssetListEntry(AssetListEntry assetListEntry);
 
 	public AssetListEntry addAssetListEntry(
-			long userId, long groupId, String title, int type,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			String title, int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	public AssetListEntry addAssetListEntry(
-			long userId, long groupId, String title, int type,
-			String typeSettings, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			String title, int type, String typeSettings,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public AssetListEntry addDynamicAssetListEntry(
-			long userId, long groupId, String title, String typeSettings,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			String title, String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	public AssetListEntry addManualAssetListEntry(
-			long userId, long groupId, String title, long[] assetEntryIds,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			String title, long[] assetEntryIds, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -158,6 +159,10 @@ public interface AssetListEntryLocalService
 
 	public AssetListEntry deleteAssetListEntry(
 			long assetListEntryId, long segmentsEntryId)
+		throws PortalException;
+
+	public AssetListEntry deleteAssetListEntry(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**
@@ -242,6 +247,10 @@ public interface AssetListEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetListEntry fetchAssetListEntry(long assetListEntryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetListEntry fetchAssetListEntryByExternalReferenceCode(
+		String externalReferenceCode, long groupId);
+
 	/**
 	 * Returns the asset list entry matching the UUID and group.
 	 *
@@ -252,6 +261,10 @@ public interface AssetListEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetListEntry fetchAssetListEntryByUuidAndGroupId(
 		String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetListEntry fetchTemplateEntry(
+		String externalReferenceCode, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -323,6 +336,11 @@ public interface AssetListEntryLocalService
 			long groupId, String assetListEntryKey)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetListEntry getAssetListEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
 	/**
 	 * Returns the asset list entry matching the UUID and group.
 	 *
@@ -383,6 +401,11 @@ public interface AssetListEntryLocalService
 
 	public AssetListEntry updateAssetListEntry(
 			long assetListEntryId, String title)
+		throws PortalException;
+
+	public AssetListEntry updateAssetListEntry(
+			String externalReferenceCode, long groupId, long segmentsEntryId,
+			String title, String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void updateAssetListEntryTypeSettings(

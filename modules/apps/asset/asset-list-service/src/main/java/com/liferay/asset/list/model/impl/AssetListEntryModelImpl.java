@@ -65,13 +65,14 @@ public class AssetListEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"assetListEntryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"assetListEntryKey", Types.VARCHAR}, {"title", Types.VARCHAR},
-		{"type_", Types.INTEGER}, {"assetEntrySubtype", Types.VARCHAR},
-		{"assetEntryType", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"assetListEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"assetListEntryKey", Types.VARCHAR},
+		{"title", Types.VARCHAR}, {"type_", Types.INTEGER},
+		{"assetEntrySubtype", Types.VARCHAR}, {"assetEntryType", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -81,6 +82,7 @@ public class AssetListEntryModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("assetListEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -97,7 +99,7 @@ public class AssetListEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetListEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,assetListEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryKey VARCHAR(75) null,title VARCHAR(75) null,type_ INTEGER,assetEntrySubtype VARCHAR(255) null,assetEntryType VARCHAR(255) null,lastPublishDate DATE null,primary key (assetListEntryId, ctCollectionId))";
+		"create table AssetListEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,assetListEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryKey VARCHAR(75) null,title VARCHAR(75) null,type_ INTEGER,assetEntrySubtype VARCHAR(255) null,assetEntryType VARCHAR(255) null,lastPublishDate DATE null,primary key (assetListEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetListEntry";
 
@@ -141,32 +143,38 @@ public class AssetListEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 16L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TITLE_COLUMN_BITMASK = 32L;
+	public static final long GROUPID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPE_COLUMN_BITMASK = 64L;
+	public static final long TITLE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 128L;
+	public static final long TYPE_COLUMN_BITMASK = 128L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long ASSETLISTENTRYID_COLUMN_BITMASK = 256L;
+	public static final long ASSETLISTENTRYID_COLUMN_BITMASK = 512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -284,6 +292,9 @@ public class AssetListEntryModelImpl
 				"ctCollectionId", AssetListEntry::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", AssetListEntry::getUuid);
 			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				AssetListEntry::getExternalReferenceCode);
+			attributeGetterFunctions.put(
 				"assetListEntryId", AssetListEntry::getAssetListEntryId);
 			attributeGetterFunctions.put("groupId", AssetListEntry::getGroupId);
 			attributeGetterFunctions.put(
@@ -333,6 +344,10 @@ public class AssetListEntryModelImpl
 			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<AssetListEntry, String>)AssetListEntry::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<AssetListEntry, String>)
+					AssetListEntry::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"assetListEntryId",
 				(BiConsumer<AssetListEntry, Long>)
@@ -444,6 +459,35 @@ public class AssetListEntryModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -818,6 +862,7 @@ public class AssetListEntryModelImpl
 		assetListEntryImpl.setMvccVersion(getMvccVersion());
 		assetListEntryImpl.setCtCollectionId(getCtCollectionId());
 		assetListEntryImpl.setUuid(getUuid());
+		assetListEntryImpl.setExternalReferenceCode(getExternalReferenceCode());
 		assetListEntryImpl.setAssetListEntryId(getAssetListEntryId());
 		assetListEntryImpl.setGroupId(getGroupId());
 		assetListEntryImpl.setCompanyId(getCompanyId());
@@ -847,6 +892,8 @@ public class AssetListEntryModelImpl
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		assetListEntryImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
+		assetListEntryImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		assetListEntryImpl.setAssetListEntryId(
 			this.<Long>getColumnOriginalValue("assetListEntryId"));
 		assetListEntryImpl.setGroupId(
@@ -961,6 +1008,18 @@ public class AssetListEntryModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			assetListEntryCacheModel.uuid = null;
+		}
+
+		assetListEntryCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			assetListEntryCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			assetListEntryCacheModel.externalReferenceCode = null;
 		}
 
 		assetListEntryCacheModel.assetListEntryId = getAssetListEntryId();
@@ -1105,6 +1164,7 @@ public class AssetListEntryModelImpl
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _assetListEntryId;
 	private long _groupId;
 	private long _companyId;
@@ -1153,6 +1213,8 @@ public class AssetListEntryModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("assetListEntryId", _assetListEntryId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1196,31 +1258,33 @@ public class AssetListEntryModelImpl
 
 		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("assetListEntryId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("assetListEntryId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("assetListEntryKey", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("title", 2048L);
+		columnBitmasks.put("assetListEntryKey", 2048L);
 
-		columnBitmasks.put("type_", 4096L);
+		columnBitmasks.put("title", 4096L);
 
-		columnBitmasks.put("assetEntrySubtype", 8192L);
+		columnBitmasks.put("type_", 8192L);
 
-		columnBitmasks.put("assetEntryType", 16384L);
+		columnBitmasks.put("assetEntrySubtype", 16384L);
 
-		columnBitmasks.put("lastPublishDate", 32768L);
+		columnBitmasks.put("assetEntryType", 32768L);
+
+		columnBitmasks.put("lastPublishDate", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

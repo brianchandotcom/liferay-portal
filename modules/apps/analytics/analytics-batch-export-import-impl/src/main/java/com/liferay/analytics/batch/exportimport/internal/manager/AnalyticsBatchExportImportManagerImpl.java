@@ -8,7 +8,6 @@ package com.liferay.analytics.batch.exportimport.internal.manager;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.analytics.batch.exportimport.manager.AnalyticsBatchExportImportManager;
-import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
@@ -737,64 +736,10 @@ public class AnalyticsBatchExportImportManagerImpl
 			return;
 		}
 
-		if (_log.isWarnEnabled()) {
-			_log.warn(
-				StringBundler.concat(
-					"Disconnecting data source for company ", companyId, ": ",
-					message));
-		}
-
-		try {
-			_companyLocalService.updatePreferences(
-				companyId,
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"liferayAnalyticsConnectionType", ""
-				).put(
-					"liferayAnalyticsDataSourceId", ""
-				).put(
-					"liferayAnalyticsEndpointURL", ""
-				).put(
-					"liferayAnalyticsFaroBackendSecuritySignature", ""
-				).put(
-					"liferayAnalyticsFaroBackendURL", ""
-				).put(
-					"liferayAnalyticsGroupIds", ""
-				).put(
-					"liferayAnalyticsProjectId", ""
-				).put(
-					"liferayAnalyticsURL", ""
-				).build());
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to remove analytics preferences for company " +
-						companyId,
-					exception);
-			}
-		}
-
-		try {
-			_configurationProvider.deleteCompanyConfiguration(
-				AnalyticsConfiguration.class, companyId);
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to remove analytics configuration for company " +
-						companyId,
-					exception);
-			}
-		}
-
-		_analyticsMessageLocalService.deleteAnalyticsMessages(companyId);
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Deleted all analytics messages for company " + companyId);
-		}
+		_log.error(
+			StringBundler.concat(
+				"Unable to connect to Analytics Cloud. Invalid token detected ",
+				"for company ", companyId, ": ", message));
 	}
 
 	private void _upload(
@@ -870,9 +815,6 @@ public class AnalyticsBatchExportImportManagerImpl
 
 	@Reference
 	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;
-
-	@Reference
-	private AnalyticsMessageLocalService _analyticsMessageLocalService;
 
 	@Reference
 	private BatchEngineExportTaskExecutor _batchEngineExportTaskExecutor;

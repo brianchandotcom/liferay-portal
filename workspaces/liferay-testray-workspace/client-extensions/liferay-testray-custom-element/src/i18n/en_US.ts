@@ -454,7 +454,7 @@ export default {
 	'warning': 'Warning',
 	'warnings': 'Warnings',
 	'warnings-x': 'Warnings ({0})',
-	'x-case-results-were-autofilled': '{0} Case Results were Autofilled.',
+	'x-case-results-were-autofilled': '{0} case results were autofilled.',
 	'x-create-date': '{0}. Create Date',
 	'x-is-a-required-field': '{0} is a required field.',
 	'x-items': '{0} Items',

@@ -124,8 +124,9 @@ public class GetPageContentMVCResourceCommandTest {
 	public void testCollectionMapping() throws Exception {
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addDynamicAssetListEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), null, _serviceContext);
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), RandomTestUtil.randomString(), null,
+				_serviceContext);
 
 		_createLayoutStructure(
 			layoutStructure -> {

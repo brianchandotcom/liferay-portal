@@ -65,7 +65,7 @@ public class AddAssetListEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				assetListEntry =
 					_assetListEntryService.addDynamicAssetListEntry(
-						serviceContext.getScopeGroupId(), title,
+						null, serviceContext.getScopeGroupId(), title,
 						UnicodePropertiesBuilder.create(
 							true
 						).put(
@@ -76,7 +76,7 @@ public class AddAssetListEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else {
 				assetListEntry = _assetListEntryService.addAssetListEntry(
-					serviceContext.getScopeGroupId(), title, type,
+					null, serviceContext.getScopeGroupId(), title, type,
 					serviceContext);
 			}
 

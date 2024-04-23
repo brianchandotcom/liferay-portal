@@ -1512,6 +1512,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		if (assetListEntry == null) {
 			_assetListEntryLocalService.addDynamicAssetListEntry(
+				assetListJSONObject.getString("externalReferenceCode"),
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				assetListJSONObject.getString("title"),
 				UnicodePropertiesBuilder.create(

@@ -203,8 +203,8 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		_assetListEntryService.addDynamicAssetListEntry(
-			themeDisplay.getScopeGroupId(), title, unicodeProperties.toString(),
-			serviceContext);
+			null, themeDisplay.getScopeGroupId(), title,
+			unicodeProperties.toString(), serviceContext);
 	}
 
 	private void _saveManualAssetList(
@@ -229,7 +229,7 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 			AssetEntry::getEntryId);
 
 		_assetListEntryService.addManualAssetListEntry(
-			themeDisplay.getScopeGroupId(), title, assetEntryIds,
+			null, themeDisplay.getScopeGroupId(), title, assetEntryIds,
 			serviceContext);
 	}
 

@@ -64,6 +64,14 @@ public class TemplateEntryLocalServiceImpl
 	}
 
 	@Override
+	public TemplateEntry fetchTemplateEntry(
+		String externalReferenceCode, long groupId) {
+
+		return templateEntryPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public TemplateEntry fetchTemplateEntryByDDMTemplateId(long ddmTemplateId) {
 		return templateEntryPersistence.fetchByDDMTemplateId(ddmTemplateId);
 	}

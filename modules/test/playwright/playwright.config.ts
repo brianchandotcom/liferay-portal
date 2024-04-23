@@ -17,6 +17,7 @@ import {config as clientExtensionWebConfig} from './tests/client-extension-web/c
 import {config as commerceConfig} from './tests/commerce/config';
 import {config as dispatchWebConfig} from './tests/dispatch-web/config';
 import {config as documentLibraryWebConfig} from './tests/document-library-web/config';
+import {config as dynamicDataMappingFormWebConfig} from './tests/dynamic-data-mapping-form-web/config';
 import {config as exportImportWebConfig} from './tests/export-import-web/config';
 import {config as frontendDataSetViewsWebConfig} from './tests/frontend-data-set-views-web/config';
 import {config as headlessBuilderImplConfig} from './tests/headless-builder-impl/config';
@@ -57,6 +58,7 @@ export default defineConfig({
 		clientExtensionWebConfig,
 		commerceConfig,
 		dispatchWebConfig,
+		dynamicDataMappingFormWebConfig,
 		documentLibraryWebConfig,
 		exportImportWebConfig,
 		frontendDataSetViewsWebConfig,

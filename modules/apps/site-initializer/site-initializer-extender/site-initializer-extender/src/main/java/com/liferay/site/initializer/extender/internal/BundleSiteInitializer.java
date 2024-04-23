@@ -1806,7 +1806,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 					TemplateEntry templateEntry =
 						_templateEntryLocalService.addTemplateEntry(
-							serviceContext.getUserId(),
+							null, serviceContext.getUserId(),
 							serviceContext.getScopeGroupId(),
 							ddmTemplate.getTemplateId(),
 							jsonObject.getString("infoItemClassName"),

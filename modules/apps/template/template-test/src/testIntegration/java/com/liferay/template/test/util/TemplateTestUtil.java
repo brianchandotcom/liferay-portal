@@ -94,7 +94,7 @@ public class TemplateTestUtil {
 			PortalUtil.getClassNameId(TemplateEntry.class), serviceContext);
 
 		return TemplateEntryLocalServiceUtil.addTemplateEntry(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			ddmTemplate.getTemplateId(), infoItemClassName,
 			infoItemFormVariationKey, serviceContext);
 	}
@@ -111,7 +111,7 @@ public class TemplateTestUtil {
 			script, serviceContext);
 
 		return TemplateEntryLocalServiceUtil.addTemplateEntry(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			ddmTemplate.getTemplateId(), infoItemClassName,
 			infoItemFormVariationKey, serviceContext);
 	}

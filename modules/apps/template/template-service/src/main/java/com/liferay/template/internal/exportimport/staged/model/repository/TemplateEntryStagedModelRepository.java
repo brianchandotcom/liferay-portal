@@ -58,7 +58,8 @@ public class TemplateEntryStagedModelRepository
 		}
 
 		return _templateEntryLocalService.addTemplateEntry(
-			userId, templateEntry.getGroupId(), ddmTemplateId,
+			templateEntry.getExternalReferenceCode(), userId,
+			templateEntry.getGroupId(), ddmTemplateId,
 			templateEntry.getInfoItemClassName(),
 			templateEntry.getInfoItemFormVariationKey(), serviceContext);
 	}

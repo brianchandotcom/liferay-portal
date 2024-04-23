@@ -96,7 +96,8 @@ public class AddTemplateEntryMVCActionCommand
 
 			TemplateEntry templateEntry =
 				_templateEntryLocalService.addTemplateEntry(
-					themeDisplay.getUserId(), serviceContext.getScopeGroupId(),
+					null, themeDisplay.getUserId(),
+					serviceContext.getScopeGroupId(),
 					ddmTemplate.getTemplateId(), infoItemClassName,
 					infoItemFormVariationKey, serviceContext);
 

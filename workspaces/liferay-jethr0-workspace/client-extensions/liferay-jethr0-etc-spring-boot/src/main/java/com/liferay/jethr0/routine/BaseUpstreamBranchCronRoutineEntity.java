@@ -7,8 +7,7 @@ package com.liferay.jethr0.routine;
 
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 import java.util.Set;
 
 import org.json.JSONObject;
@@ -20,25 +19,30 @@ public abstract class BaseUpstreamBranchCronRoutineEntity
 	extends BaseCronRoutineEntity implements UpstreamBranchCronRoutineEntity {
 
 	@Override
-	public GitBranchEntity getGitBranchEntity() {
-		List<GitBranchEntity> gitBranchEntities = new ArrayList<>(
-			getRelatedEntities(GitBranchEntity.class));
-
-		if (gitBranchEntities.isEmpty()) {
-			return null;
-		}
-
-		return gitBranchEntities.get(0);
+	public void addGitBranchEntities(Set<GitBranchEntity> gitBranchEntities) {
+		addRelatedEntities(gitBranchEntities);
 	}
 
 	@Override
-	public void setGitBranchEntity(GitBranchEntity gitBranchEntity) {
-		Set<GitBranchEntity> gitBranchEntities = getRelatedEntities(
-			GitBranchEntity.class);
+	public void addGitBranchEntity(GitBranchEntity gitBranchEntity) {
+		addRelatedEntities(Collections.singleton(gitBranchEntity));
+	}
 
-		gitBranchEntities.clear();
+	@Override
+	public Set<GitBranchEntity> getGitBranchEntities() {
+		return getRelatedEntities(GitBranchEntity.class);
+	}
 
-		gitBranchEntities.add(gitBranchEntity);
+	@Override
+	public void removeGitBranchEntities(
+		Set<GitBranchEntity> gitBranchEntities) {
+
+		removeRelatedEntities(gitBranchEntities);
+	}
+
+	@Override
+	public void removeGitBranchEntity(GitBranchEntity gitBranchEntity) {
+		removeRelatedEntities(Collections.singleton(gitBranchEntity));
 	}
 
 	protected BaseUpstreamBranchCronRoutineEntity(JSONObject jsonObject) {

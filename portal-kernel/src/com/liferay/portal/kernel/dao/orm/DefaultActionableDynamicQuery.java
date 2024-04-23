@@ -45,6 +45,10 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 		REQUIRES_NEW_TRANSACTION_CONFIG = builder.build();
 	}
 
+	public DefaultActionableDynamicQuery() {
+		_companyIdThreadLocal = CompanyThreadLocal.getCompanyId();
+	}
+
 	@Override
 	public AddCriteriaMethod getAddCriteriaMethod() {
 		return _addCriteriaMethod;
@@ -148,6 +152,7 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+		_companyIdThreadLocal = companyId;
 	}
 
 	@Override
@@ -276,8 +281,6 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 					DefaultActionableDynamicQuery.class.getName());
 
 			if (_parallel && (executorService != null)) {
-				long companyId = CompanyThreadLocal.getCompanyId();
-
 				List<Future<Void>> futures = new ArrayList<>(objects.size());
 
 				for (final Object object : objects) {
@@ -286,7 +289,7 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 							() -> {
 								try (SafeCloseable safeCloseable =
 										CompanyThreadLocal.setWithSafeCloseable(
-											companyId)) {
+											_companyIdThreadLocal)) {
 
 									performAction(object);
 
@@ -400,6 +403,7 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	private BaseLocalService _baseLocalService;
 	private ClassLoader _classLoader;
 	private long _companyId;
+	private long _companyIdThreadLocal;
 	private Method _dynamicQueryCountMethod;
 	private Method _dynamicQueryMethod;
 	private long _groupId;

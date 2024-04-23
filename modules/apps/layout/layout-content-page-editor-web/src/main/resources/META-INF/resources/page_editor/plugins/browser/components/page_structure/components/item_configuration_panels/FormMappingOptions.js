@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useControlledState} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
@@ -47,13 +48,14 @@ export default function FormMappingOptions({
 		});
 	}
 
-	const {classNameId, classTypeId} = item.config;
+	const [classNameId, setClassNameId] = useControlledState(
+		item.config.classNameId
+	);
+	const [classTypeId, setClassTypeId] = useControlledState(
+		item.config.classTypeId
+	);
 
 	const selectedType = formTypes.find(({value}) => value === classNameId);
-
-	const selectedSubtype = selectedType?.subtypes?.find(
-		({value}) => value === classTypeId
-	);
 
 	return (
 		<>
@@ -70,17 +72,23 @@ export default function FormMappingOptions({
 					},
 				}}
 				onValueSelect={(_name, classNameId) => {
+					setClassNameId(classNameId);
+
 					const type = formTypes.find(
 						({value}) => value === classNameId
 					);
 
-					return onValueSelect({
+					if (type?.subtypes?.length) {
+						return;
+					}
+
+					onValueSelect({
 						classNameId,
-						classTypeId: type?.subtypes?.[0]?.value || '0',
+						classTypeId,
 						formConfig: FORM_MAPPING_SOURCES.otherContentType,
 					});
 				}}
-				value={selectedType.value}
+				value={classNameId}
 			/>
 
 			{selectedType?.subtypes?.length > 0 && (
@@ -99,14 +107,16 @@ export default function FormMappingOptions({
 							],
 						},
 					}}
-					onValueSelect={(_name, classTypeId) =>
+					onValueSelect={(_name, classTypeId) => {
+						setClassTypeId(classTypeId);
+
 						onValueSelect({
-							classNameId: item.config.classNameId,
+							classNameId,
 							classTypeId,
 							formConfig: FORM_MAPPING_SOURCES.otherContentType,
-						})
-					}
-					value={selectedSubtype ? classTypeId : ''}
+						});
+					}}
+					value={classTypeId}
 				/>
 			)}
 		</>

@@ -166,7 +166,7 @@ public class ImportObjectDefinitionMVCActionCommand
 
 			objectDefinition.setObjectFolderExternalReferenceCode(
 				() -> ParamUtil.getString(
-					actionRequest, "objectFolderExternalReferenceCode"));
+					uploadPortletRequest, "objectFolderExternalReferenceCode"));
 
 			try {
 				ObjectDefinition putObjectDefinition =

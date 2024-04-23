@@ -77,15 +77,25 @@ class OAuth2Client {
 		const oauth2Client = this;
 
 		const origin = window.location.origin;
-		const redirectURI = oauth2Client.redirectURIs.find(uri => uri.startsWith(origin));
+		const redirectURI = oauth2Client.redirectURIs.find((uri) =>
+			uri.startsWith(origin)
+		);
 
 		if (!redirectURI) {
-			return Promise.reject(`No redirectURI in ${oauth2Client.redirectURIs} matching origin ${origin}`);
+			return Promise.reject(
+				`No redirectURI in ${oauth2Client.redirectURIs} matching origin ${origin}`
+			);
 		}
 
 		const ifrm = document.createElement('iframe');
 
-		ifrm.src = `${oauth2Client.authorizeURL}?client_id=${oauth2Client.clientId}&code_challenge=${challenge.code_challenge}&code_challenge_method=S256&redirect_uri=${encodeURIComponent(redirectURI)}&response_type=code&prompt=none&state=${sessionKey}`;
+		ifrm.src = `${oauth2Client.authorizeURL}?client_id=${
+			oauth2Client.clientId
+		}&code_challenge=${
+			challenge.code_challenge
+		}&code_challenge_method=S256&redirect_uri=${encodeURIComponent(
+			redirectURI
+		)}&response_type=code&prompt=none&state=${sessionKey}`;
 		ifrm.style.display = 'none';
 
 		document.body.appendChild(ifrm);

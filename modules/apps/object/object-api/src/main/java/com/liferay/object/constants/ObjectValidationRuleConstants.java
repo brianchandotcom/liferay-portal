@@ -16,6 +16,9 @@ public class ObjectValidationRuleConstants {
 
 	public static final String ENGINE_TYPE_GROOVY = "groovy";
 
+	public static final String ENGINE_TYPE_JAVA_DELEGATE_PREFIX =
+		"javaDelegate#";
+
 	public static final String OUTPUT_TYPE_FULL_VALIDATION = "fullValidation";
 
 	public static final String OUTPUT_TYPE_PARTIAL_VALIDATION =

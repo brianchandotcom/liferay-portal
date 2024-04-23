@@ -238,6 +238,14 @@ public class FragmentCollectionLocalServiceUtil {
 			groupId, fragmentCollectionKey);
 	}
 
+	public static FragmentCollection
+		fetchFragmentCollectionByExternalReferenceCode(
+			String externalReferenceCode, long groupId) {
+
+		return getService().fetchFragmentCollectionByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the fragment collection matching the UUID and group.
 	 *
@@ -284,6 +292,15 @@ public class FragmentCollectionLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getFragmentCollection(fragmentCollectionId);
+	}
+
+	public static FragmentCollection
+			getFragmentCollectionByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getFragmentCollectionByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

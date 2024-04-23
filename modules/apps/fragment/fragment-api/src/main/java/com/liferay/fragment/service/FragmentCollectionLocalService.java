@@ -224,6 +224,10 @@ public interface FragmentCollectionLocalService
 	public FragmentCollection fetchFragmentCollection(
 		long groupId, String fragmentCollectionKey);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentCollection fetchFragmentCollectionByExternalReferenceCode(
+		String externalReferenceCode, long groupId);
+
 	/**
 	 * Returns the fragment collection matching the UUID and group.
 	 *
@@ -253,6 +257,11 @@ public interface FragmentCollectionLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentCollection getFragmentCollection(long fragmentCollectionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentCollection getFragmentCollectionByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

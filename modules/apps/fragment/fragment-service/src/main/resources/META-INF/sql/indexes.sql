@@ -1,6 +1,7 @@
+create unique index IX_3C778AA9 on FragmentCollection (groupId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_9BFCBA4D on FragmentCollection (groupId, ctCollectionId, fragmentCollectionKey[$COLUMN_LENGTH:75$]);
+create unique index IX_33201F20 on FragmentCollection (groupId, ctCollectionId, uuid_[$COLUMN_LENGTH:75$]);
 create index IX_536510F5 on FragmentCollection (groupId, name[$COLUMN_LENGTH:75$]);
-create unique index IX_AD02299C on FragmentCollection (groupId, uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_8FB7E9C0 on FragmentCollection (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_5C61E2DD on FragmentComposition (fragmentCollectionId);

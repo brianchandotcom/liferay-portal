@@ -269,6 +269,15 @@ public class FragmentCollectionLocalServiceWrapper
 			groupId, fragmentCollectionKey);
 	}
 
+	@Override
+	public FragmentCollection fetchFragmentCollectionByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return _fragmentCollectionLocalService.
+			fetchFragmentCollectionByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the fragment collection matching the UUID and group.
 	 *
@@ -320,6 +329,16 @@ public class FragmentCollectionLocalServiceWrapper
 
 		return _fragmentCollectionLocalService.getFragmentCollection(
 			fragmentCollectionId);
+	}
+
+	@Override
+	public FragmentCollection getFragmentCollectionByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fragmentCollectionLocalService.
+			getFragmentCollectionByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	/**

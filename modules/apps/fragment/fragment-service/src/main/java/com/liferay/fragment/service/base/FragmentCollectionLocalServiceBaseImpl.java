@@ -272,6 +272,23 @@ public abstract class FragmentCollectionLocalServiceBaseImpl
 		return fragmentCollectionPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	@Override
+	public FragmentCollection fetchFragmentCollectionByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return fragmentCollectionPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
+	public FragmentCollection getFragmentCollectionByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return fragmentCollectionPersistence.findByERC_G(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the fragment collection with the primary key.
 	 *

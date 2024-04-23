@@ -1129,6 +1129,74 @@ public class FragmentCollectionUtil {
 	}
 
 	/**
+	 * Returns the fragment collection where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchCollectionException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching fragment collection
+	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
+	 */
+	public static FragmentCollection findByERC_G(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.fragment.exception.NoSuchCollectionException {
+
+		return getPersistence().findByERC_G(externalReferenceCode, groupId);
+	}
+
+	/**
+	 * Returns the fragment collection where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
+	 */
+	public static FragmentCollection fetchByERC_G(
+		String externalReferenceCode, long groupId) {
+
+		return getPersistence().fetchByERC_G(externalReferenceCode, groupId);
+	}
+
+	/**
+	 * Returns the fragment collection where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
+	 */
+	public static FragmentCollection fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache) {
+
+		return getPersistence().fetchByERC_G(
+			externalReferenceCode, groupId, useFinderCache);
+	}
+
+	/**
+	 * Removes the fragment collection where externalReferenceCode = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the fragment collection that was removed
+	 */
+	public static FragmentCollection removeByERC_G(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.fragment.exception.NoSuchCollectionException {
+
+		return getPersistence().removeByERC_G(externalReferenceCode, groupId);
+	}
+
+	/**
+	 * Returns the number of fragment collections where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the number of matching fragment collections
+	 */
+	public static int countByERC_G(String externalReferenceCode, long groupId) {
+		return getPersistence().countByERC_G(externalReferenceCode, groupId);
+	}
+
+	/**
 	 * Caches the fragment collection in the entity cache if it is enabled.
 	 *
 	 * @param fragmentCollection the fragment collection

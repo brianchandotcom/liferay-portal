@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -420,6 +421,19 @@ public class ObjectValidationRuleLocalServiceImpl
 				results = objectValidationRuleEngine.execute(
 					(Map<String, Object>)variables.get("baseModel"),
 					objectValidationRule.getScript());
+			}
+			else if (StringUtil.startsWith(
+						objectValidationRuleEngine.getKey(),
+						ObjectValidationRuleConstants.
+							ENGINE_TYPE_JAVA_DELEGATE_PREFIX)) {
+
+				results = objectValidationRuleEngine.execute(
+					HashMapBuilder.put(
+						"entryDTO", variables.get("entryDTO")
+					).put(
+						"originalEntryDTO", variables.get("originalEntryDTO")
+					).build(),
+					null);
 			}
 			else {
 				results = objectValidationRuleEngine.execute(

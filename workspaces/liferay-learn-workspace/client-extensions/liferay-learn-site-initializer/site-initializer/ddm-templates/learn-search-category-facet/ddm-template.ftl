@@ -1,8 +1,8 @@
 <#macro treeview_item
 	cssClassTreeItem = ""
 	frequency = 0
-	id = ""
 	frequencyVisible = true
+	id = ""
 	name = ""
 	selectable = false
 	selected = false
@@ -10,7 +10,7 @@
 	termDisplayContextClass = ""
 	vocabularyName = ""
 >
-	<li class="treeview-item ${termDisplayContextClass}" role="none" >
+	<li class="treeview-item ${termDisplayContextClass}" role="none">
 		<#if name?has_content>
 			<div
 				aria-controls="${namespace}treeItem${id}"
@@ -94,7 +94,7 @@
 				</span>
 			</div>
 		</#if>
-			
+
 		<#if termDisplayContexts?has_content>
 			<div class="actionBtns">
 			 <@clay.button
@@ -105,7 +105,7 @@
 			>
 				<span>${languageUtil.get(locale, "select-all")}</span>
 			</@clay.button>
-	
+
 			<@clay.button
 				cssClass="btn-unstyled c-mb-3 facet-clear-btn"
 				displayType="link"
@@ -115,57 +115,55 @@
 				<span>${languageUtil.get(locale, "clear")}</span>
 			</@clay.button>
 		</div>
-			
-			<div class="collapse show" id="${namespace}treeItem${id}">  
+
+			<div class="collapse show" id="${namespace}treeItem${id}">
 				<ul class="treeview-group" role="group">
-					
 					<#assign
 						hasTermDisplayContextHidden = false
 						termDisplayContextCount = 1
 					/>
-					
+
 					<#list termDisplayContexts as termDisplayContext>
 						<#assign hideClass = "" />
-						
-						 <!-- Renderizar apenas os primeiros 8 itens -->
-                        <#if termDisplayContextCount lte 8>
-                            <@treeview_item
-                                cssClassTreeItem="tree-item-category"
-                                frequency=termDisplayContext.getFrequency()
-                                frequencyVisible=termDisplayContext.isFrequencyVisible()
-                                id=termDisplayContext.getFilterValue()
-                                name=htmlUtil.escape(termDisplayContext.getBucketText())
-                                selectable=true
-                                selected=termDisplayContext.isSelected()
-                                termDisplayContextClass=hideClass
-                                vocabularyName=vocabularyName
-                            />
-                        <#else>
-                            <@treeview_item
-                                cssClassTreeItem="tree-item-category d-none"
-                                frequency=termDisplayContext.getFrequency()
-                                frequencyVisible=termDisplayContext.isFrequencyVisible()
-                                id=termDisplayContext.getFilterValue()
-                                name=htmlUtil.escape(termDisplayContext.getBucketText())
-                                selectable=true
-                                selected=termDisplayContext.isSelected()
-                                termDisplayContextClass=hideClass
-                                vocabularyName=vocabularyName
-                            />
-                        </#if>
-						
+
+						<#if termDisplayContextCount lte 8>
+							<@treeview_item
+								cssClassTreeItem="tree-item-category"
+								frequency=termDisplayContext.getFrequency()
+								frequencyVisible=termDisplayContext.isFrequencyVisible()
+								id=termDisplayContext.getFilterValue()
+								name=htmlUtil.escape(termDisplayContext.getBucketText())
+								selectable=true
+								selected=termDisplayContext.isSelected()
+								termDisplayContextClass=hideClass
+								vocabularyName=vocabularyName
+							/>
+						<#else>
+							<@treeview_item
+								cssClassTreeItem="tree-item-category d-none"
+								frequency=termDisplayContext.getFrequency()
+								frequencyVisible=termDisplayContext.isFrequencyVisible()
+								id=termDisplayContext.getFilterValue()
+								name=htmlUtil.escape(termDisplayContext.getBucketText())
+								selectable=true
+								selected=termDisplayContext.isSelected()
+								termDisplayContextClass=hideClass
+								vocabularyName=vocabularyName
+							/>
+						</#if>
+
 						<#assign termDisplayContextCount++ />
 					</#list>
 						 <#if termDisplayContextCount gt 8>
-                        <@clay.button
-                            cssClass="btn-unstyled facet-clear-btn view-all-btn c-mt-3"
-                            displayType="link"
-                            id="${vocabularyName + 'facetAssetCategoriesViewAll'}"
-                            onClick="${namespace}viewAll('${namespace}treeItem${id}')"
-                        >
-                            <span>${languageUtil.get(locale, "view-all")}</span>
-                        </@clay.button>
-                    </#if>
+						<@clay.button
+							cssClass="btn-unstyled facet-clear-btn view-all-btn c-mt-3"
+							displayType="link"
+							id="${vocabularyName + 'facetAssetCategoriesViewAll'}"
+							onClick="${namespace}viewAll('${namespace}treeItem${id}')"
+						>
+							<span>${languageUtil.get(locale, "view-all")}</span>
+						</@clay.button>
+					</#if>
 				</ul>
 			</div>
 		</#if>
@@ -231,32 +229,32 @@
 			}
 		}
 	}
-	
-	    function ${namespace}selectAll(event) {
-        
-        var divId = event.target.closest('.collapse').id;
-        var checkboxes = document.querySelectorAll('#' + divId + ' .custom-checkbox input[type="checkbox"]');
 
-        checkboxes.forEach((checkbox) => {
-            checkbox.checked = true;
-            var changeEvent = new Event('change');
-            checkbox.dispatchEvent(changeEvent);
-        });
-    }
-	
+		function ${namespace}selectAll(event) {
+
+		var divId = event.target.closest('.collapse').id;
+		var checkboxes = document.querySelectorAll('#' + divId + ' .custom-checkbox input[type="checkbox"]');
+
+		checkboxes.forEach((checkbox) => {
+			checkbox.checked = true;
+			var changeEvent = new Event('change');
+			checkbox.dispatchEvent(changeEvent);
+		});
+	}
+
 	function ${namespace}viewAll(dataTarget) {
-        const subtreeCategoryTreeElement = document.getElementById(dataTarget);
-        
-        if (subtreeCategoryTreeElement) {
-            const hiddenItems = subtreeCategoryTreeElement.querySelectorAll('.d-none');
-            hiddenItems.forEach(item => {
-                item.classList.remove('d-none');
-            });
+		const subtreeCategoryTreeElement = document.getElementById(dataTarget);
 
-            const viewAllButton = subtreeCategoryTreeElement.querySelector('.view-all-btn');
-            if (viewAllButton) {
-                viewAllButton.style.display = 'none';
-            }
-        }
-    }
+		if (subtreeCategoryTreeElement) {
+			const hiddenItems = subtreeCategoryTreeElement.querySelectorAll('.d-none');
+			hiddenItems.forEach(item => {
+				item.classList.remove('d-none');
+			});
+
+			const viewAllButton = subtreeCategoryTreeElement.querySelector('.view-all-btn');
+			if (viewAllButton) {
+				viewAllButton.style.display = 'none';
+			}
+		}
+	}
 </@>

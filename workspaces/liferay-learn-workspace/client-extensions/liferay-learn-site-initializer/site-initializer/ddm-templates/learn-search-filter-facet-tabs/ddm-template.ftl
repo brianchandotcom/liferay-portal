@@ -28,7 +28,7 @@
 					data\-term\-id="${entry.getFilterValue()}"
 					disabled="true"
 					displayType="link"
-					onClick="Liferay.Search.FacetUtil.changeSelection(event);"
+					onClick="${namespace}updateSelection(event)"
 				>
 					<span class="term-text">${htmlUtil.escape(entry.getBucketText())}</span>
 
@@ -40,3 +40,17 @@
 		</#list>
 	</ul>
 </#if>
+
+<@liferay_aui.script>
+	function ${namespace}updateSelection(event) {
+		const form = event.currentTarget.form;
+
+		if (!form) {
+			return;
+		}
+
+		Liferay.Search.FacetUtil.selectTerms(form, []);
+
+		Liferay.Search.FacetUtil.changeSelection(event);
+	}
+</@>

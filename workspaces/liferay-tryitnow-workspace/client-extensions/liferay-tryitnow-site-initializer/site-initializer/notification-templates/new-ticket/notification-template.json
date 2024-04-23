@@ -14,7 +14,7 @@
 		}
 	],
 	"subject": {
-		"en_US": "Hello ,\\nA new ticket was created with the following subject : [%J3Y7TICKET_SUBJECT%]"
+		"en_US": "A new ticket has been created with the following subject : [%J3Y7TICKET_SUBJECT%]"
 	},
 	"system": false,
 	"type": "userNotification",

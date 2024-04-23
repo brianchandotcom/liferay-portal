@@ -10,8 +10,20 @@ import {
 import {createResourceURL, fetch} from 'frontend-js-web';
 
 interface Role {
+	label: string;
 	name: string;
 }
+interface RolesGroup {
+	accountRoles: Role[];
+	organizationRoles: Role[];
+	regularRoles: Role[];
+}
+
+const roleGroupLabels = {
+	accountRoles: Liferay.Language.get('account-roles'),
+	organizationRoles: Liferay.Language.get('organization-roles'),
+	regularRoles: Liferay.Language.get('regular-roles'),
+};
 
 export async function getEmailNotificationRoles(baseResourceURL: string) {
 	const response = await fetch(
@@ -21,21 +33,26 @@ export async function getEmailNotificationRoles(baseResourceURL: string) {
 		}).toString()
 	);
 
-	const items = (await response.json()).accountRoles as Role[];
+	const rolesResponse = (await response.json()) as RolesGroup;
+	const roles = [] as MultiSelectItem[];
 
-	const accountRolesGroup = {
-		children: items.map(({name}) => {
-			return {
-				checked: false,
-				label: name,
-				value: name,
-			};
-		}),
-		label: 'Account Roles',
-		value: 'accountRolesList',
-	} as MultiSelectItem;
+	(Object.entries(rolesResponse) as [keyof RolesGroup, Role[]][]).forEach(
+		([roleGroupKey, roleValues]) => {
+			roles.push({
+				children: roleValues.map(({label, name}) => {
+					return {
+						checked: false,
+						label,
+						value: name,
+					};
+				}),
+				label: roleGroupLabels[roleGroupKey],
+				value: roleGroupKey,
+			});
+		}
+	);
 
-	return [accountRolesGroup];
+	return roles;
 }
 
 export function getCheckedChildren(

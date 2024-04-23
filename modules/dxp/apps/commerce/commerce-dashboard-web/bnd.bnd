@@ -1,5 +1,4 @@
 Bundle-Name: Liferay Commerce Dashboard Web
 Bundle-SymbolicName: com.liferay.commerce.dashboard.web
 Bundle-Version: 4.0.44
-Liferay-JS-Submodules-Bridge: commerce-dashboard-web
 Web-ContextPath: /commerce-dashboard-web

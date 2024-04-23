@@ -20,6 +20,7 @@ import {config as dispatchWebConfig} from './tests/dispatch-web/config';
 import {config as documentLibraryWebConfig} from './tests/document-library-web/config';
 import {config as dynamicDataMappingFormWebConfig} from './tests/dynamic-data-mapping-form-web/config';
 import {config as exportImportWebConfig} from './tests/export-import-web/config';
+import {config as featureFlagWebConfig} from './tests/feature-flag-web/config';
 import {config as frontendDataSetViewsWebConfig} from './tests/frontend-data-set-views-web/config';
 import {config as frontendDataSetWebConfig} from './tests/frontend-data-set-web/config';
 import {config as frontendJsSpaWebConfig} from './tests/frontend-js-spa-web/config';
@@ -69,6 +70,7 @@ export default defineConfig({
 		documentLibraryWebConfig,
 		dynamicDataMappingFormWebConfig,
 		exportImportWebConfig,
+		featureFlagWebConfig,
 		frontendDataSetViewsWebConfig,
 		frontendDataSetWebConfig,
 		frontendJsSpaWebConfig,

@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" change-tracking-enabled="true" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.template" short-no-such-exception-enabled="false">
 	<namespace>Template</namespace>
-	<entity local-service="true" name="TemplateEntry" remote-service="false" uuid="true">
+	<entity external-reference-code="group" local-service="true" name="TemplateEntry" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 

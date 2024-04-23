@@ -11,3 +11,12 @@
 	position: fixed;
 	z-index: 976;
 }
+
+html:not(#__):not(#___) .page-editor.is-dragging .page-editor__fragment-content.lfr-layout-structure-item-basic-component-dropdown {
+	opacity: 1;
+}
+
+html:not(#__):not(#___) .page-editor.is-dragging .page-editor__fragment-content .dropdown-fragment-toggle {
+	opacity: 0.5;
+	transition: opacity 0.2s;
+}

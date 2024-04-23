@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestFlow;
 import com.liferay.testray.rest.internal.util.TestrayUtil;
+import com.liferay.testray.rest.internal.util.comparator.TestrayCaseResultsComparator;
 import com.liferay.testray.rest.resource.v1_0.TestrayTestFlowResource;
 
 import java.io.Serializable;
@@ -97,14 +98,18 @@ public class TestrayTestFlowResourceImpl
 
 		testrayCaseResultsList.addAll(map.values());
 
-		int testraySubtaskAmount = 1;
+		int testraySubtaskAmount = 0;
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				contextCompany.getCompanyId(), "C_Subtask");
 
 		for (List<Map<String, Object>> testrayCaseResults :
-				testrayCaseResultsList) {
+				ListUtil.sort(
+					testrayCaseResultsList,
+					new TestrayCaseResultsComparator())) {
+
+			testraySubtaskAmount++;
 
 			Map<String, Object> firstTestrayCaseResult = testrayCaseResults.get(
 				0);
@@ -127,8 +132,6 @@ public class TestrayTestFlowResourceImpl
 					"score", _getTestraySubtaskScore(testrayCaseResults)
 				).build(),
 				_serviceContextHelper.getServiceContext());
-
-			testraySubtaskAmount++;
 
 			for (Map<String, Object> testrayCaseResult : testrayCaseResults) {
 				testrayCaseResult.put(

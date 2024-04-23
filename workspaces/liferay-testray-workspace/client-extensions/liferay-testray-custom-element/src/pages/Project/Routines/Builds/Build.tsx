@@ -22,6 +22,7 @@ import {
 } from '~/services/rest';
 
 import useBuildTestActions from './useBuildTestActions';
+import {getTruncateText} from '~/util/getTruncateText';
 
 const Build = () => {
 	const [searchParams] = useSearchParams();
@@ -189,7 +190,11 @@ const Build = () => {
 						{
 							key: 'errors',
 							render: (errors: string) =>
-								errors && <Code>{errors}</Code>,
+								errors && (
+									<Code title={errors as string}>
+										{getTruncateText(errors)}
+									</Code>
+								),
 							size: 'xl',
 							truncate: true,
 							value: i18n.translate('errors'),

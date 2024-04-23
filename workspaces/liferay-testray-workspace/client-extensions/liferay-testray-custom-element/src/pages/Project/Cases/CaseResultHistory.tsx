@@ -14,6 +14,7 @@ import {TableProps} from '../../../components/Table';
 import i18n from '../../../i18n';
 import {PickList, testrayCaseResultImpl} from '../../../services/rest';
 import dayjs from '../../../util/date';
+import {getTruncateText} from '~/util/getTruncateText';
 
 type CaseResultHistoryProps = {
 	listViewProps?: Partial<ListViewProps>;
@@ -106,7 +107,11 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 					{
 						key: 'errors',
 						render: (errors: string) =>
-							errors && <Code>{errors}</Code>,
+							errors && (
+								<Code title={errors as string}>
+									{getTruncateText(errors)}
+								</Code>
+							),
 						size: 'xl',
 						value: i18n.translate('errors'),
 					},

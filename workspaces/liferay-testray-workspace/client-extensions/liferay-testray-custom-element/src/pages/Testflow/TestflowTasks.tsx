@@ -43,6 +43,7 @@ import {SubTaskStatuses} from '~/util/statuses';
 import SubtaskCompleteModal from './Subtask/SubtaskCompleteModal';
 import useSubtasksActions from './Subtask/useSubtasksActions';
 import TaskHeaderActions from './TaskHeaderActions';
+import {getTruncateText} from '~/util/getTruncateText';
 
 type OutletContext = {
 	data: {
@@ -341,7 +342,11 @@ const TestFlowTasks = () => {
 							},
 							{
 								key: 'errors',
-								render: (value) => <Code>{value}</Code>,
+								render: (value) => (
+									<Code title={value as string}>
+										{getTruncateText(value)}
+									</Code>
+								),
 								size: 'xl',
 								value: i18n.translate('errors'),
 							},
@@ -392,7 +397,8 @@ const TestFlowTasks = () => {
 															0,
 															{},
 															{
-																revalidate: true,
+																revalidate:
+																	true,
 															}
 														);
 													})
@@ -418,9 +424,10 @@ const TestFlowTasks = () => {
 						{items},
 						{dispatch, listViewContext: {selectedRows}, mutate}
 					) => {
-						const selectedSubtasks: TestraySubTask[] = selectedRows.map(
-							(rowId) => items.find(({id}) => rowId === id)
-						);
+						const selectedSubtasks: TestraySubTask[] =
+							selectedRows.map((rowId) =>
+								items.find(({id}) => rowId === id)
+							);
 
 						const alerts = getFloatingBoxAlerts(selectedSubtasks);
 
@@ -430,8 +437,7 @@ const TestFlowTasks = () => {
 								clearList={() =>
 									dispatch({
 										payload: [],
-										type:
-											ListViewTypes.SET_CLEAR_CHECKED_ROW,
+										type: ListViewTypes.SET_CLEAR_CHECKED_ROW,
 									})
 								}
 								isVisible={!!selectedRows.length}

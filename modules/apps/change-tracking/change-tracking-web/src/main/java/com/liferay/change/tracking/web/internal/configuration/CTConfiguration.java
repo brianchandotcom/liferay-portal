@@ -37,7 +37,7 @@ public interface CTConfiguration {
 	public String[] productionOnlyApplication();
 
 	@Meta.AD(
-		deflt = "com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet, com_liferay_users_admin_web_portlet_UsersAdminPortlet",
+		deflt = "com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet, com_liferay_batch_planner_web_internal_portlet_BatchPlannerPortlet, com_liferay_users_admin_web_portlet_UsersAdminPortlet",
 		description = "unsupported-application-help",
 		name = "unsupported-application", required = false
 	)

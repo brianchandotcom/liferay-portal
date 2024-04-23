@@ -374,7 +374,7 @@ else {
 			id="dlFileEntryExpirationDatePanel"
 			markupView="lexicon"
 			persistState="<%= true %>"
-			title="expiration-date"
+			title='<%= FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "LPD-10701") ? "schedule" : "expiration-date" %>'
 		>
 			<aui:fieldset>
 				<liferay-ui:error exception="<%= FileEntryDisplayDateException.class %>" message="please-enter-a-valid-publish-date" />

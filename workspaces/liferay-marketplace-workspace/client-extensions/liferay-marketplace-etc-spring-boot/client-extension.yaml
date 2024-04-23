@@ -15,6 +15,7 @@ liferay-marketplace-etc-spring-boot-oauth-application-headless-server:
         - Liferay.Headless.Commerce.Admin.Catalog.everything
         - Liferay.Headless.Commerce.Admin.Order.everything
         - Liferay.Headless.Commerce.Delivery.Catalog.everything
+        - Liferay.Notification.REST.everything
     type: oAuthApplicationHeadlessServer
 liferay-marketplace-etc-spring-boot-oauth-application-user-agent:
     .serviceAddress: localhost:58081

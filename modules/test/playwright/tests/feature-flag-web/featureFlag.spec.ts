@@ -13,7 +13,7 @@ const DEPENDENT_FEATURE_FLAG = 'LPS-162765';
 
 export const test = mergeTests(featureFlagPagesTest, loginTest());
 
-test('LPS-167698 - Asserts that a feature flag can be enabled and disabled.', async ({
+test('LPS-167698 - Assert that a feature flag can be enabled and disabled.', async ({
 	featureFlagsInstanceSettingsPage,
 }) => {
 	await featureFlagsInstanceSettingsPage.goto();
@@ -38,7 +38,7 @@ test('LPS-167698 - Asserts that a feature flag can be enabled and disabled.', as
 	await expect(featureFlagToggle).toBeChecked({checked: false});
 });
 
-test('LPS-167698 - This tests asserts that a feature flag can be enabled with dependencies.', async ({
+test('LPS-167698 - Assert that a feature flag with dependencies can be enabled when the dependencies are enabled.', async ({
 	featureFlagsInstanceSettingsPage,
 }) => {
 	await featureFlagsInstanceSettingsPage.goto();
@@ -84,7 +84,7 @@ test('LPS-167698 - This tests asserts that a feature flag can be enabled with de
 	);
 });
 
-test('LPS-167698 - This tests asserts that a feature flag cannot be enabled by dependencies.', async ({
+test('LPS-167698 - Assert that a feature flag with dependencies cannot be enabled when the dependencies are not enabled.', async ({
 	featureFlagsInstanceSettingsPage,
 }) => {
 	await featureFlagsInstanceSettingsPage.goto();

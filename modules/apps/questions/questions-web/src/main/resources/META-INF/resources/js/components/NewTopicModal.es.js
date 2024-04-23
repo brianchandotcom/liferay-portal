@@ -160,7 +160,6 @@ export default function NewTopicModal({
 											'create'
 										)}
 										displayType="primary"
-										onClick={handleSubmit}
 										type="submit"
 									>
 										{Liferay.Language.get('create')}

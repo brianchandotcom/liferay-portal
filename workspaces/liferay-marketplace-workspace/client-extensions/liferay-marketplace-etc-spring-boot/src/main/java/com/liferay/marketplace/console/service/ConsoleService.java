@@ -29,30 +29,13 @@ import reactor.core.publisher.Mono;
 public class ConsoleService {
 
 	public void deleteProject(String projectId) throws Exception {
-		String projectName = _consoleProjectId + "-" + projectId;
+		String projectName = _consoleProjectId + projectId;
 
 		_getWebClient(
 		).delete(
 		).uri(
-			"/projects" + projectName
+			"/projects/" + projectName
 		);
-	}
-
-	public void deployApp(String orderId, String projectId) throws Exception {
-		deployApp(_consoleAuthEmail, orderId, projectId);
-	}
-
-	public void deployApp(String email, String orderId, String projectId)
-		throws Exception {
-
-		_post(
-			new JSONObject(
-			).put(
-				"orderId", orderId
-			).put(
-				"userEmail", email
-			),
-			"/admin/projects/" + projectId + "/apps");
 	}
 
 	public String getAuthorization() throws Exception {
@@ -98,52 +81,41 @@ public class ConsoleService {
 		return _accessToken;
 	}
 
-	public void setupCloudProjectInstallation(String virtualHost, long orderId)
+	public void setupCloudProjectInstallation(long orderId, String virtualHost)
 		throws Exception {
 
 		JSONObject projectJSONObject = _postEnvironmentProject(
 			false, _consoleProjectId + orderId);
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Project created " + projectJSONObject.toString());
-		}
-
 		JSONObject environmentProjectJSONObject = _postEnvironmentProject(
 			true, projectJSONObject.getString("projectId") + "-extprd");
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Environment Project created " +
-					environmentProjectJSONObject.toString());
-		}
-
 		_inviteProject(
 			_marketplaceTrialAdminEmail,
-			environmentProjectJSONObject.getString("projectId"), "admin");
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Invited " + _marketplaceTrialAdminEmail +
-					" as admin to cloud environment");
-		}
+			environmentProjectJSONObject.getString("projectId"));
 
 		_setupLinkBetweenPortalInstanceAndExtensionEnvironment(
 			virtualHost, environmentProjectJSONObject.getString("id"));
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				virtualHost + " Linked to environment: " +
-					environmentProjectJSONObject.getString("id"));
-		}
-
-		deployApp(
-			String.valueOf(orderId),
+		_deployApp(
+			_consoleAuthEmail, String.valueOf(orderId),
 			environmentProjectJSONObject.getString("projectId"));
+	}
+
+	private void _deployApp(String email, String orderId, String projectId)
+		throws Exception {
+
+		_post(
+			new JSONObject(
+			).put(
+				"orderId", orderId
+			).put(
+				"userEmail", email
+			),
+			"/admin/projects/" + projectId + "/apps");
 
 		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Marketplace App deployed to " +
-					environmentProjectJSONObject.getString("projectId"));
+			_log.info("Marketplace App deployed to " + projectId);
 		}
 	}
 
@@ -156,7 +128,7 @@ public class ConsoleService {
 		).build();
 	}
 
-	private void _inviteProject(String email, String projectId, String role)
+	private void _inviteProject(String email, String projectId)
 		throws Exception {
 
 		_post(
@@ -164,9 +136,13 @@ public class ConsoleService {
 			).put(
 				"email", email
 			).put(
-				"role", role
+				"role", "admin"
 			),
 			"/projects/" + projectId + "/invite");
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Invited " + email + " as admin to cloud environment");
+		}
 	}
 
 	private JSONObject _post(JSONObject jsonObject, String path)
@@ -212,7 +188,7 @@ public class ConsoleService {
 			boolean environment, String projectId)
 		throws Exception {
 
-		return _post(
+		JSONObject jsonObject = _post(
 			new JSONObject(
 			).put(
 				"cluster", _consoleCluster
@@ -222,13 +198,19 @@ public class ConsoleService {
 				"projectId", projectId
 			),
 			"/projects");
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Project created " + jsonObject);
+		}
+
+		return jsonObject;
 	}
 
-	private JSONObject _setupLinkBetweenPortalInstanceAndExtensionEnvironment(
+	private void _setupLinkBetweenPortalInstanceAndExtensionEnvironment(
 			String dxpVirtualInstanceId, String extensionProjectUid)
 		throws Exception {
 
-		return _post(
+		_post(
 			new JSONObject(
 			).put(
 				"dxpProjectUid", _consoleProjectUid
@@ -238,6 +220,12 @@ public class ConsoleService {
 				"extensionProjectUid", extensionProjectUid
 			),
 			"/lxc-extension-links");
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				dxpVirtualInstanceId + " Linked to environment: " +
+					extensionProjectUid);
+		}
 	}
 
 	private static final Log _log = LogFactory.getLog(ConsoleService.class);

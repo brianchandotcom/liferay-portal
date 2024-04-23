@@ -87,7 +87,7 @@ public class TrialRestController extends BaseRestController {
 			}
 		}
 
-		_consoleService.deleteProject("ext" + orderId);
+		_consoleService.deleteProject(orderId);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -385,7 +385,7 @@ public class TrialRestController extends BaseRestController {
 
 		try {
 			_consoleService.setupCloudProjectInstallation(
-				portalInstance.getVirtualHost(), orderId);
+				orderId, portalInstance.getVirtualHost());
 		}
 		catch (Exception exception) {
 			_log.error(

@@ -61,7 +61,7 @@ public class TemplateEntryStagedModelDataHandlerTest
 			"<#-- Empty script -->", new ServiceContext());
 
 		return _templateEntryLocalService.addTemplateEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			ddmTemplate.getTemplateId(), StringPool.BLANK, StringPool.BLANK,
 			new ServiceContext());
 	}

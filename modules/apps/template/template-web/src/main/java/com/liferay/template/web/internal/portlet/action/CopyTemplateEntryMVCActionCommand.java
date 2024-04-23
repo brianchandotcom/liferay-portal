@@ -71,7 +71,7 @@ public class CopyTemplateEntryMVCActionCommand
 			TemplateEntry.class.getName(), actionRequest);
 
 		_templateEntryLocalService.addTemplateEntry(
-			themeDisplay.getUserId(), templateEntry.getGroupId(),
+			null, themeDisplay.getUserId(), templateEntry.getGroupId(),
 			ddmTemplate.getTemplateId(), templateEntry.getInfoItemClassName(),
 			templateEntry.getInfoItemFormVariationKey(), serviceContext);
 	}

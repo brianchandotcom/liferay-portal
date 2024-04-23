@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "Testray Case Result"
+	},
+	"name": "subtaskToCaseResults",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Subtask$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:CasesResult$]",
+	"objectDefinitionName2": "CaseResult",
+	"type": "oneToMany"
+}

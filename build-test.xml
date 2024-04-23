@@ -16929,13 +16929,13 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 						jar="${liferay.home}/tools/portal-tools-db-partition-schema-validator/com.liferay.portal.tools.db.partition.schema.validator.jar"
 						output="${liferay.home}/validateoutput.txt"
 					>
-						<arg line="-d ${database.mysql.schema}" />
-						<arg line="-j ${database.mysql.url}" />
-						<arg value="-p" />
+						<arg line="--db-name ${database.mysql.schema}" />
+						<arg line="--jdbc-url ${database.mysql.url}" />
+						<arg value="--password" />
 						<arg value="&quot;${database.mysql.password}&quot;" />
-						<arg line="-s ${schema.name.prefix}" />
-						<arg line="-t mysql" />
-						<arg line="-u ${database.mysql.username}" />
+						<arg line="--schema-prefix ${schema.name.prefix}" />
+						<arg line="--db-type mysql" />
+						<arg line="--user ${database.mysql.username}" />
 					</java>
 				</then>
 				<elseif>
@@ -16946,13 +16946,13 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 							jar="${liferay.home}/tools/portal-tools-db-partition-schema-validator/com.liferay.portal.tools.db.partition.schema.validator.jar"
 							output="${liferay.home}/validateoutput.txt"
 						>
-							<arg line="-d ${database.postgresql.schema}" />
-							<arg line="-j ${database.postgresql.url}" />
-							<arg value="-p" />
+							<arg line="--db-name ${database.postgresql.schema}" />
+							<arg line="--jdbc-url ${database.postgresql.url}" />
+							<arg value="--password" />
 							<arg value="&quot;${database.postgresql.password}&quot;" />
-							<arg line="-s ${schema.name.prefix}" />
-							<arg line="-t postgresql" />
-							<arg line="-u ${database.postgresql.username}" />
+							<arg line="--schema-prefix ${schema.name.prefix}" />
+							<arg line="--db-type postgresql" />
+							<arg line="--user ${database.postgresql.username}" />
 						</java>
 					</then>
 				</elseif>

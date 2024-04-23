@@ -481,6 +481,515 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			};
 		}
 
+		case TYPES.DELETE_OBJECT_FIELD: {
+			const {
+				objectDefinitionNodes,
+				objectRelationshipEdges,
+				selectedObjectDefinitionNode,
+				selectedObjectField,
+			} = action.payload;
+
+			const newSelectedObjectDefinitionNodeObjectFields = selectedObjectDefinitionNode?.data?.objectFields.filter(
+				(objectField) =>
+					objectField.externalReferenceCode !==
+					selectedObjectField.externalReferenceCode
+			);
+
+			const updatedObjectDefinitionNodes = objectDefinitionNodes.map(
+				(objectDefinitionNode) => {
+					if (
+						objectDefinitionNode.data?.externalReferenceCode ===
+						selectedObjectDefinitionNode?.data
+							?.externalReferenceCode
+					) {
+						return {
+							...objectDefinitionNode,
+							data: {
+								...objectDefinitionNode.data,
+								objectFields: newSelectedObjectDefinitionNodeObjectFields,
+								selected: false,
+							},
+						} as Node<ObjectDefinitionNodeData>;
+					}
+
+					return objectDefinitionNode;
+				}
+			);
+
+			return {
+				...state,
+				elements: [
+					...updatedObjectDefinitionNodes,
+					...objectRelationshipEdges,
+				],
+				rightSidebarType: 'empty',
+				selectedObjectField: undefined,
+			};
+		}
+
+		case TYPES.SET_DELETE_OBJECT_DEFINITION: {
+			const {deletedObjectDefinition} = action.payload;
+
+			return {
+				...state,
+				deletedObjectDefinition,
+			};
+		}
+
+		case TYPES.SET_ELEMENTS: {
+			const {newElements} = action.payload;
+			const {selectedObjectDefinitionNode} = state;
+
+			const updatedSelectedObjectDefinitionNode = newElements.find(
+				(element) => {
+					if (isNode(element) && element.data) {
+						return (
+							(element.data as ObjectDefinitionNodeData).id ===
+							selectedObjectDefinitionNode?.data?.id
+						);
+					}
+				}
+			) as Node<ObjectDefinitionNodeData> | null;
+
+			return {
+				...state,
+				elements: newElements,
+				selectedObjectDefinitionNode: updatedSelectedObjectDefinitionNode,
+			};
+		}
+
+		case TYPES.SET_MOVED_OBJECT_DEFINITION: {
+			const {movedObjectDefinitionId} = action.payload;
+
+			return {
+				...state,
+				movedObjectDefinitionId: movedObjectDefinitionId as number,
+			};
+		}
+
+		case TYPES.SET_NODE_HANDLE_CONNECTION: {
+			const {nodeHandleConnectable} = action.payload;
+
+			return {
+				...state,
+				nodeHandleConnectable,
+			};
+		}
+
+		case TYPES.SET_OBJECT_FOLDER_NAME: {
+			const {objectFolderName} = action.payload;
+
+			return {
+				...state,
+				objectFolderName,
+				rightSidebarType: 'empty',
+			};
+		}
+
+		case TYPES.SET_LOADING_OBJECT_FOLDER: {
+			const {isLoadingObjectFolder} = action.payload;
+
+			return {
+				...state,
+				isLoadingObjectFolder,
+			};
+		}
+
+		case TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE: {
+			const {
+				objectDefinitionNodes,
+				objectRelationshipEdges,
+				selectedObjectDefinitionId,
+			} = action.payload;
+
+			const {leftSidebarItems} = state;
+
+			let selectedObjectDefinitionNode: Node<
+				ObjectDefinitionNodeData
+			> | null = null;
+
+			const newObjectDefinitionNodes = objectDefinitionNodes.map(
+				(objectDefinitionNode) => {
+					const newObjectFields = objectDefinitionNode.data?.objectFields.map(
+						(objectField) => ({
+							...objectField,
+							selected: false,
+						})
+					);
+
+					if (
+						objectDefinitionNode.id === selectedObjectDefinitionId
+					) {
+						selectedObjectDefinitionNode = {
+							...objectDefinitionNode,
+							data: {
+								...objectDefinitionNode.data,
+								objectFields: newObjectFields,
+								selected: true,
+							},
+						} as Node<ObjectDefinitionNodeData>;
+
+						return selectedObjectDefinitionNode;
+					}
+
+					return {
+						...objectDefinitionNode,
+						data: {
+							...objectDefinitionNode.data,
+							objectFields: newObjectFields,
+							selected: false,
+						},
+					};
+				}
+			) as Node<ObjectDefinitionNodeData>[];
+
+			const newLeftSidebarItems = leftSidebarItems.map((sidebarItem) => {
+				const newLeftSidebarObjectDefinitions = sidebarItem.leftSidebarObjectDefinitionItems?.map(
+					(leftSidebarObjectDefinitionItem) => ({
+						...leftSidebarObjectDefinitionItem,
+						selected:
+							selectedObjectDefinitionId ===
+							leftSidebarObjectDefinitionItem.id.toString(),
+					})
+				);
+
+				return {
+					...sidebarItem,
+					leftSidebarObjectDefinitionItems: newLeftSidebarObjectDefinitions,
+				};
+			});
+
+			const selectedObjectRelationshipEdge = objectRelationshipEdges.find(
+				(objectRelationshipEdge) =>
+					objectRelationshipEdge.data?.some(
+						(objectRelationshipEdgeData) =>
+							objectRelationshipEdgeData.selected
+					)
+			);
+
+			const newObjectRelationshipEdges = objectRelationshipEdges;
+
+			if (selectedObjectRelationshipEdge?.data) {
+				const selectedObjectRelationshipEdgeIndex = objectRelationshipEdges.findIndex(
+					(objectRelationshipEdge) =>
+						objectRelationshipEdge.data?.some(
+							(objectRelationshipEdgeData) =>
+								objectRelationshipEdgeData.selected
+						)
+				);
+
+				selectedObjectRelationshipEdge.data = selectedObjectRelationshipEdge.data.map(
+					(objectRelationshipEdgeData) => {
+						return {
+							...objectRelationshipEdgeData,
+							selected: false,
+						};
+					}
+				);
+
+				newObjectRelationshipEdges[
+					selectedObjectRelationshipEdgeIndex
+				] = selectedObjectRelationshipEdge;
+			}
+
+			return {
+				...state,
+				elements: [
+					...newObjectDefinitionNodes,
+					...newObjectRelationshipEdges,
+				],
+				leftSidebarItems: newLeftSidebarItems,
+				rightSidebarType: 'objectDefinitionDetails',
+				selectedObjectDefinitionNode,
+				selectedObjectField: undefined,
+			};
+		}
+
+		case TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE_POSITION: {
+			const {
+				newObjectDefinitionNodePosition,
+				objectDefinitionNodes,
+				objectRelationshipEdges,
+				updatedObjectDefinitionNodeId,
+				updatedObjectFolder,
+			} = action.payload;
+
+			const newObjectDefinitionNodes = objectDefinitionNodes.map(
+				(objectDefinitionNode) => {
+					if (
+						objectDefinitionNode.data?.id ===
+						updatedObjectDefinitionNodeId
+					) {
+						return {
+							...objectDefinitionNode,
+							position: newObjectDefinitionNodePosition,
+						};
+					}
+
+					return objectDefinitionNode;
+				}
+			);
+
+			return {
+				...state,
+				elements: [
+					...newObjectDefinitionNodes,
+					...objectRelationshipEdges,
+				],
+				selectedObjectFolder: updatedObjectFolder,
+			};
+		}
+
+		case TYPES.SET_SELECTED_OBJECT_FIELD: {
+			const {
+				objectDefinitionNodes,
+				objectRelationshipEdges,
+				selectedObjectDefinitionId,
+				selectedObjectField,
+				selectedObjectFieldName,
+			} = action.payload;
+
+			let selectedObjectDefinitionNode: Node<
+				ObjectDefinitionNodeData
+			> | null = null;
+
+			const newObjectDefinitionNodes = objectDefinitionNodes.map(
+				(objectDefinitionNode) => {
+					const newObjectDefinitionNode = {
+						...objectDefinitionNode,
+						data: {
+							...objectDefinitionNode.data,
+							objectFields: objectDefinitionNode.data?.objectFields.map(
+								(objectField) => ({
+									...objectField,
+									selected:
+										objectDefinitionNode.data?.id ===
+											selectedObjectDefinitionId &&
+										objectField.name ===
+											selectedObjectFieldName,
+								})
+							),
+							selected:
+								objectDefinitionNode.data?.id ===
+								selectedObjectDefinitionId,
+						},
+					} as Node<ObjectDefinitionNodeData>;
+
+					if (
+						objectDefinitionNode.data?.id ===
+						selectedObjectDefinitionId
+					) {
+						selectedObjectDefinitionNode = newObjectDefinitionNode;
+					}
+
+					return newObjectDefinitionNode;
+				}
+			) as Node<ObjectDefinitionNodeData>[];
+
+			const newObjectRelationshipEdges = objectRelationshipEdges.map(
+				(objectRelationshipEdge) => ({
+					...objectRelationshipEdge,
+					data: objectRelationshipEdge.data?.map(
+						(objectRelationshipEdgeData) => {
+							return {
+								...objectRelationshipEdgeData,
+								selected: false,
+							};
+						}
+					),
+				})
+			) as Edge<ObjectRelationshipEdgeData[]>[];
+
+			return {
+				...state,
+				elements: [
+					...newObjectDefinitionNodes,
+					...newObjectRelationshipEdges,
+				],
+				rightSidebarType: 'objectFieldDetails',
+				selectedObjectDefinitionNode,
+				selectedObjectField,
+			};
+		}
+
+		case TYPES.SET_SELECTED_OBJECT_FOLDER_DETAILS: {
+			const {leftSidebarItems} = state;
+			const {updatedSelectedObjectFolder} = action.payload;
+
+			const updatedLeftSidebarItems: LeftSidebarItem[] = leftSidebarItems.map(
+				(leftSidebarItem) => {
+					if (
+						leftSidebarItem.objectFolderName ===
+						updatedSelectedObjectFolder.name
+					) {
+						return {
+							...leftSidebarItem,
+							name: stringUtils.getLocalizableLabel(
+								defaultLanguageId,
+								updatedSelectedObjectFolder.label,
+								updatedSelectedObjectFolder.name
+							),
+						};
+					}
+
+					return leftSidebarItem;
+				}
+			);
+
+			return {
+				...state,
+				leftSidebarItems: updatedLeftSidebarItems,
+				selectedObjectFolder: updatedSelectedObjectFolder,
+			};
+		}
+
+		case TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE: {
+			const {selectedObjectRelationshipId} = action.payload;
+
+			const {elements} = state;
+
+			const edges = elements.filter((element) => isEdge(element)) as Edge<
+				ObjectRelationshipEdgeData[]
+			>[];
+
+			const nodes = elements.filter((element) => isNode(element)) as Node<
+				ObjectDefinitionNodeData
+			>[];
+
+			let selectedObjectRelationship:
+				| ObjectRelationshipEdgeData
+				| undefined;
+
+			const newObjectRelationshipEdges = edges.map(
+				(objectRelationshipEdge) => {
+					const newObjectRelationshipEdgeData = objectRelationshipEdge?.data?.map(
+						(objectRelationshipEdgeData) => {
+							if (
+								objectRelationshipEdgeData.id ===
+								selectedObjectRelationshipId
+							) {
+								selectedObjectRelationship = {
+									...objectRelationshipEdgeData,
+									selected: true,
+								};
+							}
+
+							return {
+								...objectRelationshipEdgeData,
+								selected:
+									objectRelationshipEdgeData.id ===
+									selectedObjectRelationshipId,
+							};
+						}
+					);
+
+					return {
+						...objectRelationshipEdge,
+						data: newObjectRelationshipEdgeData,
+					};
+				}
+			) as Edge<ObjectRelationshipEdgeData[]>[];
+
+			const selectedObjectDefinitionNode = nodes.find(
+				(objectDefinitionNode) => objectDefinitionNode.data?.selected
+			);
+
+			const newObjectDefinitionNodes = nodes;
+
+			if (selectedObjectDefinitionNode?.data) {
+				const {objectFields} = selectedObjectDefinitionNode.data;
+				const selectedObjectDefinitionNodeIndex = nodes.findIndex(
+					(objectDefinitionNode) =>
+						objectDefinitionNode.data?.selected
+				);
+
+				const newObjectFields = objectFields.map((objectField) => ({
+					...objectField,
+					selected: false,
+				}));
+
+				selectedObjectDefinitionNode.data.selected = false;
+				selectedObjectDefinitionNode.data.objectFields = newObjectFields;
+
+				newObjectDefinitionNodes[
+					selectedObjectDefinitionNodeIndex
+				] = selectedObjectDefinitionNode;
+			}
+
+			return {
+				...state,
+				elements: [
+					...newObjectDefinitionNodes,
+					...newObjectRelationshipEdges,
+				],
+				rightSidebarType: 'objectRelationshipDetails',
+				selectedObjectField: undefined,
+				selectedObjectRelationship,
+			};
+		}
+
+		case TYPES.SET_SHOW_ALL_OBJECT_FIELDS: {
+			const {
+				objectDefinitionExternalReferenceCode,
+				showAllObjectFields,
+			} = action.payload;
+
+			const {elements} = state;
+
+			const objectDefinitionNodes = elements.filter((element) =>
+				isNode(element)
+			) as Node<ObjectDefinitionNodeData>[];
+
+			const objectRelationshipEdges = elements.filter((element) =>
+				isEdge(element)
+			) as Edge<ObjectRelationshipEdgeData[]>[];
+
+			const newObjectDefinitionNodes = objectDefinitionNodes.map(
+				(objectDefinitionNode) => {
+					if (
+						objectDefinitionNode?.data?.externalReferenceCode ===
+						objectDefinitionExternalReferenceCode
+					) {
+						return {
+							...objectDefinitionNode,
+							data: {
+								...objectDefinitionNode.data,
+								showAllObjectFields: !showAllObjectFields,
+							},
+						};
+					}
+
+					return objectDefinitionNode;
+				}
+			) as Node<ObjectDefinitionNodeData>[];
+
+			return {
+				...state,
+				elements: [
+					...newObjectDefinitionNodes,
+					...objectRelationshipEdges,
+				],
+			};
+		}
+
+		case TYPES.SET_SHOW_CHANGES_SAVED: {
+			const {updatedShowChangesSaved} = action.payload;
+
+			return {
+				...state,
+				showChangesSaved: updatedShowChangesSaved,
+			};
+		}
+
+		case TYPES.SET_SHOW_SIDEBARS: {
+			const {updatedShowSidebars} = action.payload;
+
+			return {
+				...state,
+				showSidebars: updatedShowSidebars,
+			};
+		}
+
 		case TYPES.UPDATE_MODEL_BUILDER_STRUCTURE: {
 			const {
 				dispatch,
@@ -655,515 +1164,6 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			}
 
 			return newModelBuilderState;
-		}
-
-		case TYPES.DELETE_OBJECT_FIELD: {
-			const {
-				objectDefinitionNodes,
-				objectRelationshipEdges,
-				selectedObjectDefinitionNode,
-				selectedObjectField,
-			} = action.payload;
-
-			const newSelectedObjectDefinitionNodeObjectFields = selectedObjectDefinitionNode?.data?.objectFields.filter(
-				(objectField) =>
-					objectField.externalReferenceCode !==
-					selectedObjectField.externalReferenceCode
-			);
-
-			const updatedObjectDefinitionNodes = objectDefinitionNodes.map(
-				(objectDefinitionNode) => {
-					if (
-						objectDefinitionNode.data?.externalReferenceCode ===
-						selectedObjectDefinitionNode?.data
-							?.externalReferenceCode
-					) {
-						return {
-							...objectDefinitionNode,
-							data: {
-								...objectDefinitionNode.data,
-								objectFields: newSelectedObjectDefinitionNodeObjectFields,
-								selected: false,
-							},
-						} as Node<ObjectDefinitionNodeData>;
-					}
-
-					return objectDefinitionNode;
-				}
-			);
-
-			return {
-				...state,
-				elements: [
-					...updatedObjectDefinitionNodes,
-					...objectRelationshipEdges,
-				],
-				rightSidebarType: 'empty',
-				selectedObjectField: undefined,
-			};
-		}
-
-		case TYPES.SET_DELETE_OBJECT_DEFINITION: {
-			const {deletedObjectDefinition} = action.payload;
-
-			return {
-				...state,
-				deletedObjectDefinition,
-			};
-		}
-
-		case TYPES.SET_ELEMENTS: {
-			const {newElements} = action.payload;
-			const {selectedObjectDefinitionNode} = state;
-
-			const updatedSelectedObjectDefinitionNode = newElements.find(
-				(element) => {
-					if (isNode(element) && element.data) {
-						return (
-							(element.data as ObjectDefinitionNodeData).id ===
-							selectedObjectDefinitionNode?.data?.id
-						);
-					}
-				}
-			) as Node<ObjectDefinitionNodeData> | null;
-
-			return {
-				...state,
-				elements: newElements,
-				selectedObjectDefinitionNode: updatedSelectedObjectDefinitionNode,
-			};
-		}
-
-		case TYPES.SET_MOVED_OBJECT_DEFINITION: {
-			const {movedObjectDefinitionId} = action.payload;
-
-			return {
-				...state,
-				movedObjectDefinitionId: movedObjectDefinitionId as number,
-			};
-		}
-
-		case TYPES.SET_NODE_HANDLE_CONNECTION: {
-			const {nodeHandleConnectable} = action.payload;
-
-			return {
-				...state,
-				nodeHandleConnectable,
-			};
-		}
-
-		case TYPES.SET_OBJECT_FOLDER_NAME: {
-			const {objectFolderName} = action.payload;
-
-			return {
-				...state,
-				objectFolderName,
-				rightSidebarType: 'empty',
-			};
-		}
-
-		case TYPES.SET_LOADING_OBJECT_FOLDER: {
-			const {isLoadingObjectFolder} = action.payload;
-
-			return {
-				...state,
-				isLoadingObjectFolder,
-			};
-		}
-
-		case TYPES.SET_SELECTED_OBJECT_FIELD: {
-			const {
-				objectDefinitionNodes,
-				objectRelationshipEdges,
-				selectedObjectDefinitionId,
-				selectedObjectField,
-				selectedObjectFieldName,
-			} = action.payload;
-
-			let selectedObjectDefinitionNode: Node<
-				ObjectDefinitionNodeData
-			> | null = null;
-
-			const newObjectDefinitionNodes = objectDefinitionNodes.map(
-				(objectDefinitionNode) => {
-					const newObjectDefinitionNode = {
-						...objectDefinitionNode,
-						data: {
-							...objectDefinitionNode.data,
-							objectFields: objectDefinitionNode.data?.objectFields.map(
-								(objectField) => ({
-									...objectField,
-									selected:
-										objectDefinitionNode.data?.id ===
-											selectedObjectDefinitionId &&
-										objectField.name ===
-											selectedObjectFieldName,
-								})
-							),
-							selected:
-								objectDefinitionNode.data?.id ===
-								selectedObjectDefinitionId,
-						},
-					} as Node<ObjectDefinitionNodeData>;
-
-					if (
-						objectDefinitionNode.data?.id ===
-						selectedObjectDefinitionId
-					) {
-						selectedObjectDefinitionNode = newObjectDefinitionNode;
-					}
-
-					return newObjectDefinitionNode;
-				}
-			) as Node<ObjectDefinitionNodeData>[];
-
-			const newObjectRelationshipEdges = objectRelationshipEdges.map(
-				(objectRelationshipEdge) => ({
-					...objectRelationshipEdge,
-					data: objectRelationshipEdge.data?.map(
-						(objectRelationshipEdgeData) => {
-							return {
-								...objectRelationshipEdgeData,
-								selected: false,
-							};
-						}
-					),
-				})
-			) as Edge<ObjectRelationshipEdgeData[]>[];
-
-			return {
-				...state,
-				elements: [
-					...newObjectDefinitionNodes,
-					...newObjectRelationshipEdges,
-				],
-				rightSidebarType: 'objectFieldDetails',
-				selectedObjectDefinitionNode,
-				selectedObjectField,
-			};
-		}
-
-		case TYPES.SET_SELECTED_OBJECT_FOLDER_DETAILS: {
-			const {leftSidebarItems} = state;
-			const {updatedSelectedObjectFolder} = action.payload;
-
-			const updatedLeftSidebarItems: LeftSidebarItem[] = leftSidebarItems.map(
-				(leftSidebarItem) => {
-					if (
-						leftSidebarItem.objectFolderName ===
-						updatedSelectedObjectFolder.name
-					) {
-						return {
-							...leftSidebarItem,
-							name: stringUtils.getLocalizableLabel(
-								defaultLanguageId,
-								updatedSelectedObjectFolder.label,
-								updatedSelectedObjectFolder.name
-							),
-						};
-					}
-
-					return leftSidebarItem;
-				}
-			);
-
-			return {
-				...state,
-				leftSidebarItems: updatedLeftSidebarItems,
-				selectedObjectFolder: updatedSelectedObjectFolder,
-			};
-		}
-
-		case TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE: {
-			const {
-				objectDefinitionNodes,
-				objectRelationshipEdges,
-				selectedObjectDefinitionId,
-			} = action.payload;
-
-			const {leftSidebarItems} = state;
-
-			let selectedObjectDefinitionNode: Node<
-				ObjectDefinitionNodeData
-			> | null = null;
-
-			const newObjectDefinitionNodes = objectDefinitionNodes.map(
-				(objectDefinitionNode) => {
-					const newObjectFields = objectDefinitionNode.data?.objectFields.map(
-						(objectField) => ({
-							...objectField,
-							selected: false,
-						})
-					);
-
-					if (
-						objectDefinitionNode.id === selectedObjectDefinitionId
-					) {
-						selectedObjectDefinitionNode = {
-							...objectDefinitionNode,
-							data: {
-								...objectDefinitionNode.data,
-								objectFields: newObjectFields,
-								selected: true,
-							},
-						} as Node<ObjectDefinitionNodeData>;
-
-						return selectedObjectDefinitionNode;
-					}
-
-					return {
-						...objectDefinitionNode,
-						data: {
-							...objectDefinitionNode.data,
-							objectFields: newObjectFields,
-							selected: false,
-						},
-					};
-				}
-			) as Node<ObjectDefinitionNodeData>[];
-
-			const newLeftSidebarItems = leftSidebarItems.map((sidebarItem) => {
-				const newLeftSidebarObjectDefinitions = sidebarItem.leftSidebarObjectDefinitionItems?.map(
-					(leftSidebarObjectDefinitionItem) => ({
-						...leftSidebarObjectDefinitionItem,
-						selected:
-							selectedObjectDefinitionId ===
-							leftSidebarObjectDefinitionItem.id.toString(),
-					})
-				);
-
-				return {
-					...sidebarItem,
-					leftSidebarObjectDefinitionItems: newLeftSidebarObjectDefinitions,
-				};
-			});
-
-			const selectedObjectRelationshipEdge = objectRelationshipEdges.find(
-				(objectRelationshipEdge) =>
-					objectRelationshipEdge.data?.some(
-						(objectRelationshipEdgeData) =>
-							objectRelationshipEdgeData.selected
-					)
-			);
-
-			const newObjectRelationshipEdges = objectRelationshipEdges;
-
-			if (selectedObjectRelationshipEdge?.data) {
-				const selectedObjectRelationshipEdgeIndex = objectRelationshipEdges.findIndex(
-					(objectRelationshipEdge) =>
-						objectRelationshipEdge.data?.some(
-							(objectRelationshipEdgeData) =>
-								objectRelationshipEdgeData.selected
-						)
-				);
-
-				selectedObjectRelationshipEdge.data = selectedObjectRelationshipEdge.data.map(
-					(objectRelationshipEdgeData) => {
-						return {
-							...objectRelationshipEdgeData,
-							selected: false,
-						};
-					}
-				);
-
-				newObjectRelationshipEdges[
-					selectedObjectRelationshipEdgeIndex
-				] = selectedObjectRelationshipEdge;
-			}
-
-			return {
-				...state,
-				elements: [
-					...newObjectDefinitionNodes,
-					...newObjectRelationshipEdges,
-				],
-				leftSidebarItems: newLeftSidebarItems,
-				rightSidebarType: 'objectDefinitionDetails',
-				selectedObjectDefinitionNode,
-				selectedObjectField: undefined,
-			};
-		}
-
-		case TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE_POSITION: {
-			const {
-				newObjectDefinitionNodePosition,
-				objectDefinitionNodes,
-				objectRelationshipEdges,
-				updatedObjectDefinitionNodeId,
-				updatedObjectFolder,
-			} = action.payload;
-
-			const newObjectDefinitionNodes = objectDefinitionNodes.map(
-				(objectDefinitionNode) => {
-					if (
-						objectDefinitionNode.data?.id ===
-						updatedObjectDefinitionNodeId
-					) {
-						return {
-							...objectDefinitionNode,
-							position: newObjectDefinitionNodePosition,
-						};
-					}
-
-					return objectDefinitionNode;
-				}
-			);
-
-			return {
-				...state,
-				elements: [
-					...newObjectDefinitionNodes,
-					...objectRelationshipEdges,
-				],
-				selectedObjectFolder: updatedObjectFolder,
-			};
-		}
-
-		case TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE: {
-			const {selectedObjectRelationshipId} = action.payload;
-
-			const {elements} = state;
-
-			const edges = elements.filter((element) => isEdge(element)) as Edge<
-				ObjectRelationshipEdgeData[]
-			>[];
-
-			const nodes = elements.filter((element) => isNode(element)) as Node<
-				ObjectDefinitionNodeData
-			>[];
-
-			let selectedObjectRelationship:
-				| ObjectRelationshipEdgeData
-				| undefined;
-
-			const newObjectRelationshipEdges = edges.map(
-				(objectRelationshipEdge) => {
-					const newObjectRelationshipEdgeData = objectRelationshipEdge?.data?.map(
-						(objectRelationshipEdgeData) => {
-							if (
-								objectRelationshipEdgeData.id ===
-								selectedObjectRelationshipId
-							) {
-								selectedObjectRelationship = {
-									...objectRelationshipEdgeData,
-									selected: true,
-								};
-							}
-
-							return {
-								...objectRelationshipEdgeData,
-								selected:
-									objectRelationshipEdgeData.id ===
-									selectedObjectRelationshipId,
-							};
-						}
-					);
-
-					return {
-						...objectRelationshipEdge,
-						data: newObjectRelationshipEdgeData,
-					};
-				}
-			) as Edge<ObjectRelationshipEdgeData[]>[];
-
-			const selectedObjectDefinitionNode = nodes.find(
-				(objectDefinitionNode) => objectDefinitionNode.data?.selected
-			);
-
-			const newObjectDefinitionNodes = nodes;
-
-			if (selectedObjectDefinitionNode?.data) {
-				const {objectFields} = selectedObjectDefinitionNode.data;
-				const selectedObjectDefinitionNodeIndex = nodes.findIndex(
-					(objectDefinitionNode) =>
-						objectDefinitionNode.data?.selected
-				);
-
-				const newObjectFields = objectFields.map((objectField) => ({
-					...objectField,
-					selected: false,
-				}));
-
-				selectedObjectDefinitionNode.data.selected = false;
-				selectedObjectDefinitionNode.data.objectFields = newObjectFields;
-
-				newObjectDefinitionNodes[
-					selectedObjectDefinitionNodeIndex
-				] = selectedObjectDefinitionNode;
-			}
-
-			return {
-				...state,
-				elements: [
-					...newObjectDefinitionNodes,
-					...newObjectRelationshipEdges,
-				],
-				rightSidebarType: 'objectRelationshipDetails',
-				selectedObjectField: undefined,
-				selectedObjectRelationship,
-			};
-		}
-
-		case TYPES.SET_SHOW_ALL_OBJECT_FIELDS: {
-			const {
-				objectDefinitionExternalReferenceCode,
-				showAllObjectFields,
-			} = action.payload;
-
-			const {elements} = state;
-
-			const objectDefinitionNodes = elements.filter((element) =>
-				isNode(element)
-			) as Node<ObjectDefinitionNodeData>[];
-
-			const objectRelationshipEdges = elements.filter((element) =>
-				isEdge(element)
-			) as Edge<ObjectRelationshipEdgeData[]>[];
-
-			const newObjectDefinitionNodes = objectDefinitionNodes.map(
-				(objectDefinitionNode) => {
-					if (
-						objectDefinitionNode?.data?.externalReferenceCode ===
-						objectDefinitionExternalReferenceCode
-					) {
-						return {
-							...objectDefinitionNode,
-							data: {
-								...objectDefinitionNode.data,
-								showAllObjectFields: !showAllObjectFields,
-							},
-						};
-					}
-
-					return objectDefinitionNode;
-				}
-			) as Node<ObjectDefinitionNodeData>[];
-
-			return {
-				...state,
-				elements: [
-					...newObjectDefinitionNodes,
-					...objectRelationshipEdges,
-				],
-			};
-		}
-
-		case TYPES.SET_SHOW_CHANGES_SAVED: {
-			const {updatedShowChangesSaved} = action.payload;
-
-			return {
-				...state,
-				showChangesSaved: updatedShowChangesSaved,
-			};
-		}
-
-		case TYPES.SET_SHOW_SIDEBARS: {
-			const {updatedShowSidebars} = action.payload;
-
-			return {
-				...state,
-				showSidebars: updatedShowSidebars,
-			};
 		}
 
 		case TYPES.UPDATE_OBJECT_DEFINITION_NODE: {

@@ -711,7 +711,7 @@ public class AgentPortalK8sConfigMapModifier
 				TimeUnit.MILLISECONDS);
 		}
 		else {
-			if (_log.isDebugEnabled()) {
+			if ((localClusterNode != null) && _log.isDebugEnabled()) {
 				_log.debug(
 					"Execute on master node " +
 						localClusterNode.getClusterNodeId());

@@ -31,15 +31,16 @@ public class TemplateEntryLocalServiceImpl
 
 	@Override
 	public TemplateEntry addTemplateEntry(
-			long userId, long groupId, long ddmTemplateId,
-			String infoItemClassName, String infoItemFormVariationKey,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long ddmTemplateId, String infoItemClassName,
+			String infoItemFormVariationKey, ServiceContext serviceContext)
 		throws PortalException {
 
 		TemplateEntry templateEntry = templateEntryPersistence.create(
 			counterLocalService.increment());
 
 		templateEntry.setUuid(serviceContext.getUuid());
+		templateEntry.setExternalReferenceCode(externalReferenceCode);
 		templateEntry.setGroupId(groupId);
 
 		User user = _userLocalService.getUser(userId);

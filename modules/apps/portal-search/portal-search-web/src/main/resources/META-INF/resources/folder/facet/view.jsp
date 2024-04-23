@@ -41,7 +41,7 @@ FolderFacetPortletInstanceConfiguration folderFacetPortletInstanceConfiguration 
 		<aui:input name="<%= HtmlUtil.escapeAttribute(folderSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= folderSearchFacetDisplayContext.getParameterValue() %>" />
 	</c:when>
 	<c:otherwise>
-		<aui:form action="#" method="post" name="fm">
+		<aui:form action="#" autocomplete="off" method="post" name="fm">
 			<aui:input name="<%= HtmlUtil.escapeAttribute(folderSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= folderSearchFacetDisplayContext.getParameterValue() %>" />
 			<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= folderSearchFacetDisplayContext.getParameterName() %>" />
 			<aui:input cssClass="start-parameter-name" name="start-parameter-name" type="hidden" value="<%= folderSearchFacetDisplayContext.getPaginationStartParameterName() %>" />
@@ -97,7 +97,6 @@ FolderFacetPortletInstanceConfiguration folderFacetPortletInstanceConfiguration 
 									<div class="custom-checkbox custom-control">
 										<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
 											<input
-												autocomplete="off"
 												class="custom-control-input facet-term"
 												data-term-id="<%= bucketDisplayContext.getFilterValue() %>"
 												disabled

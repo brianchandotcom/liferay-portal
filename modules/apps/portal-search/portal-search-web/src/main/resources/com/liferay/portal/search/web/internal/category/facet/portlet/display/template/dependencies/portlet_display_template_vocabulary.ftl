@@ -51,7 +51,6 @@
 								<div class="custom-checkbox custom-control">
 									<label>
 										<input
-											autocomplete="off"
 											${selected?then("checked", "")}
 											class="custom-control-input facet-term"
 											data-term-id=${id}

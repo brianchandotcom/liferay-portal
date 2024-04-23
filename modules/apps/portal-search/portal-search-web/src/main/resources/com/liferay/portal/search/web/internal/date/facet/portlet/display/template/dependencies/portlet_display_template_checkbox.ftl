@@ -30,7 +30,6 @@
 						<div class="custom-checkbox custom-control">
 							<label class="facet-checkbox-label" for="${namespace}${entry.getBucketText()}">
 								<input
-									autocomplete="off"
 									${(entry.isSelected())?then("checked", "")}
 									class="custom-control-input facet-term"
 									data-term-id="${htmlUtil.escape(entry.getBucketText())}"
@@ -66,7 +65,6 @@
 				<div class="custom-checkbox custom-control">
 					<label class="facet-checkbox-label" for="${namespace}${customRangeBucketDisplayContext.getBucketText()}">
 						<input
-							autocomplete="off"
 							${(customRangeBucketDisplayContext.isSelected())?then("checked", "")}
 							class="custom-control-input facet-term"
 							data-term-id="${htmlUtil.escape(customRangeBucketDisplayContext.getBucketText())}"

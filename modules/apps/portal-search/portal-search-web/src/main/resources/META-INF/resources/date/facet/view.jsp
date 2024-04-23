@@ -37,7 +37,7 @@ DateFacetPortletInstanceConfiguration dateFacetPortletInstanceConfiguration = da
 %>
 
 <c:if test="<%= !dateFacetDisplayContext.isRenderNothing() %>">
-	<aui:form action="#" method="get" name="fm">
+	<aui:form action="#" autocomplete="off" method="get" name="fm">
 		<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= HtmlUtil.escapeAttribute(dateFacetDisplayContext.getParameterName()) %>" />
 		<aui:input name="start-parameter-name" type="hidden" value="<%= dateFacetDisplayContext.getPaginationStartParameterName() %>" />
 

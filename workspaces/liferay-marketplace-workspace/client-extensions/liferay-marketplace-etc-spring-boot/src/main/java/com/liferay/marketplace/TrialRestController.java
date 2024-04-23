@@ -14,6 +14,8 @@ import com.liferay.headless.portal.instances.client.dto.v1_0.Admin;
 import com.liferay.headless.portal.instances.client.dto.v1_0.PortalInstance;
 import com.liferay.headless.portal.instances.client.resource.v1_0.PortalInstanceResource;
 import com.liferay.marketplace.console.service.ConsoleService;
+import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
+import com.liferay.notification.rest.client.resource.v1_0.NotificationTemplateResource;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.net.URL;
@@ -40,10 +42,12 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -53,6 +57,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Keven Leone
@@ -195,6 +200,101 @@ public class TrialRestController extends BaseRestController {
 		).build();
 	}
 
+	private void _postNotificationQueueEntry(
+			String email, String hostname, String name)
+		throws Exception {
+
+		URL liferayDXPURL = new URL(
+			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
+
+		NotificationTemplateResource notificationTemplateResource =
+			NotificationTemplateResource.builder(
+			).endpoint(
+				liferayDXPURL
+			).header(
+				HttpHeaders.AUTHORIZATION,
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					"liferay-marketplace-etc-spring-boot-oauth-application-" +
+						"headless-server")
+			).build();
+
+		NotificationTemplate notificationTemplate =
+			notificationTemplateResource.
+				getNotificationTemplateByExternalReferenceCode(
+					"TRY-IT-NOW-COMPLETED-ORDER");
+
+		if (notificationTemplate == null) {
+			return;
+		}
+
+		JSONObject recipientsJSONObject = new JSONObject(
+			notificationTemplate.getRecipients()[0].toString());
+
+		WebClient.create(
+			liferayDXPURL.toString()
+		).post(
+		).uri(
+			"/o/notification/v1.0/notification-queue-entries"
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oauth-application-" +
+					"headless-server")
+		).accept(
+			MediaType.APPLICATION_JSON
+		).contentType(
+			MediaType.APPLICATION_JSON
+		).bodyValue(
+			new JSONObject(
+			).put(
+				"body",
+				notificationTemplate.getBody(
+				).get(
+					"en_US"
+				).replaceAll(
+					"%EMAIL%", email
+				).replaceAll(
+					"%NAME%", name
+				).replaceAll(
+					"%URL%", hostname
+				)
+			).put(
+				"recipients",
+				new JSONArray(
+				).put(
+					new JSONObject(
+					).put(
+						"from", recipientsJSONObject.getString("from")
+					).put(
+						"fromName",
+						recipientsJSONObject.getJSONObject(
+							"fromName"
+						).getString(
+							"en_US"
+						)
+					).put(
+						"to", email
+					)
+				)
+			).put(
+				"subject",
+				notificationTemplate.getSubject(
+				).get(
+					"en_US"
+				)
+			).put(
+				"type", notificationTemplate.getType()
+			).toString()
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Trial Notification Sent to: " + email);
+		}
+	}
+
 	private PortalInstance _postPortalInstance(
 			Jwt jwt, String emailAddress, long orderId)
 		throws Exception {
@@ -317,6 +417,13 @@ public class TrialRestController extends BaseRestController {
 				"trial-virtualhost", portalInstance.getVirtualHost()
 			).build(),
 			orderId, _ORDER_STATUS_COMPLETED);
+
+		_postNotificationQueueEntry(
+			modelDTOOrderJSONObject.getString("creatorEmailAddress"),
+			portalInstance.getVirtualHost(),
+			jwt.getClaim(
+				"username"
+			).toString());
 	}
 
 	private void _updateOrder(

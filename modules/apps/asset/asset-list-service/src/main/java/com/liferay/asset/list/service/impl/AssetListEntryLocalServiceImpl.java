@@ -232,24 +232,25 @@ public class AssetListEntryLocalServiceImpl
 
 	@Override
 	public AssetListEntry addDynamicAssetListEntry(
-			long userId, long groupId, String title, String typeSettings,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			String title, String typeSettings, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addAssetListEntry(
-			userId, groupId, title, AssetListEntryTypeConstants.TYPE_DYNAMIC,
-			typeSettings, serviceContext);
+			externalReferenceCode, userId, groupId, title,
+			AssetListEntryTypeConstants.TYPE_DYNAMIC, typeSettings,
+			serviceContext);
 	}
 
 	@Override
 	public AssetListEntry addManualAssetListEntry(
-			long userId, long groupId, String title, long[] assetEntryIds,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			String title, long[] assetEntryIds, ServiceContext serviceContext)
 		throws PortalException {
 
 		AssetListEntry assetListEntry = addAssetListEntry(
-			userId, groupId, title, AssetListEntryTypeConstants.TYPE_MANUAL,
-			serviceContext);
+			externalReferenceCode, userId, groupId, title,
+			AssetListEntryTypeConstants.TYPE_MANUAL, serviceContext);
 
 		addAssetEntrySelections(
 			assetListEntry.getAssetListEntryId(), assetEntryIds,

@@ -477,7 +477,6 @@ definition {
 	@priority = 3
 	test CannotSaveInFlowAccountWithoutRequiredField {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		task ("GIVEN a minium site is created and the Catalog page reached") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

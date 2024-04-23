@@ -77,9 +77,9 @@ function default_tear_down {
 function deploy_client_extensions {
 	if [[ -n ${1} ]]
 	then
-		for client_extension_dir in ${@}
+		for client_extension_name in ${@}
 		do
-			client_extension_dir=${_PORTAL_PROJECT_DIR}/${client_extension_dir}
+			local client_extension_dir=$(find ${_PORTAL_PROJECT_DIR}/workspaces -type d -name "${client_extension_name}" | grep -v .releng | grep -v .npmscripts)
 
 			if [[ -d ${client_extension_dir} ]]
 			then
@@ -92,8 +92,6 @@ function deploy_client_extensions {
 				${gradlew} deploy -Pliferay.workspace.home.dir=${LIFERAY_HOME}
 
 				wait_for_portal_log_inactivity
-			else
-				echo "The directory ${client_extension_dir} does not exist."
 			fi
 		done
 	fi
@@ -126,9 +124,9 @@ function deploy_osgi_modules {
 	then
 		mkdir -p ${LIFERAY_HOME}/deploy
 
-		for osgi_module_dir in ${@}
+		for osgi_module_name in ${@}
 		do
-			osgi_module_dir=${_PORTAL_PROJECT_DIR}/${osgi_module_dir}
+			local osgi_module_dir=$(find ${_PORTAL_PROJECT_DIR}/modules -type d -name "${osgi_module_name}" | grep -v .releng | grep -v .npmscripts)
 
 			if [[ -f ${osgi_module_dir}/build.gradle ]]
 			then
@@ -141,8 +139,6 @@ function deploy_osgi_modules {
 				${gradlew} deploy
 
 				wait_for_portal_log_inactivity
-			else
-				echo "The directory ${osgi_module_dir} does not exist."
 			fi
 		done
 	fi

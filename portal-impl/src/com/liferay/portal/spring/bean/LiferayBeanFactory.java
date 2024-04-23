@@ -49,7 +49,7 @@ public class LiferayBeanFactory extends DefaultListableBeanFactory {
 			String beanName, Object bean, RootBeanDefinition rootBeanDefinition)
 		throws Throwable {
 
-		if (!PropsValues.SPRING_BEAN_FACTORY_STRICT_LIFECYCLE_ENABLED) {
+		if (!PropsValues.SPRING_BEANFACTORY_STRICT_LIFECYCLE_ENABLED) {
 			super.invokeCustomInitMethod(beanName, bean, rootBeanDefinition);
 
 			return;
@@ -176,7 +176,7 @@ public class LiferayBeanFactory extends DefaultListableBeanFactory {
 	protected void registerDisposableBeanIfNecessary(
 		String beanName, Object bean, RootBeanDefinition rootBeanDefinition) {
 
-		if (!PropsValues.SPRING_BEAN_FACTORY_STRICT_LIFECYCLE_ENABLED) {
+		if (!PropsValues.SPRING_BEANFACTORY_STRICT_LIFECYCLE_ENABLED) {
 			super.registerDisposableBeanIfNecessary(
 				beanName, bean, rootBeanDefinition);
 

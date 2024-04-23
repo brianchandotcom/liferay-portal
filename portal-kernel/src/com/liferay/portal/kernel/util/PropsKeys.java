@@ -2536,8 +2536,8 @@ public interface PropsKeys {
 
 	public static final String SOURCE_FORGE_MIRRORS = "source.forge.mirrors";
 
-	public static final String SPRING_BEAN_FACTORY_STRICT_LIFECYCLE_ENABLED =
-		"spring.bean.factory.strict.lifecycle.enabled";
+	public static final String SPRING_BEANFACTORY_STRICT_LIFECYCLE_ENABLED =
+		"spring.beanfactory.strict.lifecycle.enabled";
 
 	public static final String SPRING_CONFIGS = "spring.configs";
 

@@ -103,7 +103,7 @@ public class ObjectEntryPerformanceTest {
 
 	@Test
 	public void testGetObjectEntries() throws Exception {
-		try (Closeable closeable = new PerformanceTimer(60000, _logFilePath)) {
+		try (Closeable closeable = new PerformanceTimer(_logFilePath, 60000)) {
 			_objectEntries = _objectEntryLocalService.getObjectEntries(
 				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);

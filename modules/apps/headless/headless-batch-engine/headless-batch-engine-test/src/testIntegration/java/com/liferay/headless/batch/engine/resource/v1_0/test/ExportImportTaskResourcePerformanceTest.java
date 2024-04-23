@@ -332,7 +332,7 @@ public class ExportImportTaskResourcePerformanceTest {
 
 		try (TestEntityPerformanceTimer itemCountPerformanceTimer =
 				new TestEntityPerformanceTimer(
-					count, className + "#export", maxExportTime)) {
+					count, maxExportTime, className + "#export")) {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
@@ -386,7 +386,7 @@ public class ExportImportTaskResourcePerformanceTest {
 
 		try (TestEntityPerformanceTimer itemCountPerformanceTimer =
 				new TestEntityPerformanceTimer(
-					count, className + "#download", maxDownloadTime)) {
+					count, maxDownloadTime, className + "#download")) {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
@@ -427,7 +427,7 @@ public class ExportImportTaskResourcePerformanceTest {
 			classNamePartsMap.get("className"), count);
 
 		try (Closeable closeable = new TestEntityPerformanceTimer(
-				count, className, maxTime)) {
+				count, maxTime, className)) {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
@@ -503,19 +503,19 @@ public class ExportImportTaskResourcePerformanceTest {
 	private class TestEntityPerformanceTimer extends PerformanceTimer {
 
 		public TestEntityPerformanceTimer(
-			int count, String name, long maxTime) {
+			int count, long maxTime, String name) {
 
 			this(
-				count, getInvokerName(null, name), System.currentTimeMillis(),
-				maxTime, null);
+				count, null, maxTime, getInvokerName(null, name),
+				System.currentTimeMillis());
 		}
 
 		public TestEntityPerformanceTimer(
-			int count, String name, long maxTime, Path logFilePath) {
+			int count, Path logFilePath, long maxTime, String name) {
 
 			this(
-				count, getInvokerName(null, name), System.currentTimeMillis(),
-				maxTime, logFilePath);
+				count, logFilePath, maxTime, getInvokerName(null, name),
+				System.currentTimeMillis());
 		}
 
 		@Override
@@ -540,10 +540,10 @@ public class ExportImportTaskResourcePerformanceTest {
 		}
 
 		protected TestEntityPerformanceTimer(
-			int count, String name, long startTime, long maxTime,
-			Path logFilePath) {
+			int count, Path logFilePath, long maxTime, String name,
+			long startTime) {
 
-			super(name, startTime, maxTime, logFilePath);
+			super(logFilePath, maxTime, name, startTime);
 
 			_count = count;
 		}

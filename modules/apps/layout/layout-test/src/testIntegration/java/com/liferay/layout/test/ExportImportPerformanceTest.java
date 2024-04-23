@@ -179,7 +179,7 @@ public class ExportImportPerformanceTest {
 
 	@Test
 	public void testExportGroupToLAR() throws Exception {
-		try (Closeable closeable = new PerformanceTimer(1000, _logFilePath)) {
+		try (Closeable closeable = new PerformanceTimer(_logFilePath, 1000)) {
 			Map<String, Serializable> exportLayoutSettingsMap =
 				_exportImportConfigurationSettingsMapFactory.
 					buildExportLayoutSettingsMap(
@@ -216,7 +216,7 @@ public class ExportImportPerformanceTest {
 		File file = _exportImportLocalService.exportLayoutsAsFile(
 			_exportImportConfiguration);
 
-		try (Closeable closeable = new PerformanceTimer(1000, _logFilePath)) {
+		try (Closeable closeable = new PerformanceTimer(_logFilePath, 1000)) {
 			Map<String, Serializable> importLayoutSettingsMap =
 				_exportImportConfigurationSettingsMapFactory.
 					buildImportLayoutSettingsMap(
@@ -237,7 +237,7 @@ public class ExportImportPerformanceTest {
 
 	@Test
 	public void testInitialStagingPublication() throws Exception {
-		try (Closeable closeable = new PerformanceTimer(10000, _logFilePath)) {
+		try (Closeable closeable = new PerformanceTimer(_logFilePath, 10000)) {
 			_stagingLocalService.enableLocalStaging(
 				TestPropsValues.getUserId(), _group, false, false,
 				_serviceContext);
@@ -274,7 +274,7 @@ public class ExportImportPerformanceTest {
 			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
 			true);
 
-		try (Closeable closeable = new PerformanceTimer(1000, _logFilePath)) {
+		try (Closeable closeable = new PerformanceTimer(_logFilePath, 1000)) {
 			MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
 			_sites.mergeLayoutSetPrototypeLayouts(
@@ -287,7 +287,7 @@ public class ExportImportPerformanceTest {
 		_stagingLocalService.enableLocalStaging(
 			TestPropsValues.getUserId(), _group, false, false, _serviceContext);
 
-		try (Closeable closeable = new PerformanceTimer(1000, _logFilePath)) {
+		try (Closeable closeable = new PerformanceTimer(_logFilePath, 1000)) {
 			Group stagingGroup = _group.getStagingGroup();
 
 			Map<String, Serializable> stagingSettingsMap =

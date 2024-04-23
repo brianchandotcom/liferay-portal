@@ -26,42 +26,42 @@ import org.junit.Assert;
  */
 public class PerformanceTimer implements Closeable {
 
-	public PerformanceTimer(Class<?> clazz, String name, long maxTime) {
+	public PerformanceTimer(Class<?> clazz, long maxTime, String name) {
 		this(
-			getInvokerName(clazz, name), System.currentTimeMillis(), maxTime,
-			null);
+			null, maxTime, getInvokerName(clazz, name),
+			System.currentTimeMillis());
 	}
 
 	public PerformanceTimer(
-		Class<?> clazz, String name, long maxTime, Path logFilePath) {
+		Class<?> clazz, Path logFilePath, long maxTime, String name) {
 
 		this(
-			getInvokerName(clazz, name), System.currentTimeMillis(), maxTime,
-			logFilePath);
+			logFilePath, maxTime, getInvokerName(clazz, name),
+			System.currentTimeMillis());
 	}
 
 	public PerformanceTimer(long maxTime) {
 		this(
-			getInvokerName(null, null), System.currentTimeMillis(), maxTime,
-			null);
+			null, maxTime, getInvokerName(null, null),
+			System.currentTimeMillis());
 	}
 
-	public PerformanceTimer(long maxTime, Path logFilePath) {
+	public PerformanceTimer(long maxTime, String name) {
 		this(
-			getInvokerName(null, null), System.currentTimeMillis(), maxTime,
-			logFilePath);
+			null, maxTime, getInvokerName(null, name),
+			System.currentTimeMillis());
 	}
 
-	public PerformanceTimer(String name, long maxTime) {
+	public PerformanceTimer(Path logFilePath, long maxTime) {
 		this(
-			getInvokerName(null, name), System.currentTimeMillis(), maxTime,
-			null);
+			logFilePath, maxTime, getInvokerName(null, null),
+			System.currentTimeMillis());
 	}
 
-	public PerformanceTimer(String name, long maxTime, Path logFilePath) {
+	public PerformanceTimer(Path logFilePath, long maxTime, String name) {
 		this(
-			getInvokerName(null, name), System.currentTimeMillis(), maxTime,
-			logFilePath);
+			logFilePath, maxTime, getInvokerName(null, name),
+			System.currentTimeMillis());
 	}
 
 	@Override
@@ -106,12 +106,13 @@ public class PerformanceTimer implements Closeable {
 	}
 
 	protected PerformanceTimer(
-		String name, long startTime, long maxTime, Path logFilePath) {
+		Path logFilePath, long maxTime, String name, long startTime) {
 
+		_logFilePath = logFilePath;
+
+		this.maxTime = maxTime;
 		this.name = name;
 		this.startTime = startTime;
-		this.maxTime = maxTime;
-		_logFilePath = logFilePath;
 
 		log("Starting " + name);
 	}

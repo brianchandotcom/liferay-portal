@@ -10,14 +10,17 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionRelException;
 import com.liferay.commerce.product.exception.NoSuchCProductException;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
@@ -189,20 +192,29 @@ public class ProductOptionValueResourceImpl
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
+		accountId = _getAccountEntryId(accountId, commerceChannel);
+
 		_commerceProductViewPermission.check(
-			PermissionThreadLocal.getPermissionChecker(),
-			_getAccountEntryId(accountId, commerceChannel),
+			PermissionThreadLocal.getPermissionChecker(), accountId,
 			commerceChannel.getGroupId(), cpDefinition.getCPDefinitionId());
 
 		ServiceContextThreadLocal.pushServiceContext(
 			_serviceContextHelper.getServiceContext(
 				commerceChannel.getGroupId()));
 
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			_cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
+				cpDefinition.getCPDefinitionId(), productOptionId);
+
+		if (cpDefinitionOptionRel == null) {
+			throw new NoSuchCPDefinitionOptionRelException();
+		}
+
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 			_cpDefinitionOptionValueRelLocalService.
 				getCPDefinitionOptionValueRels(
-					productOptionId, pagination.getStartPosition(),
-					pagination.getEndPosition());
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+					pagination.getStartPosition(), pagination.getEndPosition());
 
 		int totalItems =
 			_cpDefinitionOptionValueRelLocalService.
@@ -267,6 +279,10 @@ public class ProductOptionValueResourceImpl
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
 
 	@Reference
 	private CPDefinitionOptionValueRelLocalService

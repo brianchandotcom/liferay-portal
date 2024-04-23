@@ -234,7 +234,6 @@
 											"widgetInstance": {
 												"widgetConfig": {
 													"displayStyle": "default",
-													"displayStyleGroupId": "33405",
 													"fields": "[{\"field\":\"\",\"label\":\"relevance\"},{\"field\":\"title+\",\"label\":\"Alphabetical (A-Z)\"},{\"field\":\"title-\",\"label\":\"Alphabetical (Z-A)\"},{\"field\":\"publishedDate-\",\"label\":\"published-date\"}]"
 												},
 												"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
@@ -269,14 +268,13 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"displayStyle": "default",
-													"displayStyleGroupId": "33405",
+													"displayStyle": "ddmTemplate_LEARN_SEARCH_CATEGORY_FACET",
 													"frequenciesVisible": "false",
 													"frequencyThreshold": "1",
 													"maxTerms": "100",
 													"order": "key:asc",
 													"parameterName": "feature",
-													"vocabularyIds": "33633"
+													"vocabularyIds": "[$VOCABULARY_ENTRY_ERC:FEATURE$]"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
@@ -310,14 +308,13 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"displayStyle": "default",
-													"displayStyleGroupId": "33405",
+													"displayStyle": "ddmTemplate_LEARN_SEARCH_CATEGORY_FACET",
 													"frequenciesVisible": "false",
 													"frequencyThreshold": "1",
 													"maxTerms": "100",
 													"order": "key:asc",
 													"parameterName": "deployment-approach",
-													"vocabularyIds": "33623"
+													"vocabularyIds": "[$VOCABULARY_ENTRY_ERC:DEPLOYMENT_APPROACH$]"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}

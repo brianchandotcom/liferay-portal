@@ -6,7 +6,11 @@
 package com.liferay.portal.k8s.agent.internal.mutator;
 
 import com.liferay.portal.k8s.agent.mutator.PortalK8sConfigurationPropertiesMutator;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -14,6 +18,7 @@ import java.util.Dictionary;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.propertytypes.ServiceRanking;
 
 /**
@@ -29,8 +34,7 @@ public class BaseURLPortalK8sConfigurationPropertiesMutator
 		Map<String, String> annotations, Map<String, String> labels,
 		Dictionary<String, Object> properties) {
 
-		String mainDomain = GetterUtil.getString(
-			annotations.get("ext.lxc.liferay.com/mainDomain"));
+		String mainDomain = _getMainDomain(annotations, labels);
 
 		if (Validator.isNotNull(mainDomain)) {
 			properties.put(
@@ -39,5 +43,38 @@ public class BaseURLPortalK8sConfigurationPropertiesMutator
 			properties.put(".serviceScheme", Http.HTTPS);
 		}
 	}
+
+	private String _getMainDomain(
+		Map<String, String> annotations, Map<String, String> labels) {
+
+		String mainDomain = annotations.get("ext.lxc.liferay.com/mainDomain");
+
+		if (Validator.isNotNull(mainDomain)) {
+			return mainDomain;
+		}
+
+		String virtualInstanceId = labels.get(
+			"dxp.lxc.liferay.com/virtualInstanceId");
+
+		if (Validator.isNotNull(virtualInstanceId)) {
+			try {
+				Company company = _companyLocalService.getCompanyByWebId(
+					virtualInstanceId);
+
+				return company.getVirtualHostname();
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
+		}
+
+		return null;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseURLPortalK8sConfigurationPropertiesMutator.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 }

@@ -5,9 +5,9 @@
 
 package com.liferay.customer;
 
-import com.liferay.customer.google.service.GoogleCloudStorageWebService;
-import com.liferay.customer.object.model.TicketAttachment;
-import com.liferay.customer.object.service.TicketAttachmentWebService;
+import com.liferay.customer.model.TicketAttachment;
+import com.liferay.customer.service.GoogleCloudStorageWebService;
+import com.liferay.customer.service.TicketAttachmentWebService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

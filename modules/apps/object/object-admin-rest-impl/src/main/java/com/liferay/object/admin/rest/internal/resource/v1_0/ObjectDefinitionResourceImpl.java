@@ -1018,7 +1018,7 @@ public class ObjectDefinitionResourceImpl
 					rootObjectDefinitionExternalReferenceCode,
 					contextUser.getUserId(),
 					serviceBuilderObjectDefinition.getObjectFolderId(), 0, true,
-					false);
+					serviceBuilderObjectDefinition.isSystem());
 
 			rootServiceBuilderObjectDefinition =
 				_objectDefinitionLocalService.updateRootObjectDefinitionId(

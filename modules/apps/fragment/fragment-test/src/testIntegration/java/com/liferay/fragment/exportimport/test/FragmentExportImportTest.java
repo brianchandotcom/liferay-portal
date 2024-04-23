@@ -47,6 +47,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import java.util.Locale;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -64,6 +65,42 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_configuration = JSONUtil.put(
+			"fieldSets",
+			JSONUtil.put(
+				JSONUtil.put(
+					"fields",
+					JSONUtil.put(
+						JSONUtil.put(
+							"dataType", "int"
+						).put(
+							"defaultValue", "4"
+						).put(
+							"label", "number-of-slides"
+						).put(
+							"name", "numberOfSlides"
+						).put(
+							"type", "text"
+						).put(
+							"typeOptions",
+							JSONUtil.put(
+								"validation",
+								JSONUtil.put(
+									"max", 4
+								).put(
+									"min", 1
+								).put(
+									"type", "number"
+								))
+						))
+				).put(
+					"label", "Configuration"
+				))
+		).toString();
+	}
 
 	@Override
 	public String getNamespace() {
@@ -182,7 +219,7 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 			fragmentCollection.getFragmentCollectionId(), null,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			"Original HTML Fragment" + _HTML, StringPool.BLANK, false,
-			_CONFIGURATION, null, 0, false, FragmentConstants.TYPE_COMPONENT,
+			_configuration, null, 0, false, FragmentConstants.TYPE_COMPONENT,
 			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
@@ -224,44 +261,13 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 			fragmentEntry.getTypeOptions(), fragmentEntry.getStatus());
 	}
 
-	private static final String _CONFIGURATION = JSONUtil.put(
-		"fieldSets",
-		JSONUtil.put(
-			JSONUtil.put(
-				"fields",
-				JSONUtil.put(
-					JSONUtil.put(
-						"dataType", "int"
-					).put(
-						"defaultValue", "4"
-					).put(
-						"label", "number-of-slides"
-					).put(
-						"name", "numberOfSlides"
-					).put(
-						"type", "text"
-					).put(
-						"typeOptions",
-						JSONUtil.put(
-							"validation",
-							JSONUtil.put(
-								"max", 4
-							).put(
-								"min", 1
-							).put(
-								"type", "number"
-							))
-					))
-			).put(
-				"label", "Configuration"
-			))
-	).toString();
-
 	private static final String _HTML = StringBundler.concat(
 		"[#list 0..configuration.numberOfSlides-1 as i]\n",
 		"<div class=\"js-slide js-slide${i+1}\">\n",
 		"\t<lfr-drop-zone data-lfr-drop-zone-id=\"${i+1}\" ",
 		"data-lfr-priority=\"${i+1}\"></lfr-drop-zone>\n", "</div>\n[/#list]");
+
+	private static String _configuration;
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;

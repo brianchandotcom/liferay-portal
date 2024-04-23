@@ -358,6 +358,17 @@ public class AssetListEntryLocalServiceImpl
 	}
 
 	@Override
+	public AssetListEntry deleteAssetListEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		AssetListEntry assetListEntry = assetListEntryPersistence.findByERC_G(
+			externalReferenceCode, groupId);
+
+		return deleteAssetListEntry(assetListEntry);
+	}
+
+	@Override
 	public AssetListEntry fetchTemplateEntry(
 		String externalReferenceCode, long groupId) {
 

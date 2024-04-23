@@ -18,18 +18,19 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -132,8 +133,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 							channel.getChannelId(), contextUser.getCompanyId()),
 						commerceChannelId -> _groupLocalService.fetchGroup(
 							contextUser.getCompanyId(),
-							_portal.getClassNameId(
-								_CLASS_NAME_COMMERCE_CHANNEL),
+							_commerceChannelClassNameId.get(),
 							commerceChannelId),
 						Group.class),
 					_configurationProvider.getCompanyConfiguration(
@@ -172,8 +172,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 					dataSource.getCommerceChannelIds(),
 					commerceChannelId -> _groupLocalService.fetchGroup(
 						contextUser.getCompanyId(),
-						_portal.getClassNameId(_CLASS_NAME_COMMERCE_CHANNEL),
-						commerceChannelId),
+						_commerceChannelClassNameId.get(), commerceChannelId),
 					Group.class),
 				_configurationProvider.getCompanyConfiguration(
 					AnalyticsConfiguration.class, contextUser.getCompanyId()),
@@ -239,6 +238,9 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 	@Activate
 	protected void activate() {
 		_analyticsCloudClient = new AnalyticsCloudClient(_http);
+
+		_commerceChannelClassNameId = _classNameLocalService.getLazyClassNameId(
+			"com.liferay.commerce.product.model.CommerceChannel");
 	}
 
 	@Reference
@@ -257,9 +259,6 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 		throw new RuntimeException("Unable to get analytics data source");
 	}
 
-	private static final String _CLASS_NAME_COMMERCE_CHANNEL =
-		"com.liferay.commerce.product.model.CommerceChannel";
-
 	private AnalyticsCloudClient _analyticsCloudClient;
 
 	@Reference
@@ -271,6 +270,11 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 	private DTOConverter<AnalyticsChannel, Channel> _channelDTOConverter;
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	private Supplier<Long> _commerceChannelClassNameId;
+
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
@@ -278,8 +282,5 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 	@Reference
 	private Http _http;
-
-	@Reference
-	private Portal _portal;
 
 }

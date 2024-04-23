@@ -259,7 +259,9 @@ export default function FieldBase({
 				<input
 					data-field-name={`${fieldName}${instanceId}`}
 					data-languageid={locale}
-					data-translated={!!localizedValueEdited[editingLanguageId]}
+					data-translated={
+						!!localizedValueEdited?.[editingLanguageId]
+					}
 					key={locale}
 					name={name.replace(editingLanguageId, locale)}
 					type="hidden"

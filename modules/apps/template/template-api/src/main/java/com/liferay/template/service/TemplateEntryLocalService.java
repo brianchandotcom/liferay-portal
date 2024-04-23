@@ -208,6 +208,10 @@ public interface TemplateEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TemplateEntry fetchTemplateEntryByDDMTemplateId(long ddmTemplateId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TemplateEntry fetchTemplateEntryByExternalReferenceCode(
+		String externalReferenceCode, long groupId);
+
 	/**
 	 * Returns the template entry matching the UUID and group.
 	 *
@@ -323,6 +327,11 @@ public interface TemplateEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TemplateEntry getTemplateEntry(long templateEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TemplateEntry getTemplateEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

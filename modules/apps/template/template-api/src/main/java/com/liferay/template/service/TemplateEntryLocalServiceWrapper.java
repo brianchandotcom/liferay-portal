@@ -239,6 +239,15 @@ public class TemplateEntryLocalServiceWrapper
 			ddmTemplateId);
 	}
 
+	@Override
+	public TemplateEntry fetchTemplateEntryByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return _templateEntryLocalService.
+			fetchTemplateEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the template entry matching the UUID and group.
 	 *
@@ -418,6 +427,16 @@ public class TemplateEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _templateEntryLocalService.getTemplateEntry(templateEntryId);
+	}
+
+	@Override
+	public TemplateEntry getTemplateEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _templateEntryLocalService.
+			getTemplateEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	/**

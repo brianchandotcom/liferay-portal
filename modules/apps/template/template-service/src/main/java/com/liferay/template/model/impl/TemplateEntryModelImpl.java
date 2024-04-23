@@ -63,11 +63,12 @@ public class TemplateEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"templateEntryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"ddmTemplateId", Types.BIGINT}, {"infoItemClassName", Types.VARCHAR},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"templateEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"ddmTemplateId", Types.BIGINT},
+		{"infoItemClassName", Types.VARCHAR},
 		{"infoItemFormVariationKey", Types.VARCHAR},
 		{"lastPublishDate", Types.TIMESTAMP}
 	};
@@ -79,6 +80,7 @@ public class TemplateEntryModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("templateEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -93,7 +95,7 @@ public class TemplateEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TemplateEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,templateEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ddmTemplateId LONG,infoItemClassName VARCHAR(75) null,infoItemFormVariationKey VARCHAR(75) null,lastPublishDate DATE null,primary key (templateEntryId, ctCollectionId))";
+		"create table TemplateEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,templateEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ddmTemplateId LONG,infoItemClassName VARCHAR(75) null,infoItemFormVariationKey VARCHAR(75) null,lastPublishDate DATE null,primary key (templateEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table TemplateEntry";
 
@@ -125,32 +127,38 @@ public class TemplateEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long INFOITEMCLASSNAME_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long INFOITEMFORMVARIATIONKEY_COLUMN_BITMASK = 16L;
+	public static final long INFOITEMCLASSNAME_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long INFOITEMFORMVARIATIONKEY_COLUMN_BITMASK = 32L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TEMPLATEENTRYID_COLUMN_BITMASK = 64L;
+	public static final long TEMPLATEENTRYID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -268,6 +276,9 @@ public class TemplateEntryModelImpl
 				"ctCollectionId", TemplateEntry::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", TemplateEntry::getUuid);
 			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				TemplateEntry::getExternalReferenceCode);
+			attributeGetterFunctions.put(
 				"templateEntryId", TemplateEntry::getTemplateEntryId);
 			attributeGetterFunctions.put("groupId", TemplateEntry::getGroupId);
 			attributeGetterFunctions.put(
@@ -315,6 +326,10 @@ public class TemplateEntryModelImpl
 			attributeSetterBiConsumers.put(
 				"uuid",
 				(BiConsumer<TemplateEntry, String>)TemplateEntry::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<TemplateEntry, String>)
+					TemplateEntry::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"templateEntryId",
 				(BiConsumer<TemplateEntry, Long>)
@@ -415,6 +430,34 @@ public class TemplateEntryModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@Override
@@ -720,6 +763,7 @@ public class TemplateEntryModelImpl
 		templateEntryImpl.setMvccVersion(getMvccVersion());
 		templateEntryImpl.setCtCollectionId(getCtCollectionId());
 		templateEntryImpl.setUuid(getUuid());
+		templateEntryImpl.setExternalReferenceCode(getExternalReferenceCode());
 		templateEntryImpl.setTemplateEntryId(getTemplateEntryId());
 		templateEntryImpl.setGroupId(getGroupId());
 		templateEntryImpl.setCompanyId(getCompanyId());
@@ -747,6 +791,8 @@ public class TemplateEntryModelImpl
 		templateEntryImpl.setCtCollectionId(
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		templateEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		templateEntryImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		templateEntryImpl.setTemplateEntryId(
 			this.<Long>getColumnOriginalValue("templateEntryId"));
 		templateEntryImpl.setGroupId(
@@ -857,6 +903,18 @@ public class TemplateEntryModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			templateEntryCacheModel.uuid = null;
+		}
+
+		templateEntryCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			templateEntryCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			templateEntryCacheModel.externalReferenceCode = null;
 		}
 
 		templateEntryCacheModel.templateEntryId = getTemplateEntryId();
@@ -988,6 +1046,7 @@ public class TemplateEntryModelImpl
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _templateEntryId;
 	private long _groupId;
 	private long _companyId;
@@ -1034,6 +1093,8 @@ public class TemplateEntryModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("templateEntryId", _templateEntryId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1075,27 +1136,29 @@ public class TemplateEntryModelImpl
 
 		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("templateEntryId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("templateEntryId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("ddmTemplateId", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("infoItemClassName", 2048L);
+		columnBitmasks.put("ddmTemplateId", 2048L);
 
-		columnBitmasks.put("infoItemFormVariationKey", 4096L);
+		columnBitmasks.put("infoItemClassName", 4096L);
 
-		columnBitmasks.put("lastPublishDate", 8192L);
+		columnBitmasks.put("infoItemFormVariationKey", 8192L);
+
+		columnBitmasks.put("lastPublishDate", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

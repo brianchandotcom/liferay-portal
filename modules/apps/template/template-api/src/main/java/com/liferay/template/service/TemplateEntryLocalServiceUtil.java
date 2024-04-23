@@ -218,6 +218,13 @@ public class TemplateEntryLocalServiceUtil {
 		return getService().fetchTemplateEntryByDDMTemplateId(ddmTemplateId);
 	}
 
+	public static TemplateEntry fetchTemplateEntryByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return getService().fetchTemplateEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the template entry matching the UUID and group.
 	 *
@@ -373,6 +380,14 @@ public class TemplateEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getTemplateEntry(templateEntryId);
+	}
+
+	public static TemplateEntry getTemplateEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getTemplateEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

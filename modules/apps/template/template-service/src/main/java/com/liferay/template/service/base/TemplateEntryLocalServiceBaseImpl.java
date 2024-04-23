@@ -258,6 +258,23 @@ public abstract class TemplateEntryLocalServiceBaseImpl
 		return templateEntryPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	@Override
+	public TemplateEntry fetchTemplateEntryByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return templateEntryPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
+	public TemplateEntry getTemplateEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return templateEntryPersistence.findByERC_G(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the template entry with the primary key.
 	 *

@@ -68,7 +68,7 @@ public class TemplateEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -76,6 +76,8 @@ public class TemplateEntryCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", templateEntryId=");
 		sb.append(templateEntryId);
 		sb.append(", groupId=");
@@ -115,6 +117,13 @@ public class TemplateEntryCacheModel
 		}
 		else {
 			templateEntryImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			templateEntryImpl.setExternalReferenceCode("");
+		}
+		else {
+			templateEntryImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		templateEntryImpl.setTemplateEntryId(templateEntryId);
@@ -178,6 +187,7 @@ public class TemplateEntryCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		templateEntryId = objectInput.readLong();
 
@@ -207,6 +217,13 @@ public class TemplateEntryCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(templateEntryId);
@@ -249,6 +266,7 @@ public class TemplateEntryCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long templateEntryId;
 	public long groupId;
 	public long companyId;

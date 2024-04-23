@@ -5,13 +5,22 @@
 
 package com.liferay.marketplace.console.service;
 
+import java.util.Objects;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+
+import reactor.core.publisher.Mono;
 
 /**
  * @author Keven Leone
@@ -89,7 +98,65 @@ public class ConsoleService {
 		return _accessToken;
 	}
 
-	public void inviteProject(String email, String projectId, String role)
+	public void setupCloudProjectInstallation(String virtualHost, long orderId)
+		throws Exception {
+
+		JSONObject projectJSONObject = _postEnvironmentProject(
+			false, _consoleProjectId + orderId);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Project created " + projectJSONObject.toString());
+		}
+
+		JSONObject environmentProjectJSONObject = _postEnvironmentProject(
+			true, projectJSONObject.getString("projectId") + "-extprd");
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Environment Project created " +
+					environmentProjectJSONObject.toString());
+		}
+
+		_inviteProject(
+			_marketplaceTrialAdminEmail,
+			environmentProjectJSONObject.getString("projectId"), "admin");
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Invited " + _marketplaceTrialAdminEmail +
+					" as admin to cloud environment");
+		}
+
+		_setupLinkBetweenPortalInstanceAndExtensionEnvironment(
+			virtualHost, environmentProjectJSONObject.getString("id"));
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				virtualHost + " Linked to environment: " +
+					environmentProjectJSONObject.getString("id"));
+		}
+
+		deployApp(
+			String.valueOf(orderId),
+			environmentProjectJSONObject.getString("projectId"));
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Marketplace App deployed to " +
+					environmentProjectJSONObject.getString("projectId"));
+		}
+	}
+
+	private WebClient _getWebClient() throws Exception {
+		return WebClient.builder(
+		).baseUrl(
+			_consoleAuthURL
+		).defaultHeader(
+			HttpHeaders.AUTHORIZATION, "Bearer " + getAuthorization()
+		).build();
+	}
+
+	private void _inviteProject(String email, String projectId, String role)
 		throws Exception {
 
 		_post(
@@ -100,46 +167,6 @@ public class ConsoleService {
 				"role", role
 			),
 			"/projects/" + projectId + "/invite");
-	}
-
-	public JSONObject postEnvironmentProject(String projectId)
-		throws Exception {
-
-		return _post(
-			new JSONObject(
-			).put(
-				"cluster", _consoleCluster
-			).put(
-				"environment", true
-			).put(
-				"projectId", _consoleProjectId + "-" + projectId
-			),
-			"/projects");
-	}
-
-	public JSONObject setupLinkBetweenPortalInstanceAndExtensionEnvironment(
-			String dxpVirtualInstanceId, String extensionProjectUid)
-		throws Exception {
-
-		return _post(
-			new JSONObject(
-			).put(
-				"dxpProjectUid", _consoleProjectUid
-			).put(
-				"dxpVirtualInstanceId", dxpVirtualInstanceId
-			).put(
-				"extensionProjectUid", extensionProjectUid
-			),
-			"/lxc-extension-links");
-	}
-
-	private WebClient _getWebClient() throws Exception {
-		return WebClient.builder(
-		).baseUrl(
-			_consoleAuthURL
-		).defaultHeader(
-			HttpHeaders.AUTHORIZATION, "Bearer " + getAuthorization()
-		).build();
 	}
 
 	private JSONObject _post(JSONObject jsonObject, String path)
@@ -156,11 +183,64 @@ public class ConsoleService {
 				MediaType.APPLICATION_JSON
 			).bodyValue(
 				jsonObject.toString()
-			).retrieve(
-			).bodyToMono(
-				String.class
+			).exchangeToMono(
+				clientResponse -> {
+					HttpStatus httpStatus = clientResponse.statusCode();
+
+					if (Objects.equals(
+							clientResponse.statusCode(),
+							HttpStatus.NO_CONTENT)) {
+
+						return Mono.just("{}");
+					}
+					else if (httpStatus.is2xxSuccessful()) {
+						return clientResponse.bodyToMono(String.class);
+					}
+					else if (httpStatus.is4xxClientError()) {
+						return Mono.just(httpStatus.getReasonPhrase());
+					}
+
+					Mono<WebClientResponseException> mono =
+						clientResponse.createException();
+
+					return mono.flatMap(Mono::error);
+				}
 			).block());
 	}
+
+	private JSONObject _postEnvironmentProject(
+			boolean environment, String projectId)
+		throws Exception {
+
+		return _post(
+			new JSONObject(
+			).put(
+				"cluster", _consoleCluster
+			).put(
+				"environment", environment
+			).put(
+				"projectId", projectId
+			),
+			"/projects");
+	}
+
+	private JSONObject _setupLinkBetweenPortalInstanceAndExtensionEnvironment(
+			String dxpVirtualInstanceId, String extensionProjectUid)
+		throws Exception {
+
+		return _post(
+			new JSONObject(
+			).put(
+				"dxpProjectUid", _consoleProjectUid
+			).put(
+				"dxpVirtualInstanceId", dxpVirtualInstanceId
+			).put(
+				"extensionProjectUid", extensionProjectUid
+			),
+			"/lxc-extension-links");
+	}
+
+	private static final Log _log = LogFactory.getLog(ConsoleService.class);
 
 	private String _accessToken;
 
@@ -181,6 +261,9 @@ public class ConsoleService {
 
 	@Value("${liferay.marketplace.console.project.uid}")
 	private String _consoleProjectUid;
+
+	@Value("${liferay.marketplace.trial.admin.email}")
+	private String _marketplaceTrialAdminEmail;
 
 	private long _tokenExpirationMillis;
 

@@ -11,7 +11,7 @@ import {
 	sub,
 } from 'frontend-js-web';
 
-import {CommerceStatusDataRenderer} from './CommerceStatusDataRenderer';
+import CommerceStatusDataRenderer from './CommerceStatusDataRenderer';
 
 export default function propsTransformer({
 	additionalProps: {namespace},

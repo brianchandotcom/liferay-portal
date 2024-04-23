@@ -20,9 +20,9 @@ import {
 	TestrayCaseResult,
 	testrayCaseResultImpl,
 } from '~/services/rest';
+import {getTruncateText} from '~/util/getTruncateText';
 
 import useBuildTestActions from './useBuildTestActions';
-import {getTruncateText} from '~/util/getTruncateText';
 
 const Build = () => {
 	const [searchParams] = useSearchParams();

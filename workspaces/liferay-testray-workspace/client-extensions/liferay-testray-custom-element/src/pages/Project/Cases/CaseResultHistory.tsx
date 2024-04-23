@@ -4,6 +4,7 @@
  */
 
 import {useParams} from 'react-router-dom';
+import {getTruncateText} from '~/util/getTruncateText';
 
 import Code from '../../../components/Code';
 import JiraLink from '../../../components/JiraLink';
@@ -14,7 +15,6 @@ import {TableProps} from '../../../components/Table';
 import i18n from '../../../i18n';
 import {PickList, testrayCaseResultImpl} from '../../../services/rest';
 import dayjs from '../../../util/date';
-import {getTruncateText} from '~/util/getTruncateText';
 
 type CaseResultHistoryProps = {
 	listViewProps?: Partial<ListViewProps>;

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.change.tracking.CTAware;
@@ -16,6 +17,7 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.service.base.ClassNameLocalServiceBaseImpl;
@@ -23,6 +25,7 @@ import com.liferay.portal.service.base.ClassNameLocalServiceBaseImpl;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 
 /**
  * @author Brian Wing Shun Chan
@@ -153,6 +156,31 @@ public class ClassNameLocalServiceImpl
 	}
 
 	@Override
+	public Supplier<long[]> getClassNameIdsSupplier(
+		String keyName, String[] classNames) {
+
+		return () -> {
+			Map<String, long[]> companyIdMap = _getMap(_classNameIdsSuppliers);
+
+			return companyIdMap.computeIfAbsent(
+				keyName,
+				key -> TransformUtil.transformToLongArray(
+					ListUtil.fromArray(classNames),
+					className -> getClassNameId(className)));
+		};
+	}
+
+	@Override
+	public Supplier<Long> getClassNameIdSupplier(String className) {
+		return () -> {
+			Map<String, Long> companyIdMap = _getMap(_classNameIdSuppliers);
+
+			return companyIdMap.computeIfAbsent(
+				className, key -> getClassNameId(className));
+		};
+	}
+
+	@Override
 	public String getRegistryName() {
 		return ClassNameLocalServiceImpl.class.getName();
 	}
@@ -178,6 +206,10 @@ public class ClassNameLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClassNameLocalServiceImpl.class);
 
+	private static final Map<Long, Map<String, long[]>> _classNameIdsSuppliers =
+		new ConcurrentHashMap<>();
+	private static final Map<Long, Map<String, Long>> _classNameIdSuppliers =
+		new ConcurrentHashMap<>();
 	private static final ClassName _nullClassName = new ClassNameImpl();
 
 	private static class ClassNamePool {

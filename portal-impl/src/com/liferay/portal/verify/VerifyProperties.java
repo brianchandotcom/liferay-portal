@@ -2046,7 +2046,7 @@ public class VerifyProperties {
 		"struts.portlet.ignored.parameters.regexp",
 		"struts.portlet.request.processor",
 		"table.mapper.cache.mapping.table.names", "tck.url",
-		"transaction.manager.impl",
+		"transaction.manager.impl", "transaction.isolation.counter",
 		"user.groups.copy.layouts.to.user.personal.site",
 		"user.groups.indexer.enabled", "users.form.add.identification",
 		"users.indexer.enabled", "users.form.add.main",

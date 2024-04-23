@@ -34,14 +34,19 @@ const AutofillBuilds: React.FC<AutofillBuildsProps> = ({setVisible}) => {
 
 		testrayBuildImpl
 			.autofill(autoFillBuild.buildA, autoFillBuild.buildB)
-			.then(() =>
+			.then((reponse) =>
 				Liferay.Util.openToast({
-					message: i18n.translate(
-						'auto-fill-build-is-scheduled-to-be-processed'
+					message: i18n.sub(
+						'x-case-results-were-autofilled',
+						reponse.caseAmount
 					),
 				})
 			)
-			.then(() => setVisible(false))
+			.then(() => {
+				setBuildA(null);
+				setBuildB(null);
+				setVisible(false);
+			})
 			.catch(() =>
 				Liferay.Util.openToast({
 					message: i18n.translate('an-unexpected-error-occurred'),

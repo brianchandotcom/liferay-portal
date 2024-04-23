@@ -16,6 +16,12 @@ const headlessDeliveryAPIs = [
 	'message-board-threads',
 ];
 
+const testrayRestAPIs = [
+	'testray-run-comparisons',
+	'testray-status-metrics',
+	'testray-build-autofill',
+];
+
 function changeResource(resource: RequestInfo) {
 	const getIsResourceFromAPI = (apis: string[]) =>
 		apis.some((api) => resource.toString().includes(api));
@@ -32,10 +38,7 @@ function changeResource(resource: RequestInfo) {
 		return `${liferayHost}/o/dispatch-rest/v1.0${resource}`;
 	}
 
-	if (
-		resource.toString().startsWith('/testray-run-comparisons') ||
-		resource.toString().startsWith('/testray-status-metrics')
-	) {
+	if (getIsResourceFromAPI(testrayRestAPIs)) {
 		return `${liferayHost}/o/testray-rest/v1.0${resource}`;
 	}
 

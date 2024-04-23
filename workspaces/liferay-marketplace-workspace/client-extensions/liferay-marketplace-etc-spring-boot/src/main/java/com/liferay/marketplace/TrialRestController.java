@@ -13,7 +13,7 @@ import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResou
 import com.liferay.headless.portal.instances.client.dto.v1_0.Admin;
 import com.liferay.headless.portal.instances.client.dto.v1_0.PortalInstance;
 import com.liferay.headless.portal.instances.client.resource.v1_0.PortalInstanceResource;
-import com.liferay.marketplace.console.service.ConsoleService;
+import com.liferay.marketplace.service.ConsoleService;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.client.resource.v1_0.NotificationTemplateResource;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -384,12 +384,12 @@ public class TrialRestController extends BaseRestController {
 			orderId);
 
 		try {
-			_consoleService.setupCloudProjectInstallation(
+			_consoleService.setUpCloudProjectInstallation(
 				orderId, portalInstance.getVirtualHost());
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to setup Cloud Installation for order " + orderId);
+				"Unable to setup cloud installation for order " + orderId);
 			_log.error(exception);
 
 			return;
@@ -456,9 +456,6 @@ public class TrialRestController extends BaseRestController {
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
-
-	@Value("${liferay.marketplace.trial.admin.email}")
-	private String _marketplaceTrialAdminEmail;
 
 	private String _oauthAccessToken;
 	private long _oauthExpirationMillis;

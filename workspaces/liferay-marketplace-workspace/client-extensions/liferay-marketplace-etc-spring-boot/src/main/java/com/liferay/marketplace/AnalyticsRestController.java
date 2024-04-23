@@ -36,7 +36,7 @@ public class AnalyticsRestController extends BaseRestController {
 		).get(
 		).uri(
 			uriBuilder -> uriBuilder.path(
-				"/reports/pages"
+				"/api/reports/pages"
 			).queryParam(
 				"channelId", channelId
 			).queryParam(

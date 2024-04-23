@@ -5,7 +5,7 @@
 
 package com.liferay.marketplace;
 
-import com.liferay.marketplace.console.service.ConsoleService;
+import com.liferay.marketplace.service.ConsoleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

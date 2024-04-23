@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.marketplace.console.service;
+package com.liferay.marketplace.service;
 
 import java.util.Objects;
 
@@ -57,7 +57,7 @@ public class ConsoleService {
 		).bodyValue(
 			new JSONObject(
 			).put(
-				"email", _consoleAuthEmail
+				"email", _consoleAuthEmailAddress
 			).put(
 				"password", _consoleAuthPassword
 			).toString()
@@ -81,7 +81,7 @@ public class ConsoleService {
 		return _accessToken;
 	}
 
-	public void setupCloudProjectInstallation(long orderId, String virtualHost)
+	public void setUpCloudProjectInstallation(long orderId, String virtualHost)
 		throws Exception {
 
 		JSONObject projectJSONObject = _postEnvironmentProject(
@@ -91,14 +91,14 @@ public class ConsoleService {
 			true, projectJSONObject.getString("projectId") + "-extprd");
 
 		_inviteProject(
-			_marketplaceTrialAdminEmail,
+			_marketplaceTrialAdminEmailAddress,
 			environmentProjectJSONObject.getString("projectId"));
 
-		_setupLinkBetweenPortalInstanceAndExtensionEnvironment(
+		_setUpLinkBetweenPortalInstanceAndExtensionEnvironment(
 			virtualHost, environmentProjectJSONObject.getString("id"));
 
 		_deployApp(
-			_consoleAuthEmail, String.valueOf(orderId),
+			_consoleAuthEmailAddress, String.valueOf(orderId),
 			environmentProjectJSONObject.getString("projectId"));
 	}
 
@@ -206,7 +206,7 @@ public class ConsoleService {
 		return jsonObject;
 	}
 
-	private void _setupLinkBetweenPortalInstanceAndExtensionEnvironment(
+	private void _setUpLinkBetweenPortalInstanceAndExtensionEnvironment(
 			String dxpVirtualInstanceId, String extensionProjectUid)
 		throws Exception {
 
@@ -232,8 +232,8 @@ public class ConsoleService {
 
 	private String _accessToken;
 
-	@Value("${liferay.marketplace.console.auth.email}")
-	private String _consoleAuthEmail;
+	@Value("${liferay.marketplace.console.auth.email.address}")
+	private String _consoleAuthEmailAddress;
 
 	@Value("${liferay.marketplace.console.auth.password}")
 	private String _consoleAuthPassword;
@@ -250,8 +250,8 @@ public class ConsoleService {
 	@Value("${liferay.marketplace.console.project.uid}")
 	private String _consoleProjectUid;
 
-	@Value("${liferay.marketplace.trial.admin.email}")
-	private String _marketplaceTrialAdminEmail;
+	@Value("${liferay.marketplace.trial.admin.email.address}")
+	private String _marketplaceTrialAdminEmailAddress;
 
 	private long _tokenExpirationMillis;
 

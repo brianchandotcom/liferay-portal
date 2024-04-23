@@ -269,10 +269,18 @@
 											{
 												"definition": {
 													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+													"fragmentLink": {
+														"href": {
+															"value_i18n": {
+																"en_US": "/capabilities/cloud"
+															}
+														}
+													},
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"height": "100%",
 														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
@@ -414,10 +422,18 @@
 											{
 												"definition": {
 													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+													"fragmentLink": {
+														"href": {
+															"value_i18n": {
+																"en_US": "/capabilities/commerce"
+															}
+														}
+													},
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"height": "100%",
 														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
@@ -554,10 +570,18 @@
 											{
 												"definition": {
 													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+													"fragmentLink": {
+														"href": {
+															"value_i18n": {
+																"en_US": "/capabilities/content-management-system"
+															}
+														}
+													},
 													"fragmentStyle": {
 														"backgroundColor": "#fff",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"height": "100%",
 														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
@@ -694,10 +718,18 @@
 											{
 												"definition": {
 													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+													"fragmentLink": {
+														"href": {
+															"value_i18n": {
+																"en_US": "/capabilities/development-and-tooling"
+															}
+														}
+													},
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"height": "100%",
 														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
@@ -834,10 +866,18 @@
 											{
 												"definition": {
 													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+													"fragmentLink": {
+														"href": {
+															"value_i18n": {
+																"en_US": "/capabilities/digital-asset-management"
+															}
+														}
+													},
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"height": "100%",
 														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
@@ -974,10 +1014,18 @@
 											{
 												"definition": {
 													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+													"fragmentLink": {
+														"href": {
+															"value_i18n": {
+																"en_US": "/capabilities/dxp-self-hosted-installation-maintenance-and-administration"
+															}
+														}
+													},
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"height": "100%",
 														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
@@ -1114,10 +1162,18 @@
 											{
 												"definition": {
 													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+													"fragmentLink": {
+														"href": {
+															"value_i18n": {
+																"en_US": "/capabilities/integration"
+															}
+														}
+													},
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"height": "100%",
 														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
@@ -1254,10 +1310,18 @@
 											{
 												"definition": {
 													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+													"fragmentLink": {
+														"href": {
+															"value_i18n": {
+																"en_US": "/capabilities/personalization"
+															}
+														}
+													},
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"height": "100%",
 														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
@@ -1394,10 +1458,18 @@
 											{
 												"definition": {
 													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+													"fragmentLink": {
+														"href": {
+															"value_i18n": {
+																"en_US": "/capabilities/platform"
+															}
+														}
+													},
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"height": "100%",
 														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
@@ -1534,10 +1606,18 @@
 											{
 												"definition": {
 													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+													"fragmentLink": {
+														"href": {
+															"value_i18n": {
+																"en_US": "/capabilities/search"
+															}
+														}
+													},
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"height": "100%",
 														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
@@ -1674,10 +1754,18 @@
 											{
 												"definition": {
 													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+													"fragmentLink": {
+														"href": {
+															"value_i18n": {
+																"en_US": "/capabilities/security"
+															}
+														}
+													},
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"height": "100%",
 														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",
@@ -1814,10 +1902,18 @@
 											{
 												"definition": {
 													"customCSS": ".[$FRAGMENT_CLASS$] {\nborder: 1px solid rgba(9, 16, 24, 0.12);\nbox-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);\n}\n\n.[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important; \nborder-color: var(--color-brand-primary-darken-1, #0053F0) !important;\nborder-radius: 10px !important;\nborder-width: 1px !important;\n}",
+													"fragmentLink": {
+														"href": {
+															"value_i18n": {
+																"en_US": "/capabilities/sites"
+															}
+														}
+													},
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"borderRadius": "borderRadiusLg",
 														"borderWidth": "1px",
+														"height": "100%",
 														"maxWidth": "300px",
 														"paddingBottom": "3",
 														"paddingLeft": "3",

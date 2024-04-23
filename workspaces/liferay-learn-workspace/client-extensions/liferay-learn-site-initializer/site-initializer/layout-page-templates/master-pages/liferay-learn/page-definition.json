@@ -371,6 +371,7 @@
 															"layout": {
 																"contentDisplay": "FlexRow",
 																"flexWrap": "Wrap",
+																"justify": "SpaceBetween",
 																"paddingBottom": 2,
 																"paddingLeft": 2,
 																"paddingRight": 2,
@@ -383,6 +384,13 @@
 															{
 																"definition": {
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
+																	"fragmentLink": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "/capabilities/cloud"
+																			}
+																		}
+																	},
 																	"fragmentStyle": {
 																		"backgroundColor": "colorNeutral0",
 																		"borderRadius": "borderRadiusLg",
@@ -524,6 +532,13 @@
 															{
 																"definition": {
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
+																	"fragmentLink": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "/capabilities/commerce"
+																			}
+																		}
+																	},
 																	"fragmentStyle": {
 																		"backgroundColor": "colorNeutral0",
 																		"borderRadius": "borderRadiusLg",
@@ -665,6 +680,13 @@
 															{
 																"definition": {
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
+																	"fragmentLink": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "/capabilities/content-management-system"
+																			}
+																		}
+																	},
 																	"fragmentStyle": {
 																		"backgroundColor": "colorNeutral0",
 																		"borderRadius": "borderRadiusLg",
@@ -806,6 +828,13 @@
 															{
 																"definition": {
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
+																	"fragmentLink": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "/capabilities/development-and-tooling"
+																			}
+																		}
+																	},
 																	"fragmentStyle": {
 																		"backgroundColor": "colorNeutral0",
 																		"borderRadius": "borderRadiusLg",
@@ -946,6 +975,13 @@
 															{
 																"definition": {
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
+																	"fragmentLink": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "/capabilities/digital-asset-management"
+																			}
+																		}
+																	},
 																	"fragmentStyle": {
 																		"backgroundColor": "colorNeutral0",
 																		"borderRadius": "borderRadiusLg",
@@ -1086,6 +1122,13 @@
 															{
 																"definition": {
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
+																	"fragmentLink": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "/capabilities/dxp-self-hosted-installation-maintenance-and-administration"
+																			}
+																		}
+																	},
 																	"fragmentStyle": {
 																		"backgroundColor": "colorNeutral0",
 																		"borderRadius": "borderRadiusLg",
@@ -1226,6 +1269,13 @@
 															{
 																"definition": {
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
+																	"fragmentLink": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "/capabilities/integration"
+																			}
+																		}
+																	},
 																	"fragmentStyle": {
 																		"backgroundColor": "colorNeutral0",
 																		"borderRadius": "borderRadiusLg",
@@ -1366,6 +1416,13 @@
 															{
 																"definition": {
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
+																	"fragmentLink": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "/capabilities/personalization"
+																			}
+																		}
+																	},
 																	"fragmentStyle": {
 																		"backgroundColor": "colorNeutral0",
 																		"borderRadius": "borderRadiusLg",
@@ -1506,6 +1563,13 @@
 															{
 																"definition": {
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
+																	"fragmentLink": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "/capabilities/platform"
+																			}
+																		}
+																	},
 																	"fragmentStyle": {
 																		"backgroundColor": "colorNeutral0",
 																		"borderRadius": "borderRadiusLg",
@@ -1646,6 +1710,13 @@
 															{
 																"definition": {
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
+																	"fragmentLink": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "/capabilities/search"
+																			}
+																		}
+																	},
 																	"fragmentStyle": {
 																		"backgroundColor": "colorNeutral0",
 																		"borderRadius": "borderRadiusLg",
@@ -1701,10 +1772,14 @@
 																	},
 																	{
 																		"definition": {
+																			"fragmentStyle": {
+																				"marginLeft": "3"
+																			},
 																			"indexed": true,
 																			"layout": {
 																				"align": "Start",
-																				"contentDisplay": "FlexColumn"
+																				"contentDisplay": "FlexColumn",
+																				"marginLeft": 1
 																			}
 																		},
 																		"id": "bdc96665-0bb6-b1cc-851b-b8966a4e284a",
@@ -1786,6 +1861,13 @@
 															{
 																"definition": {
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
+																	"fragmentLink": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "/capabilities/security"
+																			}
+																		}
+																	},
 																	"fragmentStyle": {
 																		"backgroundColor": "colorNeutral0",
 																		"borderRadius": "borderRadiusLg",
@@ -1926,6 +2008,13 @@
 															{
 																"definition": {
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
+																	"fragmentLink": {
+																		"href": {
+																			"value_i18n": {
+																				"en_US": "/capabilities/sites"
+																			}
+																		}
+																	},
 																	"fragmentStyle": {
 																		"backgroundColor": "colorNeutral0",
 																		"borderRadius": "borderRadiusLg",
@@ -4117,10 +4206,6 @@
 			"lfr-theme:regular:show-header": "false",
 			"lfr-theme:regular:show-header-search": "false",
 			"lfr-theme:regular:wrap-widget-page-content": "false"
-		},
-		"themeSpritemapClientExtension": {
-			"externalReferenceCode": "LXC:liferay-learn-theme-spritemap",
-			"name": "Liferay Learn Theme Spritemap"
 		}
 	},
 	"version": 1.0

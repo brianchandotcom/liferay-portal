@@ -89,6 +89,8 @@ public class RoutineEntityScheduler {
 			_scheduler = StdSchedulerFactory.getDefaultScheduler();
 
 			_scheduler.start();
+
+			_scheduler.setJobFactory(_routineEntityJobFactory);
 		}
 		catch (SchedulerException schedulerException) {
 			if (_log.isWarnEnabled()) {
@@ -225,6 +227,9 @@ public class RoutineEntityScheduler {
 
 	@Autowired
 	private JobEntityRepository _jobEntityRepository;
+
+	@Autowired
+	private RoutineEntityJobFactory _routineEntityJobFactory;
 
 	@Autowired
 	private RoutineEntityRepository _routineEntityRepository;

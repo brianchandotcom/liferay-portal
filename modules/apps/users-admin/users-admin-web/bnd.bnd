@@ -5,6 +5,5 @@ Import-Package:\
 	javax.net.ssl,\
 	\
 	*
-Liferay-JS-Submodules-Bridge: users-admin-web
 Web-ContextPath: /users-admin-web
 -dsannotations-options: inherit

@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.LayoutPriorityComparator;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.HashMap;
 import java.util.List;
@@ -523,13 +524,14 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			}
 		}
 
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			String languageId = StringUtil.toLowerCase(
-				LocaleUtil.toLanguageId(locale));
+		for (String languageId : PropsValues.LOCALES) {
+			languageId = StringUtil.toLowerCase(languageId);
 
 			String i18nPathLanguageId =
 				StringPool.SLASH +
-					PortalUtil.getI18nPathLanguageId(locale, languageId);
+					PortalUtil.getI18nPathLanguageId(
+						LocaleUtil.fromLanguageId(languageId, false),
+						languageId);
 
 			String underlineI18nPathLanguageId = StringUtil.replace(
 				i18nPathLanguageId, CharPool.DASH, CharPool.UNDERLINE);

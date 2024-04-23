@@ -229,6 +229,15 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 										<%= HtmlUtil.escape(title) %>
 									</span>
 								</a>
+
+								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-16311") && !repositoryEntryBrowserDisplayContext.hasGuestViewPermission(fileEntry) %>'>
+									<clay:icon
+										aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+										cssClass="c-ml-2 c-mt-1 lfr-portal-tooltip text-4 text-secondary"
+										data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+										symbol="password-policies"
+									/>
+								</c:if>
 							</liferay-ui:search-container-column-text>
 
 							<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">
@@ -468,6 +477,15 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 																<%= HtmlUtil.escape(title) %>
 															</aui:a>
 
+															<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-16311") && !repositoryEntryBrowserDisplayContext.hasGuestViewPermission(fileEntry) %>'>
+																<clay:icon
+																	aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+																	cssClass="c-ml-2 c-mt-1 lfr-portal-tooltip text-4 text-secondary"
+																	data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+																	symbol="password-policies"
+																/>
+															</c:if>
+
 															<div class="card-detail">
 																<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">
 																	<span class="text-secondary">
@@ -569,6 +587,15 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 										<div class="<%= repositoryEntryBrowserDisplayContext.isPreviewable(latestFileVersion) ? "item-preview-editable" : StringPool.BLANK %> item-preview" data-href="<%= Validator.isNotNull(thumbnailSrc) ? HtmlUtil.escapeHREF(DLURLHelperUtil.getImagePreviewURL(fileEntry, themeDisplay)) : themeDisplay.getPathThemeImages() + "/file_system/large/default.png" %>" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ItemSelectorRepositoryEntryBrowserUtil.getItemSelectorReturnTypeClassName(itemSelectorReturnTypeResolver, existingFileEntryReturnType)) %>" data-title="<%= HtmlUtil.escapeAttribute(title) %>" data-type="<%= repositoryEntryBrowserDisplayContext.getType(latestFileVersion) %>" data-url="<%= HtmlUtil.escapeAttribute(DLURLHelperUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorRepositoryEntryBrowserUtil.getValue(itemSelectorReturnTypeResolver, existingFileEntryReturnType, fileEntry, themeDisplay)) %>">
 											<h5>
 												<strong><%= title %></strong>
+
+												<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-16311") && !repositoryEntryBrowserDisplayContext.hasGuestViewPermission(fileEntry) %>'>
+													<clay:icon
+														aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+														cssClass="c-ml-2 c-mt-1 lfr-portal-tooltip text-4 text-secondary"
+														data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+														symbol="password-policies"
+													/>
+												</c:if>
 											</h5>
 
 											<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">

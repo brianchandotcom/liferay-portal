@@ -38,7 +38,7 @@
 </aui:fieldset>
 
 <aui:script>
-	const usePortalTimeZoneCheckbox = document.getElementById(
+	var usePortalTimeZoneCheckbox = document.getElementById(
 		'<portlet:namespace />usePortalTimeZone'
 	);
 

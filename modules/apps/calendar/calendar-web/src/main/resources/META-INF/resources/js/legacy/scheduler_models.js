@@ -651,6 +651,11 @@ AUI.add(
 					const scheduler = instance.get('scheduler');
 
 					const activeView = scheduler.get('activeView');
+
+					if (!activeView) {
+						return;
+					}
+
 					const eventsPerPage = scheduler.get('eventsPerPage');
 					const filterCalendarBookings = scheduler.get(
 						'filterCalendarBookings'

@@ -614,6 +614,10 @@
 		var activeView = <portlet:namespace />scheduler.get('activeView');
 		var viewDate = <portlet:namespace />scheduler.get('viewDate');
 
+		if (!activeView) {
+			return;
+		}
+
 		var viewName = activeView.get('name');
 
 		var total = 1;

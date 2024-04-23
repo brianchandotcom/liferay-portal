@@ -45,16 +45,16 @@ export function PrimaryRecipient({
 	const [recipient] = values.recipients as EmailRecipients[];
 	const [toRolesList, setToRolesList] = useState<MultiSelectItem[]>([]);
 
-	const handleMultiSelectItemsChange = (items: MultiSelectItem[]) => {
+	const handleMultiSelectItemsChange = (itemsGroup: MultiSelectItem[]) => {
 		const newRecipients: EmailNotificationRecipients[] = [];
 
-		if (items.length) {
-			const [itemsGroup] = items as MultiSelectItem[];
-
-			itemsGroup.children.forEach((child) => {
-				if (child.checked) {
-					newRecipients.push({['roleName']: child.value});
-				}
+		if (itemsGroup.length) {
+			itemsGroup.forEach((itemGroup) => {
+				itemGroup.children.forEach((child) => {
+					if (child.checked) {
+						newRecipients.push({['roleName']: child.value});
+					}
+				});
 			});
 		}
 
@@ -81,18 +81,20 @@ export function PrimaryRecipient({
 			(!!toRolesList.length || !!emailNotificationRoles.length)
 		) {
 			const baseRoleList = toRolesList.length
-				? toRolesList[0]
-				: emailNotificationRoles[0];
+				? toRolesList
+				: emailNotificationRoles;
 
-			setToRolesList([
-				{
-					...baseRoleList,
-					children: getCheckedChildren(
-						recipient.to,
-						baseRoleList.children
-					),
-				},
-			]);
+			setToRolesList(
+				baseRoleList.map((baseRoleElement) => {
+					return {
+						...baseRoleElement,
+						children: getCheckedChildren(
+							recipient.to as EmailNotificationRecipients[],
+							baseRoleElement.children
+						),
+					};
+				})
+			);
 
 			return;
 		}

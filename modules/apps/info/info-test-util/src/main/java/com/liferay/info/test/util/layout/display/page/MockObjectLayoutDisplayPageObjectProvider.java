@@ -7,6 +7,9 @@ package com.liferay.info.test.util.layout.display.page;
 
 import com.liferay.info.test.util.model.MockObject;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
@@ -61,12 +64,14 @@ public class MockObjectLayoutDisplayPageObjectProvider
 
 	@Override
 	public String getTitle(Locale locale) {
-		return "mockObjectTitle";
+		return RandomTestUtil.randomString();
 	}
 
 	@Override
 	public String getURLTitle(Locale locale) {
-		return "mockObjectURLTitle";
+		return FriendlyURLNormalizerUtil.normalize(
+			RandomTestUtil.randomString(
+				LayoutFriendlyURLRandomizerBumper.INSTANCE));
 	}
 
 	private final MockObject _mockObject;

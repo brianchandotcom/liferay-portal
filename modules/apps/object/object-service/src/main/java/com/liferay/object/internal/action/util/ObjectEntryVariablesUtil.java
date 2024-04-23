@@ -118,6 +118,10 @@ public class ObjectEntryVariablesUtil {
 					objectDefinition,
 					Collections.unmodifiableSet(currentVariables.keySet()));
 			}
+		).put(
+			"originalEntryDTO",
+			payloadJSONObject.get(
+				"originalObjectEntryDTO" + objectDefinition.getShortName())
 		).build();
 	}
 

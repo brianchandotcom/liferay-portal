@@ -142,6 +142,7 @@ export interface Config {
 	getRolesURL: string;
 	getUsersURL: string;
 	imageSelectorURL: string;
+	infoFieldItemSelectorURL: string;
 	infoItemPreviewSelectorURL: string;
 	infoItemSelectorURL: string;
 	isConversionDraft: boolean;

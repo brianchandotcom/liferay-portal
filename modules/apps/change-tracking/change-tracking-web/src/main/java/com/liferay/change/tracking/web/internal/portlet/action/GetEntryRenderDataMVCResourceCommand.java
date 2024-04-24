@@ -1066,122 +1066,131 @@ public class GetEntryRenderDataMVCResourceCommand
 				modelAttributes.get("resourcePrimKey"));
 		}
 
-		WorkflowInstanceLink workflowInstanceLink =
-			_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
-				ctEntry.getCompanyId(), groupId,
-				_portal.getClassName(ctEntry.getModelClassNameId()), classPK);
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctEntry.getCtCollectionId())) {
 
-		if (workflowInstanceLink == null) {
-			return new LinkedHashMap<>();
-		}
+			WorkflowInstanceLink workflowInstanceLink =
+				_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
+					ctEntry.getCompanyId(), groupId,
+					_portal.getClassName(ctEntry.getModelClassNameId()),
+					classPK);
 
-		List<WorkflowTask> workflowTasks =
-			_workflowTaskManager.getWorkflowTasksByWorkflowInstance(
-				ctEntry.getCompanyId(), null,
-				workflowInstanceLink.getWorkflowInstanceId(), null, 0, 1, null);
-
-		if (workflowTasks.isEmpty()) {
-			return new LinkedHashMap<>();
-		}
-
-		Format format = FastDateFormatFactoryUtil.getDateTime(
-			themeDisplay.getLocale(), themeDisplay.getTimeZone());
-		WorkflowTask workflowTask = workflowTasks.get(0);
-
-		return LinkedHashMapBuilder.put(
-			"status",
-			() -> {
-				Map<String, Object> modelAttributes =
-					model.getModelAttributes();
-
-				return String.valueOf(modelAttributes.get("status"));
+			if (workflowInstanceLink == null) {
+				return new LinkedHashMap<>();
 			}
-		).put(
-			"assigned-to",
-			() -> {
-				if (!workflowTask.isAssignedToSingleUser()) {
-					return _language.get(themeDisplay.getLocale(), "nobody");
+
+			List<WorkflowTask> workflowTasks =
+				_workflowTaskManager.getWorkflowTasksByWorkflowInstance(
+					ctEntry.getCompanyId(), null,
+					workflowInstanceLink.getWorkflowInstanceId(), null, 0, 1,
+					null);
+
+			if (workflowTasks.isEmpty()) {
+				return new LinkedHashMap<>();
+			}
+
+			Format format = FastDateFormatFactoryUtil.getDateTime(
+				themeDisplay.getLocale(), themeDisplay.getTimeZone());
+			WorkflowTask workflowTask = workflowTasks.get(0);
+
+			return LinkedHashMapBuilder.put(
+				"status",
+				() -> {
+					Map<String, Object> modelAttributes =
+						model.getModelAttributes();
+
+					return String.valueOf(modelAttributes.get("status"));
 				}
+			).put(
+				"assigned-to",
+				() -> {
+					if (!workflowTask.isAssignedToSingleUser()) {
+						return _language.get(
+							themeDisplay.getLocale(), "nobody");
+					}
 
-				return _portal.getUserName(
-					workflowTask.getAssigneeUserId(),
-					String.valueOf(workflowTask.getAssigneeUserId()));
-			}
-		).put(
-			"task-name", workflowTask.getLabel(themeDisplay.getLocale())
-		).put(
-			"create-date", format.format(workflowTask.getCreateDate())
-		).put(
-			"due-date",
-			() -> {
-				if (workflowTask.getDueDate() != null) {
-					return format.format(workflowTask.getDueDate());
+					return _portal.getUserName(
+						workflowTask.getAssigneeUserId(),
+						String.valueOf(workflowTask.getAssigneeUserId()));
 				}
+			).put(
+				"task-name", workflowTask.getLabel(themeDisplay.getLocale())
+			).put(
+				"create-date", format.format(workflowTask.getCreateDate())
+			).put(
+				"due-date",
+				() -> {
+					if (workflowTask.getDueDate() != null) {
+						return format.format(workflowTask.getDueDate());
+					}
 
-				return _language.get(themeDisplay.getLocale(), "never");
-			}
-		).put(
-			"usages",
-			() -> {
-				HttpServletRequest httpServletRequest =
-					themeDisplay.getRequest();
+					return _language.get(themeDisplay.getLocale(), "never");
+				}
+			).put(
+				"usages",
+				() -> {
+					HttpServletRequest httpServletRequest =
+						themeDisplay.getRequest();
 
-				return PortletURLBuilder.create(
-					PortletURLFactoryUtil.create(
-						httpServletRequest, PortletKeys.MY_WORKFLOW_TASK,
-						PortletRequest.RENDER_PHASE)
-				).setMVCPath(
-					"/view_layout_classed_model_usages.jsp"
-				).setRedirect(
-					PortletURLBuilder.create(
+					return PortletURLBuilder.create(
 						PortletURLFactoryUtil.create(
-							httpServletRequest, CTPortletKeys.PUBLICATIONS,
+							httpServletRequest, PortletKeys.MY_WORKFLOW_TASK,
 							PortletRequest.RENDER_PHASE)
-					).setMVCRenderCommandName(
-						"/change_tracking/view_change"
+					).setMVCPath(
+						"/view_layout_classed_model_usages.jsp"
+					).setRedirect(
+						PortletURLBuilder.create(
+							PortletURLFactoryUtil.create(
+								httpServletRequest, CTPortletKeys.PUBLICATIONS,
+								PortletRequest.RENDER_PHASE)
+						).setMVCRenderCommandName(
+							"/change_tracking/view_change"
+						).setParameter(
+							"ctCollectionId", ctEntry.getCtCollectionId()
+						).setParameter(
+							"ctEntryId", ctEntry.getCtEntryId()
+						).buildString()
 					).setParameter(
-						"ctCollectionId", ctEntry.getCtCollectionId()
+						"className", workflowInstanceLink.getClassName()
 					).setParameter(
-						"ctEntryId", ctEntry.getCtEntryId()
-					).buildString()
-				).setParameter(
-					"className", workflowInstanceLink.getClassName()
-				).setParameter(
-					"classPK", workflowInstanceLink.getClassPK()
-				).setParameter(
-					"workflowTaskId", workflowTask.getWorkflowTaskId()
-				).buildString();
-			}
-		).put(
-			"comments",
-			() -> {
-				WorkflowHandler<?> workflowHandler =
-					WorkflowHandlerRegistryUtil.getWorkflowHandler(
-						workflowInstanceLink.getClassName());
-
-				if (!workflowHandler.isCommentable()) {
-					return null;
+						"classPK", workflowInstanceLink.getClassPK()
+					).setParameter(
+						"workflowTaskId", workflowTask.getWorkflowTaskId()
+					).buildString();
 				}
+			).put(
+				"comments",
+				() -> {
+					WorkflowHandler<?> workflowHandler =
+						WorkflowHandlerRegistryUtil.getWorkflowHandler(
+							workflowInstanceLink.getClassName());
 
-				Discussion discussion = _commentManager.getDiscussion(
-					themeDisplay.getUserId(), workflowInstanceLink.getGroupId(),
-					workflowInstanceLink.getClassName(),
-					workflowInstanceLink.getClassPK(),
-					_createServiceContextFunction());
+					if (!workflowHandler.isCommentable()) {
+						return null;
+					}
 
-				int count = discussion.getDiscussionCommentsCount();
+					Discussion discussion = _commentManager.getDiscussion(
+						themeDisplay.getUserId(),
+						workflowInstanceLink.getGroupId(),
+						workflowInstanceLink.getClassName(),
+						workflowInstanceLink.getClassPK(),
+						_createServiceContextFunction());
 
-				if (count == 1) {
+					int count = discussion.getDiscussionCommentsCount();
+
+					if (count == 1) {
+						return StringBundler.concat(
+							count, " ",
+							_language.get(themeDisplay.getLocale(), "comment"));
+					}
+
 					return StringBundler.concat(
 						count, " ",
-						_language.get(themeDisplay.getLocale(), "comment"));
+						_language.get(themeDisplay.getLocale(), "comments"));
 				}
-
-				return StringBundler.concat(
-					count, " ",
-					_language.get(themeDisplay.getLocale(), "comments"));
-			}
-		).build();
+			).build();
+		}
 	}
 
 	private String _getWorkflowViewHTML(

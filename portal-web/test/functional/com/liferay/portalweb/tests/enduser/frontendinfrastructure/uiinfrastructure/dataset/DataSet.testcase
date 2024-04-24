@@ -77,13 +77,13 @@ definition {
 		task ("And adding a dataset view") {
 			DataSetAdmin.createDataSetView(
 				description = "Description",
-				key_name = "View Fields Test");
+				key_name = "View Visualization Modes Test");
 		}
 
 		task ("When go to the View page of the data set created.") {
 			DataSetAdmin.goToSpecificViewPage(
 				dataSetName = "Data Set Test",
-				key_viewName = "View Fields Test");
+				key_viewName = "View Visualization Modes Test");
 		}
 
 		task ("And the user accesses the Details tab, edit the description to "description 2" and save.") {
@@ -190,8 +190,8 @@ definition {
 				key_viewName = "Blog Posting View");
 		}
 
-		task ("When goes to Fields Tab.") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+		task ("When goes to Visualization Modes Tab.") {
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 		}
 
 		task ("And Add some fields //Add headline, id and Siteid") {
@@ -1559,8 +1559,8 @@ definition {
 				key_viewName = "languages view");
 		}
 
-		task ("When goes to Fields Tab.") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+		task ("When goes to Visualization Modes Tab.") {
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 		}
 
 		task ("And Add some fields //Add id and language") {
@@ -1857,8 +1857,8 @@ definition {
 				key_viewName = "Data Set View");
 		}
 
-		task ("When goes to Fields Tab.") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+		task ("When goes to Visualization Modes Tab.") {
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 		}
 
 		task ("Then there is not any “Text Entry_i18n” field available") {
@@ -2055,7 +2055,7 @@ definition {
 				dataSetName = "Data Set Test",
 				key_viewName = "Data Set View");
 
-			DataSetAdmin.goToTab(tabName = "Fields");
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 
 			DataSetAdmin.addFields(key_fieldList = "textEntry,id,status");
 		}
@@ -2149,8 +2149,8 @@ definition {
 				key_viewName = "View Test");
 		}
 
-		task ("When goes to Fields Tab.") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+		task ("When goes to Visualization Modes Tab.") {
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 		}
 
 		task ("And adds a field name") {
@@ -2175,7 +2175,7 @@ definition {
 				fragmentName = "Data Set");
 		}
 
-		task ("And viewing the configuration menu of the portlet And selects View Fields Test") {
+		task ("And viewing the configuration menu of the portlet And selects View Visualization Modes Test") {
 			DataSetAdmin.selectDataSetFragmentView(
 				key_modalTitle = "Select",
 				key_selectView = "Select Data Set View",

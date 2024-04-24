@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -358,6 +359,18 @@ public class GraphQLServletTest {
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"testPath_v1_0",
+						new GraphQLField(
+							"testNoPermissionOverDTO", new GraphQLField("id"))),
+					"query"),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
 		// Without namespace (backwards compatibility)
 
 		_assertEquals(
@@ -376,6 +389,16 @@ public class GraphQLServletTest {
 			JSONUtil.getValueAsString(
 				_invoke(
 					new GraphQLField("testNotFoundDTO", new GraphQLField("id")),
+					"query"),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"testNoPermissionOverDTO", new GraphQLField("id")),
 					"query"),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
@@ -564,6 +587,14 @@ public class GraphQLServletTest {
 			@GraphQLName("pageSize") int pageSize) {
 
 			return new TestDTOPage(page, pageSize);
+		}
+
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		public TestDTO testNoPermissionOverDTO()
+			throws PrincipalException.MustHavePermission {
+
+			throw new PrincipalException.MustHavePermission(
+				0L, StringUtil.randomString());
 		}
 
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField

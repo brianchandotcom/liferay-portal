@@ -219,6 +219,35 @@ public class Query {
 						Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayStatusMetricByTestrayProjectIdTestrayProjectTestrayRoutinesMetrics(page: ___, pageSize: ___, testrayCasePriorities: ___, testrayCaseTypes: ___, testrayProjectId: ___, testrayRoutineId: ___, testrayTeamId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public TestrayStatusMetricPage
+			testrayStatusMetricByTestrayProjectIdTestrayProjectTestrayRoutinesMetrics(
+				@GraphQLName("testrayProjectId") Long testrayProjectId,
+				@GraphQLName("testrayCasePriorities") String
+					testrayCasePriorities,
+				@GraphQLName("testrayCaseTypes") String testrayCaseTypes,
+				@GraphQLName("testrayRoutineId") Long testrayRoutineId,
+				@GraphQLName("testrayTeamId") Long testrayTeamId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_testrayStatusMetricResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			testrayStatusMetricResource -> new TestrayStatusMetricPage(
+				testrayStatusMetricResource.
+					getTestrayStatusMetricByTestrayProjectIdTestrayProjectTestrayRoutinesMetricsPage(
+						testrayProjectId, testrayCasePriorities,
+						testrayCaseTypes, testrayRoutineId, testrayTeamId,
+						Pagination.of(page, pageSize))));
+	}
+
 	@GraphQLName("TestrayRunComparisonPage")
 	public class TestrayRunComparisonPage {
 

@@ -21,6 +21,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.testray.rest.dto.v1_0.TestrayCaseTypeMetric;
 import com.liferay.testray.rest.dto.v1_0.TestrayComponentMetric;
+import com.liferay.testray.rest.dto.v1_0.TestrayRoutineMetric;
 import com.liferay.testray.rest.dto.v1_0.TestrayRunMetric;
 import com.liferay.testray.rest.dto.v1_0.TestrayTeamMetric;
 import com.liferay.testray.rest.resource.v1_0.TestrayStatusMetricResource;
@@ -308,6 +309,80 @@ public abstract class BaseTestrayStatusMetricResourceImpl
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.ws.rs.QueryParam("testrayTeamIds")
 				String testrayTeamIds,
+				@javax.ws.rs.core.Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/testray-rest/v1.0/testray-status-metrics/by-testray-projectId/{testrayProjectId}/testray-routines-metrics'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "testrayProjectId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testrayCasePriorities"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testrayCaseTypes"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testrayRoutineId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testrayTeamId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "TestrayStatusMetric"
+			)
+		}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/testray-status-metrics/by-testray-projectId/{testrayProjectId}/testray-routines-metrics"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<TestrayRoutineMetric>
+			getTestrayStatusMetricByTestrayProjectIdTestrayProjectTestrayRoutinesMetricsPage(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("testrayProjectId")
+				Long testrayProjectId,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.ws.rs.QueryParam("testrayCasePriorities")
+				String testrayCasePriorities,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.ws.rs.QueryParam("testrayCaseTypes")
+				String testrayCaseTypes,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.ws.rs.QueryParam("testrayRoutineId")
+				Long testrayRoutineId,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.ws.rs.QueryParam("testrayTeamId")
+				Long testrayTeamId,
 				@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 

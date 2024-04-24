@@ -50,7 +50,7 @@ public class UpstreamGitBranchCronRoutineEntityJob
 
 		for (GitBranchEntity gitBranchEntity : gitBranchEntities) {
 			if (Objects.equals(
-					previousBranchSHA, gitBranchEntity.getBranchSHA())) {
+					previousBranchSHA, gitBranchEntity.getLatestSHA())) {
 
 				if (_log.isInfoEnabled()) {
 					_log.info("SKIPPED: " + previousBranchSHA);
@@ -59,7 +59,7 @@ public class UpstreamGitBranchCronRoutineEntityJob
 				return;
 			}
 
-			currentBranchSHA = gitBranchEntity.getBranchSHA();
+			currentBranchSHA = gitBranchEntity.getLatestSHA();
 		}
 
 		upstreamBranchCronRoutineEntity.setPreviousBranchSHA(currentBranchSHA);

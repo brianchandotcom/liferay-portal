@@ -31,14 +31,14 @@ public class GitBranchEntityFactory extends BaseEntityFactory<GitBranchEntity> {
 		GitBranchEntity.Type type = GitBranchEntity.Type.get(
 			jsonObject.getJSONObject("type"));
 
-		if (type == GitBranchEntity.Type.SENDER) {
-			gitBranchEntity = new SenderGitBranchEntity(jsonObject);
+		if (type == GitBranchEntity.Type.DEFAULT) {
+			gitBranchEntity = new DefaultGitBranchEntity(jsonObject);
 		}
 		else if (type == GitBranchEntity.Type.UPSTREAM) {
 			gitBranchEntity = new UpstreamGitBranchEntity(jsonObject);
 		}
 		else {
-			gitBranchEntity = new DefaultGitBranchEntity(jsonObject);
+			throw new RuntimeException("Unsupported " + type);
 		}
 
 		gitBranchEntity.setGitHubClient(_gitHubClient);

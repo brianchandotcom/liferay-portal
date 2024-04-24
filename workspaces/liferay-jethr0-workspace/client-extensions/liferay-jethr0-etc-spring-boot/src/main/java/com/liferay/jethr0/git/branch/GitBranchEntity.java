@@ -7,8 +7,6 @@ package com.liferay.jethr0.git.branch;
 
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.event.github.client.GitHubClient;
-import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.routine.RoutineEntity;
 
 import java.io.IOException;
 
@@ -17,7 +15,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -26,72 +23,34 @@ import org.json.JSONObject;
  */
 public interface GitBranchEntity extends Entity {
 
-	public void addJobEntities(Set<JobEntity> jobEntities);
-
-	public void addJobEntity(JobEntity jobEntity);
-
-	public void addRoutineEntities(Set<RoutineEntity> routineEntities);
-
-	public void addRoutineEntity(RoutineEntity routineEntity);
-
-	public String getBranchName();
-
-	public String getBranchSHA();
-
-	public URL getBranchURL();
-
-	public String getBranchUserName();
-
 	public String getFileContent(String filePath);
 
-	public Set<JobEntity> getJobEntities();
+	public String getLatestSHA();
+
+	public String getName();
 
 	public Properties getProperties(String propertiesFilePath)
 		throws IOException;
 
-	public boolean getRebased();
-
 	public String getRepositoryName();
 
-	public Set<RoutineEntity> getRoutineEntities();
-
-	public String getShortBranchSHA();
-
-	public String getShortUpstreamBranchSHA();
+	public String getShortLatestSHA();
 
 	public Type getType();
 
-	public String getUpstreamBranchName();
+	public URL getURL();
 
-	public String getUpstreamBranchSHA();
-
-	public URL getUpstreamBranchURL();
-
-	public String getUpstreamBranchUserName();
-
-	public void removeJobEntities(Set<JobEntity> jobEntities);
-
-	public void removeJobEntity(JobEntity jobEntity);
-
-	public void removeRoutineEntities(Set<RoutineEntity> routineEntities);
-
-	public void removeRoutineEntity(RoutineEntity routineEntity);
-
-	public void setBranchSHA(String branchSHA);
-
-	public void setBranchURL(URL branchURL);
+	public String getUserName();
 
 	public void setGitHubClient(GitHubClient gitHubClient);
 
-	public void setRebased(boolean rebased);
+	public void setLatestSHA(String latestSHA);
 
-	public void setUpstreamBranchSHA(String upstreamBranchSHA);
-
-	public void setUpstreamBranchURL(URL upstreamBranchURL);
+	public void setURL(URL url);
 
 	public static enum Type {
 
-		DEFAULT("default"), SENDER("sender"), UPSTREAM("upstream");
+		DEFAULT("default"), UPSTREAM("upstream");
 
 		public static Type get(JSONObject jsonObject) {
 			return getByKey(jsonObject.getString("key"));

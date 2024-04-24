@@ -66,9 +66,9 @@ public class GitBranchRestController {
 					GitBranchEntity gitBranchEntity2) {
 
 					String gitBranch1URL = String.valueOf(
-						gitBranchEntity1.getBranchURL());
+						gitBranchEntity1.getURL());
 					String gitBranch2URL = String.valueOf(
-						gitBranchEntity2.getBranchURL());
+						gitBranchEntity2.getURL());
 
 					return gitBranch2URL.compareTo(gitBranch1URL);
 				}
@@ -103,9 +103,9 @@ public class GitBranchRestController {
 					GitBranchEntity gitBranchEntity2) {
 
 					String gitBranch1URL = String.valueOf(
-						gitBranchEntity1.getBranchURL());
+						gitBranchEntity1.getURL());
 					String gitBranch2URL = String.valueOf(
-						gitBranchEntity2.getBranchURL());
+						gitBranchEntity2.getURL());
 
 					return gitBranch2URL.compareTo(gitBranch1URL);
 				}

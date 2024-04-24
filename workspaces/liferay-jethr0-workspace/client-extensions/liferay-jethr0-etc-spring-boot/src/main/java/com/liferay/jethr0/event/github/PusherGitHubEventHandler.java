@@ -59,9 +59,8 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 
 		String jobName = StringUtil.combine(
 			"Merge Central Subrepository (",
-			gitBranchEntity.getRepositoryName(), "/",
-			gitBranchEntity.getBranchName(), "[",
-			gitBranchEntity.getShortBranchSHA(), "])");
+			gitBranchEntity.getRepositoryName(), "/", gitBranchEntity.getName(),
+			"[", gitBranchEntity.getShortLatestSHA(), "])");
 
 		JobEntity jobEntity = jobEntityRepository.create(
 			null, jobName, null, 3, null, JobEntity.State.OPENED,
@@ -75,7 +74,7 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 			(MergeCentralSubrepositoryJobEntity)jobEntity;
 
 		mergeCentralSubrepositoryJobEntity.setPortalUpstreamBranchName(
-			gitBranchEntity.getUpstreamBranchName());
+			gitBranchEntity.getName());
 
 		jobEntityRepository.update(mergeCentralSubrepositoryJobEntity);
 
@@ -160,7 +159,7 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 	private void _syncCentralSubrepository() throws InvalidJSONException {
 		GitBranchEntity gitBranchEntity = _getGitBranchEntity();
 
-		Matcher matcher = _pattern.matcher(gitBranchEntity.getBranchName());
+		Matcher matcher = _pattern.matcher(gitBranchEntity.getName());
 
 		if (!matcher.matches()) {
 			return;
@@ -192,8 +191,7 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 
 		GitHubCommit headGitHubCommit = _getHeadGitHubCommit();
 
-		gitBranchEntity.setBranchSHA(headGitHubCommit.getSHA());
-		gitBranchEntity.setUpstreamBranchSHA(headGitHubCommit.getSHA());
+		gitBranchEntity.setLatestSHA(headGitHubCommit.getSHA());
 
 		GitBranchEntityRepository gitBranchEntityRepository =
 			getGitBranchEntityRepository();
@@ -217,7 +215,7 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 			null,
 			StringUtil.combine(
 				"Repository Archive (", gitBranchEntity.getRepositoryName(),
-				"/", gitBranchEntity.getBranchName(), ")"),
+				"/", gitBranchEntity.getName(), ")"),
 			null, 1, new Date(), JobEntity.State.OPENED,
 			JobEntity.Type.REPOSITORY_ARCHIVE);
 

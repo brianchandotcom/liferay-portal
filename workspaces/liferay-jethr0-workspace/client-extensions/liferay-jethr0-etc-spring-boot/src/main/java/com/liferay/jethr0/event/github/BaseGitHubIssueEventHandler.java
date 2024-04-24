@@ -140,7 +140,7 @@ public abstract class BaseGitHubIssueEventHandler
 
 		String body = StringUtil.combine(
 			"Closing pull request because pulls for reference ",
-			upstreamGitBranchEntity.getBranchName(),
+			upstreamGitBranchEntity.getName(),
 			" should not be sent to repository ",
 			upstreamGitBranchEntity.getRepositoryName(), ".");
 
@@ -188,7 +188,7 @@ public abstract class BaseGitHubIssueEventHandler
 		JobEntity jobEntity = jobEntityRepository.create(
 			null,
 			StringUtil.combine(
-				"[", upstreamGitBranchEntity.getBranchName(), "] - ci:test:",
+				"[", upstreamGitBranchEntity.getName(), "] - ci:test:",
 				testSuite, " ", gitHubIssue.getRepositoryName(), "/",
 				gitHubIssue.getReceiverUserName(), "#",
 				gitHubIssue.getNumber()),
@@ -232,9 +232,9 @@ public abstract class BaseGitHubIssueEventHandler
 
 		if (upstreamGitBranchEntity != null) {
 			pullRequestJobEntity.setUpstreamBranchName(
-				upstreamGitBranchEntity.getBranchName());
+				upstreamGitBranchEntity.getName());
 			pullRequestJobEntity.setUpstreamBranchSHA(
-				upstreamGitBranchEntity.getBranchSHA());
+				upstreamGitBranchEntity.getLatestSHA());
 		}
 
 		jobEntityRepository.update(pullRequestJobEntity);
@@ -426,7 +426,7 @@ public abstract class BaseGitHubIssueEventHandler
 
 			if (Objects.equals(
 					gitHubCIEnabledBranchName,
-					upstreamGitBranchEntity.getBranchName())) {
+					upstreamGitBranchEntity.getName())) {
 
 				return true;
 			}

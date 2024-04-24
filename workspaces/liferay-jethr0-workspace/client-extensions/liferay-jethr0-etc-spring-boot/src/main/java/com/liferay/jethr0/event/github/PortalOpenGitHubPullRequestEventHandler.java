@@ -91,7 +91,7 @@ public class PortalOpenGitHubPullRequestEventHandler
 			getJenkinsBranchBuildPropertyValue(
 				StringUtil.combine(
 					"subrepo.merge.receiver.name[",
-					upstreamGitBranchEntity.getBranchName(), "]"));
+					upstreamGitBranchEntity.getName(), "]"));
 
 		if (!gitHubPullRequest.isMergeSubrepositoryPullRequest() ||
 			!Objects.equals(

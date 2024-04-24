@@ -6,12 +6,10 @@
 package com.liferay.jethr0.routine.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.routine.RoutineEntity;
-import com.liferay.jethr0.routine.UpstreamBranchCronRoutineEntity;
 import com.liferay.jethr0.routine.dalo.RoutineEntityDALO;
 import com.liferay.jethr0.routine.dalo.RoutineToJobsEntityRelationshipDALO;
 
@@ -33,19 +31,6 @@ public class RoutineEntityRepository
 	@Override
 	public void initialize() {
 		addAll(_routineEntityDALO.getAll());
-	}
-
-	public void relateRoutineToGitBranch(
-		RoutineEntity routineEntity, GitBranchEntity gitBranchEntity) {
-
-		if (routineEntity instanceof UpstreamBranchCronRoutineEntity) {
-			UpstreamBranchCronRoutineEntity upstreamBranchCronRoutineEntity =
-				(UpstreamBranchCronRoutineEntity)routineEntity;
-
-			upstreamBranchCronRoutineEntity.addGitBranchEntity(gitBranchEntity);
-
-			gitBranchEntity.addRoutineEntity(routineEntity);
-		}
 	}
 
 	public void relateRoutineToJob(

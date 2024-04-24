@@ -191,7 +191,7 @@ public class PortalTestGitHubCommentEventHandler
 			String distPortalBundleFileNames =
 				getJenkinsBranchBuildPropertyValue(
 					"dist.portal.bundle.file.names",
-					upstreamGitBranchEntity.getBranchName());
+					upstreamGitBranchEntity.getName());
 
 			if (distPortalBundleFileNames == null) {
 				distPortalBundleFileNames =
@@ -239,8 +239,7 @@ public class PortalTestGitHubCommentEventHandler
 		try {
 			return StringUtil.toURL(
 				getJenkinsBranchBuildPropertyValue(
-					"dist.portal.job.url",
-					upstreamGitBranchEntity.getBranchName()));
+					"dist.portal.job.url", upstreamGitBranchEntity.getName()));
 		}
 		catch (MalformedURLException malformedURLException) {
 			if (_log.isWarnEnabled()) {

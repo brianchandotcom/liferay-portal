@@ -40,11 +40,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class GitBranchEntityRepository
 	extends BaseEntityRepository<GitBranchEntity> {
 
-	public GitBranchEntity createSenderGitBranchEntity(URL gitHubRefURL) {
-		return _createGitBranchEntity(
-			gitHubRefURL, GitBranchEntity.Type.SENDER);
-	}
-
 	public GitBranchEntity createUpstreamGitBranchEntity(URL gitHubRefURL) {
 		return _createGitBranchEntity(
 			gitHubRefURL, GitBranchEntity.Type.UPSTREAM);
@@ -72,7 +67,7 @@ public class GitBranchEntityRepository
 
 	public GitBranchEntity getByURL(URL url) {
 		for (GitBranchEntity gitBranchEntity : getAll()) {
-			if (Objects.equals(gitBranchEntity.getBranchURL(), url)) {
+			if (Objects.equals(gitBranchEntity.getURL(), url)) {
 				return gitBranchEntity;
 			}
 		}
@@ -97,7 +92,7 @@ public class GitBranchEntityRepository
 
 			for (GitBranchEntity gitBranchEntity : gitBranchEntities) {
 				if (Objects.equals(
-						String.valueOf(gitBranchEntity.getBranchURL()),
+						String.valueOf(gitBranchEntity.getURL()),
 						gitHubUpstreamBranchURL)) {
 
 					gitBranchEntryExists = true;

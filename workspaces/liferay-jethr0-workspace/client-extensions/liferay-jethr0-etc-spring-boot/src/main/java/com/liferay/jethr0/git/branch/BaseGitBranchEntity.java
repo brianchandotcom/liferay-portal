@@ -7,8 +7,6 @@ package com.liferay.jethr0.git.branch;
 
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.event.github.client.GitHubClient;
-import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.util.PropertiesUtil;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -16,12 +14,9 @@ import java.io.IOException;
 
 import java.net.URL;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,58 +28,12 @@ import org.json.JSONObject;
 public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 
 	@Override
-	public void addJobEntities(Set<JobEntity> jobEntities) {
-		_jobEntities.addAll(jobEntities);
-	}
-
-	@Override
-	public void addJobEntity(JobEntity jobEntity) {
-		addJobEntities(Collections.singleton(jobEntity));
-	}
-
-	@Override
-	public void addRoutineEntities(Set<RoutineEntity> routineEntities) {
-		addRelatedEntities(routineEntities);
-	}
-
-	@Override
-	public void addRoutineEntity(RoutineEntity routineEntity) {
-		addRelatedEntities(Collections.singleton(routineEntity));
-	}
-
-	@Override
-	public String getBranchName() {
-		return _getURLGroupValue(getBranchURL(), "branchName");
-	}
-
-	@Override
-	public String getBranchSHA() {
-		return _branchSHA;
-	}
-
-	@Override
-	public URL getBranchURL() {
-		return _branchURL;
-	}
-
-	@Override
-	public String getBranchUserName() {
-		return _getURLGroupValue(getBranchURL(), "userName");
-	}
-
-	@Override
 	public String getFileContent(String filePath) {
 		return _gitHubClient.requestGet(
 			StringUtil.toURL(
 				StringUtil.combine(
-					"https://raw.githubusercontent.com/", getBranchUserName(),
-					"/", getRepositoryName(), "/", getBranchName(), "/",
-					filePath)));
-	}
-
-	@Override
-	public Set<JobEntity> getJobEntities() {
-		return _jobEntities;
+					"https://raw.githubusercontent.com/", getUserName(), "/",
+					getRepositoryName(), "/", getName(), "/", filePath)));
 	}
 
 	@Override
@@ -92,11 +41,9 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 		JSONObject jsonObject = super.getJSONObject();
 
 		jsonObject.put(
-			"branchSHA", getBranchSHA()
+			"latestSHA", getLatestSHA()
 		).put(
-			"branchURL", getBranchURL()
-		).put(
-			"rebased", getRebased()
+			"url", getURL()
 		);
 
 		Type type = getType();
@@ -105,13 +52,17 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 			jsonObject.put("type", type.getJSONObject());
 		}
 
-		jsonObject.put(
-			"upstreamBranchSHA", getUpstreamBranchSHA()
-		).put(
-			"upstreamBranchURL", getUpstreamBranchURL()
-		);
-
 		return jsonObject;
+	}
+
+	@Override
+	public String getLatestSHA() {
+		return _latestSHA;
+	}
+
+	@Override
+	public String getName() {
+		return _getURLGroupValue(getURL(), "branchName");
 	}
 
 	@Override
@@ -133,23 +84,13 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 	}
 
 	@Override
-	public boolean getRebased() {
-		return _rebased;
-	}
-
-	@Override
 	public String getRepositoryName() {
-		return _getURLGroupValue(getBranchURL(), "repositoryName");
+		return _getURLGroupValue(getURL(), "repositoryName");
 	}
 
 	@Override
-	public Set<RoutineEntity> getRoutineEntities() {
-		return getRelatedEntities(RoutineEntity.class);
-	}
-
-	@Override
-	public String getShortBranchSHA() {
-		String branchSHA = getBranchSHA();
+	public String getShortLatestSHA() {
+		String branchSHA = getLatestSHA();
 
 		if (StringUtil.isNullOrEmpty(branchSHA)) {
 			return null;
@@ -159,73 +100,18 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 	}
 
 	@Override
-	public String getShortUpstreamBranchSHA() {
-		String upstreamBranchSHA = getUpstreamBranchSHA();
-
-		if (StringUtil.isNullOrEmpty(upstreamBranchSHA)) {
-			return null;
-		}
-
-		return upstreamBranchSHA.substring(0, 7);
-	}
-
-	@Override
 	public Type getType() {
 		return _type;
 	}
 
 	@Override
-	public String getUpstreamBranchName() {
-		return _getURLGroupValue(getUpstreamBranchURL(), "branchName");
+	public URL getURL() {
+		return _url;
 	}
 
 	@Override
-	public String getUpstreamBranchSHA() {
-		return _upstreamBranchSHA;
-	}
-
-	@Override
-	public URL getUpstreamBranchURL() {
-		return _upstreamBranchURL;
-	}
-
-	@Override
-	public String getUpstreamBranchUserName() {
-		return _getURLGroupValue(getUpstreamBranchURL(), "userName");
-	}
-
-	@Override
-	public void removeJobEntities(Set<JobEntity> jobEntities) {
-		_jobEntities.removeAll(jobEntities);
-	}
-
-	@Override
-	public void removeJobEntity(JobEntity jobEntity) {
-		_jobEntities.remove(jobEntity);
-	}
-
-	@Override
-	public void removeRoutineEntities(Set<RoutineEntity> routineEntities) {
-		removeRelatedEntities(routineEntities);
-	}
-
-	@Override
-	public void removeRoutineEntity(RoutineEntity routineEntity) {
-		removeRelatedEntities(Collections.singleton(routineEntity));
-	}
-
-	@Override
-	public void setBranchSHA(String branchSHA) {
-		synchronized (_propertiesFiles) {
-			_branchSHA = branchSHA;
-
-			_propertiesFiles.clear();
-		}
-	}
-
-	@Override
-	public void setBranchURL(URL branchURL) {
-		_branchURL = branchURL;
+	public String getUserName() {
+		return _getURLGroupValue(getURL(), "userName");
 	}
 
 	@Override
@@ -237,32 +123,23 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 	public void setJSONObject(JSONObject jsonObject) {
 		super.setJSONObject(jsonObject);
 
-		_branchSHA = jsonObject.getString("branchSHA");
-		_branchURL = StringUtil.toURL(jsonObject.getString("branchURL"));
-		_rebased = jsonObject.getBoolean("rebased");
+		_latestSHA = jsonObject.getString("latestSHA");
+		_url = StringUtil.toURL(jsonObject.getString("url"));
 		_type = Type.get(jsonObject.getJSONObject("type"));
-		_upstreamBranchSHA = jsonObject.getString("upstreamBranchSHA");
-		_upstreamBranchURL = StringUtil.toURL(
-			jsonObject.getString("upstreamBranchURL"));
 	}
 
 	@Override
-	public void setRebased(boolean rebased) {
-		_rebased = rebased;
-	}
-
-	@Override
-	public void setUpstreamBranchSHA(String upstreamBranchSHA) {
+	public void setLatestSHA(String latestSHA) {
 		synchronized (_propertiesFiles) {
-			_upstreamBranchSHA = upstreamBranchSHA;
+			_latestSHA = latestSHA;
 
 			_propertiesFiles.clear();
 		}
 	}
 
 	@Override
-	public void setUpstreamBranchURL(URL upstreamBranchURL) {
-		_upstreamBranchURL = upstreamBranchURL;
+	public void setURL(URL url) {
+		_url = url;
 	}
 
 	protected BaseGitBranchEntity(JSONObject jsonObject) {
@@ -287,14 +164,10 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 		"https://github.com/(?<userName>[^/]+)/(?<repositoryName>[^/]+)/" +
 			"(commits|tree)/(?<branchName>[^/]+)");
 
-	private String _branchSHA;
-	private URL _branchURL;
 	private GitHubClient _gitHubClient;
-	private final Set<JobEntity> _jobEntities = new HashSet<>();
+	private String _latestSHA;
 	private final Map<String, Properties> _propertiesFiles = new HashMap<>();
-	private boolean _rebased;
 	private Type _type;
-	private String _upstreamBranchSHA;
-	private URL _upstreamBranchURL;
+	private URL _url;
 
 }

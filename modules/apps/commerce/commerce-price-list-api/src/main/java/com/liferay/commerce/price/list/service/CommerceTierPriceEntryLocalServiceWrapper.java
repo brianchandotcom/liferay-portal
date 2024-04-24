@@ -461,6 +461,15 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	}
 
 	@Override
+	public CommerceTierPriceEntry fetchClosestCommerceTierPriceEntry(
+		long commercePriceEntryId, java.math.BigDecimal minQuantity) {
+
+		return _commerceTierPriceEntryLocalService.
+			fetchClosestCommerceTierPriceEntry(
+				commercePriceEntryId, minQuantity);
+	}
+
+	@Override
 	public java.util.List<CommerceTierPriceEntry> fetchCommerceTierPriceEntries(
 		long companyId, int start, int end) {
 
@@ -502,23 +511,6 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	}
 
 	@Override
-	public CommerceTierPriceEntry findClosestCommerceTierPriceEntry(
-		long commercePriceEntryId, java.math.BigDecimal minQuantity) {
-
-		return _commerceTierPriceEntryLocalService.
-			findClosestCommerceTierPriceEntry(
-				commercePriceEntryId, minQuantity);
-	}
-
-	@Override
-	public java.util.List<CommerceTierPriceEntry> findCommerceTierPriceEntries(
-		long commercePriceEntryId, java.math.BigDecimal minQuantity) {
-
-		return _commerceTierPriceEntryLocalService.findCommerceTierPriceEntries(
-			commercePriceEntryId, minQuantity);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -542,6 +534,22 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 
 		return _commerceTierPriceEntryLocalService.getCommerceTierPriceEntries(
 			start, end);
+	}
+
+	@Override
+	public java.util.List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
+		long commercePriceEntryId, java.math.BigDecimal minQuantity) {
+
+		return _commerceTierPriceEntryLocalService.getCommerceTierPriceEntries(
+			commercePriceEntryId, minQuantity);
+	}
+
+	@Override
+	public java.util.List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
+		long commercePriceEntryId, int status) {
+
+		return _commerceTierPriceEntryLocalService.getCommerceTierPriceEntries(
+			commercePriceEntryId, status);
 	}
 
 	@Override

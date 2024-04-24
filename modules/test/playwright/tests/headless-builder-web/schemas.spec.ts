@@ -6,16 +6,29 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
 
-export const test = mergeTests(
+export const testFeatureFlagsEnabled = mergeTests(
 	apiHelpersTest,
-	loginTest(),
-	headlessBuilderPagesTest
+	featureFlagsTest({
+		'LPD-21414': true,
+	}),
+	headlessBuilderPagesTest,
+	loginTest()
 );
 
-test('can see all available object defitions on schema creation', async ({
+export const testFeatureFlagsDisabled = mergeTests(
+	apiHelpersTest,
+	featureFlagsTest({
+		'LPD-21414': false,
+	}),
+	headlessBuilderPagesTest,
+	loginTest()
+);
+
+testFeatureFlagsDisabled('can see all available object defitions on schema creation', async ({
 	apiHelpers,
 	applicationPage,
 	headlessBuilderPage,
@@ -112,4 +125,160 @@ test('can see all available object defitions on schema creation', async ({
 		'headless-builder/applications',
 		application.externalReferenceCode
 	);
+});
+
+testFeatureFlagsDisabled('can see whitelisted object definitions on schema creation', async ({
+	apiHelpers,
+	applicationPage,
+	headlessBuilderPage,
+}) => {
+	const objectDefinition = await apiHelpers.objectAdmin.postObjectDefinition({
+		active: true,
+		externalReferenceCode: `objectDefinition`,
+		label: {
+			en_US: `objectDefinition`,
+		},
+		name: `ObjectDefinition`,
+		objectFields: [
+			{
+				DBType: 'String',
+				businessType: 'Text',
+				externalReferenceCode: 'ObjectFieldERC',
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: 'en_US',
+				label: {
+					en_US: 'Object Field',
+				},
+				listTypeDefinitionId: 0,
+				name: 'objectField',
+				required: false,
+				state: false,
+				system: false,
+				type: 'String',
+			},
+		],
+		pluralLabel: {
+			en_US: `objectDefinitions`,
+		},
+		portlet: true,
+		scope: 'company',
+		status: {
+			code: 0,
+		},
+	});
+
+	const application = await apiHelpers.object.postObjectEntry(
+		{
+			apiApplicationToAPISchemas: [
+				{
+					description: 'API Application Schema',
+					externalReferenceCode: 'api-application-schema',
+					mainObjectDefinitionERC: 'L_API_APPLICATION',
+					name: 'API Application Schema',
+				},
+			],
+			applicationStatus: 'published',
+			baseURL: 'basic-application',
+			description: 'Test API Application',
+			externalReferenceCode: 'basic-application',
+			title: 'Basic application',
+		},
+		'headless-builder/applications'
+	);
+
+	await headlessBuilderPage.goto();
+	await headlessBuilderPage.goToEditApplication(application.title);
+	await applicationPage.goToSchemasTab();
+	await applicationPage.addSchemaButton.click();
+	await applicationPage.schemaObjectDefinitionSelector.click();
+
+	expect(
+		await applicationPage.page.getByRole('menu').allTextContents()
+	).toEqual(['APISortAPIFilterAPIEndpointAPIPropertyAPISchemaAPIApplicationObjectDefinition']);
+
+	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+		'headless-builder/applications',
+		application.externalReferenceCode
+	);
+
+	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
+});
+
+testFeatureFlagsEnabled('can see whitelisted object definitions on schema creation with feature flag', async ({
+	apiHelpers,
+	applicationPage,
+	headlessBuilderPage,
+}) => {
+	const objectDefinition = await apiHelpers.objectAdmin.postObjectDefinition({
+		active: true,
+		externalReferenceCode: `objectDefinition`,
+		label: {
+			en_US: `objectDefinition`,
+		},
+		name: `ObjectDefinition`,
+		objectFields: [
+			{
+				DBType: 'String',
+				businessType: 'Text',
+				externalReferenceCode: 'ObjectFieldERC',
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: 'en_US',
+				label: {
+					en_US: 'Object Field',
+				},
+				listTypeDefinitionId: 0,
+				name: 'objectField',
+				required: false,
+				state: false,
+				system: false,
+				type: 'String',
+			},
+		],
+		pluralLabel: {
+			en_US: `objectDefinitions`,
+		},
+		portlet: true,
+		scope: 'company',
+		status: {
+			code: 0,
+		},
+	});
+
+	const application = await apiHelpers.object.postObjectEntry(
+		{
+			apiApplicationToAPISchemas: [
+				{
+					description: 'API Application Schema',
+					externalReferenceCode: 'api-application-schema',
+					mainObjectDefinitionERC: 'L_API_APPLICATION',
+					name: 'API Application Schema',
+				},
+			],
+			applicationStatus: 'published',
+			baseURL: 'basic-application',
+			description: 'Test API Application',
+			externalReferenceCode: 'basic-application',
+			title: 'Basic application',
+		},
+		'headless-builder/applications'
+	);
+
+	await headlessBuilderPage.goto();
+	await headlessBuilderPage.goToEditApplication(application.title);
+	await applicationPage.goToSchemasTab();
+	await applicationPage.addSchemaButton.click();
+	await applicationPage.schemaObjectDefinitionSelector.click();
+
+	expect(
+		await applicationPage.page.getByRole('menu').allTextContents()
+	).toEqual(['AccountEntryUserAPISortAPIFilterAPIEndpointAPIPropertyAPISchemaAPIApplicationObjectDefinition']);
+
+	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+		'headless-builder/applications',
+		application.externalReferenceCode
+	);
+
+	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
 });

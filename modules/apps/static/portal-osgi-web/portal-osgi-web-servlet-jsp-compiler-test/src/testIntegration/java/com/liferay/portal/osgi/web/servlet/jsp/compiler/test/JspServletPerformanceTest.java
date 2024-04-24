@@ -10,9 +10,9 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.performance.PerformanceTimer;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -109,7 +109,7 @@ public class JspServletPerformanceTest {
 
 		_test(_FILE_NAME_EL_EXPRESSION_UNDEFINED_SCOPED_VARIABLES_JSP, 1);
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+		try (PerformanceTimer performanceTimer = new PerformanceTimer(5000)) {
 			_test(
 				_FILE_NAME_EL_EXPRESSION_UNDEFINED_SCOPED_VARIABLES_JSP,
 				_NUMBER_OF_REQUESTS);
@@ -120,7 +120,7 @@ public class JspServletPerformanceTest {
 	public void testElExpressionWithUndefinedVariablesJsp() throws Exception {
 		_test(_FILE_NAME_EL_EXPRESSION_UNDEFINED_VARIABLES_JSP, 1);
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+		try (PerformanceTimer performanceTimer = new PerformanceTimer(1000)) {
 			_test(
 				_FILE_NAME_EL_EXPRESSION_UNDEFINED_VARIABLES_JSP,
 				_NUMBER_OF_REQUESTS);
@@ -131,7 +131,7 @@ public class JspServletPerformanceTest {
 	public void testJsp() throws Exception {
 		_test(_FILE_NAME_TEST_JSP, 1);
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+		try (PerformanceTimer performanceTimer = new PerformanceTimer(1000)) {
 			_test(_FILE_NAME_TEST_JSP, _NUMBER_OF_REQUESTS);
 		}
 	}

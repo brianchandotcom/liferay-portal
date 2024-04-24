@@ -249,15 +249,20 @@
 				</delay>
 				<blocking>true</blocking>
 				<timer-actions>
-					<timer-action>
-						<name>action 1</name>
-						<description></description>
-						<script>
-							<![CDATA[example 1]]>
-						</script>
-						<script-language>groovy</script-language>
-						<priority>1</priority>
-					</timer-action>
+					<timer-notification>
+						<name>Timer Notification 1</name>
+						<description>
+							<![CDATA[]]>
+						</description>
+						<template>
+							<![CDATA[Timer Notification 1 template]]>
+						</template>
+						<template-language>text</template-language>
+						<notification-type>user-notification</notification-type>
+						<recipients receptionType="to">
+							<user />
+						</recipients>
+					</timer-notification>
 				</timer-actions>
 			</task-timer>
 		</task-timers>
@@ -327,15 +332,20 @@
 				</delay>
 				<blocking>true</blocking>
 				<timer-actions>
-					<timer-action>
-						<name>action 2</name>
-						<description></description>
-						<script>
-							<![CDATA[example 2]]>
-						</script>
-						<script-language>groovy</script-language>
-						<priority>1</priority>
-					</timer-action>
+					<timer-notification>
+						<name>Timer Notification 2</name>
+						<description>
+							<![CDATA[]]>
+						</description>
+						<template>
+							<![CDATA[Timer Notification 2 template]]>
+						</template>
+						<template-language>text</template-language>
+						<notification-type>user-notification</notification-type>
+						<recipients receptionType="to">
+							<user />
+						</recipients>
+					</timer-notification>
 				</timer-actions>
 			</task-timer>
 		</task-timers>
@@ -405,15 +415,20 @@
 				</delay>
 				<blocking>true</blocking>
 				<timer-actions>
-					<timer-action>
-						<name>action 3</name>
-						<description></description>
-						<script>
-							<![CDATA[example 3]]>
-						</script>
-						<script-language>groovy</script-language>
-						<priority>1</priority>
-					</timer-action>
+					<timer-notification>
+						<name>Timer Notification 3</name>
+						<description>
+							<![CDATA[]]>
+						</description>
+						<template>
+							<![CDATA[Timer Notification 3 template]]>
+						</template>
+						<template-language>text</template-language>
+						<notification-type>user-notification</notification-type>
+						<recipients receptionType="to">
+							<user />
+						</recipients>
+					</timer-notification>
 				</timer-actions>
 			</task-timer>
 		</task-timers>
@@ -483,15 +498,20 @@
 				</delay>
 				<blocking>true</blocking>
 				<timer-actions>
-					<timer-action>
-						<name>action 4</name>
-						<description></description>
-						<script>
-							<![CDATA[example 4]]>
-						</script>
-						<script-language>groovy</script-language>
-						<priority>1</priority>
-					</timer-action>
+					<timer-notification>
+						<name>Timer Notification 4</name>
+						<description>
+							<![CDATA[]]>
+						</description>
+						<template>
+							<![CDATA[Timer Notification 4 template]]>
+						</template>
+						<template-language>text</template-language>
+						<notification-type>user-notification</notification-type>
+						<recipients receptionType="to">
+							<user />
+						</recipients>
+					</timer-notification>
 				</timer-actions>
 			</task-timer>
 		</task-timers>

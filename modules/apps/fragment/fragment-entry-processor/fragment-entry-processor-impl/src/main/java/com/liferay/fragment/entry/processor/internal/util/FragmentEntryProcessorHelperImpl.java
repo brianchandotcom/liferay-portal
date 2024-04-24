@@ -24,6 +24,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
+import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.info.type.Labeled;
 import com.liferay.info.type.WebImage;
 import com.liferay.info.type.WebURL;
@@ -52,10 +53,11 @@ import java.time.chrono.IsoChronology;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.FormatStyle;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -332,29 +334,61 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		if (value instanceof Collection) {
-			Collection<Object> collection = (Collection<Object>)value;
+			List<Object> list = new ArrayList<>((Collection<Object>)value);
 
-			if (collection.isEmpty()) {
+			if (list.isEmpty()) {
 				return StringPool.BLANK;
 			}
 
-			Iterator<Object> iterator = collection.iterator();
+			JSONObject configJSONObject = editableValueJSONObject.getJSONObject(
+				"config");
 
-			Object firstItem = iterator.next();
+			if (configJSONObject == null) {
+				Object firstItem = list.get(0);
 
-			Class<?> firstItemClass = firstItem.getClass();
+				Class<?> firstItemClass = firstItem.getClass();
 
-			InfoCollectionTextFormatter<Object> infoCollectionTextFormatter =
-				_getInfoCollectionTextFormatter(firstItemClass.getName());
+				InfoCollectionTextFormatter<Object>
+					infoCollectionTextFormatter =
+						_getInfoCollectionTextFormatter(
+							firstItemClass.getName());
 
-			return infoCollectionTextFormatter.format(collection, locale);
+				return infoCollectionTextFormatter.format(list, locale);
+			}
+
+			String iterationType = configJSONObject.getString("iterationType");
+
+			if (Objects.equals(iterationType, "iteration-number")) {
+				int iterationNumber = configJSONObject.getInt(
+					"iterationNumber", 0);
+
+				if ((iterationNumber > 0) && (iterationNumber <= list.size())) {
+					value = list.get(iterationNumber - 1);
+				}
+				else {
+					value = StringPool.BLANK;
+				}
+			}
+			else if (Objects.equals(iterationType, "last")) {
+				value = list.get(list.size() - 1);
+			}
+			else {
+				value = list.get(0);
+			}
 		}
-		else if (value instanceof Date) {
+
+		if (value instanceof Date) {
 			Date date = (Date)value;
 
 			return _getDateValue(
 				editableValueJSONObject, date,
 				_getShortTimeStylePattern(locale), locale);
+		}
+		else if (value instanceof KeyLocalizedLabelPair) {
+			KeyLocalizedLabelPair keyLocalizedLabelPair =
+				(KeyLocalizedLabelPair)value;
+
+			return HtmlUtil.escape(keyLocalizedLabelPair.getLabel(locale));
 		}
 		else if (value instanceof KeyValuePair) {
 			KeyValuePair keyValuePair = (KeyValuePair)value;

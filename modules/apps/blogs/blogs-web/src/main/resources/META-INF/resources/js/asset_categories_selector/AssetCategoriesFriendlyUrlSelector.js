@@ -127,7 +127,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 			<div className="c-mb-3">
 				<div className="c-mb-4">
 					{Liferay.Language.get(
-						'customize-the-url-of-this-blog-enty-to-your-preference-or-stick-to-the-default-setting-based-on-the-entry-title-categoires-can-also-be-added-to-the-url'
+						'customize-the-url-of-this-blog-entry-to-your-preference-or-stick-to-the-default-setting-based-on-the-entry-title.-categories-can-also-be-added-to-the-url'
 					)}
 
 					{friendlyURLSeparatorCompanyConfigurationURL && (

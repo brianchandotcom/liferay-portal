@@ -33,6 +33,7 @@ dependencies {
 	compileOnly project(":apps:headless:headless-delivery:headless-delivery-api")
 	compileOnly project(":apps:info:info-api")
 	compileOnly project(":apps:info:info-collection-provider-item-selector-api")
+	compileOnly project(":apps:info:info-field-item-selector-api")
 	compileOnly project(":apps:info:info-list-provider-item-selector-api")
 	compileOnly project(":apps:item-selector:item-selector-api")
 	compileOnly project(":apps:item-selector:item-selector-criteria-api")

@@ -417,11 +417,6 @@ public class FDSViewsPortlet extends MVCPortlet {
 						ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
 						_language.get(locale, "include"), "include", false),
 					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "list-type-definition-erc"),
-						"listTypeDefinitionERC", false),
-					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
 						ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
 						_language.get(locale, "multiple"), "multiple", false),
@@ -429,11 +424,78 @@ public class FDSViewsPortlet extends MVCPortlet {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
 						_language.get(locale, "preselected-values"),
-						"preselectedValues", false),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "source"), "source", false)));
+						"preselectedValues", false)));
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10754")) {
+			ObjectField sourceObjectField = ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+				_language.get(locale, "source"), "source", false);
+
+			_objectFieldLocalService.addCustomObjectField(
+				sourceObjectField.getExternalReferenceCode(), userId,
+				sourceObjectField.getListTypeDefinitionId(),
+				fdsDynamicFilterObjectDefinition.getObjectDefinitionId(),
+				sourceObjectField.getBusinessType(),
+				sourceObjectField.getDBType(), sourceObjectField.isIndexed(),
+				sourceObjectField.isIndexedAsKeyword(),
+				sourceObjectField.getIndexedLanguageId(),
+				sourceObjectField.getLabelMap(), false,
+				sourceObjectField.getName(), sourceObjectField.getReadOnly(),
+				sourceObjectField.getReadOnlyConditionExpression(),
+				sourceObjectField.isRequired(), sourceObjectField.isState(),
+				sourceObjectField.getObjectFieldSettings());
+
+			ObjectField sourceTypeObjectField =
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+					_language.get(locale, "source-type"), "sourceType", false);
+
+			_objectFieldLocalService.addCustomObjectField(
+				sourceTypeObjectField.getExternalReferenceCode(), userId,
+				sourceTypeObjectField.getListTypeDefinitionId(),
+				fdsDynamicFilterObjectDefinition.getObjectDefinitionId(),
+				sourceTypeObjectField.getBusinessType(),
+				sourceTypeObjectField.getDBType(),
+				sourceTypeObjectField.isIndexed(),
+				sourceTypeObjectField.isIndexedAsKeyword(),
+				sourceTypeObjectField.getIndexedLanguageId(),
+				sourceTypeObjectField.getLabelMap(), false,
+				sourceTypeObjectField.getName(),
+				sourceTypeObjectField.getReadOnly(),
+				sourceTypeObjectField.getReadOnlyConditionExpression(),
+				sourceTypeObjectField.isRequired(),
+				sourceTypeObjectField.isState(),
+				sourceTypeObjectField.getObjectFieldSettings());
+		}
+		else {
+			ObjectField listTypeDefinitionERCObjectField =
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+					_language.get(locale, "list-type-definition-erc"),
+					"listTypeDefinitionERC", false);
+
+			_objectFieldLocalService.addCustomObjectField(
+				listTypeDefinitionERCObjectField.getExternalReferenceCode(),
+				userId,
+				listTypeDefinitionERCObjectField.getListTypeDefinitionId(),
+				fdsDynamicFilterObjectDefinition.getObjectDefinitionId(),
+				listTypeDefinitionERCObjectField.getBusinessType(),
+				listTypeDefinitionERCObjectField.getDBType(),
+				listTypeDefinitionERCObjectField.isIndexed(),
+				listTypeDefinitionERCObjectField.isIndexedAsKeyword(),
+				listTypeDefinitionERCObjectField.getIndexedLanguageId(),
+				listTypeDefinitionERCObjectField.getLabelMap(), false,
+				listTypeDefinitionERCObjectField.getName(),
+				listTypeDefinitionERCObjectField.getReadOnly(),
+				listTypeDefinitionERCObjectField.
+					getReadOnlyConditionExpression(),
+				listTypeDefinitionERCObjectField.isRequired(),
+				listTypeDefinitionERCObjectField.isState(),
+				listTypeDefinitionERCObjectField.getObjectFieldSettings());
+		}
 
 		_enableLocalization(fdsDynamicFilterObjectDefinition);
 

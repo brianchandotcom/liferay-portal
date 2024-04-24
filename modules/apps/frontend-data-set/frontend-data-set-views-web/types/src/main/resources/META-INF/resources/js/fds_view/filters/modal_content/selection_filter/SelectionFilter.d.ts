@@ -19,7 +19,7 @@ interface IBodyProps {
 	picklists: IPickList[];
 	preselectedValues?: any[];
 	selectedPicklist?: IPickList;
-	source: ESelectionFilterSourceType | undefined;
+	sourceType: ESelectionFilterSourceType | undefined;
 }
 declare function Body({
 	includeMode,
@@ -33,7 +33,7 @@ declare function Body({
 	picklists,
 	preselectedValues,
 	selectedPicklist,
-	source,
+	sourceType,
 }: IBodyProps): JSX.Element;
 declare const _default: {
 	Body: typeof Body;

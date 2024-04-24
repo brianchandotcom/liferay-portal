@@ -28,6 +28,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="parentCategoryId" type="long" />
 		<field name="name" type="String">
+			<hint name="max-length">255</hint>
 			<validator name="required" />
 		</field>
 		<field name="description" type="String">

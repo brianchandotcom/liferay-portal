@@ -14,14 +14,11 @@ import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -83,16 +80,7 @@ public class APISchemaRelevantObjectEntryModelListener
 					"an-api-schema-must-be-an-existing-object-definition");
 			}
 
-			if (!objectDefinition.isModifiable() &&
-				objectDefinition.isSystem()) {
-
-				if (FeatureFlagManagerUtil.isEnabled("LPD-21414") &&
-					_whitelistedSystemObjectDefinitionNames.contains(
-						objectDefinition.getName())) {
-
-					return;
-				}
-
+			if (!ValidationHelper.isSupported(objectDefinition)) {
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null,
 					"An API schema must be a modifiable object definition",
@@ -125,10 +113,6 @@ public class APISchemaRelevantObjectEntryModelListener
 			throw new ModelListenerException(exception);
 		}
 	}
-
-	private static final Collection<String>
-		_whitelistedSystemObjectDefinitionNames = Arrays.asList(
-			"User", "AccountEntry");
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

@@ -805,6 +805,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 		File portalDir = getPortalDir();
 
+		if (portalDir == null) {
+			return;
+		}
+
 		List<String> serviceXMLFileNames = SourceFormatterUtil.scanForFileNames(
 			portalDir.getCanonicalPath(), new String[] {"**/service.xml"});
 

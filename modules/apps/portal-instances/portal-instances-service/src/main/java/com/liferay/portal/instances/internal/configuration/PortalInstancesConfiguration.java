@@ -23,22 +23,22 @@ public interface PortalInstancesConfiguration {
 	public boolean active();
 
 	@Meta.AD(required = false, type = Meta.Type.String)
-	public String defaultAdminPassword();
-
-	@Meta.AD(required = false, type = Meta.Type.String)
-	public String defaultAdminScreenName();
-
-	@Meta.AD(required = false, type = Meta.Type.String)
 	public String defaultAdminEmailAddress();
 
 	@Meta.AD(required = false, type = Meta.Type.String)
 	public String defaultAdminFirstName();
 
 	@Meta.AD(required = false, type = Meta.Type.String)
+	public String defaultAdminLastName();
+
+	@Meta.AD(required = false, type = Meta.Type.String)
 	public String defaultAdminMiddleName();
 
 	@Meta.AD(required = false, type = Meta.Type.String)
-	public String defaultAdminLastName();
+	public String defaultAdminPassword();
+
+	@Meta.AD(required = false, type = Meta.Type.String)
+	public String defaultAdminScreenName();
 
 	@Meta.AD(deflt = "10", required = false, type = Meta.Type.Long)
 	public long delay();

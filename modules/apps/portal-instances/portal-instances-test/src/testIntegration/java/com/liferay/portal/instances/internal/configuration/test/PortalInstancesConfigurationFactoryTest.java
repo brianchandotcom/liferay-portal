@@ -70,8 +70,8 @@ public class PortalInstancesConfigurationFactoryTest {
 					"PortalInstanceLifecycleListenerManagerImpl",
 				LoggerTestUtil.WARN)) {
 
-			String webId = RandomTestUtil.randomString();
 			CountDownLatch countDownLatch = new CountDownLatch(1);
+			String webId = RandomTestUtil.randomString();
 
 			ServiceRegistration<PortalInstanceLifecycleListener>
 				serviceRegistration = _bundleContext.registerService(

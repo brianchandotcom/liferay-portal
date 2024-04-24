@@ -101,19 +101,22 @@ public class SortDSLQueryVisitor extends BaseSortDSLQueryVisitor {
 					" related object field");
 		}
 
+		BaseSortDSLQueryVisitor baseSortDSLQueryVisitor = null;
+
 		if (objectDefinition.getObjectDefinitionId() !=
 				objectRelationship.getObjectDefinitionId1()) {
 
-			throw new InvalidSortException(
-				"Unable to sort by a many to one related object field");
+			baseSortDSLQueryVisitor =
+				new ObjectEntryMTo1RelationshipSortDSLQueryVisitor(
+					objectFieldLocalService, objectRelationshipLocalService);
 		}
-
-		ObjectEntry1ToMRelationshipSortDSLQueryVisitor
-			objectEntry1ToMRelationshipSortDSLQueryVisitor =
+		else {
+			baseSortDSLQueryVisitor =
 				new ObjectEntry1ToMRelationshipSortDSLQueryVisitor(
 					objectFieldLocalService, objectRelationshipLocalService);
+		}
 
-		return objectEntry1ToMRelationshipSortDSLQueryVisitor.visit(
+		return baseSortDSLQueryVisitor.visit(
 			dslQuery,
 			new RelationshipSort(
 				objectDefinition, objectRelationship, path,

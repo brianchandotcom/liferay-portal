@@ -6,6 +6,7 @@
 import {Locator, Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
+import {Layout} from '../../../helpers/json-web-services/JSONWebServicesLayoutApiHelper';
 import {DEFAULT_LABEL} from '../utils/constants';
 import {VisualizationMode} from '../utils/types';
 
@@ -13,17 +14,20 @@ export class FDSFragmentPage {
 	readonly apiHelpers: ApiHelpers;
 	readonly creationMenuButton: Locator;
 	readonly editPageButton: Locator;
+	readonly emptyStateTitle: Locator;
 	readonly fdsActiveViewSelector: Locator;
 	readonly fdsCardsWrapper: Locator;
 	readonly fdsListWrapper: Locator;
 	readonly fdsTableWrapper: Locator;
 	readonly fragmentWidgetSearchInput: Locator;
+	readonly loadingIndicator: Locator;
 	readonly page: Page;
 	readonly publishPageButton: Locator;
 
 	constructor(page: Page) {
 		this.apiHelpers = new ApiHelpers(page);
 		this.creationMenuButton = page.getByTestId('fdsCreationActionButton');
+		this.emptyStateTitle = page.getByText('No Results Found');
 		this.fdsActiveViewSelector = page.getByLabel('Show View Options');
 		this.fdsCardsWrapper = page.getByTestId('visualization-mode-cards');
 		this.fdsListWrapper = page.getByTestId('visualization-mode-list');
@@ -31,6 +35,7 @@ export class FDSFragmentPage {
 		this.fragmentWidgetSearchInput = page.getByLabel(
 			'Search Fragments and Widgets'
 		);
+		this.loadingIndicator = page.locator('.fds .loading-animation');
 		this.page = page;
 		this.publishPageButton = page.getByRole('button', {
 			name: 'Publish',
@@ -55,10 +60,12 @@ export class FDSFragmentPage {
 
 	async configureDataSetFragment({
 		layout,
-		site,
 		viewLabel = DEFAULT_LABEL.VIEW,
+	}: {
+		layout: Layout;
+		viewLabel: string;
 	}) {
-		await this.editPage({layout, site});
+		await this.editPage({layout});
 
 		await this.searchFragmentOrWidget('Data Set');
 
@@ -102,42 +109,14 @@ export class FDSFragmentPage {
 
 		await this.publishPage();
 
-		await this.goToPage({layout, site});
+		await this.goToPage({layout});
 
 		await this.page
 			.locator('.data-set-wrapper')
 			.waitFor({state: 'visible'});
 	}
 
-	async createPage({
-		siteId,
-		title,
-	}: {
-		siteId: string;
-		title: string;
-	}): Promise<Layout> {
-		const pageLayout =
-			await this.apiHelpers.headlessDelivery.createSitePage({
-				siteId,
-				title,
-			});
-
-		return pageLayout;
-	}
-
-	async createSite(name: string): Promise<Site> {
-		const site = await this.apiHelpers.headlessSite.createSite({
-			name,
-		});
-
-		return site;
-	}
-
-	async deleteSite(siteId: string) {
-		await this.apiHelpers.headlessSite.deleteSite(siteId);
-	}
-
-	async dragAndDropFragment(itemName) {
+	async dragAndDropFragment(itemName: string) {
 		const source = await this.page.getByRole('menuitem', {
 			exact: true,
 			name: itemName,
@@ -153,16 +132,12 @@ export class FDSFragmentPage {
 			.waitFor();
 	}
 
-	async editPage({layout, site}) {
-		await this.page.goto(
-			`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
-		);
+	async editPage({layout}: {layout: Layout}) {
+		await this.page.goto(`/web/guest${layout.friendlyURL}?p_l_mode=edit`);
 	}
 
-	async goToPage({layout, site}) {
-		await this.page.goto(
-			`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-		);
+	async goToPage({layout}: {layout: Layout}) {
+		await this.page.goto(`/web/guest${layout.friendlyURL}`);
 	}
 
 	async publishPage() {

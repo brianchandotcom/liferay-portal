@@ -7,7 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
+import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
@@ -213,21 +213,16 @@ export const fragmentTest = mergeTests(
 		'LPS-178052': true,
 	}),
 	fdsFragmentPageTest,
-	isolatedSiteTest,
+	isolatedLayoutTest({publish: false}),
 	loginTest()
 );
 
 fragmentTest.describe('Creation Actions in the fragment', () => {
 	fragmentTest(
 		'Creation Action button does not appear if no creation action is defined',
-		async ({
-			apiHelpers,
-			dataSetManagerApiHelpers,
-			fdsFragmentPage,
-			site,
-		}) => {
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
 			await fragmentTest.step('Create table field', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewFields({
+				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
@@ -236,25 +231,11 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 				});
 			});
 
-			const layout = await fragmentTest.step(
-				'Create a new page',
-				async () => {
-					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage({
-							siteId: site.id,
-							title: getRandomString(),
-						});
-
-					return pageLayout;
-				}
-			);
-
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
-						site,
 						viewLabel: actionsDataSetViewLabel,
 					});
 				}
@@ -273,15 +254,9 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 
 	fragmentTest(
 		'Show a simple button if only one Creation Action is defined',
-		async ({
-			apiHelpers,
-			dataSetManagerApiHelpers,
-			fdsFragmentPage,
-			page,
-			site,
-		}) => {
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
 			await fragmentTest.step('Create table field', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewFields({
+				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
@@ -300,25 +275,11 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 				});
 			});
 
-			const layout = await fragmentTest.step(
-				'Create a new page',
-				async () => {
-					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage({
-							siteId: site.id,
-							title: getRandomString(),
-						});
-
-					return pageLayout;
-				}
-			);
-
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
-						site,
 						viewLabel: actionsDataSetViewLabel,
 					});
 				}
@@ -357,14 +318,9 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 
 	fragmentTest(
 		'Show the Creation Actions menu if more than one Creation Action is defined',
-		async ({
-			apiHelpers,
-			dataSetManagerApiHelpers,
-			fdsFragmentPage,
-			site,
-		}) => {
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
 			await fragmentTest.step('Create table field', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewFields({
+				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
@@ -392,25 +348,11 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 				});
 			});
 
-			const layout = await fragmentTest.step(
-				'Create a new page',
-				async () => {
-					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage({
-							siteId: site.id,
-							title: getRandomString(),
-						});
-
-					return pageLayout;
-				}
-			);
-
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
-						site,
 						viewLabel: actionsDataSetViewLabel,
 					});
 				}

@@ -92,6 +92,15 @@ public class APIPropertyRelevantObjectEntryModelListener
 			objectDefinition = _objectEntryHelper.getPropertyObjectDefinition(
 				objectDefinition,
 				ListUtil.fromArray(objectRelationshipName.split(",")));
+
+			if (!ValidationHelper.isSupported(objectDefinition)) {
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					null,
+					"An API property must belong to a modifiable object " +
+						"definition",
+					"an-api-property-must-belong-to-a-modifiable-object-" +
+						"definition");
+			}
 		}
 
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(

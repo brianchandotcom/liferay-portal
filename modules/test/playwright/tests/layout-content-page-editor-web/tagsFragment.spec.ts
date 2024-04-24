@@ -101,7 +101,7 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 
 	const globalSiteId = await getGlobalSiteId(apiHelpers);
 
-	await apiHelpers.headlessAdminTaxonomy.createTag({
+	const globalTag = await apiHelpers.headlessAdminTaxonomy.createTag({
 		name: 'Rabbits',
 		siteId: globalSiteId,
 	});
@@ -136,4 +136,10 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 	await page.waitForTimeout(1000);
 
 	expect(await page.getByRole('grid')).toHaveText('RabbitsCatsDogs');
+
+	// Remove the tag created on Global
+
+	await apiHelpers.headlessAdminTaxonomy.deleteTag({
+		id: globalTag.id,
+	});
 });

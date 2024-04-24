@@ -79,4 +79,16 @@ export class HeadlessAdminTaxonomyApiHelper {
 			{data: {name}}
 		);
 	}
+
+	/**
+	 * It allows deleting a tag.
+	 *
+	 * @param id the id of the tag
+	 */
+
+	async deleteTag({id}: {id: number}) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/keywords/${id}`
+		);
+	}
 }

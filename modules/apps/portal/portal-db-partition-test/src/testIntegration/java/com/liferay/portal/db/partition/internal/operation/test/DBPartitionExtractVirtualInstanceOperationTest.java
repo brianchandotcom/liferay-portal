@@ -33,12 +33,12 @@ public class DBPartitionExtractVirtualInstanceOperationTest
 
 			deployConfiguration(_PID, "partitionCompanyId=L\"0\"\n");
 
-			verifyLog(
+			assertLog(
 				logCapture,
 				"Virtual Instance with company ID 0 does not exist");
 		}
 
-		verifyConfigurationIsDeletedAfterDeploy(_PID);
+		assertConfigurationIsDeletedAfterDeploy(_PID);
 	}
 
 	private static final String _PID =

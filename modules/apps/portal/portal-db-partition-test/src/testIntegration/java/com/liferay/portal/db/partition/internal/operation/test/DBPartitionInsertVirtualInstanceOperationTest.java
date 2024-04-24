@@ -37,14 +37,14 @@ public class DBPartitionInsertVirtualInstanceOperationTest
 				"newWebId=T\"testNewWebId\"\npartitionCompanyId=L\"" +
 					PortalInstancePool.getDefaultCompanyId() + "\"\n");
 
-			verifyLog(
+			assertLog(
 				logCapture,
 				"Virtual Instance with company ID " +
 					PortalInstancePool.getDefaultCompanyId() +
 						" already exists");
 		}
 
-		verifyConfigurationIsDeletedAfterDeploy(_PID);
+		assertConfigurationIsDeletedAfterDeploy(_PID);
 	}
 
 	private static final String _PID =

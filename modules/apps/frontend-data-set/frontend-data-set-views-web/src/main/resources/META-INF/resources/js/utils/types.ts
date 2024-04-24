@@ -85,10 +85,10 @@ export interface IDateFilter extends IFilter {
 
 export interface ISelectionFilter extends IFilter {
 	include: boolean;
-	listTypeDefinitionERC: string;
 	multiple: boolean;
 	preselectedValues: string;
-	source: ESelectionFilterSourceType;
+	source: string;
+	sourceType: ESelectionFilterSourceType;
 }
 
 export interface IPickList {

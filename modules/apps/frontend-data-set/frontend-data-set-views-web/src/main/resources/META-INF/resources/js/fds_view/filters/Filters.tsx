@@ -104,7 +104,9 @@ function AddFDSFilterModalContent({
 		fields.find((item) => item.name === filter?.fieldName)
 	);
 	const [selectedPicklist, setSelectedPicklist] = useState<IPickList>();
-	const [source, setSource] = useState<ESelectionFilterSourceType | undefined>();
+	const [sourceType, setSourceType] = useState<
+		ESelectionFilterSourceType | undefined
+	>();
 	const [to, setTo] = useState<string>((filter as IDateFilter)?.to ?? '');
 
 	const inUseFields: (string | undefined)[] = fields.map((item) =>
@@ -148,7 +150,7 @@ function AddFDSFilterModalContent({
 
 		if (filter?.filterType === EFilterType.SELECTION) {
 			const selectionFilter = filter as ISelectionFilter;
-			setSource(selectionFilter.source);
+			setSourceType(selectionFilter.sourceType);
 		}
 	}, [filter]);
 
@@ -264,7 +266,6 @@ function AddFDSFilterModalContent({
 				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER_ID]:
 					fdsView.id,
 				include: includeMode === 'include',
-				listTypeDefinitionERC: selectedPicklist?.externalReferenceCode,
 				multiple,
 				preselectedValues: JSON.stringify(
 					preselectedValues.map((item) => item.externalReferenceCode)
@@ -590,7 +591,7 @@ function AddFDSFilterModalContent({
 								picklists={picklists}
 								preselectedValues={preselectedValues}
 								selectedPicklist={selectedPicklist}
-								source={source}
+								sourceType={sourceType}
 							/>
 						)}
 					</>

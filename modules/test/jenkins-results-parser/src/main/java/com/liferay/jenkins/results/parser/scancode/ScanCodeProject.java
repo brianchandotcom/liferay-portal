@@ -31,6 +31,8 @@ public class ScanCodeProject {
 	public ScanCodeProject(String buildURL, String pipelineName) {
 		_buildURL = buildURL;
 		_pipelineName = pipelineName;
+
+		_s3URL = null;
 	}
 
 	public void addPipeline(String pipelineName)
@@ -205,6 +207,10 @@ public class ScanCodeProject {
 		return sb.toString();
 	}
 
+	public String getS3URL() {
+		return _s3URL;
+	}
+
 	public void invokeScan() throws IOException, TimeoutException {
 		StringBuilder sb = new StringBuilder();
 
@@ -281,12 +287,15 @@ public class ScanCodeProject {
 			).replaceAll(
 				"(^\\[|\\]$)", ""
 			));
-		sb.append("\n*S3 Tar.gz:* ");
-		sb.append("<");
-		sb.append(s3URL);
-		sb.append("|");
-		sb.append(_projectNameFromURL + ".tar.gz");
-		sb.append(">");
+
+		if (_s3URL != null) {
+			sb.append("\n*S3 Tar.gz:* ");
+			sb.append("<");
+			sb.append(_s3URL);
+			sb.append("|");
+			sb.append(_projectNameFromURL + ".tar.gz");
+			sb.append(">");
+		}
 
 		NotificationUtil.sendSlackNotification(
 			sb.toString(), "#scancode-io", ":liferay-ci:",
@@ -317,7 +326,7 @@ public class ScanCodeProject {
 			scanCodeS3Bucket.createScanCodeS3Object(
 				"inbox/" + tarGzFile.getName(), tarGzFile);
 
-			sendSlackNotification(scanCodeS3Bucket.getS3URL());
+			_s3URL = scanCodeS3Bucket.getS3URL();
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
@@ -400,6 +409,7 @@ public class ScanCodeProject {
 	private String _projectNameFromURL;
 	private final List<String> _projectStatuses = new ArrayList<>();
 	private String _projectURL;
+	private String _s3URL;
 	private final SimpleDateFormat _simpleDateFormat = new SimpleDateFormat(
 		"MMM d yy HH:mm:ss");
 

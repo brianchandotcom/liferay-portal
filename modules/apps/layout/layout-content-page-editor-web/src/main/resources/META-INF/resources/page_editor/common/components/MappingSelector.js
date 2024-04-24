@@ -26,6 +26,7 @@ import itemSelectorValueToInfoItem from '../../app/utils/item_selector_value/ite
 import usePageContents from '../../app/utils/usePageContents';
 import ItemSelector from './ItemSelector';
 import MappingFieldSelector from './MappingFieldSelector';
+import RepeatableOptionsSelector from './RepeatableOptionsSelector';
 
 const COLLECTION_TYPE_DIVIDER = ' - ';
 
@@ -455,6 +456,29 @@ function MappingSelector({
 					value={selectedItem.mappedField || selectedItem.fieldId}
 				/>
 			</ClayForm.Group>
+
+			<RepeatableOptionsSelector
+				fieldName={selectedItem.mappedField || selectedItem.fieldId}
+				fields={itemFields}
+				onOptionsSelect={(options) => {
+					setSelectedItem((selectedItem) => ({
+						...selectedItem,
+						config: {
+							...selectedItem.config,
+							...options,
+						},
+					}));
+
+					onMappingSelect({
+						...selectedItem,
+						config: {
+							...selectedItem.config,
+							...options,
+						},
+					});
+				}}
+				options={selectedItem.config}
+			/>
 		</>
 	);
 }

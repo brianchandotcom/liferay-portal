@@ -211,9 +211,9 @@ export const SUPPORTED_OPERATORS_MAP = {
 			name: CustomFunctionOperators.EventsFilterByCount
 		},
 		{
-			key: NotOperators.NotActivitiesFilterByCount,
+			key: NotOperators.NotEventsFilterByCount,
 			label: Liferay.Language.get('has-not-fragment'),
-			name: NotOperators.NotActivitiesFilterByCount
+			name: NotOperators.NotEventsFilterByCount
 		}
 	],
 	[PropertyTypes.Interest]: [

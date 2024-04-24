@@ -58,6 +58,11 @@
 			<finder-column name="name" />
 			<finder-column name="type" />
 		</finder>
+		<finder name="G_LikeN_T" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="LIKE" name="name" />
+			<finder-column arrayable-operator="OR" name="type" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>LayoutUtilityPageEntryName</exception>

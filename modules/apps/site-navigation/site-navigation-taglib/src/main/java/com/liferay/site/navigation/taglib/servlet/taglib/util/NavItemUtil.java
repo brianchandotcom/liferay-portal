@@ -280,7 +280,7 @@ public class NavItemUtil {
 		while (iterator.hasNext()) {
 			Layout layout = iterator.next();
 
-			if (layout.isHidden() ||
+			if (layout.isHidden() || !layout.isPublished() ||
 				!LayoutPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), layout,
 					ActionKeys.VIEW)) {

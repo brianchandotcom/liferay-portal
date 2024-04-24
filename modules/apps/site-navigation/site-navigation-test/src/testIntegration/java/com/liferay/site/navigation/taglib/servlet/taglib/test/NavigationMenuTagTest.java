@@ -78,6 +78,14 @@ public class NavigationMenuTagTest {
 			parentLayout.getLayoutId());
 	}
 
+	@Test
+	public void testNavigationMenuModePublicPagesWithUnpublishedLayout()
+		throws Exception {
+
+		_assertNavigationMenuTagWithUnpublishedLayout(
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+	}
+
 	private void _assertNavigationMenuTag() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest();

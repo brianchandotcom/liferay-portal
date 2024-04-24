@@ -153,6 +153,11 @@ public class MBServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				"MBSuspiciousActivity", "reason", "VARCHAR(255) null"));
 
 		registry.register("6.4.1", "6.5.0", new FriendlyURLUpgradeProcess());
+
+		registry.register(
+			"6.5.0", "6.5.1",
+			UpgradeProcessFactory.alterColumnType(
+				"MBCategory", "name", "VARCHAR(255) null"));
 	}
 
 	@Reference(

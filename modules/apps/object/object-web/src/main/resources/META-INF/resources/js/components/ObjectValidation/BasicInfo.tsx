@@ -114,7 +114,8 @@ export function BasicInfo({
 				/>
 			</Card>
 
-			{values.engine?.startsWith('function#') && (
+			{(values.engine?.startsWith('function#') ||
+				values.engine?.startsWith('javaDelegate#')) && (
 				<Card title={Liferay.Language.get('error-message')}>
 					<InputLocalized
 						disabled={disabled}

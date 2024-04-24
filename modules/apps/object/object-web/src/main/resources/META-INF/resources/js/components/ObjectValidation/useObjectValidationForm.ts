@@ -51,6 +51,7 @@ export function useObjectValidationForm({
 		if (
 			validation.engine !== 'compositeKey' &&
 			!validation.engine?.startsWith('function#') &&
+			!validation.engine?.startsWith('javaDelegate#') &&
 			invalidateRequired(script)
 		) {
 			errors.script = constantsUtils.REQUIRED_MSG;

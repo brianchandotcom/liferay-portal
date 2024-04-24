@@ -7,7 +7,7 @@ interface IProperty {
 	id?: string;
 	label: string;
 	name: string;
-	options?: {label: string; value: string}[];
+	options?: {label: string; value: string | boolean}[];
 	propertyKey: string;
 	type: PropertyTypes;
 }
@@ -29,7 +29,7 @@ export default class Property
 	id: string;
 	label: string;
 	name: string;
-	options?: {label: string; value: string}[];
+	options?: {label: string; value: string | boolean}[];
 	propertyKey: string;
 	type: PropertyTypes;
 

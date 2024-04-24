@@ -88,6 +88,7 @@ export type Breakdown = {
 export type Breakdowns = {[key: string]: Breakdown};
 
 export type Event = {
+	blocked?: boolean;
 	description?: string;
 	displayName?: string;
 	eventAttributeDefinitions?: Attribute[];

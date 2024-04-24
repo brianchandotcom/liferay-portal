@@ -7,6 +7,7 @@ package com.liferay.object.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -29,9 +30,11 @@ public interface ObjectConfiguration {
 	)
 	public int maximumNumberOfGuestUserObjectEntriesPerObjectDefinition();
 
+	@ExtendedAttributeDefinition(featureFlagKey = "LPS-192957")
 	@Meta.AD(deflt = "1", name = "duration", required = false)
 	public long duration();
 
+	@ExtendedAttributeDefinition(featureFlagKey = "LPS-192957")
 	@Meta.AD(
 		deflt = "days", description = "time-scale-help", name = "time-scale",
 		optionLabels = {"days", "weeks"}, optionValues = {"days", "weeks"},

@@ -63,6 +63,18 @@ declare function getPageContents({
 }: {
 	segmentsExperienceId: State['segmentsExperienceId'];
 }): Promise<PageContent[]>;
+declare function getStructureRelationships({
+	classNameId,
+	classTypeId,
+}: {
+	classNameId: string;
+	classTypeId?: string;
+}): Promise<
+	{
+		classNameId: string;
+		label: string;
+	}[]
+>;
 declare const _default: {
 	getAvailableListItemRenderers: typeof getAvailableListItemRenderers;
 	getAvailableListRenderers: typeof getAvailableListRenderers;
@@ -71,5 +83,6 @@ declare const _default: {
 	getInfoItemActionErrorMessage: typeof getInfoItemActionErrorMessage;
 	getInfoItemFieldValue: typeof getInfoItemFieldValue;
 	getPageContents: typeof getPageContents;
+	getStructureRelationships: typeof getStructureRelationships;
 };
 export default _default;

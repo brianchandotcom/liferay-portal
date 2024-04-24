@@ -21,6 +21,7 @@ export declare const CACHE_KEYS: {
 	readonly collectionVariations: 'collectionVariations';
 	readonly collectionWarningMessage: 'collectionWarningMessage';
 	readonly formFields: 'formFields';
+	readonly relationships: 'relationships';
 	readonly roles: 'roles';
 	readonly users: 'users';
 };

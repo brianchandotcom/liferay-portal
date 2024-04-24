@@ -619,7 +619,7 @@ const Sorting = ({fdsView, namespace}: IFDSViewSectionProps) => {
 				<>
 					<ClayAlert className="c-mt-5" displayType="info">
 						{Liferay.Language.get(
-							'the-hierarchy-of-the-default-sorting-will-be-defined-by-the-vertical-order-of-the-fields'
+							'the-hierarchy-of-the-sorting-options-will-be-defined-by-the-vertical-order-of-the-fields'
 						)}
 					</ClayAlert>
 
@@ -662,13 +662,13 @@ const Sorting = ({fdsView, namespace}: IFDSViewSectionProps) => {
 						]}
 						items={fdsSorts}
 						noItemsButtonLabel={Liferay.Language.get(
-							'new-default-sort'
+							'new-sorting-option'
 						)}
 						noItemsDescription={Liferay.Language.get(
-							'start-creating-a-sort-to-display-specific-data'
+							'create-a-sorting-option-to-order-the-data-in-the-fragment'
 						)}
 						noItemsTitle={Liferay.Language.get(
-							'no-default-sort-created-yet'
+							'no-sorting-created-yet'
 						)}
 						onOrderChange={({order}: {order: string}) => {
 							updateFDSSortsOrder({fdsSortsOrder: order});

@@ -190,7 +190,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				_objectEntryManagerRegistry, _objectFieldInfoFieldConverter,
 				_objectFieldLocalService,
 				_objectFieldLocalService.getObjectFields(
-					objectEntry.getObjectDefinitionId(), false),
+					objectEntry.getObjectDefinitionId()),
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
 				themeDisplay, properties));
 
@@ -229,7 +229,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				_objectEntryManagerRegistry, _objectFieldInfoFieldConverter,
 				_objectFieldLocalService,
 				_objectFieldLocalService.getObjectFields(
-					serviceBuilderObjectEntry.getObjectDefinitionId(), false),
+					serviceBuilderObjectEntry.getObjectDefinitionId()),
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
 				themeDisplay, objectEntry.getProperties()));
 

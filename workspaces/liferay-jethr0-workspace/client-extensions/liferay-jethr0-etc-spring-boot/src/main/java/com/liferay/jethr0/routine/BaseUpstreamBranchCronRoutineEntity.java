@@ -34,6 +34,19 @@ public abstract class BaseUpstreamBranchCronRoutineEntity
 	}
 
 	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		jsonObject.put("previousBranchSHA", getPreviousBranchSHA());
+
+		return jsonObject;
+	}
+
+	public String getPreviousBranchSHA() {
+		return _previousBranchSHA;
+	}
+
+	@Override
 	public void removeGitBranchEntities(
 		Set<GitBranchEntity> gitBranchEntities) {
 
@@ -45,8 +58,23 @@ public abstract class BaseUpstreamBranchCronRoutineEntity
 		removeRelatedEntities(Collections.singleton(gitBranchEntity));
 	}
 
+	@Override
+	public void setJSONObject(JSONObject jsonObject) {
+		super.setJSONObject(jsonObject);
+
+		_previousBranchSHA = jsonObject.optString("previousBranchSHA");
+	}
+
+	public void setPreviousBranchSHA(String previousBranchSHA) {
+		_previousBranchSHA = previousBranchSHA;
+	}
+
 	protected BaseUpstreamBranchCronRoutineEntity(JSONObject jsonObject) {
 		super(jsonObject);
+
+		_previousBranchSHA = jsonObject.getString("previousBranchSHA");
 	}
+
+	private String _previousBranchSHA;
 
 }

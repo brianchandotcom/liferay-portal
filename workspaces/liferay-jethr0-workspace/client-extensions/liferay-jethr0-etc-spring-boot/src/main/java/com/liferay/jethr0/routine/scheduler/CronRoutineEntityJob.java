@@ -5,6 +5,9 @@
 
 package com.liferay.jethr0.routine.scheduler;
 
+import com.liferay.jethr0.routine.RoutineEntity;
+
+import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
@@ -17,7 +20,15 @@ public class CronRoutineEntityJob extends BaseRoutineEntityJob {
 	public void execute(JobExecutionContext jobExecutionContext)
 		throws JobExecutionException {
 
-		super.execute(jobExecutionContext);
+		JobDataMap jobDataMap = jobExecutionContext.getMergedJobDataMap();
+
+		Object routineEntityObject = jobDataMap.get("routineEntity");
+
+		if (!(routineEntityObject instanceof RoutineEntity)) {
+			return;
+		}
+
+		invokeJobEntity((RoutineEntity)routineEntityObject);
 	}
 
 }

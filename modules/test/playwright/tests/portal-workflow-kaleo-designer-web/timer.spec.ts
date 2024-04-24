@@ -79,7 +79,7 @@ test.afterEach(async ({apiHelpers}) => {
 	);
 });
 
-test('LPD-16281 can create timer notifications', async ({
+test('can create timer notifications', async ({
 	diagramViewPage,
 	nodePropertiesSidebarPage,
 	processBuilderPage,
@@ -126,7 +126,7 @@ test('LPD-16281 can create timer notifications', async ({
 	await timerPage.assertTimerActionNotificationFields(timerNotifications);
 });
 
-test('LPD-21221 can create timer reassignments role type reassignment type', async ({
+test('can create timer reassignments role type reassignment type', async ({
 	actionReassignmentPage,
 	diagramViewPage,
 	nodePropertiesSidebarPage,
@@ -171,4 +171,80 @@ test('LPD-21221 can create timer reassignments role type reassignment type', asy
 	await timerOption.click();
 
 	await actionReassignmentPage.assertRoleTypeReassignmentType(roleTypes);
+});
+
+test('cannot save a workflow definition that has a timer action with groovy script when script management configuration is disabled', async ({
+	diagramViewPage,
+	nodePropertiesSidebarPage,
+	page,
+	processBuilderPage,
+	scriptManagementPage,
+}) => {
+	await scriptManagementPage.enableScriptManagementConfiguration();
+
+	await processBuilderPage.goto();
+
+	await processBuilderPage.clickWorkflowDefinitionName(
+		workflowDefinitionName
+	);
+
+	await diagramViewPage.clickReviewNodeLink();
+
+	await nodePropertiesSidebarPage.createTimerAction(
+		'Groovy Action',
+		'scriptTest',
+		'Groovy'
+	);
+
+	await diagramViewPage.saveWorkflowDefinition();
+
+	await scriptManagementPage.disableScriptManagementConfiguration();
+
+	await processBuilderPage.goto();
+
+	await processBuilderPage.clickWorkflowDefinitionName(
+		workflowDefinitionName
+	);
+
+	await diagramViewPage.saveWorkflowDefinition();
+
+	await expect(page.getByText('Error Updating Definition')).toBeVisible();
+});
+
+test('cannot save a workflow definition that has a Timer Action with java script when script management configuration is disabled', async ({
+	diagramViewPage,
+	nodePropertiesSidebarPage,
+	page,
+	processBuilderPage,
+	scriptManagementPage,
+}) => {
+	await scriptManagementPage.enableScriptManagementConfiguration();
+
+	await processBuilderPage.goto();
+
+	await processBuilderPage.clickWorkflowDefinitionName(
+		workflowDefinitionName
+	);
+
+	await diagramViewPage.clickReviewNodeLink();
+
+	await nodePropertiesSidebarPage.createTimerAction(
+		'Java Action',
+		'scriptTest',
+		'Java'
+	);
+
+	await diagramViewPage.saveWorkflowDefinition();
+
+	await scriptManagementPage.disableScriptManagementConfiguration();
+
+	await processBuilderPage.goto();
+
+	await processBuilderPage.clickWorkflowDefinitionName(
+		workflowDefinitionName
+	);
+
+	await diagramViewPage.saveWorkflowDefinition();
+
+	await expect(page.getByText('Error Updating Definition')).toBeVisible();
 });

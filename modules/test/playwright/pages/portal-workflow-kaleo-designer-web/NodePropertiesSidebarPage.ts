@@ -6,10 +6,12 @@
 import {Locator, Page} from '@playwright/test';
 
 import {getRandomInt} from '../../utils/getRandomInt';
+import {ActionPage} from './ActionPage';
 import {NotificationSectionPage} from './NotificationSectionPage';
 import {TimerPage} from './TimerPage';
 
 export class NodePropertiesSidebarPage {
+	readonly actionPage: ActionPage;
 	readonly addActionButton: Locator;
 	readonly addNotificationButton: Locator;
 	readonly addTimerButton: Locator;
@@ -40,6 +42,20 @@ export class NodePropertiesSidebarPage {
 		this.notificationPage = new NotificationSectionPage(page, 0);
 		this.page = page;
 		this.timerPage = new TimerPage(page);
+		this.actionPage = new ActionPage(page);
+	}
+
+	async createTimerAction(name: string, script: string, typeOption: string) {
+		await this.addTimerButton.click();
+
+		await this.timerPage.fillTimerFields(
+			'timerDescription' + getRandomInt(),
+			'3',
+			'timerName' + getRandomInt(),
+			'week'
+		);
+
+		await this.actionPage.fillWorkflowAction(name, script, typeOption);
 	}
 
 	async createNotification(notification: Notification) {

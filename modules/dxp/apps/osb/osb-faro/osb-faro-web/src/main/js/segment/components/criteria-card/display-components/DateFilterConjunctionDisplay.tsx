@@ -37,7 +37,11 @@ const DateFilterConjunctionDisplay: React.FC<{
 					</span>
 				);
 			case SINCE:
-				return <span>{getTimePeriodLabel(dateFilter)}</span>;
+				return (
+					<span>
+						<strong>{getTimePeriodLabel(dateFilter)}</strong>
+					</span>
+				);
 			case EVER:
 				return;
 			default:

@@ -844,17 +844,17 @@ const filterSchema = {
 	routines: {
 		fields: [
 			overrides(baseFilters.priority, {
-				name:
-					'routineToBuilds/buildToCaseResult/caseToCaseResult/priority',
+				isCustomFilter: true,
+				name: 'testrayCasePriorities',
 				removeQuoteMark: true,
 			}),
 			overrides(baseFilters.caseType, {
-				name:
-					'routineToBuilds/buildToCaseResult/caseToCaseResult/caseTypeToCases/id',
+				isCustomFilter: true,
+				name: 'testrayCaseTypes',
 			}),
 			overrides(baseFilters.team, {
-				name:
-					'routineToBuilds/buildToCaseResult/componentToCaseResult/r_teamToComponents_c_teamId',
+				isCustomFilter: true,
+				name: 'testrayTeamId',
 			}),
 		] as RendererFields[],
 		name: 'routines',

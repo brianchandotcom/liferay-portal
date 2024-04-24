@@ -8,9 +8,7 @@ import {useParams} from 'react-router-dom';
 import Container from '../../../components/Layout/Container';
 import ListViewRest from '../../../components/ListView';
 import ProgressBar from '../../../components/ProgressBar';
-import SearchBuilder from '../../../core/SearchBuilder';
 import i18n from '../../../i18n';
-import {TestrayRoutine, testrayRoutineImpl} from '../../../services/rest';
 import {getTimeFromNow} from '../../../util/date';
 import useRoutineActions from './useRoutineActions';
 
@@ -36,118 +34,85 @@ const Routines = () => {
 					filterSchema: 'routines',
 					title: i18n.translate('routines'),
 				}}
-				resource={testrayRoutineImpl.resource}
+				resource={`/testray-status-metrics/by-testray-projectId/${projectId}/testray-routines-metrics`}
 				tableProps={{
 					actions,
 					columns: [
 						{
 							clickable: true,
-							key: 'name',
+							key: 'testrayRoutineName',
 							size: 'md',
 							sorteable: true,
 							value: i18n.translate('routine'),
 						},
 						{
 							clickable: true,
-							key: 'dateCreated',
-							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]?.dateCreated
-									? getTimeFromNow(
-											testrayRoutine.builds[0]
-												?.dateCreated
-									  )
-									: null,
+							key: 'createDate',
+							render: (createDate) => getTimeFromNow(createDate),
 							value: i18n.translate('execution-date'),
 						},
 						{
 							clickable: true,
-							key: 'untested',
-							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]?.caseResultUntested ??
-								0,
+							key: 'testrayStatusMetric',
+							render: ({untested}) => untested,
 							value: i18n.translate('untested'),
 						},
 						{
 							clickable: true,
-							key: 'inprogress',
-							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]
-									?.caseResultInProgress ?? 0,
+							key: 'testrayStatusMetric',
+							render: ({inProgress}) => inProgress,
 							value: i18n.translate('in-progress'),
 						},
 						{
 							clickable: true,
-							key: 'passed',
-							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]?.caseResultPassed ?? 0,
+							key: 'testrayStatusMetric',
+							render: ({passed}) => passed,
 							value: i18n.translate('passed'),
 						},
 						{
 							clickable: true,
-							key: 'failed',
-							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]?.caseResultFailed ?? 0,
+							key: 'testrayStatusMetric',
+							render: ({failed}) => failed,
 							value: i18n.translate('failed'),
 						},
 						{
 							clickable: true,
-							key: 'blocked',
-							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]?.caseResultBlocked ??
-								0,
+							key: 'testrayStatusMetric',
+							render: ({blocked}) => blocked,
 							value: i18n.translate('blocked'),
 						},
 						{
 							clickable: true,
-							key: 'testfix',
-							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]?.caseResultTestFix ??
-								0,
+							key: 'testrayStatusMetric',
+							render: ({testfix}) => testfix,
 							value: i18n.translate('test-fix'),
 						},
 						{
 							clickable: true,
-							key: 'total',
-							render: (_, testrayRoutine: TestrayRoutine) =>
-								[
-									testrayRoutine.builds[0]?.caseResultBlocked,
-									testrayRoutine.builds[0]?.caseResultFailed,
-									testrayRoutine.builds[0]
-										?.caseResultInProgress,
-									testrayRoutine.builds[0]?.caseResultPassed,
-									testrayRoutine.builds[0]?.caseResultTestFix,
-									testrayRoutine.builds[0]
-										?.caseResultUntested,
-								]
-									.map((count) => (count ? Number(count) : 0))
-									.reduce(
-										(previousValue, currentValue) =>
-											previousValue + currentValue
-									),
+							key: 'testrayStatusMetric',
+							render: ({total}) => total,
 							value: i18n.translate('total'),
 						},
 						{
 							clickable: true,
-							key: 'metrics',
-							render: (_, testrayRoutine: TestrayRoutine) => (
+							key: 'testrayStatusMetric',
+							render: (testrayStatusMetric) => (
 								<ProgressBar
+									chartOrder={[
+										'passed',
+										'failed',
+										'blocked',
+										'test_fix',
+										'incomplete',
+									]}
 									items={{
-										blocked: Number(
-											testrayRoutine.builds[0]
-												?.caseResultBlocked
-										),
-										failed: Number(
-											testrayRoutine.builds[0]
-												?.caseResultFailed
-										),
-										passed: Number(
-											testrayRoutine.builds[0]
-												?.caseResultPassed
-										),
-										test_fix: Number(
-											testrayRoutine.builds[0]
-												?.caseResultTestFix
-										),
+										blocked: testrayStatusMetric?.blocked,
+										failed: testrayStatusMetric?.failed,
+										incomplete:
+											testrayStatusMetric?.untested +
+											testrayStatusMetric?.inProgress,
+										passed: testrayStatusMetric?.passed,
+										test_fix: testrayStatusMetric?.testfix,
 									}}
 								/>
 							),
@@ -155,13 +120,7 @@ const Routines = () => {
 							width: '300',
 						},
 					],
-					navigateTo: ({id}) => id,
-				}}
-				transformData={(response) =>
-					testrayRoutineImpl.transformDataFromList(response)
-				}
-				variables={{
-					filter: SearchBuilder.eq('projectId', projectId as string),
+					navigateTo: ({testrayRoutineId}) => testrayRoutineId,
 				}}
 			/>
 		</Container>

@@ -339,6 +339,59 @@ translationTest(
 );
 
 translationTest(
+	'LPD-23278: This is a test for mark as translated button in web content',
+	async ({journalEditArticlePage, journalPage, page, site}) => {
+		await journalPage.goto();
+
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		await journalEditArticlePage.fillTitle(getRandomString());
+
+		const translationButton = page.getByRole('combobox', {
+			name: 'Select a language',
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Not Translated',
+			}),
+			trigger: translationButton,
+		});
+
+		const translationOptionsButton = page.getByLabel('Translation Options');
+
+		await translationOptionsButton.click();
+
+		const markAsTranslatedButton = page.getByRole('button', {
+			name: 'Mark as Translated',
+		});
+
+		await markAsTranslatedButton.click();
+
+		const confirmMarkAsTranslatedButton = page
+			.getByLabel('Mark ca_ES as Translated')
+			.getByRole('button', {name: 'Mark as Translated'});
+
+		await confirmMarkAsTranslatedButton.click();
+
+		await translationButton.click();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Translated',
+			}),
+			trigger: translationButton,
+		});
+
+		await translationOptionsButton.click();
+
+		await expect(markAsTranslatedButton).toBeDisabled();
+	}
+);
+
+translationTest(
 	'LPD-17245: Add error message in Translation for concurrent users',
 	async ({
 		apiHelpers,

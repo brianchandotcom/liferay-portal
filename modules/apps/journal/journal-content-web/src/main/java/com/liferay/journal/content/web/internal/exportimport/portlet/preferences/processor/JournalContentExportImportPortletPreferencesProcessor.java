@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
 import java.util.Map;
@@ -196,8 +197,17 @@ public class JournalContentExportImportPortletPreferencesProcessor
 			PortletDataHandlerKeys.PORTLET_DATA_ALL,
 			new String[] {Boolean.TRUE.toString()});
 
-		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, portletId, article);
+		Element articleElement = portletDataContext.getExportDataElement(
+			article);
+
+		if (!GetterUtil.getBoolean(
+				articleElement.attributeValue("articleAdded"))) {
+
+			articleElement.addAttribute("articleAdded", "true");
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, portletId, article);
+		}
 
 		String defaultDDMTemplateKey = article.getDDMTemplateKey();
 		String preferenceDDMTemplateKey = portletPreferences.getValue(

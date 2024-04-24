@@ -103,16 +103,8 @@
 										"#value": "approve"
 									},
 									{
-										"#cdata-value": [
-											"                        import com.liferay.portal.kernel.workflow.WorkflowConstants;",
-											"                        import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;",
-											"                        WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus(\"approved\"), workflowContext);"
-										],
-										"#tag-name": "script"
-									},
-									{
-										"#tag-name": "script-language",
-										"#value": "groovy"
+										"#tag-name": "status",
+										"#value": "0"
 									},
 									{
 										"#tag-name": "execution-type",
@@ -160,20 +152,15 @@
 								"#child-nodes": [
 									{
 										"#tag-name": "name",
-										"#value": "reject"
+										"#value": "deny"
 									},
 									{
-										"#cdata-value": [
-											"                        import com.liferay.portal.kernel.workflow.WorkflowConstants;",
-											"                        import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;",
-											"                        WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus(\"denied\"), workflowContext);",
-											"                        WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus(\"pending\"), workflowContext);"
-										],
-										"#tag-name": "script"
+										"#tag-name": "status",
+										"#value": "4"
 									},
 									{
-										"#tag-name": "script-language",
-										"#value": "groovy"
+										"#tag-name": "priority",
+										"#value": "1"
 									},
 									{
 										"#tag-name": "execution-type",

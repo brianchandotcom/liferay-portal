@@ -55,6 +55,8 @@ import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.object.model.ObjectStateTransition;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.model.ObjectValidationRuleSetting;
+import com.liferay.object.scope.CompanyScoped;
+import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -70,6 +72,7 @@ import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.TreeFactory;
+import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.object.validation.rule.setting.builder.ObjectValidationRuleSettingBuilder;
 import com.liferay.petra.sql.dsl.Column;
@@ -121,6 +124,7 @@ import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -130,6 +134,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
@@ -182,6 +187,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
@@ -3233,6 +3243,55 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateObjectEntryWithJavaDelegateObjectValidationRule()
+		throws Exception {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			ObjectEntryLocalServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		String key =
+			ObjectValidationRuleConstants.ENGINE_TYPE_JAVA_DELEGATE_PREFIX +
+				RandomTestUtil.randomString();
+
+		ServiceRegistration<ObjectValidationRuleEngine> serviceRegistration =
+			bundleContext.registerService(
+				ObjectValidationRuleEngine.class,
+				new TestObjectValidationRuleEngine(
+					TestPropsValues.getCompanyId(),
+					Collections.singletonList(_objectDefinition.getName()),
+					key),
+				null);
+
+		try {
+			ObjectEntry objectEntry = _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddressRequired", "bob@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).build());
+
+			_addObjectValidationRule(
+				key,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"");
+
+			_objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddressRequired", "john@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+	}
+
+	@Test
 	public void testUpdateStatus() throws Exception {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -3989,5 +4048,86 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private WorkflowTaskManager _workflowTaskManager;
+
+	private static class TestObjectValidationRuleEngine
+		implements CompanyScoped, ObjectDefinitionScoped,
+				   ObjectValidationRuleEngine {
+
+		@Override
+		public Map<String, Object> execute(
+			Map<String, Object> inputObjects, String script) {
+
+			String emailAddressRequired = "";
+
+			if (inputObjects.containsKey("entryDTO") &&
+				Validator.isNotNull(inputObjects.get("entryDTO"))) {
+
+				Map<String, Object> entryDTO =
+					(Map<String, Object>)inputObjects.get("entryDTO");
+
+				Map<String, Object> entryValues =
+					(Map<String, Object>)entryDTO.get("properties");
+
+				emailAddressRequired = GetterUtil.getString(
+					entryValues.get("emailAddressRequired"));
+			}
+
+			String oldEmailAddressRequired = "";
+
+			if (inputObjects.containsKey("originalEntryDTO") &&
+				Validator.isNotNull(inputObjects.get("originalEntryDTO"))) {
+
+				Map<String, Object> originalEntryDTO =
+					(Map<String, Object>)inputObjects.get("originalEntryDTO");
+
+				Map<String, Object> originalEntryValues =
+					(Map<String, Object>)originalEntryDTO.get("properties");
+
+				oldEmailAddressRequired = GetterUtil.getString(
+					originalEntryValues.get("emailAddressRequired"));
+			}
+
+			Assert.assertEquals("john@liferay.com", emailAddressRequired);
+			Assert.assertEquals("bob@liferay.com", oldEmailAddressRequired);
+
+			return HashMapBuilder.<String, Object>put(
+				"validationCriteriaMet", true
+			).build();
+		}
+
+		@Override
+		public long getAllowedCompanyId() {
+			return _allowedCompanyId;
+		}
+
+		@Override
+		public List<String> getAllowedObjectDefinitionNames() {
+			return _allowedObjectDefinitionNames;
+		}
+
+		@Override
+		public String getKey() {
+			return _key;
+		}
+
+		@Override
+		public String getLabel(Locale locale) {
+			return RandomTestUtil.randomString();
+		}
+
+		private TestObjectValidationRuleEngine(
+			long allowedCompanyId, List<String> allowedObjectDefinitionNames,
+			String key) {
+
+			_allowedCompanyId = allowedCompanyId;
+			_allowedObjectDefinitionNames = allowedObjectDefinitionNames;
+			_key = key;
+		}
+
+		private final long _allowedCompanyId;
+		private final List<String> _allowedObjectDefinitionNames;
+		private final String _key;
+
+	}
 
 }

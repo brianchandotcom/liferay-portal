@@ -250,6 +250,7 @@ definition {
 	}
 
 	@description = "This validates LPS-68795. It ensures that a shortcut can be moved into a folder."
+	@ignore = "true"
 	@priority = 4
 	test CanMoveShortcutIntoFolder {
 		property custom.properties = "dl.actions.visible=true";

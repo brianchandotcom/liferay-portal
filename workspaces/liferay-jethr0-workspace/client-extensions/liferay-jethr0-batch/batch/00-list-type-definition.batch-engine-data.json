@@ -12,7 +12,7 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "gitHubBranchType",
+			"externalReferenceCode": "gitBranchType",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "default",
@@ -20,14 +20,6 @@
 					"name": "Default",
 					"name_i18n": {
 						"en-US": "Default"
-					}
-				},
-				{
-					"externalReferenceCode": "sender",
-					"key": "sender",
-					"name": "Sender",
-					"name_i18n": {
-						"en-US": "Sender"
 					}
 				},
 				{
@@ -39,9 +31,9 @@
 					}
 				}
 			],
-			"name": "gitHubBranchType",
+			"name": "gitBranchType",
 			"name_i18n": {
-				"en-US": "GitHub Branch Type"
+				"en-US": "Git Branch Type"
 			}
 		},
 		{

@@ -116,85 +116,6 @@
 			}
 		},
 		{
-			"externalReferenceCode": "GitBranch",
-			"label": {
-				"en_US": "Git Branch"
-			},
-			"name": "GitBranch",
-			"objectFields": [
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"label": {
-						"en_US": "Branch SHA"
-					},
-					"name": "branchSHA",
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"label": {
-						"en_US": "Branch URL"
-					},
-					"name": "branchURL",
-					"required": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Picklist",
-					"label": {
-						"en_US": "Type"
-					},
-					"listTypeDefinitionExternalReferenceCode": "gitHubBranchType",
-					"name": "type",
-					"required": true,
-					"state": false,
-					"type": "String"
-				},
-				{
-					"DBType": "Boolean",
-					"businessType": "Boolean",
-					"label": {
-						"en_US": "Rebased"
-					},
-					"name": "rebased",
-					"type": "Boolean"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"label": {
-						"en_US": "Upstream Branch SHA"
-					},
-					"name": "upstreamBranchSHA",
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"label": {
-						"en_US": "Upstream Branch URL"
-					},
-					"name": "upstreamBranchURL",
-					"required": true,
-					"type": "String"
-				}
-			],
-			"panelCategoryKey": "",
-			"pluralLabel": {
-				"en_US": "Git Branches"
-			},
-			"portlet": false,
-			"scope": "company",
-			"status": {
-				"code": 0,
-				"label": "approved",
-				"label_i18n": "Approved"
-			}
-		},
-		{
 			"externalReferenceCode": "JenkinsNode",
 			"label": {
 				"en_US": "Jenkins Node"
@@ -1085,16 +1006,6 @@
 				{
 					"deletionType": "disassociate",
 					"label": {
-						"en_US": "Jobs to Git Branches"
-					},
-					"name": "jobsToGitBranches",
-					"objectDefinitionExternalReferenceCode1": "Job",
-					"objectDefinitionExternalReferenceCode2": "GitBranch",
-					"type": "manyToMany"
-				},
-				{
-					"deletionType": "disassociate",
-					"label": {
 						"en_US": "Jobs to Jenkins Cohorts"
 					},
 					"name": "jobsToJenkinsCohorts",
@@ -1236,15 +1147,6 @@
 				},
 				{
 					"DBType": "String",
-					"businessType": "Text",
-					"label": {
-						"en_US": "Previous Branch SHA"
-					},
-					"name": "previousBranchSHA",
-					"type": "String"
-				},
-				{
-					"DBType": "String",
 					"businessType": "Picklist",
 					"label": {
 						"en_US": "Type"
@@ -1275,21 +1177,260 @@
 					"objectDefinitionExternalReferenceCode1": "Routine",
 					"objectDefinitionExternalReferenceCode2": "Job",
 					"type": "oneToMany"
-				},
-				{
-					"deletionType": "disassociate",
-					"label": {
-						"en_US": "Routines to Git Branches"
-					},
-					"name": "routinesToGitBranches",
-					"objectDefinitionExternalReferenceCode1": "Routine",
-					"objectDefinitionExternalReferenceCode2": "GitBranch",
-					"type": "manyToMany"
 				}
 			],
 			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
 				"en_US": "Routines"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "GitCommit",
+			"label": {
+				"en_US": "Git Commit"
+			},
+			"name": "GitCommit",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "SHA"
+					},
+					"name": "sha",
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"label": {
+						"en_US": "Git Commit to Jobs"
+					},
+					"name": "gitCommitToJobs",
+					"objectDefinitionExternalReferenceCode1": "GitCommit",
+					"objectDefinitionExternalReferenceCode2": "Job",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"label": {
+						"en_US": "Previous Git Commit to Routines"
+					},
+					"name": "previousGitCommitToRoutines",
+					"objectDefinitionExternalReferenceCode1": "GitCommit",
+					"objectDefinitionExternalReferenceCode2": "Routine",
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Git Commits"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "GitPull",
+			"label": {
+				"en_US": "Git Pull"
+			},
+			"name": "GitPull",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "URL"
+					},
+					"name": "url",
+					"required": true,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"label": {
+						"en_US": "Git Pull to Routines"
+					},
+					"name": "gitPullToRoutines",
+					"objectDefinitionExternalReferenceCode1": "GitPull",
+					"objectDefinitionExternalReferenceCode2": "Routine",
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Git Pulls"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "GitBranch",
+			"label": {
+				"en_US": "Git Branch"
+			},
+			"name": "GitBranch",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Latest SHA"
+					},
+					"name": "latestSHA",
+					"required": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"label": {
+						"en_US": "Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "gitBranchType",
+					"name": "type",
+					"required": true,
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "URL"
+					},
+					"name": "url",
+					"required": true,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"label": {
+						"en_US": "Base Git Branch to Git Pulls"
+					},
+					"name": "baseGitBranchToGitPulls",
+					"objectDefinitionExternalReferenceCode1": "GitBranch",
+					"objectDefinitionExternalReferenceCode2": "GitPull",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"label": {
+						"en_US": "Git Branch to Git Commits"
+					},
+					"name": "gitBranchToGitCommits",
+					"objectDefinitionExternalReferenceCode1": "GitBranch",
+					"objectDefinitionExternalReferenceCode2": "GitCommit",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"label": {
+						"en_US": "Git Branch to Routines"
+					},
+					"name": "gitBranchToRoutines",
+					"objectDefinitionExternalReferenceCode1": "GitBranch",
+					"objectDefinitionExternalReferenceCode2": "Routine",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"label": {
+						"en_US": "Head Git Branch to Git Pulls"
+					},
+					"name": "headGitBranchToGitPulls",
+					"objectDefinitionExternalReferenceCode1": "GitBranch",
+					"objectDefinitionExternalReferenceCode2": "GitPull",
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Git Branches"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "GitUser",
+			"label": {
+				"en_US": "Git User"
+			},
+			"name": "GitUser",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "URL"
+					},
+					"name": "url",
+					"required": true,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"label": {
+						"en_US": "Git User to Git Branch"
+					},
+					"name": "gitUserToGitBranches",
+					"objectDefinitionExternalReferenceCode1": "GitUser",
+					"objectDefinitionExternalReferenceCode2": "GitBranch",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"label": {
+						"en_US": "Receiver Git User to Git Pull"
+					},
+					"name": "receiverGitUserToGitPulls",
+					"objectDefinitionExternalReferenceCode1": "GitUser",
+					"objectDefinitionExternalReferenceCode2": "GitPull",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"label": {
+						"en_US": "Sender Git User to Git Pull"
+					},
+					"name": "senderGitUserToGitPulls",
+					"objectDefinitionExternalReferenceCode1": "GitUser",
+					"objectDefinitionExternalReferenceCode2": "GitPull",
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Git Users"
 			},
 			"portlet": true,
 			"scope": "company",

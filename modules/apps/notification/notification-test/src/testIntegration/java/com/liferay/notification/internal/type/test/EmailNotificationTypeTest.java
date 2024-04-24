@@ -86,6 +86,10 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.text.SimpleDateFormat;
 
+import java.time.chrono.IsoChronology;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.FormatStyle;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -129,7 +133,11 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			"${ObjectField_dateObjectField.getData()}",
 			() -> {
 				SimpleDateFormat dateInfoFieldSimpleDateFormat =
-					new SimpleDateFormat("M/d/yy hh:mm a");
+					new SimpleDateFormat(
+						DateTimeFormatterBuilder.getLocalizedDateTimePattern(
+							FormatStyle.SHORT, FormatStyle.SHORT,
+							IsoChronology.INSTANCE, LocaleUtil.US));
+
 				SimpleDateFormat dateObjectFieldSimpleDateFormat =
 					new SimpleDateFormat("yyyy-MM-dd");
 
@@ -194,7 +202,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				HashMapBuilder.put(
 					LanguageUtil.getLanguageId(LocaleUtil.US),
 					StringUtil.merge(
-						_freeMarkerTermValues.keySet(), StringPool.COMMA)
+						_freeMarkerTermValues.keySet(), StringPool.POUND)
 				).build()),
 			null, "Body", LanguageUtil.getLanguageId(LocaleUtil.US));
 
@@ -221,7 +229,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			new ArrayList<>(_freeMarkerTermValues.values()),
 			Arrays.asList(
 				StringUtil.split(
-					notificationQueueEntry.getBody(), StringPool.COMMA)));
+					notificationQueueEntry.getBody(), StringPool.POUND)));
 	}
 
 	@Test

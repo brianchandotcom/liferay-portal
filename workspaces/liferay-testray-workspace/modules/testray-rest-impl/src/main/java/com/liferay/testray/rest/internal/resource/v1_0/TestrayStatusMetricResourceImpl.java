@@ -6,6 +6,7 @@
 package com.liferay.testray.rest.internal.resource.v1_0;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -20,11 +21,7 @@ import com.liferay.testray.rest.dto.v1_0.TestrayTeamMetric;
 import com.liferay.testray.rest.internal.util.TestrayUtil;
 import com.liferay.testray.rest.resource.v1_0.TestrayStatusMetricResource;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -461,18 +458,22 @@ public class TestrayStatusMetricResourceImpl
 					TestrayRoutineMetric testrayRoutineMetric =
 						new TestrayRoutineMetric();
 
+					if (value.get("dueDate_") != null) {
+						testrayRoutineMetric.setDueDate(
+							GetterUtil.getDate(
+								value.get(
+									"dueDate_"
+								).toString(),
+								DateFormatFactoryUtil.getSimpleDateFormat(
+									"yyyy-MM-dd'T'HH:mm:ss")));
+					}
+
 					testrayRoutineMetric.setTestrayRoutineId(
 						GetterUtil.getLong(value.get("c_routineId_")));
 					testrayRoutineMetric.setTestrayRoutineName(
 						GetterUtil.getString(value.get("name_")));
 					testrayRoutineMetric.setTestrayStatusMetric(
 						_getTestrayStatusMetric(value));
-
-					LocalDateTime localDateTime = (LocalDateTime)value.get(
-						"dueDate_");
-
-					testrayRoutineMetric.setCreateDate(
-						Date.from(localDateTime.toInstant(ZoneOffset.UTC)));
 
 					return testrayRoutineMetric;
 				}),

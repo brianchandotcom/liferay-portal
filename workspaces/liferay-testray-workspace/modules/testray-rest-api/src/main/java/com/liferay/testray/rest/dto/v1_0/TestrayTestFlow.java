@@ -290,30 +290,29 @@ public class TestrayTestFlow implements Serializable {
 	private Supplier<Long> _mbThreadIdSupplier;
 
 	@Schema
-	public Integer getTestraySubtasksAmount() {
-		if (_testraySubtasksAmountSupplier != null) {
-			testraySubtasksAmount = _testraySubtasksAmountSupplier.get();
+	public Integer getSubtaskAmount() {
+		if (_subtaskAmountSupplier != null) {
+			subtaskAmount = _subtaskAmountSupplier.get();
 
-			_testraySubtasksAmountSupplier = null;
+			_subtaskAmountSupplier = null;
 		}
 
-		return testraySubtasksAmount;
+		return subtaskAmount;
 	}
 
-	public void setTestraySubtasksAmount(Integer testraySubtasksAmount) {
-		this.testraySubtasksAmount = testraySubtasksAmount;
+	public void setSubtaskAmount(Integer subtaskAmount) {
+		this.subtaskAmount = subtaskAmount;
 
-		_testraySubtasksAmountSupplier = null;
+		_subtaskAmountSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setTestraySubtasksAmount(
-		UnsafeSupplier<Integer, Exception>
-			testraySubtasksAmountUnsafeSupplier) {
+	public void setSubtaskAmount(
+		UnsafeSupplier<Integer, Exception> subtaskAmountUnsafeSupplier) {
 
-		_testraySubtasksAmountSupplier = () -> {
+		_subtaskAmountSupplier = () -> {
 			try {
-				return testraySubtasksAmountUnsafeSupplier.get();
+				return subtaskAmountUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -326,10 +325,10 @@ public class TestrayTestFlow implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer testraySubtasksAmount;
+	protected Integer subtaskAmount;
 
 	@JsonIgnore
-	private Supplier<Integer> _testraySubtasksAmountSupplier;
+	private Supplier<Integer> _subtaskAmountSupplier;
 
 	@Schema
 	public Long getUserId() {
@@ -483,16 +482,16 @@ public class TestrayTestFlow implements Serializable {
 			sb.append(mbThreadId);
 		}
 
-		Integer testraySubtasksAmount = getTestraySubtasksAmount();
+		Integer subtaskAmount = getSubtaskAmount();
 
-		if (testraySubtasksAmount != null) {
+		if (subtaskAmount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"testraySubtasksAmount\": ");
+			sb.append("\"subtaskAmount\": ");
 
-			sb.append(testraySubtasksAmount);
+			sb.append(subtaskAmount);
 		}
 
 		Long userId = getUserId();

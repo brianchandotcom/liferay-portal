@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {addMappingFields} from '../../app/actions/index';
 import {EDITABLE_TYPES} from '../../app/config/constants/editableTypes';
@@ -17,12 +17,14 @@ import {config} from '../../app/config/index';
 import {useCollectionConfig} from '../../app/contexts/CollectionItemContext';
 import {useDispatch, useSelector} from '../../app/contexts/StoreContext';
 import InfoItemService from '../../app/services/InfoItemService';
+import {CACHE_KEYS} from '../../app/utils/cache';
 import isMapped from '../../app/utils/editable_value/isMapped';
 import isMappedToInfoItem from '../../app/utils/editable_value/isMappedToInfoItem';
 import isMappedToStructure from '../../app/utils/editable_value/isMappedToStructure';
 import findPageContent from '../../app/utils/findPageContent';
 import getMappingFieldsKey from '../../app/utils/getMappingFieldsKey';
 import itemSelectorValueToInfoItem from '../../app/utils/item_selector_value/itemSelectorValueToInfoItem';
+import useCache from '../../app/utils/useCache';
 import usePageContents from '../../app/utils/usePageContents';
 import ItemSelector from './ItemSelector';
 import MappingFieldSelector from './MappingFieldSelector';
@@ -31,6 +33,7 @@ const COLLECTION_TYPE_DIVIDER = ' - ';
 
 const MAPPING_SOURCE_TYPES = {
 	content: 'content',
+	relationship: 'relationship',
 	structure: 'structure',
 };
 
@@ -273,6 +276,47 @@ function MappingSelector({
 			: MAPPING_SOURCE_TYPES.content
 	);
 
+	const relationships = useCache({
+		fetcher: () =>
+			InfoItemService.getStructureRelationships({
+				classNameId: selectedMappingTypes?.type?.id,
+				classTypeId: selectedMappingTypes?.subtype?.id,
+			}),
+		key: [
+			CACHE_KEYS.relationships,
+			selectedMappingTypes?.type?.id,
+			selectedMappingTypes?.subtype?.id || '0',
+		],
+	});
+
+	const sourceTypes = useMemo(() => {
+		const types = [
+			{
+				label: sub(
+					Liferay.Language.get('x-default'),
+					selectedMappingTypes.subtype
+						? selectedMappingTypes.subtype.label
+						: selectedMappingTypes.type.label
+				),
+				value: MAPPING_SOURCE_TYPES.structure,
+			},
+		];
+
+		if (relationships?.length && Liferay.FeatureFlags['LPD-20213']) {
+			types.push({
+				label: Liferay.Language.get('relationship'),
+				value: MAPPING_SOURCE_TYPES.relationship,
+			});
+		}
+
+		types.push({
+			label: Liferay.Language.get('specific-content'),
+			value: MAPPING_SOURCE_TYPES.content,
+		});
+
+		return types;
+	}, [relationships, selectedMappingTypes]);
+
 	const onInfoItemSelect = (selectedInfoItem) => {
 		setSelectedItem(selectedInfoItem);
 
@@ -390,21 +434,7 @@ function MappingSelector({
 								onMappingSelect({});
 							}
 						}}
-						options={[
-							{
-								label: sub(
-									Liferay.Language.get('x-default'),
-									selectedMappingTypes.subtype
-										? selectedMappingTypes.subtype.label
-										: selectedMappingTypes.type.label
-								),
-								value: MAPPING_SOURCE_TYPES.structure,
-							},
-							{
-								label: Liferay.Language.get('specific-content'),
-								value: MAPPING_SOURCE_TYPES.content,
-							},
-						]}
+						options={sourceTypes}
 						value={selectedSourceType}
 					/>
 				</ClayForm.Group>

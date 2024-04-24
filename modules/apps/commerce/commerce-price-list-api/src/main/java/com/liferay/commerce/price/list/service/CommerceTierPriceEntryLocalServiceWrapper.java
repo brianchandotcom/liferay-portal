@@ -519,6 +519,14 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<CommerceTierPriceEntry> findCommerceTierPriceEntries(
+		long commercePriceEntryId, int status) {
+
+		return _commerceTierPriceEntryLocalService.findCommerceTierPriceEntries(
+			commercePriceEntryId, status);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

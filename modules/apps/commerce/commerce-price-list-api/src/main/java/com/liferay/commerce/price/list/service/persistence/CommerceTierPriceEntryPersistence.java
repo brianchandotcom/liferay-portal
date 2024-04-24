@@ -836,6 +836,162 @@ public interface CommerceTierPriceEntryPersistence
 	public int countByC_LteM(long commercePriceEntryId, BigDecimal minQuantity);
 
 	/**
+	 * Returns all the commerce tier price entries where commercePriceEntryId = &#63; and status = &#63;.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param status the status
+	 * @return the matching commerce tier price entries
+	 */
+	public java.util.List<CommerceTierPriceEntry> findByC_S(
+		long commercePriceEntryId, int status);
+
+	/**
+	 * Returns a range of all the commerce tier price entries where commercePriceEntryId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTierPriceEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce tier price entries
+	 * @param end the upper bound of the range of commerce tier price entries (not inclusive)
+	 * @return the range of matching commerce tier price entries
+	 */
+	public java.util.List<CommerceTierPriceEntry> findByC_S(
+		long commercePriceEntryId, int status, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the commerce tier price entries where commercePriceEntryId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTierPriceEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce tier price entries
+	 * @param end the upper bound of the range of commerce tier price entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce tier price entries
+	 */
+	public java.util.List<CommerceTierPriceEntry> findByC_S(
+		long commercePriceEntryId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTierPriceEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the commerce tier price entries where commercePriceEntryId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTierPriceEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce tier price entries
+	 * @param end the upper bound of the range of commerce tier price entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce tier price entries
+	 */
+	public java.util.List<CommerceTierPriceEntry> findByC_S(
+		long commercePriceEntryId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTierPriceEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and status = &#63;.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce tier price entry
+	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
+	 */
+	public CommerceTierPriceEntry findByC_S_First(
+			long commercePriceEntryId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CommerceTierPriceEntry> orderByComparator)
+		throws NoSuchTierPriceEntryException;
+
+	/**
+	 * Returns the first commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and status = &#63;.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
+	 */
+	public CommerceTierPriceEntry fetchByC_S_First(
+		long commercePriceEntryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTierPriceEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and status = &#63;.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce tier price entry
+	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
+	 */
+	public CommerceTierPriceEntry findByC_S_Last(
+			long commercePriceEntryId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CommerceTierPriceEntry> orderByComparator)
+		throws NoSuchTierPriceEntryException;
+
+	/**
+	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and status = &#63;.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
+	 */
+	public CommerceTierPriceEntry fetchByC_S_Last(
+		long commercePriceEntryId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTierPriceEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and status = &#63;.
+	 *
+	 * @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce tier price entry
+	 * @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
+	 */
+	public CommerceTierPriceEntry[] findByC_S_PrevAndNext(
+			long commerceTierPriceEntryId, long commercePriceEntryId,
+			int status,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CommerceTierPriceEntry> orderByComparator)
+		throws NoSuchTierPriceEntryException;
+
+	/**
+	 * Removes all the commerce tier price entries where commercePriceEntryId = &#63; and status = &#63; from the database.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param status the status
+	 */
+	public void removeByC_S(long commercePriceEntryId, int status);
+
+	/**
+	 * Returns the number of commerce tier price entries where commercePriceEntryId = &#63; and status = &#63;.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param status the status
+	 * @return the number of matching commerce tier price entries
+	 */
+	public int countByC_S(long commercePriceEntryId, int status);
+
+	/**
 	 * Returns all the commerce tier price entries where displayDate &lt; &#63; and status = &#63;.
 	 *
 	 * @param displayDate the display date

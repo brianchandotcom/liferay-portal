@@ -469,6 +469,13 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 			commercePriceEntryId, minQuantity);
 	}
 
+	public static List<CommerceTierPriceEntry> findCommerceTierPriceEntries(
+		long commercePriceEntryId, int status) {
+
+		return getService().findCommerceTierPriceEntries(
+			commercePriceEntryId, status);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

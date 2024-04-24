@@ -362,6 +362,9 @@ public interface CommerceTierPriceEntryLocalService
 	public List<CommerceTierPriceEntry> findCommerceTierPriceEntries(
 		long commercePriceEntryId, BigDecimal minQuantity);
 
+	public List<CommerceTierPriceEntry> findCommerceTierPriceEntries(
+		long commercePriceEntryId, int status);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 

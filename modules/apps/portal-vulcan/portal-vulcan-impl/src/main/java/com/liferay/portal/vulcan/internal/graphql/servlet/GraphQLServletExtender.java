@@ -2369,14 +2369,7 @@ public class GraphQLServletExtender {
 					continue;
 				}
 
-				String message = graphQLError.getMessage();
-
-				if (message.contains("SecurityException")) {
-					processedErrors.add(
-						_getExtendedGraphQLError(
-							graphQLError, Response.Status.UNAUTHORIZED));
-				}
-				else if (_isForbiddenException(graphQLError)) {
+				if (_isForbiddenException(graphQLError)) {
 					processedErrors.add(
 						_getExtendedGraphQLError(
 							graphQLError, Response.Status.FORBIDDEN));
@@ -2457,7 +2450,8 @@ public class GraphQLServletExtender {
 			Throwable throwable = exceptionWhileDataFetching.getException();
 
 			if ((throwable != null) &&
-				(throwable.getCause() instanceof ForbiddenException)) {
+				((throwable.getCause() instanceof ForbiddenException) ||
+				 (throwable instanceof SecurityException))) {
 
 				return true;
 			}

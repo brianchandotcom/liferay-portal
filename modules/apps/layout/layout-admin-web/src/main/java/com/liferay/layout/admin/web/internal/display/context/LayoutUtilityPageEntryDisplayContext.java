@@ -70,6 +70,16 @@ public class LayoutUtilityPageEntryDisplayContext {
 		return StringUtil.merge(availableActions, StringPool.COMMA);
 	}
 
+	public String getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_renderRequest, "keywords");
+
+		return _keywords;
+	}
+
 	public SearchContainer<LayoutUtilityPageEntry>
 		getLayoutUtilityPageEntrySearchContainer() {
 
@@ -90,16 +100,33 @@ public class LayoutUtilityPageEntryDisplayContext {
 				getLayoutUtilityPageEntryViewRenderers(),
 			LayoutUtilityPageEntryViewRenderer::getType, String.class);
 
-		layoutUtilityPageEntrySearchContainer.setResultsAndTotal(
-			() ->
+		if (isSearch()) {
+			layoutUtilityPageEntrySearchContainer.setResultsAndTotal(
+				() ->
+					LayoutUtilityPageEntryLocalServiceUtil.
+						getLayoutUtilityPageEntries(
+							_themeDisplay.getScopeGroupId(), getKeywords(),
+							types,
+							layoutUtilityPageEntrySearchContainer.getStart(),
+							layoutUtilityPageEntrySearchContainer.getEnd(),
+							null),
 				LayoutUtilityPageEntryLocalServiceUtil.
-					getLayoutUtilityPageEntries(
-						_themeDisplay.getScopeGroupId(), types,
-						layoutUtilityPageEntrySearchContainer.getStart(),
-						layoutUtilityPageEntrySearchContainer.getEnd(), null),
-			LayoutUtilityPageEntryLocalServiceUtil.
-				getLayoutUtilityPageEntriesCount(
-					_themeDisplay.getScopeGroupId(), types));
+					getLayoutUtilityPageEntriesCount(
+						_themeDisplay.getScopeGroupId(), getKeywords(), types));
+		}
+		else {
+			layoutUtilityPageEntrySearchContainer.setResultsAndTotal(
+				() ->
+					LayoutUtilityPageEntryLocalServiceUtil.
+						getLayoutUtilityPageEntries(
+							_themeDisplay.getScopeGroupId(), types,
+							layoutUtilityPageEntrySearchContainer.getStart(),
+							layoutUtilityPageEntrySearchContainer.getEnd(),
+							null),
+				LayoutUtilityPageEntryLocalServiceUtil.
+					getLayoutUtilityPageEntriesCount(
+						_themeDisplay.getScopeGroupId(), types));
+		}
 
 		layoutUtilityPageEntrySearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
@@ -108,6 +135,14 @@ public class LayoutUtilityPageEntryDisplayContext {
 			layoutUtilityPageEntrySearchContainer;
 
 		return _layoutUtilityPageEntrySearchContainer;
+	}
+
+	public boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected String getOrderByCol() {
@@ -151,6 +186,7 @@ public class LayoutUtilityPageEntryDisplayContext {
 		return _tabs1;
 	}
 
+	private String _keywords;
 	private SearchContainer<LayoutUtilityPageEntry>
 		_layoutUtilityPageEntrySearchContainer;
 	private String _orderByCol;

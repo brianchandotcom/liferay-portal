@@ -8,6 +8,9 @@ package com.liferay.object.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.object.web.internal.portlet.action.test.util.JSONObjectDefinitionTestUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -72,6 +75,112 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 			_baseObjectDefinitionJSONString,
 			_baseObjectDefinitionJSONString, null,
 			"TestObjectDefinitionJSON");
+
+		JSONObject actualJSONObject = JSONFactoryUtil.createJSONObject(
+			_baseObjectDefinitionJSONString
+		).put(
+			"externalReferenceCode", "TESTOBJECTDEFINITIONINGERMAN"
+		).put(
+			"name", "TestObjectDefinitionInGerman"
+		);
+
+		JSONObjectDefinitionTestUtil.addLocalizedLabel(
+			actualJSONObject, "de_DE", "Test Objekt Definition");
+
+		JSONObjectDefinitionTestUtil.addLocalizedLabel(
+			JSONObjectDefinitionTestUtil.getObjectFieldJSONObject(
+				actualJSONObject, "testField"),
+			"de_DE", "Test Feld");
+
+		JSONObjectDefinitionTestUtil.addLocalizedPluralLabel(
+			actualJSONObject, "de_DE", "Test Objekt Definitions");
+
+		JSONObjectDefinitionTestUtil.setDefaultLanguageId(
+			actualJSONObject, "de_DE");
+
+		JSONObjectDefinitionTestUtil.setLocalizedLabel(
+			JSONObjectDefinitionTestUtil.getObjectFieldJSONObject(
+				actualJSONObject, "creator"),
+			"de_DE", "Autor");
+
+		JSONObjectDefinitionTestUtil.setLocalizedLabel(
+			JSONObjectDefinitionTestUtil.getObjectFieldJSONObject(
+				actualJSONObject, "createDate"),
+			"de_DE", "Erstellt am");
+
+		JSONObjectDefinitionTestUtil.setLocalizedLabel(
+			JSONObjectDefinitionTestUtil.getObjectFieldJSONObject(
+				actualJSONObject, "externalReferenceCode"),
+			"de_DE", "Externer Referenzcode");
+
+		JSONObjectDefinitionTestUtil.setLocalizedLabel(
+			JSONObjectDefinitionTestUtil.getObjectFieldJSONObject(
+				actualJSONObject, "id"),
+			"de_DE", "ID");
+
+		JSONObjectDefinitionTestUtil.setLocalizedLabel(
+			JSONObjectDefinitionTestUtil.getObjectFieldJSONObject(
+				actualJSONObject, "modifiedDate"),
+			"de_DE", "Änderungsdatum");
+
+		JSONObjectDefinitionTestUtil.setLocalizedLabel(
+			JSONObjectDefinitionTestUtil.getObjectFieldJSONObject(
+				actualJSONObject, "status"),
+			"de_DE", "Status");
+
+		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
+			_baseObjectDefinitionJSONString
+		).put(
+			"externalReferenceCode", "TESTOBJECTDEFINITIONINGERMAN"
+		).put(
+			"name", "TestObjectDefinitionInGerman"
+		);
+
+		JSONObjectDefinitionTestUtil.addLocalizedLabel(
+			expectedJSONObject, "de_DE", "Test Objekt Definition");
+
+		JSONObjectDefinitionTestUtil.addLocalizedLabel(
+			JSONObjectDefinitionTestUtil.getObjectFieldJSONObject(
+				expectedJSONObject, "creator"),
+			"de_DE", "Autor");
+
+		JSONObjectDefinitionTestUtil.addLocalizedLabel(
+			JSONObjectDefinitionTestUtil.getObjectFieldJSONObject(
+				expectedJSONObject, "createDate"),
+			"de_DE", "Erstellt am");
+
+		JSONObjectDefinitionTestUtil.addLocalizedLabel(
+			JSONObjectDefinitionTestUtil.getObjectFieldJSONObject(
+				expectedJSONObject, "externalReferenceCode"),
+			"de_DE", "Externer Referenzcode");
+
+		JSONObjectDefinitionTestUtil.addLocalizedLabel(
+			JSONObjectDefinitionTestUtil.getObjectFieldJSONObject(
+				expectedJSONObject, "id"),
+			"de_DE", "ID");
+
+		JSONObjectDefinitionTestUtil.addLocalizedLabel(
+			JSONObjectDefinitionTestUtil.getObjectFieldJSONObject(
+				expectedJSONObject, "modifiedDate"),
+			"de_DE", "Änderungsdatum");
+
+		JSONObjectDefinitionTestUtil.addLocalizedLabel(
+			JSONObjectDefinitionTestUtil.getObjectFieldJSONObject(
+				expectedJSONObject, "status"),
+			"de_DE", "Status");
+
+		JSONObjectDefinitionTestUtil.addLocalizedLabel(
+			JSONObjectDefinitionTestUtil.getObjectFieldJSONObject(
+				expectedJSONObject, "testField"),
+			"de_DE", "Test Feld");
+
+		JSONObjectDefinitionTestUtil.addLocalizedPluralLabel(
+			expectedJSONObject, "de_DE", "Test Objekt Definitions");
+
+		testExportImportJSONString(
+			actualJSONObject.toString(), expectedJSONObject.toString(),
+			"TESTOBJECTDEFINITIONINGERMAN",
+			"TestObjectDefinitionInGerman");
 	}
 
 	@Override

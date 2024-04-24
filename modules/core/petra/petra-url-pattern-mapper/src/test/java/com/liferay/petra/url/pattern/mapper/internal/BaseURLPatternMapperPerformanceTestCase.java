@@ -6,10 +6,10 @@
 package com.liferay.petra.url.pattern.mapper.internal;
 
 import com.liferay.petra.url.pattern.mapper.URLPatternMapper;
+import com.liferay.portal.kernel.test.performance.PerformanceTimer;
 
 import java.util.BitSet;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -23,25 +23,20 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 		URLPatternMapper<Integer> urlPatternMapper = createURLPatternMapper(
 			createValues());
 
-		long start = System.currentTimeMillis();
+		try (PerformanceTimer performanceTimer =
+				new SystemOutLoggerPerformanceTimer(
+					_CI_MULTIPLIER * testConsumeValuesExpectedTime(),
+					"Iterated 100 thousand times")) {
 
-		for (int i = 0; i < 100000; i++) {
-			for (String urlPath : expectedURLPatternIndexesMap.keySet()) {
-				urlPatternMapper.consumeValues(
-					__ -> {
-					},
-					urlPath);
+			for (int i = 0; i < 100000; i++) {
+				for (String urlPath : expectedURLPatternIndexesMap.keySet()) {
+					urlPatternMapper.consumeValues(
+						__ -> {
+						},
+						urlPath);
+				}
 			}
 		}
-
-		long end = System.currentTimeMillis();
-
-		long delta = end - start;
-
-		System.out.println("Iterated 100 thousand times in " + delta + " ms");
-
-		Assert.assertTrue(
-			delta < (_CI_MULTIPLIER * testConsumeValuesExpectedTime()));
 	}
 
 	@Test
@@ -54,26 +49,21 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 		URLPatternMapper<Integer> urlPatternMapper = createURLPatternMapper(
 			createValues());
 
-		long start = System.currentTimeMillis();
+		try (PerformanceTimer performanceTimer =
+				new SystemOutLoggerPerformanceTimer(
+					_CI_MULTIPLIER * testConsumeValuesOrderedExpectedTime(),
+					"Iterated 100 thousand times")) {
 
-		for (int i = 0; i < 100000; i++) {
-			for (String urlPath : expectedURLPatternIndexesMap.keySet()) {
-				urlPatternMapper.consumeValues(bitSet::set, urlPath);
+			for (int i = 0; i < 100000; i++) {
+				for (String urlPath : expectedURLPatternIndexesMap.keySet()) {
+					urlPatternMapper.consumeValues(bitSet::set, urlPath);
 
-				for (int j = bitSet.nextSetBit(0); j >= 0;
-					 j = bitSet.nextSetBit(j + 1)) {
+					for (int j = bitSet.nextSetBit(0); j >= 0;
+						 j = bitSet.nextSetBit(j + 1)) {
+					}
 				}
 			}
 		}
-
-		long end = System.currentTimeMillis();
-
-		long delta = end - start;
-
-		System.out.println("Iterated 100 thousand times in " + delta + " ms");
-
-		Assert.assertTrue(
-			delta < (_CI_MULTIPLIER * testConsumeValuesOrderedExpectedTime()));
 	}
 
 	@Test
@@ -81,22 +71,17 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 		URLPatternMapper<Integer> urlPatternMapper = createURLPatternMapper(
 			createValues());
 
-		long start = System.currentTimeMillis();
+		try (PerformanceTimer performanceTimer =
+				new SystemOutLoggerPerformanceTimer(
+					_CI_MULTIPLIER * testGetValueExpectedTime(),
+					"Iterated 100 thousand times")) {
 
-		for (int i = 0; i < 100000; i++) {
-			for (String urlPath : expectedURLPatternIndexesMap.keySet()) {
-				urlPatternMapper.getValue(urlPath);
+			for (int i = 0; i < 100000; i++) {
+				for (String urlPath : expectedURLPatternIndexesMap.keySet()) {
+					urlPatternMapper.getValue(urlPath);
+				}
 			}
 		}
-
-		long end = System.currentTimeMillis();
-
-		long delta = end - start;
-
-		System.out.println("Iterated 100 thousand times in " + delta + " ms");
-
-		Assert.assertTrue(
-			delta < (_CI_MULTIPLIER * testGetValueExpectedTime()));
 	}
 
 	@Test
@@ -104,22 +89,17 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 		URLPatternMapper<Integer> urlPatternMapper = createURLPatternMapper(
 			createValues());
 
-		long start = System.currentTimeMillis();
+		try (PerformanceTimer performanceTimer =
+				new SystemOutLoggerPerformanceTimer(
+					_CI_MULTIPLIER * testGetValuesExpectedTime(),
+					"Iterated 100 thousand times")) {
 
-		for (int i = 0; i < 100000; i++) {
-			for (String urlPath : expectedURLPatternIndexesMap.keySet()) {
-				urlPatternMapper.getValues(urlPath);
+			for (int i = 0; i < 100000; i++) {
+				for (String urlPath : expectedURLPatternIndexesMap.keySet()) {
+					urlPatternMapper.getValues(urlPath);
+				}
 			}
 		}
-
-		long end = System.currentTimeMillis();
-
-		long delta = end - start;
-
-		System.out.println("Iterated 100 thousand times in " + delta + " ms");
-
-		Assert.assertTrue(
-			delta < (_CI_MULTIPLIER * testGetValuesExpectedTime()));
 	}
 
 	/**
@@ -148,5 +128,24 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 	 * To avoid random heavy CI load
 	 */
 	private static final int _CI_MULTIPLIER = 3;
+
+	private class SystemOutLoggerPerformanceTimer extends PerformanceTimer {
+
+		public SystemOutLoggerPerformanceTimer(long maxTime, String name) {
+			this(maxTime, name, System.currentTimeMillis());
+		}
+
+		protected SystemOutLoggerPerformanceTimer(
+			long maxTime, String name, long startTime) {
+
+			super(null, maxTime, name, startTime);
+		}
+
+		@Override
+		protected void log(String message) {
+			System.out.println(message);
+		}
+
+	}
 
 }

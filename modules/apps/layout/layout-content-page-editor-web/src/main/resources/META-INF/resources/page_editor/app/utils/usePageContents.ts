@@ -51,6 +51,8 @@ const INITIAL_STATE: ContentsState = {
 
 export const pageContentsAtom = State.atom('page-contents', INITIAL_STATE);
 
+const EMPTY_ARRAY: PageContent[] = [];
+
 export default function usePageContents() {
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
@@ -74,7 +76,7 @@ export default function usePageContents() {
 		}
 	}, [contents, segmentsExperienceId, setContents]);
 
-	return contents.data || [];
+	return contents.data || EMPTY_ARRAY;
 }
 
 export function clearPageContents() {

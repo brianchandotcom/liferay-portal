@@ -144,17 +144,27 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 									name="status"
 								>
 									<c:choose>
-										<c:when test="<%= !DDMFormInstanceExpirationStatusUtil.isFormExpired(formInstance, timeZone) %>">
-											<clay:label
-												displayType="success"
-												label="available"
-											/>
-										</c:when>
-										<c:otherwise>
+										<c:when test="<%= DDMFormInstanceExpirationStatusUtil.isFormExpired(formInstance, timeZone) %>">
 											<clay:label
 												displayType="danger"
 												label="expired"
 											/>
+										</c:when>
+										<c:otherwise>
+											<c:choose>
+												<c:when test="<%= ddmFormAdminDisplayContext.isFormPublished(formInstance) %>">
+													<clay:label
+														displayType="success"
+														label="available"
+													/>
+												</c:when>
+												<c:otherwise>
+													<clay:label
+														displayType="info"
+														label="unpublished"
+													/>
+												</c:otherwise>
+											</c:choose>
 										</c:otherwise>
 									</c:choose>
 								</liferay-ui:search-container-column-text>

@@ -26,7 +26,7 @@ export const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('Add the frontend data set sample widget', async ({
+test('Use filter client extension in the frontend data set', async ({
 	apiHelpers,
 	page,
 	site,
@@ -53,7 +53,7 @@ test('Add the frontend data set sample widget', async ({
 		});
 	});
 
-	await test.step('Assert that the filter client extension is added', async () => {
+	await test.step('Assert that the filter client extension is available', async () => {
 		await page.goto(
 			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);

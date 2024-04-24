@@ -324,7 +324,7 @@ definition {
 			key_viewName = ${dataSetViewName});
 
 		if (isSet(key_fieldList)) {
-			DataSetAdmin.goToTab(tabName = "Fields");
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 
 			DataSetAdmin.addFields(key_fieldList = ${key_fieldList});
 		}

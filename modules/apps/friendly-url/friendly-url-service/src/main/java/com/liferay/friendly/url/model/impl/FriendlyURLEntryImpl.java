@@ -30,7 +30,7 @@ public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
 
 	@Override
 	public String getCategorizedUrlTitle(String languageId) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-11147")) {
+		if (!FeatureFlagManagerUtil.isEnabled(getCompanyId(), "LPD-11147")) {
 			return getUrlTitle();
 		}
 

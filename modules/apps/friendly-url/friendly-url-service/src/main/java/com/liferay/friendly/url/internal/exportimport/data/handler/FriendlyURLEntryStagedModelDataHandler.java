@@ -200,7 +200,9 @@ public class FriendlyURLEntryStagedModelDataHandler
 			FriendlyURLEntry friendlyURLEntry)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-11147")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				friendlyURLEntry.getCompanyId(), "LPD-11147")) {
+
 			return;
 		}
 
@@ -231,7 +233,8 @@ public class FriendlyURLEntryStagedModelDataHandler
 			FriendlyURLEntry importedFriendlyURL)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-11147") ||
+		if (!FeatureFlagManagerUtil.isEnabled(
+				friendlyURLEntry.getCompanyId(), "LPD-11147") ||
 			(friendlyURLEntry.getClassNameId() == _portal.getClassNameId(
 				AssetCategory.class.getName()))) {
 

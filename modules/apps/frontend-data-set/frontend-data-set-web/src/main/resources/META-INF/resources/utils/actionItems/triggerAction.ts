@@ -57,7 +57,7 @@ export function triggerAction(
 			Liferay.fire(actionTargetURL);
 			break;
 		default:
-			navigate(formatActionURL(actionTargetURL, item));
+			navigate(formatActionURL(actionTargetURL, item, actionTarget));
 			break;
 	}
 }

@@ -3,5 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-declare const formatActionURL: (url: string | undefined, item: any) => string;
+declare const formatActionURL: (
+	url: string | undefined,
+	item: any,
+	target?: string | undefined
+) => string;
 export default formatActionURL;

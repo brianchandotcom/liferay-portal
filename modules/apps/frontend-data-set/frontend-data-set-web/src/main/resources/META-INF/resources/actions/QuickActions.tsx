@@ -21,7 +21,11 @@ function QuickActions({actions, itemData, itemId, onClick}: IQuickActions) {
 						displayType="unstyled"
 						href={
 							action.href &&
-							formatActionURL(action.href, itemData)
+							formatActionURL(
+								action.href,
+								itemData,
+								action.target
+							)
 						}
 						key={action.data?.id || action.label}
 						monospaced={false}

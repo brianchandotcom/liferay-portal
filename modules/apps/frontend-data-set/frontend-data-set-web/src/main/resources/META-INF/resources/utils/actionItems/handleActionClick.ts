@@ -53,7 +53,7 @@ const handleActionClick = ({
 		title,
 	} = data ?? {};
 
-	const url = formatActionURL(href, itemData);
+	const url = formatActionURL(href, itemData, target);
 
 	const doAction = ({defaultPrevented}: {defaultPrevented: boolean}) => {
 		if (target?.includes('modal')) {

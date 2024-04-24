@@ -50,7 +50,8 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 	}
 
 	const formattedHref =
-		currentAction.href && formatActionURL(currentAction.href, itemData);
+		currentAction.href &&
+		formatActionURL(currentAction.href, itemData, currentAction.target);
 
 	function handleClickOnLink(event) {
 		const doAction = () => {

@@ -13,26 +13,37 @@ const testItem = {
 describe('formatActionURL helper', () => {
 	it('returns an empty string if no URL is provided', () => {
 		const givenURL = undefined;
-		const formattedURL = formatActionURL(givenURL, testItem);
+		const target = 'link';
+		const formattedURL = formatActionURL(givenURL, testItem, target);
 
 		expect(formattedURL).toEqual('');
 	});
 
 	it('returns the raw URL if there is no interpolation argument', () => {
 		const givenURL = 'https://www.liferay.com';
-		const formattedURL = formatActionURL(givenURL, testItem);
+		const target = 'link';
+		const formattedURL = formatActionURL(givenURL, testItem, target);
 
 		expect(formattedURL).toEqual(givenURL);
 	});
 
 	it('returns the URL with interpolate values', () => {
 		const URLWithParam = '/o/data-test/{id}';
-		const formattedURLWithParam = formatActionURL(URLWithParam, testItem);
+		const target = 'link';
+		const formattedURLWithParam = formatActionURL(
+			URLWithParam,
+			testItem,
+			target
+		);
 
 		expect(formattedURLWithParam).toEqual(`/o/data-test/${testItem.id}`);
 
 		const URLWithParams = '/o/data-test/{id}/{name}';
-		const formattedURLWithParams = formatActionURL(URLWithParams, testItem);
+		const formattedURLWithParams = formatActionURL(
+			URLWithParams,
+			testItem,
+			target
+		);
 
 		expect(formattedURLWithParams).toEqual(
 			`/o/data-test/${testItem.id}/${testItem.name}`
@@ -42,7 +53,8 @@ describe('formatActionURL helper', () => {
 	it('returns the URL, changing the _redirect parameter to use the actual URL', () => {
 		const URLWithRedirect =
 			'/test/page?p_p_id=random&random_redirect=http://www.somewhere.com';
-		const formattedURL = formatActionURL(URLWithRedirect, testItem);
+		const target = 'link';
+		const formattedURL = formatActionURL(URLWithRedirect, testItem, target);
 
 		expect(formattedURL).toEqual(
 			'/test/page?p_p_id=random&random_redirect=http://localhost/'
@@ -52,7 +64,8 @@ describe('formatActionURL helper', () => {
 	it('returns the URL, changing the _backURL parameter to use the actual URL', () => {
 		const URLWithRedirect =
 			'/test/page?p_p_id=random&random_backURL=http://www.somewhere.com';
-		const formattedURL = formatActionURL(URLWithRedirect, testItem);
+		const target = 'link';
+		const formattedURL = formatActionURL(URLWithRedirect, testItem, target);
 
 		expect(formattedURL).toEqual(
 			'/test/page?p_p_id=random&random_backURL=http://localhost/'
@@ -60,11 +73,61 @@ describe('formatActionURL helper', () => {
 	});
 
 	it('returns the URL, adding the _redirect and _backURL parameters to use the actual URL if the url includes a p_p_id parameter', () => {
-		const URLWithRedirect = '/test/page?p_p_id=random';
-		const formattedURL = formatActionURL(URLWithRedirect, testItem);
+		const URLWithoutRedirect = '/test/page?p_p_id=random';
+		const target = 'link';
+		const formattedURL = formatActionURL(
+			URLWithoutRedirect,
+			testItem,
+			target
+		);
 
 		expect(formattedURL).toEqual(
 			'/test/page?p_p_id=random&random_redirect=http://localhost/&random_backURL=http://localhost/'
 		);
+	});
+
+	it('returns the URL, without changing the _redirect and _backURL parameters if the target is different from "link"', () => {
+		const URLWithBackURL =
+			'/test/page?p_p_id=random&random_backURL=http://www.somewhere.com';
+		const modalTarget = 'modal';
+		const formattedURL = formatActionURL(
+			URLWithBackURL,
+			testItem,
+			modalTarget
+		);
+
+		expect(formattedURL).toEqual(URLWithBackURL);
+
+		const URLWithRedirect =
+			'/test/page?p_p_id=random&random_redirect=http://www.somewhere.com';
+		const panelTarget = 'sidePanel';
+		const anotherFormattedURL = formatActionURL(
+			URLWithRedirect,
+			testItem,
+			panelTarget
+		);
+
+		expect(anotherFormattedURL).toEqual(URLWithRedirect);
+	});
+
+	it('returns the URL, without adding the _redirect and _backURL parameters if the target is different from "link"', () => {
+		const URLWithoutRedirect = '/test/page?p_p_id=random';
+		const modalTarget = 'modal';
+		const formattedURL = formatActionURL(
+			URLWithoutRedirect,
+			testItem,
+			modalTarget
+		);
+
+		expect(formattedURL).toEqual('/test/page?p_p_id=random');
+
+		const panelTarget = 'sidePanel';
+		const anotherFormattedURL = formatActionURL(
+			URLWithoutRedirect,
+			testItem,
+			panelTarget
+		);
+
+		expect(anotherFormattedURL).toEqual('/test/page?p_p_id=random');
 	});
 });

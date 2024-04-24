@@ -10,6 +10,7 @@
  *
  * @param url URI with an optional number of interpolated parameters
  * @param item object with properties that could match interpolated parameters
+ * @param target string that indicates the type of the action: link, modal, sidepanel
  *
  * @example
  * url = '/o/data-sample/{id}
@@ -27,7 +28,11 @@
 
 import getValueFromItem from '../getValueFromItem';
 
-const formatActionURL = function (url: string | undefined, item: any): string {
+const formatActionURL = function (
+	url: string | undefined,
+	item: any,
+	target?: string
+): string {
 	if (!url) {
 		return '';
 	}
@@ -46,7 +51,7 @@ const formatActionURL = function (url: string | undefined, item: any): string {
 		)
 	);
 
-	if (replacedURL.includes('?')) {
+	if (target === 'link' && replacedURL.includes('?')) {
 		const redirectionURL = window.location.href;
 		const backURL = '_backURL';
 		const redirect = '_redirect';
@@ -60,7 +65,10 @@ const formatActionURL = function (url: string | undefined, item: any): string {
 
 		if (redirectRegexp.test(url) || backURLRegexp.test(url)) {
 			for (const key of searchParams.keys()) {
-				if (redirectRegexp.test(key) || backURLRegexp.test(key)) {
+				if (
+					redirectRegexp.test(`${p_p_id}${key}`) ||
+					backURLRegexp.test(`${p_p_id}${key}`)
+				) {
 					searchParams.set(key, redirectionURL);
 				}
 			}

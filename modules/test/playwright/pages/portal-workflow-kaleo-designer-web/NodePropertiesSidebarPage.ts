@@ -10,13 +10,20 @@ import {NotificationSectionPage} from './NotificationSectionPage';
 import {TimerPage} from './TimerPage';
 
 export class NodePropertiesSidebarPage {
+	readonly addActionButton: Locator;
 	readonly addNotificationButton: Locator;
 	readonly addTimerButton: Locator;
 	readonly deleteNotificationsButton: Locator;
 	readonly notificationPage: NotificationSectionPage;
+	readonly page: Page;
 	readonly timerPage: TimerPage;
 
 	constructor(page: Page) {
+		this.addActionButton = page
+			.getByRole('tablist')
+			.filter({hasText: 'Actions'})
+			.getByRole('button', {name: 'New'})
+			.first();
 		this.addNotificationButton = page
 			.getByRole('tablist')
 			.filter({hasText: 'Notifications'})
@@ -31,6 +38,7 @@ export class NodePropertiesSidebarPage {
 			'button[title="Delete Notifications"]'
 		);
 		this.notificationPage = new NotificationSectionPage(page, 0);
+		this.page = page;
 		this.timerPage = new TimerPage(page);
 	}
 

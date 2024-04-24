@@ -87,12 +87,14 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				BlogsEditEntryDisplayContext.class.getName(),
 				new BlogsEditEntryDisplayContext(
-					_getAssetAutoTaggerConfiguration(renderRequest), entry,
+					_getAssetAutoTaggerConfiguration(renderRequest),
+					_assetVocabularyLocalService, entry,
 					_blogsFileUploadsConfiguration,
 					BlogsGroupServiceSettings.getInstance(
 						themeDisplay.getScopeGroupId()),
-					httpServletRequest,
-					_portal.getLiferayPortletResponse(renderResponse)));
+					httpServletRequest, _itemSelector,
+					_portal.getLiferayPortletResponse(renderResponse),
+					_siteConnectedGroupGroupProvider));
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchEntryException ||

@@ -68,27 +68,24 @@ public class BlogsEditEntryDisplayContext {
 
 	public BlogsEditEntryDisplayContext(
 		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration,
+		AssetVocabularyLocalService assetVocabularyLocalService,
 		BlogsEntry blogsEntry,
 		BlogsFileUploadsConfiguration blogsFileUploadsConfiguration,
 		BlogsGroupServiceSettings blogsGroupServiceSettings,
-		HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
+		LiferayPortletResponse liferayPortletResponse,
+		SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider) {
 
 		_assetAutoTaggerConfiguration = assetAutoTaggerConfiguration;
+		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_blogsEntry = blogsEntry;
 		_blogsFileUploadsConfiguration = blogsFileUploadsConfiguration;
 		_blogsGroupServiceSettings = blogsGroupServiceSettings;
 		_httpServletRequest = httpServletRequest;
+		_itemSelector = itemSelector;
 		_liferayPortletResponse = liferayPortletResponse;
+		_siteConnectedGroupGroupProvider = siteConnectedGroupGroupProvider;
 
-		_assetVocabularyLocalService =
-			(AssetVocabularyLocalService)httpServletRequest.getAttribute(
-				AssetVocabularyLocalService.class.getName());
-		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
-			ItemSelector.class.getName());
-		_siteConnectedGroupGroupProvider =
-			(SiteConnectedGroupGroupProvider)httpServletRequest.getAttribute(
-				SiteConnectedGroupGroupProvider.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

@@ -56,7 +56,9 @@ public class ContextProviderUtil {
 			"HTTP.REQUEST");
 	}
 
-	public static Object getMatchedResource(Message message) {
+	public static Object getMatchedResource(
+		boolean initialize, Message message) {
+
 		Exchange exchange = message.getExchange();
 
 		Object resource = _fetchExistingResource(
@@ -93,7 +95,9 @@ public class ContextProviderUtil {
 
 			Object instance = resourceProvider.getInstance(message);
 
-			resourceContext.initResource(instance);
+			if (initialize) {
+				resourceContext.initResource(instance);
+			}
 
 			return instance;
 		}
@@ -105,6 +109,10 @@ public class ContextProviderUtil {
 		Class<?> matchedResourceClass = (Class<?>)matchedResources.get(0);
 
 		return resourceContext.getResource(matchedResourceClass);
+	}
+
+	public static Object getMatchedResource(Message message) {
+		return getMatchedResource(true, message);
 	}
 
 	public static MultivaluedHashMap<String, String> getMultivaluedHashMap(
@@ -122,7 +130,7 @@ public class ContextProviderUtil {
 	public static void releaseResourceInstance(Message message) {
 		Exchange exchange = message.getExchange();
 
-		Object resource = getMatchedResource(message);
+		Object resource = getMatchedResource(false, message);
 
 		if (resource == null) {
 			return;

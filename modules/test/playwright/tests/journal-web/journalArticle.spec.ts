@@ -306,7 +306,7 @@ translationTest(
 
 		await expect(
 			page.getByRole('option', {
-				name: 'Catalan Language: Translating 3/4',
+				name: 'Catalan Language: Translating 1/2',
 			})
 		).toBeVisible({timeout: 1000});
 

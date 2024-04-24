@@ -56,8 +56,7 @@ public class DBPartitionInsertVirtualInstanceOperation
 					_log.error(
 						StringBundler.concat(
 							"Virtual Instance with company ID ", companyId,
-							" will not be imported because a company with ",
-							"same ID exists already"));
+							" already exists"));
 
 					return null;
 				}

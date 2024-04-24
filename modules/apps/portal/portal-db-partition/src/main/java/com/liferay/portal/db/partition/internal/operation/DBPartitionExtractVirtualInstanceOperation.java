@@ -53,7 +53,7 @@ public class DBPartitionExtractVirtualInstanceOperation
 				if (_companyLocalService.fetchCompany(companyId) == null) {
 					_log.error(
 						"Virtual Instance with company ID " + companyId +
-							" will not be extracted because it does not exist");
+							" does not exist");
 
 					return null;
 				}

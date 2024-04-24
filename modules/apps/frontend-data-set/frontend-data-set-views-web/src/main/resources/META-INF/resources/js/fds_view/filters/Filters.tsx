@@ -243,12 +243,10 @@ function AddFDSFilterModalContent({
 	const FieldNameDropdown = ({
 		fields,
 		inUseFields,
-		namespace,
 		onItemClick,
 	}: {
 		fields: IField[];
 		inUseFields: (string | undefined)[];
-		namespace: string;
 		onItemClick: Function;
 	}) => {
 		return (
@@ -259,7 +257,6 @@ function AddFDSFilterModalContent({
 				}}
 				trigger={
 					<ClayButton
-						aria-labelledby={`${namespace}fieldsLabel`}
 						className="form-control form-control-select form-control-select-secondary"
 						displayType="secondary"
 						id={selectedFieldFormElementId}
@@ -343,7 +340,6 @@ function AddFDSFilterModalContent({
 					<FieldNameDropdown
 						fields={fields}
 						inUseFields={inUseFields}
-						namespace={namespace}
 						onItemClick={(item: IField) => {
 							const newVal = fields.find((field) => {
 								return field.name === item.label;

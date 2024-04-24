@@ -5,9 +5,8 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
+import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
@@ -123,28 +122,22 @@ test.describe('Item Actions in the Data Set Manager', () => {
 });
 
 export const fragmentTest = mergeTests(
-	apiHelpersTest,
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
 		'LPS-164563': true,
 		'LPS-178052': true,
 	}),
 	fdsFragmentPageTest,
-	isolatedSiteTest,
+	isolatedLayoutTest({publish: false}),
 	loginTest()
 );
 
 fragmentTest.describe('Item Actions in the fragment', () => {
 	fragmentTest(
 		'Item Action button does not appear if there is no item action',
-		async ({
-			apiHelpers,
-			dataSetManagerApiHelpers,
-			fdsFragmentPage,
-			site,
-		}) => {
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
 			await fragmentTest.step('Create table field', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewFields({
+				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
@@ -153,25 +146,11 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 				});
 			});
 
-			const layout = await fragmentTest.step(
-				'Create a new page',
-				async () => {
-					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage({
-							siteId: site.id,
-							title: getRandomString(),
-						});
-
-					return pageLayout;
-				}
-			);
-
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
-						site,
 						viewLabel: actionsDataSetViewLabel,
 					});
 				}
@@ -192,22 +171,16 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 
 	fragmentTest(
 		'Link Item Action (single action) is shown in the fragment',
-		async ({
-			apiHelpers,
-			dataSetManagerApiHelpers,
-			fdsFragmentPage,
-			page,
-			site,
-		}) => {
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
 			await fragmentTest.step('Populate Data Set', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewFields({
+				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
 						actionsDataSetViewERC,
 					type: 'string',
 				});
-				await dataSetManagerApiHelpers.createDataSetViewFields({
+				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Name'},
 					name: 'name',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
@@ -228,25 +201,11 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 				});
 			});
 
-			const layout = await fragmentTest.step(
-				'Create a new page',
-				async () => {
-					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage({
-							siteId: site.id,
-							title: getRandomString(),
-						});
-
-					return pageLayout;
-				}
-			);
-
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
-						site,
 						viewLabel: actionsDataSetViewLabel,
 					});
 				}
@@ -295,13 +254,7 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 
 	fragmentTest(
 		'Link, Modal and Side Panel Item Actions (multiple actions) are shown in fragment',
-		async ({
-			apiHelpers,
-			dataSetManagerApiHelpers,
-			fdsFragmentPage,
-			page,
-			site,
-		}) => {
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
 			const MODAL_ITEM_ACTION_NAME = 'Modal item action';
 			const MODAL_ITEM_ACTION_TITLE = 'Modal title';
 			const SIDE_PANEL_ITEM_ACTION_NAME = 'SidePanel item action';
@@ -309,14 +262,14 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 				liferayConfig.environment.baseUrl;
 
 			await fragmentTest.step('Populate Data Set', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewFields({
+				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
 						actionsDataSetViewERC,
 					type: 'string',
 				});
-				await dataSetManagerApiHelpers.createDataSetViewFields({
+				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Name'},
 					name: 'name',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
@@ -354,25 +307,11 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 				});
 			});
 
-			const layout = await fragmentTest.step(
-				'Create a new page',
-				async () => {
-					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage({
-							siteId: site.id,
-							title: getRandomString(),
-						});
-
-					return pageLayout;
-				}
-			);
-
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
-						site,
 						viewLabel: actionsDataSetViewLabel,
 					});
 				}
@@ -508,13 +447,7 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 
 	fragmentTest(
 		'Async and Headless Item Actions (multiple actions) are shown in fragment',
-		async ({
-			apiHelpers,
-			dataSetManagerApiHelpers,
-			fdsFragmentPage,
-			page,
-			site,
-		}) => {
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
 			const ASYNC_ITEM_ACTION_NAME = 'Async item action';
 			const ASYNC_ITEM_ACTION_METHOD = 'DELETE';
 			const ASYNC_ITEM_ACTION_URL = '/o/data-set-manager/fields/{id}';
@@ -524,14 +457,14 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 				'Useless Headless Item Action';
 
 			await fragmentTest.step('Populate Data Set', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewFields({
+				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
 						actionsDataSetViewERC,
 					type: 'string',
 				});
-				await dataSetManagerApiHelpers.createDataSetViewFields({
+				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Name'},
 					name: 'name',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
@@ -569,25 +502,11 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 				});
 			});
 
-			const layout = await fragmentTest.step(
-				'Create a new page',
-				async () => {
-					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage({
-							siteId: site.id,
-							title: getRandomString(),
-						});
-
-					return pageLayout;
-				}
-			);
-
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
-						site,
 						viewLabel: actionsDataSetViewLabel,
 					});
 				}
@@ -720,27 +639,21 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 
 	fragmentTest(
 		'Async Item Action shows an error toast in the fragment when a failure occurs',
-		async ({
-			apiHelpers,
-			dataSetManagerApiHelpers,
-			fdsFragmentPage,
-			page,
-			site,
-		}) => {
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
 			const ASYNC_ITEM_ACTION_NAME = 'Async item action';
 			const ASYNC_ITEM_ACTION_METHOD = 'DELETE';
 			const ASYNC_ITEM_ACTION_WRONG_URL =
 				'/o/data-set-manager/fields/{foo}';
 
 			await fragmentTest.step('Populate Data Set', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewFields({
+				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
 						actionsDataSetViewERC,
 					type: 'string',
 				});
-				await dataSetManagerApiHelpers.createDataSetViewFields({
+				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Name'},
 					name: 'name',
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
@@ -760,25 +673,11 @@ fragmentTest.describe('Item Actions in the fragment', () => {
 				});
 			});
 
-			const layout = await fragmentTest.step(
-				'Create a new page',
-				async () => {
-					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage({
-							siteId: site.id,
-							title: getRandomString(),
-						});
-
-					return pageLayout;
-				}
-			);
-
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
-						site,
 						viewLabel: actionsDataSetViewLabel,
 					});
 				}

@@ -5,9 +5,8 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
+import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
@@ -434,40 +433,32 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 });
 
 export const fragmentTest = mergeTests(
-	apiHelpersTest,
 	dataSetManagerApiHelpersTest,
 	fdsFragmentPageTest,
 	featureFlagsTest({
-		'LPS-164563': true,
 		'LPS-178052': true,
 	}),
 	loginTest(),
 	dataSetManagerSetupTest,
-	isolatedSiteTest
+	isolatedLayoutTest({publish: false})
 );
 
 fragmentTest.describe('Visualization Modes in the fragment', () => {
 	fragmentTest(
 		'Show mapped fields in the fragment',
-		async ({
-			apiHelpers,
-			dataSetManagerApiHelpers,
-			fdsFragmentPage,
-			page,
-			site,
-		}) => {
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
 			const SAMPLE_SCALAR_FIELD = 'id';
 			const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
 			const SAMPLE_OBJECT_CHILD_FIELD = 'label';
 
 			await fragmentTest.step('Create table fields', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewFields({
+				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Label'},
 					name: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC: viewERC,
 					type: 'string',
 				});
-				await dataSetManagerApiHelpers.createDataSetViewFields({
+				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Id'},
 					name: `${SAMPLE_SCALAR_FIELD}`,
 					r_fdsViewFDSFieldRelationship_c_fdsViewERC: viewERC,
@@ -501,25 +492,11 @@ fragmentTest.describe('Visualization Modes in the fragment', () => {
 				});
 			});
 
-			const layout = await fragmentTest.step(
-				'Create a new page',
-				async () => {
-					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage({
-							siteId: site.id,
-							title: getRandomString(),
-						});
-
-					return pageLayout;
-				}
-			);
-
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
-						site,
 						viewLabel,
 					});
 				}
@@ -624,18 +601,12 @@ fragmentTest.describe('Visualization Modes in the fragment', () => {
 
 	fragmentTest(
 		'Show mapped scalar array field in the fragment @LPD-11769',
-		async ({
-			apiHelpers,
-			dataSetManagerApiHelpers,
-			fdsFragmentPage,
-			page,
-			site,
-		}) => {
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
 			const SAMPLE_SCALAR_ARRAY_FIELD = 'keywords';
 			const SAMPLE_SCALAR_ARRAY_CONTENT = ['one', 'two', 'three'];
 
 			await fragmentTest.step('Create table fields', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewFields({
+				await dataSetManagerApiHelpers.createDataSetField({
 					extraBodyParams: {
 						keywords: SAMPLE_SCALAR_ARRAY_CONTENT,
 					},
@@ -646,25 +617,11 @@ fragmentTest.describe('Visualization Modes in the fragment', () => {
 				});
 			});
 
-			const layout = await fragmentTest.step(
-				'Create a new page',
-				async () => {
-					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage({
-							siteId: site.id,
-							title: getRandomString(),
-						});
-
-					return pageLayout;
-				}
-			);
-
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
-						site,
 						viewLabel,
 					});
 				}

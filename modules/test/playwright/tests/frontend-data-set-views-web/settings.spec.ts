@@ -5,9 +5,8 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
+import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
@@ -196,27 +195,19 @@ test.describe('Data Set Settings', () => {
 });
 
 export const fragmentTest = mergeTests(
-	apiHelpersTest,
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
-		'LPS-164563': true,
 		'LPS-178052': true,
 	}),
 	fdsFragmentPageTest,
-	isolatedSiteTest,
+	isolatedLayoutTest({publish: false}),
 	loginTest()
 );
 
 fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 	fragmentTest(
 		'When there is only one visualization mode defined, that will be the default one. Cards',
-		async ({
-			apiHelpers,
-			dataSetManagerApiHelpers,
-			fdsFragmentPage,
-			page,
-			site,
-		}) => {
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
 			await fragmentTest.step(
 				'Assign a field to a Card title section',
 				async () => {
@@ -229,25 +220,11 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				}
 			);
 
-			const layout = await fragmentTest.step(
-				'Create a page with a Data Set fragment',
-				async () => {
-					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage({
-							siteId: site.id,
-							title: getRandomString(),
-						});
-
-					return pageLayout;
-				}
-			);
-
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
-						site,
 						viewLabel: settingsDataSetViewLabel,
 					});
 				}
@@ -265,13 +242,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 
 	fragmentTest(
 		'When there are more than one visualization mode defined (cards & list), the user could change the visualization option.',
-		async ({
-			apiHelpers,
-			dataSetManagerApiHelpers,
-			fdsFragmentPage,
-			page,
-			site,
-		}) => {
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
 			await fragmentTest.step(
 				'Assign a field to a Card and List title sections',
 				async () => {
@@ -290,25 +261,11 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				}
 			);
 
-			const layout = await fragmentTest.step(
-				'Create a page with a Data Set fragment',
-				async () => {
-					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage({
-							siteId: site.id,
-							title: getRandomString(),
-						});
-
-					return pageLayout;
-				}
-			);
-
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
-						site,
 						viewLabel: settingsDataSetViewLabel,
 					});
 				}
@@ -346,13 +303,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 
 	fragmentTest(
 		'When there are more than one visualization modes defined, with a default selected (List), this will be the default one in the fragment.',
-		async ({
-			apiHelpers,
-			dataSetManagerApiHelpers,
-			fdsFragmentPage,
-			page,
-			site,
-		}) => {
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
 			await fragmentTest.step(
 				'Assign a field to a Card and List title sections',
 				async () => {
@@ -381,25 +332,11 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				}
 			);
 
-			const layout = await fragmentTest.step(
-				'Create a page with a Data Set fragment',
-				async () => {
-					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage({
-							siteId: site.id,
-							title: getRandomString(),
-						});
-
-					return pageLayout;
-				}
-			);
-
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
-						site,
 						viewLabel: settingsDataSetViewLabel,
 					});
 				}
@@ -442,13 +379,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 
 	fragmentTest(
 		'When the default visualization mode is changed in the Data Set Manager, the change is reflected in the fragment',
-		async ({
-			apiHelpers,
-			dataSetManagerApiHelpers,
-			fdsFragmentPage,
-			page,
-			site,
-		}) => {
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
 			await fragmentTest.step(
 				'Assign a field to a Card and List title sections',
 				async () => {
@@ -477,25 +408,11 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				}
 			);
 
-			const layout = await fragmentTest.step(
-				'Create a page with a Data Set fragment',
-				async () => {
-					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage({
-							siteId: site.id,
-							title: getRandomString(),
-						});
-
-					return pageLayout;
-				}
-			);
-
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
-						site,
 						viewLabel: settingsDataSetViewLabel,
 					});
 				}

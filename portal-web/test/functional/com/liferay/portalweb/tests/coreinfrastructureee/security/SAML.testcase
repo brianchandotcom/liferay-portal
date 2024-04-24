@@ -5356,7 +5356,7 @@ definition {
 	@priority = 4
 	test ViewSPInitiatedSSOWithOktaAndUserGroups {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
-		property custom.properties = "feature.flag.LPS-180198=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
@@ -5418,7 +5418,7 @@ definition {
 	@priority = 4
 	test ViewSPInitiatedSSOWithOktaUserGroupCanBeAssignedLater {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
-		property custom.properties = "feature.flag.LPS-180198=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
@@ -5498,7 +5498,7 @@ definition {
 	@priority = 4
 	test ViewSPInitiatedSSOWithOktaUserGroupsAreNotCreatedDuringLogin {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
-		property custom.properties = "feature.flag.LPS-180198=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
@@ -5558,7 +5558,7 @@ definition {
 	@priority = 4
 	test ViewSPInitiatedSSOWithOktaWithMultipleUserGroups {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
-		property custom.properties = "feature.flag.LPS-180198=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";

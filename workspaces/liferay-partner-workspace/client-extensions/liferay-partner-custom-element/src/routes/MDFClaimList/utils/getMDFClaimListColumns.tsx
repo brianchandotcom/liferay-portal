@@ -171,7 +171,7 @@ export default function getMDFClaimListColumns(
 		{
 			columnKey: MDFClaimColumnKey.PARTNER,
 			label: 'Partner',
-			size: 'md'
+			size: 'md',
 		},
 		{
 			columnKey: MDFClaimColumnKey.STATUS,

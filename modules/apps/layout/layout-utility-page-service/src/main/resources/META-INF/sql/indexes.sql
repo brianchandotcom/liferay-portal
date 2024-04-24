@@ -3,4 +3,5 @@ create unique index IX_373A213C on LayoutUtilityPageEntry (groupId, ctCollection
 create unique index IX_841B9C93 on LayoutUtilityPageEntry (groupId, ctCollectionId, type_[$COLUMN_LENGTH:75$], name[$COLUMN_LENGTH:75$]);
 create unique index IX_28103BB3 on LayoutUtilityPageEntry (groupId, ctCollectionId, uuid_[$COLUMN_LENGTH:75$]);
 create index IX_DCFECA00 on LayoutUtilityPageEntry (groupId, type_[$COLUMN_LENGTH:75$], defaultLayoutUtilityPageEntry);
+create index IX_B0D10431 on LayoutUtilityPageEntry (groupId, type_[$COLUMN_LENGTH:75$], name[$COLUMN_LENGTH:75$]);
 create index IX_997885CD on LayoutUtilityPageEntry (uuid_[$COLUMN_LENGTH:75$]);

@@ -109,6 +109,16 @@ public class LayoutUtilityPageEntryServiceWrapper
 
 	@Override
 	public java.util.List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId, String keyword, String[] types, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
+			orderByComparator) {
+
+		return _layoutUtilityPageEntryService.getLayoutUtilityPageEntries(
+			groupId, keyword, types, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
 		long groupId, String[] types, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
 			orderByComparator) {
@@ -121,6 +131,14 @@ public class LayoutUtilityPageEntryServiceWrapper
 	public int getLayoutUtilityPageEntriesCount(long groupId) {
 		return _layoutUtilityPageEntryService.getLayoutUtilityPageEntriesCount(
 			groupId);
+	}
+
+	@Override
+	public int getLayoutUtilityPageEntriesCount(
+		long groupId, String keyword, String[] types) {
+
+		return _layoutUtilityPageEntryService.getLayoutUtilityPageEntriesCount(
+			groupId, keyword, types);
 	}
 
 	@Override

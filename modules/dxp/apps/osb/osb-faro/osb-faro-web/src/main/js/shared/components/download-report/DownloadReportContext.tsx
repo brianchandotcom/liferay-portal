@@ -1,6 +1,5 @@
-import React, {createContext, useContext, useEffect, useReducer} from 'react';
+import React, {createContext, useContext, useReducer} from 'react';
 import {ReportContainer} from './DownloadPDFReport';
-import {useLocation} from 'react-router-dom';
 
 export const Context = createContext<{
 	reportContainers: ReportContainer[];
@@ -43,7 +42,6 @@ const downloadReportReducer = (state, action: DownloadReportAction) => {
 };
 
 export const DownloadReportProvider = ({children}) => {
-	const location = useLocation();
 	const [{reportContainers}, dispatch] = useReducer(downloadReportReducer, {
 		reportContainers: []
 	});
@@ -61,15 +59,6 @@ export const DownloadReportProvider = ({children}) => {
 			type: ActionTypes.ClearReportContainers
 		});
 	};
-
-	/**
-	 * Clear report containers on each page change to only
-	 * get report containers from the current page
-	 */
-
-	useEffect(() => {
-		clearReportContainers();
-	}, [location.pathname]);
 
 	return (
 		<Context.Provider

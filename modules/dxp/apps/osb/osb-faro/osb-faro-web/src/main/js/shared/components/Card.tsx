@@ -61,12 +61,17 @@ const Card: React.FC<ICardProps> & {
 	reportContainer,
 	testId
 }) => {
-	const {setReportContainer} = useDownloadReportContext();
+	const {
+		clearReportContainers,
+		setReportContainer
+	} = useDownloadReportContext();
 
 	useEffect(() => {
 		if (reportContainer) {
 			setReportContainer(reportContainer);
 		}
+
+		return clearReportContainers;
 	}, [reportContainer]);
 
 	const classes = getCN('card', 'card-root', className, {

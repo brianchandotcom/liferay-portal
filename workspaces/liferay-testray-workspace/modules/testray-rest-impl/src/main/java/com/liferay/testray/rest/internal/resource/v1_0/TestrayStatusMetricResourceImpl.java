@@ -298,7 +298,7 @@ public class TestrayStatusMetricResourceImpl
 		StringBundler sb = new StringBundler(29);
 
 		sb.append("select t.c_teamId_ , t.name_, count(cr.dueStatus_) as ");
-		sb.append("TOTAL, sum(case when cr.dueStatus_ = 'blocked' then 1 ");
+		sb.append("total, sum(case when cr.dueStatus_ = 'blocked' then 1 ");
 		sb.append("else 0 end) as blocked, sum(case when cr.dueStatus_ = ");
 		sb.append("'failed' then 1 else 0 end) as failed, sum(case when ");
 		sb.append("cr.dueStatus_ = 'inprogress' then 1 else 0 end) as ");

@@ -181,6 +181,7 @@ const ListView: React.FC<ListViewProps> = ({
 					matchingField,
 					value
 				);
+				delete appliedFilters[key];
 			}
 		});
 
@@ -230,7 +231,7 @@ const ListView: React.FC<ListViewProps> = ({
 		page = 1,
 		pageSize,
 		results,
-		testrayCaseResults,
+		testrayCaseResultComparisons,
 		totalCount = 0,
 	} = response || {};
 
@@ -240,12 +241,12 @@ const ListView: React.FC<ListViewProps> = ({
 	);
 
 	const itemsMemoized = useMemo(() => {
-		if (results && !testrayCaseResults) {
+		if (results && !testrayCaseResultComparisons) {
 			return matrixData;
 		}
 
-		return testrayCaseResults || items;
-	}, [items, matrixData, results, testrayCaseResults]);
+		return testrayCaseResultComparisons || items;
+	}, [items, matrixData, results, testrayCaseResultComparisons]);
 
 	const isCompareRunsMatrix = title === 'Runs';
 
@@ -361,7 +362,7 @@ const ListView: React.FC<ListViewProps> = ({
 
 				dispatch({payload: page, type: ListViewTypes.SET_PAGE});
 			}}
-			totalItems={totalCount || testrayCaseResults?.length || 0}
+			totalItems={totalCount || testrayCaseResultComparisons?.length || 0}
 		/>
 	);
 
@@ -397,7 +398,7 @@ const ListView: React.FC<ListViewProps> = ({
 					mutate,
 				})}
 
-			{!!items.length || !!testrayCaseResults?.length ? (
+			{!!items.length || !!testrayCaseResultComparisons?.length ? (
 				<>
 					{pagination?.displayTop && (
 						<div className="mt-4">{Pagination}</div>
@@ -426,7 +427,7 @@ const ListView: React.FC<ListViewProps> = ({
 			) : null}
 
 			{results &&
-				!testrayCaseResults &&
+				!testrayCaseResultComparisons &&
 				(isCompareRunsMatrix ? (
 					<ClayLayout.Col lg={12} md={12}>
 						<TableChart matrixData={itemsMemoized} title={title} />

@@ -20,6 +20,7 @@ import InfoItemService from '../../app/services/InfoItemService';
 import {CACHE_KEYS} from '../../app/utils/cache';
 import isMapped from '../../app/utils/editable_value/isMapped';
 import isMappedToInfoItem from '../../app/utils/editable_value/isMappedToInfoItem';
+import isMappedToRelationship from '../../app/utils/editable_value/isMappedToRelationship';
 import isMappedToStructure from '../../app/utils/editable_value/isMappedToStructure';
 import findPageContent from '../../app/utils/findPageContent';
 import getMappingFieldsKey from '../../app/utils/getMappingFieldsKey';
@@ -35,6 +36,11 @@ const MAPPING_SOURCE_TYPES = {
 	content: 'content',
 	relationship: 'relationship',
 	structure: 'structure',
+};
+
+const NOT_SELECTED_OPTION = {
+	label: `-- ${Liferay.Language.get('not-selected')} --`,
+	value: 'not-selected',
 };
 
 const UNMAPPED_OPTION = {
@@ -86,7 +92,7 @@ function filterFields(fields, fieldType, filterLinkTypes) {
 	}, []);
 }
 
-function loadMappingFields({item, sourceType}) {
+function loadMappingFields({item, relationship, sourceType}) {
 	let classNameId;
 	let classTypeId;
 
@@ -102,6 +108,13 @@ function loadMappingFields({item, sourceType}) {
 	) {
 		classNameId = item.classNameId;
 		classTypeId = item.classTypeId;
+	}
+	else if (
+		sourceType === MAPPING_SOURCE_TYPES.relationship &&
+		relationship
+	) {
+		classNameId = relationship;
+		classTypeId = '0';
 	}
 
 	const promise = InfoItemService.getAvailableStructureMappingFields({
@@ -120,6 +133,21 @@ function loadMappingFields({item, sourceType}) {
 	}
 
 	return Promise.resolve(null);
+}
+
+function getInitialSourceType(mappedItem) {
+	if (isMappedToRelationship(mappedItem)) {
+		return MAPPING_SOURCE_TYPES.relationship;
+	}
+	else if (
+		!isMappedToInfoItem(mappedItem) &&
+		(isMappedToStructure(mappedItem) ||
+			config.layoutType === LAYOUT_TYPES.display)
+	) {
+		return MAPPING_SOURCE_TYPES.structure;
+	}
+
+	return MAPPING_SOURCE_TYPES.content;
 }
 
 export default function MappingSelectorWrapper({
@@ -259,6 +287,7 @@ function MappingSelector({
 	const mappingFields = useSelector((state) => state.mappingFields);
 	const pageContents = usePageContents();
 	const mappingSelectorSourceSelectId = useId();
+	const relationshipSelectId = useId();
 
 	const {selectedMappingTypes} = config;
 
@@ -269,11 +298,11 @@ function MappingSelector({
 	const [subtypeLabel, setSubtypeLabel] = useState(null);
 
 	const [selectedSourceType, setSelectedSourceType] = useState(
-		!isMappedToInfoItem(mappedItem) &&
-			(isMappedToStructure(mappedItem) ||
-				config.layoutType === LAYOUT_TYPES.display)
-			? MAPPING_SOURCE_TYPES.structure
-			: MAPPING_SOURCE_TYPES.content
+		getInitialSourceType(mappedItem)
+	);
+
+	const [selectedRelationship, setSelectedRelationship] = useState(
+		mappedItem.classNameId || NOT_SELECTED_OPTION.value
 	);
 
 	const relationships = useCache({
@@ -333,6 +362,8 @@ function MappingSelector({
 				? {}
 				: selectedSourceType === MAPPING_SOURCE_TYPES.content
 				? {...selectedItem, fieldId: fieldValue}
+				: selectedSourceType === MAPPING_SOURCE_TYPES.relationship
+				? {classNameId: selectedRelationship, mappedField: fieldValue}
 				: {mappedField: fieldValue};
 
 		if (selectedSourceType === MAPPING_SOURCE_TYPES.content) {
@@ -374,8 +405,10 @@ function MappingSelector({
 
 	useEffect(() => {
 		if (
-			selectedSourceType === MAPPING_SOURCE_TYPES.content &&
-			!selectedItem.classNameId
+			(selectedSourceType === MAPPING_SOURCE_TYPES.content &&
+				!selectedItem.classNameId) ||
+			(selectedSourceType === MAPPING_SOURCE_TYPES.relationship &&
+				selectedRelationship === NOT_SELECTED_OPTION.value)
 		) {
 			setItemFields(null);
 
@@ -388,6 +421,11 @@ function MappingSelector({
 		const key =
 			selectedSourceType === MAPPING_SOURCE_TYPES.content
 				? getMappingFieldsKey(infoItem)
+				: selectedSourceType === MAPPING_SOURCE_TYPES.relationship
+				? getMappingFieldsKey({
+						classNameId: selectedRelationship,
+						classTypeId: '0',
+				  })
 				: getMappingFieldsKey(selectedMappingTypes);
 
 		const fields = mappingFields[key];
@@ -398,6 +436,7 @@ function MappingSelector({
 		else {
 			loadMappingFields({
 				item: selectedItem,
+				relationship: selectedRelationship,
 				sourceType: selectedSourceType,
 			}).then((newFields) => {
 				dispatch(addMappingFields({fields: newFields, key}));
@@ -411,33 +450,67 @@ function MappingSelector({
 		mappingFields,
 		selectedItem,
 		selectedMappingTypes,
+		selectedRelationship,
 		selectedSourceType,
 	]);
 
 	return (
 		<>
 			{config.layoutType === LAYOUT_TYPES.display && (
-				<ClayForm.Group small>
-					<label htmlFor={mappingSelectorSourceSelectId}>
-						{Liferay.Language.get('source')}
-					</label>
+				<>
+					<ClayForm.Group small>
+						<label htmlFor={mappingSelectorSourceSelectId}>
+							{Liferay.Language.get('source')}
+						</label>
 
-					<ClaySelectWithOption
-						className="pr-4 text-truncate"
-						id={mappingSelectorSourceSelectId}
-						onChange={(event) => {
-							setSelectedSourceType(event.target.value);
+						<ClaySelectWithOption
+							className="pr-4 text-truncate"
+							id={mappingSelectorSourceSelectId}
+							onChange={(event) => {
+								setSelectedSourceType(event.target.value);
 
-							setSelectedItem({});
+								setSelectedItem({});
 
-							if (isMapped(mappedItem)) {
-								onMappingSelect({});
-							}
-						}}
-						options={sourceTypes}
-						value={selectedSourceType}
-					/>
-				</ClayForm.Group>
+								setSelectedRelationship(
+									NOT_SELECTED_OPTION.value
+								);
+
+								if (isMapped(mappedItem)) {
+									onMappingSelect({});
+								}
+							}}
+							options={sourceTypes}
+							value={selectedSourceType}
+						/>
+					</ClayForm.Group>
+
+					{selectedSourceType ===
+					MAPPING_SOURCE_TYPES.relationship ? (
+						<ClayForm.Group small>
+							<label htmlFor={relationshipSelectId}>
+								{Liferay.Language.get('relationship')}
+							</label>
+
+							<ClaySelectWithOption
+								className="pr-4 text-truncate"
+								id={relationshipSelectId}
+								onChange={(event) => {
+									setSelectedRelationship(event.target.value);
+								}}
+								options={[
+									NOT_SELECTED_OPTION,
+									...(relationships || []).map(
+										({classNameId, label}) => ({
+											label,
+											value: classNameId,
+										})
+									),
+								]}
+								value={selectedRelationship}
+							/>
+						</ClayForm.Group>
+					) : null}
+				</>
 			)}
 
 			{selectedSourceType === MAPPING_SOURCE_TYPES.content && (

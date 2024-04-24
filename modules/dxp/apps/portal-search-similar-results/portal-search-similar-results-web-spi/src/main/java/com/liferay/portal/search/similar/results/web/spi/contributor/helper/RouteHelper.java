@@ -10,6 +10,14 @@ package com.liferay.portal.search.similar.results.web.spi.contributor.helper;
  */
 public interface RouteHelper {
 
+	/**
+	 * Retrieves the current URL string associated with the route.
+	 * This method is used by {@link SimilarResultsContributor#detectRoute} to extract information
+	 * from the URL that will be used to populate attributes in the {@link RouteBuilder}.
+	 * These attributes can then be accessed during {@link SimilarResultsContributor#resolveCriteria}.
+	 *
+	 * @return The current URL string associated with the route.
+	 */
 	public String getURLString();
 
 }

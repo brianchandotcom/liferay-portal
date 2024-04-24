@@ -95,7 +95,14 @@ public class CPDefinitionSystemObjectDefinitionManager
 	public String getBaseModelExternalReferenceCode(long primaryKey)
 		throws PortalException {
 
-		CProduct cProduct = _cProductLocalService.getCProduct(primaryKey);
+		CProduct cProduct = _cProductLocalService.fetchCProduct(primaryKey);
+
+		if (cProduct == null) {
+			CPDefinition cpDefinition =
+				_cpDefinitionLocalService.getCPDefinition(primaryKey);
+
+			cProduct = cpDefinition.getCProduct();
+		}
 
 		return cProduct.getExternalReferenceCode();
 	}

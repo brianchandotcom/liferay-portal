@@ -646,7 +646,11 @@ public class ObjectValidationRuleLocalServiceImpl
 			!(objectValidationRuleEngine instanceof
 				FunctionObjectValidationRuleEngineImpl ||
 			  objectValidationRuleEngine instanceof
-				  UniqueCompositeKeyObjectValidationRuleEngineImpl)) {
+				  UniqueCompositeKeyObjectValidationRuleEngineImpl ||
+			  StringUtil.startsWith(
+				  engine,
+				  ObjectValidationRuleConstants.
+					  ENGINE_TYPE_JAVA_DELEGATE_PREFIX))) {
 
 			throw new ObjectValidationRuleScriptException(
 				"The script is required", "required");

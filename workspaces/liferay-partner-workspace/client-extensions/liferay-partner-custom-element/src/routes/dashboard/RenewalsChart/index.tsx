@@ -119,7 +119,7 @@ export default function () {
 							></div>
 
 							<div>
-								<div className="font-weight-semi-bold">
+								<div className="font-weight-semi-bold responsive-text">
 									{item.opportunityName}
 								</div>
 

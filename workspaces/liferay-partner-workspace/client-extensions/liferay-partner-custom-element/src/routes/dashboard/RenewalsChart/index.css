@@ -9,7 +9,16 @@
 	}
 }
 
+.responsive-text {
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+}
+
 .status-bar-vertical {
 	height: 40px;
+	min-width: 10px;
 	width: 10px;
 }

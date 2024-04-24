@@ -14,9 +14,6 @@ import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.routine.UpstreamBranchCronRoutineEntity;
 import com.liferay.jethr0.routine.dalo.RoutineEntityDALO;
 import com.liferay.jethr0.routine.dalo.RoutineToJobsEntityRelationshipDALO;
-import com.liferay.jethr0.routine.dalo.RoutinesToGitBranchesEntityRelationshipDALO;
-
-import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -90,34 +87,6 @@ public class RoutineEntityRepository
 	private RoutineEntity _updateRoutineToJobRelationshipsFromDALO(
 		RoutineEntity parentRoutineEntity) {
 
-		updateParentToChildRelationshipsFromDALO(
-			parentRoutineEntity, _routinesToGitBranchesEntityRelationshipDALO,
-			_gitBranchEntityRepository,
-			(routineEntity, gitBranchEntity) -> relateRoutineToGitBranch(
-				routineEntity, gitBranchEntity),
-			routineEntity -> {
-				if (routineEntity instanceof UpstreamBranchCronRoutineEntity) {
-					UpstreamBranchCronRoutineEntity
-						upstreamBranchCronRoutineEntity =
-							(UpstreamBranchCronRoutineEntity)routineEntity;
-
-					return upstreamBranchCronRoutineEntity.
-						getGitBranchEntities();
-				}
-
-				return new HashSet<>();
-			},
-			(routineEntity, gitBranchEntity) -> {
-				if (routineEntity instanceof UpstreamBranchCronRoutineEntity) {
-					UpstreamBranchCronRoutineEntity
-						upstreamBranchCronRoutineEntity =
-							(UpstreamBranchCronRoutineEntity)routineEntity;
-
-					upstreamBranchCronRoutineEntity.removeGitBranchEntity(
-						gitBranchEntity);
-				}
-			});
-
 		return updateParentToChildRelationshipsFromDALO(
 			parentRoutineEntity, _routineToJobsEntityRelationshipDALO,
 			_jobEntityRepository,
@@ -133,10 +102,6 @@ public class RoutineEntityRepository
 
 	@Autowired
 	private RoutineEntityDALO _routineEntityDALO;
-
-	@Autowired
-	private RoutinesToGitBranchesEntityRelationshipDALO
-		_routinesToGitBranchesEntityRelationshipDALO;
 
 	@Autowired
 	private RoutineToJobsEntityRelationshipDALO

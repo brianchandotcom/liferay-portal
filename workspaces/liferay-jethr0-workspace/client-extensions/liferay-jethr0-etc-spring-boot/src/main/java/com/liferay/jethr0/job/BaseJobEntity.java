@@ -7,7 +7,6 @@ package com.liferay.jethr0.job;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.task.TaskEntity;
@@ -51,16 +50,6 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	}
 
 	@Override
-	public void addGitBranchEntities(Set<GitBranchEntity> gitBranchEntities) {
-		addRelatedEntities(gitBranchEntities);
-	}
-
-	@Override
-	public void addGitBranchEntity(GitBranchEntity gitBranchEntity) {
-		addRelatedEntity(gitBranchEntity);
-	}
-
-	@Override
 	public void addJenkinsCohortEntities(
 		Set<JenkinsCohortEntity> jenkinsCohortEntities) {
 
@@ -97,11 +86,6 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	@Override
 	public Set<BuildEntity> getBuildEntities() {
 		return getRelatedEntities(BuildEntity.class);
-	}
-
-	@Override
-	public Set<GitBranchEntity> getGitBranchEntities() {
-		return getRelatedEntities(GitBranchEntity.class);
 	}
 
 	@Override
@@ -228,18 +212,6 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	@Override
 	public void removeBuildEntity(BuildEntity buildEntity) {
 		removeRelatedEntity(buildEntity);
-	}
-
-	@Override
-	public void removeGitBranchEntities(
-		Set<GitBranchEntity> gitBranchEntities) {
-
-		removeRelatedEntities(gitBranchEntities);
-	}
-
-	@Override
-	public void removeGitBranchEntity(GitBranchEntity gitBranchEntity) {
-		removeRelatedEntity(gitBranchEntity);
 	}
 
 	@Override

@@ -5,11 +5,6 @@
 
 package com.liferay.jethr0.routine;
 
-import com.liferay.jethr0.git.branch.GitBranchEntity;
-
-import java.util.Collections;
-import java.util.Set;
-
 import org.json.JSONObject;
 
 /**
@@ -17,21 +12,6 @@ import org.json.JSONObject;
  */
 public abstract class BaseUpstreamBranchCronRoutineEntity
 	extends BaseCronRoutineEntity implements UpstreamBranchCronRoutineEntity {
-
-	@Override
-	public void addGitBranchEntities(Set<GitBranchEntity> gitBranchEntities) {
-		addRelatedEntities(gitBranchEntities);
-	}
-
-	@Override
-	public void addGitBranchEntity(GitBranchEntity gitBranchEntity) {
-		addRelatedEntities(Collections.singleton(gitBranchEntity));
-	}
-
-	@Override
-	public Set<GitBranchEntity> getGitBranchEntities() {
-		return getRelatedEntities(GitBranchEntity.class);
-	}
 
 	@Override
 	public JSONObject getJSONObject() {
@@ -44,18 +24,6 @@ public abstract class BaseUpstreamBranchCronRoutineEntity
 
 	public String getPreviousBranchSHA() {
 		return _previousBranchSHA;
-	}
-
-	@Override
-	public void removeGitBranchEntities(
-		Set<GitBranchEntity> gitBranchEntities) {
-
-		removeRelatedEntities(gitBranchEntities);
-	}
-
-	@Override
-	public void removeGitBranchEntity(GitBranchEntity gitBranchEntity) {
-		removeRelatedEntities(Collections.singleton(gitBranchEntity));
 	}
 
 	@Override

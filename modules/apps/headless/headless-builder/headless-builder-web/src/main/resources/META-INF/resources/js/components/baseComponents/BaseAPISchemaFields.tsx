@@ -10,6 +10,7 @@ import {sub} from 'frontend-js-web';
 import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import {Select} from '../fieldComponents/Select';
+import {SYSTEM_OBJECTS_WHITELIST} from '../utils/constants';
 import {getAllItems} from '../utils/fetchUtil';
 
 interface BaseAPIApplicationFieldsProps {
@@ -37,8 +38,16 @@ export default function BaseAPISchemaFields({
 			filter: 'status/any(k:k eq 0)',
 			url: '/o/object-admin/v1.0/object-definitions',
 		}).then((result) => {
-			const options = result
-				? result.map((objectDefinition) => ({
+			const filteredResult = result.filter(
+				(option) =>
+					!option.system ||
+					SYSTEM_OBJECTS_WHITELIST.includes(
+						option.externalReferenceCode
+					)
+			);
+
+			const options = filteredResult
+				? filteredResult.map((objectDefinition) => ({
 						label: objectDefinition.name,
 						value: objectDefinition.externalReferenceCode,
 				  }))

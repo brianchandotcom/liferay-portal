@@ -85,6 +85,7 @@ export async function getRoutineById({id, setRoutine}) {
 				}
 				routines(filter: \\"id eq '${id}'\\") {
 					items {
+						cron
 						dateCreated
 						dateModified
 						id

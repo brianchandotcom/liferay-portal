@@ -7,12 +7,14 @@ import {Locator, Page} from '@playwright/test';
 
 export class DiagramViewPage {
 	readonly backButton: Locator;
+	readonly diagramArea: Locator;
 	readonly reviewNodeLink: Locator;
 	readonly saveWorkflowDefinitionButton: Locator;
 	readonly sourceViewButton: Locator;
 
 	constructor(page: Page) {
 		this.backButton = page.getByRole('link', {name: 'Back'});
+		this.diagramArea = page.locator('.react-flow');
 		this.reviewNodeLink = page.getByText('review', {exact: true});
 		this.saveWorkflowDefinitionButton = page.getByRole('button', {
 			name: 'Save',

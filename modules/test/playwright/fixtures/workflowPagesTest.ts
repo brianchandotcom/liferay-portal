@@ -8,6 +8,7 @@ import {test} from '@playwright/test';
 import {ScriptManagementPage} from '../pages/portal-security-script-management-web/ScriptManagementPage';
 import {ActionPage} from '../pages/portal-workflow-kaleo-designer-web/ActionPage';
 import {ActionReassignmentPage} from '../pages/portal-workflow-kaleo-designer-web/ActionReassignmentPage';
+import {ConditionNode} from '../pages/portal-workflow-kaleo-designer-web/ConditionNodePage';
 import {DiagramViewPage} from '../pages/portal-workflow-kaleo-designer-web/DiagramViewPage';
 import {NodePropertiesSidebarPage} from '../pages/portal-workflow-kaleo-designer-web/NodePropertiesSidebarPage';
 import {NotificationSectionPage} from '../pages/portal-workflow-kaleo-designer-web/NotificationSectionPage';
@@ -19,6 +20,7 @@ import {WorkflowPage} from '../tests/portal-workflow-web/pages/WorkflowPage';
 const workflowPagesTest = test.extend<{
 	actionPage: ActionPage;
 	actionReassignmentPage: ActionReassignmentPage;
+	conditionNode: ConditionNode;
 	diagramViewPage: DiagramViewPage;
 	nodePropertiesSidebarPage: NodePropertiesSidebarPage;
 	notificationSectionPage: NotificationSectionPage;
@@ -33,6 +35,9 @@ const workflowPagesTest = test.extend<{
 	},
 	actionReassignmentPage: async ({page}, use) => {
 		await use(new ActionReassignmentPage(page));
+	},
+	conditionNode: async ({page}, use) => {
+		await use(new ConditionNode(page));
 	},
 	diagramViewPage: async ({page}, use) => {
 		await use(new DiagramViewPage(page));

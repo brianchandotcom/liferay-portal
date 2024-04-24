@@ -36,3 +36,5 @@ export const RETRIEVE_TYPES = {
 };
 
 export const STR_BLANK = '';
+
+export const SYSTEM_OBJECTS_WHITELIST = ['L_ACCOUNT', 'L_USER'];

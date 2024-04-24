@@ -378,11 +378,20 @@ export const convertEventToProperty = (
 		? eventDefinition.get('name')
 		: eventDefinition.name;
 
+	const blocked = isMap(eventDefinition)
+		? eventDefinition.get('blocked')
+		: eventDefinition.blocked;
+
+	const hidden = isMap(eventDefinition)
+		? eventDefinition.get('hidden')
+		: eventDefinition.hidden;
+
 	return new Property({
 		entityName: Liferay.Language.get('event'),
 		id,
 		label: displayName || name,
 		name,
+		options: [{label: 'eventHidden', value: blocked || hidden}],
 		propertyKey: 'event',
 		type: PropertyTypes.Event
 	});

@@ -31,6 +31,14 @@ public interface PersistedModelLocalService {
 
 	public int dslQueryCount(DSLQuery dslQuery);
 
+	public default PersistedModel fetchPersistedModel(
+		Serializable primaryKeyObj) {
+
+		BasePersistence<?> basePersistence = getBasePersistence();
+
+		return (PersistedModel)basePersistence.fetchByPrimaryKey(primaryKeyObj);
+	}
+
 	public default BasePersistence<?> getBasePersistence() {
 		throw new UnsupportedOperationException();
 	}

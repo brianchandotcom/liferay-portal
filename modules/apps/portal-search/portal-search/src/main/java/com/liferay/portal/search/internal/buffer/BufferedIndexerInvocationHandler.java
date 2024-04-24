@@ -107,9 +107,6 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 			bufferRequest(methodKey, args[0], indexerRequestBuffer);
 		}
 		else if (args.length == 2) {
-			MethodKey methodKey = new MethodKey(
-				Indexer.class, method.getName(), String.class, Long.TYPE);
-
 			String className = (String)args[0];
 
 			PersistedModelLocalService persistedModelLocalService =
@@ -118,16 +115,15 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 
 			Long classPK = (Long)args[1];
 
-			try {
-				persistedModelLocalService.getPersistedModel(classPK);
+			if ((persistedModelLocalService != null) &&
+				(persistedModelLocalService.fetchPersistedModel(classPK) !=
+					null)) {
 
 				bufferRequest(
-					methodKey, className, classPK, indexerRequestBuffer);
-			}
-			catch (Exception exception) {
-				if (_log.isTraceEnabled()) {
-					_log.trace(exception);
-				}
+					new MethodKey(
+						Indexer.class, method.getName(), String.class,
+						Long.TYPE),
+					className, classPK, indexerRequestBuffer);
 			}
 		}
 		else {

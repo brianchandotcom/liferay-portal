@@ -5,17 +5,14 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {
-					},
+					"layout": {},
 					"name": "Main Content Container"
 				},
 				"id": "af34d83b-d249-e8c2-a63b-a0b502d2c976",
 				"pageElements": [
 					{
 						"definition": {
-							"cssClasses": [
-								"learn-banner"
-							],
+							"cssClasses": ["learn-banner"],
 							"fragmentStyle": {
 								"paddingBottom": "4",
 								"paddingLeft": "4",
@@ -62,8 +59,7 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {
-														},
+														"fragmentLink": {},
 														"text": {
 															"value_i18n": {
 																"en_US": "Search Results"
@@ -82,9 +78,7 @@
 									},
 									{
 										"definition": {
-											"cssClasses": [
-												"learn-search"
-											],
+											"cssClasses": ["learn-search"],
 											"fragmentStyle": {
 												"marginBottom": "24px",
 												"marginTop": "24px"
@@ -113,8 +107,7 @@
 								"textAlign": "center"
 							},
 							"indexed": true,
-							"layout": {
-							},
+							"layout": {},
 							"name": "Tabs Container"
 						},
 						"id": "0cf3f6d4-5c95-d78f-c94a-8a1cab615128",
@@ -212,17 +205,19 @@
 												"paddingLeft": 1,
 												"paddingRight": 1,
 												"paddingTop": 1
-											}
+											},
+											"name": "Sort Container"
 										},
 										"id": "bada5fe9-3b12-9fb2-8a76-eb904c75cd5a",
 										"pageElements": [
 											{
 												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\n\t\t.portlet-sort .form-group-item {\n    height: auto;\n    margin-bottom: 0;\n  }\n\t\n\t.form-group-autofit {\n    flex-direction: column;\n\t\tmargin-bottom: 0;\n  }\n\t\n\t.form-group-autofit:hover {\n\t  background-color:  var(--color-neutral-1) ;\n\t}\n\t\n\t.form-group-item label {\n\t  color: var(--gray-600, #6b6c7e);\n    font-size: 13px;\n    font-weight: 400;\n\t\tdisplay: flex;\n    gap: 12px;\n\t\talign-items: center;\n\t}\n\t\n\t#sort-title {\n    font-size: 0.875rem;\n    font-weight: var(--font-weight-semi-bold, 600);\n    text-transform: uppercase;\n   }\n}",
 													"widgetInstance": {
 														"widgetConfig": {
-															"displayStyle": "default",
-															"displayStyleGroupId": "20119",
-															"fields": "[{\"field\":\"\",\"label\":\"relevance\"},{\"field\":\"title+\",\"label\":\"Alphabetical (A-Z)\"},{\"field\":\"title-\",\"label\":\"Alphabetical (Z-A)\"},{\"field\":\"publishedDate-\",\"label\":\"published-date\"}]"
+															"displayStyle": "ddmTemplate_LEARN_SEARCH_SORT",
+															"fields": "[{\"field\":\"\",\"label\":\"relevance\"},{\"field\":\"title+\",\"label\":\"Alphabetical (A-Z)\"},{\"field\":\"title-\",\"label\":\"Alphabetical (Z-A)\"},{\"field\":\"publishedDate-\",\"label\":\"publish-date\"}]",
+															"displayStyleGroupId": "32323"
 														},
 														"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
 													}

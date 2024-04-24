@@ -360,17 +360,25 @@ public class UpdateKBArticleMVCActionCommand
 			long[] removeFileEntryIds = ParamUtil.getLongValues(
 				actionRequest, "removeFileEntryIds");
 
-			if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
-				kbArticle = _kbArticleService.updateKBArticle(
-					resourcePrimKey, title, content, description, sections,
-					sourceURL, displayDate, expirationDate, reviewDate,
-					selectedFileNames, removeFileEntryIds, serviceContext);
+			try {
+				if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
+					kbArticle = _kbArticleService.updateKBArticle(
+						resourcePrimKey, title, content, description, sections,
+						sourceURL, displayDate, expirationDate, reviewDate,
+						selectedFileNames, removeFileEntryIds, serviceContext);
+				}
+				else {
+					kbArticle = _kbArticleService.updateAndUnlockKBArticle(
+						resourcePrimKey, title, content, description, sections,
+						sourceURL, displayDate, expirationDate, reviewDate,
+						selectedFileNames, removeFileEntryIds, serviceContext);
+				}
 			}
-			else {
-				kbArticle = _kbArticleService.updateAndUnlockKBArticle(
-					resourcePrimKey, title, content, description, sections,
-					sourceURL, displayDate, expirationDate, reviewDate,
-					selectedFileNames, removeFileEntryIds, serviceContext);
+			catch (LockedKBArticleException lockedKBArticleException) {
+				hideDefaultErrorMessage(actionRequest);
+				lockedKBArticleException.setCmd(Constants.SAVE);
+
+				throw lockedKBArticleException;
 			}
 		}
 

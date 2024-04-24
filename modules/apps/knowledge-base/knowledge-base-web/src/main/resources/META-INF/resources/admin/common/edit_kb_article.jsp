@@ -272,6 +272,16 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 				</c:if>
 
 				<liferay-ui:error exception="<%= FileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
+
+				<liferay-ui:error exception="<%= LockedKBArticleException.class %>">
+
+					<%
+					LockedKBArticleException lockedKBArticleException = (LockedKBArticleException)errorException;
+					%>
+
+					<liferay-ui:message arguments="<%= lockedKBArticleException.getUserName() %>" key="this-article-is-now-under-control-of-x" translateArguments="<%= false %>" />
+				</liferay-ui:error>
+
 				<liferay-ui:error exception="<%= KBArticleDisplayDateException.class %>" message="please-enter-a-valid-schedule-date" />
 				<liferay-ui:error exception="<%= KBArticleExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 				<liferay-ui:error exception="<%= KBArticleReviewDateException.class %>" message="please-enter-a-valid-review-date" />

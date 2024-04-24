@@ -20,6 +20,7 @@ import {config as documentLibraryWebConfig} from './tests/document-library-web/c
 import {config as dynamicDataMappingFormWebConfig} from './tests/dynamic-data-mapping-form-web/config';
 import {config as exportImportWebConfig} from './tests/export-import-web/config';
 import {config as frontendDataSetViewsWebConfig} from './tests/frontend-data-set-views-web/config';
+import {config as frontendDataSetWebConfig} from './tests/frontend-data-set-web/config';
 import {config as headlessBuilderImplConfig} from './tests/headless-builder-impl/config';
 import {config as headlessBuilderWebConfig} from './tests/headless-builder-web/config';
 import {config as journalWebConfig} from './tests/journal-web/config';
@@ -62,6 +63,7 @@ export default defineConfig({
 		documentLibraryWebConfig,
 		exportImportWebConfig,
 		frontendDataSetViewsWebConfig,
+		frontendDataSetWebConfig,
 		headlessBuilderImplConfig,
 		headlessBuilderWebConfig,
 		journalWebConfig,

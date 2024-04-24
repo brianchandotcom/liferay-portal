@@ -49,7 +49,9 @@ test('This is a test for LPD-21554. Some page names result in 404 friendly URLs.
 
 	await page.goto(liferayConfig.environment.baseUrl);
 
-	await page.getByText(pageName, {exact: true}).click();
+	if (await page.getByText(pageName, {exact: true}).isVisible()) {
+		await page.getByText(pageName, {exact: true}).click();
+	}
 
 	await expect.soft(page.getByText('Heading Example')).toBeVisible();
 

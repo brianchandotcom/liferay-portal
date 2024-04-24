@@ -14,6 +14,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.testray.rest.dto.v1_0.TestrayCaseTypeMetric;
 import com.liferay.testray.rest.dto.v1_0.TestrayComponentMetric;
+import com.liferay.testray.rest.dto.v1_0.TestrayRoutineMetric;
 import com.liferay.testray.rest.dto.v1_0.TestrayRunMetric;
 import com.liferay.testray.rest.dto.v1_0.TestrayTeamMetric;
 
@@ -68,6 +69,13 @@ public interface TestrayStatusMetricResource {
 				Long testrayBuildId, String testrayCasePriorities,
 				String testrayCaseTypes, Long testrayRunId,
 				String testrayTeamIds, Pagination pagination)
+		throws Exception;
+
+	public Page<TestrayRoutineMetric>
+			getTestrayStatusMetricByTestrayProjectIdTestrayProjectTestrayRoutinesMetricsPage(
+				Long testrayProjectId, String testrayCasePriorities,
+				String testrayCaseTypes, Long testrayRoutineId,
+				Long testrayTeamId, Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -70,7 +70,7 @@ public abstract class BaseTestrayTestFlowResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/testray-rest/v1.0/testray-testflow/by-testray-subtaskId/{testraySubtaskId}' -d $'{"caseResultAmount": ___, "comment": ___, "dueStatus": ___, "issues": ___, "mbMessageId": ___, "mbThreadId": ___, "testraySubtasksAmount": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/testray-rest/v1.0/testray-testflow/by-testray-subtaskId/{testraySubtaskId}' -d $'{"caseResultAmount": ___, "comment": ___, "dueStatus": ___, "issues": ___, "mbMessageId": ___, "mbThreadId": ___, "subtaskAmount": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

@@ -78,7 +78,7 @@ const Table = <T extends BasicRow>({
 									) : (
 										<span
 											className={classNames(
-												'table-cell-item',
+												'table-cell-items',
 												{
 													'text-ellipsis-lg':
 														column.size === 'lg',

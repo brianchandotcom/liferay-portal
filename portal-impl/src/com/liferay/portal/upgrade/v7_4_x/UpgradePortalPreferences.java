@@ -33,7 +33,7 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 				"create table PortalPreferenceValue (mvccVersion LONG default ",
 				"0 not null, portalPreferenceValueId LONG not null primary ",
 				"key, portalPreferencesId LONG, index_ INTEGER, key_ ",
-				"VARCHAR(255) null, largeValue TEXT null, namespace ",
+				"VARCHAR(1024) null, largeValue TEXT null, namespace ",
 				"VARCHAR(255) null, smallValue VARCHAR(255) null)"));
 
 		processConcurrently(

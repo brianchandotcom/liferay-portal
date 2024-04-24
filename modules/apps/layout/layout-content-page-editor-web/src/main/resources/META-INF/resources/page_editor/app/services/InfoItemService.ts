@@ -149,6 +149,30 @@ function getPageContents({
 	});
 }
 
+function getStructureRelationships({
+	classNameId,
+	classTypeId,
+}: {
+	classNameId: string;
+	classTypeId?: string;
+}) {
+	const body: {
+		classNameId: string;
+		classTypeId?: string;
+	} = {
+		classNameId,
+	};
+
+	if (classTypeId) {
+		body.classTypeId = classTypeId;
+	}
+
+	return Promise.resolve([
+		{classNameId: 'relationship-1', label: 'Relationship 1'},
+		{classNameId: 'relationship-2', label: 'Relationship 2'},
+	]);
+}
+
 export default {
 	getAvailableListItemRenderers,
 	getAvailableListRenderers,
@@ -157,4 +181,5 @@ export default {
 	getInfoItemActionErrorMessage,
 	getInfoItemFieldValue,
 	getPageContents,
+	getStructureRelationships,
 };

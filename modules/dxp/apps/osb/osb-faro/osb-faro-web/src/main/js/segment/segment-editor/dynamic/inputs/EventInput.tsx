@@ -1,13 +1,8 @@
 import AttributeConjunctionInput from './components/attribute-conjunction-input';
 import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
-import EventAttributeDefinitionsQuery, {
-	EventAttributeDefinitionsData,
-	EventAttributeDefinitionsVariables
-} from 'event-analysis/queries/EventAttributeDefinitionsQuery';
 import Form from 'shared/components/form';
 import OccurenceConjunctionInput from './components/OccurenceConjunctionInput';
 import React, {useEffect} from 'react';
-import {AttributeTypes} from 'event-analysis/utils/types';
 import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
 import {CustomValue} from 'shared/util/records';
 import {fromJS, Map} from 'immutable';
@@ -16,11 +11,8 @@ import {
 	getFilterCriterionIMap,
 	getIndexFromPropertyName
 } from '../utils/custom-inputs';
-import {isBoolean, isNil} from 'lodash';
-import {NAME} from 'shared/util/pagination';
-import {OrderByDirections} from 'shared/util/constants';
+import {isBoolean, isNil, isNull} from 'lodash';
 import {SafeResults} from 'shared/hoc/util';
-import {useQuery} from '@apollo/react-hooks';
 
 type Touched = {
 	attribute: boolean;
@@ -46,7 +38,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 	id,
 	onChange,
 	operatorRenderer: OperatorDropdown,
-	property: {entityName, id: eventDefinitionId, type},
+	property: {entityName, type},
 	touched,
 	valid,
 	value: valueIMap
@@ -80,23 +72,6 @@ const EventInput: React.FC<IEventInputProps> = ({
 		});
 	}, []);
 
-	const result = useQuery<
-		EventAttributeDefinitionsData,
-		EventAttributeDefinitionsVariables
-	>(EventAttributeDefinitionsQuery, {
-		variables: {
-			eventDefinitionId,
-			keyword: '',
-			page: 0,
-			size: 25,
-			sort: {
-				column: NAME,
-				type: OrderByDirections.Ascending
-			},
-			type: AttributeTypes.Global
-		}
-	});
-
 	const getConjunctionDateFilterIMap = value => {
 		const conjunctionDateFilterIndex = getIndexFromPropertyName(
 			value,
@@ -126,11 +101,11 @@ const EventInput: React.FC<IEventInputProps> = ({
 	const handleDateFilterConjunctionChange = criterion => {
 		onChange({
 			touched: {...touched, dateFilter: criterion && criterion.touched},
-			valid: {...valid, dateFilter: isNil(criterion) || criterion.valid},
-			value: isNil(criterion)
-				? valueIMap.deleteIn(['criterionGroup', 'items', 2])
+			valid: {...valid, dateFilter: isNull(criterion) || criterion.valid},
+			value: isNull(criterion)
+				? valueIMap.deleteIn(['criterionGroup', 'items', 1])
 				: valueIMap.mergeIn(
-						['criterionGroup', 'items', 2],
+						['criterionGroup', 'items', 1],
 						fromJS(criterion)
 				  )
 		});
@@ -191,7 +166,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 
 	return (
 		<div className='criteria-statement'>
-			<SafeResults {...result} page={false} pageDisplay={false}>
+			<SafeResults page={false} pageDisplay={false}>
 				{data => {
 					const attributes =
 						data?.eventAttributeDefinitions

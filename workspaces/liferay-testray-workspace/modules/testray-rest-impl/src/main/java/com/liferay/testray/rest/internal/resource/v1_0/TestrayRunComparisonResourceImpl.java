@@ -324,15 +324,33 @@ public class TestrayRunComparisonResourceImpl
 		for (Map.Entry<String, Map<String, Serializable>> entry :
 				testrayCaseResultsMap1.entrySet()) {
 
+			Map<String, Serializable> testrayCaseResult =
+				testrayCaseResultsMap2.remove(entry.getKey());
+
+			if ((testrayCaseResult == null) &&
+				(Validator.isNotNull(testrayCaseResultError2) ||
+				 Validator.isNotNull(testrayCaseResultIssue2) ||
+				 (Validator.isNotNull(testrayCaseResultStatus2) &&
+				  !testrayCaseResultStatus2.contains("DIDNOTRUN")))) {
+
+				continue;
+			}
+
 			testrayCaseResultComparisons.add(
 				_getTestrayCaseResultComparison(
-					entry.getValue(),
-					testrayCaseResultsMap2.remove(entry.getKey()),
-					testrayComponentsMap));
+					entry.getValue(), testrayCaseResult, testrayComponentsMap));
 		}
 
 		for (Map.Entry<String, Map<String, Serializable>> entry :
 				testrayCaseResultsMap2.entrySet()) {
+
+			if (Validator.isNotNull(testrayCaseResultError1) ||
+				Validator.isNotNull(testrayCaseResultIssue1) ||
+				(Validator.isNotNull(testrayCaseResultStatus1) &&
+				 !testrayCaseResultStatus1.contains("DIDNOTRUN"))) {
+
+				continue;
+			}
 
 			testrayCaseResultComparisons.add(
 				_getTestrayCaseResultComparison(

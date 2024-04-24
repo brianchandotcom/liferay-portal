@@ -38,7 +38,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 	id,
 	onChange,
 	operatorRenderer: OperatorDropdown,
-	property: {entityName, type},
+	property: {entityName, options, type},
 	touched,
 	valid,
 	value: valueIMap
@@ -163,6 +163,19 @@ const EventInput: React.FC<IEventInputProps> = ({
 	const dateFilterConjunctionCriterion = (
 		getConjunctionDateFilterIMap(valueIMap) || Map({propertyName: 'day'})
 	).toJS();
+
+	if (
+		options.length &&
+		options.some(option => option.label === 'eventHidden' && option.value)
+	) {
+		return (
+			<div className='criteria-statement'>
+				<b className='non-existent-property-message'>
+					{Liferay.Language.get('custom-event-no-longer-exists')}
+				</b>
+			</div>
+		);
+	}
 
 	return (
 		<div className='criteria-statement'>

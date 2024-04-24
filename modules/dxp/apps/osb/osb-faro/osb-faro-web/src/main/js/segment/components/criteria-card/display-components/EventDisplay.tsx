@@ -15,7 +15,7 @@ const EventDisplay: React.FC<IDisplayComponentProps> = ({
 
 	const valueIMap = value as CustomValue;
 
-	const {label, type} = property;
+	const {label, options, type} = property;
 
 	const operatorKey = maybeFormatToKnownType(operatorName, name);
 
@@ -29,6 +29,17 @@ const EventDisplay: React.FC<IDisplayComponentProps> = ({
 		getFilterCriterionIMap(valueIMap, 1) ||
 		Map({propertyName: 'completeDate'})
 	).toJS();
+
+	if (
+		options?.length &&
+		options.some(option => option.label === 'eventHidden' && option.value)
+	) {
+		return (
+			<b className='undefined-property'>
+				{Liferay.Language.get('custom-event-no-longer-exists')}
+			</b>
+		);
+	}
 
 	return (
 		<>

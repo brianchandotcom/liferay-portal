@@ -5,14 +5,17 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Main Content Container"
 				},
 				"id": "af34d83b-d249-e8c2-a63b-a0b502d2c976",
 				"pageElements": [
 					{
 						"definition": {
-							"cssClasses": ["learn-banner"],
+							"cssClasses": [
+								"learn-banner"
+							],
 							"fragmentStyle": {
 								"paddingBottom": "4",
 								"paddingLeft": "4",
@@ -59,7 +62,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Search Results"
@@ -78,7 +82,9 @@
 									},
 									{
 										"definition": {
-											"cssClasses": ["learn-search"],
+											"cssClasses": [
+												"learn-search"
+											],
 											"fragmentStyle": {
 												"marginBottom": "24px",
 												"marginTop": "24px"
@@ -107,7 +113,8 @@
 								"textAlign": "center"
 							},
 							"indexed": true,
-							"layout": {},
+							"layout": {
+							},
 							"name": "Tabs Container"
 						},
 						"id": "0cf3f6d4-5c95-d78f-c94a-8a1cab615128",
@@ -216,8 +223,8 @@
 													"widgetInstance": {
 														"widgetConfig": {
 															"displayStyle": "ddmTemplate_LEARN_SEARCH_SORT",
-															"fields": "[{\"field\":\"\",\"label\":\"relevance\"},{\"field\":\"title+\",\"label\":\"Alphabetical (A-Z)\"},{\"field\":\"title-\",\"label\":\"Alphabetical (Z-A)\"},{\"field\":\"publishedDate-\",\"label\":\"publish-date\"}]",
-															"displayStyleGroupId": "32323"
+															"displayStyleGroupId": "32323",
+															"fields": "[{\"field\":\"\",\"label\":\"relevance\"},{\"field\":\"title+\",\"label\":\"Alphabetical (A-Z)\"},{\"field\":\"title-\",\"label\":\"Alphabetical (Z-A)\"},{\"field\":\"publishedDate-\",\"label\":\"publish-date\"}]"
 														},
 														"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
 													}

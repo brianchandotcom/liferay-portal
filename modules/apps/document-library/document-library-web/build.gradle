@@ -65,6 +65,7 @@ dependencies {
 	compileOnly project(":apps:portal-workflow:portal-workflow-taglib")
 	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
+	compileOnly project(":apps:product-navigation:product-navigation-control-menu-api")
 	compileOnly project(":apps:product-navigation:product-navigation-personal-menu-api")
 	compileOnly project(":apps:ratings:ratings-taglib")
 	compileOnly project(":apps:sharing:sharing-taglib")

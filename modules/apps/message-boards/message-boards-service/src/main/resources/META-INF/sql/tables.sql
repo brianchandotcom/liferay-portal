@@ -26,7 +26,7 @@ create table MBCategory (
 	createDate DATE null,
 	modifiedDate DATE null,
 	parentCategoryId LONG,
-	name VARCHAR(75) null,
+	name VARCHAR(255) null,
 	description STRING null,
 	displayStyle VARCHAR(75) null,
 	friendlyURL VARCHAR(255) null,

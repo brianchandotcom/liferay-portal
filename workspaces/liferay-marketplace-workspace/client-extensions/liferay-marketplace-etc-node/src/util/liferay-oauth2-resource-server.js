@@ -28,8 +28,9 @@ const oauth2JWKSURI = `${lxcDXPServerProtocol}://${lxcDXPMainDomain}${
 	clientExtensionOauthJwksRoute
 }`;
 
-const allowList = domains
-	.map((domain) => `${lxcDXPServerProtocol}://${domain}`);
+const allowList = domains.map(
+	(domain) => `${lxcDXPServerProtocol}://${domain}`
+);
 
 const corsOptions = {
 	origin(origin, callback) {

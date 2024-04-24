@@ -23,8 +23,9 @@ const uriPath =
 
 const oauth2JWKSURI = `${lxcDXPServerProtocol}://${lxcDXPMainDomain}${uriPath}`;
 
-const allowList = domains
-	.map((domain) => `${lxcDXPServerProtocol}://${domain}`);
+const allowList = domains.map(
+	(domain) => `${lxcDXPServerProtocol}://${domain}`
+);
 
 const corsOptions = {
 	origin(origin, callback) {

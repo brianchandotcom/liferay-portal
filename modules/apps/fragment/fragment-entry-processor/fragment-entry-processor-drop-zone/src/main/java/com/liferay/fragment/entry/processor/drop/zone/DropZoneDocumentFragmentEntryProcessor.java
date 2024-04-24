@@ -188,7 +188,7 @@ public class DropZoneDocumentFragmentEntryProcessor
 				String dropZoneHTML = StringPool.BLANK;
 
 				if (ListUtil.isNotEmpty(dropZoneItemIds) &&
-					(dropZoneItemIds.size() < i)) {
+					(i < dropZoneItemIds.size())) {
 
 					dropZoneHTML = _fragmentDropZoneRenderer.renderDropZone(
 						fragmentEntryProcessorContext.getHttpServletRequest(),

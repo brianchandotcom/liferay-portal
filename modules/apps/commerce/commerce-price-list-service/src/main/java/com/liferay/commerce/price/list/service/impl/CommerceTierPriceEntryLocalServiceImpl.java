@@ -572,6 +572,15 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceTierPriceEntry> findCommerceTierPriceEntries(
+		long commercePriceEntryId, int status) {
+
+		return commerceTierPriceEntryPersistence.findByC_S(
+			commercePriceEntryId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new CommerceTierPriceEntryMinQuantityComparator(true));
+	}
+
+	@Override
 	public List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
 		long commercePriceEntryId, int start, int end) {
 

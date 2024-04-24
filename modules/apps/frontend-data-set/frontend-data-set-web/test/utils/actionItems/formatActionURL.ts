@@ -38,4 +38,33 @@ describe('formatActionURL helper', () => {
 			`/o/data-test/${testItem.id}/${testItem.name}`
 		);
 	});
+
+	it('returns the URL, changing the _redirect parameter to use the actual URL', () => {
+		const URLWithRedirect =
+			'/test/page?p_p_id=random&random_redirect=http://www.somewhere.com';
+		const formattedURL = formatActionURL(URLWithRedirect, testItem);
+
+		expect(formattedURL).toEqual(
+			'/test/page?p_p_id=random&random_redirect=http://localhost/'
+		);
+	});
+
+	it('returns the URL, changing the _backURL parameter to use the actual URL', () => {
+		const URLWithRedirect =
+			'/test/page?p_p_id=random&random_backURL=http://www.somewhere.com';
+		const formattedURL = formatActionURL(URLWithRedirect, testItem);
+
+		expect(formattedURL).toEqual(
+			'/test/page?p_p_id=random&random_backURL=http://localhost/'
+		);
+	});
+
+	it('returns the URL, adding the _redirect and _backURL parameters to use the actual URL if the url includes a p_p_id parameter', () => {
+		const URLWithRedirect = '/test/page?p_p_id=random';
+		const formattedURL = formatActionURL(URLWithRedirect, testItem);
+
+		expect(formattedURL).toEqual(
+			'/test/page?p_p_id=random&random_redirect=http://localhost/&random_backURL=http://localhost/'
+		);
+	});
 });

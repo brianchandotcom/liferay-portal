@@ -4,7 +4,9 @@
  */
 
 /**
- * Try to replace interpolated url arguments with item properties
+ * Try to replace interpolated url arguments with item properties.
+ * Set _redirect and/or backURL parameters to allow navigating back
+ * to the FDS component that triggered the action
  *
  * @param url URI with an optional number of interpolated parameters
  * @param item object with properties that could match interpolated parameters
@@ -37,12 +39,45 @@ const formatActionURL = function (url: string | undefined, item: any): string {
 		)
 	);
 
-	return replacedURL.replace(new RegExp('(%7B.*?%7D)', 'mg'), (matched) =>
+	replacedURL.replace(new RegExp('(%7B.*?%7D)', 'mg'), (matched) =>
 		getValueFromItem(
 			item,
 			matched.substring(3, matched.length - 3).split('.')
 		)
 	);
+
+	if (replacedURL.includes('?')) {
+		const redirectionURL = window.location.href;
+		const backURL = '_backURL';
+		const redirect = '_redirect';
+		const backURLRegexp = new RegExp(backURL);
+		const redirectRegexp = new RegExp(redirect);
+
+		const searchParams = new URLSearchParams(
+			replacedURL.slice(replacedURL.indexOf('?'))
+		);
+		const p_p_id = searchParams.get('p_p_id');
+
+		if (redirectRegexp.test(url) || backURLRegexp.test(url)) {
+			for (const key of searchParams.keys()) {
+				if (redirectRegexp.test(key) || backURLRegexp.test(key)) {
+					searchParams.set(key, redirectionURL);
+				}
+			}
+		}
+		else if (p_p_id) {
+			searchParams.set(`${p_p_id}${redirect}`, redirectionURL);
+			searchParams.set(`${p_p_id}${backURL}`, redirectionURL);
+		}
+
+		const updatedURL = decodeURIComponent(
+			`${url.slice(0, url.indexOf('?'))}?${searchParams.toString()}`
+		);
+
+		return updatedURL;
+	}
+
+	return replacedURL;
 };
 
 export default formatActionURL;

@@ -10,6 +10,7 @@ import {ICreationActionItem} from '../../management_bar/controls/CreationMenu';
 import {OPEN_MODAL, OPEN_SIDE_PANEL} from '../../utils/eventsDefinitions';
 import {resolveModalSize} from '../../utils/modals/resolveModalSize';
 import {ACTION_ITEM_TARGETS} from './constants';
+import formatActionURL from './formatActionURL';
 
 const {
 	BLANK,
@@ -56,7 +57,7 @@ export function triggerAction(
 			Liferay.fire(actionTargetURL);
 			break;
 		default:
-			navigate(actionTargetURL);
+			navigate(formatActionURL(actionTargetURL, item));
 			break;
 	}
 }

@@ -333,8 +333,8 @@ public interface CommerceTierPriceEntryLocalService
 		String externalReferenceCode, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceTierPriceEntry> fetchCommerceTierPriceEntries(
-		long companyId, int start, int end);
+	public CommerceTierPriceEntry fetchClosestCommerceTierPriceEntry(
+		long commercePriceEntryId, BigDecimal minQuantity);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTierPriceEntry fetchCommerceTierPriceEntry(
@@ -356,12 +356,6 @@ public interface CommerceTierPriceEntryLocalService
 	public CommerceTierPriceEntry fetchCommerceTierPriceEntryByUuidAndCompanyId(
 		String uuid, long companyId);
 
-	public CommerceTierPriceEntry findClosestCommerceTierPriceEntry(
-		long commercePriceEntryId, BigDecimal minQuantity);
-
-	public List<CommerceTierPriceEntry> findCommerceTierPriceEntries(
-		long commercePriceEntryId, BigDecimal minQuantity);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -379,6 +373,14 @@ public interface CommerceTierPriceEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
+		long commercePriceEntryId, BigDecimal minQuantity);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
+		long commercePriceEntryId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTierPriceEntry> getCommerceTierPriceEntries(

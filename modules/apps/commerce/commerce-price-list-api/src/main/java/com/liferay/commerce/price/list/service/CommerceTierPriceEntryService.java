@@ -103,15 +103,6 @@ public interface CommerceTierPriceEntryService extends BaseService {
 			String externalReferenceCode, long companyId)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceTierPriceEntry> fetchCommerceTierPriceEntries(
-			long companyId, int start, int end)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTierPriceEntry fetchCommerceTierPriceEntry(
 			long commerceTierPriceEntryId)

@@ -136,18 +136,6 @@ public class CommerceTierPriceEntryServiceUtil {
 			externalReferenceCode, companyId);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static List<CommerceTierPriceEntry> fetchCommerceTierPriceEntries(
-			long companyId, int start, int end)
-		throws PortalException {
-
-		return getService().fetchCommerceTierPriceEntries(
-			companyId, start, end);
-	}
-
 	public static CommerceTierPriceEntry fetchCommerceTierPriceEntry(
 			long commerceTierPriceEntryId)
 		throws PortalException {

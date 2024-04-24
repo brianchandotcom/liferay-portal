@@ -20,8 +20,12 @@ public interface UpstreamBranchCronRoutineEntity extends CronRoutineEntity {
 
 	public Set<GitBranchEntity> getGitBranchEntities();
 
+	public String getPreviousBranchSHA();
+
 	public void removeGitBranchEntities(Set<GitBranchEntity> gitBranchEntities);
 
 	public void removeGitBranchEntity(GitBranchEntity gitBranchEntity);
+
+	public void setPreviousBranchSHA(String previousBranchSHA);
 
 }

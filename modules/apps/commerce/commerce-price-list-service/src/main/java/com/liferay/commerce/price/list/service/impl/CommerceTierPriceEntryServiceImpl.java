@@ -228,18 +228,6 @@ public class CommerceTierPriceEntryServiceImpl
 		return commerceTierPriceEntry;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public List<CommerceTierPriceEntry> fetchCommerceTierPriceEntries(
-			long companyId, int start, int end)
-		throws PortalException {
-
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
 	public CommerceTierPriceEntry fetchCommerceTierPriceEntry(
 			long commerceTierPriceEntryId)

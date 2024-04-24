@@ -726,7 +726,7 @@ public class CommerceProductPriceCalculationV2Impl
 
 		CommerceTierPriceEntry commerceTierPriceEntry =
 			_commerceTierPriceEntryLocalService.
-				findClosestCommerceTierPriceEntry(
+				fetchClosestCommerceTierPriceEntry(
 					commercePriceEntry.getCommercePriceEntryId(), quantity);
 
 		if ((commerceTierPriceEntry == null) ||
@@ -839,7 +839,7 @@ public class CommerceProductPriceCalculationV2Impl
 		if (commercePriceEntry.isBulkPricing()) {
 			CommerceTierPriceEntry commerceTierPriceEntry =
 				_commerceTierPriceEntryLocalService.
-					findClosestCommerceTierPriceEntry(
+					fetchClosestCommerceTierPriceEntry(
 						commercePriceEntry.getCommercePriceEntryId(), quantity);
 
 			if (commerceTierPriceEntry == null) {
@@ -872,7 +872,7 @@ public class CommerceProductPriceCalculationV2Impl
 		}
 
 		List<CommerceTierPriceEntry> commerceTierPriceEntries =
-			_commerceTierPriceEntryLocalService.findCommerceTierPriceEntries(
+			_commerceTierPriceEntryLocalService.getCommerceTierPriceEntries(
 				commercePriceEntry.getCommercePriceEntryId(), quantity);
 
 		if (commerceTierPriceEntries.isEmpty()) {

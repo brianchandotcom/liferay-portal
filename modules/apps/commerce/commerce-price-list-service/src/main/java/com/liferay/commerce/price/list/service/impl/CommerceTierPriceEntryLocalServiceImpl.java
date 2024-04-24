@@ -531,43 +531,32 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<CommerceTierPriceEntry> fetchCommerceTierPriceEntries(
-		long companyId, int start, int end) {
-
-		return commerceTierPriceEntryPersistence.findByCompanyId(
-			companyId, start, end);
-	}
-
-	@Override
-	public CommerceTierPriceEntry findClosestCommerceTierPriceEntry(
+	public CommerceTierPriceEntry fetchClosestCommerceTierPriceEntry(
 		long commercePriceEntryId, BigDecimal minQuantity) {
 
-		CommerceTierPriceEntry commerceTierPriceEntry = null;
-
-		try {
-			commerceTierPriceEntry =
-				commerceTierPriceEntryPersistence.findByC_LteM_S_First(
-					commercePriceEntryId, minQuantity,
-					WorkflowConstants.STATUS_APPROVED,
-					new CommerceTierPriceEntryMinQuantityComparator(false));
-		}
-		catch (NoSuchTierPriceEntryException noSuchTierPriceEntryException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchTierPriceEntryException);
-			}
-		}
-
-		return commerceTierPriceEntry;
+		return commerceTierPriceEntryPersistence.fetchByC_LteM_S_First(
+			commercePriceEntryId, minQuantity,
+			WorkflowConstants.STATUS_APPROVED,
+			new CommerceTierPriceEntryMinQuantityComparator(false));
 	}
 
 	@Override
-	public List<CommerceTierPriceEntry> findCommerceTierPriceEntries(
+	public List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
 		long commercePriceEntryId, BigDecimal minQuantity) {
 
 		return commerceTierPriceEntryPersistence.findByC_LteM_S(
 			commercePriceEntryId, minQuantity,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS,
+			new CommerceTierPriceEntryMinQuantityComparator(true));
+	}
+
+	@Override
+	public List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
+		long commercePriceEntryId, int status) {
+
+		return commerceTierPriceEntryPersistence.findByC_S(
+			commercePriceEntryId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new CommerceTierPriceEntryMinQuantityComparator(true));
 	}
 

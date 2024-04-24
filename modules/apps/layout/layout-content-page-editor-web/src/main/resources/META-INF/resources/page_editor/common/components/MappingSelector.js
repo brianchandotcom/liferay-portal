@@ -265,16 +265,6 @@ function MappingSelector({
 	const [typeLabel, setTypeLabel] = useState(null);
 	const [subtypeLabel, setSubtypeLabel] = useState(null);
 
-	useEffect(() => {
-		const mappedContent = findPageContent(pageContents, selectedItem);
-
-		const type = selectedItem?.itemType || mappedContent?.type;
-		const subtype = selectedItem?.itemSubtype || mappedContent?.subtype;
-
-		setTypeLabel(type);
-		setSubtypeLabel(subtype);
-	}, [selectedItem, pageContents]);
-
 	const [selectedSourceType, setSelectedSourceType] = useState(
 		!isMappedToInfoItem(mappedItem) &&
 			(isMappedToStructure(mappedItem) ||
@@ -316,6 +306,16 @@ function MappingSelector({
 
 		onMappingSelect(data);
 	};
+
+	useEffect(() => {
+		const mappedContent = findPageContent(pageContents, selectedItem);
+
+		const type = selectedItem?.itemType || mappedContent?.type;
+		const subtype = selectedItem?.itemSubtype || mappedContent?.subtype;
+
+		setTypeLabel(type);
+		setSubtypeLabel(subtype);
+	}, [selectedItem, pageContents]);
 
 	useEffect(() => {
 		if (isMappedToInfoItem(mappedItem)) {

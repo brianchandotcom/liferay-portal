@@ -14,6 +14,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -98,7 +99,7 @@ public class TestrayTestFlowResourceImpl
 
 		testrayCaseResultsList.addAll(map.values());
 
-		int testraySubtaskAmount = 0;
+		int testraySubtasksAmount = 0;
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
@@ -109,7 +110,7 @@ public class TestrayTestFlowResourceImpl
 					testrayCaseResultsList,
 					new TestrayCaseResultsComparator())) {
 
-			testraySubtaskAmount++;
+			testraySubtasksAmount++;
 
 			Map<String, Object> firstTestrayCaseResult = testrayCaseResults.get(
 				0);
@@ -123,9 +124,9 @@ public class TestrayTestFlowResourceImpl
 					"errors",
 					String.valueOf(firstTestrayCaseResult.get("errors_"))
 				).put(
-					"name", "ST-" + testraySubtaskAmount
+					"name", "ST-" + testraySubtasksAmount
 				).put(
-					"number", testraySubtaskAmount
+					"number", testraySubtasksAmount
 				).put(
 					"r_taskToSubtasks_c_taskId", testrayTaskId
 				).put(
@@ -159,7 +160,7 @@ public class TestrayTestFlowResourceImpl
 
 		TestrayTestFlow testrayTestFlow = new TestrayTestFlow();
 
-		testrayTestFlow.setTestraySubtasksAmount(testraySubtaskAmount);
+		testrayTestFlow.setTestraySubtasksAmount(testraySubtasksAmount);
 
 		return testrayTestFlow;
 	}
@@ -178,7 +179,7 @@ public class TestrayTestFlowResourceImpl
 				_filterFactory.create(
 					"buildToTasks/id eq '" + testrayTaskId + "'",
 					objectDefinition),
-				null, -1, -1, null);
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Map<String, Serializable> testrayBuild = valuesList.get(0);
 
@@ -189,13 +190,14 @@ public class TestrayTestFlowResourceImpl
 			List<Map<String, Object>> testrayCaseResults)
 		throws Exception {
 
-		int score = 0;
+		int testraySubtaskScore = 0;
 
 		for (Map<String, Object> testrayCaseResult : testrayCaseResults) {
-			score += GetterUtil.getInteger(testrayCaseResult.get("priority_"));
+			testraySubtaskScore += GetterUtil.getInteger(
+				testrayCaseResult.get("priority_"));
 		}
 
-		return score;
+		return testraySubtaskScore;
 	}
 
 	@Reference(

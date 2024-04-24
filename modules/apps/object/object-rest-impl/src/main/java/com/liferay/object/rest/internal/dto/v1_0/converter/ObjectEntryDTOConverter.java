@@ -325,63 +325,51 @@ public class ObjectEntryDTOConverter
 							objectRelationship.getObjectDefinitionId1());
 
 					if (objectDefinition.isUnmodifiableSystemObject()) {
-						if (FeatureFlagManagerUtil.isEnabled("LPS-183882")) {
-							SystemObjectDefinitionManager
-								systemObjectDefinitionManager =
-									_systemObjectDefinitionManagerRegistry.
-										getSystemObjectDefinitionManager(
-											objectDefinition.getName());
+						SystemObjectDefinitionManager
+							systemObjectDefinitionManager =
+								_systemObjectDefinitionManagerRegistry.
+									getSystemObjectDefinitionManager(
+										objectDefinition.getName());
 
-							BaseModel<?> baseModel =
-								systemObjectDefinitionManager.
-									getBaseModelByExternalReferenceCode(
-										systemObjectDefinitionManager.
-											getBaseModelExternalReferenceCode(
-												primaryKey),
-										objectDefinition.getCompanyId());
+						BaseModel<?> baseModel =
+							systemObjectDefinitionManager.
+								getBaseModelByExternalReferenceCode(
+									systemObjectDefinitionManager.
+										getBaseModelExternalReferenceCode(
+											primaryKey),
+									objectDefinition.getCompanyId());
 
-							Map<String, Object> values =
-								ObjectEntryDTOConverterUtil.toValues(
-									baseModel,
-									dtoConverterContext.
-										getDTOConverterRegistry(),
-									objectDefinition.getName(),
-									_systemObjectDefinitionManagerRegistry,
-									dtoConverterContext.getUser());
+						Map<String, Object> values =
+							ObjectEntryDTOConverterUtil.toValues(
+								baseModel,
+								dtoConverterContext.getDTOConverterRegistry(),
+								objectDefinition.getName(),
+								_systemObjectDefinitionManagerRegistry,
+								dtoConverterContext.getUser());
 
-							if (MapUtil.isNotEmpty(values)) {
-								ObjectField objectField =
-									_objectFieldLocalService.fetchObjectField(
+						if (MapUtil.isNotEmpty(values)) {
+							ObjectField objectField =
+								_objectFieldLocalService.fetchObjectField(
+									objectDefinition.getTitleObjectFieldId());
+
+							if (objectField == null) {
+								objectField =
+									_objectFieldLocalService.getObjectField(
 										objectDefinition.
-											getTitleObjectFieldId());
-
-								if (objectField == null) {
-									objectField =
-										_objectFieldLocalService.getObjectField(
-											objectDefinition.
-												getObjectDefinitionId(),
-											"id");
-								}
-
-								values.put(
-									objectField.getName(),
-									ObjectEntryValuesUtil.getTitleFieldValue(
-										objectField.getBusinessType(),
-										baseModel.getModelAttributes(),
-										objectField,
-										dtoConverterContext.getUser(), values));
+											getObjectDefinitionId(),
+										"id");
 							}
 
-							relatedObjectEntryAtomicReference.set(
-								(Serializable)values);
+							values.put(
+								objectField.getName(),
+								ObjectEntryValuesUtil.getTitleFieldValue(
+									objectField.getBusinessType(),
+									baseModel.getModelAttributes(), objectField,
+									dtoConverterContext.getUser(), values));
 						}
-						else {
-							relatedObjectEntryAtomicReference.set(
-								(Serializable)
-									_objectEntryLocalService.
-										getSystemModelAttributes(
-											objectDefinition, primaryKey));
-						}
+
+						relatedObjectEntryAtomicReference.set(
+							(Serializable)values);
 					}
 					else {
 						relatedObjectEntryAtomicReference.set(

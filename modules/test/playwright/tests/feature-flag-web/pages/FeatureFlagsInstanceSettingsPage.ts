@@ -61,6 +61,15 @@ export class FeatureFlagsInstanceSettingsPage {
 			)} before toggling.`
 		).toBeChecked({checked: !enabled});
 
-		await featureFlagToggle.click();
+		await Promise.all([
+			featureFlagToggle.click(),
+			this.page.waitForResponse(
+				(response) =>
+					response.status() === 200 &&
+					response
+						.url()
+						.includes('com-liferay-feature-flag-web/set-enabled')
+			),
+		]);
 	}
 }

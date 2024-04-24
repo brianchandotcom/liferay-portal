@@ -10,6 +10,17 @@ package com.liferay.portal.search.similar.results.web.spi.contributor.helper;
  */
 public interface RouteBuilder {
 
+	/**
+	 * Adds an attribute to the route with the specified name and value.
+	 * This method is used by {@link SimilarResultsContributor#detectRoute}
+	 * to store information extracted from the URL (obtained via
+	 * {@link SimilarResultsContributor#routeHelper}) that will be used later
+	 * during {@link SimilarResultsContributor#resolveCriteria}.
+	 *
+	 * @param name The name of the attribute to add.
+	 * @param value The value of the attribute to add.
+	 * @return This {@link RouteBuilder} instance.
+	 */
 	public RouteBuilder addAttribute(String name, Object value);
 
 }

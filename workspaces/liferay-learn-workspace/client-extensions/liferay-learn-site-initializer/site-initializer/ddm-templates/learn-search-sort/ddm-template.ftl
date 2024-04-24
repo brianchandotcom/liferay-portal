@@ -1,34 +1,3 @@
-<style>
-	.portlet-sort .form-group-item {
-    height: auto;
-    margin-bottom: 0;
-  }
-	
-	.form-group-autofit {
-    flex-direction: column;
-		margin-bottom: 0;
-  }
-	
-	.form-group-autofit:hover {
-	  background-color:  var(--color-neutral-1) ;
-	}
-	
-	.form-group-item label {
-	  color: var(--gray-600, #6b6c7e);
-    font-size: 13px;
-    font-weight: 400;
-		display: flex;
-    gap: 12px;
-		align-items: center;
-	}
-	
-	#sort-title {
-    font-size: 0.875rem;
-    font-weight: var(--font-weight-semi-bold, 600);
-    text-transform: uppercase;
-   }
-</style>
-
 <div class="form-group-autofit">
     <div class="form-group-item form-group-item-label form-group-item-shrink c-pb-3">
         <label>

@@ -11,7 +11,7 @@ import com.liferay.jethr0.event.BaseEventHandler;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.repository.GitHubRepository;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
-import com.liferay.jethr0.git.branch.repository.GitBranchEntityRepository;
+import com.liferay.jethr0.git.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.util.PropertiesUtil;

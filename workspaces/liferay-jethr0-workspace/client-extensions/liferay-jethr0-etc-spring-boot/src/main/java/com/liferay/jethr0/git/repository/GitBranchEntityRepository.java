@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.git.branch.repository;
+package com.liferay.jethr0.git.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.event.github.GitHubFactory;
@@ -12,7 +12,7 @@ import com.liferay.jethr0.event.github.commit.GitHubCommit;
 import com.liferay.jethr0.event.github.ref.GitHubRef;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.branch.UpstreamGitBranchEntity;
-import com.liferay.jethr0.git.branch.dalo.GitBranchEntityDALO;
+import com.liferay.jethr0.git.dalo.GitBranchEntityDALO;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;

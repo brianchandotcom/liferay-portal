@@ -6,7 +6,7 @@
 package com.liferay.jethr0.event.jenkins.client;
 
 import com.liferay.jethr0.git.branch.GitBranchEntity;
-import com.liferay.jethr0.git.branch.repository.GitBranchEntityRepository;
+import com.liferay.jethr0.git.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.util.BaseRetryable;
 import com.liferay.jethr0.util.PropertiesUtil;
 import com.liferay.jethr0.util.Retryable;

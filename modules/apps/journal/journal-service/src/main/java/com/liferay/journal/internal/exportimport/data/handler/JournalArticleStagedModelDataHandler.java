@@ -530,7 +530,11 @@ public class JournalArticleStagedModelDataHandler
 				article.getTitle(article.getDefaultLanguageId()));
 		}
 
-		_exportAssetDisplayPage(portletDataContext, article);
+		if (!GetterUtil.getBoolean(
+				articleElement.attributeValue("articleAdded"))) {
+
+			_exportAssetDisplayPage(portletDataContext, article);
+		}
 
 		_exportFriendlyURLEntries(portletDataContext, article);
 

@@ -19,34 +19,32 @@ import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
-import org.quartz.JobDataMap;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-
 /**
  * @author Michael Hashimoto
  */
 public abstract class BaseRoutineEntityJob implements RoutineEntityJob {
 
 	@Override
-	public void execute(JobExecutionContext jobExecutionContext)
-		throws JobExecutionException {
+	public RoutineEntityJobFactory getRoutineEntityJobFactory() {
+		return _routineEntityJobFactory;
+	}
 
-		JobDataMap jobDataMap = jobExecutionContext.getMergedJobDataMap();
+	@Override
+	public void setRoutineEntityJobFactory(
+		RoutineEntityJobFactory routineEntityJobFactory) {
 
-		Object routineEntityObject = jobDataMap.get("routineEntity");
+		_routineEntityJobFactory = routineEntityJobFactory;
+	}
 
-		if (!(routineEntityObject instanceof RoutineEntity)) {
-			return;
-		}
-
-		RoutineEntity routineEntity = (RoutineEntity)routineEntityObject;
+	protected void invokeJobEntity(RoutineEntity routineEntity) {
+		RoutineEntityJobFactory routineEntityJobFactory =
+			getRoutineEntityJobFactory();
 
 		BuildEntityRepository buildEntityRepository =
-			_routineEntityJobFactory.getBuildEntityRepository();
+			routineEntityJobFactory.getBuildEntityRepository();
 
 		JobEntityRepository jobEntityRepository =
-			_routineEntityJobFactory.getJobEntityRepository();
+			routineEntityJobFactory.getJobEntityRepository();
 
 		JobEntity jobEntity = jobEntityRepository.create(
 			routineEntity,
@@ -67,13 +65,12 @@ public abstract class BaseRoutineEntityJob implements RoutineEntityJob {
 			}
 
 			if (jobEntity.getState() == JobEntity.State.QUEUED) {
-				BuildQueue buildQueue =
-					_routineEntityJobFactory.getBuildQueue();
+				BuildQueue buildQueue = routineEntityJobFactory.getBuildQueue();
 
 				buildQueue.addJobEntity(jobEntity);
 
 				JenkinsQueue jenkinsQueue =
-					_routineEntityJobFactory.getJenkinsQueue();
+					routineEntityJobFactory.getJenkinsQueue();
 
 				jenkinsQueue.invoke();
 			}
@@ -85,20 +82,7 @@ public abstract class BaseRoutineEntityJob implements RoutineEntityJob {
 		}
 	}
 
-	@Override
-	public RoutineEntityJobFactory getRoutineEntityJobFactory() {
-		return _routineEntityJobFactory;
-	}
-
-	@Override
-	public void setRoutineEntityJobFactory(
-		RoutineEntityJobFactory routineEntityJobFactory) {
-
-		_routineEntityJobFactory = routineEntityJobFactory;
-	}
-
-	private static final Log _log = LogFactory.getLog(
-		BaseRoutineEntityJob.class);
+	private static final Log _log = LogFactory.getLog(RoutineEntityJob.class);
 
 	private RoutineEntityJobFactory _routineEntityJobFactory;
 

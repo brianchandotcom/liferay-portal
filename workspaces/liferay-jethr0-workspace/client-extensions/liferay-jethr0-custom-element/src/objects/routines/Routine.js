@@ -5,6 +5,7 @@
 
 export default class Routine {
 	constructor({
+		cron,
 		dateCreated,
 		dateModified,
 		id,
@@ -15,6 +16,7 @@ export default class Routine {
 		name,
 		type,
 	}) {
+		this.cron = cron;
 		this.dateCreated = dateCreated;
 		this.dateModified = dateModified;
 		this.id = id;

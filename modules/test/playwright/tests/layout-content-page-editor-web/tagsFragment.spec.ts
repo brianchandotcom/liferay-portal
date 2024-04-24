@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {wemSiteTest} from '../../fixtures/wemSiteTest';
 import {TAGS_OBJECT_ERC} from '../../setup/wem-site/constants';
+import getGlobalSiteId from '../../utils/getGlobalSiteId';
 import getRandomString from '../../utils/getRandomString';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import getFormContainerDefinition from './utils/getFormContainerDefinition';
@@ -87,7 +88,7 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 		title: getRandomString(),
 	});
 
-	// Create two tags
+	// Create two tags in Wem Site
 
 	for (const tagName of ['Dogs', 'Cats']) {
 		await apiHelpers.headlessAdminTaxonomy.createTag({
@@ -96,15 +97,27 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 		});
 	}
 
+	// Create one tag on Global
+
+	const globalSiteId = await getGlobalSiteId(apiHelpers);
+
+	await apiHelpers.headlessAdminTaxonomy.createTag({
+		name: 'Rabbits',
+		siteId: globalSiteId,
+	});
+
 	// Go to view mode of the created page, select a tag for each fragment and submit the form
 
 	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
 	await page.getByRole('combobox').first().click();
-	await page.getByRole('option', {name: 'Dogs'}).click();
+	await page.getByRole('option', {exact: true, name: 'Dogs'}).click();
+
+	await page.getByRole('combobox').first().click();
+	await page.getByRole('option', {exact: true, name: 'Rabbits'}).click();
 
 	await page.getByRole('combobox').nth(1).click();
-	await page.getByRole('option', {name: 'Cats'}).click();
+	await page.getByRole('option', {exact: true, name: 'Cats'}).click();
 
 	await page.getByRole('button', {name: 'Submit'}).click();
 
@@ -122,5 +135,5 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 
 	await page.waitForTimeout(1000);
 
-	expect(await page.getByRole('grid')).toHaveText('CatsDogs');
+	expect(await page.getByRole('grid')).toHaveText('RabbitsCatsDogs');
 });

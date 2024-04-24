@@ -1236,6 +1236,15 @@
 				},
 				{
 					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Previous Branch SHA"
+					},
+					"name": "previousBranchSHA",
+					"type": "String"
+				},
+				{
+					"DBType": "String",
 					"businessType": "Picklist",
 					"label": {
 						"en_US": "Type"

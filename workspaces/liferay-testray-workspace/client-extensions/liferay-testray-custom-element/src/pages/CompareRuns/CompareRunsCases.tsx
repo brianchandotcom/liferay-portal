@@ -12,7 +12,6 @@ import StatusBadge from '~/components/StatusBadge';
 import {StatusBadgeType} from '~/components/StatusBadge/StatusBadge';
 import i18n from '~/i18n';
 import {TestrayRun} from '~/services/rest';
-import {testrayCaseImpl} from '~/services/rest/TestrayCase';
 import {CaseResultStatuses} from '~/util/statuses';
 
 type RunStatusProps = {
@@ -138,9 +137,6 @@ const CompareRunsCases = () => {
 					],
 					rowWrap: true,
 				}}
-				transformData={(response) =>
-					testrayCaseImpl.transformDataFromList(response)
-				}
 			/>
 		</Container>
 	);

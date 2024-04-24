@@ -194,7 +194,7 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 	};
 
 	useEffect(() => {
-		if (customFilterFields && serializedFilter) {
+		if (serializedFilter || customFilterFields?.key) {
 			getFilterWithOptions();
 		}
 	}, [customFilterFields, getFilterWithOptions, serializedFilter]);

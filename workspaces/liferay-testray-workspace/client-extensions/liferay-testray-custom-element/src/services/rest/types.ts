@@ -49,7 +49,7 @@ export type APIResponse<Query = any> = {
 	page: number;
 	pageSize: number;
 	results?: Results[];
-	testrayCaseResults?: Results[];
+	testrayCaseResultComparisons?: Results[];
 	totalCount: number;
 };
 

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -54,14 +53,12 @@ public abstract class BaseExportImportTestCase {
 
 		Class<?> clazz = getClazz();
 
-		String actualJsonString = StringUtil.read(
-			clazz.getResourceAsStream("dependencies/" + actualFileName));
-
-		String expectedJsonString = StringUtil.read(
-			clazz.getResourceAsStream("dependencies/" + expectedFileName));
-
 		testExportImportJSONString(
-			actualJsonString, expectedJsonString, externalReferenceCode, name);
+			StringUtil.read(
+				clazz.getResourceAsStream("dependencies/" + actualFileName)),
+			StringUtil.read(
+				clazz.getResourceAsStream("dependencies/" + expectedFileName)),
+			externalReferenceCode, name);
 	}
 
 	public void testExportImportJSONString(
@@ -197,9 +194,6 @@ public abstract class BaseExportImportTestCase {
 
 		return themeDisplay;
 	}
-
-	@Inject
-	private File _file;
 
 	@Inject
 	private Portal _portal;

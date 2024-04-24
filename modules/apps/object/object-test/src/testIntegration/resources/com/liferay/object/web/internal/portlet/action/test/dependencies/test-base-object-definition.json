@@ -137,27 +137,6 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "Test Field"
-			},
-			"localized": false,
-			"name": "testField",
-			"objectFieldSettings": [
-			],
-			"readOnly": "false",
-			"readOnlyConditionExpression": "",
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "String",
-			"unique": false
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
@@ -173,6 +152,27 @@
 			"required": false,
 			"state": false,
 			"system": true,
+			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Test Field"
+			},
+			"localized": false,
+			"name": "testField",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": false,
 			"type": "String",
 			"unique": false
 		}

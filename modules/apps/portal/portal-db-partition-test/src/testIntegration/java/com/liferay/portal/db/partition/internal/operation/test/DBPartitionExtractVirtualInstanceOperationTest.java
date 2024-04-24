@@ -6,6 +6,8 @@
 package com.liferay.portal.db.partition.internal.operation.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +26,17 @@ public class DBPartitionExtractVirtualInstanceOperationTest
 
 	@Test
 	public void testDeployConfiguration() throws Exception {
-		deployConfiguration(_PID, "partitionCompanyId=L\"0\"\n");
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.db.partition.internal.operation." +
+					"DBPartitionExtractVirtualInstanceOperation",
+				LoggerTestUtil.ERROR)) {
+
+			deployConfiguration(_PID, "partitionCompanyId=L\"0\"\n");
+
+			verifyLog(
+				logCapture,
+				"Virtual Instance with company ID 0 does not exist");
+		}
 
 		verifyConfigurationIsDeletedAfterDeploy(_PID);
 	}

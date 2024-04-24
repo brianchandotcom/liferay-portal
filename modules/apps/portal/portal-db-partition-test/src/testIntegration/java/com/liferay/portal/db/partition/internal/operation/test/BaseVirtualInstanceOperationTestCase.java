@@ -11,6 +11,9 @@ import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PropsValues;
 
@@ -19,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -95,6 +99,16 @@ public abstract class BaseVirtualInstanceOperationTestCase
 			ReflectionTestUtil.invoke(
 				_persistenceManager, "_getDictionary",
 				new Class<?>[] {String.class}, pid));
+	}
+
+	protected void verifyLog(LogCapture logCapture, String expectedMessage) {
+		List<LogEntry> logEntries = logCapture.getLogEntries();
+
+		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+		LogEntry logEntry = logEntries.get(0);
+
+		Assert.assertEquals(expectedMessage, logEntry.getMessage());
 	}
 
 	private Configuration _createConfiguration(

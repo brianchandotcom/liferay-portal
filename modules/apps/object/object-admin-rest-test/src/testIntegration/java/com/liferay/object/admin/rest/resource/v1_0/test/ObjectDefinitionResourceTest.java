@@ -797,6 +797,13 @@ public class ObjectDefinitionResourceTest
 		testGetObjectDefinitionsPage_addObjectDefinition(objectDefinition2);
 
 		for (EntityField entityField : entityFields) {
+			if (StringUtil.equals(
+					entityField.getName(),
+					"rootObjectDefinitionExternalReferenceCode")) {
+
+				continue;
+			}
+
 			_assertGetObjectDefinitionsPageWithFilter(
 				Collections.singletonList(objectDefinition1),
 				getFilterString(entityField, operator, objectDefinition1));

@@ -73,7 +73,7 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			return super.getName();
 		}
 
-		return playwrightTestClass.getName();
+		return playwrightTestClass.getSpecFilePath();
 	}
 
 	@Override

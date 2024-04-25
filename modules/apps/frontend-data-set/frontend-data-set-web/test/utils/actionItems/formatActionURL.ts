@@ -52,23 +52,23 @@ describe('formatActionURL helper', () => {
 
 	it('returns the URL, changing the _redirect parameter to use the actual URL', () => {
 		const URLWithRedirect =
-			'/test/page?p_p_id=random&random_redirect=http://www.somewhere.com';
+			'/test/page?p_p_id=random&_random_redirect=http://www.somewhere.com';
 		const target = 'link';
 		const formattedURL = formatActionURL(URLWithRedirect, testItem, target);
 
 		expect(formattedURL).toEqual(
-			'/test/page?p_p_id=random&random_redirect=http://localhost/'
+			'/test/page?p_p_id=random&_random_redirect=http://localhost/'
 		);
 	});
 
 	it('returns the URL, changing the _backURL parameter to use the actual URL', () => {
 		const URLWithRedirect =
-			'/test/page?p_p_id=random&random_backURL=http://www.somewhere.com';
+			'/test/page?p_p_id=random&_random_backURL=http://www.somewhere.com';
 		const target = 'link';
 		const formattedURL = formatActionURL(URLWithRedirect, testItem, target);
 
 		expect(formattedURL).toEqual(
-			'/test/page?p_p_id=random&random_backURL=http://localhost/'
+			'/test/page?p_p_id=random&_random_backURL=http://localhost/'
 		);
 	});
 
@@ -82,13 +82,13 @@ describe('formatActionURL helper', () => {
 		);
 
 		expect(formattedURL).toEqual(
-			'/test/page?p_p_id=random&random_redirect=http://localhost/&random_backURL=http://localhost/'
+			'/test/page?p_p_id=random&_random_redirect=http://localhost/&_random_backURL=http://localhost/'
 		);
 	});
 
 	it('returns the URL, without changing the _redirect and _backURL parameters if the target is different from "link"', () => {
 		const URLWithBackURL =
-			'/test/page?p_p_id=random&random_backURL=http://www.somewhere.com';
+			'/test/page?p_p_id=random&_random_backURL=http://www.somewhere.com';
 		const modalTarget = 'modal';
 		const formattedURL = formatActionURL(
 			URLWithBackURL,
@@ -99,7 +99,7 @@ describe('formatActionURL helper', () => {
 		expect(formattedURL).toEqual(URLWithBackURL);
 
 		const URLWithRedirect =
-			'/test/page?p_p_id=random&random_redirect=http://www.somewhere.com';
+			'/test/page?p_p_id=random&_random_redirect=http://www.somewhere.com';
 		const panelTarget = 'sidePanel';
 		const anotherFormattedURL = formatActionURL(
 			URLWithRedirect,

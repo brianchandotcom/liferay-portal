@@ -53,33 +53,37 @@ const formatActionURL = function (
 
 	if (target === 'link' && replacedURL.includes('?')) {
 		const redirectionURL = window.location.href;
-		const backURL = '_backURL';
-		const redirect = '_redirect';
-		const backURLRegexp = new RegExp(backURL);
-		const redirectRegexp = new RegExp(redirect);
-
 		const searchParams = new URLSearchParams(
 			replacedURL.slice(replacedURL.indexOf('?'))
 		);
-		const p_p_id = searchParams.get('p_p_id');
 
-		if (redirectRegexp.test(url) || backURLRegexp.test(url)) {
+		const p_p_id = searchParams.get('p_p_id');
+		const backURLParam = `_${p_p_id}_backURL`;
+		const redirectParam = `_${p_p_id}_redirect`;
+
+		const backURLRegexp = new RegExp(backURLParam);
+		const redirectRegexp = new RegExp(redirectParam);
+
+		if (
+			redirectRegexp.test(replacedURL) ||
+			backURLRegexp.test(replacedURL)
+		) {
 			for (const key of searchParams.keys()) {
-				if (
-					redirectRegexp.test(`${p_p_id}${key}`) ||
-					backURLRegexp.test(`${p_p_id}${key}`)
-				) {
+				if (redirectRegexp.test(key) || backURLRegexp.test(key)) {
 					searchParams.set(key, redirectionURL);
 				}
 			}
 		}
 		else if (p_p_id) {
-			searchParams.set(`${p_p_id}${redirect}`, redirectionURL);
-			searchParams.set(`${p_p_id}${backURL}`, redirectionURL);
+			searchParams.set(redirectParam, redirectionURL);
+			searchParams.set(backURLParam, redirectionURL);
 		}
 
 		const updatedURL = decodeURIComponent(
-			`${url.slice(0, url.indexOf('?'))}?${searchParams.toString()}`
+			`${replacedURL.slice(
+				0,
+				replacedURL.indexOf('?')
+			)}?${searchParams.toString()}`
 		);
 
 		return updatedURL;

@@ -6,10 +6,11 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {FeatureFlagsOptions, featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 
-export const headlessBuilderTest = mergeTests(
+export const headlessBuilderTest = (featureFlags?: FeatureFlagsOptions) => mergeTests(
 	featureFlagsTest({
+		...featureFlags,
 		'LPS-178642': true,
 	}),
 	apiHelpersTest.extend<{

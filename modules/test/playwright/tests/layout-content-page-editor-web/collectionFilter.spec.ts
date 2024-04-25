@@ -38,6 +38,12 @@ const FRAGMENT_FIELDS = [
 	},
 ];
 
+const CONTENT_NAMES = [
+	'sample 01',
+	'sample 02 - Dogs and Cats categories',
+	'sample 03 - Dogs category',
+];
+
 export const test = mergeTests(
 	apiHelpersTest,
 	collectionsPagesTest,
@@ -71,11 +77,6 @@ test('filters a web content collection by single and multiple categories', async
 	pageEditorPage,
 	wemSite,
 }) => {
-	const contentNames = [
-		'sample 01',
-		'sample 02 - Dogs and Cats categories',
-		'sample 03 - Dogs category',
-	];
 
 	// Create a definition for a Collection Filter
 
@@ -161,7 +162,7 @@ test('filters a web content collection by single and multiple categories', async
 
 	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
-	for (const name of contentNames) {
+	for (const name of CONTENT_NAMES) {
 		await expect(page.getByText(name)).toBeVisible();
 	}
 
@@ -169,9 +170,9 @@ test('filters a web content collection by single and multiple categories', async
 
 	await selectFilter(page, ['cats']);
 
-	await expect(page.getByText(contentNames[0])).not.toBeVisible();
-	await expect(page.getByText(contentNames[1])).toBeVisible();
-	await expect(page.getByText(contentNames[2])).not.toBeVisible();
+	await expect(page.getByText(CONTENT_NAMES[0])).not.toBeVisible();
+	await expect(page.getByText(CONTENT_NAMES[1])).toBeVisible();
+	await expect(page.getByText(CONTENT_NAMES[2])).not.toBeVisible();
 
 	// Select category filter: Cats and Dogs
 
@@ -179,9 +180,9 @@ test('filters a web content collection by single and multiple categories', async
 
 	await selectFilter(page, ['dogs', 'cats']);
 
-	await expect(page.getByText(contentNames[0])).not.toBeVisible();
-	await expect(page.getByText(contentNames[1])).toBeVisible();
-	await expect(page.getByText(contentNames[2])).toBeVisible();
+	await expect(page.getByText(CONTENT_NAMES[0])).not.toBeVisible();
+	await expect(page.getByText(CONTENT_NAMES[1])).toBeVisible();
+	await expect(page.getByText(CONTENT_NAMES[2])).toBeVisible();
 });
 
 test('filters a web content collection by single and multiple tags', async ({
@@ -398,4 +399,95 @@ test('enables search field in dropdown list of Collection Filter', async ({
 
 	await expect(page.getByText('Dogs', {exact: true})).toBeVisible();
 	await expect(page.getByText('Cats', {exact: true})).not.toBeVisible();
+});
+
+test('filters the collection content by keywords', async ({
+	apiHelpers,
+	collectionsPage,
+	page,
+	pageEditorPage,
+	wemSite,
+}) => {
+
+	// Create a definition for a Collection Filter
+
+	const collectionFilterId = getRandomString();
+
+	const collectionFilterDefinition = getFragmentDefinition(
+		collectionFilterId,
+		'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer'
+	);
+
+	// Create definition for a collection mapped to Samples collection
+
+	const collectionName = 'Samples';
+
+	const samplesClassPK = await collectionsPage.getCollectionClassPK(
+		collectionName,
+		wemSite.friendlyUrlPath
+	);
+
+	const samplesCollection = getCollectionItemDefinition(getRandomString(), [
+		getFragmentDefinition(
+			getRandomString(),
+			'BASIC_COMPONENT-heading',
+			{},
+			FRAGMENT_FIELDS
+		),
+	]);
+
+	const collectionDefinition = getCollectionDefinition({
+		classPK: samplesClassPK,
+		id: getRandomString(),
+		pageElements: [samplesCollection],
+	});
+
+	// Create a content page and go to edit mode
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			collectionFilterDefinition,
+			collectionDefinition,
+		]),
+		siteId: wemSite.id,
+		title: getRandomString(),
+	});
+
+	// Go to edit mode of the created page and select the Collection Filter fragment
+
+	await pageEditorPage.goToEditMode(layout, wemSite.friendlyUrlPath);
+
+	await pageEditorPage.selectFragment(collectionFilterId);
+
+	// Set Filter configuration for keywords
+
+	await page.getByLabel('Select', {exact: true}).click();
+
+	await page.getByLabel(collectionName).check();
+
+	await page.getByLabel('Filter', {exact: true}).selectOption('keywords');
+
+	await pageEditorPage.publishPage();
+
+	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+	// Filter by keywords
+
+	const inputSearch = await page.getByPlaceholder('Search', {exact: true});
+
+	await inputSearch.fill('category categories');
+
+	await page.getByPlaceholder('Search', {exact: true}).press('Enter');
+
+	await expect(page.getByText(CONTENT_NAMES[0])).not.toBeVisible();
+	await expect(page.getByText(CONTENT_NAMES[1])).toBeVisible();
+	await expect(page.getByText(CONTENT_NAMES[2])).toBeVisible();
+
+	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+	await inputSearch.fill('rabbit');
+
+	await page.getByPlaceholder('Search', {exact: true}).press('Enter');
+
+	await expect(page.getByText('No Results Found')).toBeVisible();
 });

@@ -162,11 +162,16 @@ export default function ChangeTrackingRenderView({
 
 	const [dataURL, setDataURL] = useState(initialDataURL);
 	const [loading, setLoading] = useState(false);
+	const [refresh, setRefresh] = useState({});
 	const [selectedLocale, setSelectedLocale] = useState(defaultLocale);
 	const [
 		selectedSegmentsExperienceId,
 		setSelectedSegmentsExperienceId,
 	] = useState(null);
+	const [
+		showWorkflowSuccessMessage,
+		setShowWorkflowSuccessMessage,
+	] = useState(false);
 	const [state, setState] = useState({
 		contentType: CONTENT_TYPE_PREVIEW,
 		renderData: null,
@@ -194,7 +199,6 @@ export default function ChangeTrackingRenderView({
 
 				const newState = {
 					children: childEntries,
-					contentType: CONTENT_TYPE_PREVIEW,
 					parents: parentEntries,
 					renderData: json,
 					view: VIEW_UNIFIED,
@@ -254,7 +258,7 @@ export default function ChangeTrackingRenderView({
 					newState.view = VIEW_SPLIT;
 				}
 
-				setState(newState);
+				setState((prevState) => ({...prevState, ...newState}));
 
 				setLoading(false);
 			})
@@ -268,7 +272,28 @@ export default function ChangeTrackingRenderView({
 					},
 				});
 			});
-	}, [childEntries, dataURL, parentEntries, selectedSegmentsExperienceId]);
+	}, [
+		childEntries,
+		dataURL,
+		parentEntries,
+		refresh,
+		selectedSegmentsExperienceId,
+	]);
+
+	useEffect(() => {
+		if (showWorkflowSuccessMessage) {
+			Liferay.fire('closeModal');
+
+			setRefresh({});
+
+			openToast({
+				message: Liferay.Language.get(
+					'your-request-completed-successfully'
+				),
+				type: 'success',
+			});
+		}
+	}, [showWorkflowSuccessMessage]);
 
 	let currentLocale = selectedLocale;
 	let currentTitle = title;
@@ -806,18 +831,12 @@ export default function ChangeTrackingRenderView({
 
 									iframe.contentWindow.location.reload();
 
-									Liferay.fire('closeModal');
-
-									openToast({
-										message: Liferay.Language.get(
-											'your-request-completed-successfully'
-										),
-										type: 'success',
-									});
+									setShowWorkflowSuccessMessage(true);
 								},
 							},
 						],
 						height: workflowAction.modalHeight,
+						onOpen: () => setShowWorkflowSuccessMessage(false),
 						size: 'lg',
 						title: workflowAction.label,
 						url: workflowAction.href,

@@ -7,7 +7,6 @@ package com.liferay.portal.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -89,10 +88,8 @@ public class PortalImplUnitTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUpGroupLocalServiceUtil();
-		_setUpPortalContextLoaderListener();
-
-		_portalImpl = new PortalImpl();
+		_groupLocalServiceUtilMockedStatic.reset();
+		_portalContextLoaderListenerMockedStatic.reset();
 	}
 
 	@After
@@ -372,7 +369,9 @@ public class PortalImplUnitTest {
 
 	@Test
 	public void testGetLayoutSetFriendlyURLWhenLayoutSetMatchesWithDifferentVirtualHost()
-		throws PortalException {
+		throws Exception {
+
+		_setUpPortalImpl("myportal");
 
 		_assertGetLayoutSetFriendlyURL(
 			"/myportal/web/testGroup", "http://othertest.com:8080/myportal");
@@ -380,7 +379,9 @@ public class PortalImplUnitTest {
 
 	@Test
 	public void testGetLayoutSetFriendlyURLWhenLayoutSetMatchesWithSameVirtualHost()
-		throws PortalException {
+		throws Exception {
+
+		_setUpPortalImpl("myportal");
 
 		_assertGetLayoutSetFriendlyURL(
 			"http://test.com:8080/myportal", "http://test.com:8080/myportal");
@@ -633,7 +634,8 @@ public class PortalImplUnitTest {
 	}
 
 	private void _assertGetLayoutSetFriendlyURL(
-		String expectedFriendlyURL, String portalURL) throws PortalException {
+			String expectedFriendlyURL, String portalURL)
+		throws Exception {
 
 		LayoutSet layoutSet = new LayoutSetImpl();
 
@@ -808,12 +810,19 @@ public class PortalImplUnitTest {
 		);
 	}
 
-	private void _setUpPortalContextLoaderListener() {
+	private void _setUpPortalContextLoaderListener(String contextPath) {
 		Mockito.when(
 			PortalContextLoaderListener.getPortalServletContextPath()
 		).thenReturn(
-			"myportal"
+			contextPath
 		);
+	}
+
+	private void _setUpPortalImpl(String contextPath) throws Exception {
+		_setUpGroupLocalServiceUtil();
+		_setUpPortalContextLoaderListener(contextPath);
+
+		_portalImpl = new PortalImpl();
 	}
 
 	private void _storeAndResetPropsValuesValue(
@@ -843,7 +852,7 @@ public class PortalImplUnitTest {
 	private final MockedStatic<PortalContextLoaderListener>
 		_portalContextLoaderListenerMockedStatic = Mockito.mockStatic(
 			PortalContextLoaderListener.class);
-	private PortalImpl _portalImpl;
+	private PortalImpl _portalImpl = new PortalImpl();
 	private String[] _virtualHostsValidHosts;
 	private boolean _webServerForwardedHostEnabled;
 	private String _webServerForwardedHostHeader;

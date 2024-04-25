@@ -6,9 +6,11 @@ import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
 import {CSVType, MAX_CSV_ENTRIES, useDownloadCSV} from './utils';
 import {DownloadReportButton} from './DownloadReportButton';
+import {fetchCount} from 'shared/api/csv';
 import {sub} from 'shared/util/lang';
 import {toLocale} from 'shared/util/numbers';
 import {useDispatch} from 'react-redux';
+import {useParams} from 'react-router-dom';
 
 interface IDownloadIndividualReportModal {
 	disabled: boolean;
@@ -20,6 +22,7 @@ export const DownloadIndividualReportModal: React.FC<IDownloadIndividualReportMo
 	const dispatch = useDispatch();
 	const generateURL = useDownloadCSV({type: CSVType.Individual});
 	const {observer, onOpenChange, open} = useModal();
+	const {channelId, groupId} = useParams();
 
 	return (
 		<>
@@ -32,7 +35,7 @@ export const DownloadIndividualReportModal: React.FC<IDownloadIndividualReportMo
 				<Modal
 					observer={observer}
 					onClose={() => onOpenChange(false)}
-					onSubmit={() => {
+					onSubmit={async () => {
 						onOpenChange(false);
 
 						dispatch(
@@ -52,6 +55,28 @@ export const DownloadIndividualReportModal: React.FC<IDownloadIndividualReportMo
 
 						a.href = url;
 						a.click();
+
+						try {
+							const count = await fetchCount({
+								channelId,
+								groupId,
+								type: CSVType.Individual
+							});
+
+							if (count > MAX_CSV_ENTRIES) {
+								dispatch(
+									addAlert({
+										alertType: Alert.Types.Warning,
+										message: sub(
+											Liferay.Language.get(
+												'the-csv-file-reached-x-entries'
+											),
+											[toLocale(MAX_CSV_ENTRIES)]
+										)
+									})
+								);
+							}
+						} catch (e) {}
 					}}
 				/>
 			)}

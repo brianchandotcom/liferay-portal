@@ -29,7 +29,7 @@ public class InfoFieldTableItemView implements TableItemView {
 
 	@Override
 	public List<String> getHeaderNames() {
-		return ListUtil.fromArray("", "name", "type", "mandatory");
+		return ListUtil.fromArray("name", "type", "mandatory");
 	}
 
 	@Override

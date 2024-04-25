@@ -13,10 +13,12 @@ import com.liferay.jethr0.git.commit.GitCommitEntity;
 import com.liferay.jethr0.git.commit.GitCommitEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
+@Configuration
 public class GitBranchToGitCommitsEntityRelationshipDALO
 	extends BaseEntityRelationshipDALO<GitBranchEntity, GitCommitEntity> {
 

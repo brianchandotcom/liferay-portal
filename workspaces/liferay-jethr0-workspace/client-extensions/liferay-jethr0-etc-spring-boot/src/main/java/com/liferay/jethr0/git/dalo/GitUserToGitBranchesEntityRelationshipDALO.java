@@ -13,10 +13,12 @@ import com.liferay.jethr0.git.user.GitUserEntity;
 import com.liferay.jethr0.git.user.GitUserEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
+@Configuration
 public class GitUserToGitBranchesEntityRelationshipDALO
 	extends BaseEntityRelationshipDALO<GitUserEntity, GitBranchEntity> {
 

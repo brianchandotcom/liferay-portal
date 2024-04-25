@@ -13,10 +13,12 @@ import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.routine.RoutineEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
+@Configuration
 public class PreviousGitCommitToRoutinesEntityRelationshipDALO
 	extends BaseEntityRelationshipDALO<GitCommitEntity, RoutineEntity> {
 

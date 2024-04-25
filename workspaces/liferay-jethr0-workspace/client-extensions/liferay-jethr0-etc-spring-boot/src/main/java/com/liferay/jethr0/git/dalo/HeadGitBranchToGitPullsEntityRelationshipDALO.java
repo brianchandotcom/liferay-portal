@@ -13,10 +13,12 @@ import com.liferay.jethr0.git.pull.GitPullEntity;
 import com.liferay.jethr0.git.pull.GitPullEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
+@Configuration
 public class HeadGitBranchToGitPullsEntityRelationshipDALO
 	extends BaseEntityRelationshipDALO<GitBranchEntity, GitPullEntity> {
 

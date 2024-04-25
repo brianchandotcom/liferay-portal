@@ -17,7 +17,6 @@ import getBasicWebContentStructureId from '../../utils/structured-content/getBas
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
 import createPageWithCollectionAndFilterCollection from './utils/createPageWithCollectionAndFilterCollection';
-import getAssetTypesDefinition from './utils/getAssetTypesDefinition';
 import getCollectionDefinition from './utils/getCollectionDefinition';
 import getCollectionItemDefinition from './utils/getCollectionItemDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
@@ -305,63 +304,56 @@ test('enables search field in dropdown list of Collection Filter', async ({
 	collectionsPage,
 	page,
 	pageEditorPage,
-	site,
+	wemSite,
 }) => {
 
-	// Create a vocabulary with two categories
-
-	const vocabulary = await apiHelpers.headlessAdminTaxonomy.createVocabulary({
-		assetTypes: getAssetTypesDefinition(),
-		name: 'Animals',
-		siteId: site.id,
-	});
-
-	const categories = [];
-
-	for (const categoryName of ['Dogs', 'Cats']) {
-		categories.push(
-			await apiHelpers.headlessAdminTaxonomy.createCategory({
-				name: categoryName,
-				vocabularyId: vocabulary.id,
-			})
-		);
-	}
-
-	// Create a Web Content
-
-	const contentStructureId = await getBasicWebContentStructureId(apiHelpers);
-	await addApprovedStructuredContent({
-		apiHelpers,
-		contentStructureId,
-		siteId: site.id,
-		title: getRandomString(),
-	});
-
-	// Create a dynamic collection with the previous Web Content
-
-	const collectionName = 'Animal Collection';
-
-	await collectionsPage.goto(site.friendlyUrlPath);
-
-	const {classPK} = await collectionsPage.createWebContentDynamicCollection(
-		collectionName,
-		site.friendlyUrlPath
-	);
-
-	// Create a page with Collection Display and Collection Filter fragments
+	// Create a definition for a Collection Filter
 
 	const collectionFilterId = getRandomString();
 
-	const layout = await createPageWithCollectionAndFilterCollection({
-		apiHelpers,
-		classPK,
+	const collectionFilterDefinition = getFragmentDefinition(
 		collectionFilterId,
-		siteId: site.id,
+		'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer'
+	);
+
+	// Create definition for a collection mapped to Samples collection
+
+	const collectionName = 'Samples';
+
+	const samplesClassPK = await collectionsPage.getCollectionClassPK(
+		collectionName,
+		wemSite.friendlyUrlPath
+	);
+
+	const samplesCollection = getCollectionItemDefinition(getRandomString(), [
+		getFragmentDefinition(
+			getRandomString(),
+			'BASIC_COMPONENT-heading',
+			{},
+			FRAGMENT_FIELDS
+		),
+	]);
+
+	const collectionDefinition = getCollectionDefinition({
+		classPK: samplesClassPK,
+		id: getRandomString(),
+		pageElements: [samplesCollection],
+	});
+
+	// Create a content page and go to edit mode
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			collectionFilterDefinition,
+			collectionDefinition,
+		]),
+		siteId: wemSite.id,
+		title: getRandomString(),
 	});
 
 	// Go to edit mode of the created page and select the Collection Filter fragment
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goToEditMode(layout, wemSite.friendlyUrlPath);
 
 	await pageEditorPage.selectFragment(collectionFilterId);
 
@@ -393,17 +385,17 @@ test('enables search field in dropdown list of Collection Filter', async ({
 
 	await pageEditorPage.publishPage();
 
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
 	// Check the categories that appear in the dropdown
 
 	await page.getByRole('button', {name: 'Select'}).click();
 
-	await expect(page.getByText('dogs')).toBeVisible();
-	await expect(page.getByText('cats')).toBeVisible();
+	await expect(page.getByText('Dogs', {exact: true})).toBeVisible();
+	await expect(page.getByText('Cats', {exact: true})).toBeVisible();
 
 	await page.getByRole('textbox').fill('dogs');
 
-	await expect(page.getByText('dogs')).toBeVisible();
-	await expect(page.getByText('cats')).not.toBeVisible();
+	await expect(page.getByText('Dogs', {exact: true})).toBeVisible();
+	await expect(page.getByText('Cats', {exact: true})).not.toBeVisible();
 });

@@ -13,7 +13,6 @@ import com.liferay.headless.delivery.dto.v1_0.ContentElement;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.ContentElementEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.ContentElementResource;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
@@ -54,7 +53,6 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/content-element.properties",
 	scope = ServiceScope.PROTOTYPE, service = ContentElementResource.class
 )
-@CTAware
 public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 
 	@Override

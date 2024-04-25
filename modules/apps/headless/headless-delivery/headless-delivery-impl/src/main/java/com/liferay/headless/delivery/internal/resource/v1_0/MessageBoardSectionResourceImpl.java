@@ -21,7 +21,6 @@ import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryService;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -66,7 +65,6 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/message-board-section.properties",
 	scope = ServiceScope.PROTOTYPE, service = MessageBoardSectionResource.class
 )
-@CTAware
 public class MessageBoardSectionResourceImpl
 	extends BaseMessageBoardSectionResourceImpl {
 

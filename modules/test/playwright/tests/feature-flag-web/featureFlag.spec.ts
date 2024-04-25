@@ -8,8 +8,8 @@ import {expect, mergeTests} from '@playwright/test';
 import {loginTest} from '../../fixtures/loginTest';
 import {featureFlagPagesTest} from './fixtures/featureFlagPagesTest';
 
-const DEPENDENCY_FEATURE_FLAG = 'LPS-162766';
-const DEPENDENT_FEATURE_FLAG = 'LPS-162765';
+const DEPENDENCY_FEATURE_FLAG = 'LPD-00000';
+const DEPENDENT_FEATURE_FLAG = 'LPD-00001';
 
 export const test = mergeTests(featureFlagPagesTest, loginTest());
 
@@ -19,19 +19,19 @@ test('LPS-167698 - Assert that a feature flag can be enabled and disabled.', asy
 	await featureFlagsInstanceSettingsPage.goto();
 
 	await featureFlagsInstanceSettingsPage.updateFeatureFlag(
-		'LPS-162766',
+		DEPENDENCY_FEATURE_FLAG,
 		true
 	);
 
 	const featureFlagToggle =
 		await featureFlagsInstanceSettingsPage.getFeatureFlagToggle(
-			'LPS-162766'
+			DEPENDENCY_FEATURE_FLAG
 		);
 
 	await expect(featureFlagToggle).toBeChecked();
 
 	await featureFlagsInstanceSettingsPage.updateFeatureFlag(
-		'LPS-162766',
+		DEPENDENCY_FEATURE_FLAG,
 		false
 	);
 

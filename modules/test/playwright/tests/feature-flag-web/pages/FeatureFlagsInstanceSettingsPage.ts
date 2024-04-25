@@ -28,7 +28,7 @@ export class FeatureFlagsInstanceSettingsPage {
 		return this.page.locator(`#${key}`);
 	}
 
-	async goto(featureFlagType = 'Release') {
+	async goto(featureFlagType = 'Developer') {
 		await this.instanceSettingsPage.goToInstanceSetting(
 			'Feature Flags',
 			featureFlagType

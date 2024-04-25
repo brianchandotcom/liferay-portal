@@ -1,6 +1,6 @@
+import BaseCard from 'shared/components/base-card';
 import BasePage from 'shared/components/base-page';
 import Card from 'shared/components/Card';
-import CardWithRangeKey from 'shared/hoc/CardWithRangeKey';
 import ChartTooltip, {
 	Alignments,
 	Weights
@@ -111,7 +111,7 @@ const VisitorsByTimeCard: React.FC<IVisitorsByTimeCardProps> = ({
 	);
 
 	return (
-		<CardWithRangeKey
+		<BaseCard
 			className={className}
 			label={label}
 			legacyDropdownRangeKey={false}
@@ -128,7 +128,7 @@ const VisitorsByTimeCard: React.FC<IVisitorsByTimeCardProps> = ({
 					/>
 				</Card.Body>
 			)}
-		</CardWithRangeKey>
+		</BaseCard>
 	);
 };
 

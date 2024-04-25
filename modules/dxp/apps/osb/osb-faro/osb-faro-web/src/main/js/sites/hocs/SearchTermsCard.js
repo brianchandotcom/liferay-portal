@@ -1,4 +1,4 @@
-import CardWithRangeKey from 'shared/hoc/CardWithRangeKey';
+import BaseCard from 'shared/components/base-card';
 import React from 'react';
 import SearchTermsQuery from 'shared/queries/SearchTermsQuery';
 import URLConstants from 'shared/util/url-constants';
@@ -61,7 +61,7 @@ const SearchTermsCard = props => {
 	const {channelId, id} = useParams();
 
 	return (
-		<CardWithRangeKey
+		<BaseCard
 			className='search-terms-card-root'
 			label={Liferay.Language.get('search-terms')}
 			legacyDropdownRangeKey={false}
@@ -76,7 +76,7 @@ const SearchTermsCard = props => {
 					rowBordered={false}
 				/>
 			)}
-		</CardWithRangeKey>
+		</BaseCard>
 	);
 };
 

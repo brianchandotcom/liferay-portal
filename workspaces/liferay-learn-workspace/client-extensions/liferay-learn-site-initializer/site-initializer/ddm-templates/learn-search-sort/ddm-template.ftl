@@ -29,28 +29,28 @@
 </div>
 
 <script>
-function handleChangeSort(event) {
-	const urlParams = new URLSearchParams(window.location.search);
-	const selectedOptionValue = event.currentTarget.value;
+	function handleChangeSort(event) {
+		const urlParams = new URLSearchParams(window.location.search);
+		const selectedOptionValue = event.currentTarget.value;
 
-	if (selectedOptionValue === 'title+') {
-		urlParams.set('sort', 'title+');
-		window.location.search = urlParams;
-	}
+		if (selectedOptionValue === 'title+') {
+			urlParams.set('sort', 'title+');
+			window.location.search = urlParams;
+		}
 
-	if (selectedOptionValue === 'title-') {
-		urlParams.set('sort', 'title-');
-		window.location.search = urlParams;
-	}
+		if (selectedOptionValue === 'title-') {
+			urlParams.set('sort', 'title-');
+			window.location.search = urlParams;
+		}
 
-	if (selectedOptionValue === 'publishedDate-') {
-		urlParams.set('sort', 'publishedDate-');
-		window.location.search = urlParams;
-	}
+		if (selectedOptionValue === 'publishedDate-') {
+			urlParams.set('sort', 'publishedDate-');
+			window.location.search = urlParams;
+		}
 
-	if (selectedOptionValue === '') {
-		urlParams.set('sort', '');
-		window.location.search = urlParams;
+		if (selectedOptionValue === '') {
+			urlParams.set('sort', '');
+			window.location.search = urlParams;
+		}
 	}
-}
 </script>

@@ -120,7 +120,7 @@ const AccountForm = () => {
 	const singleAccount = accounts.length === 1;
 
 	return (
-		<div className="align-items-center d-flex flex-column justify-content-center">
+		<div>
 			<Header
 				description={
 					<div className="d-flex flex-column justify-content-center text-center w-100">

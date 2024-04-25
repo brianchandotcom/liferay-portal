@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayLink from '@clayui/link';
-import ClaySticker from '@clayui/sticker';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
@@ -15,6 +13,8 @@ import zodSchema, {zodResolver} from '../../schema/zod';
 import fetcher from '../../services/fetcher';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 import {postOrder} from '../../utils/api';
+import AccountEmailInfo from '../CustomerDashboard/pages/Apps/App/Licenses/CreateLicense/AccountInfo';
+import {ProductCardRevamp} from '../GetApp/components/ProductCard/ProductCard';
 import {StepWizardRevamp} from '../GetApp/components/StepWizard/StepWizard';
 
 type GetSolutionOutletProps = {
@@ -170,55 +170,66 @@ const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 		navigate('/finish', {replace: true});
 	};
 
+	const stepIndex = steps.findIndex(
+		(step) => step.path === location.pathname
+	);
+
 	return (
-		<div className="align-items-center d-flex flex-column justify-content-center purchased-solutions">
-			<div className="product-card">
-				<div className="mr-5">
-					<ClaySticker size="xl">
-						<ClaySticker.Image
-							alt="placeholder"
-							src={getIcon(product?.urlImage)}
-						/>
-					</ClaySticker>
-				</div>
+		<div>
+			<ProductCardRevamp
+				icon={getIcon(product?.urlImage)}
+				subtitle="7 Days Trial"
+				title={product.name}
+			>
+				{account && (
+					<>
+						<hr />
 
-				<h2 className="mb-0">
-					<span className="mr-2">{product?.name}</span>
+						<div className="d-flex flex-row justify-content-between">
+							<strong className="account-banner-title-text align-self-center">
+								Account Selected
+							</strong>
 
-					<span>
-						<ClayLink className="font-weight-bold">Trial</ClayLink>
-					</span>
-				</h2>
-			</div>
-
-			<div className="align-items-center d-flex flex-column justify-content-center purchased-solutions-container">
-				<div className="border d-flex flex-column justify-content-center p-6 purchased-solutions-body rounded">
-					{accounts.length > 1 && (
-						<div className="d-flex justify-content-center mb-5">
-							<StepWizardRevamp
-								className="col-8"
-								currentStep={1}
-								stepIndex={steps.findIndex(
-									(step) => step.path === location.pathname
-								)}
-								steps={steps}
+							<AccountEmailInfo
+								userAccount={{
+									...myUserAccount,
+									...account,
+									image: account.logoURL,
+								}}
 							/>
 						</div>
-					)}
+					</>
+				)}
+			</ProductCardRevamp>
 
-					<Outlet
-						context={{
-							accountForm,
-							accountSelected: account,
-							accounts,
-							navigate,
-							onSubmit,
-							product,
-							setAccounts,
-							setSelectedAccount,
-						}}
-					/>
-				</div>
+			<div className="border d-flex flex-column mt-7 p-5 rounded">
+				<main>
+					<div className="d-flex flex-column">
+						{accounts.length > 1 && (
+							<div className="d-flex justify-content-center mb-6">
+								<StepWizardRevamp
+									className="col-8"
+									currentStep={steps[stepIndex]}
+									stepIndex={stepIndex}
+									steps={steps}
+								/>
+							</div>
+						)}
+
+						<Outlet
+							context={{
+								accountForm,
+								accountSelected: account,
+								accounts,
+								navigate,
+								onSubmit,
+								product,
+								setAccounts,
+								setSelectedAccount,
+							}}
+						/>
+					</div>
+				</main>
 			</div>
 		</div>
 	);

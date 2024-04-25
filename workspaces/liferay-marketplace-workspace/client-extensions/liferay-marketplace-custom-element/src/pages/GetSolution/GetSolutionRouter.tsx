@@ -9,6 +9,7 @@ import './index.scss';
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 
+import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import withProviders from '../../hoc/withProviders';
 import {useDeliveryProduct} from '../../hooks/data/useProduct';
 import GetSolutionOutlet from './GetSolutionOutlet';
@@ -17,13 +18,15 @@ import SolutionFinish from './pages/SolutionFinish';
 import SolutionForm from './pages/SolutionForm';
 
 const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
 
 const GetSolutionRouter = () => {
-	const productId = Number(urlParams.get('productId')) + 1;
+	const {properties} = useMarketplaceContext();
 
 	const {data: product, isLoading} = useDeliveryProduct(
-		(productId as unknown) as string
+		properties.trialProductId ||
+			((new URLSearchParams(queryString).get(
+				'productId'
+			) as unknown) as string)
 	);
 
 	if (isLoading) {
@@ -31,31 +34,27 @@ const GetSolutionRouter = () => {
 	}
 
 	return (
-		<div className="align-items-center d-flex flex-column justify-content-center purchased-solutions">
-			<HashRouter>
-				<Routes>
-					<Route
-						element={
-							<GetSolutionOutlet
-								product={product as DeliveryProduct}
-							/>
-						}
-					>
-						<Route element={<SolutionAccount />} index />
-						<Route element={<SolutionForm />} path="form" />
-					</Route>
+		<HashRouter>
+			<Routes>
+				<Route
+					element={
+						<GetSolutionOutlet
+							product={product as DeliveryProduct}
+						/>
+					}
+				>
+					<Route element={<SolutionAccount />} index />
+					<Route element={<SolutionForm />} path="form" />
+				</Route>
 
-					<Route
-						element={
-							<SolutionFinish
-								product={product as DeliveryProduct}
-							/>
-						}
-						path="finish"
-					/>
-				</Routes>
-			</HashRouter>
-		</div>
+				<Route
+					element={
+						<SolutionFinish product={product as DeliveryProduct} />
+					}
+					path="finish"
+				/>
+			</Routes>
+		</HashRouter>
 	);
 };
 

@@ -23,3 +23,58 @@ html.dev body {
 	font-size: 1rem;
 	font-weight: 400;
 }
+
+.product-banner {
+	background: var(--neutral-01, #f7f7f8);
+	border-radius: 10px;
+
+	.object-fit-cover {
+		border-radius: 8px;
+		object-fit: contain;
+	}
+
+	.price-text {
+		color: var(--neutral-10, #282934);
+		font-size: 13px;
+		line-height: 16px;
+
+		.license-tag {
+			background: var(--status-info-lighten-2, #e6ebf5);
+			border-radius: 4px;
+			color: var(--status-info-darken-2, #1c3667);
+			font-size: 11px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 16px;
+		}
+
+		&-value {
+			font-size: 18px;
+			font-weight: 600;
+			letter-spacing: 0;
+			line-height: 20px;
+			text-align: right;
+		}
+	}
+
+	.sub-text {
+		color: var(--neutral-08, #54555f);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 330px;
+	}
+
+	small {
+		&.subscription-banner-text {
+			color: #54555f !important;
+		}
+	}
+
+	&-title {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 330px;
+	}
+}

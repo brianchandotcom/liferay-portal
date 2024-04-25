@@ -168,21 +168,22 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 		List<Object> fragmentCompositionsAndFragmentEntries = new ArrayList<>();
 
-		Table<?> tempFragmentEntryTable = _getFragmentCompositionGroupByStep(
-			groupId, fragmentCollectionId, name, status
-		).unionAll(
-			_getFragmentEntryGroupByStep(
-				groupId, fragmentCollectionId, name, status)
-		).as(
-			"tempFragmentCompositionsAndFragmentEntriesTable"
-		);
+		Table<?> fragmentCompositionsAndFragmentEntriesTable =
+			_getFragmentCompositionGroupByStep(
+				groupId, fragmentCollectionId, name, status
+			).unionAll(
+				_getFragmentEntryGroupByStep(
+					groupId, fragmentCollectionId, name, status)
+			).as(
+				"fragmentCompositionsAndFragmentEntriesTable"
+			);
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
-			tempFragmentEntryTable
+			fragmentCompositionsAndFragmentEntriesTable
 		).from(
-			tempFragmentEntryTable
+			fragmentCompositionsAndFragmentEntriesTable
 		).orderBy(
-			tempFragmentEntryTable, orderByComparator
+			fragmentCompositionsAndFragmentEntriesTable, orderByComparator
 		).limit(
 			start, end
 		);
@@ -220,29 +221,30 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	public int getFragmentCompositionsAndFragmentEntriesCount(
 		long groupId, long fragmentCollectionId, String name, int status) {
 
-		Table<?> tempFragmentEntryTable = DSLQueryFactoryUtil.countDistinct(
-			FragmentCompositionTable.INSTANCE.fragmentCompositionId
-		).from(
-			FragmentCompositionTable.INSTANCE
-		).where(
-			_getFragmentCompositionWherePredicate(
-				groupId, fragmentCollectionId, name, status)
-		).unionAll(
+		Table<?> fragmentCompositionsAndFragmentEntriesTable =
 			DSLQueryFactoryUtil.countDistinct(
-				FragmentEntryTable.INSTANCE.fragmentEntryId
+				FragmentCompositionTable.INSTANCE.fragmentCompositionId
 			).from(
-				FragmentEntryTable.INSTANCE
+				FragmentCompositionTable.INSTANCE
 			).where(
-				_getFragmentEntryWherePredicate(
+				_getFragmentCompositionWherePredicate(
 					groupId, fragmentCollectionId, name, status)
-			)
-		).as(
-			"tempFragmentCompositionsAndFragmentEntriesTable"
-		);
+			).unionAll(
+				DSLQueryFactoryUtil.countDistinct(
+					FragmentEntryTable.INSTANCE.fragmentEntryId
+				).from(
+					FragmentEntryTable.INSTANCE
+				).where(
+					_getFragmentEntryWherePredicate(
+						groupId, fragmentCollectionId, name, status)
+				)
+			).as(
+				"fragmentCompositionsAndFragmentEntriesTable"
+			);
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
 		).from(
-			tempFragmentEntryTable
+			fragmentCompositionsAndFragmentEntriesTable
 		);
 
 		int count = 0;

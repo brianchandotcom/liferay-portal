@@ -1,0 +1,9 @@
+{
+	"description": "Description of animals vocabulary",
+	"externalReferenceCode": "ANIMVOC0001",
+	"name": "Animals",
+	"name_i18n": {
+		"en_US": "Animals"
+	},
+	"viewableBy": "Anyone"
+}

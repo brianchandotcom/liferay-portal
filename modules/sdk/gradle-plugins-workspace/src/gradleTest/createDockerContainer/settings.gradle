@@ -1,5 +1,6 @@
 import com.bmuschko.gradle.docker.tasks.container.DockerCopyFileFromContainer
 import com.bmuschko.gradle.docker.tasks.container.DockerRemoveContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerStopContainer
 import com.bmuschko.gradle.docker.tasks.image.DockerInspectImage
 import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage
 
@@ -35,8 +36,34 @@ gradle.projectsEvaluated {
 		imageId = "create_docker_container_image"
 	}
 
+	rootProject.tasks.register("testStopDockerContainer", DockerStopContainer) {
+		onError {
+			if (logger.isWarnEnabled()) {
+				logger.warn("No container with ID '${gradle.liferayWorkspace.dockerContainerId}' found")
+			}
+		}
+		targetContainerId {
+			gradle.liferayWorkspace.dockerContainerId
+		}
+	}
+
+	rootProject.tasks.register("testRemoveDockerContainer", DockerRemoveContainer) {
+		dependsOn "testStopDockerContainer"
+
+		force = true
+		onError {
+			if (logger.isWarnEnabled()) {
+				logger.warn("No container with ID '${gradle.liferayWorkspace.dockerContainerId}' found")
+			}
+		}
+		removeVolumes = true
+		targetContainerId {
+			gradle.liferayWorkspace.dockerContainerId
+		}
+	}
+
 	rootProject.tasks.register("removeImage", DockerRemoveImage) {
-		dependsOn "removeDockerContainer"
+		dependsOn "testRemoveDockerContainer"
 
 		targetImageId {
 			gradle.liferayWorkspace.dockerImageId

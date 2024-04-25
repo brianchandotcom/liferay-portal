@@ -59,14 +59,14 @@ test.describe('Manage object relationships through Model Builder', () => {
 		).toBeVisible();
 
 		await modelBuilderPage.clickObjectDefinitionShowAllFieldsButton(
-			objectDefinition2.name
+			objectDefinition2.label['en_US']
 		);
 
 		await modelBuilderPage.clickFitViewButton();
 
 		await expect(
 			modelBuilderPage.objectDefinitionNodes
-				.filter({hasText: objectDefinition2.name})
+				.filter({hasText: objectDefinition2.label['en_US']})
 				.getByText(objectRelationshipLabel)
 		).toBeVisible();
 
@@ -145,7 +145,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 
 		await expect(
 			modelBuilderPage.objectDefinitionNodes.filter({
-				hasText: objectDefinition2.name,
+				hasText: objectDefinition2.label['en_US'],
 			})
 		).toBeVisible();
 
@@ -163,7 +163,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 
 		await expect(
 			modelBuilderPage.objectDefinitionNodes.filter({
-				hasText: objectDefinition2.name,
+				hasText: objectDefinition2.label['en_US'],
 			})
 		).not.toBeVisible();
 

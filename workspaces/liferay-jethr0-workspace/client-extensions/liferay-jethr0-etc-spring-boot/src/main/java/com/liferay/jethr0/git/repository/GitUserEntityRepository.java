@@ -6,6 +6,7 @@
 package com.liferay.jethr0.git.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
+import com.liferay.jethr0.event.github.ref.GitHubRef;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.dalo.GitUserEntityDALO;
 import com.liferay.jethr0.git.dalo.GitUserToGitBranchesEntityRelationshipDALO;
@@ -13,6 +14,14 @@ import com.liferay.jethr0.git.dalo.ReceiverGitUserToGitPullsEntityRelationshipDA
 import com.liferay.jethr0.git.dalo.SenderGitUserToGitPullsEntityRelationshipDALO;
 import com.liferay.jethr0.git.pull.GitPullEntity;
 import com.liferay.jethr0.git.user.GitUserEntity;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.net.URL;
+
+import java.util.Objects;
+import java.util.Set;
+
+import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +32,38 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GitUserEntityRepository
 	extends BaseEntityRepository<GitUserEntity> {
+
+	@Override
+	public void initialize() {
+		addAll(_gitUserEntityDALO.getAll());
+	}
+
+	public GitUserEntity createGitUserEntity(GitHubRef gitHubRef) {
+		URL url = StringUtil.toURL(
+			"https://github.com/" + gitHubRef.getUserName());
+
+		GitUserEntity gitUserEntity = getByURL(url);
+
+		if (gitUserEntity != null) {
+			return gitUserEntity;
+		}
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("url", String.valueOf(url));
+
+		return create(jsonObject);
+	}
+
+	public GitUserEntity getByURL(URL url) {
+		for (GitUserEntity gitUserEntity : getAll()) {
+			if (Objects.equals(gitUserEntity.getURL(), url)) {
+				return gitUserEntity;
+			}
+		}
+
+		return null;
+	}
 
 	@Override
 	public GitUserEntityDALO getEntityDALO() {

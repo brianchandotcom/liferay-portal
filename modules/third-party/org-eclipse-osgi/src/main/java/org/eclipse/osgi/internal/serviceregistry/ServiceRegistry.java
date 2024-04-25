@@ -906,7 +906,7 @@ public class ServiceRegistry {
 								container.getEventPublisher();
 
 							equinoxEventPublisher.publishFrameworkEvent(
-								FrameworkEvent.ERROR, key.getBundle(), t);
+								FrameworkEvent.ERROR, key.getBundleImpl(), t);
 						}
 					}
 				}

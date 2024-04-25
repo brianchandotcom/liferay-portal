@@ -1,0 +1,13 @@
+diff --git a/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java b/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
+index 11c393a242110..e5b9d14a3a215 100644
+--- a/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
++++ b/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
+@@ -906,7 +906,7 @@ public class ServiceRegistry {
+ 								container.getEventPublisher();
+ 
+ 							equinoxEventPublisher.publishFrameworkEvent(
+-								FrameworkEvent.ERROR, key.getBundle(), t);
++								FrameworkEvent.ERROR, key.getBundleImpl(), t);
+ 						}
+ 					}
+ 				}

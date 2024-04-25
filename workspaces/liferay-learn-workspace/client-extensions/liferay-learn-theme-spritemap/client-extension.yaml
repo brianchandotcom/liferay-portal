@@ -6,3 +6,4 @@ liferay-learn-theme-spritemap:
     name: Liferay Learn Theme Spritemap
     type: themeSpritemap
     url: spritemap.*.svg
+    enableSVG4Everybody: true

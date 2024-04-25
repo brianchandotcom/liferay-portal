@@ -5,7 +5,6 @@
 
 import {
 	ReactNode,
-	Reducer,
 	createContext,
 	useContext,
 	useEffect,

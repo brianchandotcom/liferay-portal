@@ -11,8 +11,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Dictionary;
 import java.util.Map;
@@ -40,7 +42,10 @@ public class BaseURLPortalK8sConfigurationPropertiesMutator
 			properties.put(
 				"baseURL", "$[conf:.serviceScheme]://$[conf:.serviceAddress]");
 			properties.put(".serviceAddress", mainDomain);
-			properties.put(".serviceScheme", Http.HTTPS);
+			properties.put(
+				".serviceScheme",
+				GetterUtil.getString(
+					PropsValues.WEB_SERVER_PROTOCOL, Http.HTTPS));
 		}
 	}
 

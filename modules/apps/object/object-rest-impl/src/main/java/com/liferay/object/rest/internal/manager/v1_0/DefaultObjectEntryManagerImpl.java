@@ -1598,20 +1598,20 @@ public class DefaultObjectEntryManagerImpl
 					serviceBuilderObjectEntry, dtoConverterContext.getUriInfo())
 			).build();
 
-			boolean siteScoped = Objects.equals(
+			boolean scopeSite = Objects.equals(
 				objectDefinition.getScope(),
 				ObjectDefinitionConstants.SCOPE_SITE);
 
 			HashMap<String, String> templateParameterMap = HashMapBuilder.put(
 				() -> {
-					if (siteScoped) {
+					if (scopeSite) {
 						return "scopeKey";
 					}
 
 					return null;
 				},
 				() -> {
-					if (siteScoped) {
+					if (scopeSite) {
 						return String.valueOf(
 							serviceBuilderObjectEntry.getGroupId());
 					}
@@ -1620,7 +1620,7 @@ public class DefaultObjectEntryManagerImpl
 				}
 			).put(
 				() -> {
-					if (siteScoped) {
+					if (scopeSite) {
 						return "externalReferenceCode";
 					}
 
@@ -1631,7 +1631,7 @@ public class DefaultObjectEntryManagerImpl
 
 			String methodName = null;
 
-			if (siteScoped) {
+			if (scopeSite) {
 				methodName =
 					"putScopeScopeKeyByExternalReferenceCodeObjectAction" +
 						"ObjectActionName";

@@ -7,6 +7,7 @@ package com.liferay.jethr0.git.pull;
 
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
+import com.liferay.jethr0.git.user.GitUserEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -73,6 +74,26 @@ public abstract class BaseGitPullEntity
 	}
 
 	@Override
+	public GitUserEntity getReceiverGitUserEntity() {
+		return _receiverGitUserEntity;
+	}
+
+	@Override
+	public long getReceiverGitUserEntityId() {
+		return _receiverGitUserEntityId;
+	}
+
+	@Override
+	public GitUserEntity getSenderGitUserEntity() {
+		return _senderGitUserEntity;
+	}
+
+	@Override
+	public long getSenderGitUserEntityId() {
+		return _senderGitUserEntityId;
+	}
+
+	@Override
 	public URL getURL() {
 		return _url;
 	}
@@ -123,6 +144,30 @@ public abstract class BaseGitPullEntity
 	}
 
 	@Override
+	public void setReceiverGitUserEntity(GitUserEntity receiverGitUserEntity) {
+		_receiverGitUserEntity = receiverGitUserEntity;
+
+		if (_receiverGitUserEntity != null) {
+			_receiverGitUserEntityId = _receiverGitUserEntity.getId();
+		}
+		else {
+			_receiverGitUserEntityId = 0;
+		}
+	}
+
+	@Override
+	public void setSenderGitUserEntity(GitUserEntity senderGitUserEntity) {
+		_senderGitUserEntity = senderGitUserEntity;
+
+		if (_senderGitUserEntity != null) {
+			_senderGitUserEntityId = _senderGitUserEntity.getId();
+		}
+		else {
+			_senderGitUserEntityId = 0;
+		}
+	}
+
+	@Override
 	public void setURL(URL sha) {
 		_url = sha;
 	}
@@ -135,6 +180,10 @@ public abstract class BaseGitPullEntity
 	private long _baseGitBranchEntityId;
 	private GitBranchEntity _headGitBranchEntity;
 	private long _headGitBranchEntityId;
+	private GitUserEntity _receiverGitUserEntity;
+	private long _receiverGitUserEntityId;
+	private GitUserEntity _senderGitUserEntity;
+	private long _senderGitUserEntityId;
 	private URL _url;
 
 }

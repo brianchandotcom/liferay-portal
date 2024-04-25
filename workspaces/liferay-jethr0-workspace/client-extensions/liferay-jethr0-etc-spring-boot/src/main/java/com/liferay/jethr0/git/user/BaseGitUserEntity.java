@@ -7,6 +7,7 @@ package com.liferay.jethr0.git.user;
 
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
+import com.liferay.jethr0.git.pull.GitPullEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -32,8 +33,23 @@ public abstract class BaseGitUserEntity
 	}
 
 	@Override
+	public void addGitPullEntities(Set<GitPullEntity> gitPullEntities) {
+		addRelatedEntities(gitPullEntities);
+	}
+
+	@Override
+	public void addGitPullEntity(GitPullEntity gitPullEntity) {
+		addRelatedEntity(gitPullEntity);
+	}
+
+	@Override
 	public Set<GitBranchEntity> getGitBranchEntities() {
 		return getRelatedEntities(GitBranchEntity.class);
+	}
+
+	@Override
+	public Set<GitPullEntity> getGitPullEntities() {
+		return getRelatedEntities(GitPullEntity.class);
 	}
 
 	@Override
@@ -60,6 +76,16 @@ public abstract class BaseGitUserEntity
 	@Override
 	public void removeGitBranchEntity(GitBranchEntity gitBranchEntity) {
 		removeRelatedEntity(gitBranchEntity);
+	}
+
+	@Override
+	public void removeGitPullEntities(Set<GitPullEntity> gitPullEntities) {
+		removeRelatedEntities(gitPullEntities);
+	}
+
+	@Override
+	public void removeGitPullEntity(GitPullEntity gitPullEntity) {
+		removeRelatedEntity(gitPullEntity);
 	}
 
 	@Override

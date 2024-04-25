@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -55,6 +55,12 @@ describe('', () => {
 				setEnd: () => {},
 				setStart: () => {},
 			});
+
+			global.document.getSelection = () => {
+				return {
+					removeAllRanges: () => {},
+				};
+			};
 
 			const saveButton = global.document.createElement('button');
 			saveButton.classList.add('save-button');
@@ -120,5 +126,30 @@ describe('', () => {
 		userEvent.type(searchInput, 'anotherVariable');
 
 		expect(queryByText('no-results-found')).toBeInTheDocument();
+	});
+
+	it('enables focus trap when clicking ctrl + m', () => {
+		const {container} = renderApp();
+
+		const editor = container.querySelector('.CodeMirror').CodeMirror;
+
+		expect(editor.state.keyMaps).not.toContain(
+			expect.objectContaining({name: 'tabKey'})
+		);
+
+		act(() => {
+			editor.triggerOnKeyDown({
+				altKey: false,
+				ctrlKey: true,
+				keyCode: 77,
+				metaKey: false,
+				shiftKey: false,
+				type: 'keydown',
+			});
+		});
+
+		expect(editor.state.keyMaps).toEqual(
+			expect.arrayContaining([expect.objectContaining({name: 'tabKey'})])
+		);
 	});
 });

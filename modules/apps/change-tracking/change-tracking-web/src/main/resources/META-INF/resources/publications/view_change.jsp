@@ -41,7 +41,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "review-change"));
 </div>
 
 <aui:script>
-	function <%= PortalUtil.getPortletNamespace(PortletKeys.MY_WORKFLOW_TASK) %>refreshPortlet() {
-		window.location.reload();
+	function <%= viewChangesDisplayContext.getMyWorkflowTaskPortletNamespace() %>refreshPortlet() {
+		Liferay.fire('<portlet:namespace />workflowAssigned');
 	}
 </aui:script>

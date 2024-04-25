@@ -71,6 +71,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -294,6 +296,10 @@ public class ViewChangesDisplayContext {
 				"typeName"
 			).build()
 		).build();
+	}
+
+	public String getMyWorkflowTaskPortletNamespace() {
+		return PortalUtil.getPortletNamespace(PortletKeys.MY_WORKFLOW_TASK);
 	}
 
 	public Map<String, Object> getReactData() throws Exception {

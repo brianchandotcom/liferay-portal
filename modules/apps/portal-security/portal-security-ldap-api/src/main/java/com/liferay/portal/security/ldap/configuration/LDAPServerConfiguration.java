@@ -161,4 +161,7 @@ public interface LDAPServerConfiguration {
 	)
 	public String[] groupDefaultObjectClasses();
 
+	@Meta.AD(deflt = "", name = "modified-date", required = false)
+	public String modifiedDate();
+
 }

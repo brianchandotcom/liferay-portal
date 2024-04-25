@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
@@ -380,6 +381,7 @@ public class LDAPServerConfigurationProviderImpl
 
 		properties.put(LDAPConstants.COMPANY_ID, companyId);
 		properties.put(LDAPConstants.LDAP_SERVER_ID, ldapServerId);
+		properties.put(LDAPConstants.MODIFIED_DATE, String.valueOf(new Date()));
 
 		Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>
 			objectValuePairs = _configurations.computeIfAbsent(

@@ -113,6 +113,8 @@ public class LDAPConstants {
 
 	public static final String LDAP_SERVER_ID = "ldapServerId";
 
+	public static final String MODIFIED_DATE = "modifiedDate";
+
 	public static final String PAGE_SIZE = "pageSize";
 
 	public static final String PASSWORD_ENCRYPTION_ALGORITHM =

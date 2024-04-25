@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -539,6 +540,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 		if (safeLdapContext == null) {
 			return;
 		}
+
+		_lastImportDate = new Date(_lastImportTime);
 
 		_lastImportTime = System.currentTimeMillis();
 
@@ -1738,22 +1741,19 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 			passwordReset = user.isPasswordReset();
 		}
 
-		ExpandoBridge userExpandoBridge = user.getExpandoBridge();
+		LDAPServerConfiguration ldapServerConfiguration =
+			_ldapServerConfigurationProvider.getConfiguration(
+				companyId, ldapServerId);
 
-		long userExpandoValuesCount =
-			_expandoValueLocalService.getRowValuesCount(
-				userExpandoBridge.getCompanyId(),
-				userExpandoBridge.getClassName(),
-				ExpandoTableConstants.DEFAULT_TABLE_NAME,
-				userExpandoBridge.getClassPK());
+		ServiceContext serviceContext = ldapUser.getServiceContext();
 
-		int ldapUserExpandoMappingsCount =
-			ldapImportContext.getUserExpandoMappings(
-			).size();
+		Date serverConfigurationModifiedDate = DateUtil.parseDate(
+			"EEE MMM d HH:mm:ss zzz yyyy",
+			ldapServerConfiguration.modifiedDate(), serviceContext.getLocale());
 
 		if ((modifiedDate != null) &&
 			modifiedDate.equals(user.getModifiedDate()) &&
-			(ldapUserExpandoMappingsCount == userExpandoValuesCount)) {
+			(serverConfigurationModifiedDate.compareTo(_lastImportDate) <= 0)) {
 
 			if ((ldapUser.isUpdatePassword() ||
 				 !ldapImportConfiguration.importUserPasswordEnabled()) &&
@@ -1784,10 +1784,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 
 			return user;
 		}
-
-		LDAPServerConfiguration ldapServerConfiguration =
-			_ldapServerConfigurationProvider.getConfiguration(
-				companyId, ldapServerId);
 
 		if (ldapServerConfiguration.ldapServerId() != ldapServerId) {
 			if (_log.isDebugEnabled()) {
@@ -1824,6 +1820,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 
 		Contact ldapContact = ldapUser.getContact();
 
+		ExpandoBridge userExpandoBridge = user.getExpandoBridge();
+
 		_populateExpandoAttributes(
 			userExpandoBridge, ldapUser.getUserExpandoAttributes(),
 			ldapImportContext.getUserExpandoMappings(),
@@ -1850,8 +1848,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 		int birthdayMonth = birthdayCal.get(Calendar.MONTH);
 		int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
 		int birthdayYear = birthdayCal.get(Calendar.YEAR);
-
-		ServiceContext serviceContext = ldapUser.getServiceContext();
 
 		if (modifiedDate != null) {
 			serviceContext.setModifiedDate(modifiedDate);
@@ -2016,6 +2012,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 	@Reference
 	private GroupLocalService _groupLocalService;
 
+	private Date _lastImportDate;
 	private long _lastImportTime;
 
 	@Reference

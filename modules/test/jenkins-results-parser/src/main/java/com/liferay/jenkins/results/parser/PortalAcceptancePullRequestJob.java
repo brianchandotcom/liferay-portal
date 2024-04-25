@@ -64,7 +64,7 @@ public class PortalAcceptancePullRequestJob
 	protected Set<String> getRawBatchNames() {
 		Set<String> batchNames = super.getRawBatchNames();
 
-		if (_hasOnlyFilesInDirectory("modules")) {
+		if (_isRelevantTestSuite() && _hasOnlyFilesInDirectory("modules")) {
 			batchNames.remove("semantic-versioning-jdk8");
 		}
 

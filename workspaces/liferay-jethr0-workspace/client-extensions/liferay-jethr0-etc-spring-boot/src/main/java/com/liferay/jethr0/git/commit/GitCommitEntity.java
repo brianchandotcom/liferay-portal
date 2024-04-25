@@ -6,13 +6,37 @@
 package com.liferay.jethr0.git.commit;
 
 import com.liferay.jethr0.entity.Entity;
+import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.routine.RoutineEntity;
+
+import java.util.Set;
 
 /**
  * @author Michael Hashimoto
  */
 public interface GitCommitEntity extends Entity {
 
+	public void addJobEntities(Set<JobEntity> jobEntities);
+
+	public void addJobEntity(JobEntity jobEntity);
+
+	public void addRoutineEntities(Set<RoutineEntity> routineEntities);
+
+	public void addRoutineEntity(RoutineEntity routineEntity);
+
+	public Set<JobEntity> getJobEntities();
+
+	public Set<RoutineEntity> getRoutineEntities();
+
 	public String getSHA();
+
+	public void removeJobEntities(Set<JobEntity> jobEntities);
+
+	public void removeJobEntity(JobEntity jobEntity);
+
+	public void removeRoutineEntities(Set<RoutineEntity> routineEntities);
+
+	public void removeRoutineEntity(RoutineEntity routineEntity);
 
 	public void setSHA(String sha);
 

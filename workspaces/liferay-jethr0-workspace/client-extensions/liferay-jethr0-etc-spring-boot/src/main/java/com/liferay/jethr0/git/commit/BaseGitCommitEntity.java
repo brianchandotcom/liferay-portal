@@ -6,6 +6,10 @@
 package com.liferay.jethr0.git.commit;
 
 import com.liferay.jethr0.entity.BaseEntity;
+import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.routine.RoutineEntity;
+
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -14,6 +18,31 @@ import org.json.JSONObject;
  */
 public abstract class BaseGitCommitEntity
 	extends BaseEntity implements GitCommitEntity {
+
+	@Override
+	public void addJobEntities(Set<JobEntity> jobEntities) {
+		addRelatedEntities(jobEntities);
+	}
+
+	@Override
+	public void addJobEntity(JobEntity jobEntity) {
+		addRelatedEntity(jobEntity);
+	}
+
+	@Override
+	public void addRoutineEntities(Set<RoutineEntity> routineEntities) {
+		addRelatedEntities(routineEntities);
+	}
+
+	@Override
+	public void addRoutineEntity(RoutineEntity routineEntity) {
+		addRelatedEntity(routineEntity);
+	}
+
+	@Override
+	public Set<JobEntity> getJobEntities() {
+		return getRelatedEntities(JobEntity.class);
+	}
 
 	@Override
 	public JSONObject getJSONObject() {
@@ -25,8 +54,33 @@ public abstract class BaseGitCommitEntity
 	}
 
 	@Override
+	public Set<RoutineEntity> getRoutineEntities() {
+		return getRelatedEntities(RoutineEntity.class);
+	}
+
+	@Override
 	public String getSHA() {
 		return _sha;
+	}
+
+	@Override
+	public void removeJobEntities(Set<JobEntity> jobEntities) {
+		removeRelatedEntities(jobEntities);
+	}
+
+	@Override
+	public void removeJobEntity(JobEntity jobEntity) {
+		removeRelatedEntity(jobEntity);
+	}
+
+	@Override
+	public void removeRoutineEntities(Set<RoutineEntity> routineEntities) {
+		removeRelatedEntities(routineEntities);
+	}
+
+	@Override
+	public void removeRoutineEntity(RoutineEntity routineEntity) {
+		removeRelatedEntity(routineEntity);
 	}
 
 	@Override

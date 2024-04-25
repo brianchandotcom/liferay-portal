@@ -426,7 +426,7 @@ export default class Blogs {
 							.value,
 						entryId: this._getElementById('entryId').value,
 						friendlyUrlCategories: this._getValuesByName(
-							'friendly_url_category_ids'
+							'friendlyURLAssetCategoryIds'
 						),
 						inputPermissionsViewRole,
 						referringPortletResource: this._getElementById(

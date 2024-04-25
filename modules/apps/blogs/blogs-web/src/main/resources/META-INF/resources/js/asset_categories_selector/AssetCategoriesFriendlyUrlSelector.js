@@ -178,8 +178,8 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 				{useFallbackInput && (
 					<input
 						disabled={!selectedItems.length}
-						id={namespace + 'friendly_url_category_ids'}
-						name={namespace + 'friendly_url_category_ids'}
+						id={namespace + 'friendlyURLAssetCategoryIds'}
+						name={namespace + 'friendlyURLAssetCategoryIds'}
 						readOnly={true}
 						type="hidden"
 						value={selectedItems

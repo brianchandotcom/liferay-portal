@@ -540,7 +540,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		if (_featureFlagManager.isEnabled("LPD-11147")) {
 			serviceContext.setAttribute(
 				"friendlyURLAssetCategoryIds",
-				serviceContext.getAssetCategoryIds());
+				ParamUtil.getLongValues(
+					actionRequest, "friendlyURLAssetCategoryIds"));
 		}
 
 		serviceContext.setAttribute(

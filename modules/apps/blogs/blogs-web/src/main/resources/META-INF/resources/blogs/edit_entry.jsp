@@ -207,6 +207,8 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 											"inputAddon", StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping()) + StringPool.SLASH
 										).put(
 											"selectCategoryURL", blogsEditEntryDisplayContext.getAssetCategorySelectorURL()
+										).put(
+											"selectedCategories", blogsEditEntryDisplayContext.getFriendlyURLAssetCategoriesJSONArray()
 										).build()
 									%>'
 								/>

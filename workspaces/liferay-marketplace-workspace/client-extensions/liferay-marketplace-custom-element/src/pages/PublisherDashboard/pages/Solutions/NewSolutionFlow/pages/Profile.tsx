@@ -9,6 +9,10 @@ import ClayMultiSelect from '@clayui/multi-select';
 import {useState} from 'react';
 
 import Form from '../../../../../../components/MarketplaceForm';
+import {
+	SolutionTypes,
+	useSolutionContext,
+} from '../../../../../../context/SolutionContext';
 import i18n from '../../../../../../i18n';
 import {getIconSpriteMap} from '../../../../../../liferay/constants';
 
@@ -24,13 +28,34 @@ const sourceItems = [
 ];
 
 const Profile = () => {
-	const [value, setValue] = useState('');
-	const [items, setItems] = useState([
+	const [
 		{
-			label: 'Category',
-			value: 'Category',
+			profile: {categories, description, name, tags},
 		},
-	]);
+		dispatch,
+	] = useSolutionContext();
+
+	// eslint-disable-next-line no-console
+	console.log(name, description, categories, tags);
+
+	const [multiSelectText, setMultiSelectText] = useState({
+		categories: '',
+		tags: '',
+	});
+
+	const onChange = (event: any) => {
+		dispatch({
+			payload: {[event.target.name]: event.target.value},
+			type: SolutionTypes.SET_PROFILE,
+		});
+	};
+
+	const onChangeMultiSelect = (event: any) => {
+		setMultiSelectText((prevState) => ({
+			...prevState,
+			[event.value]: event.value,
+		}));
+	};
 
 	return (
 		<div className="mb-4 solutions-form-profile">
@@ -70,6 +95,7 @@ const Profile = () => {
 
 			<Form.Input
 				name="name"
+				onChange={onChange}
 				placeholder="Enter solution name"
 				type="text"
 			/>
@@ -81,6 +107,7 @@ const Profile = () => {
 			<Form.Input
 				component="textarea"
 				name="description"
+				onChange={onChange}
 				placeholder="Enter solution description"
 				type="textarea"
 			/>
@@ -92,12 +119,14 @@ const Profile = () => {
 
 				<ClayMultiSelect
 					inputName="description-selector"
-					items={items}
-					onChange={setValue}
-					onItemsChange={setItems}
+					items={categories}
+					onChange={onChangeMultiSelect}
+					onItemsChange={(value: any) =>
+						onChange({target: {name: 'categories', value}})
+					}
 					sourceItems={sourceItems}
 					spritemap={getIconSpriteMap()}
-					value={value}
+					value={multiSelectText.categories}
 				/>
 
 				<Form.Label className="mt-5" htmlFor="tags" required>
@@ -106,12 +135,14 @@ const Profile = () => {
 
 				<ClayMultiSelect
 					inputName="tags-selector"
-					items={items}
-					onChange={setValue}
-					onItemsChange={setItems}
+					items={tags}
+					onChange={onChangeMultiSelect}
+					onItemsChange={(value: any) => {
+						onChange({target: {name: 'tags', value}});
+					}}
 					sourceItems={sourceItems}
 					spritemap={getIconSpriteMap()}
-					value={value}
+					value={multiSelectText.tags}
 				/>
 			</div>
 		</div>

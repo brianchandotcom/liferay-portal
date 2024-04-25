@@ -34,18 +34,18 @@
 	breadcrumbJSONArray = navigationJSONObject.getJSONArray("breadcrumb")
 	childrenJSONArray = navigationJSONObject.getJSONArray("children")
 	parentJSONObject = navigationJSONObject.getJSONObject("parent")
-	productJSONObject = breadcrumbJSONArray.getJSONObject(breadcrumbJSONArray.length()-1)
+	productJSONObject = breadcrumbJSONArray.getJSONObject(breadcrumbJSONArray.length()-1)!{}
 	siblingsJSONArray = navigationJSONObject.getJSONArray("siblings")
 />
 
 <div class="learn-article-nav">
-	<#if navigationMenuItems[productJSONObject.getString("title")]?has_content && navigationMenuItems[productJSONObject.getString("title")].title?has_content>
+	<#if productJSONObject?has_content && productJSONObject.getString("title")?has_content && navigationMenuItems[productJSONObject.getString("title")]?has_content && navigationMenuItems[productJSONObject.getString("title")].title?has_content>
 		<div
 			class="dropdown learn-article-nav-root"
 			data-toggle="liferay-dropdown"
 		>
 			<div class="learn-article-nav-item">
-				<div id="dropdown-product">
+				<div class="d-flex">
 					<div class="learn-article-nav-image">
 						<img
 							class="lexicon-icon lexicon-icon-caret-bottom product-icon"
@@ -71,41 +71,40 @@
 
 			<div class="dropdown-menu">
 				<#list navigationMenuItems as key, value>
-					<div
+					<a
 						class="dropdown-item learn-article-nav-item"
 						href="/w/${navigationMenuItems[key].url}/index"
 						tabindex="4"
 					>
-						<div id="dropdown-product">
-							<div class="learn-article-nav-image">
+						<span class="d-flex">
+							<span class="learn-article-nav-image">
 								<img
 									class="lexicon-icon lexicon-icon-caret-bottom product-icon mt-0 mr-2"
 									role="presentation"
 									src="${value.image}"height: 25px; margin-left: 5px; max-width: none; width: 25px;
 									viewBox="0 0 512 512"
 								/>
-							</div>
-
+							</span>
 							<span class="learn-article-nav-text">${value.title}</span>
-						</div>
+						</span>
+
 						<#if navigationMenuItems[productJSONObject.getString("title")].url == value.url>
-							<div>
+							<span>
 								<@clay["icon"] symbol="check" />
-							</div>
+							</span>
 						</#if>
-					</div>
+					</a>
 				</#list>
 			</div>
 		</div>
 	</#if>
 
 	<div class="learn-article-nav-content">
-		<#if parentJSONObject?has_content>
-			<div class="learn-article-nav-item learn-article-nav-parent">
-				<div class="m-2">
+		<#if parentJSONObject?has_content && parentJSONObject.getString("url")?has_content>
+			<div class="learn-article-nav-item learn-article-nav-parent liferay-nav-item">
+				<div class="mr-2">
 					<a
 						href='${parentJSONObject.getString("url")}'
-						id="parentTitle"
 					>
 						<svg
 							class="lexicon-icon lexicon-icon-angle-left"
@@ -122,16 +121,15 @@
 		</#if>
 
 		<#if childrenJSONArray.length() gt 0>
-			<ul>
+			<ul class="m-0 p-2">
 				<#list 0..childrenJSONArray.length()-1 as i>
-					<li class="learn-article-nav-item ${(navigationJSONObject.getJSONObject("self").url == childrenJSONArray.getJSONObject(i).url)?then("selected", "")}">
+					<li class="${(navigationJSONObject.getJSONObject("self").url == childrenJSONArray.getJSONObject(i).url)?then("selected", "")}">
 						<a
 							class="liferay-nav-item"
 							href="${childrenJSONArray.getJSONObject(i).url}"
 						>
+							<span>${childrenJSONArray.getJSONObject(i).getString("title")}</span>
 						</a>
-
-						<span>${childrenJSONArray.getJSONObject(i).getString("title")}</span>
 					</li>
 				</#list>
 			</ul>

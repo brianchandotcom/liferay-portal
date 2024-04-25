@@ -54,7 +54,7 @@
 							<a href="/"><@clay["icon"] symbol="home-full" /></a>
 						</li>
 
-						<#if breadcrumbJSONArray?has_content>
+						<#if breadcrumbJSONArray.length() gt 0>
 							<#list breadcrumbJSONArray.length()-1..0 as i>
 								<li>
 									<a href='${breadcrumbJSONArray.getJSONObject(i).getString("url")}'>${breadcrumbJSONArray.getJSONObject(i).getString("title")}</a>
@@ -87,9 +87,11 @@
 				</#if>
 
 				<#if showChildrenCards && childrenJSONArray.length() gt 0>
-					<#list childrenJSONArray.length()-1..0 as i>
-						<a href='${childrenJSONArray.getJSONObject(i).getString("url")}'>${childrenJSONArray.getJSONObject(i).getString("title")}</a>
-					</#list>
+					<div class="d-flex flex-row flex-wrap justify-content-center">
+						<#list childrenJSONArray.length()-1..0 as i>
+							<a class="learn-card" href='${childrenJSONArray.getJSONObject(i).getString("url")}'>${childrenJSONArray.getJSONObject(i).getString("title")}</a>
+						</#list>
+					</div>
 				</#if>
 				<div class="learn-article-categories-tags">
 					<#list taxonomyVocabularies as vocabulary>

@@ -25,7 +25,7 @@ function initArticle() {
 			if (articleTOC) {
 				articleTOC.innerHTML += `
 				<li class="learn-article-nav-item">
-					<a href="#${id}" class=" liferay-nav-item" id="toc-${id}">
+					<a href="#${id}" id="toc-${id}">
 						${heading.innerText}
 					</a>
 				</li>`;
@@ -66,14 +66,14 @@ function initArticle() {
 			const node = document.getElementById(`toc-${target.id}`);
 
 			if (node) {
-				node.classList.remove('active');
+				node.classList.remove('selected');
 			}
 		});
 
 		const activeNode = document.getElementById(`toc-${id}`);
 
 		if (activeNode) {
-			activeNode.classList.add('active');
+			activeNode.classList.add('selected');
 		}
 	};
 

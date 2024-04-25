@@ -22,6 +22,7 @@ export type InitialState = {
 			value: string;
 		}[];
 		description: string;
+		file: any;
 		name: string;
 		tags: {
 			label: string;
@@ -40,6 +41,7 @@ const solutionInitialState: InitialState = {
 	profile: {
 		categories: [],
 		description: '',
+		file: {},
 		name: '',
 		tags: [],
 	},
@@ -50,6 +52,7 @@ type SolutionPayload = {
 	[SolutionTypes.SET_PROFILE]: Partial<{
 		categories: [];
 		description: '';
+		file: {};
 		name: '';
 		tags: [];
 	}>;

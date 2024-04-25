@@ -34,3 +34,18 @@
 	font-size: 4.5px;
 	margin-left: 2px;
 }
+
+.info-bg {
+	background-color: #e6ebf5;
+	border-radius: 4px;
+	width: 22px;
+	height: 22px;
+
+	.info-icon {
+		font-size: 11px;
+		margin-top: 0.5px;
+		margin-left: 5px;
+		background-color: #e6ebf5;
+		color: #264a8d;
+	}
+}

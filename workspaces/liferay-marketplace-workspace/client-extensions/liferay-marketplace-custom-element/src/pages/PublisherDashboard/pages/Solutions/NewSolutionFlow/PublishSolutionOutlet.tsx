@@ -29,11 +29,16 @@ const PublishSolutionOutlet = () => {
 	const paths = location.pathname.split('/');
 	const lastPath = paths.at(id ? -2 : -1);
 
-	const activeIndex = SOLUTION_FLOW_ITEMS.findIndex(
+	let activeIndex = SOLUTION_FLOW_ITEMS.findIndex(
 		({path}) => path === lastPath
 	);
 
-	const activeRoute = SOLUTION_FLOW_ITEMS[activeIndex];
+	if (activeIndex === -1) {
+		activeIndex = 0;
+	}
+
+	const activeRoute =
+		SOLUTION_FLOW_ITEMS[activeIndex] || SOLUTION_FLOW_ITEMS[0];
 
 	const onClickButton = (buttonName: string) => {
 		const isContinue = buttonName === button.continue;
@@ -56,7 +61,7 @@ const PublishSolutionOutlet = () => {
 			}
 		});
 
-		return navigate(
+		navigate(
 			SOLUTION_FLOW_ITEMS[isContinue ? activeIndex + 1 : activeIndex - 1]
 				.path
 		);
@@ -75,15 +80,13 @@ const PublishSolutionOutlet = () => {
 				<div className="ml-8 solutions-body-container">
 					<h1 className="header-title mb-4">{activeRoute.title}</h1>
 
-					<div className="header-description">
-						{activeRoute.description}
-					</div>
+					{activeRoute.description}
 
 					<div className="mt-6 solutions-form">
 						<Outlet />
 					</div>
 
-					<hr className="my-6"></hr>
+					<hr className="my-6" />
 
 					<div className="d-flex justify-content-end">
 						{activeIndex !== 0 && (
@@ -95,6 +98,7 @@ const PublishSolutionOutlet = () => {
 								Back
 							</ClayButton>
 						)}
+
 						<ClayButton
 							displayType="primary"
 							onClick={() => onClickButton(button.continue)}

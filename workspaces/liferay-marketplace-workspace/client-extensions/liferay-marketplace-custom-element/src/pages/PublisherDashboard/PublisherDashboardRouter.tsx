@@ -82,7 +82,7 @@ const PublisherDashboardRouter = () => {
 					}
 					path="solution/publisher/:id?"
 				>
-					<Route element={<Create />} index />
+					<Route element={<Create />} path="" />
 					<Route element={<CompanyProfile />} path="company" />
 					<Route element={<ContactUs />} path="contact" />
 					<Route element={<Details />} path="details" />

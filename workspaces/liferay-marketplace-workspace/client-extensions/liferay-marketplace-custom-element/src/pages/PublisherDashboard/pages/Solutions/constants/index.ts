@@ -14,7 +14,7 @@ export const SOLUTION_FLOW_ITEMS = [
 			'review-and-accept-the-legal-agreement-between-you-and-liferay-before-proceeding-you-are-about-to-create-a-new-solution-submission'
 		),
 		label: i18n.translate('create'),
-		path: 'publisher',
+		path: '',
 		selected: true,
 		title: i18n.translate('create-template'),
 	},

@@ -7,4 +7,6 @@ export enum ProductVocabulary {
 	EDITION = 'Marketplace Edition',
 	LIFERAY_PLATFORM_OFFERING = 'Marketplace Liferay Platform Offering',
 	LIFERAY_VERSION = 'Marketplace Liferay Version',
+	SOLUTION_CATEGORY = 'Marketplace Solution Category',
+	SOLUTION_TAGS = 'Marketplace Solution Tags',
 }

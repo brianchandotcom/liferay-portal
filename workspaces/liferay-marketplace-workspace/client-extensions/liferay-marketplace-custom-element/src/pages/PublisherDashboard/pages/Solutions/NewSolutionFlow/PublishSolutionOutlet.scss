@@ -23,7 +23,7 @@
 					background-color: #ffff;
 					border: 1px solid #b1b2b9;
 					border-radius: 8px;
-					height: 48px;
+					min-height: 48px;
 
 					.label {
 						background-color: #e6ebf5;
@@ -33,13 +33,6 @@
 						padding: 8px;
 					}
 				}
-			}
-
-			.upload-icon-background {
-				background-color: #ebeef2;
-				border-radius: 8px;
-				height: 70px;
-				width: 70px;
 			}
 		}
 

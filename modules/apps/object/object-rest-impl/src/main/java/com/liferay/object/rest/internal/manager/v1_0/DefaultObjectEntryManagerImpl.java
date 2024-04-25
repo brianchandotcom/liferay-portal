@@ -1615,33 +1615,6 @@ public class DefaultObjectEntryManagerImpl
 						"ReferenceCodeObjectActionObjectActionName";
 			}
 
-			Map<String, String> templateParameterMap = HashMapBuilder.put(
-				() -> {
-					if (scopeSite) {
-						return "scopeKey";
-					}
-
-					return null;
-				},
-				() -> {
-					if (scopeSite) {
-						return String.valueOf(
-							serviceBuilderObjectEntry.getGroupId());
-					}
-
-					return null;
-				}
-			).put(
-				() -> {
-					if (scopeSite) {
-						return "externalReferenceCode";
-					}
-
-					return "objectEntryExternalReferenceCode";
-				},
-				serviceBuilderObjectEntry.getExternalReferenceCode()
-			).build();
-
 			for (ObjectAction objectAction :
 					_objectActionLocalService.getObjectActions(
 						objectDefinition.getObjectDefinitionId(),
@@ -1652,8 +1625,31 @@ public class DefaultObjectEntryManagerImpl
 					_addAction(
 						objectAction.getName(), methodName,
 						serviceBuilderObjectEntry,
-						HashMapBuilder.create(
-							templateParameterMap
+						HashMapBuilder.put(
+							() -> {
+								if (scopeSite) {
+									return "scopeKey";
+								}
+
+								return null;
+							},
+							() -> {
+								if (scopeSite) {
+									return String.valueOf(
+										serviceBuilderObjectEntry.getGroupId());
+								}
+
+								return null;
+							}
+						).put(
+							() -> {
+								if (scopeSite) {
+									return "externalReferenceCode";
+								}
+
+								return "objectEntryExternalReferenceCode";
+							},
+							serviceBuilderObjectEntry.getExternalReferenceCode()
 						).put(
 							"objectActionName", objectAction.getName()
 						).build(),

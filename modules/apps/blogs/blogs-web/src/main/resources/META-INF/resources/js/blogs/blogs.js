@@ -355,18 +355,9 @@ export default class Blogs {
 		const subtitle = this._getElementById('subtitle').value;
 		const title = this._getElementById('title').value;
 
-		let urlTitle = '';
-
-		if (Liferay.FeatureFlags['LPD-11147']) {
-			urlTitle = this._automaticURL()
-				? ''
-				: this._getElementById('friendly_url').value;
-		}
-		else {
-			urlTitle = this._automaticURL()
-				? ''
-				: this._getElementById('urlTitle').value;
-		}
+		const urlTitle = this._automaticURL()
+			? ''
+			: this._getElementById('urlTitle').value;
 
 		if (draft && ajax) {
 			const hasData =

@@ -217,7 +217,7 @@ export enum CSVType {
 	Individual = 'individual',
 	Blog = 'blog',
 	Document = 'document',
-	Forms = 'forms',
+	Form = 'form',
 	Journal = 'journal',
 	Event = 'event',
 	Page = 'page'

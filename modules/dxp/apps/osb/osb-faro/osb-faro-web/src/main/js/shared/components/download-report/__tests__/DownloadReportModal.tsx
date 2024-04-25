@@ -246,7 +246,7 @@ describe('DownloadReportModal CSV', () => {
 		${CSVType.Blog}
 		${CSVType.Document}
 		${CSVType.Event}
-		${CSVType.Forms}
+		${CSVType.Form}
 		${CSVType.Individual}
 		${CSVType.Journal}
 		${CSVType.Page}

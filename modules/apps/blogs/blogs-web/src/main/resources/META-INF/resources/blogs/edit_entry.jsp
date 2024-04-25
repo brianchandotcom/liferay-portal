@@ -193,8 +193,6 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 										).put(
 											"inputAddon", StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping()) + StringPool.SLASH
 										).put(
-											"namespace", liferayPortletResponse.getNamespace()
-										).put(
 											"selectCategoryURL", blogsEditEntryDisplayContext.getAssetCategorySelectorURL()
 										).build()
 									%>'

@@ -198,6 +198,8 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 										HashMapBuilder.<String, Object>put(
 											"automaticURL", automaticURL
 										).put(
+											"customFriendlyURL", blogsEditEntryDisplayContext.getFriendlyURL()
+										).put(
 											"friendlyUrlInfo", LanguageUtil.format(request, "there-is-a-limit-of-x-characters-in-encoded-format-for-friendly-urls-(e.g.-x)", new String[] {String.valueOf(250), "/blogs"}, false)
 										).put(
 											"friendlyURLSeparatorCompanyConfigurationURL", blogsEditEntryDisplayContext.getFriendlyURLSeparatorCompanyConfigurationURL()

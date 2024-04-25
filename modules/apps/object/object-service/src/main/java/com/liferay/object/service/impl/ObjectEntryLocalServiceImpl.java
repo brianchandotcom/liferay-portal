@@ -1808,13 +1808,6 @@ public class ObjectEntryLocalServiceImpl
 				continue;
 			}
 
-			long primaryKey = GetterUtil.getLong(
-				values.get(objectField.getName()));
-
-			if (primaryKey == 0) {
-				continue;
-			}
-
 			ObjectRelationship objectRelationship =
 				_objectRelationshipPersistence.fetchByObjectFieldId2(
 					objectField.getObjectFieldId());
@@ -1826,6 +1819,9 @@ public class ObjectEntryLocalServiceImpl
 			if (objectDefinition == null) {
 				continue;
 			}
+
+			long primaryKey = GetterUtil.getLong(
+				values.get(objectField.getName()));
 
 			String objectRelationshipERCObjectFieldName =
 				ObjectFieldSettingUtil.getValue(
@@ -1857,13 +1853,14 @@ public class ObjectEntryLocalServiceImpl
 			ObjectEntry objectEntry = objectEntryPersistence.fetchByPrimaryKey(
 				primaryKey);
 
-			if (objectEntry == null) {
-				continue;
+			String externalReferenceCode = StringPool.BLANK;
+
+			if (objectEntry != null) {
+				externalReferenceCode = objectEntry.getExternalReferenceCode();
 			}
 
 			values.put(
-				objectRelationshipERCObjectFieldName,
-				objectEntry.getExternalReferenceCode());
+				objectRelationshipERCObjectFieldName, externalReferenceCode);
 		}
 	}
 

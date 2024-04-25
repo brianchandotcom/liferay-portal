@@ -21,6 +21,7 @@ import React, {useMemo, useRef, useState} from 'react';
 const DEFAULT_URL = 'default-url';
 const CUSTOM_URL = 'custom-url';
 function AssetVocabulariesCategoriesFriendlyUrlSelector({
+	automaticURL,
 	customFriendlyURL = '',
 	formGroupClassName = '',
 	friendlyUrlInfo,
@@ -37,7 +38,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 	useFallbackInput = true,
 }) {
 	const [customUrlCheckboxValue, setCustomUrlCheckboxValue] = useState(
-		DEFAULT_URL
+		automaticURL ? DEFAULT_URL : CUSTOM_URL
 	);
 
 	const [friendlyUrlValue, setFriendlyUrlValue] = useState(customFriendlyURL);
@@ -143,8 +144,6 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 				</div>
 
 				<ClayRadioGroup
-					defaultValue={DEFAULT_URL}
-					id={portletNamespace + 'automaticURL'}
 					name={portletNamespace + 'automaticURL'}
 					onChange={setCustomUrlCheckboxValue}
 					value={customUrlCheckboxValue}

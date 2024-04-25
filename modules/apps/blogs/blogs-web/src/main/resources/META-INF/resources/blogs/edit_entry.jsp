@@ -176,6 +176,17 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 
 					<%
 					Portlet portlet = PortletLocalServiceUtil.getPortletById(BlogsPortletKeys.BLOGS);
+
+					boolean automaticURL;
+
+					if (entry == null) {
+						automaticURL = Validator.isNull(blogsEditEntryDisplayContext.getURLTitle());
+					}
+					else {
+						String uniqueUrlTitle = BlogsEntryLocalServiceUtil.getUniqueUrlTitle(entry);
+
+						automaticURL = uniqueUrlTitle.equals(blogsEditEntryDisplayContext.getURLTitle());
+					}
 					%>
 
 					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11147") %>'>
@@ -185,6 +196,8 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 									module="{AssetCategoriesFriendlyUrlSelector} from blogs-web"
 									props='<%=
 										HashMapBuilder.<String, Object>put(
+											"automaticURL", automaticURL
+										).put(
 											"friendlyUrlInfo", LanguageUtil.format(request, "there-is-a-limit-of-x-characters-in-encoded-format-for-friendly-urls-(e.g.-x)", new String[] {String.valueOf(250), "/blogs"}, false)
 										).put(
 											"friendlyURLSeparatorCompanyConfigurationURL", blogsEditEntryDisplayContext.getFriendlyURLSeparatorCompanyConfigurationURL()
@@ -204,20 +217,6 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
 						<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-11147") %>'>
 							<div class="clearfix form-group">
-
-								<%
-								boolean automaticURL;
-
-								if (entry == null) {
-									automaticURL = Validator.isNull(blogsEditEntryDisplayContext.getURLTitle());
-								}
-								else {
-									String uniqueUrlTitle = BlogsEntryLocalServiceUtil.getUniqueUrlTitle(entry);
-
-									automaticURL = uniqueUrlTitle.equals(blogsEditEntryDisplayContext.getURLTitle());
-								}
-								%>
-
 								<label><liferay-ui:message key="url" /></label>
 
 								<div class="form-group" id="<portlet:namespace />urlOptions">

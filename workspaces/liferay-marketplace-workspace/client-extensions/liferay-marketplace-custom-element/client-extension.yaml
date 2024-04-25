@@ -15,5 +15,5 @@ liferay-marketplace-custom-element:
         marketoFormId: 3738
     type: customElement
     urls:
-        - "main-*.js"
+        - "main.js"
     useESM: true

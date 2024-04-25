@@ -73,7 +73,7 @@ test.describe('manage object definitions through view object definitions', () =>
 		await expect(
 			viewObjectDefinitionsPage.page
 				.locator('li')
-				.filter({hasText: objectFolderExternalReferenceCode})
+				.filter({hasText: objectFolder.label['en_US']})
 		).toBeVisible();
 
 		// Clean up
@@ -137,8 +137,6 @@ test('object definitions from a deleted folder are moved to the default folder',
 	apiHelpers,
 	viewObjectDefinitionsPage,
 }) => {
-	const defaultLanguage = 'en_US';
-
 	const objectFolder = await apiHelpers.objectAdmin.postRandomObjectFolder();
 
 	const objectDefinition1 =
@@ -164,13 +162,13 @@ test('object definitions from a deleted folder are moved to the default folder',
 
 	await expect(
 		viewObjectDefinitionsPage.frontendDataSetEntries.filter({
-			hasText: objectDefinition1.label[defaultLanguage],
+			hasText: objectDefinition1.label['en_US'],
 		})
 	).toBeVisible();
 
 	await expect(
 		viewObjectDefinitionsPage.frontendDataSetEntries.filter({
-			hasText: objectDefinition2.label[defaultLanguage],
+			hasText: objectDefinition2.label['en_US'],
 		})
 	).toBeVisible();
 

@@ -123,10 +123,10 @@ export class ModelBuilderPage {
 	}
 
 	async clickObjectDefinitionShowAllFieldsButton(
-		objectDefinitionName: string
+		objectDefinitionLabel: string
 	) {
 		await this.objectDefinitionNodes
-			.filter({hasText: objectDefinitionName})
+			.filter({hasText: objectDefinitionLabel})
 			.getByRole('button', {name: 'Show All Fields'})
 			.click();
 	}

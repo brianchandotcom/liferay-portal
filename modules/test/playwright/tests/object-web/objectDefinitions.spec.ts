@@ -37,13 +37,13 @@ test.describe('Manage object definitions through Model Builder', () => {
 
 		await expect(
 			modelBuilderPage.objectDefinitionNodes.filter({
-				hasText: objectDefinition.name,
+				hasText: objectDefinition.label['en_US'],
 			})
 		).toBeVisible();
 
 		await expect(
 			modelBuilderPage.leftSidebarItems.filter({
-				hasText: objectDefinition.name,
+				hasText: objectDefinition.label['en_US'],
 			})
 		).toBeVisible();
 
@@ -72,13 +72,13 @@ test.describe('Manage object definitions through Model Builder', () => {
 
 		await expect(
 			modelBuilderPage.objectDefinitionNodes.filter({
-				hasText: objectDefinition.name,
+				hasText: objectDefinition.label['en_US'],
 			})
 		).toBeVisible();
 
 		await expect(
 			modelBuilderPage.leftSidebarItems.filter({
-				hasText: objectDefinition.name,
+				hasText: objectDefinition.label['en_US'],
 			})
 		).toBeVisible();
 
@@ -132,13 +132,13 @@ test.describe('Manage object definitions through Model Builder', () => {
 
 		await expect(
 			modelBuilderPage.getLinkedObjectDefinitionIconLocator(
-				objectDefinition1.name
+				objectDefinition1.label['en_US']
 			)
 		).toBeVisible();
 
 		await expect(
 			modelBuilderPage.getLinkedObjectDefinitionIconLocator(
-				objectDefinition2.name
+				objectDefinition2.label['en_US']
 			)
 		).toBeHidden();
 
@@ -150,13 +150,13 @@ test.describe('Manage object definitions through Model Builder', () => {
 
 		await expect(
 			modelBuilderPage.getLinkedObjectDefinitionIconLocator(
-				objectDefinition1.name
+				objectDefinition1.label['en_US']
 			)
 		).toBeHidden();
 
 		await expect(
 			modelBuilderPage.getLinkedObjectDefinitionIconLocator(
-				objectDefinition2.name
+				objectDefinition2.label['en_US']
 			)
 		).toBeVisible();
 

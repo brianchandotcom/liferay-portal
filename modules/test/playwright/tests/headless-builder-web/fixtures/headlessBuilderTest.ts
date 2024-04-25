@@ -6,43 +6,51 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {FeatureFlagsOptions, featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {
+	FeatureFlagsOptions,
+	featureFlagsTest,
+} from '../../../fixtures/featureFlagsTest';
 
-export const headlessBuilderTest = (featureFlags?: FeatureFlagsOptions) => mergeTests(
-	featureFlagsTest({
-		...featureFlags,
-		'LPS-178642': true,
-	}),
-	apiHelpersTest.extend<{
-		headlessBuilder: void;
-	}>({
-		headlessBuilder: [
-			async ({apiHelpers, page}, use) => {
-				await page.goto('/');
-				for (const endpoint of [
-					'applications',
-					'endpoints',
-					'filters',
-					'properties',
-					'schemas',
-					'sorts',
-				]) {
-					await expect
-						.poll(async () =>
-							(
-								await page.request.get(
-									`/o/headless-builder/${endpoint}`,
-									{
-										headers: await apiHelpers.getHeader(),
-									}
-								)
-							).status()
-						)
-						.toBe(200);
-				}
-				await use();
-			},
-			{auto: true},
-		],
-	})
-);
+function headlessBuilderTest(featureFlags?: FeatureFlagsOptions) {
+	return mergeTests(
+		featureFlagsTest({
+			...featureFlags,
+			'LPS-178642': true,
+		}),
+		apiHelpersTest.extend<{
+			headlessBuilder: void;
+		}>({
+			headlessBuilder: [
+				async ({apiHelpers, page}, use) => {
+					await page.goto('/');
+					for (const endpoint of [
+						'applications',
+						'endpoints',
+						'filters',
+						'properties',
+						'schemas',
+						'sorts',
+					]) {
+						await expect
+							.poll(async () =>
+								(
+									await page.request.get(
+										`/o/headless-builder/${endpoint}`,
+										{
+											headers:
+												await apiHelpers.getHeader(),
+										}
+									)
+								).status()
+							)
+							.toBe(200);
+					}
+					await use();
+				},
+				{auto: true},
+			],
+		})
+	);
+}
+
+export {headlessBuilderTest};

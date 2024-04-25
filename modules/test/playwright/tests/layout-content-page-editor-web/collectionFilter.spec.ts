@@ -156,6 +156,10 @@ test('filters a web content collection by single and multiple categories', async
 
 	await page.waitForTimeout(1000);
 
+	// Check the option to show the label with the selected vocabulary
+
+	await page.getByLabel('Show Label').check();
+
 	await pageEditorPage.publishPage();
 
 	// Go to view mode of the created page
@@ -165,6 +169,8 @@ test('filters a web content collection by single and multiple categories', async
 	for (const name of CONTENT_NAMES) {
 		await expect(page.getByText(name)).toBeVisible();
 	}
+
+	await expect(page.getByText('Animals', {exact: true})).toBeVisible();
 
 	// Select category filter: Cats
 

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.UserBag;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -519,16 +520,18 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			}
 		}
 
-		if (ArrayUtil.isNotEmpty(groupIds)) {
-			for (long searchGroupId : groupIds) {
-				if (!searchPermissionContext.containsGroupId(searchGroupId) &&
-					_resourcePermissionLocalService.hasResourcePermission(
-						companyId, className, ResourceConstants.SCOPE_GROUP,
-						String.valueOf(searchGroupId), roleIds,
-						ActionKeys.VIEW)) {
+		if (ArrayUtil.isEmpty(groupIds)) {
+			groupIds = ArrayUtil.toLongArray(
+				_groupLocalService.getGroupIds(companyId, true));
+		}
 
-					groupsTermsFilter.addValue(String.valueOf(searchGroupId));
-				}
+		for (long searchGroupId : groupIds) {
+			if (!searchPermissionContext.containsGroupId(searchGroupId) &&
+				_resourcePermissionLocalService.hasResourcePermission(
+					companyId, className, ResourceConstants.SCOPE_GROUP,
+					String.valueOf(searchGroupId), roleIds, ActionKeys.VIEW)) {
+
+				groupsTermsFilter.addValue(String.valueOf(searchGroupId));
 			}
 		}
 
@@ -563,6 +566,9 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchPermissionCheckerImpl.class);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;

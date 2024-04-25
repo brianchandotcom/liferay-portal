@@ -8,6 +8,13 @@ package com.liferay.jethr0.git.repository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.git.commit.GitCommitEntity;
 import com.liferay.jethr0.git.dalo.GitCommitEntityDALO;
+import com.liferay.jethr0.git.dalo.GitCommitToJobsEntityRelationshipDALO;
+import com.liferay.jethr0.git.dalo.PreviousGitCommitToRoutinesEntityRelationshipDALO;
+import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.routine.RoutineEntity;
+import com.liferay.jethr0.routine.UpstreamBranchCronRoutineEntity;
+import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +31,102 @@ public class GitCommitEntityRepository
 		return _gitCommitEntityDALO;
 	}
 
+	public void relateGitCommitToJob(
+		GitCommitEntity gitCommitEntity, JobEntity jobEntity) {
+
+		gitCommitEntity.addJobEntity(jobEntity);
+
+		jobEntity.setGitCommitEntity(gitCommitEntity);
+	}
+
+	public void relateGitCommitToRoutine(
+		GitCommitEntity gitCommitEntity, RoutineEntity routineEntity) {
+
+		if (routineEntity instanceof UpstreamBranchCronRoutineEntity) {
+			UpstreamBranchCronRoutineEntity upstreamBranchCronRoutineEntity =
+				(UpstreamBranchCronRoutineEntity)routineEntity;
+
+			gitCommitEntity.addRoutineEntity(upstreamBranchCronRoutineEntity);
+
+			upstreamBranchCronRoutineEntity.setPreviousGitCommitEntity(
+				gitCommitEntity);
+		}
+	}
+
+	public void setJobEntityRepository(
+		JobEntityRepository jobEntityRepository) {
+
+		_jobEntityRepository = jobEntityRepository;
+	}
+
+	public void setRoutineEntityRepository(
+		RoutineEntityRepository routineEntityRepository) {
+
+		_routineEntityRepository = routineEntityRepository;
+	}
+
+	@Override
+	protected GitCommitEntity updateRelationshipsFromDALO(
+		GitCommitEntity gitCommitEntity) {
+
+		gitCommitEntity = _updateGitCommitToJobRelationshipsFromDALO(
+			gitCommitEntity);
+
+		return _updateGitCommitToRoutineRelationshipsFromDALO(gitCommitEntity);
+	}
+
+	@Override
+	protected GitCommitEntity updateRelationshipsToDALO(
+		GitCommitEntity gitCommitEntity) {
+
+		_gitCommitToJobsEntityRelationshipDALO.updateChildEntities(
+			gitCommitEntity);
+		_previousGitCommitToRoutinesEntityRelationshipDALO.updateChildEntities(
+			gitCommitEntity);
+
+		return gitCommitEntity;
+	}
+
+	private GitCommitEntity _updateGitCommitToJobRelationshipsFromDALO(
+		GitCommitEntity parentGitCommitEntity) {
+
+		return updateParentToChildRelationshipsFromDALO(
+			parentGitCommitEntity, _gitCommitToJobsEntityRelationshipDALO,
+			_jobEntityRepository,
+			(gitCommitEntity, jobEntity) -> relateGitCommitToJob(
+				gitCommitEntity, jobEntity),
+			gitCommitEntity -> gitCommitEntity.getJobEntities(),
+			(gitCommitEntity, jobEntity) -> gitCommitEntity.removeJobEntity(
+				jobEntity));
+	}
+
+	private GitCommitEntity _updateGitCommitToRoutineRelationshipsFromDALO(
+		GitCommitEntity parentGitCommitEntity) {
+
+		return updateParentToChildRelationshipsFromDALO(
+			parentGitCommitEntity,
+			_previousGitCommitToRoutinesEntityRelationshipDALO,
+			_routineEntityRepository,
+			(gitCommitEntity, routineEntity) -> relateGitCommitToRoutine(
+				gitCommitEntity, routineEntity),
+			gitCommitEntity -> gitCommitEntity.getRoutineEntities(),
+			(gitCommitEntity, routineEntity) ->
+				gitCommitEntity.removeRoutineEntity(routineEntity));
+	}
+
 	@Autowired
 	private GitCommitEntityDALO _gitCommitEntityDALO;
+
+	@Autowired
+	private GitCommitToJobsEntityRelationshipDALO
+		_gitCommitToJobsEntityRelationshipDALO;
+
+	private JobEntityRepository _jobEntityRepository;
+
+	@Autowired
+	private PreviousGitCommitToRoutinesEntityRelationshipDALO
+		_previousGitCommitToRoutinesEntityRelationshipDALO;
+
+	private RoutineEntityRepository _routineEntityRepository;
 
 }

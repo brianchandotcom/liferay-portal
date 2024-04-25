@@ -7,6 +7,7 @@ package com.liferay.jethr0.job;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.Entity;
+import com.liferay.jethr0.git.commit.GitCommitEntity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.task.TaskEntity;
@@ -46,6 +47,10 @@ public interface JobEntity extends Entity {
 	public void addTestSuiteEntity(TestSuiteEntity testSuiteEntity);
 
 	public Set<BuildEntity> getBuildEntities();
+
+	public GitCommitEntity getGitCommitEntity();
+
+	public long getGitCommitEntityId();
 
 	public Set<BuildEntity> getInitialBuildEntities();
 
@@ -94,6 +99,8 @@ public interface JobEntity extends Entity {
 	public void removeTestSuiteEntities(Set<TestSuiteEntity> testSuiteEntities);
 
 	public void removeTestSuiteEntity(TestSuiteEntity testSuiteEntity);
+
+	public void setGitCommitEntity(GitCommitEntity gitCommitEntity);
 
 	public void setJenkinsBranchURL(URL jenkinsGitHubURL);
 

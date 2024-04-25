@@ -5,6 +5,8 @@
 
 package com.liferay.jethr0.routine;
 
+import com.liferay.jethr0.git.commit.GitCommitEntity;
+
 /**
  * @author Michael Hashimoto
  */
@@ -12,6 +14,13 @@ public interface UpstreamBranchCronRoutineEntity extends CronRoutineEntity {
 
 	public String getPreviousBranchSHA();
 
+	public GitCommitEntity getPreviousGitCommitEntity();
+
+	public long getPreviousGitCommitEntityId();
+
 	public void setPreviousBranchSHA(String previousBranchSHA);
+
+	public void setPreviousGitCommitEntity(
+		GitCommitEntity previousGitCommitEntity);
 
 }

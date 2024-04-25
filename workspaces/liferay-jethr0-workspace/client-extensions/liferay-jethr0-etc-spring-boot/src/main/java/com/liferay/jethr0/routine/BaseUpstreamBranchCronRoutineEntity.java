@@ -5,6 +5,8 @@
 
 package com.liferay.jethr0.routine;
 
+import com.liferay.jethr0.git.commit.GitCommitEntity;
+
 import org.json.JSONObject;
 
 /**
@@ -17,7 +19,12 @@ public abstract class BaseUpstreamBranchCronRoutineEntity
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
-		jsonObject.put("previousBranchSHA", getPreviousBranchSHA());
+		jsonObject.put(
+			"previousBranchSHA", getPreviousBranchSHA()
+		).put(
+			"r_previousGitCommitToJobs_c_gitCommitId",
+			getPreviousGitCommitEntityId()
+		);
 
 		return jsonObject;
 	}
@@ -27,9 +34,21 @@ public abstract class BaseUpstreamBranchCronRoutineEntity
 	}
 
 	@Override
+	public GitCommitEntity getPreviousGitCommitEntity() {
+		return _previousGitCommitEntity;
+	}
+
+	@Override
+	public long getPreviousGitCommitEntityId() {
+		return _previousGitCommitEntityId;
+	}
+
+	@Override
 	public void setJSONObject(JSONObject jsonObject) {
 		super.setJSONObject(jsonObject);
 
+		_previousGitCommitEntityId = jsonObject.optLong(
+			"r_previousGitCommitToJobs_c_gitCommitId");
 		_previousBranchSHA = jsonObject.optString("previousBranchSHA");
 	}
 
@@ -37,12 +56,26 @@ public abstract class BaseUpstreamBranchCronRoutineEntity
 		_previousBranchSHA = previousBranchSHA;
 	}
 
+	@Override
+	public void setPreviousGitCommitEntity(
+		GitCommitEntity previousGitCommitEntity) {
+
+		_previousGitCommitEntity = previousGitCommitEntity;
+
+		if (_previousGitCommitEntity != null) {
+			_previousGitCommitEntityId = _previousGitCommitEntity.getId();
+		}
+		else {
+			_previousGitCommitEntityId = 0;
+		}
+	}
+
 	protected BaseUpstreamBranchCronRoutineEntity(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_previousBranchSHA = jsonObject.getString("previousBranchSHA");
 	}
 
 	private String _previousBranchSHA;
+	private GitCommitEntity _previousGitCommitEntity;
+	private long _previousGitCommitEntityId;
 
 }

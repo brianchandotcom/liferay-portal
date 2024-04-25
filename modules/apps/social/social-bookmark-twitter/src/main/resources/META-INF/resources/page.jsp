@@ -20,7 +20,7 @@ String url = GetterUtil.getString((String)request.getAttribute("liferay-social-b
 	cssClass="lfr-portal-tooltip"
 	displayType="secondary"
 	href="<%= socialBookmark.getPostURL(title, url) %>"
-	icon="twitter"
+	icon="twitter-x"
 	monospaced="<%= true %>"
 	outline="<%= true %>"
 	propsTransformer="{OpenSocialBookmarkPropsTransformer} from social-bookmarks-taglib"

@@ -5,6 +5,7 @@
 
 package com.example.sample.resource.v1_0_0;
 
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -39,6 +40,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author John Doe
  * @generated
  */
+@CTAware
 @Generated("")
 @ProviderType
 public interface TestBooleanResource {

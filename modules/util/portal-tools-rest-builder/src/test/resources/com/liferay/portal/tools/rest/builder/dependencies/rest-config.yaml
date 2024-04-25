@@ -6,5 +6,6 @@ application:
     className: "SampleApplication"
     name: "sample-application"
 author: "John Doe"
+changeTrackingEnabled: true
 forcePredictableOperationId: true
 implDir: "./test-classes/actual/sample-impl/src/main/java"

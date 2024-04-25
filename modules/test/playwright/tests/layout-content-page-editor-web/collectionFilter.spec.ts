@@ -407,7 +407,7 @@ test('enables search field in dropdown list of Collection Filter', async ({
 	await expect(page.getByText('Cats', {exact: true})).not.toBeVisible();
 });
 
-test('filters the collection content by keywords', async ({
+test('filters the collection content by keywords using two filters', async ({
 	apiHelpers,
 	collectionsPage,
 	page,
@@ -417,10 +417,16 @@ test('filters the collection content by keywords', async ({
 
 	// Create a definition for a Collection Filter
 
-	const collectionFilterId = getRandomString();
+	const firstCollectionFilterId = getRandomString();
+	const secondCollectionFilterId = getRandomString();
 
-	const collectionFilterDefinition = getFragmentDefinition(
-		collectionFilterId,
+	const firstCollectionFilterDefinition = getFragmentDefinition(
+		firstCollectionFilterId,
+		'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer'
+	);
+
+	const secondFilterDefinition = getFragmentDefinition(
+		secondCollectionFilterId,
 		'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer'
 	);
 
@@ -452,20 +458,21 @@ test('filters the collection content by keywords', async ({
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([
-			collectionFilterDefinition,
+			firstCollectionFilterDefinition,
+			secondFilterDefinition,
 			collectionDefinition,
 		]),
 		siteId: wemSite.id,
 		title: getRandomString(),
 	});
 
-	// Go to edit mode of the created page and select the Collection Filter fragment
+	// Go to edit mode
 
 	await pageEditorPage.goToEditMode(layout, wemSite.friendlyUrlPath);
 
-	await pageEditorPage.selectFragment(collectionFilterId);
+	// Configure the first filter by keywords
 
-	// Set Filter configuration for keywords
+	await pageEditorPage.selectFragment(firstCollectionFilterId);
 
 	await page.getByLabel('Select', {exact: true}).click();
 
@@ -473,27 +480,50 @@ test('filters the collection content by keywords', async ({
 
 	await page.getByLabel('Filter', {exact: true}).selectOption('keywords');
 
+	// Configure the second filter by keywords
+
+	await pageEditorPage.selectFragment(secondCollectionFilterId);
+
+	await page.getByLabel('Select', {exact: true}).click();
+
+	await page.getByLabel(collectionName).check();
+
+	await page.getByLabel('Filter', {exact: true}).selectOption('keywords');
+
+	// Publish the page
+
 	await pageEditorPage.publishPage();
 
 	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
 	// Filter by keywords
 
-	const inputSearch = await page.getByPlaceholder('Search', {exact: true});
+	const firstFilter = await page
+		.getByPlaceholder('Search', {exact: true})
+		.first();
 
-	await inputSearch.fill('category categories');
-
-	await page.getByPlaceholder('Search', {exact: true}).press('Enter');
+	await firstFilter.fill('category categories');
+	await firstFilter.press('Enter');
 
 	await expect(page.getByText(CONTENT_NAMES[0])).not.toBeVisible();
 	await expect(page.getByText(CONTENT_NAMES[1])).toBeVisible();
 	await expect(page.getByText(CONTENT_NAMES[2])).toBeVisible();
 
+	const secondFilter = await page
+		.getByPlaceholder('Search', {exact: true})
+		.nth(1);
+
+	await secondFilter.fill('sample');
+	await secondFilter.press('Enter');
+
+	CONTENT_NAMES.forEach(
+		async (name) => await expect(page.getByText(name)).toBeVisible()
+	);
+
 	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
-	await inputSearch.fill('rabbit');
-
-	await page.getByPlaceholder('Search', {exact: true}).press('Enter');
+	await firstFilter.fill('rabbit');
+	await firstFilter.press('Enter');
 
 	await expect(page.getByText('No Results Found')).toBeVisible();
 });

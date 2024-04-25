@@ -6918,6 +6918,7 @@ go</echo>
 					<matches pattern="\d{4}.q\d+.\d+" string="@{liferay.portal.bundle}" />
 				</or>
 				<then>
+					<var name="app.server.classes.portal.dir" value="${app.server.parent.dir}/tomcat/webapps/ROOT/WEB-INF/classes" />
 					<var name="app.server.tomcat.dir" value="${app.server.parent.dir}/tomcat" />
 					<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat/bin" />
 					<var name="app.server.tomcat.classes.portal.dir" value="${app.server.parent.dir}/tomcat/webapps/ROOT/WEB-INF/classes" />

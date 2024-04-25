@@ -52,6 +52,14 @@ jest.mock(
 					w3cLanguageId: 'en-US',
 				},
 			},
+			selectedMappingTypes: {
+				subtype: {
+					id: 'subtype',
+				},
+				type: {
+					id: 'type',
+				},
+			},
 		},
 	})
 );

@@ -27,6 +27,31 @@ jest.mock(
 	() => jest.fn()
 );
 
+jest.mock(
+	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
+	() => ({
+		config: {
+			availableLanguages: {
+				en_US: {
+					default: false,
+					displayName: 'English (United States)',
+					languageIcon: 'en-us',
+					languageId: 'en_US',
+					w3cLanguageId: 'en-US',
+				},
+			},
+			selectedMappingTypes: {
+				subtype: {
+					id: 'subtype',
+				},
+				type: {
+					id: 'type',
+				},
+			},
+		},
+	})
+);
+
 const getEditableConfig = (editableValues) => {
 	return editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]['editable-id-0']
 		.config;

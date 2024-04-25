@@ -225,74 +225,16 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		).from(
 			FragmentCompositionTable.INSTANCE
 		).where(
-			() -> {
-				Predicate predicate =
-					FragmentCompositionTable.INSTANCE.groupId.eq(
-						groupId
-					).and(
-						FragmentCompositionTable.INSTANCE.fragmentCollectionId.
-							eq(
-								fragmentCollectionId
-							).and(
-								() -> {
-									if (status ==
-											WorkflowConstants.STATUS_ANY) {
-
-										return null;
-									}
-
-									return FragmentCompositionTable.INSTANCE.
-										status.eq(status);
-								}
-							)
-					);
-
-				if (Validator.isNotNull(name)) {
-					return Predicate.withParentheses(
-						predicate.and(
-							_customSQL.getKeywordsPredicate(
-								DSLFunctionFactoryUtil.lower(
-									FragmentCompositionTable.INSTANCE.name),
-								_customSQL.keywords(name, true))));
-				}
-
-				return predicate;
-			}
+			_getFragmentCompositionWherePredicate(
+				groupId, fragmentCollectionId, name, status)
 		).unionAll(
 			DSLQueryFactoryUtil.countDistinct(
 				FragmentEntryTable.INSTANCE.fragmentEntryId
 			).from(
 				FragmentEntryTable.INSTANCE
 			).where(
-				() -> {
-					Predicate predicate =
-						FragmentEntryTable.INSTANCE.groupId.eq(
-							groupId
-						).and(
-							FragmentEntryTable.INSTANCE.fragmentCollectionId.eq(
-								fragmentCollectionId
-							).and(
-								Predicate.withParentheses(
-									Predicate.or(
-										FragmentEntryTable.INSTANCE.head.eq(
-											true),
-										FragmentEntryTable.INSTANCE.headId.eq(
-											FragmentEntryTable.INSTANCE.
-												fragmentEntryId)))
-							)
-						);
-
-					if (Validator.isNotNull(name)) {
-						return Predicate.withParentheses(
-							predicate.and(
-								_customSQL.getKeywordsPredicate(
-									DSLFunctionFactoryUtil.lower(
-										FragmentEntryTable.INSTANCE.name),
-									_customSQL.keywords(name, true))));
-					}
-
-					return predicate;
-				}
+				_getFragmentEntryWherePredicate(
+					groupId, fragmentCollectionId, name, status)
 			)
 		).as(
 			"tempFragmentCompositionsAndFragmentEntriesTable"
@@ -640,34 +582,40 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		).from(
 			FragmentCompositionTable.INSTANCE
 		).where(
-			FragmentCompositionTable.INSTANCE.groupId.eq(
-				groupId
-			).and(
-				FragmentCompositionTable.INSTANCE.fragmentCollectionId.eq(
-					fragmentCollectionId)
-			).and(
-				() -> {
-					if (Validator.isNotNull(name)) {
-						return DSLFunctionFactoryUtil.lower(
-							FragmentCompositionTable.INSTANCE.name
-						).like(
-							_customSQL.keywords(
-								name, true, WildcardMode.SURROUND)[0]
-						);
-					}
+			_getFragmentCompositionWherePredicate(
+				groupId, fragmentCollectionId, name, status)
+		);
+	}
 
-					return null;
-				}
-			).and(
-				() -> {
-					if (status != WorkflowConstants.STATUS_ANY) {
-						return FragmentCompositionTable.INSTANCE.status.eq(
-							status);
-					}
+	private Predicate _getFragmentCompositionWherePredicate(
+		long groupId, long fragmentCollectionId, String name, int status) {
 
-					return null;
+		return FragmentCompositionTable.INSTANCE.groupId.eq(
+			groupId
+		).and(
+			FragmentCompositionTable.INSTANCE.fragmentCollectionId.eq(
+				fragmentCollectionId)
+		).and(
+			() -> {
+				if (Validator.isNotNull(name)) {
+					return DSLFunctionFactoryUtil.lower(
+						FragmentCompositionTable.INSTANCE.name
+					).like(
+						_customSQL.keywords(name, true, WildcardMode.SURROUND)
+							[0]
+					);
 				}
-			)
+
+				return null;
+			}
+		).and(
+			() -> {
+				if (status != WorkflowConstants.STATUS_ANY) {
+					return FragmentCompositionTable.INSTANCE.status.eq(status);
+				}
+
+				return null;
+			}
 		);
 	}
 
@@ -687,40 +635,47 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		).from(
 			FragmentEntryTable.INSTANCE
 		).where(
-			FragmentEntryTable.INSTANCE.groupId.eq(
-				groupId
-			).and(
-				FragmentEntryTable.INSTANCE.fragmentCollectionId.eq(
-					fragmentCollectionId)
-			).and(
-				FragmentEntryTable.INSTANCE.head.eq(
-					true
-				).or(
-					FragmentEntryTable.INSTANCE.headId.eq(
-						FragmentEntryTable.INSTANCE.fragmentEntryId)
-				).withParentheses()
-			).and(
-				() -> {
-					if (Validator.isNotNull(name)) {
-						return DSLFunctionFactoryUtil.lower(
-							FragmentEntryTable.INSTANCE.name
-						).like(
-							_customSQL.keywords(
-								name, true, WildcardMode.SURROUND)[0]
-						);
-					}
+			_getFragmentEntryWherePredicate(
+				groupId, fragmentCollectionId, name, status)
+		);
+	}
 
-					return null;
-				}
-			).and(
-				() -> {
-					if (status != WorkflowConstants.STATUS_ANY) {
-						return FragmentEntryTable.INSTANCE.status.eq(status);
-					}
+	private Predicate _getFragmentEntryWherePredicate(
+		long groupId, long fragmentCollectionId, String name, int status) {
 
-					return null;
+		return FragmentEntryTable.INSTANCE.groupId.eq(
+			groupId
+		).and(
+			FragmentEntryTable.INSTANCE.fragmentCollectionId.eq(
+				fragmentCollectionId)
+		).and(
+			FragmentEntryTable.INSTANCE.head.eq(
+				true
+			).or(
+				FragmentEntryTable.INSTANCE.headId.eq(
+					FragmentEntryTable.INSTANCE.fragmentEntryId)
+			).withParentheses()
+		).and(
+			() -> {
+				if (Validator.isNotNull(name)) {
+					return DSLFunctionFactoryUtil.lower(
+						FragmentEntryTable.INSTANCE.name
+					).like(
+						_customSQL.keywords(name, true, WildcardMode.SURROUND)
+							[0]
+					);
 				}
-			)
+
+				return null;
+			}
+		).and(
+			() -> {
+				if (status != WorkflowConstants.STATUS_ANY) {
+					return FragmentEntryTable.INSTANCE.status.eq(status);
+				}
+
+				return null;
+			}
 		);
 	}
 

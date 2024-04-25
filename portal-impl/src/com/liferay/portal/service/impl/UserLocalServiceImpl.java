@@ -1773,7 +1773,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return;
 		}
 
-		doCheckLockout(user, user.getPasswordPolicy());
+		doCheckFailureCountAndLockout(user, user.getPasswordPolicy());
 	}
 
 	/**
@@ -1806,7 +1806,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = getUserByEmailAddress(companyId, emailAddress);
 
-		checkLoginFailure(user);
+		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+		checkLoginFailure(doCheckFailureCountAndLockout(user, passwordPolicy));
 	}
 
 	/**
@@ -6205,16 +6207,18 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return searchContext;
 	}
 
-	protected User doCheckLockout(User user, PasswordPolicy passwordPolicy)
+	protected User doCheckFailureCountAndLockout(
+			User user, PasswordPolicy passwordPolicy)
 		throws PortalException {
 
 		if (!passwordPolicy.isLockout()) {
 			return user;
 		}
 
+		Date date = new Date();
+
 		// Reset failure count
 
-		Date date = new Date();
 		int failedLoginAttempts = user.getFailedLoginAttempts();
 
 		if (failedLoginAttempts > 0) {
@@ -6259,6 +6263,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		if (user.isLockout()) {
+			checkLoginFailure(user);
+
 			throw new UserLockoutException.PasswordPolicyLockout(
 				user, passwordPolicy);
 		}
@@ -7353,7 +7359,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if (!LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
 			PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
-			user = doCheckLockout(user, passwordPolicy);
+			user = doCheckFailureCountAndLockout(user, passwordPolicy);
 
 			if (!PasswordModificationThreadLocal.isPasswordModified()) {
 				user = doCheckPasswordExpired(user, passwordPolicy);

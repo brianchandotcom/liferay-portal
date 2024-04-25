@@ -36,6 +36,8 @@ public class MappingTypesUtil {
 
 			mappingTypesJSONArray.put(
 				JSONUtil.put(
+					"className", infoItemClassDetails.getClassName()
+				).put(
 					"isRestricted",
 					() -> {
 						InfoPermissionProvider infoPermissionProvider =

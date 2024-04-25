@@ -889,6 +889,21 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				"the-folder-you-selected-already-has-an-entry-with-this-" +
 					"name.-please-select-a-different-folder");
 		}
+		else if (exception instanceof FileEntryDisplayDateException) {
+			errorMessage = _language.get(
+				_portal.getHttpServletRequest(actionRequest),
+				"please-enter-a-valid-publish-date");
+		}
+		else if (exception instanceof FileEntryExpirationDateException) {
+			errorMessage = _language.get(
+				_portal.getHttpServletRequest(actionRequest),
+				"please-enter-a-valid-expiration-date");
+		}
+		else if (exception instanceof FileEntryReviewDateException) {
+			errorMessage = _language.get(
+				_portal.getHttpServletRequest(actionRequest),
+				"please-enter-a-valid-review-date");
+		}
 		else if (exception instanceof FileExtensionException) {
 			errorMessage = _language.format(
 				themeDisplay.getLocale(),

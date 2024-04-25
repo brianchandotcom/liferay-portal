@@ -6,6 +6,7 @@
 import {useEffect} from 'react';
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
+import SolutionContextProvider from '../../context/SolutionContext';
 import withProviders from '../../hoc/withProviders';
 import {useAccount} from '../../hooks/data/useAccounts';
 import {useCatalogs} from '../../hooks/data/useCatalogs';
@@ -22,7 +23,7 @@ import {AppCreationFlow} from './pages/Apps/AppCreationFlow/AppCreationFlow';
 import Members from './pages/Members';
 import Projects from './pages/Projects';
 import Solutions from './pages/Solutions';
-import PublishSolutionForm from './pages/Solutions/NewSolutionFlow/PublishSolutionForm';
+import PublishSolutionOutlet from './pages/Solutions/NewSolutionFlow/PublishSolutionOutlet';
 import {
 	CompanyProfile,
 	ContactUs,
@@ -73,10 +74,17 @@ const PublisherDashboardRouter = () => {
 					path="app/create"
 				/>
 
-				<Route element={<PublishSolutionForm />} path="solution">
+				<Route
+					element={
+						<SolutionContextProvider>
+							<PublishSolutionOutlet />
+						</SolutionContextProvider>
+					}
+					path="solution/publisher/:id?"
+				>
+					<Route element={<Create />} index />
 					<Route element={<CompanyProfile />} path="company" />
 					<Route element={<ContactUs />} path="contact" />
-					<Route element={<Create />} path="publisher" />
 					<Route element={<Details />} path="details" />
 					<Route element={<Header />} path="header" />
 					<Route element={<Profile />} path="profile" />

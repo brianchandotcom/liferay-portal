@@ -4,13 +4,13 @@
  */
 
 import ClayButton from '@clayui/button';
-import {Outlet, useLocation, useNavigate} from 'react-router-dom';
+import {Outlet, useLocation, useNavigate, useParams} from 'react-router-dom';
 
 import {AppToolBar} from '../../../../../components/AppToolBar/AppToolBar';
 import {AppFlowList} from '../../../../../components/NewAppFlowList/AppFlowList';
 import {useAccount} from '../../../../../hooks/data/useAccounts';
 
-import './PublishSolutionForm.scss';
+import './PublishSolutionOutlet.scss';
 import {SOLUTION_FLOW_ITEMS} from '../constants';
 
 import 'react-quill/dist/quill.snow.css';
@@ -20,11 +20,14 @@ const button = {
 	continue: 'Continue',
 };
 
-const PublishSolutionForm = () => {
+const PublishSolutionOutlet = () => {
 	const {data: account} = useAccount();
 	const location = useLocation();
 	const navigate = useNavigate();
-	const lastPath = location.pathname.split('/').at(-1);
+
+	const {id} = useParams();
+	const paths = location.pathname.split('/');
+	const lastPath = paths.at(id ? -2 : -1);
 
 	const activeIndex = SOLUTION_FLOW_ITEMS.findIndex(
 		({path}) => path === lastPath
@@ -45,8 +48,7 @@ const PublishSolutionForm = () => {
 
 				if (isContinue) {
 					SOLUTION_FLOW_ITEMS[index].checked = true;
-				}
-				else {
+				} else {
 					SOLUTION_FLOW_ITEMS[index - 1].checked = false;
 				}
 
@@ -106,4 +108,4 @@ const PublishSolutionForm = () => {
 	);
 };
 
-export default PublishSolutionForm;
+export default PublishSolutionOutlet;

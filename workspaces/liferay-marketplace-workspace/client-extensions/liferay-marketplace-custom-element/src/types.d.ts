@@ -108,6 +108,17 @@ type CustomField = {
 	name: string;
 };
 
+type ActionMap<M extends {[index: string]: any}> = {
+	[Key in keyof M]: M[Key] extends undefined
+		? {
+				type: Key;
+		  }
+		: {
+				payload: M[Key];
+				type: Key;
+		  };
+};
+
 type AccountBrief = {
 	customFields?: any;
 	externalReferenceCode: string;

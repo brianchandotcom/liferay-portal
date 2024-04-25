@@ -2786,6 +2786,182 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="run-playwright-js-test">
+		<attribute default="tomcat" name="app.server.type" />
+		<attribute default="" name="test.build.fix.pack.zip.url" />
+		<attribute default="" name="test.fix.pack.base.url" />
+		<attribute default="" name="test.license.xml.url" />
+		<attribute default="" name="test.portal.bundle.dependencies.zip.url" />
+		<attribute default="" name="test.portal.bundle.elasticsearch.zip.url" />
+		<attribute default="" name="test.portal.bundle.osgi.zip.url" />
+		<attribute default="" name="test.portal.bundle.tools.zip.url" />
+		<attribute default="" name="test.portal.bundle.war.url" />
+		<attribute default="" name="test.portal.bundle.version" />
+		<attribute default="" name="test.portal.bundle.zip.url" />
+		<attribute default="" name="test.portal.lpkg.name" />
+		<attribute default="" name="test.sql.zip.url" />
+
+		<sequential>
+			<run-batch-test>
+				<test-action>
+					<database-test-run-test database.type="mysql" stop.app.server="true">
+						<test-action>
+							<delete dir="${liferay.home}/work" />
+
+							<antcall inheritAll="false" target="prepare-log4j-ext-xml" />
+
+							<generate-jdbc-properties properties.file="portal-impl/src/portal-ext.properties" />
+
+							<apply-portal-ext-properties />
+
+							<condition else="portal" property="playwright.project.name" value="${env.PLAYWRIGHT_PROJECT_NAME}">
+								<isset property="env.PLAYWRIGHT_PROJECT_NAME" />
+							</condition>
+
+							<trycatch property="exception.message">
+								<try>
+									<exec executable="/bin/bash">
+										<arg value="modules/test/playwright/env/set_up.sh" />
+										<env key="LIFERAY_HOME" value="${liferay.home}" />
+										<env key="LIFERAY_PORTAL_URL" value="http://${env.HOSTNAME}:8080" />
+										<env key="PLAYWRIGHT_PROJECT_NAME" value="${playwright.project.name}" />
+									</exec>
+
+									<start-docker-playwright />
+
+									<gradle-execute dir="${playwright.dir}" task="npmInstall" />
+
+									<local name="playwright.test.shard" />
+
+									<if>
+										<isset property="PLAYWRIGHT_ARGS_${axis.variable}" />
+										<then>
+											<propertycopy from="PLAYWRIGHT_ARGS_${axis.variable}" name="playwright.test.shard" />
+										</then>
+										<else>
+											<property name="playwright.test.shard" value="" />
+										</else>
+									</if>
+
+									<if>
+										<isset property="PLAYWRIGHT_PROJECT_NAME" />
+										<then>
+											<propertycopy from="PLAYWRIGHT_PROJECT_NAME" name="playwright.project.name" />
+										</then>
+										<else>
+											<property name="playwright.project.name" value="" />
+										</else>
+									</if>
+
+									<local name="playwright.command" />
+
+									<if>
+										<equals arg1="${playwright.project.name}" arg2="" />
+										<then>
+											<property name="playwright.command" value="npx playwright test ${playwright.test.shard}" />
+										</then>
+										<else>
+											<property name="playwright.command" value="npx playwright test --project ${playwright.project.name} ${playwright.test.shard}" />
+										</else>
+									</if>
+
+									<echo>Running "${playwright.command}" from ${playwright.dir}</echo>
+
+									<docker-execute container="${playwright.docker.host}">
+										cd ${playwright.dir}
+
+										${playwright.command}
+									</docker-execute>
+								</try>
+								<catch>
+									<echo>${exception.message}</echo>
+								</catch>
+								<finally>
+									<stop-docker-playwright />
+
+									<exec executable="/bin/bash">
+										<arg value="modules/test/playwright/env/tear_down.sh" />
+										<env key="LIFERAY_HOME" value="${liferay.home}" />
+										<env key="LIFERAY_PORTAL_URL" value="http://${env.HOSTNAME}:8080" />
+										<env key="PLAYWRIGHT_PROJECT_NAME" value="${playwright.project.name}" />
+									</exec>
+
+									<split-testsuites-junit-report test.suites.report.filepath="${playwright.dir}/test-results/TEST-playwright.xml" />
+
+									<print-docker-database-logs />
+								</finally>
+							</trycatch>
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+
+				<test-set-up>
+					<if>
+						<and>
+							<or>
+								<matches pattern="(file|https?)://" string="@{test.portal.bundle.war.url}" />
+								<matches pattern="(file|https?)://" string="@{test.portal.bundle.zip.url}" />
+							</or>
+							<matches pattern="(file|https?)://" string="@{test.sql.zip.url}" />
+						</and>
+						<then>
+							<prepare-release-test-environment
+								app.server.type="@{app.server.type}"
+								test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+								test.fix.pack.base.url="${test.fix.pack.base.url}"
+								test.license.xml.url="${test.license.xml.url}"
+								test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+								test.portal.bundle.elasticsearch.zip.url="${test.portal.bundle.elasticsearch.zip.url}"
+								test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+								test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+								test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+								test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+								test.sql.zip.url="${test.sql.zip.url}"
+							/>
+
+							<gradle-execute dir="modules/core" task="deploy">
+								<arg value="--parallel" />
+								<arg value="-Dbuild.profile=portal-pre" />
+								<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+							</gradle-execute>
+
+							<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
+
+							<gradle-execute dir="modules/apps" task="deploy">
+								<arg value="--parallel" />
+								<arg value="-Dbuild.profile=portal-pre" />
+								<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+							</gradle-execute>
+
+							<get-test-app-server-lib-portal-dir />
+
+							<unzip
+								dest="portal-impl/classes"
+								src="${test.app.server.lib.portal.dir}/portal-impl.jar"
+							/>
+
+							<ant dir="portal-test" inheritAll="false" target="jar" />
+
+							<local name="artifact.version" />
+
+							<property name="artifact.version" value="1.0.0-TEST_ARTIFACT" />
+
+							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-impl.jar" artifact.name="com.liferay.portal.impl" artifact.version="${artifact.version}" />
+							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-kernel.jar" artifact.name="com.liferay.portal.kernel" artifact.version="${artifact.version}" />
+							<copy-artifact-to-local-cache artifact.file="${project.dir}/portal-test/portal-test.jar" artifact.name="com.liferay.portal.test" artifact.version="${artifact.version}" />
+							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-bridges.jar" artifact.name="com.liferay.util.bridges" artifact.version="${artifact.version}" />
+							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-java.jar" artifact.name="com.liferay.util.java" artifact.version="${artifact.version}" />
+							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-taglib.jar" artifact.name="com.liferay.util.taglib" artifact.version="${artifact.version}" />
+						</then>
+						<else>
+							<setup-test-environment />
+						</else>
+					</if>
+				</test-set-up>
+			</run-batch-test>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="run-poshi-validation">
 		<sequential>
 			<antcall target="run-poshi-validation" />
@@ -7359,104 +7535,26 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="playwright-js-bundle-tomcat90-mysql57-jdk8">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-playwright-js-test
+			app.server.type="tomcat"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="playwright-js-tomcat90-mysql57-jdk8">
-		<run-batch-test>
-			<test-action>
-				<database-test-run-test database.type="mysql" stop.app.server="true">
-					<test-action>
-						<delete dir="${liferay.home}/work" />
-
-						<antcall inheritAll="false" target="prepare-log4j-ext-xml" />
-
-						<generate-jdbc-properties properties.file="portal-impl/src/portal-ext.properties" />
-
-						<apply-portal-ext-properties />
-
-						<condition else="portal" property="playwright.project.name" value="${env.PLAYWRIGHT_PROJECT_NAME}">
-							<isset property="env.PLAYWRIGHT_PROJECT_NAME" />
-						</condition>
-
-						<trycatch property="exception.message">
-							<try>
-								<exec executable="/bin/bash">
-									<arg value="modules/test/playwright/env/set_up.sh" />
-									<env key="LIFERAY_HOME" value="${liferay.home}" />
-									<env key="LIFERAY_PORTAL_URL" value="http://${env.HOSTNAME}:8080" />
-									<env key="PLAYWRIGHT_PROJECT_NAME" value="${playwright.project.name}" />
-								</exec>
-
-								<start-docker-playwright />
-
-								<gradle-execute dir="${playwright.dir}" task="npmInstall" />
-
-								<local name="playwright.test.shard" />
-
-								<if>
-									<isset property="PLAYWRIGHT_ARGS_${axis.variable}" />
-									<then>
-										<propertycopy from="PLAYWRIGHT_ARGS_${axis.variable}" name="playwright.test.shard" />
-									</then>
-									<else>
-										<property name="playwright.test.shard" value="" />
-									</else>
-								</if>
-
-								<if>
-									<isset property="PLAYWRIGHT_PROJECT_NAME" />
-									<then>
-										<propertycopy from="PLAYWRIGHT_PROJECT_NAME" name="playwright.project.name" />
-									</then>
-									<else>
-										<property name="playwright.project.name" value="" />
-									</else>
-								</if>
-
-								<local name="playwright.command" />
-
-								<if>
-									<equals arg1="${playwright.project.name}" arg2="" />
-									<then>
-										<property name="playwright.command" value="npx playwright test ${playwright.test.shard}" />
-									</then>
-									<else>
-										<property name="playwright.command" value="npx playwright test --project ${playwright.project.name} ${playwright.test.shard}" />
-									</else>
-								</if>
-
-								<echo>Running "${playwright.command}" from ${playwright.dir}</echo>
-
-								<docker-execute container="${playwright.docker.host}">
-									cd ${playwright.dir}
-
-									${playwright.command}
-								</docker-execute>
-							</try>
-							<catch>
-								<echo>${exception.message}</echo>
-							</catch>
-							<finally>
-								<stop-docker-playwright />
-
-								<exec executable="/bin/bash">
-									<arg value="modules/test/playwright/env/tear_down.sh" />
-									<env key="LIFERAY_HOME" value="${liferay.home}" />
-									<env key="LIFERAY_PORTAL_URL" value="http://${env.HOSTNAME}:8080" />
-									<env key="PLAYWRIGHT_PROJECT_NAME" value="${playwright.project.name}" />
-								</exec>
-
-								<split-testsuites-junit-report test.suites.report.filepath="${playwright.dir}/test-results/TEST-playwright.xml" />
-
-								<print-docker-database-logs />
-							</finally>
-						</trycatch>
-					</test-action>
-				</database-test-run-test>
-			</test-action>
-
-			<test-set-up>
-				<setup-test-environment />
-			</test-set-up>
-		</run-batch-test>
+		<run-playwright-js-test />
 	</target>
 
 	<target name="playwright-js-tomcat90-mysql57-jdk8_stable">

@@ -93,10 +93,14 @@ exports[`Sites Dashboard Overview render 1`] = `
             >
               Top Pages
             </h5>
-            <span
-              aria-hidden="true"
-              class="loading-root loading-animation"
-            />
+            <div
+              class="d-flex"
+            >
+              <span
+                aria-hidden="true"
+                class="loading-root loading-animation"
+              />
+            </div>
           </div>
           <div
             class="card-body w-100 d-flex flex-column flex-grow-1 no-padding"
@@ -193,10 +197,14 @@ exports[`Sites Dashboard Overview render 1`] = `
             >
               Acquisitions
             </h5>
-            <span
-              aria-hidden="true"
-              class="loading-root loading-animation"
-            />
+            <div
+              class="d-flex"
+            >
+              <span
+                aria-hidden="true"
+                class="loading-root loading-animation"
+              />
+            </div>
           </div>
           <div
             class="card-body w-100 d-flex flex-column flex-grow-1 no-padding"
@@ -281,10 +289,14 @@ exports[`Sites Dashboard Overview render 1`] = `
             >
               Visitors by Day and Time
             </h5>
-            <span
-              aria-hidden="true"
-              class="loading-root loading-animation"
-            />
+            <div
+              class="d-flex"
+            >
+              <span
+                aria-hidden="true"
+                class="loading-root loading-animation"
+              />
+            </div>
           </div>
           <div
             class="card-body"
@@ -311,10 +323,14 @@ exports[`Sites Dashboard Overview render 1`] = `
             >
               Search Terms
             </h5>
-            <span
-              aria-hidden="true"
-              class="loading-root loading-animation"
-            />
+            <div
+              class="d-flex"
+            >
+              <span
+                aria-hidden="true"
+                class="loading-root loading-animation"
+              />
+            </div>
           </div>
           <div
             class="table-responsive table-root flex-grow-1"
@@ -363,10 +379,14 @@ exports[`Sites Dashboard Overview render 1`] = `
             >
               Interests
             </h5>
-            <span
-              aria-hidden="true"
-              class="loading-root loading-animation"
-            />
+            <div
+              class="d-flex"
+            >
+              <span
+                aria-hidden="true"
+                class="loading-root loading-animation"
+              />
+            </div>
           </div>
           <div
             class="table-responsive table-root flex-grow-1"

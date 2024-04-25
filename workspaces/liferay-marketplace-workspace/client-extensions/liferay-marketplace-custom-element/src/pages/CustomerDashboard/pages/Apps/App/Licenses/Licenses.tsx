@@ -22,7 +22,6 @@ import {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 
-import DeactivateKeysModal from '../../../../../../components/DeactivateKeysModal/DeactivateKeysModal';
 import Modal from '../../../../../../components/Modal';
 import {Statuses as OrderStatuses} from '../../../../../../components/OrderStatus';
 import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
@@ -30,6 +29,7 @@ import {OrderType} from '../../../../../../enums/OrderType';
 import useGetProductByOrderId from '../../../../../../hooks/useGetProductByOrderId';
 import useMarketplaceSpringBootOAuth2 from '../../../../../../hooks/useMarketplaceSpringBootOAuth2';
 import {LicenseKey} from '../../../../../../services/oauth/MarketplaceSpringBootOAuth2';
+import DeactivateKeysModal from '../../../../components/DeactivateKeysModal/DeactivateKeysModal';
 import LicenseDetailsModalHeader from '../../../../components/LicenseDetailsModalHeader';
 import LicenceKeyModalContent from '../../../../components/LicenseModalContent';
 import TableActions from '../../../../components/TableActions';
@@ -79,8 +79,7 @@ const Licenses = () => {
 						pageSize: pageSize.toString(),
 					})
 				);
-			}
-			catch (error) {
+			} catch (error) {
 				return {
 					items: [],
 					totalCount: 0,

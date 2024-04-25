@@ -16,6 +16,7 @@ export class NodePropertiesSidebarPage {
 	readonly addNotificationButton: Locator;
 	readonly addTimerButton: Locator;
 	readonly deleteNotificationsButton: Locator;
+	readonly editAssignmentButton: Locator;
 	readonly notificationPage: NotificationSectionPage;
 	readonly page: Page;
 	readonly timerPage: TimerPage;
@@ -38,6 +39,9 @@ export class NodePropertiesSidebarPage {
 			.first();
 		this.deleteNotificationsButton = page.locator(
 			'button[title="Delete Notifications"]'
+		);
+		this.editAssignmentButton = page.locator(
+			'a.c-link:has-text("Asset Creator")'
 		);
 		this.notificationPage = new NotificationSectionPage(page, 0);
 		this.page = page;

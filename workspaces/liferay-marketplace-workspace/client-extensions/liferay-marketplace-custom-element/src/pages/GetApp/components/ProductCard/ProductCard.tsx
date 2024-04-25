@@ -29,10 +29,10 @@ const getIconUrl = (product?: ProductCardProps['product']) => {
 };
 
 type ProductCardPropsRevamp = {
-	children: ReactNode;
+	children?: ReactNode;
 	icon: string;
-	rightNode: ReactNode;
-	subtitle: string | ReactNode;
+	rightNode?: ReactNode;
+	subtitle?: string | ReactNode;
 	title: string;
 };
 

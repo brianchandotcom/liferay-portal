@@ -8,6 +8,7 @@ package ${configYAML.apiPackagePath}.resource.${escapedVersion};
 	import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
 </#list>
 
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -50,6 +51,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author ${configYAML.author}
  * @generated
  */
+<#if configYAML.changeTrackingEnabled>
+	@CTAware
+</#if>
 @Generated("")
 @ProviderType
 public interface ${schemaName}Resource {

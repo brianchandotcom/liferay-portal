@@ -62,6 +62,10 @@ public class ConfigYAML {
 		return _testDir;
 	}
 
+	public boolean isChangeTrackingEnabled() {
+		return _changeTrackingEnabled;
+	}
+
 	public boolean isForceClientVersionDescription() {
 		return _forceClientVersionDescription;
 	}
@@ -120,6 +124,10 @@ public class ConfigYAML {
 
 	public void setAuthor(String author) {
 		_author = author;
+	}
+
+	public void setChangeTrackingEnabled(boolean changeTrackingEnabled) {
+		_changeTrackingEnabled = changeTrackingEnabled;
 	}
 
 	public void setClientDir(String clientDir) {
@@ -216,6 +224,7 @@ public class ConfigYAML {
 	private String _apiPackagePath;
 	private Application _application;
 	private String _author;
+	private boolean _changeTrackingEnabled;
 	private String _clientDir;
 	private String _clientMavenGroupId;
 	private int _compatibilityVersion = 1;

@@ -6,25 +6,22 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
 
 export const testFeatureFlagsEnabled = mergeTests(
 	apiHelpersTest,
-	featureFlagsTest({
+	headlessBuilderPagesTest({
 		'LPD-21414': true,
 	}),
-	headlessBuilderPagesTest,
 	loginTest()
 );
 
 export const testFeatureFlagsDisabled = mergeTests(
 	apiHelpersTest,
-	featureFlagsTest({
+	headlessBuilderPagesTest({
 		'LPD-21414': false,
 	}),
-	headlessBuilderPagesTest,
 	loginTest()
 );
 

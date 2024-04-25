@@ -256,7 +256,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 	public void testGetManyToOneSystemObjectRelatedObjectEntries()
 		throws Exception {
 
-		ObjectRelationship objectRelationship = _addObjectRelationship(
+		ObjectRelationship objectRelationship1 = _addObjectRelationship(
 			_objectDefinition, _userSystemObjectDefinition,
 			_objectEntry.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
@@ -266,20 +266,44 @@ public class SystemObjectRelatedObjectEntriesTest {
 		String objectDefinitionNameReference = pkObjectFieldName.substring(
 			0, pkObjectFieldName.length() - 2);
 
-		String relatedObjectEntryFieldBase = StringBundler.concat(
-			"r_", objectRelationship.getName(), "_",
+		String relatedObjectEntryFieldBase1 = StringBundler.concat(
+			"r_", objectRelationship1.getName(), "_",
 			objectDefinitionNameReference);
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
+		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
+			null, _getLocation(objectRelationship1.getName()), Http.Method.GET);
 
 		Assert.assertEquals(
 			_objectEntry.getExternalReferenceCode(),
-			jsonObject.get(relatedObjectEntryFieldBase + "ERC"));
+			jsonObject1.get(relatedObjectEntryFieldBase1 + "ERC"));
 		Assert.assertEquals(
 			String.valueOf(_objectEntry.getObjectEntryId()),
-			jsonObject.get(
-				relatedObjectEntryFieldBase + "Id"
+			jsonObject1.get(
+				relatedObjectEntryFieldBase1 + "Id"
+			).toString());
+
+		ObjectRelationship objectRelationship2 =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition, _userSystemObjectDefinition,
+				_user.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationships.add(objectRelationship2);
+
+		String relatedObjectEntryFieldBase2 = StringBundler.concat(
+			"r_", objectRelationship2.getName(), "_",
+			objectDefinitionNameReference);
+
+		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
+			null, _getLocation(objectRelationship2.getName()), Http.Method.GET);
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			jsonObject2.get(relatedObjectEntryFieldBase2 + "ERC"));
+		Assert.assertEquals(
+			String.valueOf(0),
+			jsonObject2.get(
+				relatedObjectEntryFieldBase2 + "Id"
 			).toString());
 	}
 

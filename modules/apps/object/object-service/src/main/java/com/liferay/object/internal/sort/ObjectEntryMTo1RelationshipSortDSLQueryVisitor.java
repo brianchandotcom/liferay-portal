@@ -51,17 +51,32 @@ public class ObjectEntryMTo1RelationshipSortDSLQueryVisitor
 			"r_", objectRelationship.getName(), "_",
 			relatedObjectDefinition.getPKObjectFieldName());
 
+		String formatedRelationshipPathName = StringUtil.replace(
+			relationshipSort.getFieldPath(), CharPool.FORWARD_SLASH,
+			CharPool.UNDERLINE);
+
 		DynamicObjectDefinitionTable relatedDynamicObjectDefinitionTable =
 			(DynamicObjectDefinitionTable)getAliasedTable(
-				StringUtil.replace(
-					relationshipSort.getFieldPath(), CharPool.FORWARD_SLASH,
-					CharPool.UNDERLINE),
-				_getDynamicObjectDefinitionTable(relatedObjectDefinition));
+				formatedRelationshipPathName,
+				_toDynamicObjectDefinitionTable(relatedObjectDefinition));
 
 		if (!contains(dslQuery, relatedDynamicObjectDefinitionTable)) {
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 				_getDynamicObjectDefinitionTable(
 					relationshipSort.getObjectDefinition(), dbColumnName);
+
+			if (!contains(dslQuery, dynamicObjectDefinitionTable)) {
+				dynamicObjectDefinitionTable =
+					(DynamicObjectDefinitionTable)getAliasedTable(
+						StringUtil.removeLast(
+							formatedRelationshipPathName,
+							"_" + objectRelationship.getName()),
+						dynamicObjectDefinitionTable);
+
+				dslQuery = addLeftJoin(
+					dynamicObjectDefinitionTable.getPrimaryKeyColumn(),
+					dslQuery, null, dynamicObjectDefinitionTable);
+			}
 
 			dslQuery = addLeftJoin(
 				(Column<DynamicObjectDefinitionTable, Long>)
@@ -94,6 +109,29 @@ public class ObjectEntryMTo1RelationshipSortDSLQueryVisitor
 	}
 
 	private DynamicObjectDefinitionTable _getDynamicObjectDefinitionTable(
+			ObjectDefinition objectDefinition, String objectFieldName)
+		throws PortalException {
+
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			_toDynamicObjectDefinitionTable(objectDefinition);
+
+		Column<DynamicObjectDefinitionTable, Long> column =
+			(Column<DynamicObjectDefinitionTable, Long>)
+				dynamicObjectDefinitionTable.getColumn(objectFieldName);
+
+		if (column == null) {
+			dynamicObjectDefinitionTable = new DynamicObjectDefinitionTable(
+				objectDefinition,
+				objectFieldLocalService.getObjectFields(
+					objectDefinition.getObjectDefinitionId(),
+					objectDefinition.getExtensionDBTableName()),
+				objectDefinition.getExtensionDBTableName());
+		}
+
+		return dynamicObjectDefinitionTable;
+	}
+
+	private DynamicObjectDefinitionTable _toDynamicObjectDefinitionTable(
 			ObjectDefinition objectDefinition)
 		throws PortalException {
 
@@ -103,38 +141,6 @@ public class ObjectEntryMTo1RelationshipSortDSLQueryVisitor
 				objectDefinition.getObjectDefinitionId(),
 				objectDefinition.getDBTableName()),
 			objectDefinition.getDBTableName());
-	}
-
-	private DynamicObjectDefinitionTable _getDynamicObjectDefinitionTable(
-			ObjectDefinition objectDefinition, String objectFieldName)
-		throws PortalException {
-
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_getDynamicObjectDefinitionTable(objectDefinition);
-
-		Column<DynamicObjectDefinitionTable, Long> column =
-			(Column<DynamicObjectDefinitionTable, Long>)
-				dynamicObjectDefinitionTable.getColumn(objectFieldName);
-
-		if (column == null) {
-			dynamicObjectDefinitionTable =
-				_getExtensionDynamicObjectDefinitionTable(objectDefinition);
-		}
-
-		return dynamicObjectDefinitionTable;
-	}
-
-	private DynamicObjectDefinitionTable
-			_getExtensionDynamicObjectDefinitionTable(
-				ObjectDefinition objectDefinition)
-		throws PortalException {
-
-		return new DynamicObjectDefinitionTable(
-			objectDefinition,
-			objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId(),
-				objectDefinition.getExtensionDBTableName()),
-			objectDefinition.getExtensionDBTableName());
 	}
 
 }

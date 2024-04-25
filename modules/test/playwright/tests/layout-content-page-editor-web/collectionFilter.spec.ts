@@ -10,6 +10,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {wemSiteTest} from '../../fixtures/wemSiteTest';
 import getRandomString from '../../utils/getRandomString';
 import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
@@ -17,6 +18,26 @@ import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
 import createPageWithCollectionAndFilterCollection from './utils/createPageWithCollectionAndFilterCollection';
 import getAssetTypesDefinition from './utils/getAssetTypesDefinition';
+import getCollectionDefinition from './utils/getCollectionDefinition';
+import getCollectionItemDefinition from './utils/getCollectionItemDefinition';
+import getFragmentDefinition from './utils/getFragmentDefinition';
+import getPageDefinition from './utils/getPageDefinition';
+
+const FRAGMENT_FIELDS = [
+	{
+		id: 'element-text',
+		value: {
+			text: {
+				mapping: {
+					fieldKey: 'JournalArticle_title',
+					itemReference: {
+						contextSource: 'CollectionItem',
+					},
+				},
+			},
+		},
+	},
+];
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -27,7 +48,8 @@ export const test = mergeTests(
 	isolatedSiteTest,
 	journalPagesTest,
 	loginTest(),
-	pageEditorPagesTest
+	pageEditorPagesTest,
+	wemSiteTest
 );
 
 const selectFilter = async (page, categories) => {
@@ -39,6 +61,8 @@ const selectFilter = async (page, categories) => {
 	}
 
 	await page.getByRole('button', {name: 'Apply'}).click();
+
+	await page.waitForTimeout(1000);
 };
 
 test('filters a web content collection by single and multiple categories', async ({
@@ -46,88 +70,71 @@ test('filters a web content collection by single and multiple categories', async
 	collectionsPage,
 	page,
 	pageEditorPage,
-	site,
+	wemSite,
 }) => {
-
-	// Create a vocabulary
-
-	const vocabulary = await apiHelpers.headlessAdminTaxonomy.createVocabulary({
-		assetTypes: getAssetTypesDefinition(),
-		name: 'Animals',
-		siteId: site.id,
-	});
-
-	// Create two categories for the previous vocabulary
-
-	const categories = [];
-
-	for (const categoryName of ['Dogs', 'Cats']) {
-		categories.push(
-			await apiHelpers.headlessAdminTaxonomy.createCategory({
-				name: categoryName,
-				vocabularyId: vocabulary.id,
-			})
-		);
-	}
-
-	// Create two Web Contents with categories
-
-	const contentStructureId = await getBasicWebContentStructureId(apiHelpers);
-	const webContents = [
-		{
-			categoryIds: [categories[0].id],
-			name: 'Web content with the category Dogs',
-		},
-		{
-			categoryIds: [categories[0].id, categories[1].id],
-			name: 'Web content with the categories of Dogs and Cats',
-		},
-		{
-			name: 'Web content without categories',
-		},
+	const contentNames = [
+		'sample 01',
+		'sample 02 - Dogs and Cats categories',
+		'sample 03 - Dogs category',
 	];
 
-	for (const {categoryIds, name} of webContents) {
-		await addApprovedStructuredContent({
-			apiHelpers,
-			categoryIds,
-			contentStructureId,
-			siteId: site.id,
-			title: name,
-		});
-	}
-
-	// Create a dynamic collection with the previous Web Contents
-
-	const collectionName = 'Animal Collection';
-
-	await collectionsPage.goto(site.friendlyUrlPath);
-
-	const {classPK} = await collectionsPage.createWebContentDynamicCollection(
-		collectionName,
-		site.friendlyUrlPath
-	);
-
-	// Create a page with Collection Display and Collection Filter fragments
+	// Create a definition for a Collection Filter
 
 	const collectionFilterId = getRandomString();
 
-	const layout = await createPageWithCollectionAndFilterCollection({
-		apiHelpers,
-		classPK,
+	const collectionFilterDefinition = getFragmentDefinition(
 		collectionFilterId,
-		siteId: site.id,
+		'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer'
+	);
+
+	// Create definition for a collection mapped to Samples collection
+
+	const collectionName = 'Samples';
+
+	const samplesClassPK = await collectionsPage.getCollectionClassPK(
+		collectionName,
+		wemSite.friendlyUrlPath
+	);
+
+	const samplesCollection = getCollectionItemDefinition(getRandomString(), [
+		getFragmentDefinition(
+			getRandomString(),
+			'BASIC_COMPONENT-heading',
+			{},
+			FRAGMENT_FIELDS
+		),
+	]);
+
+	const collectionDefinition = getCollectionDefinition({
+		classPK: samplesClassPK,
+		id: getRandomString(),
+		pageElements: [samplesCollection],
 	});
 
-	// Go to edit mode of the created page and select the Collection Filter fragment
+	// Create a content page and go to edit mode
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			collectionFilterDefinition,
+			collectionDefinition,
+		]),
+		siteId: wemSite.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goToEditMode(layout, wemSite.friendlyUrlPath);
+
+	await page.waitForTimeout(1000);
+
+	// Go to edit mode of the created page and select the Collection Filter fragment
 
 	await pageEditorPage.selectFragment(collectionFilterId);
 
 	// Set Filter configuration for categories
 
 	await page.getByLabel('Select', {exact: true}).click();
+
+	await page.waitForTimeout(1000);
 
 	await page.getByLabel(collectionName).check();
 
@@ -153,9 +160,9 @@ test('filters a web content collection by single and multiple categories', async
 
 	// Go to view mode of the created page
 
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
-	for (const {name} of webContents) {
+	for (const name of contentNames) {
 		await expect(page.getByText(name)).toBeVisible();
 	}
 
@@ -163,19 +170,19 @@ test('filters a web content collection by single and multiple categories', async
 
 	await selectFilter(page, ['cats']);
 
-	await expect(page.getByText(webContents[0].name)).not.toBeVisible();
-	await expect(page.getByText(webContents[1].name)).toBeVisible();
-	await expect(page.getByText(webContents[2].name)).not.toBeVisible();
+	await expect(page.getByText(contentNames[0])).not.toBeVisible();
+	await expect(page.getByText(contentNames[1])).toBeVisible();
+	await expect(page.getByText(contentNames[2])).not.toBeVisible();
 
 	// Select category filter: Cats and Dogs
 
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
 	await selectFilter(page, ['dogs', 'cats']);
 
-	await expect(page.getByText(webContents[0].name)).toBeVisible();
-	await expect(page.getByText(webContents[1].name)).toBeVisible();
-	await expect(page.getByText(webContents[2].name)).not.toBeVisible();
+	await expect(page.getByText(contentNames[0])).not.toBeVisible();
+	await expect(page.getByText(contentNames[1])).toBeVisible();
+	await expect(page.getByText(contentNames[2])).toBeVisible();
 });
 
 test('filters a web content collection by single and multiple tags', async ({

@@ -6,13 +6,13 @@ export const fetchCount = ({
 	type,
 	...data
 }: {
-	assetId: string;
-	assetType: string;
+	assetId?: string;
+	assetType?: string;
 	channelId: string;
-	fromDate: string;
+	fromDate?: string;
 	groupId: string;
-	rangeKey: string;
-	toDate: string;
+	rangeKey?: string;
+	toDate?: string;
 	type: CSVType;
 }) =>
 	sendRequest({

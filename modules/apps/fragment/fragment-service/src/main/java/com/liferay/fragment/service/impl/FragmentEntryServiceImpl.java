@@ -12,9 +12,11 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryTable;
 import com.liferay.fragment.service.FragmentCompositionLocalService;
 import com.liferay.fragment.service.base.FragmentEntryServiceBaseImpl;
+import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
@@ -31,7 +33,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.sql.Types;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -175,7 +180,8 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 				_getFragmentEntryGroupByStep(
 					groupId, fragmentCollectionId, name, status)
 			).as(
-				"fragmentCompositionsAndFragmentEntriesTable"
+				"fragmentCompositionsAndFragmentEntriesTable",
+				FragmentCompositionsAndFragmentEntriesTable.INSTANCE
 			);
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
@@ -691,5 +697,27 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		target = "(resource.name=" + FragmentConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
+
+	private static class FragmentCompositionsAndFragmentEntriesTable
+		extends BaseTable<FragmentCompositionsAndFragmentEntriesTable> {
+
+		public static final FragmentCompositionsAndFragmentEntriesTable
+			INSTANCE = new FragmentCompositionsAndFragmentEntriesTable();
+
+		public final Column<FragmentCompositionsAndFragmentEntriesTable, Date>
+			modifiedDateColumn = createColumn(
+				"modifiedDate", Date.class, Types.TIMESTAMP,
+				Column.FLAG_DEFAULT);
+		public final Column<FragmentCompositionsAndFragmentEntriesTable, String>
+			nameColumn = createColumn(
+				"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+
+		private FragmentCompositionsAndFragmentEntriesTable() {
+			super(
+				"FragmentCompositionsAndFragmentEntriesTable",
+				FragmentCompositionsAndFragmentEntriesTable::new);
+		}
+
+	}
 
 }

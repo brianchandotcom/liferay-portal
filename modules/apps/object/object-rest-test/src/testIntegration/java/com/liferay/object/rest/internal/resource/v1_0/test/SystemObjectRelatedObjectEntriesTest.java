@@ -261,10 +261,26 @@ public class SystemObjectRelatedObjectEntriesTest {
 			_objectEntry.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
+		String pkObjectFieldName = _objectDefinition.getPKObjectFieldName();
+
+		String objectDefinitionNameReference = pkObjectFieldName.substring(
+			0, pkObjectFieldName.length() - 2);
+
+		String relatedObjectEntryFieldBase = StringBundler.concat(
+			"r_", objectRelationship.getName(), "_",
+			objectDefinitionNameReference);
+
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
-		Assert.assertNotNull(jsonObject.get(objectRelationship.getName()));
+		Assert.assertEquals(
+			_objectEntry.getExternalReferenceCode(),
+			jsonObject.get(relatedObjectEntryFieldBase + "ERC"));
+		Assert.assertEquals(
+			String.valueOf(_objectEntry.getObjectEntryId()),
+			jsonObject.get(
+				relatedObjectEntryFieldBase + "Id"
+			).toString());
 	}
 
 	@Test

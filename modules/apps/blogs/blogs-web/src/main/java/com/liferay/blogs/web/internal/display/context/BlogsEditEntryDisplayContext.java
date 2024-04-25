@@ -17,6 +17,8 @@ import com.liferay.blogs.settings.BlogsGroupServiceSettings;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
@@ -225,6 +227,19 @@ public class BlogsEditEntryDisplayContext {
 			getBlogsEntry(), _httpServletRequest, "entryId");
 
 		return _entryId;
+	}
+
+	public String getFriendlyURL() {
+		FriendlyURLEntry mainFriendlyURLEntry =
+			FriendlyURLEntryLocalServiceUtil.fetchMainFriendlyURLEntry(
+				PortalUtil.getClassNameId(BlogsEntry.class.getName()),
+				getEntryId());
+
+		if (mainFriendlyURLEntry != null) {
+			return mainFriendlyURLEntry.getUrlTitle();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public String getFriendlyURLSeparatorCompanyConfigurationURL()

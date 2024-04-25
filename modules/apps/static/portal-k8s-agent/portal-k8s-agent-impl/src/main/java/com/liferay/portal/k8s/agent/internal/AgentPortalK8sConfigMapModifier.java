@@ -591,7 +591,6 @@ public class AgentPortalK8sConfigMapModifier
 
 			Map<String, String> annotations = _getMap(
 				objectMeta.getAnnotations());
-
 			Dictionary<String, Object> properties = config.getProperties();
 
 			for (PortalK8sConfigurationPropertiesMutator

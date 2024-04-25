@@ -19,6 +19,7 @@ import com.liferay.jethr0.git.dalo.GitBranchToGitCommitsEntityRelationshipDALO;
 import com.liferay.jethr0.git.dalo.GitBranchToRoutinesEntityRelationshipDALO;
 import com.liferay.jethr0.git.dalo.HeadGitBranchToGitPullsEntityRelationshipDALO;
 import com.liferay.jethr0.git.pull.GitPullEntity;
+import com.liferay.jethr0.git.user.GitUserEntity;
 import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
@@ -196,6 +197,12 @@ public class GitBranchEntityRepository
 		_gitPullEntityRepository = gitPullEntityRepository;
 	}
 
+	public void setGitUserEntityRepository(
+		GitUserEntityRepository gitUserEntityRepository) {
+
+		_gitUserEntityRepository = gitUserEntityRepository;
+	}
+
 	public void setRoutineEntityRepository(
 		RoutineEntityRepository routineEntityRepository) {
 
@@ -244,25 +251,33 @@ public class GitBranchEntityRepository
 
 		GitHubRef gitHubRef = _gitHubFactory.newGitHubRef(gitHubRefURL);
 
+		GitUserEntity gitUserEntity =
+			_gitUserEntityRepository.createGitUserEntity(gitHubRef);
+
 		GitHubCommit gitHubCommit = gitHubRef.getGitHubCommit();
 
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
-			"branchSHA", gitHubCommit.getSHA()
+			"latestSHA", gitHubCommit.getSHA()
 		).put(
-			"branchURL", String.valueOf(gitHubRefURL)
-		).put(
-			"rebased", false
+			"r_gitUserToGitBranches_c_gitUserId", gitUserEntity.getId()
 		).put(
 			"type", type.getJSONObject()
 		).put(
-			"upstreamBranchSHA", gitHubCommit.getSHA()
-		).put(
-			"upstreamBranchURL", String.valueOf(gitHubRefURL)
+			"url", String.valueOf(gitHubRefURL)
 		);
 
-		return create(jsonObject);
+		gitBranchEntity = create(jsonObject);
+
+		gitBranchEntity.setGitUserEntity(gitUserEntity);
+
+		gitUserEntity.addGitBranchEntity(gitBranchEntity);
+
+		_gitCommitEntityRepository.createGitPullEntity(
+			gitBranchEntity, gitHubCommit.getSHA());
+
+		return gitBranchEntity;
 	}
 
 	private long _getSenderGitBranchArchiveAge() {
@@ -354,6 +369,7 @@ public class GitBranchEntityRepository
 	private String _gitHubUpstreamBranchURLs;
 
 	private GitPullEntityRepository _gitPullEntityRepository;
+	private GitUserEntityRepository _gitUserEntityRepository;
 
 	@Autowired
 	private HeadGitBranchToGitPullsEntityRelationshipDALO

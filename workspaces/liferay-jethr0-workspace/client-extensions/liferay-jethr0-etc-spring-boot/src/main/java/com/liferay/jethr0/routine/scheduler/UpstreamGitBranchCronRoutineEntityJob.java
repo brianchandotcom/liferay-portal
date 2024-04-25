@@ -5,12 +5,11 @@
 
 package com.liferay.jethr0.routine.scheduler;
 
-import com.liferay.jethr0.git.branch.GitBranchEntity;
+import com.liferay.jethr0.git.commit.GitCommitEntity;
 import com.liferay.jethr0.routine.UpstreamBranchCronRoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 
 import java.util.Objects;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -45,21 +44,15 @@ public class UpstreamGitBranchCronRoutineEntityJob
 		String previousBranchSHA =
 			upstreamBranchCronRoutineEntity.getPreviousBranchSHA();
 
-		Set<GitBranchEntity> gitBranchEntities =
-			upstreamBranchCronRoutineEntity.getGitBranchEntities();
+		GitCommitEntity previousGitCommitEntity =
+			upstreamBranchCronRoutineEntity.getPreviousGitCommitEntity();
 
-		for (GitBranchEntity gitBranchEntity : gitBranchEntities) {
+		if (previousGitCommitEntity != null) {
 			if (Objects.equals(
-					previousBranchSHA, gitBranchEntity.getLatestSHA())) {
-
-				if (_log.isInfoEnabled()) {
-					_log.info("SKIPPED: " + previousBranchSHA);
-				}
+					previousBranchSHA, previousGitCommitEntity.getSHA())) {
 
 				return;
 			}
-
-			currentBranchSHA = gitBranchEntity.getLatestSHA();
 		}
 
 		upstreamBranchCronRoutineEntity.setPreviousBranchSHA(currentBranchSHA);

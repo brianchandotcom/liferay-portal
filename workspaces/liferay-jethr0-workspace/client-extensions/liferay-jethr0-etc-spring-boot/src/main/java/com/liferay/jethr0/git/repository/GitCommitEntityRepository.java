@@ -6,6 +6,7 @@
 package com.liferay.jethr0.git.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
+import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.commit.GitCommitEntity;
 import com.liferay.jethr0.git.dalo.GitCommitEntityDALO;
 import com.liferay.jethr0.git.dalo.GitCommitToJobsEntityRelationshipDALO;
@@ -16,6 +17,10 @@ import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.routine.UpstreamBranchCronRoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 
+import java.util.Objects;
+
+import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,6 +30,46 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GitCommitEntityRepository
 	extends BaseEntityRepository<GitCommitEntity> {
+
+	public GitCommitEntity createGitPullEntity(
+		GitBranchEntity gitBranchEntity, String sha) {
+
+		GitCommitEntity gitCommitEntity = getBySHA(sha);
+
+		if (gitCommitEntity != null) {
+			return gitCommitEntity;
+		}
+
+		JSONObject jsonObject = new JSONObject();
+
+		if (gitBranchEntity != null) {
+			jsonObject.put(
+				"r_gitBranchToGitCommits_c_gitBranchId",
+				gitBranchEntity.getId());
+		}
+
+		jsonObject.put("sha", sha);
+
+		gitCommitEntity = create(jsonObject);
+
+		if (gitBranchEntity != null) {
+			gitBranchEntity.addGitCommitEntity(gitCommitEntity);
+		}
+
+		gitCommitEntity.setGitBranchEntity(gitBranchEntity);
+
+		return gitCommitEntity;
+	}
+
+	public GitCommitEntity getBySHA(String sha) {
+		for (GitCommitEntity gitCommitEntity : getAll()) {
+			if (Objects.equals(gitCommitEntity.getSHA(), sha)) {
+				return gitCommitEntity;
+			}
+		}
+
+		return null;
+	}
 
 	@Override
 	public GitCommitEntityDALO getEntityDALO() {

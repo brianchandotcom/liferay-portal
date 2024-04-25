@@ -2,10 +2,10 @@ import AcquisitionsQuery, {
 	AcquisitionsQueryData,
 	AcquisitionsQueryVariables
 } from 'shared/queries/AcquisitionsQuery';
+import BaseCard from 'shared/components/base-card';
 import BasePage from 'shared/components/base-page';
 import Card from 'shared/components/Card';
 import CardTabs from 'shared/components/CardTabs';
-import CardWithRangeKey from 'shared/hoc/CardWithRangeKey';
 import ClayLink from '@clayui/link';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import React, {useContext, useState} from 'react';
@@ -80,7 +80,7 @@ const AcquisitionsCard: React.FC<IAcquisitionsCardProps> = ({
 	label,
 	legacyDropdownRangeKey
 }) => (
-	<CardWithRangeKey
+	<BaseCard
 		className={className}
 		label={label}
 		legacyDropdownRangeKey={legacyDropdownRangeKey}
@@ -92,7 +92,7 @@ const AcquisitionsCard: React.FC<IAcquisitionsCardProps> = ({
 				rangeSelectors={rangeSelectors}
 			/>
 		)}
-	</CardWithRangeKey>
+	</BaseCard>
 );
 
 interface IAcquisitionsCard extends Partial<IAcquisitionsCardProps> {

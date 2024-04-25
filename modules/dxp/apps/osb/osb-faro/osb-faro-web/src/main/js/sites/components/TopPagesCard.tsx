@@ -1,7 +1,7 @@
+import BaseCard from 'shared/components/base-card';
 import BasePage from 'shared/components/base-page';
 import Card from 'shared/components/Card';
 import CardTabs from 'shared/components/CardTabs';
-import CardWithRangeKey from 'shared/hoc/CardWithRangeKey';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
@@ -102,7 +102,7 @@ const TopPagesCard: React.FC<ITopPagesCardProps> = ({
 	label,
 	legacyDropdownRangeKey
 }) => (
-	<CardWithRangeKey
+	<BaseCard
 		className={className}
 		label={label}
 		legacyDropdownRangeKey={legacyDropdownRangeKey}
@@ -114,7 +114,7 @@ const TopPagesCard: React.FC<ITopPagesCardProps> = ({
 				rangeSelectors={rangeSelectors}
 			/>
 		)}
-	</CardWithRangeKey>
+	</BaseCard>
 );
 
 interface ITopPageCardWithData extends Partial<ITopPagesCardProps> {

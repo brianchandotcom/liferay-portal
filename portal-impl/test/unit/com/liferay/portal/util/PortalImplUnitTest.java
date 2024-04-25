@@ -375,7 +375,7 @@ public class PortalImplUnitTest {
 		_setUpPortalImpl(StringPool.BLANK);
 
 		_assertGetLayoutSetFriendlyURL(
-			"/web/testGroup", "http://othertest.com:8080", false,
+			"/web/test-group", "http://liferay.com:8080", false,
 			new TreeMap<>());
 	}
 
@@ -386,7 +386,7 @@ public class PortalImplUnitTest {
 		_setUpPortalImpl(StringPool.BLANK);
 
 		_assertGetLayoutSetFriendlyURL(
-			"/group/testGroup", "http://othertest.com:8080", true,
+			"/group/test-group", "http://liferay.com:8080", true,
 			new TreeMap<>());
 	}
 
@@ -397,7 +397,7 @@ public class PortalImplUnitTest {
 		_setUpPortalImpl(StringPool.BLANK, true);
 
 		_assertGetLayoutSetFriendlyURL(
-			"/user/testGroup", "http://othertest.com:8080", true,
+			"/user/test-group", "http://liferay.com:8080", true,
 			new TreeMap<>());
 	}
 
@@ -408,7 +408,7 @@ public class PortalImplUnitTest {
 		_setUpPortalImpl(StringPool.BLANK);
 
 		_assertGetLayoutSetFriendlyURL(
-			"/web/testGroup", "http://othertest.com:8080", false,
+			"/web/test-group", "http://liferay.com:8080", false,
 			TreeMapBuilder.put(
 				"test.com", StringPool.BLANK
 			).build());
@@ -431,11 +431,11 @@ public class PortalImplUnitTest {
 	public void testGetLayoutSetFriendlyURLWithContextPathWhenLayoutSetMatchesWithDifferentVirtualHost()
 		throws Exception {
 
-		_setUpPortalImpl("myportal");
+		_setUpPortalImpl("context-path");
 
 		_assertGetLayoutSetFriendlyURL(
-			"/myportal/web/testGroup", "http://othertest.com:8080/myportal",
-			false,
+			"/context-path/web/test-group",
+			"http://liferay.com:8080/context-path", false,
 			TreeMapBuilder.put(
 				"test.com", StringPool.BLANK
 			).build());
@@ -445,11 +445,11 @@ public class PortalImplUnitTest {
 	public void testGetLayoutSetFriendlyURLWithContextPathWhenLayoutSetMatchesWithSameVirtualHost()
 		throws Exception {
 
-		_setUpPortalImpl("myportal");
+		_setUpPortalImpl("context-path");
 
 		_assertGetLayoutSetFriendlyURL(
-			"http://test.com:8080/myportal", "http://test.com:8080/myportal",
-			false,
+			"http://test.com:8080/context-path",
+			"http://test.com:8080/context-path", false,
 			TreeMapBuilder.put(
 				"test.com", StringPool.BLANK
 			).build());
@@ -869,7 +869,7 @@ public class PortalImplUnitTest {
 		Mockito.when(
 			group.getFriendlyURL()
 		).thenReturn(
-			"/testGroup"
+			"/test-group"
 		);
 
 		Mockito.when(

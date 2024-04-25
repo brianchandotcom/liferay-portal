@@ -7,6 +7,7 @@ package com.liferay.jethr0.git.branch;
 
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.event.github.client.GitHubClient;
+import com.liferay.jethr0.git.commit.GitCommitEntity;
 
 import java.io.IOException;
 
@@ -15,6 +16,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -23,7 +25,13 @@ import org.json.JSONObject;
  */
 public interface GitBranchEntity extends Entity {
 
+	public void addGitCommitEntities(Set<GitCommitEntity> gitCommitEntities);
+
+	public void addGitCommitEntity(GitCommitEntity gitCommitEntity);
+
 	public String getFileContent(String filePath);
+
+	public Set<GitCommitEntity> getGitCommitEntities();
 
 	public String getLatestSHA();
 
@@ -41,6 +49,10 @@ public interface GitBranchEntity extends Entity {
 	public URL getURL();
 
 	public String getUserName();
+
+	public void removeGitCommitEntities(Set<GitCommitEntity> gitCommitEntities);
+
+	public void removeGitCommitEntity(GitCommitEntity gitCommitEntity);
 
 	public void setGitHubClient(GitHubClient gitHubClient);
 

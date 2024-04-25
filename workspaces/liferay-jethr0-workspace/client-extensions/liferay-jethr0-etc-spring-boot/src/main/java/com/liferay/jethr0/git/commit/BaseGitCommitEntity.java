@@ -6,6 +6,7 @@
 package com.liferay.jethr0.git.commit;
 
 import com.liferay.jethr0.entity.BaseEntity;
+import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.routine.RoutineEntity;
 
@@ -40,6 +41,16 @@ public abstract class BaseGitCommitEntity
 	}
 
 	@Override
+	public GitBranchEntity getGitBranchEntity() {
+		return _gitBranchEntity;
+	}
+
+	@Override
+	public long getGitBranchEntityId() {
+		return _gitBranchEntityId;
+	}
+
+	@Override
 	public Set<JobEntity> getJobEntities() {
 		return getRelatedEntities(JobEntity.class);
 	}
@@ -48,7 +59,11 @@ public abstract class BaseGitCommitEntity
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
-		jsonObject.put("sha", getSHA());
+		jsonObject.put(
+			"r_gitBranchToGitCommits_c_gitBranchId", _gitBranchEntityId
+		).put(
+			"sha", getSHA()
+		);
 
 		return jsonObject;
 	}
@@ -84,9 +99,23 @@ public abstract class BaseGitCommitEntity
 	}
 
 	@Override
+	public void setGitBranchEntity(GitBranchEntity gitBranchEntity) {
+		_gitBranchEntity = gitBranchEntity;
+
+		if (gitBranchEntity == null) {
+			_gitBranchEntityId = 0;
+		}
+		else {
+			_gitBranchEntityId = gitBranchEntity.getId();
+		}
+	}
+
+	@Override
 	public void setJSONObject(JSONObject jsonObject) {
 		super.setJSONObject(jsonObject);
 
+		_gitBranchEntityId = jsonObject.optLong(
+			"r_gitBranchToGitCommits_c_gitBranchId");
 		_sha = jsonObject.getString("sha");
 	}
 
@@ -99,6 +128,8 @@ public abstract class BaseGitCommitEntity
 		super(jsonObject);
 	}
 
+	private GitBranchEntity _gitBranchEntity;
+	private long _gitBranchEntityId;
 	private String _sha;
 
 }

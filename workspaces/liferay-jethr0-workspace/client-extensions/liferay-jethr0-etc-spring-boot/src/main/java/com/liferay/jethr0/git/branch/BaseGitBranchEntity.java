@@ -7,6 +7,7 @@ package com.liferay.jethr0.git.branch;
 
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.event.github.client.GitHubClient;
+import com.liferay.jethr0.git.commit.GitCommitEntity;
 import com.liferay.jethr0.util.PropertiesUtil;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -17,6 +18,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +27,18 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
+public abstract class BaseGitBranchEntity
+	extends BaseEntity implements GitBranchEntity {
+
+	@Override
+	public void addGitCommitEntities(Set<GitCommitEntity> gitCommitEntities) {
+		addRelatedEntities(gitCommitEntities);
+	}
+
+	@Override
+	public void addGitCommitEntity(GitCommitEntity gitCommitEntity) {
+		addRelatedEntity(gitCommitEntity);
+	}
 
 	@Override
 	public String getFileContent(String filePath) {
@@ -34,6 +47,11 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 				StringUtil.combine(
 					"https://raw.githubusercontent.com/", getUserName(), "/",
 					getRepositoryName(), "/", getName(), "/", filePath)));
+	}
+
+	@Override
+	public Set<GitCommitEntity> getGitCommitEntities() {
+		return getRelatedEntities(GitCommitEntity.class);
 	}
 
 	@Override
@@ -112,6 +130,18 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 	@Override
 	public String getUserName() {
 		return _getURLGroupValue(getURL(), "userName");
+	}
+
+	@Override
+	public void removeGitCommitEntities(
+		Set<GitCommitEntity> gitCommitEntities) {
+
+		removeRelatedEntities(gitCommitEntities);
+	}
+
+	@Override
+	public void removeGitCommitEntity(GitCommitEntity gitCommitEntity) {
+		removeRelatedEntity(gitCommitEntity);
 	}
 
 	@Override

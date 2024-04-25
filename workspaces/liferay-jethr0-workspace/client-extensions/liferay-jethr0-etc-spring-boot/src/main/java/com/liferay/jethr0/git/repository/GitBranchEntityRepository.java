@@ -12,7 +12,9 @@ import com.liferay.jethr0.event.github.commit.GitHubCommit;
 import com.liferay.jethr0.event.github.ref.GitHubRef;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.branch.UpstreamGitBranchEntity;
+import com.liferay.jethr0.git.commit.GitCommitEntity;
 import com.liferay.jethr0.git.dalo.GitBranchEntityDALO;
+import com.liferay.jethr0.git.dalo.GitBranchToGitCommitsEntityRelationshipDALO;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -111,6 +113,14 @@ public class GitBranchEntityRepository
 		addAll(gitBranchEntities);
 	}
 
+	public void relateGitBranchToGitCommit(
+		GitBranchEntity gitBranchEntity, GitCommitEntity gitCommitEntity) {
+
+		gitBranchEntity.addGitCommitEntity(gitCommitEntity);
+
+		gitCommitEntity.setGitBranchEntity(gitBranchEntity);
+	}
+
 	@Scheduled(cron = "${liferay.jethr0.git.branch.archive.cron}")
 	public void scheduledArchive() {
 		Date keepDate = new Date(
@@ -142,6 +152,30 @@ public class GitBranchEntityRepository
 					"Archived ", gitBranchEntityIds.size(), " of ",
 					gitBranchCount, " git branches"));
 		}
+	}
+
+	public void setGitCommitEntityRepository(
+		GitCommitEntityRepository gitCommitEntityRepository) {
+
+		_gitCommitEntityRepository = gitCommitEntityRepository;
+	}
+
+	@Override
+	protected GitBranchEntity updateRelationshipsFromDALO(
+		GitBranchEntity gitBranchEntity) {
+
+		return _updateGitBranchToGitCommitRelationshipsFromDALO(
+			gitBranchEntity);
+	}
+
+	@Override
+	protected GitBranchEntity updateRelationshipsToDALO(
+		GitBranchEntity gitBranchEntity) {
+
+		_gitBranchToGitCommitsEntityRelationshipDALO.updateChildEntities(
+			gitBranchEntity);
+
+		return gitBranchEntity;
 	}
 
 	private GitBranchEntity _createGitBranchEntity(
@@ -181,11 +215,30 @@ public class GitBranchEntityRepository
 			24;
 	}
 
+	private GitBranchEntity _updateGitBranchToGitCommitRelationshipsFromDALO(
+		GitBranchEntity parentGitBranchEntity) {
+
+		return updateParentToChildRelationshipsFromDALO(
+			parentGitBranchEntity, _gitBranchToGitCommitsEntityRelationshipDALO,
+			_gitCommitEntityRepository,
+			(gitBranchEntity, gitCommitEntity) -> relateGitBranchToGitCommit(
+				gitBranchEntity, gitCommitEntity),
+			gitBranchEntity -> gitBranchEntity.getGitCommitEntities(),
+			(gitBranchEntity, gitCommitEntity) ->
+				gitBranchEntity.removeGitCommitEntity(gitCommitEntity));
+	}
+
 	private static final Log _log = LogFactory.getLog(
 		GitBranchEntityRepository.class);
 
 	@Autowired
 	private GitBranchEntityDALO _gitBranchEntityDALO;
+
+	@Autowired
+	private GitBranchToGitCommitsEntityRelationshipDALO
+		_gitBranchToGitCommitsEntityRelationshipDALO;
+
+	private GitCommitEntityRepository _gitCommitEntityRepository;
 
 	@Autowired
 	private GitHubClient _gitHubClient;

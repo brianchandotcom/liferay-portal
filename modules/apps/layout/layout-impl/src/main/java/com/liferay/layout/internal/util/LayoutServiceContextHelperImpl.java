@@ -190,7 +190,7 @@ public class LayoutServiceContextHelperImpl
 
 		@Override
 		public String getContextPath() {
-			return null;
+			return _portal.getPathContext();
 		}
 
 		@Override

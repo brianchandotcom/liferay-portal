@@ -20,7 +20,6 @@ import java.io.IOException;
 
 import java.nio.file.Files;
 
-import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.TaskContainer;
@@ -45,7 +44,7 @@ public class LiferayWorkspaceYarnPlugin extends YarnPlugin {
 			GradleUtil.addTaskProvider(
 				project, SET_UP_YARN_TASK_NAME, SetUpYarnTask.class);
 
-		final TaskProvider<YarnInstallTask> yarnInstallTaskProvider =
+		TaskProvider<YarnInstallTask> yarnInstallTaskProvider =
 			GradleUtil.getTaskProvider(
 				project, YARN_INSTALL_TASK_NAME, YarnInstallTask.class);
 
@@ -53,14 +52,8 @@ public class LiferayWorkspaceYarnPlugin extends YarnPlugin {
 			project, yarnInstallTaskProvider, setUpYarnTaskProvider);
 
 		project.allprojects(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					_configureNodeProject(project, yarnInstallTaskProvider);
-				}
-
-			});
+			project1 -> _configureNodeProject(
+				project1, yarnInstallTaskProvider));
 	}
 
 	private void _configureNodeProject(
@@ -68,86 +61,64 @@ public class LiferayWorkspaceYarnPlugin extends YarnPlugin {
 		TaskProvider<YarnInstallTask> yarnInstallTaskProvider) {
 
 		project.afterEvaluate(
-			new Action<Project>() {
+			project1 -> {
+				TaskContainer taskContainer = project1.getTasks();
 
-				@Override
-				public void execute(Project project) {
-					TaskContainer taskContainer = project.getTasks();
+				taskContainer.withType(
+					PackageRunTask.class,
+					packageRunTask -> {
+						if (packageRunTask instanceof PackageRunTestTask) {
+							return;
+						}
 
-					taskContainer.withType(
-						PackageRunTask.class,
-						packageRunTask -> {
-							if (packageRunTask instanceof PackageRunTestTask) {
-								return;
-							}
+						packageRunTask.mustRunAfter(yarnInstallTaskProvider);
+					});
 
-							packageRunTask.mustRunAfter(
-								yarnInstallTaskProvider);
-						});
+				taskContainer.withType(
+					NpmInstallTask.class,
+					npmInstallTask -> {
+						NodeExtension nodeExtension = GradleUtil.getExtension(
+							npmInstallTask.getProject(), NodeExtension.class);
 
-					taskContainer.withType(
-						NpmInstallTask.class,
-						new Action<NpmInstallTask>() {
+						nodeExtension.setUseNpm(false);
 
-							@Override
-							public void execute(NpmInstallTask npmInstallTask) {
-								NodeExtension nodeExtension =
-									GradleUtil.getExtension(
-										npmInstallTask.getProject(),
-										NodeExtension.class);
-
-								nodeExtension.setUseNpm(false);
-
-								npmInstallTask.finalizedBy(
-									yarnInstallTaskProvider);
-							}
-
-						});
-				}
-
+						npmInstallTask.finalizedBy(yarnInstallTaskProvider);
+					});
 			});
 	}
 
 	private void _configureTaskYarnInstallProvider(
-		final Project project,
-		TaskProvider<YarnInstallTask> yarnInstallTaskProvider,
-		final TaskProvider<SetUpYarnTask> setUpYarnTaskProvider) {
+		Project project, TaskProvider<YarnInstallTask> yarnInstallTaskProvider,
+		TaskProvider<SetUpYarnTask> setUpYarnTaskProvider) {
 
 		yarnInstallTaskProvider.configure(
-			new Action<YarnInstallTask>() {
+			yarnInstallTask -> {
+				yarnInstallTask.dependsOn(setUpYarnTaskProvider);
 
-				@Override
-				public void execute(YarnInstallTask yarnInstallTask) {
-					yarnInstallTask.dependsOn(setUpYarnTaskProvider);
+				try {
+					File file = new File(project.getProjectDir(), "yarn.lock");
 
-					try {
-						File file = new File(
-							project.getProjectDir(), "yarn.lock");
+					if (file.exists()) {
+						String contents = new String(
+							Files.readAllBytes(file.toPath()));
 
-						if (file.exists()) {
-							String contents = new String(
-								Files.readAllBytes(file.toPath()));
-
-							yarnInstallTask.setFrozenLockFile(
-								!contents.equals(""));
-						}
-						else {
-							yarnInstallTask.setFrozenLockFile(false);
-						}
+						yarnInstallTask.setFrozenLockFile(!contents.equals(""));
 					}
-					catch (IOException ioException) {
-						Logger logger = project.getLogger();
-
-						if (logger.isWarnEnabled()) {
-							StringBuilder sb = new StringBuilder();
-
-							sb.append("Unable to read yarn.lock.");
-
-							logger.warn(sb.toString());
-						}
+					else {
+						yarnInstallTask.setFrozenLockFile(false);
 					}
 				}
+				catch (IOException ioException) {
+					Logger logger = project.getLogger();
 
+					if (logger.isWarnEnabled()) {
+						StringBuilder sb = new StringBuilder();
+
+						sb.append("Unable to read yarn.lock.");
+
+						logger.warn(sb.toString());
+					}
+				}
 			});
 	}
 

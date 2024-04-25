@@ -13,10 +13,12 @@ import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.JobEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
+@Configuration
 public class GitCommitToJobsEntityRelationshipDALO
 	extends BaseEntityRelationshipDALO<GitCommitEntity, JobEntity> {
 

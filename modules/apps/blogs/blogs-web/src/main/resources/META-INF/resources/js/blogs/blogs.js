@@ -181,8 +181,8 @@ export default class Blogs {
 			`#${this._config.namespace}urlOptions input`
 		);
 
-		if (urlOptions.length) {
-			if (!Liferay.FeatureFlags['LPD-11147']) {
+		if (!Liferay.FeatureFlags['LPD-11147']) {
+			if (urlOptions.length) {
 				urlOptions.forEach((option) => {
 					this._addEventListener(
 						option,
@@ -191,9 +191,7 @@ export default class Blogs {
 					);
 				});
 			}
-		}
 
-		if (!Liferay.FeatureFlags['LPD-11147']) {
 			const titleInput = this._getElementById('title');
 
 			if (titleInput) {

@@ -4,11 +4,13 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {FRAGMENT_ENTRY_TYPES} from '../../../../../../app/config/constants/fragmentEntryTypes';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
@@ -24,8 +26,10 @@ import selectFormConfiguration from '../../../../../../app/selectors/selectFormC
 import selectFragmentEntryLink from '../../../../../../app/selectors/selectFragmentEntryLink';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import FormService from '../../../../../../app/services/FormService';
+import InfoItemService from '../../../../../../app/services/InfoItemService';
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
 import {CACHE_KEYS} from '../../../../../../app/utils/cache';
+import getMappingFieldsKey from '../../../../../../app/utils/getMappingFieldsKey';
 import {isRequiredFormField} from '../../../../../../app/utils/isRequiredFormField';
 import {setIn} from '../../../../../../app/utils/setIn';
 import useCache from '../../../../../../app/utils/useCache';
@@ -36,11 +40,22 @@ import {FragmentGeneralPanel} from './FragmentGeneralPanel';
 const DEFAULT_CONFIGURATION_VALUES = {};
 const DEFAULT_FORM_CONFIGURATION = {classNameId: null, classTypeId: null};
 
+const CLASSNAMEID_CONFIGURATION_KEY = 'classNameId';
 const FIELD_ID_CONFIGURATION_KEY = 'inputFieldId';
 const HELP_TEXT_CONFIGURATION_KEY = 'inputHelpText';
 const LABEL_CONFIGURATION_KEY = 'inputLabel';
 const REQUIRED_CONFIGURATION_KEY = 'inputRequired';
 const SHOW_HELP_TEXT_CONFIGURATION_KEY = 'inputShowHelpText';
+
+const SOURCE_TYPES = {
+	mainObject: 'main-object',
+	relationship: 'relationship',
+};
+
+const NOT_SELECTED_OPTION = {
+	label: `-- ${Liferay.Language.get('not-selected')} --`,
+	value: 'not-selected',
+};
 
 function getInputCommonConfiguration(configurationValues, formFields) {
 	const fields = [];
@@ -183,13 +198,15 @@ export function FormInputGeneralPanel({item}) {
 		[allowedInputTypes]
 	);
 
-	const filteredFormFields = useSelectorCallback(
-		(state) => {
-			if (!formFields || !allowedInputTypes || isSpecialInput) {
+	const state = useSelector((state) => state);
+
+	const filterFields = useCallback(
+		(fields) => {
+			if (!fields || !allowedInputTypes || isSpecialInput) {
 				return [];
 			}
 
-			let nextFields = formFields;
+			let nextFields = fields;
 
 			const selectedFields = (() => {
 				const selectedFields = [];
@@ -247,7 +264,7 @@ export function FormInputGeneralPanel({item}) {
 
 			return nextFields;
 		},
-		[allowedInputTypes, formFields, isSpecialInput, item.itemId]
+		[allowedInputTypes, formId, isSpecialInput, item.itemId, state]
 	);
 
 	const configFields = useMemo(() => {
@@ -291,7 +308,7 @@ export function FormInputGeneralPanel({item}) {
 			);
 		}
 
-		dispatch(
+		return dispatch(
 			updateEditableValues({
 				editableValues: setIn(editableValues, keyPath, value),
 				fragmentEntryLinkId:
@@ -320,12 +337,12 @@ export function FormInputGeneralPanel({item}) {
 					<ClayPanel.Body>
 						{!isSpecialInput && (
 							<FormInputMappingOptions
-								allowedInputTypes={allowedInputTypes}
 								configurationValues={configurationValues}
+								filterFields={filterFields}
 								form={{
 									classNameId,
 									classTypeId,
-									fields: filteredFormFields,
+									fields: filterFields(formFields),
 								}}
 								item={item}
 								onValueSelect={handleValueSelect}
@@ -365,13 +382,77 @@ export function FormInputGeneralPanel({item}) {
 	);
 }
 
-function FormInputMappingOptions({configurationValues, form, onValueSelect}) {
-	const {classNameId, classTypeId, fields} = form;
+function FormInputMappingOptions({
+	configurationValues,
+	filterFields,
+	form,
+	onValueSelect,
+}) {
+	const {classNameId, classTypeId, fields: formFields} = form;
 
 	const {subtype, type} = useMemo(
 		() => getTypeLabels(classNameId, classTypeId),
 		[classNameId, classTypeId]
 	);
+
+	const relationshipSelectId = useId();
+	const sourceSelectId = useId();
+
+	const mappingFields = useSelector((state) => state.mappingFields);
+
+	const relationships = useCache({
+		fetcher: () =>
+			InfoItemService.getStructureRelationships({
+				classNameId,
+				classTypeId,
+			}),
+		key: [CACHE_KEYS.relationships, classNameId, classTypeId || '0'],
+	});
+
+	const [fields, setFields] = useState(formFields);
+
+	const [sourceType, setSourceType] = useState(
+		configurationValues.classNameId
+			? SOURCE_TYPES.relationship
+			: SOURCE_TYPES.mainObject
+	);
+
+	const [relationship, setRelationship] = useState(
+		configurationValues.classNameId || NOT_SELECTED_OPTION.value
+	);
+
+	useEffect(() => {
+		if (sourceType === SOURCE_TYPES.mainObject) {
+			setFields(formFields);
+
+			return;
+		}
+		else if (relationship === NOT_SELECTED_OPTION.value) {
+			setFields([]);
+
+			return;
+		}
+
+		const key = getMappingFieldsKey({
+			classNameId: relationship,
+			classTypeId: '0',
+		});
+
+		if (mappingFields[key]) {
+			setFields(filterFields(mappingFields[key]));
+
+			return;
+		}
+
+		InfoItemService.getAvailableStructureMappingFields({
+			classNameId: relationship,
+			classTypeId: '0',
+		}).then((response) => {
+			if (Array.isArray(response)) {
+				setFields(filterFields(response));
+			}
+		});
+	}, [filterFields, formFields, mappingFields, relationship, sourceType]);
 
 	if (!classNameId || !classTypeId) {
 		return null;
@@ -381,53 +462,133 @@ function FormInputMappingOptions({configurationValues, form, onValueSelect}) {
 		return <ClayLoadingIndicator />;
 	}
 
-	return fields.flatMap((fieldSet) => fieldSet.fields).length ? (
+	return (
 		<>
-			<MappingFieldSelector
-				fields={fields}
-				onValueSelect={(event) =>
-					onValueSelect(
-						FIELD_ID_CONFIGURATION_KEY,
-						event.target.value === 'unmapped'
-							? null
-							: event.target.value
-					)
-				}
-				value={configurationValues[FIELD_ID_CONFIGURATION_KEY] || ''}
-			/>
-			{type && (
-				<p
-					className={classNames(
-						'page-editor__mapping-panel__type-label',
-						{
-							'mb-1': subtype,
-							'mb-3': !subtype,
+			{relationships?.length && Liferay.FeatureFlags['LPD-20213'] ? (
+				<>
+					<ClayForm.Group small>
+						<label htmlFor={sourceSelectId}>
+							{Liferay.Language.get('source')}
+						</label>
+
+						<ClaySelectWithOption
+							className="pr-4 text-truncate"
+							id={sourceSelectId}
+							onChange={(event) => {
+								setSourceType(event.target.value);
+								setRelationship(NOT_SELECTED_OPTION.value);
+								onValueSelect(FIELD_ID_CONFIGURATION_KEY, null);
+							}}
+							options={[
+								{
+									label: sub(
+										Liferay.Language.get('x-default'),
+										type
+									),
+									value: SOURCE_TYPES.mainObject,
+								},
+								{
+									label: Liferay.Language.get('relationship'),
+									value: SOURCE_TYPES.relationship,
+								},
+							]}
+							value={sourceType}
+						/>
+					</ClayForm.Group>
+
+					{sourceType === SOURCE_TYPES.relationship ? (
+						<ClayForm.Group small>
+							<label htmlFor={relationshipSelectId}>
+								{Liferay.Language.get('relationship')}
+							</label>
+
+							<ClaySelectWithOption
+								className="pr-4 text-truncate"
+								id={relationshipSelectId}
+								onChange={(event) => {
+									setRelationship(event.target.value);
+								}}
+								options={[
+									NOT_SELECTED_OPTION,
+									...(relationships || []).map(
+										({classNameId, label}) => ({
+											label,
+											value: classNameId,
+										})
+									),
+								]}
+								value={relationship}
+							/>
+						</ClayForm.Group>
+					) : null}
+				</>
+			) : null}
+
+			{fields.flatMap((fieldSet) => fieldSet.fields).length ? (
+				<>
+					<MappingFieldSelector
+						fields={fields}
+						onValueSelect={(event) =>
+							onValueSelect(
+								FIELD_ID_CONFIGURATION_KEY,
+								event.target.value === 'unmapped'
+									? null
+									: event.target.value
+							).then(() => {
+								if (sourceType === SOURCE_TYPES.relationship) {
+									onValueSelect(
+										CLASSNAMEID_CONFIGURATION_KEY,
+										relationship
+									);
+								}
+							})
 						}
+						value={
+							configurationValues[FIELD_ID_CONFIGURATION_KEY] ||
+							''
+						}
+					/>
+					{type && (
+						<p
+							className={classNames(
+								'page-editor__mapping-panel__type-label',
+								{
+									'mb-1': subtype,
+									'mb-3': !subtype,
+								}
+							)}
+						>
+							<span className="mr-1">
+								{Liferay.Language.get('content-type')}:
+							</span>
+
+							{relationship !== NOT_SELECTED_OPTION.value
+								? relationships.find(
+										({classNameId}) =>
+											classNameId === relationship
+								  ).label
+								: type}
+						</p>
 					)}
-				>
-					<span className="mr-1">
-						{Liferay.Language.get('content-type')}:
-					</span>
 
-					{type}
-				</p>
-			)}
+					{subtype && (
+						<p className="mb-3 page-editor__mapping-panel__type-label">
+							<span className="mr-1">
+								{Liferay.Language.get('subtype')}:
+							</span>
 
-			{subtype && (
-				<p className="mb-3 page-editor__mapping-panel__type-label">
-					<span className="mr-1">
-						{Liferay.Language.get('subtype')}:
-					</span>
-
-					{subtype}
-				</p>
-			)}
+							{subtype}
+						</p>
+					)}
+				</>
+			) : sourceType === SOURCE_TYPES.mainObject ||
+			  relationship !== NOT_SELECTED_OPTION.value ? (
+				<ClayAlert displayType="info">
+					{Liferay.Language.get(
+						'there-are-no-suitable-fields-in-the-item-to-be-mapped-to-the-fragment'
+					)}
+				</ClayAlert>
+			) : null}
 		</>
-	) : (
-		<ClayAlert displayType="info">
-			{Liferay.Language.get(
-				'there-are-no-suitable-fields-in-the-item-to-be-mapped-to-the-fragment'
-			)}
-		</ClayAlert>
 	);
 }

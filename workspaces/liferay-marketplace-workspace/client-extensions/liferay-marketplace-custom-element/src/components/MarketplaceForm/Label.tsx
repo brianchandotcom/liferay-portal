@@ -8,11 +8,14 @@ import {LabelHTMLAttributes} from 'react';
 
 import './index.scss';
 
+import {ClayTooltipProvider} from '@clayui/tooltip';
+
 interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
+	info?: string;
 	required?: boolean;
 }
 
-export function Label({required, ...props}: LabelProps) {
+export function Label({info, required, ...props}: LabelProps) {
 	return (
 		<>
 			<label {...props} />
@@ -22,6 +25,22 @@ export function Label({required, ...props}: LabelProps) {
 					symbol="asterisk
 "
 				/>
+			)}
+
+			{info && (
+				<ClayTooltipProvider>
+					<div
+						className="info-bg inline-item inline-item-after mb-1"
+						data-tooltip-align="top"
+						title={info}
+					>
+						<ClayIcon
+							className="info-icon"
+							symbol="info-circle-open
+"
+						/>
+					</div>
+				</ClayTooltipProvider>
 			)}
 		</>
 	);

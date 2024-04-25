@@ -89,7 +89,7 @@ const Profile = () => {
 				</div>
 			</div>
 
-			<Form.Label className="mt-5" htmlFor="name" required>
+			<Form.Label className="mt-5" htmlFor="name" info="name" required>
 				{i18n.translate('name')}
 			</Form.Label>
 
@@ -100,7 +100,12 @@ const Profile = () => {
 				type="text"
 			/>
 
-			<Form.Label className="mt-5" htmlFor="description" required>
+			<Form.Label
+				className="mt-5"
+				htmlFor="description"
+				info="description"
+				required
+			>
 				{i18n.translate('description')}
 			</Form.Label>
 
@@ -113,7 +118,12 @@ const Profile = () => {
 			/>
 
 			<div className="form-multiselect">
-				<Form.Label className="mt-5" htmlFor="categories" required>
+				<Form.Label
+					className="mt-5"
+					htmlFor="categories"
+					info="categories"
+					required
+				>
 					{i18n.translate('categories')}
 				</Form.Label>
 
@@ -129,7 +139,12 @@ const Profile = () => {
 					value={multiSelectText.categories}
 				/>
 
-				<Form.Label className="mt-5" htmlFor="tags" required>
+				<Form.Label
+					className="mt-5"
+					htmlFor="tags"
+					info="tags"
+					required
+				>
 					{i18n.translate('tags')}
 				</Form.Label>
 

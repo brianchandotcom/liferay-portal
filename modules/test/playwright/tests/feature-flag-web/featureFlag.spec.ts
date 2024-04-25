@@ -5,13 +5,21 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {featureFlagPagesTest} from './fixtures/featureFlagPagesTest';
 
 const DEPENDENCY_FEATURE_FLAG = 'LPD-00000';
 const DEPENDENT_FEATURE_FLAG = 'LPD-00001';
 
-export const test = mergeTests(featureFlagPagesTest, loginTest());
+export const test = mergeTests(
+	featureFlagPagesTest,
+	featureFlagsTest({
+		[DEPENDENCY_FEATURE_FLAG]: false,
+		[DEPENDENT_FEATURE_FLAG]: false,
+	}),
+	loginTest()
+);
 
 test('LPS-167698 - Assert that a feature flag can be enabled and disabled.', async ({
 	featureFlagsInstanceSettingsPage,

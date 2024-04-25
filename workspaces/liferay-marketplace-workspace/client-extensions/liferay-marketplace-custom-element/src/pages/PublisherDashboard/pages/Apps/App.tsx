@@ -12,7 +12,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import useSWR, {KeyedMutator} from 'swr';
 
 import circleFullIcon from '../../../../assets/icons/circle_fill_icon.svg';
-import {ReviewAndSubmitAppPage} from '../../../ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
+import {ReviewAndSubmitAppPage} from './AppCreationFlow/ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
 
 import './App.scss';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
@@ -64,8 +64,7 @@ const AdministratorButtons: React.FC<AdministratorButtons> = ({
 				message: i18n.translate('your-request-completed-successfully'),
 				type: 'success',
 			});
-		}
-		catch (error) {
+		} catch (error) {
 			Liferay.Util.openToast({
 				message: i18n.translate('an-unexpected-error-occurred'),
 				type: 'danger',

@@ -6,23 +6,23 @@
 import {useState} from 'react';
 
 import {AppFlowList} from '../../../../../components/NewAppFlowList/AppFlowList';
-import {ChoosePricingModelPage} from '../../../../ChoosePricingModelPage/ChoosePricingModelPage';
-import {CreateNewAppPage} from '../../../../CreateNewAppPage/CreateNewAppPage';
-import {InformLicensingTermsPage} from '../../../../InformLicensingTermsPage/InformLicensingTermsPage';
-import {InformLicensingTermsPricePage} from '../../../../InformLicensingTermsPage/InformLicensingTermsPricePage';
-import {ProvideAppBuildPage} from '../../../../ProvideAppBuildPage/ProvideAppBuildPage';
-import {ProvideAppSupportAndHelpPage} from '../../../../ProvideAppSupportAndHelpPage/ProvideAppSupportAndHelpPage';
-import {ProvideVersionDetailsPage} from '../../../../ProvideVersionDetailsPage/ProvideVersionDetailsPage';
-import {ReviewAndSubmitAppPage} from '../../../../ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
-import {CustomizeAppStorefrontPage} from '../../../../StorefrontPage/CustomizeAppStorefrontPage';
 import {initialFLowListItems} from './AppCreationFlowUtil';
+import {ChoosePricingModelPage} from './ChoosePricingModelPage/ChoosePricingModelPage';
+import {CreateNewAppPage} from './CreateNewAppPage/CreateNewAppPage';
+import {InformLicensingTermsPage} from './InformLicensingTermsPage/InformLicensingTermsPage';
+import {InformLicensingTermsPricePage} from './InformLicensingTermsPage/InformLicensingTermsPricePage';
+import {ProvideAppBuildPage} from './ProvideAppBuildPage/ProvideAppBuildPage';
+import {ProvideAppSupportAndHelpPage} from './ProvideAppSupportAndHelpPage/ProvideAppSupportAndHelpPage';
+import {ProvideVersionDetailsPage} from './ProvideVersionDetailsPage/ProvideVersionDetailsPage';
+import {ReviewAndSubmitAppPage} from './ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
+import {CustomizeAppStorefrontPage} from './StorefrontPage/CustomizeAppStorefrontPage';
 
 import './AppCreationFlow.scss';
 import {AppToolBar} from '../../../../../components/AppToolBar/AppToolBar';
 import {useAccount} from '../../../../../hooks/data/useAccounts';
 import {Liferay} from '../../../../../liferay/liferay';
-import {useAppContext} from '../../../../../manage-app-state/AppManageState';
-import {DefineAppProfilePage} from '../../../../DefineAppProfilePage/DefineAppProfilePage';
+import {useAppContext} from './AppContext/AppManageState';
+import {DefineAppProfilePage} from './DefineAppProfilePage/DefineAppProfilePage';
 
 type SetAppFlowListStateProps = {
 	checkedItems?: string[];
@@ -257,8 +257,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 								});
 
 								setCurrentFlow('licensingPrice');
-							}
-							else {
+							} else {
 								setAppFlowListState({
 									checkedItems: [
 										'create',
@@ -331,8 +330,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 								});
 
 								setCurrentFlow('licensingPrice');
-							}
-							else {
+							} else {
 								setAppFlowListState({
 									checkedItems: [
 										'create',

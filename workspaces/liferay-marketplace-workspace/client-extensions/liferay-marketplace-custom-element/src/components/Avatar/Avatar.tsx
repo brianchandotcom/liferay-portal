@@ -11,12 +11,10 @@ const AVATAR_SIZE_IN_PX = 40;
 
 export function Avatar({
 	emailAddress,
-	gravatarAPI,
 	initialImage,
 	userName,
 }: {
 	emailAddress: string;
-	gravatarAPI: string;
 	initialImage?: string;
 	userName: string;
 }) {
@@ -35,7 +33,7 @@ export function Avatar({
 			height={AVATAR_SIZE_IN_PX}
 			src={
 				initialImage ??
-				`${gravatarAPI}/${emailAddressMD5}?d=${encodeURIComponent(
+				`https://gravatar.com/${emailAddressMD5}?d=${encodeURIComponent(
 					uiAvatarURL
 				)}`
 			}

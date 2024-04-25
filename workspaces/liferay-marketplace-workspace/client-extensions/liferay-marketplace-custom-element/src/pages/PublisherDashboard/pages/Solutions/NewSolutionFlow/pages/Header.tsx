@@ -11,7 +11,7 @@ import ReactQuill from 'react-quill';
 import {DropzoneUpload} from '../../../../../../components/DropzoneUpload/DropzoneUpload';
 import Form from '../../../../../../components/MarketplaceForm';
 import i18n from '../../../../../../i18n';
-import {ACCEPT_FILE_TYPES} from '../../../../../StorefrontPage/CustomizeAppStorefrontPage';
+import {ACCEPT_FILE_TYPES} from '../../../Apps/AppCreationFlow/StorefrontPage/CustomizeAppStorefrontPage';
 import {MAX_SIZE_5MBS} from '../../constants';
 
 enum RadioOptions {

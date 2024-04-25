@@ -14,9 +14,7 @@ const lazyRoutes = {
 				'./pages/AdministratorDashboard/AdministratorDashboardRouter'
 			)
 	),
-	'customer-gate': React.lazy(
-		() => import('./pages/CustomerGatePage/CustomerGatePage')
-	),
+	'customer-gate': React.lazy(() => import('./pages/CustomerGate')),
 	'get-app': React.lazy(() => import('./pages/GetApp/GetAppRouter')),
 	'next-steps': React.lazy(() => import('./pages/NextSteps')),
 	'published-apps': React.lazy(

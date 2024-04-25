@@ -11,8 +11,8 @@ import {useEffect, useState} from 'react';
 
 import './PackageVersionModal.scss';
 import i18n from '../../i18n';
-import {useAppContext} from '../../manage-app-state/AppManageState';
-import {TYPES} from '../../manage-app-state/actionTypes';
+import {useAppContext} from '../../pages/PublisherDashboard/pages/Apps/AppCreationFlow/AppContext/AppManageState';
+import {TYPES} from '../../pages/PublisherDashboard/pages/Apps/AppCreationFlow/AppContext/actionTypes';
 import {getProductById} from '../../utils/api';
 import {getCustomFieldValue} from '../../utils/customFieldUtil';
 

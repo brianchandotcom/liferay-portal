@@ -7,7 +7,7 @@ import ClayIcon from '@clayui/icon';
 
 import './LicensePriceChildren.scss';
 import {CurrencyAbbreviation} from '../../enums/CurrencyAbbreviation';
-import {App} from '../../pages/ReviewAndSubmitAppPage/ReviewAndSubmitAppPageUtil';
+import {App} from '../../pages/PublisherDashboard/pages/Apps/AppCreationFlow/ReviewAndSubmitAppPage/ReviewAndSubmitAppPageUtil';
 import {isTrialSKU} from '../../utils/productUtils';
 
 export type TierPrices = {

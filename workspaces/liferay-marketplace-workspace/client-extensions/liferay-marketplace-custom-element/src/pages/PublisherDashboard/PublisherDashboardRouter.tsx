@@ -11,7 +11,7 @@ import {useAccount} from '../../hooks/data/useAccounts';
 import {useCatalogs} from '../../hooks/data/useCatalogs';
 import {useSupplierAccounts} from '../../hooks/data/useSupplierAccounts';
 import {Liferay} from '../../liferay/liferay';
-import {AppContextProvider} from '../../manage-app-state/AppManageState';
+import {AppContextProvider} from './pages/Apps/AppCreationFlow/AppContext/AppManageState';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 import SolutionsDetails from '../CustomerDashboard/pages/Solutions/ReviewAndSubmitSolutions/SolutionsDetails';
 import PublishedDashboardOutlet from './PublisherDashboardOutlet';

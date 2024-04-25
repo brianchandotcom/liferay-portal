@@ -12,7 +12,6 @@ import './MemberProfile.scss';
 import {useEffect, useState} from 'react';
 
 import {Liferay} from '../../liferay/liferay';
-import {useAppContext} from '../../manage-app-state/AppManageState';
 import {
 	getMyUserAditionalInfos,
 	updateUserAdditionalInfos,
@@ -48,8 +47,6 @@ export function MemberProfile({
 	setSelectedMember,
 	userLogged,
 }: MemberProfileProps) {
-	const [{gravatarAPI}] = useAppContext();
-
 	const paths = Liferay.ThemeDisplay.getLayoutURL().split('/');
 
 	const finalPath =
@@ -158,7 +155,6 @@ export function MemberProfile({
 				<div className="member-profile-image">
 					<Avatar
 						emailAddress={memberUser.email}
-						gravatarAPI={gravatarAPI}
 						initialImage={memberUser.image}
 						userName={memberUser.name}
 					/>

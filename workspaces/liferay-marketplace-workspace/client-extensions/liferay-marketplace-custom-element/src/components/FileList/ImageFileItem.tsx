@@ -17,8 +17,8 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
-import {useAppContext} from '../../manage-app-state/AppManageState';
-import {TYPES} from '../../manage-app-state/actionTypes';
+import {useAppContext} from '../../pages/PublisherDashboard/pages/Apps/AppCreationFlow/AppContext/AppManageState';
+import {TYPES} from '../../pages/PublisherDashboard/pages/Apps/AppCreationFlow/AppContext/actionTypes';
 import CircularProgress from '../CircularProgress';
 
 type ImageFileItemProps = {

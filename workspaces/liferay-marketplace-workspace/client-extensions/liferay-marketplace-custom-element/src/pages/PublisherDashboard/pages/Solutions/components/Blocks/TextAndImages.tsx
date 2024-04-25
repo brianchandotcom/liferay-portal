@@ -4,7 +4,7 @@
  */
 
 import {DropzoneUpload} from '../../../../../../components/DropzoneUpload/DropzoneUpload';
-import {ACCEPT_FILE_TYPES} from '../../../../../StorefrontPage/CustomizeAppStorefrontPage';
+import {ACCEPT_FILE_TYPES} from '../../../Apps/AppCreationFlow/StorefrontPage/CustomizeAppStorefrontPage';
 import {MAX_SIZE_5MBS} from '../../constants';
 import TextBlock from './TextBlock';
 

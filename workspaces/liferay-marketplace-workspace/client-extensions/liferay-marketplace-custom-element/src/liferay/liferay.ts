@@ -5,7 +5,7 @@
 
 import {LiferayStorage} from '../core/Storage';
 
-export interface IOAuth2ClientAgentApplication {
+export type IOAuth2ClientAgentApplication = {
 	authorizeURL: string;
 	clientId: string;
 	encodedRedirectURL: string;
@@ -13,15 +13,15 @@ export interface IOAuth2ClientAgentApplication {
 	homePageURL: string;
 	redirectURIs: string[];
 	tokenURL: string;
-}
+};
 
-export interface IOAuth2Client {
+export type IOAuth2Client = {
 	FromUserAgentApplication: (
 		agentName: string
 	) => IOAuth2ClientAgentApplication;
-}
+};
 
-interface ILiferay {
+type ILiferay = {
 	CommerceContext: {
 		account?: {
 			accountId: number | string | null;
@@ -65,7 +65,8 @@ interface ILiferay {
 	detach: Function;
 	fire: (event: string, data: unknown) => null;
 	on: Function;
-}
+};
+
 declare global {
 	interface Window {
 		Liferay: ILiferay;

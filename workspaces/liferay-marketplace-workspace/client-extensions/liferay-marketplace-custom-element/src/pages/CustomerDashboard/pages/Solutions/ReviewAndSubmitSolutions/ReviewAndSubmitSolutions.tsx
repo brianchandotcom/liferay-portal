@@ -6,8 +6,8 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import {Section} from '../../../../../components/Section/Section';
-import {CardSectionsBody} from '../../../../ReviewAndSubmitAppPage/CardSectionsBody';
-import {App} from '../../../../ReviewAndSubmitAppPage/ReviewAndSubmitAppPageUtil';
+import {CardSectionsBody} from '../../../../PublisherDashboard/pages/Apps/AppCreationFlow/ReviewAndSubmitAppPage/CardSectionsBody';
+import {App} from '../../../../PublisherDashboard/pages/Apps/AppCreationFlow/ReviewAndSubmitAppPage/ReviewAndSubmitAppPageUtil';
 import {Solution} from './SolutionsDetails';
 
 type ReviewAndSubmitSolutions = {

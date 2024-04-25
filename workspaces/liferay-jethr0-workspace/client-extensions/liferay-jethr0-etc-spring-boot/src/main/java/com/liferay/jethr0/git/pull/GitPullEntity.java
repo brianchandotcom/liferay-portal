@@ -6,6 +6,7 @@
 package com.liferay.jethr0.git.pull;
 
 import com.liferay.jethr0.entity.Entity;
+import com.liferay.jethr0.git.branch.GitBranchEntity;
 
 import java.net.URL;
 
@@ -14,7 +15,19 @@ import java.net.URL;
  */
 public interface GitPullEntity extends Entity {
 
+	public GitBranchEntity getBaseGitBranchEntity();
+
+	public long getBaseGitBranchEntityId();
+
+	public GitBranchEntity getHeadGitBranchEntity();
+
+	public long getHeadGitBranchEntityId();
+
 	public URL getURL();
+
+	public void setBaseGitBranchEntity(GitBranchEntity baseGitBranchEntity);
+
+	public void setHeadGitBranchEntity(GitBranchEntity headGitBranchEntity);
 
 	public void setURL(URL url);
 

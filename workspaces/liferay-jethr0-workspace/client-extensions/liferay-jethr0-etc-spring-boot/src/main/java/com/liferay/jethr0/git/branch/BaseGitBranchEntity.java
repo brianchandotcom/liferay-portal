@@ -8,6 +8,7 @@ package com.liferay.jethr0.git.branch;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.git.commit.GitCommitEntity;
+import com.liferay.jethr0.git.pull.GitPullEntity;
 import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.util.PropertiesUtil;
 import com.liferay.jethr0.util.StringUtil;
@@ -42,6 +43,16 @@ public abstract class BaseGitBranchEntity
 	}
 
 	@Override
+	public void addGitPullEntities(Set<GitPullEntity> gitPullEntities) {
+		addRelatedEntities(gitPullEntities);
+	}
+
+	@Override
+	public void addGitPullEntity(GitPullEntity gitPullEntity) {
+		addRelatedEntity(gitPullEntity);
+	}
+
+	@Override
 	public void addRoutineEntities(Set<RoutineEntity> routineEntities) {
 		addRelatedEntities(routineEntities);
 	}
@@ -63,6 +74,11 @@ public abstract class BaseGitBranchEntity
 	@Override
 	public Set<GitCommitEntity> getGitCommitEntities() {
 		return getRelatedEntities(GitCommitEntity.class);
+	}
+
+	@Override
+	public Set<GitPullEntity> getGitPullEntities() {
+		return getRelatedEntities(GitPullEntity.class);
 	}
 
 	@Override
@@ -158,6 +174,16 @@ public abstract class BaseGitBranchEntity
 	@Override
 	public void removeGitCommitEntity(GitCommitEntity gitCommitEntity) {
 		removeRelatedEntity(gitCommitEntity);
+	}
+
+	@Override
+	public void removeGitPullEntities(Set<GitPullEntity> gitPullEntities) {
+		removeRelatedEntities(gitPullEntities);
+	}
+
+	@Override
+	public void removeGitPullEntity(GitPullEntity gitPullEntity) {
+		removeRelatedEntity(gitPullEntity);
 	}
 
 	@Override

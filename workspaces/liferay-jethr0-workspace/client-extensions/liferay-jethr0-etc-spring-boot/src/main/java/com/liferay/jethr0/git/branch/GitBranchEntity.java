@@ -8,6 +8,7 @@ package com.liferay.jethr0.git.branch;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.git.commit.GitCommitEntity;
+import com.liferay.jethr0.git.pull.GitPullEntity;
 import com.liferay.jethr0.routine.RoutineEntity;
 
 import java.io.IOException;
@@ -30,6 +31,10 @@ public interface GitBranchEntity extends Entity {
 
 	public void addGitCommitEntity(GitCommitEntity gitCommitEntity);
 
+	public void addGitPullEntities(Set<GitPullEntity> gitPullEntities);
+
+	public void addGitPullEntity(GitPullEntity gitPullEntity);
+
 	public void addRoutineEntities(Set<RoutineEntity> routineEntities);
 
 	public void addRoutineEntity(RoutineEntity routineEntity);
@@ -37,6 +42,8 @@ public interface GitBranchEntity extends Entity {
 	public String getFileContent(String filePath);
 
 	public Set<GitCommitEntity> getGitCommitEntities();
+
+	public Set<GitPullEntity> getGitPullEntities();
 
 	public String getLatestSHA();
 
@@ -60,6 +67,10 @@ public interface GitBranchEntity extends Entity {
 	public void removeGitCommitEntities(Set<GitCommitEntity> gitCommitEntities);
 
 	public void removeGitCommitEntity(GitCommitEntity gitCommitEntity);
+
+	public void removeGitPullEntities(Set<GitPullEntity> gitPullEntities);
+
+	public void removeGitPullEntity(GitPullEntity gitPullEntity);
 
 	public void removeRoutineEntities(Set<RoutineEntity> routineEntities);
 

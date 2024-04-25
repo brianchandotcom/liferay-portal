@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -13,9 +13,12 @@ import com.liferay.jethr0.event.github.ref.GitHubRef;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.branch.UpstreamGitBranchEntity;
 import com.liferay.jethr0.git.commit.GitCommitEntity;
+import com.liferay.jethr0.git.dalo.BaseGitBranchToGitPullsEntityRelationshipDALO;
 import com.liferay.jethr0.git.dalo.GitBranchEntityDALO;
 import com.liferay.jethr0.git.dalo.GitBranchToGitCommitsEntityRelationshipDALO;
 import com.liferay.jethr0.git.dalo.GitBranchToRoutinesEntityRelationshipDALO;
+import com.liferay.jethr0.git.dalo.HeadGitBranchToGitPullsEntityRelationshipDALO;
+import com.liferay.jethr0.git.pull.GitPullEntity;
 import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
@@ -116,6 +119,14 @@ public class GitBranchEntityRepository
 		addAll(gitBranchEntities);
 	}
 
+	public void relateBaseGitBranchToGitPull(
+		GitBranchEntity gitBranchEntity, GitPullEntity gitPullEntity) {
+
+		gitBranchEntity.addGitPullEntity(gitPullEntity);
+
+		gitPullEntity.setBaseGitBranchEntity(gitBranchEntity);
+	}
+
 	public void relateGitBranchToGitCommit(
 		GitBranchEntity gitBranchEntity, GitCommitEntity gitCommitEntity) {
 
@@ -130,6 +141,14 @@ public class GitBranchEntityRepository
 		gitBranchEntity.addRoutineEntity(routineEntity);
 
 		routineEntity.setGitBranchEntity(gitBranchEntity);
+	}
+
+	public void relateHeadGitBranchToGitPull(
+		GitBranchEntity gitBranchEntity, GitPullEntity gitPullEntity) {
+
+		gitBranchEntity.addGitPullEntity(gitPullEntity);
+
+		gitPullEntity.setHeadGitBranchEntity(gitBranchEntity);
 	}
 
 	@Scheduled(cron = "${liferay.jethr0.git.branch.archive.cron}")
@@ -171,6 +190,12 @@ public class GitBranchEntityRepository
 		_gitCommitEntityRepository = gitCommitEntityRepository;
 	}
 
+	public void setGitPullEntityRepository(
+		GitPullEntityRepository gitPullEntityRepository) {
+
+		_gitPullEntityRepository = gitPullEntityRepository;
+	}
+
 	public void setRoutineEntityRepository(
 		RoutineEntityRepository routineEntityRepository) {
 
@@ -181,19 +206,28 @@ public class GitBranchEntityRepository
 	protected GitBranchEntity updateRelationshipsFromDALO(
 		GitBranchEntity gitBranchEntity) {
 
+		gitBranchEntity = _updateBaseGitBranchToGitPullRelationshipsFromDALO(
+			gitBranchEntity);
 		gitBranchEntity = _updateGitBranchToGitCommitRelationshipsFromDALO(
 			gitBranchEntity);
+		gitBranchEntity = _updateGitBranchToRoutineRelationshipsFromDALO(
+			gitBranchEntity);
 
-		return _updateGitBranchToRoutineRelationshipsFromDALO(gitBranchEntity);
+		return _updateHeadGitBranchToGitPullRelationshipsFromDALO(
+			gitBranchEntity);
 	}
 
 	@Override
 	protected GitBranchEntity updateRelationshipsToDALO(
 		GitBranchEntity gitBranchEntity) {
 
+		_baseGitBranchToGitPullsEntityRelationshipDALO.updateChildEntities(
+			gitBranchEntity);
 		_gitBranchToGitCommitsEntityRelationshipDALO.updateChildEntities(
 			gitBranchEntity);
 		_gitBranchToRoutinesEntityRelationshipDALO.updateChildEntities(
+			gitBranchEntity);
+		_headGitBranchToGitPullsEntityRelationshipDALO.updateChildEntities(
 			gitBranchEntity);
 
 		return gitBranchEntity;
@@ -236,6 +270,20 @@ public class GitBranchEntityRepository
 			24;
 	}
 
+	private GitBranchEntity _updateBaseGitBranchToGitPullRelationshipsFromDALO(
+		GitBranchEntity parentGitBranchEntity) {
+
+		return updateParentToChildRelationshipsFromDALO(
+			parentGitBranchEntity,
+			_baseGitBranchToGitPullsEntityRelationshipDALO,
+			_gitPullEntityRepository,
+			(gitBranchEntity, gitPullEntity) -> relateBaseGitBranchToGitPull(
+				gitBranchEntity, gitPullEntity),
+			gitBranchEntity -> gitBranchEntity.getGitPullEntities(),
+			(gitBranchEntity, gitCommitEntity) ->
+				gitBranchEntity.removeGitPullEntity(gitCommitEntity));
+	}
+
 	private GitBranchEntity _updateGitBranchToGitCommitRelationshipsFromDALO(
 		GitBranchEntity parentGitBranchEntity) {
 
@@ -262,8 +310,26 @@ public class GitBranchEntityRepository
 				gitBranchEntity.removeRoutineEntity(routineEntity));
 	}
 
+	private GitBranchEntity _updateHeadGitBranchToGitPullRelationshipsFromDALO(
+		GitBranchEntity parentGitBranchEntity) {
+
+		return updateParentToChildRelationshipsFromDALO(
+			parentGitBranchEntity,
+			_headGitBranchToGitPullsEntityRelationshipDALO,
+			_gitPullEntityRepository,
+			(gitBranchEntity, gitPullEntity) -> relateHeadGitBranchToGitPull(
+				gitBranchEntity, gitPullEntity),
+			gitBranchEntity -> gitBranchEntity.getGitPullEntities(),
+			(gitBranchEntity, gitCommitEntity) ->
+				gitBranchEntity.removeGitPullEntity(gitCommitEntity));
+	}
+
 	private static final Log _log = LogFactory.getLog(
 		GitBranchEntityRepository.class);
+
+	@Autowired
+	private BaseGitBranchToGitPullsEntityRelationshipDALO
+		_baseGitBranchToGitPullsEntityRelationshipDALO;
 
 	@Autowired
 	private GitBranchEntityDALO _gitBranchEntityDALO;
@@ -286,6 +352,12 @@ public class GitBranchEntityRepository
 
 	@Value("${liferay.jethr0.github.upstream.branch.urls}")
 	private String _gitHubUpstreamBranchURLs;
+
+	private GitPullEntityRepository _gitPullEntityRepository;
+
+	@Autowired
+	private HeadGitBranchToGitPullsEntityRelationshipDALO
+		_headGitBranchToGitPullsEntityRelationshipDALO;
 
 	private RoutineEntityRepository _routineEntityRepository;
 

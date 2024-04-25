@@ -202,8 +202,6 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 										).put(
 											"friendlyURLSeparatorCompanyConfigurationURL", blogsEditEntryDisplayContext.getFriendlyURLSeparatorCompanyConfigurationURL()
 										).put(
-											"id", liferayPortletResponse.getNamespace() + "friendly_url_category_selector"
-										).put(
 											"inputAddon", StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping()) + StringPool.SLASH
 										).put(
 											"selectCategoryURL", blogsEditEntryDisplayContext.getAssetCategorySelectorURL()

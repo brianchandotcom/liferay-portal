@@ -120,9 +120,7 @@ const DocumentAndMedia: React.FC<{
 							assetType='document'
 							disabled={dataSourceStates.empty}
 							type={CSVType.Individual}
-							typeLang={Liferay.Language.get(
-								'documents-and-media'
-							)}
+							typeLang={Liferay.Language.get('known-individuals')}
 						/>
 					</div>
 				</BasePage.SubHeader>

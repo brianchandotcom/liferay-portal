@@ -118,7 +118,7 @@ const Blog: React.FC<{
 							assetType='blog'
 							disabled={dataSourceStates.empty}
 							type={CSVType.Individual}
-							typeLang={Liferay.Language.get('blogs')}
+							typeLang={Liferay.Language.get('known-individuals')}
 						/>
 					</div>
 				</BasePage.SubHeader>

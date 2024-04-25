@@ -6,6 +6,7 @@
 package com.liferay.jethr0.routine;
 
 import com.liferay.jethr0.entity.BaseEntity;
+import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -37,6 +38,16 @@ public abstract class BaseRoutineEntity
 	@Override
 	public void addJobEntity(JobEntity jobEntity) {
 		addJobEntities(Collections.singleton(jobEntity));
+	}
+
+	@Override
+	public GitBranchEntity getGitBranchEntity() {
+		return _gitBranchEntity;
+	}
+
+	@Override
+	public long getGitBranchEntityId() {
+		return _gitBranchEntityId;
 	}
 
 	@Override
@@ -87,6 +98,8 @@ public abstract class BaseRoutineEntity
 		).put(
 			"name", getName()
 		).put(
+			"r_gitBranchToRoutines_c_gitBranchId", _gitBranchEntityId
+		).put(
 			"type", type.getJSONObject()
 		);
 
@@ -114,6 +127,18 @@ public abstract class BaseRoutineEntity
 	}
 
 	@Override
+	public void setGitBranchEntity(GitBranchEntity gitBranchEntity) {
+		_gitBranchEntity = gitBranchEntity;
+
+		if (_gitBranchEntity != null) {
+			_gitBranchEntityId = _gitBranchEntity.getId();
+		}
+		else {
+			_gitBranchEntityId = 0;
+		}
+	}
+
+	@Override
 	public void setJobName(String jobName) {
 		_jobName = jobName;
 	}
@@ -137,6 +162,8 @@ public abstract class BaseRoutineEntity
 	public void setJSONObject(JSONObject jsonObject) {
 		super.setJSONObject(jsonObject);
 
+		_gitBranchEntityId = jsonObject.optLong(
+			"r_gitBranchToRoutines_c_gitBranchId");
 		_name = jsonObject.getString("name");
 		_jobName = jsonObject.getString("jobName");
 		_jobParameters = new HashMap<>();
@@ -209,6 +236,8 @@ public abstract class BaseRoutineEntity
 
 	private static final Log _log = LogFactory.getLog(BaseRoutineEntity.class);
 
+	private GitBranchEntity _gitBranchEntity;
+	private long _gitBranchEntityId;
 	private final Set<JobEntity> _jobEntities = new HashSet<>();
 	private String _jobName;
 	private Map<String, String> _jobParameters;

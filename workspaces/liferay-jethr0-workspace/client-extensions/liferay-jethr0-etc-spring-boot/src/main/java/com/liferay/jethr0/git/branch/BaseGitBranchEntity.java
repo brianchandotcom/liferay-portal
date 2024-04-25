@@ -8,6 +8,7 @@ package com.liferay.jethr0.git.branch;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.git.commit.GitCommitEntity;
+import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.util.PropertiesUtil;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -38,6 +39,16 @@ public abstract class BaseGitBranchEntity
 	@Override
 	public void addGitCommitEntity(GitCommitEntity gitCommitEntity) {
 		addRelatedEntity(gitCommitEntity);
+	}
+
+	@Override
+	public void addRoutineEntities(Set<RoutineEntity> routineEntities) {
+		addRelatedEntities(routineEntities);
+	}
+
+	@Override
+	public void addRoutineEntity(RoutineEntity routineEntity) {
+		addRelatedEntity(routineEntity);
 	}
 
 	@Override
@@ -107,6 +118,11 @@ public abstract class BaseGitBranchEntity
 	}
 
 	@Override
+	public Set<RoutineEntity> getRoutineEntities() {
+		return getRelatedEntities(RoutineEntity.class);
+	}
+
+	@Override
 	public String getShortLatestSHA() {
 		String branchSHA = getLatestSHA();
 
@@ -142,6 +158,16 @@ public abstract class BaseGitBranchEntity
 	@Override
 	public void removeGitCommitEntity(GitCommitEntity gitCommitEntity) {
 		removeRelatedEntity(gitCommitEntity);
+	}
+
+	@Override
+	public void removeRoutineEntities(Set<RoutineEntity> routineEntities) {
+		removeRelatedEntities(routineEntities);
+	}
+
+	@Override
+	public void removeRoutineEntity(RoutineEntity routineEntity) {
+		removeRelatedEntity(routineEntity);
 	}
 
 	@Override

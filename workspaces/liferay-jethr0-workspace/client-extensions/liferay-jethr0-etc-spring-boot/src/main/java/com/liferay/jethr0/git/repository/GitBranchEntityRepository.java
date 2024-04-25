@@ -15,6 +15,9 @@ import com.liferay.jethr0.git.branch.UpstreamGitBranchEntity;
 import com.liferay.jethr0.git.commit.GitCommitEntity;
 import com.liferay.jethr0.git.dalo.GitBranchEntityDALO;
 import com.liferay.jethr0.git.dalo.GitBranchToGitCommitsEntityRelationshipDALO;
+import com.liferay.jethr0.git.dalo.GitBranchToRoutinesEntityRelationshipDALO;
+import com.liferay.jethr0.routine.RoutineEntity;
+import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -121,6 +124,14 @@ public class GitBranchEntityRepository
 		gitCommitEntity.setGitBranchEntity(gitBranchEntity);
 	}
 
+	public void relateGitBranchToRoutine(
+		GitBranchEntity gitBranchEntity, RoutineEntity routineEntity) {
+
+		gitBranchEntity.addRoutineEntity(routineEntity);
+
+		routineEntity.setGitBranchEntity(gitBranchEntity);
+	}
+
 	@Scheduled(cron = "${liferay.jethr0.git.branch.archive.cron}")
 	public void scheduledArchive() {
 		Date keepDate = new Date(
@@ -160,12 +171,20 @@ public class GitBranchEntityRepository
 		_gitCommitEntityRepository = gitCommitEntityRepository;
 	}
 
+	public void setRoutineEntityRepository(
+		RoutineEntityRepository routineEntityRepository) {
+
+		_routineEntityRepository = routineEntityRepository;
+	}
+
 	@Override
 	protected GitBranchEntity updateRelationshipsFromDALO(
 		GitBranchEntity gitBranchEntity) {
 
-		return _updateGitBranchToGitCommitRelationshipsFromDALO(
+		gitBranchEntity = _updateGitBranchToGitCommitRelationshipsFromDALO(
 			gitBranchEntity);
+
+		return _updateGitBranchToRoutineRelationshipsFromDALO(gitBranchEntity);
 	}
 
 	@Override
@@ -173,6 +192,8 @@ public class GitBranchEntityRepository
 		GitBranchEntity gitBranchEntity) {
 
 		_gitBranchToGitCommitsEntityRelationshipDALO.updateChildEntities(
+			gitBranchEntity);
+		_gitBranchToRoutinesEntityRelationshipDALO.updateChildEntities(
 			gitBranchEntity);
 
 		return gitBranchEntity;
@@ -228,6 +249,19 @@ public class GitBranchEntityRepository
 				gitBranchEntity.removeGitCommitEntity(gitCommitEntity));
 	}
 
+	private GitBranchEntity _updateGitBranchToRoutineRelationshipsFromDALO(
+		GitBranchEntity parentGitBranchEntity) {
+
+		return updateParentToChildRelationshipsFromDALO(
+			parentGitBranchEntity, _gitBranchToRoutinesEntityRelationshipDALO,
+			_routineEntityRepository,
+			(gitBranchEntity, routineEntity) -> relateGitBranchToRoutine(
+				gitBranchEntity, routineEntity),
+			gitBranchEntity -> gitBranchEntity.getRoutineEntities(),
+			(gitBranchEntity, routineEntity) ->
+				gitBranchEntity.removeRoutineEntity(routineEntity));
+	}
+
 	private static final Log _log = LogFactory.getLog(
 		GitBranchEntityRepository.class);
 
@@ -237,6 +271,10 @@ public class GitBranchEntityRepository
 	@Autowired
 	private GitBranchToGitCommitsEntityRelationshipDALO
 		_gitBranchToGitCommitsEntityRelationshipDALO;
+
+	@Autowired
+	private GitBranchToRoutinesEntityRelationshipDALO
+		_gitBranchToRoutinesEntityRelationshipDALO;
 
 	private GitCommitEntityRepository _gitCommitEntityRepository;
 
@@ -248,6 +286,8 @@ public class GitBranchEntityRepository
 
 	@Value("${liferay.jethr0.github.upstream.branch.urls}")
 	private String _gitHubUpstreamBranchURLs;
+
+	private RoutineEntityRepository _routineEntityRepository;
 
 	@Value("${JETHR0_SENDER_BRANCH_ARCHIVE_AGE_IN_DAYS:1}")
 	private String _senderGitBranchArchiveAgeInDays;

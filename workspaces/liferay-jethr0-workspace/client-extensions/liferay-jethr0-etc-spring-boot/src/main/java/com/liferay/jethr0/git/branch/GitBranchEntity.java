@@ -8,6 +8,7 @@ package com.liferay.jethr0.git.branch;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.git.commit.GitCommitEntity;
+import com.liferay.jethr0.routine.RoutineEntity;
 
 import java.io.IOException;
 
@@ -29,6 +30,10 @@ public interface GitBranchEntity extends Entity {
 
 	public void addGitCommitEntity(GitCommitEntity gitCommitEntity);
 
+	public void addRoutineEntities(Set<RoutineEntity> routineEntities);
+
+	public void addRoutineEntity(RoutineEntity routineEntity);
+
 	public String getFileContent(String filePath);
 
 	public Set<GitCommitEntity> getGitCommitEntities();
@@ -42,6 +47,8 @@ public interface GitBranchEntity extends Entity {
 
 	public String getRepositoryName();
 
+	public Set<RoutineEntity> getRoutineEntities();
+
 	public String getShortLatestSHA();
 
 	public Type getType();
@@ -53,6 +60,10 @@ public interface GitBranchEntity extends Entity {
 	public void removeGitCommitEntities(Set<GitCommitEntity> gitCommitEntities);
 
 	public void removeGitCommitEntity(GitCommitEntity gitCommitEntity);
+
+	public void removeRoutineEntities(Set<RoutineEntity> routineEntities);
+
+	public void removeRoutineEntity(RoutineEntity routineEntity);
 
 	public void setGitHubClient(GitHubClient gitHubClient);
 

@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import {act, cleanup, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -80,52 +80,52 @@ describe('', () => {
 	});
 
 	it('renders', () => {
-		const {getByText} = renderApp({
+		renderApp({
 			initialScript: 'thisistheinitialscript',
 		});
 
-		expect(getByText('thisistheinitialscript')).toBeInTheDocument();
+		expect(screen.getByText('thisistheinitialscript')).toBeInTheDocument();
 	});
 
 	it('includes the variable in the script when clicked', () => {
-		const {getByText} = renderApp();
+		renderApp();
 
-		const variableButton = getByText('variableTemplate1');
+		const variableButton = screen.getByText('variableTemplate1');
 
 		userEvent.click(variableButton);
 
-		expect(getByText('this is a variable 1')).toBeInTheDocument();
+		expect(screen.getByText('this is a variable 1')).toBeInTheDocument();
 	});
 
 	it('shows a popover with the tooltip when the preview icon is hovered', () => {
-		const {getByText} = renderApp();
+		renderApp();
 
-		const variableButton = getByText('variableTemplate1');
+		const variableButton = screen.getByText('variableTemplate1');
 
 		fireEvent.mouseEnter(variableButton.querySelector('.preview-icon'));
 
-		expect(getByText('this is a tooltip 1')).toBeInTheDocument();
+		expect(screen.getByText('this is a tooltip 1')).toBeInTheDocument();
 	});
 
 	it('filters variable groups when search', () => {
-		const {getByLabelText, queryByText} = renderApp();
+		renderApp();
 
-		const searchInput = getByLabelText('search');
+		const searchInput = screen.getByLabelText('search');
 
 		userEvent.type(searchInput, 'variableTemplate2');
 
-		expect(queryByText('variableTemplate2')).toBeInTheDocument();
-		expect(queryByText('variableTemplate1')).not.toBeInTheDocument();
+		expect(screen.queryByText('variableTemplate2')).toBeInTheDocument();
+		expect(screen.queryByText('variableTemplate1')).not.toBeInTheDocument();
 	});
 
 	it('no result when searching', () => {
-		const {getByLabelText, queryByText} = renderApp();
+		renderApp();
 
-		const searchInput = getByLabelText('search');
+		const searchInput = screen.getByLabelText('search');
 
 		userEvent.type(searchInput, 'anotherVariable');
 
-		expect(queryByText('no-results-found')).toBeInTheDocument();
+		expect(screen.queryByText('no-results-found')).toBeInTheDocument();
 	});
 
 	it('enables focus trap when clicking ctrl + m', () => {

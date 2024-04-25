@@ -12,7 +12,6 @@ import useAccounts from '../../hooks/data/useAccounts';
 import {Liferay} from '../../liferay/liferay';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 import {getAccountImage} from '../../utils/util';
-import {DashboardNavigationProps} from './DashboardNavigation';
 import Search from './Search';
 
 type AccountSearchDropdownProps = {
@@ -23,7 +22,7 @@ type AccountSearchDropdownProps = {
 };
 
 const DropdownItems: React.FC<{
-	accounts: DashboardNavigationProps['accountsSearch']['items'];
+	accounts: UserAccount[];
 }> = ({accounts = []}) => {
 	return (
 		<ClayDropDown.ItemList>

@@ -272,6 +272,7 @@ type DefaultProperties = {
 	eulaBaseURL: string;
 	featureFlags?: string[];
 	marketoFormId: string;
+	trialProductId: string;
 };
 
 interface CommerceAccount extends Omit<Account, 'description'> {

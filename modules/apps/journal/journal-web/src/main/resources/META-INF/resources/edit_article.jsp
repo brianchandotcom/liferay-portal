@@ -321,6 +321,10 @@ journalEditArticleDisplayContext.setViewAttributes();
 											type="editor"
 											xml="<%= (article != null) ? article.getDescriptionMapAsXML() : StringPool.BLANK %>"
 										/>
+
+										<p class="text-3 text-secondary" id="<portlet:namespace />descriptionNotTranslatableMessage" hidden>
+											<liferay-ui:message arguments="description" key="the-x-will-not-count-as-translatable-field" />
+										</p>
 									</div>
 
 									<c:if test="<%= !JournalUtil.isEditDefaultValues(article) %>">
@@ -361,6 +365,10 @@ journalEditArticleDisplayContext.setViewAttributes();
 												showHistory="<%= false %>"
 												showLabel="<%= false %>"
 											/>
+
+											<p class="text-3 text-secondary" id="<portlet:namespace />friendlyURLNotTranslatableMessage" hidden>
+												<liferay-ui:message arguments="friendly-url" key="the-x-will-not-count-as-translatable-field" />
+											</p>
 										</div>
 									</c:if>
 								</div>

@@ -38,6 +38,24 @@ export default function TranslationManager({
 				`[data-languageid="${languageId}"][data-value="${languageId}"]`
 			),
 		});
+
+		const descriptionMessage = document.getElementById(
+			`${namespace}descriptionNotTranslatableMessage`
+		);
+		const friendlyURLMessage = document.getElementById(
+			`${namespace}friendlyURLNotTranslatableMessage`
+		);
+
+		if (descriptionMessage && friendlyURLMessage) {
+			if (selectedLanguageId !== defaultLanguageId) {
+				descriptionMessage.hidden = false;
+				friendlyURLMessage.hidden = false;
+			}
+			else {
+				descriptionMessage.hidden = true;
+				friendlyURLMessage.hidden = true;
+			}
+		}
 	};
 
 	return (

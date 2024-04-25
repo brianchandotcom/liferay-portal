@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import {useControlledState} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useMemo} from 'react';
@@ -11,6 +13,7 @@ import {SelectField} from '../../../../../../app/components/fragment_configurati
 import {FORM_MAPPING_SOURCES} from '../../../../../../app/config/constants/formMappingSources';
 import {LAYOUT_TYPES} from '../../../../../../app/config/constants/layoutTypes';
 import {config} from '../../../../../../app/config/index';
+import {formIsMapped} from '../../../../../../app/utils/formIsMapped';
 import {openInfoFieldSelector} from '../../../../../../common/openInfoFieldSelector';
 
 export default function FormMappingOptions({
@@ -88,6 +91,20 @@ export default function FormMappingOptions({
 				}}
 				value={classNameId}
 			/>
+
+			{Liferay.FeatureFlags['LPD-20213'] && formIsMapped(item) ? (
+				<ClayButton
+					displayType="secondary"
+					onClick={() => onSelect(classNameId, classTypeId)}
+					size="xs"
+				>
+					<span className="inline-item inline-item-before">
+						<ClayIcon symbol="forms" />
+					</span>
+
+					{Liferay.Language.get('manage-form-fields')}
+				</ClayButton>
+			) : null}
 
 			{selectedType?.subtypes?.length > 0 && (
 				<SelectField

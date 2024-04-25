@@ -788,98 +788,59 @@ export default function ChangeTrackingRenderView({
 			});
 		}
 
-		if (state.renderData.divider) {
-			dropdownItems.push(state.renderData.divider);
+		const workflowActionsDropdownItems = [];
+
+		state.renderData.workflowActions?.forEach((workflowAction) => {
+			workflowActionsDropdownItems.push({
+				label: workflowAction.label,
+				onClick: () =>
+					Liferay.Util.openModal({
+						center: true,
+						customEvents: [
+							{
+								name: `${namespace}workflowTaskUpdated`,
+								onEvent() {
+									const iframe = document.querySelector(
+										'.liferay-modal iframe'
+									);
+
+									iframe.contentWindow.location.reload();
+
+									Liferay.fire('closeModal');
+
+									openToast({
+										message: Liferay.Language.get(
+											'your-request-completed-successfully'
+										),
+										type: 'success',
+									});
+								},
+							},
+						],
+						height: workflowAction.modalHeight,
+						size: 'lg',
+						title: workflowAction.label,
+						url: workflowAction.href,
+					}),
+				symbolLeft: 'workflow',
+			});
+		});
+
+		if (workflowActionsDropdownItems.length) {
 			dropdownItems = [
 				{
 					items: dropdownItems,
 					label: Liferay.Language.get('publication'),
 					type: 'group',
 				},
+				{type: 'divider'},
 				{
-					items: [],
+					items: workflowActionsDropdownItems,
 					label: Liferay.Language.get('workflow'),
 					type: 'group',
 				},
+				{type: 'divider'},
 			];
-		}
-
-		if (state.renderData.workflowAssignToMe) {
-			dropdownItems[1].items.push({
-				label: Liferay.Language.get('assign-to-me'),
-				onClick: () =>
-					Liferay.Util.openModal({
-						center: true,
-						customEvents: [
-							{
-								name: `${namespace}workflowAssigned`,
-								onEvent() {
-									const iframe = document.querySelector(
-										'.liferay-modal iframe'
-									);
-
-									iframe.contentWindow.location.reload();
-
-									Liferay.fire('closeModal');
-
-									openToast({
-										message: Liferay.Language.get(
-											'your-request-completed-successfully'
-										),
-										type: 'success',
-									});
-								},
-							},
-						],
-						height: '276px',
-						id: `${namespace}workflowDialog`,
-						size: 'lg',
-						title: Liferay.Language.get('assign-to-me'),
-						url: state.renderData.workflowAssignToMe.href,
-					}),
-				symbolLeft: 'workflow',
-			});
-		}
-
-		if (state.renderData.workflowAssignTo) {
-			dropdownItems[1].items.push({
-				label: Liferay.Language.get('assign-to-...'),
-				onClick: () =>
-					Liferay.Util.openModal({
-						center: true,
-						customEvents: [
-							{
-								name: `${namespace}workflowAssigned`,
-								onEvent() {
-									const iframe = document.querySelector(
-										'.liferay-modal iframe'
-									);
-
-									iframe.contentWindow.location.reload();
-
-									Liferay.fire('closeModal');
-
-									openToast({
-										message: Liferay.Language.get(
-											'your-request-completed-successfully'
-										),
-										type: 'success',
-									});
-								},
-							},
-						],
-						height: '356px',
-						id: `${namespace}workflowDialog`,
-						size: 'lg',
-						title: Liferay.Language.get('assign-to-...'),
-						url: state.renderData.workflowAssignTo.href,
-					}),
-				symbolLeft: 'workflow',
-			});
-		}
-
-		if (state.renderData.divider) {
-			dropdownItems[1].items.push(state.renderData.divider);
 		}
 
 		if (discardURL !== null) {

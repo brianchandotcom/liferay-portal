@@ -26,7 +26,6 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 	formGroupClassName = '',
 	friendlyUrlInfo,
 	friendlyURLSeparatorCompanyConfigurationURL,
-	id,
 	inputAddon,
 	isValid = true,
 	label = Liferay.Language.get('add-categories-to-url'),
@@ -172,7 +171,6 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 				className={classNames(formGroupClassName, {
 					'has-error': !isValid,
 				})}
-				id={id}
 			>
 				{useFallbackInput && (
 					<input
@@ -290,7 +288,6 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 
 AssetVocabulariesCategoriesFriendlyUrlSelector.propTypes = {
 	formGroupClassName: PropTypes.string,
-	id: PropTypes.string.isRequired,
 	inputAddon: PropTypes.string.isRequired,
 	isValid: PropTypes.bool,
 	label: PropTypes.string,

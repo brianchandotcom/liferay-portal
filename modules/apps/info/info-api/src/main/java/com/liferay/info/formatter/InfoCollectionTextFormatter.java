@@ -10,7 +10,10 @@ import java.util.Locale;
 
 /**
  * @author Jorge Ferrer
+ *
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public interface InfoCollectionTextFormatter<T> {
 
 	public String format(Collection<T> collection, Locale locale);

@@ -9,6 +9,12 @@ import React, {LegacyRef, useEffect, useState} from 'react';
 import {TranslationManagerProps} from './Types';
 import useTranslationProgress from './useTranslationProgress';
 
+const META_FIELD_NAMES = {
+	description: 'descriptionMapAsXML',
+	friendlyURL: 'friendlyURL',
+	title: 'titleMapAsXML',
+};
+
 const Trigger = React.forwardRef(
 	({children, ...otherProps}, ref: LegacyRef<HTMLButtonElement>) => (
 		<button
@@ -49,76 +55,109 @@ export default function TranslationFilter({
 	const handleSelection = (option: React.Key) => {
 		Liferay.fire('inputLocalized:translationFilterChange', {option});
 
-		const metadataWrapper = document.getElementById(namespace + 'metadata');
 		const contentWrapper = document.getElementById(namespace + 'content');
+		const descriptionNode = document.getElementById(
+			namespace + META_FIELD_NAMES.description + 'Wrapper'
+		);
 		const emptyPlaceholder = document.getElementById('emptyPlaceHolder');
+		const friendlyURLNode = document.getElementById(
+			namespace + META_FIELD_NAMES.friendlyURL + 'Wrapper'
+		);
+		const metadataWrapper = document.getElementById(namespace + 'metadata');
+		const titleField = translations.find(
+			(item) => item.fieldName === META_FIELD_NAMES.title
+		);
 
-		translations.map((field) => {
-			if (Object.keys(initialFields).includes(field.fieldName)) {
-				const fieldNode = document.getElementById(
-					namespace + field.fieldName + 'Wrapper'
-				);
-				if (
-					fieldNode &&
-					metadataWrapper &&
-					contentWrapper &&
-					emptyPlaceholder
-				) {
-					switch (option) {
-						case 'translated':
-							if (!field.languages.includes(selectedLanguageId)) {
-								fieldNode.hidden = true;
-							}
-							else {
-								fieldNode.hidden = false;
-							}
-							if (
-								!translationProgress?.translatedItems[
-									selectedLanguageId
-								]
-							) {
-								metadataWrapper.hidden = true;
-								contentWrapper.hidden = true;
-								emptyPlaceholder.hidden = false;
-							}
-							else {
-								metadataWrapper.hidden = false;
-								contentWrapper.hidden = false;
-								emptyPlaceholder.hidden = true;
-							}
-							break;
-						case 'untranslated':
-							if (field.languages.includes(selectedLanguageId)) {
-								fieldNode.hidden = true;
-							}
-							else {
-								fieldNode.hidden = false;
-							}
-							if (
-								translationProgress?.totalItems ===
-								translationProgress?.translatedItems[
-									selectedLanguageId
-								]
-							) {
-								metadataWrapper.hidden = true;
-								contentWrapper.hidden = true;
-								emptyPlaceholder.hidden = false;
-							}
-							else {
-								metadataWrapper.hidden = false;
-								contentWrapper.hidden = false;
-								emptyPlaceholder.hidden = true;
-							}
-							break;
-						default:
-							fieldNode.hidden = false;
-							metadataWrapper.hidden = false;
+		if (
+			contentWrapper &&
+			descriptionNode &&
+			emptyPlaceholder &&
+			friendlyURLNode &&
+			metadataWrapper &&
+			titleField
+		) {
+			switch (option) {
+				case 'translated':
+					descriptionNode.hidden = true;
+					friendlyURLNode.hidden = true;
+
+					if (!titleField?.languages.includes(selectedLanguageId)) {
+						metadataWrapper.hidden = true;
+
+						if (
+							!translationProgress?.translatedItems[
+								selectedLanguageId
+							]
+						) {
+							contentWrapper.hidden = true;
+							emptyPlaceholder.hidden = false;
+						}
+						else {
 							contentWrapper.hidden = false;
 							emptyPlaceholder.hidden = true;
+						}
 					}
-				}
+					else {
+						emptyPlaceholder.hidden = true;
+						metadataWrapper.hidden = false;
+
+						if (
+							(translationProgress?.translatedItems[
+								selectedLanguageId
+							] ?? 0) > 1
+						) {
+							contentWrapper.hidden = false;
+						}
+						else {
+							contentWrapper.hidden = true;
+						}
+					}
+					break;
+				case 'untranslated':
+					descriptionNode.hidden = true;
+					friendlyURLNode.hidden = true;
+
+					if (titleField?.languages.includes(selectedLanguageId)) {
+						metadataWrapper.hidden = true;
+
+						if (
+							(translationProgress?.translatedItems[
+								selectedLanguageId
+							] ?? 0) > 1
+						) {
+							contentWrapper.hidden = true;
+							emptyPlaceholder.hidden = false;
+						}
+						else {
+							contentWrapper.hidden = false;
+							emptyPlaceholder.hidden = true;
+						}
+					}
+					else {
+						emptyPlaceholder.hidden = true;
+						metadataWrapper.hidden = false;
+
+						if (
+							!translationProgress?.translatedItems[
+								selectedLanguageId
+							]
+						) {
+							contentWrapper.hidden = false;
+						}
+						else {
+							contentWrapper.hidden = true;
+						}
+					}
+					break;
+				default:
+					contentWrapper.hidden = false;
+					descriptionNode.hidden = false;
+					friendlyURLNode.hidden = false;
+					metadataWrapper.hidden = false;
+					emptyPlaceholder.hidden = true;
 			}
-		});
+		}
+
 		setSelectedKey(option as string);
 	};
 

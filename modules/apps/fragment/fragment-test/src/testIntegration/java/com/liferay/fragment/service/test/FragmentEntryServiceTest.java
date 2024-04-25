@@ -18,6 +18,8 @@ import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.fragment.test.util.FragmentCompositionTestUtil;
 import com.liferay.fragment.test.util.FragmentEntryTestUtil;
 import com.liferay.fragment.test.util.FragmentTestUtil;
+import com.liferay.fragment.util.comparator.FragmentCompositionFragmentEntryModifiedDateComparator;
+import com.liferay.fragment.util.comparator.FragmentCompositionFragmentEntryNameComparator;
 import com.liferay.fragment.util.comparator.FragmentEntryCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentEntryNameComparator;
 import com.liferay.petra.string.StringPool;
@@ -43,6 +45,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -770,6 +773,138 @@ public class FragmentEntryServiceTest {
 					_fragmentCollection.getGroupId(),
 					_fragmentCollection.getFragmentCollectionId(), keyword,
 					WorkflowConstants.STATUS_APPROVED));
+	}
+
+	@Test
+	public void testGetFragmentCompositionsAndFragmentEntriesOrderByModifiedDate()
+		throws Exception {
+
+		FragmentComposition fragmentComposition1 =
+			FragmentCompositionTestUtil.addFragmentComposition(
+				_fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString());
+		FragmentComposition fragmentComposition2 =
+			FragmentCompositionTestUtil.addFragmentComposition(
+				_fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString());
+
+		FragmentEntry fragmentEntry1 = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+		FragmentEntry fragmentEntry2 = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			Arrays.asList(
+				fragmentComposition1, fragmentComposition2, fragmentEntry1,
+				fragmentEntry2),
+			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
+				_fragmentCollection.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(), null,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				new FragmentCompositionFragmentEntryModifiedDateComparator(
+					true)));
+		Assert.assertEquals(
+			Arrays.asList(
+				fragmentEntry2, fragmentEntry1, fragmentComposition2,
+				fragmentComposition1),
+			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
+				_fragmentCollection.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(), null,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				new FragmentCompositionFragmentEntryModifiedDateComparator(
+					false)));
+
+		fragmentEntry1 = _fragmentEntryService.updateFragmentEntry(
+			fragmentEntry1);
+
+		Assert.assertEquals(
+			Arrays.asList(
+				fragmentComposition1, fragmentComposition2, fragmentEntry2,
+				fragmentEntry1),
+			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
+				_fragmentCollection.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(), null,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				new FragmentCompositionFragmentEntryModifiedDateComparator(
+					true)));
+		Assert.assertEquals(
+			Arrays.asList(
+				fragmentEntry1, fragmentEntry2, fragmentComposition2,
+				fragmentComposition1),
+			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
+				_fragmentCollection.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(), null,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				new FragmentCompositionFragmentEntryModifiedDateComparator(
+					false)));
+	}
+
+	@Test
+	public void testGetFragmentCompositionsAndFragmentEntriesOrderByName()
+		throws Exception {
+
+		FragmentComposition fragmentComposition1 =
+			FragmentCompositionTestUtil.addFragmentComposition(
+				_fragmentCollection.getFragmentCollectionId(), "Heading");
+		FragmentComposition fragmentComposition2 =
+			FragmentCompositionTestUtil.addFragmentComposition(
+				_fragmentCollection.getFragmentCollectionId(), "Card");
+
+		FragmentEntry fragmentEntry1 = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(), "Button");
+		FragmentEntry fragmentEntry2 = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(), "Date");
+
+		Assert.assertEquals(
+			Arrays.asList(
+				fragmentEntry1, fragmentComposition2, fragmentEntry2,
+				fragmentComposition1),
+			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
+				_fragmentCollection.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(), null,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				new FragmentCompositionFragmentEntryNameComparator(true)));
+		Assert.assertEquals(
+			Arrays.asList(
+				fragmentComposition1, fragmentEntry2, fragmentComposition2,
+				fragmentEntry1),
+			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
+				_fragmentCollection.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(), null,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				new FragmentCompositionFragmentEntryNameComparator(false)));
+
+		fragmentEntry1 = _fragmentEntryService.updateFragmentEntry(
+			fragmentEntry1.getFragmentEntryId(), "Dropdown");
+
+		Assert.assertEquals(
+			Arrays.asList(
+				fragmentComposition2, fragmentEntry2, fragmentEntry1,
+				fragmentComposition1),
+			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
+				_fragmentCollection.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(), null,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				new FragmentCompositionFragmentEntryNameComparator(true)));
+		Assert.assertEquals(
+			Arrays.asList(
+				fragmentComposition1, fragmentEntry1, fragmentEntry2,
+				fragmentComposition2),
+			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
+				_fragmentCollection.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(), null,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				new FragmentCompositionFragmentEntryNameComparator(false)));
 	}
 
 	@Test

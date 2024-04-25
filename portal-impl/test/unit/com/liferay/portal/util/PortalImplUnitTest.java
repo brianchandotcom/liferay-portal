@@ -52,6 +52,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 import java.util.logging.Level;
 
 import javax.portlet.ActionRequest;
@@ -368,13 +369,49 @@ public class PortalImplUnitTest {
 	}
 
 	@Test
+	public void testGetLayoutSetFriendlyURLLayoutSetWithoutVirtualHost()
+		throws Exception {
+
+		_setUpPortalImpl(StringPool.BLANK);
+
+		_assertGetLayoutSetFriendlyURL(
+			"/web/testGroup", "http://othertest.com:8080", false,
+			new TreeMap<>());
+	}
+
+	@Test
+	public void testGetLayoutSetFriendlyURLPrivateLayoutSetWithoutVirtualHost()
+		throws Exception {
+
+		_setUpPortalImpl(StringPool.BLANK);
+
+		_assertGetLayoutSetFriendlyURL(
+			"/group/testGroup", "http://othertest.com:8080", true,
+			new TreeMap<>());
+	}
+
+	@Test
+	public void testGetLayoutSetFriendlyURLUserGroupLayoutSetWithoutVirtualHost()
+		throws Exception {
+
+		_setUpPortalImpl(StringPool.BLANK, true);
+
+		_assertGetLayoutSetFriendlyURL(
+			"/user/testGroup", "http://othertest.com:8080", true,
+			new TreeMap<>());
+	}
+
+	@Test
 	public void testGetLayoutSetFriendlyURLWhenLayoutSetMatchesWithDifferentVirtualHost()
 		throws Exception {
 
 		_setUpPortalImpl(StringPool.BLANK);
 
 		_assertGetLayoutSetFriendlyURL(
-			"/web/testGroup", "http://othertest.com:8080");
+			"/web/testGroup", "http://othertest.com:8080", false,
+			TreeMapBuilder.put(
+				"test.com", StringPool.BLANK
+			).build());
 	}
 
 	@Test
@@ -384,7 +421,10 @@ public class PortalImplUnitTest {
 		_setUpPortalImpl(StringPool.BLANK);
 
 		_assertGetLayoutSetFriendlyURL(
-			"http://test.com:8080", "http://test.com:8080");
+			"http://test.com:8080", "http://test.com:8080", false,
+			TreeMapBuilder.put(
+				"test.com", StringPool.BLANK
+			).build());
 	}
 
 	@Test
@@ -394,7 +434,11 @@ public class PortalImplUnitTest {
 		_setUpPortalImpl("myportal");
 
 		_assertGetLayoutSetFriendlyURL(
-			"/myportal/web/testGroup", "http://othertest.com:8080/myportal");
+			"/myportal/web/testGroup", "http://othertest.com:8080/myportal",
+			false,
+			TreeMapBuilder.put(
+				"test.com", StringPool.BLANK
+			).build());
 	}
 
 	@Test
@@ -404,7 +448,11 @@ public class PortalImplUnitTest {
 		_setUpPortalImpl("myportal");
 
 		_assertGetLayoutSetFriendlyURL(
-			"http://test.com:8080/myportal", "http://test.com:8080/myportal");
+			"http://test.com:8080/myportal", "http://test.com:8080/myportal",
+			false,
+			TreeMapBuilder.put(
+				"test.com", StringPool.BLANK
+			).build());
 	}
 
 	@Test
@@ -654,17 +702,16 @@ public class PortalImplUnitTest {
 	}
 
 	private void _assertGetLayoutSetFriendlyURL(
-			String expectedFriendlyURL, String portalURL)
+			String expectedFriendlyURL, String portalURL, boolean privateLayout,
+			TreeMap<String, String> virtualHostnames)
 		throws Exception {
 
 		LayoutSet layoutSet = new LayoutSetImpl();
 
-		layoutSet.setVirtualHostnames(
-			TreeMapBuilder.put(
-				"test.com", StringPool.BLANK
-			).build());
+		layoutSet.setGroupId(2000L);
 		layoutSet.setLayoutSetId(11L);
-		layoutSet.setPrivateLayout(false);
+		layoutSet.setPrivateLayout(privateLayout);
+		layoutSet.setVirtualHostnames(virtualHostnames);
 
 		Layout layout = new LayoutImpl();
 
@@ -804,7 +851,9 @@ public class PortalImplUnitTest {
 			"WEB_SERVER_FORWARDED_HOST_HEADER", _webServerForwardedHostHeader);
 	}
 
-	private void _setUpGroupLocalServiceUtil() throws Exception {
+	private void _setUpGroupLocalServiceUtil(boolean userGroup)
+		throws Exception {
+
 		Group group = Mockito.mock(Group.class);
 
 		Mockito.when(
@@ -815,7 +864,7 @@ public class PortalImplUnitTest {
 		Mockito.when(
 			group.isUser()
 		).thenReturn(
-			false
+			userGroup
 		);
 		Mockito.when(
 			group.getFriendlyURL()
@@ -839,7 +888,13 @@ public class PortalImplUnitTest {
 	}
 
 	private void _setUpPortalImpl(String contextPath) throws Exception {
-		_setUpGroupLocalServiceUtil();
+		_setUpPortalImpl(contextPath, false);
+	}
+
+	private void _setUpPortalImpl(String contextPath, boolean userGroup)
+		throws Exception {
+
+		_setUpGroupLocalServiceUtil(userGroup);
 		_setUpPortalContextLoaderListener(contextPath);
 
 		_portalImpl = new PortalImpl();

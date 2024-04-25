@@ -5009,16 +5009,6 @@ public class ObjectEntryResourceTest {
 		);
 	}
 
-	@Test
-	public void testGetObjectEntryWithObjectActions() throws Exception {
-		_testGetObjectEntryWithObjectActions(
-			_addObjectAction(_objectDefinition1), _objectDefinition1);
-
-		_testGetObjectEntryWithObjectActions(
-			_addObjectAction(_siteScopedObjectDefinition1),
-			_siteScopedObjectDefinition1);
-	}
-
 	@FeatureFlags("LPS-174455")
 	@Test
 	public void testGetObjectEntryWithAttachmentField() throws Exception {
@@ -5540,6 +5530,16 @@ public class ObjectEntryResourceTest {
 				Http.Method.GET
 			).toString(),
 			JSONCompareMode.LENIENT);
+	}
+
+	@Test
+	public void testGetObjectEntryWithObjectActions() throws Exception {
+		_testGetObjectEntryWithObjectActions(
+			_addObjectAction(_objectDefinition1), _objectDefinition1);
+
+		_testGetObjectEntryWithObjectActions(
+			_addObjectAction(_siteScopedObjectDefinition1),
+			_siteScopedObjectDefinition1);
 	}
 
 	@Test

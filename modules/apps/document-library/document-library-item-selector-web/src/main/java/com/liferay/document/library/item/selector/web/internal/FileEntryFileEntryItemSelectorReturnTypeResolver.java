@@ -11,6 +11,7 @@ import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -68,6 +69,8 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 				themeDisplay, fileEntry, "&imagePreview=1", false);
 		}
 
+		DLVideoRenderer dlVideoRenderer = _dlVideoRendererSnapshot.get();
+
 		return JSONUtil.put(
 			"classNameId", _portal.getClassNameId(FileEntry.class)
 		).put(
@@ -79,15 +82,16 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 		).put(
 			"html",
 			() -> {
-				if (ArrayUtil.contains(
-						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES,
-						fileEntry.getMimeType()) ||
+				if (((dlVideoRenderer != null) &&
+					 ArrayUtil.contains(
+						 PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES,
+						 fileEntry.getMimeType())) ||
 					Objects.equals(
 						ContentTypes.
 							APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML,
 						fileEntry.getMimeType())) {
 
-					return _dlVideoRenderer.renderHTML(
+					return dlVideoRenderer.renderHTML(
 						fileEntry.getFileVersion(), themeDisplay.getRequest());
 				}
 
@@ -106,11 +110,13 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 		).toString();
 	}
 
-	@Reference
-	private DLURLHelper _dlURLHelper;
+	private static final Snapshot<DLVideoRenderer> _dlVideoRendererSnapshot =
+		new Snapshot<>(
+			FileEntryFileEntryItemSelectorReturnTypeResolver.class,
+			DLVideoRenderer.class, null, true);
 
 	@Reference
-	private DLVideoRenderer _dlVideoRenderer;
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private Portal _portal;

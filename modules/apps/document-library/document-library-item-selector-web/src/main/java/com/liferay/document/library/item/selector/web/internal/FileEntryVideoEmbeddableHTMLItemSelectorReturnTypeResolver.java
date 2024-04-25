@@ -10,11 +10,11 @@ import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -43,16 +43,25 @@ public class FileEntryVideoEmbeddableHTMLItemSelectorReturnTypeResolver
 	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		String html = null;
+
+		DLVideoRenderer dlVideoRenderer = _dlVideoRendererSnapshot.get();
+
+		if (dlVideoRenderer != null) {
+			html = dlVideoRenderer.renderHTML(
+				fileEntry.getFileVersion(), themeDisplay.getRequest());
+		}
+
 		return JSONUtil.put(
-			"html",
-			_dlVideoRenderer.renderHTML(
-				fileEntry.getFileVersion(), themeDisplay.getRequest())
+			"html", html
 		).put(
 			"title", fileEntry.getTitle()
 		).toString();
 	}
 
-	@Reference
-	private DLVideoRenderer _dlVideoRenderer;
+	private static final Snapshot<DLVideoRenderer> _dlVideoRendererSnapshot =
+		new Snapshot<>(
+			FileEntryVideoEmbeddableHTMLItemSelectorReturnTypeResolver.class,
+			DLVideoRenderer.class, null, true);
 
 }

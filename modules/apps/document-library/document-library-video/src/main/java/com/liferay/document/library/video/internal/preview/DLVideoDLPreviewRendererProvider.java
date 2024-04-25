@@ -18,6 +18,7 @@ import com.liferay.document.library.preview.exception.DLPreviewSizeException;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.video.renderer.DLVideoRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 
@@ -68,6 +69,8 @@ public class DLVideoDLPreviewRendererProvider
 			return null;
 		}
 
+		DLVideoRenderer dlVideoRenderer = _dlVideoRendererSnapshot.get();
+
 		return (request, response) -> {
 			_checkForPreviewGenerationExceptions(fileVersion);
 
@@ -76,7 +79,7 @@ public class DLVideoDLPreviewRendererProvider
 
 			request.setAttribute(FileVersion.class.getName(), fileVersion);
 			request.setAttribute(
-				DLVideoRenderer.class.getName(), _dlVideoRenderer);
+				DLVideoRenderer.class.getName(), dlVideoRenderer);
 
 			requestDispatcher.include(request, response);
 		};
@@ -120,14 +123,16 @@ public class DLVideoDLPreviewRendererProvider
 		}
 	}
 
+	private static final Snapshot<DLVideoRenderer> _dlVideoRendererSnapshot =
+		new Snapshot<>(
+			DLVideoDLPreviewRendererProvider.class, DLVideoRenderer.class, null,
+			true);
+
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
 	@Reference(target = "(type=" + DLProcessorConstants.VIDEO_PROCESSOR + ")")
 	private DLProcessor _dlProcessor;
-
-	@Reference
-	private DLVideoRenderer _dlVideoRenderer;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.video)"

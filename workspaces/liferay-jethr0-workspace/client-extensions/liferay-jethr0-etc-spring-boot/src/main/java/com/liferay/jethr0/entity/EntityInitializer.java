@@ -53,6 +53,8 @@ public class EntityInitializer {
 
 		_gitUserEntityRepository.setGitBranchEntityRepository(
 			_gitBranchEntityRepository);
+		_gitUserEntityRepository.setGitPullEntityRepository(
+			_gitPullEntityRepository);
 
 		_jenkinsCohortEntityRepository.setJenkinsServerEntityRepository(
 			_jenkinsServerEntityRepository);

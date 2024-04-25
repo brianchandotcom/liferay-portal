@@ -73,7 +73,7 @@ public class LayoutPageTemplateCollectionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -81,6 +81,8 @@ public class LayoutPageTemplateCollectionCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", layoutPageTemplateCollectionId=");
 		sb.append(layoutPageTemplateCollectionId);
 		sb.append(", groupId=");
@@ -125,6 +127,14 @@ public class LayoutPageTemplateCollectionCacheModel
 		}
 		else {
 			layoutPageTemplateCollectionImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			layoutPageTemplateCollectionImpl.setExternalReferenceCode("");
+		}
+		else {
+			layoutPageTemplateCollectionImpl.setExternalReferenceCode(
+				externalReferenceCode);
 		}
 
 		layoutPageTemplateCollectionImpl.setLayoutPageTemplateCollectionId(
@@ -204,6 +214,7 @@ public class LayoutPageTemplateCollectionCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		layoutPageTemplateCollectionId = objectInput.readLong();
 
@@ -236,6 +247,13 @@ public class LayoutPageTemplateCollectionCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(layoutPageTemplateCollectionId);
@@ -286,6 +304,7 @@ public class LayoutPageTemplateCollectionCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long layoutPageTemplateCollectionId;
 	public long groupId;
 	public long companyId;

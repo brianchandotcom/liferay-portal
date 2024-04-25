@@ -66,7 +66,7 @@ public class LayoutPageTemplateCollectionModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
 		{"layoutPageTemplateCollectionId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -84,6 +84,7 @@ public class LayoutPageTemplateCollectionModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutPageTemplateCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -100,7 +101,7 @@ public class LayoutPageTemplateCollectionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutPageTemplateCollection (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutPageTemplateCollectionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentLPTCollectionId LONG,lptCollectionKey VARCHAR(75) null,name VARCHAR(75) null,description STRING null,type_ INTEGER,lastPublishDate DATE null,primary key (layoutPageTemplateCollectionId, ctCollectionId))";
+		"create table LayoutPageTemplateCollection (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,layoutPageTemplateCollectionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentLPTCollectionId LONG,lptCollectionKey VARCHAR(75) null,name VARCHAR(75) null,description STRING null,type_ INTEGER,lastPublishDate DATE null,primary key (layoutPageTemplateCollectionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutPageTemplateCollection";
@@ -127,39 +128,45 @@ public class LayoutPageTemplateCollectionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
 	public static final long LAYOUTPAGETEMPLATECOLLECTIONKEY_COLUMN_BITMASK =
-		4L;
+		8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 8L;
+	public static final long NAME_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
 	public static final long
-		PARENTLAYOUTPAGETEMPLATECOLLECTIONID_COLUMN_BITMASK = 16L;
+		PARENTLAYOUTPAGETEMPLATECOLLECTIONID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPE_COLUMN_BITMASK = 32L;
+	public static final long TYPE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 64L;
+	public static final long UUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -283,6 +290,9 @@ public class LayoutPageTemplateCollectionModelImpl
 			attributeGetterFunctions.put(
 				"uuid", LayoutPageTemplateCollection::getUuid);
 			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				LayoutPageTemplateCollection::getExternalReferenceCode);
+			attributeGetterFunctions.put(
 				"layoutPageTemplateCollectionId",
 				LayoutPageTemplateCollection::
 					getLayoutPageTemplateCollectionId);
@@ -346,6 +356,10 @@ public class LayoutPageTemplateCollectionModelImpl
 				"uuid",
 				(BiConsumer<LayoutPageTemplateCollection, String>)
 					LayoutPageTemplateCollection::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<LayoutPageTemplateCollection, String>)
+					LayoutPageTemplateCollection::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"layoutPageTemplateCollectionId",
 				(BiConsumer<LayoutPageTemplateCollection, Long>)
@@ -465,6 +479,35 @@ public class LayoutPageTemplateCollectionModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -836,6 +879,8 @@ public class LayoutPageTemplateCollectionModelImpl
 		layoutPageTemplateCollectionImpl.setMvccVersion(getMvccVersion());
 		layoutPageTemplateCollectionImpl.setCtCollectionId(getCtCollectionId());
 		layoutPageTemplateCollectionImpl.setUuid(getUuid());
+		layoutPageTemplateCollectionImpl.setExternalReferenceCode(
+			getExternalReferenceCode());
 		layoutPageTemplateCollectionImpl.setLayoutPageTemplateCollectionId(
 			getLayoutPageTemplateCollectionId());
 		layoutPageTemplateCollectionImpl.setGroupId(getGroupId());
@@ -871,6 +916,8 @@ public class LayoutPageTemplateCollectionModelImpl
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		layoutPageTemplateCollectionImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
+		layoutPageTemplateCollectionImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		layoutPageTemplateCollectionImpl.setLayoutPageTemplateCollectionId(
 			this.<Long>getColumnOriginalValue(
 				"layoutPageTemplateCollectionId"));
@@ -990,6 +1037,18 @@ public class LayoutPageTemplateCollectionModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			layoutPageTemplateCollectionCacheModel.uuid = null;
+		}
+
+		layoutPageTemplateCollectionCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			layoutPageTemplateCollectionCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			layoutPageTemplateCollectionCacheModel.externalReferenceCode = null;
 		}
 
 		layoutPageTemplateCollectionCacheModel.layoutPageTemplateCollectionId =
@@ -1143,6 +1202,7 @@ public class LayoutPageTemplateCollectionModelImpl
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _layoutPageTemplateCollectionId;
 	private long _groupId;
 	private long _companyId;
@@ -1191,6 +1251,8 @@ public class LayoutPageTemplateCollectionModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put(
 			"layoutPageTemplateCollectionId", _layoutPageTemplateCollectionId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1241,31 +1303,33 @@ public class LayoutPageTemplateCollectionModelImpl
 
 		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("layoutPageTemplateCollectionId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("layoutPageTemplateCollectionId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("parentLPTCollectionId", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("lptCollectionKey", 2048L);
+		columnBitmasks.put("parentLPTCollectionId", 2048L);
 
-		columnBitmasks.put("name", 4096L);
+		columnBitmasks.put("lptCollectionKey", 4096L);
 
-		columnBitmasks.put("description", 8192L);
+		columnBitmasks.put("name", 8192L);
 
-		columnBitmasks.put("type_", 16384L);
+		columnBitmasks.put("description", 16384L);
 
-		columnBitmasks.put("lastPublishDate", 32768L);
+		columnBitmasks.put("type_", 32768L);
+
+		columnBitmasks.put("lastPublishDate", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

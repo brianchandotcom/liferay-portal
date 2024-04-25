@@ -7,6 +7,7 @@ package com.liferay.layout.page.template.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
@@ -30,8 +31,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface LayoutPageTemplateCollectionModel
 	extends BaseModel<LayoutPageTemplateCollection>,
-			CTModel<LayoutPageTemplateCollection>, MVCCModel, ShardedModel,
-			StagedGroupedModel {
+			CTModel<LayoutPageTemplateCollection>, ExternalReferenceCodeModel,
+			MVCCModel, ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -103,6 +104,23 @@ public interface LayoutPageTemplateCollectionModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this layout page template collection.
+	 *
+	 * @return the external reference code of this layout page template collection
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this layout page template collection.
+	 *
+	 * @param externalReferenceCode the external reference code of this layout page template collection
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the layout page template collection ID of this layout page template collection.

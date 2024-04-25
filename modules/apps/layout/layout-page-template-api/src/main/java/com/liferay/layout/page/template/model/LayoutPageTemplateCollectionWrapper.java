@@ -42,6 +42,7 @@ public class LayoutPageTemplateCollectionWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put(
 			"layoutPageTemplateCollectionId",
 			getLayoutPageTemplateCollectionId());
@@ -83,6 +84,13 @@ public class LayoutPageTemplateCollectionWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long layoutPageTemplateCollectionId = (Long)attributes.get(
@@ -221,6 +229,16 @@ public class LayoutPageTemplateCollectionWrapper
 	@Override
 	public String getDescription() {
 		return model.getDescription();
+	}
+
+	/**
+	 * Returns the external reference code of this layout page template collection.
+	 *
+	 * @return the external reference code of this layout page template collection
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -406,6 +424,16 @@ public class LayoutPageTemplateCollectionWrapper
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
+	}
+
+	/**
+	 * Sets the external reference code of this layout page template collection.
+	 *
+	 * @param externalReferenceCode the external reference code of this layout page template collection
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

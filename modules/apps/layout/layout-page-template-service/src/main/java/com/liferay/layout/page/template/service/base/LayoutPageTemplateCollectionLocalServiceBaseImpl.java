@@ -279,6 +279,25 @@ public abstract class LayoutPageTemplateCollectionLocalServiceBaseImpl
 			uuid, groupId);
 	}
 
+	@Override
+	public LayoutPageTemplateCollection
+		fetchLayoutPageTemplateCollectionByExternalReferenceCode(
+			String externalReferenceCode, long groupId) {
+
+		return layoutPageTemplateCollectionPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
+	public LayoutPageTemplateCollection
+			getLayoutPageTemplateCollectionByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return layoutPageTemplateCollectionPersistence.findByERC_G(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the layout page template collection with the primary key.
 	 *

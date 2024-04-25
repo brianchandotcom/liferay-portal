@@ -1,3 +1,4 @@
+create unique index IX_210E664C on LayoutPageTemplateCollection (groupId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_42B0A0C3 on LayoutPageTemplateCollection (groupId, ctCollectionId, uuid_[$COLUMN_LENGTH:75$]);
 create index IX_5A1F4BFC on LayoutPageTemplateCollection (groupId, parentLPTCollectionId);
 create unique index IX_F074765 on LayoutPageTemplateCollection (groupId, type_, ctCollectionId, lptCollectionKey[$COLUMN_LENGTH:75$]);

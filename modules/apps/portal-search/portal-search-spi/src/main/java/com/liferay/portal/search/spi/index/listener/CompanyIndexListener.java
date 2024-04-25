@@ -10,9 +10,23 @@ package com.liferay.portal.search.spi.index.listener;
  */
 public interface CompanyIndexListener {
 
+	/**
+	 * This method is called after a company index is created.
+	 * By default, it does nothing. Subclasses can override this method
+	 * to implement specific logic to be executed after index creation.
+	 *
+	 * @param indexName The name of the company index that was created.
+	 */
 	public default void onAfterCreate(String indexName) {
 	}
 
+	/**
+	 * This method is called before a company index is deleted.
+	 * By default, it does nothing. Subclasses can override this method
+	 * to implement specific logic to be executed before index deletion.
+	 *
+	 * @param indexName The name of the company index that is about to be deleted.
+	 */
 	public default void onBeforeDelete(String indexName) {
 	}
 

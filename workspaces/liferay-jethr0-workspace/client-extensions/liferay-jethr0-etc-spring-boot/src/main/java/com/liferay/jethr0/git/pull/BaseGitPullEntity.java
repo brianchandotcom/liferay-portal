@@ -7,9 +7,12 @@ package com.liferay.jethr0.git.pull;
 
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
+
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -18,6 +21,16 @@ import org.json.JSONObject;
  */
 public abstract class BaseGitPullEntity
 	extends BaseEntity implements GitPullEntity {
+
+	@Override
+	public void addJobEntities(Set<JobEntity> jobEntities) {
+		addRelatedEntities(jobEntities);
+	}
+
+	@Override
+	public void addJobEntity(JobEntity jobEntity) {
+		addRelatedEntity(jobEntity);
+	}
 
 	@Override
 	public GitBranchEntity getBaseGitBranchEntity() {
@@ -40,6 +53,11 @@ public abstract class BaseGitPullEntity
 	}
 
 	@Override
+	public Set<JobEntity> getJobEntities() {
+		return getRelatedEntities(JobEntity.class);
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
@@ -57,6 +75,16 @@ public abstract class BaseGitPullEntity
 	@Override
 	public URL getURL() {
 		return _url;
+	}
+
+	@Override
+	public void removeJobEntities(Set<JobEntity> jobEntities) {
+		removeRelatedEntities(jobEntities);
+	}
+
+	@Override
+	public void removeJobEntity(JobEntity jobEntity) {
+		removeRelatedEntity(jobEntity);
 	}
 
 	@Override

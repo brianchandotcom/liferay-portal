@@ -5,12 +5,18 @@
 
 package com.liferay.jethr0.job;
 
+import com.liferay.jethr0.git.pull.GitPullEntity;
+
 import java.net.URL;
 
 /**
  * @author Michael Hashimoto
  */
 public interface PullRequestJobEntity extends JobEntity {
+
+	public GitPullEntity getGitPullEntity();
+
+	public long getGitPullEntityId();
 
 	public long getNumber();
 
@@ -33,6 +39,8 @@ public interface PullRequestJobEntity extends JobEntity {
 	public String getUpstreamBranchName();
 
 	public String getUpstreamBranchSHA();
+
+	public void setGitPullEntity(GitPullEntity gitPullEntity);
 
 	public void setOriginName(String originName);
 

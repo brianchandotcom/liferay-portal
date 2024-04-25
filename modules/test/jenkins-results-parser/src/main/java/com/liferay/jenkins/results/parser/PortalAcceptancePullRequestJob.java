@@ -64,6 +64,12 @@ public class PortalAcceptancePullRequestJob
 	protected Set<String> getRawBatchNames() {
 		Set<String> batchNames = super.getRawBatchNames();
 
+		if (_isRelevantTestSuite() &&
+			!_hasMatchingFiles(_REST_BUILDER_FILE_PATTERN_STRING)) {
+
+			batchNames.remove("rest-builder-jdk8");
+		}
+
 		if (_isRelevantTestSuite() && _hasOnlyFilesInDirectory("modules")) {
 			batchNames.remove("semantic-versioning-jdk8");
 		}
@@ -93,6 +99,22 @@ public class PortalAcceptancePullRequestJob
 		return batchNames;
 	}
 
+	private boolean _hasMatchingFiles(String pattern) {
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		for (File modifiedFile : gitWorkingDirectory.getModifiedFilesList()) {
+			if (modifiedFile.getPath(
+				).matches(
+					pattern
+				)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _hasOnlyFilesInDirectory(String directoryName) {
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
@@ -115,6 +137,11 @@ public class PortalAcceptancePullRequestJob
 
 		return testSuiteName.equals("relevant");
 	}
+
+	private static final String _REST_BUILDER_FILE_PATTERN_STRING =
+		JenkinsResultsParserUtil.combine(
+			"(.+)?rest-openapi(.+)?.yaml|", "(.+)?rest-config(.+)?.yaml|",
+			"(.+)?portal-tools-rest-builder(.+)?");
 
 	private Boolean _centralMergePullRequest;
 

@@ -374,68 +374,16 @@ public class PortalImplUnitTest {
 	public void testGetLayoutSetFriendlyURLWhenLayoutSetMatchesWithDifferentVirtualHost()
 		throws PortalException {
 
-		LayoutSet layoutSet = new LayoutSetImpl();
-
-		layoutSet.setVirtualHostnames(
-			TreeMapBuilder.put(
-				"test.com", StringPool.BLANK
-			).build());
-		layoutSet.setLayoutSetId(11L);
-		layoutSet.setPrivateLayout(false);
-
-		Layout layout = new LayoutImpl();
-
-		layout.setLayoutSet(layoutSet);
-		layout.setType(LayoutConstants.TYPE_CONTENT);
-
-		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
-
-		themeDisplay.setDoAsGroupId(0);
-		themeDisplay.setI18nLanguageId(null);
-		themeDisplay.setLayout(layout);
-		themeDisplay.setRefererGroupId(0);
-		themeDisplay.setRefererPlid(0);
-		themeDisplay.setSecure(false);
-		themeDisplay.setServerPort(8080);
-		themeDisplay.setURLPortal("http://othertest.com:8080/myportal");
-
-		Assert.assertEquals(
-			"/myportal/web/testGroup",
-			_portalImpl.getLayoutSetFriendlyURL(layoutSet, themeDisplay));
+		_assertGetLayoutSetFriendlyURL(
+			"/myportal/web/testGroup", "http://othertest.com:8080/myportal");
 	}
 
 	@Test
 	public void testGetLayoutSetFriendlyURLWhenLayoutSetMatchesWithSameVirtualHost()
 		throws PortalException {
 
-		LayoutSet layoutSet = new LayoutSetImpl();
-
-		layoutSet.setVirtualHostnames(
-			TreeMapBuilder.put(
-				"test.com", StringPool.BLANK
-			).build());
-		layoutSet.setLayoutSetId(11L);
-		layoutSet.setPrivateLayout(false);
-
-		Layout layout = new LayoutImpl();
-
-		layout.setLayoutSet(layoutSet);
-		layout.setType(LayoutConstants.TYPE_CONTENT);
-
-		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
-
-		themeDisplay.setDoAsGroupId(0);
-		themeDisplay.setI18nLanguageId(null);
-		themeDisplay.setLayout(layout);
-		themeDisplay.setRefererGroupId(0);
-		themeDisplay.setRefererPlid(0);
-		themeDisplay.setSecure(false);
-		themeDisplay.setServerPort(8080);
-		themeDisplay.setURLPortal("http://test.com:8080/myportal");
-
-		Assert.assertEquals(
-			"http://test.com:8080/myportal",
-			_portalImpl.getLayoutSetFriendlyURL(layoutSet, themeDisplay));
+		_assertGetLayoutSetFriendlyURL(
+			"http://test.com:8080/myportal", "http://test.com:8080/myportal");
 	}
 
 	@Test
@@ -682,6 +630,39 @@ public class PortalImplUnitTest {
 		mockHttpServletRequest.addHeader("Host", httpHostHeader);
 
 		Assert.assertEquals(host, _portalImpl.getHost(mockHttpServletRequest));
+	}
+
+	private void _assertGetLayoutSetFriendlyURL(
+		String expectedFriendlyURL, String portalURL) throws PortalException {
+
+		LayoutSet layoutSet = new LayoutSetImpl();
+
+		layoutSet.setVirtualHostnames(
+			TreeMapBuilder.put(
+				"test.com", StringPool.BLANK
+			).build());
+		layoutSet.setLayoutSetId(11L);
+		layoutSet.setPrivateLayout(false);
+
+		Layout layout = new LayoutImpl();
+
+		layout.setLayoutSet(layoutSet);
+		layout.setType(LayoutConstants.TYPE_CONTENT);
+
+		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
+
+		themeDisplay.setDoAsGroupId(0);
+		themeDisplay.setI18nLanguageId(null);
+		themeDisplay.setLayout(layout);
+		themeDisplay.setRefererGroupId(0);
+		themeDisplay.setRefererPlid(0);
+		themeDisplay.setSecure(false);
+		themeDisplay.setServerPort(8080);
+		themeDisplay.setURLPortal(portalURL);
+
+		Assert.assertEquals(
+			expectedFriendlyURL,
+			_portalImpl.getLayoutSetFriendlyURL(layoutSet, themeDisplay));
 	}
 
 	private ActionRequest _createActionRequest(

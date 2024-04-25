@@ -1264,11 +1264,11 @@
 				{
 					"deletionType": "disassociate",
 					"label": {
-						"en_US": "Git Pull to Routines"
+						"en_US": "Git Pull to Jobs"
 					},
-					"name": "gitPullToRoutines",
+					"name": "gitPullToJobs",
 					"objectDefinitionExternalReferenceCode1": "GitPull",
-					"objectDefinitionExternalReferenceCode2": "Routine",
+					"objectDefinitionExternalReferenceCode2": "Job",
 					"type": "oneToMany"
 				}
 			],

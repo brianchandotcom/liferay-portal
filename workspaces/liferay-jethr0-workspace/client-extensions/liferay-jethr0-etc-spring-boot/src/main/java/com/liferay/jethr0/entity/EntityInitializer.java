@@ -48,6 +48,8 @@ public class EntityInitializer {
 		_gitCommitEntityRepository.setRoutineEntityRepository(
 			_routineEntityRepository);
 
+		_gitPullEntityRepository.setJobEntityRepository(_jobEntityRepository);
+
 		_jenkinsCohortEntityRepository.setJenkinsServerEntityRepository(
 			_jenkinsServerEntityRepository);
 
@@ -78,6 +80,7 @@ public class EntityInitializer {
 		_buildRunEntityRepository.initialize();
 		_gitBranchEntityRepository.initialize();
 		_gitCommitEntityRepository.initialize();
+		_gitPullEntityRepository.initialize();
 		_jenkinsCohortEntityRepository.initialize();
 		_jenkinsNodeEntityRepository.initialize();
 		_jenkinsServerEntityRepository.initialize();
@@ -90,6 +93,7 @@ public class EntityInitializer {
 		_buildRunEntityRepository.initializeRelationships();
 		_gitBranchEntityRepository.initializeRelationships();
 		_gitCommitEntityRepository.initializeRelationships();
+		_gitPullEntityRepository.initializeRelationships();
 		_jenkinsCohortEntityRepository.initializeRelationships();
 		_jenkinsNodeEntityRepository.initializeRelationships();
 		_jenkinsServerEntityRepository.initializeRelationships();

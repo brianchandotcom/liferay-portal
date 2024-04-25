@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.job;
 
+import com.liferay.jethr0.git.pull.GitPullEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -19,6 +20,25 @@ import org.json.JSONObject;
  */
 public abstract class BasePullRequestJobEntity
 	extends BaseJobEntity implements PullRequestJobEntity {
+
+	@Override
+	public GitPullEntity getGitPullEntity() {
+		return _gitPullEntity;
+	}
+
+	@Override
+	public long getGitPullEntityId() {
+		return _gitPullEntityId;
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		jsonObject.put("r_gitPullToJobs_c_gitPullId", getGitPullEntityId());
+
+		return jsonObject;
+	}
 
 	@Override
 	public long getNumber() {
@@ -115,6 +135,25 @@ public abstract class BasePullRequestJobEntity
 	}
 
 	@Override
+	public void setGitPullEntity(GitPullEntity gitPullEntity) {
+		_gitPullEntity = gitPullEntity;
+
+		if (_gitPullEntity == null) {
+			_gitPullEntityId = 0;
+		}
+		else {
+			_gitPullEntityId = _gitPullEntity.getId();
+		}
+	}
+
+	@Override
+	public void setJSONObject(JSONObject jsonObject) {
+		super.setJSONObject(jsonObject);
+
+		_gitPullEntityId = jsonObject.optLong("r_gitPullToJobs_c_gitPullId");
+	}
+
+	@Override
 	public void setOriginName(String originName) {
 		setParameterValue("originName", originName);
 	}
@@ -163,6 +202,8 @@ public abstract class BasePullRequestJobEntity
 			"https://github.com/(?<receiverUserName>[^/]+)/",
 			"(?<repositoryName>[^/]+)/pull/(?<number>\\d+)"));
 
+	private GitPullEntity _gitPullEntity;
+	private long _gitPullEntityId;
 	private long _number;
 	private String _receiverUserName;
 	private String _repositoryName;

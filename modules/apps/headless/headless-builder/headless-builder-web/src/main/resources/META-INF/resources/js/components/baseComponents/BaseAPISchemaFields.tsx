@@ -40,7 +40,7 @@ export default function BaseAPISchemaFields({
 		}).then((result) => {
 			const filteredResult = result.filter(
 				(option) =>
-					!option.system ||
+					option.modifiable ||
 					SYSTEM_OBJECTS_WHITELIST.includes(
 						option.externalReferenceCode
 					)

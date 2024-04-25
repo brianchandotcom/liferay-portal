@@ -37,15 +37,6 @@ export const RETRIEVE_TYPES = {
 
 export const STR_BLANK = '';
 
-const MODIFIABLE_SYSTEM_OBJECTS = [
-	'L_API_SORT',
-	'L_API_FILTER',
-	'L_API_ENDPOINT',
-	'L_API_PROPERTY',
-	'L_API_SCHEMA',
-	'L_API_APPLICATION',
-];
-
 export const SYSTEM_OBJECTS_WHITELIST = Liferay.FeatureFlags['LPD-21414']
-	? [...MODIFIABLE_SYSTEM_OBJECTS, 'L_ACCOUNT', 'L_USER']
-	: [...MODIFIABLE_SYSTEM_OBJECTS];
+	? ['L_ACCOUNT', 'L_USER']
+	: [];

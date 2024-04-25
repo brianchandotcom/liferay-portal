@@ -8087,6 +8087,887 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlags("LPD-18730")
 	@Test
+	public void testSortByManyToOneRelationshipCustomObjectFields()
+		throws Exception {
+
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition2, _objectDefinition1, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_objectRelationship2 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition3, _objectDefinition2, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		String endpoint1 = _getEndpoint(
+			TestPropsValues.getGroupId(), _objectDefinition1);
+		String endpoint2 = _getEndpoint(
+			TestPropsValues.getGroupId(), _objectDefinition2);
+		String endpoint3 = _getEndpoint(
+			TestPropsValues.getGroupId(), _objectDefinition3);
+
+		BigDecimal randomBigDecimal = new BigDecimal(
+			RandomTestUtil.randomDouble());
+		Date randomDate1 = RandomTestUtil.nextDate();
+		Date randomDate2 = RandomTestUtil.nextDate();
+		float randomFloat1 = RandomTestUtil.randomFloat();
+		int randomInt = RandomTestUtil.randomInt();
+		long randomLong = RandomTestUtil.randomLong(
+			ObjectFieldValidationConstants.BUSINESS_TYPE_LONG_VALUE_MIN,
+			ObjectFieldValidationConstants.BUSINESS_TYPE_LONG_VALUE_MAX);
+		String randomString1 = RandomTestUtil.randomString();
+		String randomString2 = RandomTestUtil.randomString();
+
+		JSONObject depth1JSONObject1 = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_BOOLEAN, false
+			).put(
+				_OBJECT_FIELD_NAME_DATE, _dateFormat.format(randomDate1)
+			).put(
+				_OBJECT_FIELD_NAME_DATE_TIME,
+				_dateTimeDateFormat.format(randomDate2)
+			).put(
+				_OBJECT_FIELD_NAME_DECIMAL, randomFloat1
+			).put(
+				_OBJECT_FIELD_NAME_INTEGER, randomInt
+			).put(
+				_OBJECT_FIELD_NAME_LONG_INTEGER, randomLong
+			).put(
+				_OBJECT_FIELD_NAME_LONG_TEXT, "a" + randomString1
+			).put(
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				JSONUtil.putAll(_LIST_TYPE_ENTRY_KEY_1, _LIST_TYPE_ENTRY_KEY_2)
+			).put(
+				_OBJECT_FIELD_NAME_PICKLIST, _LIST_TYPE_ENTRY_KEY_1
+			).put(
+				_OBJECT_FIELD_NAME_PRECISION_DECIMAL, randomBigDecimal
+			).put(
+				_OBJECT_FIELD_NAME_TEXT, "a" + randomString2
+			).toString(),
+			endpoint2, Http.Method.POST);
+
+		JSONObject depth1JSONObject2 = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_BOOLEAN, true
+			).put(
+				_OBJECT_FIELD_NAME_DATE,
+				() -> _dateFormat.format(
+					new Date(randomDate1.getTime() + (2 * 24 * 3600 * 1000)))
+			).put(
+				_OBJECT_FIELD_NAME_DATE_TIME,
+				_dateTimeDateFormat.format(
+					new Date(randomDate2.getTime() + 2000))
+			).put(
+				_OBJECT_FIELD_NAME_DECIMAL, randomFloat1 + 2
+			).put(
+				_OBJECT_FIELD_NAME_INTEGER, randomInt + 2
+			).put(
+				_OBJECT_FIELD_NAME_LONG_INTEGER, randomLong + 2
+			).put(
+				_OBJECT_FIELD_NAME_LONG_TEXT, "c" + randomString1
+			).put(
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				JSONUtil.putAll(_LIST_TYPE_ENTRY_KEY_2, _LIST_TYPE_ENTRY_KEY_3)
+			).put(
+				_OBJECT_FIELD_NAME_PICKLIST, _LIST_TYPE_ENTRY_KEY_2
+			).put(
+				_OBJECT_FIELD_NAME_PRECISION_DECIMAL,
+				randomBigDecimal.add(new BigDecimal(2))
+			).put(
+				_OBJECT_FIELD_NAME_TEXT, "c" + randomString2
+			).toString(),
+			endpoint2, Http.Method.POST);
+
+		JSONObject depth2JSONObject1 = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_BOOLEAN, false
+			).put(
+				_OBJECT_FIELD_NAME_DATE, _dateFormat.format(randomDate1)
+			).put(
+				_OBJECT_FIELD_NAME_DATE_TIME,
+				_dateTimeDateFormat.format(randomDate2)
+			).put(
+				_OBJECT_FIELD_NAME_DECIMAL, randomFloat1
+			).put(
+				_OBJECT_FIELD_NAME_INTEGER, randomInt
+			).put(
+				_OBJECT_FIELD_NAME_LONG_INTEGER, randomLong
+			).put(
+				_OBJECT_FIELD_NAME_LONG_TEXT, "a" + randomString1
+			).put(
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				JSONUtil.putAll(_LIST_TYPE_ENTRY_KEY_1, _LIST_TYPE_ENTRY_KEY_2)
+			).put(
+				_OBJECT_FIELD_NAME_PICKLIST, _LIST_TYPE_ENTRY_KEY_1
+			).put(
+				_OBJECT_FIELD_NAME_PRECISION_DECIMAL, randomBigDecimal
+			).put(
+				_OBJECT_FIELD_NAME_TEXT, "a" + randomString2
+			).toString(),
+			endpoint3, Http.Method.POST);
+
+		JSONObject depth2JSONObject2 = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_BOOLEAN, true
+			).put(
+				_OBJECT_FIELD_NAME_DATE,
+				() -> _dateFormat.format(
+					new Date(randomDate1.getTime() + (2 * 24 * 3600 * 1000)))
+			).put(
+				_OBJECT_FIELD_NAME_DATE_TIME,
+				_dateTimeDateFormat.format(
+					new Date(randomDate2.getTime() + 2000))
+			).put(
+				_OBJECT_FIELD_NAME_DECIMAL, randomFloat1 + 2
+			).put(
+				_OBJECT_FIELD_NAME_INTEGER, randomInt + 2
+			).put(
+				_OBJECT_FIELD_NAME_LONG_INTEGER, randomLong + 2
+			).put(
+				_OBJECT_FIELD_NAME_LONG_TEXT, "c" + randomString1
+			).put(
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				JSONUtil.putAll(_LIST_TYPE_ENTRY_KEY_2, _LIST_TYPE_ENTRY_KEY_3)
+			).put(
+				_OBJECT_FIELD_NAME_PICKLIST, _LIST_TYPE_ENTRY_KEY_2
+			).put(
+				_OBJECT_FIELD_NAME_PRECISION_DECIMAL,
+				randomBigDecimal.add(new BigDecimal(2))
+			).put(
+				_OBJECT_FIELD_NAME_TEXT, "c" + randomString2
+			).toString(),
+			endpoint3, Http.Method.POST);
+
+		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
+			JSONFactoryUtil.getNullJSON(
+			).toString(),
+			endpoint1, Http.Method.POST);
+
+		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
+			JSONFactoryUtil.getNullJSON(
+			).toString(),
+			endpoint1, Http.Method.POST);
+
+		JSONObject jsonObject3 = HTTPTestUtil.invokeToJSONObject(
+			JSONFactoryUtil.getNullJSON(
+			).toString(),
+			endpoint1, Http.Method.POST);
+
+		JSONObject jsonObject4 = HTTPTestUtil.invokeToJSONObject(
+			JSONFactoryUtil.getNullJSON(
+			).toString(),
+			endpoint1, Http.Method.POST);
+
+		HTTPTestUtil.invokeToJSONObject(
+			null,
+			String.format(
+				"%s/%d/%s/%d", endpoint2, depth1JSONObject1.getLong("id"),
+				_objectRelationship1.getName(), jsonObject1.getLong("id")),
+			Http.Method.PUT);
+
+		HTTPTestUtil.invokeToJSONObject(
+			null,
+			String.format(
+				"%s/%d/%s/%d", endpoint2, depth1JSONObject1.getLong("id"),
+				_objectRelationship1.getName(), jsonObject2.getLong("id")),
+			Http.Method.PUT);
+
+		HTTPTestUtil.invokeToJSONObject(
+			null,
+			String.format(
+				"%s/%d/%s/%d", endpoint2, depth1JSONObject2.getLong("id"),
+				_objectRelationship1.getName(), jsonObject3.getLong("id")),
+			Http.Method.PUT);
+
+		HTTPTestUtil.invokeToJSONObject(
+			null,
+			String.format(
+				"%s/%d/%s/%d", endpoint2, depth1JSONObject2.getLong("id"),
+				_objectRelationship1.getName(), jsonObject4.getLong("id")),
+			Http.Method.PUT);
+
+		HTTPTestUtil.invokeToJSONObject(
+			null,
+			String.format(
+				"%s/%d/%s/%d", endpoint3, depth2JSONObject1.getLong("id"),
+				_objectRelationship2.getName(),
+				depth1JSONObject1.getLong("id")),
+			Http.Method.PUT);
+
+		HTTPTestUtil.invokeToJSONObject(
+			null,
+			String.format(
+				"%s/%d/%s/%d", endpoint3, depth2JSONObject2.getLong("id"),
+				_objectRelationship2.getName(),
+				depth1JSONObject2.getLong("id")),
+			Http.Method.PUT);
+
+		try {
+
+			// Depth 1
+
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint2, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth1JSONObject1, depth1JSONObject2,
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_BOOLEAN));
+
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint2, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth1JSONObject1, depth1JSONObject2,
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_DATE));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint2, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth1JSONObject1, depth1JSONObject2,
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_DATE_TIME));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint2, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth1JSONObject1, depth1JSONObject2,
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_DECIMAL));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint2, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth1JSONObject1, depth1JSONObject2,
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_INTEGER));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint2, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth1JSONObject1, depth1JSONObject2,
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_LONG_INTEGER));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint2, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth1JSONObject1, depth1JSONObject2,
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_LONG_TEXT));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint2, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth1JSONObject1, depth1JSONObject2,
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint2, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth1JSONObject1, depth1JSONObject2,
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_PICKLIST));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint2, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth1JSONObject1, depth1JSONObject2,
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_PRECISION_DECIMAL));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint2, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth1JSONObject1, depth1JSONObject2,
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_TEXT));
+
+			// Depth 2
+
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint3, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth2JSONObject1, depth2JSONObject2,
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_BOOLEAN));
+
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint3, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth2JSONObject1, depth2JSONObject2,
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(), _OBJECT_FIELD_NAME_DATE));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint3, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth2JSONObject1, depth2JSONObject2,
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_DATE_TIME));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint3, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth2JSONObject1, depth2JSONObject2,
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_DECIMAL));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint3, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth2JSONObject1, depth2JSONObject2,
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_INTEGER));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint3, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth2JSONObject1, depth2JSONObject2,
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_LONG_INTEGER));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint3, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth2JSONObject1, depth2JSONObject2,
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_LONG_TEXT));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint3, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth2JSONObject1, depth2JSONObject2,
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint3, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth2JSONObject1, depth2JSONObject2,
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_PICKLIST));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint3, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth2JSONObject1, depth2JSONObject2,
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_PRECISION_DECIMAL));
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint3, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth2JSONObject1, depth2JSONObject2,
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(), _OBJECT_FIELD_NAME_TEXT));
+
+			// Sort by several fields
+
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint2, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth1JSONObject1, depth1JSONObject2,
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_BOOLEAN),
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_DATE),
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_DATE_TIME),
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_DECIMAL),
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_INTEGER),
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_LONG_INTEGER),
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_LONG_TEXT),
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST),
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_PICKLIST),
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_PRECISION_DECIMAL),
+				String.format(
+					"%s/%s", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_TEXT));
+
+			_testSortByManyToOneRelationshipCustomObjectFields(
+				endpoint1, endpoint3, jsonObject1, jsonObject2, jsonObject3,
+				jsonObject4, depth2JSONObject1, depth2JSONObject2,
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(), _OBJECT_FIELD_NAME_BOOLEAN),
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(), _OBJECT_FIELD_NAME_DATE),
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_DATE_TIME),
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(), _OBJECT_FIELD_NAME_DECIMAL),
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(), _OBJECT_FIELD_NAME_INTEGER),
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_LONG_INTEGER),
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_LONG_TEXT),
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST),
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_PICKLIST),
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_OBJECT_FIELD_NAME_PRECISION_DECIMAL),
+				String.format(
+					"%s/%s/%s", _objectRelationship1.getName(),
+					_objectRelationship2.getName(), _OBJECT_FIELD_NAME_TEXT));
+		}
+		finally {
+			if (jsonObject1 != null) {
+				_objectEntryLocalService.deleteObjectEntry(
+					jsonObject1.getLong("id"));
+			}
+
+			if (jsonObject2 != null) {
+				_objectEntryLocalService.deleteObjectEntry(
+					jsonObject2.getLong("id"));
+			}
+
+			if (jsonObject3 != null) {
+				_objectEntryLocalService.deleteObjectEntry(
+					jsonObject3.getLong("id"));
+			}
+
+			if (jsonObject4 != null) {
+				_objectEntryLocalService.deleteObjectEntry(
+					jsonObject4.getLong("id"));
+			}
+
+			if (depth1JSONObject1 != null) {
+				_objectEntryLocalService.deleteObjectEntry(
+					depth1JSONObject1.getLong("id"));
+			}
+
+			if (depth1JSONObject2 != null) {
+				_objectEntryLocalService.deleteObjectEntry(
+					depth1JSONObject2.getLong("id"));
+			}
+
+			if (depth2JSONObject1 != null) {
+				_objectEntryLocalService.deleteObjectEntry(
+					depth2JSONObject1.getLong("id"));
+			}
+
+			if (depth2JSONObject2 != null) {
+				_objectEntryLocalService.deleteObjectEntry(
+					depth2JSONObject2.getLong("id"));
+			}
+		}
+	}
+
+	@FeatureFlags("LPD-18730")
+	@Test
+	public void testSortByManyToOneRelationshipSystemObjectFields()
+		throws Exception {
+
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition2, _objectDefinition1, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_objectRelationship2 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition3, _objectDefinition2, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_addResourcePermission(
+			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition2, role);
+		_addResourcePermission(
+			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition3, role);
+
+		User user1 = _addUser("test1", "test1");
+		User user2 = _addUser("test2", "test2");
+		User user3 = _addUser("test3", "test3");
+
+		_roleLocalService.addUserRole(user1.getUserId(), role.getRoleId());
+		_roleLocalService.addUserRole(user2.getUserId(), role.getRoleId());
+		_roleLocalService.addUserRole(user3.getUserId(), role.getRoleId());
+
+		_objectDefinition1.setEnableObjectEntryDraft(true);
+		_objectDefinition2.setEnableObjectEntryDraft(true);
+		_objectDefinition3.setEnableObjectEntryDraft(true);
+
+		_objectDefinition1 =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition1);
+		_objectDefinition2 =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition2);
+		_objectDefinition3 =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition3);
+
+		String endpoint1 = _getEndpoint(
+			TestPropsValues.getGroupId(), _objectDefinition1);
+		String endpoint2 = _getEndpoint(
+			TestPropsValues.getGroupId(), _objectDefinition2);
+		String endpoint3 = _getEndpoint(
+			TestPropsValues.getGroupId(), _objectDefinition3);
+
+		JSONObject[] manyToOneDepth1JSONObjects = new JSONObject[2];
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			"test2@liferay.com", "test2"
+		).apply(
+			() ->
+				manyToOneDepth1JSONObjects[0] = HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						"externalReferenceCode", "ERC1_1"
+					).put(
+						"status",
+						JSONUtil.put("code", WorkflowConstants.STATUS_DRAFT)
+					).toString(),
+					endpoint2, Http.Method.POST)
+		);
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			"test3@liferay.com", "test3"
+		).apply(
+			() ->
+				manyToOneDepth1JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						"externalReferenceCode", "ERC2_1"
+					).put(
+						"status",
+						JSONUtil.put("code", WorkflowConstants.STATUS_DRAFT)
+					).toString(),
+					endpoint2, Http.Method.POST)
+		);
+
+		JSONObject[] manyToOneDepth2JSONObjects = new JSONObject[2];
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			"test2@liferay.com", "test2"
+		).apply(
+			() ->
+				manyToOneDepth2JSONObjects[0] = HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						"externalReferenceCode", "ERC1_2"
+					).put(
+						"status",
+						JSONUtil.put("code", WorkflowConstants.STATUS_DRAFT)
+					).toString(),
+					endpoint3, Http.Method.POST)
+		);
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			"test1@liferay.com", "test1"
+		).apply(
+			() ->
+				manyToOneDepth2JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						"externalReferenceCode", "ERC2_2"
+					).put(
+						"status",
+						JSONUtil.put("code", WorkflowConstants.STATUS_DRAFT)
+					).toString(),
+					endpoint3, Http.Method.POST)
+		);
+
+		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
+			JSONFactoryUtil.getNullJSON(
+			).toString(),
+			endpoint1, Http.Method.POST);
+
+		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
+			JSONFactoryUtil.getNullJSON(
+			).toString(),
+			endpoint1, Http.Method.POST);
+
+		JSONObject jsonObject3 = HTTPTestUtil.invokeToJSONObject(
+			JSONFactoryUtil.getNullJSON(
+			).toString(),
+			endpoint1, Http.Method.POST);
+
+		JSONObject jsonObject4 = HTTPTestUtil.invokeToJSONObject(
+			JSONFactoryUtil.getNullJSON(
+			).toString(),
+			endpoint1, Http.Method.POST);
+
+		HTTPTestUtil.invokeToJSONObject(
+			null,
+			String.format(
+				"%s/%d/%s/%d", endpoint2,
+				manyToOneDepth1JSONObjects[0].getLong("id"),
+				_objectRelationship1.getName(), jsonObject1.getLong("id")),
+			Http.Method.PUT);
+
+		HTTPTestUtil.invokeToJSONObject(
+			null,
+			String.format(
+				"%s/%d/%s/%d", endpoint2,
+				manyToOneDepth1JSONObjects[0].getLong("id"),
+				_objectRelationship1.getName(), jsonObject2.getLong("id")),
+			Http.Method.PUT);
+
+		HTTPTestUtil.invokeToJSONObject(
+			null,
+			String.format(
+				"%s/%d/%s/%d", endpoint2,
+				manyToOneDepth1JSONObjects[1].getLong("id"),
+				_objectRelationship1.getName(), jsonObject3.getLong("id")),
+			Http.Method.PUT);
+
+		HTTPTestUtil.invokeToJSONObject(
+			null,
+			String.format(
+				"%s/%d/%s/%d", endpoint2,
+				manyToOneDepth1JSONObjects[1].getLong("id"),
+				_objectRelationship1.getName(), jsonObject4.getLong("id")),
+			Http.Method.PUT);
+
+		HTTPTestUtil.invokeToJSONObject(
+			null,
+			String.format(
+				"%s/%d/%s/%d", endpoint3,
+				manyToOneDepth2JSONObjects[0].getLong("id"),
+				_objectRelationship2.getName(),
+				manyToOneDepth1JSONObjects[0].getLong("id")),
+			Http.Method.PUT);
+
+		HTTPTestUtil.invokeToJSONObject(
+			null,
+			String.format(
+				"%s/%d/%s/%d", endpoint3,
+				manyToOneDepth2JSONObjects[1].getLong("id"),
+				_objectRelationship2.getName(),
+				manyToOneDepth1JSONObjects[1].getLong("id")),
+			Http.Method.PUT);
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			"test2@liferay.com", "test2"
+		).apply(
+			() ->
+				manyToOneDepth1JSONObjects[0] = HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
+					).toString(),
+					endpoint2 + "/by-external-reference-code/ERC1_1",
+					Http.Method.PATCH)
+		);
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			"test3@liferay.com", "test3"
+		).apply(
+			() ->
+				manyToOneDepth1JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
+					).toString(),
+					endpoint2 + "/by-external-reference-code/ERC2_1",
+					Http.Method.PATCH)
+		);
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			"test2@liferay.com", "test2"
+		).apply(
+			() ->
+				manyToOneDepth2JSONObjects[0] = HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_3, RandomTestUtil.randomString()
+					).toString(),
+					endpoint3 + "/by-external-reference-code/ERC1_2",
+					Http.Method.PATCH)
+		);
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			"test1@liferay.com", "test1"
+		).apply(
+			() ->
+				manyToOneDepth2JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_3, RandomTestUtil.randomString()
+					).toString(),
+					endpoint3 + "/by-external-reference-code/ERC2_2",
+					Http.Method.PATCH)
+		);
+
+		try {
+
+			// Depth 1
+
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				String.format("%s/creator", _objectRelationship1.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				String.format("%s/creatorId", _objectRelationship1.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				String.format(
+					"%s/dateCreated", _objectRelationship1.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				String.format(
+					"%s/dateModified", _objectRelationship1.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				String.format(
+					"%s/externalReferenceCode",
+					_objectRelationship1.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				String.format("%s/id", _objectRelationship1.getName()));
+
+			// Depth 2
+
+			_testSortByFieldName(
+				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
+				String.format(
+					"%s/%s/creator", _objectRelationship1.getName(),
+					_objectRelationship2.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
+				String.format(
+					"%s/%s/creatorId", _objectRelationship1.getName(),
+					_objectRelationship2.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				String.format(
+					"%s/%s/dateCreated", _objectRelationship1.getName(),
+					_objectRelationship2.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				String.format(
+					"%s/%s/dateModified", _objectRelationship1.getName(),
+					_objectRelationship2.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				String.format(
+					"%s/%s/externalReferenceCode",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				String.format(
+					"%s/%s/id", _objectRelationship1.getName(),
+					_objectRelationship2.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				String.format("%s/userId", _objectRelationship1.getName()));
+
+			// Sort by several fields
+
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				String.format("%s/dateCreated", _objectRelationship1.getName()),
+				String.format("%s/id", _objectRelationship1.getName()),
+				String.format(
+					"%s/%s/dateCreated", _objectRelationship1.getName(),
+					_objectRelationship2.getName()),
+				String.format(
+					"%s/%s/id", _objectRelationship1.getName(),
+					_objectRelationship2.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				String.format("%s/creator", _objectRelationship1.getName()),
+				String.format("%s/creatorId", _objectRelationship1.getName()),
+				String.format(
+					"%s/dateModified", _objectRelationship1.getName()),
+				String.format(
+					"%s/externalReferenceCode", _objectRelationship1.getName()),
+				String.format("%s/userId", _objectRelationship1.getName()),
+				String.format(
+					"%s/%s/creator", _objectRelationship1.getName(),
+					_objectRelationship2.getName()),
+				String.format(
+					"%s/%s/creatorId", _objectRelationship1.getName(),
+					_objectRelationship2.getName()),
+				String.format(
+					"%s/%s/dateModified", _objectRelationship1.getName(),
+					_objectRelationship2.getName()),
+				String.format(
+					"%s/%s/externalReferenceCode",
+					_objectRelationship1.getName(),
+					_objectRelationship2.getName()),
+				String.format(
+					"%s/%s/userId", _objectRelationship1.getName(),
+					_objectRelationship2.getName()));
+
+			// TODO LPD-20530
+
+			_assertFailure(
+				ComparisonFailure.class,
+				() -> _testSortByFieldName(
+					endpoint1, jsonObject1, jsonObject2, jsonObject3,
+					jsonObject4,
+					String.format(
+						"%s/status", _objectRelationship1.getName())));
+			_assertFailure(
+				ComparisonFailure.class,
+				() -> _testSortByFieldName(
+					endpoint1, jsonObject1, jsonObject2, jsonObject3,
+					jsonObject4,
+					String.format(
+						"%s/%s/status", _objectRelationship1.getName(),
+						_objectRelationship2.getName())));
+		}
+		finally {
+			if (jsonObject1 != null) {
+				_objectEntryLocalService.deleteObjectEntry(
+					jsonObject1.getLong("id"));
+			}
+
+			if (jsonObject2 != null) {
+				_objectEntryLocalService.deleteObjectEntry(
+					jsonObject2.getLong("id"));
+			}
+
+			if (jsonObject3 != null) {
+				_objectEntryLocalService.deleteObjectEntry(
+					jsonObject3.getLong("id"));
+			}
+
+			if (jsonObject4 != null) {
+				_objectEntryLocalService.deleteObjectEntry(
+					jsonObject4.getLong("id"));
+			}
+
+			for (JSONObject jsonObject :
+					ArrayUtil.append(
+						manyToOneDepth1JSONObjects,
+						manyToOneDepth2JSONObjects)) {
+
+				if (jsonObject == null) {
+					continue;
+				}
+
+				_objectEntryLocalService.deleteObjectEntry(
+					jsonObject.getLong("id"));
+			}
+		}
+	}
+
+	@FeatureFlags("LPD-18730")
+	@Test
 	public void testSortByOneToManyRelationshipCustomObjectFields()
 		throws Exception {
 
@@ -11663,6 +12544,39 @@ public class ObjectEntryResourceTest {
 
 	private void _testSortByFieldName(
 			String endpoint, JSONObject expectedJSONObject1,
+			JSONObject expectedJSONObject2, JSONObject expectedJSONObject3,
+			JSONObject expectedJSONObject4, String... fieldNames)
+		throws Exception {
+
+		JSONObject pageJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				endpoint, "?sort=",
+				URLCodec.encodeURL(
+					StringUtil.merge(fieldNames, ":asc,") + ":asc")),
+			Http.Method.GET);
+
+		_assertItem(0, pageJSONObject, "id", expectedJSONObject1.getLong("id"));
+		_assertItem(1, pageJSONObject, "id", expectedJSONObject2.getLong("id"));
+		_assertItem(2, pageJSONObject, "id", expectedJSONObject3.getLong("id"));
+		_assertItem(3, pageJSONObject, "id", expectedJSONObject4.getLong("id"));
+
+		pageJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				endpoint, "?sort=",
+				URLCodec.encodeURL(
+					StringUtil.merge(fieldNames, ":desc,") + ":desc")),
+			Http.Method.GET);
+
+		_assertItem(0, pageJSONObject, "id", expectedJSONObject3.getLong("id"));
+		_assertItem(1, pageJSONObject, "id", expectedJSONObject4.getLong("id"));
+		_assertItem(2, pageJSONObject, "id", expectedJSONObject1.getLong("id"));
+		_assertItem(3, pageJSONObject, "id", expectedJSONObject2.getLong("id"));
+	}
+
+	private void _testSortByFieldName(
+			String endpoint, JSONObject expectedJSONObject1,
 			JSONObject expectedJSONObject2, String... fieldNames)
 		throws Exception {
 
@@ -11687,6 +12601,57 @@ public class ObjectEntryResourceTest {
 
 		_assertItem(0, pageJSONObject, "id", expectedJSONObject2.getLong("id"));
 		_assertItem(1, pageJSONObject, "id", expectedJSONObject1.getLong("id"));
+	}
+
+	private void _testSortByManyToOneRelationshipCustomObjectFields(
+			String endpoint1, String endpoint2, JSONObject expectedJSONObject1,
+			JSONObject expectedJSONObject2, JSONObject expectedJSONObject3,
+			JSONObject expectedJSONObject4, JSONObject relatedJSONObject1,
+			JSONObject relatedJSONObject2, String... fieldNames)
+		throws Exception {
+
+		_testSortByFieldName(
+			endpoint1, expectedJSONObject1, expectedJSONObject2,
+			expectedJSONObject3, expectedJSONObject4, fieldNames);
+
+		JSONObject valuesJSONObject1 = JSONFactoryUtil.createJSONObject();
+		JSONObject valuesJSONObject2 = JSONFactoryUtil.createJSONObject();
+
+		for (String fieldName : fieldNames) {
+			String objectFieldName = StringUtil.extractLast(fieldName, "/");
+
+			valuesJSONObject1.put(
+				objectFieldName, relatedJSONObject1.get(objectFieldName));
+			valuesJSONObject2.put(
+				objectFieldName, relatedJSONObject2.get(objectFieldName));
+		}
+
+		try {
+			HTTPTestUtil.invokeToJSONObject(
+				valuesJSONObject2.toString(),
+				endpoint2 + "/" + relatedJSONObject1.getLong("id"),
+				Http.Method.PATCH);
+
+			HTTPTestUtil.invokeToJSONObject(
+				valuesJSONObject1.toString(),
+				endpoint2 + "/" + relatedJSONObject2.getLong("id"),
+				Http.Method.PATCH);
+
+			_testSortByFieldName(
+				endpoint1, expectedJSONObject3, expectedJSONObject4,
+				expectedJSONObject1, expectedJSONObject2, fieldNames);
+		}
+		finally {
+			HTTPTestUtil.invokeToJSONObject(
+				valuesJSONObject1.toString(),
+				endpoint2 + "/" + relatedJSONObject1.getLong("id"),
+				Http.Method.PATCH);
+
+			HTTPTestUtil.invokeToJSONObject(
+				valuesJSONObject2.toString(),
+				endpoint2 + "/" + relatedJSONObject2.getLong("id"),
+				Http.Method.PATCH);
+		}
 	}
 
 	private void _testSortByOneToManyRelationshipCustomObjectFields(

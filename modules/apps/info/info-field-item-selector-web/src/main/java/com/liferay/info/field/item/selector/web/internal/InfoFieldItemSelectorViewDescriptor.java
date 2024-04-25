@@ -95,7 +95,8 @@ public class InfoFieldItemSelectorViewDescriptor
 		InfoForm infoForm = infoItemFormProvider.getInfoForm(
 			itemType, themeDisplay.getScopeGroupId());
 
-		List<InfoField<?>> infoFields = infoForm.getAllInfoFields();
+		List<InfoField<?>> infoFields = ListUtil.filter(
+			infoForm.getAllInfoFields(), InfoField::isEditable);
 
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 

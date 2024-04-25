@@ -371,6 +371,26 @@ public class PortalImplUnitTest {
 	public void testGetLayoutSetFriendlyURLWhenLayoutSetMatchesWithDifferentVirtualHost()
 		throws Exception {
 
+		_setUpPortalImpl(StringPool.BLANK);
+
+		_assertGetLayoutSetFriendlyURL(
+			"/web/testGroup", "http://othertest.com:8080");
+	}
+
+	@Test
+	public void testGetLayoutSetFriendlyURLWhenLayoutSetMatchesWithSameVirtualHost()
+		throws Exception {
+
+		_setUpPortalImpl(StringPool.BLANK);
+
+		_assertGetLayoutSetFriendlyURL(
+			"http://test.com:8080", "http://test.com:8080");
+	}
+
+	@Test
+	public void testGetLayoutSetFriendlyURLWithContextPathWhenLayoutSetMatchesWithDifferentVirtualHost()
+		throws Exception {
+
 		_setUpPortalImpl("myportal");
 
 		_assertGetLayoutSetFriendlyURL(
@@ -378,7 +398,7 @@ public class PortalImplUnitTest {
 	}
 
 	@Test
-	public void testGetLayoutSetFriendlyURLWhenLayoutSetMatchesWithSameVirtualHost()
+	public void testGetLayoutSetFriendlyURLWithContextPathWhenLayoutSetMatchesWithSameVirtualHost()
 		throws Exception {
 
 		_setUpPortalImpl("myportal");

@@ -5010,11 +5010,11 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testGetObjectEntryWithActions() throws Exception {
-		_testGetObjectEntryWithActions(
+	public void testGetObjectEntryWithObjectActions() throws Exception {
+		_testGetObjectEntryWithObjectActions(
 			_addObjectAction(_objectDefinition1), _objectDefinition1);
 
-		_testGetObjectEntryWithActions(
+		_testGetObjectEntryWithObjectActions(
 			_addObjectAction(_siteScopedObjectDefinition1),
 			_siteScopedObjectDefinition1);
 	}
@@ -9380,7 +9380,7 @@ public class ObjectEntryResourceTest {
 			expectedFieldName, objectFieldNamesAndObjectFieldValues, type);
 	}
 
-	private void _testGetObjectEntryWithActions(
+	private void _testGetObjectEntryWithObjectActions(
 			ObjectAction objectAction, ObjectDefinition objectDefinition)
 		throws Exception {
 

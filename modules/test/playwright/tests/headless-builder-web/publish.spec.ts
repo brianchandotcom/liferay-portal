@@ -12,7 +12,7 @@ import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	headlessBuilderPagesTest,
+	headlessBuilderPagesTest(),
 	headlessDiscoveryPagesTest,
 	loginTest()
 );

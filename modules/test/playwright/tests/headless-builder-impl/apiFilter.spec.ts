@@ -11,7 +11,7 @@ import {headlessBuilderTest} from '../headless-builder-web/fixtures/headlessBuil
 
 export const test = mergeTests(
 	apiHelpersTest,
-	headlessBuilderTest,
+	headlessBuilderTest(),
 	loginTest()
 );
 

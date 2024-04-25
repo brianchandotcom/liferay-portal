@@ -135,7 +135,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadCSVReport
 							disabled={dataSourceStates.empty}
-							type={CSVType.Forms}
+							type={CSVType.Form}
 							typeLang={Liferay.Language.get('forms')}
 						/>
 					</div>

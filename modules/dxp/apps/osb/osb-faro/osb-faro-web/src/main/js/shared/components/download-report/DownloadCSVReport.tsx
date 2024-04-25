@@ -54,7 +54,7 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 					infoMessage={
 						sub(
 							Liferay.Language.get(
-								'the-generated-CSV-file-will-respect-the-current-filter-and-search-results,-with-a-maximum-of-x-entries-supported-per-export.-please-ensure-that-any-desired-changes-have-been-successfully-applied-before-downloading-the-individual-x-list'
+								'the-generated-CSV-file-will-respect-the-current-filter-and-search-results,-with-a-maximum-of-x-entries-supported-per-export.-please-ensure-that-any-desired-changes-have-been-successfully-applied-before-downloading-the-x-list'
 							),
 							[toLocale(MAX_CSV_ENTRIES), typeLang]
 						) as string

@@ -135,6 +135,7 @@ function TouchpointRoutes({className, router}) {
 							assetType='page'
 							disabled={dataSourceStates.empty}
 							type={CSVType.Individual}
+							typeLang={Liferay.Language.get('known-individuals')}
 						/>
 					</div>
 				</BasePage.SubHeader>

@@ -119,7 +119,7 @@ const WebContent: React.FC<{
 							assetType='journal'
 							disabled={dataSourceStates.empty}
 							type={CSVType.Individual}
-							typeLang={Liferay.Language.get('individuals')}
+							typeLang={Liferay.Language.get('known-individuals')}
 						/>
 					</div>
 				</BasePage.SubHeader>

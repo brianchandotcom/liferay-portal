@@ -163,7 +163,7 @@ function ActionsDropdown({
 						action.target,
 						action.onClick ? action.onClick : null
 					)
-						? formatActionURL(action.href, itemData)
+						? formatActionURL(action.href, itemData, action.target)
 						: null
 				}
 				monospaced={Boolean(action.icon)}
@@ -203,7 +203,10 @@ function ActionsDropdown({
 					key={i}
 					onClick={onClick}
 					setLoading={setLoading}
-					url={item.href && formatActionURL(item.href, itemData)}
+					url={
+						item.href &&
+						formatActionURL(item.href, itemData, item.target)
+					}
 				/>
 			);
 		});

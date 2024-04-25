@@ -251,7 +251,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 			</ClayForm.Group>
 
 			<ClayForm.Group>
-				<label htmlFor="friendly-url">
+				<label htmlFor="urlTitle">
 					{Liferay.Language.get('friendly-url')}
 
 					<span
@@ -274,7 +274,8 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 					<ClayInput.GroupItem append>
 						<ClayInput
 							disabled={customUrlCheckboxValue === DEFAULT_URL}
-							id={portletNamespace + 'friendly_url'}
+							id={portletNamespace + 'urlTitle'}
+							name={portletNamespace + 'urlTitle'}
 							onChange={handleChange}
 							placeholder={Liferay.Language.get('friendly-url')}
 							type="text"

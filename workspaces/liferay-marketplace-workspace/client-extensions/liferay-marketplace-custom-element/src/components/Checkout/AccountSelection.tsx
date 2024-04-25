@@ -5,26 +5,30 @@
 
 import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useMemo} from 'react';
+import {ReactNode, useMemo} from 'react';
 import useSWR from 'swr';
 
-import RadioCardList from '../../../components/RadioCardList/RadioCardList';
-import headlessCommerceAdminUser from '../../../services/rest/HeadlessCommerceAdminUser';
-import LicenseTermsCheckbox from '../containers/LicenseTermsCheckbox';
-
-const enabledAccountRoles = ['Account Administrator', 'Account Buyer'];
+import {Liferay} from '../../liferay/liferay';
+import headlessCommerceAdminUser from '../../services/rest/HeadlessCommerceAdminUser';
+import RadioCardList from '../RadioCardList/RadioCardList';
 
 type AccountSelectionProps = {
-	isFreeApp: boolean;
+	checkPersonalAccount?: boolean;
+	children?: ReactNode;
+	enabledAccountRoles?: string[];
 	onSelectAccount: (account: Account) => void;
 	selectedAccount: Account | undefined;
+	showContactSupport?: boolean;
 	userAccount?: UserAccount;
 };
 
 const AccountSelection: React.FC<AccountSelectionProps> = ({
-	isFreeApp,
+	checkPersonalAccount = false,
+	children,
+	enabledAccountRoles,
 	onSelectAccount,
 	selectedAccount,
+	showContactSupport = true,
 	userAccount,
 }) => {
 	const accountBriefs = useMemo(() => userAccount?.accountBriefs ?? [], [
@@ -48,13 +52,17 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 			accountsInfo
 				.map((accountInfo, index) => {
 					const accountBrief = accountBriefs[index];
-					let displayAccount = accountInfo.type === 'person';
+					let displayAccount = checkPersonalAccount
+						? accountInfo.type === 'person'
+						: true;
 
 					if (accountBrief.roleBriefs.length) {
 						displayAccount = accountBriefs[
 							index
 						].roleBriefs.some((roleBrief) =>
-							enabledAccountRoles.includes(roleBrief.name)
+							enabledAccountRoles
+								? enabledAccountRoles.includes(roleBrief.name)
+								: true
 						);
 					}
 
@@ -70,13 +78,17 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 					};
 				})
 				.filter(({displayAccount}) => displayAccount),
-		[accountBriefs, accountsInfo, selectedAccount?.externalReferenceCode]
+		[
+			accountBriefs,
+			accountsInfo,
+			checkPersonalAccount,
+			enabledAccountRoles,
+			selectedAccount?.externalReferenceCode,
+		]
 	);
 
 	const handleSelectAccount = (radioOption: RadioOption<Account>) => {
-		if (radioOption.value.id !== selectedAccount?.id) {
-			onSelectAccount(radioOption.value);
-		}
+		onSelectAccount(radioOption.value);
 	};
 
 	return (
@@ -84,7 +96,7 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 			<p className="mb-4 secondary-text">
 				{`Accounts available for `}
 
-				<strong>{userAccount?.emailAddress}</strong>
+				<strong>{Liferay.ThemeDisplay.getUserEmailAddress()}</strong>
 
 				{` (you)`}
 			</p>
@@ -106,9 +118,9 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 				<p className="font-weight-bold my-5">No accounts available</p>
 			)}
 
-			{isFreeApp ? (
-				<LicenseTermsCheckbox />
-			) : (
+			{children}
+
+			{showContactSupport && (
 				<>
 					<span className="mr-1 secondary-text">
 						Not seeing a specific Account?
@@ -117,6 +129,8 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 					<ClayLink
 						className="font-weight-bold"
 						href="http://help.liferay.com/"
+						rel="noopener noreferrer"
+						target="_blank"
 					>
 						Contact Support
 					</ClayLink>

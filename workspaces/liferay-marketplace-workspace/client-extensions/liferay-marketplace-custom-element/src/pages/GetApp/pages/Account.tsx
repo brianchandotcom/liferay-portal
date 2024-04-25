@@ -5,12 +5,13 @@
 
 import {useOutletContext} from 'react-router-dom';
 
+import AccountSelection from '../../../components/Checkout/AccountSelection';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import i18n from '../../../i18n';
 import {useGetAppContext} from '../GetAppContextProvider';
 import {GetAppOutletContext} from '../GetAppOutlet';
-import AccountSelection from '../components/AccountSelection';
 import Container from '../containers/Container';
+import LicenseTermsCheckbox from '../containers/LicenseTermsCheckbox';
 import getProductPriceModel from '../utils/getProductPriceModel';
 
 const GetAppPage = () => {
@@ -52,13 +53,17 @@ const GetAppPage = () => {
 			title="Account Selection"
 		>
 			<AccountSelection
-				isFreeApp={isFreeApp}
+				checkPersonalAccount
+				enabledAccountRoles={['Account Administrator', 'Account Buyer']}
 				onSelectAccount={(account: Account) =>
 					dispatch({payload: account, type: 'SET_ACCOUNT'})
 				}
 				selectedAccount={account}
+				showContactSupport={!isFreeApp}
 				userAccount={myUserAccount}
-			/>
+			>
+				{isFreeApp && <LicenseTermsCheckbox />}
+			</AccountSelection>
 		</Container>
 	);
 };

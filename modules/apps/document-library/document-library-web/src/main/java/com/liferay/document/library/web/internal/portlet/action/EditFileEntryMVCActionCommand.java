@@ -399,21 +399,11 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		User user = _userLocalService.getUser(themeDisplay.getUserId());
 
-		Date displayDate = _getDisplayDate(
-			uploadPortletRequest, neverExpireDefaultValue, user.getTimeZone());
-
-		Date expirationDate = _getExpirationDate(
-			uploadPortletRequest, displayDate, neverExpireDefaultValue,
-			user.getTimeZone());
-
-		Date reviewDate = _getReviewDate(
-			uploadPortletRequest, neverExpireDefaultValue, user.getTimeZone());
-
 		for (String selectedFileName : selectedFileNames) {
 			_addMultipleFileEntries(
 				portletConfig, actionRequest, selectedFileName,
-				validFileNameKVPs, invalidFileNameKVPs, displayDate,
-				expirationDate, reviewDate, serviceContext);
+				validFileNameKVPs, invalidFileNameKVPs, neverExpireDefaultValue,
+				user, uploadPortletRequest, serviceContext);
 		}
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
@@ -452,8 +442,10 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private void _addMultipleFileEntries(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			String selectedFileName, List<KeyValuePair> validFileNameKVPs,
-			List<KeyValuePair> invalidFileNameKVPs, Date displayDate,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			List<KeyValuePair> invalidFileNameKVPs,
+			boolean neverExpireDefaultValue, User user,
+			UploadPortletRequest uploadPortletRequest,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -467,6 +459,18 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		FileEntry tempFileEntry = null;
 
 		try {
+			Date displayDate = _getDisplayDate(
+				uploadPortletRequest, neverExpireDefaultValue,
+				user.getTimeZone());
+
+			Date expirationDate = _getExpirationDate(
+				uploadPortletRequest, displayDate, neverExpireDefaultValue,
+				user.getTimeZone());
+
+			Date reviewDate = _getReviewDate(
+				uploadPortletRequest, neverExpireDefaultValue,
+				user.getTimeZone());
+
 			tempFileEntry = TempFileEntryUtil.getTempFileEntry(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 				TEMP_FOLDER_NAME, selectedFileName);

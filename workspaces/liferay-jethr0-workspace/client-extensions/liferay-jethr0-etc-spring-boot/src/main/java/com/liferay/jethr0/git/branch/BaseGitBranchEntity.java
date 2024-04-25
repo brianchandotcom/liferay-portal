@@ -9,6 +9,7 @@ import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.git.commit.GitCommitEntity;
 import com.liferay.jethr0.git.pull.GitPullEntity;
+import com.liferay.jethr0.git.user.GitUserEntity;
 import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.util.PropertiesUtil;
 import com.liferay.jethr0.util.StringUtil;
@@ -82,11 +83,23 @@ public abstract class BaseGitBranchEntity
 	}
 
 	@Override
+	public GitUserEntity getGitUserEntity() {
+		return _gitUserEntity;
+	}
+
+	@Override
+	public long getGitUserEntityId() {
+		return _gitUserEntityId;
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
 		jsonObject.put(
 			"latestSHA", getLatestSHA()
+		).put(
+			"r_gitUserToGitBranches_c_gitUserId", getGitUserEntityId()
 		).put(
 			"url", getURL()
 		);
@@ -202,9 +215,23 @@ public abstract class BaseGitBranchEntity
 	}
 
 	@Override
+	public void setGitUserEntity(GitUserEntity gitUserEntity) {
+		_gitUserEntity = gitUserEntity;
+
+		if (_gitUserEntity == null) {
+			_gitUserEntityId = 0;
+		}
+		else {
+			_gitUserEntityId = _gitUserEntity.getId();
+		}
+	}
+
+	@Override
 	public void setJSONObject(JSONObject jsonObject) {
 		super.setJSONObject(jsonObject);
 
+		_gitUserEntityId = jsonObject.getLong(
+			"r_gitUserToGitBranches_c_gitUserId");
 		_latestSHA = jsonObject.getString("latestSHA");
 		_url = StringUtil.toURL(jsonObject.getString("url"));
 		_type = Type.get(jsonObject.getJSONObject("type"));
@@ -247,6 +274,8 @@ public abstract class BaseGitBranchEntity
 			"(commits|tree)/(?<branchName>[^/]+)");
 
 	private GitHubClient _gitHubClient;
+	private GitUserEntity _gitUserEntity;
+	private long _gitUserEntityId;
 	private String _latestSHA;
 	private final Map<String, Properties> _propertiesFiles = new HashMap<>();
 	private Type _type;

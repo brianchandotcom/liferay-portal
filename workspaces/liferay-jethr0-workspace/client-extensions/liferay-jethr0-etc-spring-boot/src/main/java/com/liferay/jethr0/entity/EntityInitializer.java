@@ -10,6 +10,7 @@ import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.git.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.git.repository.GitCommitEntityRepository;
 import com.liferay.jethr0.git.repository.GitPullEntityRepository;
+import com.liferay.jethr0.git.repository.GitUserEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
@@ -50,6 +51,9 @@ public class EntityInitializer {
 
 		_gitPullEntityRepository.setJobEntityRepository(_jobEntityRepository);
 
+		_gitUserEntityRepository.setGitBranchEntityRepository(
+			_gitBranchEntityRepository);
+
 		_jenkinsCohortEntityRepository.setJenkinsServerEntityRepository(
 			_jenkinsServerEntityRepository);
 
@@ -81,6 +85,7 @@ public class EntityInitializer {
 		_gitBranchEntityRepository.initialize();
 		_gitCommitEntityRepository.initialize();
 		_gitPullEntityRepository.initialize();
+		_gitUserEntityRepository.initialize();
 		_jenkinsCohortEntityRepository.initialize();
 		_jenkinsNodeEntityRepository.initialize();
 		_jenkinsServerEntityRepository.initialize();
@@ -94,6 +99,7 @@ public class EntityInitializer {
 		_gitBranchEntityRepository.initializeRelationships();
 		_gitCommitEntityRepository.initializeRelationships();
 		_gitPullEntityRepository.initializeRelationships();
+		_gitUserEntityRepository.initializeRelationships();
 		_jenkinsCohortEntityRepository.initializeRelationships();
 		_jenkinsNodeEntityRepository.initializeRelationships();
 		_jenkinsServerEntityRepository.initializeRelationships();
@@ -119,6 +125,9 @@ public class EntityInitializer {
 
 	@Autowired
 	private GitPullEntityRepository _gitPullEntityRepository;
+
+	@Autowired
+	private GitUserEntityRepository _gitUserEntityRepository;
 
 	@Autowired
 	private JenkinsCohortEntityRepository _jenkinsCohortEntityRepository;

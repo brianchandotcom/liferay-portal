@@ -6,9 +6,12 @@
 package com.liferay.jethr0.git.user;
 
 import com.liferay.jethr0.entity.BaseEntity;
+import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
+
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -17,6 +20,21 @@ import org.json.JSONObject;
  */
 public abstract class BaseGitUserEntity
 	extends BaseEntity implements GitUserEntity {
+
+	@Override
+	public void addGitBranchEntities(Set<GitBranchEntity> gitBranchEntities) {
+		addRelatedEntities(gitBranchEntities);
+	}
+
+	@Override
+	public void addGitBranchEntity(GitBranchEntity gitBranchEntity) {
+		addRelatedEntity(gitBranchEntity);
+	}
+
+	@Override
+	public Set<GitBranchEntity> getGitBranchEntities() {
+		return getRelatedEntities(GitBranchEntity.class);
+	}
 
 	@Override
 	public JSONObject getJSONObject() {
@@ -30,6 +48,18 @@ public abstract class BaseGitUserEntity
 	@Override
 	public URL getURL() {
 		return _url;
+	}
+
+	@Override
+	public void removeGitBranchEntities(
+		Set<GitBranchEntity> gitBranchEntities) {
+
+		removeRelatedEntities(gitBranchEntities);
+	}
+
+	@Override
+	public void removeGitBranchEntity(GitBranchEntity gitBranchEntity) {
+		removeRelatedEntity(gitBranchEntity);
 	}
 
 	@Override

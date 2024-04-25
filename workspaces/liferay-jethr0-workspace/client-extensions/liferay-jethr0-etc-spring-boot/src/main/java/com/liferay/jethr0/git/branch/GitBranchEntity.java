@@ -9,6 +9,7 @@ import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.git.commit.GitCommitEntity;
 import com.liferay.jethr0.git.pull.GitPullEntity;
+import com.liferay.jethr0.git.user.GitUserEntity;
 import com.liferay.jethr0.routine.RoutineEntity;
 
 import java.io.IOException;
@@ -45,6 +46,10 @@ public interface GitBranchEntity extends Entity {
 
 	public Set<GitPullEntity> getGitPullEntities();
 
+	public GitUserEntity getGitUserEntity();
+
+	public long getGitUserEntityId();
+
 	public String getLatestSHA();
 
 	public String getName();
@@ -77,6 +82,8 @@ public interface GitBranchEntity extends Entity {
 	public void removeRoutineEntity(RoutineEntity routineEntity);
 
 	public void setGitHubClient(GitHubClient gitHubClient);
+
+	public void setGitUserEntity(GitUserEntity gitUserEntity);
 
 	public void setLatestSHA(String latestSHA);
 

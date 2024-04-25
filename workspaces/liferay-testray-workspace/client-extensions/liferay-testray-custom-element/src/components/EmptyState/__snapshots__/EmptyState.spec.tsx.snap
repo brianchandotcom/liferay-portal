@@ -14,7 +14,7 @@ exports[`EmptyState > renders with default properties 1`] = `
         <img
           alt="c-empty-state-image"
           class="aspect-ratio-item aspect-ratio-item-fluid"
-          src="/states/empty_state.svg"
+          src="/states/empty_state.gif"
         />
       </div>
     </div>

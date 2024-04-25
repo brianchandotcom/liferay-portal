@@ -21,7 +21,7 @@ export const States = {
 	 * When there are no elements in the data set at a certain level
 	 */
 
-	EMPTY_STATE: `${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.svg`,
+	EMPTY_STATE: `${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.gif`,
 
 	/**
 	 * When there no permission to access the module

@@ -4,5 +4,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:item-selector:item-selector-api")
 	testIntegrationImplementation project(":apps:item-selector:item-selector-criteria-api")
 	testIntegrationImplementation project(":apps:item-selector:item-selector-taglib")
+	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

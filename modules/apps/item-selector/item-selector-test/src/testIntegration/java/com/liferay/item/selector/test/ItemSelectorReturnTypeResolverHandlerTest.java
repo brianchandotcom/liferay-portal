@@ -10,7 +10,10 @@ import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewReturnTypeProvider;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -215,6 +218,28 @@ public class ItemSelectorReturnTypeResolverHandlerTest {
 		}
 	}
 
+	@Test
+	public void testItemSelectorReturnTypeResolverIsReturnedWithDisabledReference()
+		throws Exception {
+
+		ConfigurationTestUtil.saveConfiguration(
+			_BUNDLE_BLACKLIST_CONFIGURATION_PID,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"blacklist-bundle-symbolic-names",
+				"com.liferay.document.library.video"
+			).build());
+
+		Assert.assertNotNull(
+			_itemSelectorReturnTypeResolverHandler.
+				getItemSelectorReturnTypeResolver(
+					"com.liferay.item.selector.criteria." +
+						"FileEntryItemSelectorReturnType",
+					FileEntry.class.getName()));
+
+		ConfigurationTestUtil.deleteConfiguration(
+			_BUNDLE_BLACKLIST_CONFIGURATION_PID);
+	}
+
 	protected ServiceRegistration<ItemSelectorReturnTypeResolver<?, ?>>
 		registerItemSelectorReturnTypeResolver(
 			ItemSelectorReturnTypeResolver<?, ?> itemSelectorReturnTypeResolver,
@@ -262,6 +287,10 @@ public class ItemSelectorReturnTypeResolverHandlerTest {
 
 		serviceRegistrations.forEach(ServiceRegistration::unregister);
 	}
+
+	private static final String _BUNDLE_BLACKLIST_CONFIGURATION_PID =
+		"com.liferay.portal.bundle.blacklist.internal.configuration." +
+			"BundleBlacklistConfiguration";
 
 	private Bundle _bundle;
 	private BundleContext _bundleContext;

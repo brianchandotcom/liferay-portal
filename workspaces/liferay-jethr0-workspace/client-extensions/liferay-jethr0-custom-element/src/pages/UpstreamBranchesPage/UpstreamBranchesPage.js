@@ -71,7 +71,10 @@ function UpstreamBranches() {
 										upstreamGitBranch.latestSHA
 									}
 								>
-									{upstreamGitBranch.latestSHA.substring(0, 7)}
+									{upstreamGitBranch.latestSHA.substring(
+										0,
+										7
+									)}
 								</Link>
 							</td>
 							<td>

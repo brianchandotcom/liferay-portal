@@ -41,9 +41,7 @@ function UpstreamBranchInformation({upstreamBranch}) {
 				Branch ID: {upstreamBranch.id}
 				<br />
 				Branch Name:{' '}
-				<Link to={upstreamBranch.url}>
-					{upstreamBranch.name}
-				</Link>
+				<Link to={upstreamBranch.url}>{upstreamBranch.name}</Link>
 				<br />
 				Branch SHA:{' '}
 				<Link
@@ -72,9 +70,7 @@ function UpstreamBranchInformation({upstreamBranch}) {
 				</Link>
 				<br />
 				User Name:{' '}
-				<Link
-					to={'https://github.com/' + upstreamBranch.userName}
-				>
+				<Link to={'https://github.com/' + upstreamBranch.userName}>
 					{upstreamBranch.userName}
 				</Link>
 				<br />
@@ -100,9 +96,7 @@ function UpstreamBranchPage() {
 
 	if (upstreamGitBranch) {
 		upstreamBranchTitle =
-			upstreamGitBranch.repositoryName +
-			'/' +
-			upstreamGitBranch.name;
+			upstreamGitBranch.repositoryName + '/' + upstreamGitBranch.name;
 	}
 
 	const breadcrumbs = [

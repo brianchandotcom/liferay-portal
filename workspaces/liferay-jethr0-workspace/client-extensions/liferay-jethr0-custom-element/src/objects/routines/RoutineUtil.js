@@ -7,7 +7,6 @@ import liferayRequest from '../../services/liferayRequest';
 import GitBranch from '../gitbranches/GitBranch';
 import Job from '../jobs/Job';
 import Routine from './Routine';
-import {getUpstreamGitBranch} from '../gitbranches/GitBranchUtil';
 
 export async function createRoutine({data, redirect}) {
 	const headers = {
@@ -115,7 +114,9 @@ export async function getRoutineById({id, setRoutine}) {
 		routine.jobs = jobs;
 
 		if (routine.type.key === 'upstreamBranchCron') {
-			routine.upstreamGitBranch = new GitBranch(routineJSON.gitBranchToRoutines);
+			routine.upstreamGitBranch = new GitBranch(
+				routineJSON.gitBranchToRoutines
+			);
 		}
 
 		if (routine) {

@@ -8,14 +8,7 @@ const gitHubURLRegExp = new RegExp(
 );
 
 export default class GitBranch {
-	constructor({
-		latestSHA,
-		dateCreated,
-		dateModified,
-		id,
-		type,
-		url,
-	}) {
+	constructor({dateCreated, dateModified, id, latestSHA, type, url}) {
 		this.latestSHA = latestSHA;
 		this.dateCreated = dateCreated;
 		this.dateModified = dateModified;

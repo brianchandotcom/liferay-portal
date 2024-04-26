@@ -72,6 +72,7 @@ export default function ItemConfigurationSidebar() {
 							'select-a-page-element-to-activate-this-panel'
 						)}
 						imgSrc={`${config.imagesPath}/no_item.svg`}
+						imgSrcReducedMotion={null}
 						small
 						title={Liferay.Language.get('select-a-page-element')}
 					/>

@@ -16,6 +16,7 @@ export default function NoCommentsMessage() {
 					'select-a-fragment-to-add-a-comment'
 				)}
 				imgSrc={`${config.imagesPath}/no_comments.svg`}
+				imgSrcReducedMotion={null}
 				small
 				title={Liferay.Language.get('there-are-no-comments-yet')}
 			/>

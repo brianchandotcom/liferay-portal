@@ -334,8 +334,7 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"displayStyle": "default",
-													"displayStyleGroupId": "33405",
+													"displayStyle": "ddmTemplate_LEARN_SEARCH_CATEGORY_FACET",
 													"frequenciesVisible": "false",
 													"frequencyThreshold": "1",
 													"maxTerms": "100",
@@ -376,8 +375,7 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"displayStyle": "default",
-													"displayStyleGroupId": "33405",
+													"displayStyle": "ddmTemplate_LEARN_SEARCH_CATEGORY_FACET",
 													"frequenciesVisible": "false",
 													"frequencyThreshold": "1",
 													"maxTerms": "100",

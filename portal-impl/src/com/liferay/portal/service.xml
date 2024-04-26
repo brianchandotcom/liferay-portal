@@ -1122,7 +1122,7 @@
 	</entity>
 	<entity local-service="true" name="LayoutTemplate" remote-service="false" tx-manager="none">
 	</entity>
-	<entity local-service="true" name="ListType" remote-service="true">
+	<entity local-service="true" name="ListType" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -1131,6 +1131,10 @@
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 

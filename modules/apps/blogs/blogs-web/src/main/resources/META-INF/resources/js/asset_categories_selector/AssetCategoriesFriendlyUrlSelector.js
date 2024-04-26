@@ -12,7 +12,6 @@ import {useEventListener} from '@liferay/frontend-js-react-web';
 import {
 	normalizeFriendlyURL,
 	openCategorySelectionModal,
-	sub,
 } from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useRef, useState} from 'react';
@@ -25,11 +24,9 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 	friendlyURLSeparatorCompanyConfigurationURL,
 	friendlyUrlInfo,
 	inputAddon,
-	label = Liferay.Language.get('add-categories-to-url'),
 	portletNamespace,
 	selectCategoryURL,
 	selectedCategories = [],
-	showVocabularyLabel = true,
 }) {
 	const [customUrlCheckboxValue, setCustomUrlCheckboxValue] = useState(
 		automaticURL ? DEFAULT_URL : CUSTOM_URL
@@ -165,10 +162,9 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 
 			<ClayForm.Group>
 				<label
-					className={showVocabularyLabel ? '' : 'sr-only'}
 					htmlFor={`${portletNamespace}friendlyURLAssetCategoryIdsMultiSelect`}
 				>
-					{label}
+					{Liferay.Language.get('add-categories-to-url')}
 				</label>
 
 				<ClayInput.Group>
@@ -186,10 +182,6 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 					<ClayInput.GroupItem shrink>
 						<ClayButton
 							aria-haspopup="dialog"
-							aria-label={sub(
-								Liferay.Language.get('select-x'),
-								label
-							)}
 							disabled={customUrlCheckboxValue === DEFAULT_URL}
 							displayType="secondary"
 							onClick={handleSelectButtonClick}
@@ -245,11 +237,9 @@ AssetVocabulariesCategoriesFriendlyUrlSelector.propTypes = {
 	friendlyURLSeparatorCompanyConfigurationURL: PropTypes.string,
 	friendlyUrlInfo: PropTypes.string,
 	inputAddon: PropTypes.string.isRequired,
-	label: PropTypes.string,
 	portletNamespace: PropTypes.string.isRequired,
 	selectCategoryURL: PropTypes.string.isRequired,
 	selectedCategories: PropTypes.array,
-	showVocabularyLabel: PropTypes.bool,
 };
 
 export default AssetVocabulariesCategoriesFriendlyUrlSelector;

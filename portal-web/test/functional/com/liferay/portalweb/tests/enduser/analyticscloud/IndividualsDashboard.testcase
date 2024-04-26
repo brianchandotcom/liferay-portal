@@ -255,17 +255,19 @@ definition {
 	@description = "Bug: LRAC-12694 | Automation ID: LRAC-12811 | Test Summary: Known Individuals is not duplicated if user exists in multiple properties"
 	@priority = 3
 	test IndividualNotDuplicatedIfUserExistsInMultipleProperties {
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine Reason: Flaky issue with failing on upstream while passing on release branch
-
 		var propertyName1 = ${assignedPropertyName};
 
 		task ("View the site page with new user to the first property") {
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				emailList = "userea@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
+		}
+
+		task ("Close Sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Disconnect AC and DXP") {
@@ -288,6 +290,8 @@ definition {
 
 		task ("View the site page with new user to the second property") {
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				emailList = "userea@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");

@@ -106,7 +106,8 @@ public class GraphQLController extends BaseFaroController {
 			httpPost.setHeader(
 				OSBAsahHeaderConstants.PROJECT_ID, faroProject.getProjectId());
 			httpPost.setHeader(
-				OSBAsahHeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE, getSecuritySignature(uri));
+				OSBAsahHeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE,
+				getSecuritySignature(uri));
 			httpPost.setHeader("content-type", "application/json");
 
 			CloseableHttpResponse closeableHttpResponse =

@@ -114,7 +114,8 @@ public class CacheClientHttpRequestInterceptor
 	protected String getProjectId(HttpRequest httpRequest) {
 		HttpHeaders httpHeaders = httpRequest.getHeaders();
 
-		List<String> headers = httpHeaders.getOrEmpty(OSBAsahHeaderConstants.PROJECT_ID);
+		List<String> headers = httpHeaders.getOrEmpty(
+			OSBAsahHeaderConstants.PROJECT_ID);
 
 		if (headers.isEmpty()) {
 			return StringPool.BLANK;

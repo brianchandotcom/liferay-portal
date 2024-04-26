@@ -52,6 +52,8 @@ public interface GitBranchEntity extends Entity {
 
 	public long getGitUserEntityId();
 
+	public GitCommitEntity getLatestGitCommitEntity();
+
 	public String getLatestSHA();
 
 	public String getName();

@@ -44,11 +44,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8152 | Test Summary: Check all applicable events trigger for unknown users (Page, Blog, Form, Web Content, Documents & Media, Social)"
 	@priority = 5
 	test CheckGeneralEventsForUnknownUser {
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine Reason: Test fix data source name is not found
-		// AC Quarantine Ticket: LRAC-13741
-
 		property proxy.server.enabled = "true";
 		property test.run.type = "single";
 
@@ -130,7 +125,7 @@ definition {
 		}
 
 		task ("Connect the DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Get the Property ID in AC") {
@@ -138,15 +133,11 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${propertyName});
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Get the DXP Instance ID in AC") {
-			var dataSourceName = StringUtil.extractFirst(${propertyName}, "Combined");
-
-			var dataSourceName = StringUtil.trim(${dataSourceName});
-
-			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = ${dataSourceName});
+			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = ${assignedPropertyName});
 		}
 
 		task ("Sign in DXP") {
@@ -427,7 +418,7 @@ definition {
 				applicationId = "Form",
 				eventId = "pageViewed",
 				property = "title",
-				value = "");
+				value = "Created Form Name");
 
 			Click(
 				key_fieldName = "Text",

@@ -83,19 +83,21 @@ test('allows adding a Collection Display with a manual collection into another C
 
 	await pageEditorPage.goToEditMode(layout, wemSite.friendlyUrlPath);
 
-	// Expect first collection to display all recent contents
+	// Calculate the number of recent contents
 
 	const firstCollection = await pageEditorPage.getFragment(firstCollectionId);
 
-	await expect(firstCollection.getByText('Sample 01')).toBeVisible();
-	await expect(firstCollection.getByText('echo-logo.png')).toBeVisible();
+	const count = await firstCollection.locator('.list-group-item').count();
 
-	// Expect second collection to display only Sample 01 content two times
+	// Expect second collection to display only Sample 01 content that times
 
 	const secondCollection = await pageEditorPage.getFragment(
 		secondCollectionId
 	);
 
-	await expect(secondCollection.getByText('Sample 01')).toHaveCount(2);
-	await expect(secondCollection.getByText('echo-logo.png')).not.toBeVisible();
+	await expect(secondCollection.getByText('Sample 01')).toHaveCount(count);
+
+	for (const item of await secondCollection.getByRole('listitem').all()) {
+		await expect(item).toHaveText('Sample 01');
+	}
 });

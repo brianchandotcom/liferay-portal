@@ -8,13 +8,17 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.GitUtil;
+import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
+import com.liferay.source.formatter.processor.SourceProcessor;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,7 +35,8 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws Exception {
 
 		String className = JavaSourceUtil.getClassName(fileName);
 
@@ -41,6 +46,37 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 
 			return content;
 		}
+
+		SourceProcessor sourceProcessor = getSourceProcessor();
+
+		SourceFormatterArgs sourceFormatterArgs =
+			sourceProcessor.getSourceFormatterArgs();
+
+		for (String currentBranchRenamedFileName :
+				_getCurrentBranchRenamedFileNames(sourceFormatterArgs)) {
+
+			if (absolutePath.endsWith(currentBranchRenamedFileName)) {
+				return content;
+			}
+		}
+
+		for (String currentBranchAddedFileNames :
+				_getCurrentBranchAddedFileName(sourceFormatterArgs)) {
+
+			if (absolutePath.endsWith(currentBranchAddedFileNames)) {
+				_checkMissingTestFile(
+					fileName, absolutePath, content, className);
+
+				return content;
+			}
+		}
+
+		return content;
+	}
+
+	private void _checkMissingTestFile(
+		String fileName, String absolutePath, String content,
+		String className) {
 
 		String expectedTestClassName = null;
 		File file = null;
@@ -76,8 +112,6 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 				fileName,
 				"Test class '" + expectedTestClassName + "' does not exist");
 		}
-
-		return content;
 	}
 
 	private synchronized Map<String, String> _getBundleSymbolicNamesMap(
@@ -91,6 +125,37 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 			SourceUtil.getRootDirName(absolutePath));
 
 		return _bundleSymbolicNamesMap;
+	}
+
+	private synchronized List<String> _getCurrentBranchAddedFileName(
+			SourceFormatterArgs sourceFormatterArgs)
+		throws Exception {
+
+		if (_currentBranchAddedFileNames != null) {
+			return _currentBranchAddedFileNames;
+		}
+
+		_currentBranchAddedFileNames = GitUtil.getCurrentBranchAddedFileNames(
+			sourceFormatterArgs.getBaseDirName(),
+			sourceFormatterArgs.getGitWorkingBranchName());
+
+		return _currentBranchAddedFileNames;
+	}
+
+	private synchronized List<String> _getCurrentBranchRenamedFileNames(
+			SourceFormatterArgs sourceFormatterArgs)
+		throws Exception {
+
+		if (_currentBranchRenamedFileNames != null) {
+			return _currentBranchRenamedFileNames;
+		}
+
+		_currentBranchRenamedFileNames =
+			GitUtil.getCurrentBranchRenamedFileNames(
+				sourceFormatterArgs.getBaseDirName(),
+				sourceFormatterArgs.getGitWorkingBranchName());
+
+		return _currentBranchRenamedFileNames;
 	}
 
 	private boolean _isUpgradeProcess(String absolutePath, String content) {
@@ -139,6 +204,9 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 
 		return _isUpgradeProcess(file.getAbsolutePath(), FileUtil.read(file));
 	}
+
+	private static List<String> _currentBranchAddedFileNames;
+	private static List<String> _currentBranchRenamedFileNames;
 
 	private Map<String, String> _bundleSymbolicNamesMap;
 

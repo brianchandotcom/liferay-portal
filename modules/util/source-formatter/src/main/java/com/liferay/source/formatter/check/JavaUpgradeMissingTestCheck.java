@@ -10,7 +10,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
-import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.processor.SourceProcessor;
@@ -19,7 +18,6 @@ import com.liferay.source.formatter.util.FileUtil;
 import java.io.File;
 
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -88,7 +86,7 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 
 			file = JavaSourceUtil.getJavaFile(
 				expectedTestClassName, SourceUtil.getRootDirName(absolutePath),
-				_getBundleSymbolicNamesMap(absolutePath));
+				getBundleSymbolicNamesMap(absolutePath));
 		}
 		else if (absolutePath.contains("/portal-impl/") ||
 				 absolutePath.contains("/portal-kernel/")) {
@@ -112,19 +110,6 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 				fileName,
 				"Test class '" + expectedTestClassName + "' does not exist");
 		}
-	}
-
-	private synchronized Map<String, String> _getBundleSymbolicNamesMap(
-		String absolutePath) {
-
-		if (_bundleSymbolicNamesMap != null) {
-			return _bundleSymbolicNamesMap;
-		}
-
-		_bundleSymbolicNamesMap = BNDSourceUtil.getBundleSymbolicNamesMap(
-			SourceUtil.getRootDirName(absolutePath));
-
-		return _bundleSymbolicNamesMap;
 	}
 
 	private synchronized List<String> _getCurrentBranchAddedFileName(
@@ -196,7 +181,7 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 
 		File file = JavaSourceUtil.getJavaFile(
 			extendedClassName, SourceUtil.getRootDirName(absolutePath),
-			_getBundleSymbolicNamesMap(absolutePath));
+			getBundleSymbolicNamesMap(absolutePath));
 
 		if (file == null) {
 			return false;
@@ -207,7 +192,5 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 
 	private static List<String> _currentBranchAddedFileNames;
 	private static List<String> _currentBranchRenamedFileNames;
-
-	private Map<String, String> _bundleSymbolicNamesMap;
 
 }

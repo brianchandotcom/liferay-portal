@@ -10,7 +10,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -283,21 +282,6 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 		return annotationsBlock;
 	}
 
-	private Map<String, String> _getBundleSymbolicNamesMap(
-		String absolutePath) {
-
-		Map<String, String> bundleSymbolicNamesMap = _bundleSymbolicNamesMap;
-
-		if (bundleSymbolicNamesMap == null) {
-			bundleSymbolicNamesMap = BNDSourceUtil.getBundleSymbolicNamesMap(
-				_getRootDirName(absolutePath));
-
-			_bundleSymbolicNamesMap = bundleSymbolicNamesMap;
-		}
-
-		return bundleSymbolicNamesMap;
-	}
-
 	private String _getComponentName(
 			String absolutePath, JavaClass javaClass, String attributeValue)
 		throws Exception {
@@ -374,7 +358,7 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 		if (javaClass == null) {
 			File javaFile = JavaSourceUtil.getJavaFile(
 				fullyQualifiedName, _getRootDirName(absolutePath),
-				_getBundleSymbolicNamesMap(absolutePath));
+				getBundleSymbolicNamesMap(absolutePath));
 
 			if (javaFile != null) {
 				javaClass = JavaClassParser.parseJavaClass(
@@ -409,7 +393,6 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 	private static final Pattern _pipePattern = Pattern.compile(
 		"(= \".*)( \\| | \\||\\| )");
 
-	private volatile Map<String, String> _bundleSymbolicNamesMap;
 	private final Map<String, JavaClass> _javaClassMap =
 		new ConcurrentHashMap<>();
 	private volatile String _rootDirName;

@@ -21,6 +21,7 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.SourceFormatterMessage;
+import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JSPSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -315,6 +316,19 @@ public abstract class BaseSourceCheck implements SourceCheck {
 				return FileUtil.read(file);
 			}
 		}
+	}
+
+	protected synchronized Map<String, String> getBundleSymbolicNamesMap(
+		String absolutePath) {
+
+		if (_bundleSymbolicNamesMap != null) {
+			return _bundleSymbolicNamesMap;
+		}
+
+		_bundleSymbolicNamesMap = BNDSourceUtil.getBundleSymbolicNamesMap(
+			SourceUtil.getRootDirName(absolutePath));
+
+		return _bundleSymbolicNamesMap;
 	}
 
 	protected String getContent(String fileName, int level) throws IOException {
@@ -986,6 +1000,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private String _baseDirName;
 	private final Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();
+	private Map<String, String> _bundleSymbolicNamesMap;
 	private JSONObject _excludesJSONObject;
 	private final Map<String, List<String>> _excludesValuesMap =
 		new ConcurrentHashMap<>();

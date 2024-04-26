@@ -10,7 +10,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -119,19 +118,6 @@ public class JavaDuplicateVariableCheck extends BaseJavaTermCheck {
 		}
 	}
 
-	private synchronized Map<String, String> _getBundleSymbolicNamesMap(
-		String absolutePath) {
-
-		if (_bundleSymbolicNamesMap != null) {
-			return _bundleSymbolicNamesMap;
-		}
-
-		_bundleSymbolicNamesMap = BNDSourceUtil.getBundleSymbolicNamesMap(
-			_getRootDirName(absolutePath));
-
-		return _bundleSymbolicNamesMap;
-	}
-
 	private Map<String, List<JavaVariable>> _getJavaVariablesMap(
 			String absolutePath, String fullyQualifiedClassName)
 		throws IOException {
@@ -144,7 +130,7 @@ public class JavaDuplicateVariableCheck extends BaseJavaTermCheck {
 
 		File file = JavaSourceUtil.getJavaFile(
 			fullyQualifiedClassName, _getRootDirName(absolutePath),
-			_getBundleSymbolicNamesMap(absolutePath));
+			getBundleSymbolicNamesMap(absolutePath));
 
 		if (file != null) {
 			try {
@@ -212,7 +198,6 @@ public class JavaDuplicateVariableCheck extends BaseJavaTermCheck {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JavaDuplicateVariableCheck.class);
 
-	private Map<String, String> _bundleSymbolicNamesMap;
 	private final Map<String, Map<String, List<JavaVariable>>>
 		_javaVariablesMap = new HashMap<>();
 	private String _rootDirName;

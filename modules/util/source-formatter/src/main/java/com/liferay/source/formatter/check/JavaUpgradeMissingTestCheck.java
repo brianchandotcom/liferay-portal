@@ -190,7 +190,7 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 		return _isUpgradeProcess(file.getAbsolutePath(), FileUtil.read(file));
 	}
 
-	private static List<String> _currentBranchAddedFileNames;
-	private static List<String> _currentBranchRenamedFileNames;
+	private List<String> _currentBranchAddedFileNames;
+	private List<String> _currentBranchRenamedFileNames;
 
 }

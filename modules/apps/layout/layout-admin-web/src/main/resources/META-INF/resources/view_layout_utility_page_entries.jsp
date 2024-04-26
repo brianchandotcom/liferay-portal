@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-LayoutUtilityPageEntryDisplayContext layoutUtilityPageEntryDisplayContext = new LayoutUtilityPageEntryDisplayContext(renderRequest, renderResponse);
+LayoutUtilityPageEntryDisplayContext layoutUtilityPageEntryDisplayContext = (LayoutUtilityPageEntryDisplayContext)request.getAttribute(LayoutUtilityPageEntryDisplayContext.class.getName());
 %>
 
 <liferay-ui:success key="layoutUpdated" message="the-page-was-updated-successfully" />

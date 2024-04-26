@@ -29,7 +29,7 @@ long cpDefinitionId = cpDefinitionLinkDisplayContext.getCPDefinitionId();
 		<portlet:actionURL name="/cp_definitions/edit_cp_definition" var="editProductDefinitionLinksActionURL" />
 
 		<aui:form action="<%= editProductDefinitionLinksActionURL %>" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateLinks" />
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateDefinitionLinks" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
 			<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />

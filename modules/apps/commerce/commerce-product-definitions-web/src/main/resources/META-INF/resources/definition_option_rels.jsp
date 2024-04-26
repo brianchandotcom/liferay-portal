@@ -40,7 +40,7 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 			<portlet:actionURL name="/cp_definitions/edit_cp_definition" var="editProductDefinitionOptionRelsActionURL" />
 
 			<aui:form action="<%= editProductDefinitionOptionRelsActionURL %>" method="post" name="fm">
-				<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateOptionRels" />
+				<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateDefinitionOptionRels" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionOptionRelDisplayContext.getCPDefinitionId() %>" />
 				<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />

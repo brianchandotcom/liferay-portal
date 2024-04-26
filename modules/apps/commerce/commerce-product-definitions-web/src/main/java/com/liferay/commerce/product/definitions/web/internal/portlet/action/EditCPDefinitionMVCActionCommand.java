@@ -192,11 +192,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 						CPDefinitionScreenNavigationConstants.
 							CATEGORY_KEY_VISIBILITY));
 			}
-			else if (cmd.equals("updateAttachments") ||
+			else if (cmd.equals("updateAttachmentFileEntries") ||
 					 cmd.equals("updateInstances") ||
-					 cmd.equals("updateLinks") ||
-					 cmd.equals("updateOptionRels") ||
-					 cmd.equals("updateProductGroups")) {
+					 cmd.equals("updateDefinitionLinks") ||
+					 cmd.equals("updateDefinitionOptionRels") ||
+					 cmd.equals("updateDefinitionPricingClasses")) {
 
 				Callable<CPDefinition> cpDefinitionUpdateCallable =
 					new CPDefinitionUpdateCallable(actionRequest, cpDefinition);

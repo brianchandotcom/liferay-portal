@@ -196,7 +196,7 @@ test('filters a web content collection by single and multiple tags', async ({
 	collectionsPage,
 	page,
 	pageEditorPage,
-	site,
+	wemSite,
 }) => {
 
 	// Create two tags
@@ -207,7 +207,7 @@ test('filters a web content collection by single and multiple tags', async ({
 		tags.push(
 			await apiHelpers.headlessAdminTaxonomy.createTag({
 				name: tagName,
-				siteId: site.id,
+				siteId: wemSite.id,
 			})
 		);
 	}
@@ -233,7 +233,7 @@ test('filters a web content collection by single and multiple tags', async ({
 		await addApprovedStructuredContent({
 			apiHelpers,
 			contentStructureId,
-			siteId: site.id,
+			siteId: wemSite.id,
 			tags,
 			title: name,
 		});
@@ -243,11 +243,11 @@ test('filters a web content collection by single and multiple tags', async ({
 
 	const collectionName = 'Animal Collection';
 
-	await collectionsPage.goto(site.friendlyUrlPath);
+	await collectionsPage.goto(wemSite.friendlyUrlPath);
 
 	const {classPK} = await collectionsPage.createWebContentDynamicCollection(
 		collectionName,
-		site.friendlyUrlPath
+		wemSite.friendlyUrlPath
 	);
 
 	// Create a page with Collection Display and Collection Filter fragments
@@ -258,12 +258,12 @@ test('filters a web content collection by single and multiple tags', async ({
 		apiHelpers,
 		classPK,
 		collectionFilterId,
-		siteId: site.id,
+		siteId: wemSite.id,
 	});
 
 	// Go to edit mode of the created page and select the Collection Filter fragment
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goToEditMode(layout, wemSite.friendlyUrlPath);
 
 	await pageEditorPage.selectFragment(collectionFilterId);
 
@@ -279,7 +279,7 @@ test('filters a web content collection by single and multiple tags', async ({
 
 	await pageEditorPage.publishPage();
 
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
 	for (const {name} of webContents) {
 		await expect(page.getByText(name)).toBeVisible();

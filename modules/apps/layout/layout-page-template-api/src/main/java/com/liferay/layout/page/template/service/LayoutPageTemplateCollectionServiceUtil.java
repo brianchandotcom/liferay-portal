@@ -31,14 +31,16 @@ public class LayoutPageTemplateCollectionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.layout.page.template.service.impl.LayoutPageTemplateCollectionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long groupId, long parentLayoutPageTemplateCollectionId,
-			String name, String description, int type,
+			String externalReferenceCode, long groupId,
+			long parentLayoutPageTemplateCollectionId, String name,
+			String description, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addLayoutPageTemplateCollection(
-			groupId, parentLayoutPageTemplateCollectionId, name, description,
-			type, serviceContext);
+			externalReferenceCode, groupId,
+			parentLayoutPageTemplateCollectionId, name, description, type,
+			serviceContext);
 	}
 
 	public static LayoutPageTemplateCollection copyLayoutPageTemplateCollection(
@@ -62,6 +64,15 @@ public class LayoutPageTemplateCollectionServiceUtil {
 			layoutPageTemplateCollectionId);
 	}
 
+	public static LayoutPageTemplateCollection
+			deleteLayoutPageTemplateCollection(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().deleteLayoutPageTemplateCollection(
+			externalReferenceCode, groupId);
+	}
+
 	public static void deleteLayoutPageTemplateCollections(
 			long[] layoutPageTemplateCollectionIds)
 		throws PortalException {
@@ -77,6 +88,15 @@ public class LayoutPageTemplateCollectionServiceUtil {
 
 		return getService().fetchLayoutPageTemplateCollection(
 			layoutPageTemplateCollectionId);
+	}
+
+	public static LayoutPageTemplateCollection
+			fetchLayoutPageTemplateCollection(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().fetchLayoutPageTemplateCollection(
+			externalReferenceCode, groupId);
 	}
 
 	public static List<LayoutPageTemplateCollection>

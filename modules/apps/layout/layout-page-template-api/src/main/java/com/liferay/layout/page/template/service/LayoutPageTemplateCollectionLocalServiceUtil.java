@@ -54,15 +54,16 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	}
 
 	public static LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long userId, long groupId,
+			String externalReferenceCode, long userId, long groupId,
 			long parentLayoutPageTemplateCollectionId, String name,
 			String description, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addLayoutPageTemplateCollection(
-			userId, groupId, parentLayoutPageTemplateCollectionId, name,
-			description, type, serviceContext);
+			externalReferenceCode, userId, groupId,
+			parentLayoutPageTemplateCollectionId, name, description, type,
+			serviceContext);
 	}
 
 	public static LayoutPageTemplateCollection copyLayoutPageTemplateCollection(
@@ -140,6 +141,15 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 
 		return getService().deleteLayoutPageTemplateCollection(
 			layoutPageTemplateCollectionId);
+	}
+
+	public static LayoutPageTemplateCollection
+			deleteLayoutPageTemplateCollection(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().deleteLayoutPageTemplateCollection(
+			externalReferenceCode, groupId);
 	}
 
 	/**
@@ -250,6 +260,14 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 
 		return getService().fetchLayoutPageTemplateCollection(
 			groupId, layoutPageTemplateCollectionKey, type);
+	}
+
+	public static LayoutPageTemplateCollection
+		fetchLayoutPageTemplateCollection(
+			String externalReferenceCode, long groupId) {
+
+		return getService().fetchLayoutPageTemplateCollection(
+			externalReferenceCode, groupId);
 	}
 
 	public static LayoutPageTemplateCollection

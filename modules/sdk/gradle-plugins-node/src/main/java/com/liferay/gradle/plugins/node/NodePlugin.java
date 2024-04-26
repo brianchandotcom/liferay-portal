@@ -1037,6 +1037,23 @@ public class NodePlugin implements Plugin<Project> {
 		Map<String, Object> packageJSONMap =
 			(Map<String, Object>)jsonSlurper.parse(packageJSONFile);
 
+		Map<String, String> scriptsJSONMap =
+			(Map<String, String>)packageJSONMap.get("scripts");
+
+		if (scriptsJSONMap != null) {
+			for (Map.Entry<String, String> entry : scriptsJSONMap.entrySet()) {
+				String command = entry.getValue();
+				String name = entry.getKey();
+
+				if (Objects.equals(name, "build") &&
+					command.startsWith("node ") &&
+					command.endsWith("/liferay.mjs")) {
+
+					return true;
+				}
+			}
+		}
+
 		Map<String, Object> devDependencies =
 			(Map<String, Object>)packageJSONMap.get("devDependencies");
 

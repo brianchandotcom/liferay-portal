@@ -4,6 +4,9 @@ import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.GradleUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
+import groovy.json.JsonSlurper
+
+import java.util.Objects
 import java.util.concurrent.ConcurrentSkipListSet
 
 import org.apache.tools.ant.DirectoryScanner
@@ -438,9 +441,25 @@ gradle.beforeProject {
 			}
 
 			if (FileUtil.exists(project, "package.json")) {
+				JsonSlurper jsonSlurper = new JsonSlurper()
+
 				File packageJSONFile = project.file("package.json")
 
-				if (packageJSONFile.text.contains("liferay-npm-scripts build")) {
+				Map<String, Object> packageJSONMap = jsonSlurper.parse(packageJSONFile, "UTF-8")
+
+				Map<String, String> scriptsJSONMap = packageJSONMap.get("scripts")
+
+				boolean liferayESModule = false
+
+				if (scriptsJSONMap != null) {
+					for (Map.Entry<String, String> entry : scriptsJSONMap.entrySet()) {
+						if (Objects.equals(entry.key, "build") && entry.value.startsWith("node ") && entry.value.endsWith("/liferay.mjs")) {
+							liferayESModule = true
+						}
+					}
+				}
+
+				if (packageJSONFile.text.contains("liferay-npm-scripts build") || liferayESModule) {
 					buildCSS {
 						enabled = false
 					}

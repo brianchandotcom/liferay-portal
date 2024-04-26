@@ -10,11 +10,6 @@
 	color: #6e6868;
 }
 
-.lexicon-icon-order-arrow:hover {
-	color: #000;
-	transition: 0.2s;
-}
-
 .table-cell-items {
 	display: block;
 	overflow: hidden;

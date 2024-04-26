@@ -32,6 +32,7 @@ import {MDFClaimListItem} from '../../common/interfaces/mdfClaimListItem';
 import TableColumn from '../../common/interfaces/tableColumn';
 import {Filters} from '../../common/utils/constants/filters';
 import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
+import setURLParams from '../../common/utils/setURLParams';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromMDFClaims from './hooks/useGetListItemsFromMDFClaims';
@@ -42,13 +43,11 @@ type MDFClaimItem = {
 	[key in MDFClaimColumnKey]?: any;
 };
 
-const BASE_PAGE = 1;
-const MAX_ITEMS = -1;
-
 const MDFClaimList = () => {
 	const {isChannel} = useIsChannel();
 
 	const urlParams = useQueryParams();
+
 	const [openClaimsFilter, setOpenClaimsFilter] = useState(
 		!urlParams.get('tab') || urlParams.get('tab') === 'open' ? true : false
 	);
@@ -70,21 +69,22 @@ const MDFClaimList = () => {
 	const debouncedClaimTableSort = useDebounce(claimTableSort, 1000);
 
 	const {data, isValidating, mutate} = useGetListItemsFromMDFClaims(
-		debouncedClaimTableSort,
 		pagination.activePage,
 		pagination.activeDelta,
-		filtersTerm
+		setURLParams({
+			filter: filtersTerm,
+			sort: debouncedClaimTableSort,
+			urlParams,
+		})
 	);
 
 	const {data: dataCSV} = useGetListItemsFromMDFClaims(
-		null,
-		BASE_PAGE,
-		MAX_ITEMS,
-		filtersTerm
+		pagination.activePage,
+		pagination.maxItems,
+		setURLParams({filter: filtersTerm, urlParams})
 	);
 
 	const siteURL = useLiferayNavigate();
-
 	const actions = usePermissionActions(ObjectActionName.MDF_CLAIM);
 
 	const columns = getMDFClaimListColumns(urlParams, siteURL, actions, mutate);

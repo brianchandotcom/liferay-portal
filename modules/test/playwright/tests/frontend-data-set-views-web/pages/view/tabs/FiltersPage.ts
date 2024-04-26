@@ -46,7 +46,14 @@ export class FiltersPage {
 			viewLabel,
 		});
 
-		await this.viewPage.selectTab('Filters');
+		await Promise.all([
+			this.viewPage.selectTab('Filters'),
+			this.page.waitForResponse(
+				(resp) =>
+					resp.status() === 200 &&
+					resp.url().includes('/openapi.json')
+			),
+		]);
 	}
 
 	async openNewFilterModal({dropdownItemLabel}: {dropdownItemLabel: string}) {

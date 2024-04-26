@@ -7,6 +7,7 @@ package com.liferay.osb.faro.engine.client.internal;
 
 import com.liferay.osb.faro.engine.client.CerebroEngineClient;
 import com.liferay.osb.faro.engine.client.http.client.AuthenticationClientHttpRequestInterceptor;
+import com.liferay.osb.faro.engine.client.http.client.AuthorClientHttpRequestInterceptor;
 import com.liferay.osb.faro.engine.client.model.GraphQLRequest;
 import com.liferay.osb.faro.engine.client.util.EngineServiceURLUtil;
 import com.liferay.osb.faro.model.FaroProject;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 
@@ -183,8 +185,9 @@ public class CerebroEngineClientImpl implements CerebroEngineClient {
 		RestTemplate restTemplate = new RestTemplate();
 
 		restTemplate.setInterceptors(
-			Collections.singletonList(
-				new AuthenticationClientHttpRequestInterceptor(faroProject)));
+			Arrays.asList(
+				new AuthenticationClientHttpRequestInterceptor(faroProject),
+				new AuthorClientHttpRequestInterceptor()));
 
 		return restTemplate.exchange(
 			EngineServiceURLUtil.getBackendURL(faroProject, "/graphql"),

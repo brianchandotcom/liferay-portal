@@ -22,8 +22,10 @@ export class FeatureFlagsInstanceSettingsPage {
 		this.instanceSettingsPage = new InstanceSettingsPage(page);
 	}
 
-	async getFeatureFlagToggle(key: string) {
-		await this.searchFor(key);
+	async getFeatureFlagToggle(key: string, searchFor: boolean = true) {
+		if (searchFor) {
+			await this.searchFor(key);
+		}
 
 		return this.page.locator(`#${key}`);
 	}
@@ -49,10 +51,19 @@ export class FeatureFlagsInstanceSettingsPage {
 		}).toPass();
 	}
 
-	async updateFeatureFlag(key: string, enabled: boolean) {
-		await this.searchFor(key);
+	async updateFeatureFlag(
+		key: string,
+		enabled: boolean,
+		searchFor: boolean = true
+	) {
+		if (searchFor) {
+			await this.searchFor(key);
+		}
 
-		const featureFlagToggle = await this.getFeatureFlagToggle(key);
+		const featureFlagToggle = await this.getFeatureFlagToggle(
+			key,
+			searchFor
+		);
 
 		await expect(
 			featureFlagToggle,

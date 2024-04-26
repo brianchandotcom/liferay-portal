@@ -51,16 +51,20 @@ test('LPS-167698 - Assert that a feature flag with dependencies can be enabled w
 }) => {
 	await featureFlagsInstanceSettingsPage.goto();
 
+	await featureFlagsInstanceSettingsPage.searchFor('LPD-0000');
+
 	// Enable feature flag dependency
 
 	await featureFlagsInstanceSettingsPage.updateFeatureFlag(
 		DEPENDENCY_FEATURE_FLAG,
-		true
+		true,
+		false
 	);
 
 	const dependencyFeatureFlagToggle =
 		await featureFlagsInstanceSettingsPage.getFeatureFlagToggle(
-			DEPENDENCY_FEATURE_FLAG
+			DEPENDENCY_FEATURE_FLAG,
+			false
 		);
 
 	await expect(dependencyFeatureFlagToggle).toBeChecked();
@@ -69,12 +73,14 @@ test('LPS-167698 - Assert that a feature flag with dependencies can be enabled w
 
 	await featureFlagsInstanceSettingsPage.updateFeatureFlag(
 		DEPENDENT_FEATURE_FLAG,
-		true
+		true,
+		false
 	);
 
 	const dependentFeatureFlagToggle =
 		await featureFlagsInstanceSettingsPage.getFeatureFlagToggle(
-			DEPENDENT_FEATURE_FLAG
+			DEPENDENT_FEATURE_FLAG,
+			false
 		);
 
 	await expect(dependentFeatureFlagToggle).toBeChecked();
@@ -83,11 +89,13 @@ test('LPS-167698 - Assert that a feature flag with dependencies can be enabled w
 
 	await featureFlagsInstanceSettingsPage.updateFeatureFlag(
 		DEPENDENT_FEATURE_FLAG,
+		false,
 		false
 	);
 
 	await featureFlagsInstanceSettingsPage.updateFeatureFlag(
 		DEPENDENCY_FEATURE_FLAG,
+		false,
 		false
 	);
 });

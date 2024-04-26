@@ -11,6 +11,7 @@ import ClayTabs from '@clayui/tabs';
 import {useState} from 'react';
 import {CSVLink} from 'react-csv';
 
+import './index.css';
 import Modal from '../../common/components/Modal';
 import Table from '../../common/components/Table';
 import TableHeader from '../../common/components/TableHeader';
@@ -149,6 +150,7 @@ const PartnerOpportunitiesList = ({isRenewalListing, name, sort}: IProps) => {
 			return (
 				<div className="mt-3">
 					<Table<PartnerOpportunitiesItem>
+						className="custom-table"
 						columns={columns}
 						customClickOnRow={handleCustomClickOnRow}
 						rows={items}

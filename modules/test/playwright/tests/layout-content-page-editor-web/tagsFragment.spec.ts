@@ -7,8 +7,8 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {wemSiteTest} from '../../fixtures/wemSiteTest';
 import {TAGS_OBJECT_ERC} from '../../setup/wem-site/constants';
 import getGlobalSiteId from '../../utils/getGlobalSiteId';
 import getRandomString from '../../utils/getRandomString';
@@ -21,7 +21,7 @@ const OBJECT_DEFINITION_PATH = 'object-admin/v1.0/object-definitions';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	wemSiteTest,
+	isolatedSiteTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
@@ -31,7 +31,7 @@ export const test = mergeTests(
 test('uses Tags fragment for Forms in a Content Page', async ({
 	apiHelpers,
 	page,
-	wemSite,
+	site,
 }) => {
 
 	// Get the id of the tags object from the site initializer
@@ -84,7 +84,7 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([formDefinition]),
-		siteId: wemSite.id,
+		siteId: site.id,
 		title: getRandomString(),
 	});
 
@@ -93,7 +93,7 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 	for (const tagName of ['Dogs', 'Cats']) {
 		await apiHelpers.headlessAdminTaxonomy.createTag({
 			name: tagName,
-			siteId: wemSite.id,
+			siteId: site.id,
 		});
 	}
 
@@ -108,7 +108,7 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 
 	// Go to view mode of the created page, select a tag for each fragment and submit the form
 
-	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
 	await page.getByRole('combobox').first().click();
 	await page.getByRole('option', {exact: true, name: 'Dogs'}).click();
@@ -128,7 +128,7 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 	// Go to the object definition page and check the Tags fragment
 
 	await page.goto(
-		`/group${wemSite.friendlyUrlPath}${PORTLET_URLS.objects}_${objectId}`
+		`/group${site.friendlyUrlPath}${PORTLET_URLS.objects}_${objectId}`
 	);
 
 	await page.locator('.table-list-title').getByRole('link').first().click();

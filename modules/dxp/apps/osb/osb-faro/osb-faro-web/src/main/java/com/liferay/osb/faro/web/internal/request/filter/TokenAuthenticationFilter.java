@@ -5,6 +5,7 @@
 
 package com.liferay.osb.faro.web.internal.request.filter;
 
+import com.liferay.osb.faro.engine.client.constants.HeaderConstants;
 import com.liferay.osb.faro.engine.client.util.TokenUtil;
 import com.liferay.osb.faro.web.internal.annotations.TokenAuthentication;
 import com.liferay.osb.faro.web.internal.util.ServletRequestUtil;
@@ -43,7 +44,7 @@ public class TokenAuthenticationFilter implements ContainerRequestFilter {
 		}
 
 		String faroBackendSecuritySignature = _httpServletRequest.getHeader(
-			_ASAH_SECURITY_SIGNATURE_HEADER);
+			HeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE);
 
 		String originalURL = ServletRequestUtil.getOriginalURL(
 			_httpServletRequest);
@@ -78,9 +79,6 @@ public class TokenAuthenticationFilter implements ContainerRequestFilter {
 					faroBackendSecuritySignature));
 		}
 	}
-
-	private static final String _ASAH_SECURITY_SIGNATURE_HEADER =
-		"OSB-Asah-Faro-Backend-Security-Signature";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TokenAuthenticationFilter.class);

@@ -60,12 +60,6 @@ public abstract class BaseAsahServlet extends HttpServlet {
 				url.substring(0, url.lastIndexOf(uri.getPath())));
 	}
 
-	protected static final String ASAH_PROJECT_ID_HEADER =
-		"OSB-Asah-Project-ID";
-
-	protected static final String ASAH_SECURITY_SIGNATURE_HEADER =
-		"OSB-Asah-Faro-Backend-Security-Signature";
-
 	private static final long serialVersionUID = 1L;
 
 }

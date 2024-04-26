@@ -6,6 +6,7 @@
 package com.liferay.osb.faro.web.internal.controller.api;
 
 import com.liferay.oauth2.provider.scope.RequiresNoScope;
+import com.liferay.osb.faro.engine.client.constants.HeaderConstants;
 import com.liferay.osb.faro.engine.client.util.EngineServiceURLUtil;
 import com.liferay.osb.faro.engine.client.util.TokenUtil;
 import com.liferay.osb.faro.model.FaroChannel;
@@ -103,9 +104,9 @@ public class GraphQLController extends BaseFaroController {
 				new ByteArrayEntity(
 					requestBody.getBytes(StandardCharsets.UTF_8)));
 			httpPost.setHeader(
-				ASAH_PROJECT_ID_HEADER, faroProject.getProjectId());
+				HeaderConstants.PROJECT_ID, faroProject.getProjectId());
 			httpPost.setHeader(
-				ASAH_SECURITY_SIGNATURE_HEADER, getSecuritySignature(uri));
+				HeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE, getSecuritySignature(uri));
 			httpPost.setHeader("content-type", "application/json");
 
 			CloseableHttpResponse closeableHttpResponse =
@@ -134,12 +135,6 @@ public class GraphQLController extends BaseFaroController {
 			TokenUtil.getOSBAsahSecurityToken() +
 				url.substring(0, url.lastIndexOf(uri.getPath())));
 	}
-
-	protected static final String ASAH_PROJECT_ID_HEADER =
-		"OSB-Asah-Project-ID";
-
-	protected static final String ASAH_SECURITY_SIGNATURE_HEADER =
-		"OSB-Asah-Faro-Backend-Security-Signature";
 
 	private boolean _hasChannelPermission(
 		FaroProject faroProject, String channelId) {

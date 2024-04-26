@@ -10,6 +10,11 @@ package com.liferay.osb.faro.engine.client.constants;
  */
 public class HeaderConstants {
 
+	public static final String FARO_BACKEND_SECURITY_SIGNATURE =
+		"OSB-Asah-Faro-Backend-Security-Signature";
+
+	public static final String PROJECT_ID = "OSB-Asah-Project-ID";
+
 	public static final String AUTHOR_USER_ID = "OSB-Asah-Author-User-ID";
 
 	public static final String AUTHOR_USER_NAME = "OSB-Asah-Author-User-Name";

@@ -51,7 +51,7 @@
 			</#list>
 
 			<li>
-				<a class="dropdown-item" href="#1">
+				<a class="dropdown-item" href="https://customer.liferay.com/dxp-release-notes?p_p_id=com_liferay_osb_customer_release_tool_web_portlet_ReleaseToolPortlet&_com_liferay_osb_customer_release_tool_web_portlet_ReleaseToolPortlet_product=dxp&_com_liferay_osb_customer_release_tool_web_portlet_ReleaseToolPortlet_tabs1=&_com_liferay_osb_customer_release_tool_web_portlet_ReleaseToolPortlet_productVersion=7.4&_com_liferay_osb_customer_release_tool_web_portlet_ReleaseToolPortlet_fromFixPackVersion=2024.101&_com_liferay_osb_customer_release_tool_web_portlet_ReleaseToolPortlet_toFixPackVersion=2024.105" target="_blank">
 					Previous Release
 
 					<span class="dropdown-item-indicator-end">

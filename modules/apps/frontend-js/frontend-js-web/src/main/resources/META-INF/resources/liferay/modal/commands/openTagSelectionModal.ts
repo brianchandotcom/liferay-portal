@@ -42,7 +42,7 @@ export default function openTagSelectionModal({
 				return;
 			}
 
-			let url = new URL(redirectURL);
+			const url = new URL(redirectURL);
 
 			const resetCurParam = `_${url.searchParams.get('p_p_id')}_resetCur`;
 
@@ -50,16 +50,18 @@ export default function openTagSelectionModal({
 
 			const assetTags = selectedItems.map((tag) => tag.value);
 
+			let finalURL = url.href;
+
 			assetTags.forEach((assetTag) => {
 				const selectedValue = JSON.parse(assetTag);
 
-				url = addParams(
+				finalURL = addParams(
 					`${portletNamespace}assetTagId=${selectedValue.tagName}`,
-					url.href
+					finalURL
 				);
 			});
 
-			navigate(url);
+			navigate(finalURL);
 		},
 		selectEventName: `${portletNamespace}selectedAssetTag`,
 		size: 'lg',

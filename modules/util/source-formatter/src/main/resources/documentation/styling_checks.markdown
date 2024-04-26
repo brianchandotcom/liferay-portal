@@ -98,7 +98,7 @@ JavaTermDividersCheck | .java | Finds missing or unnecessary empty lines between
 JavaTermOrderCheck | .java | Checks the order of javaterms. |
 JavaTermStylingCheck | .java | Applies rules to enforce consistency in code style. |
 JavaUpgradeAlterColumnCallsOrderCheck | .java | Sorts method calls for altering table columns. |
-JavaUpgradeEmptyLinesCheck | .java | Finds missing and unnecessary empty lines in Upgrade classes. |
+JavaUpgradeEmptyLinesCheck | .java | Finds missing and unnecessary empty lines in upgrade classes. |
 LDIFEntryOrderCheck | .ldif | Checks the order of entries and attributes in `.ldif` file. |
 LDIFWhitespaceCheck | .ldif | Finds missing and unnecessary whitespace. |
 [LambdaCheck](check/lambda_check.markdown#lambdacheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that `lambda` statements are as simple as possible. |

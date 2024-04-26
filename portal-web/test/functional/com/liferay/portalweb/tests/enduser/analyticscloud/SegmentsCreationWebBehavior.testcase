@@ -95,16 +95,9 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9221 | Test Summary: Create a Web Behavior criteria at least/at most times"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentCriteriaLeastMostTimes {
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine Reason: The membership list takes a long time to update
-		// AC Refactor ticket: LRAC-10769
-
 		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
-
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "ac@liferay.com",
@@ -112,13 +105,20 @@ definition {
 			userLastName = "ac",
 			userScreenName = "ac");
 
-		ACDXPSettings.syncNewContactData();
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "ac@liferay.com");
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 
 		ACUtils.navigateToSitePage(
+			actionType = "View WC",
+			documentTitleList = "1,2,3,4,5,6",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -126,7 +126,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = ${propertyName});
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToSegments();
 
@@ -139,33 +139,24 @@ definition {
 		ACSegments.editWebBehaviorCriterion(
 			atLeastMost = "at least",
 			indexField = 1,
-			occurenceNumber = 4,
+			occurenceNumber = 2,
 			searchTerm = "Web Content AC Title");
+
+		ACSegments.previewSegmentMembership();
+
+		ACUtils.viewNameList(nameList = "ac ac");
+
+		ACUtils.closeModal();
 
 		ACSegments.saveSegment();
 
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewGenericText(textValueList = "There are no members found on the selected time period.,Check back later to verify if data has been received from your data sources.,Learn more about individuals.");
-
-		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
-
-		ACUtils.navigateToSitePage(
-			documentTitleList = "1,2,3",
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
-		ACNavigation.goToSegments();
-
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
-
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewNameList(nameList = "ac ac");
+		ACSegments.viewSegmentCriteriaWebBehavior(
+			activitiesOption = "has",
+			atLeastMost = "at least",
+			occurenceNumber = 2,
+			searchTerm = "'Web Content AC Title'",
+			timeOption = "since",
+			timePeriod = "Last 24 hours");
 
 		ACNavigation.goToSegments();
 
@@ -174,14 +165,24 @@ definition {
 		ACSegments.editWebBehaviorCriterion(
 			atLeastMost = "at most",
 			indexField = 1,
-			occurenceNumber = 3,
+			occurenceNumber = 7,
 			searchTerm = "Web Content AC Title");
+
+		ACSegments.previewSegmentMembership();
+
+		ACUtils.viewNameList(nameList = "ac ac");
+
+		ACUtils.closeModal();
 
 		ACSegments.saveSegment();
 
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewGenericText(textValueList = "There are no members found on the selected time period.,Check back later to verify if data has been received from your data sources.,Learn more about individuals.");
+		ACSegments.viewSegmentCriteriaWebBehavior(
+			activitiesOption = "has",
+			atLeastMost = "at most",
+			occurenceNumber = 7,
+			searchTerm = "'Web Content AC Title'",
+			timeOption = "since",
+			timePeriod = "Last 24 hours");
 	}
 
 	@description = "Create a segment with behavior of downloading a document"

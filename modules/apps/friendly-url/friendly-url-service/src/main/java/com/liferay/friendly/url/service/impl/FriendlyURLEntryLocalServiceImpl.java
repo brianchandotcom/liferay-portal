@@ -126,6 +126,8 @@ public class FriendlyURLEntryLocalServiceImpl
 		if ((friendlyURLEntry != null) &&
 			_containsAllURLTitles(existingUrlTitleMap, urlTitleMap)) {
 
+			_updateAssetEntry(friendlyURLEntry, serviceContext);
+
 			return friendlyURLEntry;
 		}
 

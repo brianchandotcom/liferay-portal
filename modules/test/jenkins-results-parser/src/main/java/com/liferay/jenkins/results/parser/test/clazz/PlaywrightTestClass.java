@@ -19,7 +19,7 @@ import org.json.JSONObject;
 /**
  * @author Kenji Heigel
  */
-public class PlaywrightTestClass extends BaseTestClass {
+public class PlaywrightTestClass extends JUnitTestClass {
 
 	@Override
 	public JSONObject getJSONObject() {
@@ -65,10 +65,6 @@ public class PlaywrightTestClass extends BaseTestClass {
 
 	public String getSpecTitle() {
 		return _specTitle;
-	}
-
-	public String getTestrayMainComponentName() {
-		return _testrayMainComponentName;
 	}
 
 	protected PlaywrightTestClass(

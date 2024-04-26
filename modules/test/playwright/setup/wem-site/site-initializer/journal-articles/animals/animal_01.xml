@@ -2,9 +2,9 @@
 
 <root available-locales="en_US" default-locale="en_US" version="1.0">
 	<dynamic-element index-type="keyword" instance-id="20NosvcP" name="Name" type="text">
-		<dynamic-content language-id="en_US"><![CDATA[Sample 02]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Animal 01]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="8HFRNkw7" name="Content" type="text">
-		<dynamic-content language-id="en_US"><![CDATA[Sample 02 content]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Animal 01 content]]></dynamic-content>
 	</dynamic-element>
 </root>

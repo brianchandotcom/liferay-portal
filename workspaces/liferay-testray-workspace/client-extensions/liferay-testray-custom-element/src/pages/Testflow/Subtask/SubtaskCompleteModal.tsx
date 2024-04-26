@@ -144,7 +144,8 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 
 			onSave();
 			setForceRefetch(new Date().getTime());
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 		}
 	};

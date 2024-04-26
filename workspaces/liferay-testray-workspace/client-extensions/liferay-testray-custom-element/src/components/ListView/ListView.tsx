@@ -398,7 +398,8 @@ const ListView: React.FC<ListViewProps> = ({
 					mutate,
 				})}
 
-			{!!items.length || !!testrayCaseResultComparisons?.length ? (
+			{!!items.length ||
+			(!!testrayCaseResultComparisons?.length && !isCompareRunsMatrix) ? (
 				<>
 					{pagination?.displayTop && (
 						<div className="mt-4">{Pagination}</div>
@@ -426,25 +427,27 @@ const ListView: React.FC<ListViewProps> = ({
 				</>
 			) : null}
 
-			{results &&
-				!testrayCaseResultComparisons &&
-				(isCompareRunsMatrix ? (
+			{!items.length &&
+				(results && isCompareRunsMatrix ? (
 					<ClayLayout.Col lg={12} md={12}>
-						<TableChart matrixData={itemsMemoized} title={title} />
+						<TableChart matrixData={matrixData} title={title} />
 					</ClayLayout.Col>
 				) : (
-					<div className="d-flex flex-wrap">
-						{Object.entries(itemsMemoized).map(
-							([name, data], index) => (
-								<div className="my-4" key={index}>
-									<TableChart
-										matrixData={data}
-										title={name}
-									/>
-								</div>
-							)
-						)}
-					</div>
+					!testrayCaseResultComparisons && (
+						<div className="d-flex flex-wrap">
+							{Object.entries(itemsMemoized).map(
+								([name, data], index) => (
+									<div className="my-4" key={index}>
+										<TableChart
+											fieldName={title}
+											matrixData={data}
+											title={name}
+										/>
+									</div>
+								)
+							)}
+						</div>
+					)
 				))}
 		</>
 	);

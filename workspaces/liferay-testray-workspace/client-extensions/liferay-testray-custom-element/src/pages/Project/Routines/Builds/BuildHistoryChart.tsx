@@ -102,7 +102,7 @@ const BuildHistoryChart: React.FC<BuildHistoryChartProps> = ({builds}) => (
 			padding={{bottom: 5, top: 30}}
 			tooltip={{
 				format: {
-					title: (index: number) => builds[index].name,
+					title: (index: number) => builds[index]?.name,
 				},
 			}}
 		/>

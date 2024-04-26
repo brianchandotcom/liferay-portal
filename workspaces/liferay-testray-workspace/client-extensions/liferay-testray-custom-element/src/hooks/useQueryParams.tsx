@@ -89,8 +89,7 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 					/(filter=.*?)(&|$)/,
 					`$1 and ${filter}$2`
 				);
-			}
-			else {
+			} else {
 				resourceFilter = `${resource}${
 					resource.includes('?') ? '&' : '?'
 				}filter=${filter}`;
@@ -103,8 +102,7 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 
 				if (Array.isArray(parsedValue)) {
 					_resourceFieldOptions[field.name] = parsedValue;
-				}
-				else {
+				} else {
 					if (
 						filterKeys.every(
 							(key) => parsedValue && key in parsedValue
@@ -160,8 +158,7 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 				if (filteredOptions.length) {
 					updatedFilterOptions[key] = filteredOptions;
 				}
-			}
-			else {
+			} else {
 				const matchingValues = _resourceFieldOptions[key]?.filter(
 					(options: Options) =>
 						options.value === serializedFilter[key]
@@ -211,7 +208,7 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 					label: i18n.translate(filteredField.label),
 					name: filteredField.name,
 					value: Array.isArray(filterValueOptions)
-						? filterValueOptions.map(({label}) => label)
+						? filterValueOptions?.map(({label}) => label)
 						: filterValue,
 				};
 			}) || [],

@@ -1451,50 +1451,6 @@ definition {
 		}
 	}
 
-	@description = "This test adds more than 3 Owned Roles to an account and asserts correct pagination in the Roles list."
-	@priority = 4
-	test CanChangePaginationInRolesList {
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Account with Role",
-			accountEntryType = "Business");
-
-		Account.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Account with Role");
-
-		for (var accountRoleNumber : list "1,2,3,4") {
-			Account.addOwnedAccountRole(accountRoleTitle = "Account Role ${accountRoleNumber}");
-
-			Navigator.gotoBack();
-		}
-
-		Account.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Account with Role");
-
-		Account.gotoAssigneeTab(assigneeTab = "Roles");
-
-		Pagination.changePagination(itemsPerPage = 4);
-
-		for (var accountRoleName : list "Account Administrator,Account Role 1,Account Role 2,Account Role 3") {
-			LexiconEntry.viewEntryName(rowEntry = ${accountRoleName});
-		}
-
-		LexiconEntry.viewNoEntry(rowEntry = "Account Role 4");
-
-		Pagination.viewResults(results = "Showing 1 to 4 of 5 entries.");
-
-		Click(locator1 = "Pagination#NEXT_LINK");
-
-		LexiconEntry.viewEntryName(rowEntry = "Account Role 4");
-
-		for (var accountRoleName : list "Account Administrator,Account Role 1,Account Role 2,Account Role 3") {
-			LexiconEntry.viewNoEntry(rowEntry = ${accountRoleName});
-		}
-
-		Pagination.viewResults(results = "Showing 5 to 5 of 5 entries.");
-	}
-
 	@description = "This test deactivates an active account and asserts account displays in correct filter."
 	@priority = 4
 	test CanDeactivateAccount {

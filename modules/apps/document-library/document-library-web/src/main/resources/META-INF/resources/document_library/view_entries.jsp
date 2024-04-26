@@ -133,18 +133,23 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 										<div class="card-body">
 											<div class="card-row">
 												<div class="autofit-col autofit-col-expand">
-													<aui:a cssClass="card-title text-truncate" href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>" title="<%= HtmlUtil.escapeAttribute(latestFileVersion.getTitle()) %>">
-														<%= latestFileVersion.getTitle() %>
-													</aui:a>
-
-													<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-16311") && !dlViewEntriesDisplayContext.hasGuestViewPermission(fileEntry) %>'>
-														<clay:icon
-															aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
-															cssClass="c-ml-2 c-mt-1 lfr-portal-tooltip text-4 text-secondary"
-															data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
-															symbol="password-policies"
+													<div class="d-flex">
+														<clay:link
+															cssClass="card-title text-truncate"
+															href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"
+															label="<%= latestFileVersion.getTitle() %>"
+															title="<%= HtmlUtil.escapeAttribute(latestFileVersion.getTitle()) %>"
 														/>
-													</c:if>
+
+														<c:if test='<%= FeatureFlagManagerUtil.isEnabled(latestFileVersion.getCompanyId(), "LPD-16311") && !dlViewEntriesDisplayContext.hasGuestViewPermission(fileEntry) %>'>
+															<clay:icon
+																aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+																cssClass="c-ml-2 c-mt-1 flex-shrink-0 lfr-portal-tooltip text-4 text-secondary"
+																data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+																symbol="password-policies"
+															/>
+														</c:if>
+													</div>
 
 													<div class="card-subtitle text-truncate">
 														<%= LanguageUtil.format(request, "modified-x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(latestFileVersion.getUserName())}, false) %>
@@ -244,20 +249,23 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 
 												<div class="autofit-col autofit-col-expand pl-1">
 													<div class="table-title">
-														<clay:link
-															href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"
-															label="<%= HtmlUtil.unescape(latestFileVersion.getTitle()) %>"
-															translated="<%= false %>"
-														/>
-
-														<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-16311") && !dlViewEntriesDisplayContext.hasGuestViewPermission(fileEntry) %>'>
-															<clay:icon
-																aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
-																cssClass="c-ml-2 c-mt-1 lfr-portal-tooltip text-4 text-secondary"
-																data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
-																symbol="password-policies"
+														<div class="d-flex">
+															<clay:link
+																cssClass="text-truncate"
+																href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"
+																label="<%= HtmlUtil.unescape(latestFileVersion.getTitle()) %>"
+																translated="<%= false %>"
 															/>
-														</c:if>
+
+															<c:if test='<%= FeatureFlagManagerUtil.isEnabled(latestFileVersion.getCompanyId(), "LPD-16311") && !dlViewEntriesDisplayContext.hasGuestViewPermission(fileEntry) %>'>
+																<clay:icon
+																	aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+																	cssClass="c-ml-2 c-mt-1 flex-shrink-0 lfr-portal-tooltip text-4 text-secondary"
+																	data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+																	symbol="password-policies"
+																/>
+															</c:if>
+														</div>
 
 														<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
 															<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "locked-document") %>">

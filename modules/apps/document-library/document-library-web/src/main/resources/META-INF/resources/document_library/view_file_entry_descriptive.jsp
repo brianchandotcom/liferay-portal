@@ -84,7 +84,7 @@ else {
 	</aui:a>
 
 	<span>
-		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-16311") && !dlViewEntriesDisplayContext.hasGuestViewPermission(fileEntry) %>'>
+		<c:if test='<%= FeatureFlagManagerUtil.isEnabled(latestFileVersion.getCompanyId(), "LPD-16311") && !dlViewEntriesDisplayContext.hasGuestViewPermission(fileEntry) %>'>
 			<clay:icon
 				aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
 				cssClass="c-ml-2 c-mt-1 lfr-portal-tooltip text-4 text-secondary"

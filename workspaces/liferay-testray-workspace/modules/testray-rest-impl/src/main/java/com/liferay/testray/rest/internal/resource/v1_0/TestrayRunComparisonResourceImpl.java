@@ -327,11 +327,17 @@ public class TestrayRunComparisonResourceImpl
 			Map<String, Serializable> testrayCaseResult =
 				testrayCaseResultsMap2.remove(entry.getKey());
 
-			if ((testrayCaseResult == null) &&
-				(Validator.isNotNull(testrayCaseResultError2) ||
-				 Validator.isNotNull(testrayCaseResultIssue2) ||
-				 (Validator.isNotNull(testrayCaseResultStatus2) &&
-				  !testrayCaseResultStatus2.contains("DIDNOTRUN")))) {
+			if ((Validator.isNotNull(testrayCaseResultStatus1) &&
+				 testrayCaseResultStatus1.contains("DIDNOTRUN")) ||
+				((testrayCaseResult != null) &&
+				 Validator.isNotNull(testrayCaseResultStatus2) &&
+				 !testrayCaseResultStatus2.contains(
+					 String.valueOf(testrayCaseResult.get("dueStatus")))) ||
+				((testrayCaseResult == null) &&
+				 (Validator.isNotNull(testrayCaseResultError2) ||
+				  Validator.isNotNull(testrayCaseResultIssue2) ||
+				  (Validator.isNotNull(testrayCaseResultStatus2) &&
+				   !testrayCaseResultStatus2.contains("DIDNOTRUN"))))) {
 
 				continue;
 			}
@@ -344,7 +350,9 @@ public class TestrayRunComparisonResourceImpl
 		for (Map.Entry<String, Map<String, Serializable>> entry :
 				testrayCaseResultsMap2.entrySet()) {
 
-			if (Validator.isNotNull(testrayCaseResultError1) ||
+			if ((Validator.isNotNull(testrayCaseResultStatus2) &&
+				 testrayCaseResultStatus2.contains("DIDNOTRUN")) ||
+				Validator.isNotNull(testrayCaseResultError1) ||
 				Validator.isNotNull(testrayCaseResultIssue1) ||
 				(Validator.isNotNull(testrayCaseResultStatus1) &&
 				 !testrayCaseResultStatus1.contains("DIDNOTRUN"))) {

@@ -60,7 +60,7 @@ public class EditLayoutPageTemplateCollectionMVCActionCommand
 			layoutPageTemplateCollection =
 				_layoutPageTemplateCollectionService.
 					addLayoutPageTemplateCollection(
-						serviceContext.getScopeGroupId(),
+						null, serviceContext.getScopeGroupId(),
 						LayoutPageTemplateConstants.
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 						name, description,

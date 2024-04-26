@@ -53,7 +53,7 @@ public class AddDisplayPageCollectionMVCActionCommand
 		try {
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					themeDisplay.getScopeGroupId(),
+					null, themeDisplay.getScopeGroupId(),
 					ParamUtil.getLong(
 						actionRequest, "layoutPageTemplateCollectionId",
 						LayoutPageTemplateConstants.

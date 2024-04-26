@@ -50,8 +50,9 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 		return layoutPageTemplateCollectionLocalService.
 			addLayoutPageTemplateCollection(
-				getUserId(), groupId, parentLayoutPageTemplateCollectionId,
-				name, description, type, serviceContext);
+				externalReferenceCode, getUserId(), groupId,
+				parentLayoutPageTemplateCollectionId, name, description, type,
+				serviceContext);
 	}
 
 	@Override

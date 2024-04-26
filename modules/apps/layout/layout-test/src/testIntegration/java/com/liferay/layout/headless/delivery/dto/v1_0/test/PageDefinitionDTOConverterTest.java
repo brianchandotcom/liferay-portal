@@ -114,7 +114,7 @@ public class PageDefinitionDTOConverterTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					RandomTestUtil.randomString(), StringPool.BLANK,

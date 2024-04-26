@@ -212,7 +212,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					userId, group.getGroupId(),
+					null, userId, group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Test Collection", StringPool.BLANK,

@@ -67,14 +67,14 @@ public class LayoutPageTemplateCollectionServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
-			_group.getGroupId(),
+			null, _group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"Layout Page Template Collection", null,
 			LayoutPageTemplateCollectionTypeConstants.BASIC, serviceContext);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
-			_group.getGroupId(),
+			null, _group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"Layout Page Template Collection", null,
@@ -86,7 +86,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					_group.getGroupId(),
+					null, _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection", null,
@@ -104,7 +104,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		throws Exception {
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
-			_group.getGroupId(),
+			null, _group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			StringPool.BLANK, null,
@@ -118,7 +118,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		throws Exception {
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
-			_group.getGroupId(),
+			null, _group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			null, null, LayoutPageTemplateCollectionTypeConstants.BASIC,
@@ -141,14 +141,14 @@ public class LayoutPageTemplateCollectionServiceTest {
 					LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
-			_group.getGroupId(),
+			null, _group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"Layout Page Template Collection 1", StringPool.BLANK,
 			LayoutPageTemplateCollectionTypeConstants.BASIC, serviceContext);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
-			_group.getGroupId(),
+			null, _group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"Layout Page Template Collection 2", StringPool.BLANK,
@@ -170,7 +170,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					_group.getGroupId(),
+					null, _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection", null,
@@ -197,7 +197,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection1 =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					_group.getGroupId(),
+					null, _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection 1", null,
@@ -207,7 +207,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection2 =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					_group.getGroupId(),
+					null, _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection 2", null,
@@ -245,7 +245,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection1 =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					_group.getGroupId(),
+					null, _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection 1", null,
@@ -255,7 +255,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection2 =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					_group.getGroupId(),
+					null, _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection 2", null,
@@ -287,7 +287,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					_group.getGroupId(),
+					null, _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"AA Page Template Collection", null,
@@ -295,14 +295,14 @@ public class LayoutPageTemplateCollectionServiceTest {
 					serviceContext);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
-			_group.getGroupId(),
+			null, _group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"AB Page Template Collection", null,
 			LayoutPageTemplateCollectionTypeConstants.BASIC, serviceContext);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
-			_group.getGroupId(),
+			null, _group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"AC Page Template Collection", null,
@@ -357,14 +357,14 @@ public class LayoutPageTemplateCollectionServiceTest {
 					LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
-			_group.getGroupId(),
+			null, _group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"Fjord Theme collection", null,
 			LayoutPageTemplateEntryTypeConstants.BASIC, serviceContext);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
-			_group.getGroupId(),
+			null, _group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"Theme Westeros collection", null,
@@ -390,7 +390,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
-			_group.getGroupId(),
+			null, _group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"AA Fjord Collection", null,
@@ -399,7 +399,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					_group.getGroupId(),
+					null, _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"AB Theme Collection", null,
@@ -407,7 +407,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 					serviceContext);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
-			_group.getGroupId(),
+			null, _group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"AC Theme Collection", null,
@@ -456,7 +456,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection1 =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					_group.getGroupId(),
+					null, _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection 1", null,
@@ -466,7 +466,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection2 =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					_group.getGroupId(),
+					null, _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection 2", null,
@@ -498,7 +498,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					_group.getGroupId(),
+					null, _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection", null,
@@ -529,7 +529,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					_group.getGroupId(),
+					null, _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Layout Page Template Collection", null,

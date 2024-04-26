@@ -305,7 +305,7 @@ public class FileEntryInfoDisplayContributorTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					_group.getGroupId(),
+					null, _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					RandomTestUtil.randomString(), null,

@@ -35,7 +35,7 @@ public class LayoutPageTemplateTestUtil {
 
 		return LayoutPageTemplateCollectionLocalServiceUtil.
 			addLayoutPageTemplateCollection(
-				TestPropsValues.getUserId(), groupId,
+				null, TestPropsValues.getUserId(), groupId,
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				RandomTestUtil.randomString(), StringPool.BLANK,

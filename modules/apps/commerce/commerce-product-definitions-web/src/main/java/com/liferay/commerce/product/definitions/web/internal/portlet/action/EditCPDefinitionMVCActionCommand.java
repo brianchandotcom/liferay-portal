@@ -147,6 +147,20 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
+			else if (cmd.equals("updateAttachmentFileEntries") ||
+					 cmd.equals("updateInstances") ||
+					 cmd.equals("updateDefinitionLinks") ||
+					 cmd.equals("updateDefinitionOptionRels") ||
+					 cmd.equals("updateDefinitionPricingClasses")) {
+
+				Callable<CPDefinition> cpDefinitionUpdateCallable =
+					new CPDefinitionUpdateCallable(actionRequest, cpDefinition);
+
+				cpDefinition = TransactionInvokerUtil.invoke(
+					_transactionConfig, cpDefinitionUpdateCallable);
+
+				_sendRedirect(actionRequest, actionResponse, cpDefinition);
+			}
 			else if (cmd.equals("updateConfiguration")) {
 				Callable<Object> cpDefinitionConfigurationCallable =
 					new CPDefinitionConfigurationCallable(
@@ -191,20 +205,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 						actionRequest, cpDefinition.getCPDefinitionId(),
 						CPDefinitionScreenNavigationConstants.
 							CATEGORY_KEY_VISIBILITY));
-			}
-			else if (cmd.equals("updateAttachmentFileEntries") ||
-					 cmd.equals("updateInstances") ||
-					 cmd.equals("updateDefinitionLinks") ||
-					 cmd.equals("updateDefinitionOptionRels") ||
-					 cmd.equals("updateDefinitionPricingClasses")) {
-
-				Callable<CPDefinition> cpDefinitionUpdateCallable =
-					new CPDefinitionUpdateCallable(actionRequest, cpDefinition);
-
-				cpDefinition = TransactionInvokerUtil.invoke(
-					_transactionConfig, cpDefinitionUpdateCallable);
-
-				_sendRedirect(actionRequest, actionResponse, cpDefinition);
 			}
 			else {
 				_sendRedirect(actionRequest, actionResponse, cpDefinition);

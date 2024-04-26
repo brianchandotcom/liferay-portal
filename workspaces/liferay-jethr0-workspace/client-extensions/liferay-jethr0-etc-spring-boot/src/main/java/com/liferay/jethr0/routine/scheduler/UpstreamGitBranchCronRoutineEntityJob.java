@@ -5,14 +5,12 @@
 
 package com.liferay.jethr0.routine.scheduler;
 
+import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.commit.GitCommitEntity;
 import com.liferay.jethr0.routine.UpstreamBranchCronRoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 
 import java.util.Objects;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -39,23 +37,26 @@ public class UpstreamGitBranchCronRoutineEntityJob
 		UpstreamBranchCronRoutineEntity upstreamBranchCronRoutineEntity =
 			(UpstreamBranchCronRoutineEntity)routineEntityObject;
 
-		String currentBranchSHA = null;
+		GitBranchEntity gitBranchEntity =
+			upstreamBranchCronRoutineEntity.getGitBranchEntity();
 
-		String previousBranchSHA =
-			upstreamBranchCronRoutineEntity.getPreviousBranchSHA();
+		GitCommitEntity latestGitCommitEntity =
+			gitBranchEntity.getLatestGitCommitEntity();
 
 		GitCommitEntity previousGitCommitEntity =
 			upstreamBranchCronRoutineEntity.getPreviousGitCommitEntity();
 
-		if (previousGitCommitEntity != null) {
-			if (Objects.equals(
-					previousBranchSHA, previousGitCommitEntity.getSHA())) {
+		if ((latestGitCommitEntity == null) ||
+			((previousGitCommitEntity != null) &&
+			 Objects.equals(
+				 latestGitCommitEntity.getSHA(),
+				 previousGitCommitEntity.getSHA()))) {
 
-				return;
-			}
+			return;
 		}
 
-		upstreamBranchCronRoutineEntity.setPreviousBranchSHA(currentBranchSHA);
+		upstreamBranchCronRoutineEntity.setPreviousGitCommitEntity(
+			latestGitCommitEntity);
 
 		RoutineEntityJobFactory routineEntityJobFactory =
 			getRoutineEntityJobFactory();
@@ -67,8 +68,5 @@ public class UpstreamGitBranchCronRoutineEntityJob
 
 		invokeJobEntity(upstreamBranchCronRoutineEntity);
 	}
-
-	private static final Log _log = LogFactory.getLog(
-		UpstreamGitBranchCronRoutineEntityJob.class);
 
 }

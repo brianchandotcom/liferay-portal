@@ -20,17 +20,10 @@ public abstract class BaseUpstreamBranchCronRoutineEntity
 		JSONObject jsonObject = super.getJSONObject();
 
 		jsonObject.put(
-			"previousBranchSHA", getPreviousBranchSHA()
-		).put(
 			"r_previousGitCommitToJobs_c_gitCommitId",
-			getPreviousGitCommitEntityId()
-		);
+			getPreviousGitCommitEntityId());
 
 		return jsonObject;
-	}
-
-	public String getPreviousBranchSHA() {
-		return _previousBranchSHA;
 	}
 
 	@Override
@@ -49,11 +42,6 @@ public abstract class BaseUpstreamBranchCronRoutineEntity
 
 		_previousGitCommitEntityId = jsonObject.optLong(
 			"r_previousGitCommitToJobs_c_gitCommitId");
-		_previousBranchSHA = jsonObject.optString("previousBranchSHA");
-	}
-
-	public void setPreviousBranchSHA(String previousBranchSHA) {
-		_previousBranchSHA = previousBranchSHA;
 	}
 
 	@Override
@@ -74,7 +62,6 @@ public abstract class BaseUpstreamBranchCronRoutineEntity
 		super(jsonObject);
 	}
 
-	private String _previousBranchSHA;
 	private GitCommitEntity _previousGitCommitEntity;
 	private long _previousGitCommitEntityId;
 

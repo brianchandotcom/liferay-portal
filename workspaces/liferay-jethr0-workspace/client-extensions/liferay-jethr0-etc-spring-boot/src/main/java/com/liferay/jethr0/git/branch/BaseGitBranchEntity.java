@@ -20,6 +20,7 @@ import java.net.URL;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -115,6 +116,23 @@ public abstract class BaseGitBranchEntity
 		}
 
 		return jsonObject;
+	}
+
+	@Override
+	public GitCommitEntity getLatestGitCommitEntity() {
+		String latestSHA = getLatestSHA();
+
+		if (StringUtil.isNullOrEmpty(latestSHA)) {
+			return null;
+		}
+
+		for (GitCommitEntity gitCommitEntity : getGitCommitEntities()) {
+			if (Objects.equals(gitCommitEntity.getSHA(), latestSHA)) {
+				return gitCommitEntity;
+			}
+		}
+
+		return null;
 	}
 
 	@Override

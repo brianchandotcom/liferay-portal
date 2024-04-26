@@ -1,0 +1,7 @@
+assemble:
+    - from: assets
+      into: static
+liferay-learn-global-css-fonts:
+    name: Liferay Learn Global CSS Fonts
+    type: globalCSS
+    url: fonts.css

@@ -44,30 +44,20 @@
 		</metadata>
 		<actions>
 			<action>
-				<name>Approve</name>
-				<description>Approve</description>
+				<name>Approve Commerce Order</name>
+				<description>Approve Commerce Order</description>
 				<script>
-					<![CDATA[
-						import com.liferay.commerce.constants.CommerceOrderConstants;
-						import com.liferay.commerce.model.CommerceOrder;
-						import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
-						import com.liferay.portal.kernel.workflow.WorkflowConstants;
-						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
-
-						CommerceOrder commerceOrder = CommerceOrderLocalServiceUtil.getCommerceOrder(kaleoInstanceToken.getClassPK());
-
-						commerceOrder.setOrderStatus(CommerceOrderConstants.ORDER_STATUS_PROCESSING);
-
-						commerceOrder = CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
-
-						commerceOrder.setOrderStatus(CommerceOrderConstants.ORDER_STATUS_COMPLETED);
-
-						CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
-
-						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);
-					]]>
+					<![CDATA[site.initializer.raylife.d2c.workflow.definitions.order.completion.action.executor.ApproveCommerceOrderActionExecutor]]>
 				</script>
-				<script-language>groovy</script-language>
+				<script-language>java</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Approve Workflow Instance</name>
+				<description>Approve Workflow Instance</description>
+				<status>0</status>
+				<priority>2</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
 		</actions>

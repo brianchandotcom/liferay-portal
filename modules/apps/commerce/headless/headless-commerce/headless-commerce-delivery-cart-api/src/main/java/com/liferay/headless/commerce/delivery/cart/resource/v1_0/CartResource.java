@@ -98,6 +98,17 @@ public interface CartResource {
 	public String getCartPaymentURL(Long cartId, String callbackURL)
 		throws Exception;
 
+	public Page<Cart>
+			getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
+				String accountExternalReferenceCode,
+				String channelExternalReferenceCode, String search,
+				Pagination pagination)
+		throws Exception;
+
+	public Cart postChannelCartByExternalReferenceCode(
+			String externalReferenceCode, Cart cart)
+		throws Exception;
+
 	public Page<Cart> getChannelCartsPage(
 			Long accountId, Long channelId, String search,
 			Pagination pagination)

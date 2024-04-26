@@ -6,7 +6,7 @@
 package com.liferay.osb.faro.engine.client.http.client;
 
 import com.liferay.osb.faro.engine.client.FaroClientHttpResponse;
-import com.liferay.osb.faro.engine.client.constants.HeaderConstants;
+import com.liferay.osb.faro.engine.client.constants.OSBAsahHeaderConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
@@ -114,7 +114,7 @@ public class CacheClientHttpRequestInterceptor
 	protected String getProjectId(HttpRequest httpRequest) {
 		HttpHeaders httpHeaders = httpRequest.getHeaders();
 
-		List<String> headers = httpHeaders.getOrEmpty(HeaderConstants.PROJECT_ID);
+		List<String> headers = httpHeaders.getOrEmpty(OSBAsahHeaderConstants.PROJECT_ID);
 
 		if (headers.isEmpty()) {
 			return StringPool.BLANK;

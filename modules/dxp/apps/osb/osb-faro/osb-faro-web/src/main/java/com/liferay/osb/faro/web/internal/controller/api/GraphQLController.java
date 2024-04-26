@@ -6,7 +6,7 @@
 package com.liferay.osb.faro.web.internal.controller.api;
 
 import com.liferay.oauth2.provider.scope.RequiresNoScope;
-import com.liferay.osb.faro.engine.client.constants.HeaderConstants;
+import com.liferay.osb.faro.engine.client.constants.OSBAsahHeaderConstants;
 import com.liferay.osb.faro.engine.client.util.EngineServiceURLUtil;
 import com.liferay.osb.faro.engine.client.util.TokenUtil;
 import com.liferay.osb.faro.model.FaroChannel;
@@ -104,9 +104,9 @@ public class GraphQLController extends BaseFaroController {
 				new ByteArrayEntity(
 					requestBody.getBytes(StandardCharsets.UTF_8)));
 			httpPost.setHeader(
-				HeaderConstants.PROJECT_ID, faroProject.getProjectId());
+				OSBAsahHeaderConstants.PROJECT_ID, faroProject.getProjectId());
 			httpPost.setHeader(
-				HeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE, getSecuritySignature(uri));
+				OSBAsahHeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE, getSecuritySignature(uri));
 			httpPost.setHeader("content-type", "application/json");
 
 			CloseableHttpResponse closeableHttpResponse =

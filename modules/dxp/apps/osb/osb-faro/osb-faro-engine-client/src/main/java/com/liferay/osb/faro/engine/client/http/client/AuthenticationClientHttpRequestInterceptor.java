@@ -5,7 +5,7 @@
 
 package com.liferay.osb.faro.engine.client.http.client;
 
-import com.liferay.osb.faro.engine.client.constants.HeaderConstants;
+import com.liferay.osb.faro.engine.client.constants.OSBAsahHeaderConstants;
 import com.liferay.osb.faro.engine.client.util.TokenUtil;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -48,12 +48,12 @@ public class AuthenticationClientHttpRequestInterceptor
 			HttpHeaders httpHeaders = httpRequest.getHeaders();
 
 			httpHeaders.add(
-				HeaderConstants.PROJECT_ID, _faroProject.getProjectId());
+				OSBAsahHeaderConstants.PROJECT_ID, _faroProject.getProjectId());
 
 			String originalURL = HttpRequestUtil.getOriginalURL(httpRequest);
 
 			httpHeaders.add(
-				HeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE,
+				OSBAsahHeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE,
 				DigestUtils.sha256Hex(
 					TokenUtil.getOSBAsahSecurityToken() + originalURL));
 		}

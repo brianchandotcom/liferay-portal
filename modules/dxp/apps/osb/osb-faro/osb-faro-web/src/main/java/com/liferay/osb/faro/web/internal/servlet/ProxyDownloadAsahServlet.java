@@ -5,7 +5,7 @@
 
 package com.liferay.osb.faro.web.internal.servlet;
 
-import com.liferay.osb.faro.engine.client.constants.HeaderConstants;
+import com.liferay.osb.faro.engine.client.constants.OSBAsahHeaderConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -59,9 +59,9 @@ public class ProxyDownloadAsahServlet extends BaseAsahServlet {
 			URLConnection urlConnection = url.openConnection();
 
 			urlConnection.setRequestProperty(
-				HeaderConstants.PROJECT_ID, getProjectId());
+				OSBAsahHeaderConstants.PROJECT_ID, getProjectId());
 			urlConnection.setRequestProperty(
-				HeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE, getSecuritySignature(uri));
+				OSBAsahHeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE, getSecuritySignature(uri));
 
 			urlConnection.connect();
 
@@ -103,9 +103,9 @@ public class ProxyDownloadAsahServlet extends BaseAsahServlet {
 				HttpHeaders.CONTENT_TYPE,
 				httpServletRequest.getHeader(HttpHeaders.CONTENT_TYPE));
 			urlConnection.setRequestProperty(
-				HeaderConstants.PROJECT_ID, getProjectId());
+				OSBAsahHeaderConstants.PROJECT_ID, getProjectId());
 			urlConnection.setRequestProperty(
-				HeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE, getSecuritySignature(uri));
+				OSBAsahHeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE, getSecuritySignature(uri));
 
 			try (OutputStream outputStream = urlConnection.getOutputStream();
 				InputStream inputStream = httpServletRequest.getInputStream()) {

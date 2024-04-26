@@ -8,7 +8,7 @@ package com.liferay.osb.faro.engine.client.constants;
 /**
  * @author Marcellus Tavares
  */
-public class HeaderConstants {
+public class OSBAsahHeaderConstants {
 
 	public static final String FARO_BACKEND_SECURITY_SIGNATURE =
 		"OSB-Asah-Faro-Backend-Security-Signature";

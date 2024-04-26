@@ -5,7 +5,7 @@
 
 package com.liferay.osb.faro.web.internal.servlet;
 
-import com.liferay.osb.faro.engine.client.constants.HeaderConstants;
+import com.liferay.osb.faro.engine.client.constants.OSBAsahHeaderConstants;
 import com.liferay.osb.faro.model.FaroChannel;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
@@ -77,9 +77,9 @@ public class GraphQLAsahServlet extends BaseAsahServlet {
 
 			HttpGet httpGet = new HttpGet(uri);
 
-			httpGet.setHeader(HeaderConstants.PROJECT_ID, getProjectId());
+			httpGet.setHeader(OSBAsahHeaderConstants.PROJECT_ID, getProjectId());
 			httpGet.setHeader(
-				HeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE, getSecuritySignature(uri));
+				OSBAsahHeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE, getSecuritySignature(uri));
 
 			CloseableHttpResponse closeableHttpResponse =
 				closeableHttpClient.execute(httpGet);
@@ -125,9 +125,9 @@ public class GraphQLAsahServlet extends BaseAsahServlet {
 
 			httpPost.setEntity(postEntity);
 
-			httpPost.setHeader(HeaderConstants.PROJECT_ID, getProjectId());
+			httpPost.setHeader(OSBAsahHeaderConstants.PROJECT_ID, getProjectId());
 			httpPost.setHeader(
-				HeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE, getSecuritySignature(uri));
+				OSBAsahHeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE, getSecuritySignature(uri));
 			httpPost.setHeader("content-type", "application/json");
 
 			CloseableHttpResponse closeableHttpResponse =

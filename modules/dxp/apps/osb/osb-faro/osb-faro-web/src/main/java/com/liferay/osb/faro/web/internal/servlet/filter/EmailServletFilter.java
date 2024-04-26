@@ -5,7 +5,7 @@
 
 package com.liferay.osb.faro.web.internal.servlet.filter;
 
-import com.liferay.osb.faro.engine.client.constants.HeaderConstants;
+import com.liferay.osb.faro.engine.client.constants.OSBAsahHeaderConstants;
 import com.liferay.osb.faro.engine.client.util.TokenUtil;
 import com.liferay.osb.faro.web.internal.util.ServletRequestUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -42,7 +42,7 @@ public class EmailServletFilter extends BaseFilter {
 
 	protected boolean isInvalidRequest(HttpServletRequest httpServletRequest) {
 		String faroBackendSecuritySignature = httpServletRequest.getHeader(
-			HeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE);
+			OSBAsahHeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE);
 
 		if (faroBackendSecuritySignature == null) {
 			_logInvalidRequest(null, httpServletRequest);

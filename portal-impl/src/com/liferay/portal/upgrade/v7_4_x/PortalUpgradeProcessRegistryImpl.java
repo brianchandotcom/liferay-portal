@@ -391,6 +391,9 @@ public class PortalUpgradeProcessRegistryImpl
 				"PortalPreferenceValue", "key_", "VARCHAR(1024) null"));
 
 		upgradeVersionTreeMap.put(new Version(30, 1, 1), new UpgradeRelease());
+
+		upgradeVersionTreeMap.put(
+			new Version(31, 0, 0), new UpgradeListTypeAuditFields());
 	}
 
 }

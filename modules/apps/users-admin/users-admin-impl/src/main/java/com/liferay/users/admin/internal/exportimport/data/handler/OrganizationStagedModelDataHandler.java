@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.OrgLabor;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.EmailAddressLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrgLaborLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
@@ -123,6 +125,7 @@ public class OrganizationStagedModelDataHandler
 			_exportAddresses(portletDataContext, exportedOrganization);
 			_exportCountry(portletDataContext, exportedOrganization);
 			_exportEmailAddresses(portletDataContext, exportedOrganization);
+			_exportListType(portletDataContext, exportedOrganization);
 			_exportOrgLabors(portletDataContext, exportedOrganization);
 			_exportPasswordPolicyRel(portletDataContext, exportedOrganization);
 			_exportPhones(portletDataContext, exportedOrganization);
@@ -146,6 +149,7 @@ public class OrganizationStagedModelDataHandler
 		throws Exception {
 
 		organization = _importCountry(portletDataContext, organization);
+		organization = _importListType(portletDataContext, organization);
 
 		long userId = portletDataContext.getUserId(organization.getUserUuid());
 
@@ -266,6 +270,20 @@ public class OrganizationStagedModelDataHandler
 		for (EmailAddress emailAddress : emailAddresses) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, organization, emailAddress,
+				PortletDataContext.REFERENCE_TYPE_EMBEDDED);
+		}
+	}
+
+	private void _exportListType(
+			PortletDataContext portletDataContext, Organization organization)
+		throws Exception {
+
+		if (organization.getStatusListTypeId() > 0) {
+			ListType listType = _listTypeLocalService.getListType(
+				organization.getStatusListTypeId());
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, organization, listType,
 				PortletDataContext.REFERENCE_TYPE_EMBEDDED);
 		}
 	}
@@ -439,6 +457,37 @@ public class OrganizationStagedModelDataHandler
 			importedOrganization.getOrganizationId(), emailAddresses);
 	}
 
+	private Organization _importListType(
+			PortletDataContext portletDataContext, Organization organization)
+		throws Exception {
+
+		List<Element> listTypeElements =
+			portletDataContext.getReferenceDataElements(
+				organization, ListType.class);
+
+		for (Element listTypeElement : listTypeElements) {
+			String listTypePath = listTypeElement.attributeValue("path");
+
+			ListType listType =
+				(ListType)portletDataContext.getZipEntryAsObject(listTypePath);
+
+			if (listType == null) {
+				continue;
+			}
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, listType);
+
+			listType = _listTypeLocalService.getListType(
+				portletDataContext.getCompanyId(), listType.getName(),
+				listType.getType());
+
+			organization.setStatusListTypeId(listType.getListTypeId());
+		}
+
+		return organization;
+	}
+
 	private void _importOrgLabors(
 			PortletDataContext portletDataContext, Organization organization,
 			Organization importedOrganization)
@@ -578,6 +627,9 @@ public class OrganizationStagedModelDataHandler
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

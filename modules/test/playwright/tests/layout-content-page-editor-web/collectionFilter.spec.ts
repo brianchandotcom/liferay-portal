@@ -190,6 +190,8 @@ test('filters a web content collection by single and multiple categories', async
 	).toBeVisible();
 
 	await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
+
+	await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
 });
 
 test('filters a web content collection by single and multiple tags', async ({
@@ -406,6 +408,8 @@ test('enables search field in dropdown list of Collection Filter', async ({
 
 	await expect(page.getByText('Dogs', {exact: true})).toBeVisible();
 	await expect(page.getByText('Cats', {exact: true})).not.toBeVisible();
+
+	await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
 });
 
 test('filters the collection content by keywords using two filters', async ({
@@ -529,4 +533,6 @@ test('filters the collection content by keywords using two filters', async ({
 	await firstFilter.press('Enter');
 
 	await expect(page.getByText('No Results Found')).toBeVisible();
+
+	await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
 });

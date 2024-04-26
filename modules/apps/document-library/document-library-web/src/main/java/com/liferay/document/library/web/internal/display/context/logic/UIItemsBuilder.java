@@ -441,6 +441,14 @@ public class UIItemsBuilder {
 						(ItemSelector)_httpServletRequest.getAttribute(
 							ItemSelector.class.getName()));
 
+				if (_fileShortcut != null) {
+					return folderItemSelectorURLProvider.
+						getSelectMoveToFolderURL(
+							_fileShortcut.getRepositoryId(),
+							_fileShortcut.getFolderId(),
+							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+				}
+
 				return folderItemSelectorURLProvider.getSelectMoveToFolderURL(
 					_fileEntry.getRepositoryId(), _fileEntry.getFolderId(),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);

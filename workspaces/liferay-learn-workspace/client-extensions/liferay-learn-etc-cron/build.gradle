@@ -38,7 +38,7 @@ dependencies {
 }
 
 fatJar {
-	baseName = project.name + "-all"
+	archiveBaseName = project.name + "-all"
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 	excludes = ["META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF"]
 

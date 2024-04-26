@@ -29,7 +29,7 @@
 					<li class="facet-value">
 						<@clay.button
 							cssClass="btn-unstyled facet-term ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} term-name"
-							data\-term\-id="${entry.getBucketText()}"
+							data\-term\-id="${entry.getFilterValue()}"
 							disabled="true"
 							displayType="link"
 							onClick="Liferay.Search.FacetUtil.changeSelection(event);"

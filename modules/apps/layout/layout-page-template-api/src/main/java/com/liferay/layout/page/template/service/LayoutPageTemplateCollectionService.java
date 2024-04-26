@@ -47,9 +47,9 @@ public interface LayoutPageTemplateCollectionService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.layout.page.template.service.impl.LayoutPageTemplateCollectionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the layout page template collection remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link LayoutPageTemplateCollectionServiceUtil} if injection and service tracking are not available.
 	 */
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long groupId, long parentLayoutPageTemplateCollectionId,
-			String name, String description, int type,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long groupId,
+			long parentLayoutPageTemplateCollectionId, String name,
+			String description, int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	public LayoutPageTemplateCollection copyLayoutPageTemplateCollection(
@@ -62,6 +62,10 @@ public interface LayoutPageTemplateCollectionService extends BaseService {
 			long layoutPageTemplateCollectionId)
 		throws PortalException;
 
+	public LayoutPageTemplateCollection deleteLayoutPageTemplateCollection(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
 	public void deleteLayoutPageTemplateCollections(
 			long[] layoutPageTemplateCollectionIds)
 		throws PortalException;
@@ -69,6 +73,11 @@ public interface LayoutPageTemplateCollectionService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

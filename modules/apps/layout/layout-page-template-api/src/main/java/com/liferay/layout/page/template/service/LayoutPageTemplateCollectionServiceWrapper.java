@@ -33,15 +33,17 @@ public class LayoutPageTemplateCollectionServiceWrapper
 
 	@Override
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long groupId, long parentLayoutPageTemplateCollectionId,
-			String name, String description, int type,
+			String externalReferenceCode, long groupId,
+			long parentLayoutPageTemplateCollectionId, String name,
+			String description, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutPageTemplateCollectionService.
 			addLayoutPageTemplateCollection(
-				groupId, parentLayoutPageTemplateCollectionId, name,
-				description, type, serviceContext);
+				externalReferenceCode, groupId,
+				parentLayoutPageTemplateCollectionId, name, description, type,
+				serviceContext);
 	}
 
 	@Override
@@ -68,6 +70,15 @@ public class LayoutPageTemplateCollectionServiceWrapper
 	}
 
 	@Override
+	public LayoutPageTemplateCollection deleteLayoutPageTemplateCollection(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateCollectionService.
+			deleteLayoutPageTemplateCollection(externalReferenceCode, groupId);
+	}
+
+	@Override
 	public void deleteLayoutPageTemplateCollections(
 			long[] layoutPageTemplateCollectionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -84,6 +95,15 @@ public class LayoutPageTemplateCollectionServiceWrapper
 
 		return _layoutPageTemplateCollectionService.
 			fetchLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
+	}
+
+	@Override
+	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateCollectionService.
+			fetchLayoutPageTemplateCollection(externalReferenceCode, groupId);
 	}
 
 	@Override

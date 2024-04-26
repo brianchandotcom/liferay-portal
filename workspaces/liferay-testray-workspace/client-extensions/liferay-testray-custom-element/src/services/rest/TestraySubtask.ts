@@ -51,32 +51,31 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 				r_userToSubtasks_userId,
 				score,
 			}),
-			nestedFields:
-				'tasks,users,subtask,subtaskToSubtasksCasesResults,caseResultToSubtasksCasesResults',
+			nestedFields: 'tasks,users,subtask,subtaskToCaseResults',
 			nestedFieldsDepth: 2,
 			transformData: (subTask) => ({
 				...subTask,
-				caseResultIssues: subTask.subtaskToSubtasksCasesResults?.reduce(
-					(previousIssues: string[], subTaskCaseResult) => {
-						const newIssues =
-							subTaskCaseResult?.caseResultToSubtasksCasesResults
-								?.issues || '';
+				caseResultIssues:
+					subTask.subtaskToCaseResults?.reduce(
+						(previousIssues: string[], subTaskCaseResult) => {
+							const newIssues = subTaskCaseResult?.issues || '';
 
-						return getUniqueList([
-							...previousIssues,
-							...(newIssues
-								? newIssues
-										.split(',')
-										.map((name) => name.trim())
-										.filter(Boolean)
-								: []),
-						]);
-					},
-					[]
-				),
+							return getUniqueList([
+								...previousIssues,
+								...(newIssues
+									? newIssues
+											.split(',')
+											.map((name) => name.trim())
+											.filter(Boolean)
+									: []),
+							]);
+						},
+						[]
+					) || [],
 				mergedToSubtaskId: subTask.r_mergedToTestraySubtask_c_subtaskId,
 				splitFromSubtask: subTask.r_splitFromTestraySubtask_c_subtask,
 				task: subTask.r_taskToSubtasks_c_task,
+				tests: subTask.subtaskToCaseResults?.length,
 				user: subTask.r_userToSubtasks_user,
 			}),
 			uri: 'subtasks',
@@ -106,7 +105,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 		const caseResults = await this.getCaseResultsFromSubtask(subTask.id);
 
 		const caseResultIds = caseResults.map((caseResult) =>
-			Number(caseResult.caseResult?.id)
+			Number(caseResult?.id)
 		);
 
 		const response = await this.update(subTask.id, {
@@ -134,7 +133,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 		const caseResults = await this.getCaseResultsFromSubtask(subTask.id);
 
 		const caseResultIds = caseResults.map((caseResult) =>
-			Number(caseResult.caseResult?.id)
+			Number(caseResult?.id)
 		);
 
 		const userId = Number(Liferay.ThemeDisplay.getUserId());
@@ -168,8 +167,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			);
 
 			return {mbMessage, mbThreadId};
-		}
-		catch {
+		} catch {
 			return {};
 		}
 	}
@@ -205,12 +203,13 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 		const caseResults = await this.getCaseResultsFromSubtask(subTaskId);
 
 		const caseResultIds = caseResults.map((caseResult) =>
-			Number(caseResult.caseResult?.id)
+			Number(caseResult?.id)
 		);
 
 		await testrayCaseResultImpl.updateBatch(
 			caseResultIds,
 			caseResultIds.map(() => ({
+				comment: subTaskcomment.comment,
 				defaultMessageId: subTaskcomment.mbMessageId,
 				dueStatus,
 				issues: _issues,
@@ -248,7 +247,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			);
 
 			for (const caseResult of caseResults) {
-				sumScore += caseResult?.caseResult?.case?.priority || 0;
+				sumScore += caseResult?.case?.priority || 0;
 
 				await testraySubtaskCaseResultImpl.update(caseResult.id, {
 					name: `${parentTestraySubtask.id}`,
@@ -287,7 +286,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 		);
 
 		const newSubtaskScore = selectedSubTaskCaseResults
-			.map(({caseResult}) => caseResult?.case?.priority ?? 0)
+			.map((caseResult) => caseResult?.case?.priority ?? 0)
 			.reduce(
 				(previousValue, currentValue) => previousValue + currentValue
 			);
@@ -296,7 +295,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 
 		const newSubtask = await super.create({
 			dueStatus: selectedSubTask.dueStatus.key,
-			errors: selectedSubTaskCaseResults[0]?.caseResult?.errors || ' ',
+			errors: selectedSubTaskCaseResults[0]?.errors || ' ',
 			name: `${this.PREFIX}-${newSubtaskIndex}`,
 			number: newSubtaskIndex,
 			score: newSubtaskScore,

@@ -20,6 +20,7 @@ const testrayRestAPIs = [
 	'testray-build-autofill',
 	'testray-run-comparisons',
 	'testray-status-metrics',
+	'testray-testflow',
 ];
 
 function changeResource(resource: RequestInfo) {

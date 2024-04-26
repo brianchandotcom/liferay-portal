@@ -327,19 +327,30 @@ export type TestraySubTask = {
 	score: number;
 	splitFromSubtask: TestraySubTask;
 	statusUpdateDate: string;
+	subtaskToCaseResults?: TestrayCaseResult[];
 	subtaskToSubtasksCasesResults: TestraySubTaskCaseResult[];
 	task: TestrayTask;
 	user: UserAccount;
 };
 
 export type TestraySubTaskCaseResult = {
-	caseResult?: TestrayCaseResult;
-	caseResultToSubtasksCasesResults?: TestrayCaseResult;
+	build?: TestrayBuild;
+	case?: TestrayCase;
+	errors: string;
 	id: number;
-	name: string;
-	r_caseResultToSubtasksCasesResults_c_caseResult?: TestrayCaseResult;
-	r_subtaskToSubtasksCasesResults_c_subtask?: TestraySubTask;
+	issues: string;
+	r_buildToCaseResult_c_build?: TestrayBuild;
+	r_buildToCaseResult_c_buildId?: number;
+	r_caseToCaseResult_c_case?: TestrayCase;
+	r_caseToCaseResult_c_caseId?: number;
+	r_componentToCaseResult_c_component?: TestrayComponent;
+	r_runToCaseResult_c_run?: TestrayRun;
+	r_runToCaseResult_c_runId?: number;
+	r_subtaskToCaseResults_c_subtask?: TestraySubTask;
+	r_userToCaseResults_user?: UserAccount;
+	runId?: number;
 	subTask?: TestraySubTask;
+	user?: UserAccount;
 };
 
 export type TestraySuite = {

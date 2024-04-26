@@ -6,6 +6,8 @@
 import {Dispatch, useState} from 'react';
 import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
+import JiraLink from '~/components/JiraLink';
+import {getTruncateText} from '~/util/getTruncateText';
 
 import FloatingBox from '../../../components/FloatingBox';
 import ListView from '../../../components/ListView';
@@ -17,12 +19,18 @@ import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../services/liferay';
 import {
+	PickList,
+	TestrayCaseResult,
 	TestraySubTask,
 	TestraySubTaskCaseResult,
 	testraySubTaskImpl,
 } from '../../../services/rest';
 import {testraySubtaskCaseResultImpl} from '../../../services/rest/TestraySubtaskCaseResults';
 import {SubTaskStatuses} from '../../../util/statuses';
+
+type SubtasksCaseResultsProps = {
+	forceRefetch: number;
+};
 
 type OutletContext = {
 	data: {
@@ -33,11 +41,14 @@ type OutletContext = {
 	};
 };
 
-const SubtasksCaseResults = () => {
+const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
+	forceRefetch,
+}) => {
 	const navigate = useNavigate();
 	const {subtaskId, taskId} = useParams();
 	const {updateItemFromList} = useMutate();
 	const [isLoading, setIsLoading] = useState(false);
+
 	const {
 		data: {testraySubtask},
 		mutate: {mutateSubtask},
@@ -142,6 +153,7 @@ const SubtasksCaseResults = () => {
 
 	return (
 		<ListView
+			forceRefetch={forceRefetch}
 			managementToolbarProps={{
 				applyFilters: true,
 				visible: false,
@@ -150,100 +162,69 @@ const SubtasksCaseResults = () => {
 			tableProps={{
 				columns: [
 					{
-						clickable: true,
 						key: 'run',
-						render: (
-							_,
-							testraySubTaskCaseResult: TestraySubTaskCaseResult
-						) => testraySubTaskCaseResult?.caseResult?.run?.number,
-
+						render: (_, caseResult: TestrayCaseResult) =>
+							caseResult.run?.number?.toString().padStart(2, '0'),
 						value: i18n.translate('run'),
 					},
 					{
 						clickable: true,
 						key: 'priority',
-						render: (
-							_,
-							testraySubTaskCaseResult: TestraySubTaskCaseResult
-						) =>
-							testraySubTaskCaseResult.caseResult?.case?.priority,
-
+						render: (_, {case: testrayCase}: TestrayCaseResult) =>
+							testrayCase?.priority,
 						value: i18n.translate('priority'),
 					},
 					{
 						clickable: true,
-						key: 'component',
-						render: (
-							_,
-							testraySubTaskCaseResult: TestraySubTaskCaseResult
-						) =>
-							testraySubTaskCaseResult.caseResult?.component?.team
-								?.name,
+						key: 'team',
+						render: (_, testrayCaseResult: TestrayCaseResult) =>
+							testrayCaseResult.case?.component?.team?.name,
 						value: i18n.translate('team'),
 					},
 					{
-						clickable: true,
 						key: 'component',
-						render: (
-							_,
-							testraySubTaskCaseResult: TestraySubTaskCaseResult
-						) =>
-							testraySubTaskCaseResult.caseResult?.component
-								?.name,
-
+						render: (_, {case: testrayCase}: TestrayCaseResult) =>
+							testrayCase?.component?.name,
 						value: i18n.translate('component'),
 					},
 					{
 						clickable: true,
-						key: 'case',
-						render: (
-							_,
-							testraySubTaskCaseResult: TestraySubTaskCaseResult
-						) => testraySubTaskCaseResult.caseResult?.case?.name,
-
-						size: 'md',
+						key: 'name',
+						render: (_, {case: testrayCase}: TestrayCaseResult) =>
+							testrayCase?.name,
+						size: 'xl',
 						value: i18n.translate('case'),
 					},
 					{
 						key: 'issues',
-						render: (
-							_,
-							testraySubTaskCaseResult: TestraySubTaskCaseResult
-						) => testraySubTaskCaseResult.caseResult?.issues,
+						render: (issues: string) => (
+							<JiraLink
+								displayViewInJira={false}
+								issue={issues}
+							/>
+						),
 						value: i18n.translate('issues'),
 					},
 					{
 						key: 'dueStatus',
-						render: (
-							_,
-							testraySubTaskCaseResult: TestraySubTaskCaseResult
-						) => (
+						render: (dueStatus: PickList) => (
 							<StatusBadge
-								type={
-									testraySubTaskCaseResult.caseResult
-										?.dueStatus.key as StatusBadgeType
-								}
+								type={dueStatus?.key as StatusBadgeType}
 							>
-								{
-									testraySubTaskCaseResult.caseResult
-										?.dueStatus.name
-								}
+								{dueStatus?.name}
 							</StatusBadge>
 						),
-
 						value: i18n.translate('status'),
 					},
 					{
 						key: 'comment',
-						render: (
-							_,
-							testraySubTaskCaseResult: TestraySubTaskCaseResult
-						) => testraySubTaskCaseResult.caseResult?.comment,
+						render: (value) => getTruncateText(value),
+						size: 'lg',
 						value: i18n.translate('comment'),
 					},
 				],
-				navigateTo: ({caseResult}) =>
-					`/project/${caseResult.build?.project.id}/routines/${caseResult.build?.routine.id}/build/${caseResult.build?.id}/case-result/${caseResult.id}`,
+				navigateTo: (caseResult) =>
+					`/project/${caseResult.build?.project?.id}/routines/${caseResult.build?.routine.id}/build/${caseResult.build?.id}/case-result/${caseResult.id}`,
 				rowSelectable: true,
 				rowWrap: true,
 			}}

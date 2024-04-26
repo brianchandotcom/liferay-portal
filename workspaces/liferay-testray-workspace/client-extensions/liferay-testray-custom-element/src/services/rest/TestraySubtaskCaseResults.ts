@@ -16,83 +16,56 @@ class TestraySubtaskCaseResultImpl extends Rest<
 	constructor() {
 		super({
 			adapter: ({
-				caseResultId: r_caseResultToSubtasksCasesResults_c_caseResultId,
 				issues,
-				name,
-				subtaskId: r_subtaskToSubtasksCasesResults_c_subtaskId,
+				subtaskId: r_subtaskToCaseResults_c_subtaskId,
 			}) => ({
 				issues,
-				name,
-				r_caseResultToSubtasksCasesResults_c_caseResultId,
-				r_subtaskToSubtasksCasesResults_c_subtaskId,
+				r_subtaskToCaseResults_c_subtaskId,
 			}),
 			nestedFields:
-				'caseResult.case,caseResult.component.team,caseResult.build.routine,caseResult.build.project,caseResult.run,subtask.user',
-			transformData: (subtaskCaseResult) => ({
-				caseResult: subtaskCaseResult?.r_caseResultToSubtasksCasesResults_c_caseResult
+				'case.caseType,component.team.name,team,build.project,build.routine,run,user',
+			transformData: (caseResult) => ({
+				...caseResult,
+				build: caseResult?.r_buildToCaseResult_c_build
 					? {
-							...subtaskCaseResult?.r_caseResultToSubtasksCasesResults_c_caseResult,
-							build: subtaskCaseResult
-								.r_caseResultToSubtasksCasesResults_c_caseResult
-								?.r_buildToCaseResult_c_build
-								? {
-										...subtaskCaseResult
-											.r_caseResultToSubtasksCasesResults_c_caseResult
-											?.r_buildToCaseResult_c_build,
+							...caseResult?.r_buildToCaseResult_c_build,
+							project:
+								caseResult?.r_buildToCaseResult_c_build
+									?.r_projectToBuilds_c_project,
+							routine:
+								caseResult.r_buildToCaseResult_c_build
+									?.r_routineToBuilds_c_routine,
+					  }
+					: undefined,
+				case: caseResult?.r_caseToCaseResult_c_case
+					? {
+							...caseResult?.r_caseToCaseResult_c_case,
 
-										project:
-											subtaskCaseResult
-												.r_caseResultToSubtasksCasesResults_c_caseResult
-												?.r_buildToCaseResult_c_build
-												?.r_projectToBuilds_c_project,
-										routine:
-											subtaskCaseResult
-												.r_caseResultToSubtasksCasesResults_c_caseResult
-												?.r_buildToCaseResult_c_build
-												?.r_routineToBuilds_c_routine,
-								  }
-								: undefined,
-							case:
-								subtaskCaseResult
-									?.r_caseResultToSubtasksCasesResults_c_caseResult
-									.r_caseToCaseResult_c_case,
-							component: subtaskCaseResult
-								.r_caseResultToSubtasksCasesResults_c_caseResult
-								?.r_componentToCaseResult_c_component
+							component: caseResult?.r_caseToCaseResult_c_case
+								?.r_componentToCases_c_component
 								? {
-										...subtaskCaseResult
-											.r_caseResultToSubtasksCasesResults_c_caseResult
-											?.r_componentToCaseResult_c_component,
+										...caseResult?.r_caseToCaseResult_c_case
+											?.r_componentToCases_c_component,
 										team:
-											subtaskCaseResult
-												.r_caseResultToSubtasksCasesResults_c_caseResult
-												?.r_componentToCaseResult_c_component
+											caseResult
+												?.r_caseToCaseResult_c_case
+												.r_componentToCases_c_component
 												.r_teamToComponents_c_team,
 								  }
 								: undefined,
-							run:
-								subtaskCaseResult
-									?.r_caseResultToSubtasksCasesResults_c_caseResult
-									.r_runToCaseResult_c_run,
 					  }
 					: undefined,
-				id: subtaskCaseResult.id,
-				name: '',
-				subTask: subtaskCaseResult?.r_subtaskToSubtasksCasesResults_c_subtask
+				component: caseResult?.r_componentToCaseResult_c_component
 					? {
-							...subtaskCaseResult?.r_subtaskToSubtasksCasesResults_c_subtask,
-							task:
-								subtaskCaseResult
-									.r_subtaskToSubtasksCasesResults_c_subtask
-									?.r_taskToSubtasks_c_task,
-							user:
-								subtaskCaseResult
-									.r_subtaskToSubtasksCasesResults_c_subtask
-									?.r_userToSubtasks_user,
+							...caseResult.r_componentToCaseResult_c_component,
+							team:
+								caseResult.r_componentToCaseResult_c_component
+									.r_teamToComponents_c_team,
 					  }
 					: undefined,
+				run: caseResult?.r_runToCaseResult_c_run,
 			}),
-			uri: 'subtaskscasesresultses',
+			uri: 'caseresults',
 		});
 	}
 }

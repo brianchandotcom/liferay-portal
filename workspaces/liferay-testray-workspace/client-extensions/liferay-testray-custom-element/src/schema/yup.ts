@@ -219,7 +219,6 @@ const yupSchema = {
 		userId: yup.number(),
 	}),
 	subtaskToCaseResult: yup.object({
-		caseResultId: yup.number(),
 		issues: yup.string(),
 		name: yup.string(),
 		subtaskId: yup.number(),
@@ -239,7 +238,6 @@ const yupSchema = {
 	}),
 	task: yup.object({
 		buildId: yup.number(),
-		caseTypes: yup.array(yup.number()).required(),
 		dueStatus: yup.string(),
 		id: yup.number().required(),
 		name: yup.string().required(i18n.sub('x-is-a-required-field', 'name')),

@@ -6,7 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
@@ -16,7 +16,6 @@ import Form from '../../components/Form';
 import Container from '../../components/Layout/Container';
 import SearchBuilder from '../../core/SearchBuilder';
 import {useHeader} from '../../hooks';
-import {useFetch} from '../../hooks/useFetch';
 import useFormActions from '../../hooks/useFormActions';
 import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
@@ -24,7 +23,6 @@ import yupSchema, {yupResolver} from '../../schema/yup';
 import {Liferay} from '../../services/liferay';
 import {
 	APIResponse,
-	TestrayCaseType,
 	TestrayTask,
 	TestrayTaskCaseTypes,
 	TestrayTaskUser,
@@ -71,44 +69,22 @@ const TestflowForm = () => {
 
 	const {setHeading} = useHeader({timeout: 210});
 
-	const [isCheckedAll, setCheckedAll] = useState<boolean>(false);
-
 	const {
-		data: {
-			testrayTask = undefined,
-			testrayTaskCaseTypes = [],
-			testrayTaskUser = undefined,
-		} = {},
+		data: {testrayTask = undefined, testrayTaskUser = undefined} = {},
 		mutate: {mutateTask = () => null} = {mutateTask: undefined},
 		revalidate: {revalidateTaskUser = () => null} = {
 			revalidateTaskUser: undefined,
 		},
 	} = outletContext;
 
-	const {data} = useFetch('/casetypes', {
-		params: {
-			fields: 'id,name',
-			pageSize: 100,
-		},
-	});
-	const caseTypes = useMemo(() => data?.items || [], [
-		data?.items,
-	]) as TestrayCaseType[];
-
-	const taskCaseTypeIds = testrayTaskCaseTypes.map(
-		({caseType}) => caseType?.id
-	);
-
 	const {
 		formState: {errors, isSubmitting},
 		handleSubmit,
 		register,
 		setValue,
-		watch,
 	} = useForm<TestflowFormType>({
 		defaultValues: {
 			buildId: Number(testrayTask?.build?.id ?? buildId),
-			caseTypes: taskCaseTypeIds,
 			dueStatus: TaskStatuses.IN_ANALYSIS,
 			id: Number(taskId ?? 0),
 			name: testrayTask?.name,
@@ -125,17 +101,6 @@ const TestflowForm = () => {
 
 	const _onSubmit = async (form: TestflowFormType) => {
 		let hasError = false;
-
-		if (!form.caseTypes?.length) {
-			hasError = true;
-
-			Liferay.Util.openToast({
-				message: i18n.translate(
-					'mark-at-least-one-case-type-for-processing'
-				),
-				type: 'danger',
-			});
-		}
 
 		if (!form.userIds?.length) {
 			hasError = true;
@@ -169,8 +134,7 @@ const TestflowForm = () => {
 			onSuccess();
 
 			navigate(`/testflow/${response.id}`);
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};
@@ -178,18 +142,6 @@ const TestflowForm = () => {
 	const inputProps = {
 		errors,
 		register,
-	};
-
-	const caseTypesWatch = watch('caseTypes') as number[];
-
-	const onClickCaseType = (event: any) => {
-		const value = Number(event.target.value);
-
-		const caseTypesFiltered = caseTypesWatch.includes(value)
-			? caseTypesWatch.filter((caseTypeId) => caseTypeId !== value)
-			: [...caseTypesWatch, value];
-
-		setValue('caseTypes', caseTypesFiltered);
 	};
 
 	useEffect(() => {
@@ -214,23 +166,6 @@ const TestflowForm = () => {
 		setValue('userIds', userIds);
 	}, [setValue, userIds]);
 
-	useEffect(() => {
-		if (caseTypesWatch.length && caseTypesWatch.length < caseTypes.length) {
-			setCheckedAll(false);
-		}
-	}, [caseTypes.length, caseTypesWatch.length]);
-
-	const onSelectAll = () => {
-		if (isCheckedAll) {
-			setValue('caseTypes', []);
-		}
-		else {
-			caseTypes.forEach((caseType, index) => {
-				setValue(`caseTypes.${index}`, caseType.id);
-			});
-		}
-	};
-
 	return (
 		<Container>
 			<ClayInput.GroupItem shrink>
@@ -243,44 +178,9 @@ const TestflowForm = () => {
 				/>
 			</ClayInput.GroupItem>
 
-			<Form.Clay.Group>
-				<label className="mb-2 required">
-					{i18n.translate('case-type')}
-				</label>
-
-				<div className="col-4 my-3">
-					{!taskId && (
-						<Form.Checkbox
-							checked={isCheckedAll}
-							label={i18n.translate('select-all')}
-							onChange={() => {
-								setCheckedAll((isCheckedAll) => !isCheckedAll);
-								onSelectAll();
-							}}
-						/>
-					)}
-				</div>
-
-				<div className="d-flex flex-wrap">
-					{caseTypes.map((caseType, index: number) => (
-						<div className="col-4" key={index}>
-							<Form.Checkbox
-								checked={caseTypesWatch.includes(caseType.id)}
-								disabled={!!taskId}
-								label={caseType.name}
-								name={caseType.name}
-								onChange={onClickCaseType}
-								value={caseType.id}
-							/>
-						</div>
-					))}
-				</div>
-			</Form.Clay.Group>
-
-			<label className="mb-2 required">
+			<label className="mb-2 mt-4 required">
 				<h5>{i18n.translate('users')}</h5>
 			</label>
-
 			<Form.Divider />
 
 			<Form.Clay.Group>

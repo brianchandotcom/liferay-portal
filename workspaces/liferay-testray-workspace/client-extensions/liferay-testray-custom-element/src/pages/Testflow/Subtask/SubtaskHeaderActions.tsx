@@ -16,6 +16,10 @@ import {testraySubTaskImpl} from '../../../services/rest/TestraySubtask';
 import {SubTaskStatuses} from '../../../util/statuses';
 import SubtaskCompleteModal from './SubtaskCompleteModal';
 
+type SubtaskHeaderActionsProps = {
+	setForceRefetch: React.Dispatch<React.SetStateAction<number>>;
+};
+
 type OutletContext = {
 	data: {
 		testraySubtask: TestraySubTask;
@@ -28,7 +32,9 @@ type OutletContext = {
 	};
 };
 
-const SubtaskHeaderActions = () => {
+const SubtaskHeaderActions: React.FC<SubtaskHeaderActionsProps> = ({
+	setForceRefetch,
+}) => {
 	const {
 		data: {testraySubtask},
 		mutate: {mutateSubtask},
@@ -38,7 +44,8 @@ const SubtaskHeaderActions = () => {
 		onSave: (user: UserAccount) =>
 			testraySubTaskImpl
 				.assignTo(testraySubtask, user.id)
-				.then(mutateSubtask),
+				.then(mutateSubtask)
+				.then(() => setForceRefetch(new Date().getTime())),
 	});
 
 	const {modal: completeModal} = useFormModal();
@@ -50,6 +57,7 @@ const SubtaskHeaderActions = () => {
 			<SubtaskCompleteModal
 				modal={completeModal}
 				revalidateSubtask={revalidateSubtask}
+				setForceRefetch={setForceRefetch}
 				subtask={testraySubtask}
 			/>
 
@@ -102,6 +110,9 @@ const SubtaskHeaderActions = () => {
 							testraySubTaskImpl
 								.returnToOpen(testraySubtask)
 								.then(mutateSubtask)
+								.then(() =>
+									setForceRefetch(new Date().getTime())
+								)
 						}
 					>
 						{i18n.translate('return-to-open')}

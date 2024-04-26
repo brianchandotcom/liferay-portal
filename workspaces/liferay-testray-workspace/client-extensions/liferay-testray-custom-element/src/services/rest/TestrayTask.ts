@@ -8,11 +8,7 @@ import Rest from '../../core/Rest';
 import SearchBuilder from '../../core/SearchBuilder';
 import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
-import {DISPATCH_TRIGGER_TYPE} from '../../util/enum';
-import {DispatchTriggerStatuses, TaskStatuses} from '../../util/statuses';
-import {liferayDispatchTriggerImpl} from './LiferayDispatchTrigger';
-import {testrayDispatchTriggerImpl} from './TestrayDispatchTrigger';
-import {testrayTaskCaseTypesImpl} from './TestrayTaskCaseTypes';
+import {TaskStatuses} from '../../util/statuses';
 import {testrayTaskUsersImpl} from './TestrayTaskUsers';
 import {APIResponse, TestrayTask, UserAccount} from './types';
 
@@ -33,20 +29,19 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 			adapter: ({
 				assignedUsers,
 				buildId: r_buildToTasks_c_buildId,
-				caseTypes,
+
 				dispatchTriggerId,
 				dueStatus = TaskStatuses.OPEN,
 				name,
 			}) => ({
 				assignedUsers,
-				caseTypes,
 				dispatchTriggerId,
 				dueStatus,
 				name,
 				r_buildToTasks_c_buildId,
 			}),
 			nestedFields:
-				'build.project,build.routine,taskToTasksCaseTypes,taskToTasksUsers,r_userToTasksUsers_userId',
+				'build.project,build.routine,taskToTasksUsers,r_userToTasksUsers_userId',
 			transformData: (testrayTask) => ({
 				...testrayTask,
 				build: testrayTask.r_buildToTasks_c_build
@@ -104,63 +99,11 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 	}
 
 	public async create(data: TaskForm): Promise<TestrayTask> {
-		const caseTypeIds = data.caseTypes || [];
-
-		delete (data as any).caseTypes;
-
 		const task = await super.create(data);
 
-		if (caseTypeIds.length) {
-			await testrayTaskCaseTypesImpl.createBatch(
-				caseTypeIds.map((caseTypeId) => ({
-					caseTypeId,
-					name: `${task.id}-${caseTypeId}`,
-					taskId: task.id,
-				}))
-			);
-		}
+		await this.fetcher.post(`/testray-testflow/${task.id}`);
 
-		const dispatchTrigger = await liferayDispatchTriggerImpl.create({
-			active: true,
-			dispatchTaskExecutorType: DISPATCH_TRIGGER_TYPE.CREATE_TASK_SUBTASK,
-			dispatchTaskSettings: {
-				testrayBuildId: data.buildId,
-				testrayCaseTypeIds: caseTypeIds,
-				testrayTaskId: task.id,
-			},
-			externalReferenceCode: `T-${task.id}`,
-			name: `T-${task.id} / ${data.name}`,
-			overlapAllowed: false,
-		});
-
-		const dispatchTriggerId = dispatchTrigger.liferayDispatchTrigger.id;
-
-		await super.update(task.id, {
-			...data,
-			dispatchTriggerId,
-		});
-
-		const body = {
-			dueStatus: DispatchTriggerStatuses.INPROGRESS,
-			output: '',
-		};
-
-		try {
-			await liferayDispatchTriggerImpl.run(
-				dispatchTrigger.liferayDispatchTrigger.id
-			);
-		}
-		catch (error) {
-			body.dueStatus = DispatchTriggerStatuses.FAILED;
-			body.output = (error as TestrayError)?.message;
-		}
-
-		await testrayDispatchTriggerImpl.update(
-			dispatchTrigger.testrayDispatchTrigger.id,
-			body
-		);
-
-		return {...task, dispatchTriggerId};
+		return task;
 	}
 
 	public getTasksByBuildId(buildId: number) {

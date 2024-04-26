@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 import JiraLink from '~/components/JiraLink';
@@ -44,6 +45,7 @@ type OutletContext = {
 };
 
 const Subtasks = () => {
+	const [forceRefetch, setForceRefetch] = useState<number>(0);
 	const {
 		data: {
 			mbMessage,
@@ -62,7 +64,9 @@ const Subtasks = () => {
 
 	return (
 		<>
-			{hasSubtaskEditPermission && <SubtaskHeaderActions />}
+			{hasSubtaskEditPermission && (
+				<SubtaskHeaderActions setForceRefetch={setForceRefetch} />
+			)}
 
 			<Container
 				className="pb-6"
@@ -98,6 +102,11 @@ const Subtasks = () => {
 												testraySubTaskImpl
 													.assignToMe(testraySubtask)
 													.then(mutateSubtask as any)
+													.then(() =>
+														setForceRefetch(
+															new Date().getTime()
+														)
+													)
 											}
 										/>
 									),
@@ -179,7 +188,7 @@ const Subtasks = () => {
 			</Container>
 
 			<Container className="mt-5" title={i18n.translate('tests')}>
-				<SubtasksCaseResults />
+				<SubtasksCaseResults forceRefetch={forceRefetch} />
 			</Container>
 		</>
 	);

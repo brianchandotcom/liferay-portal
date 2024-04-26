@@ -32,12 +32,14 @@ type SubtaskForm = typeof yupSchema.subtask.__outputType;
 type SubTaskCompleteModalProps = {
 	modal: FormModalOptions;
 	revalidateSubtask: () => void;
+	setForceRefetch: React.Dispatch<React.SetStateAction<number>>;
 	subtask: TestraySubTask;
 };
 
 const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 	modal: {observer, onClose, onError, onSave},
 	revalidateSubtask,
+	setForceRefetch,
 	subtask,
 }) => {
 	const {data: mbMessage} = useFetch(
@@ -47,7 +49,7 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 	const caseResultsStatusFilter = useMemo(
 		() =>
 			new SearchBuilder()
-				.eq('caseResultToSubtasksCasesResults/subtaskId', subtask.id)
+				.eq('r_subtaskToCaseResults_c_subtaskId', subtask.id)
 				.and()
 				.in('dueStatus', ['BLOCKED', 'FAILED', 'PASSED', 'TESTFIX'])
 				.and()
@@ -63,7 +65,7 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 				aggregationTerms: 'dueStatus',
 				fields: 'id',
 				filter: caseResultsStatusFilter,
-				nestedFields: 'caseResultToSubtasksCasesResults',
+				nestedFields: 'subtaskToCaseResults',
 				pageSize: 4,
 			},
 		}
@@ -141,8 +143,8 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 			revalidateSubtask();
 
 			onSave();
-		}
-		catch (error) {
+			setForceRefetch(new Date().getTime());
+		} catch (error) {
 			onError(error);
 		}
 	};

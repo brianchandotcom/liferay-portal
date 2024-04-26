@@ -37,7 +37,7 @@ pre[class*='language-'] {
 	background: none;
 	border-radius: var(--border-radius, 0.5rem);
 	color: var(--white);
-	font-family: 'Roboto Mono', SFMono-Regular, monospace;
+	font-family: var(--font-family-monospace);
 	font-size: var(--code-font-size);
 	font-weight: var(--font-weight-normal);
 	line-height: var(--code-line-height);
@@ -56,6 +56,12 @@ pre[class*='language-'] {
 	-moz-hyphens: none;
 	-ms-hyphens: none;
 	hyphens: none;
+}
+
+h1,
+h2,
+h3 {
+	font-family: var(--font-family-sans-serif);
 }
 
 pre[class*='language-'] {
@@ -227,6 +233,14 @@ pre[class*='language-'] {
 	max-width: var(--container-max-xl);
 }
 
+.landing-page,
+.learn-card-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--spacer-3);
+	margin: var(--spacer-3) 0;
+}
+
 .learn-article {
 	max-width: var(--container-max-xl);
 	padding: var(--spacer-4);
@@ -279,7 +293,6 @@ pre[class*='language-'] {
 
 		.submit-feedback > a {
 			color: var(--color-brand-primary, #0b5fff);
-			font-family: 'Source Sans Pro', sans-serif;
 			font-size: 1rem;
 			font-style: normal;
 			font-weight: 600;
@@ -293,7 +306,6 @@ pre[class*='language-'] {
 
 	.learn-article-category-title {
 		color: var(--color-neutral-10, #282934);
-		font-family: Source Sans Pro;
 		font-size: 0.875rem;
 		font-style: normal;
 		font-weight: 600;
@@ -319,11 +331,18 @@ pre[class*='language-'] {
 			margin: 1.5rem 0;
 			padding-left: 1.5rem;
 		}
+
+		p {
+			color: var(--color-neutral-8, #54555f);
+		}
 	}
 
 	.learn-article-page-nav {
-		flex: 0 0 256px;
+		align-self: flex-start;
+		padding-left: var(--spacer-2);
 		position: sticky;
+		top: 135px;
+		width: 256px;
 
 		a {
 			border-radius: 0;
@@ -341,12 +360,13 @@ pre[class*='language-'] {
 			&.selected {
 				background: none;
 				color: var(--color-neutral-10, #282934) !important;
+				position: relative;
 
 				&::before {
 					background-color: var(--color-brand-primary, #0b5fff);
 					bottom: 0;
 					content: '';
-					left: var(--spacer-2);
+					left: -4px;
 					position: absolute;
 					top: 0;
 					width: 4px;
@@ -388,23 +408,19 @@ pre[class*='language-'] {
 }
 
 .learn-article-nav {
+	align-self: flex-start;
 	font-weight: var(--font-weight-semi-bold);
 	position: sticky;
+	top: 135px;
 
-	&.show
-		> .learn-article-nav-root
-		> .learn-article-nav-item
-		> #dropdown-icon {
+	&.show .learn-article-nav-root .learn-article-nav-item #dropdown-icon {
 		color: var(--color-action-primary-hover);
 		transform: rotate(180deg);
 	}
 
-	> ul {
-		margin: 0;
-	}
-
 	ul {
 		list-style: none;
+		margin: 0;
 		padding: 0;
 	}
 
@@ -425,17 +441,17 @@ pre[class*='language-'] {
 	}
 
 	.dropdown-menu {
+		max-width: 100%;
 		overflow-x: hidden;
-		padding: var(--spacer-3);
-		width: max-content;
-		will-change: transform;
+		padding: var(--spacer-2);
+		width: 100%;
 		z-index: 1;
 
-		> .learn-article-nav-item > .learn-article-nav-image {
+		.learn-article-nav-item .learn-article-nav-image {
 			height: 2.25rem;
 			width: 2.25rem;
 
-			> .product-icon {
+			.product-icon {
 				height: 2.5rem;
 				margin-left: -2px;
 				padding-top: 3px;
@@ -446,6 +462,7 @@ pre[class*='language-'] {
 		.dropdown-item {
 			align-items: center;
 			align-self: stretch;
+			border-radius: var(--border-radius);
 			display: flex;
 			gap: 0.75rem;
 			padding: 0.75rem;
@@ -486,16 +503,6 @@ pre[class*='language-'] {
 		}
 
 		.learn-article-nav-item {
-			padding: 5px var(--spacer-2, 0.5rem);
-
-			&.selected a {
-				background-color: var(
-					--color-action-primary-active-20,
-					#e6edfb
-				);
-				color: var(--color-action-primary-active, #004ad7);
-			}
-
 			a {
 				width: 100%;
 
@@ -505,6 +512,14 @@ pre[class*='language-'] {
 						#edf3fe
 					);
 					color: var(--color-action-primary-hover, #0053f0);
+				}
+
+				&.selected {
+					background-color: var(
+						--color-action-primary-active-20,
+						#e6edfb
+					);
+					color: var(--color-action-primary-active, #004ad7);
 				}
 			}
 		}
@@ -548,6 +563,7 @@ pre[class*='language-'] {
 		align-items: center !important;
 		background-color: var(--color-neutral-1, #f7f7f8);
 		border-radius: var(--border-radius, 0.5rem);
+		cursor: pointer;
 		display: flex;
 		justify-content: space-between !important;
 		margin-bottom: var(--spacer-3);
@@ -587,8 +603,16 @@ pre[class*='language-'] {
 }
 
 .learn-banner {
-	background: linear-gradient(180deg, #00256c 0%, #6399ff 100%);
-	color: var(--color-neutral-0);
+	background: linear-gradient(
+		180deg,
+		#00256c 5%,
+		#0038a3 25%,
+		#0b5fff 45%,
+		#00a4fa 65%,
+		rgba(46, 183, 255, 0.8) 75%,
+		rgba(255, 255, 255, 0.5) 97%
+	);
+	color: var(--color-neutral-0, #fff);
 	position: relative;
 
 	&::after {
@@ -618,17 +642,27 @@ pre[class*='language-'] {
 	}
 }
 
-.learn-card {
-	border: 1px solid var(--color-neutral-0);
+.learn-card,
+.section-card {
+	border: 1px solid rgba(9, 16, 24, 0.12);
 	border-radius: var(--border-radius-lg);
+	box-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);
+	cursor: pointer;
+	flex: 0 0 calc(50% - var(--spacer-3));
 	padding: var(--spacer-3, 1rem);
 
 	&:hover {
-		background-color: var(
-			--color-action-primary-hover-10,
-			#edf3fe
-		) !important;
-		border-color: var(--color-brand-primary-darken-1, #0053f0) !important;
+		background-color: var(--color-action-primary-hover-10, #edf3fe);
+		border-color: var(--color-brand-primary-darken-1, #0053f0);
+	}
+
+	h4 {
+		font-size: 1.125rem;
+		margin: 0;
+	}
+
+	.subsection-wrapper {
+		margin-top: var(--spacer-2);
 	}
 }
 
@@ -691,7 +725,6 @@ pre[class*='language-'] {
 		border-width: 0;
 		color: var(--color-action-neutral-default, #2b3a4b);
 		display: flex;
-		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 0.875rem;
 		font-style: normal;
 		font-weight: 600;
@@ -737,7 +770,6 @@ pre[class*='language-'] {
 		border-width: 0;
 		color: var(--color-action-neutral-default, #2b3a4b);
 		display: flex;
-		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 0.875rem;
 		font-style: normal;
 		font-weight: 600;
@@ -751,87 +783,18 @@ pre[class*='language-'] {
 
 	.pagination .page-item.active .page-link {
 		background: var(--color-action-neutral-active-20, #d5d8db);
+		z-index: 2;
 	}
 
 	.pagination-results {
 		align-items: flex-start;
 		color: var(--color-neutral-10, #282934);
 		display: flex;
-		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 0.8125rem;
 		font-style: normal;
 		font-weight: 400;
 		gap: 0.25rem;
 		line-height: 1rem;
-	}
-}
-
-.portlet-sort {
-	&.form-group-autofit {
-		align-items: center;
-		height: 32px;
-		margin-bottom: 24px;
-		padding: 8px 0 8px 8px;
-	}
-
-	&:hover {
-		background-color: #edf3fe;
-		border-radius: 10px;
-	}
-
-	option {
-		color: #282934;
-		font-size: 16px;
-	}
-
-	.form-group-item {
-		height: 32px;
-		margin-bottom: 0;
-		min-height: 32px;
-	}
-
-	> .form-group-item:not(:last-child) {
-		margin-right: 0;
-	}
-
-	.form-group-item .input-select-wrapper {
-		height: 32px;
-		margin-bottom: 0;
-	}
-
-	.form-group-item select {
-		align-items: center;
-		/* stylelint-disable-next-line function-url-quotes */
-		background: url("data:image/svg+xml;utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><path d='M7 10l5 5 5-5z'/><path fill='rgba(11, 95, 255, 1)' d='M7 10l5 5 5-5z'/></svg>")
-			calc(100% - 2px) 50% no-repeat;
-		background-color: transparent;
-		border: none;
-		color: #0b5fff;
-		font-size: 14px;
-		font-weight: 600;
-		height: 32px;
-		padding-bottom: 0;
-		padding-top: 0;
-	}
-
-	.form-group-item select:focus {
-		background-color: transparent;
-		box-shadow: none;
-		color: #0b5fff;
-		height: 32px;
-	}
-
-	.text-truncate-inline {
-		align-items: center;
-		color: #282934;
-		height: 32px;
-	}
-
-	.text-truncate-inline .text-truncate {
-		font-size: 13px;
-		font-weight: 600;
-		line-height: 16px;
-		margin-top: 1px;
 	}
 }
 
@@ -857,7 +820,6 @@ pre[class*='language-'] {
 	.search-results-entry .search-results-entry-title {
 		border-radius: 0.625rem;
 		color: #0b5fff;
-		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 1rem;
 		font-style: normal;
 		font-weight: 600;
@@ -867,7 +829,6 @@ pre[class*='language-'] {
 
 	.search-results-entry .search-results-entry-title .published-date {
 		color: var(--color-state-neutral-darken-1, #6c6c75);
-		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 0.8125rem;
 		font-style: normal;
 		font-weight: 400;
@@ -878,7 +839,6 @@ pre[class*='language-'] {
 		.search-results-entry-title
 		.search-results-entry-content {
 		color: var(--color-neutral-10, #282934);
-		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 1rem;
 		font-style: normal;
 		font-weight: 400;

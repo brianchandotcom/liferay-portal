@@ -329,7 +329,15 @@
 	},
 	"fontFamilyBase": {
 		"cssVariableMapping": "font-family-base",
-		"value": "\"Source Sans Pro\", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+		"value": "'Source Sans Pro', system-ui"
+	},
+	"fontFamilyMonospace": {
+		"cssVariableMapping": "font-family-monospace",
+		"value": "'Roboto Mono', SFMono-Regular, monospace"
+	},
+	"fontFamilySansSerif": {
+		"cssVariableMapping": "font-family-sans-serif",
+		"value": "'Source Sans 3', 'Source Sans Pro', system-ui"
 	},
 	"linkHoverTextDecoration": {
 		"cssVariableMapping": "link-hover-text-decoration",

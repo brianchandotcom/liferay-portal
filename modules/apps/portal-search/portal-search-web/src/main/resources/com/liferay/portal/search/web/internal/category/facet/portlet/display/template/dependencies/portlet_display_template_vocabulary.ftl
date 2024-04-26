@@ -17,8 +17,9 @@
 				data-target="#${namespace}treeItem${id}"
 				data-toggle="collapse"
 				onClick="${namespace}toggleTreeItem('${namespace}treeItem${id}');"
+				onKeyPress="${namespace}toggleTreeItemKeypress(event);"
 				role="treeitem"
-				tabindex="0"
+				tabindex="${(termDisplayContexts?has_content)?then(0, -1)}"
 			>
 				<span class="c-inner" tabindex="-2">
 					<span class="autofit-row">
@@ -183,6 +184,14 @@
 			else {
 				subtreeCategoryTreeElement.classList.add('show');
 			}
+		}
+	}
+
+	function ${namespace}toggleTreeItemKeypress(event) {
+		event.preventDefault();
+
+		if (event.code === 'Enter' || event.code === 'Space') {
+			${namespace}toggleTreeItem(event.target.getAttribute('aria-controls'));
 		}
 	}
 </@>

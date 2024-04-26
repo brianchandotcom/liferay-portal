@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
@@ -210,6 +211,22 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 
 		registry.register(
 			"5.4.0", "5.5.0", new LayoutPageTemplateCollectionUpgradeProcess());
+
+		registry.register(
+			"5.5.0", "5.6.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{
+							"LayoutPageTemplateCollection",
+							"layoutPageTemplateCollectionId"
+						}
+					};
+				}
+
+			});
 	}
 
 	@Reference

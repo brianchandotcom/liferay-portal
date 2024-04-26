@@ -22,6 +22,11 @@
 
 	var cookieManagers = {
 		'cookie.onetrust': {
+			checkConsent: () => {
+				var OptanonActiveGroups = window.OptanonActiveGroups;
+
+				return OptanonActiveGroups && OptanonActiveGroups.includes('C0002');
+			},
 			enabled: () => {
 				if (!window.OneTrustStub && !window.OneTrust) {
 					return Promise.resolve(false);
@@ -51,11 +56,6 @@
 						return Promise.resolve(false);
 					});
 			},
-			checkConsent: () => {
-				var OptanonActiveGroups = window.OptanonActiveGroups;
-
-				return OptanonActiveGroups && OptanonActiveGroups.includes('C0002');
-			},
 			onConsentChange: (callbackFn) => {
 				var OneTrust = window.OneTrust;
 
@@ -63,70 +63,6 @@
 			},
 		},
 		'cookie.liferay': {
-			actions: {
-				getItem: (key) => {
-					var data;
-
-					try {
-						var cookie = Liferay.Util.Cookie.get(
-							key,
-							Liferay.Util.Cookie.TYPES.PERFORMANCE
-						);
-
-						data = JSON.parse(decodeURIComponent(cookie));
-					}
-					catch (error) {
-						return;
-					}
-
-					return data;
-				},
-				getItemFromLocalStorage: (key) => {
-					let data;
-
-					try {
-						const item = Liferay.Util.LocalStorage.getItem(
-							key,
-							Liferay.Util.LocalStorage.TYPES.PERFORMANCE
-						);
-						data = JSON.parse(item);
-					}
-					catch (error) {
-						return;
-					}
-
-					return data;
-				},
-				removeItem: (key) => {
-					Liferay.Util.Cookie.remove(
-						key,
-						Liferay.Util.Cookie.TYPES.PERFORMANCE
-					);
-				},
-				setItem: (key, value, encode = true) => {
-					var expires = new Date();
-
-					expires.setDate(expires.getDate() + 365);
-
-					try {
-						var jsonStr = JSON.stringify(value);
-						var data = encode ? encodeURIComponent(jsonStr) : jsonStr;
-
-						Liferay.Util.Cookie.set(
-							key,
-							data,
-							Liferay.Util.Cookie.TYPES.PERFORMANCE,
-							{
-								expires,
-								secure: true,
-							}
-						);
-					}
-					catch (error) {
-						return;
-					}
-				},
-			},
 			checkConsent: ({navigation}) => {
 				var performanceCookieEnabled = Liferay.Util.Cookie.get(
 					Liferay.Util.Cookie.TYPES.PERFORMANCE
@@ -184,8 +120,6 @@
 				m.parentNode.insertBefore(a, m);
 			})('https://analytics-js-cdn.liferay.com', () => {
 				var config = <%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG) %>;
-
-				config.cookieManager = selectedCookieManager;
 
 				var dxpMiddleware = function (request) {
 					request.context.canonicalUrl = themeDisplay.getCanonicalURL();

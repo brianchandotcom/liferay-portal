@@ -9,6 +9,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayMultiSelect from '@clayui/multi-select';
 import {useEventListener} from '@liferay/frontend-js-react-web';
+import classnames from 'classnames';
 import {
 	normalizeFriendlyURL,
 	openCategorySelectionModal,
@@ -158,6 +159,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 
 			<ClayForm.Group>
 				<label
+					className={classnames({disabled: automaticURL})}
 					htmlFor={`${portletNamespace}friendlyURLAssetCategoryIdsMultiSelect`}
 				>
 					{Liferay.Language.get('add-categories-to-url')}
@@ -166,6 +168,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<ClayMultiSelect
+							disabled={automaticURL}
 							id={`${portletNamespace}friendlyURLAssetCategoryIdsMultiSelect`}
 							inputName={
 								portletNamespace + 'friendlyURLAssetCategoryIds'
@@ -190,7 +193,10 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 			</ClayForm.Group>
 
 			<ClayForm.Group>
-				<label htmlFor="urlTitle">
+				<label
+					className={classnames({disabled: automaticURL})}
+					htmlFor="urlTitle"
+				>
 					{Liferay.Language.get('friendly-url')}
 
 					<span

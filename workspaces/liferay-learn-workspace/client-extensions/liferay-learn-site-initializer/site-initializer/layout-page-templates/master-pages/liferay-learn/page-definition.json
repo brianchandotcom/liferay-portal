@@ -1772,14 +1772,10 @@
 																	},
 																	{
 																		"definition": {
-																			"fragmentStyle": {
-																				"marginLeft": "3"
-																			},
 																			"indexed": true,
 																			"layout": {
 																				"align": "Start",
-																				"contentDisplay": "FlexColumn",
-																				"marginLeft": 1
+																				"contentDisplay": "FlexColumn"
 																			}
 																		},
 																		"id": "bdc96665-0bb6-b1cc-851b-b8966a4e284a",

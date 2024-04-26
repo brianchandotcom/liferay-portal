@@ -11,6 +11,7 @@ import {ActionReassignmentPage} from '../pages/portal-workflow-kaleo-designer-we
 import {ConditionNode} from '../pages/portal-workflow-kaleo-designer-web/ConditionNodePage';
 import {DiagramViewPage} from '../pages/portal-workflow-kaleo-designer-web/DiagramViewPage';
 import {NodePropertiesSidebarPage} from '../pages/portal-workflow-kaleo-designer-web/NodePropertiesSidebarPage';
+import {NotificationPage} from '../pages/portal-workflow-kaleo-designer-web/NotificationPage';
 import {NotificationSectionPage} from '../pages/portal-workflow-kaleo-designer-web/NotificationSectionPage';
 import {ProcessBuilderPage} from '../pages/portal-workflow-kaleo-designer-web/ProcessBuilderPage';
 import {TimerPage} from '../pages/portal-workflow-kaleo-designer-web/TimerPage';
@@ -23,6 +24,7 @@ const workflowPagesTest = test.extend<{
 	conditionNode: ConditionNode;
 	diagramViewPage: DiagramViewPage;
 	nodePropertiesSidebarPage: NodePropertiesSidebarPage;
+	notificationPage: NotificationPage;
 	notificationSectionPage: NotificationSectionPage;
 	processBuilderPage: ProcessBuilderPage;
 	scriptManagementPage: ScriptManagementPage;
@@ -44,6 +46,9 @@ const workflowPagesTest = test.extend<{
 	},
 	nodePropertiesSidebarPage: async ({page}, use) => {
 		await use(new NodePropertiesSidebarPage(page));
+	},
+	notificationPage: async ({page}, use) => {
+		await use(new NotificationPage(page));
 	},
 	notificationSectionPage: async ({page}, use) => {
 		await use(new NotificationSectionPage(page, 0));

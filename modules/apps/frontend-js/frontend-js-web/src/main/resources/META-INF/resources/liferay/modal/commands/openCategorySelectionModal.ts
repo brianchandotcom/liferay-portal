@@ -52,7 +52,7 @@ export default function openCategorySelectionModal({
 				onSelect(selectedItems);
 			}
 			else {
-				let url = new URL(redirectURL);
+				const url = new URL(redirectURL);
 
 				const resetCurParam = `_${url.searchParams.get(
 					'p_p_id'
@@ -62,14 +62,16 @@ export default function openCategorySelectionModal({
 
 				const assetCategories = Object.keys(selectedItems);
 
+				let finalURL = url.href;
+
 				assetCategories.forEach((assetCategory) => {
-					url = addParams(
+					finalURL = addParams(
 						`${portletNamespace}assetCategoryId=${selectedItems[assetCategory].categoryId}`,
-						url.href
+						finalURL
 					);
 				});
 
-				navigate(url);
+				navigate(finalURL);
 			}
 		},
 		selectEventName: `${portletNamespace}selectedAssetCategory`,

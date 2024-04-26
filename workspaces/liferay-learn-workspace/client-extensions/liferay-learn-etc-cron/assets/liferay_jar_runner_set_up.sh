@@ -61,7 +61,7 @@ function copy_images {
 	# Include must come before exclude.
 	#
 
-	rsync --include="images/*" --include="*/" --exclude="*" --prune-empty-dirs --recursive ${LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR}/docs /public_html/images
+	rsync --include="images/*" --include="*/" --exclude="*" --prune-empty-dirs --recursive ${LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR}/docs/ /public_html/images
 }
 
 function copy_reference_docs {

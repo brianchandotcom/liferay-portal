@@ -12,7 +12,7 @@ definition {
 			value1 = ${searchTerm});
 
 		Click(
-			ariaLabel = "Search",
+			ariaLabel = "Search for",
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 	}
 

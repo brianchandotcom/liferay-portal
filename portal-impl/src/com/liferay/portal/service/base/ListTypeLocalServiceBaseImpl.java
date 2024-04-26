@@ -5,6 +5,11 @@
 
 package com.liferay.portal.service.base;
 
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -15,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -230,6 +236,20 @@ public abstract class ListTypeLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the list type with the matching UUID and company.
+	 *
+	 * @param uuid the list type's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching list type, or <code>null</code> if a matching list type could not be found
+	 */
+	@Override
+	public ListType fetchListTypeByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return listTypePersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
 	 * Returns the list type with the primary key.
 	 *
 	 * @param listTypeId the primary key of the list type
@@ -282,6 +302,72 @@ public abstract class ListTypeLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("listTypeId");
 	}
 
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+
+		final ExportActionableDynamicQuery exportActionableDynamicQuery =
+			new ExportActionableDynamicQuery() {
+
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary =
+						portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(
+						stagedModelType, modelAdditionCount);
+
+					long modelDeletionCount =
+						ExportImportHelperUtil.getModelDeletionCount(
+							portletDataContext, stagedModelType);
+
+					manifestSummary.addModelDeletionCount(
+						stagedModelType, modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(
+						dynamicQuery, "modifiedDate");
+				}
+
+			});
+
+		exportActionableDynamicQuery.setCompanyId(
+			portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<ListType>() {
+
+				@Override
+				public void performAction(ListType listType)
+					throws PortalException {
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, listType);
+				}
+
+			});
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(
+				PortalUtil.getClassNameId(ListType.class.getName())));
+
+		return exportActionableDynamicQuery;
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -320,6 +406,21 @@ public abstract class ListTypeLocalServiceBaseImpl
 		throws PortalException {
 
 		return listTypePersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns the list type with the matching UUID and company.
+	 *
+	 * @param uuid the list type's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching list type
+	 * @throws PortalException if a matching list type could not be found
+	 */
+	@Override
+	public ListType getListTypeByUuidAndCompanyId(String uuid, long companyId)
+		throws PortalException {
+
+		return listTypePersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
 	/**

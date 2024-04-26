@@ -5,9 +5,11 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -196,8 +198,23 @@ public interface ListTypeLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ListType fetchListType(long listTypeId);
 
+	/**
+	 * Returns the list type with the matching UUID and company.
+	 *
+	 * @param uuid the list type's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching list type, or <code>null</code> if a matching list type could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ListType fetchListTypeByUuidAndCompanyId(
+		String uuid, long companyId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -214,6 +231,18 @@ public interface ListTypeLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ListType getListType(long companyId, String name, String type);
+
+	/**
+	 * Returns the list type with the matching UUID and company.
+	 *
+	 * @param uuid the list type's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching list type
+	 * @throws PortalException if a matching list type could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ListType getListTypeByUuidAndCompanyId(String uuid, long companyId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getListTypeId(long companyId, String name, String type);

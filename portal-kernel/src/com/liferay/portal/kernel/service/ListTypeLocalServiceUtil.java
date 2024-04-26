@@ -210,10 +210,31 @@ public class ListTypeLocalServiceUtil {
 		return getService().fetchListType(listTypeId);
 	}
 
+	/**
+	 * Returns the list type with the matching UUID and company.
+	 *
+	 * @param uuid the list type's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching list type, or <code>null</code> if a matching list type could not be found
+	 */
+	public static ListType fetchListTypeByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return getService().fetchListTypeByUuidAndCompanyId(uuid, companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static
@@ -238,6 +259,21 @@ public class ListTypeLocalServiceUtil {
 		long companyId, String name, String type) {
 
 		return getService().getListType(companyId, name, type);
+	}
+
+	/**
+	 * Returns the list type with the matching UUID and company.
+	 *
+	 * @param uuid the list type's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching list type
+	 * @throws PortalException if a matching list type could not be found
+	 */
+	public static ListType getListTypeByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return getService().getListTypeByUuidAndCompanyId(uuid, companyId);
 	}
 
 	public static long getListTypeId(long companyId, String name, String type) {

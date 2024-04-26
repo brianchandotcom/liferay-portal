@@ -7,6 +7,8 @@ package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 
+import java.util.Date;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -22,7 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ListTypeModel
-	extends BaseModel<ListType>, MVCCModel, ShardedModel {
+	extends BaseModel<ListType>, MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -61,6 +63,23 @@ public interface ListTypeModel
 	public void setMvccVersion(long mvccVersion);
 
 	/**
+	 * Returns the uuid of this list type.
+	 *
+	 * @return the uuid of this list type
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this list type.
+	 *
+	 * @param uuid the uuid of this list type
+	 */
+	@Override
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the list type ID of this list type.
 	 *
 	 * @return the list type ID of this list type
@@ -89,6 +108,87 @@ public interface ListTypeModel
 	 */
 	@Override
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this list type.
+	 *
+	 * @return the user ID of this list type
+	 */
+	@Override
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this list type.
+	 *
+	 * @param userId the user ID of this list type
+	 */
+	@Override
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this list type.
+	 *
+	 * @return the user uuid of this list type
+	 */
+	@Override
+	public String getUserUuid();
+
+	/**
+	 * Sets the user uuid of this list type.
+	 *
+	 * @param userUuid the user uuid of this list type
+	 */
+	@Override
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this list type.
+	 *
+	 * @return the user name of this list type
+	 */
+	@AutoEscape
+	@Override
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this list type.
+	 *
+	 * @param userName the user name of this list type
+	 */
+	@Override
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this list type.
+	 *
+	 * @return the create date of this list type
+	 */
+	@Override
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this list type.
+	 *
+	 * @param createDate the create date of this list type
+	 */
+	@Override
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this list type.
+	 *
+	 * @return the modified date of this list type
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this list type.
+	 *
+	 * @param modifiedDate the modified date of this list type
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the name of this list type.

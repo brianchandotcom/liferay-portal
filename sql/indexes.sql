@@ -245,6 +245,7 @@ create index IX_9178FC71 on LayoutSetPrototype (companyId, active_);
 create index IX_C5D69B24 on LayoutSetPrototype (uuid_[$COLUMN_LENGTH:75$]);
 
 create unique index IX_BF6DBF8A on ListType (companyId, type_[$COLUMN_LENGTH:75$], name[$COLUMN_LENGTH:75$]);
+create index IX_56E29D16 on ListType (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_C28C72EC on MembershipRequest (groupId, statusId);
 create index IX_35AA8FA6 on MembershipRequest (groupId, userId, statusId);

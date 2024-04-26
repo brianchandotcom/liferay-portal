@@ -5,8 +5,10 @@
 
 package com.liferay.portal.kernel.model;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,8 +34,13 @@ public class ListTypeWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("uuid", getUuid());
 		attributes.put("listTypeId", getListTypeId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
 
@@ -48,6 +55,12 @@ public class ListTypeWrapper
 			setMvccVersion(mvccVersion);
 		}
 
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long listTypeId = (Long)attributes.get("listTypeId");
 
 		if (listTypeId != null) {
@@ -58,6 +71,30 @@ public class ListTypeWrapper
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		String name = (String)attributes.get("name");
@@ -89,6 +126,16 @@ public class ListTypeWrapper
 	}
 
 	/**
+	 * Returns the create date of this list type.
+	 *
+	 * @return the create date of this list type
+	 */
+	@Override
+	public Date getCreateDate() {
+		return model.getCreateDate();
+	}
+
+	/**
 	 * Returns the list type ID of this list type.
 	 *
 	 * @return the list type ID of this list type
@@ -96,6 +143,16 @@ public class ListTypeWrapper
 	@Override
 	public long getListTypeId() {
 		return model.getListTypeId();
+	}
+
+	/**
+	 * Returns the modified date of this list type.
+	 *
+	 * @return the modified date of this list type
+	 */
+	@Override
+	public Date getModifiedDate() {
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -138,6 +195,46 @@ public class ListTypeWrapper
 		return model.getType();
 	}
 
+	/**
+	 * Returns the user ID of this list type.
+	 *
+	 * @return the user ID of this list type
+	 */
+	@Override
+	public long getUserId() {
+		return model.getUserId();
+	}
+
+	/**
+	 * Returns the user name of this list type.
+	 *
+	 * @return the user name of this list type
+	 */
+	@Override
+	public String getUserName() {
+		return model.getUserName();
+	}
+
+	/**
+	 * Returns the user uuid of this list type.
+	 *
+	 * @return the user uuid of this list type
+	 */
+	@Override
+	public String getUserUuid() {
+		return model.getUserUuid();
+	}
+
+	/**
+	 * Returns the uuid of this list type.
+	 *
+	 * @return the uuid of this list type
+	 */
+	@Override
+	public String getUuid() {
+		return model.getUuid();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -154,6 +251,16 @@ public class ListTypeWrapper
 	}
 
 	/**
+	 * Sets the create date of this list type.
+	 *
+	 * @param createDate the create date of this list type
+	 */
+	@Override
+	public void setCreateDate(Date createDate) {
+		model.setCreateDate(createDate);
+	}
+
+	/**
 	 * Sets the list type ID of this list type.
 	 *
 	 * @param listTypeId the list type ID of this list type
@@ -161,6 +268,16 @@ public class ListTypeWrapper
 	@Override
 	public void setListTypeId(long listTypeId) {
 		model.setListTypeId(listTypeId);
+	}
+
+	/**
+	 * Sets the modified date of this list type.
+	 *
+	 * @param modifiedDate the modified date of this list type
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -203,9 +320,54 @@ public class ListTypeWrapper
 		model.setType(type);
 	}
 
+	/**
+	 * Sets the user ID of this list type.
+	 *
+	 * @param userId the user ID of this list type
+	 */
+	@Override
+	public void setUserId(long userId) {
+		model.setUserId(userId);
+	}
+
+	/**
+	 * Sets the user name of this list type.
+	 *
+	 * @param userName the user name of this list type
+	 */
+	@Override
+	public void setUserName(String userName) {
+		model.setUserName(userName);
+	}
+
+	/**
+	 * Sets the user uuid of this list type.
+	 *
+	 * @param userUuid the user uuid of this list type
+	 */
+	@Override
+	public void setUserUuid(String userUuid) {
+		model.setUserUuid(userUuid);
+	}
+
+	/**
+	 * Sets the uuid of this list type.
+	 *
+	 * @param uuid the uuid of this list type
+	 */
+	@Override
+	public void setUuid(String uuid) {
+		model.setUuid(uuid);
+	}
+
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return model.getStagedModelType();
 	}
 
 	@Override

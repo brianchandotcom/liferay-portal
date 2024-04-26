@@ -183,9 +183,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 						automaticURL = Validator.isNull(blogsEditEntryDisplayContext.getURLTitle());
 					}
 					else {
-						String uniqueUrlTitle = BlogsEntryLocalServiceUtil.getUniqueUrlTitle(entry);
-
-						automaticURL = uniqueUrlTitle.equals(blogsEditEntryDisplayContext.getURLTitle());
+						automaticURL = blogsEditEntryDisplayContext.isAutomaticURL();
 					}
 					%>
 

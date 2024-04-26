@@ -189,9 +189,17 @@ testFeatureFlagsDisabled(
 		await applicationPage.schemaObjectDefinitionSelector.click();
 
 		expect(
-			await applicationPage.page.getByRole('menu').allTextContents()
+			(
+				await applicationPage.page.getByRole('menu').allInnerTexts()
+			)[0].split('\n')
 		).toEqual([
-			'APISortAPIFilterAPIEndpointAPIPropertyAPISchemaAPIApplicationObjectDefinition',
+			'APISort',
+			'APIFilter',
+			'APIEndpoint',
+			'APIProperty',
+			'APISchema',
+			'APIApplication',
+			'ObjectDefinition',
 		]);
 
 		await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
@@ -271,9 +279,19 @@ testFeatureFlagsEnabled(
 		await applicationPage.schemaObjectDefinitionSelector.click();
 
 		expect(
-			await applicationPage.page.getByRole('menu').allTextContents()
+			(
+				await applicationPage.page.getByRole('menu').allInnerTexts()
+			)[0].split('\n')
 		).toEqual([
-			'AccountEntryUserAPISortAPIFilterAPIEndpointAPIPropertyAPISchemaAPIApplicationObjectDefinition',
+			'AccountEntry',
+			'User',
+			'APISort',
+			'APIFilter',
+			'APIEndpoint',
+			'APIProperty',
+			'APISchema',
+			'APIApplication',
+			'ObjectDefinition',
 		]);
 
 		await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(

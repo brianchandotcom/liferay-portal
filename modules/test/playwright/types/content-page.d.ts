@@ -35,6 +35,7 @@ type FormConfig = {
 
 type Layout = {
 	friendlyUrlPath: string;
+	id: string;
 };
 
 type PageDefinition = {

@@ -100,4 +100,6 @@ test('allows adding a Collection Display with a manual collection into another C
 	for (const item of await secondCollection.getByRole('listitem').all()) {
 		await expect(item).toHaveText('Sample 01');
 	}
+
+	await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
 });

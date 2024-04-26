@@ -809,6 +809,8 @@ public class ObjectEntryLocalServiceTest {
 						"pt_BR", value2
 					).build()
 				).build()));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	@Test
@@ -2237,6 +2239,11 @@ public class ObjectEntryLocalServiceTest {
 		_objectEntryLocalService.deleteObjectEntry(objectEntry5);
 
 		_assertCount(0);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			draftObjectDefinition);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			publishedObjectDefinition);
 	}
 
 	@Test

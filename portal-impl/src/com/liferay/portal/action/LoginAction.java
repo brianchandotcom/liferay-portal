@@ -112,6 +112,8 @@ public class LoginAction implements Action {
 			return null;
 		}
 
+		String redirect = null;
+
 		Layout layout =
 			LayoutUtilityPageEntryLayoutProviderUtil.
 				getDefaultLayoutUtilityPageEntryLayout(
@@ -123,13 +125,24 @@ public class LoginAction implements Action {
 				getWindowState(httpServletRequest),
 				LiferayWindowState.EXCLUSIVE)) {
 
-			httpServletResponse.sendRedirect(
-				PortalUtil.getLayoutURL(layout, themeDisplay));
-
-			return null;
+			redirect = PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest, PortletKeys.LOGIN, layout,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/login/login"
+			).setParameter(
+				"saveLastPath", false
+			).setPortletMode(
+				PortletMode.VIEW
+			).setWindowState(
+				WindowState.NORMAL
+			).buildString();
 		}
 
-		String redirect = PortalUtil.getSiteLoginURL(themeDisplay);
+		if (Validator.isNull(redirect)) {
+			redirect = PortalUtil.getSiteLoginURL(themeDisplay);
+		}
 
 		if (Validator.isNull(redirect)) {
 			redirect = PropsValues.AUTH_LOGIN_URL;

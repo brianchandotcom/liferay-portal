@@ -8,11 +8,13 @@ package com.liferay.portal.kernel.upgrade;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.simple.Element;
@@ -237,6 +239,28 @@ public abstract class BasePortletPreferencesUpgradeProcess
 			String portletId, String xml)
 		throws Exception;
 
+	private long _getCompanyId(int ownerType, long ownerId, long plid)
+		throws Exception {
+
+		long[] companyIds = PortalInstancePool.getCompanyIds();
+
+		if (companyIds.length == 1) {
+			return companyIds[0];
+		}
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				_getSelectSQL(ownerType, ownerId, plid))) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getLong("companyId");
+				}
+			}
+		}
+
+		return 0;
+	}
+
 	private Map<String, PreferenceValues> _getPreferenceValuesMap(
 			PreparedStatement selectPreparedStatement)
 		throws Exception {
@@ -271,6 +295,75 @@ public abstract class BasePortletPreferencesUpgradeProcess
 		return preferenceValuesMap;
 	}
 
+	private String _getSelectSQL(int ownerType, long ownerId, long plid) {
+		String foreignColumnName = "";
+		String foreignTableName = "";
+
+		if (ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
+			foreignColumnName = "plid";
+			foreignTableName = "Layout";
+		}
+		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_COMPANY) {
+			foreignColumnName = "companyId";
+			foreignTableName = "Company";
+		}
+		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_GROUP) {
+			foreignColumnName = "groupId";
+			foreignTableName = "Group_";
+		}
+		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION) {
+			foreignColumnName = "organizationId";
+			foreignTableName = "Organization_";
+		}
+		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {
+			foreignColumnName = "portletItemId";
+			foreignTableName = "PortletItem";
+		}
+		else if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
+			foreignColumnName = "userId";
+			foreignTableName = "User_";
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Invalid ownerType: " + ownerType);
+		}
+
+		StringBundler sb = new StringBundler(2);
+
+		sb.append(
+			"select companyId from "
+		).append(
+			foreignTableName
+		).append(
+			" where "
+		).append(
+			foreignTableName
+		).append(
+			"."
+		).append(
+			foreignColumnName
+		).append(
+			" = "
+		);
+
+		if (ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
+			sb.append(
+				plid
+			).append(
+				" union all select companyId from LayoutRevision where "
+			).append(
+				"layoutRevisionId = "
+			).append(
+				plid
+			);
+		}
+		else {
+			sb.append(ownerId);
+		}
+
+		return sb.toString();
+	}
+
 	private String _toXMLString(Map<String, PreferenceValues> preferenceMap) {
 		if (preferenceMap.isEmpty()) {
 			return PortletConstants.DEFAULT_PREFERENCES;
@@ -299,6 +392,33 @@ public abstract class BasePortletPreferencesUpgradeProcess
 		}
 
 		return portletPreferencesElement.toXMLString();
+	}
+
+	private void _updateCompanyId(long companyId, long portletPreferencesId)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update PortletPreferences set companyId = ? where " +
+					"portletPreferencesId = ?")) {
+
+			preparedStatement.setLong(1, companyId);
+			preparedStatement.setLong(2, portletPreferencesId);
+
+			preparedStatement.executeUpdate();
+		}
+
+		if (!hasColumn("PortletPreferences", "preferences")) {
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"update PortletPreferenceValue set companyId = ? " +
+							"where portletPreferencesId = ?")) {
+
+				preparedStatement.setLong(1, companyId);
+				preparedStatement.setLong(2, portletPreferencesId);
+
+				preparedStatement.executeUpdate();
+			}
+		}
 	}
 
 	private void _updatePortletPreferences() throws Exception {
@@ -340,21 +460,28 @@ public abstract class BasePortletPreferencesUpgradeProcess
 		long portletPreferencesId = (Long)values[0];
 		long companyId = (Long)values[1];
 
-		if (companyId <= 0) {
-			runSQL(
-				"delete from PortletPreferences where portletPreferencesId = " +
-					portletPreferencesId);
+		int ownerType = (Integer)values[2];
+		long plid = (Long)values[3];
+		long ownerId = (Long)values[4];
 
-			return;
+		if (companyId <= 0) {
+			companyId = _getCompanyId(ownerType, ownerId, plid);
+
+			if (companyId <= 0) {
+				runSQL(
+					"delete from PortletPreferences where " +
+						"portletPreferencesId = " + portletPreferencesId);
+
+				return;
+			}
+
+			_updateCompanyId(companyId, portletPreferencesId);
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update PortletPreferences set preferences = ? where " +
 					"portletPreferencesId = ?")) {
 
-			int ownerType = (Integer)values[2];
-			long plid = (Long)values[3];
-			long ownerId = (Long)values[4];
 			String portletId = (String)values[5];
 			String preferences = (String)values[6];
 
@@ -411,21 +538,29 @@ public abstract class BasePortletPreferencesUpgradeProcess
 		long portletPreferencesId = (Long)values[0];
 		long companyId = (Long)values[1];
 
-		if (companyId <= 0) {
-			runSQL(
-				"delete from PortletPreferences where portletPreferencesId = " +
-					portletPreferencesId);
-
-			runSQL(
-				"delete from PortletPreferenceValue where " +
-					"portletPreferencesId = " + portletPreferencesId);
-
-			return;
-		}
-
 		int ownerType = (Integer)values[2];
+
 		long plid = (Long)values[3];
 		long ownerId = (Long)values[4];
+
+		if (companyId <= 0) {
+			companyId = _getCompanyId(ownerType, ownerId, plid);
+
+			if (companyId <= 0) {
+				runSQL(
+					"delete from PortletPreferences where " +
+						"portletPreferencesId = " + portletPreferencesId);
+
+				runSQL(
+					"delete from PortletPreferenceValue where " +
+						"portletPreferencesId = " + portletPreferencesId);
+
+				return;
+			}
+
+			_updateCompanyId(companyId, portletPreferencesId);
+		}
+
 		String portletId = (String)values[5];
 		long ctCollectionId = (Long)values[6];
 

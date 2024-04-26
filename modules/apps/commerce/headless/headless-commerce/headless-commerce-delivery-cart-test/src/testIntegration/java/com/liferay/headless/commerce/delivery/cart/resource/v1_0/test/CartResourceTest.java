@@ -211,6 +211,33 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 	}
 
 	@Override
+	protected Cart
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_addCart(
+				String accountExternalReferenceCode,
+				String channelExternalReferenceCode, Cart cart)
+		throws Exception {
+
+		return cartResource.postCartByExternalReferenceCodeCheckout(
+			cart.getExternalReferenceCode());
+	}
+
+	@Override
+	protected String
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_getAccountExternalReferenceCode()
+		throws Exception {
+
+		return _accountEntry.getExternalReferenceCode();
+	}
+
+	@Override
+	protected String
+			testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage_getChannelExternalReferenceCode()
+		throws Exception {
+
+		return _commerceChannel.getExternalReferenceCode();
+	}
+
+	@Override
 	protected Cart testGetChannelCartsPage_addCart(
 			Long accountId, Long channelId, Cart cart)
 		throws Exception {
@@ -285,6 +312,14 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		};
 
 		return cartResource.postCartCouponCode(cart.getId(), couponCode);
+	}
+
+	@Override
+	protected Cart testPostChannelCartByExternalReferenceCode_addCart(Cart cart)
+		throws Exception {
+
+		return cartResource.postCartByExternalReferenceCodeCheckout(
+			cart.getExternalReferenceCode());
 	}
 
 	@Override

@@ -103,6 +103,14 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 		_testGetCartItemPriceOnApplication();
 	}
 
+	@Override
+	@Test
+	public void testGetCartItemByExternalReferenceCode() throws Exception {
+		super.testGetCartItemByExternalReferenceCode();
+
+		_testGetCartItemPriceOnApplication();
+	}
+
 	@Ignore
 	@Override
 	@Test
@@ -113,6 +121,29 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 	@Override
 	@Test
 	public void testGraphQLDeleteCartItem() throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testPutCartItemByExternalReferenceCode() throws Exception {
+		CartItem postCartItem =
+			testPutCartItemByExternalReferenceCode_addCartItem();
+
+		CartItem randomCartItem = randomCartItem();
+
+		CartItem putCartItem =
+			cartItemResource.putCartItemByExternalReferenceCode(
+				postCartItem.getExternalReferenceCode(), randomCartItem);
+
+		assertEquals(randomCartItem, putCartItem);
+		assertValid(putCartItem);
+
+		CartItem getCartItem =
+			cartItemResource.getCartItemByExternalReferenceCode(
+				putCartItem.getExternalReferenceCode());
+
+		assertEquals(randomCartItem, getCartItem);
+		assertValid(getCartItem);
 	}
 
 	@Override
@@ -129,6 +160,14 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 	protected CartItem testDeleteCartItem_addCartItem() throws Exception {
 		return cartItemResource.postCartItem(
 			_commerceOrder.getCommerceOrderId(), randomCartItem());
+	}
+
+	@Override
+	protected CartItem testDeleteCartItemByExternalReferenceCode_addCartItem()
+		throws Exception {
+
+		return cartItemResource.postCartByExternalReferenceCodeItem(
+			_commerceOrder.getExternalReferenceCode(), randomCartItem());
 	}
 
 	@Override
@@ -155,6 +194,14 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 	}
 
 	@Override
+	protected CartItem testGetCartItemByExternalReferenceCode_addCartItem()
+		throws Exception {
+
+		return cartItemResource.postCartByExternalReferenceCodeItem(
+			_commerceOrder.getExternalReferenceCode(), randomCartItem());
+	}
+
+	@Override
 	protected CartItem testGetCartItemsPage_addCartItem(
 			Long cartId, CartItem cartItem)
 		throws Exception {
@@ -174,9 +221,26 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 	}
 
 	@Override
+	protected CartItem
+			testGraphQLGetCartItemByExternalReferenceCode_addCartItem()
+		throws Exception {
+
+		return cartItemResource.postCartByExternalReferenceCodeItem(
+			_commerceOrder.getExternalReferenceCode(), randomCartItem());
+	}
+
+	@Override
 	protected CartItem testPatchCartItem_addCartItem() throws Exception {
 		return cartItemResource.postCartItem(
 			_commerceOrder.getCommerceOrderId(), randomCartItem());
+	}
+
+	@Override
+	protected CartItem testPatchCartItemByExternalReferenceCode_addCartItem()
+		throws Exception {
+
+		return cartItemResource.postCartByExternalReferenceCodeItem(
+			_commerceOrder.getExternalReferenceCode(), randomCartItem());
 	}
 
 	@Override
@@ -200,6 +264,14 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 	protected CartItem testPutCartItem_addCartItem() throws Exception {
 		return cartItemResource.postCartItem(
 			_commerceOrder.getCommerceOrderId(), randomCartItem());
+	}
+
+	@Override
+	protected CartItem testPutCartItemByExternalReferenceCode_addCartItem()
+		throws Exception {
+
+		return cartItemResource.postCartByExternalReferenceCodeItem(
+			_commerceOrder.getExternalReferenceCode(), randomCartItem());
 	}
 
 	private CPInstance _addCPInstance(boolean priceOnApplication)
@@ -234,6 +306,7 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 
 		return new CartItem() {
 			{
+				externalReferenceCode = RandomTestUtil.randomString();
 				quantity = BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10));
 				sku = cpInstance.getSku();
 				skuId = cpInstance.getCPInstanceId();

@@ -191,6 +191,29 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	}
 
 	@Override
+	public Page<Cart>
+			getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
+				String accountExternalReferenceCode,
+				String channelExternalReferenceCode, String search,
+				Pagination pagination)
+		throws Exception {
+
+		AccountEntry accountEntry =
+			_accountEntryLocalService.getAccountEntryByExternalReferenceCode(
+				accountExternalReferenceCode, contextCompany.getCompanyId());
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.
+				getCommerceChannelByExternalReferenceCode(
+					channelExternalReferenceCode,
+					contextCompany.getCompanyId());
+
+		return getChannelCartsPage(
+			accountEntry.getAccountEntryId(),
+			commerceChannel.getCommerceChannelId(), search, pagination);
+	}
+
+	@Override
 	public Page<Cart> getChannelCartsPage(
 			Long accountId, Long channelId, String search,
 			Pagination pagination)
@@ -314,6 +337,19 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		_updateOrder(commerceOrder, cart);
 
 		return _toCart(commerceOrder);
+	}
+
+	@Override
+	public Cart postChannelCartByExternalReferenceCode(
+			String externalReferenceCode, Cart cart)
+		throws Exception {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.
+				getCommerceChannelByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		return postChannelCart(commerceChannel.getCommerceChannelId(), cart);
 	}
 
 	@Override

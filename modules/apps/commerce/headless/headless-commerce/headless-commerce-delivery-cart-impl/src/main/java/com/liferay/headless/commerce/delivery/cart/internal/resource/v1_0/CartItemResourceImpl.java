@@ -8,6 +8,7 @@ package com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.exception.NoSuchOrderException;
+import com.liferay.commerce.exception.NoSuchOrderItemException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -38,8 +39,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.ws.rs.core.Response;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -56,7 +55,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 
 	@Override
-	public Response deleteCartItem(Long cartItemId) throws Exception {
+	public void deleteCartItem(Long cartItemId) throws Exception {
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemService.getCommerceOrderItem(cartItemId);
 
@@ -69,10 +68,24 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 
 		_commerceOrderItemService.deleteCommerceOrderItem(
 			cartItemId, commerceContext);
+	}
 
-		Response.ResponseBuilder responseBuilder = Response.noContent();
+	@Override
+	public void deleteCartItemByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
 
-		return responseBuilder.build();
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrderItem == null) {
+			throw new NoSuchOrderItemException(
+				"Unable to find order item with external reference code " +
+					externalReferenceCode);
+		}
+
+		deleteCartItem(commerceOrderItem.getCommerceOrderItemId());
 	}
 
 	@Override
@@ -121,6 +134,24 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 			commerceOrder.getCommerceAccountId(), commerceOrderItem);
 	}
 
+	@Override
+	public CartItem getCartItemByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrderItem == null) {
+			throw new NoSuchOrderItemException(
+				"Unable to find order item with external reference code " +
+					externalReferenceCode);
+		}
+
+		return getCartItem(commerceOrderItem.getCommerceOrderItemId());
+	}
+
 	@NestedField(parentClass = Cart.class, value = "cartItems")
 	@Override
 	public Page<CartItem> getCartItemsPage(
@@ -158,6 +189,25 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 		throws Exception {
 
 		return super.patchCartItem(cartItemId, cartItem);
+	}
+
+	@Override
+	public CartItem patchCartItemByExternalReferenceCode(
+			String externalReferenceCode, CartItem cartItem)
+		throws Exception {
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrderItem == null) {
+			throw new NoSuchOrderItemException(
+				"Unable to find order item with external reference code " +
+					externalReferenceCode);
+		}
+
+		return patchCartItem(
+			commerceOrderItem.getCommerceOrderItemId(), cartItem);
 	}
 
 	@Override
@@ -248,6 +298,25 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 					commerceOrder.getCommerceAccountId()),
 				_serviceContextHelper.getServiceContext(
 					commerceOrder.getGroupId())));
+	}
+
+	@Override
+	public CartItem putCartItemByExternalReferenceCode(
+			String externalReferenceCode, CartItem cartItem)
+		throws Exception {
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrderItem == null) {
+			throw new NoSuchOrderItemException(
+				"Unable to find order item with external reference code " +
+					externalReferenceCode);
+		}
+
+		return putCartItem(
+			commerceOrderItem.getCommerceOrderItemId(), cartItem);
 	}
 
 	private List<CartItem> _filterCartItems(List<CartItem> cartItems) {

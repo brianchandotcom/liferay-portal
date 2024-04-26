@@ -541,10 +541,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 			return;
 		}
 
-		_lastImportDate = new Date(_lastImportTime);
-
-		_lastImportTime = System.currentTimeMillis();
-
 		LDAPImportConfiguration ldapImportConfiguration =
 			_ldapImportConfigurationProvider.getConfiguration(companyId);
 
@@ -560,6 +556,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 						" is no longer valid, company ", companyId,
 						" now uses ", ldapServerConfiguration.ldapServerId()));
 			}
+
+			_lastImportTime = System.currentTimeMillis();
 
 			return;
 		}
@@ -601,6 +599,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 			_log.error("Unable to import LDAP users and groups", exception);
 		}
 		finally {
+			_lastImportTime = System.currentTimeMillis();
+
 			safeLdapContext.close();
 		}
 	}
@@ -1747,18 +1747,21 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 
 		ServiceContext serviceContext = ldapUser.getServiceContext();
 
-		Date serverConfigurationModifiedDate = _lastImportDate;
+		boolean updatedCustomMappings = false;
 
 		if (Validator.isNotNull(ldapServerConfiguration.modifiedDate())) {
-			serverConfigurationModifiedDate = DateUtil.parseDate(
+			Date serverConfigurationModifiedDate = DateUtil.parseDate(
 				"EEE MMM d HH:mm:ss zzz yyyy",
 				ldapServerConfiguration.modifiedDate(),
 				serviceContext.getLocale());
+
+			updatedCustomMappings = serverConfigurationModifiedDate.after(
+				new Date(_lastImportTime));
 		}
 
 		if ((modifiedDate != null) &&
 			modifiedDate.equals(user.getModifiedDate()) &&
-			(serverConfigurationModifiedDate.compareTo(_lastImportDate) <= 0)) {
+			!updatedCustomMappings) {
 
 			if ((ldapUser.isUpdatePassword() ||
 				 !ldapImportConfiguration.importUserPasswordEnabled()) &&
@@ -2017,7 +2020,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 	@Reference
 	private GroupLocalService _groupLocalService;
 
-	private Date _lastImportDate;
 	private long _lastImportTime;
 
 	@Reference

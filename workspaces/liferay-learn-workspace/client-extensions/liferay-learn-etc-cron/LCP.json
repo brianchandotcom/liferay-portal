@@ -14,7 +14,7 @@
 		"LIFERAY_LEARN_ETC_CRON_LIFERAY_URL": "https://learn-dev.liferay.com",
 		"LIFERAY_LEARN_ETC_CRON_SLACK_CHANNEL": "#is-sites-learn-devops-dev",
 		"LIFERAY_LEARN_ETC_CRON_SLACK_ENDPOINT": "@slack-endpoint",
-		"LIFERAY_LEARN_RESOURCE_DOMAIN": "https://liferaylearnresources-exte5a2learn-extdev.lfr.cloud",
+		"LIFERAY_LEARN_RESOURCE_DOMAIN": "https://resources.learn-dev.liferay.com",
 		"LIFERAY_ROUTES_CLIENT_EXTENSION": "/etc/liferay/lxc/ext-init-metadata",
 		"LIFERAY_ROUTES_DXP": "/etc/liferay/lxc/dxp-metadata"
 	},
@@ -31,7 +31,7 @@
 			"env": {
 				"LIFERAY_LEARN_ETC_CRON_LIFERAY_URL": "https://learn-uat.liferay.com",
 				"LIFERAY_LEARN_ETC_CRON_SLACK_CHANNEL": "#is-sites-learn-devops-uat",
-				"LIFERAY_LEARN_RESOURCE_DOMAIN": "https://liferaylearnresources-exte5a2learn-extuat.lfr.cloud"
+				"LIFERAY_LEARN_RESOURCE_DOMAIN": "https://resources.learn-uat.liferay.com"
 			},
 			"schedule": "0 15 * * *"
 		},

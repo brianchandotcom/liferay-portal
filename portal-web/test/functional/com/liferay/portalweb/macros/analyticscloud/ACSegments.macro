@@ -24,10 +24,6 @@ definition {
 
 		Click(locator1 = "ACSegments#SEGMENT_OVERVIEW_ATTRIBUTE");
 
-		Type(
-			locator1 = "ACSegments#SEGMENT_OVERVIEW_ATTRIBUTE",
-			value1 = ${attribute});
-
 		Click(
 			locator1 = "ACSegments#ATTRIBUTE_DROPDOWN_MENU_ITEM",
 			menuItem = ${attribute});

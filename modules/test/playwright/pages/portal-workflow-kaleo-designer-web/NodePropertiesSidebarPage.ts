@@ -7,6 +7,7 @@ import {Locator, Page} from '@playwright/test';
 
 import {getRandomInt} from '../../utils/getRandomInt';
 import {ActionPage} from './ActionPage';
+import {DiagramViewPage} from './DiagramViewPage';
 import {NotificationSectionPage} from './NotificationSectionPage';
 import {TimerPage} from './TimerPage';
 
@@ -16,9 +17,12 @@ export class NodePropertiesSidebarPage {
 	readonly addNotificationButton: Locator;
 	readonly addTimerButton: Locator;
 	readonly deleteNotificationsButton: Locator;
+	readonly diagramViewPage: DiagramViewPage;
 	readonly editAssignmentButton: Locator;
+	readonly nodeLabelInput: Locator;
 	readonly notificationPage: NotificationSectionPage;
 	readonly page: Page;
+	readonly taskNodeSideBarItem: Locator;
 	readonly timerPage: TimerPage;
 
 	constructor(page: Page) {
@@ -29,7 +33,7 @@ export class NodePropertiesSidebarPage {
 			.first();
 		this.addNotificationButton = page
 			.getByRole('tablist')
-			.filter({hasText: 'Notifications'})
+			.filter({hasText: 'Notification'})
 			.getByRole('button', {name: 'New'})
 			.first();
 		this.addTimerButton = page
@@ -40,11 +44,16 @@ export class NodePropertiesSidebarPage {
 		this.deleteNotificationsButton = page.locator(
 			'button[title="Delete Notifications"]'
 		);
+		this.diagramViewPage = new DiagramViewPage(page);
 		this.editAssignmentButton = page.locator(
 			'a.c-link:has-text("Asset Creator")'
 		);
+		this.nodeLabelInput = page.locator('#nodeLabel');
 		this.notificationPage = new NotificationSectionPage(page, 0);
 		this.page = page;
+		this.taskNodeSideBarItem = page.getByText('Task', {
+			exact: true,
+		});
 		this.timerPage = new TimerPage(page);
 		this.actionPage = new ActionPage(page);
 	}
@@ -106,5 +115,12 @@ export class NodePropertiesSidebarPage {
 
 	async deleteNotifications() {
 		await this.deleteNotificationsButton.click();
+	}
+
+	async dragTaskNodeToDiagram() {
+		await this.taskNodeSideBarItem.dragTo(
+			this.diagramViewPage.diagramArea,
+			{targetPosition: {x: 200, y: 200}}
+		);
 	}
 }

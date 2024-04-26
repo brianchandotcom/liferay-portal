@@ -123,6 +123,25 @@ public class LayoutPageTemplateCollectionServiceImpl
 	}
 
 	@Override
+	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			layoutPageTemplateCollectionLocalService.
+				fetchLayoutPageTemplateCollection(
+					externalReferenceCode, groupId);
+
+		if (layoutPageTemplateCollection != null) {
+			_layoutPageTemplateCollectionModelResourcePermission.check(
+				getPermissionChecker(), layoutPageTemplateCollection,
+				ActionKeys.VIEW);
+		}
+
+		return layoutPageTemplateCollection;
+	}
+
+	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 		long groupId, int type) {
 

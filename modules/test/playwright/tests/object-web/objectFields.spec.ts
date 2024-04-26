@@ -12,6 +12,37 @@ import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
 
+export const createdEntities = {
+	listTypeDefinitionIds: [],
+	objectDefinitionIds: [],
+};
+
+test.afterEach(async ({apiHelpers}) => {
+	if (createdEntities.listTypeDefinitionIds.length) {
+		await Promise.all(
+			createdEntities.listTypeDefinitionIds.map((listTypeDefinitionId) =>
+				apiHelpers.listTypeAdmin.deleteListTypeDefinition(
+					listTypeDefinitionId
+				)
+			)
+		);
+
+		createdEntities.listTypeDefinitionIds = [];
+	}
+
+	if (createdEntities.objectDefinitionIds.length) {
+		await Promise.all(
+			createdEntities.objectDefinitionIds.map((objectDefinitionId) =>
+				apiHelpers.objectAdmin.deleteObjectDefinition(
+					objectDefinitionId
+				)
+			)
+		);
+
+		createdEntities.objectDefinitionIds = [];
+	}
+});
+
 test.describe('Manage object fields through Model Builder', () => {
 	test('can add picklist object field to object definition node', async ({
 		apiHelpers,
@@ -21,7 +52,7 @@ test.describe('Manage object fields through Model Builder', () => {
 	}) => {
 		await page.goto('/');
 
-		const ListTypeDefinition =
+		const listTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
 		const objectDefinition =
@@ -39,7 +70,7 @@ test.describe('Manage object fields through Model Builder', () => {
 		const objectFieldLabel = 'objectFieldLabel' + getRandomInt();
 
 		await modelBuilderPage.createObjectField({
-			listTypeDefinitionName: ListTypeDefinition.name,
+			listTypeDefinitionName: listTypeDefinition.name,
 			mandatory: false,
 			objectDefinitionName: objectDefinition.name,
 			objectFieldBusinessType: 'Picklist',
@@ -59,7 +90,66 @@ test.describe('Manage object fields through Model Builder', () => {
 		);
 
 		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
-			ListTypeDefinition.id
+			listTypeDefinition.id
+		);
+	});
+
+	test('all picklist definitions are listed during object field creation', async ({
+		apiHelpers,
+		modelBuilderPage,
+		page,
+		viewObjectDefinitionsPage,
+	}) => {
+		const listTypeDefinitions = await Promise.all(
+			Array(22)
+				.fill(null)
+				.map(() =>
+					apiHelpers.listTypeAdmin.postRandomListTypeDefinition()
+				)
+		);
+
+		createdEntities.listTypeDefinitionIds = listTypeDefinitions.map(
+			({id}) => id
+		);
+
+		const objectDefinition = [
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			}),
+		];
+
+		objectDefinition.map((objectDefinition) =>
+			createdEntities.objectDefinitionIds.push(objectDefinition.id)
+		);
+
+		await page.goto('/');
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.openObjectFolder('default');
+
+		await viewObjectDefinitionsPage.viewInModelBuilder();
+
+		await modelBuilderPage.openNewFieldModal(objectDefinition[0].name);
+
+		await modelBuilderPage.fillNewObjectFieldLabel(
+			'objectFieldLabel' + getRandomInt()
+		);
+
+		await modelBuilderPage.selectNewObjectFieldBusinessTypeOption(
+			'Picklist'
+		);
+
+		await modelBuilderPage.newObjectFieldSelectPicklist.click();
+
+		const listTypeDefinitionBox =
+			modelBuilderPage.page.getByRole('listbox');
+
+		await expect(listTypeDefinitionBox).toBeVisible();
+
+		await expect(listTypeDefinitionBox.getByRole('listitem')).toHaveCount(
+			22
 		);
 	});
 

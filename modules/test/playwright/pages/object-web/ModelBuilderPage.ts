@@ -194,23 +194,13 @@ export class ModelBuilderPage {
 		objectFieldBusinessType,
 		objectFieldLabel,
 	}: CreateObjectField) {
-		await this.leftSidebarItems
-			.filter({hasText: objectDefinitionName})
-			.click();
+		await this.openNewFieldModal(objectDefinitionName);
 
-		await this.objectDefinitionNodes
-			.filter({hasText: objectDefinitionName})
-			.getByRole('button', {name: 'Add Field or Relationship'})
-			.click();
+		await this.fillNewObjectFieldLabel(objectFieldLabel);
 
-		await this.addObjectFieldButton.click();
-
-		await this.newObjectFieldLabel.fill(objectFieldLabel);
-
-		await this.newObjectFieldSelectBusinessType.click();
-		await this.page
-			.getByRole('option', {exact: true, name: objectFieldBusinessType})
-			.click();
+		await this.selectNewObjectFieldBusinessTypeOption(
+			objectFieldBusinessType
+		);
 
 		if (objectFieldBusinessType === 'Picklist') {
 			await this.newObjectFieldSelectPicklist.click();
@@ -227,6 +217,19 @@ export class ModelBuilderPage {
 		}
 
 		await this.newObjectFieldSaveButton.click();
+	}
+
+	async fillNewObjectFieldLabel(objectFieldLabel: string) {
+		await this.newObjectFieldLabel.fill(objectFieldLabel);
+	}
+
+	async selectNewObjectFieldBusinessTypeOption(
+		objectFieldBusinessType: string
+	) {
+		await this.newObjectFieldSelectBusinessType.click();
+		await this.page
+			.getByRole('option', {exact: true, name: objectFieldBusinessType})
+			.click();
 	}
 
 	async createObjectRelationship(
@@ -302,6 +305,19 @@ export class ModelBuilderPage {
 
 	getObjectFolderERCHeaderLocator(objectFolderERC: string) {
 		return this.page.getByTitle(`ERC: ${objectFolderERC}`);
+	}
+
+	async openNewFieldModal(objectDefinitionName: string) {
+		await this.leftSidebarItems
+			.filter({hasText: objectDefinitionName})
+			.click();
+
+		await this.objectDefinitionNodes
+			.filter({hasText: objectDefinitionName})
+			.getByRole('button', {name: 'Add Field or Relationship'})
+			.click();
+
+		await this.addObjectFieldButton.click();
 	}
 
 	getObjectFolderLabelHeaderLocator = (objectFolderLabel: string) => {

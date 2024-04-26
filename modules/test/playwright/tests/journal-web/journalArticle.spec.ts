@@ -727,16 +727,12 @@ scheduleTest(
 scheduleTest(
 	'Create a web content scheduled with workflow activated',
 	async ({
-		apiHelpers,
 		journalEditArticlePage,
 		journalPage,
+		site,
 		workflowPage,
 		workflowTasksPage,
 	}) => {
-		const site = await apiHelpers.headlessSite.createSite({
-			name: 'papite',
-		});
-
 		await workflowPage.goto(site.friendlyUrlPath);
 
 		await workflowPage.changeWorkflow(

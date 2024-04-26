@@ -15,6 +15,7 @@ import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.blogs.settings.BlogsGroupServiceSettings;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
@@ -60,6 +61,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -505,6 +507,31 @@ public class BlogsEditEntryDisplayContext {
 		}
 
 		return _allowTrackbacks;
+	}
+
+	public boolean isAutomaticURL() {
+		String uniqueUrlTitle = BlogsEntryLocalServiceUtil.getUniqueUrlTitle(
+			_blogsEntry);
+
+		if (uniqueUrlTitle.equals(getURLTitle())) {
+			FriendlyURLEntry friendlyURLEntry = _getFriendlyURLEntry();
+
+			if (friendlyURLEntry == null) {
+				return true;
+			}
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				PortalUtil.getClassNameId(FriendlyURLEntry.class),
+				friendlyURLEntry.getFriendlyURLEntryId());
+
+			List<AssetCategory> assetCategories = assetEntry.getCategories();
+
+			if (assetCategories.isEmpty()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public boolean isAutoTaggingEnabled() {

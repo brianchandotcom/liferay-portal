@@ -1,4 +1,11 @@
 <style>
+	a.features-container:hover, a.features-container.hover {
+		background-color: var(--color-action-primary-hover-10, #EDF3FE);
+		border: 0.0625rem solid var(--link-hover-color, #0053F0);
+		color: var(--link-hover-color, #0053F0);
+		text-decoration: none;
+	}
+
 	.empty-container {
 		background-color: var(--color-neutral-0);
 		border-color: var(--color-neutral-3);
@@ -29,7 +36,12 @@
 		background-color: var(--color-brand-primary-lighten-6, #FBFCFE);
 		border: 0.0625rem solid var(--color-brand-primary-lighten-5, #E7EFFF);
 		border-radius: 0.625rem;
+		color: var(--link-hover-color, #0053F0);
+		font-size: 0.813rem;
+		font-weight: 600;
+		line-height: 1rem;
 		padding: 0.75rem;
+		word-break: break-word;
 	}
 
 	.features-container>svg {
@@ -166,11 +178,11 @@
 		color: var(--color-neutral-10, #282934);
 		border-radius: 0.625rem;
 		font-family: 'Source Sans Pro', sans-serif;
-		font-size: 1.5rem;
+		font-size: 1.438rem;
 		font-style: normal;
 		font-weight: 700 !important;
 		line-height: 1.5rem;
-		padding: 1rem 1rem 1rem 0.625rem;
+		padding: 0.5rem 1rem 0rem 0.625rem;
 	}
 
 	.search-results .search-results-entry .search-results-entry-title .search-results-entry-content {
@@ -185,6 +197,7 @@
 
 	.search-results .search-results-entry .search-results-entry-title:hover {
 		background: var(--color-action-primary-hover-10, #EDF3FE);
+		padding: 0.5rem 1rem 0rem 0.625rem;
 	}
 
 	.search-results .solid {
@@ -192,7 +205,7 @@
 	}
 </style>
 
-<div class="search-results" id="searchResults">
+<div class="pt-2 search-results" id="searchResults">
 	<#if entries?has_content>
 		<#list entries as searchEntry>
 			<#assign searchEntryTitle = searchEntry.getTitle()!"" />
@@ -200,7 +213,7 @@
 			<#if searchEntryTitle?has_content>
 				<#assign restArticle = restClient.get("/headless-delivery/v1.0/structured-contents/${searchEntry.getClassPK()}?fields=contentFields,relatedContents,taxonomyCategoryBriefs&nestedFields=embeddedTaxonomyCategory") />
 
-				<div class="align-items-stretch pt-3 search-results-entry">
+				<div class="align-items-stretch pt-2 search-results-entry">
 					<div class="font-weight-bold search-results-entry-title text-decoration-none unstyled">
 						<div class="product-capabilities">
 							<#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief>
@@ -230,9 +243,9 @@
 					</div>
 
 					<#if restArticle.relatedContents?has_content>
-						<div>
+						<div class="pb-2">
 							<div class="features-header">
-								${languageUtil.get(locale, "features", "Features:")}
+								${languageUtil.get(locale, "features", "Features")}:
 							</div>
 
 							<#list restArticle.relatedContents as relatedContents>
@@ -241,14 +254,14 @@
 									relatedContentsTitle = relatedContents.title
 								/>
 
-								<div class="features-box">
-									<div class="features-container">
+								<div class="d-flex features-box">
+									<a class="features-container" href="#">
 										<@clay["icon"] symbol="check-square" />
 
 										<span>
 											${relatedContentsTitle}
 										</span>
-									</div>
+									</a>
 								</div>
 							</#list>
 						</div>
@@ -268,7 +281,7 @@
 				</div>
 
 				<h1 class="empty-message-title text-center">
-					${languageUtil.get(locale, "no-highlights-found-for-the-selected-product-capabilities", "No highlights found for the selected product capabilities")}
+					${languageUtil.get(locale, "no-highlights-found-for-the-selected-product-capabilities", "No highlights found for the selected product capabilities.")}
 				</h1>
 			</div>
 		</div>

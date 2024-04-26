@@ -9,9 +9,19 @@ import {Link, useParams} from 'react-router-dom';
 import i18n from '~/i18n';
 import {CaseResultStatuses} from '~/util/statuses';
 
+import {
+	FilterSchema as FilterSchemaType,
+	filterSchema as filterSchemas,
+} from '../../schema/filter';
+
 type TableChartProps = {
+	fieldName?: string;
 	matrixData: any;
 	title?: string;
+};
+
+type URLParams = {
+	[key: string]: any;
 };
 
 const columns = [
@@ -93,18 +103,35 @@ const formattedColumnName = (columnName: string) => {
 	return formattedName[columnName] || columnName.toUpperCase();
 };
 
-const TableChart: React.FC<TableChartProps> = ({matrixData, title}) => {
+const TableChart: React.FC<TableChartProps> = ({
+	fieldName,
+	matrixData,
+	title,
+}) => {
 	const {runA: runAId, runB: runBId} = useParams();
+
+	const filterSchema = (filterSchemas as any)[
+		'compareRunsCases'
+	] as FilterSchemaType;
+
+	const filterFieldName = filterSchema.fields
+		.filter((field) => field.label === fieldName)
+		.map((filter) => filter.name)
+		.toString();
 
 	const getURLParams = (
 		columnsDueStatus: CaseResultStatuses[],
 		verticalColumnIndex: number,
 		horizontalColumnIndex: number
 	) => {
-		const urlParams = {
+		const urlParams: URLParams = {
 			testrayCaseResultStatus1: [columnsDueStatus[verticalColumnIndex]],
 			testrayCaseResultStatus2: [columnsDueStatus[horizontalColumnIndex]],
 		};
+
+		if (title !== 'Runs') {
+			urlParams[filterFieldName] = [title];
+		}
 
 		return new URLSearchParams({
 			filter: JSON.stringify(urlParams),

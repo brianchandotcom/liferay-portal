@@ -63,20 +63,28 @@ const InputSelect: React.FC<InputSelectProps> = ({
 				{isLoading ? (
 					<option value="">Loading...</option>
 				) : (
-					options?.map(({label, value}, index) => (
-						<option
-							key={index}
-							label={label}
-							selected={
-								forceSelectOption
-									? value === defaultValue
-									: undefined
-							}
-							value={value}
-						>
-							{label}
-						</option>
-					))
+					options?.map(({label, value}, index) => {
+						const valueOption =
+							name.includes('teamToComponents/name') ||
+							name.includes('componentToCaseResult/name')
+								? label
+								: value;
+
+						return (
+							<option
+								key={index}
+								label={label}
+								selected={
+									forceSelectOption
+										? value === defaultValue
+										: undefined
+								}
+								value={valueOption}
+							>
+								{label}
+							</option>
+						);
+					})
 				)}
 			</select>
 		</BaseWrapper>

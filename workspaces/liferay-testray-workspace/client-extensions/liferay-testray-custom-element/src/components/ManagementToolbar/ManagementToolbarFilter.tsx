@@ -128,11 +128,17 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		});
 
 		const filters = Object.keys(filterCleaned).map((key) => {
+			const field = fields?.find(({name}) => name === key);
+
+			const valueOption =
+				field?.name.includes('teamToComponents/name') ||
+				field?.name.includes('componentToCaseResult/name');
+
 			if (Array.isArray(filterCleaned[key])) {
 				return {
 					name: key,
-					value: (filterCleaned as any)[key].map(
-						(options: Option) => options.value || options
+					value: (filterCleaned as any)[key].map((options: Option) =>
+						valueOption ? options?.label : options?.value || options
 					),
 				};
 			}

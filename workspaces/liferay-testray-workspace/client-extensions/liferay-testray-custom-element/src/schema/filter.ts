@@ -611,7 +611,8 @@ const filterSchema = {
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.team, {
-				name: 'componentToCaseResult/teamId',
+				label: 'Teams',
+				name: 'componentToCaseResult/teamToComponents/name',
 				resource: ({runA, runB}) => {
 					const filter = `${SearchBuilder.eq(
 						'teamToComponents/componentToCaseResult/r_runToCaseResult_c_runId',
@@ -626,7 +627,8 @@ const filterSchema = {
 				type: 'select',
 			}),
 			overrides(baseFilters.component, {
-				name: 'componentToCaseResult/id',
+				label: 'Components',
+				name: 'componentToCaseResult/name',
 				resource: ({runA, runB}) => {
 					const filter = `${SearchBuilder.eq(
 						'componentToCaseResult/r_runToCaseResult_c_runId',

@@ -144,10 +144,9 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 	}
 
 	private boolean _isUpgradeProcess(String absolutePath, String content) {
-		String className = JavaSourceUtil.getClassName(absolutePath);
-
 		Pattern pattern = Pattern.compile(
-			" class " + className + "\\s+extends\\s+([\\w.]+) ");
+			" class " + JavaSourceUtil.getClassName(absolutePath) +
+				"\\s+extends\\s+([\\w.]+) ");
 
 		Matcher matcher = pattern.matcher(content);
 

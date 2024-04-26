@@ -16,10 +16,8 @@ import {
 import PropTypes from 'prop-types';
 import React, {useMemo, useRef, useState} from 'react';
 
-const DEFAULT_URL = 'default-url';
-const CUSTOM_URL = 'custom-url';
 function AssetVocabulariesCategoriesFriendlyUrlSelector({
-	automaticURL,
+	automaticURL: initialAutomaticURL,
 	customFriendlyURL = '',
 	friendlyURLSeparatorCompanyConfigurationURL,
 	friendlyUrlInfo,
@@ -28,9 +26,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 	selectCategoryURL,
 	selectedCategories = [],
 }) {
-	const [customUrlCheckboxValue, setCustomUrlCheckboxValue] = useState(
-		automaticURL ? DEFAULT_URL : CUSTOM_URL
-	);
+	const [automaticURL, setAutomaticURL] = useState(initialAutomaticURL);
 
 	const [friendlyUrlValue, setFriendlyUrlValue] = useState(customFriendlyURL);
 
@@ -137,8 +133,8 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 
 				<ClayRadioGroup
 					name={portletNamespace + 'automaticURL'}
-					onChange={setCustomUrlCheckboxValue}
-					value={customUrlCheckboxValue}
+					onChange={setAutomaticURL}
+					value={automaticURL}
 				>
 					<ClayRadio
 						label={
@@ -146,7 +142,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 								{Liferay.Language.get('use-the-default-url')}
 							</strong>
 						}
-						value={DEFAULT_URL}
+						value={true}
 					/>
 
 					<ClayRadio
@@ -155,7 +151,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 								{Liferay.Language.get('use-a-customized-url')}
 							</strong>
 						}
-						value={CUSTOM_URL}
+						value={false}
 					/>
 				</ClayRadioGroup>
 			</div>
@@ -182,7 +178,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 					<ClayInput.GroupItem shrink>
 						<ClayButton
 							aria-haspopup="dialog"
-							disabled={customUrlCheckboxValue === DEFAULT_URL}
+							disabled={automaticURL}
 							displayType="secondary"
 							onClick={handleSelectButtonClick}
 							ref={selectButtonRef}
@@ -216,7 +212,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 
 					<ClayInput.GroupItem append>
 						<ClayInput
-							disabled={customUrlCheckboxValue === DEFAULT_URL}
+							disabled={automaticURL}
 							id={portletNamespace + 'urlTitle'}
 							name={portletNamespace + 'urlTitle'}
 							onChange={handleChange}

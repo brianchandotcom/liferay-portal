@@ -108,10 +108,6 @@ export default class Blogs {
 			`input[name=${this._config.namespace}automaticURL]:checked`
 		);
 
-		if (Liferay.FeatureFlags['LPD-11147']) {
-			return automaticURLInput.value === 'default-url';
-		}
-
 		return automaticURLInput.value === 'true';
 	}
 

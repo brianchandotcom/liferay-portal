@@ -443,7 +443,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			String selectedFileName, List<KeyValuePair> validFileNameKVPs,
 			List<KeyValuePair> invalidFileNameKVPs,
-			boolean neverExpireDefaultValue, User user,
+			Boolean neverExpireDefaultValue, User user,
 			UploadPortletRequest uploadPortletRequest,
 			ServiceContext serviceContext)
 		throws PortalException {

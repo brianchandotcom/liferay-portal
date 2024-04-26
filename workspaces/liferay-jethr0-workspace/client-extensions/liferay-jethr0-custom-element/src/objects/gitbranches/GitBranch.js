@@ -9,30 +9,24 @@ const gitHubURLRegExp = new RegExp(
 
 export default class GitBranch {
 	constructor({
-		branchSHA,
-		branchURL,
+		latestSHA,
 		dateCreated,
 		dateModified,
 		id,
-		rebased,
 		type,
-		upstreamBranchSHA,
-		upstreamBranchURL,
+		url,
 	}) {
-		this.branchSHA = branchSHA;
-		this.branchURL = branchURL;
+		this.latestSHA = latestSHA;
 		this.dateCreated = dateCreated;
 		this.dateModified = dateModified;
 		this.id = id;
-		this.rebased = rebased;
 		this.type = type;
-		this.upstreamBranchSHA = upstreamBranchSHA;
-		this.upstreamBranchURL = upstreamBranchURL;
+		this.url = url;
 
-		const gitHubURLMatch = this.branchURL.match(gitHubURLRegExp);
+		const gitHubURLMatch = this.url.match(gitHubURLRegExp);
 
-		this.branchName = gitHubURLMatch[3];
-		this.branchRepositoryName = gitHubURLMatch[2];
-		this.branchUserName = gitHubURLMatch[1];
+		this.name = gitHubURLMatch[3];
+		this.repositoryName = gitHubURLMatch[2];
+		this.userName = gitHubURLMatch[1];
 	}
 }

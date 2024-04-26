@@ -8,8 +8,6 @@ import {Input} from '../../../../../../components/Input/Input';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Section} from '../../../../../../components/Section/Section';
 import {Liferay} from '../../../../../../liferay/liferay';
-import {useAppContext} from '../AppContext/AppManageState';
-import {TYPES} from '../AppContext/actionTypes';
 import {
 	addExpandoValue,
 	createAppSKU,
@@ -31,6 +29,8 @@ import {
 	getTrialOptionBody,
 	getTrialProductOptionBody,
 } from '../../../../../../utils/util';
+import {useAppContext} from '../AppContext/AppManageState';
+import {TYPES} from '../AppContext/actionTypes';
 
 import './ProvideVersionDetailsPage.scss';
 
@@ -93,7 +93,8 @@ export function ProvideVersionDetailsPage({
 			newOptionId = await postOption(
 				isDXP ? getDxpOptionBody() : getTrialOptionBody()
 			);
-		} else {
+		}
+		else {
 			newOptionId = optionId ?? targetOption!.id;
 		}
 
@@ -190,7 +191,8 @@ export function ProvideVersionDetailsPage({
 			if (sku === 'TRIAL') {
 				value = skuProductOptions.trialOptionId;
 			}
-		} else {
+		}
+		else {
 			value = skuProductOptions.noOptionId;
 		}
 

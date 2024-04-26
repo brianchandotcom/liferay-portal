@@ -118,7 +118,8 @@ export function ChoosePricingModelPage({
 									type: TYPES.UPDATE_APP_LICENSE_PRICES,
 								});
 							}
-						} else {
+						}
+						else {
 							const dataSpecification = await getSpecification(
 								'price-model'
 							);

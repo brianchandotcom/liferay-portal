@@ -15,13 +15,13 @@ import {
 import {Header} from '../../../../../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Section} from '../../../../../../components/Section/Section';
-import {useAppContext} from '../AppContext/AppManageState';
-import {TYPES} from '../AppContext/actionTypes';
 import {
 	baseURL,
 	createImageAxios,
 	deleteAttachment,
 } from '../../../../../../utils/api';
+import {useAppContext} from '../AppContext/AppManageState';
+import {TYPES} from '../AppContext/actionTypes';
 
 import './CustomizeAppStorefrontPage.scss';
 
@@ -184,7 +184,8 @@ export function CustomizeAppStorefrontPage({
 										type:
 											TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
 									});
-								} catch (error) {
+								}
+								catch (error) {
 									console.error(error);
 
 									Liferay.Util.openToast({

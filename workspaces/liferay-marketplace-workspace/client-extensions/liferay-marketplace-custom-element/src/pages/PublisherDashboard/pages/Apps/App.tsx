@@ -64,7 +64,8 @@ const AdministratorButtons: React.FC<AdministratorButtons> = ({
 				message: i18n.translate('your-request-completed-successfully'),
 				type: 'success',
 			});
-		} catch (error) {
+		}
+		catch (error) {
 			Liferay.Util.openToast({
 				message: i18n.translate('an-unexpected-error-occurred'),
 				type: 'danger',

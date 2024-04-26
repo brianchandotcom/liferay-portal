@@ -173,7 +173,8 @@ export function DefineAppProfilePage({
 				appERC,
 				appName,
 			});
-		} else {
+		}
+		else {
 			response = await createApp({
 				appCategories: [
 					...appCategories,

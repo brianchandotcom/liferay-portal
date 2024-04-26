@@ -30,6 +30,7 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 	return (
 		<ListView
 			initialContext={{
+				pageSize: 200,
 				sort: {
 					direction: 'DESC',
 					key: 'dateCreated',

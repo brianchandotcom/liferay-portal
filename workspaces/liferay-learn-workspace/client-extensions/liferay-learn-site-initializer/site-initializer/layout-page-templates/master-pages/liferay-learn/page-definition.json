@@ -56,7 +56,7 @@
 						"pageElements": [
 							{
 								"definition": {
-									"customCSS": ".[$FRAGMENT_CLASS$] {\n    background: var(--white);\n    border-radius: 10px;\n    box-shadow: var(--elevation-fluffy-1);\n    text-align: left;\n    width: 15rem;\n    z-index: 10;\n}\n}",
+									"customCSS": ".[$FRAGMENT_CLASS$] {\n    background: var(--white);\n    border-radius: 10px;\n    box-shadow: var(--elevation-fluffy-1);\n    text-align: left;\n    width: 15rem;\n    z-index: 10;\n}",
 									"indexed": true,
 									"layout": {
 									}
@@ -123,14 +123,14 @@
 															"value": {
 																"href": {
 																	"value_i18n": {
-																		"en_US": "https://help.liferay.com/hc"
+																		"en_US": "https://help.liferay.com"
 																	}
 																}
 															}
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Liferay.com"
+																"en_US": "Help Center"
 															}
 														}
 													}
@@ -2169,7 +2169,7 @@
 										"pageElements": [
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\ntext-align: left !important;\nposition: absolute;\nleft: 0;\nz-index: 1;\n\n\nborder: none;\n    border-radius: 0px 0px 8px 8px;\n    box-shadow: 0px 10px 5px rgba(0, 0, 0, 0.15);\n}\nimg {\nwidth: 50px;\nheight: 50px;\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\ntext-align: left !important;\nposition: absolute;\nleft: 0;\nz-index: 1;\n\n\nborder: none;\n border-radius: 0px 0px 8px 8px;\n box-shadow: 0px 10px 5px rgba(0, 0, 0, 0.15);\n}\n.[$FRAGMENT_CLASS$] img {\nwidth: 50px;\nheight: 50px;\n}",
 													"fragmentStyle": {
 														"backgroundColor": "colorNeutral0",
 														"width": "100%"

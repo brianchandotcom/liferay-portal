@@ -38,12 +38,6 @@ const FRAGMENT_FIELDS = [
 	},
 ];
 
-const CONTENT_NAMES = [
-	'sample 01',
-	'sample 02 - Dogs and Cats categories',
-	'sample 03 - Dogs category',
-];
-
 export const test = mergeTests(
 	apiHelpersTest,
 	collectionsPagesTest,
@@ -67,7 +61,7 @@ const selectFilter = async (page, categories) => {
 
 	await page.getByRole('button', {name: 'Apply'}).click();
 
-	await page.waitForTimeout(1000);
+	await page.waitForURL(/(.)filter_category(.)/);
 };
 
 test('filters a web content collection by single and multiple categories', async ({
@@ -87,16 +81,16 @@ test('filters a web content collection by single and multiple categories', async
 		'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer'
 	);
 
-	// Create definition for a collection mapped to Samples collection
+	// Create definition for a collection mapped to Animals collection
 
-	const collectionName = 'Samples';
+	const collectionName = 'Animals';
 
-	const samplesClassPK = await collectionsPage.getCollectionClassPK(
+	const animalsClassPK = await collectionsPage.getCollectionClassPK(
 		collectionName,
 		wemSite.friendlyUrlPath
 	);
 
-	const samplesCollection = getCollectionItemDefinition(getRandomString(), [
+	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
 		getFragmentDefinition(
 			getRandomString(),
 			'BASIC_COMPONENT-heading',
@@ -106,9 +100,9 @@ test('filters a web content collection by single and multiple categories', async
 	]);
 
 	const collectionDefinition = getCollectionDefinition({
-		classPK: samplesClassPK,
+		classPK: animalsClassPK,
 		id: getRandomString(),
-		pageElements: [samplesCollection],
+		pageElements: [animalsCollection],
 	});
 
 	// Create a content page and go to edit mode
@@ -166,9 +160,12 @@ test('filters a web content collection by single and multiple categories', async
 
 	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
-	for (const name of CONTENT_NAMES) {
-		await expect(page.getByText(name)).toBeVisible();
-	}
+	// Both should be visible initially
+
+	await expect(
+		page.getByText('Animal 01 - Dogs and Cats categories')
+	).toBeVisible();
+	await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
 
 	await expect(page.getByText('Animals', {exact: true})).toBeVisible();
 
@@ -176,9 +173,11 @@ test('filters a web content collection by single and multiple categories', async
 
 	await selectFilter(page, ['cats']);
 
-	await expect(page.getByText(CONTENT_NAMES[0])).not.toBeVisible();
-	await expect(page.getByText(CONTENT_NAMES[1])).toBeVisible();
-	await expect(page.getByText(CONTENT_NAMES[2])).not.toBeVisible();
+	await expect(
+		page.getByText('Animal 01 - Dogs and Cats categories')
+	).toBeVisible();
+
+	await expect(page.getByText('Animal 02 - Dogs category')).not.toBeVisible();
 
 	// Select category filter: Cats and Dogs
 
@@ -186,9 +185,11 @@ test('filters a web content collection by single and multiple categories', async
 
 	await selectFilter(page, ['dogs', 'cats']);
 
-	await expect(page.getByText(CONTENT_NAMES[0])).not.toBeVisible();
-	await expect(page.getByText(CONTENT_NAMES[1])).toBeVisible();
-	await expect(page.getByText(CONTENT_NAMES[2])).toBeVisible();
+	await expect(
+		page.getByText('Animal 01 - Dogs and Cats categories')
+	).toBeVisible();
+
+	await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
 });
 
 test('filters a web content collection by single and multiple tags', async ({
@@ -323,16 +324,16 @@ test('enables search field in dropdown list of Collection Filter', async ({
 		'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer'
 	);
 
-	// Create definition for a collection mapped to Samples collection
+	// Create definition for a collection mapped to Animals collection
 
-	const collectionName = 'Samples';
+	const collectionName = 'Animals';
 
-	const samplesClassPK = await collectionsPage.getCollectionClassPK(
+	const animalsClassPK = await collectionsPage.getCollectionClassPK(
 		collectionName,
 		wemSite.friendlyUrlPath
 	);
 
-	const samplesCollection = getCollectionItemDefinition(getRandomString(), [
+	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
 		getFragmentDefinition(
 			getRandomString(),
 			'BASIC_COMPONENT-heading',
@@ -342,9 +343,9 @@ test('enables search field in dropdown list of Collection Filter', async ({
 	]);
 
 	const collectionDefinition = getCollectionDefinition({
-		classPK: samplesClassPK,
+		classPK: animalsClassPK,
 		id: getRandomString(),
-		pageElements: [samplesCollection],
+		pageElements: [animalsCollection],
 	});
 
 	// Create a content page and go to edit mode
@@ -430,16 +431,16 @@ test('filters the collection content by keywords using two filters', async ({
 		'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer'
 	);
 
-	// Create definition for a collection mapped to Samples collection
+	// Create definition for a collection mapped to Animals collection
 
-	const collectionName = 'Samples';
+	const collectionName = 'Animals';
 
-	const samplesClassPK = await collectionsPage.getCollectionClassPK(
+	const animalsClassPK = await collectionsPage.getCollectionClassPK(
 		collectionName,
 		wemSite.friendlyUrlPath
 	);
 
-	const samplesCollection = getCollectionItemDefinition(getRandomString(), [
+	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
 		getFragmentDefinition(
 			getRandomString(),
 			'BASIC_COMPONENT-heading',
@@ -449,9 +450,9 @@ test('filters the collection content by keywords using two filters', async ({
 	]);
 
 	const collectionDefinition = getCollectionDefinition({
-		classPK: samplesClassPK,
+		classPK: animalsClassPK,
 		id: getRandomString(),
-		pageElements: [samplesCollection],
+		pageElements: [animalsCollection],
 	});
 
 	// Create a content page and go to edit mode
@@ -505,20 +506,22 @@ test('filters the collection content by keywords using two filters', async ({
 	await firstFilter.fill('category categories');
 	await firstFilter.press('Enter');
 
-	await expect(page.getByText(CONTENT_NAMES[0])).not.toBeVisible();
-	await expect(page.getByText(CONTENT_NAMES[1])).toBeVisible();
-	await expect(page.getByText(CONTENT_NAMES[2])).toBeVisible();
+	await expect(
+		page.getByText('Animal 01 - Dogs and Cats categories')
+	).toBeVisible();
+	await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
 
 	const secondFilter = await page
 		.getByPlaceholder('Search', {exact: true})
 		.nth(1);
 
-	await secondFilter.fill('sample');
+	await secondFilter.fill('Animal');
 	await secondFilter.press('Enter');
 
-	CONTENT_NAMES.forEach(
-		async (name) => await expect(page.getByText(name)).toBeVisible()
-	);
+	await expect(
+		page.getByText('Animal 01 - Dogs and Cats categories')
+	).toBeVisible();
+	await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
 
 	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
 

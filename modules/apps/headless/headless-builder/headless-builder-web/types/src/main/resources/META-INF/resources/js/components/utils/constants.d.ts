@@ -32,4 +32,4 @@ export declare const RETRIEVE_TYPES: {
 	SINGLE_ELEMENT: string;
 };
 export declare const STR_BLANK = '';
-export declare const SYSTEM_OBJECTS_WHITELIST: string[];
+export declare const UNMODIFIABLE_OBJECTS_WHITELIST: string[];

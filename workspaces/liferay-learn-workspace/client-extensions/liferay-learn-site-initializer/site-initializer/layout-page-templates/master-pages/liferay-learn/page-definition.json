@@ -56,7 +56,7 @@
 						"pageElements": [
 							{
 								"definition": {
-									"customCSS": ".[$FRAGMENT_CLASS$] {\n    background: var(--white);\n    border-radius: 10px;\n    box-shadow: var(--elevation-fluffy-1);\n    text-align: left;\n    width: 15rem;\n    z-index: 10;\n}\n}",
+									"customCSS": ".[$FRAGMENT_CLASS$] {\n    background: var(--white);\n    border-radius: 10px;\n    box-shadow: var(--elevation-fluffy-1);\n    text-align: left;\n    width: 15rem;\n    z-index: 10;\n}",
 									"indexed": true,
 									"layout": {
 									}
@@ -123,14 +123,14 @@
 															"value": {
 																"href": {
 																	"value_i18n": {
-																		"en_US": "https://help.liferay.com/hc"
+																		"en_US": "https://help.liferay.com"
 																	}
 																}
 															}
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Liferay.com"
+																"en_US": "Help Center"
 															}
 														}
 													}

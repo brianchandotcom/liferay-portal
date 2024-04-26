@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 import org.apache.commons.lang3.StringUtils;
 
 import org.json.JSONArray;
@@ -185,7 +188,7 @@ public class GenerateTestrayCSVUtil {
 
 	private static final List<String> _didNotRunErrorMessages = Arrays.asList(
 		"Aborted prior to running test", "Failed prior to running test",
-		"Failed for unknown reason");
+		"Failed for unknown reason", "timed out after 2 hours");
 
 	private static class TestrayCaseResult {
 
@@ -317,7 +320,19 @@ public class GenerateTestrayCSVUtil {
 				return _type;
 			}
 
-			if (_didNotRunErrorMessages.contains(getErrorMessage())) {
+			Boolean didNotRun = false;
+
+			for (String didNotRunErrorMessage : _didNotRunErrorMessages) {
+				Pattern pattern = Pattern.compile(didNotRunErrorMessage);
+
+				Matcher matcher = pattern.matcher(getErrorMessage());
+				
+				if (matcher.find()) {
+					didNotRun = true;
+				}
+			}
+			
+			if (didNotRun) {
 				_type = Type.DID_NOT_RUN;
 			}
 			else {

@@ -19,11 +19,11 @@ export default function batchRenderFragmentEntryContentRequest(
 	data: DataType,
 	callback: (content: string) => void
 ) {
+	args = [...args, data];
+	callbacks = [...callbacks, callback];
+
 	if (timeoutId) {
 		clearTimeout(timeoutId);
-
-		args = [...args, data];
-		callbacks = [...callbacks, callback];
 	}
 
 	timeoutId = setTimeout(() => doCall(languageId, segmentsExperienceId), 100);

@@ -7,5 +7,14 @@
 			"classNameIds": "com.liferay.journal.model.JournalArticle",
 			"classTypeIds": "classTypeIdsJournalArticleAssetRendererFactory"
 		}
+	},
+	{
+		"ddmStructureKey": "ANIMAL",
+		"title": "Animals",
+		"unicodeProperties": {
+			"anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",
+			"classNameIds": "com.liferay.journal.model.JournalArticle",
+			"classTypeIds": "classTypeIdsJournalArticleAssetRendererFactory"
+		}
 	}
 ]

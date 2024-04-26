@@ -5,7 +5,7 @@
 	},
 	"name": "subtaskToCaseResults",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Subtask$]",
-	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:CasesResult$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:CaseResult$]",
 	"objectDefinitionName2": "CaseResult",
 	"type": "oneToMany"
 }

@@ -72,7 +72,6 @@ public class FunctionalBatchBuildTestrayCaseResult
 				return sb.toString();
 			}
 
-
 			if (result.equals("SUCCESS") || result.equals("UNSTABLE")) {
 				return "Failed to run test on CI";
 			}

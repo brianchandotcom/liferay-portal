@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.git.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.git.repository.GitCommitEntityRepository;
-import com.liferay.jethr0.git.repository.GitPullEntityRepository;
+import com.liferay.jethr0.git.repository.GitPullRequestEntityRepository;
 import com.liferay.jethr0.git.repository.GitUserEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
@@ -40,8 +40,8 @@ public class EntityInitializer {
 
 		_gitBranchEntityRepository.setGitCommitEntityRepository(
 			_gitCommitEntityRepository);
-		_gitBranchEntityRepository.setGitPullEntityRepository(
-			_gitPullEntityRepository);
+		_gitBranchEntityRepository.setGitPullRequestEntityRepository(
+			_gitPullRequestEntityRepository);
 		_gitBranchEntityRepository.setGitUserEntityRepository(
 			_gitUserEntityRepository);
 		_gitBranchEntityRepository.setRoutineEntityRepository(
@@ -51,12 +51,13 @@ public class EntityInitializer {
 		_gitCommitEntityRepository.setRoutineEntityRepository(
 			_routineEntityRepository);
 
-		_gitPullEntityRepository.setJobEntityRepository(_jobEntityRepository);
+		_gitPullRequestEntityRepository.setJobEntityRepository(
+			_jobEntityRepository);
 
 		_gitUserEntityRepository.setGitBranchEntityRepository(
 			_gitBranchEntityRepository);
-		_gitUserEntityRepository.setGitPullEntityRepository(
-			_gitPullEntityRepository);
+		_gitUserEntityRepository.setGitPullRequestEntityRepository(
+			_gitPullRequestEntityRepository);
 
 		_jenkinsCohortEntityRepository.setJenkinsServerEntityRepository(
 			_jenkinsServerEntityRepository);
@@ -88,7 +89,7 @@ public class EntityInitializer {
 		_buildRunEntityRepository.initialize();
 		_gitBranchEntityRepository.initialize();
 		_gitCommitEntityRepository.initialize();
-		_gitPullEntityRepository.initialize();
+		_gitPullRequestEntityRepository.initialize();
 		_gitUserEntityRepository.initialize();
 		_jenkinsCohortEntityRepository.initialize();
 		_jenkinsNodeEntityRepository.initialize();
@@ -102,7 +103,7 @@ public class EntityInitializer {
 		_buildRunEntityRepository.initializeRelationships();
 		_gitBranchEntityRepository.initializeRelationships();
 		_gitCommitEntityRepository.initializeRelationships();
-		_gitPullEntityRepository.initializeRelationships();
+		_gitPullRequestEntityRepository.initializeRelationships();
 		_gitUserEntityRepository.initializeRelationships();
 		_jenkinsCohortEntityRepository.initializeRelationships();
 		_jenkinsNodeEntityRepository.initializeRelationships();
@@ -128,7 +129,7 @@ public class EntityInitializer {
 	private GitCommitEntityRepository _gitCommitEntityRepository;
 
 	@Autowired
-	private GitPullEntityRepository _gitPullEntityRepository;
+	private GitPullRequestEntityRepository _gitPullRequestEntityRepository;
 
 	@Autowired
 	private GitUserEntityRepository _gitUserEntityRepository;

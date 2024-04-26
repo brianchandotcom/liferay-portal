@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.git.pull;
+package com.liferay.jethr0.git.pullrequest;
 
 import com.liferay.jethr0.entity.factory.BaseEntityFactory;
 
@@ -15,15 +15,16 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class GitPullEntityFactory extends BaseEntityFactory<GitPullEntity> {
+public class GitPullRequestEntityFactory
+	extends BaseEntityFactory<GitPullRequestEntity> {
 
 	@Override
-	public GitPullEntity newEntity(JSONObject jsonObject) {
-		return new DefaultGitPullEntity(jsonObject);
+	public GitPullRequestEntity newEntity(JSONObject jsonObject) {
+		return new DefaultGitPullRequestEntity(jsonObject);
 	}
 
-	protected GitPullEntityFactory() {
-		super(GitPullEntity.class);
+	protected GitPullRequestEntityFactory() {
+		super(GitPullRequestEntity.class);
 	}
 
 }

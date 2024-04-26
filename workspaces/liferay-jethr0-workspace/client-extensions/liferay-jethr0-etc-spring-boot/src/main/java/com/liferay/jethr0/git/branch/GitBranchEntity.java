@@ -8,7 +8,7 @@ package com.liferay.jethr0.git.branch;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.git.commit.GitCommitEntity;
-import com.liferay.jethr0.git.pull.GitPullEntity;
+import com.liferay.jethr0.git.pullrequest.GitPullRequestEntity;
 import com.liferay.jethr0.git.user.GitUserEntity;
 import com.liferay.jethr0.routine.RoutineEntity;
 
@@ -32,9 +32,11 @@ public interface GitBranchEntity extends Entity {
 
 	public void addGitCommitEntity(GitCommitEntity gitCommitEntity);
 
-	public void addGitPullEntities(Set<GitPullEntity> gitPullEntities);
+	public void addGitPullRequestEntities(
+		Set<GitPullRequestEntity> gitPullRequestEntities);
 
-	public void addGitPullEntity(GitPullEntity gitPullEntity);
+	public void addGitPullRequestEntity(
+		GitPullRequestEntity gitPullRequestEntity);
 
 	public void addRoutineEntities(Set<RoutineEntity> routineEntities);
 
@@ -44,7 +46,7 @@ public interface GitBranchEntity extends Entity {
 
 	public Set<GitCommitEntity> getGitCommitEntities();
 
-	public Set<GitPullEntity> getGitPullEntities();
+	public Set<GitPullRequestEntity> getGitPullRequestEntities();
 
 	public GitUserEntity getGitUserEntity();
 
@@ -73,9 +75,11 @@ public interface GitBranchEntity extends Entity {
 
 	public void removeGitCommitEntity(GitCommitEntity gitCommitEntity);
 
-	public void removeGitPullEntities(Set<GitPullEntity> gitPullEntities);
+	public void removeGitPullRequestEntities(
+		Set<GitPullRequestEntity> gitPullRequestEntities);
 
-	public void removeGitPullEntity(GitPullEntity gitPullEntity);
+	public void removeGitPullRequestEntity(
+		GitPullRequestEntity gitPullRequestEntity);
 
 	public void removeRoutineEntities(Set<RoutineEntity> routineEntities);
 

@@ -7,7 +7,7 @@ package com.liferay.jethr0.git.user;
 
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
-import com.liferay.jethr0.git.pull.GitPullEntity;
+import com.liferay.jethr0.git.pullrequest.GitPullRequestEntity;
 
 import java.net.URL;
 
@@ -22,13 +22,15 @@ public interface GitUserEntity extends Entity {
 
 	public void addGitBranchEntity(GitBranchEntity gitBranchEntity);
 
-	public void addGitPullEntities(Set<GitPullEntity> gitPullEntities);
+	public void addGitPullRequestEntities(
+		Set<GitPullRequestEntity> gitPullRequestEntities);
 
-	public void addGitPullEntity(GitPullEntity gitPullEntity);
+	public void addGitPullRequestEntity(
+		GitPullRequestEntity gitPullRequestEntity);
 
 	public Set<GitBranchEntity> getGitBranchEntities();
 
-	public Set<GitPullEntity> getGitPullEntities();
+	public Set<GitPullRequestEntity> getGitPullRequestEntities();
 
 	public URL getURL();
 
@@ -36,9 +38,11 @@ public interface GitUserEntity extends Entity {
 
 	public void removeGitBranchEntity(GitBranchEntity gitBranchEntity);
 
-	public void removeGitPullEntities(Set<GitPullEntity> gitPullEntities);
+	public void removeGitPullRequestEntities(
+		Set<GitPullRequestEntity> gitPullRequestEntities);
 
-	public void removeGitPullEntity(GitPullEntity gitPullEntity);
+	public void removeGitPullRequestEntity(
+		GitPullRequestEntity gitPullRequestEntity);
 
 	public void setURL(URL url);
 

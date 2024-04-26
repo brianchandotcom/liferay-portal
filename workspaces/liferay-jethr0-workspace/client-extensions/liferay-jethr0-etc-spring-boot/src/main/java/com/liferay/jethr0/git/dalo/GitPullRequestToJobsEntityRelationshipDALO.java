@@ -7,8 +7,8 @@ package com.liferay.jethr0.git.dalo;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.git.pull.GitPullEntity;
-import com.liferay.jethr0.git.pull.GitPullEntityFactory;
+import com.liferay.jethr0.git.pullrequest.GitPullRequestEntity;
+import com.liferay.jethr0.git.pullrequest.GitPullRequestEntityFactory;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.JobEntityFactory;
 
@@ -19,8 +19,8 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class GitPullToJobsEntityRelationshipDALO
-	extends BaseEntityRelationshipDALO<GitPullEntity, JobEntity> {
+public class GitPullRequestToJobsEntityRelationshipDALO
+	extends BaseEntityRelationshipDALO<GitPullRequestEntity, JobEntity> {
 
 	@Override
 	public EntityFactory<JobEntity> getChildEntityFactory() {
@@ -28,17 +28,17 @@ public class GitPullToJobsEntityRelationshipDALO
 	}
 
 	@Override
-	public EntityFactory<GitPullEntity> getParentEntityFactory() {
-		return _gitPullEntityFactory;
+	public EntityFactory<GitPullRequestEntity> getParentEntityFactory() {
+		return _gitPullRequestEntityFactory;
 	}
 
 	@Override
 	protected String getObjectRelationshipName() {
-		return "gitPullToJobs";
+		return "gitPullRequestToJobs";
 	}
 
 	@Autowired
-	private GitPullEntityFactory _gitPullEntityFactory;
+	private GitPullRequestEntityFactory _gitPullRequestEntityFactory;
 
 	@Autowired
 	private JobEntityFactory _jobEntityFactory;

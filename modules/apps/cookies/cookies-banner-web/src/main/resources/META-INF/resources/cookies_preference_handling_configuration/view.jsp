@@ -112,6 +112,7 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 					<c:when test="<%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingConfigurationDefined() %>">
 						<clay:button
 							cssClass="submit-btn"
+							data-qa-id="submitConfiguration"
 							displayType="primary"
 							id='<%= liferayPortletResponse.getNamespace() + "update" %>'
 							label='<%= LanguageUtil.get(request, "update") %>'
@@ -122,6 +123,7 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 					<c:otherwise>
 						<clay:button
 							cssClass="submit-btn"
+							data-qa-id="submitConfiguration"
 							displayType="primary"
 							id='<%= liferayPortletResponse.getNamespace() + "save" %>'
 							label='<%= LanguageUtil.get(request, "save") %>'

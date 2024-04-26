@@ -26,10 +26,9 @@ export const test = mergeTests(
 	})
 );
 
-async function changeCookiePreference(
-	page,
-	{enableCookieBanner, enableExplicitCookieConsentMode}
-) {
+async function changeCookiePreference(page, options) {
+	const {enableCookieBanner, enableExplicitCookieConsentMode} = options || {};
+
 	await page.getByLabel('Open Applications MenuCtrl+Alt+A').click();
 
 	await page.getByRole('tab', {name: 'Control Panel'}).click();
@@ -38,18 +37,26 @@ async function changeCookiePreference(
 
 	await page.getByRole('link', {name: 'Cookies'}).click();
 
+	const cookieBannerCheckbox = await page.getByLabel('Enabled');
+
 	if (enableCookieBanner) {
-		await page.getByLabel('Enabled').check();
+		await cookieBannerCheckbox.check();
 	}
 	else {
-		await page.getByLabel('Enabled').uncheck();
+		await cookieBannerCheckbox.uncheck();
 	}
 
-	if (enableExplicitCookieConsentMode) {
-		await page.getByLabel('Explicit Cookie Consent Mode').check();
-	}
-	else {
-		await page.getByLabel('Explicit Cookie Consent Mode').uncheck();
+	const explicitCookieConsentModeCheckbox = await page.getByLabel(
+		'Explicit Cookie Consent Mode'
+	);
+
+	if (enableCookieBanner) {
+		if (enableExplicitCookieConsentMode) {
+			await explicitCookieConsentModeCheckbox.check();
+		}
+		else {
+			await explicitCookieConsentModeCheckbox.uncheck();
+		}
 	}
 
 	const submitButton = await page.$(
@@ -94,32 +101,8 @@ async function checkAnalyticsInstance(page) {
 	});
 }
 
-async function cleanVMCache(page) {
-	await page.goto(liferayConfig.environment.baseUrl);
-
-	await page.getByLabel('Open Applications MenuCtrl+Alt+A').click();
-
-	await page.getByRole('tab', {name: 'Control Panel'}).click();
-
-	await page.getByRole('menuitem', {name: 'Server Administration'}).click();
-
-	await page.waitForTimeout(3000);
-
-	const cleanVMCacheButton = await page.$('button[data-cmd="cacheSingle"]');
-
-	if (cleanVMCacheButton) {
-		await cleanVMCacheButton.click();
-
-		await page.waitForTimeout(3000);
-
-		await page.getByText('Success:Your request completed successfully.');
-	}
-}
-
 test.describe('LPD-6540 Support Liferay Cookie Manager', () => {
 	test.beforeEach(async ({page}) => {
-		await cleanVMCache(page);
-
 		await connectACToDXP(page);
 	});
 
@@ -167,6 +150,8 @@ test.describe('LPD-6540 Support Liferay Cookie Manager', () => {
 
 		await page.goto(liferayConfig.environment.baseUrl);
 
+		await page.waitForTimeout(3000);
+
 		expect(await checkAnalyticsInstance(page)).toBeTruthy();
 	});
 
@@ -194,10 +179,11 @@ test.describe('LPD-6540 Support Liferay Cookie Manager', () => {
 	}) => {
 		await changeCookiePreference(page, {
 			enableCookieBanner: false,
-			enableExplicitCookieConsentMode: false,
 		});
 
 		await page.goto(liferayConfig.environment.baseUrl);
+
+		await page.waitForTimeout(3000);
 
 		expect(await checkAnalyticsInstance(page)).toBeTruthy();
 	});

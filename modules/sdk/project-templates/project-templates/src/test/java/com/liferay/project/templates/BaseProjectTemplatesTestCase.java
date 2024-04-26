@@ -149,7 +149,7 @@ public interface BaseProjectTemplatesTestCase {
 		"gradle/wrapper/gradle-wrapper.properties"
 	};
 
-	public static final String GRADLE_WRAPPER_VERSION = "7.3.3";
+	public static final String GRADLE_WRAPPER_VERSION = "8.5";
 
 	public static final String MAVEN_GOAL_BUILD_REST = "rest-builder:build";
 

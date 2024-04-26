@@ -127,7 +127,7 @@ function CreateRoutinePage() {
 	let upstreamGitBranch = null;
 
 	for (const candidateUpstreamGitBranch of upstreamGitBranches) {
-		if (candidateUpstreamGitBranch.branchURL === upstreamGitBranchURL) {
+		if (candidateUpstreamGitBranch.url === upstreamGitBranchURL) {
 			upstreamGitBranch = candidateUpstreamGitBranch;
 		}
 	}
@@ -138,8 +138,8 @@ function CreateRoutinePage() {
 		upstreamGitBranchOptions = upstreamGitBranches.map(
 			(upstreamGitBranch) => {
 				return {
-					label: upstreamGitBranch.branchURL,
-					value: upstreamGitBranch.branchURL,
+					label: upstreamGitBranch.url,
+					value: upstreamGitBranch.url,
 				};
 			}
 		);
@@ -152,6 +152,7 @@ function CreateRoutinePage() {
 		jobPriority,
 		jobType: jobDefinition.key,
 		name: routineName,
+		r_gitBranchToRoutines_c_gitBranchId: upstreamGitBranch.id,
 		type: routineTypeKey,
 		upstreamGitBranch,
 	};

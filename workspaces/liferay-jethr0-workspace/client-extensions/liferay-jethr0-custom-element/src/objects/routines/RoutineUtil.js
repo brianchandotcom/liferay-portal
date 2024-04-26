@@ -7,6 +7,7 @@ import liferayRequest from '../../services/liferayRequest';
 import GitBranch from '../gitbranches/GitBranch';
 import Job from '../jobs/Job';
 import Routine from './Routine';
+import {getUpstreamGitBranch} from '../gitbranches/GitBranchUtil';
 
 export async function createRoutine({data, redirect}) {
 	const headers = {
@@ -22,19 +23,6 @@ export async function createRoutine({data, redirect}) {
 	});
 
 	const routinesResult = JSON.parse(await routinesResponse.text());
-
-	if (data.type === 'upstreamBranchCron' && data.upstreamGitBranch) {
-		const routinesToGitBranchesResponse = await liferayRequest({
-			body: JSON.stringify(data),
-			headers,
-			method: 'PUT',
-			urlPath: `/o/c/gitbranches/${data.upstreamGitBranch.id}/routinesToGitBranches/${routinesResult.id}`,
-		});
-
-		routinesResult.gitBranch = JSON.parse(
-			await routinesToGitBranchesResponse.text()
-		);
-	}
 
 	await liferayRequest({
 		headers,
@@ -88,6 +76,7 @@ export async function getRoutineById({id, setRoutine}) {
 						cron
 						dateCreated
 						dateModified
+						gitBranchToRoutines
 						id
 						name
 						jobName
@@ -126,21 +115,7 @@ export async function getRoutineById({id, setRoutine}) {
 		routine.jobs = jobs;
 
 		if (routine.type.key === 'upstreamBranchCron') {
-			const gitBranchesResponse = await liferayRequest({
-				method: 'GET',
-				urlPath:
-					'/o/c/routines/' + routine.id + '/routinesToGitBranches',
-			});
-
-			const gitBranchesResult = JSON.parse(
-				await gitBranchesResponse.text()
-			);
-
-			for (const gitBranch of gitBranchesResult.items) {
-				routine.upstreamGitBranch = new GitBranch(gitBranch);
-
-				break;
-			}
+			routine.upstreamGitBranch = new GitBranch(routineJSON.gitBranchToRoutines);
 		}
 
 		if (routine) {
@@ -161,6 +136,7 @@ export async function getRoutines({setRoutines}) {
 					items {
 						dateCreated
 						dateModified
+						gitBranchToRoutines
 						id
 						name
 						jobName
@@ -189,7 +165,13 @@ export async function getRoutines({setRoutines}) {
 	const routines = [];
 
 	for (const item of result.data.c.routines.items) {
-		routines.push(new Routine(item));
+		const routine = new Routine(item);
+
+		if (routine.type.key === 'upstreamBranchCron') {
+			routine.upstreamGitBranch = new GitBranch(item.gitBranchToRoutines);
+		}
+
+		routines.push(routine);
 	}
 
 	if (setRoutines) {

@@ -155,9 +155,9 @@ function RoutineInformation({routine}) {
 							routine.upstreamGitBranch.id
 						}
 						fieldValue={
-							routine.upstreamGitBranch.branchRepositoryName +
+							routine.upstreamGitBranch.repositoryName +
 							'/' +
-							routine.upstreamGitBranch.branchName
+							routine.upstreamGitBranch.name
 						}
 					/>
 				)}

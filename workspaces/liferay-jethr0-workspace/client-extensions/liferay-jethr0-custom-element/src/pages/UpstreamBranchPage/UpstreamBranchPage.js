@@ -41,41 +41,41 @@ function UpstreamBranchInformation({upstreamBranch}) {
 				Branch ID: {upstreamBranch.id}
 				<br />
 				Branch Name:{' '}
-				<Link to={upstreamBranch.branchURL}>
-					{upstreamBranch.branchName}
+				<Link to={upstreamBranch.url}>
+					{upstreamBranch.name}
 				</Link>
 				<br />
 				Branch SHA:{' '}
 				<Link
 					to={
 						'https://github.com/' +
-						upstreamBranch.branchUserName +
+						upstreamBranch.userName +
 						'/' +
-						upstreamBranch.branchRepositoryName +
+						upstreamBranch.repositoryName +
 						'/commit/' +
-						upstreamBranch.branchSHA
+						upstreamBranch.latestSHA
 					}
 				>
-					{upstreamBranch.branchSHA.substring(0, 7)}
+					{upstreamBranch.latestSHA.substring(0, 7)}
 				</Link>
 				<br />
 				Repository Name:{' '}
 				<Link
 					to={
 						'https://github.com/' +
-						upstreamBranch.branchUserName +
+						upstreamBranch.userName +
 						'/' +
-						upstreamBranch.branchRepositoryName
+						upstreamBranch.repositoryName
 					}
 				>
-					{upstreamBranch.branchRepositoryName}
+					{upstreamBranch.repositoryName}
 				</Link>
 				<br />
 				User Name:{' '}
 				<Link
-					to={'https://github.com/' + upstreamBranch.branchUserName}
+					to={'https://github.com/' + upstreamBranch.userName}
 				>
-					{upstreamBranch.branchUserName}
+					{upstreamBranch.userName}
 				</Link>
 				<br />
 				Create Date:
@@ -100,9 +100,9 @@ function UpstreamBranchPage() {
 
 	if (upstreamGitBranch) {
 		upstreamBranchTitle =
-			upstreamGitBranch.branchRepositoryName +
+			upstreamGitBranch.repositoryName +
 			'/' +
-			upstreamGitBranch.branchName;
+			upstreamGitBranch.name;
 	}
 
 	const breadcrumbs = [

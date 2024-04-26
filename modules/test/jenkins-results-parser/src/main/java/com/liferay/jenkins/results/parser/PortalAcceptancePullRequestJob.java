@@ -141,15 +141,15 @@ public class PortalAcceptancePullRequestJob
 		return testSuiteName.equals("relevant");
 	}
 
-	private static final List<PathMatcher> _restBuilderFilePathMatchers;
+	private static List<PathMatcher> _restBuilderFilePathMatchers;
 
 	static {
 		FileSystem fs = FileSystems.getDefault();
 
 		_restBuilderFilePathMatchers = Arrays.asList(
-			fs.getPathMatcher("/**/rest-openapi*.yaml"),
-			fs.getPathMatcher("/**/rest-config*.yaml"),
-			fs.getPathMatcher("/**/portal-tools-rest-builder*"));
+			fs.getPathMatcher("glob:**/rest-openapi*.yaml"),
+			fs.getPathMatcher("glob:**/rest-config*.yaml"),
+			fs.getPathMatcher("glob:**/portal-tools-rest-builder/**"));
 	}
 
 	private Boolean _centralMergePullRequest;

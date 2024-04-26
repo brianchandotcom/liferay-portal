@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -626,24 +625,16 @@ public class GetEntryRenderDataMVCResourceCommand
 					new UnsyncStringReader(rightPreview)));
 		}
 
-		String workflowView = null;
-
-		Map<String, String> workflowData = new LinkedHashMap<>();
-
 		if (_ctDisplayRendererRegistry.isWorkflowEnabled(ctEntry, rightModel) &&
-			(ctEntry.getChangeType() != CTConstants.CT_CHANGE_TYPE_DELETION)) {
-
-			workflowData = _getWorkflowData(ctEntry, rightModel, themeDisplay);
-		}
-
-		if (!workflowData.isEmpty()) {
-			workflowView = _getWorkflowViewHTML(themeDisplay, workflowData);
-		}
-
-		if ((workflowView != null) &&
+			(ctEntry.getChangeType() != CTConstants.CT_CHANGE_TYPE_DELETION) &&
 			FeatureFlagManagerUtil.isEnabled("LPD-10703")) {
 
-			jsonObject.put("workflowView", workflowView);
+			Map<String, Object> workflowData = _getWorkflowData(
+				ctEntry, rightModel, themeDisplay);
+
+			if (!workflowData.isEmpty()) {
+				jsonObject.put("workflowData", workflowData);
+			}
 		}
 
 		if (ctDisplayRenderer.showPreviewDiff() &&
@@ -1045,7 +1036,7 @@ public class GetEntryRenderDataMVCResourceCommand
 		jsonObject.put("segmentsExperiences", jsonArray);
 	}
 
-	private <T extends BaseModel<T>> Map<String, String> _getWorkflowData(
+	private <T extends BaseModel<T>> Map<String, Object> _getWorkflowData(
 			CTEntry ctEntry, T model, ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -1094,16 +1085,8 @@ public class GetEntryRenderDataMVCResourceCommand
 				themeDisplay.getLocale(), themeDisplay.getTimeZone());
 			WorkflowTask workflowTask = workflowTasks.get(0);
 
-			return LinkedHashMapBuilder.put(
-				"status",
-				() -> {
-					Map<String, Object> modelAttributes =
-						model.getModelAttributes();
-
-					return String.valueOf(modelAttributes.get("status"));
-				}
-			).put(
-				"assigned-to",
+			return LinkedHashMapBuilder.<String, Object>put(
+				"assignedTo",
 				() -> {
 					if (!workflowTask.isAssignedToSingleUser()) {
 						return _language.get(
@@ -1115,11 +1098,39 @@ public class GetEntryRenderDataMVCResourceCommand
 						String.valueOf(workflowTask.getAssigneeUserId()));
 				}
 			).put(
-				"task-name", workflowTask.getLabel(themeDisplay.getLocale())
+				"comments",
+				() -> {
+					WorkflowHandler<?> workflowHandler =
+						WorkflowHandlerRegistryUtil.getWorkflowHandler(
+							workflowInstanceLink.getClassName());
+
+					if (!workflowHandler.isCommentable()) {
+						return null;
+					}
+
+					Discussion discussion = _commentManager.getDiscussion(
+						themeDisplay.getUserId(),
+						workflowInstanceLink.getGroupId(),
+						workflowInstanceLink.getClassName(),
+						workflowInstanceLink.getClassPK(),
+						_createServiceContextFunction());
+
+					int count = discussion.getDiscussionCommentsCount();
+
+					if (count == 1) {
+						return StringBundler.concat(
+							count, " ",
+							_language.get(themeDisplay.getLocale(), "comment"));
+					}
+
+					return StringBundler.concat(
+						count, " ",
+						_language.get(themeDisplay.getLocale(), "comments"));
+				}
 			).put(
-				"create-date", format.format(workflowTask.getCreateDate())
+				"createDate", format.format(workflowTask.getCreateDate())
 			).put(
-				"due-date",
+				"dueDate",
 				() -> {
 					if (workflowTask.getDueDate() != null) {
 						return format.format(workflowTask.getDueDate());
@@ -1127,6 +1138,16 @@ public class GetEntryRenderDataMVCResourceCommand
 
 					return _language.get(themeDisplay.getLocale(), "never");
 				}
+			).put(
+				"status",
+				() -> {
+					Map<String, Object> modelAttributes =
+						model.getModelAttributes();
+
+					return modelAttributes.get("status");
+				}
+			).put(
+				"taskName", workflowTask.getLabel(themeDisplay.getLocale())
 			).put(
 				"usages",
 				() -> {
@@ -1159,89 +1180,8 @@ public class GetEntryRenderDataMVCResourceCommand
 						"workflowTaskId", workflowTask.getWorkflowTaskId()
 					).buildString();
 				}
-			).put(
-				"comments",
-				() -> {
-					WorkflowHandler<?> workflowHandler =
-						WorkflowHandlerRegistryUtil.getWorkflowHandler(
-							workflowInstanceLink.getClassName());
-
-					if (!workflowHandler.isCommentable()) {
-						return null;
-					}
-
-					Discussion discussion = _commentManager.getDiscussion(
-						themeDisplay.getUserId(),
-						workflowInstanceLink.getGroupId(),
-						workflowInstanceLink.getClassName(),
-						workflowInstanceLink.getClassPK(),
-						_createServiceContextFunction());
-
-					int count = discussion.getDiscussionCommentsCount();
-
-					if (count == 1) {
-						return StringBundler.concat(
-							count, " ",
-							_language.get(themeDisplay.getLocale(), "comment"));
-					}
-
-					return StringBundler.concat(
-						count, " ",
-						_language.get(themeDisplay.getLocale(), "comments"));
-				}
 			).build();
 		}
-	}
-
-	private String _getWorkflowViewHTML(
-		ThemeDisplay themeDisplay, Map<String, String> workflowData) {
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("<div class=\"table-responsive\"><table class=\"");
-		sb.append("publications-render-table table table-autofit ");
-		sb.append("table-nowrap\">");
-
-		for (Map.Entry<String, String> entry : workflowData.entrySet()) {
-			sb.append("<tr><td class=\"publications-key-td ");
-			sb.append("table-cell-expand-small\">");
-			sb.append(_language.get(themeDisplay.getLocale(), entry.getKey()));
-			sb.append("</td><td class=\"table-cell-expand\">");
-
-			if (Objects.equals(entry.getKey(), "status")) {
-				int status = Integer.valueOf(entry.getValue());
-
-				sb.append("<span class=\"label label-");
-				sb.append(WorkflowConstants.getStatusStyle(status));
-				sb.append("\"");
-				sb.append("<span class=\"label-item label-item-expand\">");
-				sb.append(
-					_language.get(
-						themeDisplay.getLocale(),
-						WorkflowConstants.getStatusLabel(status)));
-				sb.append("</span");
-				sb.append("</span");
-			}
-			else if (Objects.equals(entry.getKey(), "usages")) {
-				String url = entry.getValue();
-
-				sb.append("<a href=\"");
-				sb.append(HtmlUtil.escape(url));
-				sb.append("\">");
-				sb.append(
-					_language.get(themeDisplay.getLocale(), "view-usages"));
-				sb.append("</a>");
-			}
-			else {
-				sb.append(HtmlUtil.escape(String.valueOf(entry.getValue())));
-			}
-
-			sb.append("</td></tr>");
-		}
-
-		sb.append("</table></div>");
-
-		return sb.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

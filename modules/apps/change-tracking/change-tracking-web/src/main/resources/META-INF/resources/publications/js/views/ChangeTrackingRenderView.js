@@ -25,6 +25,7 @@ import React, {useEffect, useState} from 'react';
 
 import ExperienceDropdown from '../components/ExperienceDropdown';
 import {WorkflowStatusLabel} from '../components/WorkflowStatusLabel';
+import ChangeTrackingWorkflowView from './ChangeTrackingWorkflowView';
 
 const LocalizationDropdown = ({
 	currentLocale,
@@ -657,14 +658,12 @@ export default function ChangeTrackingRenderView({
 			state.contentType === CONTENT_TYPE_WORKFLOW &&
 			Object.prototype.hasOwnProperty.call(
 				state.renderData,
-				'workflowView'
+				'workflowData'
 			)
 		) {
 			return (
-				<div
-					dangerouslySetInnerHTML={{
-						__html: state.renderData.workflowView,
-					}}
+				<ChangeTrackingWorkflowView
+					workflowData={state.renderData.workflowData}
 				/>
 			);
 		}

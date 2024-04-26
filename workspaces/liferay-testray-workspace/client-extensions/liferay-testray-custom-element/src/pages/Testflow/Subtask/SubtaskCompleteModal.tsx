@@ -32,7 +32,7 @@ type SubtaskForm = typeof yupSchema.subtask.__outputType;
 type SubTaskCompleteModalProps = {
 	modal: FormModalOptions;
 	revalidateSubtask: () => void;
-	setForceRefetch: React.Dispatch<React.SetStateAction<number>>;
+	setForceRefetch?: React.Dispatch<React.SetStateAction<number>>;
 	subtask: TestraySubTask;
 };
 
@@ -143,7 +143,7 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 			revalidateSubtask();
 
 			onSave();
-			setForceRefetch(new Date().getTime());
+			setForceRefetch && setForceRefetch(new Date().getTime());
 		}
 		catch (error) {
 			onError(error);

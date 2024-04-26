@@ -126,14 +126,6 @@ definition {
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 		var nameList = "ac ac,liferay liferay";
 
-		task ("Connect Analytics Cloud to DXP") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-		}
-
-		task ("Create page") {
-			ACUtils.addPage(layoutName = "AC Page");
-		}
-
 		task ("Add two new users") {
 			for (var name : list ${users}) {
 				JSONUser.addUser(
@@ -143,21 +135,29 @@ definition {
 					userLastName = ${name},
 					userScreenName = ${name});
 			}
+		}
 
-			ACDXPSettings.syncNewContactData();
+		task ("Connect AC to DXP") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("View AC Page as new user") {
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4,5",
 				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
 
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = ${propertyName});
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Add a new static segment") {

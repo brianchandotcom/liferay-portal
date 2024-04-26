@@ -118,16 +118,15 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 				<div className="c-mb-4">
 					{Liferay.Language.get(
 						'customize-the-url-of-this-blog-entry-to-your-preference-or-stick-to-the-default-setting-based-on-the-entry-title'
-					)}
+					) + ' '}
 
 					{friendlyURLSeparatorCompanyConfigurationURL && (
 						<ClayLink
 							href={friendlyURLSeparatorCompanyConfigurationURL}
 						>
-							{' ' +
-								Liferay.Language.get(
-									'check-instance-settings-for-more-url-separator-configurations'
-								)}
+							{Liferay.Language.get(
+								'check-instance-settings-for-more-url-separator-configurations'
+							)}
 						</ClayLink>
 					)}
 				</div>

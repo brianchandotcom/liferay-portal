@@ -767,7 +767,7 @@ definition {
 	@summary = "Default summary"
 	macro openTranslationLanguageDropdown() {
 		Click.javaScriptClick(
-			key_title = "select-translation-language",
+			key_title = "Select a Language",
 			locator1 = "Button#ANY_TITLE");
 	}
 

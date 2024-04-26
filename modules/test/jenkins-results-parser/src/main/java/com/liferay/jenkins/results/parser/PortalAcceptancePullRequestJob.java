@@ -7,6 +7,11 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.PathMatcher;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -65,7 +70,7 @@ public class PortalAcceptancePullRequestJob
 		Set<String> batchNames = super.getRawBatchNames();
 
 		if (_isRelevantTestSuite() &&
-			!_hasMatchingFiles(_REST_BUILDER_FILE_PATTERN_STRING)) {
+			!_hasMatchingFiles(_restBuilderFilePathMatchers)) {
 
 			batchNames.remove("rest-builder-jdk8");
 		}
@@ -99,16 +104,14 @@ public class PortalAcceptancePullRequestJob
 		return batchNames;
 	}
 
-	private boolean _hasMatchingFiles(String pattern) {
+	private boolean _hasMatchingFiles(List<PathMatcher> pathMatchers) {
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
 		for (File modifiedFile : gitWorkingDirectory.getModifiedFilesList()) {
-			if (modifiedFile.getPath(
-				).matches(
-					pattern
-				)) {
-
-				return true;
+			for (PathMatcher pathMatcher : pathMatchers) {
+				if (pathMatcher.matches(modifiedFile.toPath())) {
+					return true;
+				}
 			}
 		}
 
@@ -138,10 +141,16 @@ public class PortalAcceptancePullRequestJob
 		return testSuiteName.equals("relevant");
 	}
 
-	private static final String _REST_BUILDER_FILE_PATTERN_STRING =
-		JenkinsResultsParserUtil.combine(
-			"(.+)?rest-openapi(.+)?.yaml|", "(.+)?rest-config(.+)?.yaml|",
-			"(.+)?portal-tools-rest-builder(.+)?");
+	private static final List<PathMatcher> _restBuilderFilePathMatchers;
+
+	static {
+		FileSystem fs = FileSystems.getDefault();
+
+		_restBuilderFilePathMatchers = Arrays.asList(
+			fs.getPathMatcher("/**/rest-openapi*.yaml"),
+			fs.getPathMatcher("/**/rest-config*.yaml"),
+			fs.getPathMatcher("/**/portal-tools-rest-builder*"));
+	}
 
 	private Boolean _centralMergePullRequest;
 

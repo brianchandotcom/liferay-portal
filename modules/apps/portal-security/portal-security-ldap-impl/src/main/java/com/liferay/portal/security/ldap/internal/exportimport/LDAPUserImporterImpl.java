@@ -1747,18 +1747,13 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 
 		ServiceContext serviceContext = ldapUser.getServiceContext();
 
-		Date serverConfigurationModifiedDate;
+		Date serverConfigurationModifiedDate = _lastImportDate;
 
-		if (!ldapServerConfiguration.modifiedDate(
-			).isEmpty()) {
-
+		if (Validator.isNotNull(ldapServerConfiguration.modifiedDate())) {
 			serverConfigurationModifiedDate = DateUtil.parseDate(
 				"EEE MMM d HH:mm:ss zzz yyyy",
 				ldapServerConfiguration.modifiedDate(),
 				serviceContext.getLocale());
-		}
-		else {
-			serverConfigurationModifiedDate = _lastImportDate;
 		}
 
 		if ((modifiedDate != null) &&

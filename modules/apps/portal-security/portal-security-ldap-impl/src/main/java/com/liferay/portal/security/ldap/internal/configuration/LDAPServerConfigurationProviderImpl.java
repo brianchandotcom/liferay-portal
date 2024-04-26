@@ -424,15 +424,17 @@ public class LDAPServerConfigurationProviderImpl
 		Dictionary<String, Object> properties, Configuration configuration,
 		String property) {
 
-		String[] propertiesCustomMapping = (String[])properties.get(property);
-		String[] configurationCustomMapping =
-			(String[])configuration.getProperties(
-			).get(
-				property
-			);
+		Dictionary<String, Object> oldProperties =
+			configuration.getProperties();
+
+		String[] oldPropertiesCustomMapping = GetterUtil.getStringValues(
+			oldProperties.get(property));
+
+		String[] propertiesCustomMapping = GetterUtil.getStringValues(
+			properties.get(property));
 
 		if (Arrays.equals(
-				propertiesCustomMapping, configurationCustomMapping)) {
+				oldPropertiesCustomMapping, propertiesCustomMapping)) {
 
 			return false;
 		}

@@ -19,7 +19,6 @@ import com.liferay.jethr0.util.StringUtil;
 import java.net.URL;
 
 import java.util.Objects;
-import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -32,11 +31,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GitUserEntityRepository
 	extends BaseEntityRepository<GitUserEntity> {
-
-	@Override
-	public void initialize() {
-		addAll(_gitUserEntityDALO.getAll());
-	}
 
 	public GitUserEntity createGitUserEntity(GitHubRef gitHubRef) {
 		URL url = StringUtil.toURL(
@@ -68,6 +62,11 @@ public class GitUserEntityRepository
 	@Override
 	public GitUserEntityDALO getEntityDALO() {
 		return _gitUserEntityDALO;
+	}
+
+	@Override
+	public void initialize() {
+		addAll(_gitUserEntityDALO.getAll());
 	}
 
 	public void relateGitUserToGitBranch(

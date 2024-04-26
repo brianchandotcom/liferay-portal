@@ -7,7 +7,6 @@ package com.liferay.jethr0.entity;
 
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
-import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.git.repository.GitCommitEntityRepository;
 import com.liferay.jethr0.git.repository.GitPullEntityRepository;

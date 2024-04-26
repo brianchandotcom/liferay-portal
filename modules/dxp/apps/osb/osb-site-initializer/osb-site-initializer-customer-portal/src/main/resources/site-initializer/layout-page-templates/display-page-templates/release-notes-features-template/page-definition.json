@@ -43,7 +43,7 @@
 								"align": "Start",
 								"contentDisplay": "FlexRow",
 								"justify": "SpaceBetween",
-								"marginBottom": 1,
+								"marginBottom": 1.5,
 								"marginTop": 1
 							}
 						},
@@ -261,18 +261,19 @@
 											"id": "tablet"
 										}
 									],
-									"size": 9
+									"size": 10
 								},
 								"pageElements": [
 									{
 										"definition": {
 											"fragmentStyle": {
+												"marginRight": "13rem",
 												"minHeight": "52.5vh"
 											},
 											"widgetInstance": {
 												"widgetConfig": {
 													"displayInDocumentForm": "false",
-													"displayStyle": "ddmTemplate_RELEASE-NOTES-HIGHLIGHTS-SEARCH",
+													"displayStyle": "ddmTemplate_RELEASE-NOTES-FEATURE-SEARCH",
 													"displayStyleGroupId": "[$GROUP_ID$]",
 													"federatedSearchKey": "",
 													"fieldsToDisplay": "",
@@ -312,7 +313,7 @@
 											"id": "tablet"
 										}
 									],
-									"size": 3
+									"size": 2
 								},
 								"pageElements": [
 									{
@@ -344,7 +345,7 @@
 													"displayStyle": "ddmTemplate_CATEGORY-FACET-VOCABULARY-FTL",
 													"displayStyleGroupId": "[$GROUP_ID$]",
 													"frequenciesVisible": "false",
-													"frequencyThreshold": "1",
+													"frequencyThreshold": "0",
 													"maxTerms": "10",
 													"order": "key:asc",
 													"parameterName": "Product Capabilities",
@@ -368,35 +369,11 @@
 													"displayStyle": "ddmTemplate_CATEGORY-FACET-VOCABULARY-FTL",
 													"displayStyleGroupId": "[$GROUP_ID$]",
 													"frequenciesVisible": "false",
-													"frequencyThreshold": "1",
+													"frequencyThreshold": "0",
 													"maxTerms": "10",
 													"order": "key:asc",
-													"parameterName": "Release Status Current",
-													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Release Status Current$]"
-												},
-												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
-											}
-										},
-										"type": "Widget"
-									},
-									{
-										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] \n\n.treeview.treeview-light.treeview-nested.treeview-vocabulary-display {\n    margin-top: 0;\n    padding: 0;\n}\n\n.c-mb-4, \n.c-my-4 {\n    margin-bottom: 0;\n    padding-left: 1.25rem;\n}\n\n.btn-unstyled.facet-clear-btn {\n    color: var(--action-neutral-default);   \n    font-size: var(--custom-control-label-font-size);    \n}\n\n.panel-body {\n    margin-top: -0.3125rem;\n    padding: 0;\n}\n\n.panel-title {\n    font-size: 1.125rem;    \n    text-transform: none;\n}\n\n.search-facet-display-vocabulary .treeview-vocabulary-display .tree-item-category {\n    padding-left: 1.25rem;\n}\n\n.search-facet-display-vocabulary .treeview-vocabulary-display .tree-item-category .custom-control-label-text {\n    color: var(--custom-control-label-color);\n}",
-											"fragmentStyle": {
-												"backgroundColor": "colorNeutral1",
-												"borderRadius": "borderRadiusLg",
-												"marginTop": "3"
-											},
-											"widgetInstance": {
-												"widgetConfig": {
-													"displayStyle": "ddmTemplate_CATEGORY-FACET-VOCABULARY-FTL",
-													"displayStyleGroupId": "[$GROUP_ID$]",
-													"frequenciesVisible": "false",
-													"frequencyThreshold": "1",
-													"maxTerms": "10",
-													"order": "key:asc",
-													"parameterName": "Release Status Previous",
-													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Release Status Previous$]"
+													"parameterName": "Feature Availability",
+													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Feature Availability$]"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}

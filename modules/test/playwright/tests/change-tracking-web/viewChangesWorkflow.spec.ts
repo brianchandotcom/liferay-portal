@@ -94,6 +94,56 @@ test('LPD-19748 Only workflow status is displayed when workflow is disabled', as
 	await changeTrackingPage.viewDisplayTab('Workflow', {isHidden: true});
 });
 
+test('LPD-19763 Workflow assign actions are displayed in dropdown', async ({
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	await changeTrackingPage.reviewChange(journalName);
+
+	const moreActionsButton = page.getByLabel('more-actions');
+
+	await moreActionsButton.click();
+
+	await expect(
+		page.getByRole('menuitem', {
+			name: 'Assign to me',
+		})
+	).toBeVisible();
+
+	await expect(
+		page.getByRole('menuitem', {
+			name: 'Assign to...',
+		})
+	).toBeVisible();
+
+	const assignToMeMenuItem = page.getByRole('menuitem', {
+		name: 'Assign to me',
+	});
+
+	await assignToMeMenuItem.click();
+
+	const doneButton = page
+		.frameLocator('iframe[title="Assign to Me"]')
+		.getByRole('button', {exact: true, name: 'Done'});
+
+	await doneButton.click();
+
+	await changeTrackingPage.selectTab('Workflow');
+
+	await page.getByRole('cell', {exact: true, name: 'Test Test'});
+
+	await moreActionsButton.click();
+
+	await expect(
+		page.getByRole('menuitem', {
+			name: 'Assign to...',
+		})
+	).toBeVisible();
+});
+
 test('LPD-22673 View Usages link is added to workflow info display', async ({
 	changeTrackingPage,
 	ctCollection,

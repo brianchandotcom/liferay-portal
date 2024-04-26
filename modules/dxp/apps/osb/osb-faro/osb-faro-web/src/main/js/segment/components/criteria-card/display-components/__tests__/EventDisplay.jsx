@@ -68,8 +68,7 @@ const mockCriterion = {
 };
 
 describe('EventDisplay', () => {
-	// TODO this test will be fixed in LPD-6522
-	it.skip('renders', () => {
+	it('renders', () => {
 		const {container} = render(
 			<WrappedEventDisplay
 				criterion={{
@@ -82,11 +81,6 @@ describe('EventDisplay', () => {
 									operatorName: RelationalOperators.EQ,
 									propertyName: 'eventDefinitionId',
 									value: '123'
-								}),
-								Map({
-									operatorName: FunctionalOperators.Contains,
-									propertyName: 'attribute/1',
-									value: 'Test String'
 								}),
 								Map({
 									operatorName: RelationalOperators.GT,
@@ -103,6 +97,7 @@ describe('EventDisplay', () => {
 					entityName: 'Individual',
 					label: 'Downloaded Document',
 					name: 'documentDownloaded',
+					options: [{label: 'eventHidden', value: false}],
 					propertykey: 'event',
 					type: PropertyTypes.Event
 				}}
@@ -113,7 +108,7 @@ describe('EventDisplay', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('show an error message when custom event is blocked', () => {
+	it('show an error message when custom event is hidden', () => {
 		const {getByText} = render(
 			<WrappedEventDisplay
 				criterion={mockCriterion}

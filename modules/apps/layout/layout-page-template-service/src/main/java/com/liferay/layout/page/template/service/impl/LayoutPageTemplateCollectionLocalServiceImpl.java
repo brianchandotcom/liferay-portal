@@ -239,6 +239,15 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	}
 
 	@Override
+	public LayoutPageTemplateCollection deleteLayoutPageTemplateCollection(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return deleteLayoutPageTemplateCollection(
+			fetchLayoutPageTemplateCollection(externalReferenceCode, groupId));
+	}
+
+	@Override
 	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
 		long layoutPageTemplateCollectionId) {
 

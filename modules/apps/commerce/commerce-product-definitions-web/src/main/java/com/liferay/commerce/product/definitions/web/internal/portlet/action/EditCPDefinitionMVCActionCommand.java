@@ -668,9 +668,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, long cpDefinitionId)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPDefinition.class.getName(), actionRequest);
-
 		boolean shippable = ParamUtil.getBoolean(actionRequest, "shippable");
 		boolean freeShipping = ParamUtil.getBoolean(
 			actionRequest, "freeShipping");
@@ -685,7 +682,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		_cpDefinitionService.updateShippingInfo(
 			cpDefinitionId, shippable, freeShipping, shipSeparately,
-			shippingExtraPrice, width, height, depth, weight, serviceContext);
+			shippingExtraPrice, width, height, depth, weight,
+			ServiceContextFactory.getInstance(
+				CPDefinition.class.getName(), actionRequest));
 	}
 
 	private void _updateSubscriptionInfo(

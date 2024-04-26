@@ -1243,11 +1243,11 @@
 			}
 		},
 		{
-			"externalReferenceCode": "GitPull",
+			"externalReferenceCode": "GitPullRequest",
 			"label": {
 				"en_US": "Git Pull"
 			},
-			"name": "GitPull",
+			"name": "GitPullRequest",
 			"objectFields": [
 				{
 					"DBType": "String",
@@ -1266,8 +1266,8 @@
 					"label": {
 						"en_US": "Git Pull to Jobs"
 					},
-					"name": "gitPullToJobs",
-					"objectDefinitionExternalReferenceCode1": "GitPull",
+					"name": "gitPullRequestToJobs",
+					"objectDefinitionExternalReferenceCode1": "GitPullRequest",
 					"objectDefinitionExternalReferenceCode2": "Job",
 					"type": "oneToMany"
 				}
@@ -1330,9 +1330,9 @@
 					"label": {
 						"en_US": "Base Git Branch to Git Pulls"
 					},
-					"name": "baseGitBranchToGitPulls",
+					"name": "baseGitBranchToGitPullRequests",
 					"objectDefinitionExternalReferenceCode1": "GitBranch",
-					"objectDefinitionExternalReferenceCode2": "GitPull",
+					"objectDefinitionExternalReferenceCode2": "GitPullRequest",
 					"type": "oneToMany"
 				},
 				{
@@ -1360,9 +1360,9 @@
 					"label": {
 						"en_US": "Head Git Branch to Git Pulls"
 					},
-					"name": "headGitBranchToGitPulls",
+					"name": "headGitBranchToGitPullRequests",
 					"objectDefinitionExternalReferenceCode1": "GitBranch",
-					"objectDefinitionExternalReferenceCode2": "GitPull",
+					"objectDefinitionExternalReferenceCode2": "GitPullRequest",
 					"type": "oneToMany"
 				}
 			],
@@ -1410,21 +1410,21 @@
 				{
 					"deletionType": "cascade",
 					"label": {
-						"en_US": "Receiver Git User to Git Pull"
+						"en_US": "Receiver Git User to Git Pull Request"
 					},
-					"name": "receiverGitUserToGitPulls",
+					"name": "receiverGitUserToGitPullRequests",
 					"objectDefinitionExternalReferenceCode1": "GitUser",
-					"objectDefinitionExternalReferenceCode2": "GitPull",
+					"objectDefinitionExternalReferenceCode2": "GitPullRequest",
 					"type": "oneToMany"
 				},
 				{
 					"deletionType": "cascade",
 					"label": {
-						"en_US": "Sender Git User to Git Pull"
+						"en_US": "Sender Git User to Git Pull Request"
 					},
-					"name": "senderGitUserToGitPulls",
+					"name": "senderGitUserToGitPullRequests",
 					"objectDefinitionExternalReferenceCode1": "GitUser",
-					"objectDefinitionExternalReferenceCode2": "GitPull",
+					"objectDefinitionExternalReferenceCode2": "GitPullRequest",
 					"type": "oneToMany"
 				}
 			],

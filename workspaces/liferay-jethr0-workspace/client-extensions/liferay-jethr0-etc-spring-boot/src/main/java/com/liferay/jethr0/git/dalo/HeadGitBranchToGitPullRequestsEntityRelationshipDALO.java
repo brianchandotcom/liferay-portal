@@ -9,8 +9,8 @@ import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.branch.GitBranchEntityFactory;
-import com.liferay.jethr0.git.pull.GitPullEntity;
-import com.liferay.jethr0.git.pull.GitPullEntityFactory;
+import com.liferay.jethr0.git.pullrequest.GitPullRequestEntity;
+import com.liferay.jethr0.git.pullrequest.GitPullRequestEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -19,12 +19,12 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class HeadGitBranchToGitPullsEntityRelationshipDALO
-	extends BaseEntityRelationshipDALO<GitBranchEntity, GitPullEntity> {
+public class HeadGitBranchToGitPullRequestsEntityRelationshipDALO
+	extends BaseEntityRelationshipDALO<GitBranchEntity, GitPullRequestEntity> {
 
 	@Override
-	public EntityFactory<GitPullEntity> getChildEntityFactory() {
-		return _gitPullEntityFactory;
+	public EntityFactory<GitPullRequestEntity> getChildEntityFactory() {
+		return _gitPullRequestEntityFactory;
 	}
 
 	@Override
@@ -34,13 +34,13 @@ public class HeadGitBranchToGitPullsEntityRelationshipDALO
 
 	@Override
 	protected String getObjectRelationshipName() {
-		return "headGitBranchToGitPulls";
+		return "headGitBranchToGitPullRequests";
 	}
 
 	@Autowired
 	private GitBranchEntityFactory _gitBranchEntityFactory;
 
 	@Autowired
-	private GitPullEntityFactory _gitPullEntityFactory;
+	private GitPullRequestEntityFactory _gitPullRequestEntityFactory;
 
 }

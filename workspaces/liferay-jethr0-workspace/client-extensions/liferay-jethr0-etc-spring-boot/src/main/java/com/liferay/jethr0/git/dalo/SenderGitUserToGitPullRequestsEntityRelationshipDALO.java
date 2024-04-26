@@ -7,8 +7,8 @@ package com.liferay.jethr0.git.dalo;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.git.pull.GitPullEntity;
-import com.liferay.jethr0.git.pull.GitPullEntityFactory;
+import com.liferay.jethr0.git.pullrequest.GitPullRequestEntity;
+import com.liferay.jethr0.git.pullrequest.GitPullRequestEntityFactory;
 import com.liferay.jethr0.git.user.GitUserEntity;
 import com.liferay.jethr0.git.user.GitUserEntityFactory;
 
@@ -19,12 +19,12 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ReceiverGitUserToGitPullsEntityRelationshipDALO
-	extends BaseEntityRelationshipDALO<GitUserEntity, GitPullEntity> {
+public class SenderGitUserToGitPullRequestsEntityRelationshipDALO
+	extends BaseEntityRelationshipDALO<GitUserEntity, GitPullRequestEntity> {
 
 	@Override
-	public EntityFactory<GitPullEntity> getChildEntityFactory() {
-		return _gitPullEntityFactory;
+	public EntityFactory<GitPullRequestEntity> getChildEntityFactory() {
+		return _gitPullRequestEntityFactory;
 	}
 
 	@Override
@@ -34,11 +34,11 @@ public class ReceiverGitUserToGitPullsEntityRelationshipDALO
 
 	@Override
 	protected String getObjectRelationshipName() {
-		return "receiverGitUserToGitPulls";
+		return "senderGitUserToGitPullRequests";
 	}
 
 	@Autowired
-	private GitPullEntityFactory _gitPullEntityFactory;
+	private GitPullRequestEntityFactory _gitPullRequestEntityFactory;
 
 	@Autowired
 	private GitUserEntityFactory _gitUserEntityFactory;

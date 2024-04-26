@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.job;
 
-import com.liferay.jethr0.git.pull.GitPullEntity;
+import com.liferay.jethr0.git.pullrequest.GitPullRequestEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -22,20 +22,21 @@ public abstract class BasePullRequestJobEntity
 	extends BaseJobEntity implements PullRequestJobEntity {
 
 	@Override
-	public GitPullEntity getGitPullEntity() {
-		return _gitPullEntity;
+	public GitPullRequestEntity getGitPullRequestEntity() {
+		return _gitPullRequestEntity;
 	}
 
 	@Override
-	public long getGitPullEntityId() {
-		return _gitPullEntityId;
+	public long getGitPullRequestEntityId() {
+		return _gitPullRequestEntityId;
 	}
 
 	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
-		jsonObject.put("r_gitPullToJobs_c_gitPullId", getGitPullEntityId());
+		jsonObject.put(
+			"r_gitPullToJobs_c_gitPullId", getGitPullRequestEntityId());
 
 		return jsonObject;
 	}
@@ -135,14 +136,16 @@ public abstract class BasePullRequestJobEntity
 	}
 
 	@Override
-	public void setGitPullEntity(GitPullEntity gitPullEntity) {
-		_gitPullEntity = gitPullEntity;
+	public void setGitPullRequestEntity(
+		GitPullRequestEntity gitPullRequestEntity) {
 
-		if (_gitPullEntity == null) {
-			_gitPullEntityId = 0;
+		_gitPullRequestEntity = gitPullRequestEntity;
+
+		if (_gitPullRequestEntity == null) {
+			_gitPullRequestEntityId = 0;
 		}
 		else {
-			_gitPullEntityId = _gitPullEntity.getId();
+			_gitPullRequestEntityId = _gitPullRequestEntity.getId();
 		}
 	}
 
@@ -150,7 +153,8 @@ public abstract class BasePullRequestJobEntity
 	public void setJSONObject(JSONObject jsonObject) {
 		super.setJSONObject(jsonObject);
 
-		_gitPullEntityId = jsonObject.optLong("r_gitPullToJobs_c_gitPullId");
+		_gitPullRequestEntityId = jsonObject.optLong(
+			"r_gitPullToJobs_c_gitPullId");
 	}
 
 	@Override
@@ -202,8 +206,8 @@ public abstract class BasePullRequestJobEntity
 			"https://github.com/(?<receiverUserName>[^/]+)/",
 			"(?<repositoryName>[^/]+)/pull/(?<number>\\d+)"));
 
-	private GitPullEntity _gitPullEntity;
-	private long _gitPullEntityId;
+	private GitPullRequestEntity _gitPullRequestEntity;
+	private long _gitPullRequestEntityId;
 	private long _number;
 	private String _receiverUserName;
 	private String _repositoryName;

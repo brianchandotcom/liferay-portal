@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.git.pull;
+package com.liferay.jethr0.git.pullrequest;
 
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
@@ -20,8 +20,8 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseGitPullEntity
-	extends BaseEntity implements GitPullEntity {
+public abstract class BaseGitPullRequestEntity
+	extends BaseEntity implements GitPullRequestEntity {
 
 	@Override
 	public void addJobEntities(Set<JobEntity> jobEntities) {
@@ -172,7 +172,7 @@ public abstract class BaseGitPullEntity
 		_url = sha;
 	}
 
-	protected BaseGitPullEntity(JSONObject jsonObject) {
+	protected BaseGitPullRequestEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

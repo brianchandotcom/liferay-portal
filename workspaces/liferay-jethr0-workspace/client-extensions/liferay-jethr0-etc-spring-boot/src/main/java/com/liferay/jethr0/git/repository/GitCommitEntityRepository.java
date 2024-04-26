@@ -31,7 +31,7 @@ import org.springframework.context.annotation.Configuration;
 public class GitCommitEntityRepository
 	extends BaseEntityRepository<GitCommitEntity> {
 
-	public GitCommitEntity createGitPullEntity(
+	public GitCommitEntity createGitPullRequestEntity(
 		GitBranchEntity gitBranchEntity, String sha) {
 
 		GitCommitEntity gitCommitEntity = getBySHA(sha);

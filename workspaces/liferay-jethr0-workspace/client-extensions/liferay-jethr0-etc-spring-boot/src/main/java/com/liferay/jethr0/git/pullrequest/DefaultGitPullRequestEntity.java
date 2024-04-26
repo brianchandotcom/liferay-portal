@@ -3,16 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.git.pull;
+package com.liferay.jethr0.git.pullrequest;
 
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public class DefaultGitPullEntity extends BaseGitPullEntity {
+public class DefaultGitPullRequestEntity extends BaseGitPullRequestEntity {
 
-	protected DefaultGitPullEntity(JSONObject jsonObject) {
+	protected DefaultGitPullRequestEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

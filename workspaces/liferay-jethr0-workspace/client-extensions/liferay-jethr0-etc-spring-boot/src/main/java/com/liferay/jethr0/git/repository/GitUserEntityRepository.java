@@ -10,9 +10,9 @@ import com.liferay.jethr0.event.github.ref.GitHubRef;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.dalo.GitUserEntityDALO;
 import com.liferay.jethr0.git.dalo.GitUserToGitBranchesEntityRelationshipDALO;
-import com.liferay.jethr0.git.dalo.ReceiverGitUserToGitPullsEntityRelationshipDALO;
-import com.liferay.jethr0.git.dalo.SenderGitUserToGitPullsEntityRelationshipDALO;
-import com.liferay.jethr0.git.pull.GitPullEntity;
+import com.liferay.jethr0.git.dalo.ReceiverGitUserToGitPullRequestsEntityRelationshipDALO;
+import com.liferay.jethr0.git.dalo.SenderGitUserToGitPullRequestsEntityRelationshipDALO;
+import com.liferay.jethr0.git.pullrequest.GitPullRequestEntity;
 import com.liferay.jethr0.git.user.GitUserEntity;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -78,19 +78,21 @@ public class GitUserEntityRepository
 	}
 
 	public void relateReceiverGitUserToGitPull(
-		GitUserEntity gitUserEntity, GitPullEntity gitPullEntity) {
+		GitUserEntity gitUserEntity,
+		GitPullRequestEntity gitPullRequestEntity) {
 
-		gitUserEntity.addGitPullEntity(gitPullEntity);
+		gitUserEntity.addGitPullRequestEntity(gitPullRequestEntity);
 
-		gitPullEntity.setReceiverGitUserEntity(gitUserEntity);
+		gitPullRequestEntity.setReceiverGitUserEntity(gitUserEntity);
 	}
 
 	public void relateSenderGitUserToGitPull(
-		GitUserEntity gitUserEntity, GitPullEntity gitPullEntity) {
+		GitUserEntity gitUserEntity,
+		GitPullRequestEntity gitPullRequestEntity) {
 
-		gitUserEntity.addGitPullEntity(gitPullEntity);
+		gitUserEntity.addGitPullRequestEntity(gitPullRequestEntity);
 
-		gitPullEntity.setSenderGitUserEntity(gitUserEntity);
+		gitPullRequestEntity.setSenderGitUserEntity(gitUserEntity);
 	}
 
 	public void setGitBranchEntityRepository(
@@ -99,10 +101,10 @@ public class GitUserEntityRepository
 		_gitBranchEntityRepository = gitBranchEntityRepository;
 	}
 
-	public void setGitPullEntityRepository(
-		GitPullEntityRepository gitPullEntityRepository) {
+	public void setGitPullRequestEntityRepository(
+		GitPullRequestEntityRepository gitPullRequestEntityRepository) {
 
-		_gitPullEntityRepository = gitPullEntityRepository;
+		_gitPullRequestEntityRepository = gitPullRequestEntityRepository;
 	}
 
 	@Override
@@ -124,10 +126,10 @@ public class GitUserEntityRepository
 
 		_gitUserToGitBranchesEntityRelationshipDALO.updateChildEntities(
 			gitUserEntity);
-		_receiverGitUserToGitPullsEntityRelationshipDALO.updateChildEntities(
-			gitUserEntity);
-		_senderGitUserToGitPullsEntityRelationshipDALO.updateChildEntities(
-			gitUserEntity);
+		_receiverGitUserToGitPullRequestsEntityRelationshipDALO.
+			updateChildEntities(gitUserEntity);
+		_senderGitUserToGitPullRequestsEntityRelationshipDALO.
+			updateChildEntities(gitUserEntity);
 
 		return gitUserEntity;
 	}
@@ -150,30 +152,33 @@ public class GitUserEntityRepository
 
 		return updateParentToChildRelationshipsFromDALO(
 			parentGitUserEntity,
-			_receiverGitUserToGitPullsEntityRelationshipDALO,
-			_gitPullEntityRepository,
-			(gitUserEntity, gitPullEntity) -> relateReceiverGitUserToGitPull(
-				gitUserEntity, gitPullEntity),
-			gitUserEntity -> gitUserEntity.getGitPullEntities(),
-			(gitUserEntity, gitPullEntity) -> gitUserEntity.removeGitPullEntity(
-				gitPullEntity));
+			_receiverGitUserToGitPullRequestsEntityRelationshipDALO,
+			_gitPullRequestEntityRepository,
+			(gitUserEntity, gitPullRequestEntity) ->
+				relateReceiverGitUserToGitPull(
+					gitUserEntity, gitPullRequestEntity),
+			gitUserEntity -> gitUserEntity.getGitPullRequestEntities(),
+			(gitUserEntity, gitPullRequestEntity) ->
+				gitUserEntity.removeGitPullRequestEntity(gitPullRequestEntity));
 	}
 
 	private GitUserEntity _updateSenderGitUserToGitPullRelationshipsFromDALO(
 		GitUserEntity parentGitUserEntity) {
 
 		return updateParentToChildRelationshipsFromDALO(
-			parentGitUserEntity, _senderGitUserToGitPullsEntityRelationshipDALO,
-			_gitPullEntityRepository,
-			(gitUserEntity, gitPullEntity) -> relateSenderGitUserToGitPull(
-				gitUserEntity, gitPullEntity),
-			gitUserEntity -> gitUserEntity.getGitPullEntities(),
-			(gitUserEntity, gitPullEntity) -> gitUserEntity.removeGitPullEntity(
-				gitPullEntity));
+			parentGitUserEntity,
+			_senderGitUserToGitPullRequestsEntityRelationshipDALO,
+			_gitPullRequestEntityRepository,
+			(gitUserEntity, gitPullRequestEntity) ->
+				relateSenderGitUserToGitPull(
+					gitUserEntity, gitPullRequestEntity),
+			gitUserEntity -> gitUserEntity.getGitPullRequestEntities(),
+			(gitUserEntity, gitPullRequestEntity) ->
+				gitUserEntity.removeGitPullRequestEntity(gitPullRequestEntity));
 	}
 
 	private GitBranchEntityRepository _gitBranchEntityRepository;
-	private GitPullEntityRepository _gitPullEntityRepository;
+	private GitPullRequestEntityRepository _gitPullRequestEntityRepository;
 
 	@Autowired
 	private GitUserEntityDALO _gitUserEntityDALO;
@@ -183,11 +188,11 @@ public class GitUserEntityRepository
 		_gitUserToGitBranchesEntityRelationshipDALO;
 
 	@Autowired
-	private ReceiverGitUserToGitPullsEntityRelationshipDALO
-		_receiverGitUserToGitPullsEntityRelationshipDALO;
+	private ReceiverGitUserToGitPullRequestsEntityRelationshipDALO
+		_receiverGitUserToGitPullRequestsEntityRelationshipDALO;
 
 	@Autowired
-	private SenderGitUserToGitPullsEntityRelationshipDALO
-		_senderGitUserToGitPullsEntityRelationshipDALO;
+	private SenderGitUserToGitPullRequestsEntityRelationshipDALO
+		_senderGitUserToGitPullRequestsEntityRelationshipDALO;
 
 }

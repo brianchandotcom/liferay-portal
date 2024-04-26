@@ -48,7 +48,23 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CartItemResource {
 
-	public Response deleteCartItem(Long cartItemId) throws Exception;
+	public void deleteCartItemByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public CartItem getCartItemByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public CartItem patchCartItemByExternalReferenceCode(
+			String externalReferenceCode, CartItem cartItem)
+		throws Exception;
+
+	public CartItem putCartItemByExternalReferenceCode(
+			String externalReferenceCode, CartItem cartItem)
+		throws Exception;
+
+	public void deleteCartItem(Long cartItemId) throws Exception;
 
 	public Response deleteCartItemBatch(String callbackURL, Object object)
 		throws Exception;

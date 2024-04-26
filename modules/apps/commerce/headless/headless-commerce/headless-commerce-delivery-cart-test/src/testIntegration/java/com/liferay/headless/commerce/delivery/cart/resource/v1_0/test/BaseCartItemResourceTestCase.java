@@ -194,6 +194,253 @@ public abstract class BaseCartItemResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteCartItemByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		CartItem cartItem =
+			testDeleteCartItemByExternalReferenceCode_addCartItem();
+
+		assertHttpResponseStatusCode(
+			204,
+			cartItemResource.deleteCartItemByExternalReferenceCodeHttpResponse(
+				cartItem.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			cartItemResource.getCartItemByExternalReferenceCodeHttpResponse(
+				cartItem.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			cartItemResource.getCartItemByExternalReferenceCodeHttpResponse(
+				cartItem.getExternalReferenceCode()));
+	}
+
+	protected CartItem testDeleteCartItemByExternalReferenceCode_addCartItem()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetCartItemByExternalReferenceCode() throws Exception {
+		CartItem postCartItem =
+			testGetCartItemByExternalReferenceCode_addCartItem();
+
+		CartItem getCartItem =
+			cartItemResource.getCartItemByExternalReferenceCode(
+				postCartItem.getExternalReferenceCode());
+
+		assertEquals(postCartItem, getCartItem);
+		assertValid(getCartItem);
+	}
+
+	protected CartItem testGetCartItemByExternalReferenceCode_addCartItem()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCartItemByExternalReferenceCode()
+		throws Exception {
+
+		CartItem cartItem =
+			testGraphQLGetCartItemByExternalReferenceCode_addCartItem();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				cartItem,
+				CartItemSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"cartItemByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												cartItem.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/cartItemByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Assert.assertTrue(
+			equals(
+				cartItem,
+				CartItemSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryCart_v1_0",
+								new GraphQLField(
+									"cartItemByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													cartItem.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryCart_v1_0",
+						"Object/cartItemByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetCartItemByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"cartItemByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryCart_v1_0",
+						new GraphQLField(
+							"cartItemByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected CartItem
+			testGraphQLGetCartItemByExternalReferenceCode_addCartItem()
+		throws Exception {
+
+		return testGraphQLCartItem_addCartItem();
+	}
+
+	@Test
+	public void testPatchCartItemByExternalReferenceCode() throws Exception {
+		CartItem postCartItem =
+			testPatchCartItemByExternalReferenceCode_addCartItem();
+
+		CartItem randomPatchCartItem = randomPatchCartItem();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		CartItem patchCartItem =
+			cartItemResource.patchCartItemByExternalReferenceCode(
+				postCartItem.getExternalReferenceCode(), randomPatchCartItem);
+
+		CartItem expectedPatchCartItem = postCartItem.clone();
+
+		BeanTestUtil.copyProperties(randomPatchCartItem, expectedPatchCartItem);
+
+		CartItem getCartItem =
+			cartItemResource.getCartItemByExternalReferenceCode(
+				patchCartItem.getExternalReferenceCode());
+
+		assertEquals(expectedPatchCartItem, getCartItem);
+		assertValid(getCartItem);
+	}
+
+	protected CartItem testPatchCartItemByExternalReferenceCode_addCartItem()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutCartItemByExternalReferenceCode() throws Exception {
+		CartItem postCartItem =
+			testPutCartItemByExternalReferenceCode_addCartItem();
+
+		CartItem randomCartItem = randomCartItem();
+
+		CartItem putCartItem =
+			cartItemResource.putCartItemByExternalReferenceCode(
+				postCartItem.getExternalReferenceCode(), randomCartItem);
+
+		assertEquals(randomCartItem, putCartItem);
+		assertValid(putCartItem);
+
+		CartItem getCartItem =
+			cartItemResource.getCartItemByExternalReferenceCode(
+				putCartItem.getExternalReferenceCode());
+
+		assertEquals(randomCartItem, getCartItem);
+		assertValid(getCartItem);
+
+		CartItem newCartItem =
+			testPutCartItemByExternalReferenceCode_createCartItem();
+
+		putCartItem = cartItemResource.putCartItemByExternalReferenceCode(
+			newCartItem.getExternalReferenceCode(), newCartItem);
+
+		assertEquals(newCartItem, putCartItem);
+		assertValid(putCartItem);
+
+		getCartItem = cartItemResource.getCartItemByExternalReferenceCode(
+			putCartItem.getExternalReferenceCode());
+
+		assertEquals(newCartItem, getCartItem);
+
+		Assert.assertEquals(
+			newCartItem.getExternalReferenceCode(),
+			putCartItem.getExternalReferenceCode());
+	}
+
+	protected CartItem testPutCartItemByExternalReferenceCode_createCartItem()
+		throws Exception {
+
+		return randomCartItem();
+	}
+
+	protected CartItem testPutCartItemByExternalReferenceCode_addCartItem()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteCartItem() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CartItem cartItem = testDeleteCartItem_addCartItem();

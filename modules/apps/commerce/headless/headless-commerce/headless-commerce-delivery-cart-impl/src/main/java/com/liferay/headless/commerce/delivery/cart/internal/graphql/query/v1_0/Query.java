@@ -235,6 +235,36 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCarts(accountExternalReferenceCode: ___, channelExternalReferenceCode: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves carts for specific account in the given channel."
+	)
+	public CartPage
+			channelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCarts(
+				@GraphQLName("accountExternalReferenceCode") String
+					accountExternalReferenceCode,
+				@GraphQLName("channelExternalReferenceCode") String
+					channelExternalReferenceCode,
+				@GraphQLName("search") String search,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_cartResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			cartResource -> new CartPage(
+				cartResource.
+					getChannelByExternalReferenceCodeChannelExternalReferenceCodeAccountByExternalReferenceCodeAccountExternalReferenceCodeCartsPage(
+						accountExternalReferenceCode,
+						channelExternalReferenceCode, search,
+						Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelCarts(accountId: ___, channelId: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
@@ -255,6 +285,26 @@ public class Query {
 				cartResource.getChannelCartsPage(
 					accountId, channelId, search,
 					Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartCommentByExternalReferenceCode(externalReferenceCode: ___){author, content, externalReferenceCode, id, orderId, restricted}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieve information of the given Cart Comment by external reference code."
+	)
+	public CartComment cartCommentByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_cartCommentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			cartCommentResource ->
+				cartCommentResource.getCartCommentByExternalReferenceCode(
+					externalReferenceCode));
 	}
 
 	/**
@@ -312,6 +362,26 @@ public class Query {
 			cartCommentResource -> new CartCommentPage(
 				cartCommentResource.getCartCommentsPage(
 					cartId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartItemByExternalReferenceCode(externalReferenceCode: ___){adaptiveMediaImageHTMLTag, cartItems, customFields, errorMessages, externalReferenceCode, id, name, options, parentCartItemId, price, productId, productURLs, quantity, replacedSku, replacedSkuId, settings, sku, skuId, skuUnitOfMeasure, subscription, thumbnail, valid}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieve information of the given Cart Item by external reference code."
+	)
+	public CartItem cartItemByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_cartItemResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			cartItemResource ->
+				cartItemResource.getCartItemByExternalReferenceCode(
+					externalReferenceCode));
 	}
 
 	/**
@@ -639,6 +709,29 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Cart.class)
+	public class GetCartCommentByExternalReferenceCodeTypeExtension {
+
+		public GetCartCommentByExternalReferenceCodeTypeExtension(Cart cart) {
+			_cart = cart;
+		}
+
+		@GraphQLField(
+			description = "Retrieve information of the given Cart Comment by external reference code."
+		)
+		public CartComment commentByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_cartCommentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				cartCommentResource ->
+					cartCommentResource.getCartCommentByExternalReferenceCode(
+						_cart.getExternalReferenceCode()));
+		}
+
+		private Cart _cart;
+
+	}
+
+	@GraphQLTypeExtension(Cart.class)
 	public class GetCartByExternalReferenceCodeBillingAddresTypeExtension {
 
 		public GetCartByExternalReferenceCodeBillingAddresTypeExtension(
@@ -680,6 +773,29 @@ public class Query {
 				cartCommentResource -> new CartCommentPage(
 					cartCommentResource.getCartCommentsPage(
 						_cart.getId(), Pagination.of(page, pageSize))));
+		}
+
+		private Cart _cart;
+
+	}
+
+	@GraphQLTypeExtension(Cart.class)
+	public class GetCartItemByExternalReferenceCodeTypeExtension {
+
+		public GetCartItemByExternalReferenceCodeTypeExtension(Cart cart) {
+			_cart = cart;
+		}
+
+		@GraphQLField(
+			description = "Retrieve information of the given Cart Item by external reference code."
+		)
+		public CartItem itemByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_cartItemResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				cartItemResource ->
+					cartItemResource.getCartItemByExternalReferenceCode(
+						_cart.getExternalReferenceCode()));
 		}
 
 		private Cart _cart;
@@ -772,11 +888,13 @@ public class Query {
 
 	}
 
-	@GraphQLTypeExtension(Address.class)
+	@GraphQLTypeExtension(CartComment.class)
 	public class GetCartByExternalReferenceCodeTypeExtension {
 
-		public GetCartByExternalReferenceCodeTypeExtension(Address address) {
-			_address = address;
+		public GetCartByExternalReferenceCodeTypeExtension(
+			CartComment cartComment) {
+
+			_cartComment = cartComment;
 		}
 
 		@GraphQLField(
@@ -787,10 +905,10 @@ public class Query {
 				_cartResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
 				cartResource -> cartResource.getCartByExternalReferenceCode(
-					_address.getExternalReferenceCode()));
+					_cartComment.getExternalReferenceCode()));
 		}
 
-		private Address _address;
+		private CartComment _cartComment;
 
 	}
 

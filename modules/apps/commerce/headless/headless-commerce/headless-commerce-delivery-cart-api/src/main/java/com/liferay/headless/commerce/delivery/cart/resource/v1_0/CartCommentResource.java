@@ -48,6 +48,22 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CartCommentResource {
 
+	public void deleteCartCommentByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public CartComment getCartCommentByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public CartComment patchCartCommentByExternalReferenceCode(
+			String externalReferenceCode, CartComment cartComment)
+		throws Exception;
+
+	public CartComment putCartCommentByExternalReferenceCode(
+			String externalReferenceCode, CartComment cartComment)
+		throws Exception;
+
 	public void deleteCartComment(Long cartCommentId) throws Exception;
 
 	public Response deleteCartCommentBatch(String callbackURL, Object object)

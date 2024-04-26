@@ -385,7 +385,12 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		String portletName = liferayPortletRequest.getPortletName();
 
 		if (portletName.equals(LoginPortletKeys.LOGIN)) {
-			portletURL.setWindowState(WindowState.MAXIMIZED);
+			if (layout.isTypeUtility()) {
+				portletURL.setWindowState(WindowState.NORMAL);
+			}
+			else {
+				portletURL.setWindowState(WindowState.MAXIMIZED);
+			}
 		}
 		else {
 			portletURL.setWindowState(actionRequest.getWindowState());

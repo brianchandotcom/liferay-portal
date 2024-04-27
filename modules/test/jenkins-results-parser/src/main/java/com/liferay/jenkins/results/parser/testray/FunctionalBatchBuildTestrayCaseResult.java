@@ -63,13 +63,7 @@ public class FunctionalBatchBuildTestrayCaseResult
 			}
 
 			if (result.equals("ABORTED")) {
-				StringBuilder sb = new StringBuilder();
-
-				sb.append(build.getJobName());
-
-				sb.append(" timed out after 2 hours");
-
-				return sb.toString();
+				return build.getJobName() + " timed out after 2 hours";
 			}
 
 			if (result.equals("SUCCESS") || result.equals("UNSTABLE")) {

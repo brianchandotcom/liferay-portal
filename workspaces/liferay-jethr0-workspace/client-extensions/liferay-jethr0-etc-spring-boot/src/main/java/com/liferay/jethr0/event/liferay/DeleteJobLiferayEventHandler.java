@@ -21,7 +21,10 @@ public class DeleteJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 	public String process() {
 		JobEntityRepository jobEntityRepository = getJobEntityRepository();
 
-		JobEntity jobEntity = jobEntityRepository.add(getJobJSONObject());
+		JSONObject jobJSONObject = getJobJSONObject();
+
+		JobEntity jobEntity = jobEntityRepository.getById(
+			jobJSONObject.getLong("id"));
 
 		if (jobEntity != null) {
 			JobQueue jobQueue = getJobQueue();

@@ -1245,7 +1245,7 @@
 		{
 			"externalReferenceCode": "GitPullRequest",
 			"label": {
-				"en_US": "Git Pull"
+				"en_US": "Git Pull Request"
 			},
 			"name": "GitPullRequest",
 			"objectFields": [
@@ -1264,7 +1264,7 @@
 				{
 					"deletionType": "disassociate",
 					"label": {
-						"en_US": "Git Pull to Jobs"
+						"en_US": "Git Pull Request to Jobs"
 					},
 					"name": "gitPullRequestToJobs",
 					"objectDefinitionExternalReferenceCode1": "GitPullRequest",
@@ -1274,7 +1274,7 @@
 			],
 			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
-				"en_US": "Git Pulls"
+				"en_US": "Git Pull Requests"
 			},
 			"portlet": true,
 			"scope": "company",
@@ -1328,7 +1328,7 @@
 				{
 					"deletionType": "cascade",
 					"label": {
-						"en_US": "Base Git Branch to Git Pulls"
+						"en_US": "Base Git Branch to Git Pull Requests"
 					},
 					"name": "baseGitBranchToGitPullRequests",
 					"objectDefinitionExternalReferenceCode1": "GitBranch",
@@ -1358,7 +1358,7 @@
 				{
 					"deletionType": "cascade",
 					"label": {
-						"en_US": "Head Git Branch to Git Pulls"
+						"en_US": "Head Git Branch to Git Pull Requests"
 					},
 					"name": "headGitBranchToGitPullRequests",
 					"objectDefinitionExternalReferenceCode1": "GitBranch",

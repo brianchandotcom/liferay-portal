@@ -13,6 +13,7 @@ import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.routine.dalo.RoutineEntityDALO;
 import com.liferay.jethr0.routine.dalo.RoutineToJobsEntityRelationshipDALO;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,6 +23,32 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RoutineEntityRepository
 	extends BaseEntityRepository<RoutineEntity> {
+
+	@Override
+	public RoutineEntity add(RoutineEntity routineEntity) {
+		long gitBranchEntityId = routineEntity.getGitBranchEntityId();
+
+		if (gitBranchEntityId > 0) {
+			routineEntity.setGitBranchEntity(
+				_gitBranchEntityRepository.getById(gitBranchEntityId));
+		}
+
+		return super.add(routineEntity);
+	}
+
+	@Override
+	public RoutineEntity create(JSONObject jsonObject) {
+		RoutineEntity routineEntity = super.create(jsonObject);
+
+		long gitBranchEntityId = routineEntity.getGitBranchEntityId();
+
+		if (gitBranchEntityId > 0) {
+			routineEntity.setGitBranchEntity(
+				_gitBranchEntityRepository.getById(gitBranchEntityId));
+		}
+
+		return routineEntity;
+	}
 
 	@Override
 	public RoutineEntityDALO getEntityDALO() {

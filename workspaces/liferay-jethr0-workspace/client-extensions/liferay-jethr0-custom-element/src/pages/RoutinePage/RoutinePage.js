@@ -175,14 +175,16 @@ function RoutineInformation({routine}) {
 							}
 						}
 
-						return (
-							<Jethr0InformationField
-								fieldLabel={parameter.label}
-								fieldType={parameter.type.name}
-								fieldValue={jobParameter.value}
-								key={jobParameter.key}
-							/>
-						);
+						if (parameter) {
+							return (
+								<Jethr0InformationField
+									fieldLabel={parameter.label}
+									fieldType={parameter.type.name}
+									fieldValue={jobParameter.value}
+									key={jobParameter.key}
+								/>
+							);
+						}
 					})}
 			</ClayPanel.Body>
 		</ClayPanel>

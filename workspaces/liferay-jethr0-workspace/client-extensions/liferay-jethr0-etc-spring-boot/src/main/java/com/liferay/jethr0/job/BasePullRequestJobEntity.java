@@ -36,7 +36,8 @@ public abstract class BasePullRequestJobEntity
 		JSONObject jsonObject = super.getJSONObject();
 
 		jsonObject.put(
-			"r_gitPullToJobs_c_gitPullId", getGitPullRequestEntityId());
+			"r_gitPullRequestToJobs_c_gitPullRequestId",
+			getGitPullRequestEntityId());
 
 		return jsonObject;
 	}
@@ -154,7 +155,7 @@ public abstract class BasePullRequestJobEntity
 		super.setJSONObject(jsonObject);
 
 		_gitPullRequestEntityId = jsonObject.optLong(
-			"r_gitPullToJobs_c_gitPullId");
+			"r_gitPullRequestToJobs_c_gitPullRequestId");
 	}
 
 	@Override

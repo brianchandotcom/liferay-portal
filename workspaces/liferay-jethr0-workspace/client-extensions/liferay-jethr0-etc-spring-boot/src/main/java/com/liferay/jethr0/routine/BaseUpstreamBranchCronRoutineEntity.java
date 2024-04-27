@@ -20,7 +20,7 @@ public abstract class BaseUpstreamBranchCronRoutineEntity
 		JSONObject jsonObject = super.getJSONObject();
 
 		jsonObject.put(
-			"r_previousGitCommitToJobs_c_gitCommitId",
+			"r_previousGitCommitToRoutines_c_gitCommitId",
 			getPreviousGitCommitEntityId());
 
 		return jsonObject;
@@ -41,7 +41,7 @@ public abstract class BaseUpstreamBranchCronRoutineEntity
 		super.setJSONObject(jsonObject);
 
 		_previousGitCommitEntityId = jsonObject.optLong(
-			"r_previousGitCommitToJobs_c_gitCommitId");
+			"r_previousGitCommitToRoutines_c_gitCommitId");
 	}
 
 	@Override

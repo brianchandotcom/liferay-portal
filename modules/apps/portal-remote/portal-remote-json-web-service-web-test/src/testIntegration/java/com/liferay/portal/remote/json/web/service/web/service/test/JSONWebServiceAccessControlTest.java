@@ -47,7 +47,7 @@ public class JSONWebServiceAccessControlTest {
 		BundleContext bundleContext = bundle.getBundleContext();
 
 		for (ServiceReference<?> serviceReference :
-				_getJSONWebServiceReferences(bundleContext)) {
+				_getServiceReferences(bundleContext)) {
 
 			Class<?> clazz = _getTargetClass(
 				bundleContext.getService(serviceReference));
@@ -56,19 +56,19 @@ public class JSONWebServiceAccessControlTest {
 				continue;
 			}
 
-			Assert.assertTrue(_isAccessControlled(clazz));
+			Assert.assertTrue(_hasAccessControlled(clazz));
 		}
 	}
 
 	@Test
-	public void testAopEnabled() throws InvalidSyntaxException {
+	public void testAopService() throws InvalidSyntaxException {
 		Bundle bundle = FrameworkUtil.getBundle(
 			JSONWebServiceAccessControlTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
 		for (ServiceReference<?> serviceReference :
-				_getJSONWebServiceReferences(bundleContext)) {
+				_getServiceReferences(bundleContext)) {
 
 			Object service = bundleContext.getService(serviceReference);
 
@@ -80,13 +80,13 @@ public class JSONWebServiceAccessControlTest {
 		}
 	}
 
-	private ServiceReference<?>[] _getJSONWebServiceReferences(
+	private ServiceReference<?>[] _getServiceReferences(
 			BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
 		return bundleContext.getServiceReferences(
 			(String)null,
-			"(&(json.web.service.context.path=*)(component.name=*))");
+			"(&(component.name=*)(json.web.service.context.path=*))");
 	}
 
 	private Class<?> _getTargetClass(Object service) {
@@ -120,7 +120,7 @@ public class JSONWebServiceAccessControlTest {
 		return service.getClass();
 	}
 
-	private boolean _isAccessControlled(Class<?> clazz) {
+	private boolean _hasAccessControlled(Class<?> clazz) {
 		while (clazz != null) {
 			if (clazz.isAnnotationPresent(AccessControlled.class)) {
 				return true;

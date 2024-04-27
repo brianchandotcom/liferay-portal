@@ -444,8 +444,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			springInitTask.get();
 		}
 
-		InitUtil.registerSpringInitialized();
-
 		ServletContextPool.put(_portalServletContextName, servletContext);
 
 		ApplicationContext applicationContext =

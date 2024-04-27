@@ -15,13 +15,7 @@ import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PortalLifecycle;
-import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.tools.DBUpgrader;
@@ -34,9 +28,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.Arrays;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Brian Wing Shun Chan
@@ -121,37 +112,6 @@ public class StartupAction extends SimpleAction {
 		StartupHelperUtil.verifyRequiredSchemaVersion();
 
 		DBUpgrader.checkReleaseState();
-
-		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
-
-		final ServiceRegistration<ModuleServiceLifecycle>
-			moduleServiceLifecycleServiceRegistration =
-				bundleContext.registerService(
-					ModuleServiceLifecycle.class,
-					new ModuleServiceLifecycle() {
-					},
-					HashMapDictionaryBuilder.<String, Object>put(
-						"module.service.lifecycle", "database.initialized"
-					).put(
-						"service.vendor", ReleaseInfo.getVendor()
-					).put(
-						"service.version", ReleaseInfo.getVersion()
-					).build());
-
-		PortalLifecycleUtil.register(
-			new BasePortalLifecycle() {
-
-				@Override
-				protected void doPortalDestroy() {
-					moduleServiceLifecycleServiceRegistration.unregister();
-				}
-
-				@Override
-				protected void doPortalInit() {
-				}
-
-			},
-			PortalLifecycle.METHOD_DESTROY);
 
 		// Check resource actions
 

@@ -25,7 +25,6 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 
 /**
@@ -40,7 +39,7 @@ public class JSONWebServiceAccessControlTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testAccessControlled() throws InvalidSyntaxException {
+	public void testAccessControlled() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
 			JSONWebServiceAccessControlTest.class);
 
@@ -61,7 +60,7 @@ public class JSONWebServiceAccessControlTest {
 	}
 
 	@Test
-	public void testAopService() throws InvalidSyntaxException {
+	public void testAopService() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
 			JSONWebServiceAccessControlTest.class);
 
@@ -82,7 +81,7 @@ public class JSONWebServiceAccessControlTest {
 
 	private ServiceReference<?>[] _getServiceReferences(
 			BundleContext bundleContext)
-		throws InvalidSyntaxException {
+		throws Exception {
 
 		return bundleContext.getServiceReferences(
 			(String)null,

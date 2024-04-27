@@ -454,6 +454,8 @@ definition {
 
 	@priority = 4
 	test AddWebContentWithCategorySpecificDefinition {
+		property osgi.module.configuration.file.names = "configuration.override.com.liferay.portal.security.script.management.configuration.ScriptManagementConfiguration.config";
+		property osgi.module.configurations = "allowScriptContentToBeExecutedOrIncluded=B\"true\"";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

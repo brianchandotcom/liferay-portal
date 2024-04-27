@@ -54,6 +54,12 @@
 		max-width: 9rem;
 	}
 
+	.label-previous-status{
+		background-color: var(--color-neutral-2, #E1E1E4);
+		color: var(--color-neutral-7, #6C6C76);
+		text-decoration: line-through;
+	}
+
 	.link-container {
 		background-color: var(--color-brand-primary-lighten-6, #FBFCFE);
 		border: 0.0625rem solid var(--color-brand-primary-lighten-5, #E7EFFF);
@@ -201,14 +207,8 @@
 		border-top: 0.0625rem solid var(--color-neutral-2, #E2E2E4);
 	}
 
-	.label-previous-status{
-		background-color: var(--color-neutral-2, #E1E1E4);
-		color: var(--color-neutral-7, #6C6C76);
-		text-decoration: line-through;
-	}
-
 	.tooltip-inner a:hover, a.hover {
-		color: var(--color-neutral-0 , #ffffff);
+		color: var(--color-neutral-0, #FFFFFF);
 		font-weight: var(--font-weight-bold, 700) !important;
 	}
 </style>
@@ -217,8 +217,11 @@
 	<#if entries?has_content>
 		<#list entries as searchEntry>
 			<#assign
-				searchEntryTitle=searchEntry.getTitle()!""
-				restArticle=restClient.get("/headless-delivery/v1.0/structured-contents/${searchEntry.getClassPK()}?fields=contentFields,relatedContents,taxonomyCategoryBriefs&nestedFields=embeddedTaxonomyCategory") />
+				searchEntryTitle = searchEntry.getTitle()!""
+
+				restArticle = restClient.get("/headless-delivery/v1.0/structured-contents/${searchEntry.getClassPK()}?fields=contentFields,relatedContents,taxonomyCategoryBriefs&nestedFields=embeddedTaxonomyCategory")
+			/>
+
 			<#if searchEntryTitle?has_content>
 				<div class="align-items-stretch search-results-entry">
 					<div
@@ -226,8 +229,8 @@
 						aria-expanded="false"
 						class="align-items-center btn btn-unstyled collapse-icon collapse-icon-middle collapsed d-flex font-weight-bold p-3 panel-header panel-header-link search-results-entry-title text-decoration-none unstyled"
 						data-target="#collapsePanelId-${searchEntry.getClassPK()}"
-						data-toggle="liferay-collapse">
-
+						data-toggle="liferay-collapse"
+					>
 						<span class="mr-5">
 							${searchEntryTitle}
 						</span>
@@ -235,9 +238,8 @@
 							<#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief>
 								<#assign taxonomyVocabularyName = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name />
 
-								<#if taxonomyVocabularyName=="Product Capabilities">
-									<span
-										class="font-weight-normal label label-secondary label-tonal-info m-0 px-2 text-paragraph-sm">
+								<#if taxonomyVocabularyName == "Product Capabilities">
+									<span class="font-weight-normal label label-secondary label-tonal-info m-0 px-2 text-paragraph-sm">
 										${taxonomyCategoryBrief.taxonomyCategoryName}
 									</span>
 								</#if>
@@ -254,8 +256,8 @@
 					<div class="collapse collapse-container panel-collapse pl-3 pr-3" id="collapsePanelId-${searchEntry.getClassPK()}">
 						<div class="description search-results-entry-content">
 							<#assign
-								urlTitle = ""
 								url = ""
+								urlTitle = ""
 							/>
 
 							<#list restArticle.contentFields as fieldData>
@@ -299,7 +301,7 @@
 							<#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief>
 								<#assign taxonomyVocabularyName = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name />
 
-								<#if taxonomyVocabularyName=="Release Status Previous">
+								<#if taxonomyVocabularyName == "Release Status Previous">
 									<span class="font-weight-normal label label-previous-status label-secondary label-tonal-secondary px-2 text-paragraph-sm">
 										${taxonomyCategoryBrief.taxonomyCategoryName}
 
@@ -325,8 +327,8 @@
 												<div class="arrow"></div>
 
 												<div class="tooltip-inner">
-													<a href="https://learn.liferay.com/en/w/dxp/system-administration/configuring-liferay/feature-flags#beta-features-and-feature-flags" target="_blank" >${languageUtil.get(locale,
-														"learn-about-the-feature-availability-statuses", "Learn about the feature availability statuses")}
+													<a href="https://learn.liferay.com/en/w/dxp/system-administration/configuring-liferay/feature-flags#beta-features-and-feature-flags" target="_blank">
+														${languageUtil.get(locale, "learn-about-the-feature-availability-statuses", "Learn about the feature availability statuses.")}
 													</a>
 												</div>
 											</div>
@@ -354,8 +356,8 @@
 					</div>
 				</div>
 
-				<h1 class="empty-message-title text-center">${languageUtil.get(locale,
-					"no-features-found-for-the-selected-product-capabilities-and-feature-availability", "No features found for the selected product capabilities and feature availability.")}
+				<h1 class="empty-message-title text-center">
+					${languageUtil.get(locale, "no-features-found-for-the-selected-product-capabilities-and-feature-availability", "No features found for the selected product capabilities and feature availability.")}
 				</h1>
 			</div>
 		</div>

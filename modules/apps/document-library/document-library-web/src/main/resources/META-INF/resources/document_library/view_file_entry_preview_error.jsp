@@ -55,7 +55,7 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 			<h3><liferay-ui:message key="no-preview-available" /></h3>
 
 			<p class="text-secondary">
-				<liferay-ui:message key="hmm-looks-like-this-item-doesnt-have-a-preview-we-can-show-you" />
+				<liferay-ui:message key="hmm-looks-like-this-item-does-not-have-a-preview-we-can-show-you" />
 			</p>
 		</div>
 	</c:otherwise>

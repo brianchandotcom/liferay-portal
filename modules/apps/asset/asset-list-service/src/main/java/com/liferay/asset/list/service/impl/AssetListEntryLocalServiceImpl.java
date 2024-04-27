@@ -370,7 +370,7 @@ public class AssetListEntryLocalServiceImpl
 	}
 
 	@Override
-	public AssetListEntry fetchTemplateEntry(
+	public AssetListEntry fetchAssetListEntry(
 		String externalReferenceCode, long groupId) {
 
 		return assetListEntryPersistence.fetchByERC_G(

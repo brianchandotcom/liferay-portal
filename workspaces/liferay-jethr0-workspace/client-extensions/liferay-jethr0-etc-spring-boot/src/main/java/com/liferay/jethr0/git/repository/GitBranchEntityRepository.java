@@ -49,9 +49,14 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class GitBranchEntityRepository
 	extends BaseEntityRepository<GitBranchEntity> {
 
+	public GitBranchEntity createGitBranchEntity(GitHubRef gitHubRef) {
+		return _createGitBranchEntity(gitHubRef, null);
+	}
+
 	public GitBranchEntity createUpstreamGitBranchEntity(URL gitHubRefURL) {
 		return _createGitBranchEntity(
-			gitHubRefURL, GitBranchEntity.Type.UPSTREAM);
+			_gitHubFactory.newGitHubRef(gitHubRefURL),
+			GitBranchEntity.Type.UPSTREAM);
 	}
 
 	public Set<GitBranchEntity> getAllByType(GitBranchEntity.Type... types) {
@@ -243,7 +248,9 @@ public class GitBranchEntityRepository
 	}
 
 	private GitBranchEntity _createGitBranchEntity(
-		URL gitHubRefURL, GitBranchEntity.Type type) {
+		GitHubRef gitHubRef, GitBranchEntity.Type type) {
+
+		URL gitHubRefURL = gitHubRef.getURL();
 
 		GitBranchEntity gitBranchEntity = getByURL(gitHubRefURL);
 
@@ -251,12 +258,14 @@ public class GitBranchEntityRepository
 			return gitBranchEntity;
 		}
 
-		GitHubRef gitHubRef = _gitHubFactory.newGitHubRef(gitHubRefURL);
-
 		GitUserEntity gitUserEntity =
 			_gitUserEntityRepository.createGitUserEntity(gitHubRef);
 
 		GitHubCommit gitHubCommit = gitHubRef.getGitHubCommit();
+
+		if (type == null) {
+			type = GitBranchEntity.Type.DEFAULT;
+		}
 
 		JSONObject jsonObject = new JSONObject();
 

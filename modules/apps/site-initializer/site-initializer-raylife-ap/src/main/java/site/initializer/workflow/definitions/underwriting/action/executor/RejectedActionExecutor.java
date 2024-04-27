@@ -16,14 +16,14 @@ import org.osgi.service.component.annotations.Component;
  * @author Feliphe Marinho
  */
 @Component(service = ActionExecutor.class)
-public class ReviewedActionExecutor extends BaseActionExecutor {
+public class RejectedActionExecutor extends BaseActionExecutor {
 
 	@Override
 	public void execute(
 			KaleoAction kaleoAction, ExecutionContext executionContext)
 		throws ActionExecutorException {
 
-		doExecute("reviewed", executionContext);
+		doExecute("rejected", executionContext);
 	}
 
 }

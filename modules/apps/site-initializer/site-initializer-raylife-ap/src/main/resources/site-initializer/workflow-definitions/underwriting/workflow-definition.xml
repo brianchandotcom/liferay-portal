@@ -123,37 +123,18 @@
 		<actions>
 			<action>
 				<name>Reviewed</name>
-				<description></description>
 				<script>
-					<![CDATA[
-						import com.liferay.object.model.ObjectEntry;
-						import com.liferay.object.service.ObjectEntryLocalServiceUtil;
-						import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-						import com.liferay.portal.kernel.util.GetterUtil;
-						import com.liferay.portal.kernel.workflow.WorkflowConstants;
-						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
-
-						import java.io.Serializable;
-
-						import java.util.Map;
-
-						long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-
-						ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(classPK);
-
-						Map<String, Serializable> values = objectEntry.getValues();
-
-						values.put("applicationStatus", "reviewed");
-
-						long userId = UserLocalServiceUtil.getUserIdByEmailAddress(serviceContext.getCompanyId(), "ryan.underwriter@mailinator.com");
-
-						ObjectEntryLocalServiceUtil.updateObjectEntry(userId, classPK, values, serviceContext);
-
-						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);
-					]]>
+					<![CDATA[site.initializer.workflow.definitions.underwriting.action.executor.ReviewedActionExecutor]]>
 				</script>
-				<script-language>groovy</script-language>
+				<script-language>java</script-language>
 				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+			<action>
+				<name>Approve Workflow Instance</name>
+				<description>Approve Workflow Instance</description>
+				<status>0</status>
+				<priority>2</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
 		</actions>

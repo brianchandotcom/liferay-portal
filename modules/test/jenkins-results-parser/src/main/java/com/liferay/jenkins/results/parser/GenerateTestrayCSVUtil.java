@@ -319,22 +319,17 @@ public class GenerateTestrayCSVUtil {
 				return _type;
 			}
 
-			Boolean didNotRun = false;
-
 			for (String didNotRunErrorMessage : _didNotRunErrorMessages) {
 				Pattern pattern = Pattern.compile(didNotRunErrorMessage);
 
 				Matcher matcher = pattern.matcher(getErrorMessage());
 
 				if (matcher.find()) {
-					didNotRun = true;
+					_type = Type.DID_NOT_RUN;
 				}
 			}
 
-			if (didNotRun) {
-				_type = Type.DID_NOT_RUN;
-			}
-			else {
+			if (_type == null) {
 				for (TestrayCaseResult historyTestrayCaseResult :
 						getTestrayCaseResultHistory()) {
 

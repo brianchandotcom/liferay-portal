@@ -98,7 +98,7 @@ export default function RepeatableOptionsSelector({
 
 						<span className="text-3">
 							{Liferay.Language.get(
-								'the-field-to-be-mapped-will-be-empty-if-the-selected-iteration-number-doesnt-exist'
+								'the-field-to-be-mapped-will-be-empty-if-the-selected-iteration-number-does-not-exist'
 							)}
 						</span>
 					</p>

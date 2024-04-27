@@ -2,3 +2,11 @@ ext.extraRemoteAppName = "com.liferay.site.initializer.raylife.ap.extra.remote.a
 ext.extraRemoteAppVersion = "20230810.1545"
 
 apply from: rootProject.file("build-site-initializer.gradle")
+
+dependencies {
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly project(":apps:object:object-api")
+	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-api")
+	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-runtime-api")
+}

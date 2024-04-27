@@ -8,7 +8,6 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
@@ -17,7 +16,6 @@ import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,7 +49,7 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 			sourceProcessor.getSourceFormatterArgs();
 
 		for (String currentBranchRenamedFileName :
-				_getCurrentBranchRenamedFileNames(sourceFormatterArgs)) {
+				sourceFormatterArgs.getCurrentBranchRenamedFileNames()) {
 
 			if (absolutePath.endsWith(currentBranchRenamedFileName)) {
 				return content;
@@ -59,7 +57,7 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 		}
 
 		for (String currentBranchAddedFileNames :
-				_getCurrentBranchAddedFileName(sourceFormatterArgs)) {
+				sourceFormatterArgs.getCurrentBranchAddedFileNames()) {
 
 			if (absolutePath.endsWith(currentBranchAddedFileNames)) {
 				_checkMissingTestFile(
@@ -112,37 +110,6 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 		}
 	}
 
-	private synchronized List<String> _getCurrentBranchAddedFileName(
-			SourceFormatterArgs sourceFormatterArgs)
-		throws Exception {
-
-		if (_currentBranchAddedFileNames != null) {
-			return _currentBranchAddedFileNames;
-		}
-
-		_currentBranchAddedFileNames = GitUtil.getCurrentBranchAddedFileNames(
-			sourceFormatterArgs.getBaseDirName(),
-			sourceFormatterArgs.getGitWorkingBranchName());
-
-		return _currentBranchAddedFileNames;
-	}
-
-	private synchronized List<String> _getCurrentBranchRenamedFileNames(
-			SourceFormatterArgs sourceFormatterArgs)
-		throws Exception {
-
-		if (_currentBranchRenamedFileNames != null) {
-			return _currentBranchRenamedFileNames;
-		}
-
-		_currentBranchRenamedFileNames =
-			GitUtil.getCurrentBranchRenamedFileNames(
-				sourceFormatterArgs.getBaseDirName(),
-				sourceFormatterArgs.getGitWorkingBranchName());
-
-		return _currentBranchRenamedFileNames;
-	}
-
 	private boolean _isUpgradeProcess(String absolutePath, String content) {
 		Pattern pattern = Pattern.compile(
 			" class " + JavaSourceUtil.getClassName(absolutePath) +
@@ -188,8 +155,5 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 
 		return _isUpgradeProcess(file.getAbsolutePath(), FileUtil.read(file));
 	}
-
-	private List<String> _currentBranchAddedFileNames;
-	private List<String> _currentBranchRenamedFileNames;
 
 }

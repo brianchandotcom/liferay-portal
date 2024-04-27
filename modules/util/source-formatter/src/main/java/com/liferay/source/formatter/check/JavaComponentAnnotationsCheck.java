@@ -15,6 +15,7 @@ import com.liferay.portal.tools.GitUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.SourceFormatterArgs;
+import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -29,6 +30,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -171,7 +173,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		}
 
 		for (String currentBranchRenamedFileName :
-				_getCurrentBranchRenamedFileNames(sourceFormatterArgs)) {
+				sourceFormatterArgs.getCurrentBranchRenamedFileNames()) {
 
 			if (absolutePath.endsWith(currentBranchRenamedFileName)) {
 				return;
@@ -294,7 +296,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 		File javaFile = JavaSourceUtil.getJavaFile(
 			fullyQualifiedName, _getRootDirName(absolutePath),
-			getBundleSymbolicNamesMap(absolutePath));
+			_getBundleSymbolicNamesMap(absolutePath));
 
 		if (javaFile == null) {
 			return;
@@ -512,7 +514,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 			File javaFile = JavaSourceUtil.getJavaFile(
 				configurationClass, _getRootDirName(absolutePath),
-				getBundleSymbolicNamesMap(absolutePath));
+				_getBundleSymbolicNamesMap(absolutePath));
 
 			if (javaFile == null) {
 				String message = StringBundler.concat(
@@ -751,20 +753,15 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		return annotation;
 	}
 
-	private synchronized List<String> _getCurrentBranchRenamedFileNames(
-			SourceFormatterArgs sourceFormatterArgs)
-		throws Exception {
+	private synchronized Map<String, String> _getBundleSymbolicNamesMap(
+		String absolutePath) {
 
-		if (_currentBranchRenamedFileNames != null) {
-			return _currentBranchRenamedFileNames;
+		if (_bundleSymbolicNamesMap == null) {
+			_bundleSymbolicNamesMap = BNDSourceUtil.getBundleSymbolicNamesMap(
+				_getRootDirName(absolutePath));
 		}
 
-		_currentBranchRenamedFileNames =
-			GitUtil.getCurrentBranchRenamedFileNames(
-				sourceFormatterArgs.getBaseDirName(),
-				sourceFormatterArgs.getGitWorkingBranchName());
-
-		return _currentBranchRenamedFileNames;
+		return _bundleSymbolicNamesMap;
 	}
 
 	private String _getExpectedServiceAttributeValue(
@@ -962,8 +959,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		Pattern.compile("\\s(\\w+) = \\{");
 	private static final Pattern _attributePattern = Pattern.compile(
 		"\\W(\\w+)\\s*=");
-	private static List<String> _currentBranchRenamedFileNames;
 
+	private Map<String, String> _bundleSymbolicNamesMap;
 	private String _rootDirName;
 
 	private class AnnotationParameterPropertyComparator

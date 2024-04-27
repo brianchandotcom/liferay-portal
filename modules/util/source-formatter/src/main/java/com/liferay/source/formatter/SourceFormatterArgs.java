@@ -92,6 +92,14 @@ public class SourceFormatterArgs {
 		return _commitCount;
 	}
 
+	public List<String> getCurrentBranchAddedFileNames() {
+		return _currentBranchAddedFileNames;
+	}
+
+	public List<String> getCurrentBranchRenamedFileNames() {
+		return _currentBranchRenamedFileNames;
+	}
+
 	public List<String> getFileExtensions() {
 		return _fileExtensions;
 	}
@@ -220,6 +228,18 @@ public class SourceFormatterArgs {
 		_commitCount = commitCount;
 	}
 
+	public void setCurrentBranchAddedFileNames(
+		List<String> currentBranchAddedFileNames) {
+
+		_currentBranchAddedFileNames = currentBranchAddedFileNames;
+	}
+
+	public void setCurrentBranchRenamedFileNames(
+		List<String> currentBranchRenamedFileNames) {
+
+		_currentBranchRenamedFileNames = currentBranchRenamedFileNames;
+	}
+
 	public void setFailOnAutoFix(boolean failOnAutoFix) {
 		_failOnAutoFix = failOnAutoFix;
 	}
@@ -321,6 +341,8 @@ public class SourceFormatterArgs {
 	private List<String> _checkNames = new ArrayList<>();
 	private boolean _checkVulnerabilities = CHECK_VULNERABILITIES;
 	private int _commitCount = COMMIT_COUNT;
+	private List<String> _currentBranchAddedFileNames = new ArrayList<>();
+	private List<String> _currentBranchRenamedFileNames = new ArrayList<>();
 	private boolean _failOnAutoFix = FAIL_ON_AUTO_FIX;
 	private boolean _failOnHasWarning = FAIL_ON_HAS_WARNING;
 	private List<String> _fileExtensions = new ArrayList<>();

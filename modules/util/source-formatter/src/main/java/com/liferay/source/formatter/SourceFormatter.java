@@ -191,6 +191,16 @@ public class SourceFormatter {
 					baseDirName);
 			}
 
+			sourceFormatterArgs.setCurrentBranchAddedFileNames(
+				GitUtil.getCurrentBranchAddedFileNames(
+					sourceFormatterArgs.getBaseDirName(),
+					sourceFormatterArgs.getGitWorkingBranchName()));
+
+			sourceFormatterArgs.setCurrentBranchRenamedFileNames(
+				GitUtil.getCurrentBranchRenamedFileNames(
+					sourceFormatterArgs.getBaseDirName(),
+					sourceFormatterArgs.getGitWorkingBranchName()));
+
 			String[] fileNames = StringUtil.split(
 				ArgumentsUtil.getString(
 					arguments, "source.files", StringPool.BLANK),

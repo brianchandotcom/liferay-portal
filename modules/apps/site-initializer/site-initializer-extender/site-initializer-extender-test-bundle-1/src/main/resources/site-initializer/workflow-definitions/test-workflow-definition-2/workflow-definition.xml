@@ -46,10 +46,7 @@
 			<action>
 				<name>Approve</name>
 				<description>Approve</description>
-				<script>
-					<![CDATA[com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(com.liferay.portal.kernel.workflow.WorkflowConstants.getLabelStatus("approved"), workflowContext);]]>
-				</script>
-				<script-language>groovy</script-language>
+				<status>0</status>
 				<execution-type>onEntry</execution-type>
 			</action>
 		</actions>

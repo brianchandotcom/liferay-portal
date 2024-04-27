@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 
 <suppressions>
-	<checkstyle>
-		<suppress checks="JSONNamingCheck" files="object-rest-test/src/testIntegration/java/com/liferay/object/rest/internal/resource/v1_0/test/ObjectEntryResourceTest\.java" />
-	</checkstyle>
 	<source-check>
 		<suppress checks="JavaAPISignatureCheck" files="object-api/src/main/java/com/liferay/object/scope/ObjectScopeProvider\.java" />
 	</source-check>

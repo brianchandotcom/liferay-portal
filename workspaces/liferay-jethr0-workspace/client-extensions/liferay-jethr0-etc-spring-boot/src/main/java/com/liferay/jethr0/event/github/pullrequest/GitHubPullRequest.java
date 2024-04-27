@@ -10,6 +10,7 @@ import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.commit.GitHubCommit;
 import com.liferay.jethr0.event.github.file.GitHubFile;
+import com.liferay.jethr0.event.github.ref.GitHubRef;
 import com.liferay.jethr0.event.github.repository.GitHubRepository;
 import com.liferay.jethr0.event.github.status.GitHubStatus;
 import com.liferay.jethr0.event.github.user.GitHubUser;
@@ -42,15 +43,33 @@ public class GitHubPullRequest {
 
 		_baseBranchName = baseJSONObject.getString("ref");
 		_baseGitHubCommit = _gitHubFactory.newGitHubCommit(baseJSONObject);
+
 		_baseGitHubRepository = _gitHubFactory.newGitHubRepository(
 			baseJSONObject.getJSONObject("repo"));
+
+		URL baseGitHubRefURL = StringUtil.toURL(
+			StringUtil.combine(
+				_baseGitHubRepository.getHTMLURL(), "/tree/",
+				baseJSONObject.getString("ref")));
+
+		_baseGitHubRef = _gitHubFactory.newGitHubRef(
+			baseGitHubRefURL, _baseGitHubCommit, baseJSONObject);
 
 		JSONObject headJSONObject = jsonObject.getJSONObject("head");
 
 		_headBranchName = headJSONObject.getString("ref");
 		_headGitHubCommit = _gitHubFactory.newGitHubCommit(headJSONObject);
+
 		_headGitHubRepository = _gitHubFactory.newGitHubRepository(
 			headJSONObject.getJSONObject("repo"));
+
+		URL headGitHubRefURL = StringUtil.toURL(
+			StringUtil.combine(
+				_headGitHubRepository.getHTMLURL(), "/tree/",
+				headJSONObject.getString("ref")));
+
+		_headGitHubRef = _gitHubFactory.newGitHubRef(
+			headGitHubRefURL, _headGitHubCommit, baseJSONObject);
 
 		_originGitHubUser = _gitHubFactory.newGitHubUser(
 			headJSONObject.getJSONObject("user"));
@@ -95,6 +114,10 @@ public class GitHubPullRequest {
 
 	public String getBaseBranchSHA() {
 		return _baseGitHubCommit.getSHA();
+	}
+
+	public GitHubRef getBaseGitHubRef() {
+		return _baseGitHubRef;
 	}
 
 	public String getBaseRepositoryName() {
@@ -265,6 +288,10 @@ public class GitHubPullRequest {
 				getHeadBranchName()));
 	}
 
+	public GitHubRef getHeadGitHubRef() {
+		return _headGitHubRef;
+	}
+
 	public URL getHTMLURL() {
 		return StringUtil.toURL(_jsonObject.getString("html_url"));
 	}
@@ -372,6 +399,7 @@ public class GitHubPullRequest {
 
 	private final String _baseBranchName;
 	private final GitHubCommit _baseGitHubCommit;
+	private final GitHubRef _baseGitHubRef;
 	private final GitHubRepository _baseGitHubRepository;
 	private List<GitHubCommit> _gitHubCommits;
 	private final GitHubFactory _gitHubFactory;
@@ -379,6 +407,7 @@ public class GitHubPullRequest {
 	private Set<GitHubStatus> _gitHubStatuses;
 	private final String _headBranchName;
 	private final GitHubCommit _headGitHubCommit;
+	private final GitHubRef _headGitHubRef;
 	private final GitHubRepository _headGitHubRepository;
 	private final JSONObject _jsonObject;
 	private final GitHubUser _originGitHubUser;

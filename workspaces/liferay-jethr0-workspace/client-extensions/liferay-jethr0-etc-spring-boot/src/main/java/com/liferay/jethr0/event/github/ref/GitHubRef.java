@@ -52,6 +52,16 @@ public class GitHubRef {
 	}
 
 	public GitHubRef(
+		GitHubFactory gitHubFactory, GitHubCommit gitHubCommit,
+		URL gitHubRefURL, JSONObject jsonObject) {
+
+		_gitHubFactory = gitHubFactory;
+		_gitHubCommit = gitHubCommit;
+		_gitHubRefURL = gitHubRefURL;
+		_jsonObject = jsonObject;
+	}
+
+	public GitHubRef(
 		GitHubFactory gitHubFactory, URL gitHubRefURL, JSONObject jsonObject) {
 
 		_gitHubFactory = gitHubFactory;
@@ -71,7 +81,11 @@ public class GitHubRef {
 	}
 
 	public String getRefName() {
-		return _jsonObject.getString("name");
+		if (_jsonObject.has("name")) {
+			return _jsonObject.getString("name");
+		}
+
+		return _jsonObject.getString("ref");
 	}
 
 	public String getRepositoryName() {

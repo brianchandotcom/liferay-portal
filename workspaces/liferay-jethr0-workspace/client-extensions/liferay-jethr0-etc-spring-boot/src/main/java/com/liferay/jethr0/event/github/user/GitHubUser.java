@@ -59,12 +59,20 @@ public class GitHubUser {
 		return _gitHubOrganizations;
 	}
 
+	public URL getHTMLURL() {
+		return StringUtil.toURL(_jsonObject.getString("html_url"));
+	}
+
 	public String getName() {
 		return _jsonObject.getString("login");
 	}
 
 	public URL getOrganizationsURL() {
 		return StringUtil.toURL(_jsonObject.getString("organizations_url"));
+	}
+
+	public URL getURL() {
+		return StringUtil.toURL(_jsonObject.getString("url"));
 	}
 
 	public boolean isLiferayUser() {

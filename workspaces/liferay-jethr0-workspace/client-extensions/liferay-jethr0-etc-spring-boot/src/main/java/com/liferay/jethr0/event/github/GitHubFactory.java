@@ -73,6 +73,12 @@ public class GitHubFactory {
 		return new GitHubRef(this, gitHubRefURL, requestJSONObject);
 	}
 
+	public GitHubRef newGitHubRef(
+		URL gitHubRefURL, GitHubCommit gitHubCommit, JSONObject jsonObject) {
+
+		return new GitHubRef(this, gitHubCommit, gitHubRefURL, jsonObject);
+	}
+
 	public GitHubRepository newGitHubRepository(JSONObject jsonObject) {
 		return new GitHubRepository(this, jsonObject);
 	}

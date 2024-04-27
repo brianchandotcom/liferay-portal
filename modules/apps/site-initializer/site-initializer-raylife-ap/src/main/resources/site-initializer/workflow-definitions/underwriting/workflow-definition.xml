@@ -25,32 +25,9 @@
 			</label>
 		</labels>
 		<script>
-			<![CDATA[
-				import com.liferay.object.model.ObjectEntry;
-				import com.liferay.object.service.ObjectEntryLocalServiceUtil;
-				import com.liferay.portal.kernel.util.GetterUtil;
-				import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-				import java.io.Serializable;
-
-				import java.util.Map;
-
-				long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-
-				ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(classPK);
-
-				Map<String, Serializable> values = objectEntry.getValues();
-
-				String status = values.get("applicationStatus").toString();
-
-				if (status.equals("underwriting")) {
-					returnValue = "yes";
-				} else {
-					returnValue = "no";
-				}
-			]]>
+			<![CDATA[site.initializer.workflow.definitions.underwriting.condition.evaluator.ApplicationStatusConditionEvaluator]]>
 		</script>
-		<script-language>groovy</script-language>
+		<script-language>java</script-language>
 		<transitions>
 			<transition>
 				<labels>

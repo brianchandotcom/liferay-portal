@@ -8,16 +8,24 @@ package com.liferay.jethr0.job.repository;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
+import com.liferay.jethr0.git.commit.GitCommitEntity;
+import com.liferay.jethr0.git.pullrequest.GitPullRequestEntity;
+import com.liferay.jethr0.git.repository.GitPullRequestEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.PullRequestJobEntity;
 import com.liferay.jethr0.job.dalo.JobEntityDALO;
 import com.liferay.jethr0.job.dalo.JobToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.routine.RoutineEntity;
+import com.liferay.jethr0.routine.UpstreamBranchCronRoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 
+import java.net.URL;
+
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -42,11 +50,54 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 
 	@Override
-	public JobEntity create(JSONObject jsonObject) {
-		Object parameters = jsonObject.opt("parameters");
+	public JobEntity add(JSONObject jsonObject) {
+		JobEntity jobEntity = super.add(jsonObject);
 
-		if (parameters != null) {
-			jsonObject.put("parameters", String.valueOf(parameters));
+		if (!(jobEntity instanceof PullRequestJobEntity)) {
+			return jobEntity;
+		}
+
+		PullRequestJobEntity pullRequestJobEntity =
+			(PullRequestJobEntity)jobEntity;
+
+		Object parametersObject = jsonObject.opt("parameters");
+
+		if (parametersObject != null) {
+			jsonObject.put("parameters", String.valueOf(parametersObject));
+
+			GitPullRequestEntity gitPullRequestEntity =
+				_createGitPullRequestEntity(parametersObject);
+
+			if (gitPullRequestEntity != null) {
+				jsonObject.put(
+					"r_gitPullRequestToJobs_c_gitPullRequestId",
+					gitPullRequestEntity.getId());
+
+				pullRequestJobEntity.setGitPullRequestEntity(
+					gitPullRequestEntity);
+
+				update(pullRequestJobEntity);
+			}
+		}
+
+		return pullRequestJobEntity;
+	}
+
+	@Override
+	public JobEntity create(JSONObject jsonObject) {
+		Object parametersObject = jsonObject.opt("parameters");
+
+		if (parametersObject != null) {
+			jsonObject.put("parameters", String.valueOf(parametersObject));
+
+			GitPullRequestEntity gitPullRequestEntity =
+				_createGitPullRequestEntity(parametersObject);
+
+			if (gitPullRequestEntity != null) {
+				jsonObject.put(
+					"r_gitPullRequestToJobs_c_gitPullRequestId",
+					gitPullRequestEntity.getId());
+			}
 		}
 
 		return super.create(jsonObject);
@@ -79,11 +130,34 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 			jsonObject.put("parameters", parametersJSONArray.toString());
 		}
 
+		GitPullRequestEntity gitPullRequestEntity = _createGitPullRequestEntity(
+			parameters);
+
+		if (gitPullRequestEntity != null) {
+			jsonObject.put(
+				"r_gitPullRequestToJobs_c_gitPullRequestId",
+				gitPullRequestEntity.getId());
+		}
+
 		jsonObject.put("priority", priority);
 
 		if (routineEntity != null) {
 			jsonObject.put(
 				"r_routineToJobs_c_routineId", routineEntity.getId());
+
+			if (routineEntity instanceof UpstreamBranchCronRoutineEntity) {
+				UpstreamBranchCronRoutineEntity
+					upstreamBranchCronRoutineEntity =
+						(UpstreamBranchCronRoutineEntity)routineEntity;
+
+				GitCommitEntity previousGitCommitEntity =
+					upstreamBranchCronRoutineEntity.
+						getPreviousGitCommitEntity();
+
+				jsonObject.put(
+					"r_gitCommitToJobs_c_gitCommitId",
+					previousGitCommitEntity.getId());
+			}
 		}
 
 		if (startDate != null) {
@@ -204,6 +278,12 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 		_buildEntityRepository = buildEntityRepository;
 	}
 
+	public void setGitPullRequestEntityRepository(
+		GitPullRequestEntityRepository gitPullRequestEntityRepository) {
+
+		_gitPullRequestEntityRepository = gitPullRequestEntityRepository;
+	}
+
 	public void setJobQueue(JobQueue jobQueue) {
 		_jobQueue = jobQueue;
 	}
@@ -233,8 +313,66 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 		return jobEntity;
 	}
 
+	private GitPullRequestEntity _createGitPullRequestEntity(
+		Map<String, String> parameters) {
+
+		URL pullRequestURL = _getParameterValue(parameters, "pullRequestURL");
+
+		if (pullRequestURL == null) {
+			return null;
+		}
+
+		return _gitPullRequestEntityRepository.create(pullRequestURL);
+	}
+
+	private GitPullRequestEntity _createGitPullRequestEntity(
+		Object parametersObject) {
+
+		return _createGitPullRequestEntity(_getParameters(parametersObject));
+	}
+
 	private long _getJobArchiveAge() {
 		return Long.valueOf(_jobArchiveAgeInDays) * 1000 * 60 * 60 * 24;
+	}
+
+	private Map<String, String> _getParameters(Object parametersObject) {
+		Map<String, String> parameters = new HashMap<>();
+
+		if (parametersObject == null) {
+			return parameters;
+		}
+
+		JSONArray parametersJSONArray = new JSONArray(
+			String.valueOf(parametersObject));
+
+		for (int i = 0; i < parametersJSONArray.length(); i++) {
+			JSONObject parameterJSONObject = parametersJSONArray.getJSONObject(
+				i);
+
+			parameters.put(
+				parameterJSONObject.getString("key"),
+				parameterJSONObject.getString("value"));
+		}
+
+		return parameters;
+	}
+
+	private URL _getParameterValue(
+		Map<String, String> parameters, String parameterKey) {
+
+		if (parameters == null) {
+			return null;
+		}
+
+		for (Map.Entry<String, String> parameter : parameters.entrySet()) {
+			String key = parameter.getKey();
+
+			if (key.equals(parameterKey)) {
+				return StringUtil.toURL(parameter.getValue());
+			}
+		}
+
+		return null;
 	}
 
 	private JobEntity _updateJobToBuildsRelationshipsFromDALO(
@@ -254,6 +392,7 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 		JobEntityRepository.class);
 
 	private BuildEntityRepository _buildEntityRepository;
+	private GitPullRequestEntityRepository _gitPullRequestEntityRepository;
 
 	@Value("${JETHR0_JOB_ARCHIVE_AGE_IN_DAYS:7}")
 	private String _jobArchiveAgeInDays;

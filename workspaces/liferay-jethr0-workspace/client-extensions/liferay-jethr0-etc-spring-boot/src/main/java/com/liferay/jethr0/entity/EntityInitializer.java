@@ -78,6 +78,8 @@ public class EntityInitializer {
 			_jobPrioritizerEntityRepository);
 
 		_jobEntityRepository.setBuildEntityRepository(_buildEntityRepository);
+		_jobEntityRepository.setGitPullRequestEntityRepository(
+			_gitPullRequestEntityRepository);
 		_jobEntityRepository.setJobQueue(_jobQueue);
 		_jobEntityRepository.setRoutineEntityRepository(
 			_routineEntityRepository);

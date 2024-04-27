@@ -72,7 +72,6 @@ public class JournalArticleImportDDMFormFieldValueTransformer
 
 			long originalArticlePrimaryKey = jsonObject.getLong(
 				"articlePrimaryKey");
-			long originalClassPK = jsonObject.getLong("classPK");
 
 			long articlePrimaryKey = GetterUtil.getLong(
 				_portletDataContext.getNewPrimaryKey(
@@ -84,6 +83,8 @@ public class JournalArticleImportDDMFormFieldValueTransformer
 					_journalArticleLocalService.fetchJournalArticle(
 						articlePrimaryKey);
 			}
+
+			long originalClassPK = jsonObject.getLong("classPK");
 
 			if ((journalArticle == null) && (originalClassPK != 0)) {
 				Map<Long, Long> primaryKeys =

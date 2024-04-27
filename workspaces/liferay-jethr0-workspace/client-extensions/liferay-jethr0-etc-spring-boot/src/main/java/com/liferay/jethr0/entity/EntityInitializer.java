@@ -51,6 +51,10 @@ public class EntityInitializer {
 		_gitCommitEntityRepository.setRoutineEntityRepository(
 			_routineEntityRepository);
 
+		_gitPullRequestEntityRepository.setGitBranchEntityRepository(
+			_gitBranchEntityRepository);
+		_gitPullRequestEntityRepository.setGitUserEntityRepository(
+			_gitUserEntityRepository);
 		_gitPullRequestEntityRepository.setJobEntityRepository(
 			_jobEntityRepository);
 

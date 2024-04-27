@@ -323,6 +323,14 @@ public class AssetListEntryLocalServiceWrapper
 	}
 
 	@Override
+	public AssetListEntry fetchAssetListEntry(
+		String externalReferenceCode, long groupId) {
+
+		return _assetListEntryLocalService.fetchAssetListEntry(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public AssetListEntry fetchAssetListEntryByExternalReferenceCode(
 		String externalReferenceCode, long groupId) {
 
@@ -344,14 +352,6 @@ public class AssetListEntryLocalServiceWrapper
 
 		return _assetListEntryLocalService.fetchAssetListEntryByUuidAndGroupId(
 			uuid, groupId);
-	}
-
-	@Override
-	public AssetListEntry fetchTemplateEntry(
-		String externalReferenceCode, long groupId) {
-
-		return _assetListEntryLocalService.fetchTemplateEntry(
-			externalReferenceCode, groupId);
 	}
 
 	@Override
@@ -560,18 +560,6 @@ public class AssetListEntryLocalServiceWrapper
 
 		return _assetListEntryLocalService.updateAssetListEntry(
 			assetListEntryId, title);
-	}
-
-	@Override
-	public AssetListEntry updateAssetListEntry(
-			String externalReferenceCode, long groupId, long segmentsEntryId,
-			String title, String typeSettings,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _assetListEntryLocalService.updateAssetListEntry(
-			externalReferenceCode, groupId, segmentsEntryId, title,
-			typeSettings, serviceContext);
 	}
 
 	@Override

@@ -291,6 +291,12 @@ public class AssetListEntryLocalServiceUtil {
 		return getService().fetchAssetListEntry(assetListEntryId);
 	}
 
+	public static AssetListEntry fetchAssetListEntry(
+		String externalReferenceCode, long groupId) {
+
+		return getService().fetchAssetListEntry(externalReferenceCode, groupId);
+	}
+
 	public static AssetListEntry fetchAssetListEntryByExternalReferenceCode(
 		String externalReferenceCode, long groupId) {
 
@@ -309,12 +315,6 @@ public class AssetListEntryLocalServiceUtil {
 		String uuid, long groupId) {
 
 		return getService().fetchAssetListEntryByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static AssetListEntry fetchTemplateEntry(
-		String externalReferenceCode, long groupId) {
-
-		return getService().fetchTemplateEntry(externalReferenceCode, groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -498,17 +498,6 @@ public class AssetListEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().updateAssetListEntry(assetListEntryId, title);
-	}
-
-	public static AssetListEntry updateAssetListEntry(
-			String externalReferenceCode, long groupId, long segmentsEntryId,
-			String title, String typeSettings,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().updateAssetListEntry(
-			externalReferenceCode, groupId, segmentsEntryId, title,
-			typeSettings, serviceContext);
 	}
 
 	public static void updateAssetListEntryTypeSettings(

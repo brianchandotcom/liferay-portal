@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.ResourceActionsException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogContextRegistryUtil;
+import com.liferay.portal.kernel.log.LogContext;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.patcher.PatcherValues;
@@ -47,6 +47,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Brian Wing Shun Chan
@@ -119,8 +120,11 @@ public class StartupHelperUtil {
 
 		if (upgrading) {
 			if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
-				LogContextRegistryUtil.registerLogContext(
-					UpgradeLogContext.getInstance());
+				BundleContext bundleContext =
+					SystemBundleUtil.getBundleContext();
+
+				_serviceRegistration = bundleContext.registerService(
+					LogContext.class, UpgradeLogContext.getInstance(), null);
 			}
 
 			DBUpgrader.startUpgradeLogAppender();
@@ -128,8 +132,13 @@ public class StartupHelperUtil {
 		else {
 			DBUpgrader.stopUpgradeLogAppender();
 
-			LogContextRegistryUtil.unregisterLogContext(
-				UpgradeLogContext.getInstance());
+			ServiceRegistration<?> serviceRegistration = _serviceRegistration;
+
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
+
+				_serviceRegistration = null;
+			}
 		}
 	}
 
@@ -247,6 +256,7 @@ public class StartupHelperUtil {
 	private static volatile boolean _dbNew;
 	private static final DCLSingleton<Boolean> _dbWarmedSCLSingleton =
 		new DCLSingleton<>();
+	private static volatile ServiceRegistration<?> _serviceRegistration;
 	private static volatile boolean _upgrading;
 
 }

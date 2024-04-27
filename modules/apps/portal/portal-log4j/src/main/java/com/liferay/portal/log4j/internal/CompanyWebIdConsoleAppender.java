@@ -5,7 +5,8 @@
 
 package com.liferay.portal.log4j.internal;
 
-import com.liferay.portal.kernel.log.LogContextRegistryUtil;
+import com.liferay.portal.kernel.log.LogContext;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import java.io.Serializable;
 
@@ -23,6 +24,9 @@ import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.config.plugins.PluginBuilderAttribute;
 import org.apache.logging.log4j.core.config.plugins.PluginBuilderFactory;
 import org.apache.logging.log4j.core.util.Constants;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Hai Yu
@@ -56,11 +60,12 @@ public final class CompanyWebIdConsoleAppender extends AbstractAppender {
 
 		@Override
 		public CompanyWebIdConsoleAppender build() {
-			if (_companyWebIdLogContext == null) {
-				_companyWebIdLogContext = new CompanyWebIdLogContext();
+			if (_serviceRegistration == null) {
+				BundleContext bundleContext =
+					SystemBundleUtil.getBundleContext();
 
-				LogContextRegistryUtil.registerLogContext(
-					_companyWebIdLogContext);
+				_serviceRegistration = bundleContext.registerService(
+					LogContext.class, new CompanyWebIdLogContext(), null);
 			}
 
 			return new CompanyWebIdConsoleAppender(
@@ -133,7 +138,7 @@ public final class CompanyWebIdConsoleAppender extends AbstractAppender {
 		return NullAppender.createAppender(getName());
 	}
 
-	private static CompanyWebIdLogContext _companyWebIdLogContext;
+	private static volatile ServiceRegistration<?> _serviceRegistration;
 
 	private Appender _appender;
 	private final boolean _bufferedIo;

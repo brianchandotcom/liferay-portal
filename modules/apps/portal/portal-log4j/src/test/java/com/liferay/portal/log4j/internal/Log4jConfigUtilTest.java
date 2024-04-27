@@ -5,11 +5,12 @@
 
 package com.liferay.portal.log4j.internal;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.LogContext;
-import com.liferay.portal.kernel.log.LogContextRegistryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.log.Log4jLogContextLogWrapper;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -30,7 +32,6 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 
 import org.apache.logging.log4j.LogManager;
@@ -42,6 +43,8 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Hai Yu
@@ -57,7 +60,12 @@ public class Log4jConfigUtilTest {
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testCompanyWebIdLogContextDisabled() {
-		Set<LogContext> logContexts = LogContextRegistryUtil.getLogContexts();
+		ServiceTrackerList<LogContext> serviceTrackerList =
+			ReflectionTestUtil.invoke(
+				Log4jLogContextLogWrapper.class, "_createServiceTrackerList",
+				new Class<?>[0]);
+
+		List<LogContext> logContexts = serviceTrackerList.toList();
 
 		Assert.assertTrue(logContexts.isEmpty());
 
@@ -65,27 +73,45 @@ public class Log4jConfigUtilTest {
 			_generateXMLConfigurationContent(
 				StringUtil.randomString(), _ALL, _CONSOLE));
 
+		logContexts = serviceTrackerList.toList();
+
 		Assert.assertTrue(logContexts.isEmpty());
 	}
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testCompanyWebIdLogContextEnabled() {
-		Set<LogContext> logContexts = LogContextRegistryUtil.getLogContexts();
+		ServiceTrackerList<LogContext> serviceTrackerList =
+			ReflectionTestUtil.invoke(
+				Log4jLogContextLogWrapper.class, "_createServiceTrackerList",
+				new Class<?>[0]);
+
+		List<LogContext> logContexts = serviceTrackerList.toList();
 
 		Assert.assertTrue(logContexts.isEmpty());
 
 		Log4jConfigUtil.configureLog4J(
 			_generateCompanyWebIdLogContextConfigurationContent());
 
-		Assert.assertFalse(logContexts.isEmpty());
+		logContexts = serviceTrackerList.toList();
 
-		for (LogContext logContext : logContexts) {
-			LogContextRegistryUtil.unregisterLogContext(logContext);
+		Assert.assertEquals(
+			logContexts.toString(), 1, serviceTrackerList.size());
 
-			Assert.assertTrue(logContext instanceof CompanyWebIdLogContext);
-			Assert.assertEquals("company", logContext.getName());
-		}
+		LogContext logContext = logContexts.get(0);
+
+		Assert.assertTrue(logContext instanceof CompanyWebIdLogContext);
+		Assert.assertEquals("company", logContext.getName());
+
+		ServiceRegistration<?> serviceRegistration =
+			ReflectionTestUtil.getFieldValue(
+				CompanyWebIdConsoleAppender.class, "_serviceRegistration");
+
+		serviceRegistration.unregister();
+
+		logContexts = serviceTrackerList.toList();
+
+		Assert.assertTrue(logContexts.isEmpty());
 	}
 
 	@Test

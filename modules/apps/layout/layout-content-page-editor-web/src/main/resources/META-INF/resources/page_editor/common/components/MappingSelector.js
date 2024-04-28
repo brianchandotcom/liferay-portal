@@ -320,8 +320,10 @@ function MappingSelector({
 	});
 
 	const sourceTypes = useMemo(() => {
-		const types = [
-			{
+		const types = [];
+
+		if (config.layoutType === LAYOUT_TYPES.display) {
+			types.push({
 				label: sub(
 					Liferay.Language.get('x-default'),
 					selectedMappingTypes.subtype
@@ -329,8 +331,13 @@ function MappingSelector({
 						: selectedMappingTypes.type.label
 				),
 				value: MAPPING_SOURCE_TYPES.structure,
-			},
-		];
+			});
+
+			types.push({
+				label: Liferay.Language.get('specific-content'),
+				value: MAPPING_SOURCE_TYPES.content,
+			});
+		}
 
 		if (relationships?.length && Liferay.FeatureFlags['LPD-20213']) {
 			types.push({
@@ -338,11 +345,6 @@ function MappingSelector({
 				value: MAPPING_SOURCE_TYPES.relationship,
 			});
 		}
-
-		types.push({
-			label: Liferay.Language.get('specific-content'),
-			value: MAPPING_SOURCE_TYPES.content,
-		});
 
 		return types;
 	}, [relationships, selectedMappingTypes]);

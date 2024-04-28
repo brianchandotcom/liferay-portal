@@ -29,7 +29,7 @@ import reactor.core.publisher.Mono;
 public class ConsoleService {
 
 	public void deleteProject(String projectId) throws Exception {
-		String projectName = _consoleProjectId + projectId;
+		String projectName = _consoleProjectPrefix + "-ext" + projectId;
 
 		_getWebClient(
 		).delete(
@@ -84,22 +84,19 @@ public class ConsoleService {
 	public void setUpCloudProjectInstallation(long orderId, String virtualHost)
 		throws Exception {
 
-		JSONObject projectJSONObject = _postEnvironmentProject(
-			false, _consoleProjectId + orderId);
-
-		JSONObject environmentProjectJSONObject = _postEnvironmentProject(
-			true, projectJSONObject.getString("projectId") + "-extprd");
+		JSONObject projectJSONObject = _postProject(
+			true, _consoleProjectPrefix + "-ext" + orderId);
 
 		_inviteProject(
 			_marketplaceTrialAdminEmailAddress,
-			environmentProjectJSONObject.getString("projectId"));
+			projectJSONObject.getString("projectId"));
 
 		_setUpLinkBetweenPortalInstanceAndExtensionEnvironment(
-			virtualHost, environmentProjectJSONObject.getString("id"));
+			virtualHost, projectJSONObject.getString("id"));
 
 		_deployApp(
 			_consoleAuthEmailAddress, String.valueOf(orderId),
-			environmentProjectJSONObject.getString("projectId"));
+			projectJSONObject.getString("projectId"));
 	}
 
 	private void _deployApp(String email, String orderId, String projectId)
@@ -184,8 +181,7 @@ public class ConsoleService {
 			).block());
 	}
 
-	private JSONObject _postEnvironmentProject(
-			boolean environment, String projectId)
+	private JSONObject _postProject(boolean environment, String projectId)
 		throws Exception {
 
 		JSONObject jsonObject = _post(
@@ -244,8 +240,8 @@ public class ConsoleService {
 	@Value("${liferay.marketplace.console.cluster}")
 	private String _consoleCluster;
 
-	@Value("${liferay.marketplace.console.project.id}")
-	private String _consoleProjectId;
+	@Value("${liferay.marketplace.console.project.prefix}")
+	private String _consoleProjectPrefix;
 
 	@Value("${liferay.marketplace.console.project.uid}")
 	private String _consoleProjectUid;

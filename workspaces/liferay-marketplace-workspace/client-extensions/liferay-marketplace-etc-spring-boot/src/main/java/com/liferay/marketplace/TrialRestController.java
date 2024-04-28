@@ -78,7 +78,7 @@ public class TrialRestController extends BaseRestController {
 		for (PortalInstance portalInstance : portalInstancesPage.getItems()) {
 			if (Objects.equals(
 					portalInstance.getVirtualHost(),
-					orderId + "." + _TRIAL_DXP_DOMAIN)) {
+					orderId + "." + _trialDXPDomain)) {
 
 				portalInstanceResource.deletePortalInstance(
 					portalInstance.getPortalInstanceId());
@@ -313,9 +313,10 @@ public class TrialRestController extends BaseRestController {
 				"username"
 			).toString());
 
-		String domain = orderId + "." + _TRIAL_DXP_DOMAIN;
+		String domain = orderId + "." + _trialDXPDomain;
 
 		portalInstance.setAdmin(() -> admin);
+
 		portalInstance.setDomain(() -> "lxc.app");
 		portalInstance.setPortalInstanceId(() -> domain);
 		portalInstance.setVirtualHost(() -> domain);
@@ -389,8 +390,22 @@ public class TrialRestController extends BaseRestController {
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to setup cloud installation for order " + orderId);
+				"Unable to SetUp Cloud installation for order " + orderId);
 			_log.error(exception);
+
+			_updateOrder(
+				HashMapBuilder.put(
+					"trial-error", exception.toString()
+				).put(
+					"trial-error-date",
+					ZonedDateTime.now(
+					).format(
+						DateTimeFormatter.ISO_INSTANT
+					)
+				).put(
+					"trial-virtualhost", portalInstance.getVirtualHost()
+				).build(),
+				orderId, _ORDER_STATUS_CANCELLED);
 
 			return;
 		}
@@ -444,8 +459,6 @@ public class TrialRestController extends BaseRestController {
 
 	private static final int _ORDER_STATUS_PROCESSING = 10;
 
-	private static final String _TRIAL_DXP_DOMAIN = "lrtrial.lxc.liferay.com";
-
 	private static final int _TRIAL_MAX_INSTANCES_IN_PROGRESS = 50;
 
 	private static final Log _log = LogFactory.getLog(
@@ -469,5 +482,8 @@ public class TrialRestController extends BaseRestController {
 
 	@Value("${liferay.marketplace.trial.auth.url}")
 	private String _trialAuthURL;
+
+	@Value("${liferay.marketplace.trial.dxp.domain}")
+	private String _trialDXPDomain;
 
 }

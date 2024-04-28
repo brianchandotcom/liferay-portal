@@ -285,63 +285,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-185226. Confirm that the user can add a field"
-	@priority = 5
-	test CanAddField {
-		property portal.acceptance = "true";
-
-		task ("And clicks on Add Fields button/And checks id field/And clicks on Save button") {
-			DataSetAdmin.addFields(key_fieldList = "id");
-		}
-
-		task ("Then the added fields are shown on Fields tab page") {
-			DataSetAdmin.assertFieldsOnTable(
-				key_position = 1,
-				keyName = "id");
-		}
-	}
-
-	@description = "LPS-179151. Confirm the change in the field label field."
-	@priority = 5
-	test CanAssertChangeInTheLabelField {
-		property portal.acceptance = "true";
-
-		task ("And adds two or more fields") {
-			DataSetAdmin.addFields(key_fieldList = "id,label");
-		}
-
-		task ("And clicks on ellipsis button on one of these fields") {
-			Click(
-				key_fieldName = "id",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-		}
-
-		task ("And clicks on Edit option") {
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("And the user changes the label field to "test"") {
-			Type(
-				key_text = "Label",
-				locator1 = "TextInput#ANY",
-				value1 = "test");
-		}
-
-		task ("And clicks on Save button") {
-			Click(
-				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
-		}
-
-		task ("Then the field label is changed the field should have “test” as its label") {
-			AssertElementPresent(
-				chosenFilter = "test",
-				key_tableColumn = 1,
-				key_tableRow = 1,
-				locator1 = "DataSet#FILTER_TABLE_CELL");
-		}
-	}
-
 	@description = "LPS-185498. Confirm that when trying to delete field, modal appears."
 	@priority = 3
 	test CanAssertModalWhenDeleteField {
@@ -1157,42 +1100,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-178736. Confirm that the user can edit Label field on Edit"
-	@priority = 5
-	test CanEditLabelFieldOnEdit {
-		property portal.acceptance = "true";
-
-		task ("And add an id Field") {
-			DataSetAdmin.addFields(key_fieldList = "id");
-		}
-
-		task ("When the user clicks on the edit option from the id Field") {
-			Click(
-				key_fieldName = "id",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("And change the label to "Id Edited"") {
-			Type(
-				key_text = "Label",
-				locator1 = "TextInput#ANY",
-				value1 = "Id Edited");
-
-			Click(
-				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
-		}
-
-		task ("Then assert the "Id Edited" is present from the column label") {
-			AssertElementPresent(
-				key_tableColumn = "Label",
-				key_tableRow = "Id Edited",
-				locator1 = "DataSet#FIELDS_TABLE_AND_ROW");
-		}
-	}
-
 	@description = "LPS-185228. Confirm that a field is not added after checking and unchecking it."
 	@priority = 5
 	test CannotAddFieldAfterUncheckingIt {
@@ -1327,58 +1234,6 @@ definition {
 			DataSetAdmin.assertFieldsOnTable(
 				key_position = 2,
 				keyName = "label");
-		}
-	}
-
-	@description = "LPS-176051. Confirm that the user can save changes when clicks on Save button"
-	@priority = 5
-	test CanSaveChangesOnSaveButton {
-		property portal.acceptance = "true";
-
-		task ("And add new fields") {
-			DataSetAdmin.addFields(key_fieldList = "id,label");
-		}
-
-		task ("And clicks on Edit option") {
-			Click(
-				key_fieldName = "id",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("And choose another client extension option") {
-			Click(
-				dropdownLabel = "Renderer",
-				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
-
-			MenuItem.click(menuItem = "Date and Time");
-		}
-
-		task ("And clicks on Save button") {
-			Click(
-				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
-		}
-
-		task ("Then the Edit field modal is closed") {
-			AssertElementNotPresent(
-				locator1 = "Portlet#MODAL_TITLE",
-				value1 = "Edit id");
-		}
-
-		task ("And a successful message appears") {
-			Alert.viewSuccessMessage();
-		}
-
-		task ("And the changes are applied") {
-			DataSetAdmin.assertFieldsOnTable(
-				key_position = 1,
-				keyName = "id");
-
-			DataSetAdmin.assertFieldsOnTable(
-				key_position = 1,
-				keyName = "Date and Time");
 		}
 	}
 

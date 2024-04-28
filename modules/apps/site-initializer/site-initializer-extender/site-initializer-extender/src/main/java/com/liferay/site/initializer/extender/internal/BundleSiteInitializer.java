@@ -32,6 +32,7 @@ import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
@@ -258,6 +259,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
 		DLURLHelper dlURLHelper,
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
@@ -341,6 +343,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 		_dlURLHelper = dlURLHelper;
 		_documentFolderResourceFactory = documentFolderResourceFactory;
 		_documentResourceFactory = documentResourceFactory;
@@ -508,10 +511,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext, stringUtilReplaceValues));
 
 			_invoke(
-				() -> _addAssetListEntries(
-					serviceContext, stringUtilReplaceValues));
-
-			_invoke(
 				() -> _addOrUpdateDocuments(
 					serviceContext, siteNavigationMenuItemSettingsBuilder,
 					stringUtilReplaceValues));
@@ -570,6 +569,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 					accountEntryRestrictedObjectDefinitions,
 					objectDefinitionIds, serviceContext,
 					stringUtilReplaceValues));
+
+			_invoke(
+				() -> _addAssetListEntries(
+					serviceContext, stringUtilReplaceValues));
 
 			_invoke(
 				() -> _addOrUpdateObjectRelationships(
@@ -861,13 +864,50 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
+		Map<String, Long> ddmStructureMap = new HashMap<>();
+
+		for (DDMStructure ddmStructure :
+				_ddmStructureLocalService.getDDMStructures(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+			ddmStructureMap.put(
+				ddmStructure.getStructureKey(), ddmStructure.getStructureId());
+		}
+
+		Map<String, Long> dlFileEntryTypeMap = new HashMap<>();
+
+		for (DLFileEntryType dlFileEntryType :
+				_dlFileEntryTypeLocalService.getDLFileEntryTypes(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+			dlFileEntryTypeMap.put(
+				dlFileEntryType.getFileEntryTypeKey(),
+				dlFileEntryType.getFileEntryTypeId());
+		}
+
+		Map<String, Long> objectDefinitionMap = new HashMap<>();
+
+		for (com.liferay.object.model.ObjectDefinition objectDefinition :
+				_objectDefinitionLocalService.getObjectDefinitions(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+			if (!objectDefinition.isSystem()) {
+				objectDefinitionMap.put(
+					StringUtil.removeSubstring(
+						objectDefinition.getName(), "C_"),
+					_portal.getClassNameId(objectDefinition.getClassName()));
+			}
+		}
+
 		JSONArray assetListJSONArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < assetListJSONArray.length(); i++) {
 			JSONObject assetListJSONObject = assetListJSONArray.getJSONObject(
 				i);
 
-			_addOrUpdateAssetListEntry(assetListJSONObject, serviceContext);
+			_addOrUpdateAssetListEntry(
+				assetListJSONObject, serviceContext, ddmStructureMap,
+				dlFileEntryTypeMap, objectDefinitionMap);
 		}
 
 		List<AssetListEntry> assetListEntries =
@@ -1419,7 +1459,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addOrUpdateAssetListEntry(
-			JSONObject assetListJSONObject, ServiceContext serviceContext)
+			JSONObject assetListJSONObject, ServiceContext serviceContext,
+			Map<String, Long> ddmStructureMap,
+			Map<String, Long> dlFileEntryTypeMap,
+			Map<String, Long> objectDefinitionMap)
 		throws Exception {
 
 		AssetListEntry assetListEntry = null;
@@ -1444,12 +1487,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONObject unicodePropertiesJSONObject =
 			assetListJSONObject.getJSONObject("unicodeProperties");
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			serviceContext.getScopeGroupId(),
-			_portal.getClassNameId(
-				unicodePropertiesJSONObject.getString("classNameIds")),
-			assetListJSONObject.getString("ddmStructureKey"));
-
 		List<String> classNameIdStrings = new ArrayList<>();
 
 		List<Long> classNameIds = ListUtil.fromArray(
@@ -1470,16 +1507,43 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_portal.getClassNameId(
 					unicodePropertiesJSONObject.getString("classNameIds")))
 		).put(
-			unicodePropertiesJSONObject.getString("anyClassType"),
-			String.valueOf(ddmStructure.getStructureId())
-		).put(
 			"classNameIds", StringUtil.merge(classNameIdStrings, ",")
-		).put(
-			unicodePropertiesJSONObject.getString("classTypeIds"),
-			String.valueOf(ddmStructure.getStructureId())
 		).put(
 			"groupIds", String.valueOf(serviceContext.getScopeGroupId())
 		).build();
+
+		String classNameId = unicodePropertiesJSONObject.getString(
+			"classNameIds");
+
+		if (StringUtil.equals(
+				classNameId, "com.liferay.journal.model.JournalArticle")) {
+
+			map.put(
+				"anyClassTypeJournalArticleAssetRendererFactory",
+				String.valueOf(
+					ddmStructureMap.get(
+						assetListJSONObject.getString("ddmStructureKey"))));
+		}
+		else if (StringUtil.equals(
+					classNameId,
+					"com.liferay.document.library.kernel.model.DLFileEntry")) {
+
+			map.put(
+				"anyClassTypeDLFileEntryAssetRendererFactory",
+				String.valueOf(
+					dlFileEntryTypeMap.get(
+						assetListJSONObject.getString("dlFileEntryTypeKey"))));
+		}
+		else if (StringUtil.equals(
+					classNameId, "com.liferay.object.model.ObjectDefinition")) {
+
+			map.put(
+				"anyAssetType",
+				String.valueOf(
+					objectDefinitionMap.get(
+						assetListJSONObject.getString(
+							"objectDefinitionName"))));
+		}
 
 		Object[] orderByObjects = JSONUtil.toObjectArray(
 			unicodePropertiesJSONObject.getJSONArray("orderBy"));
@@ -5291,6 +5355,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private final DLURLHelper _dlURLHelper;
 	private final DocumentFolderResource.Factory _documentFolderResourceFactory;
 	private final DocumentResource.Factory _documentResourceFactory;

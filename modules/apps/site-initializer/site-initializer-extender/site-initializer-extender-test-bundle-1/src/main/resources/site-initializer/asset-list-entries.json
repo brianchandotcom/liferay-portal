@@ -12,5 +12,19 @@
 		"unicodeProperties": {
 			"classNameIds": "com.liferay.journal.model.JournalArticle"
 		}
+	},
+	{
+		"dlFileEntryTypeKey": "BASIC-DOCUMENT",
+		"title": "DL Asset List Entry",
+		"unicodeProperties": {
+			"classNameIds": "com.liferay.document.library.kernel.model.DLFileEntry"
+		}
+	},
+	{
+		"objectDefinitionName": "TestObjectDefinition1",
+		"title": "Object Asset List Entry",
+		"unicodeProperties": {
+			"classNameIds": "com.liferay.object.model.ObjectDefinition"
+		}
 	}
 ]

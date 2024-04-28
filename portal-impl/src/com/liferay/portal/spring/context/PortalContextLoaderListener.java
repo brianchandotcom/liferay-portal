@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ModuleFrameworkPropsValues;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.log4j.Log4JUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
@@ -138,13 +137,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		try {
 			HotDeployUtil.reset();
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		try {
-			PortalLifecycleUtil.reset();
 		}
 		catch (Exception exception) {
 			_log.error(exception);

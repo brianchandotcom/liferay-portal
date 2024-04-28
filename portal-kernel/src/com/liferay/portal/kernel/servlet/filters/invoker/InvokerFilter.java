@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpOnlyCookieServletResponse;
 import com.liferay.portal.kernel.servlet.NonSerializableObjectRequestWrapper;
 import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
-import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -43,11 +42,26 @@ import javax.servlet.http.HttpServletResponse;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class InvokerFilter extends BasePortalLifecycle implements Filter {
+public class InvokerFilter implements Filter {
 
 	@Override
 	public void destroy() {
-		portalDestroy();
+		ServletContext servletContext = _filterConfig.getServletContext();
+
+		InvokerFilterHelper invokerFilterHelper =
+			(InvokerFilterHelper)servletContext.getAttribute(
+				InvokerFilterHelper.class.getName());
+
+		if (invokerFilterHelper != null) {
+			servletContext.removeAttribute(InvokerFilterHelper.class.getName());
+
+			invokerFilterHelper.destroy();
+		}
+
+		if (_INVOKER_FILTER_CHAIN_ENABLED) {
+			PortalCacheHelperUtil.removePortalCache(
+				PortalCacheManagerNames.SINGLE_VM, _getPortalCacheName());
+		}
 	}
 
 	@Override
@@ -108,58 +122,10 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		_contextPath = servletContext.getContextPath();
 
-		boolean registerPortalLifecycle = GetterUtil.getBoolean(
-			_filterConfig.getInitParameter("register-portal-lifecycle"), true);
-
-		if (registerPortalLifecycle) {
-			registerPortalLifecycle();
-		}
-		else {
-			try {
-				doPortalInit();
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-
-				throw new ServletException(exception);
-			}
-		}
-	}
-
-	protected void clearFilterChainsCache() {
-		if (_filterChainsPortalCache != null) {
-			_filterChainsPortalCache.removeAll();
-		}
-	}
-
-	@Override
-	protected void doPortalDestroy() {
-		ServletContext servletContext = _filterConfig.getServletContext();
-
-		InvokerFilterHelper invokerFilterHelper =
-			(InvokerFilterHelper)servletContext.getAttribute(
-				InvokerFilterHelper.class.getName());
-
-		if (invokerFilterHelper != null) {
-			servletContext.removeAttribute(InvokerFilterHelper.class.getName());
-
-			invokerFilterHelper.destroy();
-		}
-
-		if (_INVOKER_FILTER_CHAIN_ENABLED) {
-			PortalCacheHelperUtil.removePortalCache(
-				PortalCacheManagerNames.SINGLE_VM, _getPortalCacheName());
-		}
-	}
-
-	@Override
-	protected void doPortalInit() throws Exception {
 		if (_INVOKER_FILTER_CHAIN_ENABLED) {
 			_filterChainsPortalCache = PortalCacheHelperUtil.getPortalCache(
 				PortalCacheManagerNames.SINGLE_VM, _getPortalCacheName());
 		}
-
-		ServletContext servletContext = _filterConfig.getServletContext();
 
 		InvokerFilterHelper invokerFilterHelper =
 			(InvokerFilterHelper)servletContext.getAttribute(
@@ -180,6 +146,12 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		_dispatcher = Dispatcher.valueOf(
 			_filterConfig.getInitParameter("dispatcher"));
+	}
+
+	protected void clearFilterChainsCache() {
+		if (_filterChainsPortalCache != null) {
+			_filterChainsPortalCache.removeAll();
+		}
 	}
 
 	protected InvokerFilterChain getInvokerFilterChain(

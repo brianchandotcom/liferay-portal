@@ -8,20 +8,17 @@ package com.liferay.portal.kernel.deploy.hot;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.PortalLifecycle;
-import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -37,7 +34,7 @@ import javax.servlet.ServletContext;
  */
 public class HotDeployUtil {
 
-	public static void fireDeployEvent(final HotDeployEvent hotDeployEvent) {
+	public static void fireDeployEvent(HotDeployEvent hotDeployEvent) {
 		ServletContext servletContext = hotDeployEvent.getServletContext();
 
 		ServletContextPool.put(
@@ -47,21 +44,12 @@ public class HotDeployUtil {
 
 			// Capture events that are fired before the portal initialized
 
-			PortalLifecycle portalLifecycle = new BasePortalLifecycle() {
-
-				@Override
-				protected void doPortalDestroy() {
-				}
-
-				@Override
-				protected void doPortalInit() {
+			DependencyManagerSyncUtil.registerSyncCallable(
+				() -> {
 					fireDeployEvent(hotDeployEvent);
-				}
 
-			};
-
-			PortalLifecycleUtil.register(
-				portalLifecycle, PortalLifecycle.METHOD_INIT);
+					return null;
+				});
 		}
 		else {
 
@@ -91,23 +79,6 @@ public class HotDeployUtil {
 
 		_deployedServletContextNames.remove(
 			hotDeployEvent.getServletContextName());
-	}
-
-	public static boolean registerDependentPortalLifecycle(
-		String servletContextName, PortalLifecycle portalLifecycle) {
-
-		for (HotDeployEvent hotDeployEvent : _dependentHotDeployEvents) {
-			if (Objects.equals(
-					servletContextName,
-					hotDeployEvent.getServletContextName())) {
-
-				hotDeployEvent.addPortalLifecycle(portalLifecycle);
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	public static void registerListener(HotDeployListener hotDeployListener) {
@@ -193,12 +164,6 @@ public class HotDeployUtil {
 								dependentEvent.getContextClassLoader())) {
 
 						_fireDeployEvent(dependentEvent);
-
-						if (!_dependentHotDeployEvents.contains(
-								dependentEvent)) {
-
-							dependentEvent.flushInits();
-						}
 					}
 				}
 			}

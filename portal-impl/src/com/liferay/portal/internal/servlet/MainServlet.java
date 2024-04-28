@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -147,8 +146,6 @@ public class MainServlet extends HttpServlet {
 
 			listIterator.remove();
 		}
-
-		PortalLifecycleUtil.flushDestroys();
 
 		List<Portlet> portlets = PortletLocalServiceUtil.getPortlets();
 
@@ -381,8 +378,6 @@ public class MainServlet extends HttpServlet {
 
 		try {
 			HotDeployUtil.setCapturePrematureEvents(false);
-
-			PortalLifecycleUtil.flushInits();
 		}
 		catch (Exception exception) {
 			_log.error(exception);

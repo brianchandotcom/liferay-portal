@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.BasePortalLifecycle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeEvent;
@@ -23,7 +22,6 @@ import javax.servlet.ServletContextListener;
  * @author Brian Wing Shun Chan
  */
 public class PluginContextListener
-	extends BasePortalLifecycle
 	implements ServletContextAttributeListener, ServletContextListener {
 
 	public static final String PLUGIN_CLASS_LOADER = "PLUGIN_CLASS_LOADER";
@@ -100,7 +98,16 @@ public class PluginContextListener
 
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
-		portalDestroy();
+		PluginContextLifecycleThreadLocal.setDestroying(true);
+
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				pluginClassLoader)) {
+
+			fireUndeployEvent();
+		}
+		finally {
+			PluginContextLifecycleThreadLocal.setDestroying(false);
+		}
 
 		if (_classLoaderRegistered) {
 			ServletContextClassLoaderPool.unregister(
@@ -131,25 +138,6 @@ public class PluginContextListener
 
 		ServletContextPool.put(servletContextName, servletContext);
 
-		registerPortalLifecycle();
-	}
-
-	@Override
-	protected void doPortalDestroy() throws Exception {
-		PluginContextLifecycleThreadLocal.setDestroying(true);
-
-		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
-				pluginClassLoader)) {
-
-			fireUndeployEvent();
-		}
-		finally {
-			PluginContextLifecycleThreadLocal.setDestroying(false);
-		}
-	}
-
-	@Override
-	protected void doPortalInit() throws Exception {
 		PluginContextLifecycleThreadLocal.setInitializing(true);
 
 		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(

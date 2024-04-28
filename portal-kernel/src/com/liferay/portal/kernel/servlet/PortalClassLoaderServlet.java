@@ -11,8 +11,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.PortalLifecycle;
-import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 
 import java.io.IOException;
 
@@ -25,12 +23,18 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortalClassLoaderServlet
-	extends HttpServlet implements PortalLifecycle {
+public class PortalClassLoaderServlet extends HttpServlet {
 
 	@Override
 	public void destroy() {
-		portalDestroy();
+		if (_servlet != null) {
+			try (SafeCloseable safeCloseable =
+					ThreadContextClassLoaderUtil.swap(
+						PortalClassLoaderUtil.getClassLoader())) {
+
+				_servlet.destroy();
+			}
+		}
 	}
 
 	@Override
@@ -39,22 +43,6 @@ public class PortalClassLoaderServlet
 
 		_servletConfig = servletConfig;
 
-		PortalLifecycleUtil.register(this);
-	}
-
-	@Override
-	public void portalDestroy() {
-		if (!_calledPortalDestroy) {
-			PortalLifecycleUtil.removeDestroy(this);
-
-			doPortalDestroy();
-
-			_calledPortalDestroy = true;
-		}
-	}
-
-	@Override
-	public void portalInit() {
 		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
 
 		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
@@ -86,21 +74,9 @@ public class PortalClassLoaderServlet
 		}
 	}
 
-	protected void doPortalDestroy() {
-		if (_servlet != null) {
-			try (SafeCloseable safeCloseable =
-					ThreadContextClassLoaderUtil.swap(
-						PortalClassLoaderUtil.getClassLoader())) {
-
-				_servlet.destroy();
-			}
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalClassLoaderServlet.class);
 
-	private volatile boolean _calledPortalDestroy;
 	private volatile HttpServlet _servlet;
 	private ServletConfig _servletConfig;
 

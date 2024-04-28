@@ -11,9 +11,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.jsp.engine.internal.delegate.CheckEnabledServletDelegate;
 import com.liferay.portal.jsp.engine.internal.delegate.JspConfigDescriptorServletContextDelegate;
+import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalLifecycle;
-import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -113,20 +112,12 @@ public class JSPEngineShieldedContainerInitializer
 				new JspConfigDescriptorServletContextDelegate(servletContext),
 				servletContext));
 
-		PortalLifecycleUtil.register(
-			new PortalLifecycle() {
+		DependencyManagerSyncUtil.registerSyncCallable(
+			() -> {
+				JspFactorySwapper.swap();
 
-				@Override
-				public void portalDestroy() {
-				}
-
-				@Override
-				public void portalInit() {
-					JspFactorySwapper.swap();
-				}
-
-			},
-			PortalLifecycle.METHOD_INIT);
+				return null;
+			});
 
 		Map<String, String> initParameters = PropertiesUtil.toMap(
 			PropsUtil.getProperties("jsp.engine.", true));

@@ -9,7 +9,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterChain;
-import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -33,12 +32,15 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortalClassLoaderFilter
-	extends BasePortalLifecycle implements LiferayFilter {
+public class PortalClassLoaderFilter implements LiferayFilter {
 
 	@Override
 	public void destroy() {
-		portalDestroy();
+		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
+				PortalClassLoaderUtil.getClassLoader())) {
+
+			_filter.destroy();
+		}
 	}
 
 	@Override
@@ -71,10 +73,30 @@ public class PortalClassLoaderFilter
 	}
 
 	@Override
-	public void init(FilterConfig filterConfig) {
+	public void init(FilterConfig filterConfig) throws ServletException {
 		_filterConfig = filterConfig;
 
-		registerPortalLifecycle();
+		String filterClass = _filterConfig.getInitParameter("filter-class");
+
+		if (filterClass.startsWith("com.liferay.filters.")) {
+			filterClass = StringUtil.replace(
+				filterClass, "com.liferay.filters.",
+				"com.liferay.portal.servlet.filters.");
+		}
+
+		try {
+			_filter = (Filter)InstanceFactory.newInstance(
+				PortalClassLoaderUtil.getClassLoader(), filterClass);
+		}
+		catch (Exception exception) {
+			throw new ServletException(exception);
+		}
+
+		_filter.init(_filterConfig);
+
+		if (_filter instanceof LiferayFilter) {
+			_liferayFilter = (LiferayFilter)_filter;
+		}
 	}
 
 	@Override
@@ -103,35 +125,6 @@ public class PortalClassLoaderFilter
 	public void setFilterEnabled(boolean filterEnabled) {
 		if (_liferayFilter != null) {
 			_liferayFilter.setFilterEnabled(filterEnabled);
-		}
-	}
-
-	@Override
-	protected void doPortalDestroy() {
-		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
-				PortalClassLoaderUtil.getClassLoader())) {
-
-			_filter.destroy();
-		}
-	}
-
-	@Override
-	protected void doPortalInit() throws Exception {
-		String filterClass = _filterConfig.getInitParameter("filter-class");
-
-		if (filterClass.startsWith("com.liferay.filters.")) {
-			filterClass = StringUtil.replace(
-				filterClass, "com.liferay.filters.",
-				"com.liferay.portal.servlet.filters.");
-		}
-
-		_filter = (Filter)InstanceFactory.newInstance(
-			PortalClassLoaderUtil.getClassLoader(), filterClass);
-
-		_filter.init(_filterConfig);
-
-		if (_filter instanceof LiferayFilter) {
-			_liferayFilter = (LiferayFilter)_filter;
 		}
 	}
 

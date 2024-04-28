@@ -256,46 +256,41 @@ public class SystemObjectRelatedObjectEntriesTest {
 	public void testGetManyToOneSystemObjectRelatedObjectEntries()
 		throws Exception {
 
-		ObjectRelationship objectRelationship1 = _addObjectRelationship(
-			_objectDefinition, _userSystemObjectDefinition,
-			_objectEntry.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
 		String pkObjectFieldName = _objectDefinition.getPKObjectFieldName();
 
 		String objectDefinitionNameReference = pkObjectFieldName.substring(
 			0, pkObjectFieldName.length() - 2);
 
-		String relatedObjectEntryFieldBase1 = StringBundler.concat(
-			"r_", objectRelationship1.getName(), "_",
-			objectDefinitionNameReference);
-
-		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
-			null, _getLocation(objectRelationship1.getName()), Http.Method.GET);
-
-		Assert.assertEquals(
-			_objectEntry.getExternalReferenceCode(),
-			jsonObject1.get(relatedObjectEntryFieldBase1 + "ERC"));
-		Assert.assertEquals(
-			String.valueOf(_objectEntry.getObjectEntryId()),
-			jsonObject1.get(
-				relatedObjectEntryFieldBase1 + "Id"
-			).toString());
-
-		ObjectRelationship objectRelationship2 =
+		ObjectRelationship objectRelationship =
 			ObjectRelationshipTestUtil.addObjectRelationship(
 				_objectDefinition, _userSystemObjectDefinition,
 				_user.getUserId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		_objectRelationships.add(objectRelationship2);
+		_objectRelationships.add(objectRelationship);
 
 		String relatedObjectEntryFieldBase2 = StringBundler.concat(
-			"r_", objectRelationship2.getName(), "_",
+			"r_", objectRelationship.getName(), "_",
 			objectDefinitionNameReference);
 
+		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
+			null, StringBundler.concat(
+				_getLocation(), StringPool.SLASH,
+				_user.getUserId()), Http.Method.GET);
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			jsonObject1.get(relatedObjectEntryFieldBase2 + "ERC"));
+		Assert.assertEquals(
+			String.valueOf(0),
+			jsonObject1.get(
+				relatedObjectEntryFieldBase2 + "Id"
+			).toString());
+
 		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
-			null, _getLocation(objectRelationship2.getName()), Http.Method.GET);
+			null, StringBundler.concat(
+				_getLocation(), StringPool.SLASH,
+				_userAccountJSONObject.get("id")), Http.Method.GET);
 
 		Assert.assertEquals(
 			StringPool.BLANK,
@@ -304,6 +299,30 @@ public class SystemObjectRelatedObjectEntriesTest {
 			String.valueOf(0),
 			jsonObject2.get(
 				relatedObjectEntryFieldBase2 + "Id"
+			).toString());
+
+		ObjectRelationshipLocalServiceUtil.
+			addObjectRelationshipMappingTableValues(
+				_user.getUserId(), objectRelationship.getObjectRelationshipId(),
+				_objectEntry.getPrimaryKey(),  _user.getUserId(),
+				ServiceContextTestUtil.getServiceContext());
+
+		String relatedObjectEntryFieldBase1 = StringBundler.concat(
+			"r_", objectRelationship.getName(), "_",
+			objectDefinitionNameReference);
+
+		JSONObject jsonObject3 = HTTPTestUtil.invokeToJSONObject(
+			null, StringBundler.concat(
+				_getLocation(), StringPool.SLASH,
+				_user.getUserId()), Http.Method.GET);
+
+		Assert.assertEquals(
+			_objectEntry.getExternalReferenceCode(),
+			jsonObject3.get(relatedObjectEntryFieldBase1 + "ERC"));
+		Assert.assertEquals(
+			String.valueOf(_objectEntry.getObjectEntryId()),
+			jsonObject3.get(
+				relatedObjectEntryFieldBase1 + "Id"
 			).toString());
 	}
 

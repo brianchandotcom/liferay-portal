@@ -14,21 +14,33 @@ import {BUSINESS_TYPES_TO_SYMBOLS} from '../utils/constants';
 
 interface BaseAPISchemaPropertyProps {
 	added: boolean;
-	objectDefinitionName: string;
 	objectField: ObjectField;
 	objectRelationshipName?: string;
+	parentObjectDefinitionData: ParentObjectDefinitionProps;
 	setSchemaUIData: Dispatch<SetStateAction<APISchemaUIData>>;
+}
+
+interface ParentObjectDefinitionProps {
+	modifiable?: boolean;
+	objectDefinitionName: string;
+	objectDefinitionERC: string;
 }
 
 export default function BaseAPISchemaProperty({
 	added,
-	objectDefinitionName,
 	objectField,
 	objectRelationshipName,
+	parentObjectDefinitionData,
 	setSchemaUIData,
 }: BaseAPISchemaPropertyProps) {
 	const {apiSchemaId} = useContext(EditSchemaContext);
 	const [focused, setFocused] = useState(false);
+
+	const {
+		modifiable,
+		objectDefinitionERC,
+		objectDefinitionName,
+	} = parentObjectDefinitionData;
 
 	const localizedPropertyName = objectField.label[
 		Liferay.ThemeDisplay.getDefaultLanguageId()

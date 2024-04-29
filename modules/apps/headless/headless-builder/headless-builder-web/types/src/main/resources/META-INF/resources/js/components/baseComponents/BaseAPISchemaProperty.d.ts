@@ -6,16 +6,21 @@
 import {Dispatch, SetStateAction} from 'react';
 interface BaseAPISchemaPropertyProps {
 	added: boolean;
-	objectDefinitionName: string;
 	objectField: ObjectField;
 	objectRelationshipName?: string;
+	parentObjectDefinitionData: ParentObjectDefinitionProps;
 	setSchemaUIData: Dispatch<SetStateAction<APISchemaUIData>>;
+}
+interface ParentObjectDefinitionProps {
+	modifiable?: boolean;
+	objectDefinitionName: string;
+	objectDefinitionERC: string;
 }
 export default function BaseAPISchemaProperty({
 	added,
-	objectDefinitionName,
 	objectField,
 	objectRelationshipName,
+	parentObjectDefinitionData,
 	setSchemaUIData,
 }: BaseAPISchemaPropertyProps): JSX.Element;
 export {};

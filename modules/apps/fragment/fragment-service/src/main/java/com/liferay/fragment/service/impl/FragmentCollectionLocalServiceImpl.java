@@ -186,6 +186,14 @@ public class FragmentCollectionLocalServiceImpl
 	}
 
 	@Override
+	public FragmentCollection fetchFragmentCollection(
+		String externalReferenceCode, long groupId) {
+
+		return fragmentCollectionPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public String generateFragmentCollectionKey(long groupId, String name) {
 		String fragmentCollectionKey = _getFragmentCollectionKey(name);
 

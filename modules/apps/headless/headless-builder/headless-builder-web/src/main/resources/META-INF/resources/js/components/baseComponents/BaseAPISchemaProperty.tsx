@@ -7,10 +7,19 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
-import React, {Dispatch, SetStateAction, useContext, useState} from 'react';
+import React, {
+	Dispatch,
+	SetStateAction,
+	useContext,
+	useEffect,
+	useState,
+} from 'react';
 
 import {EditSchemaContext} from '../EditAPIApplicationContext';
-import {BUSINESS_TYPES_TO_SYMBOLS} from '../utils/constants';
+import {
+	BUSINESS_TYPES_TO_SYMBOLS,
+	UNMODIFIABLE_OBJECTS_WHITELIST,
+} from '../utils/constants';
 
 interface BaseAPISchemaPropertyProps {
 	added: boolean;
@@ -34,6 +43,7 @@ export default function BaseAPISchemaProperty({
 	setSchemaUIData,
 }: BaseAPISchemaPropertyProps) {
 	const {apiSchemaId} = useContext(EditSchemaContext);
+	const [disabled, setDisabled] = useState(false);
 	const [focused, setFocused] = useState(false);
 
 	const {
@@ -73,6 +83,16 @@ export default function BaseAPISchemaProperty({
 		});
 	};
 
+	useEffect(() => {
+		setDisabled(
+			added ||
+				(!modifiable &&
+					!UNMODIFIABLE_OBJECTS_WHITELIST.includes(
+						objectDefinitionERC
+					))
+		);
+	}, [added, parentObjectDefinitionData]);
+
 	return (
 		<ClayButton
 			aria-label={sub(
@@ -82,12 +102,12 @@ export default function BaseAPISchemaProperty({
 			className="property-container"
 			displayType="unstyled"
 			onBlur={() => setFocused(false)}
-			onClick={() => !added && handleClick()}
+			onClick={() => !disabled && handleClick()}
 			onFocus={() => setFocused(true)}
 		>
 			<div
 				className={classNames({
-					'disabled': added,
+					disabled,
 					'icon-container': true,
 				})}
 			>
@@ -98,7 +118,7 @@ export default function BaseAPISchemaProperty({
 
 			<div
 				className={classNames({
-					'disabled': added,
+					disabled,
 					'label-container': true,
 					'text-truncate': true,
 				})}
@@ -106,7 +126,7 @@ export default function BaseAPISchemaProperty({
 				{objectField.label[Liferay.ThemeDisplay.getDefaultLanguageId()]}
 			</div>
 
-			{!added && (
+			{!disabled && (
 				<div
 					className={classNames({
 						'focused-parent': focused,

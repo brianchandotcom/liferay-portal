@@ -112,22 +112,6 @@
 			"externalReferenceCode": "D4B8_LIST_ASSESSMENT_SCORES",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "SCORE_EXCELLENT",
-					"key": "excellent",
-					"name": "Excellent",
-					"name_i18n": {
-						"en-US": "Excellent"
-					}
-				},
-				{
-					"externalReferenceCode": "SCORE_GOOD",
-					"key": "good",
-					"name": "Good",
-					"name_i18n": {
-						"en-US": "Good"
-					}
-				},
-				{
 					"externalReferenceCode": "SCORE_AVERAGE",
 					"key": "average",
 					"name": "Average",
@@ -136,11 +120,27 @@
 					}
 				},
 				{
+					"externalReferenceCode": "SCORE_EXCELLENT",
+					"key": "excellent",
+					"name": "Excellent",
+					"name_i18n": {
+						"en-US": "Excellent"
+					}
+				},
+				{
 					"externalReferenceCode": "SCORE_FAIR",
 					"key": "fair",
 					"name": "Fair",
 					"name_i18n": {
 						"en-US": "Fair"
+					}
+				},
+				{
+					"externalReferenceCode": "SCORE_GOOD",
+					"key": "good",
+					"name": "Good",
+					"name_i18n": {
+						"en-US": "Good"
 					}
 				},
 				{

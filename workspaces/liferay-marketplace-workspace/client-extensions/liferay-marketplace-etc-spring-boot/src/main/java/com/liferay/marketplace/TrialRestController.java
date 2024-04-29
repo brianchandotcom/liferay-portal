@@ -111,17 +111,17 @@ public class TrialRestController extends BaseRestController {
 		long orderId = jsonObject.getLong("classPK");
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Provisioning trial " + orderId);
+			_log.info("Provisioning order " + orderId);
 		}
 
-		if (_orderResource.getOrdersPage(
-				"",
-				"accountId/any(x:(x eq " +
-					modelDTOOrderJSONObject.getString("accountId") +
-						")) and orderTypeExternalReferenceCode eq 'SOLUTIONS7'",
-				Pagination.of(1, 1), ""
-			).getTotalCount() > 1) {
+		Page<Order> ordersPage = _orderResource.getOrdersPage(
+			"",
+			"accountId/any(x:(x eq " +
+				modelDTOOrderJSONObject.getString("accountId") +
+					")) and orderTypeExternalReferenceCode eq 'SOLUTIONS7'",
+			Pagination.of(1, 1), "");
 
+		if (ordersPage.getTotalCount() > 1) {
 			_log.error(
 				"Account " + modelDTOOrderJSONObject.getString("accountId") +
 					" already has a provisioned order");
@@ -131,12 +131,13 @@ public class TrialRestController extends BaseRestController {
 			return;
 		}
 
-		if (_getPortalInstancesPage().getTotalCount() ==
+		com.liferay.headless.portal.instances.client.pagination.Page
+			<PortalInstance> portalInstancesPage = _getPortalInstancesPage();
+
+		if (portalInstancesPage.getTotalCount() ==
 				_TRIAL_MAX_INSTANCES_IN_PROGRESS) {
 
-			_log.error(
-				"The limit of " + _TRIAL_MAX_INSTANCES_IN_PROGRESS +
-					" has exceeded, trial installation will be scheduled");
+			_log.error("Order is on hold");
 
 			_updateOrder(null, orderId, _ORDER_STATUS_ON_HOLD);
 
@@ -150,13 +151,13 @@ public class TrialRestController extends BaseRestController {
 			orderId);
 
 		try {
-			_consoleService.setUpCloudProjectInstallation(
+			_consoleService.setUpCloudProject(
 				portalInstance.getVirtualHost(), orderId);
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to SetUp Cloud installation for order " + orderId);
-			_log.error(exception);
+				"Unable to set up cloud project for order " + orderId + ":",
+				exception);
 
 			_updateOrder(
 				HashMapBuilder.put(
@@ -206,17 +207,13 @@ public class TrialRestController extends BaseRestController {
 	@GetMapping("availability")
 	protected String getAvailability() throws Exception {
 		com.liferay.headless.portal.instances.client.pagination.Page
-			<PortalInstance> portalInstancesPage = _getPortalInstancesPage();
+			<PortalInstance> page = _getPortalInstancesPage();
 
 		return new JSONObject(
 		).put(
-			"active",
-			_TRIAL_MAX_INSTANCES_IN_PROGRESS >
-				portalInstancesPage.getTotalCount()
+			"active", _TRIAL_MAX_INSTANCES_IN_PROGRESS > page.getTotalCount()
 		).put(
-			"available",
-			_TRIAL_MAX_INSTANCES_IN_PROGRESS -
-				portalInstancesPage.getTotalCount()
+			"available", _TRIAL_MAX_INSTANCES_IN_PROGRESS - page.getTotalCount()
 		).put(
 			"max", _TRIAL_MAX_INSTANCES_IN_PROGRESS
 		).toString();

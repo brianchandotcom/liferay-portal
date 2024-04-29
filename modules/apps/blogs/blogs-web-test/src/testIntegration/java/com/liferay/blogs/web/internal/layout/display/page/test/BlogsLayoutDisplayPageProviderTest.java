@@ -6,14 +6,23 @@
 package com.liferay.blogs.web.internal.layout.display.page.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -43,7 +52,9 @@ public class BlogsLayoutDisplayPageProviderTest {
 	public void testGetLayoutDisplayPageObjectProviderLatestUrlTitle()
 		throws Exception {
 
-		BlogsEntry blogsEntry = _addBlogsEntry();
+		BlogsEntry blogsEntry = _addBlogsEntry(
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId()));
 
 		BlogsEntry updatedBlogsEntry = _updateBlogsEntry(
 			blogsEntry, RandomTestUtil.randomString());
@@ -61,7 +72,9 @@ public class BlogsLayoutDisplayPageProviderTest {
 	public void testGetLayoutDisplayPageObjectProviderPreviousUrlTitle()
 		throws Exception {
 
-		BlogsEntry blogsEntry = _addBlogsEntry();
+		BlogsEntry blogsEntry = _addBlogsEntry(
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId()));
 
 		String previousUrlTitle = blogsEntry.getUrlTitle();
 
@@ -84,7 +97,9 @@ public class BlogsLayoutDisplayPageProviderTest {
 	public void testGetLayoutDisplayPageObjectProviderSingleUrlTitle()
 		throws Exception {
 
-		BlogsEntry blogsEntry = _addBlogsEntry();
+		BlogsEntry blogsEntry = _addBlogsEntry(
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId()));
 
 		LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider =
 			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
@@ -94,12 +109,57 @@ public class BlogsLayoutDisplayPageProviderTest {
 			blogsEntry, layoutDisplayPageObjectProvider.getDisplayObject());
 	}
 
-	private BlogsEntry _addBlogsEntry() throws Exception {
+	@FeatureFlags("LPD-11147")
+	@Test
+	public void testGetLayoutDisplayPageObjectProviderWithCategoriesInUrlTitle()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		serviceContext.setAttribute(
+			"friendlyURLAssetCategoryIds",
+			new long[] {
+				assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
+			});
+
+		BlogsEntry blogsEntry = _addBlogsEntry(serviceContext);
+
+		String urlTitle = StringBundler.concat(
+			assetCategory1.getTitle(LocaleUtil.getDefault()), StringPool.SLASH,
+			assetCategory2.getTitle(LocaleUtil.getDefault()), StringPool.SLASH,
+			blogsEntry.getUrlTitle());
+
+		LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider =
+			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				TestPropsValues.getGroupId(), urlTitle);
+
+		Assert.assertEquals(
+			blogsEntry, layoutDisplayPageObjectProvider.getDisplayObject());
+	}
+
+	private BlogsEntry _addBlogsEntry(ServiceContext serviceContext)
+		throws Exception {
+
 		return _blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId()));
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	private BlogsEntry _updateBlogsEntry(BlogsEntry blogsEntry, String urlTitle)
@@ -114,6 +174,12 @@ public class BlogsLayoutDisplayPageProviderTest {
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId()));
 	}
+
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;

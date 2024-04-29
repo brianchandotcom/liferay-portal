@@ -1054,8 +1054,8 @@ public class PortalImpl implements Portal {
 		Layout layout = null;
 
 		if (Validator.isNull(friendlyURL)) {
-			layout = LayoutServiceUtil.getFirstPublishedLayout(
-				groupId, privateLayout);
+			layout = LayoutServiceUtil.fetchFirstLayout(
+				groupId, privateLayout, true);
 
 			if (layout == null) {
 				throw new NoSuchLayoutException(

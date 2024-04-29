@@ -436,6 +436,41 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	@Override
+	public Layout fetchFirstLayout(
+		long groupId, boolean privateLayout, boolean published) {
+
+		// We need to ensure that virtual layouts are merged
+
+		List<Layout> layouts = layoutLocalService.getLayouts(
+			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			true, 0, 1);
+
+		if (layouts.isEmpty()) {
+			return null;
+		}
+
+		Layout layout = layouts.get(0);
+
+		boolean viewPermission = _hasViewPermission(layout);
+
+		if ((!published || layout.isPublished()) && viewPermission) {
+			return layout;
+		}
+
+		Layout firstLayout = _getFirstLayout(groupId, privateLayout, published);
+
+		if (firstLayout != null) {
+			return firstLayout;
+		}
+
+		if (viewPermission) {
+			return layout;
+		}
+
+		return null;
+	}
+
+	@Override
 	public Layout fetchLayout(
 			long groupId, boolean privateLayout, long layoutId)
 		throws PortalException {
@@ -645,41 +680,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		}
 
 		return plid;
-	}
-
-	@Override
-	public Layout getFirstPublishedLayout(long groupId, boolean privateLayout) {
-
-		// We need to ensure that virtual layouts are merged
-
-		List<Layout> layouts = layoutLocalService.getLayouts(
-			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			true, 0, 1);
-
-		if (layouts.isEmpty()) {
-			return null;
-		}
-
-		Layout layout = layouts.get(0);
-
-		boolean viewPermission = _hasViewPermission(layout);
-
-		if (layout.isPublished() && viewPermission) {
-			return layout;
-		}
-
-		Layout firstPublishedLayout = _getFirstPublishedLayout(
-			groupId, privateLayout);
-
-		if (firstPublishedLayout != null) {
-			return firstPublishedLayout;
-		}
-
-		if (viewPermission) {
-			return layout;
-		}
-
-		return null;
 	}
 
 	/**
@@ -1686,8 +1686,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return layoutTypePortlet.getPortletIds();
 	}
 
-	private Layout _getFirstPublishedLayout(
-		long groupId, boolean privateLayout) {
+	private Layout _getFirstLayout(
+		long groupId, boolean privateLayout, boolean published) {
 
 		boolean hasNext = true;
 
@@ -1703,7 +1703,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, start, end);
 
 			for (Layout layout : layouts) {
-				if (layout.isPublished() && _hasViewPermission(layout)) {
+				if ((!published || layout.isPublished()) &&
+					_hasViewPermission(layout)) {
+
 					return layout;
 				}
 			}

@@ -4552,7 +4552,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testFilterByUnknownField() throws Exception {
+	public void testFilterByUnknownObjectField() throws Exception {
 		String filterString = "unknownField eq 'value'";
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -4998,7 +4998,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testGetObjectEntryFilteredByMultiselectPicklistField()
+	public void testGetObjectEntryFilteredByMultiselectPicklistObjectField()
 		throws Exception {
 
 		ObjectEntryTestUtil.addObjectEntry(
@@ -5352,7 +5352,7 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlags("LPS-174455")
 	@Test
-	public void testGetObjectEntryWithAttachmentField() throws Exception {
+	public void testGetObjectEntryWithAttachmentObjectField() throws Exception {
 		String content = RandomTestUtil.randomString();
 
 		FileEntry fileEntry = _addTempFileEntry(
@@ -6227,7 +6227,7 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlags("LPS-174455")
 	@Test
-	public void testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentField()
+	public void testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentObjectField()
 		throws Exception {
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
@@ -6260,7 +6260,7 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlags("LPS-174455")
 	@Test
-	public void testPatchPutCustomObjectEntryWithAttachmentField()
+	public void testPatchPutCustomObjectEntryWithAttachmentObjectField()
 		throws Exception {
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
@@ -6310,7 +6310,7 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlags("LPS-174455")
 	@Test
-	public void testPostCustomObjectEntryWithAttachmentField()
+	public void testPostCustomObjectEntryWithAttachmentObjectField()
 		throws Exception {
 
 		_testPostCustomObjectEntryWithAttachmentField(_objectDefinition1);
@@ -6319,7 +6319,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPostCustomObjectEntryWithAutoIncrementField()
+	public void testPostCustomObjectEntryWithAutoIncrementObjectField()
 		throws Exception {
 
 		ObjectDefinition objectDefinition =

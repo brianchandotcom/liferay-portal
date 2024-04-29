@@ -28,15 +28,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -212,25 +209,12 @@ public class JournalUtil {
 			}
 		}
 
-		Layout layout = LayoutLocalServiceUtil.fetchFirstLayout(
-			themeDisplay.getScopeGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		Layout layout = LayoutServiceUtil.fetchFirstLayout(
+			themeDisplay.getScopeGroupId(), false, false);
 
 		if (layout == null) {
-			layout = LayoutLocalServiceUtil.fetchFirstLayout(
-				themeDisplay.getScopeGroupId(), true,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-		}
-
-		if ((layout != null) &&
-			!LayoutPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), layout, ActionKeys.VIEW)) {
-
-			layout = _getViewableLayout(false, themeDisplay);
-
-			if (layout == null) {
-				layout = _getViewableLayout(true, themeDisplay);
-			}
+			layout = LayoutServiceUtil.fetchFirstLayout(
+				themeDisplay.getScopeGroupId(), true, false);
 		}
 
 		if (layout != null) {
@@ -393,42 +377,6 @@ public class JournalUtil {
 
 		return SubscriptionLocalServiceUtil.isSubscribed(
 			companyId, userId, DDMStructure.class.getName(), ddmStructureId);
-	}
-
-	private static Layout _getViewableLayout(
-		boolean privateLayout, ThemeDisplay themeDisplay) {
-
-		for (int end = 0, interval = 20, start = 0;;) {
-			end = start + interval;
-
-			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-				themeDisplay.getScopeGroupId(), privateLayout,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false, start, end);
-
-			for (Layout layout : layouts) {
-				try {
-					if (LayoutPermissionUtil.contains(
-							themeDisplay.getPermissionChecker(), layout,
-							ActionKeys.VIEW)) {
-
-						return layout;
-					}
-				}
-				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portalException);
-					}
-				}
-			}
-
-			start = start + interval;
-
-			if (layouts.size() < interval) {
-				break;
-			}
-		}
-
-		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalUtil.class);

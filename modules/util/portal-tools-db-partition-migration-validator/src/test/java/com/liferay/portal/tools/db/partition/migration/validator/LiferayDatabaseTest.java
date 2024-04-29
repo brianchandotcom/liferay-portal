@@ -7,9 +7,7 @@ package com.liferay.portal.tools.db.partition.migration.validator;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.tools.db.partition.migration.validator.Company;
-import com.liferay.portal.tools.db.partition.migration.validator.LiferayDatabase;
-import com.liferay.portal.tools.db.partition.migration.validator.Release;
+import com.liferay.portal.tools.db.partition.migration.validator.util.DatabaseUtil;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -52,6 +50,27 @@ public class LiferayDatabaseTest {
 	}
 
 	@Test
+	public void testGetCompanies() throws Exception {
+		Company company1 = new Company(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+		Company company2 = new Company(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		_mockCompanies(Arrays.asList(company1, company2));
+
+		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
+			_connection);
+
+		List<Company> companies = liferayDatabase.getCompanies();
+
+		Assert.assertEquals(companies.toString(), 2, companies.size());
+		Assert.assertEquals(company1, companies.get(0));
+		Assert.assertEquals(company2, companies.get(1));
+	}
+
+	@Test
 	public void testGetExportedCompanyId() throws Exception {
 		List<Long> companyIds = new ArrayList<>();
 
@@ -79,36 +98,22 @@ public class LiferayDatabaseTest {
 	}
 
 	@Test
-	public void testIsExportedCompanyDefault() throws Exception {
-		_testDefaultPartition(
-			false,
-			liferayDatabase -> Assert.assertFalse(
-				liferayDatabase.isExportedCompanyDefault()));
-		_testDefaultPartition(
-			true,
-			liferayDatabase -> Assert.assertTrue(
-				liferayDatabase.isExportedCompanyDefault()));
-	}
+	public void testGetReleases() throws Exception {
+		Release module1Release = new Release(
+			Version.parseVersion("14.2.4"), "module1", 0, true);
+		Release module2Release = new Release(
+			Version.parseVersion("2.0.1"), "module2", 1, false);
 
-	@Test
-	public void testGetCompanies() throws Exception {
-		Company company1 = new Company(
-			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-		Company company2 = new Company(
-			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-		_mockCompanies(Arrays.asList(company1, company2));
+		_mockReleases(Arrays.asList(module1Release, module2Release));
 
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
 			_connection);
 
-		List<Company> companies = liferayDatabase.getCompanies();
+		List<Release> releases = liferayDatabase.getReleases();
 
-		Assert.assertEquals(companies.toString(), 2, companies.size());
-		Assert.assertEquals(company1, companies.get(0));
-		Assert.assertEquals(company2, companies.get(1));
+		Assert.assertEquals(releases.toString(), 2, releases.size());
+		Assert.assertEquals(module1Release, releases.get(0));
+		Assert.assertEquals(module2Release, releases.get(1));
 	}
 
 	@Test
@@ -130,22 +135,15 @@ public class LiferayDatabaseTest {
 	}
 
 	@Test
-	public void testGetReleases() throws Exception {
-		Release module1Release = new Release(
-			Version.parseVersion("14.2.4"), "module1", 0, true);
-		Release module2Release = new Release(
-			Version.parseVersion("2.0.1"), "module2", 1, false);
-
-		_mockReleases(Arrays.asList(module1Release, module2Release));
-
-		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
-			_connection);
-
-		List<Release> releases = liferayDatabase.getReleases();
-
-		Assert.assertEquals(releases.toString(), 2, releases.size());
-		Assert.assertEquals(module1Release, releases.get(0));
-		Assert.assertEquals(module2Release, releases.get(1));
+	public void testIsExportedCompanyDefault() throws Exception {
+		_testDefaultPartition(
+			false,
+			liferayDatabase -> Assert.assertFalse(
+				liferayDatabase.isExportedCompanyDefault()));
+		_testDefaultPartition(
+			true,
+			liferayDatabase -> Assert.assertTrue(
+				liferayDatabase.isExportedCompanyDefault()));
 	}
 
 	private void _mockCompanies(List<Company> companies) throws SQLException {

@@ -268,7 +268,7 @@ public class JournalArticleStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testCircularDependencyBetweenAssetDisplayPageAndConfiguredWebContentDisplayPortlet()
+	public void testCircularDependencyBetweenAssetDisplayPageEntryAndConfiguredWebContentDisplayPortlet()
 		throws Exception {
 
 		initExport();
@@ -415,7 +415,6 @@ public class JournalArticleStagedModelDataHandlerTest
 				JournalContentPortletKeys.JOURNAL_CONTENT);
 
 		Assert.assertNotNull(importedPortletPreferences);
-
 		Assert.assertEquals(
 			importedJournalArticle.getArticleId(),
 			importedPortletPreferences.getValue("articleId", null));

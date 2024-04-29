@@ -177,7 +177,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 					<%
 					Portlet portlet = PortletLocalServiceUtil.getPortletById(BlogsPortletKeys.BLOGS);
 
-					boolean automaticURL;
+					boolean automaticURL = false;
 
 					if (entry == null) {
 						automaticURL = Validator.isNull(blogsEditEntryDisplayContext.getURLTitle());

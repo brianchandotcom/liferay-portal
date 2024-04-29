@@ -373,6 +373,18 @@ public interface LayoutLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public Layout copyLayoutContent(Layout sourceLayout, Layout targetLayout)
+		throws Exception;
+
+	public Layout copyLayoutContent(
+			long segmentsExperienceId, Layout sourceLayout, Layout targetLayout)
+		throws Exception;
+
+	public Layout copyLayoutContent(
+			long[] segmentsExperienceIds, Layout sourceLayout,
+			Layout targetLayout)
+		throws Exception;
+
 	/**
 	 * Creates a new layout with the primary key. Does not add the layout to the database.
 	 *

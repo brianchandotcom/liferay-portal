@@ -48,10 +48,12 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 	};
 
 	const handleItemsChange = (items) => {
-		const assetCategories = Object.entries(items).map(([id, {title}]) => ({
-			label: title,
-			value: id,
-		}));
+		const assetCategories = Object.entries(items).map(
+			([id, {label, title}]) => ({
+				label: label || title,
+				value: id,
+			})
+		);
 
 		const addedItems = getUnique(
 			assetCategories.filter(

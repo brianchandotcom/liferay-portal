@@ -43,7 +43,7 @@
 								"align": "Start",
 								"contentDisplay": "FlexRow",
 								"justify": "SpaceBetween",
-								"marginBottom": 1,
+								"marginBottom": 2,
 								"marginTop": 1
 							}
 						},
@@ -261,18 +261,53 @@
 											"id": "tablet"
 										}
 									],
-									"size": 9
+									"size": 10
 								},
 								"pageElements": [
 									{
 										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "<p>This section contains information about <strong>breaking changes in out-of-the-box DXP features and capabilities.</strong> For breaking changes or internal code, please check the list below.</p>\n",
+																"es_ES": "<p>Esta sección contiene información sobre <strong>cambios importantes en las funciones y capacidades listas para usar de DXP.&nbsp;</strong>Para cambios importantes o código interno, consulte la lista a continuación.</p>\n",
+																"ja_JP": "<p>このセクションには、<strong>すぐに使える DXP の機能の重大な変更に関する情報が含まれています。</strong>&nbsp;重大な変更または内部コードについては、以下のリストを確認してください。</p>\n",
+																"pt_BR": "<p>Esta seção contém informações sobre <strong>alterações importantes em recursos e capacidades DXP prontos para uso. </strong>Para alterações significativas ou código interno, verifique a lista abaixo.</p>\n"
+															}
+														}
+													}
+												}
+											],
 											"fragmentStyle": {
+												"marginBottom": "-0.5rem",
+												"marginLeft": "2",
+												"marginRight": "13rem",
+												"marginTop": "4"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginRight": "13rem",
 												"minHeight": "52.5vh"
 											},
 											"widgetInstance": {
 												"widgetConfig": {
 													"displayInDocumentForm": "false",
-													"displayStyle": "ddmTemplate_RELEASE-NOTES-HIGHLIGHTS-SEARCH",
+													"displayStyle": "ddmTemplate_RELEASE-NOTES-BREAKING-CHANGE-SEARCH",
 													"displayStyleGroupId": "[$GROUP_ID$]",
 													"federatedSearchKey": "",
 													"fieldsToDisplay": "",
@@ -312,7 +347,7 @@
 											"id": "tablet"
 										}
 									],
-									"size": 3
+									"size": 2
 								},
 								"pageElements": [
 									{

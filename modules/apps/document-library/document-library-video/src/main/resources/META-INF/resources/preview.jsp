@@ -23,6 +23,6 @@
 		FileVersion fileVersion = (FileVersion)request.getAttribute(FileVersion.class.getName());
 		%>
 
-		<%= (dlVideoRenderer != null) ? dlVideoRenderer.renderHTML(fileVersion, request) : null %>
+		<%= dlVideoRenderer.renderHTML(fileVersion, request) %>
 	</div>
 </div>

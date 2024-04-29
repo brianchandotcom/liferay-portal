@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -234,6 +235,11 @@ public class EmailNotificationType extends BaseNotificationType {
 
 		Group userGroup = user.getGroup();
 
+		if ((userGroup == null) && user.isGuestUser()) {
+			userGroup = _groupLocalService.getGroup(
+				user.getCompanyId(), GroupConstants.GUEST);
+		}
+
 		if (userGroup != null) {
 			groupId = userGroup.getGroupId();
 		}
@@ -246,7 +252,7 @@ public class EmailNotificationType extends BaseNotificationType {
 			notificationContext.getNotificationTemplate();
 
 		String body = _formatBody(
-			notificationTemplate.getBodyMap(), groupId, notificationContext);
+			notificationTemplate.getBodyMap(), userGroup, notificationContext);
 		NotificationRecipient notificationRecipient =
 			notificationTemplate.getNotificationRecipient();
 		String subject = formatLocalizedContent(
@@ -500,7 +506,7 @@ public class EmailNotificationType extends BaseNotificationType {
 	}
 
 	private String _formatBody(
-			Map<Locale, String> bodyMap, long groupId,
+			Map<Locale, String> bodyMap, Group group,
 			NotificationContext notificationContext)
 		throws PortalException {
 
@@ -544,9 +550,7 @@ public class EmailNotificationType extends BaseNotificationType {
 					notificationContext.getClassName());
 
 		ServiceContextThreadLocal.pushServiceContext(
-			_getServiceContext(
-				_groupLocalService.getGroup(groupId),
-				notificationContext.getUserId()));
+			_getServiceContext(group, notificationContext.getUserId()));
 
 		try {
 			InfoItemFieldValues infoItemFieldValues =

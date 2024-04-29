@@ -94,6 +94,61 @@ public class LayoutServiceTest {
 	}
 
 	@Test
+	public void testFetchFirstLayout() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_assertFetchFirstLayoutAsGuestUser(layout, false);
+	}
+
+	@Test
+	public void testFetchFirstLayoutFirstLayoutUnpublished() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_publishLayouts(
+			LayoutTestUtil.addTypeContentLayout(_group),
+			LayoutTestUtil.addTypeContentLayout(_group));
+
+		_assertFetchFirstLayoutAsGuestUser(layout, false);
+	}
+
+	@Test
+	public void testFetchFirstLayoutFirstLayoutWithoutPermission()
+		throws Exception {
+
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_publishLayouts(layout1, LayoutTestUtil.addTypeContentLayout(_group));
+
+		_removeResourcePermission(layout1);
+
+		_assertFetchFirstLayoutAsGuestUser(layout2, false);
+	}
+
+	@Test
+	public void testFetchFirstLayoutNoLayoutPublished() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		LayoutTestUtil.addTypeContentLayout(_group);
+		LayoutTestUtil.addTypeContentLayout(_group);
+
+		_assertFetchFirstLayoutAsGuestUser(layout, false);
+	}
+
+	@Test
+	public void testFetchFirstLayoutNoLayoutWithPermission() throws Exception {
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout3 = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_publishLayouts(layout1, layout2, layout3);
+
+		_removeResourcePermission(layout1, layout2, layout3);
+
+		_assertFetchFirstLayoutAsGuestUser(null, false);
+	}
+
+	@Test
 	public void testFetchFirstLayoutPublished() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -321,13 +376,20 @@ public class LayoutServiceTest {
 	private void _assertFetchFirstLayoutAsGuestUser(Layout layout)
 		throws Exception {
 
+		_assertFetchFirstLayoutAsGuestUser(layout, true);
+	}
+
+	private void _assertFetchFirstLayoutAsGuestUser(
+			Layout layout, boolean published)
+		throws Exception {
+
 		User user = _userLocalService.fetchGuestUser(_group.getCompanyId());
 
 		try {
 			UserTestUtil.setUser(user);
 
 			Layout curLayout = _layoutService.fetchFirstLayout(
-				_group.getGroupId(), false, true);
+				_group.getGroupId(), false, published);
 
 			if (layout == null) {
 				Assert.assertNull(curLayout);

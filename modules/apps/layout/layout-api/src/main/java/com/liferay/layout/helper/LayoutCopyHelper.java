@@ -11,7 +11,10 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Pavel Savinov
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.portal.kernel.service.LayoutLocalService}
  */
+@Deprecated
 @ProviderType
 public interface LayoutCopyHelper {
 

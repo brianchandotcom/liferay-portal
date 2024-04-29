@@ -381,6 +381,30 @@ public class LayoutLocalServiceUtil {
 			copyPermissions, sourcePlid, serviceContext);
 	}
 
+	public static Layout copyLayoutContent(
+			Layout sourceLayout, Layout targetLayout)
+		throws Exception {
+
+		return getService().copyLayoutContent(sourceLayout, targetLayout);
+	}
+
+	public static Layout copyLayoutContent(
+			long segmentsExperienceId, Layout sourceLayout, Layout targetLayout)
+		throws Exception {
+
+		return getService().copyLayoutContent(
+			segmentsExperienceId, sourceLayout, targetLayout);
+	}
+
+	public static Layout copyLayoutContent(
+			long[] segmentsExperienceIds, Layout sourceLayout,
+			Layout targetLayout)
+		throws Exception {
+
+		return getService().copyLayoutContent(
+			segmentsExperienceIds, sourceLayout, targetLayout);
+	}
+
 	/**
 	 * Creates a new layout with the primary key. Does not add the layout to the database.
 	 *

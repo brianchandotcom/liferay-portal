@@ -11,10 +11,10 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "D4B8_LIST_ANNUAL_PURCHASE_VOLUMES",
+			"externalReferenceCode": "D4B8_ANNUAL_PURCHASE_VOLUMES",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "VOLUME_FIRST_TIER",
+					"externalReferenceCode": "FIRST_TIER",
 					"key": "firstTier",
 					"name": "$50,000 - $100,000 USD",
 					"name_i18n": {
@@ -22,7 +22,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "VOLUME_SECOND_TIER",
+					"externalReferenceCode": "SECOND_TIER",
 					"key": "secondTier",
 					"name": "$200,000 - $500,000 USD",
 					"name_i18n": {
@@ -30,7 +30,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "VOLUME_THIRD_TIER",
+					"externalReferenceCode": "THIRD_TIER",
 					"key": "thirdTier",
 					"name": "$500,000 - $1M USD",
 					"name_i18n": {
@@ -38,7 +38,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "VOLUME_FOURTH_TIER",
+					"externalReferenceCode": "FOURTH_TIER",
 					"key": "fourthTier",
 					"name": "$1M+ USD",
 					"name_i18n": {
@@ -52,10 +52,10 @@
 			}
 		},
 		{
-			"externalReferenceCode": "D4B8_LIST_APPLICATION_STATES",
+			"externalReferenceCode": "D4B8_APPLICATION_STATES",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "APPLICATION_STATE_APPROVED",
+					"externalReferenceCode": "APPROVED",
 					"key": "approved",
 					"name": "Approved",
 					"name_i18n": {
@@ -63,7 +63,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "APPLICATION_STATE_DENIED",
+					"externalReferenceCode": "DENIED",
 					"key": "denied",
 					"name": "Denied",
 					"name_i18n": {
@@ -71,7 +71,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "APPLICATION_STATE_ON_HOLD",
+					"externalReferenceCode": "ON_HOLD",
 					"key": "onHold",
 					"name": "On Hold",
 					"name_i18n": {
@@ -79,7 +79,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "APPLICATION_STATE_OPEN",
+					"externalReferenceCode": "OPEN",
 					"key": "open",
 					"name": "Open",
 					"name_i18n": {
@@ -87,7 +87,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "APPLICATION_STATE_UNDER_REVIEW",
+					"externalReferenceCode": "UNDER_REVIEW",
 					"key": "underReview",
 					"name": "Under Review",
 					"name_i18n": {
@@ -95,7 +95,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "APPLICATION_STATE_WITHDRAWN",
+					"externalReferenceCode": "WITHDRAWN",
 					"key": "withdrawn",
 					"name": "Withdrawn",
 					"name_i18n": {
@@ -109,10 +109,10 @@
 			}
 		},
 		{
-			"externalReferenceCode": "D4B8_LIST_ASSESSMENT_SCORES",
+			"externalReferenceCode": "D4B8_ASSESSMENT_SCORES",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "SCORE_AVERAGE",
+					"externalReferenceCode": "AVERAGE",
 					"key": "average",
 					"name": "Average",
 					"name_i18n": {
@@ -120,7 +120,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "SCORE_EXCELLENT",
+					"externalReferenceCode": "EXCELLENT",
 					"key": "excellent",
 					"name": "Excellent",
 					"name_i18n": {
@@ -128,7 +128,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "SCORE_FAIR",
+					"externalReferenceCode": "FAIR",
 					"key": "fair",
 					"name": "Fair",
 					"name_i18n": {
@@ -136,7 +136,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "SCORE_GOOD",
+					"externalReferenceCode": "GOOD",
 					"key": "good",
 					"name": "Good",
 					"name_i18n": {
@@ -144,7 +144,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "SCORE_POOR",
+					"externalReferenceCode": "POOR",
 					"key": "poor",
 					"name": "Poor",
 					"name_i18n": {
@@ -158,18 +158,10 @@
 			}
 		},
 		{
-			"externalReferenceCode": "D4B8_LIST_BUSINESS_TYPES",
+			"externalReferenceCode": "D4B8_BUSINESS_TYPES",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "BUSINESS_TYPE_INDEPENDENT_BUSINESS",
-					"key": "independentBusiness",
-					"name": "Independent Business",
-					"name_i18n": {
-						"en-US": "Independent Business"
-					}
-				},
-				{
-					"externalReferenceCode": "BUSINESS_TYPE_FRANCHISE",
+					"externalReferenceCode": "FRANCHISE",
 					"key": "franchise",
 					"name": "Franchise",
 					"name_i18n": {
@@ -177,7 +169,15 @@
 					}
 				},
 				{
-					"externalReferenceCode": "BUSINESS_TYPE_OTHER",
+					"externalReferenceCode": "INDEPENDENT",
+					"key": "independent",
+					"name": "Independent",
+					"name_i18n": {
+						"en-US": "Independent"
+					}
+				},
+				{
+					"externalReferenceCode": "OTHER",
 					"key": "other",
 					"name": "Other",
 					"name_i18n": {
@@ -191,10 +191,10 @@
 			}
 		},
 		{
-			"externalReferenceCode": "D4B8_LIST_DECISIONS",
+			"externalReferenceCode": "D4B8_DECISIONS",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "DECISION_APPROVED",
+					"externalReferenceCode": "APPROVED",
 					"key": "approved",
 					"name": "Approved",
 					"name_i18n": {
@@ -202,15 +202,15 @@
 					}
 				},
 				{
-					"externalReferenceCode": "DECISION_APPROVED_WITH_CONDITIONS",
+					"externalReferenceCode": "APPROVED_WITH_CONDITIONS",
 					"key": "approvedWithConditions",
-					"name": "Approved with Conditions",
+					"name": "Approved With Conditions",
 					"name_i18n": {
-						"en-US": "Approved with Conditions"
+						"en-US": "Approved With Conditions"
 					}
 				},
 				{
-					"externalReferenceCode": "DECISION_REJECTED",
+					"externalReferenceCode": "REJECTED",
 					"key": "rejected",
 					"name": "Rejected",
 					"name_i18n": {
@@ -218,7 +218,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "DECISION_HOLD_FOR_FUTURE_CONSIDERATION",
+					"externalReferenceCode": "HOLD_FOR_FUTURE_CONSIDERATION",
 					"key": "holdForFutureConsideration",
 					"name": "Hold for Future Consideration",
 					"name_i18n": {
@@ -226,7 +226,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "DECISION_WITHDRAWN",
+					"externalReferenceCode": "WITHDRAWN",
 					"key": "withdrawn",
 					"name": "Withdrawn",
 					"name_i18n": {
@@ -240,7 +240,7 @@
 			}
 		},
 		{
-			"externalReferenceCode": "D4B8_LIST_DISTRIBUTION_CHANNELS",
+			"externalReferenceCode": "D4B8_DISTRIBUTION_CHANNELS",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "CHANNEL_OTHER_RETAILERS",
@@ -273,7 +273,7 @@
 			}
 		},
 		{
-			"externalReferenceCode": "D4B8_LIST_DISTRIBUTION_REGIONS",
+			"externalReferenceCode": "D4B8_DISTRIBUTION_REGIONS",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "REGION_LATIN_AMERICA",
@@ -362,7 +362,7 @@
 			}
 		},
 		{
-			"externalReferenceCode": "D4B8_LIST_ORDER_TYPES",
+			"externalReferenceCode": "D4B8_ORDER_TYPES",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "ORDER_TYPE_WHOLESALE",
@@ -403,7 +403,7 @@
 			}
 		},
 		{
-			"externalReferenceCode": "D4B8_LIST_PRODUCT_LABELS",
+			"externalReferenceCode": "D4B8_PRODUCT_LABELS",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "LABEL_STANDARD_US",
@@ -428,14 +428,14 @@
 			}
 		},
 		{
-			"externalReferenceCode": "D4B8_LIST_PRODUCT_TYPES",
+			"externalReferenceCode": "D4B8_PRODUCT_TYPES",
 			"name": "D4B8 Product Types",
 			"name_i18n": {
 				"en-US": "D4B8 Product Types"
 			}
 		},
 		{
-			"externalReferenceCode": "D4B8_LIST_RECOMMENDATIONS",
+			"externalReferenceCode": "D4B8_RECOMMENDATIONS",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "REC_REQUEST_ADDITIONAL_DOCUMENTS",

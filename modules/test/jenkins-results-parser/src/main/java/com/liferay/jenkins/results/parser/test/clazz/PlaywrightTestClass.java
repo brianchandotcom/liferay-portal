@@ -31,8 +31,6 @@ public class PlaywrightTestClass extends JUnitTestClass {
 			"slave_label", _slaveLabel
 		).put(
 			"spec_title", _specTitle
-		).put(
-			"testray_main_component_name", _testrayMainComponentName
 		);
 
 		return jsonObject;
@@ -102,14 +100,10 @@ public class PlaywrightTestClass extends JUnitTestClass {
 			}
 
 			_slaveLabel = slaveLabel;
-
-			_testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
-				testProperties, "testray.main.component.name");
 		}
 		else {
 			_minimumSlaveRAM = null;
 			_slaveLabel = null;
-			_testrayMainComponentName = null;
 		}
 	}
 
@@ -121,8 +115,6 @@ public class PlaywrightTestClass extends JUnitTestClass {
 		_minimumSlaveRAM = jsonObject.optInt("minimum_slave_ram");
 		_slaveLabel = jsonObject.optString("slave_label");
 		_specTitle = jsonObject.getString("spec_title");
-		_testrayMainComponentName = jsonObject.optString(
-			"testray_main_component_name");
 	}
 
 	private static final String _MINIMUM_SLAVE_RAM_DEFAULT = "12";
@@ -135,6 +127,5 @@ public class PlaywrightTestClass extends JUnitTestClass {
 	private final Integer _minimumSlaveRAM;
 	private final String _slaveLabel;
 	private final String _specTitle;
-	private final String _testrayMainComponentName;
 
 }

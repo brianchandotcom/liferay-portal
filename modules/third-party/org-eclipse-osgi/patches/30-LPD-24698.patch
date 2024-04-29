@@ -1,0 +1,408 @@
+diff --git a/org/eclipse/osgi/internal/serviceregistry/FilteredServiceListener.java b/org/eclipse/osgi/internal/serviceregistry/FilteredServiceListener.java
+index b919fb6f6835d..c192e8ee26d64 100644
+--- a/org/eclipse/osgi/internal/serviceregistry/FilteredServiceListener.java
++++ b/org/eclipse/osgi/internal/serviceregistry/FilteredServiceListener.java
+@@ -86,6 +86,11 @@ class FilteredServiceListener implements ServiceListener, ListenerHook.ListenerI
+ 			}
+ 			return; // no class in this event matches a required part of the filter; we do not need to deliver this event
+ 		}
++
++		doServiceChanged(event);
++	}
++
++	protected void doServiceChanged(ServiceEvent event) {
+ 		// TODO could short circuit service.id filters as well since the id is constant for a registration.
+ 
+ 		if (!ServiceRegistry.hasListenServicePermission(event, context))
+@@ -93,14 +98,14 @@ class FilteredServiceListener implements ServiceListener, ListenerHook.ListenerI
+ 
+ 		if (debug.DEBUG_EVENTS) {
+ 			String listenerName = this.getClass().getName() + "@" + Integer.toHexString(System.identityHashCode(this)); //$NON-NLS-1$
+-			Debug.println("filterServiceEvent(" + listenerName + ", \"" + getFilter() + "\", " + reference.getRegistration().getProperties() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
++			Debug.println("filterServiceEvent(" + listenerName + ", \"" + getFilter() + "\", " + ((ServiceReferenceImpl<?>) event.getServiceReference()).getRegistration().getProperties() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+ 		}
+ 
+ 		event = filterMatch(event);
+ 		if (event == null) {
+ 			return;
+ 		}
+-		if (allservices || ServiceRegistry.isAssignableTo(context, reference)) {
++		if (allservices || ServiceRegistry.isAssignableTo(context, (ServiceReferenceImpl<?>) event.getServiceReference())) {
+ 			if (debug.DEBUG_EVENTS) {
+ 				String listenerName = listener.getClass().getName() + "@" + Integer.toHexString(System.identityHashCode(listener)); //$NON-NLS-1$
+ 				Debug.println("dispatchFilteredServiceEvent(" + listenerName + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+@@ -172,6 +177,14 @@ class FilteredServiceListener implements ServiceListener, ListenerHook.ListenerI
+ 		return getObjectClassFilterString(objectClass);
+ 	}
+ 
++	public ServiceListener getListener() {
++		return listener;
++	}
++
++	public String getObjectClass() {
++		return objectClass;
++	}
++
+ 	/**
+ 	 * Return the state of the listener for this addition and removal life
+ 	 * cycle. Initially this method will return <code>false</code>
+diff --git a/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java b/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
+index e5b9d14a3a215..3fe3f059a6df0 100644
+--- a/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
++++ b/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
+@@ -16,6 +16,7 @@ import java.util.*;
+ import java.util.concurrent.ConcurrentHashMap;
+ import java.util.concurrent.ConcurrentLinkedQueue;
+ import java.util.concurrent.ConcurrentSkipListMap;
++import java.util.concurrent.CopyOnWriteArrayList;
+ import java.util.concurrent.atomic.AtomicLong;
+ import org.eclipse.osgi.container.Module;
+ import org.eclipse.osgi.container.ModuleRevision;
+@@ -71,11 +72,11 @@ public class ServiceRegistry {
+ 	/** next free service id. */
+ 	private final AtomicLong serviceid = new AtomicLong(1);
+ 
+-	/** Active Service Listeners.
+-	 * {@literal Map<BundleContextImpl,CopyOnWriteIdentityMap<ServiceListener,FilteredServiceListener>>}.
+-	 */
+-	/* @GuardedBy("serviceEventListeners") */
+-	private final Map<BundleContextImpl, CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener>> serviceEventListeners;
++	private final Map<String, List<FilteredServiceListener>> _objectClassFilteredServiceListeners;
++
++	private final Map<ServiceListener, FilteredServiceListener> _serviceListenerFilteredServiceListeners;
++
++	private final Map<ServiceListener, FilteredServiceListener> _globalFilteredServiceListeners;
+ 
+ 	/** initial capacity of the main data structure */
+ 	private static final int initialCapacity = 50;
+@@ -93,7 +94,9 @@ public class ServiceRegistry {
+ 	public ServiceRegistry(EquinoxContainer container) {
+ 		this.container = container;
+ 		this.debug = container.getConfiguration().getDebug();
+-		serviceEventListeners = new ConcurrentHashMap<>(initialCapacity);
++		_objectClassFilteredServiceListeners = new ConcurrentHashMap<>(initialCapacity);
++		_serviceListenerFilteredServiceListeners = new ConcurrentHashMap<>(initialCapacity);
++		_globalFilteredServiceListeners = new ConcurrentHashMap<>();
+ 		Module systemModule = container.getStorage().getModuleContainer().getModule(0);
+ 		systemBundleContext = (BundleContextImpl) systemModule.getBundle().getBundleContext();
+ 		systemBundleContext.provisionServicesInUseMap();
+@@ -710,15 +713,28 @@ public class ServiceRegistry {
+ 		}
+ 
+ 		FilteredServiceListener filteredListener = new FilteredServiceListener(context, listener, filter);
+-		FilteredServiceListener oldFilteredListener;
+-		synchronized (serviceEventListeners) {
+-			CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener> listeners = serviceEventListeners.get(context);
+-			if (listeners == null) {
+-				listeners = new CopyOnWriteIdentityMap<>();
+-				serviceEventListeners.put(context, listeners);
+-			}
+-			oldFilteredListener = listeners.put(listener, filteredListener);
++
++		String objectClass = filteredListener.getObjectClass();
++
++		if (objectClass == null) {
++			_globalFilteredServiceListeners.put(listener, filteredListener);
+ 		}
++		else {
++			_objectClassFilteredServiceListeners.compute(
++				objectClass,
++				(key, filteredListeners) -> {
++					if (filteredListeners == null) {
++						filteredListeners = new CopyOnWriteArrayList<>();
++					}
++
++					filteredListeners.add(filteredListener);
++
++					return filteredListeners;
++				}
++			);
++		}
++
++		FilteredServiceListener oldFilteredListener = _serviceListenerFilteredServiceListeners.put(listener, filteredListener);
+ 
+ 		if (oldFilteredListener != null) {
+ 			oldFilteredListener.markRemoved();
+@@ -742,18 +758,32 @@ public class ServiceRegistry {
+ 			Debug.println("removeServiceListener[" + context.getBundleImpl() + "](" + listenerName + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+ 		}
+ 
+-		FilteredServiceListener oldFilteredListener;
+-		synchronized (serviceEventListeners) {
+-			Map<ServiceListener, FilteredServiceListener> listeners = serviceEventListeners.get(context);
+-			if (listeners == null) {
+-				return; // this context has no listeners to begin with
+-			}
+-			oldFilteredListener = listeners.remove(listener);
+-		}
++		FilteredServiceListener oldFilteredListener = _serviceListenerFilteredServiceListeners.remove(listener);
+ 
+ 		if (oldFilteredListener == null) {
+ 			return;
+ 		}
++
++		String objectClass = oldFilteredListener.getObjectClass();
++
++		if (objectClass == null) {
++			_globalFilteredServiceListeners.remove(listener);
++		}
++		else {
++			_objectClassFilteredServiceListeners.compute(
++				objectClass,
++				(key, filteredListeners) -> {
++					filteredListeners.remove(oldFilteredListener);
++
++					if (filteredListeners.isEmpty()) {
++						return null;
++					}
++
++					return filteredListeners;
++				}
++			);
++		}
++
+ 		oldFilteredListener.markRemoved();
+ 		Collection<ListenerInfo> removedListeners = Collections.<ListenerInfo> singletonList(oldFilteredListener);
+ 		notifyListenerHooks(removedListeners, false);
+@@ -765,16 +795,40 @@ public class ServiceRegistry {
+ 	 * @param context Context of bundle removing all listeners.
+ 	 */
+ 	public void removeAllServiceListeners(BundleContextImpl context) {
+-		Map<ServiceListener, FilteredServiceListener> removedListenersMap;
+-		synchronized (serviceEventListeners) {
+-			removedListenersMap = serviceEventListeners.remove(context);
+-		}
+-		if ((removedListenersMap == null) || removedListenersMap.isEmpty()) {
+-			return;
+-		}
+-		Collection<FilteredServiceListener> removedListeners = removedListenersMap.values();
+-		for (FilteredServiceListener oldFilteredListener : removedListeners) {
+-			oldFilteredListener.markRemoved();
++		List<FilteredServiceListener> removedListeners = new ArrayList<>();
++
++		Iterator<FilteredServiceListener> iterator =
++			_serviceListenerFilteredServiceListeners.values().iterator();
++
++		while (iterator.hasNext()) {
++			FilteredServiceListener filteredServiceListener = iterator.next();
++
++			if (context == filteredServiceListener.getBundleContext()) {
++				filteredServiceListener.markRemoved();
++
++				removedListeners.add(filteredServiceListener);
++
++				String objectClass = filteredServiceListener.getObjectClass();
++
++				if (objectClass == null) {
++					_globalFilteredServiceListeners.remove(
++						filteredServiceListener.getListener());
++				}
++				else {
++					_objectClassFilteredServiceListeners.compute(
++						objectClass, (key, filteredListeners) -> {
++							filteredListeners.remove(filteredServiceListener);
++
++							if (filteredListeners.isEmpty()) {
++								return null;
++							}
++
++							return filteredListeners;
++						});
++				}
++
++				iterator.remove();
++			}
+ 		}
+ 		notifyListenerHooks(asListenerInfos(removedListeners), false);
+ 	}
+@@ -801,29 +855,33 @@ public class ServiceRegistry {
+ 
+ 	void publishServiceEventPrivileged(final ServiceEvent event) {
+ 		/* Build the listener snapshot */
+-		Map<BundleContextImpl, CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener>> listenerSnapshot;
++
++		Map<String, List<FilteredServiceListener>> listenerSnapshot;
+ 
+ 		List<ServiceRegistrationImpl<?>> eventHooks = lookupServiceRegistrations(eventHookName, null);
+ 		List<ServiceRegistrationImpl<?>> eventListenerHooks = lookupServiceRegistrations(eventListenerHookName, null);
+ 
+ 		if (eventHooks.isEmpty() && eventListenerHooks.isEmpty()) {
+-			listenerSnapshot = serviceEventListeners;
++			listenerSnapshot = _objectClassFilteredServiceListeners;
+ 		}
+ 		else {
+ 			CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener> systemServiceListenersOrig = null;
+ 			BundleContextImpl systemContext = null;
+-			synchronized (serviceEventListeners) {
+-				listenerSnapshot = new HashMap<>(serviceEventListeners.size());
+-				for (Map.Entry<BundleContextImpl, CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener>> entry : serviceEventListeners.entrySet()) {
+-					CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener> listeners = entry.getValue();
+-					if (!listeners.isEmpty()) {
+-						if (entry.getKey().getBundleImpl().getBundleId() == 0) {
+-							systemContext = entry.getKey();
+-							// make a copy that we can use to discard hook removals later
+-							systemServiceListenersOrig = listeners;
+-						}
+-						listenerSnapshot.put(entry.getKey(), listeners);
+-					}
++
++			Map<BundleContextImpl, CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener>> bundleContextFilteredServiceListeners = new HashMap<>();
++
++			for (Map.Entry<ServiceListener, FilteredServiceListener> entry : _serviceListenerFilteredServiceListeners.entrySet()) {
++				FilteredServiceListener filteredServiceListener = entry.getValue();
++
++				BundleContextImpl bundleContextImpl = (BundleContextImpl)filteredServiceListener.getBundleContext();
++
++				CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener> copyOnWriteIdentityMap = bundleContextFilteredServiceListeners.computeIfAbsent(bundleContextImpl, key -> new CopyOnWriteIdentityMap<>());
++
++				copyOnWriteIdentityMap.put(entry.getKey(), filteredServiceListener);
++
++				if (bundleContextImpl.getBundleImpl().getBundleId() == 0) {
++					systemContext = bundleContextImpl;
++					systemServiceListenersOrig = copyOnWriteIdentityMap;
+ 				}
+ 			}
+ 
+@@ -832,12 +890,12 @@ public class ServiceRegistry {
+ 			 * removals from that collection will result in removals of the
+ 			 * entry from the snapshot.
+ 			 */
+-			Collection<BundleContext> contexts = asBundleContexts(listenerSnapshot.keySet());
++			Collection<BundleContext> contexts = asBundleContexts(bundleContextFilteredServiceListeners.keySet());
+ 			notifyEventHooksPrivileged(event, contexts);
+-			if (!listenerSnapshot.isEmpty()) {
++			if (!bundleContextFilteredServiceListeners.isEmpty()) {
+ 				Map<BundleContextImpl, Set<Map.Entry<ServiceListener, FilteredServiceListener>>> adaptedListenerSnapshot = new HashMap<>();
+ 
+-				listenerSnapshot.forEach(
++				bundleContextFilteredServiceListeners.forEach(
+ 					(key, value) -> {
+ 						adaptedListenerSnapshot.put(key, value.entrySet());
+ 					}
+@@ -847,15 +905,31 @@ public class ServiceRegistry {
+ 
+ 				notifyEventListenerHooksPrivileged(event, listeners);
+ 
+-				listenerSnapshot.keySet().retainAll(adaptedListenerSnapshot.keySet());
++				bundleContextFilteredServiceListeners.keySet().retainAll(adaptedListenerSnapshot.keySet());
+ 			}
+ 			// always add back the system service listeners if they were removed
+ 			if (systemServiceListenersOrig != null) {
+ 				// No contains key check is done because hooks may have removed
+ 				// a single listener from the value instead of the whole context key.
+ 				// It is more simple to just replace with the original snapshot.
+-				listenerSnapshot.put(systemContext, systemServiceListenersOrig);
++				bundleContextFilteredServiceListeners.put(systemContext, systemServiceListenersOrig);
+ 			}
++
++			Map<String, List<FilteredServiceListener>> copyListenerSnapshot = new HashMap<>();
++
++			for (CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener> copyOnWriteIdentityMap : bundleContextFilteredServiceListeners.values()) {
++				for (FilteredServiceListener filteredServiceListener : copyOnWriteIdentityMap.values()) {
++					String objectClass = filteredServiceListener.getObjectClass();
++
++					if (objectClass != null) {
++						List<FilteredServiceListener> filteredServiceListeners = copyListenerSnapshot.computeIfAbsent(objectClass, key -> new ArrayList<>());
++
++						filteredServiceListeners.add(filteredServiceListener);
++					}
++				}
++			}
++
++			listenerSnapshot = copyListenerSnapshot;
+ 		}
+ 		if (listenerSnapshot.isEmpty()) {
+ 			return;
+@@ -885,32 +959,21 @@ public class ServiceRegistry {
+ 		}
+ 
+ 		try {
+-			listenerSnapshot.forEach(
+-				(key, value) -> {
+-					for (FilteredServiceListener filteredServiceListener : value.values()) {
+-						try {
+-							filteredServiceListener.serviceChanged(event);
+-						}
+-						catch (Throwable t) {
+-							if (debug.DEBUG_GENERAL) {
+-								Debug.println(
+-									"Exception in bottom level event dispatcher: " +
+-										t.getMessage());
+-
+-								Debug.printStackTrace(t);
+-							}
+-
+-							container.handleRuntimeError(t);
++			ServiceReferenceImpl<?> reference = (ServiceReferenceImpl<?>) event.getServiceReference();
+ 
+-							EquinoxEventPublisher equinoxEventPublisher =
+-								container.getEventPublisher();
++			for (String clazz : reference.getClasses()) {
++				List<FilteredServiceListener> filteredServiceListeners = _objectClassFilteredServiceListeners.get(clazz);
+ 
+-							equinoxEventPublisher.publishFrameworkEvent(
+-								FrameworkEvent.ERROR, key.getBundleImpl(), t);
+-						}
++				if (filteredServiceListeners != null) {
++					for (FilteredServiceListener filteredServiceListener : filteredServiceListeners) {
++						_serviceChanged(filteredServiceListener, event);
+ 					}
+ 				}
+-			);
++			}
++
++			for (FilteredServiceListener filteredServiceListener : _globalFilteredServiceListeners.values()) {
++				_serviceChanged(filteredServiceListener, event);
++			}
+ 		}
+ 		finally {
+ 			if (previousTCCL != null) {
+@@ -919,6 +982,31 @@ public class ServiceRegistry {
+ 		}
+ 	}
+ 
++	private void _serviceChanged(FilteredServiceListener filteredServiceListener, ServiceEvent serviceEvent) {
++		try {
++			filteredServiceListener.doServiceChanged(serviceEvent);
++		}
++		catch (Throwable t) {
++			if (debug.DEBUG_GENERAL) {
++				Debug.println(
++					"Exception in bottom level event dispatcher: " +
++						t.getMessage());
++
++				Debug.printStackTrace(t);
++			}
++
++			container.handleRuntimeError(t);
++
++			EquinoxEventPublisher equinoxEventPublisher =
++				container.getEventPublisher();
++
++			BundleContextImpl bundleContextImpl = (BundleContextImpl)filteredServiceListener.getBundleContext();
++
++			equinoxEventPublisher.publishFrameworkEvent(
++				FrameworkEvent.ERROR, bundleContextImpl.getBundleImpl(), t);
++		}
++	}
++
+ 	/**
+ 	 * Coerce the generic type of a collection from Collection<BundleContextImpl>
+ 	 * to Collection<BundleContext>
+@@ -1387,15 +1475,7 @@ public class ServiceRegistry {
+ 			Debug.println("notifyServiceNewListenerHook(" + registration + ")"); //$NON-NLS-1$ //$NON-NLS-2$ 
+ 		}
+ 
+-		// snapshot the listeners
+-		Collection<ListenerInfo> addedListeners = new ArrayList<>(initialCapacity);
+-		synchronized (serviceEventListeners) {
+-			for (CopyOnWriteIdentityMap<ServiceListener, FilteredServiceListener> listeners : serviceEventListeners.values()) {
+-				if (!listeners.isEmpty()) {
+-					addedListeners.addAll(listeners.values());
+-				}
+-			}
+-		}
++		Collection<ListenerInfo> addedListeners = new ArrayList<>(_serviceListenerFilteredServiceListeners.values());
+ 
+ 		final Collection<ListenerInfo> listeners = Collections.unmodifiableCollection(addedListeners);
+ 		notifyHookPrivileged(systemBundleContext, registration, new HookContext() {

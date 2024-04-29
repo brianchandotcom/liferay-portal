@@ -86,6 +86,11 @@ class FilteredServiceListener implements ServiceListener, ListenerHook.ListenerI
 			}
 			return; // no class in this event matches a required part of the filter; we do not need to deliver this event
 		}
+
+		doServiceChanged(event);
+	}
+
+	protected void doServiceChanged(ServiceEvent event) {
 		// TODO could short circuit service.id filters as well since the id is constant for a registration.
 
 		if (!ServiceRegistry.hasListenServicePermission(event, context))
@@ -93,14 +98,14 @@ class FilteredServiceListener implements ServiceListener, ListenerHook.ListenerI
 
 		if (debug.DEBUG_EVENTS) {
 			String listenerName = this.getClass().getName() + "@" + Integer.toHexString(System.identityHashCode(this)); //$NON-NLS-1$
-			Debug.println("filterServiceEvent(" + listenerName + ", \"" + getFilter() + "\", " + reference.getRegistration().getProperties() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+			Debug.println("filterServiceEvent(" + listenerName + ", \"" + getFilter() + "\", " + ((ServiceReferenceImpl<?>) event.getServiceReference()).getRegistration().getProperties() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		}
 
 		event = filterMatch(event);
 		if (event == null) {
 			return;
 		}
-		if (allservices || ServiceRegistry.isAssignableTo(context, reference)) {
+		if (allservices || ServiceRegistry.isAssignableTo(context, (ServiceReferenceImpl<?>) event.getServiceReference())) {
 			if (debug.DEBUG_EVENTS) {
 				String listenerName = listener.getClass().getName() + "@" + Integer.toHexString(System.identityHashCode(listener)); //$NON-NLS-1$
 				Debug.println("dispatchFilteredServiceEvent(" + listenerName + ")"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -170,6 +175,14 @@ class FilteredServiceListener implements ServiceListener, ListenerHook.ListenerI
 			return filter.toString();
 		}
 		return getObjectClassFilterString(objectClass);
+	}
+
+	public ServiceListener getListener() {
+		return listener;
+	}
+
+	public String getObjectClass() {
+		return objectClass;
 	}
 
 	/**

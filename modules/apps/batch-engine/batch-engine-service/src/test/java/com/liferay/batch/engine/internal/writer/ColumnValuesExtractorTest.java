@@ -226,8 +226,8 @@ public class ColumnValuesExtractorTest {
 					fieldName, index,
 					object -> {
 						ObjectValuePair<Field, Method>
-							propertiesObjectValuePair =
-								objectValuePairs.get("properties");
+							propertiesObjectValuePair = objectValuePairs.get(
+								"properties");
 
 						Method method = propertiesObjectValuePair.getValue();
 

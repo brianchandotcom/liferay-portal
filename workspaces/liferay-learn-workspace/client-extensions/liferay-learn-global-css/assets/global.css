@@ -313,15 +313,13 @@ pre[class*='language-'] {
 			color: var(--color-neutral-8, #54555f);
 			margin-bottom: 1rem;
 			width: 100%;
-			thead {
-				color: var(--color-neutral-0, #fff);
-			}
+			
 			td {
 				background-clip: padding-box;
 				border-bottom-width: 0.0625rem;
 				border-color: transparent;
-				border-left-width: 0px;
-				border-right-width: 0px;
+				border-left-width: 0;
+				border-right-width: 0;
 				border-style: solid;
 				border-top-width: 0.0625rem;
 				height: 56px;
@@ -329,66 +327,40 @@ pre[class*='language-'] {
 				position: relative;
 				vertical-align: middle;
 			}
-		}
 
-		table th {
-			color: var(--color-neutral-10, #282934);
-			font-size: 0.875rem;
-		}
-
-		.table th:first-child,
-		table th:first-child,
-		.table td:first-child,
-		table td:first-child,
-		.table .table-column-start,
-		table .table-column-start {
-			padding-left: 1.25rem;
-		}
-
-		.table thead th,
-		table thead th,
-		.table thead td,
-		table thead td {
-			border-bottom: calc(2 * 0.0625rem) solid #dee2e6;
-			border-top-width: 0px;
-			vertical-align: middle;
-		}
-
-		.table-striped
-			tbody
-			tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
-				.table-divider
-			),
-		table
-			tbody
-			tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
-				.table-divider
-			),
-		.table-striped
-			tbody
-			tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
-				.table-divider
-			)
-			td,
-		table
-			tbody
-			tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
-				.table-divider
-			)
-			td,
-		.table-striped
-			tbody
-			tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
-				.table-divider
-			)
-			th,
-		table
-			tbody
-			tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
-				.table-divider
-			)
 			th {
-			background-color: var(--color-state-info-lighten-2, #e6ebf5);
+				color: var(--color-neutral-10, #282934);
+				font-size: 0.875rem;
+			}
+
+			thead {
+				color: var(--color-neutral-0, #fff);
+			}
+		}
+
+		table, .table {
+			td:first-child,
+			th:first-child,
+			.table-column-start {
+				padding-left: 1.25rem;
+			}
+	
+			thead td,
+			thead th {
+				border-bottom: calc(2 * 0.0625rem) solid #dee2e6;
+				border-top-width: 0;
+				vertical-align: middle;
+			}
+		}
+
+		table, .table-striped {
+			tbody tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(.table-divider) {
+				&,
+				td,
+				th {
+					background-color: var(--color-state-info-lighten-2, #e6ebf5);
+				}
+			}
 		}
 	}
 

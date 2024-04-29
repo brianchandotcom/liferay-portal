@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.test;
+package com.liferay.layout.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -25,7 +25,6 @@ import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.content.LayoutContentProvider;
-import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -116,7 +115,7 @@ import org.junit.runner.RunWith;
  * @author Pavel Savinov
  */
 @RunWith(Arquillian.class)
-public class LayoutCopyHelperTest {
+public class LayoutLocalServiceCopyLayoutContentTest {
 
 	@ClassRule
 	@Rule
@@ -156,7 +155,7 @@ public class LayoutCopyHelperTest {
 			new long[] {assetCategory.getCategoryId()},
 			new String[] {assetTag.getName()});
 
-		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
+		_layoutLocalService.copyLayoutContent(sourceLayout, targetLayout);
 
 		List<AssetCategory> assetCategories =
 			_assetCategoryLocalService.getCategories(
@@ -225,7 +224,7 @@ public class LayoutCopyHelperTest {
 				_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 					_group.getGroupId(), targetLayout.getPlid())));
 
-		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
+		_layoutLocalService.copyLayoutContent(sourceLayout, targetLayout);
 
 		Assert.assertNotNull(
 			_layoutPageTemplateStructureLocalService.
@@ -313,7 +312,7 @@ public class LayoutCopyHelperTest {
 				sourceLayout.getGroupId(), sourceLayout.getPlid(),
 				defaultSegmentsExperienceId, layoutStructure.toString());
 
-		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
+		_layoutLocalService.copyLayoutContent(sourceLayout, targetLayout);
 
 		List<FragmentEntryLink> firstCopyFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
@@ -369,7 +368,7 @@ public class LayoutCopyHelperTest {
 				sourceLayout.getGroupId(), sourceLayout.getPlid(),
 				defaultSegmentsExperienceId, layoutStructure.toString());
 
-		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
+		_layoutLocalService.copyLayoutContent(sourceLayout, targetLayout);
 
 		List<FragmentEntryLink> secondCopyFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
@@ -421,7 +420,7 @@ public class LayoutCopyHelperTest {
 
 		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
-		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
+		_layoutLocalService.copyLayoutContent(sourceLayout, targetLayout);
 
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
 			_layoutClassedModelUsageLocalService.
@@ -441,7 +440,7 @@ public class LayoutCopyHelperTest {
 
 		targetLayout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
+		_layoutLocalService.copyLayoutContent(sourceLayout, targetLayout);
 
 		layoutClassedModelUsages =
 			_layoutClassedModelUsageLocalService.
@@ -484,7 +483,7 @@ public class LayoutCopyHelperTest {
 
 				String content = RandomTestUtil.randomString();
 
-				_layoutCopyHelper.copyLayoutContent(
+				_layoutLocalService.copyLayoutContent(
 					_addFragmentEntryLinkAndGetLayout(content, draftLayout),
 					layout);
 
@@ -527,7 +526,7 @@ public class LayoutCopyHelperTest {
 						ctCollection.getCtCollectionId())) {
 
 				try (LoggingTimer loggingTimer = new LoggingTimer()) {
-					_layoutCopyHelper.copyLayoutContent(
+					_layoutLocalService.copyLayoutContent(
 						displayPageTemplateLayout.fetchDraftLayout(),
 						displayPageTemplateLayout);
 				}
@@ -599,7 +598,7 @@ public class LayoutCopyHelperTest {
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
-		_layoutCopyHelper.copyLayoutContent(
+		_layoutLocalService.copyLayoutContent(
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				sourceLayout.getPlid()),
 			sourceLayout, targetLayout);
@@ -639,7 +638,7 @@ public class LayoutCopyHelperTest {
 		Assert.assertNotEquals(
 			sourceLayout.getIconImageId(), targetLayout.getIconImageId());
 
-		targetLayout = _layoutCopyHelper.copyLayoutContent(
+		targetLayout = _layoutLocalService.copyLayoutContent(
 			sourceLayout, targetLayout);
 
 		Assert.assertTrue(sourceLayout.isIconImage());
@@ -673,7 +672,7 @@ public class LayoutCopyHelperTest {
 
 		Assert.assertNotEquals(sourceLayout.getCss(), targetLayout.getCss());
 
-		targetLayout = _layoutCopyHelper.copyLayoutContent(
+		targetLayout = _layoutLocalService.copyLayoutContent(
 			sourceLayout, targetLayout);
 
 		Assert.assertEquals(
@@ -708,7 +707,7 @@ public class LayoutCopyHelperTest {
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
-		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
+		_layoutLocalService.copyLayoutContent(sourceLayout, targetLayout);
 
 		targetPortletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
@@ -744,7 +743,7 @@ public class LayoutCopyHelperTest {
 			targetUnicodeProperties.getProperty(
 				"lfr-theme:regular:show-header"));
 
-		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
+		_layoutLocalService.copyLayoutContent(sourceLayout, targetLayout);
 
 		targetLayout = _layoutLocalService.fetchLayout(targetLayout.getPlid());
 
@@ -1079,9 +1078,6 @@ public class LayoutCopyHelperTest {
 
 	@Inject
 	private LayoutContentProvider _layoutContentProvider;
-
-	@Inject
-	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

@@ -8,6 +8,7 @@ package com.liferay.portal.workflow.kaleo.definition.internal.parser;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.security.script.management.configuration.helper.ScriptManagementConfigurationHelper;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
@@ -20,7 +21,6 @@ import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowValidator;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -62,10 +62,8 @@ public class XMLWorkflowValidator implements WorkflowValidator {
 			}
 			else if (content.contains(
 						"<script-language>java</script-language>") &&
-					 !Objects.equals(
-						 definition.getName(),
-						 "Message Board Threads and Comments Reputation " +
-							 "Approver")) {
+					 !_safeWorkflowDefinitionNames.contains(
+						 definition.getName())) {
 
 				throw new KaleoDefinitionValidationException.
 					NotAllowedScriptLanguage("Java is not allowed");
@@ -102,6 +100,11 @@ public class XMLWorkflowValidator implements WorkflowValidator {
 	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
+
+	private final List<String> _safeWorkflowDefinitionNames =
+		ListUtil.fromArray(
+			"Message Board Threads and Comments Reputation Approver",
+			"Underwriting Workflow");
 
 	@Reference
 	private ScriptManagementConfigurationHelper

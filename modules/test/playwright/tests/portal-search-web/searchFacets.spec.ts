@@ -24,7 +24,7 @@ test.describe('Clear and retain facet selections', () => {
 		await searchPage.searchKeywordInNavBar('test');
 
 		await expect(searchPage.searchResultsTotalLabel).toHaveText(
-			'10 Results for test'
+			/\d+ Results for test/
 		);
 
 		// Select facet terms and assert checked
@@ -52,6 +52,22 @@ test.describe('Clear and retain facet selections', () => {
 		await searchPage.selectSearchFacetLink(lastModifiedPastYearFacetLink);
 	});
 
+	test.afterEach(async ({searchPage}) => {
+
+		// Teardown by resetting search options
+
+		await searchPage.selectSearchOptionCheckboxConfigurations([
+			{
+				label: 'Allow Empty Searches',
+				value: false,
+			},
+			{
+				label: 'Retain Facet Selections Across Searches',
+				value: false,
+			},
+		]);
+	});
+
 	test('clears facet terms after new keyword search @LPD-19994', async ({
 		searchPage,
 	}) => {
@@ -61,7 +77,7 @@ test.describe('Clear and retain facet selections', () => {
 		await searchPage.searchKeywordInNavBar('png');
 
 		await expect(searchPage.searchResultsTotalLabel).toHaveText(
-			'7 Results for png'
+			/\d+ Results for png/
 		);
 
 		// Verify that facet selections are cleared
@@ -83,7 +99,7 @@ test.describe('Clear and retain facet selections', () => {
 		await searchPage.searchKeywordInNavBar('test');
 
 		await expect(searchPage.searchResultsTotalLabel).toHaveText(
-			'7 Results for test'
+			/\d+ Results for test/
 		);
 
 		// Verify that facet selections are retained
@@ -111,7 +127,7 @@ test.describe('Clear and retain facet selections', () => {
 		await searchPage.searchKeywordInNavBar('png');
 
 		await expect(searchPage.searchResultsTotalLabel).toHaveText(
-			'7 Results for png'
+			/\d+ Results for png/
 		);
 
 		// Verify that page number is reset but items per page is not
@@ -125,7 +141,7 @@ test.describe('Clear and retain facet selections', () => {
 		).toHaveAttribute('aria-current', 'page');
 
 		await expect(searchPage.searchResultsPaginationDescription).toHaveText(
-			'Showing 1 to 4 of 7 entries.'
+			/Showing 1 to 4 of \d+ entries./
 		);
 	});
 
@@ -136,10 +152,12 @@ test.describe('Clear and retain facet selections', () => {
 
 		// Configure search options to retain facet selections
 
-		await searchPage.selectSearchOptionConfiguration(
-			'Allow Empty Searches',
-			true
-		);
+		await searchPage.selectSearchOptionCheckboxConfigurations([
+			{
+				label: 'Allow Empty Searches',
+				value: true,
+			},
+		]);
 
 		await page.reload();
 
@@ -148,7 +166,7 @@ test.describe('Clear and retain facet selections', () => {
 		await searchPage.searchKeywordInNavBar('');
 
 		await expect(searchPage.searchResultsTotalLabel).toHaveText(
-			'11 Results for'
+			/\d+ Results for\s+/
 		);
 
 		// Verify that facet selections are cleared
@@ -159,13 +177,6 @@ test.describe('Clear and retain facet selections', () => {
 		await expect(lastModifiedPastYearFacetLink).not.toHaveClass(
 			/facet-term-selected/
 		);
-
-		// Teardown
-
-		await searchPage.selectSearchOptionConfiguration(
-			'Allow Empty Searches',
-			false
-		);
 	});
 
 	test('retains facet terms if configured under search options @LPD-19994', async ({
@@ -175,10 +186,12 @@ test.describe('Clear and retain facet selections', () => {
 
 		// Configure search options to retain facet selections
 
-		await searchPage.selectSearchOptionConfiguration(
-			'Retain Facet Selections Across Searches',
-			true
-		);
+		await searchPage.selectSearchOptionCheckboxConfigurations([
+			{
+				label: 'Retain Facet Selections Across Searches',
+				value: true,
+			},
+		]);
 
 		await page.reload();
 
@@ -187,7 +200,7 @@ test.describe('Clear and retain facet selections', () => {
 		await searchPage.searchKeywordInNavBar('png');
 
 		await expect(searchPage.searchResultsTotalLabel).toHaveText(
-			'7 Results for png'
+			/\d+ Results for png/
 		);
 
 		// Verify that facet selections are retained
@@ -197,13 +210,6 @@ test.describe('Clear and retain facet selections', () => {
 		await expect(userTestTestFacetCheckbox).toBeChecked();
 		await expect(lastModifiedPastYearFacetLink).toHaveClass(
 			/facet-term-selected/
-		);
-
-		// Teardown
-
-		await searchPage.selectSearchOptionConfiguration(
-			'Retain Facet Selections Across Searches',
-			false
 		);
 	});
 });

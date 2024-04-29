@@ -119,43 +119,54 @@ export class SearchPage {
 		).toHaveAttribute('aria-current', 'page');
 	}
 
-	async selectSearchFacetCheckbox(searchFacetCheckbox: Locator) {
-		await searchFacetCheckbox.check();
+	async selectSearchFacetCheckbox(
+		searchFacetCheckbox: Locator,
+		value: boolean = true
+	) {
+		if (value) {
+			await searchFacetCheckbox.check();
 
-		await expect(searchFacetCheckbox).toBeChecked();
+			await expect(searchFacetCheckbox).toBeChecked();
+		}
+		else {
+			await searchFacetCheckbox.uncheck();
+
+			await expect(searchFacetCheckbox).not.toBeChecked();
+		}
 	}
 
-	async selectSearchFacetLink(searchFacetLink: Locator) {
+	async selectSearchFacetLink(
+		searchFacetLink: Locator,
+		value: boolean = true
+	) {
 		await searchFacetLink.click();
 
 		await expect(searchFacetLink).not.toBeDisabled();
 
-		await expect(searchFacetLink).toHaveClass(/facet-term-selected/);
+		if (value) {
+			await expect(searchFacetLink).toHaveClass(/facet-term-selected/);
+		}
+		else {
+			await expect(searchFacetLink).not.toHaveClass(
+				/facet-term-selected/
+			);
+		}
 	}
 
-	async selectSearchOptionConfiguration(option: string, value: boolean) {
+	async selectSearchOptionCheckboxConfigurations(
+		options: {label: string; value: boolean}[]
+	) {
 		await this.searchOptionsConfigurationLink.click();
 
-		const configurationCheckbox = this.modalIFrame.locator(
-			`xpath=//*[text()[contains(.,'${option}')]]//input`
-		);
+		for (const option of options) {
+			const configurationCheckbox = this.modalIFrame.locator(
+				`xpath=//*[text()[contains(.,'${option.label}')]]//input`
+			);
 
-		const checked = await configurationCheckbox.isChecked();
-
-		if (value) {
-			if (!checked) {
-				await configurationCheckbox.check();
-			}
-
-			await expect(configurationCheckbox).toBeChecked();
-		}
-
-		if (!value) {
-			if (checked) {
-				await configurationCheckbox.uncheck();
-			}
-
-			await expect(configurationCheckbox).not.toBeChecked();
+			await this.selectSearchFacetCheckbox(
+				configurationCheckbox,
+				option.value
+			);
 		}
 
 		await this.modalIFrame.getByRole('button', {name: 'Save'}).click();

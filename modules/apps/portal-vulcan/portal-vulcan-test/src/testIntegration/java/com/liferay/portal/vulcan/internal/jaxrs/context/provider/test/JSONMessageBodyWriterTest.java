@@ -64,9 +64,6 @@ public class JSONMessageBodyWriterTest {
 				"osgi.jaxrs.extension.select",
 				"(osgi.jaxrs.name=Liferay.Vulcan)"
 			).build());
-
-		_property1UnsafeSupplierComputed = false;
-		_property2UnsafeSupplierComputed = false;
 	}
 
 	@After
@@ -243,9 +240,8 @@ public class JSONMessageBodyWriterTest {
 			URLConnectionUtil.read(urlString));
 	}
 
-	private static boolean _property1UnsafeSupplierComputed;
-	private static boolean _property2UnsafeSupplierComputed;
-
+	private boolean _property1UnsafeSupplierComputed;
+	private boolean _property2UnsafeSupplierComputed;
 	private ServiceRegistration<Application> _serviceRegistration;
 
 }

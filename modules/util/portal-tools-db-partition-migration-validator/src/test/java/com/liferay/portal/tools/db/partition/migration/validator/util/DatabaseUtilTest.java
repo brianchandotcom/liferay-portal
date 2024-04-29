@@ -53,20 +53,20 @@ public class DatabaseUtilTest {
 
 	@Test
 	public void testCompanyId() throws Exception {
-		List<Long> companyInfoIds = new ArrayList<>();
+		List<Long> companyIds = new ArrayList<>();
 
-		companyInfoIds.add(RandomTestUtil.randomLong());
+		companyIds.add(RandomTestUtil.randomLong());
 
 		_testCompanyId(
-			companyInfoIds,
+			companyIds,
 			liferayDatabase -> Assert.assertEquals(
-				companyInfoIds.get(0),
+				companyIds.get(0),
 				(Long)liferayDatabase.getExportedCompanyId()));
 
-		companyInfoIds.add(RandomTestUtil.randomLong());
+		companyIds.add(RandomTestUtil.randomLong());
 
 		try {
-			_testCompanyId(companyInfoIds, liferayDatabase -> Assert.fail());
+			_testCompanyId(companyIds, liferayDatabase -> Assert.fail());
 		}
 		catch (Exception exception) {
 			Assert.assertTrue(
@@ -752,10 +752,10 @@ public class DatabaseUtilTest {
 	}
 
 	private void _testCompanyId(
-			List<Long> companyInfoIds, Consumer<LiferayDatabase> consumer)
+			List<Long> companyIds, Consumer<LiferayDatabase> consumer)
 		throws Exception {
 
-		_mockGetCompanyInfoIds(companyInfoIds);
+		_mockGetCompanyInfoIds(companyIds);
 
 		consumer.accept(DatabaseUtil.exportLiferayDatabase(_connection));
 	}

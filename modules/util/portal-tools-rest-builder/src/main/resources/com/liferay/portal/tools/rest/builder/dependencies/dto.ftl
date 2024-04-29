@@ -204,7 +204,8 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 							return value;
 						}
 
-						UnsafeSupplier<?, ?> unsafeSupplier = (UnsafeSupplier<?, ?>)value;
+						UnsafeSupplier<?, ?> unsafeSupplier =
+							(UnsafeSupplier<?, ?>)value;
 
 						try {
 							return unsafeSupplier.get();
@@ -369,7 +370,8 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 							return value;
 						}
 
-						UnsafeSupplier<?, ?> unsafeSupplier = (UnsafeSupplier<?, ?>)value;
+						UnsafeSupplier<?, ?> unsafeSupplier =
+							(UnsafeSupplier<?, ?>)value;
 
 						try {
 							value = unsafeSupplier.get();

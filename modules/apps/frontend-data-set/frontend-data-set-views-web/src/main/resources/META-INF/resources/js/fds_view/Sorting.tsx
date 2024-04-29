@@ -22,7 +22,8 @@ import {API_URL, OBJECT_RELATIONSHIP} from '../utils/constants';
 import getFields from '../utils/getFields';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
-import {IField} from '../utils/types';
+import sortItems from '../utils/sortItems';
+import {IField, IOrderable} from '../utils/types';
 
 interface IAddFDSSortModalContentInterface {
 	closeModal: Function;
@@ -37,11 +38,10 @@ interface IContentRendererProps {
 	query: string;
 }
 
-interface IFDSSort {
+interface IFDSSort extends IOrderable {
 	default: boolean;
 	externalReferenceCode: string;
 	fieldName: string;
-	id: number;
 	label: string;
 	label_i18n: Liferay.Language.LocalizedValue<string>;
 	orderType: string;
@@ -448,35 +448,19 @@ const Sorting = ({fdsView, namespace}: IFDSViewSectionProps) => {
 	useEffect(() => {
 		const getFDSSort = async () => {
 			const response = await fetch(
-				`${API_URL.FDS_SORTS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_SORT_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_SORT}&sort=dateCreated:desc`
+				`${API_URL.FDS_SORTS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_SORT_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_SORT}&sort=dateCreated:asc`
 			);
 
 			const responseJSON = await response.json();
 
 			const storedFDSSorts: IFDSSort[] = responseJSON.items;
 
-			let ordered = storedFDSSorts;
-			let notOrdered: IFDSSort[] = [];
-
-			if (responseJSON.fdsSortsOrder) {
-				const fdsSortsOrderArray = responseJSON.fdsSortsOrder.split(
-					','
-				) as string[];
-
-				ordered = fdsSortsOrderArray
-					.map((fdsSortId) =>
-						storedFDSSorts.find(
-							(fdsSort) => fdsSort.id === Number(fdsSortId)
-						)
-					)
-					.filter(Boolean) as IFDSSort[];
-
-				notOrdered = storedFDSSorts.filter(
-					(filter) => !fdsSortsOrderArray.includes(String(filter.id))
-				);
-			}
-
-			setFDSSorts([...notOrdered, ...ordered]);
+			setFDSSorts(
+				sortItems(
+					storedFDSSorts,
+					responseJSON.fdsSortsOrder
+				) as IFDSSort[]
+			);
 
 			await getFields(fdsView).then((fields) => {
 				const nextFields = fields.filter((field) => field.sortable);

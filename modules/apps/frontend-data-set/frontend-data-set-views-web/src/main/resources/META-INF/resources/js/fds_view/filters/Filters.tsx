@@ -41,6 +41,7 @@ import SelectionFilterModalContent from './modal_content/selection_filter/Select
 
 import '../../../css/Filters.scss';
 import RequiredMark from '../../components/RequiredMark';
+import sortItems from '../../utils/sortItems';
 
 type FilterCollection = Array<
 	IClientExtensionFilter | IDateFilter | ISelectionFilter
@@ -672,26 +673,11 @@ function Filters({fdsFilterClientExtensions, fdsView, namespace}: IProps) {
 				})),
 			];
 
-			if (fdsView.fdsFiltersOrder) {
-				const order = fdsView.fdsFiltersOrder.split(',');
-
-				let notOrdered: FilterCollection = [];
-
-				notOrdered = filtersOrdered.filter(
-					(filter) => !order.includes(String(filter.id))
-				);
-
-				filtersOrdered = fdsView.fdsFiltersOrder
-					.split(',')
-					.map((fdsFilterId) =>
-						filtersOrdered.find(
-							(filter) => filter.id === Number(fdsFilterId)
-						)
-					)
-					.filter(Boolean) as FilterCollection;
-
-				filtersOrdered = [...notOrdered, ...filtersOrdered];
-			}
+			filtersOrdered = sortItems(
+				filtersOrdered,
+				fdsView.fdsFiltersOrder,
+				true
+			) as FilterCollection;
 
 			setFilters(
 				filtersOrdered.map((filter) => {

@@ -8,6 +8,7 @@
 import {IFDSViewSectionProps} from '../FDSView';
 import {OBJECT_RELATIONSHIP} from '../utils/constants';
 import '../../css/Actions.scss';
+import {IOrderable} from '../utils/types';
 declare const SECTIONS: {
 	CREATION_ACTIONS: string;
 	EDIT_CREATION_ACTION: string;
@@ -16,7 +17,7 @@ declare const SECTIONS: {
 	NEW_CREATION_ACTION: string;
 	NEW_ITEM_ACTION: string;
 };
-interface IFDSAction {
+interface IFDSAction extends IOrderable {
 	[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CREATION_ACTION]?: any;
 	[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ITEM_ACTION]?: any;
 	actions: {
@@ -35,7 +36,6 @@ interface IFDSAction {
 		[key: string]: string;
 	};
 	icon: string;
-	id: number;
 	label: string;
 	label_i18n: {
 		[key: string]: string;

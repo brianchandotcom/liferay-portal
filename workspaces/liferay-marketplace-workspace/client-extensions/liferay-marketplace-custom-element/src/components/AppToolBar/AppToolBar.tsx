@@ -6,13 +6,11 @@
 import ClayButton from '@clayui/button';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 
-import chevronRight from '../../assets/icons/chevron_right_icon.svg';
-import circleFill from '../../assets/icons/circle_fill_icon.svg';
-import emptyPicture from '../../assets/icons/empty_picture_icon.svg';
 import {getAccountImage} from '../../utils/util';
 
 import './AppToolBar.scss';
 
+import ClayIcon from '@clayui/icon';
 import {Link} from 'react-router-dom';
 
 type AppToolBarProps = {
@@ -45,18 +43,28 @@ export function AppToolBar({
 							</span>
 						</div>
 
-						<img
-							alt="Arrow right"
+						<ClayIcon
+							aria-label="Arrow right"
 							className="new-app-tool-bar-arrow-right"
-							src={chevronRight}
+							symbol="angle-right"
 						/>
 
 						<div className="new-app-tool-bar-new-app-logo">
-							<img
-								alt="New App logo"
-								className="new-app-tool-bar-new-app-logo-img"
-								src={appImage ?? emptyPicture}
-							/>
+							{appImage ? (
+								<img
+									alt="New App logo"
+									className="new-app-tool-bar-new-app-logo-img"
+									src={appImage}
+								/>
+							) : (
+								<div className="bg-light px-5 py-3 rounded">
+									<ClayIcon
+										aria-label="New App logo"
+										className="text-muted"
+										symbol="picture"
+									/>
+								</div>
+							)}
 
 							<span className="new-app-tool-bar-new-app-logo-text">
 								{appName ?? 'New App'}
@@ -65,10 +73,10 @@ export function AppToolBar({
 					</div>
 
 					<div className="flex-shrink-0 new-app-tool-bar-status-container">
-						<img
-							alt="Status"
+						<ClayIcon
+							aria-label="Status"
 							className="new-app-tool-bar-status-icon"
-							src={circleFill}
+							symbol="circle"
 						/>
 
 						<span className="new-app-tool-bar-status-text">

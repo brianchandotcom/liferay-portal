@@ -8,19 +8,19 @@ import ClayForm from '@clayui/form';
 import classNames from 'classnames';
 import {ReactNode} from 'react';
 
-import arrowDown from '../assets/icons/arrow_down_icon.svg';
-import asteriskIcon from '../assets/icons/asterisk_icon.svg';
-
 import './FieldBase.scss';
+
+import ClayIcon from '@clayui/icon';
+
 import {Tooltip} from './Tooltip/Tooltip';
 
 export function RequiredMask() {
 	return (
 		<>
 			<span className="field-base-required-asterisk">
-				<img
-					className="field-base-required-asterisk-icon"
-					src={asteriskIcon}
+				<ClayIcon
+					className="field-base-required-asterisk-icon ml-1 text-danger"
+					symbol="asterisk"
 				/>
 			</span>
 
@@ -106,7 +106,10 @@ export function FieldBase({
 					<div className="field-base-localized-field">
 						<ClayButton displayType={null}>
 							English (US)
-							<img className="arrow-down-icon" src={arrowDown} />
+							<ClayIcon
+								className="arrow-down-icon"
+								symbol="caret-bottom"
+							/>
 						</ClayButton>
 
 						<>

@@ -5,8 +5,8 @@
 
 /* eslint-disable react/no-unescaped-entities */
 
-import circleFill from '../../../../../assets/icons/circle_fill_icon.svg';
-import radioSelected from '../../../../../assets/icons/radio_button_checked_2_icon.svg';
+import ClayIcon from '@clayui/icon';
+
 import timeline from '../../../../../assets/images/timeline.png';
 
 import './TrialMethod.scss';
@@ -37,10 +37,10 @@ export function TrialMethod() {
 	return (
 		<div className="d-flex get-app-modal-trial">
 			<div className="d-flex flex-column get-app-modal-trial-timeline">
-				<img
-					alt="circle fill"
+				<ClayIcon
+					aria-label="circle fill"
 					className="get-app-modal-trial-timeline-icon-selected"
-					src={radioSelected}
+					symbol="radio-button"
 				/>
 
 				<img
@@ -49,17 +49,17 @@ export function TrialMethod() {
 					src={timeline}
 				/>
 
-				<img
-					alt="circleFill"
-					className="get-app-modal-trial-timeline-icon"
-					src={circleFill}
+				<ClayIcon
+					aria-label="circleFill"
+					className="get-app-modal-trial-timeline-icon text-muted"
+					symbol="circle"
 				/>
 			</div>
 
 			<div className="get-app-modal-trial-messages">
 				<div className="get-app-modal-trial-messages-item">
 					<div className="active title">
-						Today - free trial for 30 days.{' '}
+						Today - free trial for 30 days.
 					</div>
 
 					<div className="description">

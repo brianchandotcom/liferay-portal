@@ -4,12 +4,6 @@
  */
 
 import brightnessEmptyIcon from '../../../../../../assets/icons/brightness_empty_icon.svg';
-import calendarMonthIcon from '../../../../../../assets/icons/calendar_month_icon.svg';
-import cancelIcon from '../../../../../../assets/icons/cancel_icon.svg';
-import creditCardIcon from '../../../../../../assets/icons/credit_card_icon.svg';
-import documentIcon from '../../../../../../assets/icons/document_icon.svg';
-import scheduleIcon from '../../../../../../assets/icons/schedule_icon.svg';
-import taskCheckedIcon from '../../../../../../assets/icons/task_checked_icon.svg';
 import {CardLink} from '../../../../../../components/Card/CardLink';
 import {CardView} from '../../../../../../components/Card/CardView';
 import {Tag} from '../../../../../../components/Tag/Tag';
@@ -19,6 +13,7 @@ import {App} from './ReviewAndSubmitAppPageUtil';
 
 import './CardSectionsBody.scss';
 
+import ClayIcon from '@clayui/icon';
 import DOMPurify from 'dompurify';
 
 import LicensePriceChildren from '../../../../../../components/LicensePriceCard/LicensePriceChildren';
@@ -82,7 +77,7 @@ export function CardSectionsBody({
 											'create-a-dxp-app-to-be-delivered-as-a-download'
 									  )
 							}
-							icon={isCloud ? taskCheckedIcon : cancelIcon}
+							icon={isCloud ? 'check-circle' : 'times-circle'}
 							title={isCloud ? 'Yes' : 'No'}
 						/>
 					</div>
@@ -118,20 +113,14 @@ export function CardSectionsBody({
 					<CardSection required sectionName="Build">
 						<div className="card-section-body-section-file">
 							<div className="card-section-body-section-file-container">
-								<img
-									alt="Folder Icon"
+								<ClayIcon
+									aria-label="Folder Icon"
 									className="card-section-body-section-file-container-icon"
-									src={documentIcon}
+									symbol="document-text"
 								/>
 							</div>
 
-							<img
-								alt="Document Icon"
-								className="card-section-body-section-file-icon"
-								src={documentIcon}
-							/>
-
-							<span className="card-section-body-section-file-name">
+							<span className="card-section-body-section-file-name ml-3">
 								{app?.attachmentTitle}
 							</span>
 						</div>
@@ -147,7 +136,7 @@ export function CardSectionsBody({
 							icon={
 								app?.['price-model'] === 'Free'
 									? brightnessEmptyIcon
-									: creditCardIcon
+									: 'credit-card'
 							}
 							title={app?.['price-model'] as string}
 						/>
@@ -162,8 +151,8 @@ export function CardSectionsBody({
 							}
 							icon={
 								app?.['license-type'] === 'Perpetual'
-									? scheduleIcon
-									: calendarMonthIcon
+									? 'time'
+									: 'calendar'
 							}
 							title={
 								app?.['license-type'] === 'Perpetual'
@@ -187,7 +176,7 @@ export function CardSectionsBody({
 				<div>
 					{app?.storefront?.map(({id, priority, src, title}) => (
 						<div
-							className="card-section-body-section-files"
+							className="align-items-center card-section-body-section-files d-flex"
 							key={id}
 						>
 							<strong>{isApp ?? priority}</strong>
@@ -200,13 +189,7 @@ export function CardSectionsBody({
 								/>
 							</div>
 
-							<div className="card-section-body-section-files-data">
-								<img
-									alt={title['en_US']}
-									className="card-section-body-section-files-data-icon"
-									src={documentIcon}
-								/>
-
+							<div className="card-section-body-section-files-data ml-2">
 								<span className="card-section-body-section-files-data-name">
 									{title['en_US']}
 								</span>

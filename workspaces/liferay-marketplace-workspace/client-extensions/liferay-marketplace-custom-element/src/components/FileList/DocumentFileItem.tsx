@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import folderIcon from '../../assets/icons/folder_fill_icon.svg';
 import {UploadedFile} from './FileList';
 
 import './DocumentFileItem.scss';
@@ -44,10 +43,10 @@ export function DocumentFileItem({
 							width={50}
 						/>
 					) : (
-						<img
-							alt="Folder Icon"
+						<ClayIcon
+							aria-label="Folder Icon"
 							className="document-file-list-item-left-content-icon"
-							src={folderIcon}
+							symbol="folder"
 						/>
 					)}
 				</div>

@@ -6,9 +6,9 @@
 import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
 
-import documentIcon from '../../assets/icons/document_icon.svg';
-
 import './DropzoneUpload.scss';
+
+import ClayIcon from '@clayui/icon';
 
 interface DropzoneUploadProps {
 	acceptFileTypes: {
@@ -55,10 +55,10 @@ export function DropzoneUpload({
 				>
 					{showDocumentIcon && (
 						<div className="dropzone-upload-document-container">
-							<img
-								alt="Document icon"
+							<ClayIcon
+								aria-label="Document icon"
 								className="dropzone-upload-document-icon"
-								src={documentIcon}
+								symbol="document-text"
 							/>
 						</div>
 					)}

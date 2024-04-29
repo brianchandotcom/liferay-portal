@@ -5,7 +5,6 @@
 
 import {useOutletContext} from 'react-router-dom';
 
-import membersIcon from '../../../assets/icons/person_fill_icon.svg';
 import {MembersPage} from '../../../components/MembersPage/MembersPage';
 import {
 	publisherAppPermissionDescriptions,
@@ -18,7 +17,7 @@ const Members = () => {
 
 	return (
 		<MembersPage
-			icon={membersIcon}
+			icon="user"
 			isCustomerDashboard={false}
 			isPublisherDashboard={true}
 			listOfRoles={publisherRoles}

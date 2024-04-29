@@ -6,6 +6,9 @@
 import {ReactNode} from 'react';
 
 import './CardView.scss';
+
+import ClayIcon from '@clayui/icon';
+
 import {Tooltip} from '../Tooltip/Tooltip';
 
 interface CardViewProps {
@@ -30,10 +33,10 @@ export function CardView({
 					<span className="card-view-title-text">{title}</span>
 
 					{icon && (
-						<img
-							alt="Icon"
+						<ClayIcon
+							aria-label="Icon"
 							className="card-view-title-icon"
-							src={icon}
+							symbol={icon}
 						/>
 					)}
 				</div>

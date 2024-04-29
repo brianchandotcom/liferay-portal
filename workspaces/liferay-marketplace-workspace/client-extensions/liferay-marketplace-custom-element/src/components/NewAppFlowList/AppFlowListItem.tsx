@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import checkFill from '../../assets/icons/check_fill_icon.svg';
-import circleFill from '../../assets/icons/circle_fill_icon.svg';
-import radioSelected from '../../assets/icons/radio_button_checked_2_icon.svg';
+import ClayIcon from '@clayui/icon';
 
 import './AppFlowListItem.scss';
 
@@ -24,31 +22,27 @@ export function AppFlowListItem({
 }: AppFlowListItemProps) {
 	const getIcon = () => {
 		if (checked) {
-			return checkFill;
+			return 'check';
 		}
 
 		if (selected) {
-			return radioSelected;
+			return 'radio-button';
 		}
 
-		return circleFill;
+		return 'circle';
 	};
 
 	return (
 		<div className="app-flow-list-item-container">
-			<img
-				alt={
-					checkFill
-						? 'check fill'
-						: selected
-						? 'radio selected'
-						: 'circle fill'
+			<ClayIcon
+				aria-label={
+					'check fill' ?? selected ? 'radio selected' : 'circle fill'
 				}
-				className={classNames('app-flow-list-item-icon', {
+				className={classNames('app-flow-list-item-icon text-muted', {
 					'app-flow-list-item-icon-checked': checked,
 					'app-flow-list-item-icon-selected': selected,
 				})}
-				src={getIcon()}
+				symbol={getIcon()}
 			/>
 
 			<li

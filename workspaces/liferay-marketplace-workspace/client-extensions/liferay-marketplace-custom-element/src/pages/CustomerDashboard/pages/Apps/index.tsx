@@ -8,7 +8,6 @@ import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
 
-import appsIcon from '../../../../assets/icons/apps_fill_icon.svg';
 import {DashboardPage} from '../../../../components/DashBoardPage/DashboardPage';
 import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
 import {getSiteURL} from '../../../../components/InviteMemberModal/services';
@@ -62,7 +61,7 @@ const Apps = () => {
 				<DashboardEmptyTable
 					description1="An error has occurred in retrieving you App."
 					description2="Please try again. If the issue persists please contact marketplace-admin@liferay.com"
-					icon={appsIcon}
+					icon="grid"
 					title="An error occurred while fetching the data."
 				/>
 			</DashboardPage>

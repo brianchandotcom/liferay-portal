@@ -6,9 +6,10 @@
 import classNames from 'classnames';
 import {MouseEvent, ReactNode} from 'react';
 
-import sitesIcon from '../../assets/icons/sites_icon.svg';
-
 import './CardButton.scss';
+
+import ClayIcon from '@clayui/icon';
+
 import {StepType} from '../../pages/GetApp/enums/stepType';
 
 export function CardButton({
@@ -39,20 +40,20 @@ export function CardButton({
 			onClick={disabled ? () => {} : onClick}
 		>
 			{step === StepType.PAYMENT ? (
-				<img
-					alt="trial"
+				<ClayIcon
+					aria-label="trial"
 					className="card-button-icon"
-					src={icon as string}
+					symbol={icon as string}
 				/>
 			) : (
 				!iconRight &&
 				(icon ? (
 					icon
 				) : (
-					<img
-						alt="sites-icon"
+					<ClayIcon
+						aria-label="sites-icon"
 						className="card-button-icon"
-						src={sitesIcon}
+						symbol="sites"
 					/>
 				))
 			)}

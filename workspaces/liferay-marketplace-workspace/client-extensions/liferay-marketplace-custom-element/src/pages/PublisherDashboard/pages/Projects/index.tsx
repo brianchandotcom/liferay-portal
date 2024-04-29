@@ -8,7 +8,6 @@ import {useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import useSWR from 'swr';
 
-import projectsIcon from '../../../../assets/icons/projects_icon.svg';
 import {CreateProjectModal} from '../../../../components/CreateProjectModal/CreateProjectModal';
 import {ProjectDetailsCard} from '../../../../components/CreateProjectModal/ProjectDetailsCard';
 import {DashboardTable} from '../../../../components/DashboardTable/DashboardTable';
@@ -110,7 +109,7 @@ export default function ProjectsPage() {
 					description2: 'Click on “New Projects” to start.',
 					title: 'No projects yet',
 				}}
-				icon={projectsIcon}
+				icon="sheets"
 				items={projectOrders || []}
 				tableHeaders={projectsTableHeaders}
 			>

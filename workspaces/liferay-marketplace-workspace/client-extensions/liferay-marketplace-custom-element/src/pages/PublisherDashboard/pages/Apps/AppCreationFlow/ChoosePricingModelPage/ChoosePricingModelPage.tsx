@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import brightnessEmptyIcon from '../../../../../../assets/icons/brightness_empty_icon.svg';
-import creditCardIcon from '../../../../../../assets/icons/credit_card_icon.svg';
 import {Header} from '../../../../../../components/Header/Header';
 import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../../components/Section/Section';
@@ -55,7 +53,6 @@ export function ChoosePricingModelPage({
 				<div className="choose-pricing-model-page-radio-container">
 					<RadioCard
 						description="The app is offered in the Marketplace with no charge."
-						icon={brightnessEmptyIcon}
 						onChange={() => {
 							dispatch({
 								payload: {id: priceModel.id, value: 'Free'},
@@ -69,7 +66,7 @@ export function ChoosePricingModelPage({
 
 					<RadioCard
 						description="To enable paid apps, you must be a business and enter payment information in your Marketplace account profile."
-						icon={creditCardIcon}
+						icon="credit-card"
 						onChange={() => {
 							dispatch({
 								payload: {id: priceModel.id, value: 'Paid'},

@@ -5,8 +5,6 @@
 
 import ClaySticker from '@clayui/sticker';
 
-import emptyPictureIcon from '../../../../../../../../assets/icons/empty_picture_icon.svg';
-
 import './index.scss';
 
 type AccountInfoProps = {
@@ -31,7 +29,7 @@ const AccountEmailInfo: React.FC<AccountInfoProps> = ({userAccount}) => (
 			<ClaySticker.Image
 				alt="placeholder"
 				height="24"
-				src={userAccount?.image ?? emptyPictureIcon}
+				src={userAccount?.image ?? 'picture'}
 				width="24"
 			/>
 		</ClaySticker>

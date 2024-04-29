@@ -5,10 +5,6 @@
 
 import {useState} from 'react';
 
-import cancelIcon from '../../../../../../assets/icons/cancel_icon.svg';
-import pendingActionsIcon from '../../../../../../assets/icons/pending_actions_icon.svg';
-import scheduleIcon from '../../../../../../assets/icons/schedule_icon.svg';
-import taskCheckedIcon from '../../../../../../assets/icons/task_checked_icon.svg';
 import {Header} from '../../../../../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
@@ -199,7 +195,7 @@ export function InformLicensingTermsPage({
 				<div className="informing-licensing-terms-page-app-license-container">
 					<RadioCard
 						description="The app version is offered in perpetuity."
-						icon={scheduleIcon}
+						icon="time"
 						onChange={() => {
 							dispatch({
 								payload: {
@@ -217,7 +213,7 @@ export function InformLicensingTermsPage({
 					<RadioCard
 						description="App License must be renewed annually."
 						disabled={priceModel.value === 'Free'}
-						icon={pendingActionsIcon}
+						icon="document-pending"
 						onChange={() => {
 							dispatch({
 								payload: {
@@ -244,7 +240,7 @@ export function InformLicensingTermsPage({
 					<RadioCard
 						description="Offer a 30-day free trial for this app."
 						disabled={priceModel.value === 'Free'}
-						icon={taskCheckedIcon}
+						icon="check-circle"
 						onChange={() =>
 							dispatch({
 								payload: {value: 'yes'},
@@ -258,7 +254,7 @@ export function InformLicensingTermsPage({
 
 					<RadioCard
 						description="Do not offer a 30-day free trial."
-						icon={cancelIcon}
+						icon="times-circle"
 						onChange={() => {
 							dispatch({
 								payload: {value: 'no'},

@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import documentIcon from '../../../../../../assets/icons/document_icon.svg';
+import ClayIcon from '@clayui/icon';
+
 import {Header} from '../../../../../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {useAppContext} from '../AppContext/AppManageState';
@@ -35,10 +36,10 @@ export function CreateNewAppPage({
 				<div className="create-new-app-card-header">
 					<div className="create-new-app-card-header-left-content">
 						<div className="create-new-app-card-header-icon-container">
-							<img
-								alt="Document Icon"
+							<ClayIcon
+								aria-label="Document Icon"
 								className="create-new-app-card-header-icon"
-								src={documentIcon}
+								symbol="document-text"
 							/>
 						</div>
 

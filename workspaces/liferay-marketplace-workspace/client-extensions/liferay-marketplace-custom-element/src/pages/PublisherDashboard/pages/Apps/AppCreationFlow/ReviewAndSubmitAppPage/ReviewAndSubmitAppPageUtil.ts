@@ -3,11 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import documentationIcon from '../../../../../../assets/icons/documentation_icon.svg';
-import globeIcon from '../../../../../../assets/icons/globe_icon.svg';
-import phoneIcon from '../../../../../../assets/icons/phone_icon.svg';
-import sitesIcon from '../../../../../../assets/icons/sites_icon.svg';
-import usageTermsIcon from '../../../../../../assets/icons/usage_terms_icon.svg';
 import {TierPrices} from '../../../../../../components/LicensePriceCard/LicensePriceChildren';
 
 export type App = {
@@ -42,35 +37,35 @@ export const supportAndHelpMap = new Map<string, {icon: string; title: string}>(
 		[
 			'supporturl',
 			{
-				icon: phoneIcon,
+				icon: 'phone',
 				title: 'Support URL',
 			},
 		],
 		[
 			'publisherwebsiteurl',
 			{
-				icon: globeIcon,
+				icon: 'globe',
 				title: 'Publisher website URL',
 			},
 		],
 		[
 			'appusagetermsurl',
 			{
-				icon: usageTermsIcon,
+				icon: 'document',
 				title: 'App usage terms (EULA) URL',
 			},
 		],
 		[
 			'appdocumentationurl',
 			{
-				icon: documentationIcon,
+				icon: 'document',
 				title: 'App documentation URL',
 			},
 		],
 		[
 			'appinstallationguideurl',
 			{
-				icon: sitesIcon,
+				icon: 'sites',
 				title: 'App installation guide URL',
 			},
 		],

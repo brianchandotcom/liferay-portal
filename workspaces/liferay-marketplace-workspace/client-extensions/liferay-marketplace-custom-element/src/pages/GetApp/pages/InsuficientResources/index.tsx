@@ -11,7 +11,6 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {Outlet, useLocation} from 'react-router-dom';
 
-import catalogIcon from '../../../../assets/icons/catalog_icon.svg';
 import hourglass from '../../../../assets/icons/hourglass_icon.svg';
 import {AccountAndAppCard} from '../../../../components/Card/AccountAndAppCard';
 import {useDeliveryProduct} from '../../../../hooks/data/useProduct';
@@ -101,7 +100,7 @@ export function InsuficientResources() {
 			<div className="contact-sales-page-cards">
 				<AccountAndAppCard
 					category="Application"
-					logo={appLogo || catalogIcon}
+					logo={appLogo || 'catalog'}
 					title={
 						<span className="m-0">
 							<b>{appName}</b>

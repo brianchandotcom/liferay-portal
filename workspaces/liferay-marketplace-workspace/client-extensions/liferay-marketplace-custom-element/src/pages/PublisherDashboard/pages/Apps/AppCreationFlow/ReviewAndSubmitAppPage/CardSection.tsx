@@ -6,11 +6,12 @@
 import ClayButton from '@clayui/button';
 import {ReactNode} from 'react';
 
-import arrowDown from '../../../../../../assets/icons/arrow_down_icon.svg';
 import {RequiredMask} from '../../../../../../components/FieldBase';
 import {Tooltip} from '../../../../../../components/Tooltip/Tooltip';
 
 import './CardSection.scss';
+
+import ClayIcon from '@clayui/icon';
 
 interface CardSectionProps {
 	children: ReactNode;
@@ -40,9 +41,9 @@ export function CardSection({
 						<div className="field-base-localized-field">
 							<ClayButton displayType={null}>
 								English (US)
-								<img
+								<ClayIcon
 									className="arrow-down-icon"
-									src={arrowDown}
+									symbol="caret-bottom"
 								/>
 							</ClayButton>
 

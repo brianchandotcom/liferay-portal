@@ -3,9 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import credit_card_icon from '../../../../assets/icons/credit_card_icon.svg';
-import document_icon from '../../../../assets/icons/document_icon.svg';
-import task_checked_icon from '../../../../assets/icons/task_checked_icon.svg';
 import {CardButton} from '../../../../components/CardButton/CardButton';
 import {PaymentMethod} from '../../enums/paymentMethod';
 import {StepType} from '../../enums/stepType';
@@ -17,21 +14,21 @@ const getPaymentMethods = (
 	{
 		description: 'Try Now. Pay Later.',
 		disabled: selectedPaymentMethod !== PaymentMethod.TRIAL,
-		icon: task_checked_icon,
+		icon: 'check-circle',
 		method: PaymentMethod.TRIAL,
 		title: '30-day trial',
 	},
 	{
 		description: 'Pay Today',
 		disabled: disablePaidMethods,
-		icon: credit_card_icon,
+		icon: 'credit-card',
 		method: PaymentMethod.PAY,
 		title: 'Pay Now',
 	},
 	{
 		description: 'Requires a PO Number',
 		disabled: disablePaidMethods,
-		icon: document_icon,
+		icon: 'document-text',
 		method: PaymentMethod.ORDER,
 		title: 'Invoice',
 	},

@@ -5,10 +5,9 @@
 
 import classNames from 'classnames';
 
-import circleFill from '../../assets/icons/circle_fill_icon.svg';
-
 import './DashboardNavigationListItem.scss';
 
+import ClayIcon from '@clayui/icon';
 import {NavLink} from 'react-router-dom';
 
 import {getThumbnailByProductAttachment, showAppImage} from '../../utils/util';
@@ -48,8 +47,8 @@ export function DashboardNavigationListItem({
 				</span>
 			</div>
 
-			<img
-				alt="Circle fill"
+			<ClayIcon
+				aria-label="Circle fill"
 				className={classNames(
 					'dashboard-navigation-body-list-item-app-status',
 					{
@@ -61,7 +60,7 @@ export function DashboardNavigationListItem({
 							status === 'Published',
 					}
 				)}
-				src={circleFill}
+				symbol="circle"
 			/>
 		</NavLink>
 	);

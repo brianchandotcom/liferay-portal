@@ -6,8 +6,6 @@
 import ClayButton from '@clayui/button';
 import {Text} from '@clayui/core';
 
-import arrowNorth from '../../assets/icons/arrow_north_icon.svg';
-import arrowSouth from '../../assets/icons/arrow_south_icon.svg';
 import {Tooltip} from '../Tooltip/Tooltip';
 import {UploadedFile} from './FileList';
 
@@ -55,10 +53,10 @@ export function ImageFileItem({
 					displayType="unstyled"
 					onClick={() => onArrowClick(index, 'up')}
 				>
-					<img
-						alt="Arrow Up"
+					<ClayIcon
+						aria-label="Arrow Up"
 						className="image-file-item-arrow-icon"
-						src={arrowNorth}
+						symbol="order-arrow-up"
 					/>
 				</ClayButton>
 
@@ -67,10 +65,10 @@ export function ImageFileItem({
 					displayType="unstyled"
 					onClick={() => onArrowClick(index, 'down')}
 				>
-					<img
-						alt="Arrow South"
+					<ClayIcon
+						aria-label="Arrow South"
 						className="image-file-item-arrow-icon"
-						src={arrowSouth}
+						symbol="order-arrow-down"
 					/>
 				</ClayButton>
 			</div>

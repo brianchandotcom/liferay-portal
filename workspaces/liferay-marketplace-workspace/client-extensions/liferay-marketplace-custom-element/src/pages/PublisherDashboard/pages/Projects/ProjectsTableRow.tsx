@@ -7,12 +7,12 @@ import DropDown from '@clayui/drop-down';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 
-import arrowDownIcon from '../../../../assets/icons/arrow_down_icon.svg';
-import circleFillIcon from '../../../../assets/icons/circle_fill_icon.svg';
 import liferayIcon from '../../../../assets/icons/liferay_icon.svg';
 import {Tag} from '../../../../components/Tag/Tag';
 
 import './ProjectsTableRow.scss';
+
+import ClayIcon from '@clayui/icon';
 
 interface ProjectsTableRowProps {
 	author: string;
@@ -66,7 +66,7 @@ export function ProjectsTableRow({
 
 			<ClayTable.Cell>
 				<div className="projects-table-row-provisioning-container">
-					<img
+					<ClayIcon
 						className={classNames(
 							'projects-table-row-provisioning-icon-pending',
 							{
@@ -74,7 +74,7 @@ export function ProjectsTableRow({
 									status === 'Complete',
 							}
 						)}
-						src={circleFillIcon}
+						symbol="circle"
 					/>
 
 					<span className="projects-table-row-provisioning-text">
@@ -92,9 +92,9 @@ export function ProjectsTableRow({
 								Manage
 							</span>
 
-							<img
+							<ClayIcon
 								className="projects-table-row-project-button-icon"
-								src={arrowDownIcon}
+								symbol="caret-bottom"
 							/>
 						</button>
 					}

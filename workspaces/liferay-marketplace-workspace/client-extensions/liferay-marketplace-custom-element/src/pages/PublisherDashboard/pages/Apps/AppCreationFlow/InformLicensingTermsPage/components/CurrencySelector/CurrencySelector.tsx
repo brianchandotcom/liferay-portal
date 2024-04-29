@@ -6,8 +6,6 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 
-import flagUSAIcon from '../../../../../../../../assets/icons/united_states_icon.svg';
-
 import './CurrencySelector.scss';
 
 import ClayIcon from '@clayui/icon';
@@ -22,7 +20,7 @@ const CURRENCY_SELECTOR_OPTIONS = [
 		label: (
 			<span className="align-items-center d-flex">
 				<span className="mr-1">USD</span>
-				<img className="currency-selector-icon" src={flagUSAIcon} />
+				<ClayIcon className="currency-selector-icon" symbol="en-us" />
 			</span>
 		),
 		value: 'USD',

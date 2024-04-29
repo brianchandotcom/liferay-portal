@@ -3,27 +3,23 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import calendarIcon from '../../assets/icons/calendar_month_icon.svg';
 import githubIcon from '../../assets/icons/github_icon.svg';
 import liferayIcon from '../../assets/icons/liferay_icon.svg';
-import listIcon from '../../assets/icons/list_alt_icon.svg';
-import serverIcon from '../../assets/icons/server_icon.svg';
-import sitesIcon from '../../assets/icons/sites_icon.svg';
 
 const projectDetailsCardValues = [
 	{
 		description: '1 Site',
-		icon: sitesIcon,
+		icon: 'sites',
 		title: 'Sites',
 	},
 	{
 		description: '10 GB',
-		icon: serverIcon,
+		icon: 'cards-full',
 		title: 'Storage',
 	},
 	{
 		description: 'Yes',
-		icon: listIcon,
+		icon: 'forms',
 		title: 'Extensions Environment',
 	},
 	{
@@ -33,7 +29,7 @@ const projectDetailsCardValues = [
 	},
 	{
 		description: '60 days',
-		icon: calendarIcon,
+		icon: 'calendar',
 		title: 'Duration',
 	},
 ];

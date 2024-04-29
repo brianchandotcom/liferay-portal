@@ -9,11 +9,7 @@ import {filesize} from 'filesize';
 import {useCallback, useMemo, useState} from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-import cancelIcon from '../../../../../../assets/icons/cancel_icon.svg';
-import cloudIcon from '../../../../../../assets/icons/cloud_fill_icon.svg';
 import githubIcon from '../../../../../../assets/icons/github_icon.svg';
-import taskCheckedIcon from '../../../../../../assets/icons/task_checked_icon.svg';
-import uploadIcon from '../../../../../../assets/icons/upload_fill_icon.svg';
 import {DropzoneUpload} from '../../../../../../components/DropzoneUpload/DropzoneUpload';
 import {FileList} from '../../../../../../components/FileList/FileList';
 import {Header} from '../../../../../../components/Header/Header';
@@ -542,7 +538,7 @@ export function ProvideAppBuildPage({
 						description={i18n.translate(
 							'create-a-cloud-app-to-be-delivered-as-a-live-service'
 						)}
-						icon={taskCheckedIcon}
+						icon="check-circle"
 						onChange={() => handleAppTypeChange(ProductType.CLOUD)}
 						selected={appType.value === ProductType.CLOUD}
 						title={i18n.translate('yes')}
@@ -566,7 +562,7 @@ export function ProvideAppBuildPage({
 						description={i18n.translate(
 							'create-a-dxp-app-to-be-delivered-as-a-download'
 						)}
-						icon={cancelIcon}
+						icon="times-circle"
 						onChange={() => handleAppTypeChange(ProductType.DXP)}
 						selected={appType.value === ProductType.DXP}
 						title={i18n.translate('no')}
@@ -630,7 +626,7 @@ export function ProvideAppBuildPage({
 										? 'use-any-local-zip-files-to-upload-max-file-size-is-500-mb'
 										: 'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin'
 								)}
-								icon={uploadIcon}
+								icon="upload"
 								onChange={() =>
 									dispatch({
 										payload: {
@@ -667,7 +663,7 @@ export function ProvideAppBuildPage({
 									'use-any-build-from-any-available-liferay-experience-cloud-account-requires-lxc-account'
 								)}
 								disabled
-								icon={cloudIcon}
+								icon="cloud"
 								onChange={() =>
 									dispatch({
 										payload: {value: ProductUploadType.LXC},

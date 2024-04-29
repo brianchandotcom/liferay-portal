@@ -11,7 +11,6 @@ import {useMemo, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import useSWR, {KeyedMutator} from 'swr';
 
-import circleFullIcon from '../../../../assets/icons/circle_fill_icon.svg';
 import {ReviewAndSubmitAppPage} from './AppCreationFlow/ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
 
 import './App.scss';
@@ -208,8 +207,8 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 								</span>
 							)}
 
-							<img
-								alt="status icon"
+							<ClayIcon
+								aria-label="status icon"
 								className={classNames(
 									'app-details-page-app-info-subtitle-icon',
 									{
@@ -224,7 +223,7 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 												.label === 'approved',
 									}
 								)}
-								src={circleFullIcon}
+								symbol="circle"
 							/>
 
 							<span className="app-details-page-app-info-subtitle-text">

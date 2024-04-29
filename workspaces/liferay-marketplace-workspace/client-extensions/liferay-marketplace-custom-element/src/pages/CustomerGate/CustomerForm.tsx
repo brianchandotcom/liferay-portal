@@ -15,7 +15,6 @@ import {InputHTMLAttributes, useRef} from 'react';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 
-import emptyPictureIcon from '../../assets/icons/avatar.svg';
 import {Header} from '../../components/Header/Header';
 import BaseWrapper from '../../components/Input/base/BaseWrapper';
 import {Liferay} from '../../liferay/liferay';
@@ -116,7 +115,7 @@ const CreateCustomerAccountForm: React.FC<CreateCustomerAccountForm> = ({
 			emailAddress: user?.emailAddress,
 			familyName: user?.familyName,
 			givenName: user?.givenName,
-			image: user?.image ?? emptyPictureIcon,
+			image: user?.image ?? 'picture',
 			imageBlob: '',
 			newsSubscription: user?.newsSubscription,
 		},
@@ -244,7 +243,10 @@ const CreateCustomerAccountForm: React.FC<CreateCustomerAccountForm> = ({
 								/>
 							</ClaySticker>
 						) : (
-							<img alt="Circle Icon" src={emptyPictureIcon} />
+							<ClayIcon
+								aria-label="Circle Icon"
+								symbol="picture"
+							/>
 						)}
 
 						<input

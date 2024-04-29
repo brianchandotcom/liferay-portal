@@ -6,9 +6,9 @@
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 
-import helpFillIcon from '../../assets/icons/help_fill_icon.svg';
-
 import './Tooltip.scss';
+
+import ClayIcon from '@clayui/icon';
 
 interface TooltipProps {
 	tooltip?: string;
@@ -36,7 +36,10 @@ export function Tooltip({tooltip, tooltipText}: TooltipProps) {
 						</span>
 					)}
 
-					<img className="tooltip-icon" src={helpFillIcon} />
+					<ClayIcon
+						className="tooltip-icon"
+						symbol="question-circle"
+					/>
 				</div>
 			</div>
 		</ClayTooltipProvider>

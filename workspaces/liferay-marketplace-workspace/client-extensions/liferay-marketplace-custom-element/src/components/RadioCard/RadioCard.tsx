@@ -6,11 +6,14 @@
 import {ClayToggle} from '@clayui/form';
 import classNames from 'classnames';
 
-import radioChecked from '../../assets/icons/radio_button_checked_icon.svg';
+import radioChecked from '../../assets/icons/radio_button_checked_2_icon.svg';
 import radioUnchecked from '../../assets/icons/radio_button_unchecked_icon.svg';
 import paypal from '../../assets/images/paypal.png';
 
 import './RadioCard.scss';
+
+import ClayIcon from '@clayui/icon';
+
 import {Tooltip} from '../Tooltip/Tooltip';
 
 interface RadioCardProps {
@@ -50,10 +53,10 @@ export function RadioCard({
 			<div className="radio-card-main-info">
 				<div className="radio-card-title">
 					{position === 'right' && icon && (
-						<img
-							alt="Icon"
+						<ClayIcon
+							aria-label="Icon"
 							className="radio-card-title-icon-rounded"
-							src={icon}
+							symbol={icon}
 						/>
 					)}
 
@@ -110,12 +113,12 @@ export function RadioCard({
 					)}
 
 					{position === 'left' && icon && (
-						<img
-							alt="Icon"
+						<ClayIcon
+							aria-label="Icon"
 							className={classNames('radio-card-title-icon', {
 								'radio-card-title-icon-selected': selected,
 							})}
-							src={icon}
+							symbol={icon}
 						/>
 					)}
 				</div>
@@ -147,7 +150,7 @@ export function RadioCard({
 										: 'Radio unchecked'
 								}
 								className="radio-card-button-icon"
-								src={selected ? radioChecked : radioUnchecked}
+								src={selected ? 'live' : 'radio-button'}
 							/>
 						</button>
 					))}

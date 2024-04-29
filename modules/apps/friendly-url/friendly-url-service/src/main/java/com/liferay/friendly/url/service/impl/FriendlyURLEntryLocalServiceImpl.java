@@ -135,9 +135,7 @@ public class FriendlyURLEntryLocalServiceImpl
 			friendlyURLEntryId);
 
 		friendlyURLEntry.setUuid(serviceContext.getUuid());
-
 		friendlyURLEntry.setCompanyId(group.getCompanyId());
-
 		friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
 		friendlyURLEntry.setGroupId(groupId);
 		friendlyURLEntry.setClassNameId(classNameId);
@@ -215,9 +213,9 @@ public class FriendlyURLEntryLocalServiceImpl
 		// Asset
 
 		_deleteAssetEntry(
+			deletedFriendlyURLEntry.getCompanyId(),
 			FriendlyURLEntry.class.getName(),
-			deletedFriendlyURLEntry.getFriendlyURLEntryId(),
-			deletedFriendlyURLEntry.getCompanyId());
+			deletedFriendlyURLEntry.getFriendlyURLEntryId());
 
 		return deletedFriendlyURLEntry;
 	}
@@ -260,9 +258,9 @@ public class FriendlyURLEntryLocalServiceImpl
 			// Asset
 
 			_deleteAssetEntry(
+				friendlyURLEntry.getCompanyId(),
 				FriendlyURLEntry.class.getName(),
-				friendlyURLEntry.getFriendlyURLEntryId(),
-				friendlyURLEntry.getCompanyId());
+				friendlyURLEntry.getFriendlyURLEntryId());
 		}
 
 		_friendlyURLEntryMappingPersistence.remove(friendlyURLEntryMapping);
@@ -273,7 +271,7 @@ public class FriendlyURLEntryLocalServiceImpl
 			long friendlyURLEntryId, String languageId)
 		throws PortalException {
 
-		FriendlyURLEntryLocalization deletedFriendlyURLEntryLocalization =
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
 			friendlyURLEntryLocalizationPersistence.
 				removeByFriendlyURLEntryId_LanguageId(
 					friendlyURLEntryId, languageId);
@@ -298,8 +296,8 @@ public class FriendlyURLEntryLocalServiceImpl
 		// Asset
 
 		_deleteAssetEntry(
-			FriendlyURLEntry.class.getName(), friendlyURLEntryId,
-			deletedFriendlyURLEntryLocalization.getCompanyId());
+			friendlyURLEntryLocalization.getCompanyId(),
+			FriendlyURLEntry.class.getName(), friendlyURLEntryId);
 	}
 
 	@Override
@@ -337,9 +335,9 @@ public class FriendlyURLEntryLocalServiceImpl
 				// Asset
 
 				_deleteAssetEntry(
+					friendlyURLEntry.getCompanyId(),
 					FriendlyURLEntry.class.getName(),
-					friendlyURLEntry.getFriendlyURLEntryId(),
-					friendlyURLEntry.getCompanyId());
+					friendlyURLEntry.getFriendlyURLEntryId());
 			});
 
 		try {
@@ -685,7 +683,7 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	private void _deleteAssetEntry(
-		String className, long classPK, long companyId) {
+		long companyId, String className, long classPK) {
 
 		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-11147")) {
 			return;

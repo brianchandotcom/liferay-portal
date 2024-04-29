@@ -84,6 +84,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -244,6 +246,9 @@ public class ObjectDefinitionResourceImpl
 							_objectFilterLocalService)));
 		}
 		else {
+			Locale defaultLocale = LocaleUtil.fromLanguageId(
+				objectDefinition.getDefaultLanguageId());
+
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.addCustomObjectDefinition(
 					_getObjectFolderId(
@@ -254,13 +259,17 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getEnableLocalization()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryDraft()),
-					LocalizedMapUtil.getLocalizedMap(
-						objectDefinition.getLabel()),
+					_getLocalizedMap(
+						defaultLocale,
+						LocalizedMapUtil.getLocalizedMap(
+							objectDefinition.getLabel())),
 					objectDefinition.getName(),
 					objectDefinition.getPanelAppOrder(),
 					objectDefinition.getPanelCategoryKey(),
-					LocalizedMapUtil.getLocalizedMap(
-						objectDefinition.getPluralLabel()),
+					_getLocalizedMap(
+						defaultLocale,
+						LocalizedMapUtil.getLocalizedMap(
+							objectDefinition.getPluralLabel())),
 					GetterUtil.getBoolean(objectDefinition.getPortlet(), true),
 					objectDefinition.getScope(),
 					objectDefinition.getStorageType(),
@@ -277,8 +286,7 @@ public class ObjectDefinitionResourceImpl
 									ObjectFieldConstants.
 										BUSINESS_TYPE_RELATIONSHIP)),
 						objectField -> ObjectFieldUtil.toObjectField(
-							LocaleUtil.fromLanguageId(
-								objectDefinition.getDefaultLanguageId()),
+							defaultLocale,
 							GetterUtil.getBoolean(
 								objectDefinition.getEnableLocalization()),
 							_listTypeDefinitionLocalService, objectField,
@@ -1109,6 +1117,21 @@ public class ObjectDefinitionResourceImpl
 		}
 
 		return accountEntryRestrictedObjectRelationshipsNames;
+	}
+
+	private Map<Locale, String> _getLocalizedMap(
+		Locale defaultLocale, Map<Locale, String> localizedMap) {
+
+		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+
+		if (localizedMap.containsKey(defaultLocale) &&
+			!localizedMap.containsKey(siteDefaultLocale)) {
+
+			localizedMap.put(
+				siteDefaultLocale, localizedMap.get(defaultLocale));
+		}
+
+		return localizedMap;
 	}
 
 	private long _getObjectFolderId(String objectFolderExternalReferenceCode)

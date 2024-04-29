@@ -81,8 +81,7 @@ public class ConsoleService {
 		return _accessToken;
 	}
 
-	public void setUpCloudProjectInstallation(
-			String dxpVirtualInstanceId, long orderId)
+	public void setUpCloudProject(String dxpVirtualInstanceId, long orderId)
 		throws Exception {
 
 		JSONObject projectJSONObject = _postProject(
@@ -126,20 +125,20 @@ public class ConsoleService {
 		).build();
 	}
 
-	private void _inviteProject(String email, String projectId)
+	private void _inviteProject(String emailAddress, String projectId)
 		throws Exception {
 
 		_post(
 			new JSONObject(
 			).put(
-				"email", email
+				"email", emailAddress
 			).put(
 				"role", "admin"
 			),
 			"/projects/" + projectId + "/invite");
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Invited " + email + " as admin to cloud environment");
+			_log.info("Invited " + emailAddress);
 		}
 	}
 

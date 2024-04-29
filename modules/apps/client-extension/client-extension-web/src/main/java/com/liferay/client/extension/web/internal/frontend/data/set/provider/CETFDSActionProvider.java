@@ -12,7 +12,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder.DropdownItemListWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -70,11 +69,9 @@ public class CETFDSActionProvider implements FDSActionProvider {
 					cetFDSEntry, dropdownItem, httpServletRequest)
 			);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-182184")) {
-			dropdownItemListWrapper = dropdownItemListWrapper.add(
-				dropdownItem -> _buildExportClientExtensionEntryAction(
-					cetFDSEntry, dropdownItem, httpServletRequest));
-		}
+		dropdownItemListWrapper = dropdownItemListWrapper.add(
+			dropdownItem -> _buildExportClientExtensionEntryAction(
+				cetFDSEntry, dropdownItem, httpServletRequest));
 
 		return dropdownItemListWrapper.build();
 	}

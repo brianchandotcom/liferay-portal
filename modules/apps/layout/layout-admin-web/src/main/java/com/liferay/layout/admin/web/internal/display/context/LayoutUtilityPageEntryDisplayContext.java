@@ -70,16 +70,6 @@ public class LayoutUtilityPageEntryDisplayContext {
 		return StringUtil.merge(availableActions, StringPool.COMMA);
 	}
 
-	public String getKeywords() {
-		if (_keywords != null) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(_renderRequest, "keywords");
-
-		return _keywords;
-	}
-
 	public SearchContainer<LayoutUtilityPageEntry>
 		getLayoutUtilityPageEntrySearchContainer() {
 
@@ -100,19 +90,20 @@ public class LayoutUtilityPageEntryDisplayContext {
 				getLayoutUtilityPageEntryViewRenderers(),
 			LayoutUtilityPageEntryViewRenderer::getType, String.class);
 
-		if (isSearch()) {
+		if (Validator.isNotNull(_getKeywords())) {
 			layoutUtilityPageEntrySearchContainer.setResultsAndTotal(
 				() ->
 					LayoutUtilityPageEntryLocalServiceUtil.
 						getLayoutUtilityPageEntries(
-							_themeDisplay.getScopeGroupId(), getKeywords(),
+							_themeDisplay.getScopeGroupId(), _getKeywords(),
 							types,
 							layoutUtilityPageEntrySearchContainer.getStart(),
 							layoutUtilityPageEntrySearchContainer.getEnd(),
 							null),
 				LayoutUtilityPageEntryLocalServiceUtil.
 					getLayoutUtilityPageEntriesCount(
-						_themeDisplay.getScopeGroupId(), getKeywords(), types));
+						_themeDisplay.getScopeGroupId(), _getKeywords(),
+						types));
 		}
 		else {
 			layoutUtilityPageEntrySearchContainer.setResultsAndTotal(
@@ -137,14 +128,6 @@ public class LayoutUtilityPageEntryDisplayContext {
 		return _layoutUtilityPageEntrySearchContainer;
 	}
 
-	public boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
-	}
-
 	protected String getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -166,6 +149,16 @@ public class LayoutUtilityPageEntryDisplayContext {
 			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "asc");
 
 		return _orderByType;
+	}
+
+	private String _getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_renderRequest, "keywords");
+
+		return _keywords;
 	}
 
 	private PortletURL _getPortletURL() {

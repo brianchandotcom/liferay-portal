@@ -1,0 +1,84 @@
+{
+	"defaultLanguageId": "en_US",
+	"label": {
+		"en_US": "Definição de Objeto Teste",
+		"pt_BR": "Definição de Objeto Teste"
+	},
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Author",
+				"pt_BR": "Autor"
+			},
+			"name": "creator",
+			"system": true
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"label": {
+				"en_US": "Create Date",
+				"pt_BR": "Data de Criação"
+			},
+			"name": "createDate",
+			"system": true
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "External Reference Code",
+				"pt_BR": "Código de Referência Externo"
+			},
+			"name": "externalReferenceCode",
+			"system": true
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "ID",
+				"pt_BR": "ID"
+			},
+			"name": "id",
+			"system": true
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"label": {
+				"en_US": "Modified Date",
+				"pt_BR": "Data de Modificação"
+			},
+			"name": "modifiedDate",
+			"system": true
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Nome",
+				"pt_BR": "Nome"
+			},
+			"name": "name"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Status",
+				"pt_BR": "Estado"
+			},
+			"name": "status",
+			"system": true
+		}
+	],
+	"objectFolderExternalReferenceCode": "default",
+	"pluralLabel": {
+		"en_US": "Definições de Objeto Teste",
+		"pt_BR": "Definições de Objeto Teste"
+	},
+	"scope": "company"
+}

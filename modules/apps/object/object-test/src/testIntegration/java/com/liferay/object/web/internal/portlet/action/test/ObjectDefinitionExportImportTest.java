@@ -60,6 +60,11 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 		testExportImport(
 			"test-object-definition.json", "test-object-definition.json", null,
 			"TestObjectDefinition");
+
+		testExportImport(
+			"test-object-definition.portuguese-locale.json",
+			"test-object-definition.site-default-locale.json",
+			"TESTOBJECTDEFINITIONPORTUGUESE", "TestObjectDefinitionPortuguese");
 	}
 
 	@Override

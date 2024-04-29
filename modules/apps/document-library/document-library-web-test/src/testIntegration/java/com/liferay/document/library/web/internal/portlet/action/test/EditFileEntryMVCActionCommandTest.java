@@ -153,6 +153,7 @@ public class EditFileEntryMVCActionCommandTest {
 
 		Map<String, String[]> parameters = _getParameters(
 			tempFileEntry, Constants.ADD_MULTIPLE);
+
 		UploadPortletRequest uploadPortletRequest =
 			UploadTestUtil.createUploadPortletRequest(
 				UploadTestUtil.createUploadServletRequest(
@@ -220,6 +221,7 @@ public class EditFileEntryMVCActionCommandTest {
 
 		Map<String, String[]> parameters = _getParameters(
 			tempFileEntry, Constants.ADD_MULTIPLE);
+
 		UploadPortletRequest uploadPortletRequest =
 			UploadTestUtil.createUploadPortletRequest(
 				UploadTestUtil.createUploadServletRequest(
@@ -287,6 +289,7 @@ public class EditFileEntryMVCActionCommandTest {
 
 		Map<String, String[]> parameters = _getParameters(
 			tempFileEntry, Constants.ADD_MULTIPLE);
+
 		UploadPortletRequest uploadPortletRequest =
 			UploadTestUtil.createUploadPortletRequest(
 				UploadTestUtil.createUploadServletRequest(

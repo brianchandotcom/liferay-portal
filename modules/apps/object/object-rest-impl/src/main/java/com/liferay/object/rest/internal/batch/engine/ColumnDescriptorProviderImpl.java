@@ -46,15 +46,15 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 			String taskItemDelegateName)
 		throws PortalException {
 
+		ObjectValuePair<Field, Method> propertiesObjectValuePair =
+			objectValuePairs.get("properties");
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				companyId, taskItemDelegateName);
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectDefinition.getObjectDefinitionId(), fieldName);
-
-		ObjectValuePair<Field, Method> propertiesObjectValuePair =
-			objectValuePairs.get("properties");
 
 		if (Objects.equals(
 				objectField.getBusinessType(),

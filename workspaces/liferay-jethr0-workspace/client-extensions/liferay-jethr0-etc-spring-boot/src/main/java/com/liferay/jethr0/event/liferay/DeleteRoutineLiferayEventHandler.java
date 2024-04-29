@@ -32,8 +32,6 @@ public class DeleteRoutineLiferayEventHandler
 
 		routineEntityScheduler.unscheduleRoutineEntity(routineEntity);
 
-		routineEntityRepository.remove(routineEntity);
-
 		return String.valueOf(routineEntity);
 	}
 

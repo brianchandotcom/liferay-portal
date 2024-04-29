@@ -5,6 +5,10 @@
 
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
+import com.liferay.jenkins.results.parser.Dom4JUtil;
+
+import java.io.IOException;
+
 import org.dom4j.Element;
 
 /**
@@ -12,6 +16,16 @@ import org.dom4j.Element;
  */
 public class GradleTaskFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
+
+	@Override
+	public String getMessage(String consoleText) {
+		try {
+			return Dom4JUtil.format(getMessageElement(consoleText));
+		}
+		catch (IOException ioException) {
+			return ioException.getMessage();
+		}
+	}
 
 	@Override
 	public Element getMessageElement(String consoleText) {

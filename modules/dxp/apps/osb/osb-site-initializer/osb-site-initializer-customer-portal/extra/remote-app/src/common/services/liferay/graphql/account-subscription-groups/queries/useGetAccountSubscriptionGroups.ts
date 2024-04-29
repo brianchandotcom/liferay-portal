@@ -22,6 +22,7 @@ const GET_ACCOUNT_SUBSCRIPTION_GROUPS = gql`
 				items {
 					accountSubscriptionGroupId
 					accountKey
+					activationProductName
 					activationStatus
 					externalReferenceCode
 					hasActivation

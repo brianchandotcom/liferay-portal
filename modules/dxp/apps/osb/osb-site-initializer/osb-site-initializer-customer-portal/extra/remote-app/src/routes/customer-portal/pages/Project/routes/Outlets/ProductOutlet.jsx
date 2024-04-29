@@ -13,7 +13,7 @@ const ProductOutlet = ({product}) => {
 	const [{project, subscriptionGroups}] = useCustomerPortal();
 
 	const hasProduct = useMemo(
-		() => !!subscriptionGroups?.find(({name}) => name === product),
+		() => !!subscriptionGroups?.find(({activationProductName, name}) => activationProductName === product || name === product),
 		[product, subscriptionGroups]
 	);
 

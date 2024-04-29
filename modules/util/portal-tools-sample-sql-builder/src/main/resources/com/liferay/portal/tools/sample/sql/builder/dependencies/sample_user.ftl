@@ -14,7 +14,7 @@
 
 <#assign
 	groupIds = dataFactory.getSequence(dataFactory.maxGroupCount)
-	roleIds = [dataFactory.administratorRoleModel.roleId, dataFactory.powerUserRoleModel.roleId, dataFactory.userRoleModel.roleId, dataFactory.publicationsReviewerRoleModel.roleId]
+	roleIds = [dataFactory.administratorRoleModel.roleId, dataFactory.powerUserRoleModel.roleId, dataFactory.userRoleModel.roleId]
 />
 
 <@insertUser

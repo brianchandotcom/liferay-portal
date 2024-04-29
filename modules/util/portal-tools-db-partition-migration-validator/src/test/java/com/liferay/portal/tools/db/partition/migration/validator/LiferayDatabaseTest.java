@@ -119,9 +119,9 @@ public class LiferayDatabaseTest {
 
 	@Test
 	public void testGetTableNames() throws Exception {
-		_mockGetCompanyIds(Collections.singletonList(25000L));
 		_mockGetColumns(
 			Arrays.asList("Table1", "Company", "Table2", "Object_x_25000"));
+		_mockGetCompanyIds(Collections.singletonList(25000L));
 
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
 			_connection);

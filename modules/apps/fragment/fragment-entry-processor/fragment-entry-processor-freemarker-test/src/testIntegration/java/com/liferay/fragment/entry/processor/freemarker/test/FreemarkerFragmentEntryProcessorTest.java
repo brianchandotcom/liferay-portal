@@ -131,7 +131,7 @@ public class FreemarkerFragmentEntryProcessorTest {
 
 			FragmentCollection fragmentCollection =
 				_fragmentCollectionService.addFragmentCollection(
-					_group.getGroupId(), "Fragment Collection",
+					null, _group.getGroupId(), "Fragment Collection",
 					StringPool.BLANK, serviceContext);
 
 			FragmentEntry draftFragmentEntry =
@@ -159,8 +159,8 @@ public class FreemarkerFragmentEntryProcessorTest {
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				null, _group.getGroupId(), "Fragment Collection",
+				StringPool.BLANK, serviceContext);
 
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
@@ -197,8 +197,8 @@ public class FreemarkerFragmentEntryProcessorTest {
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				null, _group.getGroupId(), "Fragment Collection",
+				StringPool.BLANK, serviceContext);
 
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
@@ -635,8 +635,8 @@ public class FreemarkerFragmentEntryProcessorTest {
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				null, _group.getGroupId(), "Fragment Collection",
+				StringPool.BLANK, serviceContext);
 
 		String configuration = null;
 

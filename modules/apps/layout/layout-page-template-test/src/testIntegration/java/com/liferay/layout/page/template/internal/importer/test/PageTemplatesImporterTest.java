@@ -561,7 +561,7 @@ public class PageTemplatesImporterTest {
 
 			FragmentCollection fragmentCollection =
 				_fragmentCollectionLocalService.addFragmentCollection(
-					TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(), serviceContext);
 
@@ -644,7 +644,7 @@ public class PageTemplatesImporterTest {
 
 			FragmentCollection fragmentCollection =
 				_fragmentCollectionLocalService.addFragmentCollection(
-					TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(), serviceContext);
 
@@ -730,7 +730,7 @@ public class PageTemplatesImporterTest {
 
 			FragmentCollection fragmentCollection =
 				_fragmentCollectionLocalService.addFragmentCollection(
-					TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(), serviceContext);
 
@@ -832,7 +832,7 @@ public class PageTemplatesImporterTest {
 
 			FragmentCollection fragmentCollection =
 				_fragmentCollectionLocalService.addFragmentCollection(
-					TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(), serviceContext);
 
@@ -1236,7 +1236,7 @@ public class PageTemplatesImporterTest {
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				"Test Collection", StringPool.BLANK, serviceContext);
 
 		_fragmentEntryLocalService.addFragmentEntry(

@@ -75,7 +75,8 @@ public class FragmentCollectionServiceTest {
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
-				_group.getGroupId(), name, StringPool.BLANK, serviceContext);
+				null, _group.getGroupId(), name, StringPool.BLANK,
+				serviceContext);
 
 		FragmentCollection persistedFragmentCollection =
 			_fragmentCollectionPersistence.findByPrimaryKey(
@@ -96,7 +97,7 @@ public class FragmentCollectionServiceTest {
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
-				_group.getGroupId(), RandomTestUtil.randomString(), name,
+				null, _group.getGroupId(), RandomTestUtil.randomString(), name,
 				StringPool.BLANK, serviceContext);
 
 		FragmentCollection persistedFragmentCollection =
@@ -158,7 +159,7 @@ public class FragmentCollectionServiceTest {
 	public void testGetFragmentCollectionFileEntries() throws Exception {
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
-				_group.getGroupId(), RandomTestUtil.randomString(),
+				null, _group.getGroupId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(
 					_group, TestPropsValues.getUserId()));
@@ -455,7 +456,7 @@ public class FragmentCollectionServiceTest {
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
-				_group.getGroupId(), RandomTestUtil.randomString(), name,
+				null, _group.getGroupId(), RandomTestUtil.randomString(), name,
 				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(
 					_group, TestPropsValues.getUserId()));

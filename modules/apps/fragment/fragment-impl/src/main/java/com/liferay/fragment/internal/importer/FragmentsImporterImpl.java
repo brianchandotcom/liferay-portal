@@ -244,7 +244,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		if (fragmentCollection == null) {
 			fragmentCollection =
 				_fragmentCollectionService.addFragmentCollection(
-					groupId, fragmentCollectionKey, name, description,
+					null, groupId, fragmentCollectionKey, name, description,
 					ServiceContextThreadLocal.getServiceContext());
 		}
 		else if (Objects.equals(
@@ -259,7 +259,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 			fragmentCollection =
 				_fragmentCollectionService.addFragmentCollection(
-					groupId,
+					null, groupId,
 					_fragmentCollectionLocalService.
 						generateFragmentCollectionKey(
 							groupId, fragmentCollectionKey),
@@ -553,7 +553,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		}
 
 		return _fragmentCollectionService.addFragmentCollection(
-			groupId, _FRAGMENT_COLLECTION_KEY_DEFAULT,
+			null, groupId, _FRAGMENT_COLLECTION_KEY_DEFAULT,
 			_language.get(
 				_portal.getSiteDefaultLocale(groupId),
 				_FRAGMENT_COLLECTION_KEY_DEFAULT),

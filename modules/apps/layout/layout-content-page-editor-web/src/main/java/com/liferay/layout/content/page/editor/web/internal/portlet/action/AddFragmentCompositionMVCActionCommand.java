@@ -86,8 +86,9 @@ public class AddFragmentCompositionMVCActionCommand
 
 			fragmentCollection =
 				_fragmentCollectionService.addFragmentCollection(
-					themeDisplay.getScopeGroupId(), fragmentCollectionName,
-					fragmentCollectionName, serviceContext);
+					null, themeDisplay.getScopeGroupId(),
+					fragmentCollectionName, fragmentCollectionName,
+					serviceContext);
 		}
 
 		String name = ParamUtil.getString(actionRequest, "name");

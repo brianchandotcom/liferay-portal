@@ -137,7 +137,7 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContextTest {
 	private FragmentEntry _getFragmentEntry() throws Exception {
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				_serviceContext);
 

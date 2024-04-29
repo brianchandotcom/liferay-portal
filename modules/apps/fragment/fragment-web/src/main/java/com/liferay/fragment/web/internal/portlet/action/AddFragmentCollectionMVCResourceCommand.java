@@ -58,7 +58,7 @@ public class AddFragmentCollectionMVCResourceCommand
 
 			FragmentCollection fragmentCollection =
 				_fragmentCollectionService.addFragmentCollection(
-					serviceContext.getScopeGroupId(), name, description,
+					null, serviceContext.getScopeGroupId(), name, description,
 					serviceContext);
 
 			jsonObject.put(

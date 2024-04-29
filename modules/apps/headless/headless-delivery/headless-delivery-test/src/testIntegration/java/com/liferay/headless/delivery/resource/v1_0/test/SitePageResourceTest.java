@@ -892,7 +892,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
-				testGroup.getCreatorUserId(), testGroup.getGroupId(),
+				null, testGroup.getCreatorUserId(), testGroup.getGroupId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				serviceContext);
 

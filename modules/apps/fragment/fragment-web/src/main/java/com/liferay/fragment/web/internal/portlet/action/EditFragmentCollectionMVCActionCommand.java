@@ -57,7 +57,7 @@ public class EditFragmentCollectionMVCActionCommand
 
 			fragmentCollection =
 				_fragmentCollectionService.addFragmentCollection(
-					serviceContext.getScopeGroupId(), name, description,
+					null, serviceContext.getScopeGroupId(), name, description,
 					serviceContext);
 		}
 		else {

@@ -96,7 +96,7 @@ public class CopyFragmentEntryMVCActionCommandTest {
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				null);
 
@@ -138,7 +138,7 @@ public class CopyFragmentEntryMVCActionCommandTest {
 	public void testCopyFragmentEntry() throws Exception {
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				null);
 

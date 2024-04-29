@@ -89,6 +89,25 @@ public class FragmentCollectionServiceImpl
 	}
 
 	@Override
+	public FragmentCollection deleteFragmentCollection(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		FragmentCollection fragmentCollection =
+			fragmentCollectionLocalService.fetchFragmentCollection(
+				externalReferenceCode, groupId);
+
+		if (fragmentCollection != null) {
+			_portletResourcePermission.check(
+				getPermissionChecker(), fragmentCollection.getGroupId(),
+				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+		}
+
+		return fragmentCollectionLocalService.deleteFragmentCollection(
+			fragmentCollection);
+	}
+
+	@Override
 	public void deleteFragmentCollections(long[] fragmentCollectionIds)
 		throws PortalException {
 

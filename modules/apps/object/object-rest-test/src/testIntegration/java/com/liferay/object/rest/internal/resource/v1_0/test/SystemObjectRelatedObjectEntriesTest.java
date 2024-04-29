@@ -273,69 +273,40 @@ public class SystemObjectRelatedObjectEntriesTest {
 			"r_", objectRelationship.getName(), "_",
 			objectDefinitionNameReference);
 
-		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				_getLocation(), StringPool.SLASH, _user.getUserId()),
-			Http.Method.GET);
+		// Default unrelated user
 
-		Assert.assertEquals(
-			StringPool.BLANK,
-			jsonObject1.get(relatedObjectEntryFieldBase + "ERC"));
-		Assert.assertEquals(
-			String.valueOf(0),
-			jsonObject1.get(
-				relatedObjectEntryFieldBase + "Id"
-			).toString());
+		_testGetManyToOneSystemObjectRelatedObjectEntries(
+			StringPool.BLANK, 0, relatedObjectEntryFieldBase,
+			_user.getUserId());
 
-		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				_getLocation(), StringPool.SLASH,
-				_userAccountJSONObject.get("id")),
-			Http.Method.GET);
+		// New unrelated user
 
-		Assert.assertEquals(
-			StringPool.BLANK,
-			jsonObject2.get(relatedObjectEntryFieldBase + "ERC"));
-		Assert.assertEquals(
-			String.valueOf(0),
-			jsonObject2.get(
-				relatedObjectEntryFieldBase + "Id"
-			).toString());
+		_testGetManyToOneSystemObjectRelatedObjectEntries(
+			StringPool.BLANK, 0, relatedObjectEntryFieldBase,
+			_userAccountJSONObject.getLong("id"));
 
-		ObjectRelationshipLocalServiceUtil.
-			addObjectRelationshipMappingTableValues(
-				_user.getUserId(), objectRelationship.getObjectRelationshipId(),
-				_objectEntry.getPrimaryKey(), _user.getUserId(),
-				ServiceContextTestUtil.getServiceContext());
+		// Default related user
 
-		JSONObject jsonObject3 = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				_getLocation(), StringPool.SLASH, _user.getUserId()),
-			Http.Method.GET);
+		ObjectRelationshipTestUtil.relateObjectEntries(
+			_objectEntry.getObjectEntryId(), _user.getUserId(),
+			objectRelationship, _user.getUserId());
 
-		Assert.assertEquals(
+		_testGetManyToOneSystemObjectRelatedObjectEntries(
 			_objectEntry.getExternalReferenceCode(),
-			jsonObject3.get(relatedObjectEntryFieldBase + "ERC"));
-		Assert.assertEquals(
-			String.valueOf(_objectEntry.getObjectEntryId()),
-			jsonObject3.get(
-				relatedObjectEntryFieldBase + "Id"
-			).toString());
+			_objectEntry.getObjectEntryId(), relatedObjectEntryFieldBase,
+			_user.getUserId());
 
-		ObjectRelationshipLocalServiceUtil.
-			addObjectRelationshipMappingTableValues(
-				_user.getUserId(), objectRelationship.getObjectRelationshipId(),
-				_objectEntry.getPrimaryKey(),
-				_userAccountJSONObject.getLong("id"),
-				ServiceContextTestUtil.getServiceContext());
+		// New related user
 
-		JSONObject jsonObject4 = HTTPTestUtil.invokeToJSONObject(
+		ObjectRelationshipTestUtil.relateObjectEntries(
+			_objectEntry.getObjectEntryId(),
+			_userAccountJSONObject.getLong("id"), objectRelationship,
+			_user.getUserId());
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
-		Assert.assertNotNull(jsonObject4.get(objectRelationship.getName()));
+		Assert.assertNotNull(jsonObject.get(objectRelationship.getName()));
 	}
 
 	@Test
@@ -874,6 +845,25 @@ public class SystemObjectRelatedObjectEntriesTest {
 		}
 
 		return Type.MANY_TO_MANY;
+	}
+
+	private void _testGetManyToOneSystemObjectRelatedObjectEntries(
+			String expectedObjectEntryExternalReferenceCode,
+			long expectedObjectEntryId, String relatedObjectEntryFieldBase,
+			long userId)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(_getLocation(), StringPool.SLASH, userId),
+			Http.Method.GET);
+
+		Assert.assertEquals(
+			expectedObjectEntryExternalReferenceCode,
+			jsonObject.get(relatedObjectEntryFieldBase + "ERC"));
+		Assert.assertEquals(
+			expectedObjectEntryId,
+			jsonObject.getLong(relatedObjectEntryFieldBase + "Id"));
 	}
 
 	private void _testGetSystemObjectRelatedObjectEntries(

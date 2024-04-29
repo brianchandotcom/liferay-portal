@@ -50,19 +50,20 @@ public class FragmentCollectionLocalServiceImpl
 
 	@Override
 	public FragmentCollection addFragmentCollection(
-			long userId, long groupId, String name, String description,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			String name, String description, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addFragmentCollection(
-			userId, groupId, StringPool.BLANK, name, description,
-			serviceContext);
+			externalReferenceCode, userId, groupId, StringPool.BLANK, name,
+			description, serviceContext);
 	}
 
 	@Override
 	public FragmentCollection addFragmentCollection(
-			long userId, long groupId, String fragmentCollectionKey,
-			String name, String description, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			String fragmentCollectionKey, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Fragment collection
@@ -96,6 +97,7 @@ public class FragmentCollectionLocalServiceImpl
 			fragmentCollectionPersistence.create(fragmentCollectionId);
 
 		fragmentCollection.setUuid(serviceContext.getUuid());
+		fragmentCollection.setExternalReferenceCode(externalReferenceCode);
 		fragmentCollection.setGroupId(groupId);
 		fragmentCollection.setCompanyId(companyId);
 		fragmentCollection.setUserId(user.getUserId());

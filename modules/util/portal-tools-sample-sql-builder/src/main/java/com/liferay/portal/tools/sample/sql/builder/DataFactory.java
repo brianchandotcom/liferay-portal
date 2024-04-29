@@ -5733,6 +5733,18 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
+		String name, String primKey, long ownerId) {
+
+		return ListUtil.fromArray(
+			newResourcePermissionModel(
+				name, primKey, _guestRoleModel.getRoleId(), 0),
+			newResourcePermissionModel(
+				name, primKey, _ownerRoleModel.getRoleId(), ownerId),
+			newResourcePermissionModel(
+				name, primKey, _siteMemberRoleModel.getRoleId(), 0));
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
 		UserModel userModel) {
 
 		return Collections.singletonList(
@@ -7394,18 +7406,6 @@ public class DataFactory {
 		resourcePermissionModel.setViewActionId(true);
 
 		return resourcePermissionModel;
-	}
-
-	protected List<ResourcePermissionModel> newResourcePermissionModels(
-		String name, String primKey, long ownerId) {
-
-		return ListUtil.fromArray(
-			newResourcePermissionModel(
-				name, primKey, _guestRoleModel.getRoleId(), 0),
-			newResourcePermissionModel(
-				name, primKey, _ownerRoleModel.getRoleId(), ownerId),
-			newResourcePermissionModel(
-				name, primKey, _siteMemberRoleModel.getRoleId(), 0));
 	}
 
 	protected RoleModel newRoleModel(String name, int type) {

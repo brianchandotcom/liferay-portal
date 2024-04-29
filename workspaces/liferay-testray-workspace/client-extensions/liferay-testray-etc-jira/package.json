@@ -23,5 +23,5 @@
 		"dev": "tsx watch src/index.ts",
 		"start": "tsx src/index.ts"
 	},
-	"version": "1.0.0"
+	"version": "0.0.0"
 }

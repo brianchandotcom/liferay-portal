@@ -7,5 +7,5 @@
 	},
 	"main": "package.json",
 	"name": "@liferay/liferay-marketplace-theme-css",
-	"version": "1.0.0"
+	"version": "0.0.0"
 }

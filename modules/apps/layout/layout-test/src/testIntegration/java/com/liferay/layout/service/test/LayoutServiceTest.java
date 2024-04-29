@@ -6,24 +6,30 @@
 package com.liferay.layout.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -85,6 +91,73 @@ public class LayoutServiceTest {
 	@Test
 	public void testAddPublicLayout() throws Exception {
 		_assertAddLayout(false);
+	}
+
+	@Test
+	public void testFetchFirstLayoutPublished() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_publishLayouts(
+			layout, LayoutTestUtil.addTypeContentLayout(_group),
+			LayoutTestUtil.addTypeContentLayout(_group));
+
+		_assertFetchFirstLayoutAsGuestUser(layout);
+	}
+
+	@Test
+	public void testFetchFirstLayoutPublishedFirstLayoutUnpublished()
+		throws Exception {
+
+		LayoutTestUtil.addTypeContentLayout(_group);
+		LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_publishLayouts(layout, LayoutTestUtil.addTypeContentLayout(_group));
+
+		_assertFetchFirstLayoutAsGuestUser(layout);
+	}
+
+	@Test
+	public void testFetchFirstLayoutPublishedFirstLayoutWithoutPermission()
+		throws Exception {
+
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_publishLayouts(
+			layout1, layout2, LayoutTestUtil.addTypeContentLayout(_group));
+
+		_removeResourcePermission(layout1);
+
+		_assertFetchFirstLayoutAsGuestUser(layout2);
+	}
+
+	@Test
+	public void testFetchFirstLayoutPublishedNoLayoutPublished()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		LayoutTestUtil.addTypeContentLayout(_group);
+		LayoutTestUtil.addTypeContentLayout(_group);
+
+		_assertFetchFirstLayoutAsGuestUser(layout);
+	}
+
+	@Test
+	public void testFetchFirstLayoutPublishedNoLayoutWithPermission()
+		throws Exception {
+
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout3 = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_publishLayouts(layout1, layout2, layout3);
+
+		_removeResourcePermission(layout1, layout2, layout3);
+
+		_assertFetchFirstLayoutAsGuestUser(null);
 	}
 
 	@Test
@@ -245,6 +318,29 @@ public class LayoutServiceTest {
 		Assert.assertTrue(layout.isTypePortlet());
 	}
 
+	private void _assertFetchFirstLayoutAsGuestUser(Layout layout)
+		throws Exception {
+
+		User user = _userLocalService.fetchGuestUser(_group.getCompanyId());
+
+		try {
+			UserTestUtil.setUser(user);
+
+			Layout curLayout = _layoutService.fetchFirstLayout(
+				_group.getGroupId(), false, true);
+
+			if (layout == null) {
+				Assert.assertNull(curLayout);
+			}
+			else {
+				Assert.assertEquals(layout.getPlid(), curLayout.getPlid());
+			}
+		}
+		finally {
+			UserTestUtil.setUser(TestPropsValues.getUser());
+		}
+	}
+
 	private void _assertPortletIdsInColumn(
 			int columnIndex, long plid, String[] portletIds)
 		throws Exception {
@@ -259,6 +355,22 @@ public class LayoutServiceTest {
 			StringUtil.split(
 				layoutTypeSettingsUnicodeProperties.getProperty(
 					"column-" + columnIndex)));
+	}
+
+	private void _publishLayouts(Layout... layouts) throws Exception {
+		for (Layout layout : layouts) {
+			ContentLayoutTestUtil.publishLayout(
+				layout.fetchDraftLayout(), layout);
+		}
+	}
+
+	private void _removeResourcePermission(Layout... layouts) throws Exception {
+		for (Layout layout : layouts) {
+			RoleTestUtil.removeResourcePermission(
+				RoleConstants.GUEST, Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layout.getPlid()), ActionKeys.VIEW);
+		}
 	}
 
 	private void _testAddPortletsToLayout(boolean privateLayout)
@@ -324,5 +436,8 @@ public class LayoutServiceTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

@@ -35,8 +35,8 @@ definition {
 				key_viewName = "View Fields Test");
 		}
 
-		task ("When goes to Fields Tab.") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+		task ("When goes to Visualization Modes Tab.") {
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 		}
 	}
 

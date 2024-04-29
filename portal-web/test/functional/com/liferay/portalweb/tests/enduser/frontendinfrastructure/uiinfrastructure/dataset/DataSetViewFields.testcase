@@ -36,7 +36,7 @@ definition {
 		}
 
 		task ("When goes to Fields Tab.") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 		}
 	}
 
@@ -147,7 +147,7 @@ definition {
 		}
 
 		task ("And go to fields tab") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 		}
 
 		task ("And click on add button") {
@@ -1121,13 +1121,13 @@ definition {
 			Button.clickSave();
 		}
 
-		task ("Then label field should appear on Fields tab page") {
+		task ("Then label field should appear on Visualization Modes tab page") {
 			DataSetAdmin.assertFieldsOnTable(
 				key_position = 1,
 				keyName = "label");
 		}
 
-		task ("And id should not appear on Fields tab page") {
+		task ("And id should not appear on Visualization Modes tab page") {
 			AssertElementNotPresent(
 				key_position = 1,
 				keyName = "id",

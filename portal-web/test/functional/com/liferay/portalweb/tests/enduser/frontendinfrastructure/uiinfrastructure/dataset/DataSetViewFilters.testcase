@@ -356,8 +356,8 @@ definition {
 				picklistName = "Transport");
 		}
 
-		task ("When the user accesses the Fields tab and add datecreated,datemodified") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+		task ("When the user accesses the Visualization Modes tab and add datecreated,datemodified") {
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 
 			LexiconEntry.gotoAdd();
 
@@ -1292,7 +1292,7 @@ definition {
 			Button.clickCancel();
 		}
 
-		task ("Then assert the field is not deleted and it still appears in the Fields tab table") {
+		task ("Then assert the field is not deleted and it still appears in the Visualization Modes tab table") {
 			DataSetAdmin.assertFieldsOnTable(
 				key_position = 1,
 				keyName = "from");
@@ -2276,8 +2276,8 @@ definition {
 				picklistName = "Transport");
 		}
 
-		task ("When the user accesses the Fields tab") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+		task ("When the user accesses the Visualization Modes tab") {
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 		}
 
 		task ("And adds a new filter") {
@@ -2399,8 +2399,8 @@ definition {
 				picklistName = "Transport");
 		}
 
-		task ("When the user accesses the Fields tab") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+		task ("When the user accesses the Visualization Modes tab") {
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 		}
 
 		task ("And adds a new filter") {

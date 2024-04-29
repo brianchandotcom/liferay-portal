@@ -64,8 +64,8 @@ definition {
 				key_viewName = "View Fields Test");
 		}
 
-		task ("When the user goes to Fields tab") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+		task ("When the user goes to Visualization Modes tab") {
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 		}
 
 		task ("And adds new fields //creator, id, status") {
@@ -131,8 +131,8 @@ definition {
 				key_viewName = "View Fields Test");
 		}
 
-		task ("When the user goes to Fields tab") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+		task ("When the user goes to Visualization Modes tab") {
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 		}
 
 		task ("And adds new fields //creator, id, status") {
@@ -186,8 +186,8 @@ definition {
 				key_viewName = "View Fields Test");
 		}
 
-		task ("And the user goes to Fields tab") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+		task ("And the user goes to Visualization Modes tab") {
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 		}
 
 		task ("When the user adds new fields") {

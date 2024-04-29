@@ -141,7 +141,7 @@ definition {
 				dataSetName = "Countries",
 				key_viewName = "Abbreviations view");
 
-			DataSetAdmin.goToTab(tabName = "Fields");
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 
 			DataSetAdmin.addFields(key_fieldList = "name,a3,a2");
 		}
@@ -239,7 +239,7 @@ definition {
 				dataSetName = "Countries",
 				key_viewName = "Abbreviations view");
 
-			DataSetAdmin.goToTab(tabName = "Fields");
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 
 			DataSetAdmin.addFields(key_fieldList = "name,a3,a2");
 		}
@@ -328,7 +328,7 @@ definition {
 		}
 
 		task ("Then the Delete option is displayed in the item action dropdown menu") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 
 			DataSetAdmin.addFields(key_fieldList = "name,id,label");
 		}
@@ -464,7 +464,7 @@ definition {
 				dataSetName = "Web contents",
 				key_viewName = "View Test");
 
-			DataSetAdmin.goToTab(tabName = "Fields");
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 
 			DataSetAdmin.addFields(key_fieldList = "title,siteId");
 		}
@@ -566,7 +566,7 @@ definition {
 				dataSetName = "Roles",
 				key_viewName = "View Test");
 
-			DataSetAdmin.goToTab(tabName = "Fields");
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 
 			DataSetAdmin.addFields(key_fieldList = "name,id");
 		}
@@ -672,7 +672,7 @@ definition {
 				dataSetName = "Vocabulary",
 				key_viewName = "View Test");
 
-			DataSetAdmin.goToTab(tabName = "Fields");
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 
 			DataSetAdmin.addFields(key_fieldList = "name,siteId");
 		}

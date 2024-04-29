@@ -1188,7 +1188,7 @@ definition {
 		}
 
 		task ("Add new fields to the view") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 
 			DataSetAdmin.addFields(key_fieldList = "id,status");
 		}
@@ -2736,7 +2736,7 @@ definition {
 		}
 
 		task ("Add new fields to the view") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 
 			DataSetAdmin.addFields(key_fieldList = "id,status");
 		}
@@ -3165,7 +3165,7 @@ definition {
 		}
 
 		task ("Add new fields to the view") {
-			DataSetAdmin.goToTab(tabName = "Fields");
+			DataSetAdmin.goToTab(tabName = "Visualization Modes");
 
 			DataSetAdmin.addFields(key_fieldList = "id,status");
 		}

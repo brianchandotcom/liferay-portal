@@ -758,13 +758,14 @@ public class ObjectEntryLocalServiceImpl
 				selectExpressions),
 			objectDefinition.getObjectDefinitionId(), selectExpressions);
 
-		if (rows.isEmpty()) {
-			return new HashMap<>();
+		Object[] row = null;
+
+		if (!rows.isEmpty()) {
+			row = rows.get(0);
 		}
 
 		Map<String, Serializable> values = _getValues(
-			objectDefinition.getObjectDefinitionId(), rows.get(0),
-			selectExpressions);
+			objectDefinition.getObjectDefinitionId(), row, selectExpressions);
 
 		values.remove(objectDefinition.getPKObjectFieldName());
 
@@ -3283,6 +3284,12 @@ public class ObjectEntryLocalServiceImpl
 			String columnName = null;
 			Class<?> javaTypeClass = null;
 
+			Object object = null;
+
+			if (objects != null) {
+				object = objects[i];
+			}
+
 			if (selectExpression instanceof Alias) {
 				Alias<?> alias = (Alias<?>)selectExpression;
 
@@ -3312,13 +3319,12 @@ public class ObjectEntryLocalServiceImpl
 					_objectFieldLocalService.fetchObjectField(
 						objectDefinitionId, columnName);
 
-				if ((objectField != null) &&
+				if ((object != null) && (objectField != null) &&
 					objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
 
 					try {
-						objects[i] = _encryptor.decrypt(
-							_getKey(), (String)objects[i]);
+						object = _encryptor.decrypt(_getKey(), (String)object);
 					}
 					catch (IllegalArgumentException illegalArgumentException) {
 						throw new IllegalArgumentException(
@@ -3333,7 +3339,7 @@ public class ObjectEntryLocalServiceImpl
 				}
 			}
 
-			_putValue(javaTypeClass, columnName, objects[i], values);
+			_putValue(javaTypeClass, columnName, object, values);
 		}
 
 		return values;

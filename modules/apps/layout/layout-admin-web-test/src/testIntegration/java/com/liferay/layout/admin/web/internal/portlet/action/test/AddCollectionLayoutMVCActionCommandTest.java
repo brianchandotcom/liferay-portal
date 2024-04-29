@@ -133,8 +133,8 @@ public class AddCollectionLayoutMVCActionCommandTest {
 		throws Exception {
 
 		return _assetListEntryLocalService.addManualAssetListEntry(
-			TestPropsValues.getUserId(), group.getGroupId(), "Collection Title",
-			new long[0], serviceContext);
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			"Collection Title", new long[0], serviceContext);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(

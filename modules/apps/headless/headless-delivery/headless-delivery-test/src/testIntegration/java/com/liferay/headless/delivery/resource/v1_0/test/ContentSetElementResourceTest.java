@@ -39,11 +39,11 @@ public class ContentSetElementResourceTest
 		_serviceContext = _getServiceContext();
 
 		_assetListEntry = AssetListEntryLocalServiceUtil.addAssetListEntry(
-			TestPropsValues.getUserId(), testGroup.getGroupId(),
+			null, TestPropsValues.getUserId(), testGroup.getGroupId(),
 			RandomTestUtil.randomString(),
 			AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 		_depotAssetListEntry = AssetListEntryLocalServiceUtil.addAssetListEntry(
-			TestPropsValues.getUserId(), testDepotEntry.getGroupId(),
+			null, TestPropsValues.getUserId(), testDepotEntry.getGroupId(),
 			RandomTestUtil.randomString(),
 			AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 	}

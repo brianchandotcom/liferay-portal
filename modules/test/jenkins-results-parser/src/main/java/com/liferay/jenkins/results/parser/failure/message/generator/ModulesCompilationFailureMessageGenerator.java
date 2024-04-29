@@ -6,6 +6,9 @@
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.Dom4JUtil;
+
+import java.io.IOException;
 
 import org.dom4j.Element;
 
@@ -14,6 +17,32 @@ import org.dom4j.Element;
  */
 public class ModulesCompilationFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
+
+	@Override
+	public String getMessage(Build build) {
+		String jobVariant = build.getJobVariant();
+
+		if (!jobVariant.contains("modules-compile")) {
+			return null;
+		}
+
+		try {
+			return Dom4JUtil.format(getMessageElement(build.getConsoleText()));
+		}
+		catch (IOException ioException) {
+			return ioException.getMessage();
+		}
+	}
+
+	@Override
+	public String getMessage(String consoleText) {
+		try {
+			return Dom4JUtil.format(getMessageElement(consoleText));
+		}
+		catch (IOException ioException) {
+			return ioException.getMessage();
+		}
+	}
 
 	@Override
 	public Element getMessageElement(Build build) {

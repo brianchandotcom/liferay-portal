@@ -72,10 +72,10 @@ public class TrialRestController extends BaseRestController {
 			_getPortalInstanceResource();
 
 		com.liferay.headless.portal.instances.client.pagination.Page
-			<PortalInstance> portalInstancesPage =
+			<PortalInstance> page =
 				portalInstanceResource.getPortalInstancesPage(true);
 
-		for (PortalInstance portalInstance : portalInstancesPage.getItems()) {
+		for (PortalInstance portalInstance : page.getItems()) {
 			if (Objects.equals(
 					portalInstance.getVirtualHost(),
 					orderId + "." + _trialDXPDomain)) {
@@ -91,9 +91,116 @@ public class TrialRestController extends BaseRestController {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Virtual instance and cloud project deleted for Order " +
+				"Virtual instance and cloud project deleted for order " +
 					orderId);
 		}
+	}
+
+	@PostMapping("provisioning")
+	public void postProvisioning(
+			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
+		throws Exception {
+
+		_initResourceBuilders();
+
+		JSONObject jsonObject = new JSONObject(json);
+
+		JSONObject modelDTOOrderJSONObject = jsonObject.getJSONObject(
+			"modelDTOOrder");
+
+		long orderId = jsonObject.getLong("classPK");
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Provisioning trial " + orderId);
+		}
+
+		if (_orderResource.getOrdersPage(
+				"",
+				"accountId/any(x:(x eq " +
+					modelDTOOrderJSONObject.getString("accountId") +
+						")) and orderTypeExternalReferenceCode eq 'SOLUTIONS7'",
+				Pagination.of(1, 1), ""
+			).getTotalCount() > 1) {
+
+			_log.error(
+				"Account " + modelDTOOrderJSONObject.getString("accountId") +
+					" already has a provisioned order");
+
+			_updateOrder(null, orderId, _ORDER_STATUS_CANCELLED);
+
+			return;
+		}
+
+		if (_getPortalInstancesPage().getTotalCount() ==
+				_TRIAL_MAX_INSTANCES_IN_PROGRESS) {
+
+			_log.error(
+				"The limit of " + _TRIAL_MAX_INSTANCES_IN_PROGRESS +
+					" has exceeded, trial installation will be scheduled");
+
+			_updateOrder(null, orderId, _ORDER_STATUS_ON_HOLD);
+
+			return;
+		}
+
+		_updateOrder(null, orderId, _ORDER_STATUS_PROCESSING);
+
+		PortalInstance portalInstance = _postPortalInstance(
+			jwt, modelDTOOrderJSONObject.getString("creatorEmailAddress"),
+			orderId);
+
+		try {
+			_consoleService.setUpCloudProjectInstallation(
+				portalInstance.getVirtualHost(), orderId);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to SetUp Cloud installation for order " + orderId);
+			_log.error(exception);
+
+			_updateOrder(
+				HashMapBuilder.put(
+					"trial-error", exception.toString()
+				).put(
+					"trial-error-date",
+					ZonedDateTime.now(
+					).format(
+						DateTimeFormatter.ISO_INSTANT
+					)
+				).put(
+					"trial-virtualhost", portalInstance.getVirtualHost()
+				).build(),
+				orderId, _ORDER_STATUS_CANCELLED);
+
+			return;
+		}
+
+		_updateOrder(
+			HashMapBuilder.put(
+				"trial-end-date",
+				ZonedDateTime.now(
+				).plusDays(
+					7
+				).format(
+					DateTimeFormatter.ISO_INSTANT
+				)
+			).put(
+				"trial-start-date",
+				ZonedDateTime.now(
+				).format(
+					DateTimeFormatter.ISO_INSTANT
+				)
+			).put(
+				"trial-virtualhost", portalInstance.getVirtualHost()
+			).build(),
+			orderId, _ORDER_STATUS_COMPLETED);
+
+		_postNotificationQueueEntry(
+			modelDTOOrderJSONObject.getString("creatorEmailAddress"),
+			portalInstance.getVirtualHost(),
+			jwt.getClaim(
+				"username"
+			).toString());
 	}
 
 	@GetMapping("availability")
@@ -329,113 +436,6 @@ public class TrialRestController extends BaseRestController {
 		}
 
 		return portalInstance;
-	}
-
-	@PostMapping("provisioning")
-	private void _postProvisioning(
-			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
-		throws Exception {
-
-		_initResourceBuilders();
-
-		JSONObject jsonObject = new JSONObject(json);
-
-		JSONObject modelDTOOrderJSONObject = jsonObject.getJSONObject(
-			"modelDTOOrder");
-
-		long orderId = jsonObject.getLong("classPK");
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Provisioning trial " + orderId);
-		}
-
-		if (_orderResource.getOrdersPage(
-				"",
-				"accountId/any(x:(x eq " +
-					modelDTOOrderJSONObject.getString("accountId") +
-						")) and orderTypeExternalReferenceCode eq 'SOLUTIONS7'",
-				Pagination.of(1, 1), ""
-			).getTotalCount() > 1) {
-
-			_log.error(
-				"Account " + modelDTOOrderJSONObject.getString("accountId") +
-					" already has a provisioned order");
-
-			_updateOrder(null, orderId, _ORDER_STATUS_CANCELLED);
-
-			return;
-		}
-
-		if (_getPortalInstancesPage().getTotalCount() ==
-				_TRIAL_MAX_INSTANCES_IN_PROGRESS) {
-
-			_log.error(
-				"The limit of " + _TRIAL_MAX_INSTANCES_IN_PROGRESS +
-					" has exceeded, trial installation will be scheduled");
-
-			_updateOrder(null, orderId, _ORDER_STATUS_ON_HOLD);
-
-			return;
-		}
-
-		_updateOrder(null, orderId, _ORDER_STATUS_PROCESSING);
-
-		PortalInstance portalInstance = _postPortalInstance(
-			jwt, modelDTOOrderJSONObject.getString("creatorEmailAddress"),
-			orderId);
-
-		try {
-			_consoleService.setUpCloudProjectInstallation(
-				orderId, portalInstance.getVirtualHost());
-		}
-		catch (Exception exception) {
-			_log.error(
-				"Unable to SetUp Cloud installation for order " + orderId);
-			_log.error(exception);
-
-			_updateOrder(
-				HashMapBuilder.put(
-					"trial-error", exception.toString()
-				).put(
-					"trial-error-date",
-					ZonedDateTime.now(
-					).format(
-						DateTimeFormatter.ISO_INSTANT
-					)
-				).put(
-					"trial-virtualhost", portalInstance.getVirtualHost()
-				).build(),
-				orderId, _ORDER_STATUS_CANCELLED);
-
-			return;
-		}
-
-		_updateOrder(
-			HashMapBuilder.put(
-				"trial-end-date",
-				ZonedDateTime.now(
-				).plusDays(
-					7
-				).format(
-					DateTimeFormatter.ISO_INSTANT
-				)
-			).put(
-				"trial-start-date",
-				ZonedDateTime.now(
-				).format(
-					DateTimeFormatter.ISO_INSTANT
-				)
-			).put(
-				"trial-virtualhost", portalInstance.getVirtualHost()
-			).build(),
-			orderId, _ORDER_STATUS_COMPLETED);
-
-		_postNotificationQueueEntry(
-			modelDTOOrderJSONObject.getString("creatorEmailAddress"),
-			portalInstance.getVirtualHost(),
-			jwt.getClaim(
-				"username"
-			).toString());
 	}
 
 	private void _updateOrder(

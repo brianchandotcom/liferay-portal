@@ -61,7 +61,7 @@ describe('formatActionURL helper', () => {
 		);
 	});
 
-	it('returns the URL, changing the _backURL parameter to use the actual URL', () => {
+	it('returns the URL, changing the portlet_ns_backURL parameter to use the actual URL', () => {
 		const URLWithRedirect =
 			'/test/page?p_p_id=random&_random_backURL=http://www.somewhere.com';
 		const target = 'link';
@@ -70,6 +70,14 @@ describe('formatActionURL helper', () => {
 		expect(formattedURL).toEqual(
 			'/test/page?p_p_id=random&_random_backURL=http://localhost/'
 		);
+	});
+
+	it('returns the URL, changing any _backURL parameter to use the actual URL', () => {
+		const URLWithRedirect = '/test/page?backURL=http://www.somewhere.com';
+		const target = 'link';
+		const formattedURL = formatActionURL(URLWithRedirect, testItem, target);
+
+		expect(formattedURL).toEqual('/test/page?backURL=http://localhost/');
 	});
 
 	it('returns the URL, adding the _redirect and _backURL parameters to use the actual URL if the url includes a p_p_id parameter', () => {

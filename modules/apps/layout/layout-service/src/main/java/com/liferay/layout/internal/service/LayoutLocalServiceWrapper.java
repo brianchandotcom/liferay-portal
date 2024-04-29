@@ -8,6 +8,7 @@ package com.liferay.layout.internal.service;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
+import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -22,6 +23,33 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ServiceWrapper.class)
 public class LayoutLocalServiceWrapper
 	extends com.liferay.portal.kernel.service.LayoutLocalServiceWrapper {
+
+	@Override
+	public Layout copyLayoutContent(Layout sourceLayout, Layout targetLayout)
+		throws Exception {
+
+		return _layoutCopyHelper.copyLayoutContent(
+			sourceLayout, targetLayout);
+	}
+
+	@Override
+	public Layout copyLayoutContent(
+			long segmentsExperienceId, Layout sourceLayout, Layout targetLayout)
+		throws Exception {
+
+		return _layoutCopyHelper.copyLayoutContent(
+			segmentsExperienceId, sourceLayout, targetLayout);
+	}
+
+	@Override
+	public Layout copyLayoutContent(
+			long[] segmentsExperiencesIds, Layout sourceLayout,
+			Layout targetLayout)
+		throws Exception {
+
+		return _layoutCopyHelper.copyLayoutContent(
+			segmentsExperiencesIds, sourceLayout, targetLayout);
+	}
 
 	@Override
 	public Layout fetchLayoutByFriendlyURL(
@@ -80,6 +108,9 @@ public class LayoutLocalServiceWrapper
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Reference
 	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;

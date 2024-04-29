@@ -61,15 +61,9 @@ const formatActionURL = function (
 		const backURLParam = `_${p_p_id}_backURL`;
 		const redirectParam = `_${p_p_id}_redirect`;
 
-		const backURLRegexp = new RegExp(backURLParam);
-		const redirectRegexp = new RegExp(redirectParam);
-
-		if (
-			redirectRegexp.test(replacedURL) ||
-			backURLRegexp.test(replacedURL)
-		) {
+		if (searchParams.has(redirectParam) || searchParams.has(backURLParam)) {
 			for (const key of searchParams.keys()) {
-				if (redirectRegexp.test(key) || backURLRegexp.test(key)) {
+				if (key === backURLParam || key === redirectParam) {
 					searchParams.set(key, redirectionURL);
 				}
 			}

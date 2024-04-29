@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.configuration.BaseConfigurationProvider;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
@@ -423,6 +424,10 @@ public class LDAPServerConfigurationProviderImpl
 	private boolean _isCustomMappingModified(
 		Dictionary<String, Object> properties, Configuration configuration,
 		String property) {
+
+		if (Validator.isNull(configuration.getProperties())) {
+			return false;
+		}
 
 		Dictionary<String, Object> oldProperties =
 			configuration.getProperties();

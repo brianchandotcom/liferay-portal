@@ -67,7 +67,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class TrialRestController extends BaseRestController {
 
 	@DeleteMapping("{orderId}")
-	private void _deleteTrial(@RequestParam String orderId) throws Exception {
+	public void delete(@RequestParam String orderId) throws Exception {
 		PortalInstanceResource portalInstanceResource =
 			_getPortalInstanceResource();
 
@@ -97,7 +97,7 @@ public class TrialRestController extends BaseRestController {
 	}
 
 	@GetMapping("availability")
-	private String _getAvailability() throws Exception {
+	protected String getAvailability() throws Exception {
 		com.liferay.headless.portal.instances.client.pagination.Page
 			<PortalInstance> portalInstancesPage = _getPortalInstancesPage();
 

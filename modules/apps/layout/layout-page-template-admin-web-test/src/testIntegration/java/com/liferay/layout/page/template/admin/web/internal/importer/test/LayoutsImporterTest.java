@@ -302,7 +302,7 @@ public class LayoutsImporterTest {
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
-				TestPropsValues.getUserId(), groupId, "Test Collection",
+				null, TestPropsValues.getUserId(), groupId, "Test Collection",
 				StringPool.BLANK, serviceContext);
 
 		return _fragmentEntryLocalService.addFragmentEntry(

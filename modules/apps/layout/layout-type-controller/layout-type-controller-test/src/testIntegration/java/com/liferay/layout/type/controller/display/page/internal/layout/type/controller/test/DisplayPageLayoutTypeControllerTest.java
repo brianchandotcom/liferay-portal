@@ -197,7 +197,7 @@ public class DisplayPageLayoutTypeControllerTest {
 	private void _addFragmentEntryLink(Layout layout) throws Exception {
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				StringUtil.randomString(), StringPool.BLANK, _serviceContext);
 
 		FragmentEntry fragmentEntry =

@@ -79,7 +79,7 @@ public class FragmentCollectionServicePermissionTest {
 		UserTestUtil.setUser(_user);
 
 		_fragmentCollectionService.addFragmentCollection(
-			_group.getGroupId(), RandomTestUtil.randomString(),
+			null, _group.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
 
@@ -95,7 +95,7 @@ public class FragmentCollectionServicePermissionTest {
 		UserTestUtil.setUser(_user);
 
 		_fragmentCollectionService.addFragmentCollection(
-			_group.getGroupId(), RandomTestUtil.randomString(),
+			null, _group.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
 
@@ -107,7 +107,7 @@ public class FragmentCollectionServicePermissionTest {
 		UserTestUtil.setUser(_user);
 
 		_fragmentCollectionService.addFragmentCollection(
-			_group.getGroupId(), RandomTestUtil.randomString(),
+			null, _group.getGroupId(), RandomTestUtil.randomString(),
 			StringPool.BLANK, serviceContext);
 	}
 
@@ -121,7 +121,7 @@ public class FragmentCollectionServicePermissionTest {
 		UserTestUtil.setUser(_user);
 
 		_fragmentCollectionService.addFragmentCollection(
-			_group.getGroupId(), RandomTestUtil.randomString(),
+			null, _group.getGroupId(), RandomTestUtil.randomString(),
 			StringPool.BLANK, serviceContext);
 	}
 

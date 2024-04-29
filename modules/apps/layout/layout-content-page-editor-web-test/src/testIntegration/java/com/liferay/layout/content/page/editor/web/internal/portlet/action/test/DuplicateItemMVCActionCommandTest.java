@@ -244,7 +244,7 @@ public class DuplicateItemMVCActionCommandTest {
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				StringUtil.randomString(), StringPool.BLANK, _serviceContext);
 
 		FragmentEntry fragmentEntry =

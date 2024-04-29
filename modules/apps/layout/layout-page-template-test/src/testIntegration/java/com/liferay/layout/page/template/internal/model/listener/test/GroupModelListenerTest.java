@@ -153,8 +153,8 @@ public class GroupModelListenerTest {
 				groupId, TestPropsValues.getUserId());
 
 		return _fragmentCollectionLocalService.addFragmentCollection(
-			TestPropsValues.getUserId(), groupId, RandomTestUtil.randomString(),
-			StringPool.BLANK, serviceContext);
+			null, TestPropsValues.getUserId(), groupId,
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(long groupId, long plid)

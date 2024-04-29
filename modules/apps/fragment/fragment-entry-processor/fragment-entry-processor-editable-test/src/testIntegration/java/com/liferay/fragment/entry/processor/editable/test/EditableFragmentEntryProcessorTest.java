@@ -1179,8 +1179,8 @@ public class EditableFragmentEntryProcessorTest {
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
+				null, _group.getGroupId(), "Fragment Collection",
+				StringPool.BLANK, serviceContext);
 
 		return _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),

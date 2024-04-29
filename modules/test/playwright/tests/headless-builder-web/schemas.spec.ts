@@ -123,62 +123,66 @@ testFeatureFlagsDisabled(
 	}
 );
 
+const objectDefinitionData = {
+	active: true,
+	externalReferenceCode: `objectDefinition`,
+	label: {
+		en_US: `objectDefinition`,
+	},
+	name: `ObjectDefinition`,
+	objectFields: [
+		{
+			DBType: 'String',
+			businessType: 'Text',
+			externalReferenceCode: 'ObjectFieldERC',
+			indexed: true,
+			indexedAsKeyword: false,
+			indexedLanguageId: 'en_US',
+			label: {
+				en_US: 'Object Field',
+			},
+			listTypeDefinitionId: 0,
+			name: 'objectField',
+			required: false,
+			state: false,
+			system: false,
+			type: 'String',
+		},
+	],
+	pluralLabel: {
+		en_US: `objectDefinitions`,
+	},
+	portlet: true,
+	scope: 'company',
+	status: {
+		code: 0,
+	},
+}
+
+const applicationData = {
+	apiApplicationToAPISchemas: [
+		{
+			description: 'API Application Schema',
+			externalReferenceCode: 'api-application-schema',
+			mainObjectDefinitionERC: 'L_API_APPLICATION',
+			name: 'API Application Schema',
+		},
+	],
+	applicationStatus: 'published',
+	baseURL: 'basic-application',
+	description: 'Test API Application',
+	externalReferenceCode: 'basic-application',
+	title: 'Basic application',
+}
+
 testFeatureFlagsDisabled(
 	'can see whitelisted object definitions on schema creation',
 	async ({apiHelpers, applicationPage, headlessBuilderPage}) => {
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postObjectDefinition({
-				active: true,
-				externalReferenceCode: `objectDefinition`,
-				label: {
-					en_US: `objectDefinition`,
-				},
-				name: `ObjectDefinition`,
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'ObjectFieldERC',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: 'en_US',
-						label: {
-							en_US: 'Object Field',
-						},
-						listTypeDefinitionId: 0,
-						name: 'objectField',
-						required: false,
-						state: false,
-						system: false,
-						type: 'String',
-					},
-				],
-				pluralLabel: {
-					en_US: `objectDefinitions`,
-				},
-				portlet: true,
-				scope: 'company',
-				status: {
-					code: 0,
-				},
-			});
+			await apiHelpers.objectAdmin.postObjectDefinition(objectDefinitionData);
 
 		const application = await apiHelpers.objectEntry.postObjectEntry(
-			{
-				apiApplicationToAPISchemas: [
-					{
-						description: 'API Application Schema',
-						externalReferenceCode: 'api-application-schema',
-						mainObjectDefinitionERC: 'L_API_APPLICATION',
-						name: 'API Application Schema',
-					},
-				],
-				applicationStatus: 'published',
-				baseURL: 'basic-application',
-				description: 'Test API Application',
-				externalReferenceCode: 'basic-application',
-				title: 'Basic application',
-			},
+			applicationData,
 			'headless-builder/applications'
 		);
 
@@ -217,58 +221,10 @@ testFeatureFlagsEnabled(
 	'can see whitelisted object definitions on schema creation with feature flag',
 	async ({apiHelpers, applicationPage, headlessBuilderPage}) => {
 		const objectDefinition =
-			await apiHelpers.objectAdmin.postObjectDefinition({
-				active: true,
-				externalReferenceCode: `objectDefinition`,
-				label: {
-					en_US: `objectDefinition`,
-				},
-				name: `ObjectDefinition`,
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'ObjectFieldERC',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: 'en_US',
-						label: {
-							en_US: 'Object Field',
-						},
-						listTypeDefinitionId: 0,
-						name: 'objectField',
-						required: false,
-						state: false,
-						system: false,
-						type: 'String',
-					},
-				],
-				pluralLabel: {
-					en_US: `objectDefinitions`,
-				},
-				portlet: true,
-				scope: 'company',
-				status: {
-					code: 0,
-				},
-			});
+			await apiHelpers.objectAdmin.postObjectDefinition(objectDefinitionData);
 
 		const application = await apiHelpers.objectEntry.postObjectEntry(
-			{
-				apiApplicationToAPISchemas: [
-					{
-						description: 'API Application Schema',
-						externalReferenceCode: 'api-application-schema',
-						mainObjectDefinitionERC: 'L_API_APPLICATION',
-						name: 'API Application Schema',
-					},
-				],
-				applicationStatus: 'published',
-				baseURL: 'basic-application',
-				description: 'Test API Application',
-				externalReferenceCode: 'basic-application',
-				title: 'Basic application',
-			},
+			applicationData,
 			'headless-builder/applications'
 		);
 

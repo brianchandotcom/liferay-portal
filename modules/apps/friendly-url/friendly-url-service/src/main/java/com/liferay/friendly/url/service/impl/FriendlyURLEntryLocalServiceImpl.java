@@ -137,9 +137,9 @@ public class FriendlyURLEntryLocalServiceImpl
 			friendlyURLEntryId);
 
 		friendlyURLEntry.setUuid(serviceContext.getUuid());
-		friendlyURLEntry.setCompanyId(group.getCompanyId());
 		friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
 		friendlyURLEntry.setGroupId(groupId);
+		friendlyURLEntry.setCompanyId(group.getCompanyId());
 		friendlyURLEntry.setClassNameId(classNameId);
 		friendlyURLEntry.setClassPK(classPK);
 

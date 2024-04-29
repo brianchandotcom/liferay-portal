@@ -7,9 +7,9 @@ package com.liferay.layout.taglib.internal.struts;
 
 import com.liferay.layout.taglib.internal.util.LayoutUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -67,6 +66,11 @@ public class GetLayoutsStrutsAction implements StrutsAction {
 			end = QueryUtil.ALL_POS;
 		}
 
+		JSONObject layoutsJSONObject = LayoutUtil.getLayoutsJSONObject(
+			checkDisplayPage, enableCurrentPage, groupId, httpServletRequest,
+			itemSelectorReturnType, privateLayout, parentLayoutId,
+			selectedLayoutUuids, selPlid, start, end);
+
 		ServletResponseUtil.write(
 			httpServletResponse,
 			JSONUtil.put(
@@ -76,27 +80,17 @@ public class GetLayoutsStrutsAction implements StrutsAction {
 						return false;
 					}
 
-					int childLayoutsCount = _layoutService.getLayoutsCount(
-						groupId, privateLayout, parentLayoutId);
-
-					if (childLayoutsCount > startEndMax) {
+					if (layoutsJSONObject.getInt("total") > startEndMax) {
 						return true;
 					}
 
 					return false;
 				}
 			).put(
-				"items",
-				LayoutUtil.getLayoutsJSONArray(
-					checkDisplayPage, enableCurrentPage, groupId,
-					httpServletRequest, itemSelectorReturnType, privateLayout,
-					parentLayoutId, selectedLayoutUuids, selPlid, start, end)
+				"items", layoutsJSONObject.get("items")
 			).toString());
 
 		return null;
 	}
-
-	@Reference
-	private LayoutService _layoutService;
 
 }

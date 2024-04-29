@@ -9,6 +9,7 @@ import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.item.selector.LayoutItemSelectorReturnType;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -82,7 +83,7 @@ public class LayoutUtil {
 		return PortalUtil.getLayoutRelativeURL(layout, themeDisplay, false);
 	}
 
-	public static JSONArray getLayoutsJSONArray(
+	public static JSONObject getLayoutsJSONObject(
 			boolean checkDisplayPage, boolean enableCurrentPage, long groupId,
 			HttpServletRequest httpServletRequest,
 			String itemSelectorReturnType, boolean privateLayout,
@@ -187,7 +188,13 @@ public class LayoutUtil {
 				));
 		}
 
-		return jsonArray;
+		return JSONUtil.put(
+			"items", jsonArray
+		).put(
+			"total",
+			LayoutServiceUtil.getLayoutsCount(
+				groupId, privateLayout, parentLayoutId)
+		);
 	}
 
 	private static boolean _isExcludedLayout(Layout layout) {

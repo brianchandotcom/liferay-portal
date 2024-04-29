@@ -10,12 +10,12 @@ import com.liferay.layout.taglib.internal.util.LayoutUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -196,23 +196,22 @@ public class SelectLayoutTag extends IncludeTag {
 			return JSONFactoryUtil.createJSONArray();
 		}
 
+		int end = PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN;
+
+		if (end <= 0) {
+			end = QueryUtil.ALL_POS;
+		}
+
+		JSONObject layoutsJSONObject = LayoutUtil.getLayoutsJSONObject(
+			_checkDisplayPage, _enableCurrentPage,
+			themeDisplay.getScopeGroupId(), getRequest(),
+			_itemSelectorReturnType, _privateLayout,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, selectedLayoutIds,
+			selPlid, QueryUtil.ALL_POS, end);
+
 		return JSONUtil.put(
 			JSONUtil.put(
-				"children",
-				() -> {
-					int end = PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN;
-
-					if (end <= 0) {
-						end = QueryUtil.ALL_POS;
-					}
-
-					return LayoutUtil.getLayoutsJSONArray(
-						_checkDisplayPage, _enableCurrentPage,
-						themeDisplay.getScopeGroupId(), getRequest(),
-						_itemSelectorReturnType, _privateLayout,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-						selectedLayoutIds, selPlid, QueryUtil.ALL_POS, end);
-				}
+				"children", layoutsJSONObject.get("items")
 			).put(
 				"disabled", true
 			).put(
@@ -232,11 +231,7 @@ public class SelectLayoutTag extends IncludeTag {
 						return false;
 					}
 
-					int layoutsCount = LayoutServiceUtil.getLayoutsCount(
-						themeDisplay.getScopeGroupId(), _privateLayout,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-					if (layoutsCount >
+					if (layoutsJSONObject.getInt("total") >
 							PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) {
 
 						return true;

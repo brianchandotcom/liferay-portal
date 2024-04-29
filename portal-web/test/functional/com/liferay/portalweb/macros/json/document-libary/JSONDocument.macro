@@ -288,7 +288,6 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 		var targetRepositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${targetGroupName});
-		var sourceRepositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${sourceGroupName});
 
 		if (isSet(sourceFolderName)) {
 			Variables.assertDefined(parameterList = ${sourceFolderName});
@@ -339,12 +338,15 @@ definition {
 		}
 
 		var userLoginInfo = JSONUtil2.formatJSONUser();
+		var targetGroupId = JSONGroupAPI._getGroupIdByName(
+			groupName = ${targetGroupName},
+			site = "true");
 
 		var curl = '''
 			${portalURL}/api/jsonws/dlfileshortcut/add-file-shortcut  \
 				-u ${userLoginInfo} \
-				-d groupId=${targetRepositoryId} \
-				-d repositoryId=${sourceRepositoryId} \
+				-d groupId=${targetGroupId} \
+				-d repositoryId=${targetRepositoryId} \
 				-d folderId=${targetFolderId} \
 				-d toFileEntryId=${fileEntryId}
 		''';

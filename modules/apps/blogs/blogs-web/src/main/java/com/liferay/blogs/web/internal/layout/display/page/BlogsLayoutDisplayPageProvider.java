@@ -16,6 +16,7 @@ import com.liferay.layout.display.page.BaseLayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
@@ -100,6 +101,25 @@ public class BlogsLayoutDisplayPageProvider
 				if (group != null) {
 					return getLayoutDisplayPageObjectProvider(
 						group.getGroupId(), urlNames[1]);
+				}
+
+				if (FeatureFlagManagerUtil.isEnabled("LPD-11147")) {
+					for (int i = 0; i < urlNames.length; i++) {
+						BlogsEntry blogsEntry =
+							_blogsEntryLocalService.fetchEntry(
+								groupId, urlTitle);
+
+						if ((blogsEntry != null) && !blogsEntry.isInTrash()) {
+							return new BlogsLayoutDisplayPageObjectProvider(
+								_assetHelper, blogsEntry,
+								_infoItemFriendlyURLProvider, _language);
+						}
+
+						urlTitle = urlTitle.substring(
+							urlTitle.indexOf(StringPool.SLASH) + 1);
+					}
+
+					return null;
 				}
 			}
 		}

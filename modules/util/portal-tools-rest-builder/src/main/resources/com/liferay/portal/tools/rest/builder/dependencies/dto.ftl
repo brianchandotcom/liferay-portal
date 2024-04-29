@@ -204,10 +204,10 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 							return value;
 						}
 
-						UnsafeSupplier<?, ?> unsafeSuppplier = (UnsafeSupplier<?, ?>)value;
+						UnsafeSupplier<?, ?> unsafeSupplier = (UnsafeSupplier<?, ?>)value;
 
 						try {
-							return unsafeSuppplier.get();
+							return unsafeSupplier.get();
 						}
 						catch (Throwable throwable) {
 							throw new RuntimeException(throwable);
@@ -369,10 +369,10 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 							return value;
 						}
 
-						UnsafeSupplier<?, ?> unsafeSuppplier = (UnsafeSupplier<?, ?>)value;
+						UnsafeSupplier<?, ?> unsafeSupplier = (UnsafeSupplier<?, ?>)value;
 
 						try {
-							value = unsafeSuppplier.get();
+							value = unsafeSupplier.get();
 
 							${propertyName}.put(propertyName, value);
 						}

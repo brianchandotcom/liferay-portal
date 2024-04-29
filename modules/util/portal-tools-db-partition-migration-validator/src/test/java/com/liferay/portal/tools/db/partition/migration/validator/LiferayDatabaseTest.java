@@ -38,15 +38,15 @@ public class LiferayDatabaseTest {
 
 	@Before
 	public void setUp() throws SQLException {
+		_mockGetColumns(Collections.emptyList());
 		_mockGetCompanies(Collections.emptyList());
+		_mockGetCompanyIds(Collections.emptyList());
+		_mockGetCompanyInfos(Collections.emptyList());
 		_mockGetConnection(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
-		_mockGetTables(true);
-		_mockGetCompanyIds(Collections.emptyList());
-		_mockGetCompanyInfos(Collections.emptyList());
 		_mockGetReleases(Collections.emptyList());
-		_mockGetColumns(Collections.emptyList());
+		_mockGetTables(true);
 	}
 
 	@Test
@@ -147,7 +147,91 @@ public class LiferayDatabaseTest {
 			true);
 	}
 
-	private void _mockGetCompanies(List<Company> companies) throws SQLException {
+	private void _mockGetColumns(List<String> tableNames) throws SQLException {
+		ResultSet resultSet1 = Mockito.mock(ResultSet.class);
+
+		Mockito.when(
+			_databaseMetaData.getColumns(
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.any(), Mockito.nullable(String.class))
+		).thenReturn(
+			resultSet1
+		);
+
+		Mockito.when(
+			resultSet1.next()
+		).thenReturn(
+			true
+		);
+
+		ResultSet resultSet2 = Mockito.mock(ResultSet.class);
+
+		Mockito.when(
+			_databaseMetaData.getTables(
+				Mockito.nullable(String.class), Mockito.nullable(String.class),
+				Mockito.isNull(), Mockito.any(String[].class))
+		).thenReturn(
+			resultSet2
+		);
+
+		final List<Integer> nextCounter = new ArrayList<>();
+
+		nextCounter.add(0);
+
+		Mockito.when(
+			resultSet2.next()
+		).thenAnswer(
+			new Answer<Boolean>() {
+
+				@Override
+				public Boolean answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					int counter = nextCounter.get(0);
+
+					if (counter >= tableNames.size()) {
+						return false;
+					}
+
+					nextCounter.set(0, ++counter);
+
+					return true;
+				}
+
+			}
+		);
+
+		final List<Integer> getStringCounter = new ArrayList<>();
+
+		getStringCounter.add(0);
+
+		Mockito.when(
+			resultSet2.getString("TABLE_NAME")
+		).thenAnswer(
+			new Answer<String>() {
+
+				@Override
+				public String answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					int counter = getStringCounter.get(0);
+
+					if (counter >= tableNames.size()) {
+						throw new IndexOutOfBoundsException();
+					}
+
+					getStringCounter.set(0, ++counter);
+
+					return tableNames.get(counter - 1);
+				}
+
+			}
+		);
+	}
+
+	private void _mockGetCompanies(List<Company> companies)
+		throws SQLException {
+
 		PreparedStatement preparedStatement = Mockito.mock(
 			PreparedStatement.class);
 		ResultSet resultSet = Mockito.mock(ResultSet.class);
@@ -311,49 +395,6 @@ public class LiferayDatabaseTest {
 		);
 	}
 
-	private void _mockGetConnection(
-			String password, String url, String user)
-		throws SQLException {
-
-		_driverManagerMockedStatic.when(
-			() -> DriverManager.getConnection(url, user, password)
-		).thenReturn(
-			_connection
-		);
-
-		Mockito.when(
-			_connection.getMetaData()
-		).thenReturn(
-			_databaseMetaData
-		);
-
-		Mockito.when(
-			_databaseMetaData.getURL()
-		).thenReturn(
-			url
-		);
-	}
-
-	private void _mockGetTables(boolean defaultPartition)
-		throws SQLException {
-
-		ResultSet resultSet = Mockito.mock(ResultSet.class);
-
-		Mockito.when(
-			_databaseMetaData.getTables(
-				Mockito.nullable(String.class), Mockito.nullable(String.class),
-				Mockito.eq("Company"), Mockito.any(String[].class))
-		).thenReturn(
-			resultSet
-		);
-
-		Mockito.when(
-			resultSet.next()
-		).thenReturn(
-			defaultPartition
-		);
-	}
-
 	private void _mockGetCompanyIds(List<Long> companyIds) throws SQLException {
 		PreparedStatement preparedStatement = Mockito.mock(
 			PreparedStatement.class);
@@ -497,6 +538,28 @@ public class LiferayDatabaseTest {
 				}
 
 			}
+		);
+	}
+
+	private void _mockGetConnection(String password, String url, String user)
+		throws SQLException {
+
+		_driverManagerMockedStatic.when(
+			() -> DriverManager.getConnection(url, user, password)
+		).thenReturn(
+			_connection
+		);
+
+		Mockito.when(
+			_connection.getMetaData()
+		).thenReturn(
+			_databaseMetaData
+		);
+
+		Mockito.when(
+			_databaseMetaData.getURL()
+		).thenReturn(
+			url
 		);
 	}
 
@@ -666,85 +729,21 @@ public class LiferayDatabaseTest {
 		);
 	}
 
-	private void _mockGetColumns(List<String> tableNames) throws SQLException {
-		ResultSet resultSet1 = Mockito.mock(ResultSet.class);
-
-		Mockito.when(
-			_databaseMetaData.getColumns(
-				Mockito.nullable(String.class), Mockito.nullable(String.class),
-				Mockito.any(), Mockito.nullable(String.class))
-		).thenReturn(
-			resultSet1
-		);
-
-		Mockito.when(
-			resultSet1.next()
-		).thenReturn(
-			true
-		);
-
-		ResultSet resultSet2 = Mockito.mock(ResultSet.class);
+	private void _mockGetTables(boolean defaultPartition) throws SQLException {
+		ResultSet resultSet = Mockito.mock(ResultSet.class);
 
 		Mockito.when(
 			_databaseMetaData.getTables(
 				Mockito.nullable(String.class), Mockito.nullable(String.class),
-				Mockito.isNull(), Mockito.any(String[].class))
+				Mockito.eq("Company"), Mockito.any(String[].class))
 		).thenReturn(
-			resultSet2
+			resultSet
 		);
 
-		final List<Integer> nextCounter = new ArrayList<>();
-
-		nextCounter.add(0);
-
 		Mockito.when(
-			resultSet2.next()
-		).thenAnswer(
-			new Answer<Boolean>() {
-
-				@Override
-				public Boolean answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = nextCounter.get(0);
-
-					if (counter >= tableNames.size()) {
-						return false;
-					}
-
-					nextCounter.set(0, ++counter);
-
-					return true;
-				}
-
-			}
-		);
-
-		final List<Integer> getStringCounter = new ArrayList<>();
-
-		getStringCounter.add(0);
-
-		Mockito.when(
-			resultSet2.getString("TABLE_NAME")
-		).thenAnswer(
-			new Answer<String>() {
-
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = getStringCounter.get(0);
-
-					if (counter >= tableNames.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					getStringCounter.set(0, ++counter);
-
-					return tableNames.get(counter - 1);
-				}
-
-			}
+			resultSet.next()
+		).thenReturn(
+			defaultPartition
 		);
 	}
 

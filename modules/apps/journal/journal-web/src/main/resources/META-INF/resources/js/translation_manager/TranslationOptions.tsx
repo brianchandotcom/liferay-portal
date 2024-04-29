@@ -118,6 +118,24 @@ export default function TranslationOptions({
 						<ClayDropDown.Item>
 							<ClayButton
 								className="font-weight-normal text-secondary"
+								disabled={!!disabledMarkTranslatedButton}
+								displayType="unstyled"
+								onClick={() =>
+									onOpenChangeMarkAsTranslated(true)
+								}
+								size="sm"
+							>
+								<ClayIcon symbol="check-circle" />
+
+								<span className="c-ml-3">
+									{Liferay.Language.get('mark-as-translated')}
+								</span>
+							</ClayButton>
+						</ClayDropDown.Item>
+
+						<ClayDropDown.Item>
+							<ClayButton
+								className="font-weight-normal text-secondary"
 								disabled={!!disabledResetButton}
 								displayType="unstyled"
 								onClick={() =>
@@ -129,24 +147,6 @@ export default function TranslationOptions({
 
 								<span className="c-ml-3">
 									{Liferay.Language.get('reset-translation')}
-								</span>
-							</ClayButton>
-						</ClayDropDown.Item>
-
-						<ClayDropDown.Item>
-							<ClayButton
-								className="font-weight-normal text-secondary"
-								disabled={!!disabledMarkTranslatedButton}
-								displayType="unstyled"
-								onClick={() =>
-									onOpenChangeMarkAsTranslated(true)
-								}
-								size="sm"
-							>
-								<ClayIcon symbol="question-circle-full" />
-
-								<span className="c-ml-3">
-									{Liferay.Language.get('mark-as-translated')}
 								</span>
 							</ClayButton>
 						</ClayDropDown.Item>

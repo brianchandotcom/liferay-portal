@@ -1693,7 +1693,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		int start = 1;
 		int end = 0;
-		int interval = 20;
+		int interval = 5;
 
 		while (hasNext) {
 			end = start + interval;

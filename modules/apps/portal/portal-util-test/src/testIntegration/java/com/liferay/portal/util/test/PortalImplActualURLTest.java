@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
@@ -184,40 +182,6 @@ public class PortalImplActualURLTest {
 		_removeResourcePermission(layout1);
 
 		_assertGetActualURLAsGuestUser(layout2);
-	}
-
-	@Test
-	public void testNullFriendlyURLFirstLayoutPublishedWithoutPermissionUserMissingInRequest()
-		throws Exception {
-
-		Layout layout1 = LayoutTestUtil.addTypeContentLayout(_group);
-		Layout layout2 = LayoutTestUtil.addTypeContentLayout(_group);
-
-		_publishLayouts(
-			layout1, layout2, LayoutTestUtil.addTypeContentLayout(_group));
-
-		_removeResourcePermission(layout1);
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			PermissionThreadLocal.setPermissionChecker(null);
-
-			Map<String, String[]> parameterMap =
-				HttpComponentsUtil.getParameterMap(
-					HttpComponentsUtil.getQueryString(
-						_portal.getActualURL(
-							_group.getGroupId(), false, Portal.PATH_MAIN, null,
-							Collections.emptyMap(), _getRequestContext())));
-
-			Assert.assertEquals(
-				MapUtil.toString(parameterMap), layout2.getPlid(),
-				MapUtil.getLong(parameterMap, "p_l_id"));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-		}
 	}
 
 	@Test

@@ -111,7 +111,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 
 	const handleChange = (event) => {
 		editedRef.current = true;
-		setFriendlyUrlValue(normalizeFriendlyURL(event.target.value));
+		setFriendlyUrlValue(event.target.value);
 	};
 
 	return (

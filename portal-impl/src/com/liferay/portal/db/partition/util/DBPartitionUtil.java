@@ -585,6 +585,23 @@ public class DBPartitionUtil {
 		}
 	}
 
+	private static List<String> _getColumnNames(
+			Connection connection, String tableName)
+		throws SQLException {
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		List<String> columnNames = new ArrayList<>();
+
+		try (ResultSet resultSet = dbInspector.getColumnsResultSet(tableName)) {
+			while (resultSet.next()) {
+				columnNames.add(resultSet.getString("COLUMN_NAME"));
+			}
+		}
+
+		return columnNames;
+	}
+
 	private static List<Long> _getCompanyIds() throws SQLException {
 		if (_companyIds.isEmpty()) {
 			for (long companyId : PortalInstancePool.getCompanyIds()) {
@@ -756,23 +773,6 @@ public class DBPartitionUtil {
 		return " where trigger_name like '%@" + companyId + "'";
 	}
 
-	private static List<String> _getColumnNames(
-			Connection connection, String tableName)
-		throws SQLException {
-
-		DBInspector dbInspector = new DBInspector(connection);
-
-		List<String> columnNames = new ArrayList<>();
-
-		try (ResultSet resultSet = dbInspector.getColumnsResultSet(tableName)) {
-			while (resultSet.next()) {
-				columnNames.add(resultSet.getString("COLUMN_NAME"));
-			}
-		}
-
-		return columnNames;
-	}
-
 	private static void _insertDBPartition(long companyId)
 		throws PortalException {
 
@@ -924,14 +924,13 @@ public class DBPartitionUtil {
 
 		_moveData(
 			fromPartitionName, toPartitionName, tableName,
-			_getColumnNames(statement.getConnection(), tableName),
-			statement, " where companyId = " + companyId);
+			_getColumnNames(statement.getConnection(), tableName), statement,
+			" where companyId = " + companyId);
 	}
 
 	private static void _moveData(
 			String fromPartitionName, String toPartitionName, String tableName,
-			List<String> columnNames, Statement statement,
-			String whereClause)
+			List<String> columnNames, Statement statement, String whereClause)
 		throws Exception {
 
 		statement.executeUpdate(

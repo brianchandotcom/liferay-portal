@@ -766,6 +766,30 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layoutLocalService.updateLayout(targetLayout);
 	}
 
+	@Override
+	public Layout copyLayoutContent(Layout sourceLayout, Layout targetLayout)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Layout copyLayoutContent(
+			long segmentsExperienceId, Layout sourceLayout, Layout targetLayout)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Layout copyLayoutContent(
+			long[] segmentsExperienceIds, Layout sourceLayout,
+			Layout targetLayout)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
 	/**
 	 * Deletes the layout, its child layouts, and its associated resources.
 	 *

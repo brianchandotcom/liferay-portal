@@ -88,18 +88,6 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 					Object value = _getValue(
 						fieldName, object, propertiesObjectValuePair);
 
-					try {
-						if (value instanceof UnsafeSupplier) {
-							UnsafeSupplier<Object, Exception> unsafeSupplier =
-								(UnsafeSupplier<Object, Exception>)value;
-
-							value = unsafeSupplier.get();
-						}
-					}
-					catch (Throwable throwable) {
-						throw new RuntimeException(throwable);
-					}
-
 					if (value == null) {
 						return StringPool.BLANK;
 					}
@@ -122,18 +110,6 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 				Object value = _getValue(
 					fieldName, object, propertiesObjectValuePair);
 
-				try {
-					if (value instanceof UnsafeSupplier) {
-						UnsafeSupplier<Object, Exception> unsafeSupplier =
-							(UnsafeSupplier<Object, Exception>)value;
-
-						value = unsafeSupplier.get();
-					}
-				}
-				catch (Throwable throwable) {
-					throw new RuntimeException(throwable);
-				}
-
 				if (value == null) {
 					return StringPool.BLANK;
 				}
@@ -147,18 +123,6 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 			object -> {
 				Object value = _getValue(
 					fieldName, object, propertiesObjectValuePair);
-
-				try {
-					if (value instanceof UnsafeSupplier) {
-						UnsafeSupplier<Object, Exception> unsafeSupplier =
-							(UnsafeSupplier<Object, Exception>)value;
-
-						value = unsafeSupplier.get();
-					}
-				}
-				catch (Throwable throwable) {
-					throw new RuntimeException(throwable);
-				}
 
 				if (value == null) {
 					return StringPool.BLANK;
@@ -176,18 +140,6 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 				Object value = _getValue(
 					fieldName, object, propertiesObjectValuePair);
 
-				try {
-					if (value instanceof UnsafeSupplier) {
-						UnsafeSupplier<Object, Exception> unsafeSupplier =
-							(UnsafeSupplier<Object, Exception>)value;
-
-						value = unsafeSupplier.get();
-					}
-				}
-				catch (Throwable throwable) {
-					throw new RuntimeException(throwable);
-				}
-
 				if (value == null) {
 					return StringPool.BLANK;
 				}
@@ -203,18 +155,6 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 			object -> {
 				Object value = _getValue(
 					fieldName, object, propertiesObjectValuePair);
-
-				try {
-					if (value instanceof UnsafeSupplier) {
-						UnsafeSupplier<Object, Exception> unsafeSupplier =
-							(UnsafeSupplier<Object, Exception>)value;
-
-						value = unsafeSupplier.get();
-					}
-				}
-				catch (Throwable throwable) {
-					throw new RuntimeException(throwable);
-				}
 
 				if (value == null) {
 					return StringPool.BLANK;
@@ -269,18 +209,6 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 					Object value = _getValue(
 						fieldName, object, propertiesObjectValuePair);
 
-					try {
-						if (value instanceof UnsafeSupplier) {
-							UnsafeSupplier<Object, Exception> unsafeSupplier =
-								(UnsafeSupplier<Object, Exception>)value;
-
-							value = unsafeSupplier.get();
-						}
-					}
-					catch (Throwable throwable) {
-						throw new RuntimeException(throwable);
-					}
-
 					if (value == null) {
 						return StringPool.BLANK;
 					}
@@ -295,18 +223,6 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 				object -> {
 					Object value = _getValue(
 						fieldName, object, propertiesObjectValuePair);
-
-					try {
-						if (value instanceof UnsafeSupplier) {
-							UnsafeSupplier<Object, Exception> unsafeSupplier =
-								(UnsafeSupplier<Object, Exception>)value;
-
-							value = unsafeSupplier.get();
-						}
-					}
-					catch (Throwable throwable) {
-						throw new RuntimeException(throwable);
-					}
 
 					if (value == null) {
 						return StringPool.BLANK;
@@ -335,18 +251,6 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 				Object value = _getValue(
 					fieldName, object, propertiesObjectValuePair);
 
-				try {
-					if (value instanceof UnsafeSupplier) {
-						UnsafeSupplier<Object, Exception> unsafeSupplier =
-							(UnsafeSupplier<Object, Exception>)value;
-
-						value = unsafeSupplier.get();
-					}
-				}
-				catch (Throwable throwable) {
-					throw new RuntimeException(throwable);
-				}
-
 				if (value == null) {
 					return StringPool.BLANK;
 				}
@@ -361,18 +265,6 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 			object -> {
 				Object value = _getValue(
 					fieldName, object, propertiesObjectValuePair);
-
-				try {
-					if (value instanceof UnsafeSupplier) {
-						UnsafeSupplier<Object, Exception> unsafeSupplier =
-							(UnsafeSupplier<Object, Exception>)value;
-
-						value = unsafeSupplier.get();
-					}
-				}
-				catch (Throwable throwable) {
-					throw new RuntimeException(throwable);
-				}
 
 				if (value == null) {
 					return StringPool.BLANK;
@@ -404,7 +296,21 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 			map = (Map<?, ?>)method.invoke(object);
 		}
 
-		return map.get(fieldName);
+		Object value = map.get(fieldName);
+
+		try {
+			if (value instanceof UnsafeSupplier) {
+				UnsafeSupplier<Object, Exception> unsafeSupplier =
+					(UnsafeSupplier<Object, Exception>)value;
+
+				value = unsafeSupplier.get();
+			}
+		}
+		catch (Throwable throwable) {
+			throw new RuntimeException(throwable);
+		}
+
+		return value;
 	}
 
 	@Reference

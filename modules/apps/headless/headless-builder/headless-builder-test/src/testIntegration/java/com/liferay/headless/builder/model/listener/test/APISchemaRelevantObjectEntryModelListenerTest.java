@@ -82,6 +82,22 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
+				"mainObjectDefinitionERC", "L_USER"
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				apiApplicationJSONObject.getLong("id")
+			).toString(),
+			"headless-builder/schemas", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"An API schema must be a modifiable object definition.",
+			jsonObject.get("title"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
 				"mainObjectDefinitionERC",
 				_objectDefinition.getExternalReferenceCode()
 			).put(

@@ -8,18 +8,33 @@ package com.liferay.headless.builder.model.listener.test;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.headless.builder.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.test.util.ObjectFieldTestUtil;
+import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.rest.test.util.UserAccountTestUtil;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.system.SystemObjectDefinitionManager;
+import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
+
+import java.io.Serializable;
 
 import java.util.Arrays;
 
@@ -59,6 +74,31 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Arrays.asList(_objectField1, _objectField2),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		SystemObjectDefinitionManager userSystemObjectDefinitionManager =
+			_systemObjectDefinitionManagerRegistry.
+				getSystemObjectDefinitionManager("User");
+
+		ObjectDefinition userSystemObjectDefinition =
+			_objectDefinitionLocalService.fetchSystemObjectDefinition(
+				userSystemObjectDefinitionManager.getName());
+
+		_userSystemObjectField = ObjectFieldTestUtil.addCustomObjectField(
+			TestPropsValues.getUserId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, userSystemObjectDefinition,
+			_SYSTEM_OBJECT_FIELD_NAME);
+
+		UserAccountTestUtil.addUserAccountJSONObject(
+			userSystemObjectDefinitionManager,
+			HashMapBuilder.<String, Serializable>put(
+				_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE
+			).build());
+
+		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition, userSystemObjectDefinition,
+			TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	@Test
@@ -100,6 +140,27 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		Assert.assertEquals(
 			"A field API property cannot have an empty object field external " +
 				"reference code.",
+			jsonObject.get("title"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"description", RandomTestUtil.randomString()
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"objectFieldERC",
+				_userSystemObjectField.getExternalReferenceCode()
+			).put(
+				"objectRelationshipNames", _objectRelationship.getName()
+			).put(
+				"r_apiSchemaToAPIProperties_c_apiSchemaId",
+				apiSchemaJSONObject.get("id")
+			).toString(),
+			"headless-builder/properties", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"An API property must belong to a modifiable object definition.",
 			jsonObject.get("title"));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -634,13 +695,35 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			apiPropertiesJSONArray.toString(), JSONCompareMode.LENIENT);
 	}
 
+	private static final String _SYSTEM_OBJECT_FIELD_NAME =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _SYSTEM_OBJECT_FIELD_VALUE =
+		RandomTestUtil.randomString();
+
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@DeleteAfterTestRun
 	private ObjectField _objectField1;
 
 	@DeleteAfterTestRun
 	private ObjectField _objectField2;
+
+	@DeleteAfterTestRun
+	private ObjectRelationship _objectRelationship;
+
+	@Inject
+	private SystemObjectDefinitionManagerRegistry
+		_systemObjectDefinitionManagerRegistry;
+
+	@DeleteAfterTestRun
+	private ObjectField _userSystemObjectField;
 
 }

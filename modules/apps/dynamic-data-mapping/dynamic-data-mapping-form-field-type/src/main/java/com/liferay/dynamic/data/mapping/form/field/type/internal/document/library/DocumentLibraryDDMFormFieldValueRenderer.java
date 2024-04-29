@@ -5,7 +5,7 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.document.library;
 
-import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
@@ -47,8 +47,8 @@ public class DocumentLibraryDDMFormFieldValueRenderer
 		}
 
 		try {
-			FileEntry fileEntry = dlAppService.getFileEntryByUuidAndGroupId(
-				uuid, groupId);
+			FileEntry fileEntry =
+				dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
 
 			return fileEntry.getTitle();
 		}
@@ -63,7 +63,7 @@ public class DocumentLibraryDDMFormFieldValueRenderer
 	}
 
 	@Reference
-	protected DLAppService dlAppService;
+	protected DLAppLocalService dlAppLocalService;
 
 	@Reference(
 		target = "(ddm.form.field.type.name=" + DDMFormFieldTypeConstants.DOCUMENT_LIBRARY + ")"

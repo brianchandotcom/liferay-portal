@@ -104,6 +104,11 @@ public class LayoutUtil {
 			layout -> !_isExcludedLayout(layout));
 
 		for (Layout layout : ListUtil.subList(layouts, start, end)) {
+			List<Layout> childLayouts = ListUtil.filter(
+				LayoutServiceUtil.getLayouts(
+					groupId, layout.isPrivateLayout(), layout.getLayoutId()),
+				curLayout -> !_isExcludedLayout(curLayout));
+
 			jsonArray.put(
 				JSONUtil.put(
 					"disabled",
@@ -121,7 +126,7 @@ public class LayoutUtil {
 				).put(
 					"groupId", layout.getGroupId()
 				).put(
-					"hasChildren", layout.hasChildren()
+					"hasChildren", ListUtil.isNotEmpty(childLayouts)
 				).put(
 					"hasGuestViewPermission",
 					() -> {
@@ -146,12 +151,6 @@ public class LayoutUtil {
 				).put(
 					"paginated",
 					() -> {
-						List<Layout> childLayouts = ListUtil.filter(
-							LayoutServiceUtil.getLayouts(
-								groupId, layout.isPrivateLayout(),
-								layout.getLayoutId()),
-							curLayout -> !_isExcludedLayout(curLayout));
-
 						if (childLayouts.size() >
 								PropsValues.
 									LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) {

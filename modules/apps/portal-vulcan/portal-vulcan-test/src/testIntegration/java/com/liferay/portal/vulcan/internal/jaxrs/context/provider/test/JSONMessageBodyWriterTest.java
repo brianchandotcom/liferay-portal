@@ -183,7 +183,7 @@ public class JSONMessageBodyWriterTest {
 			_property2UnsafeSupplierComputed);
 	}
 
-	public static class TestApplication extends Application {
+	public class TestApplication extends Application {
 
 		@Override
 		public Set<Object> getSingletons() {
@@ -194,17 +194,11 @@ public class JSONMessageBodyWriterTest {
 		@Path("/test-class")
 		@Produces(MediaType.APPLICATION_JSON)
 		public TestClass testClass() {
-			return TestClass.of(1L, "hello", TestClass.of(6L, "hi", null));
+			return new TestClass(1L, "hello", new TestClass(6L, "hi", null));
 		}
 
 		@JsonFilter("Liferay.Vulcan")
-		public static class TestClass {
-
-			public static TestClass of(
-				Long number, String string, TestClass testClass) {
-
-				return new TestClass(number, string, testClass);
-			}
+		public class TestClass {
 
 			public TestClass(Long number, String string, TestClass testClass) {
 				this.number = number;

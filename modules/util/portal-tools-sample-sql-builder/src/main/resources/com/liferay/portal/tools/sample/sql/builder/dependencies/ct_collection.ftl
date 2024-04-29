@@ -12,6 +12,10 @@ ${dataFactory.toInsertSQL(publicationGroupModel)}
 <#list dataFactory.newCTCollectionModels(ctSchemaVersionModel) as ctCollectionModel>
 	${dataFactory.toInsertSQL(ctCollectionModel)}
 
+	<#list dataFactory.newResourcePermissionModels("com.liferay.change.tracking.model.CTCollection", ctCollectionModel.ctCollectionId?c, defaultAdminUserModel.userId) as resourcePermissionModel>
+		${dataFactory.toInsertSQL(resourcePermissionModel)}
+	</#list>
+
 	<#assign
 		ctCollectionId = ctCollectionModel.ctCollectionId
 		ctCollectionIdString = ctCollectionModel.ctCollectionId?c

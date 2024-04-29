@@ -298,13 +298,14 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 
 		Object value = map.get(fieldName);
 
-		try {
-			if (value instanceof UnsafeSupplier) {
-				UnsafeSupplier<Object, Exception> unsafeSupplier =
-					(UnsafeSupplier<Object, Exception>)value;
+		if (!(value instanceof UnsafeSupplier<?, ?>)) {
+			return value;
+		}
 
-				value = unsafeSupplier.get();
-			}
+		UnsafeSupplier<?, ?> unsafeSupplier = (UnsafeSupplier<?, ?>)value;
+
+		try {
+			value = unsafeSupplier.get();
 		}
 		catch (Throwable throwable) {
 			throw new RuntimeException(throwable);

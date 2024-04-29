@@ -102,30 +102,19 @@ public class BlogsLayoutDisplayPageProvider
 					return getLayoutDisplayPageObjectProvider(
 						group.getGroupId(), urlNames[1]);
 				}
-
-				if (FeatureFlagManagerUtil.isEnabled("LPD-11147")) {
-					for (int i = 0; i < urlNames.length; i++) {
-						BlogsEntry blogsEntry =
-							_blogsEntryLocalService.fetchEntry(
-								groupId, urlTitle);
-
-						if ((blogsEntry != null) && !blogsEntry.isInTrash()) {
-							return new BlogsLayoutDisplayPageObjectProvider(
-								_assetHelper, blogsEntry,
-								_infoItemFriendlyURLProvider, _language);
-						}
-
-						urlTitle = urlTitle.substring(
-							urlTitle.indexOf(StringPool.SLASH) + 1);
-					}
-
-					return null;
-				}
 			}
 		}
 
 		BlogsEntry blogsEntry = _blogsEntryLocalService.fetchEntry(
 			groupId, urlTitle);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-11147") &&
+			(blogsEntry == null)) {
+
+			blogsEntry = _blogsEntryLocalService.fetchEntry(
+				groupId,
+				urlTitle.substring(urlTitle.lastIndexOf(StringPool.SLASH) + 1));
+		}
 
 		if ((blogsEntry == null) || blogsEntry.isInTrash()) {
 			return null;

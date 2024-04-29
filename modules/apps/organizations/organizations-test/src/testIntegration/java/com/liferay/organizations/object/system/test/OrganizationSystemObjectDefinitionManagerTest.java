@@ -57,7 +57,8 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 
 	@Test
 	public void testAddBaseModel() throws Exception {
-		_assertCount(0);
+		int organizationsCount =
+			_organizationLocalService.getOrganizationsCount();
 
 		String comments1 = RandomTestUtil.randomString();
 		String name1 = RandomTestUtil.randomString();
@@ -69,7 +70,7 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 				"name", name1
 			).build());
 
-		_assertCount(1);
+		_assertCount(organizationsCount + 1);
 
 		String comments2 = RandomTestUtil.randomString();
 		String name2 = RandomTestUtil.randomString();
@@ -81,7 +82,7 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 				"name", name2
 			).build());
 
-		_assertCount(2);
+		_assertCount(organizationsCount + 2);
 
 		Organization organization1 = _organizationLocalService.getOrganization(
 			organizationId1);
@@ -101,6 +102,9 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 
 	@Test
 	public void testDeleteBaseModel() throws Exception {
+		int organizationsCount =
+			_organizationLocalService.getOrganizationsCount();
+
 		long organizationId = _addBaseModel(
 			HashMapBuilder.<String, Object>put(
 				"comment", RandomTestUtil.randomString()
@@ -108,7 +112,7 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 				"name", RandomTestUtil.randomString()
 			).build());
 
-		_assertCount(1);
+		_assertCount(organizationsCount + 1);
 
 		_organizationSystemObjectDefinitionManager.deleteBaseModel(
 			_organizationLocalService.getOrganization(organizationId));
@@ -118,7 +122,7 @@ public class OrganizationSystemObjectDefinitionManagerTest {
 			"No Organization exists with the primary key " + organizationId,
 			() -> _organizationLocalService.getOrganization(organizationId));
 
-		_assertCount(0);
+		_assertCount(organizationsCount);
 	}
 
 	@Test

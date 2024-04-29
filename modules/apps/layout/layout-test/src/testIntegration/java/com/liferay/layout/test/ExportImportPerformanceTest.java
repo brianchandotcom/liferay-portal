@@ -31,7 +31,6 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -262,7 +261,8 @@ public class ExportImportPerformanceTest {
 			layoutPrototypeLayout = _layoutLocalService.updateLayout(
 				layoutPrototypeLayout);
 
-			_layoutCopyHelper.copyLayoutContent(layout, layoutPrototypeLayout);
+			_layoutLocalService.copyLayoutContent(
+				layout, layoutPrototypeLayout);
 
 			layout.setLayoutPrototypeUuid(layoutPrototype.getUuid());
 			layout.setLayoutPrototypeLinkEnabled(true);
@@ -410,7 +410,7 @@ public class ExportImportPerformanceTest {
 				defaultSegmentsExperienceId,
 				_generateContentLayoutStructureJSONObject(draftLayout));
 
-		_layoutCopyHelper.copyLayoutContent(draftLayout, layout);
+		_layoutLocalService.copyLayoutContent(draftLayout, layout);
 	}
 
 	private JournalArticle _addJournalArticle() throws Exception {
@@ -582,9 +582,6 @@ public class ExportImportPerformanceTest {
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
-
-	@Inject
-	private LayoutCopyHelper _layoutCopyHelper;
 
 	private long[] _layoutIds;
 

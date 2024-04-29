@@ -12,7 +12,6 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
-import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -201,7 +200,7 @@ public class LayoutLocalServiceTest {
 				Collections.emptyMap(), publishedLayout.getMasterLayoutPlid(),
 				serviceContext);
 
-			draftLayout = _layoutCopyHelper.copyLayoutContent(
+			draftLayout = _layoutLocalService.copyLayoutContent(
 				publishedLayout, draftLayout);
 		}
 
@@ -633,9 +632,6 @@ public class LayoutLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

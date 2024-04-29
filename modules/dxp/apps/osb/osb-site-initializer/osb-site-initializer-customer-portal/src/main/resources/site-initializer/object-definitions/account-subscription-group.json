@@ -29,6 +29,16 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
+				"en-US": "Activation Product Name"
+			},
+			"name": "activationProductName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
 				"en-US": "Activation Status"
 			},
 			"name": "activationStatus",

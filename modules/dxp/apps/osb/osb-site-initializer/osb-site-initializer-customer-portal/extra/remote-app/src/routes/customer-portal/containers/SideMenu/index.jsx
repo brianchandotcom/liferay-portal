@@ -62,9 +62,11 @@ const SideMenu = () => {
 
 	const accountSubscriptionGroupsMenuItem = useMemo(
 		() =>
-			activationSubscriptionGroups?.map(({name}, index) => {
+			activationSubscriptionGroups?.map(({activationProductName, name}, index) => {
 				if (name !== PRODUCT_TYPES.liferayExperienceCloud) {
-					const redirectPage = getKebabCase(name);
+					const displayName = activationProductName ? activationProductName : name;
+
+					const redirectPage = getKebabCase(displayName);
 
 					const menuUpdateStatus = (isActive) =>
 						setMenuItemActiveStatus(
@@ -85,11 +87,11 @@ const SideMenu = () => {
 					return (
 						<MenuItem
 							iconKey={redirectPage.split('-')[0]}
-							key={`${name}-${index}`}
+							key={`${displayName}-${index}`}
 							setActive={menuUpdateStatus}
 							to={`${ACTIVATION_PATH}/${redirectPage}`}
 						>
-							{getProperProductNames(name)}
+							{displayName}
 						</MenuItem>
 					);
 				}

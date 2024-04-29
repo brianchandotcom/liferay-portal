@@ -55,22 +55,6 @@
 			"externalReferenceCode": "D4B8_LIST_APPLICATION_STATES",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "APPLICATION_STATE_OPEN",
-					"key": "open",
-					"name": "Open",
-					"name_i18n": {
-						"en-US": "Open"
-					}
-				},
-				{
-					"externalReferenceCode": "APPLICATION_STATE_UNDER_REVIEW",
-					"key": "underReview",
-					"name": "Under Review",
-					"name_i18n": {
-						"en-US": "Under Review"
-					}
-				},
-				{
 					"externalReferenceCode": "APPLICATION_STATE_APPROVED",
 					"key": "approved",
 					"name": "Approved",
@@ -87,19 +71,35 @@
 					}
 				},
 				{
-					"externalReferenceCode": "APPLICATION_STATE_WITHDRAWN",
-					"key": "withdrawn",
-					"name": "Withdrawn",
-					"name_i18n": {
-						"en-US": "Withdrawn"
-					}
-				},
-				{
 					"externalReferenceCode": "APPLICATION_STATE_ON_HOLD",
 					"key": "onHold",
 					"name": "On Hold",
 					"name_i18n": {
 						"en-US": "On Hold"
+					}
+				},
+				{
+					"externalReferenceCode": "APPLICATION_STATE_OPEN",
+					"key": "open",
+					"name": "Open",
+					"name_i18n": {
+						"en-US": "Open"
+					}
+				},
+				{
+					"externalReferenceCode": "APPLICATION_STATE_UNDER_REVIEW",
+					"key": "underReview",
+					"name": "Under Review",
+					"name_i18n": {
+						"en-US": "Under Review"
+					}
+				},
+				{
+					"externalReferenceCode": "APPLICATION_STATE_WITHDRAWN",
+					"key": "withdrawn",
+					"name": "Withdrawn",
+					"name_i18n": {
+						"en-US": "Withdrawn"
 					}
 				}
 			],

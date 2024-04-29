@@ -13,6 +13,7 @@ import {formatDistance} from 'date-fns';
 import {DashboardEmptyTable} from '../../../../../components/DashboardTable/DashboardEmptyTable';
 import Table from '../../../../../components/Table/Table';
 import i18n from '../../../../../i18n';
+import {ORDER_STATUS} from '../../../../../enums/Order';
 
 type TrialTableProps = {
 	items: Order[];
@@ -37,7 +38,11 @@ const itemsDropdown = [
 		id: 1,
 		name: i18n.translate('go-to-trial'),
 		onClick: (order: Order) =>
-			window.open(order?.customFields?.['trial-virtualhost'] as string),
+			window.open(
+				`https://${
+					order?.customFields?.['trial-virtualhost'] as string
+				}`
+			),
 	},
 	{
 		id: 2,
@@ -145,6 +150,13 @@ const TrialTable: React.FC<TrialTableProps> = ({items}) => {
 						align: 'right',
 						key: 'accountId',
 						render: (_, order) => {
+							if (
+								order.orderStatusInfo?.code !==
+								ORDER_STATUS.COMPLETED
+							) {
+								return null;
+							}
+
 							return (
 								<DropDown
 									closeOnClick
@@ -152,7 +164,7 @@ const TrialTable: React.FC<TrialTableProps> = ({items}) => {
 									trigger={
 										<div>
 											<ClayButton
-												aria-label="Actio dropdown"
+												aria-label="Action Dropdown"
 												displayType="unstyled"
 											>
 												<ClayIcon symbol="ellipsis-v" />
@@ -162,14 +174,15 @@ const TrialTable: React.FC<TrialTableProps> = ({items}) => {
 								>
 									<DropDown.ItemList items={itemsDropdown}>
 										{(dropDownItem: unknown) => {
-											const item = dropDownItem as DropDownItems;
+											const item =
+												dropDownItem as DropDownItems;
 
 											return (
 												<DropDown.Item
 													key={item.name}
-													onClick={() => {
-														item.onClick(order);
-													}}
+													onClick={() =>
+														item.onClick(order)
+													}
 												>
 													{item?.name}
 												</DropDown.Item>

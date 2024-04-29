@@ -4,8 +4,10 @@
  */
 
 export enum ORDER_STATUS {
-	APPROVED = 0,
+	CANCELLED = 8,
+	COMPLETED = 0,
 	ON_HOLD = 20,
+	PROCESSING = 10,
 }
 
 export enum ORDER_TYPES {

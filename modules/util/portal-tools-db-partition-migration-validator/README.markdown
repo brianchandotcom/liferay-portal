@@ -21,10 +21,10 @@ Operation mode:
 
 Data Export parameters:
 
-- `--output-dir <arg>` Set the output directory. (Optional, default: `./exports`).
+- `--output-dir <arg>` Set the output directory.
 - `--jdbc-url <arg>` Set the JDBC URL.
 - `--password <arg>` Set the database user password.
-- `--schema-name <arg>` Set the database schema name. (Optional, default: JDBC URL schema name).
+- `--schema-name <arg>` Set the database schema name.
 - `--user <arg>` Set the database user name.
 
 Data Validation parameters:

@@ -16,11 +16,11 @@ java -jar com.liferay.portal.tools.db.partition.schema.validator.jar --db-name x
 
 Options:
 
-- `--debug` Print all log traces. (Optional).
+- `--debug` Print all log traces.
 - `--db-name <arg>` Set the database name.
 - `--help` Print help message.
-- `--jdbc-url <arg>` Set the JDBC URL. (Optional, default: localhost JDBC URL with no parameters).
+- `--jdbc-url <arg>` Set the JDBC URL.
 - `--password <arg>` Set the database user password.
-- `--schema-prefix <arg>` Set the schema prefix. (Optional, default: `lpartition_`).
+- `--schema-prefix <arg>` Set the schema prefix.
 - `--db-type <mysql|postgresql>` Set the database type.
 - `--user <arg>` Set the database user name.

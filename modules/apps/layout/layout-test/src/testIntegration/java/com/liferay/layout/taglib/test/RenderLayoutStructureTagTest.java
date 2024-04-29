@@ -199,7 +199,7 @@ public class RenderLayoutStructureTagTest {
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(),
 				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
 
@@ -256,7 +256,7 @@ public class RenderLayoutStructureTagTest {
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(),
 				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
 
@@ -361,7 +361,7 @@ public class RenderLayoutStructureTagTest {
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(),
 				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
 
@@ -444,7 +444,7 @@ public class RenderLayoutStructureTagTest {
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(),
 				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
 

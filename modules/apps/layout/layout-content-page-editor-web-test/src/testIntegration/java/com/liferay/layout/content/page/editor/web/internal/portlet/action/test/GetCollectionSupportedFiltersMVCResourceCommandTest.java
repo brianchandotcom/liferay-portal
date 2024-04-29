@@ -108,7 +108,7 @@ public class GetCollectionSupportedFiltersMVCResourceCommandTest {
 	public void testAssetListSupportedFilters() throws PortalException {
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addDynamicAssetListEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				"Collection Title", _getTypeSettings(), _serviceContext);
 
 		String collectionId = RandomTestUtil.randomString();

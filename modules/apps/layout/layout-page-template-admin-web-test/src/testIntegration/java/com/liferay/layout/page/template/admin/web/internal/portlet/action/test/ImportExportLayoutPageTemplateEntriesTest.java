@@ -1322,7 +1322,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		throws PortalException {
 
 		return _assetListEntryLocalService.addAssetListEntry(
-			TestPropsValues.getUserId(), groupId, RandomTestUtil.randomString(),
+			null, TestPropsValues.getUserId(), groupId,
+			RandomTestUtil.randomString(),
 			AssetListEntryTypeConstants.TYPE_MANUAL,
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}

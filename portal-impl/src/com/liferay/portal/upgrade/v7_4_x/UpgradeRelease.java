@@ -27,12 +27,12 @@ public class UpgradeRelease extends UpgradeProcess {
 		for (String servletContextName : _SERVLET_CONTEXT_NAMES) {
 			sb.append(StringPool.APOSTROPHE);
 			sb.append(servletContextName);
-			sb.append(StringPool.APOSTROPHE + StringPool.COMMA);
+			sb.append("', ");
 		}
 
 		sb.setIndex(sb.index() - 1);
 
-		sb.append(StringPool.APOSTROPHE + StringPool.CLOSE_PARENTHESIS);
+		sb.append("')");
 
 		runSQL(sb.toString());
 	}

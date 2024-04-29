@@ -151,7 +151,7 @@ export const Node = ({
 							params: {
 								channelId,
 								groupId,
-								title: payload.name,
+								title: encodeURIComponent(payload.name),
 								touchpoint: payload.url
 							},
 							query: {
@@ -183,7 +183,7 @@ export const Node = ({
 						target='_blank'
 						title={
 							sub(Liferay.Language.get('visit-x'), [
-								payload.url
+								decodeURIComponent(payload.url)
 							]) as string
 						}
 					>
@@ -196,7 +196,7 @@ export const Node = ({
 							x={x + 20}
 							y={y - 10}
 						>
-							{truncateText(payload.url, 18)}
+							{truncateText(decodeURIComponent(payload.url), 18)}
 						</text>
 					</ClayLink>
 				</>

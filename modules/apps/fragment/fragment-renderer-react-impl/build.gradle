@@ -7,3 +7,31 @@ dependencies {
 	compileOnly project(":apps:portal-template:portal-template-react-renderer-api")
 	compileOnly project(":core:petra:petra-string")
 }
+
+task addReactAMDDependency
+
+// This is to get around our build tooling until fragments can fully convert to ESM
+addReactAMDDependency {
+	dependsOn packageRunBuild
+
+	doLast {
+		def packageJsonFile = file('build/node/packageRunBuild/resources/package.json')
+		def packageJson = [:]
+
+		if (packageJsonFile.exists()) {
+			packageJson = new groovy.json.JsonSlurper().parseText(packageJsonFile.text)
+		}
+
+		if (!packageJson.containsKey('dependencies')) {
+			packageJson.dependencies = [:]
+		}
+
+		packageJson.dependencies.'liferay!frontend-js-react-web$react' = '*'
+
+		packageJsonFile.text = new groovy.json.JsonBuilder(packageJson).toPrettyString()
+	}
+}
+
+classes {
+	dependsOn addReactAMDDependency
+}

@@ -6359,7 +6359,10 @@ public class ObjectEntryResourceTest {
 			endpoint, Http.Method.POST);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, endpoint, Http.Method.GET);
+			null,
+			StringBundler.concat(
+				endpoint, "?sort=", URLCodec.encodeURL("id:asc")),
+			Http.Method.GET);
 
 		_assertItem(0, jsonObject, "autoIncrement", "10-private");
 		_assertItem(1, jsonObject, "autoIncrement", "100-private");

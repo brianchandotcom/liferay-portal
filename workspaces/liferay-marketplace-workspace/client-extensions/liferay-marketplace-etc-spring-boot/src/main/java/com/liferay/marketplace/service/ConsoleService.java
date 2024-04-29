@@ -81,7 +81,8 @@ public class ConsoleService {
 		return _accessToken;
 	}
 
-	public void setUpCloudProjectInstallation(long orderId, String virtualHost)
+	public void setUpCloudProjectInstallation(
+			String dxpVirtualInstanceId, long orderId)
 		throws Exception {
 
 		JSONObject projectJSONObject = _postProject(
@@ -92,7 +93,7 @@ public class ConsoleService {
 			projectJSONObject.getString("projectId"));
 
 		_setUpLinkBetweenPortalInstanceAndExtensionEnvironment(
-			virtualHost, projectJSONObject.getString("id"));
+			dxpVirtualInstanceId, projectJSONObject.getString("id"));
 
 		_deployApp(
 			_consoleAuthEmailAddress, String.valueOf(orderId),

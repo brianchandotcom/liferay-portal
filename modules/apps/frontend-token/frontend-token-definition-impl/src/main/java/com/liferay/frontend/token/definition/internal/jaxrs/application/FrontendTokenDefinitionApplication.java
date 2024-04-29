@@ -13,7 +13,6 @@ import com.liferay.frontend.token.definition.internal.FrontendTokenDefinitionImp
 import com.liferay.frontend.token.definition.internal.validator.FrontendTokenDefinitionJSONValidator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.validator.JSONValidatorException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
@@ -74,11 +73,6 @@ public class FrontendTokenDefinitionApplication extends Application {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response validateFile(
 		@Context HttpServletRequest httpServletRequest) {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-10773")) {
-			return Response.serverError(
-			).build();
-		}
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 

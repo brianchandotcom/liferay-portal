@@ -16,7 +16,6 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.validator.JSONValidatorException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -261,9 +260,7 @@ public class FrontendTokenDefinitionRegistryImpl
 	private FrontendTokenDefinition _getFrontendTokenDefinition(
 		long companyId, String externalReferenceCode, String themeId) {
 
-		if ((externalReferenceCode != null) &&
-			FeatureFlagManagerUtil.isEnabled("LPD-10773")) {
-
+		if (externalReferenceCode != null) {
 			Map<String, FrontendTokenDefinition> frontendTokenDefinitions =
 				_getFrontendTokenDefinitions(companyId);
 

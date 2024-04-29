@@ -12,7 +12,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -23,7 +22,6 @@ import org.junit.Test;
 /**
  * @author Thiago Buarque
  */
-@FeatureFlags("LPD-10773")
 public class ThemeCSSCETImplFactoryImplTest {
 
 	@ClassRule

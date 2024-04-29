@@ -7,7 +7,6 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {pagesAdminPageTest} from '../../fixtures/PagesAdminPageTest';
 import {styleBookPageTest} from '../../fixtures/StyleBookPageTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
@@ -17,9 +16,6 @@ import uploadAndValidateFile from './utils/uploadAndValidateFile';
 
 export const test = mergeTests(
 	clientExtensionsPageTest,
-	featureFlagsTest({
-		'LPD-10773': true,
-	}),
 	loginTest(),
 	pagesAdminPageTest,
 	styleBookPageTest,

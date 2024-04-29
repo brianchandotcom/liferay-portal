@@ -10,7 +10,6 @@ import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
-import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -115,7 +114,7 @@ public class PublishLayoutMVCActionCommand
 			UnicodeProperties originalTypeSettingsUnicodeProperties =
 				layout.getTypeSettingsProperties();
 
-			_layoutCopyHelper.copyLayoutContent(draftLayout, layout);
+			_layoutLocalService.copyLayoutContent(draftLayout, layout);
 
 			layout = _layoutLocalService.getLayout(layout.getPlid());
 
@@ -228,9 +227,6 @@ public class PublishLayoutMVCActionCommand
 			layoutRevision.getColorSchemeId(), layoutRevision.getCss(),
 			serviceContext);
 	}
-
-	@Reference
-	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

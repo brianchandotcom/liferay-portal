@@ -7,7 +7,6 @@ package com.liferay.layout.type.controller.content.internal.product.navigation.c
 
 import com.liferay.exportimport.kernel.staging.LayoutStaging;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
-import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.petra.string.StringPool;
@@ -116,7 +115,7 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 					Collections.emptyMap(), layout.getMasterLayoutPlid(),
 					serviceContext);
 
-				draftLayout = _layoutCopyHelper.copyLayoutContent(
+				draftLayout = _layoutLocalService.copyLayoutContent(
 					layout, draftLayout);
 
 				_layoutLocalService.updateStatus(
@@ -251,9 +250,6 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

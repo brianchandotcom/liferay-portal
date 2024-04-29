@@ -5,7 +5,6 @@
 
 package com.liferay.layout.internal.service;
 
-import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -46,7 +45,7 @@ public class LayoutServiceWrapper
 			GuestOrUserUtil.getPermissionChecker(), draftLayout,
 			ActionKeys.UPDATE);
 
-		layout = _layoutCopyHelper.copyLayoutContent(draftLayout, layout);
+		layout = _layoutLocalService.copyLayoutContent(draftLayout, layout);
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -59,9 +58,6 @@ public class LayoutServiceWrapper
 			layout.getUserId(), layout.getPlid(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
-
-	@Reference
-	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

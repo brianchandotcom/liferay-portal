@@ -7,7 +7,6 @@ package com.liferay.layout.internal.util;
 
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.exception.LayoutConvertException;
-import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.BulkLayoutConverter;
@@ -255,7 +254,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 			Layout layout = _layoutLocalService.getLayout(
 				draftLayout.getClassPK());
 
-			_layoutCopyHelper.copyLayoutContent(draftLayout, layout);
+			_layoutLocalService.copyLayoutContent(draftLayout, layout);
 
 			draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
 
@@ -356,7 +355,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 		}
 
 		try {
-			return _layoutCopyHelper.copyLayoutContent(layout, draftLayout);
+			return _layoutLocalService.copyLayoutContent(layout, draftLayout);
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
@@ -413,9 +412,6 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 	@Reference
 	private LayoutConverterRegistry _layoutConverterRegistry;
-
-	@Reference
-	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -6,7 +6,6 @@
 package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
-import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -147,7 +146,7 @@ public class LayoutPageTemplateEntryServiceImpl
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		_layoutCopyHelper.copyLayoutContent(
+		_layoutLocalService.copyLayoutContent(
 			segmentsExperienceId, sourceLayout, layout.fetchDraftLayout());
 
 		Layout draftLayout = _layoutLocalService.fetchDraftLayout(
@@ -1097,9 +1096,6 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Reference
 	private CustomSQL _customSQL;
-
-	@Reference
-	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

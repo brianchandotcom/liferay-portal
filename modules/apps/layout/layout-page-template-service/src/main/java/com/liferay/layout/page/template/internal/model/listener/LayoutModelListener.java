@@ -7,7 +7,6 @@ package com.liferay.layout.page.template.internal.model.listener;
 
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
-import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -194,7 +193,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				layoutPageTemplateEntryLayout.getGroupId(),
 				layoutPageTemplateEntryLayout.getPlid());
 
-		draftLayout = _layoutCopyHelper.copyLayoutContent(
+		draftLayout = _layoutLocalService.copyLayoutContent(
 			layoutPageTemplateEntryLayout, draftLayout);
 
 		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
@@ -210,7 +209,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 		_layoutLocalService.updateLayout(draftLayout);
 
-		_layoutCopyHelper.copyLayoutContent(
+		_layoutLocalService.copyLayoutContent(
 			layoutPageTemplateEntryLayout, layout);
 
 		return null;
@@ -277,9 +276,6 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutModelListener.class);
-
-	@Reference
-	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

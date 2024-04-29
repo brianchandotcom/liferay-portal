@@ -7,7 +7,6 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandlerUtil;
-import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -93,13 +92,14 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			Layout sourceLayout = _layoutLocalService.fetchLayout(sourcePlid);
 
-			targetLayout = _layoutCopyHelper.copyLayoutContent(
+			targetLayout = _layoutLocalService.copyLayoutContent(
 				sourceLayout, targetLayout);
 
 			Layout draftLayout = targetLayout.fetchDraftLayout();
 
 			if (draftLayout != null) {
-				_layoutCopyHelper.copyLayoutContent(targetLayout, draftLayout);
+				_layoutLocalService.copyLayoutContent(
+					targetLayout, draftLayout);
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -129,9 +129,6 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, actionResponse, exception);
 		}
 	}
-
-	@Reference
-	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

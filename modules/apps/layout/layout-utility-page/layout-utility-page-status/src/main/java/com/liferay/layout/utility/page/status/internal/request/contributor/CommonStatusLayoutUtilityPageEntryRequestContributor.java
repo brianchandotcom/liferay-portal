@@ -18,15 +18,11 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualHost;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -173,10 +169,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			return;
 		}
 
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			user);
-
-		Layout layout = _getFirstLayout(group.getGroupId(), permissionChecker);
+		Layout layout = _getFirstLayout(group.getGroupId());
 
 		if (layout == null) {
 			_addVirtualHostAttributesAndParameters(
@@ -225,11 +218,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 				return;
 			}
 
-			PermissionChecker permissionChecker =
-				_permissionCheckerFactory.create(user);
-
-			Layout layout = _getFirstLayout(
-				layoutSet.getGroupId(), permissionChecker);
+			Layout layout = _getFirstLayout(layoutSet.getGroupId());
 
 			if (layout != null) {
 				_addLayoutAttributesAndParameters(
@@ -243,31 +232,14 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 		}
 	}
 
-	private Layout _getFirstLayout(
-		long groupId, PermissionChecker permissionChecker) {
-
-		Layout layout = _getFirstLayout(groupId, permissionChecker, false);
+	private Layout _getFirstLayout(long groupId) {
+		Layout layout = _layoutService.fetchFirstLayout(groupId, false, false);
 
 		if (layout != null) {
 			return layout;
 		}
 
-		return _getFirstLayout(groupId, permissionChecker, true);
-	}
-
-	private Layout _getFirstLayout(
-		long groupId, PermissionChecker permissionChecker,
-		boolean privateLayout) {
-
-		for (Layout layout :
-				_layoutLocalService.getLayouts(groupId, privateLayout)) {
-
-			if (_hasViewPermission(layout, permissionChecker)) {
-				return layout;
-			}
-		}
-
-		return null;
+		return _layoutService.fetchFirstLayout(groupId, true, false);
 	}
 
 	private User _getUser(
@@ -289,25 +261,6 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 		return _userLocalService.fetchGuestUser(companyId);
 	}
 
-	private boolean _hasViewPermission(
-		Layout layout, PermissionChecker permissionChecker) {
-
-		try {
-			if (LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.VIEW)) {
-
-				return true;
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
-		return false;
-	}
-
 	private static final String _PRIVATE_GROUP_SERVLET_MAPPING =
 		PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING;
 
@@ -324,13 +277,10 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private LayoutLocalService _layoutLocalService;
+	private LayoutService _layoutService;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
-
-	@Reference
-	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Reference
 	private Portal _portal;

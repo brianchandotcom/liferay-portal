@@ -21,6 +21,19 @@
 			"label": "Archive CI Build Data"
 		},
 		{
+			"externalReferenceCode": "approveGitHubCollaboratorInvites",
+			"jobDefinitionsToJobDefinitionParameters": [
+				{
+					"externalReferenceCode": "jenkinsBranchURL"
+				},
+				{
+					"externalReferenceCode": "jenkinsSlaveLabel"
+				}
+			],
+			"key": "approveGitHubCollaboratorInvites",
+			"label": "Approve GitHub Collaborator Invites"
+		},
+		{
 			"externalReferenceCode": "default",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -75,6 +88,19 @@
 			"label": "Fixpack Builder Pull Request"
 		},
 		{
+			"externalReferenceCode": "forwardBranchesCleanupDaily",
+			"jobDefinitionsToJobDefinitionParameters": [
+				{
+					"externalReferenceCode": "jenkinsBranchURL"
+				},
+				{
+					"externalReferenceCode": "jenkinsSlaveLabel"
+				}
+			],
+			"key": "forwardBranchesCleanupDaily",
+			"label": "Forward Branches Cleanup Daily"
+		},
+		{
 			"externalReferenceCode": "forwardPullRequest",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -94,30 +120,20 @@
 			"label": "Forward Pull Request"
 		},
 		{
-			"externalReferenceCode": "generateCISystemHistoryReport",
+			"externalReferenceCode": "generateFlakyTestReport",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
 					"externalReferenceCode": "jenkinsBranchURL"
 				},
 				{
 					"externalReferenceCode": "jenkinsSlaveLabel"
-				}
-			],
-			"key": "generateCISystemHistoryReport",
-			"label": "Generate CI System History Report"
-		},
-		{
-			"externalReferenceCode": "generateCISystemStatusReport",
-			"jobDefinitionsToJobDefinitionParameters": [
-				{
-					"externalReferenceCode": "jenkinsBranchURL"
 				},
 				{
-					"externalReferenceCode": "jenkinsSlaveLabel"
+					"externalReferenceCode": "portalUpstreamBranchName"
 				}
 			],
-			"key": "generateCISystemStatusReport",
-			"label": "Generate CI System Status Report"
+			"key": "generateFlakyTestReport",
+			"label": "Generate Flaky Test Report"
 		},
 		{
 			"externalReferenceCode": "generateReports",

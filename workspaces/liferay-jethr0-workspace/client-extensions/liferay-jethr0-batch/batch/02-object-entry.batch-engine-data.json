@@ -14,14 +14,14 @@
 			"externalReferenceCode": "batchNames",
 			"key": "batchNames",
 			"label": "Batch Names",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your batch names here in a comma delimited list"
 		},
 		{
 			"externalReferenceCode": "callbackURL",
 			"key": "callbackURL",
 			"label": "Callback URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "Insert your Callback URL here",
 			"valueRegex": "https?://.+"
 		},
@@ -29,14 +29,14 @@
 			"externalReferenceCode": "cleanUpCommand",
 			"key": "cleanUpCommand",
 			"label": "Clean Up Command",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your clean up command here"
 		},
 		{
 			"externalReferenceCode": "dockerImageFilter",
 			"key": "dockerImageFilter",
 			"label": "Docker Image Filter",
-			"type": "STRING",
+			"type": "string",
 			"valueDefault": "snapshot",
 			"valueDescription": "Insert your Docker image filter here"
 		},
@@ -44,14 +44,14 @@
 			"externalReferenceCode": "fileNames",
 			"key": "fileNames",
 			"label": "File Names",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your file names here in a comma-delimited list"
 		},
 		{
 			"externalReferenceCode": "forwardForce",
 			"key": "forwardForce",
 			"label": "Forward Force",
-			"type": "STRING",
+			"type": "string",
 			"valueDefault": "false",
 			"valueDescription": "Insert whether to force forward the pull request here",
 			"valueRegex": "(false|true)"
@@ -60,7 +60,7 @@
 			"externalReferenceCode": "forwardReceiverUserName",
 			"key": "forwardReceiverUserName",
 			"label": "Forward Receiver User Name",
-			"type": "STRING",
+			"type": "string",
 			"valueDefault": "e.g. brianchandotcom",
 			"valueDescription": "Insert your forward receiver user name here"
 		},
@@ -68,7 +68,7 @@
 			"externalReferenceCode": "jenkinsBranchURL",
 			"key": "jenkinsBranchURL",
 			"label": "Jenkins Branch URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. https://github.com/[user]/liferay-jenkins-ee/tree/[branch]",
 			"valueRegex": "https://github.com/[^/]+/liferay-jenkins-ee/tree/[^/]+"
 		},
@@ -76,7 +76,7 @@
 			"externalReferenceCode": "jenkinsBuildID",
 			"key": "jenkinsBuildID",
 			"label": "Jenkins Build ID",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "e.g. 5017401_7441",
 			"valueRegex": "\\d+_\\d+"
 		},
@@ -84,7 +84,7 @@
 			"externalReferenceCode": "jenkinsBuildURL",
 			"key": "jenkinsBuildURL",
 			"label": "Jenkins Build URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. https://test-1-1.liferay.com/job/test-portal-acceptance-pullrequest(master)/1/",
 			"valueRegex": "https?://test-\\d+-\\d+(.liferay.com)?/job/[^/]+/\\d+/?"
 		},
@@ -92,14 +92,14 @@
 			"externalReferenceCode": "jenkinsSlaveLabel",
 			"key": "jenkinsSlaveLabel",
 			"label": "Jenkins Slave Label",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "e.g. !master"
 		},
 		{
 			"externalReferenceCode": "mirrorsURL",
 			"key": "mirrorsURL",
 			"label": "Mirrors URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "Insert your mirrors url here",
 			"valueRegex": "https?://.+"
 		},
@@ -107,14 +107,14 @@
 			"externalReferenceCode": "pluginName",
 			"key": "pluginName",
 			"label": "Plugin Name",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your plugin name here"
 		},
 		{
 			"externalReferenceCode": "pluginsBranchSHA",
 			"key": "pluginsBranchSHA",
 			"label": "Plugins Branch SHA",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "e.g. 617eb3201c2ad33025bfe6a3989ba90c268431ba",
 			"valueRegex": "[a-f0-9]+"
 		},
@@ -122,7 +122,7 @@
 			"externalReferenceCode": "pluginsBranchURL",
 			"key": "pluginsBranchURL",
 			"label": "Plugins Branch URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. https://github.com/[user]/liferay-plugins-ee/tree/[branch]",
 			"valueRegex": "https://github.com/[^/]+/liferay-plugins-ee/tree/[^/]+"
 		},
@@ -130,7 +130,7 @@
 			"externalReferenceCode": "pluginsExtraAppsURL",
 			"key": "pluginsExtraAppsURL",
 			"label": "Plugins Extra Apps URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "Insert your plugins extra apps URL here",
 			"valueRegex": "https?://.+"
 		},
@@ -138,14 +138,14 @@
 			"externalReferenceCode": "pluginsMarketplaceAppFileName",
 			"key": "pluginsMarketplaceAppFileName",
 			"label": "Plugins Marketplace App File Name",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your Marketplace app file name here"
 		},
 		{
 			"externalReferenceCode": "pluginsMarketplaceAppType",
 			"key": "pluginsMarketplaceAppType",
 			"label": "Plugins Marketplace App Type",
-			"type": "STRING",
+			"type": "string",
 			"valueDefault": "community",
 			"valueDescription": "Insert your Marketplace app type here"
 		},
@@ -153,7 +153,7 @@
 			"externalReferenceCode": "pluginsMarketplaceAppURL",
 			"key": "pluginsMarketplaceAppURL",
 			"label": "Plugins Marketplace App URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "Insert your plugins Marketplace app URL here",
 			"valueRegex": "https?://.+"
 		},
@@ -161,28 +161,28 @@
 			"externalReferenceCode": "pluginsUpstreamBranchName",
 			"key": "pluginsUpstreamBranchName",
 			"label": "Plugins Upstream Branch Name",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your plugins upstream branch name here"
 		},
 		{
 			"externalReferenceCode": "portalBatchName",
 			"key": "portalBatchName",
 			"label": "Portal Batch Name",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "e.g. functional-tomcat90-mysql57-jdk8"
 		},
 		{
 			"externalReferenceCode": "portalBatchTestSelector",
 			"key": "portalBatchTestSelector",
 			"label": "Portal Batch Test Selector",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "e.g. PortalSmoke#Smoke"
 		},
 		{
 			"externalReferenceCode": "portalBranchSHA",
 			"key": "portalBranchSHA",
 			"label": "Portal Branch SHA",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "e.g. 617eb3201c2ad33025bfe6a3989ba90c268431ba",
 			"valueRegex": "[a-f0-9]+"
 		},
@@ -190,14 +190,14 @@
 			"externalReferenceCode": "portalBranchSHAs",
 			"key": "portalBranchSHAs",
 			"label": "Portal Branch SHAs",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "e.g. 617eb3201c2ad33025bfe6a3989ba90c268431ba,b2003beba572c86324f221650b696eaa431903f9,eec06d83124d6f6b47fac5fcca9464b9bb3fe877"
 		},
 		{
 			"externalReferenceCode": "portalBranchURL",
 			"key": "portalBranchURL",
 			"label": "Portal Branch URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. https://github.com/[user]/liferay-portal/tree/[branch]",
 			"valueRegex": "https://github.com/[^/]+/liferay-portal(-ee)?/tree/[^/]+"
 		},
@@ -205,7 +205,7 @@
 			"externalReferenceCode": "portalBuildProfile",
 			"key": "portalBuildProfile",
 			"label": "Portal Build Profile",
-			"type": "STRING",
+			"type": "string",
 			"valueDefault": "dxp",
 			"valueDescription": "Insert your portal build profile here (i.e. 'dxp' or 'portal')",
 			"valueRegex": "(dxp|portal)"
@@ -214,14 +214,14 @@
 			"externalReferenceCode": "portalCherryPickSHAs",
 			"key": "portalCherryPickSHAs",
 			"label": "Portal Cherry Pick SHAs",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "e.g. 617eb3201c2ad33025bfe6a3989ba90c268431ba,b2003beba572c86324f221650b696eaa431903f9,eec06d83124d6f6b47fac5fcca9464b9bb3fe877"
 		},
 		{
 			"externalReferenceCode": "portalFixpackReleaseURL",
 			"key": "portalFixpackReleaseURL",
 			"label": "Portal Fixpack Release URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. http://mirrors/files.liferay.com/private/ee/fix-packs/7.3.10/dxp/liferay-fix-pack-dxp-1-7310.zip",
 			"valueRegex": "https?://.+"
 		},
@@ -229,7 +229,7 @@
 			"externalReferenceCode": "portalHotfixReleaseURL",
 			"key": "portalHotfixReleaseURL",
 			"label": "Portal Hotfix Release URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. http://mirrors.lax.liferay.com/files.liferay.com/private/ee/fix-packs/7.4.13/hotfix/liferay-hotfix-4521-7413.zip",
 			"valueRegex": "https?://.+"
 		},
@@ -237,7 +237,7 @@
 			"externalReferenceCode": "portalLegacyBranchURL",
 			"key": "portalLegacyBranchURL",
 			"label": "Portal Legacy Branch URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. https://github.com/[user]/liferay-qa-portal-legacy-ee/tree/[branch]",
 			"valueRegex": "https://github.com/[^/]+/liferay-qa-portal-legacy-ee/tree/[^/]+"
 		},
@@ -245,14 +245,14 @@
 			"externalReferenceCode": "portalLegacyVersions",
 			"key": "portalLegacyVersions",
 			"label": "Portal Legacy Versions",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "e.g. 2023.q4.0, 7.4.13-u106"
 		},
 		{
 			"externalReferenceCode": "portalPatchTicketURL",
 			"key": "portalPatchTicketURL",
 			"label": "Portal Patch Ticket URL",
-			"type": "URL",
+			"type": "url",
 			"valueDefault": "https://help.liferay.com/hc/en-us/requests/PATCHERTEST",
 			"valueDescription": "e.g. https://help.liferay.com/hc/en-us/requests/PATCHERTEST",
 			"valueRegex": "https?://.+"
@@ -261,28 +261,28 @@
 			"externalReferenceCode": "portalPatcherBuildID",
 			"key": "portalPatcherBuildID",
 			"label": "Portal Patcher Build ID",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your portal patcher build ID here"
 		},
 		{
 			"externalReferenceCode": "portalPatcherRequestKey",
 			"key": "portalPatcherRequestKey",
 			"label": "Portal Patcher Request Key",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your portal patcher request key here"
 		},
 		{
 			"externalReferenceCode": "portalPatcherUserID",
 			"key": "portalPatcherUserID",
 			"label": "Portal Patcher User ID",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your portal patcher user ID here"
 		},
 		{
 			"externalReferenceCode": "portalPullRequestURL",
 			"key": "portalPullRequestURL",
 			"label": "Portal Pull Request URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. https://github.com/[user]/liferay-portal/pull/[number]",
 			"valueRegex": "https://github.com/[^/]+/liferay-portal(-ee)?/pull/[^/]+"
 		},
@@ -290,7 +290,7 @@
 			"externalReferenceCode": "portalReleaseDependenciesURL",
 			"key": "portalReleaseDependenciesURL",
 			"label": "Portal Release Dependencies URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. http://mirrors/files.liferay.com/private/ee/portal/7.0.10.17/liferay-dxp-digital-enterprise-dependencies-7.0.10.17-sp17.zip",
 			"valueRegex": "https?://.+"
 		},
@@ -298,7 +298,7 @@
 			"externalReferenceCode": "portalReleaseOSGiURL",
 			"key": "portalReleaseOSGiURL",
 			"label": "Portal Release OSGi URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. https://releases.liferay.com/dxp/release-candidates/2023.q4.0-1701199535/liferay-dxp-osgi-2023.q4.0-1701199535.zip",
 			"valueRegex": "https?://.+"
 		},
@@ -306,7 +306,7 @@
 			"externalReferenceCode": "portalReleaseSQLURL",
 			"key": "portalReleaseSQLURL",
 			"label": "Portal Release SQL URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. https://releases.liferay.com/dxp/release-candidates/2023.q4.0-1701199535/liferay-dxp-sql-2023.q4.0-1701199535.zip",
 			"valueRegex": "https?://.+"
 		},
@@ -314,7 +314,7 @@
 			"externalReferenceCode": "portalReleaseTomcatURL",
 			"key": "portalReleaseTomcatURL",
 			"label": "Portal Release Tomcat URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. https://releases.liferay.com/dxp/release-candidates/2023.q4.0-1701199535/liferay-dxp-tomcat-2023.q4.0-1701199535.7z",
 			"valueRegex": "https?://.+"
 		},
@@ -322,7 +322,7 @@
 			"externalReferenceCode": "portalReleaseToolsURL",
 			"key": "portalReleaseToolsURL",
 			"label": "Portal Release Tools URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. https://releases.liferay.com/dxp/release-candidates/2023.q4.0-1701199535/liferay-dxp-tools-2023.q4.0-1701199535.zip",
 			"valueRegex": "https?://.+"
 		},
@@ -330,7 +330,7 @@
 			"externalReferenceCode": "portalReleaseVersion",
 			"key": "portalReleaseVersion",
 			"label": "Portal Release Version",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "e.g. 2023.q4.0, 7.4.13-u106",
 			"valueRegex": "https?://.+"
 		},
@@ -338,7 +338,7 @@
 			"externalReferenceCode": "portalReleaseWarURL",
 			"key": "portalReleaseWarURL",
 			"label": "Portal Release War URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. https://releases.liferay.com/dxp/release-candidates/2023.q4.0-1701199535/liferay-dxp-2023.q4.0-1701199535.war",
 			"valueRegex": "https?://.+"
 		},
@@ -346,14 +346,14 @@
 			"externalReferenceCode": "portalUpstreamBranchName",
 			"key": "portalUpstreamBranchName",
 			"label": "Portal Upstream Branch Name",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your portal upstream branch name here"
 		},
 		{
 			"externalReferenceCode": "portalUpstreamBranchSHA",
 			"key": "portalUpstreamBranchSHA",
 			"label": "Portal Upstream Branch SHA",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "e.g. 617eb3201c2ad33025bfe6a3989ba90c268431ba",
 			"valueRegex": "[a-f0-9]+"
 		},
@@ -361,14 +361,14 @@
 			"externalReferenceCode": "poshiQuery",
 			"key": "poshiQuery",
 			"label": "Poshi Query",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "e.g. (test.class.method.name == \"PortalSmoke#Smoke\")"
 		},
 		{
 			"externalReferenceCode": "pullRequestURL",
 			"key": "pullRequestURL",
 			"label": "Pull Request URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. https://github.com/[user]/[repository]/pull/[number]",
 			"valueRegex": "https://github.com/[^/]+/[^/]+/pull/[^/]+"
 		},
@@ -376,7 +376,7 @@
 			"externalReferenceCode": "qaWebsitesBranchSHA",
 			"key": "qaWebsitesBranchSHA",
 			"label": "QA Websites Branch SHA",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "e.g. 617eb3201c2ad33025bfe6a3989ba90c268431ba",
 			"valueRegex": "[a-f0-9]+"
 		},
@@ -384,7 +384,7 @@
 			"externalReferenceCode": "qaWebsitesBranchURL",
 			"key": "qaWebsitesBranchURL",
 			"label": "QA Websites Branch URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. https://github.com/[user]/liferay-qa-websites-ee/tree/[branch]",
 			"valueRegex": "https://github.com/[^/]+/liferay-qa-websites-ee/tree/[^/]+"
 		},
@@ -392,21 +392,21 @@
 			"externalReferenceCode": "qaWebsitesProjectName",
 			"key": "qaWebsitesProjectName",
 			"label": "QA Websites Project Name",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your QA Websites project name here"
 		},
 		{
 			"externalReferenceCode": "reportNames",
 			"key": "reportNames",
 			"label": "Report Names",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your report names here in a comma delimited list"
 		},
 		{
 			"externalReferenceCode": "repositoryNames",
 			"key": "repositoryNames",
 			"label": "Repository Names",
-			"type": "STRING",
+			"type": "string",
 			"valueDefault": "liferay-jenkins-ee",
 			"valueDescription": "e.g. liferay-jenkins-ee"
 		},
@@ -414,7 +414,7 @@
 			"externalReferenceCode": "retestCount",
 			"key": "retestCount",
 			"label": "Retest Count",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your retest count here",
 			"valueRegex": "\\d+"
 		},
@@ -422,7 +422,7 @@
 			"externalReferenceCode": "sourceDirURL",
 			"key": "sourceDirURL",
 			"label": "Source Dir URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "Insert your source dir url here",
 			"valueRegex": "https?://.+"
 		},
@@ -430,7 +430,7 @@
 			"externalReferenceCode": "subrepositoryBranchSHA",
 			"key": "subrepositoryBranchSHA",
 			"label": "Subrepository Branch SHA",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "e.g. 617eb3201c2ad33025bfe6a3989ba90c268431ba",
 			"valueRegex": "[a-f0-9]+"
 		},
@@ -438,7 +438,7 @@
 			"externalReferenceCode": "subrepositoryBranchURL",
 			"key": "subrepositoryBranchURL",
 			"label": "Subrepository Branch URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "e.g. https://github.com/[user]/com-liferay-osb-asah-private/tree/[branch]",
 			"valueRegex": "https://github.com/[^/]+/com-liferay-[^/]+-private/tree/[^/]+"
 		},
@@ -446,28 +446,28 @@
 			"externalReferenceCode": "subrepositoryUpstreamBranchName",
 			"key": "subrepositoryUpstreamBranchName",
 			"label": "Subrepository Upstream Branch Name",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your subrepository upstream branch name here"
 		},
 		{
 			"externalReferenceCode": "targetDirPath",
 			"key": "targetDirPath",
 			"label": "Target Dir Path",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your target dir path here"
 		},
 		{
 			"externalReferenceCode": "testSuiteName",
 			"key": "testSuiteName",
 			"label": "Test Suite Name",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your test suite name here"
 		},
 		{
 			"externalReferenceCode": "testrayBuildID",
 			"key": "testrayBuildID",
 			"label": "Testray Build ID",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your Testray build ID here",
 			"valueRegex": "\\d+"
 		},
@@ -475,42 +475,42 @@
 			"externalReferenceCode": "testrayBuildName",
 			"key": "testrayBuildName",
 			"label": "Testray Build Name",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your Testray build name here"
 		},
 		{
 			"externalReferenceCode": "testrayProductVersion",
 			"key": "testrayProductVersion",
 			"label": "Testray Product Version",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your Testray product version here"
 		},
 		{
 			"externalReferenceCode": "testrayProjectName",
 			"key": "testrayProjectName",
 			"label": "Testray Project Name",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your Testray project name here"
 		},
 		{
 			"externalReferenceCode": "testrayRoutineName",
 			"key": "testrayRoutineName",
 			"label": "Testray Routine Name",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your Testray routine name here"
 		},
 		{
 			"externalReferenceCode": "testrayServerType",
 			"key": "testrayServerType",
 			"label": "Testray Server Type",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your Testray server type here"
 		},
 		{
 			"externalReferenceCode": "testrayServerURL",
 			"key": "testrayServerURL",
 			"label": "Testray Server URL",
-			"type": "URL",
+			"type": "url",
 			"valueDescription": "Insert your Testray server URL here",
 			"valueRegex": "https?://.+"
 		},
@@ -518,14 +518,14 @@
 			"externalReferenceCode": "testraySlackChannels",
 			"key": "testraySlackChannels",
 			"label": "Testray Slack Channels",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your Testray Slack channels here"
 		},
 		{
 			"externalReferenceCode": "testraySlackIconEmoji",
 			"key": "testraySlackIconEmoji",
 			"label": "Testray Slack Icon Emoji",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your Testray Slack icon emoji here",
 			"valueRegex": ":[^:]+:"
 		},
@@ -533,7 +533,7 @@
 			"externalReferenceCode": "testraySlackUserName",
 			"key": "testraySlackUserName",
 			"label": "Testray Slack User Name",
-			"type": "STRING",
+			"type": "string",
 			"valueDescription": "Insert your Testray Slack user name here"
 		}
 	]

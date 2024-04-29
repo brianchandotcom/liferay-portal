@@ -293,6 +293,14 @@
 					}
 				},
 				{
+					"externalReferenceCode": "approveGitHubCollaboratorInvites",
+					"key": "approveGitHubCollaboratorInvites",
+					"name": "Approve GitHub Collaborator Invites",
+					"name_i18n": {
+						"en-US": "Approve GitHub Collaborator Invites"
+					}
+				},
+				{
 					"externalReferenceCode": "default",
 					"key": "default",
 					"name": "Default",
@@ -317,6 +325,14 @@
 					}
 				},
 				{
+					"externalReferenceCode": "forwardBranchesCleanupDaily",
+					"key": "forwardBranchesCleanupDaily",
+					"name": "Forward Branches Cleanup Daily",
+					"name_i18n": {
+						"en-US": "Forward Branches Cleanup Daily"
+					}
+				},
+				{
 					"externalReferenceCode": "forwardPullRequest",
 					"key": "forwardPullRequest",
 					"name": "Forward Pull Request",
@@ -325,19 +341,11 @@
 					}
 				},
 				{
-					"externalReferenceCode": "generateCISystemHistoryReport",
-					"key": "generateCISystemHistoryReport",
-					"name": "Generate CI System History Report",
+					"externalReferenceCode": "generateFlakyTestReport",
+					"key": "generateFlakyTestReport",
+					"name": "Generate Flaky Test Report",
 					"name_i18n": {
-						"en-US": "Generate CI System History Report"
-					}
-				},
-				{
-					"externalReferenceCode": "generateCISystemStatusReport",
-					"key": "generateCISystemStatusReport",
-					"name": "Generate CI System Status Report",
-					"name_i18n": {
-						"en-US": "Generate CI System Status Report"
+						"en-US": "Generate Flaky Test Report"
 					}
 				},
 				{

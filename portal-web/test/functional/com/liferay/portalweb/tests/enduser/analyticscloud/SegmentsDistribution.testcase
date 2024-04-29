@@ -23,8 +23,6 @@ definition {
 			ACUtils.addSiteAndPage();
 		}
 
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
 		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -38,8 +36,8 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 	}
 

@@ -56,7 +56,7 @@ definition {
 		ACUtils.navigateToSitePageWithUser(
 			actionType = "Comment Blog",
 			commentText = "Blogs Entry Comment",
-			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
+			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
 			emailList = "ac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");

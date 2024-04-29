@@ -513,6 +513,8 @@ definition {
 	test ViewIndividualNameAtTheTopOfIndividualsPage {
 		task ("View the site page with new user") {
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				emailList = "userea@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");

@@ -1562,14 +1562,11 @@ definition {
 	@description = "Feature ID: LRAC-13424 | Automation ID: LRAC-14041 | Test Summary: Check that it is not possible to create a dynamic segment with a name that is already in use"
 	@priority = 4
 	test CheckNotPossibleCreateDynamicSegmentWithNameAlreadyInUse {
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
+		task ("View the site page with new user") {
+			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
+				emailList = "userea@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

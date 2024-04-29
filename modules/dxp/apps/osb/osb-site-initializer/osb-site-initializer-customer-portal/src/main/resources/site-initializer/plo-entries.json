@@ -51,6 +51,15 @@
 		}
 	},
 	{
+		"key": "no-features-found-for-the-selected-product-capabilities-and-feature-availability",
+		"value": {
+			"en-US": "No features found for the selected product capabilities and feature availability.",
+			"es-ES": "No se encontraron funciones para las capacidades del producto seleccionado y la disponibilidad de funciones.",
+			"ja-JP": "選択した製品の機能と利用可能な機能に対応する機能が見つかりません。",
+			"pt-BR": "Nenhum recurso encontrado para os recursos e disponibilidade de recursos do produto selecionado."
+		}
+	},
+	{
 		"key": "no-highlights-found-for-the-selected-product-capabilities",
 		"value": {
 			"en-US": "No highlights found for the selected product capabilities.",

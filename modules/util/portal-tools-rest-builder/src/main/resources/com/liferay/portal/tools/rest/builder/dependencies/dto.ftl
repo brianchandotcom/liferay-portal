@@ -203,8 +203,11 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 						if (!(value instanceof UnsafeSupplier<?, ?>)) {
 							return value;
 						}
+
+						UnsafeSupplier<?, ?> unsafeSuppplier = (UnsafeSupplier<?, ?>)value;
+
 						try {
-							return ((UnsafeSupplier<?, ?>)value).get();
+							return unsafeSuppplier.get();
 						}
 						catch (Throwable throwable) {
 							throw new RuntimeException(throwable);
@@ -214,7 +217,6 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 				return ${propertyName};
 			}
-
 		<#else>
 			public ${propertyType} get${capitalizedPropertyName}() {
 				if (_${propertyName}Supplier != null) {

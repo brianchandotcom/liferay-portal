@@ -36,6 +36,7 @@ import '../../../../css/TableVisualizationMode.scss';
 import ClayAlert from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 
+import sortItems from '../../../utils/sortItems';
 import {EFieldType, IFDSField, IField} from '../../../utils/types';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
@@ -359,41 +360,9 @@ function Table(props: IFDSViewSectionProps & {title?: string}) {
 	const [fdsFields, setFDSFields] = useState<Array<IFDSField> | null>(null);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 
-	const reorderFDSFields = ({
-		fdsFieldsOrder,
-		storedFDSFields,
-	}: {
-		fdsFieldsOrder: string;
-		storedFDSFields: Array<IFDSField>;
-	}): Array<IFDSField> => {
-		const storedOrderedFDSFieldIds = fdsFieldsOrder.split(',');
-
-		const orderedFDSFields: Array<IFDSField> = [];
-
-		const orderedFDSFieldIds: Array<number> = [];
-
-		storedOrderedFDSFieldIds.forEach((fdsFieldId: string) => {
-			storedFDSFields.forEach((storedFDSField: IFDSField) => {
-				if (fdsFieldId === String(storedFDSField.id)) {
-					orderedFDSFields.push(storedFDSField);
-
-					orderedFDSFieldIds.push(storedFDSField.id);
-				}
-			});
-		});
-
-		storedFDSFields.forEach((storedFDSField: IFDSField) => {
-			if (!orderedFDSFieldIds.includes(storedFDSField.id)) {
-				orderedFDSFields.push(storedFDSField);
-			}
-		});
-
-		return orderedFDSFields;
-	};
-
 	const getFDSFields = async () => {
 		const response = await fetch(
-			`${API_URL.FDS_FIELDS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD}`
+			`${API_URL.FDS_FIELDS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD}&sort=dateCreated:asc`
 		);
 
 		if (!response.ok) {
@@ -404,7 +373,7 @@ function Table(props: IFDSViewSectionProps & {title?: string}) {
 
 		const responseJSON = await response.json();
 
-		const storedFDSFields = responseJSON?.items;
+		const storedFDSFields: IFDSField[] = responseJSON?.items;
 
 		if (!storedFDSFields) {
 			openDefaultFailureToast();
@@ -413,20 +382,13 @@ function Table(props: IFDSViewSectionProps & {title?: string}) {
 		}
 
 		const fdsFieldsOrder =
+
+			// @ts-ignore
+
 			storedFDSFields?.[0]?.[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD]
 				?.fdsFieldsOrder;
 
-		if (fdsFieldsOrder) {
-			const orderedFDSFields = reorderFDSFields({
-				fdsFieldsOrder,
-				storedFDSFields,
-			});
-
-			setFDSFields(orderedFDSFields);
-		}
-		else {
-			setFDSFields(storedFDSFields);
-		}
+		setFDSFields(sortItems(storedFDSFields, fdsFieldsOrder) as IFDSField[]);
 	};
 
 	const onDeleteButtonClick = ({item}: {item: IFDSField}) => {
@@ -588,12 +550,9 @@ function Table(props: IFDSViewSectionProps & {title?: string}) {
 			storedFDSFieldsOrder &&
 			storedFDSFieldsOrder === fdsFieldsOrder
 		) {
-			const orderedFDSFields = reorderFDSFields({
-				fdsFieldsOrder,
-				storedFDSFields,
-			});
-
-			setFDSFields(orderedFDSFields);
+			setFDSFields(
+				sortItems(storedFDSFields, fdsFieldsOrder) as IFDSField[]
+			);
 
 			openDefaultSuccessToast();
 		}

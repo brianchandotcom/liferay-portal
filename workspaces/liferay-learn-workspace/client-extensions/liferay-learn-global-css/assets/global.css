@@ -286,7 +286,9 @@ pre[class*='language-'] {
 		max-width: var(--container-max-lg);
 
 		h1 > a,
-		h2 > a {
+		h2 > a,
+		h3 > a,
+		h4 > a {
 			color: #000;
 			font-weight: 700;
 			text-decoration: none;
@@ -300,6 +302,93 @@ pre[class*='language-'] {
 			line-height: 20px;
 			margin: 1.5rem 0;
 			padding-left: 1.5rem;
+		}
+
+		p {
+			color: var(--color-neutral-8, #54555f);
+		}
+
+		table {
+			border-spacing: 0;
+			color: var(--color-neutral-8, #54555f);
+			margin-bottom: 1rem;
+			width: 100%;
+			thead {
+				color: var(--color-neutral-0, #fff);
+			}
+			td {
+				background-clip: padding-box;
+				border-bottom-width: 0.0625rem;
+				border-color: transparent;
+				border-left-width: 0px;
+				border-right-width: 0px;
+				border-style: solid;
+				border-top-width: 0.0625rem;
+				height: 56px;
+				padding: 0.5rem 1rem;
+				position: relative;
+				vertical-align: middle;
+			}
+		}
+
+		table th {
+			color: var(--color-neutral-10, #282934);
+			font-size: 0.875rem;
+		}
+
+		.table th:first-child,
+		table th:first-child,
+		.table td:first-child,
+		table td:first-child,
+		.table .table-column-start,
+		table .table-column-start {
+			padding-left: 1.25rem;
+		}
+
+		.table thead th,
+		table thead th,
+		.table thead td,
+		table thead td {
+			border-bottom: calc(2 * 0.0625rem) solid #dee2e6;
+			border-top-width: 0px;
+			vertical-align: middle;
+		}
+
+		.table-striped
+			tbody
+			tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
+				.table-divider
+			),
+		table
+			tbody
+			tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
+				.table-divider
+			),
+		.table-striped
+			tbody
+			tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
+				.table-divider
+			)
+			td,
+		table
+			tbody
+			tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
+				.table-divider
+			)
+			td,
+		.table-striped
+			tbody
+			tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
+				.table-divider
+			)
+			th,
+		table
+			tbody
+			tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
+				.table-divider
+			)
+			th {
+			background-color: var(--color-state-info-lighten-2, #e6ebf5);
 		}
 	}
 

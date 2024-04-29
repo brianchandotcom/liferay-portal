@@ -225,10 +225,11 @@ public class ColumnValuesExtractorTest {
 				ColumnDescriptor.from(
 					fieldName, index,
 					object -> {
-						ObjectValuePair<Field, Method> properties =
-							objectValuePairs.get("properties");
+						ObjectValuePair<Field, Method>
+							propertiesObjectValuePair =
+								objectValuePairs.get("properties");
 
-						Method method = properties.getValue();
+						Method method = propertiesObjectValuePair.getValue();
 
 						Map<String, Object> map =
 							(Map<String, Object>)method.invoke(object);

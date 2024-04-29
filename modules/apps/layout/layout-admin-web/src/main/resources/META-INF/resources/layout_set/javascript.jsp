@@ -13,6 +13,13 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
 %>
 
+<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10981") %>'>
+	<clay:alert
+		displayType="info"
+		message="some-load-attributes-cannot-be-changed-because-they-were-set-in-a-client-extension"
+	/>
+</c:if>
+
 <liferay-frontend:fieldset
 	collapsed="<%= false %>"
 	collapsible="<%= true %>"

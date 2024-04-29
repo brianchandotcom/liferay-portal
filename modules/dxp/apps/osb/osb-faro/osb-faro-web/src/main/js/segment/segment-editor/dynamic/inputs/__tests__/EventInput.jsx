@@ -50,7 +50,9 @@ describe('EventInput', () => {
 						<EventInput
 							displayValue='Asset Clicked'
 							onChange={jest.fn()}
-							operatorRenderer={() => <div>{'test'}</div>}
+							operatorRenderer={() => (
+								<div>{'has / has not'}</div>
+							)}
 							property={Property({
 								entityName: 'Event',
 								id: '3',

@@ -209,7 +209,8 @@ public class SelectLayoutTag extends IncludeTag {
 					return LayoutUtil.getLayoutsJSONArray(
 						_checkDisplayPage, _enableCurrentPage,
 						themeDisplay.getScopeGroupId(), getRequest(),
-						_itemSelectorReturnType, _privateLayout, 0,
+						_itemSelectorReturnType, _privateLayout,
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 						selectedLayoutIds, selPlid, QueryUtil.ALL_POS, end);
 				}
 			).put(

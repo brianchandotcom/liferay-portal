@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.tools.db.partition.migration.validator.util;
+package com.liferay.portal.tools.db.partition.migration.validator;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.version.Version;
@@ -36,7 +36,7 @@ import org.mockito.stubbing.Answer;
 /**
  * @author Luis Ortiz
  */
-public class DatabaseUtilTest {
+public class LiferayDatabaseTest {
 
 	@Before
 	public void setUp() throws SQLException {

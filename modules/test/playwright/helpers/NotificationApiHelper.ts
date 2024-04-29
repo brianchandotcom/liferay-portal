@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { getRandomInt } from '../utils/getRandomInt';
+import {getRandomInt} from '../utils/getRandomInt';
 import {ApiHelpers} from './ApiHelpers';
 
 type TNotificationTemplate = {
@@ -66,11 +66,10 @@ export class NotificationApiHelper {
 
 	async postRandomNotificationTemplate(
 		name?: string
-	) : Promise<TNotificationTemplate> {
-
+	): Promise<TNotificationTemplate> {
 		const requestBody = {
 			editorType: 'richText',
-			name: name,
+			name,
 			recipientType: 'email',
 			recipients: [
 				{
@@ -79,12 +78,12 @@ export class NotificationApiHelper {
 						en_US: 'do-not-replay@liferay.com',
 					},
 					to: {
-						en_US: 'to' + getRandomInt()+"@liferay.com",
+						en_US: 'to' + getRandomInt() + '@liferay.com',
 					},
 				},
 			],
 			subject: {
-				en_US: 'subject' + getRandomInt()
+				en_US: 'subject' + getRandomInt(),
 			},
 			type: 'email',
 		} as TNotificationTemplate;

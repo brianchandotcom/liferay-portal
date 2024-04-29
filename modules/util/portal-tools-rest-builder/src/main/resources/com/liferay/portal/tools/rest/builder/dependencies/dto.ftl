@@ -363,18 +363,24 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			{
 				<#list jsonMapPropertyNames as propertyName>
 					if (${propertyName}.containsKey(propertyName)) {
-						Object object = ${propertyName}.get(propertyName);
+						Object value = ${propertyName}.get(propertyName);
 
-						if (object instanceof UnsafeSupplier<?, ?>){
-							try {
-								object = ((UnsafeSupplier<?, ?>) object).get();
-								${propertyName}.put(propertyName, object);
-							} catch (Throwable e) {
-								throw new RuntimeException(e);
-							}
+						if (!(value instanceof UnsafeSupplier<?, ?>)) {
+							return value;
 						}
 
-						return object;
+						UnsafeSupplier<?, ?> unsafeSuppplier = (UnsafeSupplier<?, ?>)value;
+
+						try {
+							value = unsafeSuppplier.get();
+
+							${propertyName}.put(propertyName, value);
+						}
+						catch (Throwable e) {
+							throw new RuntimeException(e);
+						}
+
+						return value;
 					}
 				</#list>
 			}

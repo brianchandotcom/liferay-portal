@@ -580,8 +580,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			return LayoutConstants.DEFAULT_PLID;
 		}
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
 		String scopeGroupLayoutUuid = null;
 
 		Group scopeGroup = _groupLocalService.getGroup(scopeGroupId);
@@ -620,10 +618,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 				continue;
 			}
 
-			if (!LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.VIEW) ||
-				!layout.isTypePortlet()) {
-
+			if (!_hasViewPermission(layout) || !layout.isTypePortlet()) {
 				continue;
 			}
 
@@ -1637,15 +1632,11 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		}
 	}
 
-	protected List<Layout> filterLayouts(List<Layout> layouts)
-		throws PortalException {
-
+	protected List<Layout> filterLayouts(List<Layout> layouts) {
 		List<Layout> filteredLayouts = new ArrayList<>();
 
 		for (Layout layout : layouts) {
-			if (LayoutPermissionUtil.contains(
-					getPermissionChecker(), layout, ActionKeys.VIEW)) {
-
+			if (_hasViewPermission(layout)) {
 				filteredLayouts.add(layout);
 			}
 		}

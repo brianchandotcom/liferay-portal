@@ -59,47 +59,46 @@ const UploadLogo: React.FC<UploadLogoProps> = ({
 	return (
 		<ClayTooltipProvider>
 			<div className="upload-logo-container">
-				<>
-					{uploadedFile?.preview ? (
-						<img
-							alt="New App logo"
-							className="upload-logo-icon"
-							src={uploadedFile?.preview}
+				{uploadedFile?.preview ? (
+					<img
+						alt="New App logo"
+						className="upload-logo-icon"
+						src={uploadedFile?.preview}
+					/>
+				) : (
+					<div className="bg-light py-5 rounded">
+						<ClayIcon
+							aria-label="New App logo"
+							className="text-muted upload-logo-icon"
+							symbol="picture"
 						/>
-					) : (
-						<div className="bg-light py-5 rounded">
-							<ClayIcon
-								aria-label="New App logo"
-								className="text-muted upload-logo-icon"
-								symbol="picture"
-							/>
-						</div>
-					)}
-					<div
-						data-title-set-as-html
-						data-tooltip-align="top"
-						title={tooltip}
-					>
-						<input
-							accept="image/jpeg, image/png, image/gif"
-							id="file"
-							name="file"
-							onChange={({target: {files}}) => {
-								if (files !== null) {
-									onUpload(files);
-								}
-							}}
-							type="file"
-						/>
-
-						<label
-							className="btn btn-primary btn-sm m-0"
-							htmlFor="file"
-						>
-							Upload Image
-						</label>
 					</div>
-				</>
+				)}
+
+				<div
+					data-title-set-as-html
+					data-tooltip-align="top"
+					title={tooltip}
+				>
+					<input
+						accept="image/jpeg, image/png, image/gif"
+						id="file"
+						name="file"
+						onChange={({target: {files}}) => {
+							if (files !== null) {
+								onUpload(files);
+							}
+						}}
+						type="file"
+					/>
+
+					<label
+						className="btn btn-primary btn-sm m-0"
+						htmlFor="file"
+					>
+						Upload Image
+					</label>
+				</div>
 
 				{uploadedFile?.uploaded && (
 					<button
@@ -184,8 +183,7 @@ export function DefineAppProfilePage({
 				appERC,
 				appName,
 			});
-		}
-		else {
+		} else {
 			response = await createApp({
 				appCategories: [
 					...appCategories,
@@ -199,7 +197,8 @@ export function DefineAppProfilePage({
 					{
 						channelId: channel?.id as number,
 						currencyCode: channel?.currencyCode as string,
-						externalReferenceCode: channel?.externalReferenceCode as string,
+						externalReferenceCode:
+							channel?.externalReferenceCode as string,
 						id: channel?.id as number,
 						name: channel?.name as string,
 						type: channel?.type as string,

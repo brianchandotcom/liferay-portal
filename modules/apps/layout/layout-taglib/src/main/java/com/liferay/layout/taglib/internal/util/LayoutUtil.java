@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -97,14 +98,12 @@ public class LayoutUtil {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<Layout> layouts = LayoutServiceUtil.getLayouts(
-			groupId, privateLayout, parentLayoutId, false, start, end);
+		List<Layout> layouts = ListUtil.filter(
+			LayoutServiceUtil.getLayouts(
+				groupId, privateLayout, parentLayoutId),
+			layout -> !_isExcludedLayout(layout));
 
-		for (Layout layout : layouts) {
-			if (_isExcludedLayout(layout)) {
-				continue;
-			}
-
+		for (Layout layout : ListUtil.subList(layouts, start, end)) {
 			jsonArray.put(
 				JSONUtil.put(
 					"disabled",
@@ -147,11 +146,13 @@ public class LayoutUtil {
 				).put(
 					"paginated",
 					() -> {
-						int layoutsCount = LayoutServiceUtil.getLayoutsCount(
-							groupId, layout.isPrivateLayout(),
-							layout.getLayoutId());
+						List<Layout> childLayouts = ListUtil.filter(
+							LayoutServiceUtil.getLayouts(
+								groupId, layout.isPrivateLayout(),
+								layout.getLayoutId()),
+							curLayout -> !_isExcludedLayout(curLayout));
 
-						if (layoutsCount >
+						if (childLayouts.size() >
 								PropsValues.
 									LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) {
 
@@ -191,9 +192,7 @@ public class LayoutUtil {
 		return JSONUtil.put(
 			"items", jsonArray
 		).put(
-			"total",
-			LayoutServiceUtil.getLayoutsCount(
-				groupId, privateLayout, parentLayoutId)
+			"total", layouts.size()
 		);
 	}
 

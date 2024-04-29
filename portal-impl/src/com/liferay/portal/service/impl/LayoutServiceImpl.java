@@ -647,6 +647,41 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return plid;
 	}
 
+	@Override
+	public Layout getFirstPublishedLayout(long groupId, boolean privateLayout) {
+
+		// We need to ensure that virtual layouts are merged
+
+		List<Layout> layouts = layoutLocalService.getLayouts(
+			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			true, 0, 1);
+
+		if (layouts.isEmpty()) {
+			return null;
+		}
+
+		Layout layout = layouts.get(0);
+
+		boolean viewPermission = _hasViewPermission(layout);
+
+		if (layout.isPublished() && viewPermission) {
+			return layout;
+		}
+
+		Layout firstPublishedLayout = _getFirstPublishedLayout(
+			groupId, privateLayout);
+
+		if (firstPublishedLayout != null) {
+			return firstPublishedLayout;
+		}
+
+		if (viewPermission) {
+			return layout;
+		}
+
+		return null;
+	}
+
 	/**
 	 * Returns the layout matching the UUID, group, and privacy.
 	 *
@@ -1649,6 +1684,55 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			(LayoutTypePortlet)clonedLayout.getLayoutType();
 
 		return layoutTypePortlet.getPortletIds();
+	}
+
+	private Layout _getFirstPublishedLayout(
+		long groupId, boolean privateLayout) {
+
+		boolean hasNext = true;
+
+		int start = 1;
+		int end = 0;
+		int interval = 20;
+
+		while (hasNext) {
+			end = start + interval;
+
+			List<Layout> layouts = layoutLocalService.getLayouts(
+				groupId, privateLayout,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, start, end);
+
+			for (Layout layout : layouts) {
+				if (layout.isPublished() && _hasViewPermission(layout)) {
+					return layout;
+				}
+			}
+
+			start = start + interval;
+
+			if (layouts.size() < interval) {
+				hasNext = false;
+			}
+		}
+
+		return null;
+	}
+
+	private boolean _hasViewPermission(Layout layout) {
+		try {
+			if (LayoutPermissionUtil.contains(
+					getPermissionChecker(), layout, ActionKeys.VIEW)) {
+
+				return true;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

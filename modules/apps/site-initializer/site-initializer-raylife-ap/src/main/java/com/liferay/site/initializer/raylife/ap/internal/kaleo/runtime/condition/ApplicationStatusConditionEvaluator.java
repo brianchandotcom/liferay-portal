@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package site.initializer.workflow.definitions.underwriting.condition.evaluator;
+package com.liferay.site.initializer.raylife.ap.internal.kaleo.runtime.condition;
 
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;

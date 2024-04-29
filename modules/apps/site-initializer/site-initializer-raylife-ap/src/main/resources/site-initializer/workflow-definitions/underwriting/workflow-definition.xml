@@ -25,7 +25,7 @@
 			</label>
 		</labels>
 		<script>
-			<![CDATA[site.initializer.workflow.definitions.underwriting.condition.evaluator.ApplicationStatusConditionEvaluator]]>
+			<![CDATA[com.liferay.site.initializer.raylife.ap.internal.kaleo.runtime.condition.ApplicationStatusConditionEvaluator]]>
 		</script>
 		<script-language>java</script-language>
 		<transitions>
@@ -101,7 +101,7 @@
 			<action>
 				<name>Reviewed</name>
 				<script>
-					<![CDATA[site.initializer.workflow.definitions.underwriting.action.executor.ReviewedActionExecutor]]>
+					<![CDATA[com.liferay.site.initializer.raylife.ap.internal.kaleo.runtime.action.executor.ReviewedActionExecutor]]>
 				</script>
 				<script-language>java</script-language>
 				<priority>1</priority>
@@ -139,7 +139,7 @@
 			<action>
 				<name>rejected</name>
 				<script>
-					<![CDATA[site.initializer.workflow.definitions.underwriting.action.executor.RejectedActionExecutor]]>
+					<![CDATA[com.liferay.site.initializer.raylife.ap.internal.kaleo.runtime.action.executor.RejectedActionExecutor]]>
 				</script>
 				<script-language>java</script-language>
 				<priority>1</priority>

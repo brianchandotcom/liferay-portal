@@ -1,5 +1,5 @@
 import {getFilters} from 'shared/util/filter';
-import {getSafeRangeSelectors} from 'shared/util/util';
+import {getSafeRangeSelectors, getSafeTouchpoint} from 'shared/util/util';
 import {isNil, reduce} from 'lodash';
 
 export const formatItem = item =>
@@ -112,8 +112,7 @@ export function getVariables({
 
 	let variables = {
 		title: decodeURIComponent(title),
-		touchpoint:
-			touchpoint !== 'Any' ? decodeURIComponent(touchpoint) : null,
+		touchpoint: getSafeTouchpoint(touchpoint),
 		...getSafeRangeSelectors(rangeSelectors)
 	};
 

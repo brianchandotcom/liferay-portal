@@ -1,3 +1,4 @@
+import {getSafeTouchpoint} from 'shared/util/util';
 import {getVariables, safeResultToProps} from 'shared/util/mappers';
 
 const assetTypeLabels = {
@@ -39,7 +40,7 @@ const mapPropsToOptions = ({
 		return {
 			variables: {
 				...variables,
-				touchpoint: decodeURIComponent(touchpoint)
+				touchpoint: getSafeTouchpoint(touchpoint)
 			}
 		};
 	}

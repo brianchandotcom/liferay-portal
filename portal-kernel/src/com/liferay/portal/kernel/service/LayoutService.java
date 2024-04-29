@@ -289,6 +289,10 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Layout fetchFirstLayout(
+		long groupId, boolean privateLayout, boolean published);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Layout fetchLayout(
 			long groupId, boolean privateLayout, long layoutId)
 		throws PortalException;

@@ -321,6 +321,12 @@ public class LayoutServiceUtil {
 		getService().deleteTempFileEntry(groupId, folderName, fileName);
 	}
 
+	public static Layout fetchFirstLayout(
+		long groupId, boolean privateLayout, boolean published) {
+
+		return getService().fetchFirstLayout(groupId, privateLayout, published);
+	}
+
 	public static Layout fetchLayout(
 			long groupId, boolean privateLayout, long layoutId)
 		throws PortalException {

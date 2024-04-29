@@ -322,6 +322,14 @@ public class LayoutServiceWrapper
 	}
 
 	@Override
+	public Layout fetchFirstLayout(
+		long groupId, boolean privateLayout, boolean published) {
+
+		return _layoutService.fetchFirstLayout(
+			groupId, privateLayout, published);
+	}
+
+	@Override
 	public Layout fetchLayout(
 			long groupId, boolean privateLayout, long layoutId)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -42,21 +42,7 @@ public class FragmentCollectionServiceImpl
 
 	@Override
 	public FragmentCollection addFragmentCollection(
-			long groupId, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-
-		return fragmentCollectionLocalService.addFragmentCollection(
-			getUserId(), groupId, name, description, serviceContext);
-	}
-
-	@Override
-	public FragmentCollection addFragmentCollection(
-			long groupId, String fragmentCollectionKey, String name,
+			String externalReferenceCode, long groupId, String name,
 			String description, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -65,8 +51,24 @@ public class FragmentCollectionServiceImpl
 			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		return fragmentCollectionLocalService.addFragmentCollection(
-			getUserId(), groupId, fragmentCollectionKey, name, description,
+			externalReferenceCode, getUserId(), groupId, name, description,
 			serviceContext);
+	}
+
+	@Override
+	public FragmentCollection addFragmentCollection(
+			String externalReferenceCode, long groupId,
+			String fragmentCollectionKey, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
+		return fragmentCollectionLocalService.addFragmentCollection(
+			externalReferenceCode, getUserId(), groupId, fragmentCollectionKey,
+			name, description, serviceContext);
 	}
 
 	@Override

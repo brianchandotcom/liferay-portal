@@ -244,6 +244,10 @@ public class LayoutUtilityPageEntryServiceImpl
 			long layoutUtilityPageEntryId, String name)
 		throws PortalException {
 
+		_layoutUtilityPageEntryModelResourcePermission.check(
+			getPermissionChecker(), layoutUtilityPageEntryId,
+			ActionKeys.UPDATE);
+
 		return layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
 			layoutUtilityPageEntryId, name);
 	}

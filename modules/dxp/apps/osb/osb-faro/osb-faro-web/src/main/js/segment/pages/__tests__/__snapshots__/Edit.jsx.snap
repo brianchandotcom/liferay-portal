@@ -367,6 +367,11 @@ exports[`Edit should render 1`] = `
                       class="property-subgroups-list active"
                     >
                       <li>
+                        <div
+                          class="property-subgroup-label"
+                        >
+                          Default Events
+                        </div>
                         <ul
                           class="properties-list"
                         >
@@ -641,6 +646,51 @@ exports[`Edit should render 1`] = `
                               </span>
                             </span>
                             Viewed Web Content
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div
+                          class="property-subgroup-label"
+                        >
+                          Custom Events
+                        </div>
+                        <ul
+                          class="properties-list"
+                        >
+                          <li
+                            class="criteria-sidebar-item-root color--event"
+                            draggable="true"
+                          >
+                            <span
+                              class="inline-item"
+                            >
+                              <svg
+                                class="lexicon-icon lexicon-icon-drag icon-root"
+                                role="presentation"
+                              >
+                                <use
+                                  href="#drag"
+                                />
+                              </svg>
+                            </span>
+                            <span
+                              class="criteria-sidebar-item-type sticker"
+                            >
+                              <span
+                                class="inline-item"
+                              >
+                                <svg
+                                  class="lexicon-icon lexicon-icon-ac-event-analysis icon-root"
+                                  role="presentation"
+                                >
+                                  <use
+                                    href="#ac-event-analysis"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                            displayName-1
                           </li>
                         </ul>
                       </li>

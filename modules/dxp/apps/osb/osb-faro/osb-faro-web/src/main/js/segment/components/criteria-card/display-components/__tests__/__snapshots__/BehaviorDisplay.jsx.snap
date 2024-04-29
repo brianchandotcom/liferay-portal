@@ -25,7 +25,9 @@ exports[`BehaviorDisplay renders 1`] = `
     since
   </span>
   <span>
-    Last 24 hours
+    <strong>
+      Last 24 hours
+    </strong>
   </span>
 </div>
 `;

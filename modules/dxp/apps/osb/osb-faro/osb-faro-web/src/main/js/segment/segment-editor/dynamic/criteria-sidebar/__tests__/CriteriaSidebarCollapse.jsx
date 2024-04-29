@@ -37,6 +37,35 @@ describe('CriteriaSidebarCollapse', () => {
 		})
 	]);
 
+	const propertyGroupsIListCustomEvents = new List([
+		new PropertyGroup({
+			label: 'Events',
+			name: 'Events',
+			propertyKey: 'events',
+			propertySubgroups: new List([
+				new PropertySubgroup({
+					label: 'Custom Events',
+					properties: new List([
+						data.getImmutableMock(Property, data.mockProperty, 0, {
+							label: 'Custom Event 1',
+							name: 'Custom Event 1'
+						}),
+
+						data.getImmutableMock(Property, data.mockProperty, 0, {
+							label: 'Custom Event 2',
+							name: 'Custom Event 2'
+						}),
+
+						data.getImmutableMock(Property, data.mockProperty, 0, {
+							label: 'Custom Event 3',
+							name: 'Custom Event 3'
+						})
+					])
+				})
+			])
+		})
+	]);
+
 	afterEach(cleanup);
 
 	it('should render', () => {
@@ -81,5 +110,21 @@ describe('CriteriaSidebarCollapse', () => {
 		expect(queryByText('No results were found.')).toBeTruthy();
 		expect(queryByText('Page Views')).toBeNull();
 		expect(queryByText('Page Actions')).toBeNull();
+	});
+
+	it('should render custom events in the sidebar', () => {
+		const {queryByText} = render(
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaSidebarCollapse
+					propertyGroupsIList={propertyGroupsIListCustomEvents}
+					propertyKey='events'
+				/>
+			</DndProvider>
+		);
+
+		expect(queryByText('Custom Events')).toBeInTheDocument();
+		expect(queryByText('Custom Event 1')).toBeInTheDocument();
+		expect(queryByText('Custom Event 2')).toBeInTheDocument();
+		expect(queryByText('Custom Event 3')).toBeInTheDocument();
 	});
 });

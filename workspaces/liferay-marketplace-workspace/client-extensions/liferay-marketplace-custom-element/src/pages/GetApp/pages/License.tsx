@@ -97,7 +97,7 @@ export default function LicenseSelector() {
 					<div className="d-flex flex-column trial-timeline">
 						<p className="d-flex mb-2 trial-info">
 							Need help with license calculations?
-							<span className="d-flex info-button align-items-center">
+							<span className="align-items-center d-flex info-button">
 								More Info
 								<ClayIcon symbol="question-circle-full" />
 							</span>

@@ -12,8 +12,8 @@ import {formatDistance} from 'date-fns';
 
 import {DashboardEmptyTable} from '../../../../../components/DashboardTable/DashboardEmptyTable';
 import Table from '../../../../../components/Table/Table';
-import i18n from '../../../../../i18n';
 import {ORDER_STATUS} from '../../../../../enums/Order';
+import i18n from '../../../../../i18n';
 
 type TrialTableProps = {
 	items: Order[];
@@ -174,8 +174,7 @@ const TrialTable: React.FC<TrialTableProps> = ({items}) => {
 								>
 									<DropDown.ItemList items={itemsDropdown}>
 										{(dropDownItem: unknown) => {
-											const item =
-												dropDownItem as DropDownItems;
+											const item = dropDownItem as DropDownItems;
 
 											return (
 												<DropDown.Item

@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.vulcan.jackson.databind.ser.VulcanPropertyFilter;
-import com.liferay.portal.vulcan.serializer.UnsafeSupplierSerializer;
+import com.liferay.portal.vulcan.jaxrs.serializer.UnsafeSupplierSerializer;
 
 import java.util.HashSet;
 import java.util.List;

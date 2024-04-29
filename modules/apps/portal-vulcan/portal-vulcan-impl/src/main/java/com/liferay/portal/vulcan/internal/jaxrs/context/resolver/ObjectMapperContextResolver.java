@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.vulcan.internal.jaxrs.serializer.JSONArrayStdSerializer;
 import com.liferay.portal.vulcan.internal.jaxrs.serializer.JSONObjectStdSerializer;
-import com.liferay.portal.vulcan.serializer.UnsafeSupplierSerializer;
+import com.liferay.portal.vulcan.jaxrs.serializer.UnsafeSupplierSerializer;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;

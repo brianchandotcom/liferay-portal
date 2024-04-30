@@ -49,7 +49,8 @@ public class LayoutPageTemplateCollectionStagedModelRepository
 
 		return _layoutPageTemplateCollectionLocalService.
 			addLayoutPageTemplateCollection(
-				null, userId, serviceContext.getScopeGroupId(),
+				layoutPageTemplateCollection.getExternalReferenceCode(), userId,
+				serviceContext.getScopeGroupId(),
 				layoutPageTemplateCollection.
 					getParentLayoutPageTemplateCollectionId(),
 				layoutPageTemplateCollection.getName(),

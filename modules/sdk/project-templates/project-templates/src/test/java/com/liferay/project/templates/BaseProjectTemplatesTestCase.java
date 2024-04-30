@@ -1140,6 +1140,9 @@ public interface BaseProjectTemplatesTestCase {
 		else if (liferayVersion.startsWith("7.4")) {
 			return "portal-7.4-ga56";
 		}
+		else if (liferayVersion.startsWith("20")) {
+			return "dxp-2024.q1.1";
+		}
 
 		return null;
 	}
@@ -1426,7 +1429,9 @@ public interface BaseProjectTemplatesTestCase {
 			testExists(gradleProjectDir, "src/main/" + resourceFileName);
 		}
 
-		if (VersionUtil.getMinorVersion(liferayVersion) < 3) {
+		if ((VersionUtil.getMinorVersion(liferayVersion) < 3) ||
+			(VersionUtil.getMajorVersion(liferayVersion) > 7)) {
+
 			testContains(
 				gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_DXP_API);
 		}
@@ -1950,7 +1955,9 @@ public interface BaseProjectTemplatesTestCase {
 				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
 				"liferay-portlet-app_7_3_0.dtd");
 		}
-		else if (liferayVersion.startsWith("7.4")) {
+		else if (liferayVersion.startsWith("7.4") ||
+				 liferayVersion.startsWith("20")) {
+
 			testContains(
 				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
 				"liferay-display_7_4_0.dtd");

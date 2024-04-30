@@ -6,13 +6,16 @@
 package com.liferay.expando.web.internal.portlet.action;
 
 import com.liferay.expando.constants.ExpandoPortletKeys;
+import com.liferay.expando.web.internal.display.context.ExpandoDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -31,7 +34,16 @@ public class ViewAttributesMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		renderRequest.setAttribute(
+			ExpandoDisplayContext.class.getName(),
+			new ExpandoDisplayContext(
+				_portal.getHttpServletRequest(renderRequest), renderRequest,
+				renderResponse));
+
 		return "/view_attributes.jsp";
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

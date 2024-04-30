@@ -7,8 +7,11 @@ package com.liferay.portal.search.elasticsearch7.internal.query;
 
 import com.liferay.portal.search.query.TermsQuery;
 
+import java.util.ArrayList;
+
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.TermsQueryBuilder;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -20,8 +23,35 @@ public class TermsQueryTranslatorImpl implements TermsQueryTranslator {
 
 	@Override
 	public QueryBuilder translate(TermsQuery termsQuery) {
-		return QueryBuilders.termsQuery(
-			termsQuery.getField(), termsQuery.getValues());
+		String field = termsQuery.getField();
+		int maxTermsCount = 65536;
+		String[] terms = termsQuery.getValues();
+
+		if (terms.length <= maxTermsCount) {
+			return new TermsQueryBuilder(field, terms);
+		}
+
+		ArrayList<String> termsList = new ArrayList<>();
+		BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
+
+		for (String term : terms) {
+			termsList.add(term);
+
+			if (termsList.size() == maxTermsCount) {
+				boolQueryBuilder.should(
+					new TermsQueryBuilder(
+						field, termsList.toArray(new String[0])));
+
+				termsList.clear();
+			}
+		}
+
+		if (!termsList.isEmpty()) {
+			boolQueryBuilder.should(
+				new TermsQueryBuilder(field, termsList.toArray(new String[0])));
+		}
+
+		return boolQueryBuilder;
 	}
 
 }

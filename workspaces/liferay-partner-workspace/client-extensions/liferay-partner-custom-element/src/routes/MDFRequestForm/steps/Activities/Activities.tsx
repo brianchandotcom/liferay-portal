@@ -132,6 +132,20 @@ const Activities = ({
 
 	const onContinueForm = () => {
 		if (currentActivityIndex === undefined) {
+			for (let index = 0; index < values.activities.length; index++) {
+				setFieldValue(
+					`activities[${index}].convertedTotalCostOfExpense`,
+					values.activities[index].totalCostOfExpense /
+						values.currencyExchangeRate
+				);
+
+				setFieldValue(
+					`activities[${index}].convertedMDFRequestAmount`,
+					values.activities[index].mdfRequestAmount /
+						values.currencyExchangeRate
+				);
+			}
+
 			onContinue?.(formikHelpers, StepType.REVIEW);
 
 			return;

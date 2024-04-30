@@ -41,7 +41,6 @@ const BudgetBreakdownSection = ({
 	budgets = [],
 	claimPercent,
 	currency,
-	currencyExchangeRate,
 	currentActivityIndex,
 	expenseEntries,
 	isButtonClicked,
@@ -70,26 +69,11 @@ const BudgetBreakdownSection = ({
 				);
 
 				setFieldValue(
-					`activities[${currentActivityIndex}].convertedTotalCostOfExpense`,
-					amountValue / currencyExchangeRate
-				);
-
-				setFieldValue(
 					`activities[${currentActivityIndex}].mdfRequestAmount`,
 					amountValue * claimPercent
 				);
-
-				setFieldValue(
-					`activities[${currentActivityIndex}].convertedMDFRequestAmount`,
-					(amountValue * claimPercent) / currencyExchangeRate
-				);
 			},
-			[
-				claimPercent,
-				currencyExchangeRate,
-				currentActivityIndex,
-				setFieldValue,
-			]
+			[claimPercent, currentActivityIndex, setFieldValue]
 		)
 	);
 

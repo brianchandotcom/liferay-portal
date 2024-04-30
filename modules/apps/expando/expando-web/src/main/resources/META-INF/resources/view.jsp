@@ -43,7 +43,7 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 			/>
 
 			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcPath" value="/view_attributes.jsp" />
+				<portlet:param name="mvcRenderCommandName" value="/expando/view_attributes" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="modelResource" value="<%= customAttributesDisplay.getClassName() %>" />
 			</portlet:renderURL>

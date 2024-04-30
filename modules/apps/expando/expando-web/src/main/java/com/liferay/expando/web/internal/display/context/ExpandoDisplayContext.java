@@ -83,9 +83,9 @@ public class ExpandoDisplayContext {
 		searchContainer.setDelta(attributeNames.size());
 
 		searchContainer.setId("customFields");
+		searchContainer.setResultsAndTotal(attributeNames);
 		searchContainer.setRowChecker(
 			new CustomFieldChecker(_renderRequest, _renderResponse));
-		searchContainer.setResultsAndTotal(attributeNames);
 
 		_searchContainer = searchContainer;
 

@@ -19,7 +19,7 @@ CustomAttributesDisplay customAttributesDisplay = (CustomAttributesDisplay)row.g
 
 <c:if test="<%= permissionChecker.isCompanyAdmin() %>">
 	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcPath" value="/view_attributes.jsp" />
+		<portlet:param name="mvcRenderCommandName" value="/expando/view_attributes" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="modelResource" value="<%= customAttributesDisplay.getClassName() %>" />
 	</portlet:renderURL>

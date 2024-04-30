@@ -61,8 +61,8 @@ if (expandoColumn != null) {
 
 PortletURL portletURL = PortletURLBuilder.createRenderURL(
 	renderResponse
-).setMVCPath(
-	"/view_attributes.jsp"
+).setMVCRenderCommandName(
+	"/expando/view_attributes"
 ).setRedirect(
 	redirect
 ).setParameter(

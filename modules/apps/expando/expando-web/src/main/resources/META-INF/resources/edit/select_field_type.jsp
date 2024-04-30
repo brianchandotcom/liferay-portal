@@ -34,8 +34,8 @@ PortalUtil.addPortletBreadcrumbEntry(
 	request, LanguageUtil.get(request, "view-attributes"),
 	PortletURLBuilder.createRenderURL(
 		renderResponse
-	).setMVCPath(
-		"/view_attributes.jsp"
+	).setMVCRenderCommandName(
+		"/expando/view_attributes"
 	).setRedirect(
 		redirect
 	).setParameter(

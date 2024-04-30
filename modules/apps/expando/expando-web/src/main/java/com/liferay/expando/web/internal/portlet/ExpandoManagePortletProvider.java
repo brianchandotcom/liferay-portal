@@ -37,8 +37,8 @@ public class ExpandoManagePortletProvider extends BasePortletProvider {
 
 		return PortletURLBuilder.create(
 			super.getPortletURL(httpServletRequest)
-		).setMVCPath(
-			"/view_attributes.jsp"
+		).setMVCRenderCommandName(
+			"/expando/view_attributes"
 		).buildPortletURL();
 	}
 

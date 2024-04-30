@@ -550,65 +550,6 @@ public class JSONWebServiceActionsManagerImpl
 		return service.getClass();
 	}
 
-	private void _onJSONWebServiceBean(
-			String contextName, String contextPath, Object serviceBean,
-			JSONWebService jsonWebService)
-		throws Exception {
-
-		JSONWebServiceMode jsonWebServiceMode = JSONWebServiceMode.MANUAL;
-
-		if (jsonWebService != null) {
-			jsonWebServiceMode = jsonWebService.mode();
-		}
-
-		Method[] serviceMethods = JSONWebServiceScannerUtil.scan(serviceBean);
-
-		for (Method method : serviceMethods) {
-			JSONWebService methodJSONWebService = method.getAnnotation(
-				JSONWebService.class);
-
-			if (methodJSONWebService == null) {
-				if (!jsonWebServiceMode.equals(JSONWebServiceMode.AUTO)) {
-					continue;
-				}
-			}
-			else {
-				JSONWebServiceMode methodJSONWebServiceMode =
-					methodJSONWebService.mode();
-
-				if (methodJSONWebServiceMode.equals(
-						JSONWebServiceMode.IGNORE)) {
-
-					continue;
-				}
-			}
-
-			String httpMethod =
-				JSONWebServiceMappingResolverUtil.resolveHttpMethod(method);
-
-			if (!JSONWebServiceNamingUtil.isValidHttpMethod(httpMethod)) {
-				continue;
-			}
-
-			Class<?> serviceBeanClass = method.getDeclaringClass();
-
-			String path = JSONWebServiceMappingResolverUtil.resolvePath(
-				serviceBeanClass, method);
-
-			if (!JSONWebServiceNamingUtil.isIncludedPath(
-					contextName, contextPath, path)) {
-
-				continue;
-			}
-
-			if (JSONWebServiceNamingUtil.isIncludedMethod(method)) {
-				registerJSONWebServiceAction(
-					contextName, contextPath, serviceBean, serviceBeanClass,
-					method, path, httpMethod);
-			}
-		}
-	}
-
 	private void _processBean(
 		String contextName, String contextPath, Object bean) {
 
@@ -624,8 +565,54 @@ public class JSONWebServiceActionsManagerImpl
 		}
 
 		try {
-			_onJSONWebServiceBean(
-				contextName, contextPath, bean, jsonWebService);
+			JSONWebServiceMode jsonWebServiceMode = jsonWebService.mode();
+
+			Method[] serviceMethods = JSONWebServiceScannerUtil.scan(bean);
+
+			for (Method method : serviceMethods) {
+				JSONWebService methodJSONWebService = method.getAnnotation(
+					JSONWebService.class);
+
+				if (methodJSONWebService == null) {
+					if (!jsonWebServiceMode.equals(JSONWebServiceMode.AUTO)) {
+						continue;
+					}
+				}
+				else {
+					JSONWebServiceMode methodJSONWebServiceMode =
+						methodJSONWebService.mode();
+
+					if (methodJSONWebServiceMode.equals(
+							JSONWebServiceMode.IGNORE)) {
+
+						continue;
+					}
+				}
+
+				String httpMethod =
+					JSONWebServiceMappingResolverUtil.resolveHttpMethod(method);
+
+				if (!JSONWebServiceNamingUtil.isValidHttpMethod(httpMethod)) {
+					continue;
+				}
+
+				Class<?> serviceBeanClass = method.getDeclaringClass();
+
+				String path = JSONWebServiceMappingResolverUtil.resolvePath(
+					serviceBeanClass, method);
+
+				if (!JSONWebServiceNamingUtil.isIncludedPath(
+						contextName, contextPath, path)) {
+
+					continue;
+				}
+
+				if (JSONWebServiceNamingUtil.isIncludedMethod(method)) {
+					registerJSONWebServiceAction(
+						contextName, contextPath, bean, serviceBeanClass,
+						method, path, httpMethod);
+				}
+			}
 		}
 		catch (Exception exception) {
 			_log.error(exception);

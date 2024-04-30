@@ -39,6 +39,14 @@ public class DatabaseUtil {
 		return liferayDatabase;
 	}
 
+	public static boolean isPostgreSQL(String jdbcURL) {
+		if (jdbcURL.indexOf("postgresql") != -1) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static String replaceSchemaName(String jdbcURL, String schemaName) {
 		if (schemaName == null) {
 			return jdbcURL;

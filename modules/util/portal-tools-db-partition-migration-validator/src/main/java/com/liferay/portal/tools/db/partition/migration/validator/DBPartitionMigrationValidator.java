@@ -109,15 +109,22 @@ public class DBPartitionMigrationValidator {
 			commandLine.getOptionValue("schema-name"));
 
 		try {
+			if (DatabaseUtil.isPostgreSQL(jdbcURL)) {
+				Class.forName("org.postgresql.Driver");
+			}
+			else {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			}
+
 			_connection = DriverManager.getConnection(
 				jdbcURL, commandLine.getOptionValue("user"),
 				commandLine.getOptionValue("password"));
 		}
-		catch (SQLException sqlException) {
+		catch (Exception exception) {
 			System.err.println(
 				"Unable to connect to database with the specified parameters:");
 
-			sqlException.printStackTrace();
+			exception.printStackTrace();
 
 			_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
 		}

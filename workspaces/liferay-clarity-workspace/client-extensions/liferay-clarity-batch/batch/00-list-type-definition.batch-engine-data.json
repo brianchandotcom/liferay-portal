@@ -210,19 +210,19 @@
 					}
 				},
 				{
-					"externalReferenceCode": "REJECTED",
-					"key": "rejected",
-					"name": "Rejected",
-					"name_i18n": {
-						"en-US": "Rejected"
-					}
-				},
-				{
 					"externalReferenceCode": "HOLD_FOR_FUTURE_CONSIDERATION",
 					"key": "holdForFutureConsideration",
 					"name": "Hold for Future Consideration",
 					"name_i18n": {
 						"en-US": "Hold for Future Consideration"
+					}
+				},
+				{
+					"externalReferenceCode": "REJECTED",
+					"key": "rejected",
+					"name": "Rejected",
+					"name_i18n": {
+						"en-US": "Rejected"
 					}
 				},
 				{
@@ -243,7 +243,15 @@
 			"externalReferenceCode": "D4B8_DISTRIBUTION_CHANNELS",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "CHANNEL_OTHER_RETAILERS",
+					"externalReferenceCode": "E_COMMERCE",
+					"key": "eCommerce",
+					"name": "E-Commerce",
+					"name_i18n": {
+						"en-US": "E-Commerce"
+					}
+				},
+				{
+					"externalReferenceCode": "OTHER_RETAILERS",
 					"key": "otherRetailers",
 					"name": "Distribute to Other Retailers",
 					"name_i18n": {
@@ -251,19 +259,11 @@
 					}
 				},
 				{
-					"externalReferenceCode": "CHANNEL_OWN_RETAIL",
+					"externalReferenceCode": "OWN_RETAIL",
 					"key": "ownRetail",
 					"name": "Sell Through Own Retail",
 					"name_i18n": {
 						"en-US": "Sell Through Own Retail"
-					}
-				},
-				{
-					"externalReferenceCode": "CHANNEL_E_COMMERCE",
-					"key": "eCommerce",
-					"name": "E-Commerce",
-					"name_i18n": {
-						"en-US": "E-Commerce"
 					}
 				}
 			],
@@ -276,47 +276,7 @@
 			"externalReferenceCode": "D4B8_DISTRIBUTION_REGIONS",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "REGION_LATIN_AMERICA",
-					"key": "latinAmerica",
-					"name": "Latin America",
-					"name_i18n": {
-						"en-US": "Latin America"
-					}
-				},
-				{
-					"externalReferenceCode": "REGION_CARIBBEAN",
-					"key": "caribbean",
-					"name": "Caribbean",
-					"name_i18n": {
-						"en-US": "Caribbean"
-					}
-				},
-				{
-					"externalReferenceCode": "REGION_EASTERN_EUROPE",
-					"key": "easternEurope",
-					"name": "Eastern Europe",
-					"name_i18n": {
-						"en-US": "Eastern Europe"
-					}
-				},
-				{
-					"externalReferenceCode": "REGION_WESTERN_EUROPE",
-					"key": "westernEurope",
-					"name": "Western Europe",
-					"name_i18n": {
-						"en-US": "Western Europe"
-					}
-				},
-				{
-					"externalReferenceCode": "REGION_MIDDLE_EAST",
-					"key": "middleEast",
-					"name": "Middle East",
-					"name_i18n": {
-						"en-US": "Middle East"
-					}
-				},
-				{
-					"externalReferenceCode": "REGION_AFRICA",
+					"externalReferenceCode": "AFRICA",
 					"key": "africa",
 					"name": "Africa",
 					"name_i18n": {
@@ -324,15 +284,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "REGION_CENTRAL_ASIA",
-					"key": "centralAsia",
-					"name": "Central Asia",
-					"name_i18n": {
-						"en-US": "Central Asia"
-					}
-				},
-				{
-					"externalReferenceCode": "REGION_ASIA_PACIFIC_RIM",
+					"externalReferenceCode": "ASIA_PACIFIC_RIM",
 					"key": "asiaPacificRim",
 					"name": "Asia & Pacific Rim",
 					"name_i18n": {
@@ -340,7 +292,31 @@
 					}
 				},
 				{
-					"externalReferenceCode": "REGION_INDIA",
+					"externalReferenceCode": "CARIBBEAN",
+					"key": "caribbean",
+					"name": "Caribbean",
+					"name_i18n": {
+						"en-US": "Caribbean"
+					}
+				},
+				{
+					"externalReferenceCode": "CENTRAL_ASIA",
+					"key": "centralAsia",
+					"name": "Central Asia",
+					"name_i18n": {
+						"en-US": "Central Asia"
+					}
+				},
+				{
+					"externalReferenceCode": "EASTERN_EUROPE",
+					"key": "easternEurope",
+					"name": "Eastern Europe",
+					"name_i18n": {
+						"en-US": "Eastern Europe"
+					}
+				},
+				{
+					"externalReferenceCode": "INDIA",
 					"key": "india",
 					"name": "India",
 					"name_i18n": {
@@ -348,11 +324,35 @@
 					}
 				},
 				{
-					"externalReferenceCode": "REGION_NORTH_AMERICA",
+					"externalReferenceCode": "LATIN_AMERICA",
+					"key": "latinAmerica",
+					"name": "Latin America",
+					"name_i18n": {
+						"en-US": "Latin America"
+					}
+				},
+				{
+					"externalReferenceCode": "MIDDLE_EAST",
+					"key": "middleEast",
+					"name": "Middle East",
+					"name_i18n": {
+						"en-US": "Middle East"
+					}
+				},
+				{
+					"externalReferenceCode": "NORTH_AMERICA",
 					"key": "northAmerica",
 					"name": "North America",
 					"name_i18n": {
 						"en-US": "North America"
+					}
+				},
+				{
+					"externalReferenceCode": "WESTERN_EUROPE",
+					"key": "westernEurope",
+					"name": "Western Europe",
+					"name_i18n": {
+						"en-US": "Western Europe"
 					}
 				}
 			],
@@ -365,23 +365,7 @@
 			"externalReferenceCode": "D4B8_ORDER_TYPES",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "ORDER_TYPE_WHOLESALE",
-					"key": "wholesale",
-					"name": "Wholesale",
-					"name_i18n": {
-						"en-US": "Wholesale"
-					}
-				},
-				{
-					"externalReferenceCode": "ORDER_TYPE_PRIVATE_LABELING",
-					"key": "privateLabeling",
-					"name": "Private Labeling",
-					"name_i18n": {
-						"en-US": "Private Labeling"
-					}
-				},
-				{
-					"externalReferenceCode": "ORDER_TYPE_BULK_FORMATS",
+					"externalReferenceCode": "BULK_FORMATS",
 					"key": "bulkFormats",
 					"name": "Bulk Formats",
 					"name_i18n": {
@@ -389,7 +373,23 @@
 					}
 				},
 				{
-					"externalReferenceCode": "ORDER_TYPE_NOT_SURE",
+					"externalReferenceCode": "PRIVATE_LABELING",
+					"key": "privateLabeling",
+					"name": "Private Labeling",
+					"name_i18n": {
+						"en-US": "Private Labeling"
+					}
+				},
+				{
+					"externalReferenceCode": "WHOLESALE",
+					"key": "wholesale",
+					"name": "Wholesale",
+					"name_i18n": {
+						"en-US": "Wholesale"
+					}
+				},
+				{
+					"externalReferenceCode": "NOT_SURE",
 					"key": "notSure",
 					"name": "Not Sure",
 					"name_i18n": {
@@ -406,19 +406,19 @@
 			"externalReferenceCode": "D4B8_PRODUCT_LABELS",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "LABEL_STANDARD_US",
-					"key": "standardUS",
-					"name": "Standard US",
-					"name_i18n": {
-						"en-US": "Standard US"
-					}
-				},
-				{
-					"externalReferenceCode": "LABEL_LOCALIZED",
+					"externalReferenceCode": "LOCALIZED",
 					"key": "localized",
 					"name": "Localized",
 					"name_i18n": {
 						"en-US": "Localized"
+					}
+				},
+				{
+					"externalReferenceCode": "STANDARD_US",
+					"key": "standardUS",
+					"name": "Standard US",
+					"name_i18n": {
+						"en-US": "Standard US"
 					}
 				}
 			],
@@ -438,39 +438,7 @@
 			"externalReferenceCode": "D4B8_RECOMMENDATIONS",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "REC_REQUEST_ADDITIONAL_DOCUMENTS",
-					"key": "requestAdditionalDocuments",
-					"name": "Request Additional Documents",
-					"name_i18n": {
-						"en-US": "Request Additional Documents"
-					}
-				},
-				{
-					"externalReferenceCode": "REC_SCHEDULE_FOLLOWUP_INTERVIEW",
-					"key": "scheduleFollowupInterview",
-					"name": "Schedule Follow-up Interview",
-					"name_i18n": {
-						"en-US": "Schedule Follow-up Interview"
-					}
-				},
-				{
-					"externalReferenceCode": "REC_PROPOSE_APPROVAL",
-					"key": "proposeApproval",
-					"name": "Propose Approval",
-					"name_i18n": {
-						"en-US": "Propose Approval"
-					}
-				},
-				{
-					"externalReferenceCode": "REC_PROPOSE_CONDITIONAL_APPROVAL",
-					"key": "proposeConditionalApproval",
-					"name": "Propose Conditional Approval",
-					"name_i18n": {
-						"en-US": "Propose Conditional Approval"
-					}
-				},
-				{
-					"externalReferenceCode": "REC_DECLINE_APPLICATION",
+					"externalReferenceCode": "DECLINE_APPLICATION",
 					"key": "declineApplication",
 					"name": "Decline Application",
 					"name_i18n": {
@@ -478,7 +446,39 @@
 					}
 				},
 				{
-					"externalReferenceCode": "REC_SEEK_LEGAL_REVIEW",
+					"externalReferenceCode": "PROPOSE_APPROVAL",
+					"key": "proposeApproval",
+					"name": "Propose Approval",
+					"name_i18n": {
+						"en-US": "Propose Approval"
+					}
+				},
+				{
+					"externalReferenceCode": "PROPOSE_CONDITIONAL_APPROVAL",
+					"key": "proposeConditionalApproval",
+					"name": "Propose Conditional Approval",
+					"name_i18n": {
+						"en-US": "Propose Conditional Approval"
+					}
+				},
+				{
+					"externalReferenceCode": "REQUEST_ADDITIONAL_DOCUMENTS",
+					"key": "requestAdditionalDocuments",
+					"name": "Request Additional Documents",
+					"name_i18n": {
+						"en-US": "Request Additional Documents"
+					}
+				},
+				{
+					"externalReferenceCode": "SCHEDULE_FOLLOWUP_INTERVIEW",
+					"key": "scheduleFollowupInterview",
+					"name": "Schedule Follow-up Interview",
+					"name_i18n": {
+						"en-US": "Schedule Follow-up Interview"
+					}
+				},
+				{
+					"externalReferenceCode": "SEEK_LEGAL_REVIEW",
 					"key": "seekLegalReview",
 					"name": "Seek Legal Review",
 					"name_i18n": {

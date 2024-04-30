@@ -77,13 +77,21 @@ describe('util', () => {
 
 	describe('getSafeTouchpoint', () => {
 		it.each`
-			value                                       | expected
-			${'http://localhost:7400/日本語ページ'}     | ${'http://localhost:7400/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8'}
-			${'http://liferay.com/موقعي العربي الرائع'} | ${'http://liferay.com/%D9%85%D9%88%D9%82%D8%B9%D9%8A%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%20%D8%A7%D9%84%D8%B1%D8%A7%D8%A6%D8%B9'}
-			${'http://liferay.com/home'}                | ${'http://liferay.com/home'}
-			${'Any'}                                    | ${null}
-			${''}                                       | ${null}
-			${undefined}                                | ${null}
+			value                                                        | expected
+			${'http://localhost:7400/日本語ページ'}                      | ${'http://localhost:7400/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8'}
+			${'http://liferay.com/موقعي العربي الرائع'}                  | ${'http://liferay.com/%D9%85%D9%88%D9%82%D8%B9%D9%8A%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%20%D8%A7%D9%84%D8%B1%D8%A7%D8%A6%D8%B9'}
+			${'http://liferay.com/home'}                                 | ${'http://liferay.com/home'}
+			${'http://liferay.com/?js_fast_load=0'}                      | ${'http://liferay.com/?js_fast_load=0'}
+			${'http://liferay.com/home?js_fast_load=0'}                  | ${'http://liferay.com/home?js_fast_load=0'}
+			${'http://liferay.com/my home page?js_fast_load=0'}          | ${'http://liferay.com/my%20home%20page?js_fast_load=0'}
+			${'http://liferay.com/home?js_fast_load=0#section'}          | ${'http://liferay.com/home?js_fast_load=0#section'}
+			${'http://liferay.com/home?日本語ページ=0#section'}          | ${'http://liferay.com/home?%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8=0#section'}
+			${'http://liferay.com/home?js_fast_load=0&test=123#section'} | ${'http://liferay.com/home?js_fast_load=0&test=123#section'}
+			${'http://liferay.com'}                                      | ${'http://liferay.com'}
+			${'it-is-a-custom-touchpoint'}                               | ${'it-is-a-custom-touchpoint'}
+			${'Any'}                                                     | ${null}
+			${''}                                                        | ${null}
+			${undefined}                                                 | ${null}
 		`(
 			'should return $expected if the value is $value',
 			({expected, value}) => {

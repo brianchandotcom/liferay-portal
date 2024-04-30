@@ -8,6 +8,8 @@ package com.liferay.login.authentication.facebook.connect.web.internal.servlet.t
 import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -53,8 +55,11 @@ public class FacebookConnectNavigationPreJSPDynamicInclude
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		Layout layout = themeDisplay.getLayout();
+
 		if (strutsAction.startsWith("/login/facebook_connect") ||
-			!_facebookConnect.isEnabled(themeDisplay.getCompanyId())) {
+			!_facebookConnect.isEnabled(themeDisplay.getCompanyId()) ||
+			LayoutConstants.TYPE_UTILITY.equals(layout.getType())) {
 
 			return;
 		}

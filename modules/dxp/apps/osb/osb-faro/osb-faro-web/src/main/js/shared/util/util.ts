@@ -94,8 +94,9 @@ export const getSafeTouchpoint = (touchpoint: string) => {
 
 	try {
 		const url = new URL(decodeURIComponent(touchpoint));
+		const remainingUrl = url.href.replace(url.origin, '');
 
-		return `${url.origin}${url.pathname}${url.search}${url.hash}`;
+		return remainingUrl === '/' ? url.origin : url.origin + remainingUrl;
 	} catch (e) {
 		return touchpoint !== 'Any' ? decodeURIComponent(touchpoint) : null;
 	}

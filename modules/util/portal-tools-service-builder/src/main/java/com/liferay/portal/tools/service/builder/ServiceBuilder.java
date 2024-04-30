@@ -4142,8 +4142,10 @@ public class ServiceBuilder {
 				continue;
 			}
 
+			String tableName = entity.getTable();
+
 			List<IndexMetadata> indexMetadatas = indexMetadatasMap.get(
-				entity.getTable());
+				tableName);
 
 			if ((indexMetadatas != null) && _optimizeDBIndexes) {
 				indexMetadatas.clear();
@@ -4201,12 +4203,18 @@ public class ServiceBuilder {
 
 				IndexMetadata indexMetadata =
 					IndexMetadataFactoryUtil.createIndexMetadata(
-						unique, entity.getTable(),
-						dbNames.toArray(new String[0]));
+						unique, tableName, dbNames.toArray(new String[0]));
 
 				_addIndexMetadata(
 					indexMetadatasMap, indexMetadata.getTableName(),
 					entity.getPKEntityColumnDBNames(), indexMetadata);
+			}
+
+			indexMetadatas = indexMetadatasMap.get(entity.getTable());
+
+			if (_optimizeDBIndexes && (indexMetadatas != null)) {
+				indexMetadatasMap.put(
+					tableName, _optimizeForBTreeIndexes(indexMetadatas));
 			}
 		}
 
@@ -4215,16 +4223,14 @@ public class ServiceBuilder {
 
 			EntityMapping entityMapping = entry.getValue();
 
+			indexMetadatasMap.remove(entityMapping.getTableName());
+
 			_getCreateMappingTableIndex(entityMapping, indexMetadatasMap);
 		}
 
 		StringBundler sb = new StringBundler();
 
 		for (List<IndexMetadata> indexMetadatas : indexMetadatasMap.values()) {
-			if (_optimizeDBIndexes) {
-				indexMetadatas = _optimizeForBTreeIndexes(indexMetadatas);
-			}
-
 			Collections.sort(indexMetadatas);
 
 			for (IndexMetadata indexMetadata : indexMetadatas) {
@@ -6128,39 +6134,33 @@ public class ServiceBuilder {
 	private List<IndexMetadata> _optimizeForBTreeIndexes(
 		List<IndexMetadata> indexMetadatas) {
 
-		while (true) {
-			Map<String, IntegerWrapper> frequencyMap = new HashMap<>();
+		Map<String, IntegerWrapper> frequencyMap = new HashMap<>();
 
-			for (IndexMetadata indexMetadata : indexMetadatas) {
-				for (String columnName : indexMetadata.getColumnNames()) {
-					IntegerWrapper count = frequencyMap.computeIfAbsent(
-						columnName, key -> new IntegerWrapper());
+		for (IndexMetadata indexMetadata : indexMetadatas) {
+			for (String columnName : indexMetadata.getColumnNames()) {
+				IntegerWrapper count = frequencyMap.computeIfAbsent(
+					columnName, key -> new IntegerWrapper());
 
-					if (columnName.endsWith("Date")) {
-						count.setValue(0);
-					}
-					else {
-						count.increment();
-					}
+				if (columnName.endsWith("Date")) {
+					count.setValue(0);
+				}
+				else {
+					count.increment();
 				}
 			}
-
-			for (IndexMetadata indexMetadata : indexMetadatas) {
-				indexMetadata.optimizeColumns(frequencyMap);
-			}
-
-			List<IndexMetadata> optimizedIndexMetadatas = new ArrayList<>();
-
-			for (IndexMetadata indexMetadata : indexMetadatas) {
-				_addIndexMetadata(optimizedIndexMetadatas, indexMetadata);
-			}
-
-			if (optimizedIndexMetadatas.size() == indexMetadatas.size()) {
-				return optimizedIndexMetadatas;
-			}
-
-			indexMetadatas = optimizedIndexMetadatas;
 		}
+
+		for (IndexMetadata indexMetadata : indexMetadatas) {
+			indexMetadata.optimizeColumns(frequencyMap);
+		}
+
+		List<IndexMetadata> optimizedIndexMetadatas = new ArrayList<>();
+
+		for (IndexMetadata indexMetadata : indexMetadatas) {
+			_addIndexMetadata(optimizedIndexMetadatas, indexMetadata);
+		}
+
+		return optimizedIndexMetadatas;
 	}
 
 	private Entity _parseEntity(Element entityElement) throws Exception {

@@ -66,6 +66,8 @@ dependencies {
 	compileInclude project(":apps:layout:layout-page-template-api")
 	compileInclude project(":apps:layout:layout-page-template-service")
 	compileInclude project(":apps:layout:layout-service")
+	compileInclude project(":apps:list-type:list-type-api")
+	compileInclude project(":apps:list-type:list-type-service")
 	compileInclude project(":apps:login:login-web-api")
 	compileInclude project(":apps:message-boards:message-boards-api")
 	compileInclude project(":apps:message-boards:message-boards-service")

@@ -210,9 +210,9 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
-				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				serviceContext);
+				null, TestPropsValues.getUserId(),
+				serviceContext.getScopeGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext);
 
 		return _fragmentEntryLocalService.addFragmentEntry(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),

@@ -131,22 +131,26 @@ function deploy_osgi_configs {
 }
 
 function deploy_osgi_modules {
-	if [[ -n ${1} ]]
+	local osgi_modules_list_file=${1}
+
+	if [[ -n $(cat ${osgi_modules_list_file}) ]]
 	then
-		mkdir -p ${LIFERAY_HOME}/deploy
+		echo "Deploying OSGi modules in ${osgi_modules_list_file}"
 
-		for osgi_module_name in ${@}
+		for osgi_module_name in $(cat ${osgi_modules_list_file})
 		do
-			uniqueModules=()
-
-			if [[ ${osgi_module_name} == ${1} ]]
-			then
-				echo "Duplicate OSGi modules found: ${osgi_module_name}"
-			else
-				uniqueModules+=(${osgi_module_name})
-			fi
-
 			local osgi_module_dir=$(find ${_PORTAL_PROJECT_DIR}/modules -type d -name "${osgi_module_name}" | grep -v .releng | grep -v .npmscripts | grep -v node_modules)
+
+			if [[ $(echo ${osgi_module_dir} | wc -w | grep -o -E '[0-9]+') > 1 ]]
+			then
+				echo "Duplicate OSGi modules found for ${osgi_module_name}:"
+
+				printf "%s\n" ${osgi_module_dir}
+
+				echo "Please replace \"${osgi_module_name}\" in ${osgi_modules_list_file} with a partial file path"
+
+				osgi_module_dir=$(echo ${osgi_module_dir} | awk '{print $1}')
+			fi
 
 			if [[ -f ${osgi_module_dir}/build.gradle ]]
 			then
@@ -199,7 +203,7 @@ function deploy_parent_project_osgi_modules {
 	do
 		if [[ -f ${parent_playwright_project_dir}/env/osgi-modules.list ]]
 		then
-			deploy_osgi_modules $(cat ${parent_playwright_project_dir}/env/osgi-modules.list)
+			deploy_osgi_modules ${parent_playwright_project_dir}/env/osgi-modules.list
 		fi
 	done
 }
@@ -226,7 +230,7 @@ function deploy_project_osgi_modules {
 
 	if [[ -f ${playwright_project_dir}/env/osgi-modules.list ]]
 	then
-		deploy_osgi_modules $(cat ${playwright_project_dir}/env/osgi-modules.list)
+		deploy_osgi_modules ${playwright_project_dir}/env/osgi-modules.list
 	fi
 }
 

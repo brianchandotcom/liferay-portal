@@ -109,6 +109,10 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		return _builder._readOnly;
 	}
 
+	public boolean isRepeatable() {
+		return _builder._repeatable;
+	}
+
 	public boolean isRequired() {
 		return _builder._required;
 	}
@@ -145,6 +149,7 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		private String _name;
 		private String _namespace;
 		private boolean _readOnly;
+		private boolean _repeatable;
 		private boolean _required;
 		private String _uniqueId;
 
@@ -197,6 +202,12 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 
 		public FinalStep<T> readOnly(boolean readOnly) {
 			_builder._readOnly = readOnly;
+
+			return this;
+		}
+
+		public FinalStep<T> repeatable(boolean repeatable) {
+			_builder._repeatable = repeatable;
 
 			return this;
 		}

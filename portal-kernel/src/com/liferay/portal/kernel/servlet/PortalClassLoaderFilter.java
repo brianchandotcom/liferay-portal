@@ -76,17 +76,17 @@ public class PortalClassLoaderFilter implements LiferayFilter {
 	public void init(FilterConfig filterConfig) throws ServletException {
 		_filterConfig = filterConfig;
 
-		String filterClass = _filterConfig.getInitParameter("filter-class");
+		String filterClassName = _filterConfig.getInitParameter("filter-class");
 
-		if (filterClass.startsWith("com.liferay.filters.")) {
-			filterClass = StringUtil.replace(
-				filterClass, "com.liferay.filters.",
+		if (filterClassName.startsWith("com.liferay.filters.")) {
+			filterClassName = StringUtil.replace(
+				filterClassName, "com.liferay.filters.",
 				"com.liferay.portal.servlet.filters.");
 		}
 
 		try {
 			_filter = (Filter)InstanceFactory.newInstance(
-				PortalClassLoaderUtil.getClassLoader(), filterClass);
+				PortalClassLoaderUtil.getClassLoader(), filterClassName);
 		}
 		catch (Exception exception) {
 			throw new ServletException(exception);

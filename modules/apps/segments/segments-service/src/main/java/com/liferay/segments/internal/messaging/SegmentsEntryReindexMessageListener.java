@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.search.spi.reindexer.BulkReindexer;
 import com.liferay.segments.internal.constants.SegmentsDestinationNames;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRelTable;
@@ -159,16 +160,19 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 			long companyId, long segmentsEntryId, Set<Long> newClassPKs)
 		throws PortalException {
 
-		Set<Long> classPKs = SetUtil.symmetricDifference(
-			_getOldIndexClassPKs(companyId, segmentsEntryId), newClassPKs);
-
-		for (long classPK : classPKs) {
-			_indexer.reindex(User.class.getName(), classPK);
-		}
+		_bulkReindexer.reindex(
+			companyId,
+			SetUtil.symmetricDifference(
+				_getOldIndexClassPKs(companyId, segmentsEntryId), newClassPKs));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsEntryReindexMessageListener.class);
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private BulkReindexer _bulkReindexer;
 
 	@Reference(
 		target = "(indexer.class.name=com.liferay.portal.kernel.model.User)"

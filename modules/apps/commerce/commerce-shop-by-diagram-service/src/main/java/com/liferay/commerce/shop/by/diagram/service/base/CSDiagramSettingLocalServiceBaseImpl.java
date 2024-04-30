@@ -7,7 +7,6 @@ package com.liferay.commerce.shop.by.diagram.service.base;
 
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingLocalService;
-import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingLocalServiceUtil;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramSettingPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -73,7 +72,7 @@ public abstract class CSDiagramSettingLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CSDiagramSettingLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CSDiagramSettingLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CSDiagramSettingLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -494,7 +493,6 @@ public abstract class CSDiagramSettingLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CSDiagramSettingLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -508,9 +506,6 @@ public abstract class CSDiagramSettingLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		csDiagramSettingLocalService = (CSDiagramSettingLocalService)aopProxy;
-
-		CSDiagramSettingLocalServiceUtil.setService(
-			csDiagramSettingLocalService);
 	}
 
 	/**

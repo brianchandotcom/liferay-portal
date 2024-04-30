@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
-import com.liferay.commerce.product.service.CPInstanceServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPInstanceFinder;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class CPInstanceServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPInstanceService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPInstanceServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPInstanceService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPInstanceServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CPInstanceServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class CPInstanceServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		cpInstanceService = (CPInstanceService)aopProxy;
-
-		CPInstanceServiceUtil.setService(cpInstanceService);
 	}
 
 	/**

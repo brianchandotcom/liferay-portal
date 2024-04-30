@@ -10,6 +10,7 @@ import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.InputStream;
@@ -633,13 +634,12 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	public static BackgroundTaskLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(BackgroundTaskLocalService service) {
-		_service = service;
-	}
-
-	private static volatile BackgroundTaskLocalService _service;
+	private static final Snapshot<BackgroundTaskLocalService> _serviceSnapshot =
+		new Snapshot<>(
+			BackgroundTaskLocalServiceUtil.class,
+			BackgroundTaskLocalService.class);
 
 }

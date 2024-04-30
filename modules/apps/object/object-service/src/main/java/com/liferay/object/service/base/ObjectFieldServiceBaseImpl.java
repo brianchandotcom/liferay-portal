@@ -7,7 +7,6 @@ package com.liferay.object.service.base;
 
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldService;
-import com.liferay.object.service.ObjectFieldServiceUtil;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class ObjectFieldServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectFieldService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectFieldServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectFieldService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectFieldServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		ObjectFieldServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class ObjectFieldServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		objectFieldService = (ObjectFieldService)aopProxy;
-
-		ObjectFieldServiceUtil.setService(objectFieldService);
 	}
 
 	/**

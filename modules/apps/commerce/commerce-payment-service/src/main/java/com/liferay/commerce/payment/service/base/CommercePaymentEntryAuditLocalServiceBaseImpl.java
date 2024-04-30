@@ -7,7 +7,6 @@ package com.liferay.commerce.payment.service.base;
 
 import com.liferay.commerce.payment.model.CommercePaymentEntryAudit;
 import com.liferay.commerce.payment.service.CommercePaymentEntryAuditLocalService;
-import com.liferay.commerce.payment.service.CommercePaymentEntryAuditLocalServiceUtil;
 import com.liferay.commerce.payment.service.persistence.CommercePaymentEntryAuditPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class CommercePaymentEntryAuditLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePaymentEntryAuditLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePaymentEntryAuditLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePaymentEntryAuditLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.payment.service.CommercePaymentEntryAuditLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -408,7 +407,6 @@ public abstract class CommercePaymentEntryAuditLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommercePaymentEntryAuditLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -423,9 +421,6 @@ public abstract class CommercePaymentEntryAuditLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commercePaymentEntryAuditLocalService =
 			(CommercePaymentEntryAuditLocalService)aopProxy;
-
-		CommercePaymentEntryAuditLocalServiceUtil.setService(
-			commercePaymentEntryAuditLocalService);
 	}
 
 	/**

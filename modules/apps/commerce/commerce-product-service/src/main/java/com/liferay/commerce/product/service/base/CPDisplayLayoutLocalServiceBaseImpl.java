@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
-import com.liferay.commerce.product.service.CPDisplayLayoutLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPDisplayLayoutPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -75,7 +74,7 @@ public abstract class CPDisplayLayoutLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDisplayLayoutLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDisplayLayoutLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDisplayLayoutLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPDisplayLayoutLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -547,7 +546,6 @@ public abstract class CPDisplayLayoutLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CPDisplayLayoutLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -561,8 +559,6 @@ public abstract class CPDisplayLayoutLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		cpDisplayLayoutLocalService = (CPDisplayLayoutLocalService)aopProxy;
-
-		CPDisplayLayoutLocalServiceUtil.setService(cpDisplayLayoutLocalService);
 	}
 
 	/**

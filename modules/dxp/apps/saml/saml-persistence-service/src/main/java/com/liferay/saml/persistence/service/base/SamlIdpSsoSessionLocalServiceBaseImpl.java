@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
 import com.liferay.saml.persistence.service.SamlIdpSsoSessionLocalService;
-import com.liferay.saml.persistence.service.SamlIdpSsoSessionLocalServiceUtil;
 import com.liferay.saml.persistence.service.persistence.SamlIdpSsoSessionPersistence;
 
 import java.io.Serializable;
@@ -64,7 +63,7 @@ public abstract class SamlIdpSsoSessionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SamlIdpSsoSessionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SamlIdpSsoSessionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SamlIdpSsoSessionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.saml.persistence.service.SamlIdpSsoSessionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -388,7 +387,6 @@ public abstract class SamlIdpSsoSessionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		SamlIdpSsoSessionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -402,9 +400,6 @@ public abstract class SamlIdpSsoSessionLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		samlIdpSsoSessionLocalService = (SamlIdpSsoSessionLocalService)aopProxy;
-
-		SamlIdpSsoSessionLocalServiceUtil.setService(
-			samlIdpSsoSessionLocalService);
 	}
 
 	/**

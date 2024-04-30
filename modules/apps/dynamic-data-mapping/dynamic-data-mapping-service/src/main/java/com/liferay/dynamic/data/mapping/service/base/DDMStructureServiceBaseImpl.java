@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.mapping.service.base;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class DDMStructureServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DDMStructureService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DDMStructureServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DDMStructureService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		DDMStructureServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class DDMStructureServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ddmStructureService = (DDMStructureService)aopProxy;
-
-		DDMStructureServiceUtil.setService(ddmStructureService);
 	}
 
 	/**

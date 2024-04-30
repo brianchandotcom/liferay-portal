@@ -7,6 +7,7 @@ package com.liferay.journal.service;
 
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the remote service utility for JournalFeed. This utility wraps
@@ -91,13 +92,10 @@ public class JournalFeedServiceUtil {
 	}
 
 	public static JournalFeedService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(JournalFeedService service) {
-		_service = service;
-	}
-
-	private static volatile JournalFeedService _service;
+	private static final Snapshot<JournalFeedService> _serviceSnapshot =
+		new Snapshot<>(JournalFeedServiceUtil.class, JournalFeedService.class);
 
 }

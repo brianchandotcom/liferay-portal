@@ -7,7 +7,6 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.service.CommerceOrderNoteLocalService;
-import com.liferay.commerce.service.CommerceOrderNoteLocalServiceUtil;
 import com.liferay.commerce.service.persistence.CommerceOrderNotePersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -70,7 +69,7 @@ public abstract class CommerceOrderNoteLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceOrderNoteLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceOrderNoteLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceOrderNoteLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceOrderNoteLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -541,7 +540,6 @@ public abstract class CommerceOrderNoteLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceOrderNoteLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -555,9 +553,6 @@ public abstract class CommerceOrderNoteLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceOrderNoteLocalService = (CommerceOrderNoteLocalService)aopProxy;
-
-		CommerceOrderNoteLocalServiceUtil.setService(
-			commerceOrderNoteLocalService);
 	}
 
 	/**

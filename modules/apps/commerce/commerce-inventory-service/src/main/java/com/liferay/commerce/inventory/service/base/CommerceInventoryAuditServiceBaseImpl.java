@@ -7,7 +7,6 @@ package com.liferay.commerce.inventory.service.base;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryAudit;
 import com.liferay.commerce.inventory.service.CommerceInventoryAuditService;
-import com.liferay.commerce.inventory.service.CommerceInventoryAuditServiceUtil;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryAuditPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CommerceInventoryAuditServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceInventoryAuditService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceInventoryAuditServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceInventoryAuditService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.inventory.service.CommerceInventoryAuditServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceInventoryAuditServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,9 +60,6 @@ public abstract class CommerceInventoryAuditServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceInventoryAuditService = (CommerceInventoryAuditService)aopProxy;
-
-		CommerceInventoryAuditServiceUtil.setService(
-			commerceInventoryAuditService);
 	}
 
 	/**

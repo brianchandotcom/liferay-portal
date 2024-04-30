@@ -7,7 +7,6 @@ package com.liferay.oauth2.provider.service.base;
 
 import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService;
-import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalServiceUtil;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ApplicationScopeAliasesPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class OAuth2ApplicationScopeAliasesLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>OAuth2ApplicationScopeAliasesLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>OAuth2ApplicationScopeAliasesLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>OAuth2ApplicationScopeAliasesLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -410,7 +409,6 @@ public abstract class OAuth2ApplicationScopeAliasesLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		OAuth2ApplicationScopeAliasesLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -425,9 +423,6 @@ public abstract class OAuth2ApplicationScopeAliasesLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		oAuth2ApplicationScopeAliasesLocalService =
 			(OAuth2ApplicationScopeAliasesLocalService)aopProxy;
-
-		OAuth2ApplicationScopeAliasesLocalServiceUtil.setService(
-			oAuth2ApplicationScopeAliasesLocalService);
 	}
 
 	/**

@@ -7,7 +7,6 @@ package com.liferay.commerce.product.type.virtual.service.base;
 
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
-import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingServiceUtil;
 import com.liferay.commerce.product.type.virtual.service.persistence.CPDefinitionVirtualSettingPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CPDefinitionVirtualSettingServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDefinitionVirtualSettingService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDefinitionVirtualSettingServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDefinitionVirtualSettingService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CPDefinitionVirtualSettingServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,9 +62,6 @@ public abstract class CPDefinitionVirtualSettingServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpDefinitionVirtualSettingService =
 			(CPDefinitionVirtualSettingService)aopProxy;
-
-		CPDefinitionVirtualSettingServiceUtil.setService(
-			cpDefinitionVirtualSettingService);
 	}
 
 	/**

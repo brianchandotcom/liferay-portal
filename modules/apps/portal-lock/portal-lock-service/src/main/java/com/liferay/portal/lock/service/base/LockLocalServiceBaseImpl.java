@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.lock.model.Lock;
 import com.liferay.portal.lock.service.LockLocalService;
-import com.liferay.portal.lock.service.LockLocalServiceUtil;
 import com.liferay.portal.lock.service.persistence.LockPersistence;
 
 import java.io.Serializable;
@@ -63,7 +62,7 @@ public abstract class LockLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>LockLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>LockLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>LockLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.lock.service.LockLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -394,7 +393,6 @@ public abstract class LockLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		LockLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -408,8 +406,6 @@ public abstract class LockLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		lockLocalService = (LockLocalService)aopProxy;
-
-		LockLocalServiceUtil.setService(lockLocalService);
 	}
 
 	/**

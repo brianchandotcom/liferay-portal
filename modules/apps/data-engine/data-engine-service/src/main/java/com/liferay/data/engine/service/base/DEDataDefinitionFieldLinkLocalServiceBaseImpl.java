@@ -7,7 +7,6 @@ package com.liferay.data.engine.service.base;
 
 import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
 import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
-import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalServiceUtil;
 import com.liferay.data.engine.service.persistence.DEDataDefinitionFieldLinkPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -75,7 +74,7 @@ public abstract class DEDataDefinitionFieldLinkLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DEDataDefinitionFieldLinkLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DEDataDefinitionFieldLinkLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DEDataDefinitionFieldLinkLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -582,7 +581,6 @@ public abstract class DEDataDefinitionFieldLinkLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DEDataDefinitionFieldLinkLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -598,9 +596,6 @@ public abstract class DEDataDefinitionFieldLinkLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		deDataDefinitionFieldLinkLocalService =
 			(DEDataDefinitionFieldLinkLocalService)aopProxy;
-
-		DEDataDefinitionFieldLinkLocalServiceUtil.setService(
-			deDataDefinitionFieldLinkLocalService);
 	}
 
 	/**

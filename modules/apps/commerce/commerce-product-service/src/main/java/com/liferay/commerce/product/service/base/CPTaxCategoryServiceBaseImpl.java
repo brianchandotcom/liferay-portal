@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
-import com.liferay.commerce.product.service.CPTaxCategoryServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPTaxCategoryFinder;
 import com.liferay.commerce.product.service.persistence.CPTaxCategoryPersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class CPTaxCategoryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPTaxCategoryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPTaxCategoryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPTaxCategoryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPTaxCategoryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CPTaxCategoryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class CPTaxCategoryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		cpTaxCategoryService = (CPTaxCategoryService)aopProxy;
-
-		CPTaxCategoryServiceUtil.setService(cpTaxCategoryService);
 	}
 
 	/**

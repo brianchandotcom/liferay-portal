@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.reports.engine.console.model.Entry;
 import com.liferay.portal.reports.engine.console.service.EntryService;
-import com.liferay.portal.reports.engine.console.service.EntryServiceUtil;
 import com.liferay.portal.reports.engine.console.service.persistence.EntryFinder;
 import com.liferay.portal.reports.engine.console.service.persistence.EntryPersistence;
 
@@ -45,11 +44,10 @@ public abstract class EntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>EntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>EntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>EntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.reports.engine.console.service.EntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		EntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class EntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		entryService = (EntryService)aopProxy;
-
-		EntryServiceUtil.setService(entryService);
 	}
 
 	/**

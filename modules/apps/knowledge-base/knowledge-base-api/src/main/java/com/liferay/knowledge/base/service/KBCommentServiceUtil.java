@@ -7,6 +7,7 @@ package com.liferay.knowledge.base.service;
 
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -162,13 +163,10 @@ public class KBCommentServiceUtil {
 	}
 
 	public static KBCommentService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(KBCommentService service) {
-		_service = service;
-	}
-
-	private static volatile KBCommentService _service;
+	private static final Snapshot<KBCommentService> _serviceSnapshot =
+		new Snapshot<>(KBCommentServiceUtil.class, KBCommentService.class);
 
 }

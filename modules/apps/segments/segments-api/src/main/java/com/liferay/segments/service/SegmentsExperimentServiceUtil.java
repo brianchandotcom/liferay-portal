@@ -6,6 +6,7 @@
 package com.liferay.segments.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.segments.model.SegmentsExperiment;
 
 import java.util.Map;
@@ -164,13 +165,12 @@ public class SegmentsExperimentServiceUtil {
 	}
 
 	public static SegmentsExperimentService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(SegmentsExperimentService service) {
-		_service = service;
-	}
-
-	private static volatile SegmentsExperimentService _service;
+	private static final Snapshot<SegmentsExperimentService> _serviceSnapshot =
+		new Snapshot<>(
+			SegmentsExperimentServiceUtil.class,
+			SegmentsExperimentService.class);
 
 }

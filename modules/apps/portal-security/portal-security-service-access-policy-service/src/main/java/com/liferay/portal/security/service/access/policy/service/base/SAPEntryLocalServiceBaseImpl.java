@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
-import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalServiceUtil;
 import com.liferay.portal.security.service.access.policy.service.persistence.SAPEntryPersistence;
 
 import java.io.Serializable;
@@ -69,7 +68,7 @@ public abstract class SAPEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SAPEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SAPEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SAPEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.security.service.access.policy.service.SAPEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -472,7 +471,6 @@ public abstract class SAPEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		SAPEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -486,8 +484,6 @@ public abstract class SAPEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		sapEntryLocalService = (SAPEntryLocalService)aopProxy;
-
-		SAPEntryLocalServiceUtil.setService(sapEntryLocalService);
 	}
 
 	/**

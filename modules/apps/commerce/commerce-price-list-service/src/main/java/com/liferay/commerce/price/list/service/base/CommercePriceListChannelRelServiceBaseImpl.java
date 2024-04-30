@@ -7,7 +7,6 @@ package com.liferay.commerce.price.list.service.base;
 
 import com.liferay.commerce.price.list.model.CommercePriceListChannelRel;
 import com.liferay.commerce.price.list.service.CommercePriceListChannelRelService;
-import com.liferay.commerce.price.list.service.CommercePriceListChannelRelServiceUtil;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListChannelRelFinder;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListChannelRelPersistence;
 import com.liferay.portal.aop.AopService;
@@ -46,11 +45,10 @@ public abstract class CommercePriceListChannelRelServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePriceListChannelRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePriceListChannelRelServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePriceListChannelRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.price.list.service.CommercePriceListChannelRelServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommercePriceListChannelRelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -65,9 +63,6 @@ public abstract class CommercePriceListChannelRelServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commercePriceListChannelRelService =
 			(CommercePriceListChannelRelService)aopProxy;
-
-		CommercePriceListChannelRelServiceUtil.setService(
-			commercePriceListChannelRelService);
 	}
 
 	/**

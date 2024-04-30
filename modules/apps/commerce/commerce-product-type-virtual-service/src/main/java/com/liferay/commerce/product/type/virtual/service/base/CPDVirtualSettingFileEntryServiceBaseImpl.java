@@ -7,7 +7,6 @@ package com.liferay.commerce.product.type.virtual.service.base;
 
 import com.liferay.commerce.product.type.virtual.model.CPDVirtualSettingFileEntry;
 import com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryService;
-import com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryServiceUtil;
 import com.liferay.commerce.product.type.virtual.service.persistence.CPDVirtualSettingFileEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CPDVirtualSettingFileEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDVirtualSettingFileEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDVirtualSettingFileEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDVirtualSettingFileEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CPDVirtualSettingFileEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,9 +62,6 @@ public abstract class CPDVirtualSettingFileEntryServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpdVirtualSettingFileEntryService =
 			(CPDVirtualSettingFileEntryService)aopProxy;
-
-		CPDVirtualSettingFileEntryServiceUtil.setService(
-			cpdVirtualSettingFileEntryService);
 	}
 
 	/**

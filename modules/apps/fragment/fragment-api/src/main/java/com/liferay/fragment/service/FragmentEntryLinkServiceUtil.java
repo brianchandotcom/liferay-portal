@@ -7,6 +7,7 @@ package com.liferay.fragment.service;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the remote service utility for FragmentEntryLink. This utility wraps
@@ -84,13 +85,11 @@ public class FragmentEntryLinkServiceUtil {
 	}
 
 	public static FragmentEntryLinkService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(FragmentEntryLinkService service) {
-		_service = service;
-	}
-
-	private static volatile FragmentEntryLinkService _service;
+	private static final Snapshot<FragmentEntryLinkService> _serviceSnapshot =
+		new Snapshot<>(
+			FragmentEntryLinkServiceUtil.class, FragmentEntryLinkService.class);
 
 }

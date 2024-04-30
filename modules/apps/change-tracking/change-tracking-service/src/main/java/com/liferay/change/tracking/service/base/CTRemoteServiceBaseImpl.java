@@ -7,7 +7,6 @@ package com.liferay.change.tracking.service.base;
 
 import com.liferay.change.tracking.model.CTRemote;
 import com.liferay.change.tracking.service.CTRemoteService;
-import com.liferay.change.tracking.service.CTRemoteServiceUtil;
 import com.liferay.change.tracking.service.persistence.CTRemotePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class CTRemoteServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CTRemoteService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CTRemoteServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CTRemoteService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.change.tracking.service.CTRemoteServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CTRemoteServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class CTRemoteServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ctRemoteService = (CTRemoteService)aopProxy;
-
-		CTRemoteServiceUtil.setService(ctRemoteService);
 	}
 
 	/**

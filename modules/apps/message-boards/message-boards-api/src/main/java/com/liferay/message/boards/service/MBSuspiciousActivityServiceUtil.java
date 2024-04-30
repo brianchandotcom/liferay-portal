@@ -7,6 +7,7 @@ package com.liferay.message.boards.service;
 
 import com.liferay.message.boards.model.MBSuspiciousActivity;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -88,13 +89,12 @@ public class MBSuspiciousActivityServiceUtil {
 	}
 
 	public static MBSuspiciousActivityService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(MBSuspiciousActivityService service) {
-		_service = service;
-	}
-
-	private static volatile MBSuspiciousActivityService _service;
+	private static final Snapshot<MBSuspiciousActivityService>
+		_serviceSnapshot = new Snapshot<>(
+			MBSuspiciousActivityServiceUtil.class,
+			MBSuspiciousActivityService.class);
 
 }

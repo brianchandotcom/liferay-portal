@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryService;
-import com.liferay.trash.service.TrashEntryServiceUtil;
 import com.liferay.trash.service.persistence.TrashEntryPersistence;
 
 import javax.sql.DataSource;
@@ -44,11 +43,10 @@ public abstract class TrashEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>TrashEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>TrashEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>TrashEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.trash.service.TrashEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		TrashEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class TrashEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		trashEntryService = (TrashEntryService)aopProxy;
-
-		TrashEntryServiceUtil.setService(trashEntryService);
 	}
 
 	/**

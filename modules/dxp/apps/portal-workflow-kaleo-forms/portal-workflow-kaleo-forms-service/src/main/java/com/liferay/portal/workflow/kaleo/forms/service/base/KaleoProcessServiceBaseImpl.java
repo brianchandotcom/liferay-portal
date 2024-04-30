@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessService;
-import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessFinder;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessPersistence;
 
@@ -45,11 +44,10 @@ public abstract class KaleoProcessServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KaleoProcessService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KaleoProcessServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KaleoProcessService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		KaleoProcessServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class KaleoProcessServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		kaleoProcessService = (KaleoProcessService)aopProxy;
-
-		KaleoProcessServiceUtil.setService(kaleoProcessService);
 	}
 
 	/**

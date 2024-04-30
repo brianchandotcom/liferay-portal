@@ -7,7 +7,6 @@ package com.liferay.commerce.payment.service.base;
 
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
-import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelServiceUtil;
 import com.liferay.commerce.payment.service.persistence.CommercePaymentMethodGroupRelPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CommercePaymentMethodGroupRelServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePaymentMethodGroupRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePaymentMethodGroupRelServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePaymentMethodGroupRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommercePaymentMethodGroupRelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,9 +62,6 @@ public abstract class CommercePaymentMethodGroupRelServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commercePaymentMethodGroupRelService =
 			(CommercePaymentMethodGroupRelService)aopProxy;
-
-		CommercePaymentMethodGroupRelServiceUtil.setService(
-			commercePaymentMethodGroupRelService);
 	}
 
 	/**

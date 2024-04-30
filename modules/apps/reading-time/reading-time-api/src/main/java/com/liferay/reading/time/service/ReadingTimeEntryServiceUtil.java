@@ -5,6 +5,8 @@
 
 package com.liferay.reading.time.service;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
+
 /**
  * Provides the remote service utility for ReadingTimeEntry. This utility wraps
  * <code>com.liferay.reading.time.service.impl.ReadingTimeEntryServiceImpl</code> and is an
@@ -30,18 +32,16 @@ public class ReadingTimeEntryServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static ReadingTimeEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(ReadingTimeEntryService service) {
-		_service = service;
-	}
-
-	private static volatile ReadingTimeEntryService _service;
+	private static final Snapshot<ReadingTimeEntryService> _serviceSnapshot =
+		new Snapshot<>(
+			ReadingTimeEntryServiceUtil.class, ReadingTimeEntryService.class);
 
 }

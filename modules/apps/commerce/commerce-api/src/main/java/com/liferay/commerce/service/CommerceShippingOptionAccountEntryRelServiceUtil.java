@@ -7,6 +7,7 @@ package com.liferay.commerce.service;
 
 import com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -105,16 +106,12 @@ public class CommerceShippingOptionAccountEntryRelServiceUtil {
 	}
 
 	public static CommerceShippingOptionAccountEntryRelService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(
-		CommerceShippingOptionAccountEntryRelService service) {
-
-		_service = service;
-	}
-
-	private static volatile CommerceShippingOptionAccountEntryRelService
-		_service;
+	private static final Snapshot<CommerceShippingOptionAccountEntryRelService>
+		_serviceSnapshot = new Snapshot<>(
+			CommerceShippingOptionAccountEntryRelServiceUtil.class,
+			CommerceShippingOptionAccountEntryRelService.class);
 
 }

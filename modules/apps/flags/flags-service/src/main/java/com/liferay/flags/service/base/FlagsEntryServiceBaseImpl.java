@@ -6,7 +6,6 @@
 package com.liferay.flags.service.base;
 
 import com.liferay.flags.service.FlagsEntryService;
-import com.liferay.flags.service.FlagsEntryServiceUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -43,11 +42,10 @@ public abstract class FlagsEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>FlagsEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>FlagsEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>FlagsEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.flags.service.FlagsEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		FlagsEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -60,8 +58,6 @@ public abstract class FlagsEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		flagsEntryService = (FlagsEntryService)aopProxy;
-
-		FlagsEntryServiceUtil.setService(flagsEntryService);
 	}
 
 	/**

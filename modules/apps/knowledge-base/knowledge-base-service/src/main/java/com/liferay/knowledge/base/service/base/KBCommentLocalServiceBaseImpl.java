@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.service.KBCommentLocalService;
-import com.liferay.knowledge.base.service.KBCommentLocalServiceUtil;
 import com.liferay.knowledge.base.service.persistence.KBCommentPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -74,7 +73,7 @@ public abstract class KBCommentLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KBCommentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KBCommentLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KBCommentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.knowledge.base.service.KBCommentLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -539,7 +538,6 @@ public abstract class KBCommentLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		KBCommentLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -553,8 +551,6 @@ public abstract class KBCommentLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		kbCommentLocalService = (KBCommentLocalService)aopProxy;
-
-		KBCommentLocalServiceUtil.setService(kbCommentLocalService);
 	}
 
 	/**

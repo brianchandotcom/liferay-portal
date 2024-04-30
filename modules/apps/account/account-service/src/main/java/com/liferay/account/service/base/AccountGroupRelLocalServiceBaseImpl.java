@@ -7,7 +7,6 @@ package com.liferay.account.service.base;
 
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountGroupRelLocalService;
-import com.liferay.account.service.AccountGroupRelLocalServiceUtil;
 import com.liferay.account.service.persistence.AccountGroupRelPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class AccountGroupRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AccountGroupRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AccountGroupRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AccountGroupRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.account.service.AccountGroupRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -382,7 +381,6 @@ public abstract class AccountGroupRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AccountGroupRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -396,8 +394,6 @@ public abstract class AccountGroupRelLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		accountGroupRelLocalService = (AccountGroupRelLocalService)aopProxy;
-
-		AccountGroupRelLocalServiceUtil.setService(accountGroupRelLocalService);
 	}
 
 	/**

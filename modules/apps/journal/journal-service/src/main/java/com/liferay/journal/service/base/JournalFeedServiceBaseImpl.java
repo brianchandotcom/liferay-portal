@@ -7,7 +7,6 @@ package com.liferay.journal.service.base;
 
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedService;
-import com.liferay.journal.service.JournalFeedServiceUtil;
 import com.liferay.journal.service.persistence.JournalFeedPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class JournalFeedServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>JournalFeedService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>JournalFeedServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>JournalFeedService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.journal.service.JournalFeedServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		JournalFeedServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class JournalFeedServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		journalFeedService = (JournalFeedService)aopProxy;
-
-		JournalFeedServiceUtil.setService(journalFeedService);
 	}
 
 	/**

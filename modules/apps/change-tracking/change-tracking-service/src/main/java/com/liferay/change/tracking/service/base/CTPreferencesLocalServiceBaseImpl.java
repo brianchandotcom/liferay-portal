@@ -7,7 +7,6 @@ package com.liferay.change.tracking.service.base;
 
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
-import com.liferay.change.tracking.service.CTPreferencesLocalServiceUtil;
 import com.liferay.change.tracking.service.persistence.CTPreferencesPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -63,7 +62,7 @@ public abstract class CTPreferencesLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CTPreferencesLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CTPreferencesLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CTPreferencesLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.change.tracking.service.CTPreferencesLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -377,7 +376,6 @@ public abstract class CTPreferencesLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CTPreferencesLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -391,8 +389,6 @@ public abstract class CTPreferencesLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ctPreferencesLocalService = (CTPreferencesLocalService)aopProxy;
-
-		CTPreferencesLocalServiceUtil.setService(ctPreferencesLocalService);
 	}
 
 	/**

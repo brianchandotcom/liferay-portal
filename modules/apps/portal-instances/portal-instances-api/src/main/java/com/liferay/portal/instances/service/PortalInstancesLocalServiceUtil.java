@@ -6,6 +6,7 @@
 package com.liferay.portal.instances.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the local service utility for PortalInstances. This utility wraps
@@ -55,13 +56,12 @@ public class PortalInstancesLocalServiceUtil {
 	}
 
 	public static PortalInstancesLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(PortalInstancesLocalService service) {
-		_service = service;
-	}
-
-	private static volatile PortalInstancesLocalService _service;
+	private static final Snapshot<PortalInstancesLocalService>
+		_serviceSnapshot = new Snapshot<>(
+			PortalInstancesLocalServiceUtil.class,
+			PortalInstancesLocalService.class);
 
 }

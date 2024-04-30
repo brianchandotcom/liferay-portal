@@ -7,6 +7,7 @@ package com.liferay.commerce.discount.service;
 
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -392,13 +393,11 @@ public class CommerceDiscountServiceUtil {
 	}
 
 	public static CommerceDiscountService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CommerceDiscountService service) {
-		_service = service;
-	}
-
-	private static volatile CommerceDiscountService _service;
+	private static final Snapshot<CommerceDiscountService> _serviceSnapshot =
+		new Snapshot<>(
+			CommerceDiscountServiceUtil.class, CommerceDiscountService.class);
 
 }

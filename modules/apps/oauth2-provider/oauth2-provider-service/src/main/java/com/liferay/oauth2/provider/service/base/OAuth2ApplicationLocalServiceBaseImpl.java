@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
-import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalServiceUtil;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ApplicationPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -70,7 +69,7 @@ public abstract class OAuth2ApplicationLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>OAuth2ApplicationLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>OAuth2ApplicationLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>OAuth2ApplicationLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.oauth2.provider.service.OAuth2ApplicationLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -512,7 +511,6 @@ public abstract class OAuth2ApplicationLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		OAuth2ApplicationLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -526,9 +524,6 @@ public abstract class OAuth2ApplicationLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		oAuth2ApplicationLocalService = (OAuth2ApplicationLocalService)aopProxy;
-
-		OAuth2ApplicationLocalServiceUtil.setService(
-			oAuth2ApplicationLocalService);
 	}
 
 	/**

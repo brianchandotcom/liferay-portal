@@ -7,7 +7,6 @@ package com.liferay.layout.utility.page.service.base;
 
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
-import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryServiceUtil;
 import com.liferay.layout.utility.page.service.persistence.LayoutUtilityPageEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class LayoutUtilityPageEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>LayoutUtilityPageEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>LayoutUtilityPageEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>LayoutUtilityPageEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.layout.utility.page.service.LayoutUtilityPageEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		LayoutUtilityPageEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,9 +60,6 @@ public abstract class LayoutUtilityPageEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		layoutUtilityPageEntryService = (LayoutUtilityPageEntryService)aopProxy;
-
-		LayoutUtilityPageEntryServiceUtil.setService(
-			layoutUtilityPageEntryService);
 	}
 
 	/**

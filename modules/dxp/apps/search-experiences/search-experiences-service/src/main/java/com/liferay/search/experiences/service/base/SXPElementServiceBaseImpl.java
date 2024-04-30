@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementService;
-import com.liferay.search.experiences.service.SXPElementServiceUtil;
 import com.liferay.search.experiences.service.persistence.SXPElementPersistence;
 
 import javax.sql.DataSource;
@@ -44,11 +43,10 @@ public abstract class SXPElementServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SXPElementService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SXPElementServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SXPElementService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.search.experiences.service.SXPElementServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		SXPElementServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class SXPElementServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		sxpElementService = (SXPElementService)aopProxy;
-
-		SXPElementServiceUtil.setService(sxpElementService);
 	}
 
 	/**

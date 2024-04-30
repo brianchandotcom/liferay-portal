@@ -7,7 +7,6 @@ package com.liferay.analytics.message.storage.service.base;
 
 import com.liferay.analytics.message.storage.model.AnalyticsAssociation;
 import com.liferay.analytics.message.storage.service.AnalyticsAssociationLocalService;
-import com.liferay.analytics.message.storage.service.AnalyticsAssociationLocalServiceUtil;
 import com.liferay.analytics.message.storage.service.persistence.AnalyticsAssociationPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -67,7 +66,7 @@ public abstract class AnalyticsAssociationLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AnalyticsAssociationLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AnalyticsAssociationLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AnalyticsAssociationLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.analytics.message.storage.service.AnalyticsAssociationLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -404,7 +403,6 @@ public abstract class AnalyticsAssociationLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AnalyticsAssociationLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -420,9 +418,6 @@ public abstract class AnalyticsAssociationLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		analyticsAssociationLocalService =
 			(AnalyticsAssociationLocalService)aopProxy;
-
-		AnalyticsAssociationLocalServiceUtil.setService(
-			analyticsAssociationLocalService);
 	}
 
 	/**

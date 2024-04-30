@@ -7,6 +7,7 @@ package com.liferay.commerce.notification.service;
 
 import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -74,15 +75,12 @@ public class CommerceNotificationQueueEntryServiceUtil {
 	}
 
 	public static CommerceNotificationQueueEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(
-		CommerceNotificationQueueEntryService service) {
-
-		_service = service;
-	}
-
-	private static volatile CommerceNotificationQueueEntryService _service;
+	private static final Snapshot<CommerceNotificationQueueEntryService>
+		_serviceSnapshot = new Snapshot<>(
+			CommerceNotificationQueueEntryServiceUtil.class,
+			CommerceNotificationQueueEntryService.class);
 
 }

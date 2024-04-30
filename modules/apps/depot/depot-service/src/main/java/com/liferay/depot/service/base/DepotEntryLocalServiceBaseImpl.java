@@ -7,7 +7,6 @@ package com.liferay.depot.service.base;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.depot.service.persistence.DepotEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -72,7 +71,7 @@ public abstract class DepotEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DepotEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DepotEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DepotEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.depot.service.DepotEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -514,7 +513,6 @@ public abstract class DepotEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DepotEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -528,8 +526,6 @@ public abstract class DepotEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		depotEntryLocalService = (DepotEntryLocalService)aopProxy;
-
-		DepotEntryLocalServiceUtil.setService(depotEntryLocalService);
 	}
 
 	/**

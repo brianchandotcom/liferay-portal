@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
-import com.liferay.commerce.product.service.CPDefinitionOptionValueRelServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CPDefinitionOptionValueRelServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDefinitionOptionValueRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDefinitionOptionValueRelServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDefinitionOptionValueRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPDefinitionOptionValueRelServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CPDefinitionOptionValueRelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,9 +62,6 @@ public abstract class CPDefinitionOptionValueRelServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpDefinitionOptionValueRelService =
 			(CPDefinitionOptionValueRelService)aopProxy;
-
-		CPDefinitionOptionValueRelServiceUtil.setService(
-			cpDefinitionOptionValueRelService);
 	}
 
 	/**

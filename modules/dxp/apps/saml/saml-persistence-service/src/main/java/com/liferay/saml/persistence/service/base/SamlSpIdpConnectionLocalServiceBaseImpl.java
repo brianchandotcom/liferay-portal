@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
-import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalServiceUtil;
 import com.liferay.saml.persistence.service.persistence.SamlSpIdpConnectionPersistence;
 
 import java.io.Serializable;
@@ -64,7 +63,7 @@ public abstract class SamlSpIdpConnectionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SamlSpIdpConnectionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SamlSpIdpConnectionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SamlSpIdpConnectionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -401,7 +400,6 @@ public abstract class SamlSpIdpConnectionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		SamlSpIdpConnectionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -416,9 +414,6 @@ public abstract class SamlSpIdpConnectionLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		samlSpIdpConnectionLocalService =
 			(SamlSpIdpConnectionLocalService)aopProxy;
-
-		SamlSpIdpConnectionLocalServiceUtil.setService(
-			samlSpIdpConnectionLocalService);
 	}
 
 	/**

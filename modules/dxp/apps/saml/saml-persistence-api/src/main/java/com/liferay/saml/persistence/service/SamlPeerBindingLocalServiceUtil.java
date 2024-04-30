@@ -9,6 +9,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
 
@@ -335,13 +336,12 @@ public class SamlPeerBindingLocalServiceUtil {
 	}
 
 	public static SamlPeerBindingLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(SamlPeerBindingLocalService service) {
-		_service = service;
-	}
-
-	private static volatile SamlPeerBindingLocalService _service;
+	private static final Snapshot<SamlPeerBindingLocalService>
+		_serviceSnapshot = new Snapshot<>(
+			SamlPeerBindingLocalServiceUtil.class,
+			SamlPeerBindingLocalService.class);
 
 }

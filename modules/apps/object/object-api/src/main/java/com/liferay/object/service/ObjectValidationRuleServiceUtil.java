@@ -7,6 +7,7 @@ package com.liferay.object.service;
 
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 import java.util.Map;
@@ -86,13 +87,12 @@ public class ObjectValidationRuleServiceUtil {
 	}
 
 	public static ObjectValidationRuleService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(ObjectValidationRuleService service) {
-		_service = service;
-	}
-
-	private static volatile ObjectValidationRuleService _service;
+	private static final Snapshot<ObjectValidationRuleService>
+		_serviceSnapshot = new Snapshot<>(
+			ObjectValidationRuleServiceUtil.class,
+			ObjectValidationRuleService.class);
 
 }

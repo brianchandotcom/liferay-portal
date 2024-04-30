@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
-import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
 import com.liferay.layout.service.persistence.LayoutClassedModelUsagePersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -75,7 +74,7 @@ public abstract class LayoutClassedModelUsageLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>LayoutClassedModelUsageLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>LayoutClassedModelUsageLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>LayoutClassedModelUsageLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -578,7 +577,6 @@ public abstract class LayoutClassedModelUsageLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		LayoutClassedModelUsageLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -594,9 +592,6 @@ public abstract class LayoutClassedModelUsageLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		layoutClassedModelUsageLocalService =
 			(LayoutClassedModelUsageLocalService)aopProxy;
-
-		LayoutClassedModelUsageLocalServiceUtil.setService(
-			layoutClassedModelUsageLocalService);
 	}
 
 	/**

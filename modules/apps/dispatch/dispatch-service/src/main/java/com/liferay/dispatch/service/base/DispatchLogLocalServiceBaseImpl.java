@@ -7,7 +7,6 @@ package com.liferay.dispatch.service.base;
 
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.service.DispatchLogLocalService;
-import com.liferay.dispatch.service.DispatchLogLocalServiceUtil;
 import com.liferay.dispatch.service.persistence.DispatchLogPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -63,7 +62,7 @@ public abstract class DispatchLogLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DispatchLogLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DispatchLogLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DispatchLogLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dispatch.service.DispatchLogLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -376,7 +375,6 @@ public abstract class DispatchLogLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DispatchLogLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -390,8 +388,6 @@ public abstract class DispatchLogLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		dispatchLogLocalService = (DispatchLogLocalService)aopProxy;
-
-		DispatchLogLocalServiceUtil.setService(dispatchLogLocalService);
 	}
 
 	/**

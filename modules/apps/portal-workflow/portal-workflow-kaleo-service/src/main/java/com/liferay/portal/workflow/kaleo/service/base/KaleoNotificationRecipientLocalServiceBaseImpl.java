@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.service.KaleoNotificationRecipientLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoNotificationRecipientLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoNotificationRecipientPersistence;
 
 import java.io.Serializable;
@@ -67,7 +66,7 @@ public abstract class KaleoNotificationRecipientLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KaleoNotificationRecipientLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KaleoNotificationRecipientLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KaleoNotificationRecipientLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.workflow.kaleo.service.KaleoNotificationRecipientLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -411,7 +410,6 @@ public abstract class KaleoNotificationRecipientLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		KaleoNotificationRecipientLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -427,9 +425,6 @@ public abstract class KaleoNotificationRecipientLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		kaleoNotificationRecipientLocalService =
 			(KaleoNotificationRecipientLocalService)aopProxy;
-
-		KaleoNotificationRecipientLocalServiceUtil.setService(
-			kaleoNotificationRecipientLocalService);
 	}
 
 	/**

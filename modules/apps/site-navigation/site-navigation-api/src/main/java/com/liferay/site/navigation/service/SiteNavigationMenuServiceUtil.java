@@ -6,6 +6,7 @@
 package com.liferay.site.navigation.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 
@@ -157,13 +158,12 @@ public class SiteNavigationMenuServiceUtil {
 	}
 
 	public static SiteNavigationMenuService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(SiteNavigationMenuService service) {
-		_service = service;
-	}
-
-	private static volatile SiteNavigationMenuService _service;
+	private static final Snapshot<SiteNavigationMenuService> _serviceSnapshot =
+		new Snapshot<>(
+			SiteNavigationMenuServiceUtil.class,
+			SiteNavigationMenuService.class);
 
 }

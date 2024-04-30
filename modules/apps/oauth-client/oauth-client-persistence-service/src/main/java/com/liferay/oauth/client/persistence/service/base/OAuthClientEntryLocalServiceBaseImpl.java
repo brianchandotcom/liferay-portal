@@ -7,7 +7,6 @@ package com.liferay.oauth.client.persistence.service.base;
 
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
-import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalServiceUtil;
 import com.liferay.oauth.client.persistence.service.persistence.OAuthClientEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class OAuthClientEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>OAuthClientEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>OAuthClientEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>OAuthClientEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -389,7 +388,6 @@ public abstract class OAuthClientEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		OAuthClientEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -403,9 +401,6 @@ public abstract class OAuthClientEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		oAuthClientEntryLocalService = (OAuthClientEntryLocalService)aopProxy;
-
-		OAuthClientEntryLocalServiceUtil.setService(
-			oAuthClientEntryLocalService);
 	}
 
 	/**

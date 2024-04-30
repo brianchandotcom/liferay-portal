@@ -7,7 +7,6 @@ package com.liferay.object.service.base;
 
 import com.liferay.object.model.ObjectViewColumn;
 import com.liferay.object.service.ObjectViewColumnService;
-import com.liferay.object.service.ObjectViewColumnServiceUtil;
 import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class ObjectViewColumnServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectViewColumnService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectViewColumnServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectViewColumnService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectViewColumnServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		ObjectViewColumnServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class ObjectViewColumnServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		objectViewColumnService = (ObjectViewColumnService)aopProxy;
-
-		ObjectViewColumnServiceUtil.setService(objectViewColumnService);
 	}
 
 	/**

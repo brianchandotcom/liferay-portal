@@ -7,6 +7,7 @@ package com.liferay.dynamic.data.mapping.service;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -117,13 +118,12 @@ public class DDMFormInstanceRecordServiceUtil {
 	}
 
 	public static DDMFormInstanceRecordService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(DDMFormInstanceRecordService service) {
-		_service = service;
-	}
-
-	private static volatile DDMFormInstanceRecordService _service;
+	private static final Snapshot<DDMFormInstanceRecordService>
+		_serviceSnapshot = new Snapshot<>(
+			DDMFormInstanceRecordServiceUtil.class,
+			DDMFormInstanceRecordService.class);
 
 }

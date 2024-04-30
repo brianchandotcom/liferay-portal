@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryService;
-import com.liferay.segments.service.SegmentsEntryServiceUtil;
 import com.liferay.segments.service.persistence.SegmentsEntryPersistence;
 
 import javax.sql.DataSource;
@@ -44,11 +43,10 @@ public abstract class SegmentsEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SegmentsEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SegmentsEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SegmentsEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.segments.service.SegmentsEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		SegmentsEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class SegmentsEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		segmentsEntryService = (SegmentsEntryService)aopProxy;
-
-		SegmentsEntryServiceUtil.setService(segmentsEntryService);
 	}
 
 	/**

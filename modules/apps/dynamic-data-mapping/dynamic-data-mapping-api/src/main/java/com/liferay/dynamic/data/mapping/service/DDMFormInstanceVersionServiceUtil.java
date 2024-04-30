@@ -7,6 +7,7 @@ package com.liferay.dynamic.data.mapping.service;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -77,13 +78,12 @@ public class DDMFormInstanceVersionServiceUtil {
 	}
 
 	public static DDMFormInstanceVersionService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(DDMFormInstanceVersionService service) {
-		_service = service;
-	}
-
-	private static volatile DDMFormInstanceVersionService _service;
+	private static final Snapshot<DDMFormInstanceVersionService>
+		_serviceSnapshot = new Snapshot<>(
+			DDMFormInstanceVersionServiceUtil.class,
+			DDMFormInstanceVersionService.class);
 
 }

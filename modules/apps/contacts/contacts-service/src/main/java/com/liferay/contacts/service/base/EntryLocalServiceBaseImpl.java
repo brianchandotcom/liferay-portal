@@ -7,7 +7,6 @@ package com.liferay.contacts.service.base;
 
 import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.service.EntryLocalService;
-import com.liferay.contacts.service.EntryLocalServiceUtil;
 import com.liferay.contacts.service.persistence.EntryFinder;
 import com.liferay.contacts.service.persistence.EntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -64,7 +63,7 @@ public abstract class EntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>EntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>EntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>EntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.contacts.service.EntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -369,7 +368,6 @@ public abstract class EntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		EntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -383,8 +381,6 @@ public abstract class EntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		entryLocalService = (EntryLocalService)aopProxy;
-
-		EntryLocalServiceUtil.setService(entryLocalService);
 	}
 
 	/**

@@ -7,6 +7,7 @@ package com.liferay.object.service;
 
 import com.liferay.object.model.ObjectView;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 import java.util.Map;
@@ -82,13 +83,10 @@ public class ObjectViewServiceUtil {
 	}
 
 	public static ObjectViewService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(ObjectViewService service) {
-		_service = service;
-	}
-
-	private static volatile ObjectViewService _service;
+	private static final Snapshot<ObjectViewService> _serviceSnapshot =
+		new Snapshot<>(ObjectViewServiceUtil.class, ObjectViewService.class);
 
 }

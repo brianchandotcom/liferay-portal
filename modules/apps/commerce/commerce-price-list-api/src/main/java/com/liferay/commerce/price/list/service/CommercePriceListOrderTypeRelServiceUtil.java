@@ -7,6 +7,7 @@ package com.liferay.commerce.price.list.service;
 
 import com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -96,15 +97,12 @@ public class CommercePriceListOrderTypeRelServiceUtil {
 	}
 
 	public static CommercePriceListOrderTypeRelService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(
-		CommercePriceListOrderTypeRelService service) {
-
-		_service = service;
-	}
-
-	private static volatile CommercePriceListOrderTypeRelService _service;
+	private static final Snapshot<CommercePriceListOrderTypeRelService>
+		_serviceSnapshot = new Snapshot<>(
+			CommercePriceListOrderTypeRelServiceUtil.class,
+			CommercePriceListOrderTypeRelService.class);
 
 }

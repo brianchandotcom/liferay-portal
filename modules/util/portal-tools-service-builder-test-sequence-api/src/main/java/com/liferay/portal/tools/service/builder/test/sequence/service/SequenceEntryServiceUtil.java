@@ -5,6 +5,8 @@
 
 package com.liferay.portal.tools.service.builder.test.sequence.service;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
+
 /**
  * Provides the remote service utility for SequenceEntry. This utility wraps
  * <code>com.liferay.portal.tools.service.builder.test.sequence.service.impl.SequenceEntryServiceImpl</code> and is an
@@ -30,18 +32,16 @@ public class SequenceEntryServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static SequenceEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(SequenceEntryService service) {
-		_service = service;
-	}
-
-	private static volatile SequenceEntryService _service;
+	private static final Snapshot<SequenceEntryService> _serviceSnapshot =
+		new Snapshot<>(
+			SequenceEntryServiceUtil.class, SequenceEntryService.class);
 
 }

@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
-import com.liferay.sharing.service.SharingEntryLocalServiceUtil;
 import com.liferay.sharing.service.persistence.SharingEntryFinder;
 import com.liferay.sharing.service.persistence.SharingEntryPersistence;
 
@@ -72,7 +71,7 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SharingEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SharingEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SharingEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.sharing.service.SharingEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -540,7 +539,6 @@ public abstract class SharingEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		SharingEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -554,8 +552,6 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		sharingEntryLocalService = (SharingEntryLocalService)aopProxy;
-
-		SharingEntryLocalServiceUtil.setService(sharingEntryLocalService);
 	}
 
 	/**

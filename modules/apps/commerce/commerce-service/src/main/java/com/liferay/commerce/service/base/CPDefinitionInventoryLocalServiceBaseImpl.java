@@ -7,7 +7,6 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
-import com.liferay.commerce.service.CPDefinitionInventoryLocalServiceUtil;
 import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -73,7 +72,7 @@ public abstract class CPDefinitionInventoryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDefinitionInventoryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDefinitionInventoryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDefinitionInventoryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CPDefinitionInventoryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -544,7 +543,6 @@ public abstract class CPDefinitionInventoryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CPDefinitionInventoryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -560,9 +558,6 @@ public abstract class CPDefinitionInventoryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpDefinitionInventoryLocalService =
 			(CPDefinitionInventoryLocalService)aopProxy;
-
-		CPDefinitionInventoryLocalServiceUtil.setService(
-			cpDefinitionInventoryLocalService);
 	}
 
 	/**

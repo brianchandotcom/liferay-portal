@@ -7,6 +7,7 @@ package com.liferay.contacts.service;
 
 import com.liferay.contacts.model.Entry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the remote service utility for Entry. This utility wraps
@@ -41,13 +42,10 @@ public class EntryServiceUtil {
 	}
 
 	public static EntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(EntryService service) {
-		_service = service;
-	}
-
-	private static volatile EntryService _service;
+	private static final Snapshot<EntryService> _serviceSnapshot =
+		new Snapshot<>(EntryServiceUtil.class, EntryService.class);
 
 }

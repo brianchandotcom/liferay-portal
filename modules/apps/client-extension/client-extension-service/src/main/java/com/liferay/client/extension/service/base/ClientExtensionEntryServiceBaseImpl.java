@@ -7,7 +7,6 @@ package com.liferay.client.extension.service.base;
 
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryService;
-import com.liferay.client.extension.service.ClientExtensionEntryServiceUtil;
 import com.liferay.client.extension.service.persistence.ClientExtensionEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class ClientExtensionEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ClientExtensionEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ClientExtensionEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ClientExtensionEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.client.extension.service.ClientExtensionEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		ClientExtensionEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class ClientExtensionEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		clientExtensionEntryService = (ClientExtensionEntryService)aopProxy;
-
-		ClientExtensionEntryServiceUtil.setService(clientExtensionEntryService);
 	}
 
 	/**

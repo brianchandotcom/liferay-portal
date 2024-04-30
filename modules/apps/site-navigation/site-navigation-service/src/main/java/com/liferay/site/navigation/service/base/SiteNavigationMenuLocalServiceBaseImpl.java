@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
-import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 import com.liferay.site.navigation.service.persistence.SiteNavigationMenuPersistence;
 
 import java.io.Serializable;
@@ -73,7 +72,7 @@ public abstract class SiteNavigationMenuLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SiteNavigationMenuLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SiteNavigationMenuLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SiteNavigationMenuLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -540,7 +539,6 @@ public abstract class SiteNavigationMenuLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		SiteNavigationMenuLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -555,9 +553,6 @@ public abstract class SiteNavigationMenuLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		siteNavigationMenuLocalService =
 			(SiteNavigationMenuLocalService)aopProxy;
-
-		SiteNavigationMenuLocalServiceUtil.setService(
-			siteNavigationMenuLocalService);
 	}
 
 	/**

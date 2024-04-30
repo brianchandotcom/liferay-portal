@@ -7,7 +7,6 @@ package com.liferay.commerce.pricing.service.base;
 
 import com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel;
 import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalService;
-import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalServiceUtil;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelPersistence;
 import com.liferay.petra.function.UnsafeFunction;
@@ -68,7 +67,7 @@ public abstract class CommercePricingClassCPDefinitionRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePricingClassCPDefinitionRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePricingClassCPDefinitionRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePricingClassCPDefinitionRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -430,7 +429,6 @@ public abstract class CommercePricingClassCPDefinitionRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommercePricingClassCPDefinitionRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -446,9 +444,6 @@ public abstract class CommercePricingClassCPDefinitionRelLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commercePricingClassCPDefinitionRelLocalService =
 			(CommercePricingClassCPDefinitionRelLocalService)aopProxy;
-
-		CommercePricingClassCPDefinitionRelLocalServiceUtil.setService(
-			commercePricingClassCPDefinitionRelLocalService);
 	}
 
 	/**

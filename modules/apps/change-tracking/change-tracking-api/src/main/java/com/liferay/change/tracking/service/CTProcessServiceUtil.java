@@ -7,6 +7,7 @@ package com.liferay.change.tracking.service;
 
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -73,13 +74,10 @@ public class CTProcessServiceUtil {
 	}
 
 	public static CTProcessService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CTProcessService service) {
-		_service = service;
-	}
-
-	private static volatile CTProcessService _service;
+	private static final Snapshot<CTProcessService> _serviceSnapshot =
+		new Snapshot<>(CTProcessServiceUtil.class, CTProcessService.class);
 
 }

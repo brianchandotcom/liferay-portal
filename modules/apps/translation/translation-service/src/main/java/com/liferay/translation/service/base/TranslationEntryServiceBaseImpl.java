@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryService;
-import com.liferay.translation.service.TranslationEntryServiceUtil;
 import com.liferay.translation.service.persistence.TranslationEntryPersistence;
 
 import javax.sql.DataSource;
@@ -44,11 +43,10 @@ public abstract class TranslationEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>TranslationEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>TranslationEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>TranslationEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.translation.service.TranslationEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		TranslationEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class TranslationEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		translationEntryService = (TranslationEntryService)aopProxy;
-
-		TranslationEntryServiceUtil.setService(translationEntryService);
 	}
 
 	/**

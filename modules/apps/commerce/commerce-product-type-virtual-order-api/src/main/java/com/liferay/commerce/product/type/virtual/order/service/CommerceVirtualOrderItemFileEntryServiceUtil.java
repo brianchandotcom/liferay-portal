@@ -7,6 +7,7 @@ package com.liferay.commerce.product.type.virtual.order.service;
 
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -68,15 +69,12 @@ public class CommerceVirtualOrderItemFileEntryServiceUtil {
 	}
 
 	public static CommerceVirtualOrderItemFileEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(
-		CommerceVirtualOrderItemFileEntryService service) {
-
-		_service = service;
-	}
-
-	private static volatile CommerceVirtualOrderItemFileEntryService _service;
+	private static final Snapshot<CommerceVirtualOrderItemFileEntryService>
+		_serviceSnapshot = new Snapshot<>(
+			CommerceVirtualOrderItemFileEntryServiceUtil.class,
+			CommerceVirtualOrderItemFileEntryService.class);
 
 }

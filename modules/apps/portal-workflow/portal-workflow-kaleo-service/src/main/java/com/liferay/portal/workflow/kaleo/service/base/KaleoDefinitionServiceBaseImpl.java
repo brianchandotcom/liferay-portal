@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionService;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoDefinitionPersistence;
 
 import javax.sql.DataSource;
@@ -44,11 +43,10 @@ public abstract class KaleoDefinitionServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KaleoDefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KaleoDefinitionServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KaleoDefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.workflow.kaleo.service.KaleoDefinitionServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		KaleoDefinitionServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class KaleoDefinitionServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		kaleoDefinitionService = (KaleoDefinitionService)aopProxy;
-
-		KaleoDefinitionServiceUtil.setService(kaleoDefinitionService);
 	}
 
 	/**

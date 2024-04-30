@@ -7,7 +7,6 @@ package com.liferay.commerce.inventory.service.base;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
-import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalServiceUtil;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryBookedQuantityPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class CommerceInventoryBookedQuantityLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceInventoryBookedQuantityLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceInventoryBookedQuantityLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceInventoryBookedQuantityLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -416,7 +415,6 @@ public abstract class CommerceInventoryBookedQuantityLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceInventoryBookedQuantityLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -431,9 +429,6 @@ public abstract class CommerceInventoryBookedQuantityLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceInventoryBookedQuantityLocalService =
 			(CommerceInventoryBookedQuantityLocalService)aopProxy;
-
-		CommerceInventoryBookedQuantityLocalServiceUtil.setService(
-			commerceInventoryBookedQuantityLocalService);
 	}
 
 	/**

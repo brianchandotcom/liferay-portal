@@ -7,7 +7,6 @@ package com.liferay.adaptive.media.image.service.base;
 
 import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
-import com.liferay.adaptive.media.image.service.AMImageEntryLocalServiceUtil;
 import com.liferay.adaptive.media.image.service.persistence.AMImageEntryPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -66,7 +65,7 @@ public abstract class AMImageEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AMImageEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AMImageEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AMImageEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.adaptive.media.image.service.AMImageEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -443,7 +442,6 @@ public abstract class AMImageEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AMImageEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -457,8 +455,6 @@ public abstract class AMImageEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		amImageEntryLocalService = (AMImageEntryLocalService)aopProxy;
-
-		AMImageEntryLocalServiceUtil.setService(amImageEntryLocalService);
 	}
 
 	/**

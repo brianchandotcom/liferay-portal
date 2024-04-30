@@ -7,7 +7,6 @@ package com.liferay.calendar.service.base;
 
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.service.CalendarNotificationTemplateLocalService;
-import com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil;
 import com.liferay.calendar.service.persistence.CalendarNotificationTemplatePersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -73,7 +72,7 @@ public abstract class CalendarNotificationTemplateLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CalendarNotificationTemplateLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CalendarNotificationTemplateLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CalendarNotificationTemplateLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -562,7 +561,6 @@ public abstract class CalendarNotificationTemplateLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CalendarNotificationTemplateLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -578,9 +576,6 @@ public abstract class CalendarNotificationTemplateLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		calendarNotificationTemplateLocalService =
 			(CalendarNotificationTemplateLocalService)aopProxy;
-
-		CalendarNotificationTemplateLocalServiceUtil.setService(
-			calendarNotificationTemplateLocalService);
 	}
 
 	/**

@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.AppLocalService;
-import com.liferay.marketplace.service.AppLocalServiceUtil;
 import com.liferay.marketplace.service.persistence.AppPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -69,7 +68,7 @@ public abstract class AppLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AppLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AppLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AppLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.marketplace.service.AppLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -464,7 +463,6 @@ public abstract class AppLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AppLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -478,8 +476,6 @@ public abstract class AppLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		appLocalService = (AppLocalService)aopProxy;
-
-		AppLocalServiceUtil.setService(appLocalService);
 	}
 
 	/**

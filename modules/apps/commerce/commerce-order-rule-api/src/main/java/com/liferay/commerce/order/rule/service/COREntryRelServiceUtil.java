@@ -7,6 +7,7 @@ package com.liferay.commerce.order.rule.service;
 
 import com.liferay.commerce.order.rule.model.COREntryRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -163,13 +164,10 @@ public class COREntryRelServiceUtil {
 	}
 
 	public static COREntryRelService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(COREntryRelService service) {
-		_service = service;
-	}
-
-	private static volatile COREntryRelService _service;
+	private static final Snapshot<COREntryRelService> _serviceSnapshot =
+		new Snapshot<>(COREntryRelServiceUtil.class, COREntryRelService.class);
 
 }

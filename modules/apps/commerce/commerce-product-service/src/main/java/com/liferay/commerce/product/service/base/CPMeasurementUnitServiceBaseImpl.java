@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
-import com.liferay.commerce.product.service.CPMeasurementUnitServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPMeasurementUnitPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class CPMeasurementUnitServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPMeasurementUnitService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPMeasurementUnitServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPMeasurementUnitService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPMeasurementUnitServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CPMeasurementUnitServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class CPMeasurementUnitServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		cpMeasurementUnitService = (CPMeasurementUnitService)aopProxy;
-
-		CPMeasurementUnitServiceUtil.setService(cpMeasurementUnitService);
 	}
 
 	/**

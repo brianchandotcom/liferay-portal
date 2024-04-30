@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -69,7 +68,7 @@ public abstract class ObjectFieldLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectFieldLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectFieldLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectFieldLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectFieldLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -482,7 +481,6 @@ public abstract class ObjectFieldLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		ObjectFieldLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -496,8 +494,6 @@ public abstract class ObjectFieldLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		objectFieldLocalService = (ObjectFieldLocalService)aopProxy;
-
-		ObjectFieldLocalServiceUtil.setService(objectFieldLocalService);
 	}
 
 	/**

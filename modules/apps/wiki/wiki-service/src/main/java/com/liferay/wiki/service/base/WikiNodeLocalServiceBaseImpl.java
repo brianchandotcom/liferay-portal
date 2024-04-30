@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
-import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.persistence.WikiNodePersistence;
 
 import java.io.Serializable;
@@ -81,7 +80,7 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>WikiNodeLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>WikiNodeLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>WikiNodeLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.wiki.service.WikiNodeLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -590,7 +589,6 @@ public abstract class WikiNodeLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		WikiNodeLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -604,8 +602,6 @@ public abstract class WikiNodeLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		wikiNodeLocalService = (WikiNodeLocalService)aopProxy;
-
-		WikiNodeLocalServiceUtil.setService(wikiNodeLocalService);
 	}
 
 	/**

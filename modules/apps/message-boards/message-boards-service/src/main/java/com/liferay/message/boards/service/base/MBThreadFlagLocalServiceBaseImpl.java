@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBThreadFlag;
 import com.liferay.message.boards.service.MBThreadFlagLocalService;
-import com.liferay.message.boards.service.MBThreadFlagLocalServiceUtil;
 import com.liferay.message.boards.service.persistence.MBThreadFlagPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -72,7 +71,7 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MBThreadFlagLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MBThreadFlagLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MBThreadFlagLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBThreadFlagLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -518,7 +517,6 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		MBThreadFlagLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -532,8 +530,6 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		mbThreadFlagLocalService = (MBThreadFlagLocalService)aopProxy;
-
-		MBThreadFlagLocalServiceUtil.setService(mbThreadFlagLocalService);
 	}
 
 	/**

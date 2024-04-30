@@ -7,6 +7,7 @@ package com.liferay.asset.list.service;
 
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -287,13 +288,11 @@ public class AssetListEntryServiceUtil {
 	}
 
 	public static AssetListEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(AssetListEntryService service) {
-		_service = service;
-	}
-
-	private static volatile AssetListEntryService _service;
+	private static final Snapshot<AssetListEntryService> _serviceSnapshot =
+		new Snapshot<>(
+			AssetListEntryServiceUtil.class, AssetListEntryService.class);
 
 }

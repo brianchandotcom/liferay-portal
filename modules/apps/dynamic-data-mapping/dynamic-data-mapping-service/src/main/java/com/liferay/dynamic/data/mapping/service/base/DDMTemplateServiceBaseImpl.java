@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.mapping.service.base;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplatePersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class DDMTemplateServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DDMTemplateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DDMTemplateServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DDMTemplateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		DDMTemplateServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class DDMTemplateServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ddmTemplateService = (DDMTemplateService)aopProxy;
-
-		DDMTemplateServiceUtil.setService(ddmTemplateService);
 	}
 
 	/**

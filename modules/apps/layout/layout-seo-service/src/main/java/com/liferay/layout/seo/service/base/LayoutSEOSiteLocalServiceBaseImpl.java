@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
-import com.liferay.layout.seo.service.LayoutSEOSiteLocalServiceUtil;
 import com.liferay.layout.seo.service.persistence.LayoutSEOSitePersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -72,7 +71,7 @@ public abstract class LayoutSEOSiteLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>LayoutSEOSiteLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>LayoutSEOSiteLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>LayoutSEOSiteLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.layout.seo.service.LayoutSEOSiteLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -515,7 +514,6 @@ public abstract class LayoutSEOSiteLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		LayoutSEOSiteLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -529,8 +527,6 @@ public abstract class LayoutSEOSiteLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		layoutSEOSiteLocalService = (LayoutSEOSiteLocalService)aopProxy;
-
-		LayoutSEOSiteLocalServiceUtil.setService(layoutSEOSiteLocalService);
 	}
 
 	/**

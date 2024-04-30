@@ -7,6 +7,7 @@ package com.liferay.message.boards.service;
 
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -213,13 +214,10 @@ public class MBThreadServiceUtil {
 	}
 
 	public static MBThreadService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(MBThreadService service) {
-		_service = service;
-	}
-
-	private static volatile MBThreadService _service;
+	private static final Snapshot<MBThreadService> _serviceSnapshot =
+		new Snapshot<>(MBThreadServiceUtil.class, MBThreadService.class);
 
 }

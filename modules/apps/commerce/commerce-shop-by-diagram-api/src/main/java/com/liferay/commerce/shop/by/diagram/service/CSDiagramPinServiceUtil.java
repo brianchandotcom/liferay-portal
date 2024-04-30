@@ -7,6 +7,7 @@ package com.liferay.commerce.shop.by.diagram.service;
 
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -92,13 +93,11 @@ public class CSDiagramPinServiceUtil {
 	}
 
 	public static CSDiagramPinService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CSDiagramPinService service) {
-		_service = service;
-	}
-
-	private static volatile CSDiagramPinService _service;
+	private static final Snapshot<CSDiagramPinService> _serviceSnapshot =
+		new Snapshot<>(
+			CSDiagramPinServiceUtil.class, CSDiagramPinService.class);
 
 }

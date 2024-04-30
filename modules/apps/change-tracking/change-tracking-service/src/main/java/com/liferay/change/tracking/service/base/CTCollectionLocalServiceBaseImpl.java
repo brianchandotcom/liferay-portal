@@ -7,7 +7,6 @@ package com.liferay.change.tracking.service.base;
 
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTCollectionLocalServiceUtil;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -69,7 +68,7 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CTCollectionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CTCollectionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CTCollectionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.change.tracking.service.CTCollectionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -501,7 +500,6 @@ public abstract class CTCollectionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CTCollectionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -515,8 +513,6 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ctCollectionLocalService = (CTCollectionLocalService)aopProxy;
-
-		CTCollectionLocalServiceUtil.setService(ctCollectionLocalService);
 	}
 
 	/**

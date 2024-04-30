@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
-import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryFinder;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -83,7 +82,7 @@ public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPAttachmentFileEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPAttachmentFileEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPAttachmentFileEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPAttachmentFileEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -661,7 +660,6 @@ public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CPAttachmentFileEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -677,9 +675,6 @@ public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpAttachmentFileEntryLocalService =
 			(CPAttachmentFileEntryLocalService)aopProxy;
-
-		CPAttachmentFileEntryLocalServiceUtil.setService(
-			cpAttachmentFileEntryLocalService);
 	}
 
 	/**

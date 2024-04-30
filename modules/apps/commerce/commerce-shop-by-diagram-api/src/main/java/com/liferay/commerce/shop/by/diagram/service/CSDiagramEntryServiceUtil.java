@@ -7,6 +7,7 @@ package com.liferay.commerce.shop.by.diagram.service;
 
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -122,13 +123,11 @@ public class CSDiagramEntryServiceUtil {
 	}
 
 	public static CSDiagramEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CSDiagramEntryService service) {
-		_service = service;
-	}
-
-	private static volatile CSDiagramEntryService _service;
+	private static final Snapshot<CSDiagramEntryService> _serviceSnapshot =
+		new Snapshot<>(
+			CSDiagramEntryServiceUtil.class, CSDiagramEntryService.class);
 
 }

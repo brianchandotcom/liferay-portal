@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
-import com.liferay.translation.service.TranslationEntryLocalServiceUtil;
 import com.liferay.translation.service.persistence.TranslationEntryPersistence;
 
 import java.io.Serializable;
@@ -81,7 +80,7 @@ public abstract class TranslationEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>TranslationEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>TranslationEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>TranslationEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.translation.service.TranslationEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -593,7 +592,6 @@ public abstract class TranslationEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		TranslationEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -607,9 +605,6 @@ public abstract class TranslationEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		translationEntryLocalService = (TranslationEntryLocalService)aopProxy;
-
-		TranslationEntryLocalServiceUtil.setService(
-			translationEntryLocalService);
 	}
 
 	/**

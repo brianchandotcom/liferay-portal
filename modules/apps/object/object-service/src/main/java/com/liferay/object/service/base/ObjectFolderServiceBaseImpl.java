@@ -7,7 +7,6 @@ package com.liferay.object.service.base;
 
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectFolderService;
-import com.liferay.object.service.ObjectFolderServiceUtil;
 import com.liferay.object.service.persistence.ObjectFolderPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class ObjectFolderServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectFolderService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectFolderServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectFolderService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectFolderServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		ObjectFolderServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class ObjectFolderServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		objectFolderService = (ObjectFolderService)aopProxy;
-
-		ObjectFolderServiceUtil.setService(objectFolderService);
 	}
 
 	/**

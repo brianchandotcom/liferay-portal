@@ -7,7 +7,6 @@ package com.liferay.commerce.inventory.service.base;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseRelLocalService;
-import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseRelLocalServiceUtil;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseRelPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class CommerceInventoryWarehouseRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceInventoryWarehouseRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceInventoryWarehouseRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceInventoryWarehouseRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.inventory.service.CommerceInventoryWarehouseRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -412,7 +411,6 @@ public abstract class CommerceInventoryWarehouseRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceInventoryWarehouseRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -427,9 +425,6 @@ public abstract class CommerceInventoryWarehouseRelLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceInventoryWarehouseRelLocalService =
 			(CommerceInventoryWarehouseRelLocalService)aopProxy;
-
-		CommerceInventoryWarehouseRelLocalServiceUtil.setService(
-			commerceInventoryWarehouseRelLocalService);
 	}
 
 	/**

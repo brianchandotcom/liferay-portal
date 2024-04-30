@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.mapping.service.base;
 
 import com.liferay.dynamic.data.mapping.model.DDMField;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMFieldLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFieldPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -66,7 +65,7 @@ public abstract class DDMFieldLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DDMFieldLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DDMFieldLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DDMFieldLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.mapping.service.DDMFieldLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -373,7 +372,6 @@ public abstract class DDMFieldLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DDMFieldLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -387,8 +385,6 @@ public abstract class DDMFieldLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ddmFieldLocalService = (DDMFieldLocalService)aopProxy;
-
-		DDMFieldLocalServiceUtil.setService(ddmFieldLocalService);
 	}
 
 	/**

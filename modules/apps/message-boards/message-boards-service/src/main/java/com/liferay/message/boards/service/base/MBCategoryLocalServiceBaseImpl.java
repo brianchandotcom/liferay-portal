@@ -14,7 +14,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
-import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.service.persistence.MBCategoryFinder;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
 import com.liferay.petra.function.UnsafeFunction;
@@ -82,7 +81,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MBCategoryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MBCategoryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MBCategoryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBCategoryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -579,7 +578,6 @@ public abstract class MBCategoryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		MBCategoryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -593,8 +591,6 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		mbCategoryLocalService = (MBCategoryLocalService)aopProxy;
-
-		MBCategoryLocalServiceUtil.setService(mbCategoryLocalService);
 	}
 
 	/**

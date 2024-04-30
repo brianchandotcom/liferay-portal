@@ -7,6 +7,7 @@ package com.liferay.dispatch.service;
 
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -102,13 +103,11 @@ public class DispatchTriggerServiceUtil {
 	}
 
 	public static DispatchTriggerService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(DispatchTriggerService service) {
-		_service = service;
-	}
-
-	private static volatile DispatchTriggerService _service;
+	private static final Snapshot<DispatchTriggerService> _serviceSnapshot =
+		new Snapshot<>(
+			DispatchTriggerServiceUtil.class, DispatchTriggerService.class);
 
 }

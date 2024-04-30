@@ -5,6 +5,8 @@
 
 package com.liferay.object.service;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
+
 /**
  * Provides the remote service utility for ObjectLayoutTab. This utility wraps
  * <code>com.liferay.object.service.impl.ObjectLayoutTabServiceImpl</code> and is an
@@ -30,18 +32,16 @@ public class ObjectLayoutTabServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static ObjectLayoutTabService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(ObjectLayoutTabService service) {
-		_service = service;
-	}
-
-	private static volatile ObjectLayoutTabService _service;
+	private static final Snapshot<ObjectLayoutTabService> _serviceSnapshot =
+		new Snapshot<>(
+			ObjectLayoutTabServiceUtil.class, ObjectLayoutTabService.class);
 
 }

@@ -7,6 +7,7 @@ package com.liferay.message.boards.service;
 
 import com.liferay.message.boards.model.MBBan;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the remote service utility for MBBan. This utility wraps
@@ -53,13 +54,10 @@ public class MBBanServiceUtil {
 	}
 
 	public static MBBanService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(MBBanService service) {
-		_service = service;
-	}
-
-	private static volatile MBBanService _service;
+	private static final Snapshot<MBBanService> _serviceSnapshot =
+		new Snapshot<>(MBBanServiceUtil.class, MBBanService.class);
 
 }

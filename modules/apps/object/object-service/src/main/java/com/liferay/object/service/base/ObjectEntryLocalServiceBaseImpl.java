@@ -14,7 +14,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -78,7 +77,7 @@ public abstract class ObjectEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -583,7 +582,6 @@ public abstract class ObjectEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		ObjectEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -597,8 +595,6 @@ public abstract class ObjectEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		objectEntryLocalService = (ObjectEntryLocalService)aopProxy;
-
-		ObjectEntryLocalServiceUtil.setService(objectEntryLocalService);
 	}
 
 	/**

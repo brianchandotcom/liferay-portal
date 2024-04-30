@@ -7,7 +7,6 @@ package com.liferay.commerce.price.list.service.base;
 
 import com.liferay.commerce.price.list.model.CommercePriceListAccountRel;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelService;
-import com.liferay.commerce.price.list.service.CommercePriceListAccountRelServiceUtil;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListAccountRelFinder;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListAccountRelPersistence;
 import com.liferay.portal.aop.AopService;
@@ -46,11 +45,10 @@ public abstract class CommercePriceListAccountRelServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePriceListAccountRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePriceListAccountRelServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePriceListAccountRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.price.list.service.CommercePriceListAccountRelServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommercePriceListAccountRelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -65,9 +63,6 @@ public abstract class CommercePriceListAccountRelServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commercePriceListAccountRelService =
 			(CommercePriceListAccountRelService)aopProxy;
-
-		CommercePriceListAccountRelServiceUtil.setService(
-			commercePriceListAccountRelService);
 	}
 
 	/**

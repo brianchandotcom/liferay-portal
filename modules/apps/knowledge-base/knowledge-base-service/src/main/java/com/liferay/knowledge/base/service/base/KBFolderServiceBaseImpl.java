@@ -7,7 +7,6 @@ package com.liferay.knowledge.base.service.base;
 
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBFolderService;
-import com.liferay.knowledge.base.service.KBFolderServiceUtil;
 import com.liferay.knowledge.base.service.persistence.KBFolderFinder;
 import com.liferay.knowledge.base.service.persistence.KBFolderPersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class KBFolderServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KBFolderService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KBFolderServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KBFolderService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.knowledge.base.service.KBFolderServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		KBFolderServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class KBFolderServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		kbFolderService = (KBFolderService)aopProxy;
-
-		KBFolderServiceUtil.setService(kbFolderService);
 	}
 
 	/**

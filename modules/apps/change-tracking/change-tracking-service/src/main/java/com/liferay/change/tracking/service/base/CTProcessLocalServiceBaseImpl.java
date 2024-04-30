@@ -7,7 +7,6 @@ package com.liferay.change.tracking.service.base;
 
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTProcessLocalService;
-import com.liferay.change.tracking.service.CTProcessLocalServiceUtil;
 import com.liferay.change.tracking.service.persistence.CTProcessPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -63,7 +62,7 @@ public abstract class CTProcessLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CTProcessLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CTProcessLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CTProcessLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.change.tracking.service.CTProcessLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -371,7 +370,6 @@ public abstract class CTProcessLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CTProcessLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -385,8 +383,6 @@ public abstract class CTProcessLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ctProcessLocalService = (CTProcessLocalService)aopProxy;
-
-		CTProcessLocalServiceUtil.setService(ctProcessLocalService);
 	}
 
 	/**

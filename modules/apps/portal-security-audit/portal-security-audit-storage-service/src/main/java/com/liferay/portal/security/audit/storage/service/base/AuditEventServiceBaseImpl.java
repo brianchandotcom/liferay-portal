@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
 import com.liferay.portal.security.audit.storage.service.AuditEventService;
-import com.liferay.portal.security.audit.storage.service.AuditEventServiceUtil;
 import com.liferay.portal.security.audit.storage.service.persistence.AuditEventPersistence;
 
 import javax.sql.DataSource;
@@ -44,11 +43,10 @@ public abstract class AuditEventServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AuditEventService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AuditEventServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AuditEventService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.security.audit.storage.service.AuditEventServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		AuditEventServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class AuditEventServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		auditEventService = (AuditEventService)aopProxy;
-
-		AuditEventServiceUtil.setService(auditEventService);
 	}
 
 	/**

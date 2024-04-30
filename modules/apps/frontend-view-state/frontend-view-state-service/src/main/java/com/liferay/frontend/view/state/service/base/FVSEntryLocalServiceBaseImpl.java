@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.frontend.view.state.model.FVSEntry;
 import com.liferay.frontend.view.state.service.FVSEntryLocalService;
-import com.liferay.frontend.view.state.service.FVSEntryLocalServiceUtil;
 import com.liferay.frontend.view.state.service.persistence.FVSEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -69,7 +68,7 @@ public abstract class FVSEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>FVSEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>FVSEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>FVSEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.frontend.view.state.service.FVSEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -471,7 +470,6 @@ public abstract class FVSEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		FVSEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -485,8 +483,6 @@ public abstract class FVSEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		fvsEntryLocalService = (FVSEntryLocalService)aopProxy;
-
-		FVSEntryLocalServiceUtil.setService(fvsEntryLocalService);
 	}
 
 	/**

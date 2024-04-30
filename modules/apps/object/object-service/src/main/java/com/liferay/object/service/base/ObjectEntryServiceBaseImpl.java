@@ -7,7 +7,6 @@ package com.liferay.object.service.base;
 
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
-import com.liferay.object.service.ObjectEntryServiceUtil;
 import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class ObjectEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		ObjectEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class ObjectEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		objectEntryService = (ObjectEntryService)aopProxy;
-
-		ObjectEntryServiceUtil.setService(objectEntryService);
 	}
 
 	/**

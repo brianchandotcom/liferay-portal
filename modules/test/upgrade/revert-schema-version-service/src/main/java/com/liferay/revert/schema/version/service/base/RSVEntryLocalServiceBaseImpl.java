@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.revert.schema.version.model.RSVEntry;
 import com.liferay.revert.schema.version.service.RSVEntryLocalService;
-import com.liferay.revert.schema.version.service.RSVEntryLocalServiceUtil;
 import com.liferay.revert.schema.version.service.persistence.RSVEntryPersistence;
 
 import java.io.Serializable;
@@ -63,7 +62,7 @@ public abstract class RSVEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>RSVEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>RSVEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>RSVEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.revert.schema.version.service.RSVEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -370,7 +369,6 @@ public abstract class RSVEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		RSVEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -384,8 +382,6 @@ public abstract class RSVEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		rsvEntryLocalService = (RSVEntryLocalService)aopProxy;
-
-		RSVEntryLocalServiceUtil.setService(rsvEntryLocalService);
 	}
 
 	/**

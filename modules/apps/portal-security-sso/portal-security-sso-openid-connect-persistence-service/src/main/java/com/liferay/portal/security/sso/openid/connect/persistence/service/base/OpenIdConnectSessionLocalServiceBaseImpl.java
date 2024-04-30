@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectSessionLocalService;
-import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectSessionLocalServiceUtil;
 import com.liferay.portal.security.sso.openid.connect.persistence.service.persistence.OpenIdConnectSessionPersistence;
 
 import java.io.Serializable;
@@ -64,7 +63,7 @@ public abstract class OpenIdConnectSessionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>OpenIdConnectSessionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>OpenIdConnectSessionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>OpenIdConnectSessionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectSessionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -401,7 +400,6 @@ public abstract class OpenIdConnectSessionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		OpenIdConnectSessionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -416,9 +414,6 @@ public abstract class OpenIdConnectSessionLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		openIdConnectSessionLocalService =
 			(OpenIdConnectSessionLocalService)aopProxy;
-
-		OpenIdConnectSessionLocalServiceUtil.setService(
-			openIdConnectSessionLocalService);
 	}
 
 	/**

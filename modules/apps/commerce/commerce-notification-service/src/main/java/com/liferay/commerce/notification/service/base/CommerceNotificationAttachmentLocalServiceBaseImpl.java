@@ -7,7 +7,6 @@ package com.liferay.commerce.notification.service.base;
 
 import com.liferay.commerce.notification.model.CommerceNotificationAttachment;
 import com.liferay.commerce.notification.service.CommerceNotificationAttachmentLocalService;
-import com.liferay.commerce.notification.service.CommerceNotificationAttachmentLocalServiceUtil;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationAttachmentPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -70,7 +69,7 @@ public abstract class CommerceNotificationAttachmentLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceNotificationAttachmentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceNotificationAttachmentLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceNotificationAttachmentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.notification.service.CommerceNotificationAttachmentLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -559,7 +558,6 @@ public abstract class CommerceNotificationAttachmentLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceNotificationAttachmentLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -574,9 +572,6 @@ public abstract class CommerceNotificationAttachmentLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceNotificationAttachmentLocalService =
 			(CommerceNotificationAttachmentLocalService)aopProxy;
-
-		CommerceNotificationAttachmentLocalServiceUtil.setService(
-			commerceNotificationAttachmentLocalService);
 	}
 
 	/**

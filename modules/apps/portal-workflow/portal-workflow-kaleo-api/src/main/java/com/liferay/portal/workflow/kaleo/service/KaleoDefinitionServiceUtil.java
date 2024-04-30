@@ -6,6 +6,7 @@
 package com.liferay.portal.workflow.kaleo.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 
 /**
@@ -57,13 +58,11 @@ public class KaleoDefinitionServiceUtil {
 	}
 
 	public static KaleoDefinitionService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(KaleoDefinitionService service) {
-		_service = service;
-	}
-
-	private static volatile KaleoDefinitionService _service;
+	private static final Snapshot<KaleoDefinitionService> _serviceSnapshot =
+		new Snapshot<>(
+			KaleoDefinitionServiceUtil.class, KaleoDefinitionService.class);
 
 }

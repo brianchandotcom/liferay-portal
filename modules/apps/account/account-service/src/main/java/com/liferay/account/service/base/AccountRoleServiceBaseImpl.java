@@ -7,7 +7,6 @@ package com.liferay.account.service.base;
 
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleService;
-import com.liferay.account.service.AccountRoleServiceUtil;
 import com.liferay.account.service.persistence.AccountRolePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class AccountRoleServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AccountRoleService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AccountRoleServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AccountRoleService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.account.service.AccountRoleServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		AccountRoleServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class AccountRoleServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		accountRoleService = (AccountRoleService)aopProxy;
-
-		AccountRoleServiceUtil.setService(accountRoleService);
 	}
 
 	/**

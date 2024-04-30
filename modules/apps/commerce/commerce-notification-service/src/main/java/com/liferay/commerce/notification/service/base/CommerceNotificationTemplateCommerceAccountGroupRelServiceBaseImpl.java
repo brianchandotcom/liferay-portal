@@ -7,7 +7,6 @@ package com.liferay.commerce.notification.service.base;
 
 import com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateCommerceAccountGroupRelService;
-import com.liferay.commerce.notification.service.CommerceNotificationTemplateCommerceAccountGroupRelServiceUtil;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationTemplateCommerceAccountGroupRelPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -47,12 +46,10 @@ public abstract class
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceNotificationTemplateCommerceAccountGroupRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceNotificationTemplateCommerceAccountGroupRelServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceNotificationTemplateCommerceAccountGroupRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.notification.service.CommerceNotificationTemplateCommerceAccountGroupRelServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceNotificationTemplateCommerceAccountGroupRelServiceUtil.
-			setService(null);
 	}
 
 	@Override
@@ -68,10 +65,6 @@ public abstract class
 		commerceNotificationTemplateCommerceAccountGroupRelService =
 			(CommerceNotificationTemplateCommerceAccountGroupRelService)
 				aopProxy;
-
-		CommerceNotificationTemplateCommerceAccountGroupRelServiceUtil.
-			setService(
-				commerceNotificationTemplateCommerceAccountGroupRelService);
 	}
 
 	/**

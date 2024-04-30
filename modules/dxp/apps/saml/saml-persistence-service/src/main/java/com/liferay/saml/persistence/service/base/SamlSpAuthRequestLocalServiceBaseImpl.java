@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
 import com.liferay.saml.persistence.service.SamlSpAuthRequestLocalService;
-import com.liferay.saml.persistence.service.SamlSpAuthRequestLocalServiceUtil;
 import com.liferay.saml.persistence.service.persistence.SamlSpAuthRequestPersistence;
 
 import java.io.Serializable;
@@ -64,7 +63,7 @@ public abstract class SamlSpAuthRequestLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SamlSpAuthRequestLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SamlSpAuthRequestLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SamlSpAuthRequestLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.saml.persistence.service.SamlSpAuthRequestLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -392,7 +391,6 @@ public abstract class SamlSpAuthRequestLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		SamlSpAuthRequestLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -406,9 +404,6 @@ public abstract class SamlSpAuthRequestLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		samlSpAuthRequestLocalService = (SamlSpAuthRequestLocalService)aopProxy;
-
-		SamlSpAuthRequestLocalServiceUtil.setService(
-			samlSpAuthRequestLocalService);
 	}
 
 	/**

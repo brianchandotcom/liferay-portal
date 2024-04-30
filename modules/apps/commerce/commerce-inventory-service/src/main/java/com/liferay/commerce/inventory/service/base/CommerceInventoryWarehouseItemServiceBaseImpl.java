@@ -7,7 +7,6 @@ package com.liferay.commerce.inventory.service.base;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
-import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemServiceUtil;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseItemPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CommerceInventoryWarehouseItemServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceInventoryWarehouseItemService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceInventoryWarehouseItemServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceInventoryWarehouseItemService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceInventoryWarehouseItemServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,9 +62,6 @@ public abstract class CommerceInventoryWarehouseItemServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceInventoryWarehouseItemService =
 			(CommerceInventoryWarehouseItemService)aopProxy;
-
-		CommerceInventoryWarehouseItemServiceUtil.setService(
-			commerceInventoryWarehouseItemService);
 	}
 
 	/**

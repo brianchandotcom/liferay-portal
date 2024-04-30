@@ -7,7 +7,6 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceOrderPayment;
 import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
-import com.liferay.commerce.service.CommerceOrderPaymentLocalServiceUtil;
 import com.liferay.commerce.service.persistence.CommerceOrderPaymentPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class CommerceOrderPaymentLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceOrderPaymentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceOrderPaymentLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceOrderPaymentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceOrderPaymentLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -401,7 +400,6 @@ public abstract class CommerceOrderPaymentLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceOrderPaymentLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -416,9 +414,6 @@ public abstract class CommerceOrderPaymentLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceOrderPaymentLocalService =
 			(CommerceOrderPaymentLocalService)aopProxy;
-
-		CommerceOrderPaymentLocalServiceUtil.setService(
-			commerceOrderPaymentLocalService);
 	}
 
 	/**

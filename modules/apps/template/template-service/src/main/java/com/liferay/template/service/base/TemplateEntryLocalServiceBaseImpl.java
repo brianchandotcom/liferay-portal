@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
-import com.liferay.template.service.TemplateEntryLocalServiceUtil;
 import com.liferay.template.service.persistence.TemplateEntryPersistence;
 
 import java.io.Serializable;
@@ -72,7 +71,7 @@ public abstract class TemplateEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>TemplateEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>TemplateEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>TemplateEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.template.service.TemplateEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -535,7 +534,6 @@ public abstract class TemplateEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		TemplateEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -549,8 +547,6 @@ public abstract class TemplateEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		templateEntryLocalService = (TemplateEntryLocalService)aopProxy;
-
-		TemplateEntryLocalServiceUtil.setService(templateEntryLocalService);
 	}
 
 	/**

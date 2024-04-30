@@ -7,7 +7,6 @@ package com.liferay.marketplace.service.base;
 
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.AppService;
-import com.liferay.marketplace.service.AppServiceUtil;
 import com.liferay.marketplace.service.persistence.AppPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class AppServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AppService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AppServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AppService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.marketplace.service.AppServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		AppServiceUtil.setService(null);
 	}
 
 	@Override
@@ -59,8 +57,6 @@ public abstract class AppServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		appService = (AppService)aopProxy;
-
-		AppServiceUtil.setService(appService);
 	}
 
 	/**

@@ -7,7 +7,6 @@ package com.liferay.batch.planner.service.base;
 
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.service.BatchPlannerMappingLocalService;
-import com.liferay.batch.planner.service.BatchPlannerMappingLocalServiceUtil;
 import com.liferay.batch.planner.service.persistence.BatchPlannerMappingPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class BatchPlannerMappingLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>BatchPlannerMappingLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>BatchPlannerMappingLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>BatchPlannerMappingLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.batch.planner.service.BatchPlannerMappingLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -401,7 +400,6 @@ public abstract class BatchPlannerMappingLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		BatchPlannerMappingLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -416,9 +414,6 @@ public abstract class BatchPlannerMappingLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		batchPlannerMappingLocalService =
 			(BatchPlannerMappingLocalService)aopProxy;
-
-		BatchPlannerMappingLocalServiceUtil.setService(
-			batchPlannerMappingLocalService);
 	}
 
 	/**

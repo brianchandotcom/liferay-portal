@@ -7,6 +7,7 @@ package com.liferay.commerce.service;
 
 import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the remote service utility for CPDAvailabilityEstimate. This utility wraps
@@ -55,13 +56,12 @@ public class CPDAvailabilityEstimateServiceUtil {
 	}
 
 	public static CPDAvailabilityEstimateService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CPDAvailabilityEstimateService service) {
-		_service = service;
-	}
-
-	private static volatile CPDAvailabilityEstimateService _service;
+	private static final Snapshot<CPDAvailabilityEstimateService>
+		_serviceSnapshot = new Snapshot<>(
+			CPDAvailabilityEstimateServiceUtil.class,
+			CPDAvailabilityEstimateService.class);
 
 }

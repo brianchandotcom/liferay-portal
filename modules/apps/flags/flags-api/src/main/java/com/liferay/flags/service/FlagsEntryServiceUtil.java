@@ -6,6 +6,7 @@
 package com.liferay.flags.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the remote service utility for FlagsEntry. This utility wraps
@@ -48,13 +49,10 @@ public class FlagsEntryServiceUtil {
 	}
 
 	public static FlagsEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(FlagsEntryService service) {
-		_service = service;
-	}
-
-	private static volatile FlagsEntryService _service;
+	private static final Snapshot<FlagsEntryService> _serviceSnapshot =
+		new Snapshot<>(FlagsEntryServiceUtil.class, FlagsEntryService.class);
 
 }

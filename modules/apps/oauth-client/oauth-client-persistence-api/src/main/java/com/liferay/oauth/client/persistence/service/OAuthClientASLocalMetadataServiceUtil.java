@@ -7,6 +7,7 @@ package com.liferay.oauth.client.persistence.service;
 
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -105,13 +106,12 @@ public class OAuthClientASLocalMetadataServiceUtil {
 	}
 
 	public static OAuthClientASLocalMetadataService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(OAuthClientASLocalMetadataService service) {
-		_service = service;
-	}
-
-	private static volatile OAuthClientASLocalMetadataService _service;
+	private static final Snapshot<OAuthClientASLocalMetadataService>
+		_serviceSnapshot = new Snapshot<>(
+			OAuthClientASLocalMetadataServiceUtil.class,
+			OAuthClientASLocalMetadataService.class);
 
 }

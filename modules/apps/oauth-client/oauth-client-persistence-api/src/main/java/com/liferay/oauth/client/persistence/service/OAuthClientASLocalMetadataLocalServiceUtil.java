@@ -10,6 +10,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
@@ -369,15 +370,12 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 	}
 
 	public static OAuthClientASLocalMetadataLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(
-		OAuthClientASLocalMetadataLocalService service) {
-
-		_service = service;
-	}
-
-	private static volatile OAuthClientASLocalMetadataLocalService _service;
+	private static final Snapshot<OAuthClientASLocalMetadataLocalService>
+		_serviceSnapshot = new Snapshot<>(
+			OAuthClientASLocalMetadataLocalServiceUtil.class,
+			OAuthClientASLocalMetadataLocalService.class);
 
 }

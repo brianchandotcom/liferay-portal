@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.lists.service.base;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetFinder;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -73,7 +72,7 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DDLRecordSetLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DDLRecordSetLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DDLRecordSetLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -519,7 +518,6 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DDLRecordSetLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -533,8 +531,6 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ddlRecordSetLocalService = (DDLRecordSetLocalService)aopProxy;
-
-		DDLRecordSetLocalServiceUtil.setService(ddlRecordSetLocalService);
 	}
 
 	/**

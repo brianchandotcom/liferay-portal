@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.saved.content.model.SavedContentEntry;
 import com.liferay.saved.content.service.SavedContentEntryService;
-import com.liferay.saved.content.service.SavedContentEntryServiceUtil;
 import com.liferay.saved.content.service.persistence.SavedContentEntryPersistence;
 
 import javax.sql.DataSource;
@@ -44,11 +43,10 @@ public abstract class SavedContentEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SavedContentEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SavedContentEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SavedContentEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.saved.content.service.SavedContentEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		SavedContentEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class SavedContentEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		savedContentEntryService = (SavedContentEntryService)aopProxy;
-
-		SavedContentEntryServiceUtil.setService(savedContentEntryService);
 	}
 
 	/**

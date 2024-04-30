@@ -7,7 +7,6 @@ package com.liferay.commerce.notification.service.base;
 
 import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
 import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalService;
-import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalServiceUtil;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationQueueEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class CommerceNotificationQueueEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceNotificationQueueEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceNotificationQueueEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceNotificationQueueEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -412,7 +411,6 @@ public abstract class CommerceNotificationQueueEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceNotificationQueueEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -427,9 +425,6 @@ public abstract class CommerceNotificationQueueEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceNotificationQueueEntryLocalService =
 			(CommerceNotificationQueueEntryLocalService)aopProxy;
-
-		CommerceNotificationQueueEntryLocalServiceUtil.setService(
-			commerceNotificationQueueEntryLocalService);
 	}
 
 	/**

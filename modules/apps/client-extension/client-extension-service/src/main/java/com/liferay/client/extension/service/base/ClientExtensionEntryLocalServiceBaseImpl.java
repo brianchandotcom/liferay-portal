@@ -7,7 +7,6 @@ package com.liferay.client.extension.service.base;
 
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
-import com.liferay.client.extension.service.ClientExtensionEntryLocalServiceUtil;
 import com.liferay.client.extension.service.persistence.ClientExtensionEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -81,7 +80,7 @@ public abstract class ClientExtensionEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ClientExtensionEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ClientExtensionEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ClientExtensionEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.client.extension.service.ClientExtensionEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -574,7 +573,6 @@ public abstract class ClientExtensionEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		ClientExtensionEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -590,9 +588,6 @@ public abstract class ClientExtensionEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		clientExtensionEntryLocalService =
 			(ClientExtensionEntryLocalService)aopProxy;
-
-		ClientExtensionEntryLocalServiceUtil.setService(
-			clientExtensionEntryLocalService);
 	}
 
 	/**

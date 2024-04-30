@@ -7,6 +7,7 @@ package com.liferay.layout.seo.service;
 
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.Map;
 
@@ -100,13 +101,11 @@ public class LayoutSEOEntryServiceUtil {
 	}
 
 	public static LayoutSEOEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(LayoutSEOEntryService service) {
-		_service = service;
-	}
-
-	private static volatile LayoutSEOEntryService _service;
+	private static final Snapshot<LayoutSEOEntryService> _serviceSnapshot =
+		new Snapshot<>(
+			LayoutSEOEntryServiceUtil.class, LayoutSEOEntryService.class);
 
 }

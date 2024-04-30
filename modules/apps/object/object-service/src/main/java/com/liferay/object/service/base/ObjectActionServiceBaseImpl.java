@@ -7,7 +7,6 @@ package com.liferay.object.service.base;
 
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.service.ObjectActionService;
-import com.liferay.object.service.ObjectActionServiceUtil;
 import com.liferay.object.service.persistence.ObjectActionPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class ObjectActionServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectActionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectActionServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectActionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectActionServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		ObjectActionServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class ObjectActionServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		objectActionService = (ObjectActionService)aopProxy;
-
-		ObjectActionServiceUtil.setService(objectActionService);
 	}
 
 	/**

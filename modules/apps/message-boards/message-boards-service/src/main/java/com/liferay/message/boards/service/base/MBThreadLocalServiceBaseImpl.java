@@ -14,7 +14,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBThreadLocalService;
-import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
 import com.liferay.message.boards.service.persistence.MBThreadFinder;
 import com.liferay.message.boards.service.persistence.MBThreadPersistence;
 import com.liferay.petra.function.UnsafeFunction;
@@ -82,7 +81,7 @@ public abstract class MBThreadLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MBThreadLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MBThreadLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MBThreadLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBThreadLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -576,7 +575,6 @@ public abstract class MBThreadLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		MBThreadLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -590,8 +588,6 @@ public abstract class MBThreadLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		mbThreadLocalService = (MBThreadLocalService)aopProxy;
-
-		MBThreadLocalServiceUtil.setService(mbThreadLocalService);
 	}
 
 	/**

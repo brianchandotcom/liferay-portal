@@ -7,7 +7,6 @@ package com.liferay.asset.list.service.base;
 
 import com.liferay.asset.list.model.AssetListEntryUsage;
 import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
-import com.liferay.asset.list.service.AssetListEntryUsageLocalServiceUtil;
 import com.liferay.asset.list.service.persistence.AssetListEntryUsagePersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -75,7 +74,7 @@ public abstract class AssetListEntryUsageLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AssetListEntryUsageLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AssetListEntryUsageLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AssetListEntryUsageLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.asset.list.service.AssetListEntryUsageLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -571,7 +570,6 @@ public abstract class AssetListEntryUsageLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AssetListEntryUsageLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -587,9 +585,6 @@ public abstract class AssetListEntryUsageLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		assetListEntryUsageLocalService =
 			(AssetListEntryUsageLocalService)aopProxy;
-
-		AssetListEntryUsageLocalServiceUtil.setService(
-			assetListEntryUsageLocalService);
 	}
 
 	/**

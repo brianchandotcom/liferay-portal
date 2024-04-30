@@ -7,7 +7,6 @@ package com.liferay.document.library.service.base;
 
 import com.liferay.document.library.model.DLFileVersionPreview;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
-import com.liferay.document.library.service.DLFileVersionPreviewLocalServiceUtil;
 import com.liferay.document.library.service.persistence.DLFileVersionPreviewPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -67,7 +66,7 @@ public abstract class DLFileVersionPreviewLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DLFileVersionPreviewLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DLFileVersionPreviewLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DLFileVersionPreviewLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.document.library.service.DLFileVersionPreviewLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -404,7 +403,6 @@ public abstract class DLFileVersionPreviewLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DLFileVersionPreviewLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -420,9 +418,6 @@ public abstract class DLFileVersionPreviewLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		dlFileVersionPreviewLocalService =
 			(DLFileVersionPreviewLocalService)aopProxy;
-
-		DLFileVersionPreviewLocalServiceUtil.setService(
-			dlFileVersionPreviewLocalService);
 	}
 
 	/**

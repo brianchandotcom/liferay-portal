@@ -7,7 +7,6 @@ package com.liferay.commerce.discount.service.base;
 
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
-import com.liferay.commerce.discount.service.CommerceDiscountServiceUtil;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountPersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class CommerceDiscountServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceDiscountService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceDiscountServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceDiscountService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.discount.service.CommerceDiscountServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceDiscountServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class CommerceDiscountServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceDiscountService = (CommerceDiscountService)aopProxy;
-
-		CommerceDiscountServiceUtil.setService(commerceDiscountService);
 	}
 
 	/**

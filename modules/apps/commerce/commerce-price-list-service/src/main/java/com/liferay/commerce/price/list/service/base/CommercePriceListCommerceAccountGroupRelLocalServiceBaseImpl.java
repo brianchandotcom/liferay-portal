@@ -7,7 +7,6 @@ package com.liferay.commerce.price.list.service.base;
 
 import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelLocalService;
-import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelLocalServiceUtil;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListCommerceAccountGroupRelFinder;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListCommerceAccountGroupRelPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -76,7 +75,7 @@ public abstract class
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePriceListCommerceAccountGroupRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePriceListCommerceAccountGroupRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePriceListCommerceAccountGroupRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -544,8 +543,6 @@ public abstract class
 
 	@Deactivate
 	protected void deactivate() {
-		CommercePriceListCommerceAccountGroupRelLocalServiceUtil.setService(
-			null);
 	}
 
 	@Override
@@ -561,9 +558,6 @@ public abstract class
 	public void setAopProxy(Object aopProxy) {
 		commercePriceListCommerceAccountGroupRelLocalService =
 			(CommercePriceListCommerceAccountGroupRelLocalService)aopProxy;
-
-		CommercePriceListCommerceAccountGroupRelLocalServiceUtil.setService(
-			commercePriceListCommerceAccountGroupRelLocalService);
 	}
 
 	/**

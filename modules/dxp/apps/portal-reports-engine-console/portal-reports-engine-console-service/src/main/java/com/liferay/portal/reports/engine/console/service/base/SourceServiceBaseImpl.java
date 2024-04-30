@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.service.SourceService;
-import com.liferay.portal.reports.engine.console.service.SourceServiceUtil;
 import com.liferay.portal.reports.engine.console.service.persistence.SourceFinder;
 import com.liferay.portal.reports.engine.console.service.persistence.SourcePersistence;
 
@@ -45,11 +44,10 @@ public abstract class SourceServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SourceService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SourceServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SourceService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.reports.engine.console.service.SourceServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		SourceServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class SourceServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		sourceService = (SourceService)aopProxy;
-
-		SourceServiceUtil.setService(sourceService);
 	}
 
 	/**

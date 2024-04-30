@@ -7,7 +7,6 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceAddressRestriction;
 import com.liferay.commerce.service.CommerceAddressRestrictionService;
-import com.liferay.commerce.service.CommerceAddressRestrictionServiceUtil;
 import com.liferay.commerce.service.persistence.CommerceAddressRestrictionPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CommerceAddressRestrictionServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceAddressRestrictionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceAddressRestrictionServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceAddressRestrictionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceAddressRestrictionServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceAddressRestrictionServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,9 +62,6 @@ public abstract class CommerceAddressRestrictionServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceAddressRestrictionService =
 			(CommerceAddressRestrictionService)aopProxy;
-
-		CommerceAddressRestrictionServiceUtil.setService(
-			commerceAddressRestrictionService);
 	}
 
 	/**

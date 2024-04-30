@@ -10,6 +10,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
@@ -341,13 +342,12 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 	}
 
 	public static MFAFIDO2CredentialEntryLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(MFAFIDO2CredentialEntryLocalService service) {
-		_service = service;
-	}
-
-	private static volatile MFAFIDO2CredentialEntryLocalService _service;
+	private static final Snapshot<MFAFIDO2CredentialEntryLocalService>
+		_serviceSnapshot = new Snapshot<>(
+			MFAFIDO2CredentialEntryLocalServiceUtil.class,
+			MFAFIDO2CredentialEntryLocalService.class);
 
 }

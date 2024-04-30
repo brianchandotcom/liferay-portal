@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
-import com.liferay.commerce.product.service.CPMeasurementUnitLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPMeasurementUnitPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -73,7 +72,7 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPMeasurementUnitLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPMeasurementUnitLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPMeasurementUnitLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPMeasurementUnitLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -547,7 +546,6 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CPMeasurementUnitLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -561,9 +559,6 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		cpMeasurementUnitLocalService = (CPMeasurementUnitLocalService)aopProxy;
-
-		CPMeasurementUnitLocalServiceUtil.setService(
-			cpMeasurementUnitLocalService);
 	}
 
 	/**

@@ -7,7 +7,6 @@ package com.liferay.commerce.shop.by.diagram.service.base;
 
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinService;
-import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinServiceUtil;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramPinPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class CSDiagramPinServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CSDiagramPinService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CSDiagramPinServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CSDiagramPinService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.shop.by.diagram.service.CSDiagramPinServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CSDiagramPinServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class CSDiagramPinServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		csDiagramPinService = (CSDiagramPinService)aopProxy;
-
-		CSDiagramPinServiceUtil.setService(csDiagramPinService);
 	}
 
 	/**

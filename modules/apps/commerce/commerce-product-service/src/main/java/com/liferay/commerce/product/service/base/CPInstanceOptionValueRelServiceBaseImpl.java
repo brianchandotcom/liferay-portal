@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelService;
-import com.liferay.commerce.product.service.CPInstanceOptionValueRelServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelFinder;
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
 import com.liferay.portal.aop.AopService;
@@ -46,11 +45,10 @@ public abstract class CPInstanceOptionValueRelServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPInstanceOptionValueRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPInstanceOptionValueRelServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPInstanceOptionValueRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPInstanceOptionValueRelServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CPInstanceOptionValueRelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,9 +62,6 @@ public abstract class CPInstanceOptionValueRelServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpInstanceOptionValueRelService =
 			(CPInstanceOptionValueRelService)aopProxy;
-
-		CPInstanceOptionValueRelServiceUtil.setService(
-			cpInstanceOptionValueRelService);
 	}
 
 	/**

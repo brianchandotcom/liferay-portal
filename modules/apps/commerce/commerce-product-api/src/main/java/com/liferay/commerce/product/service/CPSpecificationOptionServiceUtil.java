@@ -7,6 +7,7 @@ package com.liferay.commerce.product.service;
 
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.Map;
 
@@ -101,13 +102,12 @@ public class CPSpecificationOptionServiceUtil {
 	}
 
 	public static CPSpecificationOptionService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CPSpecificationOptionService service) {
-		_service = service;
-	}
-
-	private static volatile CPSpecificationOptionService _service;
+	private static final Snapshot<CPSpecificationOptionService>
+		_serviceSnapshot = new Snapshot<>(
+			CPSpecificationOptionServiceUtil.class,
+			CPSpecificationOptionService.class);
 
 }

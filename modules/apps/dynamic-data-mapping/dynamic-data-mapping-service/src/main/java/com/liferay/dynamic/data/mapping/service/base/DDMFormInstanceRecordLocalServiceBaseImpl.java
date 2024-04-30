@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.mapping.service.base;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordFinder;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -74,7 +73,7 @@ public abstract class DDMFormInstanceRecordLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DDMFormInstanceRecordLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DDMFormInstanceRecordLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DDMFormInstanceRecordLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -548,7 +547,6 @@ public abstract class DDMFormInstanceRecordLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DDMFormInstanceRecordLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -564,9 +562,6 @@ public abstract class DDMFormInstanceRecordLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		ddmFormInstanceRecordLocalService =
 			(DDMFormInstanceRecordLocalService)aopProxy;
-
-		DDMFormInstanceRecordLocalServiceUtil.setService(
-			ddmFormInstanceRecordLocalService);
 	}
 
 	/**

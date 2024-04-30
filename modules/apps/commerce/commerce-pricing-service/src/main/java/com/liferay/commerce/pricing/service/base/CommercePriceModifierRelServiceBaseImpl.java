@@ -7,7 +7,6 @@ package com.liferay.commerce.pricing.service.base;
 
 import com.liferay.commerce.pricing.model.CommercePriceModifierRel;
 import com.liferay.commerce.pricing.service.CommercePriceModifierRelService;
-import com.liferay.commerce.pricing.service.CommercePriceModifierRelServiceUtil;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelPersistence;
 import com.liferay.portal.aop.AopService;
@@ -46,11 +45,10 @@ public abstract class CommercePriceModifierRelServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePriceModifierRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePriceModifierRelServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePriceModifierRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.pricing.service.CommercePriceModifierRelServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommercePriceModifierRelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,9 +62,6 @@ public abstract class CommercePriceModifierRelServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commercePriceModifierRelService =
 			(CommercePriceModifierRelService)aopProxy;
-
-		CommercePriceModifierRelServiceUtil.setService(
-			commercePriceModifierRelService);
 	}
 
 	/**

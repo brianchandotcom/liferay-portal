@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
-import com.liferay.portal.language.override.service.PLOEntryLocalServiceUtil;
 import com.liferay.portal.language.override.service.persistence.PLOEntryPersistence;
 
 import java.io.Serializable;
@@ -63,7 +62,7 @@ public abstract class PLOEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>PLOEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>PLOEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>PLOEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.language.override.service.PLOEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -370,7 +369,6 @@ public abstract class PLOEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		PLOEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -384,8 +382,6 @@ public abstract class PLOEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ploEntryLocalService = (PLOEntryLocalService)aopProxy;
-
-		PLOEntryLocalServiceUtil.setService(ploEntryLocalService);
 	}
 
 	/**

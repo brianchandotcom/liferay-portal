@@ -7,7 +7,6 @@ package com.liferay.commerce.payment.service.base;
 
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
-import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalServiceUtil;
 import com.liferay.commerce.payment.service.persistence.CommercePaymentMethodGroupRelPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class CommercePaymentMethodGroupRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePaymentMethodGroupRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePaymentMethodGroupRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePaymentMethodGroupRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -412,7 +411,6 @@ public abstract class CommercePaymentMethodGroupRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommercePaymentMethodGroupRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -427,9 +425,6 @@ public abstract class CommercePaymentMethodGroupRelLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commercePaymentMethodGroupRelLocalService =
 			(CommercePaymentMethodGroupRelLocalService)aopProxy;
-
-		CommercePaymentMethodGroupRelLocalServiceUtil.setService(
-			commercePaymentMethodGroupRelLocalService);
 	}
 
 	/**

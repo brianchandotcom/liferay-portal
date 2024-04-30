@@ -7,7 +7,6 @@ package com.liferay.change.tracking.service.base;
 
 import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.CTCollectionTemplateService;
-import com.liferay.change.tracking.service.CTCollectionTemplateServiceUtil;
 import com.liferay.change.tracking.service.persistence.CTCollectionTemplatePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CTCollectionTemplateServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CTCollectionTemplateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CTCollectionTemplateServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CTCollectionTemplateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.change.tracking.service.CTCollectionTemplateServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CTCollectionTemplateServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class CTCollectionTemplateServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ctCollectionTemplateService = (CTCollectionTemplateService)aopProxy;
-
-		CTCollectionTemplateServiceUtil.setService(ctCollectionTemplateService);
 	}
 
 	/**

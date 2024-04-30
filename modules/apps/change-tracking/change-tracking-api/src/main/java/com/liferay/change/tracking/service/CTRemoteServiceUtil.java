@@ -7,6 +7,7 @@ package com.liferay.change.tracking.service;
 
 import com.liferay.change.tracking.model.CTRemote;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -82,13 +83,10 @@ public class CTRemoteServiceUtil {
 	}
 
 	public static CTRemoteService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CTRemoteService service) {
-		_service = service;
-	}
-
-	private static volatile CTRemoteService _service;
+	private static final Snapshot<CTRemoteService> _serviceSnapshot =
+		new Snapshot<>(CTRemoteServiceUtil.class, CTRemoteService.class);
 
 }

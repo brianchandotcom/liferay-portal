@@ -7,7 +7,6 @@ package com.liferay.change.tracking.service.base;
 
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
-import com.liferay.change.tracking.service.CTEntryLocalServiceUtil;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -69,7 +68,7 @@ public abstract class CTEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CTEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CTEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CTEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.change.tracking.service.CTEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -486,7 +485,6 @@ public abstract class CTEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CTEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -500,8 +498,6 @@ public abstract class CTEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ctEntryLocalService = (CTEntryLocalService)aopProxy;
-
-		CTEntryLocalServiceUtil.setService(ctEntryLocalService);
 	}
 
 	/**

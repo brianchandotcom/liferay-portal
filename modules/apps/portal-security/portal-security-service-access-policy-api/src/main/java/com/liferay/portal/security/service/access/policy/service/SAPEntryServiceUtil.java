@@ -6,6 +6,7 @@
 package com.liferay.portal.security.service.access.policy.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 
@@ -111,13 +112,10 @@ public class SAPEntryServiceUtil {
 	}
 
 	public static SAPEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(SAPEntryService service) {
-		_service = service;
-	}
-
-	private static volatile SAPEntryService _service;
+	private static final Snapshot<SAPEntryService> _serviceSnapshot =
+		new Snapshot<>(SAPEntryServiceUtil.class, SAPEntryService.class);
 
 }

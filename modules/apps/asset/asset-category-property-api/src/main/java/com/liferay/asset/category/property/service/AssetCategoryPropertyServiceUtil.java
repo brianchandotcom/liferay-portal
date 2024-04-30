@@ -7,6 +7,7 @@ package com.liferay.asset.category.property.service;
 
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -80,13 +81,12 @@ public class AssetCategoryPropertyServiceUtil {
 	}
 
 	public static AssetCategoryPropertyService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(AssetCategoryPropertyService service) {
-		_service = service;
-	}
-
-	private static volatile AssetCategoryPropertyService _service;
+	private static final Snapshot<AssetCategoryPropertyService>
+		_serviceSnapshot = new Snapshot<>(
+			AssetCategoryPropertyServiceUtil.class,
+			AssetCategoryPropertyService.class);
 
 }

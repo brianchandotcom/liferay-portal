@@ -7,7 +7,6 @@ package com.liferay.knowledge.base.service.base;
 
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.service.KBTemplateService;
-import com.liferay.knowledge.base.service.KBTemplateServiceUtil;
 import com.liferay.knowledge.base.service.persistence.KBTemplatePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class KBTemplateServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KBTemplateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KBTemplateServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KBTemplateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.knowledge.base.service.KBTemplateServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		KBTemplateServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class KBTemplateServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		kbTemplateService = (KBTemplateService)aopProxy;
-
-		KBTemplateServiceUtil.setService(kbTemplateService);
 	}
 
 	/**

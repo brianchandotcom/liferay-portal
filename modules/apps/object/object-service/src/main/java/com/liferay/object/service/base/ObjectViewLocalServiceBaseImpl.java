@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.object.model.ObjectView;
 import com.liferay.object.service.ObjectViewLocalService;
-import com.liferay.object.service.ObjectViewLocalServiceUtil;
 import com.liferay.object.service.persistence.ObjectViewPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -69,7 +68,7 @@ public abstract class ObjectViewLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectViewLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectViewLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectViewLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectViewLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -476,7 +475,6 @@ public abstract class ObjectViewLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		ObjectViewLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -490,8 +488,6 @@ public abstract class ObjectViewLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		objectViewLocalService = (ObjectViewLocalService)aopProxy;
-
-		ObjectViewLocalServiceUtil.setService(objectViewLocalService);
 	}
 
 	/**

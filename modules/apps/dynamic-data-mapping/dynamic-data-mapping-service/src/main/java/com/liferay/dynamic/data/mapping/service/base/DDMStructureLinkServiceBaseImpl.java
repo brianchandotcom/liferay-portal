@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.mapping.service.base;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLinkServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkFinder;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class DDMStructureLinkServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DDMStructureLinkService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DDMStructureLinkServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DDMStructureLinkService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.mapping.service.DDMStructureLinkServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		DDMStructureLinkServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class DDMStructureLinkServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ddmStructureLinkService = (DDMStructureLinkService)aopProxy;
-
-		DDMStructureLinkServiceUtil.setService(ddmStructureLinkService);
 	}
 
 	/**

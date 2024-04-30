@@ -8,7 +8,6 @@ package com.liferay.change.tracking.store.service.base;
 import com.liferay.change.tracking.store.model.CTSContent;
 import com.liferay.change.tracking.store.model.CTSContentDataBlobModel;
 import com.liferay.change.tracking.store.service.CTSContentLocalService;
-import com.liferay.change.tracking.store.service.CTSContentLocalServiceUtil;
 import com.liferay.change.tracking.store.service.persistence.CTSContentPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.io.AutoDeleteFileInputStream;
@@ -76,7 +75,7 @@ public abstract class CTSContentLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CTSContentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CTSContentLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CTSContentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.change.tracking.store.service.CTSContentLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -445,7 +444,6 @@ public abstract class CTSContentLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CTSContentLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -459,8 +457,6 @@ public abstract class CTSContentLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ctsContentLocalService = (CTSContentLocalService)aopProxy;
-
-		CTSContentLocalServiceUtil.setService(ctsContentLocalService);
 	}
 
 	/**

@@ -7,6 +7,7 @@ package com.liferay.commerce.tax.engine.fixed.service;
 
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -109,13 +110,12 @@ public class CommerceTaxFixedRateServiceUtil {
 	}
 
 	public static CommerceTaxFixedRateService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CommerceTaxFixedRateService service) {
-		_service = service;
-	}
-
-	private static volatile CommerceTaxFixedRateService _service;
+	private static final Snapshot<CommerceTaxFixedRateService>
+		_serviceSnapshot = new Snapshot<>(
+			CommerceTaxFixedRateServiceUtil.class,
+			CommerceTaxFixedRateService.class);
 
 }

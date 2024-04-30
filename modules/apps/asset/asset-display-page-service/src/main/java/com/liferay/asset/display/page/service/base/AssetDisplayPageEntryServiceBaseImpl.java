@@ -7,7 +7,6 @@ package com.liferay.asset.display.page.service.base;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryService;
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryServiceUtil;
 import com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class AssetDisplayPageEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AssetDisplayPageEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AssetDisplayPageEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AssetDisplayPageEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.asset.display.page.service.AssetDisplayPageEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		AssetDisplayPageEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,9 +60,6 @@ public abstract class AssetDisplayPageEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		assetDisplayPageEntryService = (AssetDisplayPageEntryService)aopProxy;
-
-		AssetDisplayPageEntryServiceUtil.setService(
-			assetDisplayPageEntryService);
 	}
 
 	/**

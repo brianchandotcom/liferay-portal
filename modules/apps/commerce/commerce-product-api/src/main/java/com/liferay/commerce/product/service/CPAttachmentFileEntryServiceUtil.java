@@ -7,6 +7,7 @@ package com.liferay.commerce.product.service;
 
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -180,13 +181,12 @@ public class CPAttachmentFileEntryServiceUtil {
 	}
 
 	public static CPAttachmentFileEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CPAttachmentFileEntryService service) {
-		_service = service;
-	}
-
-	private static volatile CPAttachmentFileEntryService _service;
+	private static final Snapshot<CPAttachmentFileEntryService>
+		_serviceSnapshot = new Snapshot<>(
+			CPAttachmentFileEntryServiceUtil.class,
+			CPAttachmentFileEntryService.class);
 
 }

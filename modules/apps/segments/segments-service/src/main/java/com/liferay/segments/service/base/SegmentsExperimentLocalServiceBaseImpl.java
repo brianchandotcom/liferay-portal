@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
-import com.liferay.segments.service.SegmentsExperimentLocalServiceUtil;
 import com.liferay.segments.service.persistence.SegmentsExperimentPersistence;
 
 import java.io.Serializable;
@@ -73,7 +72,7 @@ public abstract class SegmentsExperimentLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SegmentsExperimentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SegmentsExperimentLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SegmentsExperimentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.segments.service.SegmentsExperimentLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -537,7 +536,6 @@ public abstract class SegmentsExperimentLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		SegmentsExperimentLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -552,9 +550,6 @@ public abstract class SegmentsExperimentLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		segmentsExperimentLocalService =
 			(SegmentsExperimentLocalService)aopProxy;
-
-		SegmentsExperimentLocalServiceUtil.setService(
-			segmentsExperimentLocalService);
 	}
 
 	/**

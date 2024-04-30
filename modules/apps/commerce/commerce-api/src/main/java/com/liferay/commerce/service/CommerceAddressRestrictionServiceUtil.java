@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.service;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
+
 /**
  * Provides the remote service utility for CommerceAddressRestriction. This utility wraps
  * <code>com.liferay.commerce.service.impl.CommerceAddressRestrictionServiceImpl</code> and is an
@@ -30,18 +32,17 @@ public class CommerceAddressRestrictionServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static CommerceAddressRestrictionService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CommerceAddressRestrictionService service) {
-		_service = service;
-	}
-
-	private static volatile CommerceAddressRestrictionService _service;
+	private static final Snapshot<CommerceAddressRestrictionService>
+		_serviceSnapshot = new Snapshot<>(
+			CommerceAddressRestrictionServiceUtil.class,
+			CommerceAddressRestrictionService.class);
 
 }

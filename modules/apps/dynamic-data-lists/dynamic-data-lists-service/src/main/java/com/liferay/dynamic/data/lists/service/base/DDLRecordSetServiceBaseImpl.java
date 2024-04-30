@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.lists.service.base;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetFinder;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetPersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class DDLRecordSetServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DDLRecordSetService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DDLRecordSetServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DDLRecordSetService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		DDLRecordSetServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class DDLRecordSetServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ddlRecordSetService = (DDLRecordSetService)aopProxy;
-
-		DDLRecordSetServiceUtil.setService(ddlRecordSetService);
 	}
 
 	/**

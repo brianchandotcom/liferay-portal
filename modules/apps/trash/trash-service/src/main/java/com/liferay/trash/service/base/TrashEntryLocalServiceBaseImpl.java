@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalService;
-import com.liferay.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.service.persistence.TrashEntryPersistence;
 
 import java.io.Serializable;
@@ -66,7 +65,7 @@ public abstract class TrashEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>TrashEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>TrashEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>TrashEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.trash.service.TrashEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -374,7 +373,6 @@ public abstract class TrashEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		TrashEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -388,8 +386,6 @@ public abstract class TrashEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		trashEntryLocalService = (TrashEntryLocalService)aopProxy;
-
-		TrashEntryLocalServiceUtil.setService(trashEntryLocalService);
 	}
 
 	/**

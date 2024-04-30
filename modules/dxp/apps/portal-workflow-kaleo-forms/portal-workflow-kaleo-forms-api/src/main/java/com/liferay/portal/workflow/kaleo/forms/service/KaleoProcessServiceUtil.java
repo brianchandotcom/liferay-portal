@@ -6,6 +6,7 @@
 package com.liferay.portal.workflow.kaleo.forms.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 
@@ -197,13 +198,11 @@ public class KaleoProcessServiceUtil {
 	}
 
 	public static KaleoProcessService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(KaleoProcessService service) {
-		_service = service;
-	}
-
-	private static volatile KaleoProcessService _service;
+	private static final Snapshot<KaleoProcessService> _serviceSnapshot =
+		new Snapshot<>(
+			KaleoProcessServiceUtil.class, KaleoProcessService.class);
 
 }

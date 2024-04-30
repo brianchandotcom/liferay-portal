@@ -9,6 +9,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.subscription.model.Subscription;
 
@@ -549,13 +550,11 @@ public class SubscriptionLocalServiceUtil {
 	}
 
 	public static SubscriptionLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(SubscriptionLocalService service) {
-		_service = service;
-	}
-
-	private static volatile SubscriptionLocalService _service;
+	private static final Snapshot<SubscriptionLocalService> _serviceSnapshot =
+		new Snapshot<>(
+			SubscriptionLocalServiceUtil.class, SubscriptionLocalService.class);
 
 }

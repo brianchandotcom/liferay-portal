@@ -7,7 +7,6 @@ package com.liferay.commerce.price.list.service.base;
 
 import com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRel;
 import com.liferay.commerce.price.list.service.CommercePriceListOrderTypeRelService;
-import com.liferay.commerce.price.list.service.CommercePriceListOrderTypeRelServiceUtil;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListOrderTypeRelPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CommercePriceListOrderTypeRelServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePriceListOrderTypeRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePriceListOrderTypeRelServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePriceListOrderTypeRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.price.list.service.CommercePriceListOrderTypeRelServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommercePriceListOrderTypeRelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,9 +62,6 @@ public abstract class CommercePriceListOrderTypeRelServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commercePriceListOrderTypeRelService =
 			(CommercePriceListOrderTypeRelService)aopProxy;
-
-		CommercePriceListOrderTypeRelServiceUtil.setService(
-			commercePriceListOrderTypeRelService);
 	}
 
 	/**

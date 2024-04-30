@@ -9,6 +9,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
 
@@ -343,15 +344,12 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	}
 
 	public static SharepointOAuth2TokenEntryLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(
-		SharepointOAuth2TokenEntryLocalService service) {
-
-		_service = service;
-	}
-
-	private static volatile SharepointOAuth2TokenEntryLocalService _service;
+	private static final Snapshot<SharepointOAuth2TokenEntryLocalService>
+		_serviceSnapshot = new Snapshot<>(
+			SharepointOAuth2TokenEntryLocalServiceUtil.class,
+			SharepointOAuth2TokenEntryLocalService.class);
 
 }

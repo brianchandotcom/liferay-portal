@@ -6,6 +6,7 @@
 package com.liferay.portal.reports.engine.console.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.reports.engine.console.model.Definition;
 
@@ -99,13 +100,10 @@ public class DefinitionServiceUtil {
 	}
 
 	public static DefinitionService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(DefinitionService service) {
-		_service = service;
-	}
-
-	private static volatile DefinitionService _service;
+	private static final Snapshot<DefinitionService> _serviceSnapshot =
+		new Snapshot<>(DefinitionServiceUtil.class, DefinitionService.class);
 
 }

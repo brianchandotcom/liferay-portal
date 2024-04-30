@@ -7,7 +7,6 @@ package com.liferay.account.service.base;
 
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelService;
-import com.liferay.account.service.AccountEntryUserRelServiceUtil;
 import com.liferay.account.service.persistence.AccountEntryUserRelPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class AccountEntryUserRelServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AccountEntryUserRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AccountEntryUserRelServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AccountEntryUserRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.account.service.AccountEntryUserRelServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		AccountEntryUserRelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class AccountEntryUserRelServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		accountEntryUserRelService = (AccountEntryUserRelService)aopProxy;
-
-		AccountEntryUserRelServiceUtil.setService(accountEntryUserRelService);
 	}
 
 	/**

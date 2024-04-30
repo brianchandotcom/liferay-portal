@@ -7,7 +7,6 @@ package com.liferay.commerce.payment.service.base;
 
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.commerce.payment.service.CommercePaymentEntryService;
-import com.liferay.commerce.payment.service.CommercePaymentEntryServiceUtil;
 import com.liferay.commerce.payment.service.persistence.CommercePaymentEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CommercePaymentEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePaymentEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePaymentEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePaymentEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.payment.service.CommercePaymentEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommercePaymentEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class CommercePaymentEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commercePaymentEntryService = (CommercePaymentEntryService)aopProxy;
-
-		CommercePaymentEntryServiceUtil.setService(commercePaymentEntryService);
 	}
 
 	/**

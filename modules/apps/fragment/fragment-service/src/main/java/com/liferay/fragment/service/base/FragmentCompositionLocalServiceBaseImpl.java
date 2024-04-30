@@ -14,7 +14,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.service.FragmentCompositionLocalService;
-import com.liferay.fragment.service.FragmentCompositionLocalServiceUtil;
 import com.liferay.fragment.service.persistence.FragmentCompositionPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -82,7 +81,7 @@ public abstract class FragmentCompositionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>FragmentCompositionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>FragmentCompositionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>FragmentCompositionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.fragment.service.FragmentCompositionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -614,7 +613,6 @@ public abstract class FragmentCompositionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		FragmentCompositionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -630,9 +628,6 @@ public abstract class FragmentCompositionLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		fragmentCompositionLocalService =
 			(FragmentCompositionLocalService)aopProxy;
-
-		FragmentCompositionLocalServiceUtil.setService(
-			fragmentCompositionLocalService);
 	}
 
 	/**

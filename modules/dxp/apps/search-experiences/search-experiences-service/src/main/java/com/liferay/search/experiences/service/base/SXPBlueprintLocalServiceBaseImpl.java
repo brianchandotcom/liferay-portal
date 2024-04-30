@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
-import com.liferay.search.experiences.service.SXPBlueprintLocalServiceUtil;
 import com.liferay.search.experiences.service.persistence.SXPBlueprintPersistence;
 
 import java.io.Serializable;
@@ -77,7 +76,7 @@ public abstract class SXPBlueprintLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SXPBlueprintLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SXPBlueprintLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SXPBlueprintLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.search.experiences.service.SXPBlueprintLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -544,7 +543,6 @@ public abstract class SXPBlueprintLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		SXPBlueprintLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -558,8 +556,6 @@ public abstract class SXPBlueprintLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		sxpBlueprintLocalService = (SXPBlueprintLocalService)aopProxy;
-
-		SXPBlueprintLocalServiceUtil.setService(sxpBlueprintLocalService);
 	}
 
 	/**

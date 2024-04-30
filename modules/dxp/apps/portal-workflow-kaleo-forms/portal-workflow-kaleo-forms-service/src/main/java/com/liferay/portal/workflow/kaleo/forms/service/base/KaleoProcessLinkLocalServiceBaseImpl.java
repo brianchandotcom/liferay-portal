@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalService;
-import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessLinkPersistence;
 
 import java.io.Serializable;
@@ -64,7 +63,7 @@ public abstract class KaleoProcessLinkLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KaleoProcessLinkLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KaleoProcessLinkLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KaleoProcessLinkLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -387,7 +386,6 @@ public abstract class KaleoProcessLinkLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		KaleoProcessLinkLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -401,9 +399,6 @@ public abstract class KaleoProcessLinkLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		kaleoProcessLinkLocalService = (KaleoProcessLinkLocalService)aopProxy;
-
-		KaleoProcessLinkLocalServiceUtil.setService(
-			kaleoProcessLinkLocalService);
 	}
 
 	/**

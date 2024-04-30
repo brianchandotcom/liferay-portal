@@ -7,7 +7,6 @@ package com.liferay.message.boards.service.base;
 
 import com.liferay.message.boards.model.MBSuspiciousActivity;
 import com.liferay.message.boards.service.MBSuspiciousActivityService;
-import com.liferay.message.boards.service.MBSuspiciousActivityServiceUtil;
 import com.liferay.message.boards.service.persistence.MBSuspiciousActivityPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class MBSuspiciousActivityServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MBSuspiciousActivityService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MBSuspiciousActivityServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MBSuspiciousActivityService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBSuspiciousActivityServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		MBSuspiciousActivityServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class MBSuspiciousActivityServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		mbSuspiciousActivityService = (MBSuspiciousActivityService)aopProxy;
-
-		MBSuspiciousActivityServiceUtil.setService(mbSuspiciousActivityService);
 	}
 
 	/**

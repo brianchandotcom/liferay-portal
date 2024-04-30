@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.commerce.product.service.CommerceChannelServiceUtil;
 import com.liferay.commerce.product.service.persistence.CommerceChannelPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class CommerceChannelServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceChannelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceChannelServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceChannelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CommerceChannelServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceChannelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class CommerceChannelServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceChannelService = (CommerceChannelService)aopProxy;
-
-		CommerceChannelServiceUtil.setService(commerceChannelService);
 	}
 
 	/**

@@ -7,7 +7,6 @@ package com.liferay.osb.faro.contacts.service.base;
 
 import com.liferay.osb.faro.contacts.model.ContactsLayoutTemplate;
 import com.liferay.osb.faro.contacts.service.ContactsLayoutTemplateLocalService;
-import com.liferay.osb.faro.contacts.service.ContactsLayoutTemplateLocalServiceUtil;
 import com.liferay.osb.faro.contacts.service.persistence.ContactsLayoutTemplatePersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class ContactsLayoutTemplateLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ContactsLayoutTemplateLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ContactsLayoutTemplateLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ContactsLayoutTemplateLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.osb.faro.contacts.service.ContactsLayoutTemplateLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -404,7 +403,6 @@ public abstract class ContactsLayoutTemplateLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		ContactsLayoutTemplateLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -419,9 +417,6 @@ public abstract class ContactsLayoutTemplateLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		contactsLayoutTemplateLocalService =
 			(ContactsLayoutTemplateLocalService)aopProxy;
-
-		ContactsLayoutTemplateLocalServiceUtil.setService(
-			contactsLayoutTemplateLocalService);
 	}
 
 	/**

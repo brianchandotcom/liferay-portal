@@ -7,6 +7,7 @@ package com.liferay.commerce.inventory.service;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -76,15 +77,12 @@ public class CommerceInventoryBookedQuantityServiceUtil {
 	}
 
 	public static CommerceInventoryBookedQuantityService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(
-		CommerceInventoryBookedQuantityService service) {
-
-		_service = service;
-	}
-
-	private static volatile CommerceInventoryBookedQuantityService _service;
+	private static final Snapshot<CommerceInventoryBookedQuantityService>
+		_serviceSnapshot = new Snapshot<>(
+			CommerceInventoryBookedQuantityServiceUtil.class,
+			CommerceInventoryBookedQuantityService.class);
 
 }

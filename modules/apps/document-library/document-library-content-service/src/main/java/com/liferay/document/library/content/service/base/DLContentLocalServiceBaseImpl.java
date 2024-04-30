@@ -8,7 +8,6 @@ package com.liferay.document.library.content.service.base;
 import com.liferay.document.library.content.model.DLContent;
 import com.liferay.document.library.content.model.DLContentDataBlobModel;
 import com.liferay.document.library.content.service.DLContentLocalService;
-import com.liferay.document.library.content.service.DLContentLocalServiceUtil;
 import com.liferay.document.library.content.service.persistence.DLContentPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.io.AutoDeleteFileInputStream;
@@ -76,7 +75,7 @@ public abstract class DLContentLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DLContentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DLContentLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DLContentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.document.library.content.service.DLContentLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -441,7 +440,6 @@ public abstract class DLContentLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DLContentLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -455,8 +453,6 @@ public abstract class DLContentLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		dlContentLocalService = (DLContentLocalService)aopProxy;
-
-		DLContentLocalServiceUtil.setService(dlContentLocalService);
 	}
 
 	/**

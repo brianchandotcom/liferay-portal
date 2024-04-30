@@ -7,7 +7,6 @@ package com.liferay.commerce.tax.engine.fixed.service.base;
 
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateService;
-import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateServiceUtil;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRatePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CommerceTaxFixedRateServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceTaxFixedRateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceTaxFixedRateServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceTaxFixedRateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceTaxFixedRateServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class CommerceTaxFixedRateServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceTaxFixedRateService = (CommerceTaxFixedRateService)aopProxy;
-
-		CommerceTaxFixedRateServiceUtil.setService(commerceTaxFixedRateService);
 	}
 
 	/**

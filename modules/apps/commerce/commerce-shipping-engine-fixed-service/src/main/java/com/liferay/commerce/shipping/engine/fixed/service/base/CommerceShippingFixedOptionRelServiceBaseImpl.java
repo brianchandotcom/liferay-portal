@@ -7,7 +7,6 @@ package com.liferay.commerce.shipping.engine.fixed.service.base;
 
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService;
-import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelServiceUtil;
 import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelFinder;
 import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelPersistence;
 import com.liferay.portal.aop.AopService;
@@ -46,11 +45,10 @@ public abstract class CommerceShippingFixedOptionRelServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceShippingFixedOptionRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceShippingFixedOptionRelServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceShippingFixedOptionRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceShippingFixedOptionRelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -65,9 +63,6 @@ public abstract class CommerceShippingFixedOptionRelServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceShippingFixedOptionRelService =
 			(CommerceShippingFixedOptionRelService)aopProxy;
-
-		CommerceShippingFixedOptionRelServiceUtil.setService(
-			commerceShippingFixedOptionRelService);
 	}
 
 	/**

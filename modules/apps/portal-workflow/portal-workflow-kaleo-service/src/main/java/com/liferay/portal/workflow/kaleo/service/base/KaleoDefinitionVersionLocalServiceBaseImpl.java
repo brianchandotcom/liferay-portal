@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoDefinitionVersionPersistence;
 
 import java.io.Serializable;
@@ -67,7 +66,7 @@ public abstract class KaleoDefinitionVersionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KaleoDefinitionVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KaleoDefinitionVersionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KaleoDefinitionVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -409,7 +408,6 @@ public abstract class KaleoDefinitionVersionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		KaleoDefinitionVersionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -425,9 +423,6 @@ public abstract class KaleoDefinitionVersionLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		kaleoDefinitionVersionLocalService =
 			(KaleoDefinitionVersionLocalService)aopProxy;
-
-		KaleoDefinitionVersionLocalServiceUtil.setService(
-			kaleoDefinitionVersionLocalService);
 	}
 
 	/**

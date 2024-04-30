@@ -7,7 +7,6 @@ package com.liferay.osb.faro.service.base;
 
 import com.liferay.osb.faro.model.FaroNotification;
 import com.liferay.osb.faro.service.FaroNotificationLocalService;
-import com.liferay.osb.faro.service.FaroNotificationLocalServiceUtil;
 import com.liferay.osb.faro.service.persistence.FaroNotificationPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class FaroNotificationLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>FaroNotificationLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>FaroNotificationLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>FaroNotificationLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.osb.faro.service.FaroNotificationLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -387,7 +386,6 @@ public abstract class FaroNotificationLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		FaroNotificationLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -401,9 +399,6 @@ public abstract class FaroNotificationLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		faroNotificationLocalService = (FaroNotificationLocalService)aopProxy;
-
-		FaroNotificationLocalServiceUtil.setService(
-			faroNotificationLocalService);
 	}
 
 	/**

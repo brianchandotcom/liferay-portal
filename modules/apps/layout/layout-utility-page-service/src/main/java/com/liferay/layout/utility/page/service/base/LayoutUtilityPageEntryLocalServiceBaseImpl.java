@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
-import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServiceUtil;
 import com.liferay.layout.utility.page.service.persistence.LayoutUtilityPageEntryPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -73,7 +72,7 @@ public abstract class LayoutUtilityPageEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>LayoutUtilityPageEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>LayoutUtilityPageEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>LayoutUtilityPageEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -571,7 +570,6 @@ public abstract class LayoutUtilityPageEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		LayoutUtilityPageEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -587,9 +585,6 @@ public abstract class LayoutUtilityPageEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		layoutUtilityPageEntryLocalService =
 			(LayoutUtilityPageEntryLocalService)aopProxy;
-
-		LayoutUtilityPageEntryLocalServiceUtil.setService(
-			layoutUtilityPageEntryLocalService);
 	}
 
 	/**

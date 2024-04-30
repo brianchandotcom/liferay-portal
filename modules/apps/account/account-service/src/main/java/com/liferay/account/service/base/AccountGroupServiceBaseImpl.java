@@ -7,7 +7,6 @@ package com.liferay.account.service.base;
 
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupService;
-import com.liferay.account.service.AccountGroupServiceUtil;
 import com.liferay.account.service.persistence.AccountGroupPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class AccountGroupServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AccountGroupService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AccountGroupServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AccountGroupService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.account.service.AccountGroupServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		AccountGroupServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class AccountGroupServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		accountGroupService = (AccountGroupService)aopProxy;
-
-		AccountGroupServiceUtil.setService(accountGroupService);
 	}
 
 	/**

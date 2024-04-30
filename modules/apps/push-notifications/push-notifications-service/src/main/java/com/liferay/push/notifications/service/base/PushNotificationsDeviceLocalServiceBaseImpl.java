@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.push.notifications.model.PushNotificationsDevice;
 import com.liferay.push.notifications.service.PushNotificationsDeviceLocalService;
-import com.liferay.push.notifications.service.PushNotificationsDeviceLocalServiceUtil;
 import com.liferay.push.notifications.service.persistence.PushNotificationsDevicePersistence;
 
 import java.io.Serializable;
@@ -64,7 +63,7 @@ public abstract class PushNotificationsDeviceLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>PushNotificationsDeviceLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>PushNotificationsDeviceLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>PushNotificationsDeviceLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.push.notifications.service.PushNotificationsDeviceLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -408,7 +407,6 @@ public abstract class PushNotificationsDeviceLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		PushNotificationsDeviceLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -423,9 +421,6 @@ public abstract class PushNotificationsDeviceLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		pushNotificationsDeviceLocalService =
 			(PushNotificationsDeviceLocalService)aopProxy;
-
-		PushNotificationsDeviceLocalServiceUtil.setService(
-			pushNotificationsDeviceLocalService);
 	}
 
 	/**

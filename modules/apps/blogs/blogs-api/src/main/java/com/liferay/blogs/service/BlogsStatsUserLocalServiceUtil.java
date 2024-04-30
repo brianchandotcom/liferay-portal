@@ -6,6 +6,7 @@
 package com.liferay.blogs.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -64,13 +65,12 @@ public class BlogsStatsUserLocalServiceUtil {
 	}
 
 	public static BlogsStatsUserLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(BlogsStatsUserLocalService service) {
-		_service = service;
-	}
-
-	private static volatile BlogsStatsUserLocalService _service;
+	private static final Snapshot<BlogsStatsUserLocalService> _serviceSnapshot =
+		new Snapshot<>(
+			BlogsStatsUserLocalServiceUtil.class,
+			BlogsStatsUserLocalService.class);
 
 }

@@ -7,7 +7,6 @@ package com.liferay.message.boards.service.base;
 
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryService;
-import com.liferay.message.boards.service.MBCategoryServiceUtil;
 import com.liferay.message.boards.service.persistence.MBCategoryFinder;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class MBCategoryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MBCategoryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MBCategoryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MBCategoryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBCategoryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		MBCategoryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class MBCategoryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		mbCategoryService = (MBCategoryService)aopProxy;
-
-		MBCategoryServiceUtil.setService(mbCategoryService);
 	}
 
 	/**

@@ -5,6 +5,8 @@
 
 package com.liferay.osb.faro.service;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
+
 /**
  * Provides the local service utility for FaroEmail. This utility wraps
  * <code>com.liferay.osb.faro.service.impl.FaroEmailLocalServiceImpl</code> and
@@ -30,7 +32,7 @@ public class FaroEmailLocalServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
@@ -40,20 +42,16 @@ public class FaroEmailLocalServiceUtil {
 		return getService().getResourceBundle(locale);
 	}
 
-	public static java.lang.String getTemplate(java.lang.String name)
-		throws java.lang.Exception {
-
+	public static String getTemplate(String name) throws Exception {
 		return getService().getTemplate(name);
 	}
 
 	public static FaroEmailLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(FaroEmailLocalService service) {
-		_service = service;
-	}
-
-	private static volatile FaroEmailLocalService _service;
+	private static final Snapshot<FaroEmailLocalService> _serviceSnapshot =
+		new Snapshot<>(
+			FaroEmailLocalServiceUtil.class, FaroEmailLocalService.class);
 
 }

@@ -7,7 +7,6 @@ package com.liferay.commerce.product.type.virtual.service.base;
 
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
-import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalServiceUtil;
 import com.liferay.commerce.product.type.virtual.service.persistence.CPDefinitionVirtualSettingPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -72,7 +71,7 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDefinitionVirtualSettingLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDefinitionVirtualSettingLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDefinitionVirtualSettingLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -583,7 +582,6 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CPDefinitionVirtualSettingLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -598,9 +596,6 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpDefinitionVirtualSettingLocalService =
 			(CPDefinitionVirtualSettingLocalService)aopProxy;
-
-		CPDefinitionVirtualSettingLocalServiceUtil.setService(
-			cpDefinitionVirtualSettingLocalService);
 	}
 
 	/**

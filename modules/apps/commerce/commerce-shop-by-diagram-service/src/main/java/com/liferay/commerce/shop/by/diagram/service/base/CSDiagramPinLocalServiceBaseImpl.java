@@ -7,7 +7,6 @@ package com.liferay.commerce.shop.by.diagram.service.base;
 
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinLocalService;
-import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinLocalServiceUtil;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramPinPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -66,7 +65,7 @@ public abstract class CSDiagramPinLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CSDiagramPinLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CSDiagramPinLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CSDiagramPinLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.shop.by.diagram.service.CSDiagramPinLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -380,7 +379,6 @@ public abstract class CSDiagramPinLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CSDiagramPinLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -394,8 +392,6 @@ public abstract class CSDiagramPinLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		csDiagramPinLocalService = (CSDiagramPinLocalService)aopProxy;
-
-		CSDiagramPinLocalServiceUtil.setService(csDiagramPinLocalService);
 	}
 
 	/**

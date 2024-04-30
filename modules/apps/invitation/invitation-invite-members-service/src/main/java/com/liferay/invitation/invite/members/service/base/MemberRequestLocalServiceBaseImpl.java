@@ -7,7 +7,6 @@ package com.liferay.invitation.invite.members.service.base;
 
 import com.liferay.invitation.invite.members.model.MemberRequest;
 import com.liferay.invitation.invite.members.service.MemberRequestLocalService;
-import com.liferay.invitation.invite.members.service.MemberRequestLocalServiceUtil;
 import com.liferay.invitation.invite.members.service.persistence.MemberRequestPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -63,7 +62,7 @@ public abstract class MemberRequestLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MemberRequestLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MemberRequestLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MemberRequestLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.invitation.invite.members.service.MemberRequestLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -377,7 +376,6 @@ public abstract class MemberRequestLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		MemberRequestLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -391,8 +389,6 @@ public abstract class MemberRequestLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		memberRequestLocalService = (MemberRequestLocalService)aopProxy;
-
-		MemberRequestLocalServiceUtil.setService(memberRequestLocalService);
 	}
 
 	/**

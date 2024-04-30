@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.service.DefinitionService;
-import com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil;
 import com.liferay.portal.reports.engine.console.service.persistence.DefinitionFinder;
 import com.liferay.portal.reports.engine.console.service.persistence.DefinitionPersistence;
 
@@ -45,11 +44,10 @@ public abstract class DefinitionServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DefinitionServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		DefinitionServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class DefinitionServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		definitionService = (DefinitionService)aopProxy;
-
-		DefinitionServiceUtil.setService(definitionService);
 	}
 
 	/**

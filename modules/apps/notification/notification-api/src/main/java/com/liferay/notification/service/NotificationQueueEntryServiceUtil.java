@@ -7,6 +7,7 @@ package com.liferay.notification.service;
 
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the remote service utility for NotificationQueueEntry. This utility wraps
@@ -68,13 +69,12 @@ public class NotificationQueueEntryServiceUtil {
 	}
 
 	public static NotificationQueueEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(NotificationQueueEntryService service) {
-		_service = service;
-	}
-
-	private static volatile NotificationQueueEntryService _service;
+	private static final Snapshot<NotificationQueueEntryService>
+		_serviceSnapshot = new Snapshot<>(
+			NotificationQueueEntryServiceUtil.class,
+			NotificationQueueEntryService.class);
 
 }

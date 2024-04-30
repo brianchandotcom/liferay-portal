@@ -7,7 +7,6 @@ package com.liferay.dispatch.service.base;
 
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.service.DispatchLogService;
-import com.liferay.dispatch.service.DispatchLogServiceUtil;
 import com.liferay.dispatch.service.persistence.DispatchLogPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class DispatchLogServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DispatchLogService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DispatchLogServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DispatchLogService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dispatch.service.DispatchLogServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		DispatchLogServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class DispatchLogServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		dispatchLogService = (DispatchLogService)aopProxy;
-
-		DispatchLogServiceUtil.setService(dispatchLogService);
 	}
 
 	/**

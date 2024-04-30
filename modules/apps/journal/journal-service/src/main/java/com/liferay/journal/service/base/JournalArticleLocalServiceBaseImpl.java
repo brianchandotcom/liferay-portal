@@ -14,7 +14,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.persistence.JournalArticleFinder;
 import com.liferay.journal.service.persistence.JournalArticlePersistence;
 import com.liferay.petra.function.UnsafeFunction;
@@ -83,7 +82,7 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>JournalArticleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>JournalArticleLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>JournalArticleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.journal.service.JournalArticleLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -621,7 +620,6 @@ public abstract class JournalArticleLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		JournalArticleLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -635,8 +633,6 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		journalArticleLocalService = (JournalArticleLocalService)aopProxy;
-
-		JournalArticleLocalServiceUtil.setService(journalArticleLocalService);
 	}
 
 	/**

@@ -7,7 +7,6 @@ package com.liferay.depot.service.base;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
-import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.depot.service.persistence.DepotEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class DepotEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DepotEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DepotEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DepotEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.depot.service.DepotEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		DepotEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class DepotEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		depotEntryService = (DepotEntryService)aopProxy;
-
-		DepotEntryServiceUtil.setService(depotEntryService);
 	}
 
 	/**

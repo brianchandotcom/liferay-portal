@@ -10,6 +10,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
@@ -403,13 +404,12 @@ public class JournalContentSearchLocalServiceUtil {
 	}
 
 	public static JournalContentSearchLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(JournalContentSearchLocalService service) {
-		_service = service;
-	}
-
-	private static volatile JournalContentSearchLocalService _service;
+	private static final Snapshot<JournalContentSearchLocalService>
+		_serviceSnapshot = new Snapshot<>(
+			JournalContentSearchLocalServiceUtil.class,
+			JournalContentSearchLocalService.class);
 
 }

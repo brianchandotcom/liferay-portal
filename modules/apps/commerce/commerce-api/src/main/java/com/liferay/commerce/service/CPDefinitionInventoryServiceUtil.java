@@ -7,6 +7,7 @@ package com.liferay.commerce.service;
 
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the remote service utility for CPDefinitionInventory. This utility wraps
@@ -85,13 +86,12 @@ public class CPDefinitionInventoryServiceUtil {
 	}
 
 	public static CPDefinitionInventoryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CPDefinitionInventoryService service) {
-		_service = service;
-	}
-
-	private static volatile CPDefinitionInventoryService _service;
+	private static final Snapshot<CPDefinitionInventoryService>
+		_serviceSnapshot = new Snapshot<>(
+			CPDefinitionInventoryServiceUtil.class,
+			CPDefinitionInventoryService.class);
 
 }

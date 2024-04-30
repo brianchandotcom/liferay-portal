@@ -14,7 +14,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -82,7 +81,7 @@ public abstract class LayoutPageTemplateEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>LayoutPageTemplateEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>LayoutPageTemplateEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>LayoutPageTemplateEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -648,7 +647,6 @@ public abstract class LayoutPageTemplateEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		LayoutPageTemplateEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -664,9 +662,6 @@ public abstract class LayoutPageTemplateEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		layoutPageTemplateEntryLocalService =
 			(LayoutPageTemplateEntryLocalService)aopProxy;
-
-		LayoutPageTemplateEntryLocalServiceUtil.setService(
-			layoutPageTemplateEntryLocalService);
 	}
 
 	/**

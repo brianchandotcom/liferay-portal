@@ -7,7 +7,6 @@ package com.liferay.commerce.shop.by.diagram.service.base;
 
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
-import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryServiceUtil;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class CSDiagramEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CSDiagramEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CSDiagramEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CSDiagramEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CSDiagramEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class CSDiagramEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		csDiagramEntryService = (CSDiagramEntryService)aopProxy;
-
-		CSDiagramEntryServiceUtil.setService(csDiagramEntryService);
 	}
 
 	/**

@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
-import com.liferay.message.boards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.message.boards.service.persistence.MBDiscussionPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -74,7 +73,7 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MBDiscussionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MBDiscussionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MBDiscussionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBDiscussionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -545,7 +544,6 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		MBDiscussionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -559,8 +557,6 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		mbDiscussionLocalService = (MBDiscussionLocalService)aopProxy;
-
-		MBDiscussionLocalServiceUtil.setService(mbDiscussionLocalService);
 	}
 
 	/**

@@ -7,6 +7,7 @@ package com.liferay.account.service;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -200,13 +201,11 @@ public class AccountEntryServiceUtil {
 	}
 
 	public static AccountEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(AccountEntryService service) {
-		_service = service;
-	}
-
-	private static volatile AccountEntryService _service;
+	private static final Snapshot<AccountEntryService> _serviceSnapshot =
+		new Snapshot<>(
+			AccountEntryServiceUtil.class, AccountEntryService.class);
 
 }

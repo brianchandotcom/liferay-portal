@@ -7,7 +7,6 @@ package com.liferay.commerce.inventory.service.base;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
-import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalServiceUtil;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseItemPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -70,7 +69,7 @@ public abstract class CommerceInventoryWarehouseItemLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceInventoryWarehouseItemLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceInventoryWarehouseItemLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceInventoryWarehouseItemLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -541,7 +540,6 @@ public abstract class CommerceInventoryWarehouseItemLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceInventoryWarehouseItemLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -556,9 +554,6 @@ public abstract class CommerceInventoryWarehouseItemLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceInventoryWarehouseItemLocalService =
 			(CommerceInventoryWarehouseItemLocalService)aopProxy;
-
-		CommerceInventoryWarehouseItemLocalServiceUtil.setService(
-			commerceInventoryWarehouseItemLocalService);
 	}
 
 	/**

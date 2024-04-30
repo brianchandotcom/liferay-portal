@@ -10,6 +10,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
@@ -421,15 +422,12 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 	}
 
 	public static AssetEntryAssetCategoryRelLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(
-		AssetEntryAssetCategoryRelLocalService service) {
-
-		_service = service;
-	}
-
-	private static volatile AssetEntryAssetCategoryRelLocalService _service;
+	private static final Snapshot<AssetEntryAssetCategoryRelLocalService>
+		_serviceSnapshot = new Snapshot<>(
+			AssetEntryAssetCategoryRelLocalServiceUtil.class,
+			AssetEntryAssetCategoryRelLocalService.class);
 
 }

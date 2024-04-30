@@ -6,6 +6,7 @@
 package com.liferay.external.reference.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the local service utility for EROrganization. This utility wraps
@@ -51,13 +52,12 @@ public class EROrganizationLocalServiceUtil {
 	}
 
 	public static EROrganizationLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(EROrganizationLocalService service) {
-		_service = service;
-	}
-
-	private static volatile EROrganizationLocalService _service;
+	private static final Snapshot<EROrganizationLocalService> _serviceSnapshot =
+		new Snapshot<>(
+			EROrganizationLocalServiceUtil.class,
+			EROrganizationLocalService.class);
 
 }

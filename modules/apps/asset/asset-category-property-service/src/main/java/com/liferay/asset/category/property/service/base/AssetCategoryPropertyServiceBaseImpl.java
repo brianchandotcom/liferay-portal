@@ -7,7 +7,6 @@ package com.liferay.asset.category.property.service.base;
 
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyService;
-import com.liferay.asset.category.property.service.AssetCategoryPropertyServiceUtil;
 import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class AssetCategoryPropertyServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AssetCategoryPropertyService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AssetCategoryPropertyServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AssetCategoryPropertyService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.asset.category.property.service.AssetCategoryPropertyServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		AssetCategoryPropertyServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,9 +60,6 @@ public abstract class AssetCategoryPropertyServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		assetCategoryPropertyService = (AssetCategoryPropertyService)aopProxy;
-
-		AssetCategoryPropertyServiceUtil.setService(
-			assetCategoryPropertyService);
 	}
 
 	/**

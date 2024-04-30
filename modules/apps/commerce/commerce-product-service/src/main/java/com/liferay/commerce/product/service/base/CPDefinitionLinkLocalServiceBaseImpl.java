@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
-import com.liferay.commerce.product.service.CPDefinitionLinkLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLinkPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -82,7 +81,7 @@ public abstract class CPDefinitionLinkLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDefinitionLinkLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDefinitionLinkLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDefinitionLinkLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPDefinitionLinkLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -597,7 +596,6 @@ public abstract class CPDefinitionLinkLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CPDefinitionLinkLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -611,9 +609,6 @@ public abstract class CPDefinitionLinkLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		cpDefinitionLinkLocalService = (CPDefinitionLinkLocalService)aopProxy;
-
-		CPDefinitionLinkLocalServiceUtil.setService(
-			cpDefinitionLinkLocalService);
 	}
 
 	/**

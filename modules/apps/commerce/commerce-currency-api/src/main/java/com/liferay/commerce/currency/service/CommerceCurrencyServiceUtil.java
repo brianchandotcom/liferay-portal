@@ -7,6 +7,7 @@ package com.liferay.commerce.currency.service;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -161,13 +162,11 @@ public class CommerceCurrencyServiceUtil {
 	}
 
 	public static CommerceCurrencyService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CommerceCurrencyService service) {
-		_service = service;
-	}
-
-	private static volatile CommerceCurrencyService _service;
+	private static final Snapshot<CommerceCurrencyService> _serviceSnapshot =
+		new Snapshot<>(
+			CommerceCurrencyServiceUtil.class, CommerceCurrencyService.class);
 
 }

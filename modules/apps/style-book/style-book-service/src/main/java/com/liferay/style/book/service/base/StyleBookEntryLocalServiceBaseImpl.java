@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.model.StyleBookEntryVersion;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
-import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.service.persistence.StyleBookEntryPersistence;
 import com.liferay.style.book.service.persistence.StyleBookEntryVersionPersistence;
 
@@ -80,7 +79,7 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>StyleBookEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>StyleBookEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>StyleBookEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.style.book.service.StyleBookEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -482,7 +481,6 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		StyleBookEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -496,8 +494,6 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		styleBookEntryLocalService = (StyleBookEntryLocalService)aopProxy;
-
-		StyleBookEntryLocalServiceUtil.setService(styleBookEntryLocalService);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

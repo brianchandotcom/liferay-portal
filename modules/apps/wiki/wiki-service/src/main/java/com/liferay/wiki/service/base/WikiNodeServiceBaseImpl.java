@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeService;
-import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.persistence.WikiNodePersistence;
 
 import javax.sql.DataSource;
@@ -44,11 +43,10 @@ public abstract class WikiNodeServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>WikiNodeService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>WikiNodeServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>WikiNodeService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.wiki.service.WikiNodeServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		WikiNodeServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class WikiNodeServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		wikiNodeService = (WikiNodeService)aopProxy;
-
-		WikiNodeServiceUtil.setService(wikiNodeService);
 	}
 
 	/**

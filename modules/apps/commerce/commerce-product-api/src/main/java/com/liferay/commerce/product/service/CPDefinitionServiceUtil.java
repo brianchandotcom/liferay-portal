@@ -7,6 +7,7 @@ package com.liferay.commerce.product.service;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
@@ -481,13 +482,11 @@ public class CPDefinitionServiceUtil {
 	}
 
 	public static CPDefinitionService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CPDefinitionService service) {
-		_service = service;
-	}
-
-	private static volatile CPDefinitionService _service;
+	private static final Snapshot<CPDefinitionService> _serviceSnapshot =
+		new Snapshot<>(
+			CPDefinitionServiceUtil.class, CPDefinitionService.class);
 
 }

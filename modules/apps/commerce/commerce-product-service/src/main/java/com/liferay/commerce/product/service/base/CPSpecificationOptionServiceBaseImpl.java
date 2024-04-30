@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
-import com.liferay.commerce.product.service.CPSpecificationOptionServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPSpecificationOptionPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CPSpecificationOptionServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPSpecificationOptionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPSpecificationOptionServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPSpecificationOptionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPSpecificationOptionServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CPSpecificationOptionServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,9 +60,6 @@ public abstract class CPSpecificationOptionServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		cpSpecificationOptionService = (CPSpecificationOptionService)aopProxy;
-
-		CPSpecificationOptionServiceUtil.setService(
-			cpSpecificationOptionService);
 	}
 
 	/**

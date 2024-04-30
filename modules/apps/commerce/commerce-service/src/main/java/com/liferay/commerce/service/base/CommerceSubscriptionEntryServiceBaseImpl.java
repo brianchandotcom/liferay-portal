@@ -7,7 +7,6 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.service.CommerceSubscriptionEntryService;
-import com.liferay.commerce.service.CommerceSubscriptionEntryServiceUtil;
 import com.liferay.commerce.service.persistence.CommerceSubscriptionEntryFinder;
 import com.liferay.commerce.service.persistence.CommerceSubscriptionEntryPersistence;
 import com.liferay.portal.aop.AopService;
@@ -46,11 +45,10 @@ public abstract class CommerceSubscriptionEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceSubscriptionEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceSubscriptionEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceSubscriptionEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceSubscriptionEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceSubscriptionEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -65,9 +63,6 @@ public abstract class CommerceSubscriptionEntryServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceSubscriptionEntryService =
 			(CommerceSubscriptionEntryService)aopProxy;
-
-		CommerceSubscriptionEntryServiceUtil.setService(
-			commerceSubscriptionEntryService);
 	}
 
 	/**

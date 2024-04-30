@@ -9,6 +9,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.redirect.model.RedirectEntry;
 
@@ -449,13 +450,12 @@ public class RedirectEntryLocalServiceUtil {
 	}
 
 	public static RedirectEntryLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(RedirectEntryLocalService service) {
-		_service = service;
-	}
-
-	private static volatile RedirectEntryLocalService _service;
+	private static final Snapshot<RedirectEntryLocalService> _serviceSnapshot =
+		new Snapshot<>(
+			RedirectEntryLocalServiceUtil.class,
+			RedirectEntryLocalService.class);
 
 }

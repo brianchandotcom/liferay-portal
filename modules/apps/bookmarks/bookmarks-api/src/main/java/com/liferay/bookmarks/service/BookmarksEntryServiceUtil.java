@@ -7,6 +7,7 @@ package com.liferay.bookmarks.service;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -189,13 +190,11 @@ public class BookmarksEntryServiceUtil {
 	}
 
 	public static BookmarksEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(BookmarksEntryService service) {
-		_service = service;
-	}
-
-	private static volatile BookmarksEntryService _service;
+	private static final Snapshot<BookmarksEntryService> _serviceSnapshot =
+		new Snapshot<>(
+			BookmarksEntryServiceUtil.class, BookmarksEntryService.class);
 
 }

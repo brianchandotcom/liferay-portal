@@ -7,7 +7,6 @@ package com.liferay.commerce.term.service.base;
 
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
-import com.liferay.commerce.term.service.CommerceTermEntryServiceUtil;
 import com.liferay.commerce.term.service.persistence.CTermEntryLocalizationPersistence;
 import com.liferay.commerce.term.service.persistence.CommerceTermEntryPersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class CommerceTermEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceTermEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceTermEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceTermEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.term.service.CommerceTermEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceTermEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class CommerceTermEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceTermEntryService = (CommerceTermEntryService)aopProxy;
-
-		CommerceTermEntryServiceUtil.setService(commerceTermEntryService);
 	}
 
 	/**

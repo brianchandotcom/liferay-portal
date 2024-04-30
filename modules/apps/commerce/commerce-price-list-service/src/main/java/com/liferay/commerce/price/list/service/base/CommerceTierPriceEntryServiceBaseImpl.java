@@ -7,7 +7,6 @@ package com.liferay.commerce.price.list.service.base;
 
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
-import com.liferay.commerce.price.list.service.CommerceTierPriceEntryServiceUtil;
 import com.liferay.commerce.price.list.service.persistence.CommerceTierPriceEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CommerceTierPriceEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceTierPriceEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceTierPriceEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceTierPriceEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.price.list.service.CommerceTierPriceEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceTierPriceEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,9 +60,6 @@ public abstract class CommerceTierPriceEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceTierPriceEntryService = (CommerceTierPriceEntryService)aopProxy;
-
-		CommerceTierPriceEntryServiceUtil.setService(
-			commerceTierPriceEntryService);
 	}
 
 	/**

@@ -7,7 +7,6 @@ package com.liferay.osb.faro.service.base;
 
 import com.liferay.osb.faro.model.FaroProjectEmailDomain;
 import com.liferay.osb.faro.service.FaroProjectEmailDomainLocalService;
-import com.liferay.osb.faro.service.FaroProjectEmailDomainLocalServiceUtil;
 import com.liferay.osb.faro.service.persistence.FaroProjectEmailDomainPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class FaroProjectEmailDomainLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>FaroProjectEmailDomainLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>FaroProjectEmailDomainLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>FaroProjectEmailDomainLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.osb.faro.service.FaroProjectEmailDomainLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -404,7 +403,6 @@ public abstract class FaroProjectEmailDomainLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		FaroProjectEmailDomainLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -419,9 +417,6 @@ public abstract class FaroProjectEmailDomainLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		faroProjectEmailDomainLocalService =
 			(FaroProjectEmailDomainLocalService)aopProxy;
-
-		FaroProjectEmailDomainLocalServiceUtil.setService(
-			faroProjectEmailDomainLocalService);
 	}
 
 	/**

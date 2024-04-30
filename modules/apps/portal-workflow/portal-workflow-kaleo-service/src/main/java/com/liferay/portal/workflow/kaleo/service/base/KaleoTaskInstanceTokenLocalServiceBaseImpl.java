@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenFinder;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenPersistence;
 
@@ -68,7 +67,7 @@ public abstract class KaleoTaskInstanceTokenLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KaleoTaskInstanceTokenLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KaleoTaskInstanceTokenLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KaleoTaskInstanceTokenLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -408,7 +407,6 @@ public abstract class KaleoTaskInstanceTokenLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		KaleoTaskInstanceTokenLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -424,9 +422,6 @@ public abstract class KaleoTaskInstanceTokenLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		kaleoTaskInstanceTokenLocalService =
 			(KaleoTaskInstanceTokenLocalService)aopProxy;
-
-		KaleoTaskInstanceTokenLocalServiceUtil.setService(
-			kaleoTaskInstanceTokenLocalService);
 	}
 
 	/**

@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
-import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 import com.liferay.subscription.service.persistence.SubscriptionPersistence;
 
 import java.io.Serializable;
@@ -66,7 +65,7 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SubscriptionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SubscriptionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SubscriptionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.subscription.service.SubscriptionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -383,7 +382,6 @@ public abstract class SubscriptionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		SubscriptionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -397,8 +395,6 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		subscriptionLocalService = (SubscriptionLocalService)aopProxy;
-
-		SubscriptionLocalServiceUtil.setService(subscriptionLocalService);
 	}
 
 	/**

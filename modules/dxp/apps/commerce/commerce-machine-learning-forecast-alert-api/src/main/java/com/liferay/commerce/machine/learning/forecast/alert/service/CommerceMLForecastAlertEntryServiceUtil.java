@@ -7,6 +7,7 @@ package com.liferay.commerce.machine.learning.forecast.alert.service;
 
 import com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -102,13 +103,12 @@ public class CommerceMLForecastAlertEntryServiceUtil {
 	}
 
 	public static CommerceMLForecastAlertEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CommerceMLForecastAlertEntryService service) {
-		_service = service;
-	}
-
-	private static volatile CommerceMLForecastAlertEntryService _service;
+	private static final Snapshot<CommerceMLForecastAlertEntryService>
+		_serviceSnapshot = new Snapshot<>(
+			CommerceMLForecastAlertEntryServiceUtil.class,
+			CommerceMLForecastAlertEntryService.class);
 
 }

@@ -10,6 +10,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
@@ -304,13 +305,12 @@ public class CTPreferencesLocalServiceUtil {
 	}
 
 	public static CTPreferencesLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CTPreferencesLocalService service) {
-		_service = service;
-	}
-
-	private static volatile CTPreferencesLocalService _service;
+	private static final Snapshot<CTPreferencesLocalService> _serviceSnapshot =
+		new Snapshot<>(
+			CTPreferencesLocalServiceUtil.class,
+			CTPreferencesLocalService.class);
 
 }

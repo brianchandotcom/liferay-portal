@@ -7,6 +7,7 @@ package com.liferay.calendar.service;
 
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -122,13 +123,11 @@ public class CalendarResourceServiceUtil {
 	}
 
 	public static CalendarResourceService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CalendarResourceService service) {
-		_service = service;
-	}
-
-	private static volatile CalendarResourceService _service;
+	private static final Snapshot<CalendarResourceService> _serviceSnapshot =
+		new Snapshot<>(
+			CalendarResourceServiceUtil.class, CalendarResourceService.class);
 
 }

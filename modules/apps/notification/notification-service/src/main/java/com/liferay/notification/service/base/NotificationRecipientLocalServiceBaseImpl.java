@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.service.NotificationRecipientLocalService;
-import com.liferay.notification.service.NotificationRecipientLocalServiceUtil;
 import com.liferay.notification.service.persistence.NotificationRecipientPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -72,7 +71,7 @@ public abstract class NotificationRecipientLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>NotificationRecipientLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>NotificationRecipientLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>NotificationRecipientLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.notification.service.NotificationRecipientLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -535,7 +534,6 @@ public abstract class NotificationRecipientLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		NotificationRecipientLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -550,9 +548,6 @@ public abstract class NotificationRecipientLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		notificationRecipientLocalService =
 			(NotificationRecipientLocalService)aopProxy;
-
-		NotificationRecipientLocalServiceUtil.setService(
-			notificationRecipientLocalService);
 	}
 
 	/**

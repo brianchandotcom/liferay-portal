@@ -7,7 +7,6 @@ package com.liferay.commerce.payment.service.base;
 
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelQualifier;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelQualifierLocalService;
-import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelQualifierLocalServiceUtil;
 import com.liferay.commerce.payment.service.persistence.CommercePaymentMethodGroupRelQualifierPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class CommercePaymentMethodGroupRelQualifierLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePaymentMethodGroupRelQualifierLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePaymentMethodGroupRelQualifierLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePaymentMethodGroupRelQualifierLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelQualifierLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -427,7 +426,6 @@ public abstract class CommercePaymentMethodGroupRelQualifierLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommercePaymentMethodGroupRelQualifierLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -442,9 +440,6 @@ public abstract class CommercePaymentMethodGroupRelQualifierLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commercePaymentMethodGroupRelQualifierLocalService =
 			(CommercePaymentMethodGroupRelQualifierLocalService)aopProxy;
-
-		CommercePaymentMethodGroupRelQualifierLocalServiceUtil.setService(
-			commercePaymentMethodGroupRelQualifierLocalService);
 	}
 
 	/**

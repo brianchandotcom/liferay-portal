@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
-import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPInstanceFinder;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -82,7 +81,7 @@ public abstract class CPInstanceLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPInstanceLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPInstanceLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPInstanceLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPInstanceLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -602,7 +601,6 @@ public abstract class CPInstanceLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CPInstanceLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -616,8 +614,6 @@ public abstract class CPInstanceLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		cpInstanceLocalService = (CPInstanceLocalService)aopProxy;
-
-		CPInstanceLocalServiceUtil.setService(cpInstanceLocalService);
 	}
 
 	/**

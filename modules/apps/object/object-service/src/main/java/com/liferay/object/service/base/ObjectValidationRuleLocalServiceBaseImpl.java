@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
-import com.liferay.object.service.ObjectValidationRuleLocalServiceUtil;
 import com.liferay.object.service.persistence.ObjectValidationRulePersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -70,7 +69,7 @@ public abstract class ObjectValidationRuleLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectValidationRuleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectValidationRuleLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectValidationRuleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectValidationRuleLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -510,7 +509,6 @@ public abstract class ObjectValidationRuleLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		ObjectValidationRuleLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -525,9 +523,6 @@ public abstract class ObjectValidationRuleLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		objectValidationRuleLocalService =
 			(ObjectValidationRuleLocalService)aopProxy;
-
-		ObjectValidationRuleLocalServiceUtil.setService(
-			objectValidationRuleLocalService);
 	}
 
 	/**

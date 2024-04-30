@@ -7,7 +7,6 @@ package com.liferay.portal.instances.service.base;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
-import com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -44,11 +43,10 @@ public abstract class PortalInstancesLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>PortalInstancesLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>PortalInstancesLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>PortalInstancesLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		PortalInstancesLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class PortalInstancesLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		portalInstancesLocalService = (PortalInstancesLocalService)aopProxy;
-
-		PortalInstancesLocalServiceUtil.setService(portalInstancesLocalService);
 	}
 
 	/**

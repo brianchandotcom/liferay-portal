@@ -7,7 +7,6 @@ package com.liferay.commerce.payment.service.base;
 
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelQualifier;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelQualifierService;
-import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelQualifierServiceUtil;
 import com.liferay.commerce.payment.service.persistence.CommercePaymentMethodGroupRelQualifierPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CommercePaymentMethodGroupRelQualifierServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePaymentMethodGroupRelQualifierService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePaymentMethodGroupRelQualifierServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePaymentMethodGroupRelQualifierService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelQualifierServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommercePaymentMethodGroupRelQualifierServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,9 +62,6 @@ public abstract class CommercePaymentMethodGroupRelQualifierServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commercePaymentMethodGroupRelQualifierService =
 			(CommercePaymentMethodGroupRelQualifierService)aopProxy;
-
-		CommercePaymentMethodGroupRelQualifierServiceUtil.setService(
-			commercePaymentMethodGroupRelQualifierService);
 	}
 
 	/**

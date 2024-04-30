@@ -13,7 +13,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationPersistence;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryPersistence;
 import com.liferay.petra.function.UnsafeFunction;
@@ -80,7 +79,7 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>FriendlyURLEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>FriendlyURLEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>FriendlyURLEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -738,7 +737,6 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		FriendlyURLEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -752,9 +750,6 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		friendlyURLEntryLocalService = (FriendlyURLEntryLocalService)aopProxy;
-
-		FriendlyURLEntryLocalServiceUtil.setService(
-			friendlyURLEntryLocalService);
 	}
 
 	/**

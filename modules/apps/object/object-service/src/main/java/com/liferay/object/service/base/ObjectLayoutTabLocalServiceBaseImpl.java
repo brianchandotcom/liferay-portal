@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.object.service.ObjectLayoutTabLocalService;
-import com.liferay.object.service.ObjectLayoutTabLocalServiceUtil;
 import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -70,7 +69,7 @@ public abstract class ObjectLayoutTabLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectLayoutTabLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectLayoutTabLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectLayoutTabLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectLayoutTabLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -486,7 +485,6 @@ public abstract class ObjectLayoutTabLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		ObjectLayoutTabLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -500,8 +498,6 @@ public abstract class ObjectLayoutTabLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		objectLayoutTabLocalService = (ObjectLayoutTabLocalService)aopProxy;
-
-		ObjectLayoutTabLocalServiceUtil.setService(objectLayoutTabLocalService);
 	}
 
 	/**

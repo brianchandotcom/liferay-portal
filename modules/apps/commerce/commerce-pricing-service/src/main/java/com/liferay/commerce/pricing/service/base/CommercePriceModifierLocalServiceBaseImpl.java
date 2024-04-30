@@ -7,7 +7,6 @@ package com.liferay.commerce.pricing.service.base;
 
 import com.liferay.commerce.pricing.model.CommercePriceModifier;
 import com.liferay.commerce.pricing.service.CommercePriceModifierLocalService;
-import com.liferay.commerce.pricing.service.CommercePriceModifierLocalServiceUtil;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -83,7 +82,7 @@ public abstract class CommercePriceModifierLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePriceModifierLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePriceModifierLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePriceModifierLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.pricing.service.CommercePriceModifierLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -636,7 +635,6 @@ public abstract class CommercePriceModifierLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommercePriceModifierLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -652,9 +650,6 @@ public abstract class CommercePriceModifierLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commercePriceModifierLocalService =
 			(CommercePriceModifierLocalService)aopProxy;
-
-		CommercePriceModifierLocalServiceUtil.setService(
-			commercePriceModifierLocalService);
 	}
 
 	/**

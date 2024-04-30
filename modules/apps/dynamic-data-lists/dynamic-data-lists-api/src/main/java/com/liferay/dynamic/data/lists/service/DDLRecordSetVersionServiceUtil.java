@@ -7,6 +7,7 @@ package com.liferay.dynamic.data.lists.service;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -69,13 +70,12 @@ public class DDLRecordSetVersionServiceUtil {
 	}
 
 	public static DDLRecordSetVersionService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(DDLRecordSetVersionService service) {
-		_service = service;
-	}
-
-	private static volatile DDLRecordSetVersionService _service;
+	private static final Snapshot<DDLRecordSetVersionService> _serviceSnapshot =
+		new Snapshot<>(
+			DDLRecordSetVersionServiceUtil.class,
+			DDLRecordSetVersionService.class);
 
 }

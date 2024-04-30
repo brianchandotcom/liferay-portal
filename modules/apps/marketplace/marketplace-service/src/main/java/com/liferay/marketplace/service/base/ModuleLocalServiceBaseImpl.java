@@ -7,7 +7,6 @@ package com.liferay.marketplace.service.base;
 
 import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.ModuleLocalService;
-import com.liferay.marketplace.service.ModuleLocalServiceUtil;
 import com.liferay.marketplace.service.persistence.ModulePersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -63,7 +62,7 @@ public abstract class ModuleLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ModuleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ModuleLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ModuleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.marketplace.service.ModuleLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -395,7 +394,6 @@ public abstract class ModuleLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		ModuleLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -409,8 +407,6 @@ public abstract class ModuleLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		moduleLocalService = (ModuleLocalService)aopProxy;
-
-		ModuleLocalServiceUtil.setService(moduleLocalService);
 	}
 
 	/**

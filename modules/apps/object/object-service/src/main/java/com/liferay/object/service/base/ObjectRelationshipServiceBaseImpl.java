@@ -7,7 +7,6 @@ package com.liferay.object.service.base;
 
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectRelationshipService;
-import com.liferay.object.service.ObjectRelationshipServiceUtil;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class ObjectRelationshipServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectRelationshipService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectRelationshipServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectRelationshipService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectRelationshipServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		ObjectRelationshipServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class ObjectRelationshipServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		objectRelationshipService = (ObjectRelationshipService)aopProxy;
-
-		ObjectRelationshipServiceUtil.setService(objectRelationshipService);
 	}
 
 	/**

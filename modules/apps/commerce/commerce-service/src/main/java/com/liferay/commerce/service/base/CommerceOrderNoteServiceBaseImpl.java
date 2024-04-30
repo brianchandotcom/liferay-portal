@@ -7,7 +7,6 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.service.CommerceOrderNoteService;
-import com.liferay.commerce.service.CommerceOrderNoteServiceUtil;
 import com.liferay.commerce.service.persistence.CommerceOrderNotePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class CommerceOrderNoteServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceOrderNoteService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceOrderNoteServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceOrderNoteService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceOrderNoteServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceOrderNoteServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class CommerceOrderNoteServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceOrderNoteService = (CommerceOrderNoteService)aopProxy;
-
-		CommerceOrderNoteServiceUtil.setService(commerceOrderNoteService);
 	}
 
 	/**

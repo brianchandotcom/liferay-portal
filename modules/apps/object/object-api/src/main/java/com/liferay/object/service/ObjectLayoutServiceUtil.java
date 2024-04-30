@@ -7,6 +7,7 @@ package com.liferay.object.service;
 
 import com.liferay.object.model.ObjectLayout;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 import java.util.Map;
@@ -72,13 +73,11 @@ public class ObjectLayoutServiceUtil {
 	}
 
 	public static ObjectLayoutService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(ObjectLayoutService service) {
-		_service = service;
-	}
-
-	private static volatile ObjectLayoutService _service;
+	private static final Snapshot<ObjectLayoutService> _serviceSnapshot =
+		new Snapshot<>(
+			ObjectLayoutServiceUtil.class, ObjectLayoutService.class);
 
 }

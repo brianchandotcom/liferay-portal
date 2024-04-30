@@ -6,6 +6,7 @@
 package com.liferay.style.book.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.style.book.model.StyleBookEntry;
 
 /**
@@ -130,13 +131,11 @@ public class StyleBookEntryServiceUtil {
 	}
 
 	public static StyleBookEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(StyleBookEntryService service) {
-		_service = service;
-	}
-
-	private static volatile StyleBookEntryService _service;
+	private static final Snapshot<StyleBookEntryService> _serviceSnapshot =
+		new Snapshot<>(
+			StyleBookEntryServiceUtil.class, StyleBookEntryService.class);
 
 }

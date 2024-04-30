@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionLocalService;
-import com.liferay.commerce.product.service.CPOptionLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -72,7 +71,7 @@ public abstract class CPOptionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPOptionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPOptionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPOptionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPOptionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -492,7 +491,6 @@ public abstract class CPOptionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CPOptionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -506,8 +504,6 @@ public abstract class CPOptionLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		cpOptionLocalService = (CPOptionLocalService)aopProxy;
-
-		CPOptionLocalServiceUtil.setService(cpOptionLocalService);
 	}
 
 	/**

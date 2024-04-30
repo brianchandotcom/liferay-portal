@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoLog;
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoLogPersistence;
 
 import java.io.Serializable;
@@ -66,7 +65,7 @@ public abstract class KaleoLogLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KaleoLogLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KaleoLogLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KaleoLogLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.workflow.kaleo.service.KaleoLogLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -373,7 +372,6 @@ public abstract class KaleoLogLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		KaleoLogLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -387,8 +385,6 @@ public abstract class KaleoLogLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		kaleoLogLocalService = (KaleoLogLocalService)aopProxy;
-
-		KaleoLogLocalServiceUtil.setService(kaleoLogLocalService);
 	}
 
 	/**

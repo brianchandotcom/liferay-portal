@@ -7,7 +7,6 @@ package com.liferay.commerce.currency.service.base;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.currency.service.CommerceCurrencyServiceUtil;
 import com.liferay.commerce.currency.service.persistence.CommerceCurrencyFinder;
 import com.liferay.commerce.currency.service.persistence.CommerceCurrencyPersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class CommerceCurrencyServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceCurrencyService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceCurrencyServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceCurrencyService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.currency.service.CommerceCurrencyServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceCurrencyServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class CommerceCurrencyServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceCurrencyService = (CommerceCurrencyService)aopProxy;
-
-		CommerceCurrencyServiceUtil.setService(commerceCurrencyService);
 	}
 
 	/**

@@ -7,7 +7,6 @@ package com.liferay.fragment.service.base;
 
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
-import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryVersionPersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class FragmentEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>FragmentEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>FragmentEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>FragmentEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.fragment.service.FragmentEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		FragmentEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class FragmentEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		fragmentEntryService = (FragmentEntryService)aopProxy;
-
-		FragmentEntryServiceUtil.setService(fragmentEntryService);
 	}
 
 	/**

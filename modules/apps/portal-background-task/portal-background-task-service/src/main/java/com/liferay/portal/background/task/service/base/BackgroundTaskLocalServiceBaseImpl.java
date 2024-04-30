@@ -9,7 +9,6 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
-import com.liferay.portal.background.task.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.background.task.service.persistence.BackgroundTaskFinder;
 import com.liferay.portal.background.task.service.persistence.BackgroundTaskPersistence;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -64,7 +63,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>BackgroundTaskLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>BackgroundTaskLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>BackgroundTaskLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.background.task.service.BackgroundTaskLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -381,7 +380,6 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		BackgroundTaskLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -395,8 +393,6 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		backgroundTaskLocalService = (BackgroundTaskLocalService)aopProxy;
-
-		BackgroundTaskLocalServiceUtil.setService(backgroundTaskLocalService);
 	}
 
 	/**

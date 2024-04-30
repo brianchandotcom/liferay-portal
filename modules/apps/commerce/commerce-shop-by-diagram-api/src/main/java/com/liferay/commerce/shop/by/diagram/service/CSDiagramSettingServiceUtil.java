@@ -7,6 +7,7 @@ package com.liferay.commerce.shop.by.diagram.service;
 
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the remote service utility for CSDiagramSetting. This utility wraps
@@ -76,13 +77,11 @@ public class CSDiagramSettingServiceUtil {
 	}
 
 	public static CSDiagramSettingService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CSDiagramSettingService service) {
-		_service = service;
-	}
-
-	private static volatile CSDiagramSettingService _service;
+	private static final Snapshot<CSDiagramSettingService> _serviceSnapshot =
+		new Snapshot<>(
+			CSDiagramSettingServiceUtil.class, CSDiagramSettingService.class);
 
 }

@@ -7,7 +7,6 @@ package com.liferay.osb.faro.service.base;
 
 import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.service.FaroUserLocalService;
-import com.liferay.osb.faro.service.FaroUserLocalServiceUtil;
 import com.liferay.osb.faro.service.persistence.FaroUserFinder;
 import com.liferay.osb.faro.service.persistence.FaroUserPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -64,7 +63,7 @@ public abstract class FaroUserLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>FaroUserLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>FaroUserLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>FaroUserLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.osb.faro.service.FaroUserLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -371,7 +370,6 @@ public abstract class FaroUserLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		FaroUserLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -385,8 +383,6 @@ public abstract class FaroUserLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		faroUserLocalService = (FaroUserLocalService)aopProxy;
-
-		FaroUserLocalServiceUtil.setService(faroUserLocalService);
 	}
 
 	/**

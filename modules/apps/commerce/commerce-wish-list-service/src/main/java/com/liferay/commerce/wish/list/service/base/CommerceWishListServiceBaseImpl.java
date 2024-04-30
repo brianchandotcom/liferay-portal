@@ -7,7 +7,6 @@ package com.liferay.commerce.wish.list.service.base;
 
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
-import com.liferay.commerce.wish.list.service.CommerceWishListServiceUtil;
 import com.liferay.commerce.wish.list.service.persistence.CommerceWishListPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class CommerceWishListServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceWishListService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceWishListServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceWishListService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.wish.list.service.CommerceWishListServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceWishListServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class CommerceWishListServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceWishListService = (CommerceWishListService)aopProxy;
-
-		CommerceWishListServiceUtil.setService(commerceWishListService);
 	}
 
 	/**

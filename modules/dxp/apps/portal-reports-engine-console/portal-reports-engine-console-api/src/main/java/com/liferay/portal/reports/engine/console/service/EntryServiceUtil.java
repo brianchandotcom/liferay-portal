@@ -6,6 +6,7 @@
 package com.liferay.portal.reports.engine.console.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.reports.engine.console.model.Entry;
 
@@ -102,13 +103,10 @@ public class EntryServiceUtil {
 	}
 
 	public static EntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(EntryService service) {
-		_service = service;
-	}
-
-	private static volatile EntryService _service;
+	private static final Snapshot<EntryService> _serviceSnapshot =
+		new Snapshot<>(EntryServiceUtil.class, EntryService.class);
 
 }

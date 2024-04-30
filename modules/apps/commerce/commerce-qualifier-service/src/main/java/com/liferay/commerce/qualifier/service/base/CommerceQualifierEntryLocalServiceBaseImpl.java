@@ -7,7 +7,6 @@ package com.liferay.commerce.qualifier.service.base;
 
 import com.liferay.commerce.qualifier.model.CommerceQualifierEntry;
 import com.liferay.commerce.qualifier.service.CommerceQualifierEntryLocalService;
-import com.liferay.commerce.qualifier.service.CommerceQualifierEntryLocalServiceUtil;
 import com.liferay.commerce.qualifier.service.persistence.CommerceQualifierEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class CommerceQualifierEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceQualifierEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceQualifierEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceQualifierEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.qualifier.service.CommerceQualifierEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -406,7 +405,6 @@ public abstract class CommerceQualifierEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceQualifierEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -421,9 +419,6 @@ public abstract class CommerceQualifierEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceQualifierEntryLocalService =
 			(CommerceQualifierEntryLocalService)aopProxy;
-
-		CommerceQualifierEntryLocalServiceUtil.setService(
-			commerceQualifierEntryLocalService);
 	}
 
 	/**

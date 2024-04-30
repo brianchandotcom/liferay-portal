@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
-import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CommerceChannelAccountEntryRelPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -67,7 +66,7 @@ public abstract class CommerceChannelAccountEntryRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceChannelAccountEntryRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceChannelAccountEntryRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceChannelAccountEntryRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -417,7 +416,6 @@ public abstract class CommerceChannelAccountEntryRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceChannelAccountEntryRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -433,9 +431,6 @@ public abstract class CommerceChannelAccountEntryRelLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceChannelAccountEntryRelLocalService =
 			(CommerceChannelAccountEntryRelLocalService)aopProxy;
-
-		CommerceChannelAccountEntryRelLocalServiceUtil.setService(
-			commerceChannelAccountEntryRelLocalService);
 	}
 
 	/**

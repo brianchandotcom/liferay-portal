@@ -7,7 +7,6 @@ package com.liferay.batch.engine.service.base;
 
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
-import com.liferay.batch.engine.service.BatchEngineImportTaskServiceUtil;
 import com.liferay.batch.engine.service.persistence.BatchEngineImportTaskPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class BatchEngineImportTaskServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>BatchEngineImportTaskService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>BatchEngineImportTaskServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>BatchEngineImportTaskService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.batch.engine.service.BatchEngineImportTaskServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		BatchEngineImportTaskServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,9 +60,6 @@ public abstract class BatchEngineImportTaskServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		batchEngineImportTaskService = (BatchEngineImportTaskService)aopProxy;
-
-		BatchEngineImportTaskServiceUtil.setService(
-			batchEngineImportTaskService);
 	}
 
 	/**

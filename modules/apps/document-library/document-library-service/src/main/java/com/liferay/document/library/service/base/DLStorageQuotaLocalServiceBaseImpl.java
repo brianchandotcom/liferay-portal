@@ -7,7 +7,6 @@ package com.liferay.document.library.service.base;
 
 import com.liferay.document.library.model.DLStorageQuota;
 import com.liferay.document.library.service.DLStorageQuotaLocalService;
-import com.liferay.document.library.service.DLStorageQuotaLocalServiceUtil;
 import com.liferay.document.library.service.persistence.DLStorageQuotaPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -63,7 +62,7 @@ public abstract class DLStorageQuotaLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DLStorageQuotaLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DLStorageQuotaLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DLStorageQuotaLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.document.library.service.DLStorageQuotaLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -377,7 +376,6 @@ public abstract class DLStorageQuotaLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DLStorageQuotaLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -391,8 +389,6 @@ public abstract class DLStorageQuotaLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		dlStorageQuotaLocalService = (DLStorageQuotaLocalService)aopProxy;
-
-		DLStorageQuotaLocalServiceUtil.setService(dlStorageQuotaLocalService);
 	}
 
 	/**

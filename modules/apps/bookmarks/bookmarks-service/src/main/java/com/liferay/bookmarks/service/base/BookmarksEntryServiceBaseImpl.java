@@ -7,7 +7,6 @@ package com.liferay.bookmarks.service.base;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryService;
-import com.liferay.bookmarks.service.BookmarksEntryServiceUtil;
 import com.liferay.bookmarks.service.persistence.BookmarksEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class BookmarksEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>BookmarksEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>BookmarksEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>BookmarksEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.bookmarks.service.BookmarksEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		BookmarksEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class BookmarksEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		bookmarksEntryService = (BookmarksEntryService)aopProxy;
-
-		BookmarksEntryServiceUtil.setService(bookmarksEntryService);
 	}
 
 	/**

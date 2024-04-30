@@ -7,7 +7,6 @@ package com.liferay.asset.auto.tagger.service.base;
 
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
-import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalServiceUtil;
 import com.liferay.asset.auto.tagger.service.persistence.AssetAutoTaggerEntryPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -67,7 +66,7 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AssetAutoTaggerEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AssetAutoTaggerEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AssetAutoTaggerEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -404,7 +403,6 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AssetAutoTaggerEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -420,9 +418,6 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		assetAutoTaggerEntryLocalService =
 			(AssetAutoTaggerEntryLocalService)aopProxy;
-
-		AssetAutoTaggerEntryLocalServiceUtil.setService(
-			assetAutoTaggerEntryLocalService);
 	}
 
 	/**

@@ -7,7 +7,6 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceOrderTypeRel;
 import com.liferay.commerce.service.CommerceOrderTypeRelLocalService;
-import com.liferay.commerce.service.CommerceOrderTypeRelLocalServiceUtil;
 import com.liferay.commerce.service.persistence.CommerceOrderTypeRelPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -72,7 +71,7 @@ public abstract class CommerceOrderTypeRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceOrderTypeRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceOrderTypeRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceOrderTypeRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceOrderTypeRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -552,7 +551,6 @@ public abstract class CommerceOrderTypeRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceOrderTypeRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -567,9 +565,6 @@ public abstract class CommerceOrderTypeRelLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceOrderTypeRelLocalService =
 			(CommerceOrderTypeRelLocalService)aopProxy;
-
-		CommerceOrderTypeRelLocalServiceUtil.setService(
-			commerceOrderTypeRelLocalService);
 	}
 
 	/**

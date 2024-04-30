@@ -7,6 +7,7 @@ package com.liferay.message.boards.service;
 
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.io.InputStream;
 
@@ -417,13 +418,10 @@ public class MBMessageServiceUtil {
 	}
 
 	public static MBMessageService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(MBMessageService service) {
-		_service = service;
-	}
-
-	private static volatile MBMessageService _service;
+	private static final Snapshot<MBMessageService> _serviceSnapshot =
+		new Snapshot<>(MBMessageServiceUtil.class, MBMessageService.class);
 
 }

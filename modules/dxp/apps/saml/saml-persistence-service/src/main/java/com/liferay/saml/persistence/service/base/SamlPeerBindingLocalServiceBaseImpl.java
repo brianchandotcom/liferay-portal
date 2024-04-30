@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
-import com.liferay.saml.persistence.service.SamlPeerBindingLocalServiceUtil;
 import com.liferay.saml.persistence.service.persistence.SamlPeerBindingPersistence;
 
 import java.io.Serializable;
@@ -64,7 +63,7 @@ public abstract class SamlPeerBindingLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SamlPeerBindingLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SamlPeerBindingLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SamlPeerBindingLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.saml.persistence.service.SamlPeerBindingLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -382,7 +381,6 @@ public abstract class SamlPeerBindingLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		SamlPeerBindingLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -396,8 +394,6 @@ public abstract class SamlPeerBindingLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		samlPeerBindingLocalService = (SamlPeerBindingLocalService)aopProxy;
-
-		SamlPeerBindingLocalServiceUtil.setService(samlPeerBindingLocalService);
 	}
 
 	/**

@@ -7,6 +7,7 @@ package com.liferay.commerce.inventory.service;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -141,15 +142,12 @@ public class CommerceInventoryWarehouseRelServiceUtil {
 	}
 
 	public static CommerceInventoryWarehouseRelService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(
-		CommerceInventoryWarehouseRelService service) {
-
-		_service = service;
-	}
-
-	private static volatile CommerceInventoryWarehouseRelService _service;
+	private static final Snapshot<CommerceInventoryWarehouseRelService>
+		_serviceSnapshot = new Snapshot<>(
+			CommerceInventoryWarehouseRelServiceUtil.class,
+			CommerceInventoryWarehouseRelService.class);
 
 }

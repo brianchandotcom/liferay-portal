@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
-import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
 import com.liferay.list.type.service.persistence.ListTypeEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -69,7 +68,7 @@ public abstract class ListTypeEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ListTypeEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ListTypeEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ListTypeEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.list.type.service.ListTypeEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -484,7 +483,6 @@ public abstract class ListTypeEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		ListTypeEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -498,8 +496,6 @@ public abstract class ListTypeEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		listTypeEntryLocalService = (ListTypeEntryLocalService)aopProxy;
-
-		ListTypeEntryLocalServiceUtil.setService(listTypeEntryLocalService);
 	}
 
 	/**

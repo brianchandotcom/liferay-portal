@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
-import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalServiceUtil;
 import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionPersistence;
 
 import java.io.Serializable;
@@ -78,7 +77,7 @@ public abstract class WorkflowMetricsSLADefinitionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>WorkflowMetricsSLADefinitionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>WorkflowMetricsSLADefinitionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>WorkflowMetricsSLADefinitionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -600,7 +599,6 @@ public abstract class WorkflowMetricsSLADefinitionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		WorkflowMetricsSLADefinitionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -615,9 +613,6 @@ public abstract class WorkflowMetricsSLADefinitionLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		workflowMetricsSLADefinitionLocalService =
 			(WorkflowMetricsSLADefinitionLocalService)aopProxy;
-
-		WorkflowMetricsSLADefinitionLocalServiceUtil.setService(
-			workflowMetricsSLADefinitionLocalService);
 	}
 
 	/**

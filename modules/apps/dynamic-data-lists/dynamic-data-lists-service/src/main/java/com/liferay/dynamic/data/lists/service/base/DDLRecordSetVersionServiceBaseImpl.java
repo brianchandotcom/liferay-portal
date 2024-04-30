@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.lists.service.base;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetVersionService;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetVersionServiceUtil;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetVersionPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class DDLRecordSetVersionServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DDLRecordSetVersionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DDLRecordSetVersionServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DDLRecordSetVersionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.lists.service.DDLRecordSetVersionServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		DDLRecordSetVersionServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class DDLRecordSetVersionServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ddlRecordSetVersionService = (DDLRecordSetVersionService)aopProxy;
-
-		DDLRecordSetVersionServiceUtil.setService(ddlRecordSetVersionService);
 	}
 
 	/**

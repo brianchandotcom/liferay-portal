@@ -7,7 +7,6 @@ package com.liferay.change.tracking.service.base;
 
 import com.liferay.change.tracking.model.CTSchemaVersion;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
-import com.liferay.change.tracking.service.CTSchemaVersionLocalServiceUtil;
 import com.liferay.change.tracking.service.persistence.CTSchemaVersionPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class CTSchemaVersionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CTSchemaVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CTSchemaVersionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CTSchemaVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.change.tracking.service.CTSchemaVersionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -382,7 +381,6 @@ public abstract class CTSchemaVersionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CTSchemaVersionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -396,8 +394,6 @@ public abstract class CTSchemaVersionLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ctSchemaVersionLocalService = (CTSchemaVersionLocalService)aopProxy;
-
-		CTSchemaVersionLocalServiceUtil.setService(ctSchemaVersionLocalService);
 	}
 
 	/**

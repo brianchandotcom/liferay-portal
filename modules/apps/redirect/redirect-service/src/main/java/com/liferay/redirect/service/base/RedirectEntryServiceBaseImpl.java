@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryService;
-import com.liferay.redirect.service.RedirectEntryServiceUtil;
 import com.liferay.redirect.service.persistence.RedirectEntryPersistence;
 
 import javax.sql.DataSource;
@@ -44,11 +43,10 @@ public abstract class RedirectEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>RedirectEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>RedirectEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>RedirectEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.redirect.service.RedirectEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		RedirectEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class RedirectEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		redirectEntryService = (RedirectEntryService)aopProxy;
-
-		RedirectEntryServiceUtil.setService(redirectEntryService);
 	}
 
 	/**

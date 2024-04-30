@@ -7,7 +7,6 @@ package com.liferay.commerce.shipping.engine.fixed.service.base;
 
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
-import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionServiceUtil;
 import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CommerceShippingFixedOptionServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceShippingFixedOptionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceShippingFixedOptionServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceShippingFixedOptionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceShippingFixedOptionServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,9 +62,6 @@ public abstract class CommerceShippingFixedOptionServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceShippingFixedOptionService =
 			(CommerceShippingFixedOptionService)aopProxy;
-
-		CommerceShippingFixedOptionServiceUtil.setService(
-			commerceShippingFixedOptionService);
 	}
 
 	/**

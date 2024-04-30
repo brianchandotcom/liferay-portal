@@ -7,7 +7,6 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.commerce.service.CPDAvailabilityEstimateService;
-import com.liferay.commerce.service.CPDAvailabilityEstimateServiceUtil;
 import com.liferay.commerce.service.persistence.CPDAvailabilityEstimatePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CPDAvailabilityEstimateServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDAvailabilityEstimateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDAvailabilityEstimateServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDAvailabilityEstimateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CPDAvailabilityEstimateServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CPDAvailabilityEstimateServiceUtil.setService(null);
 	}
 
 	@Override
@@ -63,9 +61,6 @@ public abstract class CPDAvailabilityEstimateServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpdAvailabilityEstimateService =
 			(CPDAvailabilityEstimateService)aopProxy;
-
-		CPDAvailabilityEstimateServiceUtil.setService(
-			cpdAvailabilityEstimateService);
 	}
 
 	/**

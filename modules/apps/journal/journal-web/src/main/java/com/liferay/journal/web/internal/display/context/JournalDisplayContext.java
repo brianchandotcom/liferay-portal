@@ -688,7 +688,7 @@ public class JournalDisplayContext {
 
 		return _getSubtitle(
 			folder.getModifiedDate(), "modified-x-ago-by-x",
-			folder.getStatusByUserName());
+			folder.getUserName());
 	}
 
 	public long getHighlightedDDMStructureId() {

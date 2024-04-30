@@ -166,7 +166,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 
 	if (
 		options.length &&
-		options.some(option => option.label === 'eventHidden' && option.value)
+		options.some(option => option.label === 'hidden' && option.value)
 	) {
 		return (
 			<div className='criteria-statement'>

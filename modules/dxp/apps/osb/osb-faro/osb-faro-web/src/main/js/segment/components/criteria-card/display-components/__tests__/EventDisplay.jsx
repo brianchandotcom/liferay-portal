@@ -97,7 +97,7 @@ describe('EventDisplay', () => {
 					entityName: 'Individual',
 					label: 'Downloaded Document',
 					name: 'documentDownloaded',
-					options: [{label: 'eventHidden', value: false}],
+					options: [{label: 'hidden', value: false}],
 					propertykey: 'event',
 					type: PropertyTypes.Event
 				}}
@@ -116,7 +116,7 @@ describe('EventDisplay', () => {
 					entityName: 'Individual',
 					label: 'Downloaded Document',
 					name: 'documentDownloaded',
-					options: [{label: 'eventHidden', value: true}],
+					options: [{label: 'hidden', value: true}],
 					propertykey: 'event',
 					type: PropertyTypes.Event
 				}}

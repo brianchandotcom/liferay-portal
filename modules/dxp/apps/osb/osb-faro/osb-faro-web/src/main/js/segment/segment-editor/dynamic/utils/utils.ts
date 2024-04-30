@@ -378,10 +378,6 @@ export const convertEventToProperty = (
 		? eventDefinition.get('name')
 		: eventDefinition.name;
 
-	const blocked = isMap(eventDefinition)
-		? eventDefinition.get('blocked')
-		: eventDefinition.blocked;
-
 	const hidden = isMap(eventDefinition)
 		? eventDefinition.get('hidden')
 		: eventDefinition.hidden;
@@ -391,7 +387,7 @@ export const convertEventToProperty = (
 		id,
 		label: displayName || name,
 		name,
-		options: [{label: 'eventHidden', value: blocked || hidden}],
+		options: [{label: 'hidden', value: hidden}],
 		propertyKey: 'event',
 		type: PropertyTypes.Event
 	});

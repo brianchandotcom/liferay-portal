@@ -32,7 +32,7 @@ const EventDisplay: React.FC<IDisplayComponentProps> = ({
 
 	if (
 		options?.length &&
-		options.some(option => option.label === 'eventHidden' && option.value)
+		options.some(option => option.label === 'hidden' && option.value)
 	) {
 		return (
 			<b className='undefined-property'>

@@ -24,10 +24,12 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -41,6 +43,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -49,7 +53,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -67,8 +73,11 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
+import com.liferay.portal.workflow.manager.WorkflowLogManager;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -80,6 +89,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import java.text.Format;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -1134,6 +1144,45 @@ public class GetEntryRenderDataMVCResourceCommand
 				themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
 			return LinkedHashMapBuilder.<String, Object>put(
+				"activities",
+				() -> {
+					List<WorkflowLog> workflowLogs =
+						_workflowLogManager.getWorkflowLogsByWorkflowInstance(
+							themeDisplay.getCompanyId(),
+							workflowTask.getWorkflowInstanceId(),
+							Arrays.asList(
+								WorkflowLog.TASK_ASSIGN,
+								WorkflowLog.TASK_COMPLETION,
+								WorkflowLog.TASK_UPDATE,
+								WorkflowLog.TRANSITION),
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+							_workflowComparatorFactory.
+								getLogCreateDateComparator(false));
+
+					JSONObject workflowLogsJSONObject =
+						_jsonFactory.createJSONObject();
+
+					for (WorkflowLog workflowLog : workflowLogs) {
+						workflowLogsJSONObject.put(
+							String.valueOf(workflowLog.getWorkflowLogId()),
+							JSONUtil.put(
+								"comment",
+								_language.get(
+									themeDisplay.getRequest(),
+									workflowLog.getComment())
+							).put(
+								"createDate",
+								format.format(workflowLog.getCreateDate())
+							).put(
+								"description",
+								_getWorkflowLogDescriptions(
+									themeDisplay, workflowLog)
+							));
+					}
+
+					return String.valueOf(workflowLogsJSONObject);
+				}
+			).put(
 				"assignedTo",
 				() -> {
 					if (!workflowTask.isAssignedToSingleUser()) {
@@ -1258,6 +1307,111 @@ public class GetEntryRenderDataMVCResourceCommand
 			_portal.getClassName(ctEntry.getModelClassNameId()), classPK);
 	}
 
+	private String _getWorkflowLogDescriptions(
+			ThemeDisplay themeDisplay, WorkflowLog workflowLog)
+		throws PortalException {
+
+		if (workflowLog.getType() == WorkflowLog.TASK_COMPLETION) {
+			return _language.format(
+				themeDisplay.getLocale(), "x-completed-the-task-x",
+				new Object[] {
+					_portal.getUserName(
+						workflowLog.getAuditUserId(),
+						String.valueOf(workflowLog.getAuditUserId())),
+					workflowLog.getCurrentWorkflowNodeLabel(
+						themeDisplay.getLocale())
+				},
+				false);
+		}
+		else if (workflowLog.getType() == WorkflowLog.TASK_UPDATE) {
+			return _language.format(
+				themeDisplay.getLocale(), "x-updated-the-due-date",
+				_portal.getUserName(
+					workflowLog.getAuditUserId(),
+					String.valueOf(workflowLog.getAuditUserId())),
+				false);
+		}
+		else if (workflowLog.getType() == WorkflowLog.TRANSITION) {
+			return _language.format(
+				themeDisplay.getLocale(), "x-changed-the-state-from-x-to-x",
+				new Object[] {
+					_portal.getUserName(
+						workflowLog.getAuditUserId(),
+						String.valueOf(workflowLog.getAuditUserId())),
+					workflowLog.getPreviousWorkflowNodeLabel(
+						themeDisplay.getLocale()),
+					workflowLog.getCurrentWorkflowNodeLabel(
+						themeDisplay.getLocale())
+				},
+				false);
+		}
+		else if (workflowLog.getAuditUserId() == workflowLog.getUserId()) {
+			User user = _userLocalService.fetchUser(workflowLog.getUserId());
+
+			return _language.format(
+				themeDisplay.getLocale(), "x-assigned-the-task-to-x",
+				new String[] {
+					user.getFullName(), user.isMale() ? "himself" : "herself"
+				},
+				false);
+		}
+		else if (workflowLog.getRoleId() == 0) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(
+				_language.format(
+					themeDisplay.getLocale(), "x-assigned-the-task-to-x",
+					new Object[] {
+						_portal.getUserName(
+							workflowLog.getAuditUserId(),
+							String.valueOf(workflowLog.getAuditUserId())),
+						_portal.getUserName(
+							workflowLog.getUserId(),
+							String.valueOf(workflowLog.getUserId()))
+					},
+					false));
+
+			if (workflowLog.getPreviousUserId() != 0) {
+				sb.append(StringPool.SPACE);
+
+				sb.append(
+					_language.format(
+						themeDisplay.getLocale(), "previous-assignee-was-x",
+						_portal.getUserName(
+							workflowLog.getPreviousUserId(),
+							String.valueOf(workflowLog.getPreviousUserId())),
+						false));
+			}
+
+			return sb.toString();
+		}
+
+		String actorName = null;
+
+		if (workflowLog.getRoleId() != 0) {
+			Role role = _roleLocalService.fetchRole(workflowLog.getRoleId());
+
+			if (role == null) {
+				return String.valueOf(workflowLog.getRoleId());
+			}
+
+			actorName = role.getName();
+		}
+		else if (workflowLog.getUserId() != 0) {
+			User user = _userLocalService.fetchUser(workflowLog.getUserId());
+
+			if (user == null) {
+				return String.valueOf(workflowLog.getUserId());
+			}
+
+			actorName = user.getFullName();
+		}
+
+		return _language.format(
+			themeDisplay.getLocale(), "task-initially-assigned-to-the-x-role",
+			String.valueOf(actorName), false);
+	}
+
 	private <T extends BaseModel<T>> WorkflowTask _getWorkflowTask(
 			CTEntry ctEntry, T model)
 		throws Exception {
@@ -1319,13 +1473,25 @@ public class GetEntryRenderDataMVCResourceCommand
 	private Portal _portal;
 
 	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
+	private UserLocalService _userLocalService;
+
+	@Reference
+	private WorkflowComparatorFactory _workflowComparatorFactory;
+
+	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
+
+	@Reference
+	private WorkflowLogManager _workflowLogManager;
 
 	@Reference
 	private WorkflowTaskManager _workflowTaskManager;

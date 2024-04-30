@@ -73,6 +73,7 @@ public class LanguageExtension {
 			Object aggregate = attributes.get("resource.bundle.aggregate");
 			Object baseName = attributes.get("resource.bundle.base.name");
 			Object serviceRanking = attributes.get(Constants.SERVICE_RANKING);
+			Object servletContextName = attributes.get("servlet.context.name");
 
 			if (aggregate instanceof String) {
 				int aggregateId = _atomicInteger.incrementAndGet();
@@ -107,6 +108,26 @@ public class LanguageExtension {
 
 				resourceBundleLoader =
 					ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+			}
+
+			if (Validator.isNull(servletContextName)) {
+				Dictionary<String, String> headers = _bundle.getHeaders(
+					StringPool.BLANK);
+
+				String webContextName = headers.get("Web-ContextName");
+
+				if (Validator.isNotNull(webContextName)) {
+					attributes.put("servlet.context.name", webContextName);
+				}
+				else {
+					String webContextPath = headers.get("Web-ContextPath");
+
+					if (Validator.isNotNull(webContextPath)) {
+						attributes.put(
+							"servlet.context.name",
+							webContextPath.substring(1));
+					}
+				}
 			}
 
 			if (Validator.isNotNull(serviceRanking)) {

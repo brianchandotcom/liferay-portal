@@ -83,6 +83,38 @@ public class DatabaseUtilTest extends BaseTestCase {
 		_assert(liferayDatabase, false);
 	}
 
+	@Test
+	public void testReplaceSchemaName() {
+		Assert.assertEquals(
+			"jdbc:mysql://localhost:3306/lportal",
+			DatabaseUtil.replaceSchemaName(
+				"jdbc:mysql://localhost:3306/lportal", null));
+		Assert.assertEquals(
+			"jdbc:postgresql://localhost:5432/lportal",
+			DatabaseUtil.replaceSchemaName(
+				"jdbc:postgresql://localhost:5432/lportal", null));
+
+		Assert.assertEquals(
+			"jdbc:mysql://localhost:3306/db",
+			DatabaseUtil.replaceSchemaName(
+				"jdbc:mysql://localhost:3306/lportal", "db"));
+		Assert.assertEquals(
+			"jdbc:postgresql://localhost:5432/lportal?currentSchema=db",
+			DatabaseUtil.replaceSchemaName(
+				"jdbc:postgresql://localhost:5432/lportal", "db"));
+
+		Assert.assertEquals(
+			"jdbc:mysql://localhost:3306/db?parameter=value",
+			DatabaseUtil.replaceSchemaName(
+				"jdbc:mysql://localhost:3306/lportal?parameter=value", "db"));
+		Assert.assertEquals(
+			"jdbc:postgresql://localhost:5432/lportal?parameter=value&" +
+				"currentSchema=db",
+			DatabaseUtil.replaceSchemaName(
+				"jdbc:postgresql://localhost:5432/lportal?parameter=value",
+				"db"));
+	}
+
 	private void _assert(LiferayDatabase liferayDatabase, boolean isDefault) {
 		List<Company> companies = liferayDatabase.getCompanies();
 

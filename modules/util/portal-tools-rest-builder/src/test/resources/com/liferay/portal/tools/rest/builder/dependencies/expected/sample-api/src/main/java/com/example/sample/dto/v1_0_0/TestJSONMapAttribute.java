@@ -146,8 +146,11 @@ public class TestJSONMapAttribute implements Serializable {
 					return value;
 				}
 
+				UnsafeSupplier<?, ?> unsafeSupplier =
+					(UnsafeSupplier<?, ?>)value;
+
 				try {
-					return ((UnsafeSupplier<?, ?>)value).get();
+					return unsafeSupplier.get();
 				}
 				catch (Throwable throwable) {
 					throw new RuntimeException(throwable);
@@ -192,8 +195,11 @@ public class TestJSONMapAttribute implements Serializable {
 					return value;
 				}
 
+				UnsafeSupplier<?, ?> unsafeSupplier =
+					(UnsafeSupplier<?, ?>)value;
+
 				try {
-					return ((UnsafeSupplier<?, ?>)value).get();
+					return unsafeSupplier.get();
 				}
 				catch (Throwable throwable) {
 					throw new RuntimeException(throwable);
@@ -254,35 +260,47 @@ public class TestJSONMapAttribute implements Serializable {
 		}
 		else {
 			if (properties1.containsKey(propertyName)) {
-				Object object = properties1.get(propertyName);
+				Object value = properties1.get(propertyName);
 
-				if (object instanceof UnsafeSupplier<?, ?>) {
-					try {
-						object = ((UnsafeSupplier<?, ?>)object).get();
-						properties1.put(propertyName, object);
-					}
-					catch (Throwable e) {
-						throw new RuntimeException(e);
-					}
+				if (!(value instanceof UnsafeSupplier<?, ?>)) {
+					return value;
 				}
 
-				return object;
+				UnsafeSupplier<?, ?> unsafeSupplier =
+					(UnsafeSupplier<?, ?>)value;
+
+				try {
+					value = unsafeSupplier.get();
+
+					properties1.put(propertyName, value);
+				}
+				catch (Throwable e) {
+					throw new RuntimeException(e);
+				}
+
+				return value;
 			}
 
 			if (properties2.containsKey(propertyName)) {
-				Object object = properties2.get(propertyName);
+				Object value = properties2.get(propertyName);
 
-				if (object instanceof UnsafeSupplier<?, ?>) {
-					try {
-						object = ((UnsafeSupplier<?, ?>)object).get();
-						properties2.put(propertyName, object);
-					}
-					catch (Throwable e) {
-						throw new RuntimeException(e);
-					}
+				if (!(value instanceof UnsafeSupplier<?, ?>)) {
+					return value;
 				}
 
-				return object;
+				UnsafeSupplier<?, ?> unsafeSupplier =
+					(UnsafeSupplier<?, ?>)value;
+
+				try {
+					value = unsafeSupplier.get();
+
+					properties2.put(propertyName, value);
+				}
+				catch (Throwable e) {
+					throw new RuntimeException(e);
+				}
+
+				return value;
 			}
 		}
 

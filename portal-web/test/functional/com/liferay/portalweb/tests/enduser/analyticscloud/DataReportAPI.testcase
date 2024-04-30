@@ -393,7 +393,7 @@ definition {
 		task ("Visit the site page") {
 			ACUtils.navigateToSitePageWithUser(
 				actionType = "View WC",
-				documentTitleList = "1,2,3,4",
+				documentTitleList = "1,2,3,4,5,6,7",
 				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");

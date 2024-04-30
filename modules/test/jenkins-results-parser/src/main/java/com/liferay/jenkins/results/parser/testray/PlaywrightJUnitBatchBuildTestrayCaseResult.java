@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.TopLevelBuild;
-import com.liferay.jenkins.results.parser.test.clazz.PlaywrightTestClass;
+import com.liferay.jenkins.results.parser.test.clazz.PlaywrightJUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
@@ -16,25 +16,25 @@ import java.util.List;
 /**
  * @author Kenji Heigel
  */
-public class PlaywrightBatchBuildTestrayCaseResult
+public class PlaywrightJUnitBatchBuildTestrayCaseResult
 	extends JUnitBatchBuildTestrayCaseResult {
 
-	public PlaywrightBatchBuildTestrayCaseResult(
+	public PlaywrightJUnitBatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
 
 		super(testrayBuild, topLevelBuild, axisTestClassGroup, testClass);
 
-		_playwrightTestClass = (PlaywrightTestClass)testClass;
+		_playwrightJUnitTestClass = (PlaywrightJUnitTestClass)testClass;
 	}
 
 	@Override
 	public String getName() {
-		if (_playwrightTestClass == null) {
+		if (_playwrightJUnitTestClass == null) {
 			return super.getName();
 		}
 
-		return _playwrightTestClass.getSpecFilePath();
+		return _playwrightJUnitTestClass.getSpecFilePath();
 	}
 
 	@Override
@@ -58,6 +58,6 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			getAxisBuildURLPath() + "/playwright-report/index.html");
 	}
 
-	private final PlaywrightTestClass _playwrightTestClass;
+	private final PlaywrightJUnitTestClass _playwrightJUnitTestClass;
 
 }

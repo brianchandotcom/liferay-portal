@@ -17,9 +17,10 @@ import java.io.IOException;
 /**
  * @author Michael Hashimoto
  */
-public class PortalLogTestrayCaseResult extends BatchBuildTestrayCaseResult {
+public class PortalLogBatchBuildTestrayCaseResult
+	extends BatchBuildTestrayCaseResult {
 
-	public PortalLogTestrayCaseResult(
+	public PortalLogBatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
 		AxisTestClassGroup axisTestClassGroup) {
 

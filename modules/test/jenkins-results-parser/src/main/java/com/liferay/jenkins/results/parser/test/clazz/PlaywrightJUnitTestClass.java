@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -19,7 +19,7 @@ import org.json.JSONObject;
 /**
  * @author Kenji Heigel
  */
-public class PlaywrightTestClass extends JUnitTestClass {
+public class PlaywrightJUnitTestClass extends JUnitTestClass {
 
 	@Override
 	public JSONObject getJSONObject() {
@@ -65,7 +65,7 @@ public class PlaywrightTestClass extends JUnitTestClass {
 		return _specTitle;
 	}
 
-	protected PlaywrightTestClass(
+	protected PlaywrightJUnitTestClass(
 		BatchTestClassGroup batchTestClassGroup, File testClassFile,
 		String specTitle) {
 
@@ -107,7 +107,7 @@ public class PlaywrightTestClass extends JUnitTestClass {
 		}
 	}
 
-	protected PlaywrightTestClass(
+	protected PlaywrightJUnitTestClass(
 		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject) {
 
 		super(batchTestClassGroup, jsonObject);

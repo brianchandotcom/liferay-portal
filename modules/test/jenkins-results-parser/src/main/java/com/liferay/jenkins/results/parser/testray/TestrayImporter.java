@@ -1032,18 +1032,19 @@ public class TestrayImporter {
 							axisTestClassGroup instanceof
 								PlaywrightAxisTestClassGroup) {
 
-							PortalLogTestrayCaseResult
-								portalLogTestrayCaseResult =
+							PortalLogBatchBuildTestrayCaseResult
+								portalLogBatchBuildTestrayCaseResult =
 									TestrayFactory.
 										newPortalLogTestrayCaseResult(
 											testrayBuild, getTopLevelBuild(),
 											axisTestClassGroup);
 
 							if (!JenkinsResultsParserUtil.isNullOrEmpty(
-									portalLogTestrayCaseResult.getErrors())) {
+									portalLogBatchBuildTestrayCaseResult.
+										getErrors())) {
 
 								testrayCaseResults.add(
-									portalLogTestrayCaseResult);
+									portalLogBatchBuildTestrayCaseResult);
 							}
 
 							for (TestClass testClass :

@@ -257,6 +257,14 @@ public class RoleNotificationRecipientBuilder
 		return users;
 	}
 
+	private boolean _isPreventNotifyingAncestorSites() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-23210")) {
+			return false;
+		}
+
+		return _workflowDefinitionConfiguration.preventNotifyingAncestorSites();
+	}
+
 	private boolean _isSelfAssignedUser(
 		ExecutionContext executionContext, User user) {
 
@@ -302,14 +310,6 @@ public class RoleNotificationRecipientBuilder
 		}
 
 		return false;
-	}
-
-	private boolean _isPreventNotifyingAncestorSites() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-23210")) {
-			return false;
-		}
-
-		return _workflowDefinitionConfiguration.preventNotifyingAncestorSites();
 	}
 
 	private volatile ServiceTrackerList<GroupAwareRoleValidator>

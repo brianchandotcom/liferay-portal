@@ -6,6 +6,10 @@
 	width: min-content;
 }
 
+.component-action {
+	margin-left: 0px;
+}
+
 .lexicon-icon-order-arrow {
 	color: #6e6868;
 }

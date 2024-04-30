@@ -8,6 +8,7 @@ dependencies {
 	compileInclude group: "com.mysql", name: "mysql-connector-j", version: "8.3.0"
 	compileInclude group: "commons-cli", name: "commons-cli", version: "1.4"
 	compileInclude group: "org.json", name: "json", version: "20231013"
+	compileInclude group: "org.postgresql", name: "postgresql", version: "42.4.4"
 
 	compileOnly group: "com.liferay", name: "com.liferay.petra.function", version: "5.5.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "5.2.0"

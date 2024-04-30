@@ -79,14 +79,15 @@ function deploy_client_extensions {
 	then
 		for client_extension_name in ${@}
 		do
-
 			uniqueExtensions=()
+
 			if [[ ${client_extension_name} == $1 ]]
 			then
-			 echo "Duplicate Client Extentions found: ${client_extension_name}"
-			 else
+				echo "Duplicate Client Extensions found: ${client_extension_name}"
+			else
 				uniqueExtensions+=(${client_extension_name})
 			fi
+
 			local client_extension_dir=$(find ${_PORTAL_PROJECT_DIR}/workspaces -type d -name "${client_extension_name}" | grep -v .releng | grep -v .npmscripts | grep -v node_modules)
 
 			if [[ -d ${client_extension_dir} ]]
@@ -137,12 +138,14 @@ function deploy_osgi_modules {
 		for osgi_module_name in ${@}
 		do
 			uniqueModules=()
-			if [[ ${osgi_module_name} == $1 ]]
+
+			if [[ ${osgi_module_name} == ${1} ]]
 			then
-			 echo "Duplicate OSGI Modules found: ${osgi_module_name}"
-			 else
+				echo "Duplicate OSGi modules found: ${osgi_module_name}"
+			else
 				uniqueModules+=(${osgi_module_name})
 			fi
+
 			local osgi_module_dir=$(find ${_PORTAL_PROJECT_DIR}/modules -type d -name "${osgi_module_name}" | grep -v .releng | grep -v .npmscripts | grep -v node_modules)
 
 			if [[ -f ${osgi_module_dir}/build.gradle ]]
@@ -156,7 +159,7 @@ function deploy_osgi_modules {
 				${gradlew} deploy
 
 				wait_for_portal_log_inactivity
-				else
+			else
 				echo "Unable to find OSGi module directory at ${osgi_module_dir}"
 			fi
 		done

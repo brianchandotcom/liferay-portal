@@ -52,6 +52,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/layout.layoutpagetemplatecollection/add-layout-page-template-collection \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode='' \
 				-d groupId=${groupId} \
 				-d parentLayoutPageTemplateCollectionId=0 \
 				-d name=${layoutPageTemplateCollectionName} \

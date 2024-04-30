@@ -7,6 +7,8 @@ package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -43,15 +45,20 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Igor Spasic
+ * @author Miguel Pastor
  * @author Raymond Augé
  */
 @Component(service = JSONWebServiceActionsManager.class)
@@ -582,5 +589,64 @@ public class JSONWebServiceActionsManagerImpl
 	private final ConcurrentMap<String, JSONWebServiceActionConfig>
 		_signatureIndexedJSONWebServiceActionConfigs =
 			new ConcurrentHashMap<>();
+
+	private class JSONWebServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<Object, Object> {
+
+		public JSONWebServiceTrackerCustomizer(
+			JSONWebServiceActionsManager jsonWebServiceActionsManager,
+			BundleContext bundleContext) {
+
+			_jsonWebServiceActionsManager = jsonWebServiceActionsManager;
+			_bundleContext = bundleContext;
+		}
+
+		@Override
+		public Object addingService(ServiceReference<Object> serviceReference) {
+			String contextName = (String)serviceReference.getProperty(
+				"json.web.service.context.name");
+			String contextPath = (String)serviceReference.getProperty(
+				"json.web.service.context.path");
+			Object service = _bundleContext.getService(serviceReference);
+
+			Bundle bundle = serviceReference.getBundle();
+
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+			try (SafeCloseable safeCloseable =
+					ThreadContextClassLoaderUtil.swap(
+						bundleWiring.getClassLoader())) {
+
+				_jsonWebServiceActionsManager.registerService(
+					contextName, contextPath, service);
+			}
+
+			return service;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<Object> serviceReference, Object service) {
+
+			removedService(serviceReference, service);
+
+			addingService(serviceReference);
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<Object> serviceReference, Object service) {
+
+			_jsonWebServiceActionsManager.unregisterJSONWebServiceActions(
+				service);
+
+			_bundleContext.ungetService(serviceReference);
+		}
+
+		private final BundleContext _bundleContext;
+		private final JSONWebServiceActionsManager
+			_jsonWebServiceActionsManager;
+
+	}
 
 }

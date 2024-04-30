@@ -1,6 +1,6 @@
 [
 	{
-		"ddmStructureKey": "SAMPLE",
+		"assetEntrySubtypeId": "[$DDM_STRUCTURE_ID:SAMPLE$]",
 		"title": "Samples",
 		"unicodeProperties": {
 			"anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",
@@ -9,7 +9,7 @@
 		}
 	},
 	{
-		"ddmStructureKey": "ANIMAL",
+		"assetEntrySubtypeId": "[$DDM_STRUCTURE_ID:ANIMAL$]",
 		"title": "Animals",
 		"unicodeProperties": {
 			"anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",

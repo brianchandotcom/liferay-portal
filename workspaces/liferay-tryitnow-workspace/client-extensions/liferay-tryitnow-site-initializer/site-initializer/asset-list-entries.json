@@ -1,6 +1,6 @@
 [
 	{
-		"ddmStructureKey": "M2H8-FAQ",
+		"assetEntrySubtypeId": "[$DDM_STRUCTURE_ID:M2H8-FAQ$]",
 		"title": "FAQs",
 		"unicodeProperties": {
 			"anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",

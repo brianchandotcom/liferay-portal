@@ -1,6 +1,6 @@
 [
 	{
-		"ddmStructureKey": "NEWS",
+		"assetEntrySubtypeId": "[$DDM_STRUCTURE_ID:NEWS$]",
 		"title": "News Entries",
 		"unicodeProperties": {
 			"anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",

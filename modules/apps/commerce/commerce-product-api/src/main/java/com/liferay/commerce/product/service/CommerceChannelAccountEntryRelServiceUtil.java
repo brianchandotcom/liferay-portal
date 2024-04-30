@@ -7,6 +7,7 @@ package com.liferay.commerce.product.service;
 
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -140,15 +141,12 @@ public class CommerceChannelAccountEntryRelServiceUtil {
 	}
 
 	public static CommerceChannelAccountEntryRelService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(
-		CommerceChannelAccountEntryRelService service) {
-
-		_service = service;
-	}
-
-	private static volatile CommerceChannelAccountEntryRelService _service;
+	private static final Snapshot<CommerceChannelAccountEntryRelService>
+		_serviceSnapshot = new Snapshot<>(
+			CommerceChannelAccountEntryRelServiceUtil.class,
+			CommerceChannelAccountEntryRelService.class);
 
 }

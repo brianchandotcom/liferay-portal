@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryService;
-import com.liferay.sharing.service.SharingEntryServiceUtil;
 import com.liferay.sharing.service.persistence.SharingEntryFinder;
 import com.liferay.sharing.service.persistence.SharingEntryPersistence;
 
@@ -45,11 +44,10 @@ public abstract class SharingEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SharingEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SharingEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SharingEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.sharing.service.SharingEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		SharingEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class SharingEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		sharingEntryService = (SharingEntryService)aopProxy;
-
-		SharingEntryServiceUtil.setService(sharingEntryService);
 	}
 
 	/**

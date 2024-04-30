@@ -7,7 +7,6 @@ package com.liferay.account.service.base;
 
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
-import com.liferay.account.service.AccountRoleLocalServiceUtil;
 import com.liferay.account.service.persistence.AccountRolePersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -63,7 +62,7 @@ public abstract class AccountRoleLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AccountRoleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AccountRoleLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AccountRoleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.account.service.AccountRoleLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -379,7 +378,6 @@ public abstract class AccountRoleLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AccountRoleLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -393,8 +391,6 @@ public abstract class AccountRoleLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		accountRoleLocalService = (AccountRoleLocalService)aopProxy;
-
-		AccountRoleLocalServiceUtil.setService(accountRoleLocalService);
 	}
 
 	/**

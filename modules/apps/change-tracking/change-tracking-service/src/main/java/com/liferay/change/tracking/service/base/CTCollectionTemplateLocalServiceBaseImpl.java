@@ -7,7 +7,6 @@ package com.liferay.change.tracking.service.base;
 
 import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.CTCollectionTemplateLocalService;
-import com.liferay.change.tracking.service.CTCollectionTemplateLocalServiceUtil;
 import com.liferay.change.tracking.service.persistence.CTCollectionTemplatePersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class CTCollectionTemplateLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CTCollectionTemplateLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CTCollectionTemplateLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CTCollectionTemplateLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.change.tracking.service.CTCollectionTemplateLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -401,7 +400,6 @@ public abstract class CTCollectionTemplateLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CTCollectionTemplateLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -416,9 +414,6 @@ public abstract class CTCollectionTemplateLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		ctCollectionTemplateLocalService =
 			(CTCollectionTemplateLocalService)aopProxy;
-
-		CTCollectionTemplateLocalServiceUtil.setService(
-			ctCollectionTemplateLocalService);
 	}
 
 	/**

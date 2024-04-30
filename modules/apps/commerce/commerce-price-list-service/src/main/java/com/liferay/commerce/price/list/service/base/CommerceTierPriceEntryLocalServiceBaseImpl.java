@@ -7,7 +7,6 @@ package com.liferay.commerce.price.list.service.base;
 
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
-import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalServiceUtil;
 import com.liferay.commerce.price.list.service.persistence.CommerceTierPriceEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -81,7 +80,7 @@ public abstract class CommerceTierPriceEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceTierPriceEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceTierPriceEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceTierPriceEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -578,7 +577,6 @@ public abstract class CommerceTierPriceEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceTierPriceEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -594,9 +592,6 @@ public abstract class CommerceTierPriceEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceTierPriceEntryLocalService =
 			(CommerceTierPriceEntryLocalService)aopProxy;
-
-		CommerceTierPriceEntryLocalServiceUtil.setService(
-			commerceTierPriceEntryLocalService);
 	}
 
 	/**

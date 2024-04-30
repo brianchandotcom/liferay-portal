@@ -7,7 +7,6 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.service.CommerceOrderTypeService;
-import com.liferay.commerce.service.CommerceOrderTypeServiceUtil;
 import com.liferay.commerce.service.persistence.CommerceOrderTypePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class CommerceOrderTypeServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceOrderTypeService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceOrderTypeServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceOrderTypeService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceOrderTypeServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceOrderTypeServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class CommerceOrderTypeServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceOrderTypeService = (CommerceOrderTypeService)aopProxy;
-
-		CommerceOrderTypeServiceUtil.setService(commerceOrderTypeService);
 	}
 
 	/**

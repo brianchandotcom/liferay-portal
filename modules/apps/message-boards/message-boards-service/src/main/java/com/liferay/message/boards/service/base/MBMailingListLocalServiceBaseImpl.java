@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBMailingList;
 import com.liferay.message.boards.service.MBMailingListLocalService;
-import com.liferay.message.boards.service.MBMailingListLocalServiceUtil;
 import com.liferay.message.boards.service.persistence.MBMailingListPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -72,7 +71,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MBMailingListLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MBMailingListLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MBMailingListLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBMailingListLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -515,7 +514,6 @@ public abstract class MBMailingListLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		MBMailingListLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -529,8 +527,6 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		mbMailingListLocalService = (MBMailingListLocalService)aopProxy;
-
-		MBMailingListLocalServiceUtil.setService(mbMailingListLocalService);
 	}
 
 	/**

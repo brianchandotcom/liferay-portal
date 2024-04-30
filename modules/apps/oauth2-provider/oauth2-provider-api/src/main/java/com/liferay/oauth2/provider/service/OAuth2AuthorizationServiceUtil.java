@@ -7,6 +7,7 @@ package com.liferay.oauth2.provider.service;
 
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -84,13 +85,12 @@ public class OAuth2AuthorizationServiceUtil {
 	}
 
 	public static OAuth2AuthorizationService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(OAuth2AuthorizationService service) {
-		_service = service;
-	}
-
-	private static volatile OAuth2AuthorizationService _service;
+	private static final Snapshot<OAuth2AuthorizationService> _serviceSnapshot =
+		new Snapshot<>(
+			OAuth2AuthorizationServiceUtil.class,
+			OAuth2AuthorizationService.class);
 
 }

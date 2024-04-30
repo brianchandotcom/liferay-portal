@@ -7,7 +7,6 @@ package com.liferay.commerce.product.type.grouped.service.base;
 
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryService;
-import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryServiceUtil;
 import com.liferay.commerce.product.type.grouped.service.persistence.CPDefinitionGroupedEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CPDefinitionGroupedEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDefinitionGroupedEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDefinitionGroupedEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDefinitionGroupedEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CPDefinitionGroupedEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -63,9 +61,6 @@ public abstract class CPDefinitionGroupedEntryServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpDefinitionGroupedEntryService =
 			(CPDefinitionGroupedEntryService)aopProxy;
-
-		CPDefinitionGroupedEntryServiceUtil.setService(
-			cpDefinitionGroupedEntryService);
 	}
 
 	/**

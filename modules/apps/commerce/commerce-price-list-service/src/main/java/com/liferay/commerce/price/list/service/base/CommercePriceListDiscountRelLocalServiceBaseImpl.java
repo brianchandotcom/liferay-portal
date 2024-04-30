@@ -7,7 +7,6 @@ package com.liferay.commerce.price.list.service.base;
 
 import com.liferay.commerce.price.list.model.CommercePriceListDiscountRel;
 import com.liferay.commerce.price.list.service.CommercePriceListDiscountRelLocalService;
-import com.liferay.commerce.price.list.service.CommercePriceListDiscountRelLocalServiceUtil;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListDiscountRelPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -73,7 +72,7 @@ public abstract class CommercePriceListDiscountRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePriceListDiscountRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePriceListDiscountRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePriceListDiscountRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.price.list.service.CommercePriceListDiscountRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -525,7 +524,6 @@ public abstract class CommercePriceListDiscountRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommercePriceListDiscountRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -541,9 +539,6 @@ public abstract class CommercePriceListDiscountRelLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commercePriceListDiscountRelLocalService =
 			(CommercePriceListDiscountRelLocalService)aopProxy;
-
-		CommercePriceListDiscountRelLocalServiceUtil.setService(
-			commercePriceListDiscountRelLocalService);
 	}
 
 	/**

@@ -10,6 +10,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
@@ -424,15 +425,12 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 	}
 
 	public static CalendarNotificationTemplateLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(
-		CalendarNotificationTemplateLocalService service) {
-
-		_service = service;
-	}
-
-	private static volatile CalendarNotificationTemplateLocalService _service;
+	private static final Snapshot<CalendarNotificationTemplateLocalService>
+		_serviceSnapshot = new Snapshot<>(
+			CalendarNotificationTemplateLocalServiceUtil.class,
+			CalendarNotificationTemplateLocalService.class);
 
 }

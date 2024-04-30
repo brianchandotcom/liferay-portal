@@ -8,7 +8,6 @@ package com.liferay.commerce.product.service.base;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPDefinitionFinder;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
@@ -87,7 +86,7 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDefinitionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDefinitionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDefinitionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -847,7 +846,6 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CPDefinitionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -861,8 +859,6 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		cpDefinitionLocalService = (CPDefinitionLocalService)aopProxy;
-
-		CPDefinitionLocalServiceUtil.setService(cpDefinitionLocalService);
 	}
 
 	/**

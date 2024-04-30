@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoConditionPersistence;
 
 import java.io.Serializable;
@@ -66,7 +65,7 @@ public abstract class KaleoConditionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KaleoConditionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KaleoConditionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KaleoConditionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -380,7 +379,6 @@ public abstract class KaleoConditionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		KaleoConditionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -394,8 +392,6 @@ public abstract class KaleoConditionLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		kaleoConditionLocalService = (KaleoConditionLocalService)aopProxy;
-
-		KaleoConditionLocalServiceUtil.setService(kaleoConditionLocalService);
 	}
 
 	/**

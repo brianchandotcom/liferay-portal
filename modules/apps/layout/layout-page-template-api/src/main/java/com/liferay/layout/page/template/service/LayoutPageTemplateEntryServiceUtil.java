@@ -7,6 +7,7 @@ package com.liferay.layout.page.template.service;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -561,13 +562,12 @@ public class LayoutPageTemplateEntryServiceUtil {
 	}
 
 	public static LayoutPageTemplateEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(LayoutPageTemplateEntryService service) {
-		_service = service;
-	}
-
-	private static volatile LayoutPageTemplateEntryService _service;
+	private static final Snapshot<LayoutPageTemplateEntryService>
+		_serviceSnapshot = new Snapshot<>(
+			LayoutPageTemplateEntryServiceUtil.class,
+			LayoutPageTemplateEntryService.class);
 
 }

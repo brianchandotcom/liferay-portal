@@ -7,7 +7,6 @@ package com.liferay.list.type.service.base;
 
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionService;
-import com.liferay.list.type.service.ListTypeDefinitionServiceUtil;
 import com.liferay.list.type.service.persistence.ListTypeDefinitionPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class ListTypeDefinitionServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ListTypeDefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ListTypeDefinitionServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ListTypeDefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.list.type.service.ListTypeDefinitionServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		ListTypeDefinitionServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class ListTypeDefinitionServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		listTypeDefinitionService = (ListTypeDefinitionService)aopProxy;
-
-		ListTypeDefinitionServiceUtil.setService(listTypeDefinitionService);
 	}
 
 	/**

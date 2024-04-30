@@ -7,7 +7,6 @@ package com.liferay.message.boards.service.base;
 
 import com.liferay.message.boards.model.MBBan;
 import com.liferay.message.boards.service.MBBanService;
-import com.liferay.message.boards.service.MBBanServiceUtil;
 import com.liferay.message.boards.service.persistence.MBBanPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class MBBanServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MBBanService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MBBanServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MBBanService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBBanServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		MBBanServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class MBBanServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		mbBanService = (MBBanService)aopProxy;
-
-		MBBanServiceUtil.setService(mbBanService);
 	}
 
 	/**

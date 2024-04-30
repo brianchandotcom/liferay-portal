@@ -7,6 +7,7 @@ package com.liferay.commerce.product.type.grouped.service;
 
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -134,13 +135,12 @@ public class CPDefinitionGroupedEntryServiceUtil {
 	}
 
 	public static CPDefinitionGroupedEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CPDefinitionGroupedEntryService service) {
-		_service = service;
-	}
-
-	private static volatile CPDefinitionGroupedEntryService _service;
+	private static final Snapshot<CPDefinitionGroupedEntryService>
+		_serviceSnapshot = new Snapshot<>(
+			CPDefinitionGroupedEntryServiceUtil.class,
+			CPDefinitionGroupedEntryService.class);
 
 }

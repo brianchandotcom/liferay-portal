@@ -7,7 +7,6 @@ package com.liferay.account.service.base;
 
 import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
-import com.liferay.account.service.AccountEntryOrganizationRelLocalServiceUtil;
 import com.liferay.account.service.persistence.AccountEntryOrganizationRelPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class AccountEntryOrganizationRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AccountEntryOrganizationRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AccountEntryOrganizationRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AccountEntryOrganizationRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.account.service.AccountEntryOrganizationRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -408,7 +407,6 @@ public abstract class AccountEntryOrganizationRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AccountEntryOrganizationRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -423,9 +421,6 @@ public abstract class AccountEntryOrganizationRelLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		accountEntryOrganizationRelLocalService =
 			(AccountEntryOrganizationRelLocalService)aopProxy;
-
-		AccountEntryOrganizationRelLocalServiceUtil.setService(
-			accountEntryOrganizationRelLocalService);
 	}
 
 	/**

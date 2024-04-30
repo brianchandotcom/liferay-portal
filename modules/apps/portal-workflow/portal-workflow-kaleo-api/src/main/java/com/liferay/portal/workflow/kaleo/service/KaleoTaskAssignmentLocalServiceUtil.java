@@ -9,6 +9,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 
@@ -351,13 +352,12 @@ public class KaleoTaskAssignmentLocalServiceUtil {
 	}
 
 	public static KaleoTaskAssignmentLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(KaleoTaskAssignmentLocalService service) {
-		_service = service;
-	}
-
-	private static volatile KaleoTaskAssignmentLocalService _service;
+	private static final Snapshot<KaleoTaskAssignmentLocalService>
+		_serviceSnapshot = new Snapshot<>(
+			KaleoTaskAssignmentLocalServiceUtil.class,
+			KaleoTaskAssignmentLocalService.class);
 
 }

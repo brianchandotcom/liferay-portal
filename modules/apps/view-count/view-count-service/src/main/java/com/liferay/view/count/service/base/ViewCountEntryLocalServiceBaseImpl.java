@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.view.count.model.ViewCountEntry;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
-import com.liferay.view.count.service.ViewCountEntryLocalServiceUtil;
 import com.liferay.view.count.service.persistence.ViewCountEntryFinder;
 import com.liferay.view.count.service.persistence.ViewCountEntryPK;
 import com.liferay.view.count.service.persistence.ViewCountEntryPersistence;
@@ -65,7 +64,7 @@ public abstract class ViewCountEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ViewCountEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ViewCountEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ViewCountEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.view.count.service.ViewCountEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -386,7 +385,6 @@ public abstract class ViewCountEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		ViewCountEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -400,8 +398,6 @@ public abstract class ViewCountEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		viewCountEntryLocalService = (ViewCountEntryLocalService)aopProxy;
-
-		ViewCountEntryLocalServiceUtil.setService(viewCountEntryLocalService);
 	}
 
 	/**

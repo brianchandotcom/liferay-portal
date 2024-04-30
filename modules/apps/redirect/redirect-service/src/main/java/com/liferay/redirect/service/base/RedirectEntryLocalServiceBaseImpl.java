@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryLocalService;
-import com.liferay.redirect.service.RedirectEntryLocalServiceUtil;
 import com.liferay.redirect.service.persistence.RedirectEntryPersistence;
 
 import java.io.Serializable;
@@ -69,7 +68,7 @@ public abstract class RedirectEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>RedirectEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>RedirectEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>RedirectEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.redirect.service.RedirectEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -515,7 +514,6 @@ public abstract class RedirectEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		RedirectEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -529,8 +527,6 @@ public abstract class RedirectEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		redirectEntryLocalService = (RedirectEntryLocalService)aopProxy;
-
-		RedirectEntryLocalServiceUtil.setService(redirectEntryLocalService);
 	}
 
 	/**

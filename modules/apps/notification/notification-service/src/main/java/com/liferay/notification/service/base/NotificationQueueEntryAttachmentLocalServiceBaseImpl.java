@@ -7,7 +7,6 @@ package com.liferay.notification.service.base;
 
 import com.liferay.notification.model.NotificationQueueEntryAttachment;
 import com.liferay.notification.service.NotificationQueueEntryAttachmentLocalService;
-import com.liferay.notification.service.NotificationQueueEntryAttachmentLocalServiceUtil;
 import com.liferay.notification.service.persistence.NotificationQueueEntryAttachmentPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class NotificationQueueEntryAttachmentLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>NotificationQueueEntryAttachmentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>NotificationQueueEntryAttachmentLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>NotificationQueueEntryAttachmentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.notification.service.NotificationQueueEntryAttachmentLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -417,7 +416,6 @@ public abstract class NotificationQueueEntryAttachmentLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		NotificationQueueEntryAttachmentLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -432,9 +430,6 @@ public abstract class NotificationQueueEntryAttachmentLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		notificationQueueEntryAttachmentLocalService =
 			(NotificationQueueEntryAttachmentLocalService)aopProxy;
-
-		NotificationQueueEntryAttachmentLocalServiceUtil.setService(
-			notificationQueueEntryAttachmentLocalService);
 	}
 
 	/**

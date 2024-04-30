@@ -7,6 +7,7 @@ package com.liferay.commerce.product.service;
 
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -119,13 +120,11 @@ public class CPTaxCategoryServiceUtil {
 	}
 
 	public static CPTaxCategoryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CPTaxCategoryService service) {
-		_service = service;
-	}
-
-	private static volatile CPTaxCategoryService _service;
+	private static final Snapshot<CPTaxCategoryService> _serviceSnapshot =
+		new Snapshot<>(
+			CPTaxCategoryServiceUtil.class, CPTaxCategoryService.class);
 
 }

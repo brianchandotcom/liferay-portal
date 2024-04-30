@@ -7,6 +7,7 @@ package com.liferay.depot.service;
 
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -88,13 +89,12 @@ public class DepotEntryGroupRelServiceUtil {
 	}
 
 	public static DepotEntryGroupRelService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(DepotEntryGroupRelService service) {
-		_service = service;
-	}
-
-	private static volatile DepotEntryGroupRelService _service;
+	private static final Snapshot<DepotEntryGroupRelService> _serviceSnapshot =
+		new Snapshot<>(
+			DepotEntryGroupRelServiceUtil.class,
+			DepotEntryGroupRelService.class);
 
 }

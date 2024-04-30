@@ -7,7 +7,6 @@ package com.liferay.json.storage.service.base;
 
 import com.liferay.json.storage.model.JSONStorageEntry;
 import com.liferay.json.storage.service.JSONStorageEntryLocalService;
-import com.liferay.json.storage.service.JSONStorageEntryLocalServiceUtil;
 import com.liferay.json.storage.service.persistence.JSONStorageEntryPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -67,7 +66,7 @@ public abstract class JSONStorageEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>JSONStorageEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>JSONStorageEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>JSONStorageEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.json.storage.service.JSONStorageEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -390,7 +389,6 @@ public abstract class JSONStorageEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		JSONStorageEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -404,9 +402,6 @@ public abstract class JSONStorageEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		jsonStorageEntryLocalService = (JSONStorageEntryLocalService)aopProxy;
-
-		JSONStorageEntryLocalServiceUtil.setService(
-			jsonStorageEntryLocalService);
 	}
 
 	/**

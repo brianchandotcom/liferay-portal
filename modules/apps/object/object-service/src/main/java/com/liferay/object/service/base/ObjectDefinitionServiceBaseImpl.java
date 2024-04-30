@@ -7,7 +7,6 @@ package com.liferay.object.service.base;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectDefinitionServiceUtil;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class ObjectDefinitionServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectDefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectDefinitionServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectDefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectDefinitionServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		ObjectDefinitionServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class ObjectDefinitionServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		objectDefinitionService = (ObjectDefinitionService)aopProxy;
-
-		ObjectDefinitionServiceUtil.setService(objectDefinitionService);
 	}
 
 	/**

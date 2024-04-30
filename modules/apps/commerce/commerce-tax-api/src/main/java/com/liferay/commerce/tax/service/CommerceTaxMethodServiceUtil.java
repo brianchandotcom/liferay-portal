@@ -7,6 +7,7 @@ package com.liferay.commerce.tax.service;
 
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 import java.util.Map;
@@ -124,13 +125,11 @@ public class CommerceTaxMethodServiceUtil {
 	}
 
 	public static CommerceTaxMethodService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CommerceTaxMethodService service) {
-		_service = service;
-	}
-
-	private static volatile CommerceTaxMethodService _service;
+	private static final Snapshot<CommerceTaxMethodService> _serviceSnapshot =
+		new Snapshot<>(
+			CommerceTaxMethodServiceUtil.class, CommerceTaxMethodService.class);
 
 }

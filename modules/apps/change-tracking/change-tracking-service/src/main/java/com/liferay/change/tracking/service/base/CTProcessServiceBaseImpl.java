@@ -7,7 +7,6 @@ package com.liferay.change.tracking.service.base;
 
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTProcessService;
-import com.liferay.change.tracking.service.CTProcessServiceUtil;
 import com.liferay.change.tracking.service.persistence.CTProcessPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class CTProcessServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CTProcessService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CTProcessServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CTProcessService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.change.tracking.service.CTProcessServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CTProcessServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class CTProcessServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ctProcessService = (CTProcessService)aopProxy;
-
-		CTProcessServiceUtil.setService(ctProcessService);
 	}
 
 	/**

@@ -7,7 +7,6 @@ package com.liferay.account.service.base;
 
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalService;
-import com.liferay.account.service.AccountGroupLocalServiceUtil;
 import com.liferay.account.service.persistence.AccountGroupPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -69,7 +68,7 @@ public abstract class AccountGroupLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AccountGroupLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AccountGroupLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AccountGroupLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.account.service.AccountGroupLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -501,7 +500,6 @@ public abstract class AccountGroupLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AccountGroupLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -515,8 +513,6 @@ public abstract class AccountGroupLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		accountGroupLocalService = (AccountGroupLocalService)aopProxy;
-
-		AccountGroupLocalServiceUtil.setService(accountGroupLocalService);
 	}
 
 	/**

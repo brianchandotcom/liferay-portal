@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.segments.model.SegmentsEntryRole;
 import com.liferay.segments.service.SegmentsEntryRoleLocalService;
-import com.liferay.segments.service.SegmentsEntryRoleLocalServiceUtil;
 import com.liferay.segments.service.persistence.SegmentsEntryRolePersistence;
 
 import java.io.Serializable;
@@ -67,7 +66,7 @@ public abstract class SegmentsEntryRoleLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SegmentsEntryRoleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SegmentsEntryRoleLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SegmentsEntryRoleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.segments.service.SegmentsEntryRoleLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -391,7 +390,6 @@ public abstract class SegmentsEntryRoleLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		SegmentsEntryRoleLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -405,9 +403,6 @@ public abstract class SegmentsEntryRoleLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		segmentsEntryRoleLocalService = (SegmentsEntryRoleLocalService)aopProxy;
-
-		SegmentsEntryRoleLocalServiceUtil.setService(
-			segmentsEntryRoleLocalService);
 	}
 
 	/**

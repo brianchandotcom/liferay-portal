@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementLocalService;
-import com.liferay.search.experiences.service.SXPElementLocalServiceUtil;
 import com.liferay.search.experiences.service.persistence.SXPElementPersistence;
 
 import java.io.Serializable;
@@ -69,7 +68,7 @@ public abstract class SXPElementLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SXPElementLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SXPElementLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SXPElementLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.search.experiences.service.SXPElementLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -496,7 +495,6 @@ public abstract class SXPElementLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		SXPElementLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -510,8 +508,6 @@ public abstract class SXPElementLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		sxpElementLocalService = (SXPElementLocalService)aopProxy;
-
-		SXPElementLocalServiceUtil.setService(sxpElementLocalService);
 	}
 
 	/**

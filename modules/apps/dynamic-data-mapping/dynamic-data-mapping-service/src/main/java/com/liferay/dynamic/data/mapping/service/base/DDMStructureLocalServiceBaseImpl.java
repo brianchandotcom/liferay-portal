@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.mapping.service.base;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -74,7 +73,7 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DDMStructureLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DDMStructureLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DDMStructureLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -545,7 +544,6 @@ public abstract class DDMStructureLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DDMStructureLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -559,8 +557,6 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ddmStructureLocalService = (DDMStructureLocalService)aopProxy;
-
-		DDMStructureLocalServiceUtil.setService(ddmStructureLocalService);
 	}
 
 	/**

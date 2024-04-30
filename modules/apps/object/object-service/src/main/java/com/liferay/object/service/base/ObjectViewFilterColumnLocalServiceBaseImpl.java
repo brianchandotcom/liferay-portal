@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.object.model.ObjectViewFilterColumn;
 import com.liferay.object.service.ObjectViewFilterColumnLocalService;
-import com.liferay.object.service.ObjectViewFilterColumnLocalServiceUtil;
 import com.liferay.object.service.persistence.ObjectViewFilterColumnPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -70,7 +69,7 @@ public abstract class ObjectViewFilterColumnLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectViewFilterColumnLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectViewFilterColumnLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectViewFilterColumnLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectViewFilterColumnLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -511,7 +510,6 @@ public abstract class ObjectViewFilterColumnLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		ObjectViewFilterColumnLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -526,9 +524,6 @@ public abstract class ObjectViewFilterColumnLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		objectViewFilterColumnLocalService =
 			(ObjectViewFilterColumnLocalService)aopProxy;
-
-		ObjectViewFilterColumnLocalServiceUtil.setService(
-			objectViewFilterColumnLocalService);
 	}
 
 	/**

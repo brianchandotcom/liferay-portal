@@ -7,6 +7,7 @@ package com.liferay.commerce.product.type.virtual.order.service;
 
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the remote service utility for CommerceVirtualOrderItem. This utility wraps
@@ -73,13 +74,12 @@ public class CommerceVirtualOrderItemServiceUtil {
 	}
 
 	public static CommerceVirtualOrderItemService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CommerceVirtualOrderItemService service) {
-		_service = service;
-	}
-
-	private static volatile CommerceVirtualOrderItemService _service;
+	private static final Snapshot<CommerceVirtualOrderItemService>
+		_serviceSnapshot = new Snapshot<>(
+			CommerceVirtualOrderItemServiceUtil.class,
+			CommerceVirtualOrderItemService.class);
 
 }

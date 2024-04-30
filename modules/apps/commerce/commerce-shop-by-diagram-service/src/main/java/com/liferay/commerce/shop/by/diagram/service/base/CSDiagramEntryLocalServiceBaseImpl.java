@@ -7,7 +7,6 @@ package com.liferay.commerce.shop.by.diagram.service.base;
 
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
-import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalServiceUtil;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramEntryPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -66,7 +65,7 @@ public abstract class CSDiagramEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CSDiagramEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CSDiagramEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CSDiagramEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -383,7 +382,6 @@ public abstract class CSDiagramEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CSDiagramEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -397,8 +395,6 @@ public abstract class CSDiagramEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		csDiagramEntryLocalService = (CSDiagramEntryLocalService)aopProxy;
-
-		CSDiagramEntryLocalServiceUtil.setService(csDiagramEntryLocalService);
 	}
 
 	/**

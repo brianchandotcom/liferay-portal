@@ -6,7 +6,6 @@
 package com.liferay.message.boards.service.base;
 
 import com.liferay.message.boards.service.MBStatsUserLocalService;
-import com.liferay.message.boards.service.MBStatsUserLocalServiceUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -43,11 +42,10 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MBStatsUserLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MBStatsUserLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MBStatsUserLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBStatsUserLocalServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		MBStatsUserLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -60,8 +58,6 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		mbStatsUserLocalService = (MBStatsUserLocalService)aopProxy;
-
-		MBStatsUserLocalServiceUtil.setService(mbStatsUserLocalService);
 	}
 
 	/**

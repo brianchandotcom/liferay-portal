@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectFolderLocalService;
-import com.liferay.object.service.ObjectFolderLocalServiceUtil;
 import com.liferay.object.service.persistence.ObjectFolderPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -69,7 +68,7 @@ public abstract class ObjectFolderLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectFolderLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectFolderLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectFolderLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectFolderLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -501,7 +500,6 @@ public abstract class ObjectFolderLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		ObjectFolderLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -515,8 +513,6 @@ public abstract class ObjectFolderLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		objectFolderLocalService = (ObjectFolderLocalService)aopProxy;
-
-		ObjectFolderLocalServiceUtil.setService(objectFolderLocalService);
 	}
 
 	/**

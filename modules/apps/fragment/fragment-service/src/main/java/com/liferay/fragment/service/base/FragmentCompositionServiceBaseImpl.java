@@ -7,7 +7,6 @@ package com.liferay.fragment.service.base;
 
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.service.FragmentCompositionService;
-import com.liferay.fragment.service.FragmentCompositionServiceUtil;
 import com.liferay.fragment.service.persistence.FragmentCompositionPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class FragmentCompositionServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>FragmentCompositionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>FragmentCompositionServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>FragmentCompositionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.fragment.service.FragmentCompositionServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		FragmentCompositionServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class FragmentCompositionServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		fragmentCompositionService = (FragmentCompositionService)aopProxy;
-
-		FragmentCompositionServiceUtil.setService(fragmentCompositionService);
 	}
 
 	/**

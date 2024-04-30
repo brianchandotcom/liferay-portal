@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.site.model.SiteFriendlyURL;
 import com.liferay.site.service.SiteFriendlyURLLocalService;
-import com.liferay.site.service.SiteFriendlyURLLocalServiceUtil;
 import com.liferay.site.service.persistence.SiteFriendlyURLPersistence;
 
 import java.io.Serializable;
@@ -70,7 +69,7 @@ public abstract class SiteFriendlyURLLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SiteFriendlyURLLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SiteFriendlyURLLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SiteFriendlyURLLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.site.service.SiteFriendlyURLLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -520,7 +519,6 @@ public abstract class SiteFriendlyURLLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		SiteFriendlyURLLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -534,8 +532,6 @@ public abstract class SiteFriendlyURLLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		siteFriendlyURLLocalService = (SiteFriendlyURLLocalService)aopProxy;
-
-		SiteFriendlyURLLocalServiceUtil.setService(siteFriendlyURLLocalService);
 	}
 
 	/**

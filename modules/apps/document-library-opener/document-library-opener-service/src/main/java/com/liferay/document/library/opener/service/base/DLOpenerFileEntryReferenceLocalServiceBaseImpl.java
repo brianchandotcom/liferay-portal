@@ -7,7 +7,6 @@ package com.liferay.document.library.opener.service.base;
 
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
-import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalServiceUtil;
 import com.liferay.document.library.opener.service.persistence.DLOpenerFileEntryReferencePersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class DLOpenerFileEntryReferenceLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DLOpenerFileEntryReferenceLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DLOpenerFileEntryReferenceLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DLOpenerFileEntryReferenceLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -408,7 +407,6 @@ public abstract class DLOpenerFileEntryReferenceLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DLOpenerFileEntryReferenceLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -423,9 +421,6 @@ public abstract class DLOpenerFileEntryReferenceLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		dlOpenerFileEntryReferenceLocalService =
 			(DLOpenerFileEntryReferenceLocalService)aopProxy;
-
-		DLOpenerFileEntryReferenceLocalServiceUtil.setService(
-			dlOpenerFileEntryReferenceLocalService);
 	}
 
 	/**

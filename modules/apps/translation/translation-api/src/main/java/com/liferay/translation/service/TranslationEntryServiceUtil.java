@@ -6,6 +6,7 @@
 package com.liferay.translation.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.translation.model.TranslationEntry;
 
 /**
@@ -67,13 +68,11 @@ public class TranslationEntryServiceUtil {
 	}
 
 	public static TranslationEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(TranslationEntryService service) {
-		_service = service;
-	}
-
-	private static volatile TranslationEntryService _service;
+	private static final Snapshot<TranslationEntryService> _serviceSnapshot =
+		new Snapshot<>(
+			TranslationEntryServiceUtil.class, TranslationEntryService.class);
 
 }

@@ -7,6 +7,7 @@ package com.liferay.commerce.product.service;
 
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.Map;
 
@@ -89,13 +90,11 @@ public class CPOptionCategoryServiceUtil {
 	}
 
 	public static CPOptionCategoryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CPOptionCategoryService service) {
-		_service = service;
-	}
-
-	private static volatile CPOptionCategoryService _service;
+	private static final Snapshot<CPOptionCategoryService> _serviceSnapshot =
+		new Snapshot<>(
+			CPOptionCategoryServiceUtil.class, CPOptionCategoryService.class);
 
 }

@@ -7,7 +7,6 @@ package com.liferay.knowledge.base.service.base;
 
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
-import com.liferay.knowledge.base.service.KBArticleServiceUtil;
 import com.liferay.knowledge.base.service.persistence.KBArticleFinder;
 import com.liferay.knowledge.base.service.persistence.KBArticlePersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class KBArticleServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KBArticleService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KBArticleServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KBArticleService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.knowledge.base.service.KBArticleServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		KBArticleServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class KBArticleServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		kbArticleService = (KBArticleService)aopProxy;
-
-		KBArticleServiceUtil.setService(kbArticleService);
 	}
 
 	/**

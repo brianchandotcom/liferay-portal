@@ -7,7 +7,6 @@ package com.liferay.commerce.tax.engine.fixed.service.base;
 
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelLocalService;
-import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelLocalServiceUtil;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelFinder;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -65,7 +64,7 @@ public abstract class CommerceTaxFixedRateAddressRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceTaxFixedRateAddressRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceTaxFixedRateAddressRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceTaxFixedRateAddressRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -413,7 +412,6 @@ public abstract class CommerceTaxFixedRateAddressRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceTaxFixedRateAddressRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -428,9 +426,6 @@ public abstract class CommerceTaxFixedRateAddressRelLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceTaxFixedRateAddressRelLocalService =
 			(CommerceTaxFixedRateAddressRelLocalService)aopProxy;
-
-		CommerceTaxFixedRateAddressRelLocalServiceUtil.setService(
-			commerceTaxFixedRateAddressRelLocalService);
 	}
 
 	/**

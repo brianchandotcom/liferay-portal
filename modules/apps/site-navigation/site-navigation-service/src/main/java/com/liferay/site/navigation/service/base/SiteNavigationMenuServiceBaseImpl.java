@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
-import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
 import com.liferay.site.navigation.service.persistence.SiteNavigationMenuPersistence;
 
 import javax.sql.DataSource;
@@ -44,11 +43,10 @@ public abstract class SiteNavigationMenuServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SiteNavigationMenuService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SiteNavigationMenuServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SiteNavigationMenuService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		SiteNavigationMenuServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class SiteNavigationMenuServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		siteNavigationMenuService = (SiteNavigationMenuService)aopProxy;
-
-		SiteNavigationMenuServiceUtil.setService(siteNavigationMenuService);
 	}
 
 	/**

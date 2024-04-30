@@ -7,7 +7,6 @@ package com.liferay.object.service.base;
 
 import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.object.service.ObjectLayoutTabService;
-import com.liferay.object.service.ObjectLayoutTabServiceUtil;
 import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class ObjectLayoutTabServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectLayoutTabService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectLayoutTabServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectLayoutTabService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectLayoutTabServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		ObjectLayoutTabServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class ObjectLayoutTabServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		objectLayoutTabService = (ObjectLayoutTabService)aopProxy;
-
-		ObjectLayoutTabServiceUtil.setService(objectLayoutTabService);
 	}
 
 	/**

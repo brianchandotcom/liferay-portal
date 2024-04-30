@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.product.service.CPDefinitionServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPDefinitionFinder;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
@@ -46,11 +45,10 @@ public abstract class CPDefinitionServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDefinitionServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPDefinitionServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CPDefinitionServiceUtil.setService(null);
 	}
 
 	@Override
@@ -63,8 +61,6 @@ public abstract class CPDefinitionServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		cpDefinitionService = (CPDefinitionService)aopProxy;
-
-		CPDefinitionServiceUtil.setService(cpDefinitionService);
 	}
 
 	/**

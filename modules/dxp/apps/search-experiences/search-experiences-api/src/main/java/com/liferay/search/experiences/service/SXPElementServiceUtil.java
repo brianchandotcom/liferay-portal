@@ -6,6 +6,7 @@
 package com.liferay.search.experiences.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.search.experiences.model.SXPElement;
 
 import java.util.Map;
@@ -102,13 +103,10 @@ public class SXPElementServiceUtil {
 	}
 
 	public static SXPElementService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(SXPElementService service) {
-		_service = service;
-	}
-
-	private static volatile SXPElementService _service;
+	private static final Snapshot<SXPElementService> _serviceSnapshot =
+		new Snapshot<>(SXPElementServiceUtil.class, SXPElementService.class);
 
 }

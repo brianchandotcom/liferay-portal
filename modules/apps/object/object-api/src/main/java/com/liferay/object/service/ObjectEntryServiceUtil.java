@@ -7,6 +7,7 @@ package com.liferay.object.service;
 
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.io.Serializable;
 
@@ -201,13 +202,10 @@ public class ObjectEntryServiceUtil {
 	}
 
 	public static ObjectEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(ObjectEntryService service) {
-		_service = service;
-	}
-
-	private static volatile ObjectEntryService _service;
+	private static final Snapshot<ObjectEntryService> _serviceSnapshot =
+		new Snapshot<>(ObjectEntryServiceUtil.class, ObjectEntryService.class);
 
 }

@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.mapping.service.base;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -67,7 +66,7 @@ public abstract class DDMTemplateLinkLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DDMTemplateLinkLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DDMTemplateLinkLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DDMTemplateLinkLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -385,7 +384,6 @@ public abstract class DDMTemplateLinkLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DDMTemplateLinkLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -399,8 +397,6 @@ public abstract class DDMTemplateLinkLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ddmTemplateLinkLocalService = (DDMTemplateLinkLocalService)aopProxy;
-
-		DDMTemplateLinkLocalServiceUtil.setService(ddmTemplateLinkLocalService);
 	}
 
 	/**

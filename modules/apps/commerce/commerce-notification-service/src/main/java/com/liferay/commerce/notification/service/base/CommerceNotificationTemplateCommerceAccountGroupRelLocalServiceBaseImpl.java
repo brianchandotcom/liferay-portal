@@ -7,7 +7,6 @@ package com.liferay.commerce.notification.service.base;
 
 import com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateCommerceAccountGroupRelLocalService;
-import com.liferay.commerce.notification.service.CommerceNotificationTemplateCommerceAccountGroupRelLocalServiceUtil;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationTemplateCommerceAccountGroupRelPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -66,7 +65,7 @@ public abstract class
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceNotificationTemplateCommerceAccountGroupRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceNotificationTemplateCommerceAccountGroupRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceNotificationTemplateCommerceAccountGroupRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.notification.service.CommerceNotificationTemplateCommerceAccountGroupRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -432,8 +431,6 @@ public abstract class
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceNotificationTemplateCommerceAccountGroupRelLocalServiceUtil.
-			setService(null);
 	}
 
 	@Override
@@ -450,10 +447,6 @@ public abstract class
 		commerceNotificationTemplateCommerceAccountGroupRelLocalService =
 			(CommerceNotificationTemplateCommerceAccountGroupRelLocalService)
 				aopProxy;
-
-		CommerceNotificationTemplateCommerceAccountGroupRelLocalServiceUtil.
-			setService(
-				commerceNotificationTemplateCommerceAccountGroupRelLocalService);
 	}
 
 	/**

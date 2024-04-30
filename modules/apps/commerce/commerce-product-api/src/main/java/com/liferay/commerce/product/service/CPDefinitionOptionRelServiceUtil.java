@@ -7,6 +7,7 @@ package com.liferay.commerce.product.service;
 
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -222,13 +223,12 @@ public class CPDefinitionOptionRelServiceUtil {
 	}
 
 	public static CPDefinitionOptionRelService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CPDefinitionOptionRelService service) {
-		_service = service;
-	}
-
-	private static volatile CPDefinitionOptionRelService _service;
+	private static final Snapshot<CPDefinitionOptionRelService>
+		_serviceSnapshot = new Snapshot<>(
+			CPDefinitionOptionRelServiceUtil.class,
+			CPDefinitionOptionRelService.class);
 
 }

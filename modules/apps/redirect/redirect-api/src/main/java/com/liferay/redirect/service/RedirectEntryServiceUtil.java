@@ -6,6 +6,7 @@
 package com.liferay.redirect.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.redirect.model.RedirectEntry;
 
@@ -112,13 +113,11 @@ public class RedirectEntryServiceUtil {
 	}
 
 	public static RedirectEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(RedirectEntryService service) {
-		_service = service;
-	}
-
-	private static volatile RedirectEntryService _service;
+	private static final Snapshot<RedirectEntryService> _serviceSnapshot =
+		new Snapshot<>(
+			RedirectEntryServiceUtil.class, RedirectEntryService.class);
 
 }

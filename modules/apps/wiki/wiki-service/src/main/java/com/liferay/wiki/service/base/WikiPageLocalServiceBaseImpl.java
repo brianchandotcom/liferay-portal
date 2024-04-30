@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.persistence.WikiPageFinder;
 import com.liferay.wiki.service.persistence.WikiPagePersistence;
 
@@ -83,7 +82,7 @@ public abstract class WikiPageLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>WikiPageLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>WikiPageLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>WikiPageLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.wiki.service.WikiPageLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -591,7 +590,6 @@ public abstract class WikiPageLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		WikiPageLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -605,8 +603,6 @@ public abstract class WikiPageLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		wikiPageLocalService = (WikiPageLocalService)aopProxy;
-
-		WikiPageLocalServiceUtil.setService(wikiPageLocalService);
 	}
 
 	/**

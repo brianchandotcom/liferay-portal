@@ -7,7 +7,6 @@ package com.liferay.journal.service.base;
 
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderService;
-import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.service.persistence.JournalFolderFinder;
 import com.liferay.journal.service.persistence.JournalFolderPersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class JournalFolderServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>JournalFolderService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>JournalFolderServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>JournalFolderService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.journal.service.JournalFolderServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		JournalFolderServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class JournalFolderServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		journalFolderService = (JournalFolderService)aopProxy;
-
-		JournalFolderServiceUtil.setService(journalFolderService);
 	}
 
 	/**

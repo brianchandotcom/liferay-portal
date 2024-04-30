@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.service.CPDisplayLayoutService;
-import com.liferay.commerce.product.service.CPDisplayLayoutServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPDisplayLayoutPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class CPDisplayLayoutServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDisplayLayoutService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDisplayLayoutServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDisplayLayoutService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPDisplayLayoutServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CPDisplayLayoutServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class CPDisplayLayoutServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		cpDisplayLayoutService = (CPDisplayLayoutService)aopProxy;
-
-		CPDisplayLayoutServiceUtil.setService(cpDisplayLayoutService);
 	}
 
 	/**

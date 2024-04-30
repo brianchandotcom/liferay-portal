@@ -7,6 +7,7 @@ package com.liferay.batch.planner.service;
 
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -165,13 +166,11 @@ public class BatchPlannerPlanServiceUtil {
 	}
 
 	public static BatchPlannerPlanService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(BatchPlannerPlanService service) {
-		_service = service;
-	}
-
-	private static volatile BatchPlannerPlanService _service;
+	private static final Snapshot<BatchPlannerPlanService> _serviceSnapshot =
+		new Snapshot<>(
+			BatchPlannerPlanServiceUtil.class, BatchPlannerPlanService.class);
 
 }

@@ -7,7 +7,6 @@ package com.liferay.commerce.product.type.virtual.service.base;
 
 import com.liferay.commerce.product.type.virtual.model.CPDVirtualSettingFileEntry;
 import com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryLocalService;
-import com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryLocalServiceUtil;
 import com.liferay.commerce.product.type.virtual.service.persistence.CPDVirtualSettingFileEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -70,7 +69,7 @@ public abstract class CPDVirtualSettingFileEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDVirtualSettingFileEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDVirtualSettingFileEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDVirtualSettingFileEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -553,7 +552,6 @@ public abstract class CPDVirtualSettingFileEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CPDVirtualSettingFileEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -568,9 +566,6 @@ public abstract class CPDVirtualSettingFileEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpdVirtualSettingFileEntryLocalService =
 			(CPDVirtualSettingFileEntryLocalService)aopProxy;
-
-		CPDVirtualSettingFileEntryLocalServiceUtil.setService(
-			cpdVirtualSettingFileEntryLocalService);
 	}
 
 	/**

@@ -7,7 +7,6 @@ package com.liferay.asset.list.service.base;
 
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
-import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.service.persistence.AssetListEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class AssetListEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AssetListEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AssetListEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AssetListEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.asset.list.service.AssetListEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		AssetListEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class AssetListEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		assetListEntryService = (AssetListEntryService)aopProxy;
-
-		AssetListEntryServiceUtil.setService(assetListEntryService);
 	}
 
 	/**

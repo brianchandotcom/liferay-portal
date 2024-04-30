@@ -7,7 +7,6 @@ package com.liferay.knowledge.base.service.base;
 
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.service.KBCommentService;
-import com.liferay.knowledge.base.service.KBCommentServiceUtil;
 import com.liferay.knowledge.base.service.persistence.KBCommentPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class KBCommentServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KBCommentService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KBCommentServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KBCommentService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.knowledge.base.service.KBCommentServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		KBCommentServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class KBCommentServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		kbCommentService = (KBCommentService)aopProxy;
-
-		KBCommentServiceUtil.setService(kbCommentService);
 	}
 
 	/**

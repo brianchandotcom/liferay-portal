@@ -6,6 +6,7 @@
 package com.liferay.wiki.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.wiki.model.WikiNode;
 
@@ -159,13 +160,10 @@ public class WikiNodeServiceUtil {
 	}
 
 	public static WikiNodeService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(WikiNodeService service) {
-		_service = service;
-	}
-
-	private static volatile WikiNodeService _service;
+	private static final Snapshot<WikiNodeService> _serviceSnapshot =
+		new Snapshot<>(WikiNodeServiceUtil.class, WikiNodeService.class);
 
 }

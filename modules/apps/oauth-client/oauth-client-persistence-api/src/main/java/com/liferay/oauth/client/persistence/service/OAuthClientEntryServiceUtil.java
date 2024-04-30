@@ -7,6 +7,7 @@ package com.liferay.oauth.client.persistence.service;
 
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -118,13 +119,11 @@ public class OAuthClientEntryServiceUtil {
 	}
 
 	public static OAuthClientEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(OAuthClientEntryService service) {
-		_service = service;
-	}
-
-	private static volatile OAuthClientEntryService _service;
+	private static final Snapshot<OAuthClientEntryService> _serviceSnapshot =
+		new Snapshot<>(
+			OAuthClientEntryServiceUtil.class, OAuthClientEntryService.class);
 
 }

@@ -7,7 +7,6 @@ package com.liferay.commerce.term.service.base;
 
 import com.liferay.commerce.term.model.CommerceTermEntryRel;
 import com.liferay.commerce.term.service.CommerceTermEntryRelLocalService;
-import com.liferay.commerce.term.service.CommerceTermEntryRelLocalServiceUtil;
 import com.liferay.commerce.term.service.persistence.CommerceTermEntryRelPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class CommerceTermEntryRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceTermEntryRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceTermEntryRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceTermEntryRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.term.service.CommerceTermEntryRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -403,7 +402,6 @@ public abstract class CommerceTermEntryRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceTermEntryRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -418,9 +416,6 @@ public abstract class CommerceTermEntryRelLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceTermEntryRelLocalService =
 			(CommerceTermEntryRelLocalService)aopProxy;
-
-		CommerceTermEntryRelLocalServiceUtil.setService(
-			commerceTermEntryRelLocalService);
 	}
 
 	/**

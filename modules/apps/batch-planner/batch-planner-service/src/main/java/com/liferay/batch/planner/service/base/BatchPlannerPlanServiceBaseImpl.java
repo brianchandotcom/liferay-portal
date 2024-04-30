@@ -7,7 +7,6 @@ package com.liferay.batch.planner.service.base;
 
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
-import com.liferay.batch.planner.service.BatchPlannerPlanServiceUtil;
 import com.liferay.batch.planner.service.persistence.BatchPlannerPlanPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class BatchPlannerPlanServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>BatchPlannerPlanService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>BatchPlannerPlanServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>BatchPlannerPlanService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.batch.planner.service.BatchPlannerPlanServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		BatchPlannerPlanServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class BatchPlannerPlanServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		batchPlannerPlanService = (BatchPlannerPlanService)aopProxy;
-
-		BatchPlannerPlanServiceUtil.setService(batchPlannerPlanService);
 	}
 
 	/**

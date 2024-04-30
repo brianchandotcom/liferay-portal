@@ -7,6 +7,7 @@ package com.liferay.object.service;
 
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.Map;
 
@@ -77,13 +78,11 @@ public class ObjectFolderServiceUtil {
 	}
 
 	public static ObjectFolderService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(ObjectFolderService service) {
-		_service = service;
-	}
-
-	private static volatile ObjectFolderService _service;
+	private static final Snapshot<ObjectFolderService> _serviceSnapshot =
+		new Snapshot<>(
+			ObjectFolderServiceUtil.class, ObjectFolderService.class);
 
 }

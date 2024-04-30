@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.tools.service.builder.test.sequence.model.SequenceEntry;
 import com.liferay.portal.tools.service.builder.test.sequence.service.SequenceEntryLocalService;
-import com.liferay.portal.tools.service.builder.test.sequence.service.SequenceEntryLocalServiceUtil;
 import com.liferay.portal.tools.service.builder.test.sequence.service.persistence.SequenceEntryPersistence;
 
 import java.io.Serializable;
@@ -63,7 +62,7 @@ public abstract class SequenceEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SequenceEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SequenceEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SequenceEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.tools.service.builder.test.sequence.service.SequenceEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -409,7 +408,6 @@ public abstract class SequenceEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		SequenceEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -423,8 +421,6 @@ public abstract class SequenceEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		sequenceEntryLocalService = (SequenceEntryLocalService)aopProxy;
-
-		SequenceEntryLocalServiceUtil.setService(sequenceEntryLocalService);
 	}
 
 	/**

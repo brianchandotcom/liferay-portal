@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.trash.model.TrashVersion;
 import com.liferay.trash.service.TrashVersionLocalService;
-import com.liferay.trash.service.TrashVersionLocalServiceUtil;
 import com.liferay.trash.service.persistence.TrashVersionPersistence;
 
 import java.io.Serializable;
@@ -66,7 +65,7 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>TrashVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>TrashVersionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>TrashVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.trash.service.TrashVersionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -377,7 +376,6 @@ public abstract class TrashVersionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		TrashVersionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -391,8 +389,6 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		trashVersionLocalService = (TrashVersionLocalService)aopProxy;
-
-		TrashVersionLocalServiceUtil.setService(trashVersionLocalService);
 	}
 
 	/**

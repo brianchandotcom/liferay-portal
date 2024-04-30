@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.mapping.service.base;
 
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -66,7 +65,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DDMStorageLinkLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DDMStorageLinkLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DDMStorageLinkLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -412,7 +411,6 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DDMStorageLinkLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -426,8 +424,6 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ddmStorageLinkLocalService = (DDMStorageLinkLocalService)aopProxy;
-
-		DDMStorageLinkLocalServiceUtil.setService(ddmStorageLinkLocalService);
 	}
 
 	/**

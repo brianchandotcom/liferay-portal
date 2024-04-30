@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoNodePersistence;
 
 import java.io.Serializable;
@@ -66,7 +65,7 @@ public abstract class KaleoNodeLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KaleoNodeLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KaleoNodeLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KaleoNodeLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -374,7 +373,6 @@ public abstract class KaleoNodeLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		KaleoNodeLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -388,8 +386,6 @@ public abstract class KaleoNodeLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		kaleoNodeLocalService = (KaleoNodeLocalService)aopProxy;
-
-		KaleoNodeLocalServiceUtil.setService(kaleoNodeLocalService);
 	}
 
 	/**

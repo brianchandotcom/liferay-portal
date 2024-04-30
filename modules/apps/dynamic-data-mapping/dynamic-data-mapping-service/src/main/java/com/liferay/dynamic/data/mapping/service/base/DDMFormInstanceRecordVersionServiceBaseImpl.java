@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.mapping.service.base;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionService;
-import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordVersionPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class DDMFormInstanceRecordVersionServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DDMFormInstanceRecordVersionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DDMFormInstanceRecordVersionServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DDMFormInstanceRecordVersionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		DDMFormInstanceRecordVersionServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,9 +62,6 @@ public abstract class DDMFormInstanceRecordVersionServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		ddmFormInstanceRecordVersionService =
 			(DDMFormInstanceRecordVersionService)aopProxy;
-
-		DDMFormInstanceRecordVersionServiceUtil.setService(
-			ddmFormInstanceRecordVersionService);
 	}
 
 	/**

@@ -14,7 +14,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
-import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.service.persistence.MBMessageFinder;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 import com.liferay.petra.function.UnsafeFunction;
@@ -82,7 +81,7 @@ public abstract class MBMessageLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MBMessageLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MBMessageLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MBMessageLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBMessageLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -617,7 +616,6 @@ public abstract class MBMessageLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		MBMessageLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -631,8 +629,6 @@ public abstract class MBMessageLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		mbMessageLocalService = (MBMessageLocalService)aopProxy;
-
-		MBMessageLocalServiceUtil.setService(mbMessageLocalService);
 	}
 
 	/**

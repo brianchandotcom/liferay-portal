@@ -9,6 +9,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
@@ -509,13 +510,12 @@ public class SiteNavigationMenuItemLocalServiceUtil {
 	}
 
 	public static SiteNavigationMenuItemLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(SiteNavigationMenuItemLocalService service) {
-		_service = service;
-	}
-
-	private static volatile SiteNavigationMenuItemLocalService _service;
+	private static final Snapshot<SiteNavigationMenuItemLocalService>
+		_serviceSnapshot = new Snapshot<>(
+			SiteNavigationMenuItemLocalServiceUtil.class,
+			SiteNavigationMenuItemLocalService.class);
 
 }

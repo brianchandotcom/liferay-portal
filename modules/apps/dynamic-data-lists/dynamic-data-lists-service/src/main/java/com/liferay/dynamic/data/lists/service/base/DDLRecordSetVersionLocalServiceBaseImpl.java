@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.lists.service.base;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalService;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetVersionPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -67,7 +66,7 @@ public abstract class DDLRecordSetVersionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DDLRecordSetVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DDLRecordSetVersionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DDLRecordSetVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -401,7 +400,6 @@ public abstract class DDLRecordSetVersionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DDLRecordSetVersionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -417,9 +415,6 @@ public abstract class DDLRecordSetVersionLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		ddlRecordSetVersionLocalService =
 			(DDLRecordSetVersionLocalService)aopProxy;
-
-		DDLRecordSetVersionLocalServiceUtil.setService(
-			ddlRecordSetVersionLocalService);
 	}
 
 	/**

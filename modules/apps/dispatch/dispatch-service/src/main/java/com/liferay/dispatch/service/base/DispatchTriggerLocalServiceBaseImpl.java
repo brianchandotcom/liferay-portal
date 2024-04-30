@@ -7,7 +7,6 @@ package com.liferay.dispatch.service.base;
 
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.dispatch.service.DispatchTriggerLocalServiceUtil;
 import com.liferay.dispatch.service.persistence.DispatchTriggerPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -70,7 +69,7 @@ public abstract class DispatchTriggerLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DispatchTriggerLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DispatchTriggerLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DispatchTriggerLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dispatch.service.DispatchTriggerLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -505,7 +504,6 @@ public abstract class DispatchTriggerLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DispatchTriggerLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -519,8 +517,6 @@ public abstract class DispatchTriggerLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		dispatchTriggerLocalService = (DispatchTriggerLocalService)aopProxy;
-
-		DispatchTriggerLocalServiceUtil.setService(dispatchTriggerLocalService);
 	}
 
 	/**

@@ -7,6 +7,7 @@ package com.liferay.microblogs.service;
 
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -125,13 +126,11 @@ public class MicroblogsEntryServiceUtil {
 	}
 
 	public static MicroblogsEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(MicroblogsEntryService service) {
-		_service = service;
-	}
-
-	private static volatile MicroblogsEntryService _service;
+	private static final Snapshot<MicroblogsEntryService> _serviceSnapshot =
+		new Snapshot<>(
+			MicroblogsEntryServiceUtil.class, MicroblogsEntryService.class);
 
 }

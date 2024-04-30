@@ -7,7 +7,6 @@ package com.liferay.commerce.product.type.virtual.order.service.base;
 
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemFileEntryLocalService;
-import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemFileEntryLocalServiceUtil;
 import com.liferay.commerce.product.type.virtual.order.service.persistence.CommerceVirtualOrderItemFileEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -70,7 +69,7 @@ public abstract class CommerceVirtualOrderItemFileEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceVirtualOrderItemFileEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceVirtualOrderItemFileEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceVirtualOrderItemFileEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemFileEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -569,7 +568,6 @@ public abstract class CommerceVirtualOrderItemFileEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceVirtualOrderItemFileEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -584,9 +582,6 @@ public abstract class CommerceVirtualOrderItemFileEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceVirtualOrderItemFileEntryLocalService =
 			(CommerceVirtualOrderItemFileEntryLocalService)aopProxy;
-
-		CommerceVirtualOrderItemFileEntryLocalServiceUtil.setService(
-			commerceVirtualOrderItemFileEntryLocalService);
 	}
 
 	/**

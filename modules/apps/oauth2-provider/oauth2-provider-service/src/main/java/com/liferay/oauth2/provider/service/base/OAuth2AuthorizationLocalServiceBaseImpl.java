@@ -7,7 +7,6 @@ package com.liferay.oauth2.provider.service.base;
 
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
-import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalServiceUtil;
 import com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationFinder;
 import com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationPersistence;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersistence;
@@ -66,7 +65,7 @@ public abstract class OAuth2AuthorizationLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>OAuth2AuthorizationLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>OAuth2AuthorizationLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>OAuth2AuthorizationLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -580,7 +579,6 @@ public abstract class OAuth2AuthorizationLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		OAuth2AuthorizationLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -595,9 +593,6 @@ public abstract class OAuth2AuthorizationLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		oAuth2AuthorizationLocalService =
 			(OAuth2AuthorizationLocalService)aopProxy;
-
-		OAuth2AuthorizationLocalServiceUtil.setService(
-			oAuth2AuthorizationLocalService);
 	}
 
 	/**

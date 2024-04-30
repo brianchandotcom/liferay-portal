@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
-import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -73,7 +72,7 @@ public abstract class FragmentCollectionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>FragmentCollectionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>FragmentCollectionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>FragmentCollectionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.fragment.service.FragmentCollectionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -540,7 +539,6 @@ public abstract class FragmentCollectionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		FragmentCollectionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -555,9 +553,6 @@ public abstract class FragmentCollectionLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		fragmentCollectionLocalService =
 			(FragmentCollectionLocalService)aopProxy;
-
-		FragmentCollectionLocalServiceUtil.setService(
-			fragmentCollectionLocalService);
 	}
 
 	/**

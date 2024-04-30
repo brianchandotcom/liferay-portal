@@ -7,6 +7,7 @@ package com.liferay.commerce.tax.engine.fixed.service;
 
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -113,15 +114,12 @@ public class CommerceTaxFixedRateAddressRelServiceUtil {
 	}
 
 	public static CommerceTaxFixedRateAddressRelService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(
-		CommerceTaxFixedRateAddressRelService service) {
-
-		_service = service;
-	}
-
-	private static volatile CommerceTaxFixedRateAddressRelService _service;
+	private static final Snapshot<CommerceTaxFixedRateAddressRelService>
+		_serviceSnapshot = new Snapshot<>(
+			CommerceTaxFixedRateAddressRelServiceUtil.class,
+			CommerceTaxFixedRateAddressRelService.class);
 
 }

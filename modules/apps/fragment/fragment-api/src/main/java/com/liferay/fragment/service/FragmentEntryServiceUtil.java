@@ -7,6 +7,7 @@ package com.liferay.fragment.service;
 
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -326,13 +327,11 @@ public class FragmentEntryServiceUtil {
 	}
 
 	public static FragmentEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(FragmentEntryService service) {
-		_service = service;
-	}
-
-	private static volatile FragmentEntryService _service;
+	private static final Snapshot<FragmentEntryService> _serviceSnapshot =
+		new Snapshot<>(
+			FragmentEntryServiceUtil.class, FragmentEntryService.class);
 
 }

@@ -7,6 +7,7 @@ package com.liferay.commerce.product.service;
 
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -155,13 +156,12 @@ public class CPInstanceUnitOfMeasureServiceUtil {
 	}
 
 	public static CPInstanceUnitOfMeasureService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CPInstanceUnitOfMeasureService service) {
-		_service = service;
-	}
-
-	private static volatile CPInstanceUnitOfMeasureService _service;
+	private static final Snapshot<CPInstanceUnitOfMeasureService>
+		_serviceSnapshot = new Snapshot<>(
+			CPInstanceUnitOfMeasureServiceUtil.class,
+			CPInstanceUnitOfMeasureService.class);
 
 }

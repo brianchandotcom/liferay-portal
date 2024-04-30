@@ -7,7 +7,6 @@ package com.liferay.journal.service.base;
 
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
-import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.service.persistence.JournalArticleResourcePersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -67,7 +66,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>JournalArticleResourceLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>JournalArticleResourceLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>JournalArticleResourceLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.journal.service.JournalArticleResourceLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -468,7 +467,6 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		JournalArticleResourceLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -484,9 +482,6 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		journalArticleResourceLocalService =
 			(JournalArticleResourceLocalService)aopProxy;
-
-		JournalArticleResourceLocalServiceUtil.setService(
-			journalArticleResourceLocalService);
 	}
 
 	/**

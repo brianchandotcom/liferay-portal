@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentPersistence;
 
 import java.io.Serializable;
@@ -67,7 +66,7 @@ public abstract class KaleoTaskAssignmentLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KaleoTaskAssignmentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KaleoTaskAssignmentLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KaleoTaskAssignmentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -404,7 +403,6 @@ public abstract class KaleoTaskAssignmentLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		KaleoTaskAssignmentLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -420,9 +418,6 @@ public abstract class KaleoTaskAssignmentLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		kaleoTaskAssignmentLocalService =
 			(KaleoTaskAssignmentLocalService)aopProxy;
-
-		KaleoTaskAssignmentLocalServiceUtil.setService(
-			kaleoTaskAssignmentLocalService);
 	}
 
 	/**

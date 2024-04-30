@@ -7,7 +7,6 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel;
 import com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelLocalService;
-import com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelLocalServiceUtil;
 import com.liferay.commerce.service.persistence.CommerceShippingOptionAccountEntryRelPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class CommerceShippingOptionAccountEntryRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceShippingOptionAccountEntryRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceShippingOptionAccountEntryRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceShippingOptionAccountEntryRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -425,7 +424,6 @@ public abstract class CommerceShippingOptionAccountEntryRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceShippingOptionAccountEntryRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -440,9 +438,6 @@ public abstract class CommerceShippingOptionAccountEntryRelLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceShippingOptionAccountEntryRelLocalService =
 			(CommerceShippingOptionAccountEntryRelLocalService)aopProxy;
-
-		CommerceShippingOptionAccountEntryRelLocalServiceUtil.setService(
-			commerceShippingOptionAccountEntryRelLocalService);
 	}
 
 	/**

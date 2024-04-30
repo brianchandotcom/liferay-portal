@@ -7,7 +7,6 @@ package com.liferay.commerce.order.rule.service.base;
 
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.service.COREntryService;
-import com.liferay.commerce.order.rule.service.COREntryServiceUtil;
 import com.liferay.commerce.order.rule.service.persistence.COREntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class COREntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>COREntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>COREntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>COREntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.order.rule.service.COREntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		COREntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class COREntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		corEntryService = (COREntryService)aopProxy;
-
-		COREntryServiceUtil.setService(corEntryService);
 	}
 
 	/**

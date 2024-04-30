@@ -7,6 +7,7 @@ package com.liferay.change.tracking.service;
 
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the remote service utility for CTPreferences. This utility wraps
@@ -52,13 +53,11 @@ public class CTPreferencesServiceUtil {
 	}
 
 	public static CTPreferencesService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CTPreferencesService service) {
-		_service = service;
-	}
-
-	private static volatile CTPreferencesService _service;
+	private static final Snapshot<CTPreferencesService> _serviceSnapshot =
+		new Snapshot<>(
+			CTPreferencesServiceUtil.class, CTPreferencesService.class);
 
 }

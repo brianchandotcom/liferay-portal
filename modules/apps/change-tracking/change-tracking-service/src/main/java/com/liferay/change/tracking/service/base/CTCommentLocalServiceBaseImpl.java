@@ -7,7 +7,6 @@ package com.liferay.change.tracking.service.base;
 
 import com.liferay.change.tracking.model.CTComment;
 import com.liferay.change.tracking.service.CTCommentLocalService;
-import com.liferay.change.tracking.service.CTCommentLocalServiceUtil;
 import com.liferay.change.tracking.service.persistence.CTCommentPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -63,7 +62,7 @@ public abstract class CTCommentLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CTCommentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CTCommentLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CTCommentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.change.tracking.service.CTCommentLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -371,7 +370,6 @@ public abstract class CTCommentLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CTCommentLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -385,8 +383,6 @@ public abstract class CTCommentLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ctCommentLocalService = (CTCommentLocalService)aopProxy;
-
-		CTCommentLocalServiceUtil.setService(ctCommentLocalService);
 	}
 
 	/**

@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedLocalService;
-import com.liferay.journal.service.JournalFeedLocalServiceUtil;
 import com.liferay.journal.service.persistence.JournalFeedPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -72,7 +71,7 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>JournalFeedLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>JournalFeedLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>JournalFeedLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.journal.service.JournalFeedLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -511,7 +510,6 @@ public abstract class JournalFeedLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		JournalFeedLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -525,8 +523,6 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		journalFeedLocalService = (JournalFeedLocalService)aopProxy;
-
-		JournalFeedLocalServiceUtil.setService(journalFeedLocalService);
 	}
 
 	/**

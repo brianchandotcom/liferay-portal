@@ -6,6 +6,7 @@
 package com.liferay.dynamic.data.mapping.service;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -58,13 +59,11 @@ public class DDMStructureLinkServiceUtil {
 	}
 
 	public static DDMStructureLinkService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(DDMStructureLinkService service) {
-		_service = service;
-	}
-
-	private static volatile DDMStructureLinkService _service;
+	private static final Snapshot<DDMStructureLinkService> _serviceSnapshot =
+		new Snapshot<>(
+			DDMStructureLinkServiceUtil.class, DDMStructureLinkService.class);
 
 }

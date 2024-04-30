@@ -7,7 +7,6 @@ package com.liferay.multi.factor.authentication.email.otp.service.base;
 
 import com.liferay.multi.factor.authentication.email.otp.model.MFAEmailOTPEntry;
 import com.liferay.multi.factor.authentication.email.otp.service.MFAEmailOTPEntryLocalService;
-import com.liferay.multi.factor.authentication.email.otp.service.MFAEmailOTPEntryLocalServiceUtil;
 import com.liferay.multi.factor.authentication.email.otp.service.persistence.MFAEmailOTPEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class MFAEmailOTPEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MFAEmailOTPEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MFAEmailOTPEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MFAEmailOTPEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.multi.factor.authentication.email.otp.service.MFAEmailOTPEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -387,7 +386,6 @@ public abstract class MFAEmailOTPEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		MFAEmailOTPEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -401,9 +399,6 @@ public abstract class MFAEmailOTPEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		mfaEmailOTPEntryLocalService = (MFAEmailOTPEntryLocalService)aopProxy;
-
-		MFAEmailOTPEntryLocalServiceUtil.setService(
-			mfaEmailOTPEntryLocalService);
 	}
 
 	/**

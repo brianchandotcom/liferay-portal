@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.mapping.service.base;
 
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceFinder;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstancePersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -74,7 +73,7 @@ public abstract class DDMDataProviderInstanceLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DDMDataProviderInstanceLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DDMDataProviderInstanceLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DDMDataProviderInstanceLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -555,7 +554,6 @@ public abstract class DDMDataProviderInstanceLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DDMDataProviderInstanceLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -571,9 +569,6 @@ public abstract class DDMDataProviderInstanceLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		ddmDataProviderInstanceLocalService =
 			(DDMDataProviderInstanceLocalService)aopProxy;
-
-		DDMDataProviderInstanceLocalServiceUtil.setService(
-			ddmDataProviderInstanceLocalService);
 	}
 
 	/**

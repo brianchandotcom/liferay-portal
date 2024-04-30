@@ -7,6 +7,7 @@ package com.liferay.layout.page.template.service;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the remote service utility for LayoutPageTemplateStructure. This utility wraps
@@ -47,13 +48,12 @@ public class LayoutPageTemplateStructureServiceUtil {
 	}
 
 	public static LayoutPageTemplateStructureService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(LayoutPageTemplateStructureService service) {
-		_service = service;
-	}
-
-	private static volatile LayoutPageTemplateStructureService _service;
+	private static final Snapshot<LayoutPageTemplateStructureService>
+		_serviceSnapshot = new Snapshot<>(
+			LayoutPageTemplateStructureServiceUtil.class,
+			LayoutPageTemplateStructureService.class);
 
 }

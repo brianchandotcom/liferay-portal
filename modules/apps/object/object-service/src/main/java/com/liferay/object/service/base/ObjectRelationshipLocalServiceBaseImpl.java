@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -70,7 +69,7 @@ public abstract class ObjectRelationshipLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectRelationshipLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectRelationshipLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectRelationshipLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectRelationshipLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -503,7 +502,6 @@ public abstract class ObjectRelationshipLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		ObjectRelationshipLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -518,9 +516,6 @@ public abstract class ObjectRelationshipLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		objectRelationshipLocalService =
 			(ObjectRelationshipLocalService)aopProxy;
-
-		ObjectRelationshipLocalServiceUtil.setService(
-			objectRelationshipLocalService);
 	}
 
 	/**

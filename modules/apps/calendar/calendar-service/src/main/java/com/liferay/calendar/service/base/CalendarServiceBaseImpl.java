@@ -7,7 +7,6 @@ package com.liferay.calendar.service.base;
 
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.service.CalendarService;
-import com.liferay.calendar.service.CalendarServiceUtil;
 import com.liferay.calendar.service.persistence.CalendarFinder;
 import com.liferay.calendar.service.persistence.CalendarPersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class CalendarServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CalendarService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CalendarServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CalendarService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.calendar.service.CalendarServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CalendarServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class CalendarServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		calendarService = (CalendarService)aopProxy;
-
-		CalendarServiceUtil.setService(calendarService);
 	}
 
 	/**

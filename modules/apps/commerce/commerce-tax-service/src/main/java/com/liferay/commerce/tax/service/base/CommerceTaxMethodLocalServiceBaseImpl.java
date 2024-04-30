@@ -7,7 +7,6 @@ package com.liferay.commerce.tax.service.base;
 
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodLocalService;
-import com.liferay.commerce.tax.service.CommerceTaxMethodLocalServiceUtil;
 import com.liferay.commerce.tax.service.persistence.CommerceTaxMethodPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class CommerceTaxMethodLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceTaxMethodLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceTaxMethodLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceTaxMethodLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.tax.service.CommerceTaxMethodLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -388,7 +387,6 @@ public abstract class CommerceTaxMethodLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceTaxMethodLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -402,9 +400,6 @@ public abstract class CommerceTaxMethodLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceTaxMethodLocalService = (CommerceTaxMethodLocalService)aopProxy;
-
-		CommerceTaxMethodLocalServiceUtil.setService(
-			commerceTaxMethodLocalService);
 	}
 
 	/**

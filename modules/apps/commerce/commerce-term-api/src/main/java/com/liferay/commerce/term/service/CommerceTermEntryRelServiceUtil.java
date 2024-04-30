@@ -7,6 +7,7 @@ package com.liferay.commerce.term.service;
 
 import com.liferay.commerce.term.model.CommerceTermEntryRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -124,13 +125,12 @@ public class CommerceTermEntryRelServiceUtil {
 	}
 
 	public static CommerceTermEntryRelService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CommerceTermEntryRelService service) {
-		_service = service;
-	}
-
-	private static volatile CommerceTermEntryRelService _service;
+	private static final Snapshot<CommerceTermEntryRelService>
+		_serviceSnapshot = new Snapshot<>(
+			CommerceTermEntryRelServiceUtil.class,
+			CommerceTermEntryRelService.class);
 
 }

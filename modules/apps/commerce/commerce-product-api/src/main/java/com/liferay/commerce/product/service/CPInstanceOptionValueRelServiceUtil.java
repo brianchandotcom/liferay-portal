@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.product.service;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
+
 /**
  * Provides the remote service utility for CPInstanceOptionValueRel. This utility wraps
  * <code>com.liferay.commerce.product.service.impl.CPInstanceOptionValueRelServiceImpl</code> and is an
@@ -30,18 +32,17 @@ public class CPInstanceOptionValueRelServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static CPInstanceOptionValueRelService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CPInstanceOptionValueRelService service) {
-		_service = service;
-	}
-
-	private static volatile CPInstanceOptionValueRelService _service;
+	private static final Snapshot<CPInstanceOptionValueRelService>
+		_serviceSnapshot = new Snapshot<>(
+			CPInstanceOptionValueRelServiceUtil.class,
+			CPInstanceOptionValueRelService.class);
 
 }

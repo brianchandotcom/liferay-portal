@@ -7,6 +7,7 @@ package com.liferay.batch.engine.service;
 
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.InputStream;
@@ -122,13 +123,12 @@ public class BatchEngineImportTaskServiceUtil {
 	}
 
 	public static BatchEngineImportTaskService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(BatchEngineImportTaskService service) {
-		_service = service;
-	}
-
-	private static volatile BatchEngineImportTaskService _service;
+	private static final Snapshot<BatchEngineImportTaskService>
+		_serviceSnapshot = new Snapshot<>(
+			BatchEngineImportTaskServiceUtil.class,
+			BatchEngineImportTaskService.class);
 
 }

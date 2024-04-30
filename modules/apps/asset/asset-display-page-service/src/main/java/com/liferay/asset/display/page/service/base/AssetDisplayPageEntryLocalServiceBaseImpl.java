@@ -7,7 +7,6 @@ package com.liferay.asset.display.page.service.base;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
 import com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -75,7 +74,7 @@ public abstract class AssetDisplayPageEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AssetDisplayPageEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AssetDisplayPageEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AssetDisplayPageEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -571,7 +570,6 @@ public abstract class AssetDisplayPageEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AssetDisplayPageEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -587,9 +585,6 @@ public abstract class AssetDisplayPageEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		assetDisplayPageEntryLocalService =
 			(AssetDisplayPageEntryLocalService)aopProxy;
-
-		AssetDisplayPageEntryLocalServiceUtil.setService(
-			assetDisplayPageEntryLocalService);
 	}
 
 	/**

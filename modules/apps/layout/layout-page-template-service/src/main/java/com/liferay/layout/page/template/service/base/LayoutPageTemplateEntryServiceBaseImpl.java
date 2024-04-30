@@ -7,7 +7,6 @@ package com.liferay.layout.page.template.service.base;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class LayoutPageTemplateEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>LayoutPageTemplateEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>LayoutPageTemplateEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>LayoutPageTemplateEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		LayoutPageTemplateEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -63,9 +61,6 @@ public abstract class LayoutPageTemplateEntryServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		layoutPageTemplateEntryService =
 			(LayoutPageTemplateEntryService)aopProxy;
-
-		LayoutPageTemplateEntryServiceUtil.setService(
-			layoutPageTemplateEntryService);
 	}
 
 	/**

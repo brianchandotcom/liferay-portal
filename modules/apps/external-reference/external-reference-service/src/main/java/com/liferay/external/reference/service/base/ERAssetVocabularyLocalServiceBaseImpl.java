@@ -6,7 +6,6 @@
 package com.liferay.external.reference.service.base;
 
 import com.liferay.external.reference.service.ERAssetVocabularyLocalService;
-import com.liferay.external.reference.service.ERAssetVocabularyLocalServiceUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -44,11 +43,10 @@ public abstract class ERAssetVocabularyLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ERAssetVocabularyLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ERAssetVocabularyLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ERAssetVocabularyLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.external.reference.service.ERAssetVocabularyLocalServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		ERAssetVocabularyLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,9 +59,6 @@ public abstract class ERAssetVocabularyLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		erAssetVocabularyLocalService = (ERAssetVocabularyLocalService)aopProxy;
-
-		ERAssetVocabularyLocalServiceUtil.setService(
-			erAssetVocabularyLocalService);
 	}
 
 	/**

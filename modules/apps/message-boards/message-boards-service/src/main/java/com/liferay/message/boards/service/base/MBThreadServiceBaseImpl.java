@@ -7,7 +7,6 @@ package com.liferay.message.boards.service.base;
 
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBThreadService;
-import com.liferay.message.boards.service.MBThreadServiceUtil;
 import com.liferay.message.boards.service.persistence.MBThreadFinder;
 import com.liferay.message.boards.service.persistence.MBThreadPersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class MBThreadServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MBThreadService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MBThreadServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MBThreadService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBThreadServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		MBThreadServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class MBThreadServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		mbThreadService = (MBThreadService)aopProxy;
-
-		MBThreadServiceUtil.setService(mbThreadService);
 	}
 
 	/**

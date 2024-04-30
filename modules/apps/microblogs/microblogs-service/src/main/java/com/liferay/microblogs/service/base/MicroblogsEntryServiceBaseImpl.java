@@ -7,7 +7,6 @@ package com.liferay.microblogs.service.base;
 
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.service.MicroblogsEntryService;
-import com.liferay.microblogs.service.MicroblogsEntryServiceUtil;
 import com.liferay.microblogs.service.persistence.MicroblogsEntryFinder;
 import com.liferay.microblogs.service.persistence.MicroblogsEntryPersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class MicroblogsEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MicroblogsEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MicroblogsEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MicroblogsEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.microblogs.service.MicroblogsEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		MicroblogsEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class MicroblogsEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		microblogsEntryService = (MicroblogsEntryService)aopProxy;
-
-		MicroblogsEntryServiceUtil.setService(microblogsEntryService);
 	}
 
 	/**

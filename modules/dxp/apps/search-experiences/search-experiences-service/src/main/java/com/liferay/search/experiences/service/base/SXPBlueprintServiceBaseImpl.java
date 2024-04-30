@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintService;
-import com.liferay.search.experiences.service.SXPBlueprintServiceUtil;
 import com.liferay.search.experiences.service.persistence.SXPBlueprintPersistence;
 
 import javax.sql.DataSource;
@@ -44,11 +43,10 @@ public abstract class SXPBlueprintServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SXPBlueprintService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SXPBlueprintServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SXPBlueprintService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.search.experiences.service.SXPBlueprintServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		SXPBlueprintServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class SXPBlueprintServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		sxpBlueprintService = (SXPBlueprintService)aopProxy;
-
-		SXPBlueprintServiceUtil.setService(sxpBlueprintService);
 	}
 
 	/**

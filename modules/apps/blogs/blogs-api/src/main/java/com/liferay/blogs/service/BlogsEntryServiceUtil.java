@@ -7,6 +7,7 @@ package com.liferay.blogs.service;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -321,13 +322,10 @@ public class BlogsEntryServiceUtil {
 	}
 
 	public static BlogsEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(BlogsEntryService service) {
-		_service = service;
-	}
-
-	private static volatile BlogsEntryService _service;
+	private static final Snapshot<BlogsEntryService> _serviceSnapshot =
+		new Snapshot<>(BlogsEntryServiceUtil.class, BlogsEntryService.class);
 
 }

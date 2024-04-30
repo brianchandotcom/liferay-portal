@@ -6,7 +6,6 @@
 package com.liferay.osb.testray.service.base;
 
 import com.liferay.osb.testray.service.CompareRunsService;
-import com.liferay.osb.testray.service.CompareRunsServiceUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -43,11 +42,10 @@ public abstract class CompareRunsServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CompareRunsService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CompareRunsServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CompareRunsService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.osb.testray.service.CompareRunsServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CompareRunsServiceUtil.setService(null);
 	}
 
 	@Override
@@ -60,8 +58,6 @@ public abstract class CompareRunsServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		compareRunsService = (CompareRunsService)aopProxy;
-
-		CompareRunsServiceUtil.setService(compareRunsService);
 	}
 
 	/**

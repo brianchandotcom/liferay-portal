@@ -7,7 +7,6 @@ package com.liferay.object.service.base;
 
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.service.ObjectValidationRuleService;
-import com.liferay.object.service.ObjectValidationRuleServiceUtil;
 import com.liferay.object.service.persistence.ObjectValidationRulePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class ObjectValidationRuleServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectValidationRuleService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectValidationRuleServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectValidationRuleService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectValidationRuleServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		ObjectValidationRuleServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class ObjectValidationRuleServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		objectValidationRuleService = (ObjectValidationRuleService)aopProxy;
-
-		ObjectValidationRuleServiceUtil.setService(objectValidationRuleService);
 	}
 
 	/**

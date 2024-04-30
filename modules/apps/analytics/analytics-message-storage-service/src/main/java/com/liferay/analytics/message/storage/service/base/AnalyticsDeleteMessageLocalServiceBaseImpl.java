@@ -7,7 +7,6 @@ package com.liferay.analytics.message.storage.service.base;
 
 import com.liferay.analytics.message.storage.model.AnalyticsDeleteMessage;
 import com.liferay.analytics.message.storage.service.AnalyticsDeleteMessageLocalService;
-import com.liferay.analytics.message.storage.service.AnalyticsDeleteMessageLocalServiceUtil;
 import com.liferay.analytics.message.storage.service.persistence.AnalyticsDeleteMessagePersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -67,7 +66,7 @@ public abstract class AnalyticsDeleteMessageLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AnalyticsDeleteMessageLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AnalyticsDeleteMessageLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AnalyticsDeleteMessageLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.analytics.message.storage.service.AnalyticsDeleteMessageLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -407,7 +406,6 @@ public abstract class AnalyticsDeleteMessageLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AnalyticsDeleteMessageLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -423,9 +421,6 @@ public abstract class AnalyticsDeleteMessageLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		analyticsDeleteMessageLocalService =
 			(AnalyticsDeleteMessageLocalService)aopProxy;
-
-		AnalyticsDeleteMessageLocalServiceUtil.setService(
-			analyticsDeleteMessageLocalService);
 	}
 
 	/**

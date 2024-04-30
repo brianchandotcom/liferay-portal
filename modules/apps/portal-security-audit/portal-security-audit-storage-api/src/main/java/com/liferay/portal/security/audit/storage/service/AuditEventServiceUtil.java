@@ -6,6 +6,7 @@
 package com.liferay.portal.security.audit.storage.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
 
@@ -106,13 +107,10 @@ public class AuditEventServiceUtil {
 	}
 
 	public static AuditEventService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(AuditEventService service) {
-		_service = service;
-	}
-
-	private static volatile AuditEventService _service;
+	private static final Snapshot<AuditEventService> _serviceSnapshot =
+		new Snapshot<>(AuditEventServiceUtil.class, AuditEventService.class);
 
 }

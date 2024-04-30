@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskFormInstanceLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoTaskFormInstanceLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskFormInstancePersistence;
 
 import java.io.Serializable;
@@ -67,7 +66,7 @@ public abstract class KaleoTaskFormInstanceLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KaleoTaskFormInstanceLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KaleoTaskFormInstanceLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KaleoTaskFormInstanceLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.workflow.kaleo.service.KaleoTaskFormInstanceLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -404,7 +403,6 @@ public abstract class KaleoTaskFormInstanceLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		KaleoTaskFormInstanceLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -420,9 +418,6 @@ public abstract class KaleoTaskFormInstanceLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		kaleoTaskFormInstanceLocalService =
 			(KaleoTaskFormInstanceLocalService)aopProxy;
-
-		KaleoTaskFormInstanceLocalServiceUtil.setService(
-			kaleoTaskFormInstanceLocalService);
 	}
 
 	/**

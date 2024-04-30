@@ -7,7 +7,6 @@ package com.liferay.change.tracking.service.base;
 
 import com.liferay.change.tracking.model.CTMessage;
 import com.liferay.change.tracking.service.CTMessageLocalService;
-import com.liferay.change.tracking.service.CTMessageLocalServiceUtil;
 import com.liferay.change.tracking.service.persistence.CTMessagePersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -63,7 +62,7 @@ public abstract class CTMessageLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CTMessageLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CTMessageLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CTMessageLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.change.tracking.service.CTMessageLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -371,7 +370,6 @@ public abstract class CTMessageLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CTMessageLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -385,8 +383,6 @@ public abstract class CTMessageLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ctMessageLocalService = (CTMessageLocalService)aopProxy;
-
-		CTMessageLocalServiceUtil.setService(ctMessageLocalService);
 	}
 
 	/**

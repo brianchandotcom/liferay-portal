@@ -7,7 +7,6 @@ package com.liferay.oauth2.provider.service.base;
 
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
-import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalServiceUtil;
 import com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationPersistence;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantFinder;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersistence;
@@ -66,7 +65,7 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>OAuth2ScopeGrantLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>OAuth2ScopeGrantLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>OAuth2ScopeGrantLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -564,7 +563,6 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		OAuth2ScopeGrantLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -578,9 +576,6 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		oAuth2ScopeGrantLocalService = (OAuth2ScopeGrantLocalService)aopProxy;
-
-		OAuth2ScopeGrantLocalServiceUtil.setService(
-			oAuth2ScopeGrantLocalService);
 	}
 
 	/**

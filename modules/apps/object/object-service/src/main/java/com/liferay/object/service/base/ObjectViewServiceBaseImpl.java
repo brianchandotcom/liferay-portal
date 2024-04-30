@@ -7,7 +7,6 @@ package com.liferay.object.service.base;
 
 import com.liferay.object.model.ObjectView;
 import com.liferay.object.service.ObjectViewService;
-import com.liferay.object.service.ObjectViewServiceUtil;
 import com.liferay.object.service.persistence.ObjectViewPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class ObjectViewServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectViewService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectViewServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectViewService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectViewServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		ObjectViewServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class ObjectViewServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		objectViewService = (ObjectViewService)aopProxy;
-
-		ObjectViewServiceUtil.setService(objectViewService);
 	}
 
 	/**

@@ -7,7 +7,6 @@ package com.liferay.commerce.discount.service.base;
 
 import com.liferay.commerce.discount.model.CommerceDiscountUsageEntry;
 import com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalService;
-import com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalServiceUtil;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountUsageEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class CommerceDiscountUsageEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceDiscountUsageEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceDiscountUsageEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceDiscountUsageEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -408,7 +407,6 @@ public abstract class CommerceDiscountUsageEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceDiscountUsageEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -423,9 +421,6 @@ public abstract class CommerceDiscountUsageEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceDiscountUsageEntryLocalService =
 			(CommerceDiscountUsageEntryLocalService)aopProxy;
-
-		CommerceDiscountUsageEntryLocalServiceUtil.setService(
-			commerceDiscountUsageEntryLocalService);
 	}
 
 	/**

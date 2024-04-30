@@ -7,7 +7,6 @@ package com.liferay.notification.service.base;
 
 import com.liferay.notification.model.NotificationTemplateAttachment;
 import com.liferay.notification.service.NotificationTemplateAttachmentLocalService;
-import com.liferay.notification.service.NotificationTemplateAttachmentLocalServiceUtil;
 import com.liferay.notification.service.persistence.NotificationTemplateAttachmentPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class NotificationTemplateAttachmentLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>NotificationTemplateAttachmentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>NotificationTemplateAttachmentLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>NotificationTemplateAttachmentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.notification.service.NotificationTemplateAttachmentLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -412,7 +411,6 @@ public abstract class NotificationTemplateAttachmentLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		NotificationTemplateAttachmentLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -427,9 +425,6 @@ public abstract class NotificationTemplateAttachmentLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		notificationTemplateAttachmentLocalService =
 			(NotificationTemplateAttachmentLocalService)aopProxy;
-
-		NotificationTemplateAttachmentLocalServiceUtil.setService(
-			notificationTemplateAttachmentLocalService);
 	}
 
 	/**

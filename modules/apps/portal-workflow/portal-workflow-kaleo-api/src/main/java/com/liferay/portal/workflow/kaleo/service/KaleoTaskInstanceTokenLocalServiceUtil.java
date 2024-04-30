@@ -9,6 +9,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 
@@ -674,13 +675,12 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 	}
 
 	public static KaleoTaskInstanceTokenLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(KaleoTaskInstanceTokenLocalService service) {
-		_service = service;
-	}
-
-	private static volatile KaleoTaskInstanceTokenLocalService _service;
+	private static final Snapshot<KaleoTaskInstanceTokenLocalService>
+		_serviceSnapshot = new Snapshot<>(
+			KaleoTaskInstanceTokenLocalServiceUtil.class,
+			KaleoTaskInstanceTokenLocalService.class);
 
 }

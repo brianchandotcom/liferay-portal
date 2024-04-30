@@ -7,6 +7,7 @@ package com.liferay.commerce.service;
 
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -332,13 +333,11 @@ public class CommerceAddressServiceUtil {
 	}
 
 	public static CommerceAddressService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CommerceAddressService service) {
-		_service = service;
-	}
-
-	private static volatile CommerceAddressService _service;
+	private static final Snapshot<CommerceAddressService> _serviceSnapshot =
+		new Snapshot<>(
+			CommerceAddressServiceUtil.class, CommerceAddressService.class);
 
 }

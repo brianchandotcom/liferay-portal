@@ -7,7 +7,6 @@ package com.liferay.contacts.service.base;
 
 import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.service.EntryService;
-import com.liferay.contacts.service.EntryServiceUtil;
 import com.liferay.contacts.service.persistence.EntryFinder;
 import com.liferay.contacts.service.persistence.EntryPersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class EntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>EntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>EntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>EntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.contacts.service.EntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		EntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class EntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		entryService = (EntryService)aopProxy;
-
-		EntryServiceUtil.setService(entryService);
 	}
 
 	/**

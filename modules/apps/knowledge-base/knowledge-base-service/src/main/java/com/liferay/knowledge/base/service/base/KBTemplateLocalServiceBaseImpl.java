@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.service.KBTemplateLocalService;
-import com.liferay.knowledge.base.service.KBTemplateLocalServiceUtil;
 import com.liferay.knowledge.base.service.persistence.KBTemplatePersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -72,7 +71,7 @@ public abstract class KBTemplateLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KBTemplateLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KBTemplateLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KBTemplateLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.knowledge.base.service.KBTemplateLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -517,7 +516,6 @@ public abstract class KBTemplateLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		KBTemplateLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -531,8 +529,6 @@ public abstract class KBTemplateLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		kbTemplateLocalService = (KBTemplateLocalService)aopProxy;
-
-		KBTemplateLocalServiceUtil.setService(kbTemplateLocalService);
 	}
 
 	/**

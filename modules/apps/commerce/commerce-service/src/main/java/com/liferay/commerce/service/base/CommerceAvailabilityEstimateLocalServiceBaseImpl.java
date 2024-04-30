@@ -7,7 +7,6 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
 import com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService;
-import com.liferay.commerce.service.CommerceAvailabilityEstimateLocalServiceUtil;
 import com.liferay.commerce.service.persistence.CommerceAvailabilityEstimatePersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -70,7 +69,7 @@ public abstract class CommerceAvailabilityEstimateLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceAvailabilityEstimateLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceAvailabilityEstimateLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceAvailabilityEstimateLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceAvailabilityEstimateLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -522,7 +521,6 @@ public abstract class CommerceAvailabilityEstimateLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceAvailabilityEstimateLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -537,9 +535,6 @@ public abstract class CommerceAvailabilityEstimateLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceAvailabilityEstimateLocalService =
 			(CommerceAvailabilityEstimateLocalService)aopProxy;
-
-		CommerceAvailabilityEstimateLocalServiceUtil.setService(
-			commerceAvailabilityEstimateLocalService);
 	}
 
 	/**

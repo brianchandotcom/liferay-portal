@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.layout.model.LayoutLocalization;
 import com.liferay.layout.service.LayoutLocalizationLocalService;
-import com.liferay.layout.service.LayoutLocalizationLocalServiceUtil;
 import com.liferay.layout.service.persistence.LayoutLocalizationPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -73,7 +72,7 @@ public abstract class LayoutLocalizationLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>LayoutLocalizationLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>LayoutLocalizationLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>LayoutLocalizationLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.layout.service.LayoutLocalizationLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -535,7 +534,6 @@ public abstract class LayoutLocalizationLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		LayoutLocalizationLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -550,9 +548,6 @@ public abstract class LayoutLocalizationLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		layoutLocalizationLocalService =
 			(LayoutLocalizationLocalService)aopProxy;
-
-		LayoutLocalizationLocalServiceUtil.setService(
-			layoutLocalizationLocalService);
 	}
 
 	/**

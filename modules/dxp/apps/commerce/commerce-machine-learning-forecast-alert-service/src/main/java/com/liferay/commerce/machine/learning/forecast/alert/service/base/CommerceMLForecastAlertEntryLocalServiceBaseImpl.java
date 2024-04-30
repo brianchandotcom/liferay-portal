@@ -7,7 +7,6 @@ package com.liferay.commerce.machine.learning.forecast.alert.service.base;
 
 import com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry;
 import com.liferay.commerce.machine.learning.forecast.alert.service.CommerceMLForecastAlertEntryLocalService;
-import com.liferay.commerce.machine.learning.forecast.alert.service.CommerceMLForecastAlertEntryLocalServiceUtil;
 import com.liferay.commerce.machine.learning.forecast.alert.service.persistence.CommerceMLForecastAlertEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -70,7 +69,7 @@ public abstract class CommerceMLForecastAlertEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceMLForecastAlertEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceMLForecastAlertEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceMLForecastAlertEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.machine.learning.forecast.alert.service.CommerceMLForecastAlertEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -520,7 +519,6 @@ public abstract class CommerceMLForecastAlertEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceMLForecastAlertEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -535,9 +533,6 @@ public abstract class CommerceMLForecastAlertEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceMLForecastAlertEntryLocalService =
 			(CommerceMLForecastAlertEntryLocalService)aopProxy;
-
-		CommerceMLForecastAlertEntryLocalServiceUtil.setService(
-			commerceMLForecastAlertEntryLocalService);
 	}
 
 	/**

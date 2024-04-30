@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
-import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelFinder;
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -74,7 +73,7 @@ public abstract class CPInstanceOptionValueRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPInstanceOptionValueRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPInstanceOptionValueRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPInstanceOptionValueRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -554,7 +553,6 @@ public abstract class CPInstanceOptionValueRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CPInstanceOptionValueRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -570,9 +568,6 @@ public abstract class CPInstanceOptionValueRelLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpInstanceOptionValueRelLocalService =
 			(CPInstanceOptionValueRelLocalService)aopProxy;
-
-		CPInstanceOptionValueRelLocalServiceUtil.setService(
-			cpInstanceOptionValueRelLocalService);
 	}
 
 	/**

@@ -7,7 +7,6 @@ package com.liferay.asset.entry.rel.service.base;
 
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
-import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalServiceUtil;
 import com.liferay.asset.entry.rel.service.persistence.AssetEntryAssetCategoryRelPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -67,7 +66,7 @@ public abstract class AssetEntryAssetCategoryRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AssetEntryAssetCategoryRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AssetEntryAssetCategoryRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AssetEntryAssetCategoryRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -411,7 +410,6 @@ public abstract class AssetEntryAssetCategoryRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AssetEntryAssetCategoryRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -427,9 +425,6 @@ public abstract class AssetEntryAssetCategoryRelLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		assetEntryAssetCategoryRelLocalService =
 			(AssetEntryAssetCategoryRelLocalService)aopProxy;
-
-		AssetEntryAssetCategoryRelLocalServiceUtil.setService(
-			assetEntryAssetCategoryRelLocalService);
 	}
 
 	/**

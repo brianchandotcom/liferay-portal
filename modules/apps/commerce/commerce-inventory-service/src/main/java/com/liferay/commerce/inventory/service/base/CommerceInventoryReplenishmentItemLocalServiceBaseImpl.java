@@ -7,7 +7,6 @@ package com.liferay.commerce.inventory.service.base;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemLocalService;
-import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemLocalServiceUtil;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryReplenishmentItemPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -70,7 +69,7 @@ public abstract class CommerceInventoryReplenishmentItemLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceInventoryReplenishmentItemLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceInventoryReplenishmentItemLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceInventoryReplenishmentItemLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -552,7 +551,6 @@ public abstract class CommerceInventoryReplenishmentItemLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceInventoryReplenishmentItemLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -567,9 +565,6 @@ public abstract class CommerceInventoryReplenishmentItemLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceInventoryReplenishmentItemLocalService =
 			(CommerceInventoryReplenishmentItemLocalService)aopProxy;
-
-		CommerceInventoryReplenishmentItemLocalServiceUtil.setService(
-			commerceInventoryReplenishmentItemLocalService);
 	}
 
 	/**

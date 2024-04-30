@@ -5,6 +5,8 @@
 
 package com.liferay.layout.seo.service;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
+
 /**
  * Provides the remote service utility for LayoutSEOSite. This utility wraps
  * <code>com.liferay.layout.seo.service.impl.LayoutSEOSiteServiceImpl</code> and is an
@@ -30,18 +32,16 @@ public class LayoutSEOSiteServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static LayoutSEOSiteService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(LayoutSEOSiteService service) {
-		_service = service;
-	}
-
-	private static volatile LayoutSEOSiteService _service;
+	private static final Snapshot<LayoutSEOSiteService> _serviceSnapshot =
+		new Snapshot<>(
+			LayoutSEOSiteServiceUtil.class, LayoutSEOSiteService.class);
 
 }

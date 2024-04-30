@@ -7,6 +7,7 @@ package com.liferay.object.service;
 
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 import java.util.Map;
@@ -114,13 +115,12 @@ public class ObjectRelationshipServiceUtil {
 	}
 
 	public static ObjectRelationshipService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(ObjectRelationshipService service) {
-		_service = service;
-	}
-
-	private static volatile ObjectRelationshipService _service;
+	private static final Snapshot<ObjectRelationshipService> _serviceSnapshot =
+		new Snapshot<>(
+			ObjectRelationshipServiceUtil.class,
+			ObjectRelationshipService.class);
 
 }

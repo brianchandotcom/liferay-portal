@@ -7,6 +7,7 @@ package com.liferay.account.service;
 
 import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -111,13 +112,12 @@ public class AccountEntryOrganizationRelServiceUtil {
 	}
 
 	public static AccountEntryOrganizationRelService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(AccountEntryOrganizationRelService service) {
-		_service = service;
-	}
-
-	private static volatile AccountEntryOrganizationRelService _service;
+	private static final Snapshot<AccountEntryOrganizationRelService>
+		_serviceSnapshot = new Snapshot<>(
+			AccountEntryOrganizationRelServiceUtil.class,
+			AccountEntryOrganizationRelService.class);
 
 }

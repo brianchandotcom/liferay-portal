@@ -5,6 +5,8 @@
 
 package com.liferay.osb.testray.service;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
+
 /**
  * Provides the remote service utility for CompareRuns. This utility wraps
  * <code>com.liferay.osb.testray.service.impl.CompareRunsServiceImpl</code> and is an
@@ -30,18 +32,15 @@ public class CompareRunsServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static CompareRunsService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CompareRunsService service) {
-		_service = service;
-	}
-
-	private static volatile CompareRunsService _service;
+	private static final Snapshot<CompareRunsService> _serviceSnapshot =
+		new Snapshot<>(CompareRunsServiceUtil.class, CompareRunsService.class);
 
 }

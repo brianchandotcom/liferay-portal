@@ -6,6 +6,7 @@
 package com.liferay.segments.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.segments.model.SegmentsEntryRel;
 
@@ -85,13 +86,11 @@ public class SegmentsEntryRelServiceUtil {
 	}
 
 	public static SegmentsEntryRelService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(SegmentsEntryRelService service) {
-		_service = service;
-	}
-
-	private static volatile SegmentsEntryRelService _service;
+	private static final Snapshot<SegmentsEntryRelService> _serviceSnapshot =
+		new Snapshot<>(
+			SegmentsEntryRelServiceUtil.class, SegmentsEntryRelService.class);
 
 }

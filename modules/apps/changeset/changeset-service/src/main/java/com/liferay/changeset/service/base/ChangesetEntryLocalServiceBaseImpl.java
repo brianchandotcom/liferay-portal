@@ -7,7 +7,6 @@ package com.liferay.changeset.service.base;
 
 import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.service.ChangesetEntryLocalService;
-import com.liferay.changeset.service.ChangesetEntryLocalServiceUtil;
 import com.liferay.changeset.service.persistence.ChangesetEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -63,7 +62,7 @@ public abstract class ChangesetEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ChangesetEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ChangesetEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ChangesetEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.changeset.service.ChangesetEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -377,7 +376,6 @@ public abstract class ChangesetEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		ChangesetEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -391,8 +389,6 @@ public abstract class ChangesetEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		changesetEntryLocalService = (ChangesetEntryLocalService)aopProxy;
-
-		ChangesetEntryLocalServiceUtil.setService(changesetEntryLocalService);
 	}
 
 	/**

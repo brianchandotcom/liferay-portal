@@ -6,7 +6,6 @@
 package com.liferay.blogs.service.base;
 
 import com.liferay.blogs.service.BlogsStatsUserLocalService;
-import com.liferay.blogs.service.BlogsStatsUserLocalServiceUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -43,11 +42,10 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>BlogsStatsUserLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>BlogsStatsUserLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>BlogsStatsUserLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.blogs.service.BlogsStatsUserLocalServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		BlogsStatsUserLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -60,8 +58,6 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		blogsStatsUserLocalService = (BlogsStatsUserLocalService)aopProxy;
-
-		BlogsStatsUserLocalServiceUtil.setService(blogsStatsUserLocalService);
 	}
 
 	/**

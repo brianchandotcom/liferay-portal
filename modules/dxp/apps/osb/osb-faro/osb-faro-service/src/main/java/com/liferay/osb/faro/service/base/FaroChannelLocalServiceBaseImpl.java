@@ -7,7 +7,6 @@ package com.liferay.osb.faro.service.base;
 
 import com.liferay.osb.faro.model.FaroChannel;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
-import com.liferay.osb.faro.service.FaroChannelLocalServiceUtil;
 import com.liferay.osb.faro.service.persistence.FaroChannelFinder;
 import com.liferay.osb.faro.service.persistence.FaroChannelPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -64,7 +63,7 @@ public abstract class FaroChannelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>FaroChannelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>FaroChannelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>FaroChannelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.osb.faro.service.FaroChannelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -380,7 +379,6 @@ public abstract class FaroChannelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		FaroChannelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -394,8 +392,6 @@ public abstract class FaroChannelLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		faroChannelLocalService = (FaroChannelLocalService)aopProxy;
-
-		FaroChannelLocalServiceUtil.setService(faroChannelLocalService);
 	}
 
 	/**

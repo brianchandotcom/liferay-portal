@@ -7,6 +7,7 @@ package com.liferay.dynamic.data.mapping.service;
 
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -147,13 +148,12 @@ public class DDMDataProviderInstanceServiceUtil {
 	}
 
 	public static DDMDataProviderInstanceService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(DDMDataProviderInstanceService service) {
-		_service = service;
-	}
-
-	private static volatile DDMDataProviderInstanceService _service;
+	private static final Snapshot<DDMDataProviderInstanceService>
+		_serviceSnapshot = new Snapshot<>(
+			DDMDataProviderInstanceServiceUtil.class,
+			DDMDataProviderInstanceService.class);
 
 }

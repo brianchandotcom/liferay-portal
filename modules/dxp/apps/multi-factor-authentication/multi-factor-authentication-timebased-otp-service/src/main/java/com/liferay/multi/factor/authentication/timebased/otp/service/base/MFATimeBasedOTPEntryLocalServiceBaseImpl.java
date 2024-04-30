@@ -7,7 +7,6 @@ package com.liferay.multi.factor.authentication.timebased.otp.service.base;
 
 import com.liferay.multi.factor.authentication.timebased.otp.model.MFATimeBasedOTPEntry;
 import com.liferay.multi.factor.authentication.timebased.otp.service.MFATimeBasedOTPEntryLocalService;
-import com.liferay.multi.factor.authentication.timebased.otp.service.MFATimeBasedOTPEntryLocalServiceUtil;
 import com.liferay.multi.factor.authentication.timebased.otp.service.persistence.MFATimeBasedOTPEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class MFATimeBasedOTPEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MFATimeBasedOTPEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MFATimeBasedOTPEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MFATimeBasedOTPEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.multi.factor.authentication.timebased.otp.service.MFATimeBasedOTPEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -401,7 +400,6 @@ public abstract class MFATimeBasedOTPEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		MFATimeBasedOTPEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -416,9 +414,6 @@ public abstract class MFATimeBasedOTPEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		mfaTimeBasedOTPEntryLocalService =
 			(MFATimeBasedOTPEntryLocalService)aopProxy;
-
-		MFATimeBasedOTPEntryLocalServiceUtil.setService(
-			mfaTimeBasedOTPEntryLocalService);
 	}
 
 	/**

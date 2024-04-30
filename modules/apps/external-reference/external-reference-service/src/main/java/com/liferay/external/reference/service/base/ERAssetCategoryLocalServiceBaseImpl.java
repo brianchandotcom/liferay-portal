@@ -6,7 +6,6 @@
 package com.liferay.external.reference.service.base;
 
 import com.liferay.external.reference.service.ERAssetCategoryLocalService;
-import com.liferay.external.reference.service.ERAssetCategoryLocalServiceUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -44,11 +43,10 @@ public abstract class ERAssetCategoryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ERAssetCategoryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ERAssetCategoryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ERAssetCategoryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.external.reference.service.ERAssetCategoryLocalServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		ERAssetCategoryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class ERAssetCategoryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		erAssetCategoryLocalService = (ERAssetCategoryLocalService)aopProxy;
-
-		ERAssetCategoryLocalServiceUtil.setService(erAssetCategoryLocalService);
 	}
 
 	/**

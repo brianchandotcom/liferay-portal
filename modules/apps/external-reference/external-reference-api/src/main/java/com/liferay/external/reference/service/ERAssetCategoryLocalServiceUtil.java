@@ -6,6 +6,7 @@
 package com.liferay.external.reference.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.Map;
 
@@ -52,13 +53,12 @@ public class ERAssetCategoryLocalServiceUtil {
 	}
 
 	public static ERAssetCategoryLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(ERAssetCategoryLocalService service) {
-		_service = service;
-	}
-
-	private static volatile ERAssetCategoryLocalService _service;
+	private static final Snapshot<ERAssetCategoryLocalService>
+		_serviceSnapshot = new Snapshot<>(
+			ERAssetCategoryLocalServiceUtil.class,
+			ERAssetCategoryLocalService.class);
 
 }

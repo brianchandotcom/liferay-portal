@@ -7,6 +7,7 @@ package com.liferay.batch.planner.service;
 
 import com.liferay.batch.planner.model.BatchPlannerPolicy;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -83,13 +84,12 @@ public class BatchPlannerPolicyServiceUtil {
 	}
 
 	public static BatchPlannerPolicyService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(BatchPlannerPolicyService service) {
-		_service = service;
-	}
-
-	private static volatile BatchPlannerPolicyService _service;
+	private static final Snapshot<BatchPlannerPolicyService> _serviceSnapshot =
+		new Snapshot<>(
+			BatchPlannerPolicyServiceUtil.class,
+			BatchPlannerPolicyService.class);
 
 }

@@ -7,7 +7,6 @@ package com.liferay.notification.service.base;
 
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateService;
-import com.liferay.notification.service.NotificationTemplateServiceUtil;
 import com.liferay.notification.service.persistence.NotificationTemplatePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class NotificationTemplateServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>NotificationTemplateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>NotificationTemplateServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>NotificationTemplateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.notification.service.NotificationTemplateServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		NotificationTemplateServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class NotificationTemplateServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		notificationTemplateService = (NotificationTemplateService)aopProxy;
-
-		NotificationTemplateServiceUtil.setService(notificationTemplateService);
 	}
 
 	/**

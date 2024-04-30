@@ -7,6 +7,7 @@ package com.liferay.account.service;
 
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the remote service utility for AccountGroupRel. This utility wraps
@@ -74,13 +75,11 @@ public class AccountGroupRelServiceUtil {
 	}
 
 	public static AccountGroupRelService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(AccountGroupRelService service) {
-		_service = service;
-	}
-
-	private static volatile AccountGroupRelService _service;
+	private static final Snapshot<AccountGroupRelService> _serviceSnapshot =
+		new Snapshot<>(
+			AccountGroupRelServiceUtil.class, AccountGroupRelService.class);
 
 }

@@ -7,7 +7,6 @@ package com.liferay.oauth.client.persistence.service.base;
 
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataService;
-import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataServiceUtil;
 import com.liferay.oauth.client.persistence.service.persistence.OAuthClientASLocalMetadataPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class OAuthClientASLocalMetadataServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>OAuthClientASLocalMetadataService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>OAuthClientASLocalMetadataServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>OAuthClientASLocalMetadataService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		OAuthClientASLocalMetadataServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,9 +62,6 @@ public abstract class OAuthClientASLocalMetadataServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		oAuthClientASLocalMetadataService =
 			(OAuthClientASLocalMetadataService)aopProxy;
-
-		OAuthClientASLocalMetadataServiceUtil.setService(
-			oAuthClientASLocalMetadataService);
 	}
 
 	/**

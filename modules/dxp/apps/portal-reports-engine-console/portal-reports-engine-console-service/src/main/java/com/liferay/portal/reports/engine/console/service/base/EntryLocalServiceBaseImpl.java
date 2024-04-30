@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.reports.engine.console.model.Entry;
 import com.liferay.portal.reports.engine.console.service.EntryLocalService;
-import com.liferay.portal.reports.engine.console.service.EntryLocalServiceUtil;
 import com.liferay.portal.reports.engine.console.service.persistence.EntryFinder;
 import com.liferay.portal.reports.engine.console.service.persistence.EntryPersistence;
 
@@ -64,7 +63,7 @@ public abstract class EntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>EntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>EntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>EntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.reports.engine.console.service.EntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -369,7 +368,6 @@ public abstract class EntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		EntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -383,8 +381,6 @@ public abstract class EntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		entryLocalService = (EntryLocalService)aopProxy;
-
-		EntryLocalServiceUtil.setService(entryLocalService);
 	}
 
 	/**

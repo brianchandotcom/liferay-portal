@@ -7,6 +7,7 @@ package com.liferay.fragment.service;
 
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -157,13 +158,12 @@ public class FragmentCompositionServiceUtil {
 	}
 
 	public static FragmentCompositionService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(FragmentCompositionService service) {
-		_service = service;
-	}
-
-	private static volatile FragmentCompositionService _service;
+	private static final Snapshot<FragmentCompositionService> _serviceSnapshot =
+		new Snapshot<>(
+			FragmentCompositionServiceUtil.class,
+			FragmentCompositionService.class);
 
 }

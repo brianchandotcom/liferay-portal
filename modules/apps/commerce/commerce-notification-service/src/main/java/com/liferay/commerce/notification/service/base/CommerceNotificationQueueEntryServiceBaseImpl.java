@@ -7,7 +7,6 @@ package com.liferay.commerce.notification.service.base;
 
 import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
 import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryService;
-import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryServiceUtil;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationQueueEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CommerceNotificationQueueEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceNotificationQueueEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceNotificationQueueEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceNotificationQueueEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.notification.service.CommerceNotificationQueueEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceNotificationQueueEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,9 +62,6 @@ public abstract class CommerceNotificationQueueEntryServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceNotificationQueueEntryService =
 			(CommerceNotificationQueueEntryService)aopProxy;
-
-		CommerceNotificationQueueEntryServiceUtil.setService(
-			commerceNotificationQueueEntryService);
 	}
 
 	/**

@@ -6,6 +6,7 @@
 package com.liferay.asset.display.page.service;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -132,13 +133,12 @@ public class AssetDisplayPageEntryServiceUtil {
 	}
 
 	public static AssetDisplayPageEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(AssetDisplayPageEntryService service) {
-		_service = service;
-	}
-
-	private static volatile AssetDisplayPageEntryService _service;
+	private static final Snapshot<AssetDisplayPageEntryService>
+		_serviceSnapshot = new Snapshot<>(
+			AssetDisplayPageEntryServiceUtil.class,
+			AssetDisplayPageEntryService.class);
 
 }

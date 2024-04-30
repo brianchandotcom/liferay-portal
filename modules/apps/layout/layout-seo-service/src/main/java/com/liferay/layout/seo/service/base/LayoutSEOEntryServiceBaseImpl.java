@@ -7,7 +7,6 @@ package com.liferay.layout.seo.service.base;
 
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryService;
-import com.liferay.layout.seo.service.LayoutSEOEntryServiceUtil;
 import com.liferay.layout.seo.service.persistence.LayoutSEOEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class LayoutSEOEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>LayoutSEOEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>LayoutSEOEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>LayoutSEOEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.layout.seo.service.LayoutSEOEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		LayoutSEOEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class LayoutSEOEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		layoutSEOEntryService = (LayoutSEOEntryService)aopProxy;
-
-		LayoutSEOEntryServiceUtil.setService(layoutSEOEntryService);
 	}
 
 	/**

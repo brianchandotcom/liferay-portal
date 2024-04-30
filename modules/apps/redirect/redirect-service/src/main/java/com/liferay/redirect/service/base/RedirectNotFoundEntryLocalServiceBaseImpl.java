@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
-import com.liferay.redirect.service.RedirectNotFoundEntryLocalServiceUtil;
 import com.liferay.redirect.service.persistence.RedirectNotFoundEntryPersistence;
 
 import java.io.Serializable;
@@ -64,7 +63,7 @@ public abstract class RedirectNotFoundEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>RedirectNotFoundEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>RedirectNotFoundEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>RedirectNotFoundEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.redirect.service.RedirectNotFoundEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -401,7 +400,6 @@ public abstract class RedirectNotFoundEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		RedirectNotFoundEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -416,9 +414,6 @@ public abstract class RedirectNotFoundEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		redirectNotFoundEntryLocalService =
 			(RedirectNotFoundEntryLocalService)aopProxy;
-
-		RedirectNotFoundEntryLocalServiceUtil.setService(
-			redirectNotFoundEntryLocalService);
 	}
 
 	/**

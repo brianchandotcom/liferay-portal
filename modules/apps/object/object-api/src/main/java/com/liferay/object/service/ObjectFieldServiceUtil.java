@@ -7,6 +7,7 @@ package com.liferay.object.service;
 
 import com.liferay.object.model.ObjectField;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 import java.util.Map;
@@ -88,13 +89,10 @@ public class ObjectFieldServiceUtil {
 	}
 
 	public static ObjectFieldService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(ObjectFieldService service) {
-		_service = service;
-	}
-
-	private static volatile ObjectFieldService _service;
+	private static final Snapshot<ObjectFieldService> _serviceSnapshot =
+		new Snapshot<>(ObjectFieldServiceUtil.class, ObjectFieldService.class);
 
 }

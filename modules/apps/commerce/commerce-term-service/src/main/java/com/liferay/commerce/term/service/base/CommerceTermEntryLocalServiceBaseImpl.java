@@ -8,7 +8,6 @@ package com.liferay.commerce.term.service.base;
 import com.liferay.commerce.term.model.CTermEntryLocalization;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
-import com.liferay.commerce.term.service.CommerceTermEntryLocalServiceUtil;
 import com.liferay.commerce.term.service.persistence.CTermEntryLocalizationPersistence;
 import com.liferay.commerce.term.service.persistence.CommerceTermEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -83,7 +82,7 @@ public abstract class CommerceTermEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceTermEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceTermEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceTermEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.term.service.CommerceTermEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -731,7 +730,6 @@ public abstract class CommerceTermEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceTermEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -745,9 +743,6 @@ public abstract class CommerceTermEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceTermEntryLocalService = (CommerceTermEntryLocalService)aopProxy;
-
-		CommerceTermEntryLocalServiceUtil.setService(
-			commerceTermEntryLocalService);
 	}
 
 	/**

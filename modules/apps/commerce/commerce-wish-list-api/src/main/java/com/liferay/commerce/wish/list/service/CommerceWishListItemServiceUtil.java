@@ -7,6 +7,7 @@ package com.liferay.commerce.wish.list.service;
 
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -103,13 +104,12 @@ public class CommerceWishListItemServiceUtil {
 	}
 
 	public static CommerceWishListItemService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CommerceWishListItemService service) {
-		_service = service;
-	}
-
-	private static volatile CommerceWishListItemService _service;
+	private static final Snapshot<CommerceWishListItemService>
+		_serviceSnapshot = new Snapshot<>(
+			CommerceWishListItemServiceUtil.class,
+			CommerceWishListItemService.class);
 
 }

@@ -7,6 +7,7 @@ package com.liferay.commerce.qualifier.service;
 
 import com.liferay.commerce.qualifier.model.CommerceQualifierEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -134,13 +135,12 @@ public class CommerceQualifierEntryServiceUtil {
 	}
 
 	public static CommerceQualifierEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CommerceQualifierEntryService service) {
-		_service = service;
-	}
-
-	private static volatile CommerceQualifierEntryService _service;
+	private static final Snapshot<CommerceQualifierEntryService>
+		_serviceSnapshot = new Snapshot<>(
+			CommerceQualifierEntryServiceUtil.class,
+			CommerceQualifierEntryService.class);
 
 }

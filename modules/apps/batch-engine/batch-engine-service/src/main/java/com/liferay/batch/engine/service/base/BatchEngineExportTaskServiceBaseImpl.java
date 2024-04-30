@@ -7,7 +7,6 @@ package com.liferay.batch.engine.service.base;
 
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskService;
-import com.liferay.batch.engine.service.BatchEngineExportTaskServiceUtil;
 import com.liferay.batch.engine.service.persistence.BatchEngineExportTaskPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class BatchEngineExportTaskServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>BatchEngineExportTaskService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>BatchEngineExportTaskServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>BatchEngineExportTaskService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.batch.engine.service.BatchEngineExportTaskServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		BatchEngineExportTaskServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,9 +60,6 @@ public abstract class BatchEngineExportTaskServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		batchEngineExportTaskService = (BatchEngineExportTaskService)aopProxy;
-
-		BatchEngineExportTaskServiceUtil.setService(
-			batchEngineExportTaskService);
 	}
 
 	/**

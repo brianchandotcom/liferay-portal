@@ -7,6 +7,7 @@ package com.liferay.calendar.service;
 
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the remote service utility for CalendarNotificationTemplate. This utility wraps
@@ -64,13 +65,12 @@ public class CalendarNotificationTemplateServiceUtil {
 	}
 
 	public static CalendarNotificationTemplateService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CalendarNotificationTemplateService service) {
-		_service = service;
-	}
-
-	private static volatile CalendarNotificationTemplateService _service;
+	private static final Snapshot<CalendarNotificationTemplateService>
+		_serviceSnapshot = new Snapshot<>(
+			CalendarNotificationTemplateServiceUtil.class,
+			CalendarNotificationTemplateService.class);
 
 }

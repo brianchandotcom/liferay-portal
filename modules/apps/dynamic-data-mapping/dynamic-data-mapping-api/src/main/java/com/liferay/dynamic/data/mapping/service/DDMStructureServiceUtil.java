@@ -7,6 +7,7 @@ package com.liferay.dynamic.data.mapping.service;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -523,13 +524,11 @@ public class DDMStructureServiceUtil {
 	}
 
 	public static DDMStructureService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(DDMStructureService service) {
-		_service = service;
-	}
-
-	private static volatile DDMStructureService _service;
+	private static final Snapshot<DDMStructureService> _serviceSnapshot =
+		new Snapshot<>(
+			DDMStructureServiceUtil.class, DDMStructureService.class);
 
 }

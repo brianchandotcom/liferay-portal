@@ -7,7 +7,6 @@ package com.liferay.commerce.inventory.service.base;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService;
-import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemServiceUtil;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryReplenishmentItemPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CommerceInventoryReplenishmentItemServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceInventoryReplenishmentItemService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceInventoryReplenishmentItemServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceInventoryReplenishmentItemService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceInventoryReplenishmentItemServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,9 +62,6 @@ public abstract class CommerceInventoryReplenishmentItemServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceInventoryReplenishmentItemService =
 			(CommerceInventoryReplenishmentItemService)aopProxy;
-
-		CommerceInventoryReplenishmentItemServiceUtil.setService(
-			commerceInventoryReplenishmentItemService);
 	}
 
 	/**

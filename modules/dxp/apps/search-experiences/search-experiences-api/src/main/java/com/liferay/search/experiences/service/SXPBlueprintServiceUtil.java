@@ -6,6 +6,7 @@
 package com.liferay.search.experiences.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
 import java.util.Map;
@@ -101,13 +102,11 @@ public class SXPBlueprintServiceUtil {
 	}
 
 	public static SXPBlueprintService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(SXPBlueprintService service) {
-		_service = service;
-	}
-
-	private static volatile SXPBlueprintService _service;
+	private static final Snapshot<SXPBlueprintService> _serviceSnapshot =
+		new Snapshot<>(
+			SXPBlueprintServiceUtil.class, SXPBlueprintService.class);
 
 }

@@ -6,6 +6,7 @@
 package com.liferay.sharing.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.sharing.model.SharingEntry;
 
 /**
@@ -144,13 +145,11 @@ public class SharingEntryServiceUtil {
 	}
 
 	public static SharingEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(SharingEntryService service) {
-		_service = service;
-	}
-
-	private static volatile SharingEntryService _service;
+	private static final Snapshot<SharingEntryService> _serviceSnapshot =
+		new Snapshot<>(
+			SharingEntryServiceUtil.class, SharingEntryService.class);
 
 }

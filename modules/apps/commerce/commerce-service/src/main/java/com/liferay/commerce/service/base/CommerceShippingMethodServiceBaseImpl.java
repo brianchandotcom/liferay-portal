@@ -7,7 +7,6 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.CommerceShippingMethodService;
-import com.liferay.commerce.service.CommerceShippingMethodServiceUtil;
 import com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CommerceShippingMethodServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceShippingMethodService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceShippingMethodServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceShippingMethodService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceShippingMethodServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceShippingMethodServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,9 +60,6 @@ public abstract class CommerceShippingMethodServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceShippingMethodService = (CommerceShippingMethodService)aopProxy;
-
-		CommerceShippingMethodServiceUtil.setService(
-			commerceShippingMethodService);
 	}
 
 	/**

@@ -9,6 +9,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.wiki.model.WikiPageResource;
 
@@ -393,13 +394,12 @@ public class WikiPageResourceLocalServiceUtil {
 	}
 
 	public static WikiPageResourceLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(WikiPageResourceLocalService service) {
-		_service = service;
-	}
-
-	private static volatile WikiPageResourceLocalService _service;
+	private static final Snapshot<WikiPageResourceLocalService>
+		_serviceSnapshot = new Snapshot<>(
+			WikiPageResourceLocalServiceUtil.class,
+			WikiPageResourceLocalService.class);
 
 }

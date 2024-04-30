@@ -6,6 +6,7 @@
 package com.liferay.trash.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.trash.model.TrashEntry;
 
@@ -251,13 +252,10 @@ public class TrashEntryServiceUtil {
 	}
 
 	public static TrashEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(TrashEntryService service) {
-		_service = service;
-	}
-
-	private static volatile TrashEntryService _service;
+	private static final Snapshot<TrashEntryService> _serviceSnapshot =
+		new Snapshot<>(TrashEntryServiceUtil.class, TrashEntryService.class);
 
 }

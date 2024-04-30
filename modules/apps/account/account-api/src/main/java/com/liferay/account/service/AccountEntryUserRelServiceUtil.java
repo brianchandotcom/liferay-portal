@@ -7,6 +7,7 @@ package com.liferay.account.service;
 
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -174,13 +175,12 @@ public class AccountEntryUserRelServiceUtil {
 	}
 
 	public static AccountEntryUserRelService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(AccountEntryUserRelService service) {
-		_service = service;
-	}
-
-	private static volatile AccountEntryUserRelService _service;
+	private static final Snapshot<AccountEntryUserRelService> _serviceSnapshot =
+		new Snapshot<>(
+			AccountEntryUserRelServiceUtil.class,
+			AccountEntryUserRelService.class);
 
 }

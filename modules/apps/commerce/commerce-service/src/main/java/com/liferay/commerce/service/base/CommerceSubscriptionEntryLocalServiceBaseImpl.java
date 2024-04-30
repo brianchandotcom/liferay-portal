@@ -7,7 +7,6 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
-import com.liferay.commerce.service.CommerceSubscriptionEntryLocalServiceUtil;
 import com.liferay.commerce.service.persistence.CommerceSubscriptionEntryFinder;
 import com.liferay.commerce.service.persistence.CommerceSubscriptionEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -71,7 +70,7 @@ public abstract class CommerceSubscriptionEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceSubscriptionEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceSubscriptionEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceSubscriptionEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceSubscriptionEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -553,7 +552,6 @@ public abstract class CommerceSubscriptionEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceSubscriptionEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -568,9 +566,6 @@ public abstract class CommerceSubscriptionEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceSubscriptionEntryLocalService =
 			(CommerceSubscriptionEntryLocalService)aopProxy;
-
-		CommerceSubscriptionEntryLocalServiceUtil.setService(
-			commerceSubscriptionEntryLocalService);
 	}
 
 	/**

@@ -7,6 +7,7 @@ package com.liferay.commerce.shipping.engine.fixed.service;
 
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -134,13 +135,12 @@ public class CommerceShippingFixedOptionServiceUtil {
 	}
 
 	public static CommerceShippingFixedOptionService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CommerceShippingFixedOptionService service) {
-		_service = service;
-	}
-
-	private static volatile CommerceShippingFixedOptionService _service;
+	private static final Snapshot<CommerceShippingFixedOptionService>
+		_serviceSnapshot = new Snapshot<>(
+			CommerceShippingFixedOptionServiceUtil.class,
+			CommerceShippingFixedOptionService.class);
 
 }

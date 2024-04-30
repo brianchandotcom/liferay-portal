@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
 import com.liferay.portal.security.audit.storage.service.AuditEventLocalService;
-import com.liferay.portal.security.audit.storage.service.AuditEventLocalServiceUtil;
 import com.liferay.portal.security.audit.storage.service.persistence.AuditEventPersistence;
 
 import java.io.Serializable;
@@ -63,7 +62,7 @@ public abstract class AuditEventLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AuditEventLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AuditEventLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AuditEventLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.security.audit.storage.service.AuditEventLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -374,7 +373,6 @@ public abstract class AuditEventLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AuditEventLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -388,8 +386,6 @@ public abstract class AuditEventLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		auditEventLocalService = (AuditEventLocalService)aopProxy;
-
-		AuditEventLocalServiceUtil.setService(auditEventLocalService);
 	}
 
 	/**

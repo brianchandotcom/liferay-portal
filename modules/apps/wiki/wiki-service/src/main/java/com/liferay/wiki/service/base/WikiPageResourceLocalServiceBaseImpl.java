@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageResourceLocalService;
-import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.wiki.service.persistence.WikiPageResourcePersistence;
 
 import java.io.Serializable;
@@ -67,7 +66,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>WikiPageResourceLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>WikiPageResourceLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>WikiPageResourceLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.wiki.service.WikiPageResourceLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -452,7 +451,6 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		WikiPageResourceLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -466,9 +464,6 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		wikiPageResourceLocalService = (WikiPageResourceLocalService)aopProxy;
-
-		WikiPageResourceLocalServiceUtil.setService(
-			wikiPageResourceLocalService);
 	}
 
 	/**

@@ -7,6 +7,7 @@ package com.liferay.account.service;
 
 import com.liferay.account.model.AccountRole;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.Map;
@@ -109,13 +110,10 @@ public class AccountRoleServiceUtil {
 	}
 
 	public static AccountRoleService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(AccountRoleService service) {
-		_service = service;
-	}
-
-	private static volatile AccountRoleService _service;
+	private static final Snapshot<AccountRoleService> _serviceSnapshot =
+		new Snapshot<>(AccountRoleServiceUtil.class, AccountRoleService.class);
 
 }

@@ -7,6 +7,7 @@ package com.liferay.dispatch.service;
 
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -74,13 +75,10 @@ public class DispatchLogServiceUtil {
 	}
 
 	public static DispatchLogService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(DispatchLogService service) {
-		_service = service;
-	}
-
-	private static volatile DispatchLogService _service;
+	private static final Snapshot<DispatchLogService> _serviceSnapshot =
+		new Snapshot<>(DispatchLogServiceUtil.class, DispatchLogService.class);
 
 }

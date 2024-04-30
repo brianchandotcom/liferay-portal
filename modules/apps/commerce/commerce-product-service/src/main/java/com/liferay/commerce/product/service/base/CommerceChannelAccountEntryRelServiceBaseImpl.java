@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
-import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelServiceUtil;
 import com.liferay.commerce.product.service.persistence.CommerceChannelAccountEntryRelPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class CommerceChannelAccountEntryRelServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceChannelAccountEntryRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceChannelAccountEntryRelServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceChannelAccountEntryRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CommerceChannelAccountEntryRelServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceChannelAccountEntryRelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,9 +62,6 @@ public abstract class CommerceChannelAccountEntryRelServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceChannelAccountEntryRelService =
 			(CommerceChannelAccountEntryRelService)aopProxy;
-
-		CommerceChannelAccountEntryRelServiceUtil.setService(
-			commerceChannelAccountEntryRelService);
 	}
 
 	/**

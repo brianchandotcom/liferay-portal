@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.tools.service.builder.test.sequence.model.SequenceEntry;
 import com.liferay.portal.tools.service.builder.test.sequence.service.SequenceEntryService;
-import com.liferay.portal.tools.service.builder.test.sequence.service.SequenceEntryServiceUtil;
 import com.liferay.portal.tools.service.builder.test.sequence.service.persistence.SequenceEntryPersistence;
 
 import javax.sql.DataSource;
@@ -44,11 +43,10 @@ public abstract class SequenceEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SequenceEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SequenceEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SequenceEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.tools.service.builder.test.sequence.service.SequenceEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		SequenceEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class SequenceEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		sequenceEntryService = (SequenceEntryService)aopProxy;
-
-		SequenceEntryServiceUtil.setService(sequenceEntryService);
 	}
 
 	/**

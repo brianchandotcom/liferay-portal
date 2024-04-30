@@ -7,7 +7,6 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.commerce.service.CPDAvailabilityEstimateLocalService;
-import com.liferay.commerce.service.CPDAvailabilityEstimateLocalServiceUtil;
 import com.liferay.commerce.service.persistence.CPDAvailabilityEstimatePersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -70,7 +69,7 @@ public abstract class CPDAvailabilityEstimateLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDAvailabilityEstimateLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDAvailabilityEstimateLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDAvailabilityEstimateLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CPDAvailabilityEstimateLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -516,7 +515,6 @@ public abstract class CPDAvailabilityEstimateLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CPDAvailabilityEstimateLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -531,9 +529,6 @@ public abstract class CPDAvailabilityEstimateLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpdAvailabilityEstimateLocalService =
 			(CPDAvailabilityEstimateLocalService)aopProxy;
-
-		CPDAvailabilityEstimateLocalServiceUtil.setService(
-			cpdAvailabilityEstimateLocalService);
 	}
 
 	/**

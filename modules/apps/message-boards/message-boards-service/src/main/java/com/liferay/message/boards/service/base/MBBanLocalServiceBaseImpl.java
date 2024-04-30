@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBBan;
 import com.liferay.message.boards.service.MBBanLocalService;
-import com.liferay.message.boards.service.MBBanLocalServiceUtil;
 import com.liferay.message.boards.service.persistence.MBBanPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -72,7 +71,7 @@ public abstract class MBBanLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MBBanLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MBBanLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MBBanLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBBanLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -503,7 +502,6 @@ public abstract class MBBanLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		MBBanLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -517,8 +515,6 @@ public abstract class MBBanLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		mbBanLocalService = (MBBanLocalService)aopProxy;
-
-		MBBanLocalServiceUtil.setService(mbBanLocalService);
 	}
 
 	/**

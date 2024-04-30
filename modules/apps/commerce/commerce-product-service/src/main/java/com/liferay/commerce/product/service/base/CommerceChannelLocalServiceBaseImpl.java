@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CommerceChannelPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -73,7 +72,7 @@ public abstract class CommerceChannelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceChannelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceChannelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceChannelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -508,7 +507,6 @@ public abstract class CommerceChannelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceChannelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -522,8 +520,6 @@ public abstract class CommerceChannelLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceChannelLocalService = (CommerceChannelLocalService)aopProxy;
-
-		CommerceChannelLocalServiceUtil.setService(commerceChannelLocalService);
 	}
 
 	/**

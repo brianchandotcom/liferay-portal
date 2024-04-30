@@ -7,7 +7,6 @@ package com.liferay.batch.engine.service.base;
 
 import com.liferay.batch.engine.model.BatchEngineImportTaskError;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
-import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalServiceUtil;
 import com.liferay.batch.engine.service.persistence.BatchEngineImportTaskErrorPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class BatchEngineImportTaskErrorLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>BatchEngineImportTaskErrorLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>BatchEngineImportTaskErrorLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>BatchEngineImportTaskErrorLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -408,7 +407,6 @@ public abstract class BatchEngineImportTaskErrorLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		BatchEngineImportTaskErrorLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -423,9 +421,6 @@ public abstract class BatchEngineImportTaskErrorLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		batchEngineImportTaskErrorLocalService =
 			(BatchEngineImportTaskErrorLocalService)aopProxy;
-
-		BatchEngineImportTaskErrorLocalServiceUtil.setService(
-			batchEngineImportTaskErrorLocalService);
 	}
 
 	/**

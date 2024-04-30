@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
-import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -73,7 +72,7 @@ public abstract class CPDefinitionOptionValueRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDefinitionOptionValueRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDefinitionOptionValueRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDefinitionOptionValueRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -558,7 +557,6 @@ public abstract class CPDefinitionOptionValueRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CPDefinitionOptionValueRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -574,9 +572,6 @@ public abstract class CPDefinitionOptionValueRelLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpDefinitionOptionValueRelLocalService =
 			(CPDefinitionOptionValueRelLocalService)aopProxy;
-
-		CPDefinitionOptionValueRelLocalServiceUtil.setService(
-			cpDefinitionOptionValueRelLocalService);
 	}
 
 	/**

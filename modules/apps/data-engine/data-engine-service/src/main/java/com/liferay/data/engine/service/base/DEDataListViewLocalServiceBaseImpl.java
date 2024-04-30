@@ -7,7 +7,6 @@ package com.liferay.data.engine.service.base;
 
 import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.service.DEDataListViewLocalService;
-import com.liferay.data.engine.service.DEDataListViewLocalServiceUtil;
 import com.liferay.data.engine.service.persistence.DEDataListViewPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -72,7 +71,7 @@ public abstract class DEDataListViewLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DEDataListViewLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DEDataListViewLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DEDataListViewLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.data.engine.service.DEDataListViewLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -515,7 +514,6 @@ public abstract class DEDataListViewLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DEDataListViewLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -529,8 +527,6 @@ public abstract class DEDataListViewLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		deDataListViewLocalService = (DEDataListViewLocalService)aopProxy;
-
-		DEDataListViewLocalServiceUtil.setService(deDataListViewLocalService);
 	}
 
 	/**

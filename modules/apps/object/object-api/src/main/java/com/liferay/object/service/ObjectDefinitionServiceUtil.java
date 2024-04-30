@@ -7,6 +7,7 @@ package com.liferay.object.service;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 import java.util.Map;
@@ -204,13 +205,11 @@ public class ObjectDefinitionServiceUtil {
 	}
 
 	public static ObjectDefinitionService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(ObjectDefinitionService service) {
-		_service = service;
-	}
-
-	private static volatile ObjectDefinitionService _service;
+	private static final Snapshot<ObjectDefinitionService> _serviceSnapshot =
+		new Snapshot<>(
+			ObjectDefinitionServiceUtil.class, ObjectDefinitionService.class);
 
 }

@@ -6,6 +6,7 @@
 package com.liferay.external.reference.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -61,13 +62,10 @@ public class ERUserLocalServiceUtil {
 	}
 
 	public static ERUserLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(ERUserLocalService service) {
-		_service = service;
-	}
-
-	private static volatile ERUserLocalService _service;
+	private static final Snapshot<ERUserLocalService> _serviceSnapshot =
+		new Snapshot<>(ERUserLocalServiceUtil.class, ERUserLocalService.class);
 
 }

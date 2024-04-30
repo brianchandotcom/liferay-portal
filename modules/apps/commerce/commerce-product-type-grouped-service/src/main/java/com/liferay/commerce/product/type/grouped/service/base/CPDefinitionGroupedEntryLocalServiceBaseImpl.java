@@ -7,7 +7,6 @@ package com.liferay.commerce.product.type.grouped.service.base;
 
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryLocalService;
-import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryLocalServiceUtil;
 import com.liferay.commerce.product.type.grouped.service.persistence.CPDefinitionGroupedEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -70,7 +69,7 @@ public abstract class CPDefinitionGroupedEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPDefinitionGroupedEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDefinitionGroupedEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPDefinitionGroupedEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -550,7 +549,6 @@ public abstract class CPDefinitionGroupedEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CPDefinitionGroupedEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -565,9 +563,6 @@ public abstract class CPDefinitionGroupedEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpDefinitionGroupedEntryLocalService =
 			(CPDefinitionGroupedEntryLocalService)aopProxy;
-
-		CPDefinitionGroupedEntryLocalServiceUtil.setService(
-			cpDefinitionGroupedEntryLocalService);
 	}
 
 	/**

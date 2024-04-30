@@ -7,6 +7,7 @@ package com.liferay.knowledge.base.service;
 
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -101,13 +102,10 @@ public class KBTemplateServiceUtil {
 	}
 
 	public static KBTemplateService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(KBTemplateService service) {
-		_service = service;
-	}
-
-	private static volatile KBTemplateService _service;
+	private static final Snapshot<KBTemplateService> _serviceSnapshot =
+		new Snapshot<>(KBTemplateServiceUtil.class, KBTemplateService.class);
 
 }

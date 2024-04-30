@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryService;
-import com.liferay.portal.language.override.service.PLOEntryServiceUtil;
 import com.liferay.portal.language.override.service.persistence.PLOEntryPersistence;
 
 import javax.sql.DataSource;
@@ -44,11 +43,10 @@ public abstract class PLOEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>PLOEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>PLOEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>PLOEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.language.override.service.PLOEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		PLOEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class PLOEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ploEntryService = (PLOEntryService)aopProxy;
-
-		PLOEntryServiceUtil.setService(ploEntryService);
 	}
 
 	/**

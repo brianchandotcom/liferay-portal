@@ -7,6 +7,7 @@ package com.liferay.dynamic.data.lists.service;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.io.Serializable;
 
@@ -197,13 +198,10 @@ public class DDLRecordServiceUtil {
 	}
 
 	public static DDLRecordService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(DDLRecordService service) {
-		_service = service;
-	}
-
-	private static volatile DDLRecordService _service;
+	private static final Snapshot<DDLRecordService> _serviceSnapshot =
+		new Snapshot<>(DDLRecordServiceUtil.class, DDLRecordService.class);
 
 }

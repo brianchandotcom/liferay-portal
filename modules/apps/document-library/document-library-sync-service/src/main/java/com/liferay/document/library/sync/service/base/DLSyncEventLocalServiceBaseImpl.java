@@ -7,7 +7,6 @@ package com.liferay.document.library.sync.service.base;
 
 import com.liferay.document.library.sync.model.DLSyncEvent;
 import com.liferay.document.library.sync.service.DLSyncEventLocalService;
-import com.liferay.document.library.sync.service.DLSyncEventLocalServiceUtil;
 import com.liferay.document.library.sync.service.persistence.DLSyncEventPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -63,7 +62,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DLSyncEventLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DLSyncEventLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DLSyncEventLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.document.library.sync.service.DLSyncEventLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -374,7 +373,6 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DLSyncEventLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -388,8 +386,6 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		dlSyncEventLocalService = (DLSyncEventLocalService)aopProxy;
-
-		DLSyncEventLocalServiceUtil.setService(dlSyncEventLocalService);
 	}
 
 	/**

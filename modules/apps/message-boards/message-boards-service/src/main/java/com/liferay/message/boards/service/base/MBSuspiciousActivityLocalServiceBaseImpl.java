@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBSuspiciousActivity;
 import com.liferay.message.boards.service.MBSuspiciousActivityLocalService;
-import com.liferay.message.boards.service.MBSuspiciousActivityLocalServiceUtil;
 import com.liferay.message.boards.service.persistence.MBSuspiciousActivityPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -73,7 +72,7 @@ public abstract class MBSuspiciousActivityLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MBSuspiciousActivityLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MBSuspiciousActivityLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MBSuspiciousActivityLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBSuspiciousActivityLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -544,7 +543,6 @@ public abstract class MBSuspiciousActivityLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		MBSuspiciousActivityLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -560,9 +558,6 @@ public abstract class MBSuspiciousActivityLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		mbSuspiciousActivityLocalService =
 			(MBSuspiciousActivityLocalService)aopProxy;
-
-		MBSuspiciousActivityLocalServiceUtil.setService(
-			mbSuspiciousActivityLocalService);
 	}
 
 	/**

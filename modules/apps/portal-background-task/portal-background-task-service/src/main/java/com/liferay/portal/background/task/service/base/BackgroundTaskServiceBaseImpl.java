@@ -8,7 +8,6 @@ package com.liferay.portal.background.task.service.base;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskService;
-import com.liferay.portal.background.task.service.BackgroundTaskServiceUtil;
 import com.liferay.portal.background.task.service.persistence.BackgroundTaskFinder;
 import com.liferay.portal.background.task.service.persistence.BackgroundTaskPersistence;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -45,11 +44,10 @@ public abstract class BackgroundTaskServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>BackgroundTaskService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>BackgroundTaskServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>BackgroundTaskService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.background.task.service.BackgroundTaskServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		BackgroundTaskServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class BackgroundTaskServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		backgroundTaskService = (BackgroundTaskService)aopProxy;
-
-		BackgroundTaskServiceUtil.setService(backgroundTaskService);
 	}
 
 	/**

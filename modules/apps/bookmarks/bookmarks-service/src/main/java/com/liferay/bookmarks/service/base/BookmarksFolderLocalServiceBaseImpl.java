@@ -7,7 +7,6 @@ package com.liferay.bookmarks.service.base;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderFinder;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -83,7 +82,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>BookmarksFolderLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>BookmarksFolderLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>BookmarksFolderLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -590,7 +589,6 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		BookmarksFolderLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -604,8 +602,6 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		bookmarksFolderLocalService = (BookmarksFolderLocalService)aopProxy;
-
-		BookmarksFolderLocalServiceUtil.setService(bookmarksFolderLocalService);
 	}
 
 	/**

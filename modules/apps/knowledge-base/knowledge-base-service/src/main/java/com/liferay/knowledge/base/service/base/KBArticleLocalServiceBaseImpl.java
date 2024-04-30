@@ -14,7 +14,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.persistence.KBArticleFinder;
 import com.liferay.knowledge.base.service.persistence.KBArticlePersistence;
 import com.liferay.petra.function.UnsafeFunction;
@@ -83,7 +82,7 @@ public abstract class KBArticleLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KBArticleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KBArticleLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KBArticleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.knowledge.base.service.KBArticleLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -595,7 +594,6 @@ public abstract class KBArticleLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		KBArticleLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -609,8 +607,6 @@ public abstract class KBArticleLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		kbArticleLocalService = (KBArticleLocalService)aopProxy;
-
-		KBArticleLocalServiceUtil.setService(kbArticleLocalService);
 	}
 
 	/**

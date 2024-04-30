@@ -7,7 +7,6 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
-import com.liferay.commerce.product.service.CommerceCatalogServiceUtil;
 import com.liferay.commerce.product.service.persistence.CommerceCatalogPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class CommerceCatalogServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceCatalogService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceCatalogServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceCatalogService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CommerceCatalogServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceCatalogServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class CommerceCatalogServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceCatalogService = (CommerceCatalogService)aopProxy;
-
-		CommerceCatalogServiceUtil.setService(commerceCatalogService);
 	}
 
 	/**

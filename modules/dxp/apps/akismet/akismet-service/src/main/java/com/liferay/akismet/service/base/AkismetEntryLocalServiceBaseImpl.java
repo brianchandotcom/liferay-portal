@@ -7,7 +7,6 @@ package com.liferay.akismet.service.base;
 
 import com.liferay.akismet.model.AkismetEntry;
 import com.liferay.akismet.service.AkismetEntryLocalService;
-import com.liferay.akismet.service.AkismetEntryLocalServiceUtil;
 import com.liferay.akismet.service.persistence.AkismetEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -63,7 +62,7 @@ public abstract class AkismetEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AkismetEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AkismetEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AkismetEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.akismet.service.AkismetEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -377,7 +376,6 @@ public abstract class AkismetEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AkismetEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -391,8 +389,6 @@ public abstract class AkismetEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		akismetEntryLocalService = (AkismetEntryLocalService)aopProxy;
-
-		AkismetEntryLocalServiceUtil.setService(akismetEntryLocalService);
 	}
 
 	/**

@@ -7,7 +7,6 @@ package com.liferay.commerce.wish.list.service.base;
 
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.service.CommerceWishListLocalService;
-import com.liferay.commerce.wish.list.service.CommerceWishListLocalServiceUtil;
 import com.liferay.commerce.wish.list.service.persistence.CommerceWishListPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -70,7 +69,7 @@ public abstract class CommerceWishListLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceWishListLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceWishListLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceWishListLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.wish.list.service.CommerceWishListLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -522,7 +521,6 @@ public abstract class CommerceWishListLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		CommerceWishListLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -536,9 +534,6 @@ public abstract class CommerceWishListLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceWishListLocalService = (CommerceWishListLocalService)aopProxy;
-
-		CommerceWishListLocalServiceUtil.setService(
-			commerceWishListLocalService);
 	}
 
 	/**

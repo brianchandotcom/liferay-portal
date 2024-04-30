@@ -6,6 +6,7 @@
 package com.liferay.saved.content.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.saved.content.model.SavedContentEntry;
 
@@ -93,13 +94,11 @@ public class SavedContentEntryServiceUtil {
 	}
 
 	public static SavedContentEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(SavedContentEntryService service) {
-		_service = service;
-	}
-
-	private static volatile SavedContentEntryService _service;
+	private static final Snapshot<SavedContentEntryService> _serviceSnapshot =
+		new Snapshot<>(
+			SavedContentEntryServiceUtil.class, SavedContentEntryService.class);
 
 }

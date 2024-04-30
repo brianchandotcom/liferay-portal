@@ -7,7 +7,6 @@ package com.liferay.message.boards.service.base;
 
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageService;
-import com.liferay.message.boards.service.MBMessageServiceUtil;
 import com.liferay.message.boards.service.persistence.MBMessageFinder;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 import com.liferay.portal.aop.AopService;
@@ -45,11 +44,10 @@ public abstract class MBMessageServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MBMessageService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MBMessageServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MBMessageService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.message.boards.service.MBMessageServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		MBMessageServiceUtil.setService(null);
 	}
 
 	@Override
@@ -62,8 +60,6 @@ public abstract class MBMessageServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		mbMessageService = (MBMessageService)aopProxy;
-
-		MBMessageServiceUtil.setService(mbMessageService);
 	}
 
 	/**

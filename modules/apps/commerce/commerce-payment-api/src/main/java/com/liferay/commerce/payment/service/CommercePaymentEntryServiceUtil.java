@@ -7,6 +7,7 @@ package com.liferay.commerce.payment.service;
 
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -177,13 +178,12 @@ public class CommercePaymentEntryServiceUtil {
 	}
 
 	public static CommercePaymentEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(CommercePaymentEntryService service) {
-		_service = service;
-	}
-
-	private static volatile CommercePaymentEntryService _service;
+	private static final Snapshot<CommercePaymentEntryService>
+		_serviceSnapshot = new Snapshot<>(
+			CommercePaymentEntryServiceUtil.class,
+			CommercePaymentEntryService.class);
 
 }

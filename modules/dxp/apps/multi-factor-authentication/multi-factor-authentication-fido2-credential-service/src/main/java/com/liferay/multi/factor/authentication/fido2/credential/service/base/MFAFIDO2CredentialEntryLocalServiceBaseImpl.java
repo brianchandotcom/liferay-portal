@@ -7,7 +7,6 @@ package com.liferay.multi.factor.authentication.fido2.credential.service.base;
 
 import com.liferay.multi.factor.authentication.fido2.credential.model.MFAFIDO2CredentialEntry;
 import com.liferay.multi.factor.authentication.fido2.credential.service.MFAFIDO2CredentialEntryLocalService;
-import com.liferay.multi.factor.authentication.fido2.credential.service.MFAFIDO2CredentialEntryLocalServiceUtil;
 import com.liferay.multi.factor.authentication.fido2.credential.service.persistence.MFAFIDO2CredentialEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -64,7 +63,7 @@ public abstract class MFAFIDO2CredentialEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MFAFIDO2CredentialEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MFAFIDO2CredentialEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MFAFIDO2CredentialEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.multi.factor.authentication.fido2.credential.service.MFAFIDO2CredentialEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -408,7 +407,6 @@ public abstract class MFAFIDO2CredentialEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		MFAFIDO2CredentialEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -423,9 +421,6 @@ public abstract class MFAFIDO2CredentialEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		mfaFIDO2CredentialEntryLocalService =
 			(MFAFIDO2CredentialEntryLocalService)aopProxy;
-
-		MFAFIDO2CredentialEntryLocalServiceUtil.setService(
-			mfaFIDO2CredentialEntryLocalService);
 	}
 
 	/**

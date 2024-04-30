@@ -7,6 +7,7 @@ package com.liferay.marketplace.service;
 
 import com.liferay.marketplace.model.App;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * Provides the remote service utility for App. This utility wraps
@@ -53,13 +54,10 @@ public class AppServiceUtil {
 	}
 
 	public static AppService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(AppService service) {
-		_service = service;
-	}
-
-	private static volatile AppService _service;
+	private static final Snapshot<AppService> _serviceSnapshot = new Snapshot<>(
+		AppServiceUtil.class, AppService.class);
 
 }

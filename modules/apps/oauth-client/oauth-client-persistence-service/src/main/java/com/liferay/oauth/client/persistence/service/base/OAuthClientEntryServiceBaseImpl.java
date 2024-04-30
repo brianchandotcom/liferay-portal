@@ -7,7 +7,6 @@ package com.liferay.oauth.client.persistence.service.base;
 
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryService;
-import com.liferay.oauth.client.persistence.service.OAuthClientEntryServiceUtil;
 import com.liferay.oauth.client.persistence.service.persistence.OAuthClientEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class OAuthClientEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>OAuthClientEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>OAuthClientEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>OAuthClientEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.oauth.client.persistence.service.OAuthClientEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		OAuthClientEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class OAuthClientEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		oAuthClientEntryService = (OAuthClientEntryService)aopProxy;
-
-		OAuthClientEntryServiceUtil.setService(oAuthClientEntryService);
 	}
 
 	/**

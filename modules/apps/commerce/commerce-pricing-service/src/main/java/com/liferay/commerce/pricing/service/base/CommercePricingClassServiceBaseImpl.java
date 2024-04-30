@@ -7,7 +7,6 @@ package com.liferay.commerce.pricing.service.base;
 
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassService;
-import com.liferay.commerce.pricing.service.CommercePricingClassServiceUtil;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassPersistence;
 import com.liferay.portal.aop.AopService;
@@ -46,11 +45,10 @@ public abstract class CommercePricingClassServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePricingClassService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePricingClassServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePricingClassService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.pricing.service.CommercePricingClassServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommercePricingClassServiceUtil.setService(null);
 	}
 
 	@Override
@@ -63,8 +61,6 @@ public abstract class CommercePricingClassServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commercePricingClassService = (CommercePricingClassService)aopProxy;
-
-		CommercePricingClassServiceUtil.setService(commercePricingClassService);
 	}
 
 	/**

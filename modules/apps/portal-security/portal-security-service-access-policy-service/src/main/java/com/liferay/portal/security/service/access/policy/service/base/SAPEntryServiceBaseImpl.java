@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryService;
-import com.liferay.portal.security.service.access.policy.service.SAPEntryServiceUtil;
 import com.liferay.portal.security.service.access.policy.service.persistence.SAPEntryPersistence;
 
 import javax.sql.DataSource;
@@ -44,11 +43,10 @@ public abstract class SAPEntryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SAPEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SAPEntryServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SAPEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.security.service.access.policy.service.SAPEntryServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		SAPEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class SAPEntryServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		sapEntryService = (SAPEntryService)aopProxy;
-
-		SAPEntryServiceUtil.setService(sapEntryService);
 	}
 
 	/**

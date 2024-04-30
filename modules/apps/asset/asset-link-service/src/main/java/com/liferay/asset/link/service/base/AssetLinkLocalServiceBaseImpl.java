@@ -7,7 +7,6 @@ package com.liferay.asset.link.service.base;
 
 import com.liferay.asset.link.model.AssetLink;
 import com.liferay.asset.link.service.AssetLinkLocalService;
-import com.liferay.asset.link.service.AssetLinkLocalServiceUtil;
 import com.liferay.asset.link.service.persistence.AssetLinkPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -66,7 +65,7 @@ public abstract class AssetLinkLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AssetLinkLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AssetLinkLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AssetLinkLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.asset.link.service.AssetLinkLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -373,7 +372,6 @@ public abstract class AssetLinkLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AssetLinkLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -387,8 +385,6 @@ public abstract class AssetLinkLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		assetLinkLocalService = (AssetLinkLocalService)aopProxy;
-
-		AssetLinkLocalServiceUtil.setService(assetLinkLocalService);
 	}
 
 	/**

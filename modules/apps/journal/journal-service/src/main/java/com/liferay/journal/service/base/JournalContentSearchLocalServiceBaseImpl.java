@@ -7,7 +7,6 @@ package com.liferay.journal.service.base;
 
 import com.liferay.journal.model.JournalContentSearch;
 import com.liferay.journal.service.JournalContentSearchLocalService;
-import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.journal.service.persistence.JournalContentSearchPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -67,7 +66,7 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>JournalContentSearchLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>JournalContentSearchLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>JournalContentSearchLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.journal.service.JournalContentSearchLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -400,7 +399,6 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		JournalContentSearchLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -416,9 +414,6 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		journalContentSearchLocalService =
 			(JournalContentSearchLocalService)aopProxy;
-
-		JournalContentSearchLocalServiceUtil.setService(
-			journalContentSearchLocalService);
 	}
 
 	/**

@@ -7,6 +7,7 @@ package com.liferay.client.extension.service;
 
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.Map;
 
@@ -93,13 +94,12 @@ public class ClientExtensionEntryServiceUtil {
 	}
 
 	public static ClientExtensionEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(ClientExtensionEntryService service) {
-		_service = service;
-	}
-
-	private static volatile ClientExtensionEntryService _service;
+	private static final Snapshot<ClientExtensionEntryService>
+		_serviceSnapshot = new Snapshot<>(
+			ClientExtensionEntryServiceUtil.class,
+			ClientExtensionEntryService.class);
 
 }

@@ -7,7 +7,6 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceAddressServiceUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,11 +34,10 @@ public abstract class CommerceAddressServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceAddressService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceAddressServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceAddressService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceAddressServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		CommerceAddressServiceUtil.setService(null);
 	}
 
 	@Override
@@ -52,8 +50,6 @@ public abstract class CommerceAddressServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		commerceAddressService = (CommerceAddressService)aopProxy;
-
-		CommerceAddressServiceUtil.setService(commerceAddressService);
 	}
 
 	/**

@@ -5,6 +5,8 @@
 
 package com.liferay.object.service;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
+
 /**
  * Provides the remote service utility for ObjectViewColumn. This utility wraps
  * <code>com.liferay.object.service.impl.ObjectViewColumnServiceImpl</code> and is an
@@ -30,18 +32,16 @@ public class ObjectViewColumnServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static ObjectViewColumnService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(ObjectViewColumnService service) {
-		_service = service;
-	}
-
-	private static volatile ObjectViewColumnService _service;
+	private static final Snapshot<ObjectViewColumnService> _serviceSnapshot =
+		new Snapshot<>(
+			ObjectViewColumnServiceUtil.class, ObjectViewColumnService.class);
 
 }

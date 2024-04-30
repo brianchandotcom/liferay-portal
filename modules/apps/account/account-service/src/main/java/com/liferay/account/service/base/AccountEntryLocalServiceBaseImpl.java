@@ -7,7 +7,6 @@ package com.liferay.account.service.base;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.account.service.persistence.AccountEntryPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -77,7 +76,7 @@ public abstract class AccountEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AccountEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AccountEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AccountEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.account.service.AccountEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -544,7 +543,6 @@ public abstract class AccountEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AccountEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -558,8 +556,6 @@ public abstract class AccountEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		accountEntryLocalService = (AccountEntryLocalService)aopProxy;
-
-		AccountEntryLocalServiceUtil.setService(accountEntryLocalService);
 	}
 
 	/**

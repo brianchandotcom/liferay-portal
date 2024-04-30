@@ -7,7 +7,6 @@ package com.liferay.account.service.base;
 
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountGroupRelService;
-import com.liferay.account.service.AccountGroupRelServiceUtil;
 import com.liferay.account.service.persistence.AccountGroupRelPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,11 +43,10 @@ public abstract class AccountGroupRelServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AccountGroupRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AccountGroupRelServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AccountGroupRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.account.service.AccountGroupRelServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		AccountGroupRelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class AccountGroupRelServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		accountGroupRelService = (AccountGroupRelService)aopProxy;
-
-		AccountGroupRelServiceUtil.setService(accountGroupRelService);
 	}
 
 	/**

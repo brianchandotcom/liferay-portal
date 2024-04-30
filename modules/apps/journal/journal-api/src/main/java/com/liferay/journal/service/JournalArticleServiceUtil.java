@@ -7,6 +7,7 @@ package com.liferay.journal.service;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -1823,13 +1824,11 @@ public class JournalArticleServiceUtil {
 	}
 
 	public static JournalArticleService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(JournalArticleService service) {
-		_service = service;
-	}
-
-	private static volatile JournalArticleService _service;
+	private static final Snapshot<JournalArticleService> _serviceSnapshot =
+		new Snapshot<>(
+			JournalArticleServiceUtil.class, JournalArticleService.class);
 
 }

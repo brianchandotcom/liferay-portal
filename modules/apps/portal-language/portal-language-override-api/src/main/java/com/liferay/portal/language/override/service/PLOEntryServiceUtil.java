@@ -6,6 +6,7 @@
 package com.liferay.portal.language.override.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.language.override.model.PLOEntry;
 
 import java.util.List;
@@ -76,13 +77,10 @@ public class PLOEntryServiceUtil {
 	}
 
 	public static PLOEntryService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(PLOEntryService service) {
-		_service = service;
-	}
-
-	private static volatile PLOEntryService _service;
+	private static final Snapshot<PLOEntryService> _serviceSnapshot =
+		new Snapshot<>(PLOEntryServiceUtil.class, PLOEntryService.class);
 
 }

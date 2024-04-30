@@ -10,6 +10,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
@@ -390,16 +391,13 @@ public class CommerceShippingOptionAccountEntryRelLocalServiceUtil {
 	public static CommerceShippingOptionAccountEntryRelLocalService
 		getService() {
 
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(
-		CommerceShippingOptionAccountEntryRelLocalService service) {
-
-		_service = service;
-	}
-
-	private static volatile CommerceShippingOptionAccountEntryRelLocalService
-		_service;
+	private static final Snapshot
+		<CommerceShippingOptionAccountEntryRelLocalService> _serviceSnapshot =
+			new Snapshot<>(
+				CommerceShippingOptionAccountEntryRelLocalServiceUtil.class,
+				CommerceShippingOptionAccountEntryRelLocalService.class);
 
 }

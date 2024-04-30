@@ -12,7 +12,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.object.model.ObjectStateTransition;
 import com.liferay.object.service.ObjectStateTransitionLocalService;
-import com.liferay.object.service.ObjectStateTransitionLocalServiceUtil;
 import com.liferay.object.service.persistence.ObjectStateTransitionPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -70,7 +69,7 @@ public abstract class ObjectStateTransitionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>ObjectStateTransitionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>ObjectStateTransitionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>ObjectStateTransitionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.object.service.ObjectStateTransitionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -508,7 +507,6 @@ public abstract class ObjectStateTransitionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		ObjectStateTransitionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -523,9 +521,6 @@ public abstract class ObjectStateTransitionLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		objectStateTransitionLocalService =
 			(ObjectStateTransitionLocalService)aopProxy;
-
-		ObjectStateTransitionLocalServiceUtil.setService(
-			objectStateTransitionLocalService);
 	}
 
 	/**

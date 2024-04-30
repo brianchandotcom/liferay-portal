@@ -15,7 +15,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryVersion;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryVersionPersistence;
 import com.liferay.petra.function.UnsafeFunction;
@@ -89,7 +88,7 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>FragmentEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>FragmentEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>FragmentEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.fragment.service.FragmentEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -552,7 +551,6 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		FragmentEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -566,8 +564,6 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		fragmentEntryLocalService = (FragmentEntryLocalService)aopProxy;
-
-		FragmentEntryLocalServiceUtil.setService(fragmentEntryLocalService);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

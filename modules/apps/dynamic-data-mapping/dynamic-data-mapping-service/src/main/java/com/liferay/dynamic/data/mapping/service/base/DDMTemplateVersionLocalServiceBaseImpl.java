@@ -7,7 +7,6 @@ package com.liferay.dynamic.data.mapping.service.base;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -67,7 +66,7 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DDMTemplateVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DDMTemplateVersionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DDMTemplateVersionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -392,7 +391,6 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		DDMTemplateVersionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -407,9 +405,6 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		ddmTemplateVersionLocalService =
 			(DDMTemplateVersionLocalService)aopProxy;
-
-		DDMTemplateVersionLocalServiceUtil.setService(
-			ddmTemplateVersionLocalService);
 	}
 
 	/**

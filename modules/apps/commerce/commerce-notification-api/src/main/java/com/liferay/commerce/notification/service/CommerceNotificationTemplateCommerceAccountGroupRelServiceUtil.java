@@ -7,6 +7,7 @@ package com.liferay.commerce.notification.service;
 
 import com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -88,16 +89,15 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelServiceUtil {
 	public static CommerceNotificationTemplateCommerceAccountGroupRelService
 		getService() {
 
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(
-		CommerceNotificationTemplateCommerceAccountGroupRelService service) {
-
-		_service = service;
-	}
-
-	private static volatile
-		CommerceNotificationTemplateCommerceAccountGroupRelService _service;
+	private static final Snapshot
+		<CommerceNotificationTemplateCommerceAccountGroupRelService>
+			_serviceSnapshot = new Snapshot<>(
+				CommerceNotificationTemplateCommerceAccountGroupRelServiceUtil.
+					class,
+				CommerceNotificationTemplateCommerceAccountGroupRelService.
+					class);
 
 }

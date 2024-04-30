@@ -162,7 +162,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * *",
-			"externalReferenceCode": "publishPortalDockerImageDXPNightly",
+			"externalReferenceCode": "publishPortalDockerImageDXPNightlyController",
 			"jobName": "Publish Portal Docker Image DXP Nightly - $(current_date)",
 			"jobParameters": "[{\"key\":\"dockerImageFilter\",\"value\":\"7.4.13.nightly\"}]",
 			"jobPriority": 1,
@@ -178,6 +178,16 @@
 			"jobPriority": 1,
 			"jobType": "repositoryArchive",
 			"name": "Repository Archive Controller",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * 5 *",
+			"externalReferenceCode": "sanitizeLanguageController",
+			"jobName": "Repository Archive - $(current_date)",
+			"jobParameters": "[]",
+			"jobPriority": 1,
+			"jobType": "sanitizeLanguage",
+			"name": "Sanitize Language Controller",
 			"type": "cron"
 		}
 	]

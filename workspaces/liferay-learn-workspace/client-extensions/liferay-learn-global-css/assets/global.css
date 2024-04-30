@@ -343,7 +343,7 @@ pre[class*='language-'] {
 			color: var(--color-neutral-8, #54555f);
 			margin-bottom: 1rem;
 			width: 100%;
-			
+
 			td {
 				background-clip: padding-box;
 				border-bottom-width: 0.0625rem;
@@ -353,7 +353,7 @@ pre[class*='language-'] {
 				border-style: solid;
 				border-top-width: 0.0625rem;
 				height: 56px;
-				padding: 0.5rem 1rem;
+				padding: var(--spacer-2, 0.5rem) var(--spacer-3, 1rem);
 				position: relative;
 				vertical-align: middle;
 			}
@@ -361,6 +361,8 @@ pre[class*='language-'] {
 			th {
 				color: var(--color-neutral-10, #282934);
 				font-size: 0.875rem;
+				height: 56px;
+				padding: var(--spacer-2, 0.5rem) var(--spacer-3, 1rem);
 			}
 
 			thead {
@@ -368,13 +370,14 @@ pre[class*='language-'] {
 			}
 		}
 
-		table, .table {
+		table,
+		.table {
 			td:first-child,
 			th:first-child,
 			.table-column-start {
 				padding-left: 1.25rem;
 			}
-	
+
 			thead td,
 			thead th {
 				border-bottom: calc(2 * 0.0625rem) solid #dee2e6;
@@ -383,12 +386,17 @@ pre[class*='language-'] {
 			}
 		}
 
-		table, .table-striped {
-			tbody tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(.table-divider) {
+		table,
+		.table-striped {
+			tbody
+				tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(.table-divider) {
 				&,
 				td,
 				th {
-					background-color: var(--color-state-info-lighten-2, #e6ebf5);
+					background-color: var(
+						--color-state-info-lighten-2,
+						#e6ebf5
+					);
 				}
 			}
 		}
@@ -594,7 +602,7 @@ pre[class*='language-'] {
 			a {
 				border-radius: var(--border-radius, 0.5rem);
 				color: var(--color-neutral-10, #282934);
-				padding: 0.5rem;
+				padding: var(--spacer-2, 0.5rem);
 
 				&:hover {
 					background-color: var(

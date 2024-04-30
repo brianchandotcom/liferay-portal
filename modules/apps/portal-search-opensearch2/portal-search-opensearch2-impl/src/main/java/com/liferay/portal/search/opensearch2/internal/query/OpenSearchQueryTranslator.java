@@ -992,20 +992,36 @@ public class OpenSearchQueryTranslator
 
 	@Override
 	public QueryVariant visit(TermsQuery termsQuery) {
-		org.opensearch.client.opensearch._types.query_dsl.TermsQuery.Builder
-			builder = QueryBuilders.terms();
+		String field = termsQuery.getField();
+		int maxTermsCount = 65536;
+		String[] terms = termsQuery.getValues();
 
-		SetterUtil.setNotNullFloat(builder::boost, termsQuery.getBoost());
+		if (terms.length <= maxTermsCount) {
+			return _getTermsQuery(termsQuery, field, terms);
+		}
 
-		builder.field(termsQuery.getField());
+		ArrayList<String> termsList = new ArrayList<>();
+		BoolQuery.Builder builder = QueryBuilders.bool();
 
-		List<FieldValue> fieldValues = new ArrayList<>();
+		for (String term : terms) {
+			termsList.add(term);
 
-		ListUtil.isNotEmptyForEach(
-			Arrays.asList(termsQuery.getValues()),
-			value -> fieldValues.add(FieldValue.of(value)));
+			if (termsList.size() == maxTermsCount) {
+				builder.should(
+					_getTermsQuery(
+						termsQuery, field, termsList.toArray(new String[0])
+					)._toQuery());
 
-		builder.terms(termsQueryField -> termsQueryField.value(fieldValues));
+				termsList.clear();
+			}
+		}
+
+		if (!termsList.isEmpty()) {
+			builder.should(
+				_getTermsQuery(
+					termsQuery, field, termsList.toArray(new String[0])
+				)._toQuery());
+		}
 
 		return builder.build();
 	}
@@ -1132,6 +1148,30 @@ public class OpenSearchQueryTranslator
 			"Invalid multi match query type " + type);
 	}
 
+	private org.opensearch.client.opensearch._types.query_dsl.TermsQuery
+		_getTermsQuery(TermsQuery termsQuery, String field, String[] values) {
+
+		org.opensearch.client.opensearch._types.query_dsl.TermsQuery.Builder
+			builder = QueryBuilders.terms();
+
+		SetterUtil.setNotNullFloat(builder::boost, termsQuery.getBoost());
+
+		builder.field(field);
+
+		builder.terms(
+			termsQueryField -> {
+				List<FieldValue> fieldValues = new ArrayList<>();
+
+				ListUtil.isNotEmptyForEach(
+					Arrays.asList(values),
+					value -> fieldValues.add(FieldValue.of(value)));
+
+				return termsQueryField.value(fieldValues);
+			});
+
+		return builder.build();
+	}
+
 	private void _processBooleanQueryClauses(
 		List<Query> queryClauses,
 		Consumer<org.opensearch.client.opensearch._types.query_dsl.Query>
@@ -1181,14 +1221,12 @@ public class OpenSearchQueryTranslator
 
 		documentIdentifiers.forEach(
 			documentIdentifier -> {
-				LikeDocument.Builder likeDocumentBuilder =
-					new LikeDocument.Builder();
+				LikeDocument.Builder builder = new LikeDocument.Builder();
 
-				likeDocumentBuilder.id(documentIdentifier.getId());
-				likeDocumentBuilder.index(documentIdentifier.getIndex());
+				builder.id(documentIdentifier.getId());
+				builder.index(documentIdentifier.getIndex());
 
-				likes.add(
-					Like.of(l -> l.document(likeDocumentBuilder.build())));
+				likes.add(Like.of(l -> l.document(builder.build())));
 			});
 
 		return likes;

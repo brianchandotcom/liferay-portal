@@ -42,6 +42,22 @@ public class TemplateEntryLocalServiceTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
+	@Test(expected = DuplicateTemplateEntryExternalReferenceCodeException.class)
+	public void testAddTemplateEntryWithExistingExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		_templateEntryLocalService.addTemplateEntry(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), 0, StringPool.BLANK, StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_templateEntryLocalService.addTemplateEntry(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), 0, StringPool.BLANK, StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
 	@Test
 	public void testDeleteTemplateEntryByExternalReferenceCode()
 		throws Exception {
@@ -75,22 +91,6 @@ public class TemplateEntryLocalServiceTest {
 		Assert.assertNotNull(
 			_templateEntryLocalService.fetchTemplateEntry(
 				externalReferenceCode, _group.getGroupId()));
-	}
-
-	@Test(expected = DuplicateTemplateEntryExternalReferenceCodeException.class)
-	public void testShouldFailIfDuplicateExternalReferenceCode()
-		throws Exception {
-
-		String externalReferenceCode = StringUtil.randomString();
-
-		_templateEntryLocalService.addTemplateEntry(
-			externalReferenceCode, TestPropsValues.getUserId(),
-			_group.getGroupId(), 0, StringPool.BLANK, StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-		_templateEntryLocalService.addTemplateEntry(
-			externalReferenceCode, TestPropsValues.getUserId(),
-			_group.getGroupId(), 0, StringPool.BLANK, StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	@DeleteAfterTestRun

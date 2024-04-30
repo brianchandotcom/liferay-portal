@@ -653,6 +653,7 @@ const filterSchema = {
 				label: i18n.sub('status-in-x', 'run-a'),
 				name: 'testrayCaseResultStatus1',
 				operator: 'eq',
+				optionalOperator: 'ne',
 				options: [
 					{
 						label: i18n.translate('passed'),
@@ -683,6 +684,7 @@ const filterSchema = {
 				label: i18n.sub('status-in-x', 'run-b'),
 				name: 'testrayCaseResultStatus2',
 				operator: 'eq',
+				optionalOperator: 'ne',
 				options: [
 					{
 						label: i18n.translate('passed'),

@@ -401,9 +401,10 @@ const ListView: React.FC<ListViewProps> = ({
 			{!!items.length ||
 			(!!testrayCaseResultComparisons?.length && !isCompareRunsMatrix) ? (
 				<>
-					{pagination?.displayTop && (
-						<div className="mt-4">{Pagination}</div>
-					)}
+					{!testrayCaseResultComparisons?.length &&
+						pagination?.displayTop && (
+							<div className="mt-4">{Pagination}</div>
+						)}
 
 					{tableVisible && (
 						<Table
@@ -423,7 +424,7 @@ const ListView: React.FC<ListViewProps> = ({
 						/>
 					)}
 
-					{Pagination}
+					{!testrayCaseResultComparisons?.length && Pagination}
 				</>
 			) : null}
 

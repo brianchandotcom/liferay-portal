@@ -24,6 +24,7 @@ export type Operators =
 
 export interface SearchBuilderConstructor {
 	useURIEncode?: boolean;
+	[key: string]: any;
 }
 
 /**
@@ -139,6 +140,7 @@ export default class SearchBuilder {
 	static createCustomFilter(schema: RendererFields, filter: any) {
 		const customOperator = schema?.operator;
 		const requestOperator = schema?.requestOperator as string;
+		const optionalOperator = schema?.optionalOperator as Operators;
 
 		if (customOperator && SearchBuilder[customOperator]) {
 			if (Array.isArray(filter)) {
@@ -147,6 +149,13 @@ export default class SearchBuilder {
 						typeof item === 'object' ? item.value : item
 					)
 					.join(',');
+
+				if (filters.includes('DIDNOTRUN')) {
+					return SearchBuilder[optionalOperator](
+						requestOperator,
+						filters
+					);
+				}
 
 				return SearchBuilder[customOperator](requestOperator, filters);
 			}

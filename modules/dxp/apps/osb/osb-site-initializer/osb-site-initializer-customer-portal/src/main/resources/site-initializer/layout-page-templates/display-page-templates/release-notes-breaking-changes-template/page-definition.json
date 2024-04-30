@@ -279,10 +279,10 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "<p>This section contains information about <strong>breaking changes in out-of-the-box DXP features and capabilities.</strong> For breaking changes or internal code, please check the list below.</p>\n",
-																"es_ES": "<p>Esta sección contiene información sobre <strong>cambios importantes en las funciones y capacidades listas para usar de DXP.&nbsp;</strong>Para cambios importantes o código interno, consulte la lista a continuación.</p>\n",
-																"ja_JP": "<p>このセクションには、<strong>すぐに使える DXP の機能の重大な変更に関する情報が含まれています。</strong>&nbsp;重大な変更または内部コードについては、以下のリストを確認してください。</p>\n",
-																"pt_BR": "<p>Esta seção contém informações sobre <strong>alterações importantes em recursos e capacidades DXP prontos para uso. </strong>Para alterações significativas ou código interno, verifique a lista abaixo.</p>\n"
+																"en_US": "<p>This section contains information about breaking changes in out-of-the-box DXP features and capabilities. For breaking changes or internal code, please check <a href=\"https://github.com/liferay/liferay-portal/blob/master/readme/BREAKING_CHANGES.markdown\" rel=\"noopener noreferrer\" target=\"_blank\">this link</a>.</p>\n",
+																"es_ES": "<p>Esta sección contiene información sobre cambios rupturistas (breaking changes) en funcionalidades y capacidades de un DXP listo para usar. Para cambios rupturistas o código interno, verifica <a href=\"https://github.com/liferay/liferay-portal/blob/master/readme/BREAKING_CHANGES.markdown\" rel=\"noopener noreferrer\" target=\"_blank\">este enlace</a>.</p>\n",
+																"ja_JP": "<p>このセクションには、DXPの機能および性能の重大な変更点に関する情報が含まれています。重大な変更点または内部コードについては、こちらの<a href=\"https://github.com/liferay/liferay-portal/blob/master/readme/BREAKING_CHANGES.markdown\" rel=\"noopener noreferrer\" target=\"_blank\">リンク</a>をご覧ください。</p>\n",
+																"pt_BR": "<p>Esta seção contém informações sobre alterações importantes em recursos e capacidades DXP prontos para uso. Para alterações significativas (Breaking Changes) ou código interno, por favor acesse <a href=\"https://github.com/liferay/liferay-portal/blob/master/readme/BREAKING_CHANGES.markdown\" rel=\"noopener noreferrer\" target=\"_blank\">este link</a>.</p>\n"
 															}
 														}
 													}

@@ -96,9 +96,9 @@
 		"key": "there-are-no-breaking-changes-in-out-of-the-box-features-and-capabilities-for-this-quarterly-release",
 		"value": {
 			"en-US": "There are no breaking changes in out-of-the-box features and capabilities for this quarterly release.",
-			"es-ES": "No hay cambios importantes en las funciones y capacidades listas para usar para esta versión trimestral.",
-			"ja-JP": "この四半期リリースでは、すぐに使用できる機能に重大な変更はありません。",
-			"pt-BR": "Não há alterações significativas nos recursos e capacidades prontos para uso para este lançamento trimestral."
+			"es-ES": "No hay cambios rupturistas (breaking changes) en funcionalidades o capacidades listas para su uso en esta versión trimestral (Quarterly Release).",
+			"ja-JP": "この四半期ごとのリリースでは、基本機能および性能に重大な変更点はありません。",
+			"pt-BR": "Não há alterações significativas nos recursos e capacidades prontos para uso nesta versão trimestral (Quarterly Release)."
 		}
 	}
 ]

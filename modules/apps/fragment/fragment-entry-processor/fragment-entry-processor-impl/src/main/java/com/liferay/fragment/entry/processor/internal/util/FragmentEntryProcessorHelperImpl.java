@@ -739,7 +739,7 @@ public class FragmentEntryProcessorHelperImpl
 
 		String iterationType = configJSONObject.getString("iterationType");
 
-		if (Objects.equals(iterationType, "iteration-number")) {
+		if (Objects.equals(iterationType, _ITERATION_TYPE_NUMBER)) {
 			int iterationNumber = configJSONObject.getInt("iterationNumber", 0);
 
 			if ((iterationNumber > 0) && (iterationNumber <= list.size())) {
@@ -748,7 +748,7 @@ public class FragmentEntryProcessorHelperImpl
 
 			return null;
 		}
-		else if (Objects.equals(iterationType, "last")) {
+		else if (Objects.equals(iterationType, _ITERATION_TYPE_LAST)) {
 			return list.get(list.size() - 1);
 		}
 
@@ -758,6 +758,10 @@ public class FragmentEntryProcessorHelperImpl
 	private static final InfoCollectionTextFormatter<Object>
 		_INFO_COLLECTION_TEXT_FORMATTER =
 			new CommaSeparatedInfoCollectionTextFormatter();
+
+	private static final String _ITERATION_TYPE_LAST = "last";
+
+	private static final String _ITERATION_TYPE_NUMBER = "iteration-number";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryProcessorHelperImpl.class);

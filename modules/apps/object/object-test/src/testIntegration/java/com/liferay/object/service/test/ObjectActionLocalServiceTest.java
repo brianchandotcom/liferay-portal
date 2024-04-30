@@ -99,6 +99,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.script.management.test.util.ScriptManagementConfigurationTestRule;
 import com.liferay.portal.security.script.management.test.util.ScriptManagementConfigurationTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -126,10 +127,8 @@ import java.util.Set;
 import org.hamcrest.CoreMatchers;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -150,17 +149,8 @@ public class ObjectActionLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		ScriptManagementConfigurationTestUtil.save(true);
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		ScriptManagementConfigurationTestUtil.delete();
-	}
+			PermissionCheckerMethodTestRule.INSTANCE,
+			ScriptManagementConfigurationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {

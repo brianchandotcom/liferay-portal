@@ -6,7 +6,7 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.TopLevelBuild;
-import com.liferay.jenkins.results.parser.test.clazz.PlaywrightTestClass;
+import com.liferay.jenkins.results.parser.test.clazz.PlaywrightJUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
@@ -25,16 +25,16 @@ public class PlaywrightBatchBuildTestrayCaseResult
 
 		super(testrayBuild, topLevelBuild, axisTestClassGroup, testClass);
 
-		_playwrightTestClass = (PlaywrightTestClass)testClass;
+		_playwrightJUnitTestClass = (PlaywrightJUnitTestClass)testClass;
 	}
 
 	@Override
 	public String getName() {
-		if (_playwrightTestClass == null) {
+		if (_playwrightJUnitTestClass == null) {
 			return super.getName();
 		}
 
-		return _playwrightTestClass.getSpecFilePath();
+		return _playwrightJUnitTestClass.getSpecFilePath();
 	}
 
 	@Override
@@ -58,6 +58,6 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			getAxisBuildURLPath() + "/playwright-report/index.html");
 	}
 
-	private final PlaywrightTestClass _playwrightTestClass;
+	private final PlaywrightJUnitTestClass _playwrightJUnitTestClass;
 
 }

@@ -19,7 +19,7 @@ import org.json.JSONObject;
 /**
  * @author Kenji Heigel
  */
-public class PlaywrightTestClass extends JUnitTestClass {
+public class PlaywrightJUnitTestClass extends JUnitTestClass {
 
 	@Override
 	public JSONObject getJSONObject() {
@@ -65,7 +65,7 @@ public class PlaywrightTestClass extends JUnitTestClass {
 		return _specTitle;
 	}
 
-	protected PlaywrightTestClass(
+	protected PlaywrightJUnitTestClass(
 		BatchTestClassGroup batchTestClassGroup, File testClassFile,
 		String specTitle) {
 
@@ -107,7 +107,7 @@ public class PlaywrightTestClass extends JUnitTestClass {
 		}
 	}
 
-	protected PlaywrightTestClass(
+	protected PlaywrightJUnitTestClass(
 		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject) {
 
 		super(batchTestClassGroup, jsonObject);

@@ -5,7 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
-import com.liferay.jenkins.results.parser.test.clazz.PlaywrightTestClass;
+import com.liferay.jenkins.results.parser.test.clazz.PlaywrightJUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.util.List;
@@ -27,14 +27,14 @@ public class PlaywrightAxisTestClassGroup extends AxisTestClassGroup {
 
 		TestClass testClass = testClasses.get(0);
 
-		if (!(testClass instanceof PlaywrightTestClass)) {
+		if (!(testClass instanceof PlaywrightJUnitTestClass)) {
 			return super.getMinimumSlaveRAM();
 		}
 
-		PlaywrightTestClass playwrightTestClass =
-			(PlaywrightTestClass)testClass;
+		PlaywrightJUnitTestClass playwrightJUnitTestClass =
+			(PlaywrightJUnitTestClass)testClass;
 
-		Integer minimumSlaveRAM = playwrightTestClass.getMinimumSlaveRAM();
+		Integer minimumSlaveRAM = playwrightJUnitTestClass.getMinimumSlaveRAM();
 
 		if (minimumSlaveRAM == null) {
 			return super.getMinimumSlaveRAM();
@@ -53,14 +53,14 @@ public class PlaywrightAxisTestClassGroup extends AxisTestClassGroup {
 
 		TestClass testClass = testClasses.get(0);
 
-		if (!(testClass instanceof PlaywrightTestClass)) {
+		if (!(testClass instanceof PlaywrightJUnitTestClass)) {
 			return super.getSlaveLabel();
 		}
 
-		PlaywrightTestClass playwrightTestClass =
-			(PlaywrightTestClass)testClass;
+		PlaywrightJUnitTestClass playwrightJUnitTestClass =
+			(PlaywrightJUnitTestClass)testClass;
 
-		String slaveLabel = playwrightTestClass.getSlaveLabel();
+		String slaveLabel = playwrightJUnitTestClass.getSlaveLabel();
 
 		if (slaveLabel == null) {
 			return super.getSlaveLabel();

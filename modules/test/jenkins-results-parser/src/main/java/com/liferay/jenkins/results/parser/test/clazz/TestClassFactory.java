@@ -206,11 +206,11 @@ public class TestClassFactory {
 						PlaywrightBatchTestClassGroup) {
 
 				if (jsonObject != null) {
-					return new PlaywrightTestClass(
+					return new PlaywrightJUnitTestClass(
 						batchTestClassGroup, jsonObject);
 				}
 
-				return new PlaywrightTestClass(
+				return new PlaywrightJUnitTestClass(
 					batchTestClassGroup, testClassFile, testClassMethodName);
 			}
 			else if (batchTestClassGroup instanceof

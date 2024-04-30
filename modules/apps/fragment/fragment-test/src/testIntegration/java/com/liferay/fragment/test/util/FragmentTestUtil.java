@@ -33,8 +33,8 @@ public class FragmentTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return FragmentCollectionLocalServiceUtil.addFragmentCollection(
-			TestPropsValues.getUserId(), groupId, RandomTestUtil.randomString(),
-			StringPool.BLANK, serviceContext);
+			null, TestPropsValues.getUserId(), groupId,
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
 
 	public static FragmentCollection addFragmentCollection(
@@ -45,7 +45,7 @@ public class FragmentTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return FragmentCollectionLocalServiceUtil.addFragmentCollection(
-			TestPropsValues.getUserId(), groupId, name, StringPool.BLANK,
+			null, TestPropsValues.getUserId(), groupId, name, StringPool.BLANK,
 			serviceContext);
 	}
 
@@ -60,7 +60,7 @@ public class FragmentTestUtil {
 		serviceContext.setModifiedDate(createDate);
 
 		return FragmentCollectionLocalServiceUtil.addFragmentCollection(
-			TestPropsValues.getUserId(), groupId, name, StringPool.BLANK,
+			null, TestPropsValues.getUserId(), groupId, name, StringPool.BLANK,
 			serviceContext);
 	}
 
@@ -72,8 +72,8 @@ public class FragmentTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return FragmentCollectionLocalServiceUtil.addFragmentCollection(
-			TestPropsValues.getUserId(), groupId, fragmentCollectionKey, name,
-			StringPool.BLANK, serviceContext);
+			null, TestPropsValues.getUserId(), groupId, fragmentCollectionKey,
+			name, StringPool.BLANK, serviceContext);
 	}
 
 	public static FragmentEntryLink addFragmentEntryLink(

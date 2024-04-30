@@ -94,8 +94,9 @@ public class FragmentCollectionServiceImpl
 		throws PortalException {
 
 		FragmentCollection fragmentCollection =
-			fragmentCollectionLocalService.fetchFragmentCollection(
-				externalReferenceCode, groupId);
+			fragmentCollectionLocalService.
+				fetchFragmentCollectionByExternalReferenceCode(
+					externalReferenceCode, groupId);
 
 		if (fragmentCollection != null) {
 			_portletResourcePermission.check(

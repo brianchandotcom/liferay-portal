@@ -170,7 +170,7 @@ public class ResetPrototypeMVCActionCommandTest {
 	private FragmentEntry _addFragmentEntry() throws Exception {
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				_layoutSetPrototypeGroup.getGroupId(),
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				_serviceContext);

@@ -1,0 +1,18 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "C_GitUser"
+	},
+	"items": [
+		{
+			"externalReferenceCode": "liferay",
+			"url": "https://github.com/liferay"
+		}
+	]
+}

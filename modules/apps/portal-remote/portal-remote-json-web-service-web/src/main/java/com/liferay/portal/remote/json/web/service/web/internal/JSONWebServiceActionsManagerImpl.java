@@ -225,7 +225,7 @@ public class JSONWebServiceActionsManagerImpl
 
 		_ensureOpen();
 
-		_processBean(this, contextName, contextPath, service);
+		_processBean(contextName, contextPath, service);
 
 		int count = _getJSONWebServiceActionsCount(contextPath);
 
@@ -551,7 +551,6 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	private void _onJSONWebServiceBean(
-			JSONWebServiceActionsManager jsonWebServiceActionsManager,
 			String contextName, String contextPath, Object serviceBean,
 			JSONWebService jsonWebService)
 		throws Exception {
@@ -603,7 +602,7 @@ public class JSONWebServiceActionsManagerImpl
 			}
 
 			if (JSONWebServiceNamingUtil.isIncludedMethod(method)) {
-				jsonWebServiceActionsManager.registerJSONWebServiceAction(
+				registerJSONWebServiceAction(
 					contextName, contextPath, serviceBean, serviceBeanClass,
 					method, path, httpMethod);
 			}
@@ -611,7 +610,6 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	private void _processBean(
-		JSONWebServiceActionsManager jsonWebServiceActionsManager,
 		String contextName, String contextPath, Object bean) {
 
 		if (!PropsValues.JSON_WEB_SERVICE_ENABLED) {
@@ -627,8 +625,7 @@ public class JSONWebServiceActionsManagerImpl
 
 		try {
 			_onJSONWebServiceBean(
-				jsonWebServiceActionsManager, contextName, contextPath, bean,
-				jsonWebService);
+				contextName, contextPath, bean, jsonWebService);
 		}
 		catch (Exception exception) {
 			_log.error(exception);

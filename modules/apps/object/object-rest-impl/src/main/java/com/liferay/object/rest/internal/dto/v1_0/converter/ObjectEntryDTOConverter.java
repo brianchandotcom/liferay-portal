@@ -802,13 +802,6 @@ public class ObjectEntryDTOConverter
 				continue;
 			}
 
-			if (objectField.isLocalized()) {
-				UnsafeSupplier<Object, Exception> unsafeSupplier =
-					() -> values.get(objectField.getI18nObjectFieldName());
-
-				map.put(objectField.getI18nObjectFieldName(), unsafeSupplier);
-			}
-
 			String objectFieldName = objectField.getName();
 
 			Serializable serializable = values.get(objectFieldName);
@@ -820,7 +813,10 @@ public class ObjectEntryDTOConverter
 				Map<String, Serializable> objectField_i18n =
 					(Map<String, Serializable>)values.get(i18nObjectFieldName);
 
-				map.put(i18nObjectFieldName, objectField_i18n);
+				UnsafeSupplier<Object, Exception>
+					objectField_i18nUnsafeSupplier = () -> objectField_i18n;
+
+				map.put(i18nObjectFieldName, objectField_i18nUnsafeSupplier);
 
 				if ((dtoConverterContext.getLocale() != null) &&
 					(objectField_i18n != null)) {

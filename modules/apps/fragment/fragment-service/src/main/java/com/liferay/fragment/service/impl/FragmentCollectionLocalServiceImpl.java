@@ -175,7 +175,8 @@ public class FragmentCollectionLocalServiceImpl
 		throws PortalException {
 
 		return fragmentCollectionLocalService.deleteFragmentCollection(
-			fetchFragmentCollection(externalReferenceCode, groupId));
+			fragmentCollectionPersistence.findByERC_G(
+				externalReferenceCode, groupId));
 	}
 
 	@Override

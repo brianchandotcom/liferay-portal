@@ -37,7 +37,7 @@ export default function RepeatableOptionsSelector({
 }) {
 	const field = getSelectedField({fields, value: fieldName});
 
-	if (!field || !field.repeatable) {
+	if (!field || !field.repeatable || !Liferay.FeatureFlags['LPD-11377']) {
 		return null;
 	}
 

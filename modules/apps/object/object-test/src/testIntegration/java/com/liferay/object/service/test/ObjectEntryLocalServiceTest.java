@@ -2331,11 +2331,13 @@ public class ObjectEntryLocalServiceTest {
 			deleteExtensionDynamicObjectDefinitionTableValues(
 				objectDefinition, user.getUserId());
 
-		Assert.assertTrue(
-			MapUtil.isEmpty(
-				_objectEntryLocalService.
-					getExtensionDynamicObjectDefinitionTableValues(
-						objectDefinition, user.getUserId())));
+		Map<String, Serializable> extensionValues =
+			_objectEntryLocalService.
+				getExtensionDynamicObjectDefinitionTableValues(
+					objectDefinition, user.getUserId());
+
+		Assert.assertEquals(0L, extensionValues.get("longField"));
+		Assert.assertNull(extensionValues.get("textField"));
 	}
 
 	@Test

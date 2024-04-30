@@ -184,6 +184,10 @@ public abstract class BaseRoutineEntity
 				JSONObject jobParameterJSONObject =
 					jobParametersJSONArray.getJSONObject(i);
 
+				if (!jobParameterJSONObject.has("key")) {
+					continue;
+				}
+
 				_jobParameters.put(
 					jobParameterJSONObject.getString("key"),
 					jobParameterJSONObject.getString("value"));

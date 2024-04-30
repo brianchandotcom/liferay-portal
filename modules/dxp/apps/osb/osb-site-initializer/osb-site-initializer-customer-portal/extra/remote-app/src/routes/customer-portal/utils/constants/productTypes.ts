@@ -8,7 +8,7 @@ export const PRODUCT_TYPES = {
 	commerce: 'Commerce',
 	commerceCloud: 'Commerce for Cloud',
 	dxp: 'DXP',
-	dxpCloud: 'LXC - SM',
+	dxpCloud: 'Liferay PaaS',
 	enterpriseSearch: 'Enterprise Search',
 	liferayExperienceCloud: 'Liferay Experience Cloud',
 	other: 'Other',

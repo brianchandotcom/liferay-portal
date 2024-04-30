@@ -27,6 +27,7 @@ const navigationIcons = {
 		NavigationMenuIcons.ExperienceCloudIcon,
 		NavigationMenuIcons.ExperienceCloudIconGray,
 	],
+	liferay: [NavigationMenuIcons.DXPIcon, NavigationMenuIcons.DXPIconGray],
 	lxc: [NavigationMenuIcons.LXCIcon, NavigationMenuIcons.LXCIconGray],
 	overview: [
 		NavigationMenuIcons.OverviewIcon,

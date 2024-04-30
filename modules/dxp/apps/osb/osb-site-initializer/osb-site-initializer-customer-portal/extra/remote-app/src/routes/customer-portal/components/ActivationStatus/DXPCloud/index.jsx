@@ -235,7 +235,7 @@ const ActivationStatusDXPCloud = ({
 
 	useEffect(() => {
 		const fetchCommerceOrderItems = async () => {
-			const filterAccountSubscriptionERC = `customFields/accountSubscriptionGroupERC eq '${project.accountKey}_lxc---sm'`;
+			const filterAccountSubscriptionERC = `customFields/accountSubscriptionGroupERC eq '${project.accountKey}_liferay-paas'`;
 			const {data} = await client.query({
 				query: getCommerceOrderItems,
 				variables: {

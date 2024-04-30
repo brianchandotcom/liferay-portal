@@ -1510,6 +1510,13 @@ public interface BaseProjectTemplatesTestCase {
 				gradleWorkspaceDir,
 				"liferay.workspace.target.platform.version=7.3.7");
 		}
+		else if (liferayVersion.startsWith("20")) {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir,
+				"liferay.workspace.target.platform.version=2024.q1.1");
+
+			liferayProduct = "dxp";
+		}
 		else {
 			writeGradlePropertiesInWorkspace(
 				gradleWorkspaceDir,

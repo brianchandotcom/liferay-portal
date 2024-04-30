@@ -306,6 +306,40 @@ public class DLFileEntryLocalServiceTest {
 		Assert.assertNull(dlFileEntry.getReviewDate());
 	}
 
+	@Test(expected = DuplicateFileEntryExternalReferenceCodeException.class)
+	public void testAddFileEntryWithExistingExternalReferenceCode()
+		throws Exception {
+
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
+		String externalReferenceCode = StringUtil.randomString();
+		Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
+			ddmFormValuesMap = Collections.emptyMap();
+		InputStream inputStream = new ByteArrayInputStream(new byte[0]);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		DLFileEntryLocalServiceUtil.addFileEntry(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			dlFolder.getGroupId(), dlFolder.getRepositoryId(),
+			dlFolder.getFolderId(), StringUtil.randomString(),
+			ContentTypes.TEXT_PLAIN, StringUtil.randomString(),
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			ddmFormValuesMap, null, inputStream, 0, null, null, null,
+			serviceContext);
+
+		DLFileEntryLocalServiceUtil.addFileEntry(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			dlFolder.getGroupId(), dlFolder.getRepositoryId(),
+			dlFolder.getFolderId(), StringUtil.randomString(),
+			ContentTypes.TEXT_PLAIN, StringUtil.randomString(),
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			ddmFormValuesMap, null, inputStream, 0, null, null, null,
+			serviceContext);
+	}
+
 	@Test
 	public void testAddFileEntryWithExternalReferenceCode() throws Exception {
 		String externalReferenceCode = StringUtil.randomString();
@@ -828,38 +862,6 @@ public class DLFileEntryLocalServiceTest {
 		DLFileEntryLocalServiceUtil.deleteFileVersion(
 			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
 			dlFileVersion.getVersion());
-	}
-
-	@Test(expected = DuplicateFileEntryExternalReferenceCodeException.class)
-	public void testDuplicateFileEntryExternalReferenceCode() throws Exception {
-		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
-		String externalReferenceCode = StringUtil.randomString();
-		Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
-			ddmFormValuesMap = Collections.emptyMap();
-		InputStream inputStream = new ByteArrayInputStream(new byte[0]);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		DLFileEntryLocalServiceUtil.addFileEntry(
-			externalReferenceCode, TestPropsValues.getUserId(),
-			dlFolder.getGroupId(), dlFolder.getRepositoryId(),
-			dlFolder.getFolderId(), StringUtil.randomString(),
-			ContentTypes.TEXT_PLAIN, StringUtil.randomString(),
-			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			ddmFormValuesMap, null, inputStream, 0, null, null, null,
-			serviceContext);
-
-		DLFileEntryLocalServiceUtil.addFileEntry(
-			externalReferenceCode, TestPropsValues.getUserId(),
-			dlFolder.getGroupId(), dlFolder.getRepositoryId(),
-			dlFolder.getFolderId(), StringUtil.randomString(),
-			ContentTypes.TEXT_PLAIN, StringUtil.randomString(),
-			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			ddmFormValuesMap, null, inputStream, 0, null, null, null,
-			serviceContext);
 	}
 
 	@Test

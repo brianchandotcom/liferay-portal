@@ -166,6 +166,20 @@ public class JournalArticleLocalServiceTest {
 		_themeDisplay = _getThemeDisplay();
 	}
 
+	@Test(expected = DuplicateArticleExternalReferenceCodeException.class)
+	public void testAddArticleWithExistingExternalReferenceCode()
+		throws Exception {
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalTestUtil.addArticle(
+			article.getExternalReferenceCode(), _group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			article.getArticleId(), true);
+	}
+
 	@Test
 	public void testArticleFriendlyURLValidation() throws Exception {
 		_assertArticleFriendlyURLMap(_group);
@@ -1043,18 +1057,6 @@ public class JournalArticleLocalServiceTest {
 
 		JournalTestUtil.addArticle(
 			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			article.getArticleId(), true);
-	}
-
-	@Test(expected = DuplicateArticleExternalReferenceCodeException.class)
-	public void testDuplicatedExternalReferenceCode() throws Exception {
-		JournalArticle article = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		JournalTestUtil.addArticle(
-			article.getExternalReferenceCode(), _group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			article.getArticleId(), true);
 	}

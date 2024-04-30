@@ -131,6 +131,45 @@ public class AssetCategoryLocalServiceTest {
 			"Expected title map length does not match", 1, titleMap.size());
 	}
 
+	@Test(expected = DuplicateCategoryExternalReferenceCodeException.class)
+	public void testAddAssetCategoryWithExistingExternalReferenceCode()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		String externalReferenceCode = StringUtil.randomString();
+		Locale locale = PortalUtil.getSiteDefaultLocale(_group.getGroupId());
+
+		AssetCategoryLocalServiceUtil.addCategory(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			HashMapBuilder.put(
+				locale, RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				locale, StringPool.BLANK
+			).build(),
+			assetVocabulary.getVocabularyId(), null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		AssetCategoryLocalServiceUtil.addCategory(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			HashMapBuilder.put(
+				locale, RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				locale, StringPool.BLANK
+			).build(),
+			assetVocabulary.getVocabularyId(), null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
 	@Test
 	public void testAddAssetCategoryWithMissingTranslationInSiteDefaultLocale()
 		throws Exception {
@@ -447,43 +486,6 @@ public class AssetCategoryLocalServiceTest {
 		finally {
 			serviceRegistration.unregister();
 		}
-	}
-
-	@Test(expected = DuplicateCategoryExternalReferenceCodeException.class)
-	public void testDuplicateCategoryExternalReferenceCode() throws Exception {
-		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId());
-
-		String externalReferenceCode = StringUtil.randomString();
-		Locale locale = PortalUtil.getSiteDefaultLocale(_group.getGroupId());
-
-		AssetCategoryLocalServiceUtil.addCategory(
-			externalReferenceCode, TestPropsValues.getUserId(),
-			_group.getGroupId(),
-			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			HashMapBuilder.put(
-				locale, RandomTestUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				locale, StringPool.BLANK
-			).build(),
-			assetVocabulary.getVocabularyId(), null,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
-
-		AssetCategoryLocalServiceUtil.addCategory(
-			externalReferenceCode, TestPropsValues.getUserId(),
-			_group.getGroupId(),
-			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			HashMapBuilder.put(
-				locale, RandomTestUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				locale, StringPool.BLANK
-			).build(),
-			assetVocabulary.getVocabularyId(), null,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Test

@@ -145,7 +145,7 @@
 </tr>
 <tr>
 	<td>TABLE_CHECKBOX</td>
-	<td>//tr[.//*[normalize-space(text())='${key_tableMember}']]</td>
+	<td>//tr[.//*[contains(normalize-space(text()),'${key_tableMember}')]]</td>
 	<td></td>
 </tr>
 <tr>

@@ -5,6 +5,7 @@ application:
     className: "HeadlessAdminContentApplication"
     name: "Liferay.Headless.Admin.Content"
 author: "Javier Gamarra"
+changeTrackingEnabled: true
 clientDir: "../headless-admin-content-client/src/main/java"
 compatibilityVersion: 5
 forcePredictableOperationId: true

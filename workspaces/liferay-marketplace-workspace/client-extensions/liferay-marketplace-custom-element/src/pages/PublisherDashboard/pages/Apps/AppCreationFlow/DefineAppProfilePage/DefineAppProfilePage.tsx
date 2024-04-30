@@ -262,22 +262,6 @@ export function DefineAppProfilePage({
 					<UploadLogo
 						onDeleteFile={handleLogoDelete}
 						onUpload={handleLogoUpload}
-						tooltip={ReactDOMServer.renderToString(
-							<span>
-								The icon is a small image representation of the
-								app. Icons must be a PNG, JPG, or GIF format and
-								cannot exceed 5MB. Animated images are
-								prohibited. The use of the Liferay logo,
-								including any permitted alternate versions of
-								the Liferay logo, is permitted only with
-								Liferay's express permission. Please refer to
-								our{' '}
-								<a href="https://www.liferay.com/trademark">
-									trademark policy
-								</a>{' '}
-								for details.
-							</span>
-						)}
 						uploadedFile={appLogo}
 					/>
 

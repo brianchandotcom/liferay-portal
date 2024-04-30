@@ -18,6 +18,8 @@
 
 			const portletBody = document.querySelector('.portlet-body');
 
+			portletBody.innerHTML = '';
+
 			portletBody.appendChild(body);
 
 			Liferay.Util.runScriptsInElement(body);

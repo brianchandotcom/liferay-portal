@@ -172,6 +172,9 @@ public class BaseNotificationTypeTest {
 
 		group = GroupTestUtil.addGroup();
 
+		guestUser = userLocalService.getGuestUser(
+			TestPropsValues.getCompanyId());
+
 		parentObjectEntryValues = LinkedHashMapBuilder.<String, Object>put(
 			"systemObjectField", RandomTestUtil.randomString()
 		).put(
@@ -560,6 +563,7 @@ public class BaseNotificationTypeTest {
 	protected static DTOConverterRegistry dtoConverterRegistry;
 
 	protected static Group group;
+	protected static User guestUser;
 
 	@Inject
 	protected static ObjectDefinitionLocalService objectDefinitionLocalService;

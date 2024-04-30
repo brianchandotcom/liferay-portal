@@ -343,7 +343,9 @@ public class FragmentEntryProcessorHelperImpl
 			JSONObject configJSONObject = editableValueJSONObject.getJSONObject(
 				"config");
 
-			if (configJSONObject == null) {
+			if ((configJSONObject == null) ||
+				(configJSONObject.length() == 0)) {
+
 				Object firstItem = list.get(0);
 
 				Class<?> firstItemClass = firstItem.getClass();

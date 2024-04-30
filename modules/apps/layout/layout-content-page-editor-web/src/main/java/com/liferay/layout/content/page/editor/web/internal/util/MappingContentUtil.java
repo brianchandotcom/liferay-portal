@@ -72,7 +72,7 @@ public class MappingContentUtil {
 		).put(
 			"name", infoField.getName()
 		).put(
-			"repeatable", infoField.isMultivalued()
+			"repeatable", infoField.isMultivalued() || infoField.isRepeatable()
 		).put(
 			"required", infoField.isRequired()
 		).put(

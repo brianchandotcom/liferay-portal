@@ -18,10 +18,12 @@ import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.util.comparator.ClassNameModelResourceComparator;
+import com.liferay.asset.util.AssetRendererFactoryWrapper;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.type.CET;
@@ -864,50 +866,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		Map<String, Long> ddmStructureMap = new HashMap<>();
-
-		for (DDMStructure ddmStructure :
-				_ddmStructureLocalService.getDDMStructures(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-
-			ddmStructureMap.put(
-				ddmStructure.getStructureKey(), ddmStructure.getStructureId());
-		}
-
-		Map<String, Long> dlFileEntryTypeMap = new HashMap<>();
-
 		for (DLFileEntryType dlFileEntryType :
 				_dlFileEntryTypeLocalService.getDLFileEntryTypes(
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
-			dlFileEntryTypeMap.put(
-				dlFileEntryType.getFileEntryTypeKey(),
-				dlFileEntryType.getFileEntryTypeId());
+			stringUtilReplaceValues.put(
+				"DOCUMENT_FILE_ENTRY_TYPE_ID:" +
+					dlFileEntryType.getFileEntryTypeKey(),
+				String.valueOf(dlFileEntryType.getFileEntryTypeId()));
 		}
 
-		Map<String, Long> objectDefinitionMap = new HashMap<>();
-
-		for (com.liferay.object.model.ObjectDefinition objectDefinition :
-				_objectDefinitionLocalService.getObjectDefinitions(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-
-			if (!objectDefinition.isSystem()) {
-				objectDefinitionMap.put(
-					StringUtil.removeSubstring(
-						objectDefinition.getName(), "C_"),
-					_portal.getClassNameId(objectDefinition.getClassName()));
-			}
-		}
-
-		JSONArray assetListJSONArray = _jsonFactory.createJSONArray(json);
+		JSONArray assetListJSONArray = _jsonFactory.createJSONArray(
+			_replace(json, stringUtilReplaceValues));
 
 		for (int i = 0; i < assetListJSONArray.length(); i++) {
 			JSONObject assetListJSONObject = assetListJSONArray.getJSONObject(
 				i);
 
-			_addOrUpdateAssetListEntry(
-				assetListJSONObject, serviceContext, ddmStructureMap,
-				dlFileEntryTypeMap, objectDefinitionMap);
+			_addOrUpdateAssetListEntry(assetListJSONObject, serviceContext);
 		}
 
 		List<AssetListEntry> assetListEntries =
@@ -1459,10 +1435,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addOrUpdateAssetListEntry(
-			JSONObject assetListJSONObject, ServiceContext serviceContext,
-			Map<String, Long> ddmStructureMap,
-			Map<String, Long> dlFileEntryTypeMap,
-			Map<String, Long> objectDefinitionMap)
+			JSONObject assetListJSONObject, ServiceContext serviceContext)
 		throws Exception {
 
 		AssetListEntry assetListEntry = null;
@@ -1507,43 +1480,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_portal.getClassNameId(
 					unicodePropertiesJSONObject.getString("classNameIds")))
 		).put(
+			"anyClassType" +
+				_getAssetRendererFactoryName(
+					unicodePropertiesJSONObject.getString("classNameIds")),
+			assetListJSONObject.getString("assetEntrySubtypeId")
+		).put(
 			"classNameIds", StringUtil.merge(classNameIdStrings, ",")
 		).put(
 			"groupIds", String.valueOf(serviceContext.getScopeGroupId())
 		).build();
-
-		String classNameId = unicodePropertiesJSONObject.getString(
-			"classNameIds");
-
-		if (StringUtil.equals(
-				classNameId, "com.liferay.journal.model.JournalArticle")) {
-
-			map.put(
-				"anyClassTypeJournalArticleAssetRendererFactory",
-				String.valueOf(
-					ddmStructureMap.get(
-						assetListJSONObject.getString("ddmStructureKey"))));
-		}
-		else if (StringUtil.equals(
-					classNameId,
-					"com.liferay.document.library.kernel.model.DLFileEntry")) {
-
-			map.put(
-				"anyClassTypeDLFileEntryAssetRendererFactory",
-				String.valueOf(
-					dlFileEntryTypeMap.get(
-						assetListJSONObject.getString("dlFileEntryTypeKey"))));
-		}
-		else if (StringUtil.equals(
-					classNameId, "com.liferay.object.model.ObjectDefinition")) {
-
-			map.put(
-				"anyAssetType",
-				String.valueOf(
-					objectDefinitionMap.get(
-						assetListJSONObject.getString(
-							"objectDefinitionName"))));
-		}
 
 		Object[] orderByObjects = JSONUtil.toObjectArray(
 			unicodePropertiesJSONObject.getJSONArray("orderBy"));
@@ -4797,6 +4742,33 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return ArrayUtil.toLongArray(assetCategoryIds);
+	}
+
+	private String _getAssetRendererFactoryName(String assetEntryType) {
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				assetEntryType);
+
+		if ((assetRendererFactory == null) ||
+			!assetRendererFactory.isSupportsClassTypes()) {
+
+			return StringPool.BLANK;
+		}
+
+		Class<?> clazz = assetRendererFactory.getClass();
+
+		if (assetRendererFactory instanceof AssetRendererFactoryWrapper) {
+			AssetRendererFactoryWrapper<?> assetRendererFactoryWrapper =
+				(AssetRendererFactoryWrapper<?>)assetRendererFactory;
+
+			clazz = assetRendererFactoryWrapper.getWrappedClass();
+		}
+
+		String className = clazz.getName();
+
+		int pos = className.lastIndexOf(StringPool.PERIOD);
+
+		return className.substring(pos + 1);
 	}
 
 	private Map<String, String> _getClassNameIdStringUtilReplaceValues() {

@@ -16,6 +16,7 @@ import com.liferay.fragment.internal.upgrade.v2_6_0.util.FragmentEntryVersionTab
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -196,6 +197,19 @@ public class FragmentServiceUpgradeStepRegistrator
 					"update FragmentEntryLink set originalFragmentEntryLinkId ",
 					"= 0 where originalFragmentEntryLinkId > 0 and plid in ",
 					"(select plid from Layout where classPK > 0)")));
+
+		registry.register(
+			"2.10.3", "2.11.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"FragmentCollection", "fragmentCollectionId"}
+					};
+				}
+
+			});
 	}
 
 	@Reference

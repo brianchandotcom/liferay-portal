@@ -75,24 +75,30 @@ function default_tear_down {
 }
 
 function deploy_client_extensions {
-	if [[ -n ${1} ]]
+	local client_extensions_list_file=${1}
+
+	if [[ -n $(cat ${client_extensions_list_file}) ]]
 	then
-		for client_extension_name in ${@}
+		echo "Deploying Client Extensions in ${client_extensions_list_file}"
+
+		for client_extension_name in $(cat ${client_extensions_list_file})
 		do
-			uniqueExtensions=()
-
-			if [[ ${client_extension_name} == $1 ]]
-			then
-				echo "Duplicate Client Extensions found: ${client_extension_name}"
-			else
-				uniqueExtensions+=(${client_extension_name})
-			fi
-
 			local client_extension_dir=$(find ${_PORTAL_PROJECT_DIR}/workspaces -type d -name "${client_extension_name}" | grep -v .releng | grep -v .npmscripts | grep -v node_modules)
+
+			if [[ $(echo ${client_extension_dir} | wc -w | grep -o -E '[0-9]+') > 1 ]]
+			then
+				echo "Duplicate Client Extensions found for ${client_extension_name}:"
+
+				printf "%s\n" ${client_extension_dir}
+
+				echo "Please replace \"${client_extension_name}\" in ${client_extensions_list_file} with a partial file path"
+
+				client_extension_dir=$(echo ${client_extension_dir} | awk '{print $1}')
+			fi
 
 			if [[ -d ${client_extension_dir} ]]
 			then
-				echo "Deploy '${client_extension_dir}'"
+				echo "Deploying ${client_extension_dir}"
 
 				cd ${client_extension_dir}
 
@@ -175,7 +181,7 @@ function deploy_parent_project_client_extensions {
 	do
 		if [[ -f ${parent_playwright_project_dir}/env/client-extensions.list ]]
 		then
-			deploy_client_extensions $(cat ${parent_playwright_project_dir}/env/client-extensions.list)
+			deploy_client_extensions ${parent_playwright_project_dir}/env/client-extensions.list
 		fi
 	done
 }
@@ -213,7 +219,7 @@ function deploy_project_client_extensions {
 
 	if [[ -f ${playwright_project_dir}/env/client-extensions.list ]]
 	then
-		deploy_client_extensions $(cat ${playwright_project_dir}/env/client-extensions.list)
+		deploy_client_extensions ${playwright_project_dir}/env/client-extensions.list
 	fi
 }
 

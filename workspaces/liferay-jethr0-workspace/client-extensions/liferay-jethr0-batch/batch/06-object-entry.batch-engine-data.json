@@ -1,0 +1,216 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "C_Routine"
+	},
+	"items": [
+		{
+			"cron": "0 0 0/8 ? * *",
+			"externalReferenceCode": "archiveCIBuildDataController",
+			"jobName": "Archive CI Build Data - $(current_date)",
+			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"master\"}]",
+			"jobPriority": 1,
+			"jobType": "archiveCIBuildData",
+			"name": "Archive CI Build Data Controller",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0/30 * ? * *",
+			"externalReferenceCode": "approveGitHubCollaboratorInvitesController",
+			"jobName": "Approve GitHub Collaborator Invites - $(current_date)",
+			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"}]",
+			"jobPriority": 1,
+			"jobType": "approveGitHubCollaboratorInvites",
+			"name": "Approve GitHub Collaborator Invites Controller",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "forwardBranchesCleanupDailyController",
+			"jobName": "Forward Branches Cleanup Daily - $(current_date)",
+			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"}]",
+			"jobPriority": 1,
+			"jobType": "forwardBranchesCleanupDaily",
+			"name": "Forward Branches Cleanup Daily Controller",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "generateReportsController",
+			"jobName": "Generate Reports - $(current_date)",
+			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"}]",
+			"jobPriority": 1,
+			"jobType": "generateReports",
+			"name": "Generate Reports Controller",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "generateFlakyTestReportControllerEE61x",
+			"jobName": "Generate Flaky Test Report (ee-6.1.x) - $(current_date)",
+			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"ee-6.1.x\"}]",
+			"jobPriority": 1,
+			"jobType": "generateFlakyTestReport",
+			"name": "Generate Flaky Test Report Controller (ee-6.1.x)",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "generateFlakyTestReportControllerEE62x",
+			"jobName": "Generate Flaky Test Report (ee-6.2.x) - $(current_date)",
+			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"ee-6.2.x\"}]",
+			"jobPriority": 1,
+			"jobType": "generateFlakyTestReport",
+			"name": "Generate Flaky Test Report Controller (ee-6.2.x)",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "generateFlakyTestReportControllerMaster",
+			"jobName": "Generate Flaky Test Report (master) - $(current_date)",
+			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"master\"}]",
+			"jobPriority": 1,
+			"jobType": "generateFlakyTestReport",
+			"name": "Generate Flaky Test Report Controller (master)",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "generateFlakyTestReportController70x",
+			"jobName": "Generate Flaky Test Report (7.0.x) - $(current_date)",
+			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"7.0.x\"}]",
+			"jobPriority": 1,
+			"jobType": "generateFlakyTestReport",
+			"name": "Generate Flaky Test Report Controller (7.0.x)",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "generateFlakyTestReportController71x",
+			"jobName": "Generate Flaky Test Report (7.1.x) - $(current_date)",
+			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"7.1.x\"}]",
+			"jobPriority": 1,
+			"jobType": "generateFlakyTestReport",
+			"name": "Generate Flaky Test Report Controller (7.1.x)",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "generateFlakyTestReportController72x",
+			"jobName": "Generate Flaky Test Report (7.2.x) - $(current_date)",
+			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"7.2.x\"}]",
+			"jobPriority": 1,
+			"jobType": "generateFlakyTestReport",
+			"name": "Generate Flaky Test Report Controller (7.2.x)",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "generateFlakyTestReportController73x",
+			"jobName": "Generate Flaky Test Report (7.3.x) - $(current_date)",
+			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"7.3.x\"}]",
+			"jobPriority": 1,
+			"jobType": "generateFlakyTestReport",
+			"name": "Generate Flaky Test Report Controller (7.3.x)",
+			"type": "cron"
+		},
+		{
+			"cron": "0 */10 * ? * *",
+			"externalReferenceCode": "generateReportsControllerEvery10Mins",
+			"jobName": "Generate Reports (Every 10 Mins) - $(current_date)",
+			"jobParameters": "[{\"key\":\"reportNames\",\"value\":\"CI System Status\"}]",
+			"jobPriority": 3,
+			"jobType": "generateReports",
+			"name": "Generate Reports Controller (Every 10 Mins)",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "generateReportsControllerDaily",
+			"jobName": "Generate Reports (Daily) - $(current_date)",
+			"jobParameters": "[{\"key\":\"reportNames\",\"value\":\"Build History,CI System History,Pull Request History,Release History,Upstream History\"}]",
+			"jobPriority": 3,
+			"jobType": "generateReports",
+			"name": "Generate Reports Controller (Daily)",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * 1",
+			"externalReferenceCode": "generateReportsControllerWeekly",
+			"jobName": "Generate Reports (Weekly) - $(current_date)",
+			"jobParameters": "[{\"key\":\"reportNames\",\"value\":\"Utilization\"}]",
+			"jobPriority": 3,
+			"jobType": "generateReports",
+			"name": "Generate Reports Controller (Weekly)",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "liferayBinariesCacheUpdaterController",
+			"jobName": "Liferay Binaries Cache Updater - $(current_date)",
+			"jobParameters": "[]",
+			"jobPriority": 3,
+			"jobType": "liferayBinariesCacheUpdater",
+			"name": "Liferay Binaries Cache Updater Controller",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 1 * ? *",
+			"externalReferenceCode": "portalUpstreamAcceptanceControllerEE61x",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalEE61x",
+			"jobName": "Portal Upstream Acceptance (ee-6.1.x) - $(current_date)",
+			"jobParameters": "[{\"key\":\"portalBuildProfile\",\"value\":\"dxp\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"ee-6.1.x\"}]",
+			"jobPriority": 5,
+			"jobType": "portalUpstreamAcceptance",
+			"name": "Portal Upstream Acceptance Controller (ee-6.1.x)",
+			"type": "upstreamBranchCron"
+		},
+		{
+			"cron": "0 0 0 1 * ? *",
+			"externalReferenceCode": "portalUpstreamAcceptanceControllerEE62x",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalEE62x",
+			"jobName": "Portal Upstream Acceptance (ee-6.2.x) - $(current_date)",
+			"jobParameters": "[{\"key\":\"portalBuildProfile\",\"value\":\"dxp\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"ee-6.2.x\"}]",
+			"jobPriority": 5,
+			"jobType": "portalUpstreamAcceptance",
+			"name": "Portal Upstream Acceptance Controller (ee-6.2.x)",
+			"type": "upstreamBranchCron"
+		},
+		{
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "publishPortalDockerImageDXPNightlyController",
+			"jobName": "Publish Portal Docker Image DXP Nightly - $(current_date)",
+			"jobParameters": "[{\"key\":\"dockerImageFilter\",\"value\":\"7.4.13.nightly\"}]",
+			"jobPriority": 1,
+			"jobType": "publishPortalDockerImage",
+			"name": "Publish Portal Docker Image DXP Nightly Controller",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "repositoryArchiveController",
+			"jobName": "Repository Archive - $(current_date)",
+			"jobParameters": "[{\"key\":\"dockerImageFilter\",\"value\":\"7.4.13.nightly\"}]",
+			"jobPriority": 1,
+			"jobType": "repositoryArchive",
+			"name": "Repository Archive Controller",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * 5 *",
+			"externalReferenceCode": "sanitizeLanguageController",
+			"jobName": "Repository Archive - $(current_date)",
+			"jobParameters": "[]",
+			"jobPriority": 1,
+			"jobType": "sanitizeLanguage",
+			"name": "Sanitize Language Controller",
+			"type": "cron"
+		}
+	]
+}

@@ -36,13 +36,8 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 			url="javascript:void(0);"
 		/>
 
-		<div class="form-group input-text-wrapper">
-			<label class="control-label" id="<portlet:namespace />captchaLabel">
-				<liferay-ui:message key="text-verification" />
-			</label>
-
-			<input
-				aria-labelledby="<portlet:namespace />captchaLabel <portlet:namespace />captchaError" class="form-control" name="<portlet:namespace />captchaText" required="<%= true %>" size="10" type="text" value=""
+			<aui:input
+				aria-labelledby="<portlet:namespace />captchaLabel <portlet:namespace />captchaError" class="form-control" label="text-verification" name="captchaText" required="<%= true %>" size="10" type="text" value=""
 			/>
 
 			<c:if test="<%= Validator.isNotNull(errorMessage) %>">

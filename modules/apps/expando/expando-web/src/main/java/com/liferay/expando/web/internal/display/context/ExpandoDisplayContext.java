@@ -74,15 +74,18 @@ public class ExpandoDisplayContext {
 				_httpServletRequest, "no-custom-fields-are-defined-for-x",
 				HtmlUtil.escape(modelResourceName), false));
 
-		searchContainer.setId("customFields");
-		searchContainer.setRowChecker(
-			new CustomFieldChecker(_renderRequest, _renderResponse));
-
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			_themeDisplay.getCompanyId(), modelResource);
 
-		searchContainer.setResultsAndTotal(
-			Collections.list(expandoBridge.getAttributeNames()));
+		List<String> attributeNames = Collections.list(
+			expandoBridge.getAttributeNames());
+
+		searchContainer.setDelta(attributeNames.size());
+
+		searchContainer.setId("customFields");
+		searchContainer.setRowChecker(
+			new CustomFieldChecker(_renderRequest, _renderResponse));
+		searchContainer.setResultsAndTotal(attributeNames);
 
 		_searchContainer = searchContainer;
 

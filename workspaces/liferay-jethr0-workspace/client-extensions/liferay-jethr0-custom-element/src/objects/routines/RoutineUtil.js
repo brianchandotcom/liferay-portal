@@ -113,7 +113,7 @@ export async function getRoutineById({id, setRoutine}) {
 
 		routine.jobs = jobs;
 
-		if (routine.type.key === 'upstreamBranchCron') {
+		if (routineJSON.gitBranchToRoutines) {
 			routine.upstreamGitBranch = new GitBranch(
 				routineJSON.gitBranchToRoutines
 			);
@@ -168,7 +168,7 @@ export async function getRoutines({setRoutines}) {
 	for (const item of result.data.c.routines.items) {
 		const routine = new Routine(item);
 
-		if (routine.type.key === 'upstreamBranchCron') {
+		if (item.gitBranchToRoutines) {
 			routine.upstreamGitBranch = new GitBranch(item.gitBranchToRoutines);
 		}
 

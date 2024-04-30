@@ -7,7 +7,6 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
@@ -36,7 +35,8 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 
 		String className = JavaSourceUtil.getClassName(fileName);
 
-		if (!absolutePath.contains("/upgrade/") ||
+		if (absolutePath.contains("/portal-kernel/") ||
+			!absolutePath.contains("/upgrade/") ||
 			absolutePath.contains("-test/") || className.startsWith("Base") ||
 			!_isUpgradeProcess(absolutePath, content)) {
 
@@ -74,7 +74,10 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content,
 		String className) {
 
-		String expectedTestClassName = null;
+		String expectedTestClassName = StringBundler.concat(
+			JavaSourceUtil.getPackageName(content), ".test.", className,
+			"Test");
+
 		File file = null;
 
 		if (isModulesFile(absolutePath)) {
@@ -86,20 +89,7 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 				expectedTestClassName, SourceUtil.getRootDirName(absolutePath),
 				getBundleSymbolicNamesMap(absolutePath));
 		}
-		else if (absolutePath.contains("/portal-impl/") ||
-				 absolutePath.contains("/portal-kernel/")) {
-
-			expectedTestClassName = StringUtil.replaceFirst(
-				absolutePath,
-				new String[] {"/portal-impl/src/", "/portal-kernel/src/"},
-				new String[] {
-					"/portal-impl/test/unit/", "/portal-kernel/test/unit/"
-				});
-
-			expectedTestClassName = StringUtil.insert(
-				expectedTestClassName, "Test",
-				expectedTestClassName.length() - 5);
-
+		else if (absolutePath.contains("/portal-impl/")) {
 			file = new File(expectedTestClassName);
 		}
 

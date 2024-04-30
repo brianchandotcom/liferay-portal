@@ -74,7 +74,7 @@ public class DDMFormFieldInfoFieldConverterImpl
 		);
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-11377")) {
-			finalStep = finalStep.multivalued(ddmFormField.isRepeatable());
+			finalStep = finalStep.repeatable(ddmFormField.isRepeatable());
 		}
 
 		return finalStep.build();

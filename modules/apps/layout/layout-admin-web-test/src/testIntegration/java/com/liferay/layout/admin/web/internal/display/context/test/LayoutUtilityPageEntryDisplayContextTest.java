@@ -165,15 +165,15 @@ public class LayoutUtilityPageEntryDisplayContextTest {
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			new MockLiferayPortletRenderRequest();
 
-		mockLiferayPortletRenderRequest.setAttribute(
-			WebKeys.COMPANY_ID, _group.getCompanyId());
-
 		String path = "/view.jsp";
 
 		mockLiferayPortletRenderRequest.setAttribute(
 			MVCRenderConstants.
 				PORTLET_CONTEXT_OVERRIDE_REQUEST_ATTIBUTE_NAME_PREFIX + path,
 			new MockLiferayPortletContext(path));
+
+		mockLiferayPortletRenderRequest.setAttribute(
+			WebKeys.COMPANY_ID, _group.getCompanyId());
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 

@@ -1,7 +1,0 @@
-assemble:
-    - from: assets
-      into: static
-liferay-dotcom-global-css-fonts:
-    name: Liferay Dotcom Global CSS Fonts
-    type: globalCSS
-    url: fonts.css

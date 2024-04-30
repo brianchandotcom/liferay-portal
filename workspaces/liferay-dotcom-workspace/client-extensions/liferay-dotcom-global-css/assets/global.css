@@ -1,3 +1,21 @@
+@font-face {
+	font-family: 'Source Sans 3';
+	font-weight: 1 1000;
+	src: url(./fonts/SourceSans3-Variable.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'Source Serif 4';
+	font-weight: 1 1000;
+	src: url(./fonts/SourceSerif4-Variable.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'Source Code Pro';
+	font-weight: 1 1000;
+	src: url(./fonts/SourceCodePro-Variable.ttf) format('truetype');
+}
+
 :root {
 	--accent-1: var(--color-accent-1: );
 	--accent-2: var(--color-accent-2: );

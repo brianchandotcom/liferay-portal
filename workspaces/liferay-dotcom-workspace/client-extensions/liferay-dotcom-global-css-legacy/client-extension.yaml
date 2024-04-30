@@ -1,7 +1,0 @@
-assemble:
-    - from: assets
-      into: static
-liferay-dotcom-global-css-legacy:
-    name: Liferay Dotcom Global CSS Legacy
-    type: globalCSS
-    url: legacy.css

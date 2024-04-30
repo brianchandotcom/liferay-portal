@@ -949,18 +949,11 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9223 | Test Summary: Create a Web Behavior Segment of Viewing a Blog"
-	@ignore = "true"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentViewingBlog {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-14011
-
 		property test.run.type = "single";
 
 		ACUtils.createBlogsAndAddToPage();
-
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "ac@liferay.com",
@@ -968,15 +961,17 @@ definition {
 			userLastName = "ac",
 			userScreenName = "ac");
 
-		ACDXPSettings.syncNewContactData();
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "ac@liferay.com");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		ACUtils.navigateToSitePage(
+		ACUtils.navigateToSitePageWithUser(
 			actionType = "View Blog",
-			documentTitleList = "Blogs AC Title",
+			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
+			emailList = "ac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -984,7 +979,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = ${propertyName});
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToSegments();
 
@@ -994,53 +989,39 @@ definition {
 
 		ACSegments.addSegmentField(segmentField = "Viewed Blog");
 
-		ACSegments.editWebBehaviorCriterion(
-			indexField = 1,
-			occurenceNumber = 4,
-			searchTerm = "Blogs AC Title");
+		ACSegments.selectDocument(
+			documentTitle = "Blogs AC Title",
+			indexField = 1);
+
+		ACSegments.previewSegmentMembership();
+
+		ACUtils.viewNameList(nameList = "ac ac");
+
+		ACUtils.closeModal();
 
 		ACSegments.saveSegment();
 
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewGenericText(textValueList = "There are no members found on the selected time period.,Check back later to verify if data has been received from your data sources.,Learn more about individuals.");
-
-		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
-
-		ACUtils.navigateToSitePage(
-			actionType = "View Blog",
-			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title",
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
+		ACSegments.viewSegmentCriteriaWebBehavior(
+			activitiesOption = "has",
+			atLeastMost = "at least",
+			occurenceNumber = 1,
+			searchTerm = "'Blogs AC Title'",
+			timeOption = "since",
+			timePeriod = "Last 24 hours");
 
 		ACNavigation.goToSegments();
 
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
-
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewNameList(nameList = "ac ac");
+		ACUtils.viewNameList(nameList = "Dynamic Segment Test");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9224 | Test Summary: Create a Web Behavior Segment of Viewing Document & Media in a Topic"
-	@ignore = "true"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentViewingDM {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-14011
-
 		property test.run.type = "single";
 
 		var username = "ac";
 
 		ACUtils.createDMAndAddToPage();
-
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "${username}@liferay.com",
@@ -1048,15 +1029,17 @@ definition {
 			userLastName = ${username},
 			userScreenName = ${username});
 
-		ACDXPSettings.syncNewContactData();
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "${username}@liferay.com");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "${username}@liferay.com",
-			userLoginFullName = "${username} ${username}");
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		ACUtils.navigateToSitePage(
+		ACUtils.navigateToSitePageWithUser(
 			actionType = "View DM",
-			documentTitleList = "DM AC Title",
+			documentTitleList = "DM AC Title,DM AC Title,DM AC Title,DM AC Title",
+			emailList = "${username}@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -1064,7 +1047,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = ${propertyName});
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToSegments();
 
@@ -1078,52 +1061,35 @@ definition {
 			documentTitle = "DM AC Title",
 			indexField = 1);
 
-		ACSegments.setOccurence(occurenceNumber = 4);
+		ACSegments.previewSegmentMembership();
+
+		ACUtils.viewNameList(nameList = "${username} ${username}");
+
+		ACUtils.closeModal();
 
 		ACSegments.saveSegment();
 
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewGenericText(textValueList = "There are no members found on the selected time period.,Check back later to verify if data has been received from your data sources.,Learn more about individuals.");
-
-		ACUtils.launchDXP(userEmailAddress = "${username}@liferay.com");
-
-		ACUtils.navigateToSitePage(
-			actionType = "View DM",
-			documentTitleList = "DM AC Title,DM AC Title,DM AC Title",
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
+		ACSegments.viewSegmentCriteriaWebBehavior(
+			activitiesOption = "has",
+			atLeastMost = "at least",
+			occurenceNumber = 1,
+			searchTerm = "'DM AC Title'",
+			timeOption = "since",
+			timePeriod = "Last 24 hours");
 
 		ACNavigation.goToSegments();
 
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
-
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewNameList(nameList = "${username} ${username}");
+		ACUtils.viewNameList(nameList = "Dynamic Segment Test");
 	}
 
 	@description = "Create a segment with behavior of viewing a form"
-	@ignore = "true"
 	@priority = 5
 	test CanCreateWebBehaviorSegmentViewingForm {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-14011
-
 		property test.run.type = "single";
 
 		var username = "ac";
 
 		ACUtils.createFormAndAddToPage();
-
-		Navigator.openURL();
-
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "${username}@liferay.com",
@@ -1131,14 +1097,17 @@ definition {
 			userLastName = ${username},
 			userScreenName = ${username});
 
-		ACDXPSettings.syncNewContactData();
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "${username}@liferay.com");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "${username}@liferay.com",
-			userLoginFullName = "${username} ${username}");
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		ACUtils.navigateToSitePage(
+		ACUtils.navigateToSitePageWithUser(
 			actionType = "View Form",
+			documentTitleList = "1,2,3,4",
+			emailList = "${username}@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -1146,7 +1115,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = ${propertyName});
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToSegments();
 
@@ -1160,51 +1129,33 @@ definition {
 			documentTitle = "Created Form Name",
 			indexField = 1);
 
-		ACSegments.setOccurence(occurenceNumber = 4);
+		ACSegments.previewSegmentMembership();
+
+		ACUtils.viewNameList(nameList = "${username} ${username}");
+
+		ACUtils.closeModal();
 
 		ACSegments.saveSegment();
 
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewGenericText(textValueList = "There are no members found on the selected time period.,Check back later to verify if data has been received from your data sources.,Learn more about individuals.");
-
-		ACUtils.launchDXP(userEmailAddress = "${username}@liferay.com");
-
-		for (var n : list "1,2,3") {
-			ACUtils.navigateToSitePage(
-				actionType = "View Form",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
+		ACSegments.viewSegmentCriteriaWebBehavior(
+			activitiesOption = "has",
+			atLeastMost = "at least",
+			occurenceNumber = 1,
+			searchTerm = "'Created Form Name'",
+			timeOption = "since",
+			timePeriod = "Last 24 hours");
 
 		ACNavigation.goToSegments();
 
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
-
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewNameList(nameList = "${username} ${username}");
+		ACUtils.viewNameList(nameList = "Dynamic Segment Test");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9225 | Test Summary: Create a Web Behavior Segment of Viewing a Page"
-	@ignore = "true"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentViewingPage {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-14011
-
 		property test.run.type = "single";
 
 		var username = "ac";
-
-		ACUtils.createBlogsAndAddToPage();
-
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "${username}@liferay.com",
@@ -1212,15 +1163,17 @@ definition {
 			userLastName = ${username},
 			userScreenName = ${username});
 
-		ACDXPSettings.syncNewContactData();
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "${username}@liferay.com");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "${username}@liferay.com",
-			userLoginFullName = "${username} ${username}");
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		ACUtils.navigateToSitePage(
-			actionType = "View Blog",
-			documentTitleList = "Blogs AC Title",
+		ACUtils.navigateToSitePageWithUser(
+			actionType = "View WC",
+			documentTitleList = "1,2,3,4,5",
+			emailList = "${username}@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -1238,51 +1191,37 @@ definition {
 
 		ACSegments.addSegmentField(segmentField = "Viewed Page");
 
-		ACSegments.editWebBehaviorCriterion(
-			indexField = 1,
-			occurenceNumber = 4,
-			searchTerm = "Blogs AC Title - Site Name - Liferay DXP");
+		ACSegments.selectDocument(
+			documentTitle = "AC Page - Site Name",
+			indexField = 1);
+
+		ACSegments.previewSegmentMembership();
+
+		ACUtils.viewNameList(nameList = "${username} ${username}");
+
+		ACUtils.closeModal();
 
 		ACSegments.saveSegment();
 
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewGenericText(textValueList = "There are no members found on the selected time period.,Check back later to verify if data has been received from your data sources.,Learn more about individuals.");
-
-		ACUtils.launchDXP(userEmailAddress = "${username}@liferay.com");
-
-		ACUtils.navigateToSitePage(
-			actionType = "View Blog",
-			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title",
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
+		ACSegments.viewSegmentCriteriaWebBehavior(
+			activitiesOption = "has",
+			atLeastMost = "at least",
+			occurenceNumber = 1,
+			searchTerm = "'AC Page - Site Name'",
+			timeOption = "since",
+			timePeriod = "Last 24 hours");
 
 		ACNavigation.goToSegments();
 
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
-
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewNameList(nameList = "${username} ${username}");
+		ACUtils.viewNameList(nameList = "Dynamic Segment Test");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9226 | Test Summary: Create a Web Behavior Segment of Viewing a Web Content"
-	@ignore = "true"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentViewingWC {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-14011
-
 		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
-
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "ac@liferay.com",
@@ -1290,13 +1229,17 @@ definition {
 			userLastName = "ac",
 			userScreenName = "ac");
 
-		ACDXPSettings.syncNewContactData();
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "ac@liferay.com");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		ACUtils.navigateToSitePage(
+		ACUtils.navigateToSitePageWithUser(
+			actionType = "View WC",
+			documentTitleList = "1,2,3,4,5",
+			emailList = "ac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -1304,7 +1247,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = ${propertyName});
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToSegments();
 
@@ -1314,36 +1257,29 @@ definition {
 
 		ACSegments.addSegmentField(segmentField = "Viewed Web Content");
 
-		ACSegments.editWebBehaviorCriterion(
-			indexField = 1,
-			occurenceNumber = 4,
-			searchTerm = "Web Content AC Title");
+		ACSegments.selectDocument(
+			documentTitle = "Web Content AC Title",
+			indexField = 1);
+
+		ACSegments.previewSegmentMembership();
+
+		ACUtils.viewNameList(nameList = "ac ac");
+
+		ACUtils.closeModal();
 
 		ACSegments.saveSegment();
 
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewGenericText(textValueList = "There are no members found on the selected time period.,Check back later to verify if data has been received from your data sources.,Learn more about individuals.");
-
-		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
-
-		for (var n : list "1,2,3") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
+		ACSegments.viewSegmentCriteriaWebBehavior(
+			activitiesOption = "has",
+			atLeastMost = "at least",
+			occurenceNumber = 1,
+			searchTerm = "'Web Content AC Title'",
+			timeOption = "since",
+			timePeriod = "Last 24 hours");
 
 		ACNavigation.goToSegments();
 
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
-
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewNameList(nameList = "ac ac");
+		ACUtils.viewNameList(nameList = "Dynamic Segment Test");
 	}
 
 	@description = "Bug: LRAC-8233 | Automation ID: LRAC-11537 | Test Summary: Check web behavior shows which data source data came from"

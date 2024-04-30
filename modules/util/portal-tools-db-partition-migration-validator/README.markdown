@@ -4,7 +4,7 @@ This tool allows the export and validation of the database information required 
 
 ## Requirements
 
-- MySQL
+- MySQL or PostgreSQL
 - Database user with DDL privileges
 
 ## Usage

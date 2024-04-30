@@ -31,23 +31,25 @@ public class FragmentCollectionServiceWrapper
 
 	@Override
 	public FragmentCollection addFragmentCollection(
-			long groupId, String name, String description,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentCollectionService.addFragmentCollection(
-			groupId, name, description, serviceContext);
-	}
-
-	@Override
-	public FragmentCollection addFragmentCollection(
-			long groupId, String fragmentCollectionKey, String name,
+			String externalReferenceCode, long groupId, String name,
 			String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _fragmentCollectionService.addFragmentCollection(
-			groupId, fragmentCollectionKey, name, description, serviceContext);
+			externalReferenceCode, groupId, name, description, serviceContext);
+	}
+
+	@Override
+	public FragmentCollection addFragmentCollection(
+			String externalReferenceCode, long groupId,
+			String fragmentCollectionKey, String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fragmentCollectionService.addFragmentCollection(
+			externalReferenceCode, groupId, fragmentCollectionKey, name,
+			description, serviceContext);
 	}
 
 	@Override
@@ -57,6 +59,15 @@ public class FragmentCollectionServiceWrapper
 
 		return _fragmentCollectionService.deleteFragmentCollection(
 			fragmentCollectionId);
+	}
+
+	@Override
+	public FragmentCollection deleteFragmentCollection(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fragmentCollectionService.deleteFragmentCollection(
+			externalReferenceCode, groupId);
 	}
 
 	@Override
@@ -73,6 +84,14 @@ public class FragmentCollectionServiceWrapper
 
 		return _fragmentCollectionService.fetchFragmentCollection(
 			fragmentCollectionId);
+	}
+
+	@Override
+	public FragmentCollection fetchFragmentCollection(
+		String externalReferenceCode, long groupId) {
+
+		return _fragmentCollectionService.fetchFragmentCollection(
+			externalReferenceCode, groupId);
 	}
 
 	@Override

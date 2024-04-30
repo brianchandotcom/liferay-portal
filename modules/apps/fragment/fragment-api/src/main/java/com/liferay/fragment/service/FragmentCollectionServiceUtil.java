@@ -31,22 +31,24 @@ public class FragmentCollectionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.fragment.service.impl.FragmentCollectionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static FragmentCollection addFragmentCollection(
-			long groupId, String name, String description,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addFragmentCollection(
-			groupId, name, description, serviceContext);
-	}
-
-	public static FragmentCollection addFragmentCollection(
-			long groupId, String fragmentCollectionKey, String name,
+			String externalReferenceCode, long groupId, String name,
 			String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addFragmentCollection(
-			groupId, fragmentCollectionKey, name, description, serviceContext);
+			externalReferenceCode, groupId, name, description, serviceContext);
+	}
+
+	public static FragmentCollection addFragmentCollection(
+			String externalReferenceCode, long groupId,
+			String fragmentCollectionKey, String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addFragmentCollection(
+			externalReferenceCode, groupId, fragmentCollectionKey, name,
+			description, serviceContext);
 	}
 
 	public static FragmentCollection deleteFragmentCollection(
@@ -54,6 +56,14 @@ public class FragmentCollectionServiceUtil {
 		throws PortalException {
 
 		return getService().deleteFragmentCollection(fragmentCollectionId);
+	}
+
+	public static FragmentCollection deleteFragmentCollection(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().deleteFragmentCollection(
+			externalReferenceCode, groupId);
 	}
 
 	public static void deleteFragmentCollections(long[] fragmentCollectionIds)
@@ -67,6 +77,13 @@ public class FragmentCollectionServiceUtil {
 		throws PortalException {
 
 		return getService().fetchFragmentCollection(fragmentCollectionId);
+	}
+
+	public static FragmentCollection fetchFragmentCollection(
+		String externalReferenceCode, long groupId) {
+
+		return getService().fetchFragmentCollection(
+			externalReferenceCode, groupId);
 	}
 
 	public static List<com.liferay.portal.kernel.repository.model.FileEntry>

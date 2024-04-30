@@ -52,24 +52,26 @@ public class FragmentCollectionLocalServiceWrapper
 
 	@Override
 	public FragmentCollection addFragmentCollection(
-			long userId, long groupId, String name, String description,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentCollectionLocalService.addFragmentCollection(
-			userId, groupId, name, description, serviceContext);
-	}
-
-	@Override
-	public FragmentCollection addFragmentCollection(
-			long userId, long groupId, String fragmentCollectionKey,
+			String externalReferenceCode, long userId, long groupId,
 			String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _fragmentCollectionLocalService.addFragmentCollection(
-			userId, groupId, fragmentCollectionKey, name, description,
+			externalReferenceCode, userId, groupId, name, description,
 			serviceContext);
+	}
+
+	@Override
+	public FragmentCollection addFragmentCollection(
+			String externalReferenceCode, long userId, long groupId,
+			String fragmentCollectionKey, String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fragmentCollectionLocalService.addFragmentCollection(
+			externalReferenceCode, userId, groupId, fragmentCollectionKey, name,
+			description, serviceContext);
 	}
 
 	/**
@@ -136,6 +138,15 @@ public class FragmentCollectionLocalServiceWrapper
 
 		return _fragmentCollectionLocalService.deleteFragmentCollection(
 			fragmentCollectionId);
+	}
+
+	@Override
+	public FragmentCollection deleteFragmentCollection(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fragmentCollectionLocalService.deleteFragmentCollection(
+			externalReferenceCode, groupId);
 	}
 
 	/**
@@ -267,6 +278,14 @@ public class FragmentCollectionLocalServiceWrapper
 
 		return _fragmentCollectionLocalService.fetchFragmentCollection(
 			groupId, fragmentCollectionKey);
+	}
+
+	@Override
+	public FragmentCollection fetchFragmentCollection(
+		String externalReferenceCode, long groupId) {
+
+		return _fragmentCollectionLocalService.fetchFragmentCollection(
+			externalReferenceCode, groupId);
 	}
 
 	@Override

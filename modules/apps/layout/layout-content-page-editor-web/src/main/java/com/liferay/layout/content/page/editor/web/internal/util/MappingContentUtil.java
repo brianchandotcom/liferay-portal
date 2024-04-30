@@ -70,9 +70,9 @@ public class MappingContentUtil {
 				return infoField.getLabel(locale);
 			}
 		).put(
-			"multivalued", infoField.isMultivalued()
-		).put(
 			"name", infoField.getName()
+		).put(
+			"repeatable", infoField.isMultivalued()
 		).put(
 			"required", infoField.isRequired()
 		).put(

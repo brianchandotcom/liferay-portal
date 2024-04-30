@@ -37,7 +37,7 @@ export default function RepeatableOptionsSelector({
 }) {
 	const field = getSelectedField({fields, value: fieldName});
 
-	if (!field || !field.multivalued) {
+	if (!field || !field.repeatable) {
 		return null;
 	}
 

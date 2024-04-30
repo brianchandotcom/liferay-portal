@@ -32,6 +32,8 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.entry.ObjectEntryContext;
+import com.liferay.object.entry.contributor.ObjectEntryValuesContributor;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.exception.DuplicateObjectEntryExternalReferenceCodeException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
@@ -69,6 +71,8 @@ import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.rest.filter.factory.FilterFactory;
+import com.liferay.object.scope.CompanyScoped;
+import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -87,6 +91,8 @@ import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.TreeFactory;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.sql.dsl.Column;
@@ -223,6 +229,7 @@ import org.apache.commons.io.IOUtils;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -259,6 +266,8 @@ public class ObjectEntryLocalServiceImpl
 		_fillDefaultValue(
 			_objectFieldLocalService.getObjectFields(objectDefinitionId),
 			values);
+
+		_contributeValues(groupId, objectDefinition, userId, values);
 
 		long objectEntryId = counterLocalService.increment();
 
@@ -1488,6 +1497,9 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
+		_contributeValues(
+			objectEntry.getGroupId(), objectDefinition, userId, values);
+
 		_validateValues(
 			objectEntry, user.isGuestUser(), objectEntry.getGroupId(),
 			objectDefinition, objectEntryId, serviceContext, userId, values);
@@ -1622,6 +1634,17 @@ public class ObjectEntryLocalServiceImpl
 			new InclusionOperatorsObjectFilterParser(),
 			ObjectFilterConstants.TYPE_EXCLUDES,
 			ObjectFilterConstants.TYPE_INCLUDES);
+
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, ObjectEntryValuesContributor.class);
+	}
+
+	@Deactivate
+	@Override
+	protected void deactivate() {
+		super.deactivate();
+
+		_serviceTrackerList.close();
 	}
 
 	@Modified
@@ -1841,6 +1864,44 @@ public class ObjectEntryLocalServiceImpl
 			values.put(
 				objectRelationshipERCObjectFieldName,
 				objectEntry.getExternalReferenceCode());
+		}
+	}
+
+	private void _contributeValues(
+		long groupId, ObjectDefinition objectDefinition, long userId,
+		Map<String, Serializable> values) {
+
+		for (ObjectEntryValuesContributor objectEntryValuesContributor :
+				_serviceTrackerList) {
+
+			if (objectEntryValuesContributor instanceof CompanyScoped) {
+				CompanyScoped companyScoped =
+					(CompanyScoped)objectEntryValuesContributor;
+
+				if (!companyScoped.isAllowedCompany(
+						objectDefinition.getCompanyId())) {
+
+					continue;
+				}
+			}
+
+			if (objectEntryValuesContributor instanceof
+					ObjectDefinitionScoped) {
+
+				ObjectDefinitionScoped objectDefinitionScoped =
+					(ObjectDefinitionScoped)objectEntryValuesContributor;
+
+				if (!objectDefinitionScoped.isAllowedObjectDefinition(
+						objectDefinition.getName())) {
+
+					continue;
+				}
+			}
+
+			objectEntryValuesContributor.contribute(
+				new ObjectEntryContext(
+					groupId, objectDefinition.getObjectDefinitionId(), userId,
+					values));
 		}
 	}
 
@@ -4888,6 +4949,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	private ServiceTrackerList<ObjectEntryValuesContributor>
+		_serviceTrackerList;
 
 	@Reference
 	private Sorts _sorts;

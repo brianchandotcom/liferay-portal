@@ -45,7 +45,7 @@ definition {
 			tableName = "Company");
 
 		SQL.dropMySQLIndex(
-			indexName = "IX_9AA41E0",
+			indexName = "IX_D3ACAD4A",
 			tableName = "JournalArticle");
 
 		task ("Restart portal and cleaning the logs") {
@@ -60,10 +60,10 @@ definition {
 			fail("Company index IX_EC00543C wasn't recreated");
 		}
 
-		var hasJournalArticleMissingIndex = SQL.hasMySQLIndex(indexName = "IX_9AA41E0");
+		var hasJournalArticleMissingIndex = SQL.hasMySQLIndex(indexName = "IX_D3ACAD4A");
 
 		if (${hasJournalArticleMissingIndex} == "false") {
-			fail("JournalArticle index IX_9AA41E0 wasn't recreated");
+			fail("JournalArticle index IX_D3ACAD4A wasn't recreated");
 		}
 	}
 

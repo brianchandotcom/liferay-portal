@@ -88,6 +88,9 @@
 											}
 										}
 									],
+									"fragmentStyle": {
+										"hidden": true
+									},
 									"indexed": true
 								},
 								"id": "8ccf7738-54bd-e011-4ab2-dbb31dc0822b",

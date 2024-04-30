@@ -4,7 +4,6 @@
  */
 
 import {UploadedImage} from '../../components/FileList/FileList';
-import {Liferay} from '../../liferay/liferay';
 import fetcher from '../fetcher';
 
 class HeadlessCommerceAdminCatalog {
@@ -132,21 +131,6 @@ class HeadlessCommerceAdminCatalog {
 		return fetcher.patch(
 			`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${externalReferenceCode}`,
 			body
-		);
-	}
-
-	async getMarketplaceVocabularies() {
-		return fetcher(
-			`/o/headless-admin-taxonomy/v1.0/sites/${Liferay.ThemeDisplay.getCompanyGroupId()}/taxonomy-vocabularies`
-		);
-	}
-
-	async getMarketplaceCategories(
-		vocabularyId: number,
-		searchParams = new URLSearchParams()
-	) {
-		return fetcher(
-			`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories?${searchParams.toString()}`
 		);
 	}
 

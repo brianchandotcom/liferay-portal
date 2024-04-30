@@ -49,6 +49,8 @@ export default {
 	'cancel': 'Cancel',
 	'cash': 'Cash',
 	'categories': 'Categories',
+	'choose-the-marketplace-category-that-most-accurately-describes-what-your-solution-does-users-looking-for-specific-types-of-solutions-will-often-browse-categories-by-searching-on-a-specific-category-name-in-the-main-marketplace-home-page-having-your-solution-listed-under-the-appropriate-category-will-help-them-find-your-solution':
+		'Choose the Marketplace category that most accurately describes what your solution does. Users looking for specific types of solutions will often browse categories by searching on a specific category name in the main Marketplace home page. Having your solution listed under the appropriate category will help them find your solution.',
 	'click-on-add-apps-to-start': "Click on 'Add Apps' to start.",
 	'client-extensions': 'Client Extensions',
 	'cloud-apps-must-state-resource-requirements-if-your-app-has-no-additional-cpu-or-ram-requirements-please-enter-0':
@@ -82,6 +84,8 @@ export default {
 	'customer-account': 'Customer Account',
 	'customer-dashboard': 'Customer Dashboard',
 	'customer-roject': 'Customer Project',
+	'customers-of-the-marketplace-will-see-this-as-the-name-of-the-solution-please-use-a-title-of-no-longer-than-50-characters-titles-longer-than-18-characters-may-be-truncated-the-solution-title-may-contain-the-word-liferay-to-describe-its-use-or-intent-as-long-as-the-name-does-not-imply-official-certification-or-validation-from-liferay-inc-an-example-of-permissible-names-would-be-exchange-connector-for-liferay-or-integration-connector-kit-for-liferay-while-liferay-mail-solution-or-liferay-management-console-would-not-be-permitted-without-explicit-approval-please-refer-to-our-trademark-policy':
+		'Customers of the marketplace will see this as the name of the solution. Please use a title of no longer than 50 characters. Titles longer than 18 characters may be truncated. The Solution title may contain the word "Liferay" to describe its use or intent as long as the name does not imply official certification or validation from Liferay, Inc. An example of permissible names would be "Exchange Connector for Liferay" or "Integration Connector Kit for Liferay" while "Liferay Mail Solution" or "Liferay Management Console" would not be permitted without explicit approval. Please refer to our trademark policy.',
 	'customize-solution-header': 'Customize solution header',
 	'customize-storefront-solutions-details':
 		'Customize storefront solutions details',
@@ -283,6 +287,8 @@ export default {
 	'success': 'success',
 	'summary': 'Summary',
 	'tags': 'Tags',
+	'tags-help-to-describe-your-solution-in-the-marketplace-select-the-tags-most-relevant-to-your-solution-they-can-be-changed-if-needed':
+		'Tags help to describe your solution in the Marketplace. Select the tags most relevant to your solution. They can be changed if needed.',
 	'tax-vat': 'Tax/VAT',
 	'terms-of-service': 'Terms of Service',
 	'thank-you-for-your': 'Thank you for your',
@@ -349,6 +355,8 @@ export default {
 		'We are happy to have you interested in the Liferay Marketplace. At the moment, we are working on enhancing the experience for our publishers in the Marketplace.  If you are an existing Liferay developer or partner, you can choose to join our pilot group of publishers to submit apps to the Marketplace.  Continue to request a publisher account.',
 	'x-is-required': '{0} is required',
 	'yes': 'Yes',
+	'you-can-put-anything-you-want-here-but-a-good-guideline-is-no-more-than-4-5-paragraphs-this-field-does-not-allow-any-markup-tags-its-just-text-please-do-not-use-misleading-names-information-or-icons-descriptions-should-be-as-concise-as-possible-ensure-your-icons-images-descriptions-and-tags-are-free-of-profanity-or-other-offensive-material':
+		'You can put anything you want here, but a good guideline is no more than 4-5 paragraphs. This field does not allow any markup tags - it’s just text Please do not use misleading names, information, or icons. Descriptions should be as concise as possible. Ensure your icons, images, descriptions, and tags are free of profanity or other offensive material.',
 	'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb':
 		'You can upload one or many ZIP files. Max total size is 500MB.',
 	'your-request-completed-successfully':

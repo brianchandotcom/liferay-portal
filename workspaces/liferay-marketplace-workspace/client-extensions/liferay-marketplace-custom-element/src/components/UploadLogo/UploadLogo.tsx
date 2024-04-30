@@ -5,7 +5,9 @@
 
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import ReactDOMServer from 'react-dom/server';
 
+import i18n from '../../i18n';
 import {UploadedFile} from '../FileList/FileList';
 
 type UploadLogoProps = {
@@ -18,7 +20,6 @@ type UploadLogoProps = {
 const UploadLogo: React.FC<UploadLogoProps> = ({
 	onDeleteFile,
 	onUpload,
-	tooltip,
 	uploadedFile,
 }) => {
 	return (
@@ -43,7 +44,24 @@ const UploadLogo: React.FC<UploadLogoProps> = ({
 				<div
 					data-title-set-as-html
 					data-tooltip-align="top"
-					title={tooltip}
+					title={ReactDOMServer.renderToString(
+						<span>
+							The icon is a small image representation of the app.
+							Icons must be a PNG, JPG, or GIF format and cannot
+							exceed 5MB. Animated images are prohibited. The use
+							of the Liferay logo, including any permitted
+							alternate versions of the Liferay logo, is permitted
+							only with Liferay&apos;s express permission. Please
+							refer to our{' '}
+							<a
+								href="https://www.liferay.com/trademark"
+								target="_blank"
+							>
+								trademark policy
+							</a>{' '}
+							for details.
+						</span>
+					)}
 				>
 					<input
 						accept="image/jpeg, image/png, image/gif"
@@ -61,7 +79,7 @@ const UploadLogo: React.FC<UploadLogoProps> = ({
 						className="btn btn-primary btn-sm m-0"
 						htmlFor="file"
 					>
-						Upload Image
+						{i18n.translate('upload-image')}
 					</label>
 				</div>
 
@@ -70,7 +88,7 @@ const UploadLogo: React.FC<UploadLogoProps> = ({
 						className="btn btn-secondary btn-sm m-0 upload-logo-delete-button"
 						onClick={() => onDeleteFile(uploadedFile.id)}
 					>
-						Delete
+						{i18n.translate('delete')}
 					</button>
 				)}
 			</div>

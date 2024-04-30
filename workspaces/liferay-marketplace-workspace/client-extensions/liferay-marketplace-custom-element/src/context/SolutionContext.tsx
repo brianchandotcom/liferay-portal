@@ -52,6 +52,7 @@ type SolutionPayload = {
 export type AppActions = ActionMap<SolutionPayload>[keyof ActionMap<
 	SolutionPayload
 >];
+
 const reducer = (state: InitialState, action: AppActions) => {
 	switch (action.type) {
 		case SolutionTypes.SET_PRODUCT_ID: {

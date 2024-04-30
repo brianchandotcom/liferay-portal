@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -764,20 +765,26 @@ public class RedirectEntryLocalServiceTest {
 		return _GROUP_BASE_URL + StringPool.SLASH + url;
 	}
 
-	private static final String _ANOTHER_SOURCE_URL = "anotherSourceURL";
+	private static final String _ANOTHER_SOURCE_URL =
+		"URL" + RandomTestUtil.randomString();
 
-	private static final String _DESTINATION_URL = "destinationURL";
+	private static final String _DESTINATION_URL =
+		"URL" + RandomTestUtil.randomString();
 
-	private static final String _FINAL_DESTINATION_URL = "finalDestinationURL";
+	private static final String _FINAL_DESTINATION_URL =
+		"URL" + RandomTestUtil.randomString();
 
-	private static final String _GROUP_BASE_URL = "groupBaseURL";
+	private static final String _GROUP_BASE_URL =
+		"URL" + RandomTestUtil.randomString();
 
 	private static final String _INTERMEDIATE_DESTINATION_URL =
-		"intermediateDestinationURL";
+		"URL" + RandomTestUtil.randomString();
 
-	private static final String _INTERMEDIATE_URL = "intermediateURL";
+	private static final String _INTERMEDIATE_URL =
+		"URL" + RandomTestUtil.randomString();
 
-	private static final String _SOURCE_URL = "sourceURL";
+	private static final String _SOURCE_URL =
+		"URL" + RandomTestUtil.randomString();
 
 	@DeleteAfterTestRun
 	private RedirectEntry _chainedRedirectEntry;

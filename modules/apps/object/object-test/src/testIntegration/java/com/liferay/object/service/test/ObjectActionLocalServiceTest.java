@@ -1832,6 +1832,96 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
+	public void testOnAfterUpdateObjectActionWithAttachmentObjectField()
+		throws Exception {
+
+		ObjectDefinition publishedObjectDefinition =
+			_publishCustomObjectDefinition(
+				false,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+						ObjectFieldConstants.DB_TYPE_INTEGER, true, false, null,
+						"integerField", "integerField", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+						ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
+						"upload", "upload",
+						Arrays.asList(
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_ACCEPTED_FILE_EXTENSIONS
+							).value(
+								"txt"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_FILE_SOURCE
+							).value(
+								ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+							).value(
+								String.valueOf(100)
+							).build()),
+						false)));
+
+		_objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			publishedObjectDefinition.getObjectDefinitionId(), true,
+			StringPool.BLANK, RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			UnicodePropertiesBuilder.put(
+				"objectDefinitionId",
+				publishedObjectDefinition.getObjectDefinitionId()
+			).put(
+				"predefinedValues",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "integerField"
+					).put(
+						"value", "1"
+					)
+				).toString()
+			).build(),
+			false);
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			0, publishedObjectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"integerField", String.valueOf(RandomTestUtil.randomInt())
+			).put(
+				"upload", StringPool.BLANK
+			).build());
+
+		_objectEntryLocalService.addOrUpdateObjectEntry(
+			objectEntry.getExternalReferenceCode(), TestPropsValues.getUserId(),
+			0, publishedObjectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"integerField", String.valueOf(RandomTestUtil.randomInt())
+			).put(
+				"upload", StringPool.BLANK
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		objectEntry = _objectEntryLocalService.getObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		Assert.assertEquals(1, values.get("integerField"));
+	}
+
+	@Test
 	public void testUpdateObjectAction() throws Exception {
 		String externalReferenceCode1 = RandomTestUtil.randomString();
 
@@ -2059,6 +2149,16 @@ public class ObjectActionLocalServiceTest {
 			objectActionTriggerKey, unicodeProperties, system);
 	}
 
+	private ObjectEntry _addObjectEntry(
+			long groupId, long objectDefinitionId,
+			Map<String, Serializable> values)
+		throws Exception {
+
+		return _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), groupId, objectDefinitionId, values,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
 	private void _assertGroovyObjectActionExecutorArguments(
 		String firstName, ObjectEntry objectEntry) {
 
@@ -2284,6 +2384,20 @@ public class ObjectActionLocalServiceTest {
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId());
+	}
+
+	private ObjectDefinition _publishCustomObjectDefinition(
+			boolean enableLocalization, List<ObjectField> objectFields)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				enableLocalization, _objectDefinitionLocalService,
+				objectFields);
+
+		return _objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
 	}
 
 	private void _testAddObjectActionWithCircularReference(

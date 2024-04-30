@@ -130,7 +130,11 @@ public abstract class BaseEntityRepository<T extends Entity>
 	}
 
 	protected T add(T entity) {
-		addAll(Collections.singleton(entity));
+		Set<T> entities = new HashSet<>();
+
+		entities.add(entity);
+
+		addAll(entities);
 
 		return entity;
 	}

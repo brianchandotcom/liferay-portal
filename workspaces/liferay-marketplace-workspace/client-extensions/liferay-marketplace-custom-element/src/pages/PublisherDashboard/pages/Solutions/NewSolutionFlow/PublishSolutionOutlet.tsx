@@ -53,7 +53,8 @@ const PublishSolutionOutlet = () => {
 
 				if (isContinue) {
 					SOLUTION_FLOW_ITEMS[index].checked = true;
-				} else {
+				}
+				else {
 					SOLUTION_FLOW_ITEMS[index - 1].checked = false;
 				}
 

@@ -10,7 +10,7 @@ import ReactDOMServer from 'react-dom/server';
 
 import {UploadedFile} from '../../../../../../components/FileList/FileList';
 import Form from '../../../../../../components/MarketplaceForm';
-import {UploadLogo} from '../../../../../../components/UploadLogo/UploadLogo';
+import UploadLogo from '../../../../../../components/UploadLogo/UploadLogo';
 import {
 	SolutionTypes,
 	useSolutionContext,
@@ -189,7 +189,7 @@ const Profile = () => {
 					</Form.Label>
 
 					<ClayMultiSelect
-						{...{placeholder: 'Select Categories'}}
+						{...{placeholder: 'Select categories'}}
 						inputName="description-selector"
 						items={categories}
 						key={'cat-' + categories.length}
@@ -224,7 +224,7 @@ const Profile = () => {
 					</Form.Label>
 
 					<ClayMultiSelect
-						{...{placeholder: 'Select Tags'}}
+						{...{placeholder: 'Select tags'}}
 						inputName="tags-selector"
 						items={tags}
 						key={'tags-' + tags.length}

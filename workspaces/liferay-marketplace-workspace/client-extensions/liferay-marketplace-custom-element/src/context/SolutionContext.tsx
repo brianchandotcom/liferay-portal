@@ -3,16 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	ReactNode,
-	createContext,
-	useContext,
-	useEffect,
-	useReducer,
-} from 'react';
-import {useParams} from 'react-router-dom';
-
-import HeadlessCommerceAdminCatalogImpl from '../services/rest/HeadlessCommerceAdminCatalog';
+import {ReactNode, createContext, useContext, useReducer} from 'react';
 
 export type InitialState = {
 	productId: number;
@@ -97,16 +88,6 @@ export default function SolutionContextProvider({
 	children,
 }: SolutionContextProviderProps) {
 	const [state, dispatch] = useReducer(reducer, solutionInitialState);
-
-	const {id: productId} = useParams();
-
-	useEffect(() => {
-		if (productId) {
-			HeadlessCommerceAdminCatalogImpl.getProduct(productId as string)
-				.then(console.log)
-				.catch(console.error);
-		}
-	}, [productId]);
 
 	return (
 		<SolutionContext.Provider value={[state, dispatch]}>

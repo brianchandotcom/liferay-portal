@@ -27,10 +27,7 @@ import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
 
 import './DefineAppProfilePage.scss';
-
-import ClayIcon from '@clayui/icon';
-import {ClayTooltipProvider} from '@clayui/tooltip';
-
+import UploadLogo from '../../../../../../components/UploadLogo/UploadLogo';
 import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 
@@ -42,76 +39,6 @@ type DefineAppProfilePageProps = {
 type VocabDropdownItem = {
 	checked: boolean;
 } & Categories;
-
-type UploadLogoProps = {
-	onDeleteFile: (id: string) => void;
-	onUpload: (files: FileList) => void;
-	tooltip?: string;
-	uploadedFile?: UploadedFile;
-};
-
-const UploadLogo: React.FC<UploadLogoProps> = ({
-	onDeleteFile,
-	onUpload,
-	tooltip,
-	uploadedFile,
-}) => {
-	return (
-		<ClayTooltipProvider>
-			<div className="upload-logo-container">
-				{uploadedFile?.preview ? (
-					<img
-						alt="New App logo"
-						className="upload-logo-icon"
-						src={uploadedFile?.preview}
-					/>
-				) : (
-					<div className="bg-light py-5 rounded">
-						<ClayIcon
-							aria-label="New App logo"
-							className="text-muted upload-logo-icon"
-							symbol="picture"
-						/>
-					</div>
-				)}
-
-				<div
-					data-title-set-as-html
-					data-tooltip-align="top"
-					title={tooltip}
-				>
-					<input
-						accept="image/jpeg, image/png, image/gif"
-						id="file"
-						name="file"
-						onChange={({target: {files}}) => {
-							if (files !== null) {
-								onUpload(files);
-							}
-						}}
-						type="file"
-					/>
-
-					<label
-						className="btn btn-primary btn-sm m-0"
-						htmlFor="file"
-					>
-						Upload Image
-					</label>
-				</div>
-
-				{uploadedFile?.uploaded && (
-					<button
-						className="btn btn-secondary btn-sm m-0 upload-logo-delete-button"
-						onClick={() => onDeleteFile(uploadedFile.id)}
-					>
-						Delete
-					</button>
-				)}
-			</div>
-		</ClayTooltipProvider>
-	);
-};
 
 export function DefineAppProfilePage({
 	onClickBack,

@@ -31,12 +31,16 @@ import org.springframework.context.annotation.Configuration;
 public class GitCommitEntityRepository
 	extends BaseEntityRepository<GitCommitEntity> {
 
-	public GitCommitEntity createGitPullRequestEntity(
+	public GitCommitEntity createGitCommitEntity(
 		GitBranchEntity gitBranchEntity, String sha) {
 
 		GitCommitEntity gitCommitEntity = getBySHA(sha);
 
 		if (gitCommitEntity != null) {
+			gitBranchEntity.addGitCommitEntity(gitCommitEntity);
+
+			gitCommitEntity.setGitBranchEntity(gitBranchEntity);
+
 			return gitCommitEntity;
 		}
 
@@ -68,7 +72,7 @@ public class GitCommitEntityRepository
 			}
 		}
 
-		return null;
+		return add(_gitCommitEntityDALO.getBySHA(sha));
 	}
 
 	@Override

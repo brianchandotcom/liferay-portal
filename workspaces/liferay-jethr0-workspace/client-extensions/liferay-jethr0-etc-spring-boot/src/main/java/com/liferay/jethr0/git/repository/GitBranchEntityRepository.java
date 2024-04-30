@@ -99,30 +99,37 @@ public class GitBranchEntityRepository
 		Set<GitBranchEntity> gitBranchEntities = _gitBranchEntityDALO.getByType(
 			GitBranchEntity.Type.UPSTREAM);
 
-		for (String gitHubUpstreamBranchURL :
-				_gitHubUpstreamBranchURLs.split(",")) {
-
-			boolean gitBranchEntryExists = false;
-
-			for (GitBranchEntity gitBranchEntity : gitBranchEntities) {
-				if (Objects.equals(
-						String.valueOf(gitBranchEntity.getURL()),
-						gitHubUpstreamBranchURL)) {
-
-					gitBranchEntryExists = true;
-
-					break;
-				}
-			}
-
-			if (!gitBranchEntryExists) {
-				gitBranchEntities.add(
-					createUpstreamGitBranchEntity(
-						StringUtil.toURL(gitHubUpstreamBranchURL)));
-			}
-		}
-
 		addAll(gitBranchEntities);
+
+		for (GitBranchEntity gitBranchEntity : gitBranchEntities) {
+			GitHubRef gitHubRef = _gitHubFactory.newGitHubRef(
+				gitBranchEntity.getURL());
+
+			GitUserEntity gitUserEntity = gitBranchEntity.getGitUserEntity();
+
+			if (gitUserEntity == null) {
+				gitUserEntity = _gitUserEntityRepository.createGitUserEntity(
+					gitHubRef);
+
+				gitBranchEntity.setGitUserEntity(gitUserEntity);
+
+				gitUserEntity.addGitBranchEntity(gitBranchEntity);
+			}
+
+			GitHubCommit gitHubCommit = gitHubRef.getGitHubCommit();
+
+			gitBranchEntity.setLatestSHA(gitHubCommit.getSHA());
+
+			GitCommitEntity gitCommitEntity =
+				_gitCommitEntityRepository.getBySHA(gitHubCommit.getSHA());
+
+			if (gitCommitEntity == null) {
+				_gitCommitEntityRepository.createGitCommitEntity(
+					gitBranchEntity, gitHubCommit.getSHA());
+			}
+
+			update(gitBranchEntity);
+		}
 	}
 
 	public void relateBaseGitBranchToGitPull(
@@ -285,7 +292,7 @@ public class GitBranchEntityRepository
 
 		gitUserEntity.addGitBranchEntity(gitBranchEntity);
 
-		_gitCommitEntityRepository.createGitPullRequestEntity(
+		_gitCommitEntityRepository.createGitCommitEntity(
 			gitBranchEntity, gitHubCommit.getSHA());
 
 		return gitBranchEntity;
@@ -377,9 +384,6 @@ public class GitBranchEntityRepository
 
 	@Autowired
 	private GitHubFactory _gitHubFactory;
-
-	@Value("${liferay.jethr0.github.upstream.branch.urls}")
-	private String _gitHubUpstreamBranchURLs;
 
 	private GitPullRequestEntityRepository _gitPullRequestEntityRepository;
 	private GitUserEntityRepository _gitUserEntityRepository;

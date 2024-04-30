@@ -256,9 +256,9 @@ public abstract class BaseGitBranchEntity
 	public void setJSONObject(JSONObject jsonObject) {
 		super.setJSONObject(jsonObject);
 
-		_gitUserEntityId = jsonObject.getLong(
+		_gitUserEntityId = jsonObject.optLong(
 			"r_gitUserToGitBranches_c_gitUserId");
-		_latestSHA = jsonObject.getString("latestSHA");
+		_latestSHA = jsonObject.optString("latestSHA");
 		_url = StringUtil.toURL(jsonObject.getString("url"));
 		_type = Type.get(jsonObject.getJSONObject("type"));
 	}

@@ -226,6 +226,12 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		ThemeDisplay themeDisplay = _getThemeDisplay(
+			mockHttpServletRequest, user);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL, _portal.getPortalURL(_layout, themeDisplay));
+
 		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			JournalArticle.class.getName(),
 			_journalArticle.getResourcePrimKey());
@@ -243,8 +249,7 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 					JournalArticle.class.getName(),
 					_journalArticle.getResourcePrimKey())));
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY,
-			_getThemeDisplay(mockHttpServletRequest, user));
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		_serviceContext.setRequest(mockHttpServletRequest);
 

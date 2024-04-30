@@ -9,6 +9,8 @@ import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -68,13 +70,12 @@ public class OpenIdConnectNavigationPreJSPDynamicInclude
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String layoutType = themeDisplay.getLayout(
-		).getType();
+		Layout layout = themeDisplay.getLayout();
 
 		if (mvcRenderCommandName.equals(
 				OpenIdConnectWebKeys.OPEN_ID_CONNECT_REQUEST_ACTION_NAME) ||
 			!_openIdConnect.isEnabled(themeDisplay.getCompanyId()) ||
-			layoutType.equals(_UTILITY_PAGE_TYPE)) {
+			LayoutConstants.TYPE_UTILITY.equals(layout.getType())) {
 
 			return;
 		}
@@ -100,8 +101,6 @@ public class OpenIdConnectNavigationPreJSPDynamicInclude
 	protected Log getLog() {
 		return _log;
 	}
-
-	private static final String _UTILITY_PAGE_TYPE = "utility";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdConnectNavigationPreJSPDynamicInclude.class);

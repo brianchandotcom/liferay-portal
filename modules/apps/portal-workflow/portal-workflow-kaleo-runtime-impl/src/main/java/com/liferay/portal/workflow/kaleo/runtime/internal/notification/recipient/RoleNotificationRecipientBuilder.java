@@ -181,7 +181,7 @@ public class RoleNotificationRecipientBuilder
 				groupIds.addAll(_getAncestorOrganizationGroupIds(group, role));
 			}
 
-			if (group.isSite() && !_preventNotifyingAncestorSites()) {
+			if (group.isSite() && !_isPreventNotifyingAncestorSites()) {
 				groupIds.addAll(_getAncestorGroupIds(group, role));
 			}
 
@@ -304,7 +304,7 @@ public class RoleNotificationRecipientBuilder
 		return false;
 	}
 
-	private boolean _preventNotifyingAncestorSites() {
+	private boolean _isPreventNotifyingAncestorSites() {
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-23210")) {
 			return false;
 		}

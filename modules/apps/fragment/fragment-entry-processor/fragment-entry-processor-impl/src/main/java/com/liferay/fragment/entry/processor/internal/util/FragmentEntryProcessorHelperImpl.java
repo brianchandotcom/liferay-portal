@@ -329,6 +329,25 @@ public class FragmentEntryProcessorHelperImpl
 			return null;
 		}
 
+		JSONObject configJSONObject = editableValueJSONObject.getJSONObject(
+			"config");
+
+		InfoField infoField = infoFieldValue.getInfoField();
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-11377") &&
+			infoField.isRepeatable()) {
+
+			List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>(
+				infoItemFieldValues.getInfoFieldValues(fieldName));
+
+			infoFieldValue = _getSpecificIteration(
+				infoFieldValues, configJSONObject);
+
+			if (infoFieldValue == null) {
+				return null;
+			}
+		}
+
 		Object value = infoFieldValue.getValue(locale);
 
 		if (value == null) {
@@ -341,9 +360,6 @@ public class FragmentEntryProcessorHelperImpl
 			if (list.isEmpty()) {
 				return StringPool.BLANK;
 			}
-
-			JSONObject configJSONObject = editableValueJSONObject.getJSONObject(
-				"config");
 
 			if (JSONUtil.isEmpty(configJSONObject) ||
 				!FeatureFlagManagerUtil.isEnabled("LPD-11377")) {
@@ -387,7 +403,7 @@ public class FragmentEntryProcessorHelperImpl
 			return labeledFieldValue.getLabel(locale);
 		}
 		else if (value instanceof String) {
-			InfoField infoField = infoFieldValue.getInfoField();
+			infoField = infoFieldValue.getInfoField();
 
 			if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
 				Locale dateLocale = LocaleUtil.getSiteDefault();

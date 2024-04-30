@@ -44,7 +44,8 @@ create unique index IX_677F9088 on ObjectFolder (companyId, externalReferenceCod
 create index IX_8FBAE114 on ObjectFolder (companyId, name[$COLUMN_LENGTH:75$]);
 create index IX_14631921 on ObjectFolder (uuid_[$COLUMN_LENGTH:75$]);
 
-create unique index IX_5BE8DA03 on ObjectFolderItem (objectFolderId, objectDefinitionId);
+create unique index IX_61EBCE03 on ObjectFolderItem (objectDefinitionId, objectFolderId);
+create index IX_F9E61F22 on ObjectFolderItem (objectFolderId);
 create index IX_880861CE on ObjectFolderItem (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_FD0CCE8A on ObjectLayout (objectDefinitionId, defaultObjectLayout);
@@ -78,7 +79,8 @@ create index IX_8B817F36 on ObjectRelationship (reverse, dbTableName[$COLUMN_LEN
 create index IX_B81C5B95 on ObjectRelationship (reverse, objectDefinitionId2, type_[$COLUMN_LENGTH:75$]);
 create index IX_E95FE5D7 on ObjectRelationship (uuid_[$COLUMN_LENGTH:75$]);
 
-create index IX_D8444F12 on ObjectState (objectStateFlowId, listTypeEntryId);
+create index IX_C34F0F9E on ObjectState (listTypeEntryId, objectStateFlowId);
+create index IX_F9D4BA53 on ObjectState (objectStateFlowId);
 create index IX_3030D2FC on ObjectState (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_AE828160 on ObjectStateFlow (objectFieldId);
@@ -96,7 +98,8 @@ create unique index IX_88476606 on ObjectValidationRule (objectDefinitionId, ext
 create index IX_465D010A on ObjectValidationRule (objectDefinitionId, outputType[$COLUMN_LENGTH:75$]);
 create index IX_ADDDA15A on ObjectValidationRule (uuid_[$COLUMN_LENGTH:75$]);
 
-create unique index IX_7C5A0E83 on ObjectValidationRuleSetting (name[$COLUMN_LENGTH:75$], value[$COLUMN_LENGTH:75$], objectValidationRuleId);
+create index IX_76851E60 on ObjectValidationRuleSetting (name[$COLUMN_LENGTH:75$], value[$COLUMN_LENGTH:75$]);
+create unique index IX_7FCFA51D on ObjectValidationRuleSetting (objectValidationRuleId, name[$COLUMN_LENGTH:75$], value[$COLUMN_LENGTH:75$]);
 create index IX_9CCE9B52 on ObjectValidationRuleSetting (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_6AF6C9EA on ObjectView (objectDefinitionId, defaultObjectView);

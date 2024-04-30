@@ -1,2 +1,2 @@
-create unique index IX_3D475BC8 on AssetCategoryProperty (key_[$COLUMN_LENGTH:255$], categoryId, ctCollectionId);
-create index IX_3F2D0E0B on AssetCategoryProperty (key_[$COLUMN_LENGTH:255$], companyId);
+create unique index IX_87C75408 on AssetCategoryProperty (categoryId, key_[$COLUMN_LENGTH:255$], ctCollectionId);
+create index IX_52340033 on AssetCategoryProperty (companyId, key_[$COLUMN_LENGTH:255$]);

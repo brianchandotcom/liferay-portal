@@ -768,90 +768,31 @@ pre[class*='language-'] {
 }
 
 .pagination-bar {
-	align-items: flex-start;
-	display: flex;
-	gap: 1rem;
-
-	.dropdown.pagination-items-per-page {
-		align-items: flex-start;
-		display: flex;
-	}
-
-	.dropdown.pagination-items-per-page .dropdown-toggle.page-link {
-		align-items: center;
-		border-width: 0;
-		color: var(--color-action-neutral-default, #2b3a4b);
-		display: flex;
-		font-size: 0.875rem;
-		font-style: normal;
-		font-weight: 600;
-		gap: 0.25rem;
-		justify-content: center;
-		line-height: 1rem;
-		text-align: center;
-	}
-
-	.pagination-bar
-		.dropdown.pagination-items-per-page
-		.dropdown-toggle.page-link
-		.c-inner {
-		align-items: center;
-		display: flex;
-		height: 1rem;
-		justify-content: center;
-	}
-
-	.pagination-bar
-		.dropdown.pagination-items-per-page
-		.dropdown-toggle.page-link
-		.c-inner
-		.lexicon-icon.lexicon-icon-caret-double-l {
-		align-items: center;
-		display: flex;
-		flex-shrink: 0;
-		height: 1rem;
-		justify-content: center;
-		width: 1rem;
-	}
-
-	.pagination {
-		align-items: flex-start;
-		display: flex;
-		gap: 0.5rem;
-		justify-content: center;
-	}
-
-	.pagination .page-item .page-link {
-		align-items: center;
-		border-radius: 0.375rem;
-		border-width: 0;
-		color: var(--color-action-neutral-default, #2b3a4b);
-		display: flex;
-		font-size: 0.875rem;
-		font-style: normal;
-		font-weight: 600;
-		gap: 0.25rem;
-		justify-content: center;
-		line-height: 1rem;
-		min-width: 2rem;
-		padding: 0.5rem;
-		text-align: center;
-	}
-
-	.pagination .page-item.active .page-link {
-		background: var(--color-action-neutral-active-20, #d5d8db);
-		z-index: 2;
-	}
-
+	&,
+	.dropdown-toggle,
+	.pagination,
 	.pagination-results {
-		align-items: flex-start;
-		color: var(--color-neutral-10, #282934);
+		color: var(--color-action-neutral-default, #2b3a4b);
 		display: flex;
-		font-size: 0.8125rem;
-		font-style: normal;
-		font-weight: 400;
-		gap: 0.25rem;
-		line-height: 1rem;
+		gap: var(--spacer-2);
+		justify-content: space-between;
+	}
+
+	button,
+	.page-link {
+		color: var(--color-action-neutral-default);
+		font-weight: var(--font-weight-normal) !important;
+		letter-spacing: 0;
+		margin: 0;
+
+		&::before {
+			display: none !important;
+		}
+	}
+
+	.active.page-item .page-link,
+	.page-link:hover {
+		background-color: var(--color-action-neutral-hover-10);
 	}
 }
 

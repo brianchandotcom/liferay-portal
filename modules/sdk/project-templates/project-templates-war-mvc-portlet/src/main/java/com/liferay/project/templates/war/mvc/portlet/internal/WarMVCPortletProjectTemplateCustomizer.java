@@ -43,9 +43,14 @@ public class WarMVCPortletProjectTemplateCustomizer
 
 		File webINFDir = new File(buildDir, "src/main/webapp/WEB-INF");
 
+		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
+
 		String minorVersionString = String.valueOf(
-			VersionUtil.getMinorVersion(
-				projectTemplatesArgs.getLiferayVersion()));
+			VersionUtil.getMinorVersion(liferayVersion));
+
+		if (VersionUtil.isLiferayQuarterlyVersion(liferayVersion)) {
+			minorVersionString = "4";
+		}
 
 		File liferayDisplayXMLFile = new File(webINFDir, "liferay-display.xml");
 

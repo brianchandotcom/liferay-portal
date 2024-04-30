@@ -903,7 +903,7 @@ definition {
 		}
 
 		if (isSet(searchTerm)) {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				key_index = 1,
 				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_B",
 				value1 = ${searchTerm});

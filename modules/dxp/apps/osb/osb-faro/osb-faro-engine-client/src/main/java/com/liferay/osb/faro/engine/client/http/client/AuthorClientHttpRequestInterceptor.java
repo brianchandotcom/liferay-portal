@@ -30,22 +30,34 @@ public class AuthorClientHttpRequestInterceptor
 			ClientHttpRequestExecution clientHttpRequestExecution)
 		throws IOException {
 
-		HttpHeaders httpHeaders = httpRequest.getHeaders();
+		_addAuthorHeaders(httpRequest);
 
+		return clientHttpRequestExecution.execute(httpRequest, bytes);
+	}
+
+	private void _addAuthorHeaders(HttpRequest httpRequest) {
 		User user = _getUser();
+
+		if (user == null) {
+			return;
+		}
+
+		HttpHeaders httpHeaders = httpRequest.getHeaders();
 
 		httpHeaders.add(
 			OSBAsahHeaderConstants.AUTHOR_USER_ID,
 			String.valueOf(user.getUserId()));
 		httpHeaders.add(
 			OSBAsahHeaderConstants.AUTHOR_USER_NAME, user.getFullName());
-
-		return clientHttpRequestExecution.execute(httpRequest, bytes);
 	}
 
 	private User _getUser() {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker == null) {
+			return null;
+		}
 
 		return permissionChecker.getUser();
 	}

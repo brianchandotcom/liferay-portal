@@ -1,13 +1,6 @@
 .autofit-col-expand {
 	min-inline-size: min-content;
-}
-
-.autofit-row {
-	width: min-content;
-}
-
-.component-action {
-	margin-left: 0px;
+	padding-right: 0 !important;
 }
 
 .lexicon-icon-order-arrow {

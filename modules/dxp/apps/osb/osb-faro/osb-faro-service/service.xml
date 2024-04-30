@@ -246,11 +246,11 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="LiveUserId" return-type="Collection">
-			<finder-column name="liveUserId" />
-		</finder>
 		<finder name="Key" return-type="FaroUser" unique="true">
 			<finder-column name="key" />
+		</finder>
+		<finder name="LiveUserId" return-type="Collection">
+			<finder-column name="liveUserId" />
 		</finder>
 		<finder name="G_L" return-type="FaroUser">
 			<finder-column name="groupId" />

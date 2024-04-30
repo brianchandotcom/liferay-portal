@@ -194,29 +194,9 @@ public class JSONWebServiceActionsManagerImpl
 
 		_ensureOpen();
 
-		try {
-			if (!_addJSONWebServiceActionConfig(
-					new JSONWebServiceActionConfig(
-						contextName, contextPath, actionObject, actionClass,
-						actionMethod, path, method))) {
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"A JSON web service action is already registered at " +
-							path);
-				}
-			}
-		}
-		catch (Exception exception) {
-			_log.warn(
-				StringBundler.concat(
-					"Something went wrong attempting to register service ",
-					"method {contextName=", contextName, ",contextPath=",
-					contextPath, ",actionObject=", actionObject,
-					",actionClass=", actionClass, ",actionMethod=",
-					actionMethod, ",path=", path, ",method=", method,
-					"} due to ", exception.getMessage()));
-		}
+		_registerJSONWebServiceAction(
+			contextName, contextPath, actionObject, actionClass, actionMethod,
+			path, method);
 	}
 
 	@Override
@@ -225,17 +205,7 @@ public class JSONWebServiceActionsManagerImpl
 
 		_ensureOpen();
 
-		_processBean(contextName, contextPath, service);
-
-		int count = _getJSONWebServiceActionsCount(contextPath);
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Configured ", count, " actions for ", contextPath));
-		}
-
-		return count;
+		return _registerService(contextName, contextPath, service);
 	}
 
 	@Override
@@ -244,20 +214,7 @@ public class JSONWebServiceActionsManagerImpl
 
 		_ensureOpen();
 
-		int count = 0;
-
-		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
-				_signatureIndexedJSONWebServiceActionConfigs.values()) {
-
-			if ((actionObject ==
-					jsonWebServiceActionConfig.getActionObject()) &&
-				_removeJSONWebServiceActionConfig(jsonWebServiceActionConfig)) {
-
-				count++;
-			}
-		}
-
-		return count;
+		return _unregisterJSONWebServiceActions(actionObject);
 	}
 
 	@Activate
@@ -608,7 +565,7 @@ public class JSONWebServiceActionsManagerImpl
 				}
 
 				if (JSONWebServiceNamingUtil.isIncludedMethod(method)) {
-					registerJSONWebServiceAction(
+					_registerJSONWebServiceAction(
 						contextName, contextPath, bean, serviceBeanClass,
 						method, path, httpMethod);
 				}
@@ -617,6 +574,51 @@ public class JSONWebServiceActionsManagerImpl
 		catch (Exception exception) {
 			_log.error(exception);
 		}
+	}
+
+	private synchronized void _registerJSONWebServiceAction(
+		String contextName, String contextPath, Object actionObject,
+		Class<?> actionClass, Method actionMethod, String path, String method) {
+
+		try {
+			if (!_addJSONWebServiceActionConfig(
+					new JSONWebServiceActionConfig(
+						contextName, contextPath, actionObject, actionClass,
+						actionMethod, path, method))) {
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"A JSON web service action is already registered at " +
+							path);
+				}
+			}
+		}
+		catch (Exception exception) {
+			_log.warn(
+				StringBundler.concat(
+					"Something went wrong attempting to register service ",
+					"method {contextName=", contextName, ",contextPath=",
+					contextPath, ",actionObject=", actionObject,
+					",actionClass=", actionClass, ",actionMethod=",
+					actionMethod, ",path=", path, ",method=", method,
+					"} due to ", exception.getMessage()));
+		}
+	}
+
+	private int _registerService(
+		String contextName, String contextPath, Object service) {
+
+		_processBean(contextName, contextPath, service);
+
+		int count = _getJSONWebServiceActionsCount(contextPath);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Configured ", count, " actions for ", contextPath));
+		}
+
+		return count;
 	}
 
 	private boolean _removeJSONWebServiceActionConfig(
@@ -685,6 +687,25 @@ public class JSONWebServiceActionsManagerImpl
 		return new String[] {contextName, path};
 	}
 
+	private synchronized int _unregisterJSONWebServiceActions(
+		Object actionObject) {
+
+		int count = 0;
+
+		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
+				_signatureIndexedJSONWebServiceActionConfigs.values()) {
+
+			if ((actionObject ==
+					jsonWebServiceActionConfig.getActionObject()) &&
+				_removeJSONWebServiceActionConfig(jsonWebServiceActionConfig)) {
+
+				count++;
+			}
+		}
+
+		return count;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceActionsManagerImpl.class);
 
@@ -727,7 +748,7 @@ public class JSONWebServiceActionsManagerImpl
 					ThreadContextClassLoaderUtil.swap(
 						bundleWiring.getClassLoader())) {
 
-				registerService(contextName, contextPath, service);
+				_registerService(contextName, contextPath, service);
 			}
 
 			return service;
@@ -746,7 +767,7 @@ public class JSONWebServiceActionsManagerImpl
 		public void removedService(
 			ServiceReference<Object> serviceReference, Object service) {
 
-			unregisterJSONWebServiceActions(service);
+			_unregisterJSONWebServiceActions(service);
 
 			_bundleContext.ungetService(serviceReference);
 		}

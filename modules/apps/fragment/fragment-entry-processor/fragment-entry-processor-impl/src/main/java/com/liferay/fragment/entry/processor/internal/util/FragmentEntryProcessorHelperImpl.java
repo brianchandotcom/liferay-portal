@@ -34,6 +34,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -344,8 +345,7 @@ public class FragmentEntryProcessorHelperImpl
 			JSONObject configJSONObject = editableValueJSONObject.getJSONObject(
 				"config");
 
-			if ((configJSONObject == null) ||
-				(configJSONObject.length() == 0) ||
+			if (JSONUtil.isEmpty(configJSONObject) ||
 				!FeatureFlagManagerUtil.isEnabled("LPD-11377")) {
 
 				Object firstItem = list.get(0);

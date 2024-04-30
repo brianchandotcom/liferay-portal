@@ -360,25 +360,7 @@ public class FragmentEntryProcessorHelperImpl
 				return infoCollectionTextFormatter.format(list, locale);
 			}
 
-			String iterationType = configJSONObject.getString("iterationType");
-
-			if (Objects.equals(iterationType, "iteration-number")) {
-				int iterationNumber = configJSONObject.getInt(
-					"iterationNumber", 0);
-
-				if ((iterationNumber > 0) && (iterationNumber <= list.size())) {
-					value = list.get(iterationNumber - 1);
-				}
-				else {
-					value = StringPool.BLANK;
-				}
-			}
-			else if (Objects.equals(iterationType, "last")) {
-				value = list.get(list.size() - 1);
-			}
-			else {
-				value = list.get(0);
-			}
+			value = _getSpecificIteration(list, configJSONObject);
 		}
 
 		if (value instanceof Date) {
@@ -724,6 +706,37 @@ public class FragmentEntryProcessorHelperImpl
 		_shortTimeStylePatterns.put(locale, sortTimeStylePattern);
 
 		return sortTimeStylePattern;
+	}
+
+	private <T> T _getSpecificIteration(
+		List<T> list, JSONObject configJSONObject) {
+
+		if (list.isEmpty()) {
+			return null;
+		}
+
+		if (JSONUtil.isEmpty(configJSONObject) ||
+			!FeatureFlagManagerUtil.isEnabled("LPD-11377")) {
+
+			return list.get(0);
+		}
+
+		String iterationType = configJSONObject.getString("iterationType");
+
+		if (Objects.equals(iterationType, "iteration-number")) {
+			int iterationNumber = configJSONObject.getInt("iterationNumber", 0);
+
+			if ((iterationNumber > 0) && (iterationNumber <= list.size())) {
+				return list.get(iterationNumber - 1);
+			}
+
+			return null;
+		}
+		else if (Objects.equals(iterationType, "last")) {
+			return list.get(list.size() - 1);
+		}
+
+		return list.get(0);
 	}
 
 	private static final InfoCollectionTextFormatter<Object>

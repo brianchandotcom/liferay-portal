@@ -1,5 +1,5 @@
 create index IX_F3DC928B on FriendlyURLEntry (groupId, classNameId, classPK);
-create unique index IX_7EFCFE9C on FriendlyURLEntry (groupId, uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_D51F1A48 on FriendlyURLEntry (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
 create index IX_BFA6E36A on FriendlyURLEntryLocalization (friendlyURLEntryId);
 create index IX_543EE90B on FriendlyURLEntryLocalization (groupId, classNameId, languageId[$COLUMN_LENGTH:75$], classPK);

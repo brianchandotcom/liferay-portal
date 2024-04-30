@@ -260,8 +260,7 @@ public class JSONWebServiceActionsManagerImpl
 			StringBundler.concat(
 				"(&(json.web.service.context.name=*)(json.web.service.context.",
 				"path=*)(!(objectClass=", AopService.class.getName(), ")))"),
-			new JSONWebServiceTrackerCustomizer(
-				JSONWebServiceActionsManagerImpl.this, bundleContext));
+			new JSONWebServiceTrackerCustomizer(bundleContext));
 	}
 
 	@Deactivate
@@ -593,11 +592,7 @@ public class JSONWebServiceActionsManagerImpl
 	private class JSONWebServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, Object> {
 
-		public JSONWebServiceTrackerCustomizer(
-			JSONWebServiceActionsManager jsonWebServiceActionsManager,
-			BundleContext bundleContext) {
-
-			_jsonWebServiceActionsManager = jsonWebServiceActionsManager;
+		public JSONWebServiceTrackerCustomizer(BundleContext bundleContext) {
 			_bundleContext = bundleContext;
 		}
 
@@ -617,8 +612,7 @@ public class JSONWebServiceActionsManagerImpl
 					ThreadContextClassLoaderUtil.swap(
 						bundleWiring.getClassLoader())) {
 
-				_jsonWebServiceActionsManager.registerService(
-					contextName, contextPath, service);
+				registerService(contextName, contextPath, service);
 			}
 
 			return service;
@@ -637,15 +631,12 @@ public class JSONWebServiceActionsManagerImpl
 		public void removedService(
 			ServiceReference<Object> serviceReference, Object service) {
 
-			_jsonWebServiceActionsManager.unregisterJSONWebServiceActions(
-				service);
+			unregisterJSONWebServiceActions(service);
 
 			_bundleContext.ungetService(serviceReference);
 		}
 
 		private final BundleContext _bundleContext;
-		private final JSONWebServiceActionsManager
-			_jsonWebServiceActionsManager;
 
 	}
 

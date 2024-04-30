@@ -1713,6 +1713,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 			}
 		}
 
+		LDAPImportConfiguration ldapImportConfiguration =
+			_ldapImportConfigurationProvider.getConfiguration(companyId);
+		LDAPServerConfiguration ldapServerConfiguration =
+			_ldapServerConfigurationProvider.getConfiguration(
+				companyId, ldapServerId);
+
 		Date modifiedDate = null;
 
 		try {
@@ -1732,21 +1738,13 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 			modifiedDate = new Date();
 		}
 
-		LDAPImportConfiguration ldapImportConfiguration =
-			_ldapImportConfigurationProvider.getConfiguration(companyId);
-
 		boolean passwordReset = ldapUser.isPasswordReset();
 
 		if (_ldapSettings.isExportEnabled(companyId)) {
 			passwordReset = user.isPasswordReset();
 		}
 
-		LDAPServerConfiguration ldapServerConfiguration =
-			_ldapServerConfigurationProvider.getConfiguration(
-				companyId, ldapServerId);
-
 		ServiceContext serviceContext = ldapUser.getServiceContext();
-
 		boolean updatedCustomMappings = false;
 
 		if (Validator.isNotNull(ldapServerConfiguration.modifiedDate())) {

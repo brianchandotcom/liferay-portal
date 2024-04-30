@@ -462,12 +462,25 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		dynamicProxyCreator.clear();
 
-		if (DBUpgrader.isUpgradeDatabaseAutoRunEnabled()) {
+		boolean upgradeDatabaseAutoRun =
+			DBUpgrader.isUpgradeDatabaseAutoRunEnabled();
+
+		if (upgradeDatabaseAutoRun) {
 			StartupHelperUtil.setUpgrading(true);
 
-			DBUpgrader.upgradePortal();
+			try {
+				DBUpgrader.upgradePortal();
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
 		}
-		else {
+
+		ModuleFrameworkUtil.registerContext(applicationContext);
+
+		CustomJspBagRegistryUtil.getCustomJspBags();
+
+		if (!upgradeDatabaseAutoRun) {
 
 			// Check class names
 
@@ -475,13 +488,14 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 				_log.debug("Check class names");
 			}
 
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> ClassNameLocalServiceUtil.checkClassNames());
+			try {
+				DBPartitionUtil.forEachCompanyId(
+					companyId -> ClassNameLocalServiceUtil.checkClassNames());
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
 		}
-
-		ModuleFrameworkUtil.registerContext(applicationContext);
-
-		CustomJspBagRegistryUtil.getCustomJspBags();
 	}
 
 	private void _logJVMArguments() {

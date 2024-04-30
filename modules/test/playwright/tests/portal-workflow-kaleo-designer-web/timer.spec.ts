@@ -6,11 +6,19 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 
-export const test = mergeTests(apiHelpersTest, loginTest(), workflowPagesTest);
+export const test = mergeTests(
+	apiHelpersTest,
+	loginTest(),
+	featureFlagsTest({
+		'LPD-11179': true,
+	}),
+	workflowPagesTest
+);
 
 const roleTypes = [
 	{

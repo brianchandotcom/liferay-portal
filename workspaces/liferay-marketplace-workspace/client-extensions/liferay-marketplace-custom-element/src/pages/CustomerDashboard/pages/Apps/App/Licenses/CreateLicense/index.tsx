@@ -137,6 +137,9 @@ const CreateLicense = () => {
 		async (form: z.infer<typeof zodSchema.generateLicenseKey>) => {
 			setLoading(true);
 
+			const producSpecifications =
+				(product as DeliveryProduct)?.productSpecifications || [];
+
 			try {
 				const licenseKey = await marketplaceSpringBootOAuth2.createLicenseKey(
 					{
@@ -146,13 +149,17 @@ const CreateLicense = () => {
 							ipAddresses: form.ipAddress,
 							macAddresses: form.macAddress,
 							orderId: orderId as string,
+							productId:
+								getValueFromDeliverySpecifications(
+									producSpecifications,
+									'app-entry-uuid'
+								) || undefined,
 							productPurchaseKey: form.subscription
 								?.productPurchasedKey as string,
 							productVersion:
 								form.subscription?.productVersion ||
 								getValueFromDeliverySpecifications(
-									(product as DeliveryProduct)
-										?.productSpecifications,
+									producSpecifications,
 									'latest-version'
 								) ||
 								'1.0.0',

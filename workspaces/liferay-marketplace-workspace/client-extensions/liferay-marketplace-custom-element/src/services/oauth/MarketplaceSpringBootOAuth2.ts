@@ -58,6 +58,7 @@ type LicenseTypePayload = {
 		ipAddresses: string;
 		macAddresses: string;
 		orderId: string;
+		productId?: string;
 		productPurchaseKey: string;
 		productVersion: string;
 	};

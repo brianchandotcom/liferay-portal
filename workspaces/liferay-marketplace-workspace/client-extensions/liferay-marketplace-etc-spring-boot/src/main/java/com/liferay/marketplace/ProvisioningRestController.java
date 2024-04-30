@@ -23,7 +23,6 @@ import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Objects;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -177,17 +176,18 @@ public class ProvisioningRestController extends BaseRestController {
 		AppLicenseKey.LicenseType licenseType =
 			AppLicenseKey.LicenseType.PRODUCTION;
 
-		if (Objects.equals(jsonObject.getString("type"), "developer")) {
-			licenseType = AppLicenseKey.LicenseType.DEVELOPER;
-		}
-
 		appLicenseKey.setLicenseType(licenseType);
 
 		appLicenseKey.setOwner((String)jwt.getClaim("username"));
-		appLicenseKey.setProductId(productPurchase.getProductKey());
+
+		if (appLicenseKey.getProductId() == null) {
+			appLicenseKey.setProductId(productPurchase.getProductKey());
+		}
+
 		appLicenseKey.setProductName(
 			productPurchase.getProduct(
 			).getName());
+		appLicenseKey.setProductVersion("1");
 
 		Date startDate = productPurchase.getStartDate();
 

@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -128,8 +129,17 @@ public class JournalEditArticleDisplayContextTest {
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			JournalFolderLocalServiceUtil.class, "_service",
-			_journalFolderLocalService);
+			JournalFolderLocalServiceUtil.class, "_serviceSnapshot",
+			new Snapshot<JournalFolderLocalService>(
+				JournalFolderLocalServiceUtil.class,
+				JournalFolderLocalService.class) {
+
+				@Override
+				public JournalFolderLocalService get() {
+					return _journalFolderLocalService;
+				}
+
+			});
 
 		JournalFolder folder = Mockito.mock(JournalFolder.class);
 
@@ -183,8 +193,17 @@ public class JournalEditArticleDisplayContextTest {
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			JournalFolderLocalServiceUtil.class, "_service",
-			_journalFolderLocalService);
+			JournalFolderLocalServiceUtil.class, "_serviceSnapshot",
+			new Snapshot<JournalFolderLocalService>(
+				JournalFolderLocalServiceUtil.class,
+				JournalFolderLocalService.class) {
+
+				@Override
+				public JournalFolderLocalService get() {
+					return _journalFolderLocalService;
+				}
+
+			});
 
 		_journalEditArticleDisplayContext =
 			new JournalEditArticleDisplayContext(

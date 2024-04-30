@@ -11,6 +11,7 @@ import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -61,8 +62,17 @@ public class DLFolderUtilTest {
 			depotGroupId);
 
 		ReflectionTestUtil.setFieldValue(
-			DepotEntryLocalServiceUtil.class, "_service",
-			depotEntryLocalService);
+			DepotEntryLocalServiceUtil.class, "_serviceSnapshot",
+			new Snapshot<DepotEntryLocalService>(
+				DepotEntryLocalServiceUtil.class,
+				DepotEntryLocalService.class) {
+
+				@Override
+				public DepotEntryLocalService get() {
+					return depotEntryLocalService;
+				}
+
+			});
 
 		Mockito.when(
 			depotEntryLocalService.getGroupConnectedDepotEntries(
@@ -108,8 +118,17 @@ public class DLFolderUtilTest {
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			DepotEntryLocalServiceUtil.class, "_service",
-			depotEntryLocalService);
+			DepotEntryLocalServiceUtil.class, "_serviceSnapshot",
+			new Snapshot<DepotEntryLocalService>(
+				DepotEntryLocalServiceUtil.class,
+				DepotEntryLocalService.class) {
+
+				@Override
+				public DepotEntryLocalService get() {
+					return depotEntryLocalService;
+				}
+
+			});
 
 		DLFolderUtil.validateDepotFolder(
 			RandomTestUtil.randomLong(), depotGroup.getGroupId(),

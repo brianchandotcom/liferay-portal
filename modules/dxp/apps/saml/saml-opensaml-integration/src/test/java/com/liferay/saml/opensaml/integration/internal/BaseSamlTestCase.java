@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -114,8 +115,15 @@ public abstract class BaseSamlTestCase {
 		identifiers.clear();
 
 		for (Class<?> serviceUtilClass : serviceUtilClasses) {
-			ReflectionTestUtil.setFieldValue(
-				serviceUtilClass, "_service", null);
+			try {
+				ReflectionTestUtil.setFieldValue(
+					serviceUtilClass, "_service", null);
+			}
+			catch (Exception exception) {
+				ReflectionTestUtil.setFieldValue(
+					serviceUtilClass, "_serviceSnapshot",
+					_snapshots.remove(serviceUtilClass));
+			}
 		}
 
 		ClassLoaderPool.unregister("saml-portlet");
@@ -468,8 +476,24 @@ public abstract class BaseSamlTestCase {
 
 		T serviceMock = Mockito.mock(serviceClass);
 
-		ReflectionTestUtil.setFieldValue(
-			serviceUtilClass, "_service", serviceMock);
+		try {
+			ReflectionTestUtil.setFieldValue(
+				serviceUtilClass, "_service", serviceMock);
+		}
+		catch (Exception exception) {
+			_snapshots.put(
+				serviceUtilClass,
+				ReflectionTestUtil.getAndSetFieldValue(
+					serviceUtilClass, "_serviceSnapshot",
+					new Snapshot<T>(serviceUtilClass, serviceClass) {
+
+						@Override
+						public T get() {
+							return serviceMock;
+						}
+
+					}));
+		}
 
 		return serviceMock;
 	}
@@ -743,5 +767,6 @@ public abstract class BaseSamlTestCase {
 
 	private final Map<Long, SamlPeerBinding> _samlPeerBindings =
 		new HashMap<>();
+	private final Map<Class<?>, Snapshot<?>> _snapshots = new HashMap<>();
 
 }

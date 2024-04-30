@@ -9,9 +9,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -180,7 +182,18 @@ public class IndexActionsDisplayContextTest {
 			portalInstancesLocalService
 		).getCompanyIds();
 
-		PortalInstancesLocalServiceUtil.setService(portalInstancesLocalService);
+		ReflectionTestUtil.setFieldValue(
+			PortalInstancesLocalServiceUtil.class, "_serviceSnapshot",
+			new Snapshot<PortalInstancesLocalService>(
+				PortalInstancesLocalServiceUtil.class,
+				PortalInstancesLocalService.class) {
+
+				@Override
+				public PortalInstancesLocalService get() {
+					return portalInstancesLocalService;
+				}
+
+			});
 	}
 
 	private void _setUpPortalUtil() {

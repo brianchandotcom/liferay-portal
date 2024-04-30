@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -68,8 +69,17 @@ public class DDMFixture {
 
 	private void _setUpDDMStructureLocalServiceUtil() {
 		ReflectionTestUtil.setFieldValue(
-			DDMStructureLocalServiceUtil.class, "_service",
-			_ddmStructureLocalService);
+			DDMStructureLocalServiceUtil.class, "_serviceSnapshot",
+			new Snapshot<DDMStructureLocalService>(
+				DDMStructureLocalServiceUtil.class,
+				DDMStructureLocalService.class) {
+
+				@Override
+				public DDMStructureLocalService get() {
+					return _ddmStructureLocalService;
+				}
+
+			});
 	}
 
 	private void _setUpLanguageUtil() {

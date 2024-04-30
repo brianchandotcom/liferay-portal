@@ -12,6 +12,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -197,12 +199,18 @@ public class SiteNavigationMenuDisplayContextTest {
 			_layoutPageTemplateEntry
 		);
 
-		LayoutPageTemplateEntryLocalServiceUtil
-			layoutPageTemplateEntryLocalServiceUtil =
-				new LayoutPageTemplateEntryLocalServiceUtil();
+		ReflectionTestUtil.setFieldValue(
+			LayoutPageTemplateEntryLocalServiceUtil.class, "_serviceSnapshot",
+			new Snapshot<LayoutPageTemplateEntryLocalService>(
+				LayoutPageTemplateEntryLocalServiceUtil.class,
+				LayoutPageTemplateEntryLocalService.class) {
 
-		layoutPageTemplateEntryLocalServiceUtil.setService(
-			layoutPageTemplateEntryLocalService);
+				@Override
+				public LayoutPageTemplateEntryLocalService get() {
+					return layoutPageTemplateEntryLocalService;
+				}
+
+			});
 	}
 
 	private void _setUpSiteNavigationMenuPortletInstanceConfiguration(

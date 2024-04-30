@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
@@ -603,8 +604,17 @@ public abstract class BaseDDMTestCase {
 			DDMStructureLocalService.class);
 
 		ReflectionTestUtil.setFieldValue(
-			DDMStructureLocalServiceUtil.class, "_service",
-			ddmStructureLocalService);
+			DDMStructureLocalServiceUtil.class, "_serviceSnapshot",
+			new Snapshot<DDMStructureLocalService>(
+				DDMStructureLocalServiceUtil.class,
+				DDMStructureLocalService.class) {
+
+				@Override
+				public DDMStructureLocalService get() {
+					return ddmStructureLocalService;
+				}
+
+			});
 
 		Mockito.when(
 			ddmStructureLocalService.getStructure(Mockito.anyLong())
@@ -645,8 +655,17 @@ public abstract class BaseDDMTestCase {
 			DDMTemplateLocalService.class);
 
 		ReflectionTestUtil.setFieldValue(
-			DDMTemplateLocalServiceUtil.class, "_service",
-			ddmTemplateLocalService);
+			DDMTemplateLocalServiceUtil.class, "_serviceSnapshot",
+			new Snapshot<DDMTemplateLocalService>(
+				DDMTemplateLocalServiceUtil.class,
+				DDMTemplateLocalService.class) {
+
+				@Override
+				public DDMTemplateLocalService get() {
+					return ddmTemplateLocalService;
+				}
+
+			});
 
 		Mockito.when(
 			ddmTemplateLocalService.getTemplate(Mockito.anyLong())

@@ -21,6 +21,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -392,10 +394,18 @@ public class EditAssetListDisplayContextTest {
 			assetListEntry
 		);
 
-		AssetListEntryLocalServiceUtil assetListEntryLocalServiceUtil =
-			new AssetListEntryLocalServiceUtil();
+		ReflectionTestUtil.setFieldValue(
+			AssetListEntryLocalServiceUtil.class, "_serviceSnapshot",
+			new Snapshot<AssetListEntryLocalService>(
+				AssetListEntryLocalServiceUtil.class,
+				AssetListEntryLocalService.class) {
 
-		assetListEntryLocalServiceUtil.setService(assetListEntryLocalService);
+				@Override
+				public AssetListEntryLocalService get() {
+					return assetListEntryLocalService;
+				}
+
+			});
 	}
 
 	private void _setUpAssetRendererFactoryRegistryUtil(

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -218,9 +220,6 @@ public class LayoutUtilityPageEntryActionDropdownItemsProviderTest {
 		LayoutUtilityPageEntryLocalService layoutUtilityPageEntryLocalService =
 			Mockito.mock(LayoutUtilityPageEntryLocalService.class);
 
-		LayoutUtilityPageEntryLocalServiceUtil.setService(
-			layoutUtilityPageEntryLocalService);
-
 		Mockito.when(
 			layoutUtilityPageEntryLocalService.
 				fetchDefaultLayoutUtilityPageEntry(
@@ -228,6 +227,19 @@ public class LayoutUtilityPageEntryActionDropdownItemsProviderTest {
 		).thenReturn(
 			_layoutUtilityPageEntry
 		);
+
+		ReflectionTestUtil.setFieldValue(
+			LayoutUtilityPageEntryLocalServiceUtil.class, "_serviceSnapshot",
+			new Snapshot<LayoutUtilityPageEntryLocalService>(
+				LayoutUtilityPageEntryLocalServiceUtil.class,
+				LayoutUtilityPageEntryLocalService.class) {
+
+				@Override
+				public LayoutUtilityPageEntryLocalService get() {
+					return layoutUtilityPageEntryLocalService;
+				}
+
+			});
 	}
 
 	private void _setUpLayoutUtilityPageEntryPermission() throws Exception {

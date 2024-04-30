@@ -11,6 +11,7 @@ import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.blogs.web.internal.trackback.Trackback;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -53,7 +54,16 @@ public class TrackbackMVCActionCommandTest {
 	@Before
 	public void setUp() throws Exception {
 		ReflectionTestUtil.setFieldValue(
-			BlogsEntryServiceUtil.class, "_service", _blogsEntryService);
+			BlogsEntryServiceUtil.class, "_serviceSnapshot",
+			new Snapshot<BlogsEntryService>(
+				BlogsEntryServiceUtil.class, BlogsEntryService.class) {
+
+				@Override
+				public BlogsEntryService get() {
+					return _blogsEntryService;
+				}
+
+			});
 
 		_setUpActionRequest();
 		_setUpBlogsEntry();

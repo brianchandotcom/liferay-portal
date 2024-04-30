@@ -21,6 +21,10 @@ String liferayVersion = request.properties.get("liferayVersion")
 
 char minorVersion = liferayVersion.charAt(2)
 
+if (liferayVersion.startsWith("20")) {
+	minorVersion = '4'
+}
+
 File liferayLayoutTemplatesXML = new File(webINFDir, "liferay-layout-templates.xml");
 
 def newLiferayLayoutTemplatesContent = liferayLayoutTemplatesXML.text.replace("7.0", "7." + minorVersion).replace("7_0", "7_" + minorVersion)

@@ -32,6 +32,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -344,7 +345,8 @@ public class FragmentEntryProcessorHelperImpl
 				"config");
 
 			if ((configJSONObject == null) ||
-				(configJSONObject.length() == 0)) {
+				(configJSONObject.length() == 0) ||
+				!FeatureFlagManagerUtil.isEnabled("LPD-11377")) {
 
 				Object firstItem = list.get(0);
 

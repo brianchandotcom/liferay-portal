@@ -138,6 +138,9 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_JOURNAL_ARTICLE_VERSION_COUNT =
 		"sample.sql.max.journal.article.version.count";
 
+	public static final String MAX_LIST_TYPE_ENTRY_COUNT =
+		"sample.sql.max.list.type.entry.count";
+
 	public static final String MAX_MB_CATEGORY_COUNT =
 		"sample.sql.max.mb.category.count";
 

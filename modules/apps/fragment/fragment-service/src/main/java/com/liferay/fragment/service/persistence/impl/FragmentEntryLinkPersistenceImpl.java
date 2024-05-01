@@ -13963,13 +13963,13 @@ public class FragmentEntryLinkPersistenceImpl
 		ctMergeColumnNames.add("js");
 		ctMergeColumnNames.add("configuration");
 		ctStrictColumnNames.add("deleted");
-		ctStrictColumnNames.add("editableValues");
+		ctMergeColumnNames.add("editableValues");
 		ctStrictColumnNames.add("namespace");
 		ctStrictColumnNames.add("position");
 		ctStrictColumnNames.add("rendererKey");
 		ctStrictColumnNames.add("type_");
-		ctStrictColumnNames.add("lastPropagationDate");
-		ctStrictColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("lastPropagationDate");
+		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

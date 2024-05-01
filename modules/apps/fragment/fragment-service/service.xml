@@ -242,13 +242,13 @@
 		<column change-tracking-resolution-type="merge" name="js" type="String" />
 		<column change-tracking-resolution-type="merge" name="configuration" type="String" />
 		<column name="deleted" type="boolean" />
-		<column name="editableValues" type="String" />
+		<column change-tracking-resolution-type="merge" name="editableValues" type="String" />
 		<column name="namespace" type="String" />
 		<column name="position" type="int" />
 		<column name="rendererKey" type="String" />
 		<column name="type" type="int" />
-		<column name="lastPropagationDate" type="Date" />
-		<column name="lastPublishDate" type="Date" />
+		<column change-tracking-resolution-type="merge" name="lastPropagationDate" type="Date" />
+		<column change-tracking-resolution-type="merge" name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 

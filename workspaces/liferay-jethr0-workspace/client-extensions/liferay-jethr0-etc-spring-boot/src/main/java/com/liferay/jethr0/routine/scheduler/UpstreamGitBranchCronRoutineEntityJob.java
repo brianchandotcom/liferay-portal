@@ -7,7 +7,7 @@ package com.liferay.jethr0.routine.scheduler;
 
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.commit.GitCommitEntity;
-import com.liferay.jethr0.routine.UpstreamBranchCronRoutineEntity;
+import com.liferay.jethr0.routine.UpstreamBranchRoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 
 import java.util.Objects;
@@ -30,12 +30,12 @@ public class UpstreamGitBranchCronRoutineEntityJob
 
 		Object routineEntityObject = jobDataMap.get("routineEntity");
 
-		if (!(routineEntityObject instanceof UpstreamBranchCronRoutineEntity)) {
+		if (!(routineEntityObject instanceof UpstreamBranchRoutineEntity)) {
 			return;
 		}
 
-		UpstreamBranchCronRoutineEntity upstreamBranchCronRoutineEntity =
-			(UpstreamBranchCronRoutineEntity)routineEntityObject;
+		UpstreamBranchRoutineEntity upstreamBranchCronRoutineEntity =
+			(UpstreamBranchRoutineEntity)routineEntityObject;
 
 		GitBranchEntity gitBranchEntity =
 			upstreamBranchCronRoutineEntity.getGitBranchEntity();

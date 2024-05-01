@@ -10,7 +10,7 @@ import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.routine.CronRoutineEntity;
-import com.liferay.jethr0.routine.UpstreamBranchCronRoutineEntity;
+import com.liferay.jethr0.routine.UpstreamBranchRoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 
 import org.quartz.JobDataMap;
@@ -57,7 +57,7 @@ public class RoutineEntityJobFactory extends AdaptableJobFactory {
 
 		RoutineEntityJob routineEntityJob = null;
 
-		if (routineEntityObject instanceof UpstreamBranchCronRoutineEntity) {
+		if (routineEntityObject instanceof UpstreamBranchRoutineEntity) {
 			routineEntityJob = new UpstreamGitBranchCronRoutineEntityJob();
 		}
 		else if (routineEntityObject instanceof CronRoutineEntity) {

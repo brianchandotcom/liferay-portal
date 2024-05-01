@@ -31,6 +31,16 @@ public abstract class BaseRoutineEntity
 	extends BaseEntity implements RoutineEntity {
 
 	@Override
+	public Boolean getEnabled() {
+		return _enabled;
+	}
+
+	@Override
+	public void setEnabled(Boolean enabled) {
+		_enabled = enabled;
+	}
+
+	@Override
 	public void addJobEntities(Set<JobEntity> jobEntities) {
 		_jobEntities.addAll(jobEntities);
 	}
@@ -88,6 +98,8 @@ public abstract class BaseRoutineEntity
 		Type type = getType();
 
 		jsonObject.put(
+			"enabled", getEnabled()
+		).put(
 			"jobName", getJobName()
 		).put(
 			"jobParameters", String.valueOf(_getJobParametersJSONArray())
@@ -248,6 +260,7 @@ public abstract class BaseRoutineEntity
 	private int _jobPriority;
 	private JobEntity.Type _jobType;
 	private String _name;
+	private Boolean _enabled;
 	private Type _type;
 
 }

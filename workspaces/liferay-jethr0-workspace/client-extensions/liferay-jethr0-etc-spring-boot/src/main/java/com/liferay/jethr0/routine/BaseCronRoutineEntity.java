@@ -24,16 +24,9 @@ public abstract class BaseCronRoutineEntity
 
 		jsonObject.put(
 			"cron", getCron()
-		).put(
-			"scheduled", getScheduled()
 		);
 
 		return jsonObject;
-	}
-
-	@Override
-	public Boolean getScheduled() {
-		return _scheduled;
 	}
 
 	@Override
@@ -46,12 +39,6 @@ public abstract class BaseCronRoutineEntity
 		super.setJSONObject(jsonObject);
 
 		_cron = jsonObject.optString("cron");
-		_scheduled = jsonObject.optBoolean("scheduled");
-	}
-
-	@Override
-	public void setScheduled(Boolean scheduled) {
-		_scheduled = scheduled;
 	}
 
 	protected BaseCronRoutineEntity(JSONObject jsonObject) {
@@ -59,6 +46,5 @@ public abstract class BaseCronRoutineEntity
 	}
 
 	private String _cron;
-	private Boolean _scheduled;
 
 }

@@ -14,7 +14,7 @@ import com.liferay.jethr0.git.dalo.PreviousGitCommitToRoutinesEntityRelationship
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.routine.RoutineEntity;
-import com.liferay.jethr0.routine.UpstreamBranchCronRoutineEntity;
+import com.liferay.jethr0.routine.UpstreamBranchRoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 
 import java.util.Objects;
@@ -91,13 +91,13 @@ public class GitCommitEntityRepository
 	public void relateGitCommitToRoutine(
 		GitCommitEntity gitCommitEntity, RoutineEntity routineEntity) {
 
-		if (routineEntity instanceof UpstreamBranchCronRoutineEntity) {
-			UpstreamBranchCronRoutineEntity upstreamBranchCronRoutineEntity =
-				(UpstreamBranchCronRoutineEntity)routineEntity;
+		if (routineEntity instanceof UpstreamBranchRoutineEntity) {
+			UpstreamBranchRoutineEntity upstreamBranchRoutineEntity =
+				(UpstreamBranchRoutineEntity)routineEntity;
 
-			gitCommitEntity.addRoutineEntity(upstreamBranchCronRoutineEntity);
+			gitCommitEntity.addRoutineEntity(upstreamBranchRoutineEntity);
 
-			upstreamBranchCronRoutineEntity.setPreviousGitCommitEntity(
+			upstreamBranchRoutineEntity.setPreviousGitCommitEntity(
 				gitCommitEntity);
 		}
 	}

@@ -74,24 +74,17 @@ public class JavaUpgradeMissingTestCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content,
 		String className) {
 
+		if (!isModulesFile(absolutePath) && !isPortalSource()) {
+			return;
+		}
+
 		String expectedTestClassName = StringBundler.concat(
 			JavaSourceUtil.getPackageName(content), ".test.", className,
 			"Test");
 
-		File file = null;
-
-		if (isModulesFile(absolutePath)) {
-			expectedTestClassName = StringBundler.concat(
-				JavaSourceUtil.getPackageName(content), ".test.", className,
-				"Test");
-
-			file = JavaSourceUtil.getJavaFile(
-				expectedTestClassName, SourceUtil.getRootDirName(absolutePath),
-				getBundleSymbolicNamesMap(absolutePath));
-		}
-		else if (absolutePath.contains("/portal-impl/")) {
-			file = new File(expectedTestClassName);
-		}
+		File file = JavaSourceUtil.getJavaFile(
+			expectedTestClassName, SourceUtil.getRootDirName(absolutePath),
+			getBundleSymbolicNamesMap(absolutePath));
 
 		if ((file == null) || !file.exists()) {
 			addMessage(

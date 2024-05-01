@@ -134,8 +134,6 @@
 		<Logger level="WARN" name="com.liferay.portal.service.persistence.impl" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet" />
 		<Logger level="WARN" name="com.liferay.portal.servlet.LanguageServlet" />
-		<Logger level="ERROR" name="com.liferay.portal.servlet.PortalSessionCreator" />
-		<Logger level="ERROR" name="com.liferay.portal.servlet.PortalSessionDestroyer" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.autologin.AutoLoginFilter" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.cache" />

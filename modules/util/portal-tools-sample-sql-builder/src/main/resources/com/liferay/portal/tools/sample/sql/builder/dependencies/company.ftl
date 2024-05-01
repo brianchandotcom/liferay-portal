@@ -24,4 +24,14 @@
 	<#include "groups.ftl">
 
 	<#include "ct_collection.ftl">
+
+	<#-- SYSTEM_DEFAULT SAPEntry -->
+
+	<#list dataFactory.newSystemDefaultSAPEntryModel(companyModel) as sapEntryModel>
+		${dataFactory.toInsertSQL(sapEntryModel)}
+
+		<#assign sapEntryResourcePermissionModel = dataFactory.newSAPEntryResourcePermissionModel(sapEntryModel) />
+
+		${dataFactory.toInsertSQL(sapEntryResourcePermissionModel)}
+	</#list>
 </#list>

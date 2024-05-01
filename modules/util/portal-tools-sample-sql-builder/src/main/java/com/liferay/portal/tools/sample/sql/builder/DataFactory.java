@@ -260,6 +260,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.theme.NavItem;
@@ -310,6 +311,9 @@ import com.liferay.portal.search.web.internal.suggestions.constants.SuggestionsP
 import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortletKeys;
 import com.liferay.portal.search.web.internal.type.facet.constants.TypeFacetPortletKeys;
 import com.liferay.portal.search.web.internal.user.facet.constants.UserFacetPortletKeys;
+import com.liferay.portal.security.service.access.policy.model.SAPEntry;
+import com.liferay.portal.security.service.access.policy.model.SAPEntryModel;
+import com.liferay.portal.security.service.access.policy.model.impl.SAPEntryModelImpl;
 import com.liferay.portal.service.impl.LayoutLocalServiceImpl;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
@@ -5864,6 +5868,41 @@ public class DataFactory {
 			_SAMPLE_USER_NAME, UserConstants.TYPE_REGULAR);
 	}
 
+	public ResourcePermissionModel newSAPEntryResourcePermissionModel(
+		SAPEntryModel sapEntryModel) {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(false);
+		serviceContext.setAddGuestPermissions(false);
+
+		ResourcePermissionModel resourcePermissionModel =
+			new ResourcePermissionModelImpl();
+
+		// PK fields
+
+		resourcePermissionModel.setResourcePermissionId(
+			_resourcePermissionIdCounter.get());
+
+		// Audit fields
+
+		resourcePermissionModel.setCompanyId(sapEntryModel.getCompanyId());
+
+		// Other fields
+
+		resourcePermissionModel.setName(SAPEntry.class.getName());
+		resourcePermissionModel.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
+		resourcePermissionModel.setPrimKey(
+			String.valueOf(sapEntryModel.getSapEntryId()));
+		resourcePermissionModel.setPrimKeyId(sapEntryModel.getSapEntryId());
+		resourcePermissionModel.setRoleId(_ownerRoleModel.getRoleId());
+		resourcePermissionModel.setOwnerId(_ownerRoleModel.getUserId());
+		resourcePermissionModel.setActionIds(1);
+		resourcePermissionModel.setViewActionId(true);
+
+		return resourcePermissionModel;
+	}
+
 	public LayoutModel newSearchGroupLayoutModel(
 		long groupId, LayoutModel layoutModel) {
 
@@ -6085,6 +6124,51 @@ public class DataFactory {
 	public SubscriptionModel newSubscriptionModel(WikiPageModel wikiPageModel) {
 		return newSubscriptionModel(
 			getClassNameId(WikiPage.class), wikiPageModel.getResourcePrimKey());
+	}
+
+	public List<SAPEntryModel> newSystemDefaultSAPEntryModel(
+		CompanyModel companyModel) {
+
+		List<SAPEntryModel> systemSAPEntries = new ArrayList<>(2);
+
+		SAPEntryModel systemDefaultSAPEntry = new SAPEntryModelImpl();
+
+		systemDefaultSAPEntry.setSapEntryId(_counter.get());
+		systemDefaultSAPEntry.setUuid(
+			new ServiceContext(
+			).getUuid());
+		systemDefaultSAPEntry.setCompanyId(companyModel.getCompanyId());
+		systemDefaultSAPEntry.setUserId(companyModel.getUserId());
+		systemDefaultSAPEntry.setUserName(null);
+		systemDefaultSAPEntry.setAllowedServiceSignatures("*");
+		systemDefaultSAPEntry.setDefaultSAPEntry(true);
+		systemDefaultSAPEntry.setEnabled(true);
+		systemDefaultSAPEntry.setName("SYSTEM_DEFAULT");
+		systemDefaultSAPEntry.setTitle(
+			"System Service Access Policy Applied on Every Request");
+
+		systemSAPEntries.add(systemDefaultSAPEntry);
+
+		SAPEntryModel systemUserPasswordSAPEntry = new SAPEntryModelImpl();
+
+		systemUserPasswordSAPEntry.setSapEntryId(_counter.get());
+		systemUserPasswordSAPEntry.setUuid(
+			new ServiceContext(
+			).getUuid());
+		systemUserPasswordSAPEntry.setCompanyId(companyModel.getCompanyId());
+		systemUserPasswordSAPEntry.setUserId(companyModel.getUserId());
+		systemUserPasswordSAPEntry.setUserName(null);
+		systemUserPasswordSAPEntry.setAllowedServiceSignatures("*");
+		systemUserPasswordSAPEntry.setDefaultSAPEntry(true);
+		systemUserPasswordSAPEntry.setEnabled(true);
+		systemUserPasswordSAPEntry.setName("SYSTEM_USER_PASSWORD");
+		systemUserPasswordSAPEntry.setTitle(
+			"System Service Access Policy for Requests Authenticated Using User " +
+				"Password");
+
+		systemSAPEntries.add(systemUserPasswordSAPEntry);
+
+		return systemSAPEntries;
 	}
 
 	public List<UserModel> newUserModels() {

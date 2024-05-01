@@ -76,6 +76,8 @@ dependencies {
 	compileInclude project(":apps:normalizer:normalizer-api")
 	compileInclude project(":apps:portal-search:portal-search-web")
 	compileInclude project(":apps:portal-search:portal-search-web-api")
+	compileInclude project(":apps:portal-security:portal-security-service-access-policy-api")
+	compileInclude project(":apps:portal-security:portal-security-service-access-policy-service")
 	compileInclude project(":apps:portlet-display-template:portlet-display-template-api")
 	compileInclude project(":apps:segments:segments-api")
 	compileInclude project(":apps:segments:segments-service")

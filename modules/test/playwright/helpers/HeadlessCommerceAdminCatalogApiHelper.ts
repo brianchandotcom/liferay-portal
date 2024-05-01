@@ -302,6 +302,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 					name: {
 						en_US: 'Product' + getRandomInt(),
 					},
+					productChannelFilter: true,
 					productStatus: 0,
 					productType: 'simple',
 					skus: [

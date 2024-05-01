@@ -593,38 +593,38 @@
 
 		<!-- Other fields -->
 
-		<column name="parentPlid" type="long" />
+		<column change-tracking-resolution-type="merge" name="parentPlid" type="long" />
 		<column name="privateLayout" type="boolean" />
 		<column accessor="true" name="layoutId" type="long" />
-		<column name="parentLayoutId" type="long" />
+		<column change-tracking-resolution-type="merge" name="parentLayoutId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column change-tracking-resolution-type="merge" localized="true" name="name" type="String" />
 		<column change-tracking-resolution-type="merge" localized="true" name="title" type="String" />
 		<column change-tracking-resolution-type="merge" localized="true" name="description" type="String" />
-		<column localized="true" name="keywords" type="String" />
-		<column localized="true" name="robots" type="String" />
+		<column change-tracking-resolution-type="merge" localized="true" name="keywords" type="String" />
+		<column change-tracking-resolution-type="merge" localized="true" name="robots" type="String" />
 		<column name="type" type="String" />
 		<column change-tracking-resolution-type="merge" name="typeSettings" type="String" />
-		<column name="hidden" type="boolean" />
+		<column change-tracking-resolution-type="merge" name="hidden" type="boolean" />
 		<column name="system" type="boolean" />
 		<column change-tracking-resolution-type="merge" name="friendlyURL" type="String" />
-		<column name="iconImageId" type="long" />
-		<column name="themeId" type="String" />
-		<column name="colorSchemeId" type="String" />
-		<column name="styleBookEntryId" type="long" />
-		<column name="css" type="String" />
+		<column change-tracking-resolution-type="merge" name="iconImageId" type="long" />
+		<column change-tracking-resolution-type="merge" name="themeId" type="String" />
+		<column change-tracking-resolution-type="merge" name="colorSchemeId" type="String" />
+		<column change-tracking-resolution-type="merge" name="styleBookEntryId" type="long" />
+		<column change-tracking-resolution-type="merge" name="css" type="String" />
 		<column change-tracking-resolution-type="merge" name="priority" type="int" />
-		<column name="faviconFileEntryId" type="long" />
+		<column change-tracking-resolution-type="merge" name="faviconFileEntryId" type="long" />
 		<column name="masterLayoutPlid" type="long" />
 		<column name="layoutPrototypeUuid" type="String" />
 		<column name="layoutPrototypeLinkEnabled" type="boolean" />
 		<column name="sourcePrototypeLayoutUuid" type="String" />
 		<column change-tracking-resolution-type="merge" name="publishDate" type="Date" />
-		<column name="lastPublishDate" type="Date" />
-		<column name="status" type="int" />
-		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
+		<column change-tracking-resolution-type="merge" name="lastPublishDate" type="Date" />
+		<column change-tracking-resolution-type="merge" name="status" type="int" />
+		<column change-tracking-resolution-type="merge" name="statusByUserId" type="long" />
+		<column change-tracking-resolution-type="merge" name="statusByUserName" type="String" />
 		<column change-tracking-resolution-type="merge" name="statusDate" type="Date" />
 
 		<!-- Order -->

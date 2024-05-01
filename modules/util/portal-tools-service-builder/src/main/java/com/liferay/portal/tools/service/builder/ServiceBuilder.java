@@ -8065,8 +8065,18 @@ public class ServiceBuilder {
 				startIndex = index + 5;
 			}
 			else {
-				throw new ServiceBuilderException(
-					"Unable to parse package path from " + fileName);
+
+				// Older branches still have integration tests in portal-impl
+
+				index = fileName.indexOf("/test/integration/");
+
+				if (index > 0) {
+					startIndex = index + 18;
+				}
+				else {
+					throw new ServiceBuilderException(
+						"Unable to parse package path from " + fileName);
+				}
 			}
 		}
 

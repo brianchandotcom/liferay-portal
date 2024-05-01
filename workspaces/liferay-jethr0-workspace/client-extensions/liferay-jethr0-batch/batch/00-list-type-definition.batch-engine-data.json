@@ -728,7 +728,7 @@
 				},
 				{
 					"externalReferenceCode": "upstreamBranch",
-					"key": "upstreamBranc",
+					"key": "upstreamBranch",
 					"name": "Upstream Branch",
 					"name_i18n": {
 						"en-US": "Upstream Branch"

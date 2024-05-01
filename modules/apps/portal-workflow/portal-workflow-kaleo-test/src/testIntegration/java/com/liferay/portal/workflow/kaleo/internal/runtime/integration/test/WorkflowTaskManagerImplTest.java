@@ -186,8 +186,6 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		BaseWorkflowManagerTestCase.tearDownClass();
-
 		_companyLocalService.deleteCompany(_company);
 
 		ConfigurationTestUtil.deleteConfiguration(_configuration);

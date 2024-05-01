@@ -5,16 +5,25 @@
 
 package com.liferay.jethr0.event.github;
 
+import com.liferay.jethr0.bui1d.BuildEntity;
+import com.liferay.jethr0.bui1d.queue.BuildQueue;
+import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.commit.GitHubCommit;
 import com.liferay.jethr0.event.github.repository.GitHubRepository;
 import com.liferay.jethr0.event.github.user.GitHubUser;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
+import com.liferay.jethr0.git.commit.GitCommitEntity;
 import com.liferay.jethr0.git.repository.GitBranchEntityRepository;
+import com.liferay.jethr0.git.repository.GitCommitEntityRepository;
+import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.MergeCentralSubrepositoryJobEntity;
 import com.liferay.jethr0.job.RepositoryArchiveJobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.routine.RoutineEntity;
+import com.liferay.jethr0.routine.UpstreamBranchRoutineEntity;
+import com.liferay.jethr0.util.JobUtil;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.io.IOException;
@@ -26,6 +35,9 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -193,6 +205,79 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 
 		gitBranchEntity.setLatestSHA(headGitHubCommit.getSHA());
 
+		GitCommitEntityRepository gitCommitEntityRepository =
+			getGitCommitEntityRepository();
+
+		GitCommitEntity latestGitCommitEntity =
+			gitCommitEntityRepository.createGitCommitEntity(
+				gitBranchEntity, headGitHubCommit.getSHA());
+
+		for (RoutineEntity routineEntity :
+				gitBranchEntity.getRoutineEntities()) {
+
+			if (routineEntity.getType() != RoutineEntity.Type.UPSTREAM_BRANCH) {
+				continue;
+			}
+
+			UpstreamBranchRoutineEntity upstreamBranchRoutineEntity =
+				(UpstreamBranchRoutineEntity)routineEntity;
+
+			GitCommitEntity previousGitCommitEntity =
+				upstreamBranchRoutineEntity.getPreviousGitCommitEntity();
+
+			if ((latestGitCommitEntity == null) ||
+				((previousGitCommitEntity != null) &&
+				 Objects.equals(
+					 latestGitCommitEntity.getSHA(),
+					 previousGitCommitEntity.getSHA()))) {
+
+				continue;
+			}
+
+			upstreamBranchRoutineEntity.setPreviousGitCommitEntity(
+				latestGitCommitEntity);
+
+			BuildEntityRepository buildEntityRepository =
+				getBuildEntityRepository();
+
+			JobEntityRepository jobEntityRepository = getJobEntityRepository();
+
+			JobEntity jobEntity = jobEntityRepository.create(
+				routineEntity,
+				JobUtil.getUpdateJobEntityName(routineEntity.getJobName()),
+				routineEntity.getJobParameters(),
+				routineEntity.getJobPriority(), null, JobEntity.State.QUEUED,
+				routineEntity.getJobType());
+
+			try {
+				for (JSONObject initialBuildJSONObject :
+						jobEntity.getInitialBuildJSONObjects()) {
+
+					BuildEntity buildEntity = buildEntityRepository.create(
+						jobEntity, initialBuildJSONObject);
+
+					buildEntity.setJobEntity(jobEntity);
+
+					jobEntity.addBuildEntity(buildEntity);
+				}
+
+				if (jobEntity.getState() == JobEntity.State.QUEUED) {
+					BuildQueue buildQueue = getBuildQueue();
+
+					buildQueue.addJobEntity(jobEntity);
+
+					JenkinsQueue jenkinsQueue = getJenkinsQueue();
+
+					jenkinsQueue.invoke();
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception);
+				}
+			}
+		}
+
 		GitBranchEntityRepository gitBranchEntityRepository =
 			getGitBranchEntityRepository();
 
@@ -231,6 +316,9 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 
 		invokeJobEntity(repositoryArchiveJobEntity);
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		PusherGitHubEventHandler.class);
 
 	private static final Pattern _pattern = Pattern.compile("7\\.\\d\\.x");
 

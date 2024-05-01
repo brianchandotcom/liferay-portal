@@ -25,6 +25,7 @@ import java.util.Base64;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Generated;
@@ -310,7 +311,20 @@ public class HttpInvoker {
 			(HttpURLConnection)url.openConnection();
 
 		try {
-			_methodField.set(httpURLConnection, _httpMethod.name());
+			HttpURLConnection setMethodHttpURLConnection = httpURLConnection;
+
+			if (Objects.equals(url.getProtocol(), "https")) {
+				Class<?> clazz = httpURLConnection.getClass();
+
+				Field field = clazz.getDeclaredField("delegate");
+
+				field.setAccessible(true);
+
+				setMethodHttpURLConnection = (HttpURLConnection)field.get(
+					httpURLConnection);
+			}
+
+			_methodField.set(setMethodHttpURLConnection, _httpMethod.name());
 		}
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			throw new IOException(reflectiveOperationException);

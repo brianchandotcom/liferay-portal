@@ -61,21 +61,23 @@ function UpstreamBranches() {
 								</Link>
 							</td>
 							<td>
-								<Link
-									to={
-										'https://github.com/' +
-										upstreamGitBranch.userName +
-										'/' +
-										upstreamGitBranch.repositoryName +
-										'/commit/' +
-										upstreamGitBranch.latestSHA
-									}
-								>
-									{upstreamGitBranch.latestSHA.substring(
-										0,
-										7
-									)}
-								</Link>
+								{upstreamGitBranch.latestSHA &&
+									(<Link
+										to={
+											'https://github.com/' +
+											upstreamGitBranch.userName +
+											'/' +
+											upstreamGitBranch.repositoryName +
+											'/commit/' +
+											upstreamGitBranch.latestSHA
+										}
+									>
+										{upstreamGitBranch.latestSHA.substring(
+											0,
+											7
+										)}
+									</Link>)
+								}
 							</td>
 							<td>
 								<Link

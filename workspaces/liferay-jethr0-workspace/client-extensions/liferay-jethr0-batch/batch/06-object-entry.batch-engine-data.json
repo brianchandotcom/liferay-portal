@@ -205,7 +205,7 @@
 		{
 			"cron": "0 0 0 ? * 5 *",
 			"externalReferenceCode": "sanitizeLanguageController",
-			"jobName": "Repository Archive - $(current_date)",
+			"jobName": "Sanitize Language - $(current_date)",
 			"jobParameters": "[]",
 			"jobPriority": 1,
 			"jobType": "sanitizeLanguage",

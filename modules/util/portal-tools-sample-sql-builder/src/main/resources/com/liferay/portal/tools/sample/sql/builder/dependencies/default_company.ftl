@@ -15,3 +15,13 @@ ${dataFactory.toInsertSQL(dataFactory.newVirtualHostModel())}
 <#include "roles.ftl">
 
 <#include "default_groups.ftl">
+
+<#-- SYSTEM_DEFAULT SAPEntry -->
+
+<#list dataFactory.newSystemDefaultSAPEntryModel(defaultCompanyModel) as sapEntryModel>
+	${dataFactory.toInsertSQL(sapEntryModel)}
+
+	<#assign sapEntryResourcePermissionModel = dataFactory.newSAPEntryResourcePermissionModel(sapEntryModel) />
+
+	${dataFactory.toInsertSQL(sapEntryResourcePermissionModel)}
+</#list>

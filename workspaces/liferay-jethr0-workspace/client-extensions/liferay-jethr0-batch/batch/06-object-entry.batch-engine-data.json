@@ -238,6 +238,26 @@
 			"type": "upstreamBranchCron"
 		},
 		{
+			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE70xBundles",
+			"jobName": "ci:test:bundles - 7.0.x - $(current_date)",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal-ee/tree/7.0.x\"},{\"key\":\"portalBuildProfile\",\"value\":\"dxp\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"7.0.x\"},{\"key\":\"testSuiteName\",\"value\":\"bundles\"}]",
+			"jobPriority": 3,
+			"jobType": "portalUpstreamTestSuite",
+			"name": "ci:test:bundles - 7.0.x",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalEE70x",
+			"type": "upstreamBranch"
+		},
+		{
+			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE71xBundles",
+			"jobName": "ci:test:bundles - 7.1.x - $(current_date)",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal-ee/tree/7.1.x\"},{\"key\":\"portalBuildProfile\",\"value\":\"dxp\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"7.1.x\"},{\"key\":\"testSuiteName\",\"value\":\"bundles\"}]",
+			"jobPriority": 3,
+			"jobType": "portalUpstreamTestSuite",
+			"name": "ci:test:bundles - 7.1.x",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalEE71x",
+			"type": "upstreamBranch"
+		},
+		{
 			"cron": "0 0 0 ? * 3 *",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE71xEnvironments",
 			"jobName": "ci:test:environments - 7.1.x - $(current_date)",
@@ -293,6 +313,16 @@
 			"type": "upstreamBranchCron"
 		},
 		{
+			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE72xBundles",
+			"jobName": "ci:test:bundles - 7.2.x - $(current_date)",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal-ee/tree/7.2.x\"},{\"key\":\"portalBuildProfile\",\"value\":\"dxp\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"7.2.x\"},{\"key\":\"testSuiteName\",\"value\":\"bundles\"}]",
+			"jobPriority": 3,
+			"jobType": "portalUpstreamTestSuite",
+			"name": "ci:test:bundles - 7.2.x",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalEE72x",
+			"type": "upstreamBranch"
+		},
+		{
 			"cron": "0 0 0 ? * 3 *",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE72xEnvironments",
 			"jobName": "ci:test:environments - 7.2.x - $(current_date)",
@@ -346,6 +376,16 @@
 			"name": "ci:test:upgrade - 7.2.x",
 			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalEE72x",
 			"type": "upstreamBranchCron"
+		},
+		{
+			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE73xBundles",
+			"jobName": "ci:test:bundles - 7.3.x - $(current_date)",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal-ee/tree/7.3.x\"},{\"key\":\"portalBuildProfile\",\"value\":\"dxp\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"7.3.x\"},{\"key\":\"testSuiteName\",\"value\":\"bundles\"}]",
+			"jobPriority": 3,
+			"jobType": "portalUpstreamTestSuite",
+			"name": "ci:test:bundles - 7.3.x",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalEE73x",
+			"type": "upstreamBranch"
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
@@ -404,7 +444,7 @@
 		},
 		{
 			"cron": "0 0 0 ? * 3 *",
-			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterAcceptanceFunctionalAcceptanceFunctionalDBPartition",
+			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterAcceptanceFunctionalDBPartition",
 			"jobName": "ci:test:acceptance-functional-db-partition - master - $(current_date)",
 			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal/tree/master\"},{\"key\":\"portalBuildProfile\",\"value\":\"dxp\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"master\"},{\"key\":\"testSuiteName\",\"value\":\"acceptance-functional-db-partition\"}]",
 			"jobPriority": 5,
@@ -412,6 +452,16 @@
 			"name": "ci:test:acceptance-functional-db-partition - master",
 			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalMaster",
 			"type": "upstreamBranchCron"
+		},
+		{
+			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterBundles",
+			"jobName": "ci:test:bundles - master - $(current_date)",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal/tree/master\"},{\"key\":\"portalBuildProfile\",\"value\":\"dxp\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"master\"},{\"key\":\"testSuiteName\",\"value\":\"bundles\"}]",
+			"jobPriority": 3,
+			"jobType": "portalUpstreamTestSuite",
+			"name": "ci:test:bundles - master",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalMaster",
+			"type": "upstreamBranch"
 		},
 		{
 			"cron": "0 0 0 ? * * *",

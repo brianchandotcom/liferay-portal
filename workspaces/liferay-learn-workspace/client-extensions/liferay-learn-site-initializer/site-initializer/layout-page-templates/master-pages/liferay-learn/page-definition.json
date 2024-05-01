@@ -14,6 +14,7 @@
 						"searchBlueprintId": 0,
 						"showAccountMenu": true,
 						"showCta": false,
+						"showHelp": true,
 						"showLanguageMenu": true,
 						"showSearch": true,
 						"showSiteName": true,
@@ -229,12 +230,31 @@
 						"definition": {
 						},
 						"id": "11de3bab-6e27-8bea-216d-03fac57605a9",
+						"pageElements": [
+							{
+								"definition": {
+									"widgetInstance": {
+										"widgetConfig": {
+										},
+										"widgetName": "com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet"
+									}
+								},
+								"id": "54708d9c-6758-f73a-761b-3a0925957782",
+								"type": "Widget"
+							}
+						],
 						"type": "FragmentDropZone"
 					},
 					{
 						"definition": {
 						},
 						"id": "11a71e2a-f8c0-74dd-2723-a87ed2016011",
+						"type": "FragmentDropZone"
+					},
+					{
+						"definition": {
+						},
+						"id": "462e81b2-985d-14d6-5b1f-7860f04caf07",
 						"pageElements": [
 							{
 								"definition": {
@@ -2986,7 +3006,7 @@
 					{
 						"definition": {
 						},
-						"id": "462e81b2-985d-14d6-5b1f-7860f04caf07",
+						"id": "1b4a2c92-4359-d37e-08ed-1e20a41532f5",
 						"type": "FragmentDropZone"
 					}
 				],
@@ -4186,7 +4206,7 @@
 			{
 				"clientExtensionConfig": {
 					"loadType": "default",
-					"scriptLocation": "head"
+					"scriptLocation": "bottom"
 				},
 				"externalReferenceCode": "LXC:liferay-learn-global-js",
 				"name": "Liferay Learn Global JS"

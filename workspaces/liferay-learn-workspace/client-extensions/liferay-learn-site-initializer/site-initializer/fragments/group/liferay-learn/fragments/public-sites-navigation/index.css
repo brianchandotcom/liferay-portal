@@ -336,6 +336,7 @@ nav.public-sites-navigation
 	.language-dropdown-list-container
 	.language-dropdown-list
 	ul {
+	margin: 0;
 	padding-inline-start: 0;
 }
 nav.public-sites-navigation
@@ -345,7 +346,6 @@ nav.public-sites-navigation
 	.language-nav-item {
 	align-items: center;
 	border-radius: var(--border-radius-xs);
-	display: flex;
 	font-weight: var(--font-weight-semi-bold);
 	text-align: left;
 }

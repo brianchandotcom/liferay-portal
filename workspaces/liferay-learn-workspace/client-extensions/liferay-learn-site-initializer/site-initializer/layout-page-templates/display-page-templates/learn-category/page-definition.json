@@ -274,7 +274,7 @@
 													"maxTerms": "100",
 													"order": "key:asc",
 													"parameterName": "feature",
-													"vocabularyIds": "[$VOCABULARY_ENTRY_ERC:FEATURE$]"
+													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Feature$]"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
@@ -314,7 +314,7 @@
 													"maxTerms": "100",
 													"order": "key:asc",
 													"parameterName": "deployment-approach",
-													"vocabularyIds": "[$VOCABULARY_ENTRY_ERC:DEPLOYMENT_APPROACH$]"
+													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Deployment Approach$]"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}

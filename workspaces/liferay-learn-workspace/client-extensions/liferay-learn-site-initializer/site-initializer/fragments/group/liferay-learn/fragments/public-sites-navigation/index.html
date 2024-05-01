@@ -51,26 +51,7 @@
 
 						<div class="language-dropdown-list-container">
 							<div class="language-dropdown-list">
-								<div class="class-toggle language-dropdown" data-target-class="language-selection-menu-active" data-target-nodes=".osb-nav-secondary">
-									<ul>
-										[#assign availableLocales = languageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()) /]
-										[#assign separator = themeDisplay.getURLCurrent()?contains("?")?then("&", "?")]
-
-										[#list availableLocales as locale]
-											[#assign isSelected = locale.getLanguage() == themeDisplay.getLanguageId() /]
-
-											<li>
-												[@clay["link"]
-													cssClass="${isSelected?then('selected', '')} language-nav-item language-locale-long-text liferay-nav-item"
-													href="${themeDisplay.getURLCurrent()}${separator}languageId=${locale.getLanguage()}"
-													label=locale.getDisplayLanguage()?cap_first
-													lang=localeUtil.toW3cLanguageId(locale)
-													rel="nofollow"
-												/]
-											</li>
-										[/#list]
-									</ul>
-								</div>
+								<lfr-drop-zone></lfr-drop-zone>
 							</div>
 						</div>
 					</div>

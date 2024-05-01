@@ -33,14 +33,14 @@
 		<column name="classPK" type="long" />
 		<column name="treePath" type="String" />
 		<column accessor="true" name="articleId" type="String" />
-		<column name="version" type="double" />
+		<column change-tracking-resolution-type="merge" name="version" type="double" />
 		<column name="urlTitle" type="String" uad-nonanonymizable="true" />
 		<column name="DDMStructureId" type="long" />
 		<column name="DDMTemplateKey" type="String" />
 		<column name="defaultLanguageId" type="String" />
 		<column name="layoutUuid" type="String" />
 		<column name="displayDate" type="Date" />
-		<column name="expirationDate" type="Date" />
+		<column change-tracking-resolution-type="merge" name="expirationDate" type="Date" />
 		<column name="reviewDate" type="Date" />
 		<column name="indexable" type="boolean" />
 		<column name="smallImage" type="boolean" />
@@ -49,9 +49,9 @@
 		<column name="smallImageURL" type="String" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
-		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />
-		<column name="statusDate" type="Date" />
+		<column change-tracking-resolution-type="merge" name="statusByUserId" type="long" />
+		<column change-tracking-resolution-type="merge" name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />
+		<column change-tracking-resolution-type="merge" name="statusDate" type="Date" />
 
 		<!-- Order -->
 

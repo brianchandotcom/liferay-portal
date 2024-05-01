@@ -238,6 +238,61 @@
 			"type": "upstreamBranchCron"
 		},
 		{
+			"cron": "0 0 0 ? * 3 *",
+			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE71xEnvironments",
+			"jobName": "ci:test:environments - 7.1.x - $(current_date)",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal-ee/tree/7.1.x\"},{\"key\":\"portalBuildProfile\",\"value\":\"dxp\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"7.1.x\"},{\"key\":\"testSuiteName\",\"value\":\"environments\"}]",
+			"jobPriority": 5,
+			"jobType": "portalUpstreamTestSuite",
+			"name": "ci:test:environments - 7.1.x",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalEE71x",
+			"type": "upstreamBranchCron"
+		},
+		{
+			"cron": "0 0 0 ? * 3 *",
+			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE71xJDK11",
+			"jobName": "ci:test:jdk11 - 7.1.x - $(current_date)",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal-ee/tree/7.1.x\"},{\"key\":\"portalBuildProfile\",\"value\":\"dxp\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"7.1.x\"},{\"key\":\"testSuiteName\",\"value\":\"jdk11\"}]",
+			"jobPriority": 5,
+			"jobType": "portalUpstreamTestSuite",
+			"name": "ci:test:jdk11 - 7.1.x",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalEE71x",
+			"type": "upstreamBranchCron"
+		},
+		{
+			"cron": "0 0 0 ? * 3 *",
+			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE71xLicense",
+			"jobName": "ci:test:license - 7.1.x - $(current_date)",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal-ee/tree/7.1.x\"},{\"key\":\"portalBuildProfile\",\"value\":\"dxp\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"7.1.x\"},{\"key\":\"testSuiteName\",\"value\":\"license\"}]",
+			"jobPriority": 5,
+			"jobType": "portalUpstreamTestSuite",
+			"name": "ci:test:license - 7.1.x",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalEE71x",
+			"type": "upstreamBranchCron"
+		},
+		{
+			"cron": "0 0 0 ? * 3 *",
+			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE71xLicenseCluster",
+			"jobName": "ci:test:license-cluster - 7.1.x - $(current_date)",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal-ee/tree/7.1.x\"},{\"key\":\"portalBuildProfile\",\"value\":\"dxp\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"7.1.x\"},{\"key\":\"testSuiteName\",\"value\":\"license-cluster\"}]",
+			"jobPriority": 5,
+			"jobType": "portalUpstreamTestSuite",
+			"name": "ci:test:license-cluster - 7.1.x",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalEE71x",
+			"type": "upstreamBranchCron"
+		},
+		{
+			"cron": "0 0 0 ? * 3 *",
+			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE71xUpgrade",
+			"jobName": "ci:test:upgrade - 7.1.x - $(current_date)",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal-ee/tree/7.1.x\"},{\"key\":\"portalBuildProfile\",\"value\":\"dxp\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"7.1.x\"},{\"key\":\"testSuiteName\",\"value\":\"upgrade\"}]",
+			"jobPriority": 5,
+			"jobType": "portalUpstreamTestSuite",
+			"name": "ci:test:upgrade - 7.1.x",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalEE71x",
+			"type": "upstreamBranchCron"
+		},
+		{
 			"cron": "0 0 0 ? * *",
 			"externalReferenceCode": "publishPortalDockerImageDXPNightlyController",
 			"jobName": "Publish Portal Docker Image DXP Nightly - $(current_date)",

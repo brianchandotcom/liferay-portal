@@ -59,10 +59,10 @@ public class ProxyDownloadAsahServlet extends BaseAsahServlet {
 			URLConnection urlConnection = url.openConnection();
 
 			urlConnection.setRequestProperty(
-				OSBAsahHeaderConstants.PROJECT_ID, getProjectId());
-			urlConnection.setRequestProperty(
 				OSBAsahHeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE,
 				getSecuritySignature(uri));
+			urlConnection.setRequestProperty(
+				OSBAsahHeaderConstants.PROJECT_ID, getProjectId());
 
 			urlConnection.connect();
 
@@ -104,10 +104,10 @@ public class ProxyDownloadAsahServlet extends BaseAsahServlet {
 				HttpHeaders.CONTENT_TYPE,
 				httpServletRequest.getHeader(HttpHeaders.CONTENT_TYPE));
 			urlConnection.setRequestProperty(
-				OSBAsahHeaderConstants.PROJECT_ID, getProjectId());
-			urlConnection.setRequestProperty(
 				OSBAsahHeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE,
 				getSecuritySignature(uri));
+			urlConnection.setRequestProperty(
+				OSBAsahHeaderConstants.PROJECT_ID, getProjectId());
 
 			try (OutputStream outputStream = urlConnection.getOutputStream();
 				InputStream inputStream = httpServletRequest.getInputStream()) {

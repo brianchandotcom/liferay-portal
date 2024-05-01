@@ -128,10 +128,10 @@ public class GraphQLAsahServlet extends BaseAsahServlet {
 			httpPost.setEntity(postEntity);
 
 			httpPost.setHeader(
-				OSBAsahHeaderConstants.PROJECT_ID, getProjectId());
-			httpPost.setHeader(
 				OSBAsahHeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE,
 				getSecuritySignature(uri));
+			httpPost.setHeader(
+				OSBAsahHeaderConstants.PROJECT_ID, getProjectId());
 			httpPost.setHeader("content-type", "application/json");
 
 			CloseableHttpResponse closeableHttpResponse =

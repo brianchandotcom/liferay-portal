@@ -8,10 +8,17 @@ package com.liferay.jethr0.event.liferay;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.event.EventHandlerContext;
+import com.liferay.jethr0.git.branch.GitBranchEntity;
+import com.liferay.jethr0.git.commit.GitCommitEntity;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.routine.RoutineEntity;
+import com.liferay.jethr0.routine.UpstreamBranchCronRoutineEntity;
+import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 import com.liferay.jethr0.util.JobUtil;
+
+import java.util.Objects;
 
 import org.json.JSONObject;
 
@@ -27,6 +34,41 @@ public class AddJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 
 		JobEntity jobEntity = jobEntityRepository.add(getJobJSONObject());
 
+		boolean jobEntityUpdated = false;
+
+		RoutineEntity routineEntity = jobEntity.getRoutineEntity();
+
+		if (routineEntity != null) {
+			UpstreamBranchCronRoutineEntity upstreamBranchCronRoutineEntity =
+				(UpstreamBranchCronRoutineEntity)routineEntity;
+
+			GitBranchEntity gitBranchEntity =
+				upstreamBranchCronRoutineEntity.getGitBranchEntity();
+
+			GitCommitEntity latestGitCommitEntity =
+				gitBranchEntity.getLatestGitCommitEntity();
+
+			GitCommitEntity previousGitCommitEntity =
+				upstreamBranchCronRoutineEntity.getPreviousGitCommitEntity();
+
+			if (latestGitCommitEntity != null) {
+				jobEntity.setGitCommitEntity(latestGitCommitEntity);
+
+				jobEntityUpdated = true;
+
+				if (previousGitCommitEntity == null) {
+					RoutineEntityRepository routineEntityRepository =
+						getRoutineEntityRepository();
+
+					upstreamBranchCronRoutineEntity.setPreviousGitCommitEntity(
+						latestGitCommitEntity);
+
+					routineEntityRepository.update(
+						upstreamBranchCronRoutineEntity);
+				}
+			}
+		}
+
 		String currentJobName = jobEntity.getName();
 
 		String updatedJobName = JobUtil.getUpdateJobEntityName(currentJobName);
@@ -34,6 +76,10 @@ public class AddJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 		if (!currentJobName.equals(updatedJobName)) {
 			jobEntity.setName(updatedJobName);
 
+			jobEntityUpdated = true;
+		}
+
+		if (jobEntityUpdated) {
 			jobEntityRepository.update(jobEntity);
 		}
 

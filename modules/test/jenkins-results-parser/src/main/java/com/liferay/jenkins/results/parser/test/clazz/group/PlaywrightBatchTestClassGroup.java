@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.NotificationUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
@@ -27,6 +28,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -315,7 +317,21 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 			result = result.replace("Finished executing Bash commands.", "");
 
-			_playwrightJSONObject = new JSONObject(result.trim());
+			try {
+				_playwrightJSONObject = new JSONObject(result.trim());
+			}
+			catch (JSONException jsonException) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("Failed to parse Playwright JSON object ");
+				sb.append("<@U04GTH03Q>, <@U01EV0V1Y6N>\n");
+
+				sb.append(System.getenv("TOP_LEVEL_BUILD_URL"));
+
+				NotificationUtil.sendSlackNotification(
+					sb.toString(), "#ci-notifications", ":playwright:",
+					"Playwright Batch Creation Failure", "Liferay Playwright");
+			}
 
 			JSONArray errorsJSONArray = _playwrightJSONObject.optJSONArray(
 				"errors");

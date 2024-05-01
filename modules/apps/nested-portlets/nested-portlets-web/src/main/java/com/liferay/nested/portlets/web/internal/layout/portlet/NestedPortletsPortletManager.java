@@ -26,7 +26,7 @@ public class NestedPortletsPortletManager implements PortletManager {
 			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 }

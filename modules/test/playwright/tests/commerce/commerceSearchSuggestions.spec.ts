@@ -53,7 +53,6 @@ test('LPD-18809 Search suggestions should filter by product visibility with the 
 		name: {
 			en_US: 'tprod' + getRandomInt(),
 		},
-		productChannelFilter: true,
 	});
 
 	const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
@@ -61,6 +60,7 @@ test('LPD-18809 Search suggestions should filter by product visibility with the 
 		name: {
 			en_US: 'tprod' + getRandomInt(),
 		},
+		productChannelFilter: false,
 	});
 
 	await applicationsMenuPage.goToSite(site.name);

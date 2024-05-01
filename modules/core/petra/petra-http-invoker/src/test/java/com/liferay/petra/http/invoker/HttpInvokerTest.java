@@ -13,6 +13,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -62,7 +63,20 @@ public class HttpInvokerTest {
 			(HttpURLConnection)url.openConnection();
 
 		try {
-			_methodField.set(httpURLConnection, _methodName);
+			HttpURLConnection setMethodHttpURLConnection = httpURLConnection;
+
+			if (Objects.equals(url.getProtocol(), "https")) {
+				Class<?> clazz = httpURLConnection.getClass();
+
+				Field field = clazz.getDeclaredField("delegate");
+
+				field.setAccessible(true);
+
+				setMethodHttpURLConnection = (HttpURLConnection)field.get(
+					httpURLConnection);
+			}
+
+			_methodField.set(setMethodHttpURLConnection, _methodName);
 		}
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			throw new IOException(reflectiveOperationException);

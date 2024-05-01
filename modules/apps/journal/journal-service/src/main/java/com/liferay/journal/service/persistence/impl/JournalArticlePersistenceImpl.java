@@ -34247,6 +34247,7 @@ public class JournalArticlePersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -34265,14 +34266,14 @@ public class JournalArticlePersistenceImpl
 		ctStrictColumnNames.add("classPK");
 		ctStrictColumnNames.add("treePath");
 		ctStrictColumnNames.add("articleId");
-		ctStrictColumnNames.add("version");
+		ctMergeColumnNames.add("version");
 		ctStrictColumnNames.add("urlTitle");
 		ctStrictColumnNames.add("DDMStructureId");
 		ctStrictColumnNames.add("DDMTemplateKey");
 		ctStrictColumnNames.add("defaultLanguageId");
 		ctStrictColumnNames.add("layoutUuid");
 		ctStrictColumnNames.add("displayDate");
-		ctStrictColumnNames.add("expirationDate");
+		ctMergeColumnNames.add("expirationDate");
 		ctStrictColumnNames.add("reviewDate");
 		ctStrictColumnNames.add("indexable");
 		ctStrictColumnNames.add("smallImage");
@@ -34281,14 +34282,15 @@ public class JournalArticlePersistenceImpl
 		ctStrictColumnNames.add("smallImageURL");
 		ctStrictColumnNames.add("lastPublishDate");
 		ctStrictColumnNames.add("status");
-		ctStrictColumnNames.add("statusByUserId");
-		ctStrictColumnNames.add("statusByUserName");
-		ctStrictColumnNames.add("statusDate");
+		ctMergeColumnNames.add("statusByUserId");
+		ctMergeColumnNames.add("statusByUserName");
+		ctMergeColumnNames.add("statusDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("id_"));
 		_ctColumnNamesMap.put(

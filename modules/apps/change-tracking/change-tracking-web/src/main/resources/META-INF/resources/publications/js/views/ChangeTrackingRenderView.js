@@ -1420,7 +1420,13 @@ export default function ChangeTrackingRenderView({
 					key="workflow"
 				>
 					<ClayLink
-						onClick={() => setContentType(CONTENT_TYPE_WORKFLOW)}
+						onClick={() =>
+							setState((prevState) => ({
+								...prevState,
+								contentType: CONTENT_TYPE_WORKFLOW,
+								view: VIEW_UNIFIED,
+							}))
+						}
 					>
 						{Liferay.Language.get('workflow')}
 					</ClayLink>

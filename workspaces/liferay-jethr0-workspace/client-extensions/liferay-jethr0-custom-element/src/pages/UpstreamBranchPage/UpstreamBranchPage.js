@@ -44,18 +44,20 @@ function UpstreamBranchInformation({upstreamBranch}) {
 				<Link to={upstreamBranch.url}>{upstreamBranch.name}</Link>
 				<br />
 				Branch SHA:{' '}
-				<Link
-					to={
-						'https://github.com/' +
-						upstreamBranch.userName +
-						'/' +
-						upstreamBranch.repositoryName +
-						'/commit/' +
-						upstreamBranch.latestSHA
-					}
-				>
-					{upstreamBranch.latestSHA.substring(0, 7)}
-				</Link>
+				{upstreamBranch.latestSHA &&
+					(<Link
+						to={
+							'https://github.com/' +
+							upstreamBranch.userName +
+							'/' +
+							upstreamBranch.repositoryName +
+							'/commit/' +
+							upstreamBranch.latestSHA
+						}
+					>
+						{upstreamBranch.latestSHA.substring(0, 7)}
+					</Link>)
+				}
 				<br />
 				Repository Name:{' '}
 				<Link

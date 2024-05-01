@@ -42,12 +42,12 @@ public abstract class BaseRoutineEntity
 
 	@Override
 	public void addJobEntities(Set<JobEntity> jobEntities) {
-		_jobEntities.addAll(jobEntities);
+		addRelatedEntities(jobEntities);
 	}
 
 	@Override
 	public void addJobEntity(JobEntity jobEntity) {
-		addJobEntities(Collections.singleton(jobEntity));
+		addRelatedEntity(jobEntity);
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public abstract class BaseRoutineEntity
 
 	@Override
 	public Set<JobEntity> getJobEntities() {
-		return _jobEntities;
+		return getRelatedEntities(JobEntity.class);
 	}
 
 	@Override
@@ -130,12 +130,12 @@ public abstract class BaseRoutineEntity
 
 	@Override
 	public void removeJobEntities(Set<JobEntity> jobEntities) {
-		_jobEntities.removeAll(jobEntities);
+		removeRelatedEntities(jobEntities);
 	}
 
 	@Override
 	public void removeJobEntity(JobEntity jobEntity) {
-		_jobEntities.remove(jobEntity);
+		removeRelatedEntity(jobEntity);
 	}
 
 	@Override
@@ -254,7 +254,6 @@ public abstract class BaseRoutineEntity
 
 	private GitBranchEntity _gitBranchEntity;
 	private long _gitBranchEntityId;
-	private final Set<JobEntity> _jobEntities = new HashSet<>();
 	private String _jobName;
 	private Map<String, String> _jobParameters;
 	private int _jobPriority;

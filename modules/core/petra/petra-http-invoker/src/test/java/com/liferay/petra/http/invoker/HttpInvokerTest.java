@@ -1,17 +1,20 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 package com.liferay.petra.http.invoker;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
+
+import java.lang.reflect.Field;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +22,6 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -29,10 +31,10 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class HttpInvokerTest {
 
-	public HttpInvokerTest(String methodName, String urlString) {
-		_methodName = methodName;
-		_urlString = urlString;
-	}
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Parameterized.Parameters(name = "Testcase-{index}: testing {0} {1}")
 	public static Iterable<Object[]> data() {
@@ -44,16 +46,19 @@ public class HttpInvokerTest {
 		for (String protocol : protocols) {
 			for (String method : methods) {
 				testData.add(
-					new Object[]{
-						method, String.format("%s://foo.demo", protocol)}
-				);
+					new Object[] {
+						method, String.format("%s://foo.demo", protocol)
+					});
 			}
 		}
+
 		return testData;
 	}
 
-	private final String _urlString;
-	private final String _methodName;
+	public HttpInvokerTest(String methodName, String urlString) {
+		_methodName = methodName;
+		_urlString = urlString;
+	}
 
 	@Test
 	public void test() throws IOException {
@@ -82,7 +87,8 @@ public class HttpInvokerTest {
 			throw new IOException(reflectiveOperationException);
 		}
 
-		Assert.assertEquals(_urlString, _methodName, httpURLConnection.getRequestMethod());
+		Assert.assertEquals(
+			_urlString, _methodName, httpURLConnection.getRequestMethod());
 	}
 
 	private static final Field _methodField;
@@ -97,5 +103,8 @@ public class HttpInvokerTest {
 			throw new ExceptionInInitializerError(exception);
 		}
 	}
+
+	private final String _methodName;
+	private final String _urlString;
 
 }

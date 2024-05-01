@@ -323,7 +323,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			catch (JSONException jsonException) {
 				StringBuilder sb = new StringBuilder();
 
-				sb.append("Failed to parse Playwright JSON object ");
+				sb.append("Unable to parse Playwright JSON object ");
 				sb.append("<@U04GTH03Q>, <@U01EV0V1Y6N>\n");
 
 				sb.append(System.getenv("TOP_LEVEL_BUILD_URL"));

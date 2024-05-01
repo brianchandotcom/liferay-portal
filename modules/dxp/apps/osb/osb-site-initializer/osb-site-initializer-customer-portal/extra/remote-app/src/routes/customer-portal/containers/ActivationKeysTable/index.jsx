@@ -12,7 +12,6 @@ import RoundedGroupButtons from '../../../../common/components/RoundedGroupButto
 import Table from '../../../../common/components/Table';
 import {useAppPropertiesContext} from '../../../../common/contexts/AppPropertiesContext';
 import {ALERT_DOWNLOAD_TYPE} from '../../utils/constants/alertDownloadType';
-import { getProperProductNames } from '../../utils/getProperProductNames';
 import {getLicenseKeyPermanentStatus} from '../GenerateNewKey/utils/licenseKeyPermanentStatus';
 import DownloadAlert from './components/DownloadAlert';
 import ActivationKeysTableHeader from './components/Header';
@@ -225,7 +224,7 @@ const ActivationKeysTable = ({
 					<div className="align-center cp-activation-key-container d-flex justify-content-between mb-2">
 						<h3 className="m-0">
 							{isRenewTable
-								? i18n.sub('renew-x-activation-key', getProperProductNames(productName))
+								? i18n.sub('renew-x-activation-key', productName)
 								: i18n.translate('activation-keys')}
 						</h3>
 

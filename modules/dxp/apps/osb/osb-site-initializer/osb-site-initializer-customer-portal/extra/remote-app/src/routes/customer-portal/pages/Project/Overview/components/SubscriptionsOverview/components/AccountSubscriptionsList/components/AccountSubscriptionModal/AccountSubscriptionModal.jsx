@@ -7,7 +7,6 @@ import ClayModal from '@clayui/modal';
 import {memo} from 'react';
 
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
-import { getProperProductNames } from '~/routes/customer-portal/utils/getProperProductNames';
 import i18n from '../../../../../../../../../../../common/I18n';
 
 import {
@@ -67,7 +66,7 @@ const AccountSubscriptionModal = ({
 							{i18n.translate('subscription-terms').toUpperCase()}
 						</div>
 
-						<h2 className="text-neutral-10">{getProperProductNames(title)}</h2>
+						<h2 className="text-neutral-10">{title}</h2>
 					</div>
 
 					<Button

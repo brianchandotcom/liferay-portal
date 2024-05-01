@@ -65,7 +65,7 @@ const DXPCloud = () => {
 				<DeveloperKeysLayouts.Inputs
 					accountKey={project.accountKey}
 					downloadTextHelper={i18n.translate(
-						'to-activate-a-local-instance-of-liferay-self-hosted-download-a-developer-key-for-your-liferay-self-hosted-version'
+						'to-activate-a-local-instance-of-liferay-dxp-download-a-developer-key-for-your-liferay-dxp-version'
 					)}
 					dxpVersion={project.dxpVersion}
 					listType={LIST_TYPES.dxpVersion}

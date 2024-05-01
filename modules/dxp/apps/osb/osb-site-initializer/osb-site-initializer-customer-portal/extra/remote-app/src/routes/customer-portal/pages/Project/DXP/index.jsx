@@ -25,7 +25,7 @@ const DXP = ({hasComplimentaryKey}) => {
 				<DeveloperKeysLayouts.Inputs
 					accountKey={project.accountKey}
 					downloadTextHelper={i18n.translate(
-						'select-the-liferay-self-hosted-version-for-your-developer-key-to-download'
+						'select-the-liferay-dxp-version-for-your-developer-key-to-download'
 					)}
 					dxpVersion={project.dxpVersion}
 					listType={LIST_TYPES.dxpVersion}

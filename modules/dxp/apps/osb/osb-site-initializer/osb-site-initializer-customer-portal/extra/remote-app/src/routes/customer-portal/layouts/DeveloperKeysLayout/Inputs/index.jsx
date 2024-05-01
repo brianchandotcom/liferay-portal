@@ -7,7 +7,6 @@ import ClayAlert from '@clayui/alert';
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useEffect, useState} from 'react';
-import { getProperProductNames } from '~/routes/customer-portal/utils/getProperProductNames';
 import i18n from '../../../../../common/I18n';
 import {Button} from '../../../../../common/components';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
@@ -95,7 +94,7 @@ const DeveloperKeysInputs = ({
 
 			return downloadFromBlob(
 				licenseBlob,
-				`activation-key-${getProperProductNames(productName).toLowerCase().replace(' ', '-')}-development-${selectedVersionSplitted}-${projectFileName}${extensionFile}`
+				`activation-key-${productName.toLowerCase()}development-${selectedVersionSplitted}-${projectFileName}${extensionFile}`
 			);
 		}
 
@@ -146,7 +145,7 @@ const DeveloperKeysInputs = ({
 
 			<p className="text-neutral-7">
 				{`${i18n.translate(
-					'for-instructions-on-how-to-activate-your-liferay-self-hosted-or-liferay-portal-instance-please-read-the'
+					'for-instructions-on-how-to-activate-your-liferay-dxp-or-liferay-portal-instance-please-read-the'
 				)} `}
 
 				<a

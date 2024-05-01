@@ -401,7 +401,7 @@ const SetupDXPCloudPage = ({
 									<div className="flex-fill">
 										<label>
 											{i18n.translate(
-												'liferay-self-hosted-version'
+												'liferay-dxp-version'
 											)}
 										</label>
 
@@ -595,7 +595,7 @@ const SetupDXPCloudPage = ({
 
 							<div className="flex-fill">
 								<label>
-									{i18n.translate('liferay-self-hosted-version')}
+									{i18n.translate('liferay-dxp-version')}
 								</label>
 
 								<div className="position-relative">

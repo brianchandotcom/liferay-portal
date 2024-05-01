@@ -9,7 +9,6 @@ import {useEffect, useState} from 'react';
 
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconButton';
-import { getProperProductNames } from '~/routes/customer-portal/utils/getProperProductNames';
 import i18n from '../../../../../../common/I18n';
 import {
 	DXPIcon,
@@ -116,14 +115,10 @@ const TableKeyDetails = ({currentActivationKey, setValueToCopyToClipboard}) => {
 
 			<div className="row">
 				<div className="col-2">
-					<p className={classNames('align-items-center bg-brand-primary-lighten-5 cp-key-details-paragraph px-3 py-2 rounded', {
-							'': formattedProductName === 'DXP',
-							'd-flex': formattedProductName === 'Portal',
-						})}
-					>
+					<p className="align-items-center bg-brand-primary-lighten-5 cp-key-details-paragraph d-flex px-3 py-2 rounded">
 						<Logo className="mr-2" />
 
-						{getProperProductNames(formattedProductName)}
+						{formattedProductName}
 					</p>
 				</div>
 

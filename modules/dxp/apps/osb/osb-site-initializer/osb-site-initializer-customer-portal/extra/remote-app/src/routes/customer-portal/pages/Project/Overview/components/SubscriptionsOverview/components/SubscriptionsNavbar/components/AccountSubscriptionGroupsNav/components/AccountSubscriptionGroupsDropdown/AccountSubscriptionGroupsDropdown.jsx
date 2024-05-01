@@ -7,7 +7,6 @@ import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useState} from 'react';
-import { getProperProductNames } from '~/routes/customer-portal/utils/getProperProductNames';
 import Skeleton from '../../../../../../../../../../../../../common/components/Skeleton';
 
 const AccountSubscriptionGroupsDropdown = ({
@@ -36,7 +35,7 @@ const AccountSubscriptionGroupsDropdown = ({
 					{loading ? (
 						<Skeleton height={16} width={80} />
 					) : (
-						getProperProductNames(accountSubscriptionGroups[selectedIndex]?.name)
+						accountSubscriptionGroups[selectedIndex]?.name
 					)}
 
 					<span className="inline-item-after">
@@ -57,7 +56,7 @@ const AccountSubscriptionGroupsDropdown = ({
 						}}
 						symbolRight={index === selectedIndex && 'check'}
 					>
-						{getProperProductNames(accountSubscriptionGroup.name)}
+						{accountSubscriptionGroup.name}
 					</DropDown.Item>
 				)
 			)}

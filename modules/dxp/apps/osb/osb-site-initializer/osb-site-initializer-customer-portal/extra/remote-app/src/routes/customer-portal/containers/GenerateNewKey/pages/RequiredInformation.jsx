@@ -470,7 +470,7 @@ const RequiredInformation = ({
 												'description'
 											)}
 											name="description"
-											placeholder="e.g. Liferay Dev Environment – ECOM Liferay Self-Hosted 7.2"
+											placeholder="e.g. Liferay Dev Environment – ECOM DXP 7.2"
 											type="text"
 										/>
 									</div>

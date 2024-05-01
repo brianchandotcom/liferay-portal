@@ -21,7 +21,6 @@ import {
 } from '~/common/services/liferay/rest/raysource/LicenseKeys';
 import {FORMAT_DATE_TYPES} from '~/common/utils/constants';
 import getDateCustomFormat from '~/common/utils/getDateCustomFormat';
-import { getProperProductNames } from '~/routes/customer-portal/utils/getProperProductNames';
 import {useCustomerPortal} from '../../../context';
 import {has100YearsDifference} from '../../ActivationKeysTable/utils';
 import GenerateNewKeySkeleton from '../Skeleton';
@@ -618,7 +617,7 @@ const SelectSubscription = ({
 								{subscriptionGroups?.map((product) => (
 									<ClaySelect.Option
 										key={product.name}
-										label={getProperProductNames(productGroupName)}
+										label={productGroupName}
 									/>
 								))}
 							</ClaySelect>

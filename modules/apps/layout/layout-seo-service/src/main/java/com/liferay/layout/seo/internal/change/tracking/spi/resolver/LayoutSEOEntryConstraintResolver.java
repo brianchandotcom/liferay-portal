@@ -8,12 +8,15 @@ package com.liferay.layout.seo.internal.change.tracking.spi.resolver;
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Samuel Trong Tran
@@ -34,7 +37,7 @@ public class LayoutSEOEntryConstraintResolver
 
 	@Override
 	public String getResolutionDescriptionKey() {
-		return "discard-the-page-seo-entry-in-the-publication";
+		return "duplicate-page-seo-entry-was-removed";
 	}
 
 	@Override
@@ -49,7 +52,17 @@ public class LayoutSEOEntryConstraintResolver
 
 	@Override
 	public void resolveConflict(
-		ConstraintResolverContext<LayoutSEOEntry> constraintResolverContext) {
+			ConstraintResolverContext<LayoutSEOEntry> constraintResolverContext)
+		throws PortalException {
+
+		LayoutSEOEntry layoutSEOEntry =
+			constraintResolverContext.getTargetCTModel();
+
+		_layoutSEOEntryLocalService.deleteLayoutSEOEntry(
+			layoutSEOEntry.getLayoutSEOEntryId());
 	}
+
+	@Reference
+	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 }

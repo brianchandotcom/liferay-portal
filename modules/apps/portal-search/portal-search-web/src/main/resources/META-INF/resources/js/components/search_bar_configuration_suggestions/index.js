@@ -96,14 +96,6 @@ function SearchBarConfigurationSuggestions({
 			title: Liferay.Language.get('blueprint'),
 		};
 
-		const COMMERCE_OPTION = {
-			contributorName: CONTRIBUTOR_TYPES.COMMERCE,
-			description: Liferay.Language.get(
-				'commerce-suggestions-contributor-help'
-			),
-			title: Liferay.Language.get('commerce'),
-		};
-
 		const SITE_ACTIVITIES_OPTION = {
 			contributorName: CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_SITE_ACTIVITY,
 			description: (
@@ -133,15 +125,6 @@ function SearchBarConfigurationSuggestions({
 			options.push(BASIC_OPTION);
 		}
 
-		const commerceContributorExists =
-			suggestionsContributorConfiguration.findIndex(
-				(value) => value.contributorName === CONTRIBUTOR_TYPES.COMMERCE
-			) > -1;
-
-		if (!commerceContributorExists) {
-			options.push(COMMERCE_OPTION);
-		}
-
 		if (isDXP && isSearchExperiencesSupported) {
 			options.push(BLUEPRINT_OPTION);
 		}
@@ -155,15 +138,6 @@ function SearchBarConfigurationSuggestions({
 
 	const _handleInputSetAdd = (contributorName) => () => {
 		if (contributorName === CONTRIBUTOR_TYPES.BASIC) {
-			onInputSetsAdd({
-				attributes:
-					CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES[contributorName],
-				contributorName,
-				displayGroupName: 'suggestions',
-				size: '5',
-			});
-		}
-		else if (contributorName === CONTRIBUTOR_TYPES.COMMERCE) {
 			onInputSetsAdd({
 				attributes:
 					CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES[contributorName],

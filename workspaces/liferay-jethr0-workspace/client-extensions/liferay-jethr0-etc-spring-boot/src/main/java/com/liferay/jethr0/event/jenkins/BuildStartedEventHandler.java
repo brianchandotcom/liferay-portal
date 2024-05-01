@@ -49,12 +49,13 @@ public class BuildStartedEventHandler extends BaseJenkinsEventHandler {
 			buildQueue.sort();
 		}
 
-		BuildEntityRepository buildEntityRepository = getBuildRepository();
+		BuildEntityRepository buildEntityRepository =
+			getBuildEntityRepository();
 
 		buildEntityRepository.update(buildEntity);
 
 		BuildRunEntityRepository buildRunEntityRepository =
-			getBuildRunRepository();
+			getBuildRunEntityRepository();
 
 		buildRunEntityRepository.update(buildRunEntity);
 

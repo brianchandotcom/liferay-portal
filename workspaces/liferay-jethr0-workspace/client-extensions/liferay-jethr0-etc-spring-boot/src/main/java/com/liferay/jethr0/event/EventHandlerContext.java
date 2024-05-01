@@ -14,6 +14,7 @@ import com.liferay.jethr0.event.jenkins.JenkinsEventProcessor;
 import com.liferay.jethr0.event.jenkins.client.JenkinsClient;
 import com.liferay.jethr0.event.jrp.JRPEventProcessor;
 import com.liferay.jethr0.git.repository.GitBranchEntityRepository;
+import com.liferay.jethr0.git.repository.GitCommitEntityRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
@@ -33,20 +34,24 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EventHandlerContext {
 
+	public BuildEntityRepository getBuildEntityRepository() {
+		return _buildEntityRepository;
+	}
+
 	public BuildQueue getBuildQueue() {
 		return _buildQueue;
 	}
 
-	public BuildEntityRepository getBuildRepository() {
-		return _buildEntityRepository;
-	}
-
-	public BuildRunEntityRepository getBuildRunRepository() {
+	public BuildRunEntityRepository getBuildRunEntityRepository() {
 		return _buildRunEntityRepository;
 	}
 
 	public GitBranchEntityRepository getGitBranchEntityRepository() {
 		return _gitBranchEntityRepository;
+	}
+
+	public GitCommitEntityRepository getGitCommitEntityRepository() {
+		return _gitCommitEntityRepository;
 	}
 
 	public GitHubClient getGitHubClient() {
@@ -126,6 +131,9 @@ public class EventHandlerContext {
 
 	@Autowired
 	private GitBranchEntityRepository _gitBranchEntityRepository;
+
+	@Autowired
+	private GitCommitEntityRepository _gitCommitEntityRepository;
 
 	@Autowired
 	private GitHubClient _gitHubClient;

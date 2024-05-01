@@ -54,12 +54,13 @@ public class BuildCompletedEventHandler extends BaseJenkinsEventHandler {
 			jobEntityRepository.update(jobEntity);
 		}
 
-		BuildEntityRepository buildEntityRepository = getBuildRepository();
+		BuildEntityRepository buildEntityRepository =
+			getBuildEntityRepository();
 
 		buildEntityRepository.update(buildEntity);
 
 		BuildRunEntityRepository buildRunEntityRepository =
-			getBuildRunRepository();
+			getBuildRunEntityRepository();
 
 		buildRunEntityRepository.update(buildRunEntity);
 

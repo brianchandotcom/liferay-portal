@@ -24,7 +24,8 @@ public class CreateBuildEventHandler extends BaseJRPEventHandler {
 	public String process() throws InvalidJSONException {
 		JobEntity jobEntity = getJobEntity(getJobJSONObject());
 
-		BuildEntityRepository buildEntityRepository = getBuildRepository();
+		BuildEntityRepository buildEntityRepository =
+			getBuildEntityRepository();
 
 		BuildEntity buildEntity = buildEntityRepository.create(
 			jobEntity, getBuildJSONObject());

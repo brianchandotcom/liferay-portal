@@ -18,8 +18,6 @@ import com.liferay.jethr0.routine.UpstreamBranchCronRoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 import com.liferay.jethr0.util.JobUtil;
 
-import java.util.Objects;
-
 import org.json.JSONObject;
 
 /**
@@ -48,13 +46,14 @@ public class AddJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 			GitCommitEntity latestGitCommitEntity =
 				gitBranchEntity.getLatestGitCommitEntity();
 
-			GitCommitEntity previousGitCommitEntity =
-				upstreamBranchCronRoutineEntity.getPreviousGitCommitEntity();
-
 			if (latestGitCommitEntity != null) {
 				jobEntity.setGitCommitEntity(latestGitCommitEntity);
 
 				jobEntityUpdated = true;
+
+				GitCommitEntity previousGitCommitEntity =
+					upstreamBranchCronRoutineEntity.
+						getPreviousGitCommitEntity();
 
 				if (previousGitCommitEntity == null) {
 					RoutineEntityRepository routineEntityRepository =

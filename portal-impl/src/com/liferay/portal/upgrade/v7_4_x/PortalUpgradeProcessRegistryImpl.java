@@ -394,6 +394,9 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(31, 0, 0), new UpgradeListTypeAuditFields());
+
+		upgradeVersionTreeMap.put(
+			new Version(31, 0, 1), new UpgradePortletPreferencesCompanyId());
 	}
 
 }

@@ -7,6 +7,7 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.poshi.core.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -25,6 +27,7 @@ import java.util.regex.Pattern;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
+import org.dom4j.Node;
 
 /**
  * @author Michael Hashimoto
@@ -307,17 +310,25 @@ public class DXPCloudClientTestrayImporter {
 			return attachmentsElement;
 		}
 
-		Matcher matcher = _pattern.matcher(
-			testCaseResultElement.attributeValue("name"));
+		String className = testCaseResultElement.attributeValue("classname");
 
-		if (!matcher.find()) {
-			return attachmentsElement;
+		File testDir = new File(_projectDir, "playwright/playwright-report");
+
+		String testName = null;
+
+		if (!className.endsWith("spec.ts")) {
+			Matcher matcher = _pattern.matcher(
+				testCaseResultElement.attributeValue("name"));
+
+			if (!matcher.find()) {
+				return attachmentsElement;
+			}
+
+			testName = matcher.group("testName");
+
+			testDir = new File(
+				_projectDir, "test-results/" + testName.replace("#", "_"));
 		}
-
-		String testName = matcher.group("testName");
-
-		File testDir = new File(
-			_projectDir, "test-results/" + testName.replace("#", "_"));
 
 		if (!testDir.exists()) {
 			return attachmentsElement;
@@ -334,9 +345,14 @@ public class DXPCloudClientTestrayImporter {
 		for (File file : JenkinsResultsParserUtil.findFiles(testDir, ".*")) {
 			String fileName = file.getName();
 
-			if (!fileName.endsWith(".gz")) {
-				File gzipFile = new File(
-					file.getParent(), file.getName() + ".gz");
+			String parentFile = file.getParent();
+
+			if (parentFile.contains("trace")) {
+				continue;
+			}
+
+			if (!fileName.endsWith(".gz") || !fileName.endsWith(".zip")) {
+				File gzipFile = new File(parentFile, file.getName() + ".gz");
 
 				JenkinsResultsParserUtil.gzip(file, gzipFile);
 
@@ -358,6 +374,19 @@ public class DXPCloudClientTestrayImporter {
 
 			if (fileName.equals("console.txt.gz")) {
 				attachmentName = "Poshi Console";
+			}
+			else if (fileName.equals("index.html.gz") &&
+					 key.contains("playwright")) {
+
+				attachmentName = "Playwright Report";
+			}
+			else if (fileName.endsWith(".zip") && parentFile.contains("data")) {
+				attachmentName = "Trace Zip";
+			}
+			else if (fileName.endsWith(".png.gz") &&
+					 parentFile.contains("data")) {
+
+				attachmentName = "Failure Screenshot";
 			}
 			else if (fileName.equals("index.html.gz")) {
 				attachmentName = "Poshi Report";
@@ -381,11 +410,13 @@ public class DXPCloudClientTestrayImporter {
 			attachmentElement.addAttribute("value", key + "?authuser=0");
 		}
 
-		Element poshiLogAttachmentElement = _getPoshiLogAttachmentElement(
-			testName);
+		if (Validator.isNotNull(testName)) {
+			Element poshiLogAttachmentElement = _getPoshiLogAttachmentElement(
+				testName);
 
-		if (poshiLogAttachmentElement != null) {
-			attachmentsElement.add(poshiLogAttachmentElement);
+			if (poshiLogAttachmentElement != null) {
+				attachmentsElement.add(poshiLogAttachmentElement);
+			}
 		}
 
 		return attachmentsElement;
@@ -421,8 +452,14 @@ public class DXPCloudClientTestrayImporter {
 		Matcher matcher = _pattern.matcher(
 			testCaseResultElement.attributeValue("name"));
 
-		if (!matcher.find()) {
-			return _getPropertiesElement(properties);
+		String className = testCaseResultElement.attributeValue("classname");
+
+		if (!className.endsWith("spec.ts")) {
+			if (!matcher.find()) {
+				return _getPropertiesElement(properties);
+			}
+
+			className = matcher.group("testName");
 		}
 
 		TestrayCaseResult.Status status = TestrayCaseResult.Status.PASSED;
@@ -440,8 +477,7 @@ public class DXPCloudClientTestrayImporter {
 		properties.setProperty(
 			"testray.main.component.name", _testrayComponentName);
 		properties.setProperty("testray.team.name", _testrayTeamName);
-		properties.setProperty(
-			"testray.testcase.name", matcher.group("testName"));
+		properties.setProperty("testray.testcase.name", className);
 		properties.setProperty(
 			"testray.testcase.priority", String.valueOf(_testrayCasePriority));
 		properties.setProperty("testray.testcase.status", status.getName());
@@ -459,6 +495,55 @@ public class DXPCloudClientTestrayImporter {
 				_projectDir,
 				"test-results" +
 					"/TEST-com.liferay.poshi.runner.ParallelPoshiRunner.xml");
+		}
+
+		if (!xmlFile.exists()) {
+			xmlFile = new File(
+				_projectDir, "playwright/test-results/TEST-playwright.xml");
+
+			_splitTestSuitesJUnitReport(xmlFile.getPath());
+
+			List<Element> testCaseElements = new ArrayList<>();
+
+			File parentDir = new File(_projectDir, "playwright/test-results");
+
+			for (File childFile : parentDir.listFiles()) {
+				String childFileName = childFile.getName();
+
+				if (childFileName.endsWith(".xml")) {
+					try {
+						Document document = Dom4JUtil.parse(
+							JenkinsResultsParserUtil.read(childFile));
+
+						Element rootElement = document.getRootElement();
+
+						for (Element testCaseElement :
+								rootElement.elements("testcase")) {
+
+							testCaseElements.add(testCaseElement);
+						}
+					}
+					catch (Exception exception) {
+						if (childFile.exists()) {
+							File xmlGzipFile = new File(
+								childFile.getParentFile(),
+								childFile.getName() + ".gz");
+
+							JenkinsResultsParserUtil.gzip(
+								childFile, xmlGzipFile);
+
+							_testrayS3Bucket.createTestrayS3Object(
+								_getRelativeURLPath() + "/" +
+									xmlGzipFile.getName(),
+								xmlGzipFile);
+						}
+
+						throw new RuntimeException(exception);
+					}
+				}
+			}
+
+			return testCaseElements;
 		}
 
 		try {
@@ -710,6 +795,49 @@ public class DXPCloudClientTestrayImporter {
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
+		}
+	}
+
+	private static void _splitTestSuitesJUnitReport(String filePath) {
+		File testSuitesReportFile = new File(filePath);
+
+		if (!testSuitesReportFile.exists()) {
+			return;
+		}
+
+		try {
+			String content = JenkinsResultsParserUtil.read(
+				testSuitesReportFile);
+
+			Document document = Dom4JUtil.parse(content);
+
+			List<Node> nodes = Dom4JUtil.getNodesByXPath(
+				document, "//testsuite");
+
+			if ((nodes != null) && !nodes.isEmpty()) {
+				int i = 1;
+
+				for (Object node : nodes) {
+					if (!(node instanceof Element)) {
+						continue;
+					}
+
+					Element element = (Element)node;
+
+					File partitionedTestResultsFile = new File(
+						filePath.replace(".xml", i + ".xml"));
+
+					JenkinsResultsParserUtil.write(
+						partitionedTestResultsFile, Dom4JUtil.format(element));
+
+					i++;
+				}
+			}
+
+			testSuitesReportFile.delete();
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 

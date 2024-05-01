@@ -871,7 +871,7 @@
 		</check>
 		<check name="JavaUpgradeMissingTestCheck">
 			<category name="Bug Prevention" />
-			<description name="Finds missing tests for upgrade classes." />
+			<description name="Finds missing integration tests for upgrade classes." />
 			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaUpgradeVersionCheck">

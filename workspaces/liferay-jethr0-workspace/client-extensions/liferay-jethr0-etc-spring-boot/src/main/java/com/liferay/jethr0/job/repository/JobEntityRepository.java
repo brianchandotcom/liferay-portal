@@ -17,7 +17,7 @@ import com.liferay.jethr0.job.dalo.JobEntityDALO;
 import com.liferay.jethr0.job.dalo.JobToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.routine.RoutineEntity;
-import com.liferay.jethr0.routine.UpstreamBranchCronRoutineEntity;
+import com.liferay.jethr0.routine.UpstreamBranchRoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -145,14 +145,12 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 			jsonObject.put(
 				"r_routineToJobs_c_routineId", routineEntity.getId());
 
-			if (routineEntity instanceof UpstreamBranchCronRoutineEntity) {
-				UpstreamBranchCronRoutineEntity
-					upstreamBranchCronRoutineEntity =
-						(UpstreamBranchCronRoutineEntity)routineEntity;
+			if (routineEntity instanceof UpstreamBranchRoutineEntity) {
+				UpstreamBranchRoutineEntity upstreamBranchRoutineEntity =
+					(UpstreamBranchRoutineEntity)routineEntity;
 
 				GitCommitEntity previousGitCommitEntity =
-					upstreamBranchCronRoutineEntity.
-						getPreviousGitCommitEntity();
+					upstreamBranchRoutineEntity.getPreviousGitCommitEntity();
 
 				jsonObject.put(
 					"r_gitCommitToJobs_c_gitCommitId",

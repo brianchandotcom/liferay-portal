@@ -10,7 +10,7 @@ import com.liferay.jethr0.git.commit.GitCommitEntity;
 /**
  * @author Michael Hashimoto
  */
-public interface UpstreamBranchCronRoutineEntity extends CronRoutineEntity {
+public interface UpstreamBranchRoutineEntity extends RoutineEntity {
 
 	public GitCommitEntity getPreviousGitCommitEntity();
 

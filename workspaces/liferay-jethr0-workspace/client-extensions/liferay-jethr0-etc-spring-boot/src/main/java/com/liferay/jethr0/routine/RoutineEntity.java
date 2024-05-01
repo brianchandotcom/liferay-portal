@@ -21,6 +21,10 @@ import org.json.JSONObject;
  */
 public interface RoutineEntity extends Entity {
 
+	public Boolean getEnabled();
+
+	public void setEnabled(Boolean enabled);
+
 	public void addJobEntities(Set<JobEntity> jobEntities);
 
 	public void addJobEntity(JobEntity jobEntity);
@@ -66,6 +70,7 @@ public interface RoutineEntity extends Entity {
 	public enum Type {
 
 		CRON("cron", "Cron"), MANUAL("manual", "Manual"),
+		UPSTREAM_BRANCH("upstreamBranch", "Upstream Branch"),
 		UPSTREAM_BRANCH_CRON("upstreamBranchCron", "Upstream Branch Cron");
 
 		public static Type get(Object picklistValue) {

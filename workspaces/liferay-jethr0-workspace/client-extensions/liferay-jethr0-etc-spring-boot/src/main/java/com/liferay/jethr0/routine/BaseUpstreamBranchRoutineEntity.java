@@ -12,26 +12,14 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseUpstreamBranchCronRoutineEntity
-	extends BaseRoutineEntity implements CronRoutineEntity,UpstreamBranchRoutineEntity {
-
-	@Override
-	public String getCron() {
-		return _cron;
-	}
-
-	@Override
-	public void setCron(String cron) {
-		_cron = cron;
-	}
+public abstract class BaseUpstreamBranchRoutineEntity
+	extends BaseRoutineEntity implements UpstreamBranchRoutineEntity {
 
 	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
 		jsonObject.put(
-			"cron", getCron()
-		).put(
 			"r_previousGitCommitToRoutines_c_gitCommitId",
 			getPreviousGitCommitEntityId()
 		);
@@ -53,14 +41,13 @@ public abstract class BaseUpstreamBranchCronRoutineEntity
 	public void setJSONObject(JSONObject jsonObject) {
 		super.setJSONObject(jsonObject);
 
-		_cron = jsonObject.optString("cron");
 		_previousGitCommitEntityId = jsonObject.optLong(
 			"r_previousGitCommitToRoutines_c_gitCommitId");
 	}
 
 	@Override
 	public void setPreviousGitCommitEntity(
-		GitCommitEntity previousGitCommitEntity) {
+			GitCommitEntity previousGitCommitEntity) {
 
 		_previousGitCommitEntity = previousGitCommitEntity;
 
@@ -72,11 +59,10 @@ public abstract class BaseUpstreamBranchCronRoutineEntity
 		}
 	}
 
-	protected BaseUpstreamBranchCronRoutineEntity(JSONObject jsonObject) {
+	protected BaseUpstreamBranchRoutineEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 
-	private String _cron;
 	private GitCommitEntity _previousGitCommitEntity;
 	private long _previousGitCommitEntityId;
 

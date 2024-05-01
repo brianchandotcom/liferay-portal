@@ -6185,6 +6185,7 @@ public class AssetEntryPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
 		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
@@ -6195,7 +6196,7 @@ public class AssetEntryPersistenceImpl
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
-		ctMergeColumnNames.add("modifiedDate");
+		ctIgnoreColumnNames.add("modifiedDate");
 		ctStrictColumnNames.add("classNameId");
 		ctStrictColumnNames.add("classPK");
 		ctStrictColumnNames.add("classUuid");
@@ -6204,7 +6205,7 @@ public class AssetEntryPersistenceImpl
 		ctMergeColumnNames.add("visible");
 		ctStrictColumnNames.add("startDate");
 		ctStrictColumnNames.add("endDate");
-		ctStrictColumnNames.add("publishDate");
+		ctMergeColumnNames.add("publishDate");
 		ctStrictColumnNames.add("expirationDate");
 		ctStrictColumnNames.add("mimeType");
 		ctMergeColumnNames.add("title");
@@ -6219,6 +6220,8 @@ public class AssetEntryPersistenceImpl
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
 		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("entryId"));

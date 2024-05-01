@@ -32,6 +32,7 @@ export class ApplicationsMenuPage {
 	private readonly processBuilderItem: Locator;
 	private readonly productsMenuItem: Locator;
 	private readonly queueMenuItem: Locator;
+	private readonly searchItem: Locator;
 	private readonly serviceAccountsItem: Locator;
 	private readonly sitesItem: Locator;
 	private readonly systemSettingsItem: Locator;
@@ -126,6 +127,10 @@ export class ApplicationsMenuPage {
 			exact: true,
 			name: 'Queue',
 		});
+		this.searchItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Search',
+		});
 		this.serviceAccountsItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Service Accounts',
@@ -213,6 +218,11 @@ export class ApplicationsMenuPage {
 	async goToObjects() {
 		await this.goToControlPanel();
 		await this.objectsMenuItem.click();
+	}
+
+	async goToSearch() {
+		await this.goToControlPanel();
+		await this.searchItem.click();
 	}
 
 	async goToServerAdministration() {

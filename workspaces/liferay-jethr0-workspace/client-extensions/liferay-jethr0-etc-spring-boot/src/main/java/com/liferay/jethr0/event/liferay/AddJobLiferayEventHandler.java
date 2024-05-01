@@ -28,7 +28,8 @@ public class AddJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 	@Override
 	public String process() {
 		JobEntityRepository jobEntityRepository = getJobEntityRepository();
-		BuildEntityRepository buildEntityRepository = getBuildRepository();
+		BuildEntityRepository buildEntityRepository =
+			getBuildEntityRepository();
 
 		JobEntity jobEntity = jobEntityRepository.add(getJobJSONObject());
 

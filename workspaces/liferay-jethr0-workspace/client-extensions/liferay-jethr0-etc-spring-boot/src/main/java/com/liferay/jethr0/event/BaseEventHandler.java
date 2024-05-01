@@ -16,6 +16,7 @@ import com.liferay.jethr0.event.jenkins.JenkinsEventProcessor;
 import com.liferay.jethr0.event.jenkins.client.JenkinsClient;
 import com.liferay.jethr0.event.jrp.JRPEventProcessor;
 import com.liferay.jethr0.git.repository.GitBranchEntityRepository;
+import com.liferay.jethr0.git.repository.GitCommitEntityRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
@@ -44,20 +45,24 @@ public abstract class BaseEventHandler implements EventHandler {
 		_messageJSONObject = messageJSONObject;
 	}
 
+	protected BuildEntityRepository getBuildEntityRepository() {
+		return _eventHandlerContext.getBuildEntityRepository();
+	}
+
 	protected BuildQueue getBuildQueue() {
 		return _eventHandlerContext.getBuildQueue();
 	}
 
-	protected BuildEntityRepository getBuildRepository() {
-		return _eventHandlerContext.getBuildRepository();
-	}
-
-	protected BuildRunEntityRepository getBuildRunRepository() {
-		return _eventHandlerContext.getBuildRunRepository();
+	protected BuildRunEntityRepository getBuildRunEntityRepository() {
+		return _eventHandlerContext.getBuildRunEntityRepository();
 	}
 
 	protected GitBranchEntityRepository getGitBranchEntityRepository() {
 		return _eventHandlerContext.getGitBranchEntityRepository();
+	}
+
+	protected GitCommitEntityRepository getGitCommitEntityRepository() {
+		return _eventHandlerContext.getGitCommitEntityRepository();
 	}
 
 	protected GitHubClient getGitHubClient() {

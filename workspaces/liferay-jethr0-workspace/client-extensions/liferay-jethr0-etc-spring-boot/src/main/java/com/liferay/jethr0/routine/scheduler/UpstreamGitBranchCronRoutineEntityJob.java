@@ -34,17 +34,17 @@ public class UpstreamGitBranchCronRoutineEntityJob
 			return;
 		}
 
-		UpstreamBranchRoutineEntity upstreamBranchCronRoutineEntity =
+		UpstreamBranchRoutineEntity upstreamBranchRoutineEntity =
 			(UpstreamBranchRoutineEntity)routineEntityObject;
 
 		GitBranchEntity gitBranchEntity =
-			upstreamBranchCronRoutineEntity.getGitBranchEntity();
+			upstreamBranchRoutineEntity.getGitBranchEntity();
 
 		GitCommitEntity latestGitCommitEntity =
 			gitBranchEntity.getLatestGitCommitEntity();
 
 		GitCommitEntity previousGitCommitEntity =
-			upstreamBranchCronRoutineEntity.getPreviousGitCommitEntity();
+			upstreamBranchRoutineEntity.getPreviousGitCommitEntity();
 
 		if ((latestGitCommitEntity == null) ||
 			((previousGitCommitEntity != null) &&
@@ -55,7 +55,7 @@ public class UpstreamGitBranchCronRoutineEntityJob
 			return;
 		}
 
-		upstreamBranchCronRoutineEntity.setPreviousGitCommitEntity(
+		upstreamBranchRoutineEntity.setPreviousGitCommitEntity(
 			latestGitCommitEntity);
 
 		RoutineEntityJobFactory routineEntityJobFactory =
@@ -64,9 +64,9 @@ public class UpstreamGitBranchCronRoutineEntityJob
 		RoutineEntityRepository routineEntityRepository =
 			routineEntityJobFactory.getRoutineEntityRepository();
 
-		routineEntityRepository.update(upstreamBranchCronRoutineEntity);
+		routineEntityRepository.update(upstreamBranchRoutineEntity);
 
-		invokeJobEntity(upstreamBranchCronRoutineEntity);
+		invokeJobEntity(upstreamBranchRoutineEntity);
 	}
 
 }

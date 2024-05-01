@@ -37,8 +37,6 @@ public abstract class BaseRoutineEntityJob implements RoutineEntityJob {
 	}
 
 	protected void invokeJobEntity(RoutineEntity routineEntity) {
-		System.out.println(routineEntity);
-
 		RoutineEntityJobFactory routineEntityJobFactory =
 			getRoutineEntityJobFactory();
 

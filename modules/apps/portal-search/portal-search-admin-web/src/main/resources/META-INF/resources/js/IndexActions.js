@@ -515,7 +515,7 @@ function IndexActions({
 					</ClayLayout.Col>
 
 					<ClayLayout.Col size={8}>
-						<div className="sheet sheet-lg">
+						<div className="index-actions-sheet sheet sheet-lg">
 							<h2 className="sheet-title">
 								{Liferay.Language.get('actions')}
 							</h2>

@@ -245,7 +245,8 @@ export default function ChangeTrackingRenderView({
 							json,
 							'unifiedLocalizedRender'
 						)) ||
-						(newState.contentType === CONTENT_TYPE_PREVIEW &&
+						((!newState.contentType ||
+							newState.contentType === CONTENT_TYPE_PREVIEW) &&
 							!Object.prototype.hasOwnProperty.call(
 								json,
 								'unifiedPreview'

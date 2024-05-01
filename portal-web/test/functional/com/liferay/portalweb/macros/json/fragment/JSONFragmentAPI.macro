@@ -18,6 +18,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmentcollection/add-fragment-collection \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode='' \
 				-d groupId=${groupId} \
 				-d name=${name} \
 				-d description=${description}

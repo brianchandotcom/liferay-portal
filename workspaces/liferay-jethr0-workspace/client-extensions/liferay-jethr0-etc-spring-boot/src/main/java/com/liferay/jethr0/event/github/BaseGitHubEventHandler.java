@@ -95,7 +95,8 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 			return;
 		}
 
-		BuildEntityRepository buildEntityRepository = getBuildRepository();
+		BuildEntityRepository buildEntityRepository =
+			getBuildEntityRepository();
 
 		for (JSONObject initialBuildJSONObject :
 				jobEntity.getInitialBuildJSONObjects()) {

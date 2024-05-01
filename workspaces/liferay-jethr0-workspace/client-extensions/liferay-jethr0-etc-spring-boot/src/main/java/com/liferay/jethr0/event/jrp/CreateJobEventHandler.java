@@ -31,7 +31,8 @@ public class CreateJobEventHandler extends BaseJRPEventHandler {
 		JSONArray buildsJSONArray = jobJSONObject.optJSONArray("builds");
 
 		if ((buildsJSONArray != null) && !buildsJSONArray.isEmpty()) {
-			BuildEntityRepository buildEntityRepository = getBuildRepository();
+			BuildEntityRepository buildEntityRepository =
+				getBuildEntityRepository();
 
 			for (int i = 0; i < buildsJSONArray.length(); i++) {
 				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);

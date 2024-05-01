@@ -50,7 +50,7 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 		buildEntity.setState(BuildEntity.State.QUEUED);
 
 		BuildRunEntityRepository buildRunEntityRepository =
-			getBuildRunRepository();
+			getBuildRunEntityRepository();
 
 		BuildRunEntity buildRunEntity = buildRunEntityRepository.create(
 			buildEntity, BuildRunEntity.State.QUEUED);
@@ -75,7 +75,8 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 				}
 			).build());
 
-		BuildEntityRepository buildEntityRepository = getBuildRepository();
+		BuildEntityRepository buildEntityRepository =
+			getBuildEntityRepository();
 
 		buildEntityRepository.update(buildEntity);
 

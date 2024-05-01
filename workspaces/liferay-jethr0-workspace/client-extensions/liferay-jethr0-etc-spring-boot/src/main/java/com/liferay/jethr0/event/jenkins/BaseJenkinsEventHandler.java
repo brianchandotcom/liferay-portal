@@ -96,7 +96,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		}
 
 		BuildRunEntityRepository buildRunEntityRepository =
-			getBuildRunRepository();
+			getBuildRunEntityRepository();
 
 		BuildRunEntity buildRunEntity = buildRunEntityRepository.getById(
 			Long.valueOf(buildRunID));

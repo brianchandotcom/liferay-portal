@@ -10,9 +10,7 @@ import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.util.StringUtil;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -31,16 +29,6 @@ public abstract class BaseRoutineEntity
 	extends BaseEntity implements RoutineEntity {
 
 	@Override
-	public Boolean getEnabled() {
-		return _enabled;
-	}
-
-	@Override
-	public void setEnabled(Boolean enabled) {
-		_enabled = enabled;
-	}
-
-	@Override
 	public void addJobEntities(Set<JobEntity> jobEntities) {
 		addRelatedEntities(jobEntities);
 	}
@@ -48,6 +36,11 @@ public abstract class BaseRoutineEntity
 	@Override
 	public void addJobEntity(JobEntity jobEntity) {
 		addRelatedEntity(jobEntity);
+	}
+
+	@Override
+	public Boolean getEnabled() {
+		return _enabled;
 	}
 
 	@Override
@@ -136,6 +129,11 @@ public abstract class BaseRoutineEntity
 	@Override
 	public void removeJobEntity(JobEntity jobEntity) {
 		removeRelatedEntity(jobEntity);
+	}
+
+	@Override
+	public void setEnabled(Boolean enabled) {
+		_enabled = enabled;
 	}
 
 	@Override
@@ -252,6 +250,7 @@ public abstract class BaseRoutineEntity
 
 	private static final Log _log = LogFactory.getLog(BaseRoutineEntity.class);
 
+	private Boolean _enabled;
 	private GitBranchEntity _gitBranchEntity;
 	private long _gitBranchEntityId;
 	private String _jobName;
@@ -259,7 +258,6 @@ public abstract class BaseRoutineEntity
 	private int _jobPriority;
 	private JobEntity.Type _jobType;
 	private String _name;
-	private Boolean _enabled;
 	private Type _type;
 
 }

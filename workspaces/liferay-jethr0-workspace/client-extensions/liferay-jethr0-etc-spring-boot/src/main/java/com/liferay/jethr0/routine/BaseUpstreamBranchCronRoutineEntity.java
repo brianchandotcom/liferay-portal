@@ -13,16 +13,12 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public abstract class BaseUpstreamBranchCronRoutineEntity
-	extends BaseRoutineEntity implements CronRoutineEntity,UpstreamBranchRoutineEntity {
+	extends BaseRoutineEntity
+	implements CronRoutineEntity, UpstreamBranchRoutineEntity {
 
 	@Override
 	public String getCron() {
 		return _cron;
-	}
-
-	@Override
-	public void setCron(String cron) {
-		_cron = cron;
 	}
 
 	@Override
@@ -47,6 +43,11 @@ public abstract class BaseUpstreamBranchCronRoutineEntity
 	@Override
 	public long getPreviousGitCommitEntityId() {
 		return _previousGitCommitEntityId;
+	}
+
+	@Override
+	public void setCron(String cron) {
+		_cron = cron;
 	}
 
 	@Override

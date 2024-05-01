@@ -21,13 +21,11 @@ import org.json.JSONObject;
  */
 public interface RoutineEntity extends Entity {
 
-	public Boolean getEnabled();
-
-	public void setEnabled(Boolean enabled);
-
 	public void addJobEntities(Set<JobEntity> jobEntities);
 
 	public void addJobEntity(JobEntity jobEntity);
+
+	public Boolean getEnabled();
 
 	public GitBranchEntity getGitBranchEntity();
 
@@ -52,6 +50,8 @@ public interface RoutineEntity extends Entity {
 	public void removeJobEntities(Set<JobEntity> jobEntities);
 
 	public void removeJobEntity(JobEntity jobEntity);
+
+	public void setEnabled(Boolean enabled);
 
 	public void setGitBranchEntity(GitBranchEntity gitBranchEntity);
 

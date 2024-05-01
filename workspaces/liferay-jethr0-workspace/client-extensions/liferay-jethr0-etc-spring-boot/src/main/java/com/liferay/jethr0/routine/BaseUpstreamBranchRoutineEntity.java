@@ -21,8 +21,7 @@ public abstract class BaseUpstreamBranchRoutineEntity
 
 		jsonObject.put(
 			"r_previousGitCommitToRoutines_c_gitCommitId",
-			getPreviousGitCommitEntityId()
-		);
+			getPreviousGitCommitEntityId());
 
 		return jsonObject;
 	}
@@ -47,7 +46,7 @@ public abstract class BaseUpstreamBranchRoutineEntity
 
 	@Override
 	public void setPreviousGitCommitEntity(
-			GitCommitEntity previousGitCommitEntity) {
+		GitCommitEntity previousGitCommitEntity) {
 
 		_previousGitCommitEntity = previousGitCommitEntity;
 

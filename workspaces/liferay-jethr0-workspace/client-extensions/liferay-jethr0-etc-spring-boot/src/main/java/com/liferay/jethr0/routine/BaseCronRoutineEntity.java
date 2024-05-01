@@ -22,9 +22,7 @@ public abstract class BaseCronRoutineEntity
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
-		jsonObject.put(
-			"cron", getCron()
-		);
+		jsonObject.put("cron", getCron());
 
 		return jsonObject;
 	}

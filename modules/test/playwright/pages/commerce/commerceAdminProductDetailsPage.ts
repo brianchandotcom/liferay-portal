@@ -9,7 +9,6 @@ export class CommerceAdminProductDetailsPage {
 	readonly page: Page;
 	readonly productDiagramTab: Locator;
 	readonly productRelationsTab: Locator;
-	readonly visibilityTab: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -19,9 +18,6 @@ export class CommerceAdminProductDetailsPage {
 		this.productRelationsTab = page.getByRole('link', {
 			name: 'Product Relations',
 		});
-		this.visibilityTab = page.getByRole('link', {
-			name: 'Visibility',
-		});
 	}
 
 	async goToProductDiagram() {
@@ -30,9 +26,5 @@ export class CommerceAdminProductDetailsPage {
 
 	async goToProductRelations() {
 		await this.productRelationsTab.click();
-	}
-
-	async goToVisibility() {
-		await this.visibilityTab.click();
 	}
 }

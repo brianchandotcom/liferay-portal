@@ -34,12 +34,15 @@ import com.liferay.object.web.internal.model.ProxyObjectEntry;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,17 +93,14 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	@Override
 	public InfoItemFieldValues getInfoItemFieldValues(ObjectEntry objectEntry) {
 		try {
-			ThemeDisplay themeDisplay =
-				ObjectEntryInfoItemUtil.getThemeDisplay();
-
 			return InfoItemFieldValues.builder(
 			).infoFieldValues(
-				_getInfoFieldValues(objectEntry, themeDisplay)
+				_getInfoFieldValues(objectEntry)
 			).infoFieldValues(
 				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
 					_getInfoItemReference(objectEntry), StringPool.BLANK,
 					ObjectEntry.class.getSimpleName(), objectEntry,
-					themeDisplay)
+					_getThemeDisplay())
 			).infoFieldValues(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
 					objectEntry.getModelClassName(), objectEntry)
@@ -117,16 +117,14 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	}
 
 	private List<InfoFieldValue<Object>> _getInfoFieldValues(
-		ObjectEntry objectEntry, ThemeDisplay themeDisplay) {
+		ObjectEntry objectEntry) {
 
 		try {
 			if (_objectDefinition.isDefaultStorageType()) {
-				return _getInfoFieldValuesByDefaultStorageType(
-					objectEntry, themeDisplay);
+				return _getInfoFieldValuesByDefaultStorageType(objectEntry);
 			}
 
-			return _getInfoFieldValuesByObjectEntryManager(
-				objectEntry, themeDisplay);
+			return _getInfoFieldValuesByObjectEntryManager(objectEntry);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
@@ -134,8 +132,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	}
 
 	private List<InfoFieldValue<Object>>
-			_getInfoFieldValuesByDefaultStorageType(
-				ObjectEntry objectEntry, ThemeDisplay themeDisplay)
+			_getInfoFieldValuesByDefaultStorageType(ObjectEntry objectEntry)
 		throws Exception {
 
 		List<InfoFieldValue<Object>> objectEntryFieldValues = new ArrayList<>();
@@ -171,7 +168,9 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		objectEntryFieldValues.add(
 			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.userProfileImageInfoField,
-				_getWebImage(themeDisplay, objectEntry.getUserId())));
+				_getWebImage(objectEntry.getUserId())));
+
+		ThemeDisplay themeDisplay = ObjectEntryInfoItemUtil.getThemeDisplay();
 
 		Map<String, Object> properties = new HashMap<>();
 
@@ -199,9 +198,14 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 	private List<InfoFieldValue<Object>>
 			_getInfoFieldValuesByObjectEntryManager(
-				ObjectEntry serviceBuilderObjectEntry,
-				ThemeDisplay themeDisplay)
+				ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		if (themeDisplay == null) {
+			return Collections.emptyList();
+		}
 
 		List<InfoFieldValue<Object>> objectEntryFieldValues = new ArrayList<>();
 
@@ -268,24 +272,35 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			_objectScopeProviderRegistry, objectEntry, themeDisplay);
 	}
 
-	private WebImage _getWebImage(ThemeDisplay themeDisplay, long userId)
-		throws Exception {
+	private ThemeDisplay _getThemeDisplay() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-		if (themeDisplay == null) {
-			return null;
+		if (serviceContext != null) {
+			return serviceContext.getThemeDisplay();
 		}
 
+		return null;
+	}
+
+	private WebImage _getWebImage(long userId) throws Exception {
 		User user = _userLocalService.fetchUser(userId);
 
 		if (user == null) {
 			return null;
 		}
 
-		WebImage webImage = new WebImage(user.getPortraitURL(themeDisplay));
+		ThemeDisplay themeDisplay = _getThemeDisplay();
 
-		webImage.setAlt(user.getFullName());
+		if (themeDisplay != null) {
+			WebImage webImage = new WebImage(user.getPortraitURL(themeDisplay));
 
-		return webImage;
+			webImage.setAlt(user.getFullName());
+
+			return webImage;
+		}
+
+		return null;
 	}
 
 	private final DisplayPageInfoItemFieldSetProvider

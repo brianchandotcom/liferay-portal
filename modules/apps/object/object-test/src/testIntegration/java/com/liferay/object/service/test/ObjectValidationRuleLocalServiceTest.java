@@ -56,8 +56,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -74,6 +76,16 @@ public class ObjectValidationRuleLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		ScriptManagementConfigurationTestUtil.save(true);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		ScriptManagementConfigurationTestUtil.delete();
+	}
 
 	@Before
 	public void setUp() throws Exception {

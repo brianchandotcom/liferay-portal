@@ -100,9 +100,8 @@ const seeAllResultsLink = fragmentElement.querySelector(
 
 const searchSubmitLink = fragmentElement.querySelector('.search-submit');
 
-const searchSuggestionItem = searchSuggestionItemTemplate.content.querySelector(
-	'a'
-);
+const searchSuggestionItem =
+	searchSuggestionItemTemplate.content.querySelector('a');
 
 function updateSearch() {
 	searchSuggestions.innerHTML = '';
@@ -116,8 +115,7 @@ function updateSearch() {
 			searchSubmitURL + '?q=' + searchSuggestionsInputValue;
 		suggestions.classList.add('performing-search');
 		performSearch(searchSuggestionsInputValue);
-	}
-	else {
+	} else {
 		suggestions.classList.remove(
 			'loading-search',
 			'performing-search',
@@ -200,15 +198,14 @@ function performSearch(query) {
 							suggestion.attributes.assetSearchSummary;
 
 						if (suggestionContentTextValue) {
-							suggestionContentTextValue = suggestionContentTextValue.substring(
-								0,
-								500
-							);
+							suggestionContentTextValue =
+								suggestionContentTextValue.substring(0, 500);
 
-							suggestionContent.innerHTML = suggestionContentTextValue.replace(
-								searchTermRegExp,
-								`<b>$1</b>`
-							);
+							suggestionContent.innerHTML =
+								suggestionContentTextValue.replace(
+									searchTermRegExp,
+									`<b>$1</b>`
+								);
 						}
 
 						const suggestionURL = suggestionLink.querySelector(
@@ -227,8 +224,7 @@ function performSearch(query) {
 						suggestions.classList.remove('loading-search');
 					}
 				}
-			}
-			else {
+			} else {
 				suggestions.classList.remove('search-results-found');
 				suggestions.classList.remove('loading-search');
 			}
@@ -298,6 +294,10 @@ document.getElementById('searchIcon').addEventListener('click', changeFocus);
 const searchInput = document.getElementById('searchInput');
 const siteSearchWrapper = document.getElementById('siteSearchWrapper');
 
+searchInput.addEventListener('click', function () {
+	inputClicked = true;
+});
+
 window.addEventListener('keyup', (event) => {
 	if (event.code === 'Escape' || event.key === 'Escape') {
 		if (!siteSearchWrapper.classList.contains('search-open')) {
@@ -308,7 +308,10 @@ window.addEventListener('keyup', (event) => {
 		siteSearchWrapper.classList.remove('search-open');
 	}
 
-	if (event.code === 'Slash' || event.key === '/') {
+	if (
+		event.code === 'Slash' &&
+		!document.activeElement.classList.contains('search-bar-keywords-input')
+	) {
 		searchInput.focus();
 
 		if (siteSearchWrapper.classList.contains('search-open')) {
@@ -316,5 +319,6 @@ window.addEventListener('keyup', (event) => {
 		}
 
 		siteSearchWrapper.classList.add('search-open');
+		inputClicked = false;
 	}
 });

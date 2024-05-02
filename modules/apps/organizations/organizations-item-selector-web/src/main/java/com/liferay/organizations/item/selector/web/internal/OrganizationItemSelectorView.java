@@ -70,7 +70,8 @@ public class OrganizationItemSelectorView
 			organizationItemSelectorViewDisplayContext =
 				new OrganizationItemSelectorViewDisplayContext(
 					organizationItemSelectorCriterion,
-					_organizationLocalService, httpServletRequest, portletURL);
+					_organizationLocalService, httpServletRequest, _portal,
+					portletURL);
 
 		_itemSelectorViewDescriptorRenderer.renderHTML(
 			httpServletRequest, servletResponse,

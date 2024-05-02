@@ -65,7 +65,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testEnglishUserEnglishSessionEnglishCookieWithoutVirtualHostAlgorithm3()
+	public void testEnglishUserEnglishSessionEnglishCookieWithoutVirtualHostPreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertNull(
@@ -74,7 +74,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testEnglishUserEnglishSessionSpanishCookieWithoutVirtualHostAlgorithm3()
+	public void testEnglishUserEnglishSessionSpanishCookieWithoutVirtualHostPreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertNull(
@@ -83,7 +83,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testEnglishUserEnglishSessionWithoutCookieVirtualHostAlgorithm3()
+	public void testEnglishUserEnglishSessionWithoutCookieVirtualHostPreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertNull(
@@ -92,7 +92,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testEnglishUserSpanishCookieSpanishVirtualHostWithoutSessionAlgorithm3()
+	public void testEnglishUserSpanishCookieSpanishVirtualHostWithoutSessionPreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertNull(
@@ -102,7 +102,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testEnglishUserSpanishSessionEnglishCookieWithoutVirtualHostAlgorithm3()
+	public void testEnglishUserSpanishSessionEnglishCookieWithoutVirtualHostPreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -112,7 +112,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testEnglishUserSpanishSessionSpanishCookieSpanishVirtualHostAlgorithm3()
+	public void testEnglishUserSpanishSessionSpanishCookieSpanishVirtualHostPreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -123,7 +123,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testEnglishUserSpanishSessionSpanishCookieWithoutVirtualHostAlgorithm3()
+	public void testEnglishUserSpanishSessionSpanishCookieWithoutVirtualHostPreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -134,7 +134,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testEnglishUserSpanishSessionWithoutCookieVirtualHostAlgorithm3()
+	public void testEnglishUserSpanishSessionWithoutCookieVirtualHostPreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -153,7 +153,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testGuestEnglishSessionEnglishCookieWithoutVirtualHostAlgorithm3()
+	public void testGuestEnglishSessionEnglishCookieWithoutVirtualHostPreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertNull(
@@ -162,7 +162,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testGuestEnglishSessionSpanishCookieWithoutVirtualHostAlgorithm3()
+	public void testGuestEnglishSessionSpanishCookieWithoutVirtualHostPreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertNull(
@@ -171,7 +171,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testGuestEnglishSessionWithoutCookieVirtualHostAlgorithm3()
+	public void testGuestEnglishSessionWithoutCookieVirtualHostPreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertNull(
@@ -180,7 +180,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testGuestSpanishCookieSpanishVirtualHostWithoutSessionAlgorithm3()
+	public void testGuestSpanishCookieSpanishVirtualHostWithoutSessionPreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -200,7 +200,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testGuestSpanishSessionEnglishCookieWithoutVirtualHostAlgorithm3()
+	public void testGuestSpanishSessionEnglishCookieWithoutVirtualHostPreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -210,7 +210,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testGuestSpanishSessionSpanishCookieSpanishVirtualHostAlgorithm3()
+	public void testGuestSpanishSessionSpanishCookieSpanishVirtualHostPreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -221,7 +221,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testGuestSpanishSessionSpanishCookieWithoutVirtualHostAlgorithm3()
+	public void testGuestSpanishSessionSpanishCookieWithoutVirtualHostPreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -231,7 +231,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testGuestSpanishSessionWithoutCookieVirtualHostAlgorithm3()
+	public void testGuestSpanishSessionWithoutCookieVirtualHostPreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -241,7 +241,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testGuestSpanishVirtualHostWithoutSessionCookieAlgorithm3()
+	public void testGuestSpanishVirtualHostWithoutSessionCookiePreferredAlgorithm3()
 		throws Exception {
 
 		Assert.assertEquals(

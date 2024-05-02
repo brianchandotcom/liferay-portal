@@ -120,11 +120,7 @@ public class LoginAction implements Action {
 					themeDisplay.getScopeGroupId(),
 					LayoutUtilityPageEntryConstants.TYPE_LOGIN);
 
-		if ((layout != null) &&
-			!Objects.equals(
-				getWindowState(httpServletRequest),
-				LiferayWindowState.EXCLUSIVE)) {
-
+		if (layout != null) {
 			redirect = PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
 					httpServletRequest, PortletKeys.LOGIN, layout,
@@ -136,7 +132,7 @@ public class LoginAction implements Action {
 			).setPortletMode(
 				PortletMode.VIEW
 			).setWindowState(
-				WindowState.NORMAL
+				getWindowState(httpServletRequest)
 			).buildString();
 		}
 

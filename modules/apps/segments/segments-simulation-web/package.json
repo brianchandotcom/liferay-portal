@@ -17,5 +17,5 @@
 		"format": "liferay-npm-scripts fix",
 		"test": "env TZ=utc liferay-npm-scripts test"
 	},
-	"version": "3.0.49"
+	"version": "3.0.50"
 }

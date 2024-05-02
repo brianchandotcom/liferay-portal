@@ -69,7 +69,7 @@ public class FragmentCollectionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -77,6 +77,8 @@ public class FragmentCollectionCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", fragmentCollectionId=");
 		sb.append(fragmentCollectionId);
 		sb.append(", groupId=");
@@ -117,6 +119,14 @@ public class FragmentCollectionCacheModel
 		}
 		else {
 			fragmentCollectionImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			fragmentCollectionImpl.setExternalReferenceCode("");
+		}
+		else {
+			fragmentCollectionImpl.setExternalReferenceCode(
+				externalReferenceCode);
 		}
 
 		fragmentCollectionImpl.setFragmentCollectionId(fragmentCollectionId);
@@ -186,6 +196,7 @@ public class FragmentCollectionCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		fragmentCollectionId = objectInput.readLong();
 
@@ -214,6 +225,13 @@ public class FragmentCollectionCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(fragmentCollectionId);
@@ -261,6 +279,7 @@ public class FragmentCollectionCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long fragmentCollectionId;
 	public long groupId;
 	public long companyId;

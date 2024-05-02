@@ -54,23 +54,25 @@ public class FragmentCollectionLocalServiceUtil {
 	}
 
 	public static FragmentCollection addFragmentCollection(
-			long userId, long groupId, String name, String description,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addFragmentCollection(
-			userId, groupId, name, description, serviceContext);
-	}
-
-	public static FragmentCollection addFragmentCollection(
-			long userId, long groupId, String fragmentCollectionKey,
+			String externalReferenceCode, long userId, long groupId,
 			String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addFragmentCollection(
-			userId, groupId, fragmentCollectionKey, name, description,
+			externalReferenceCode, userId, groupId, name, description,
 			serviceContext);
+	}
+
+	public static FragmentCollection addFragmentCollection(
+			String externalReferenceCode, long userId, long groupId,
+			String fragmentCollectionKey, String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addFragmentCollection(
+			externalReferenceCode, userId, groupId, fragmentCollectionKey, name,
+			description, serviceContext);
 	}
 
 	/**
@@ -129,6 +131,14 @@ public class FragmentCollectionLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deleteFragmentCollection(fragmentCollectionId);
+	}
+
+	public static FragmentCollection deleteFragmentCollection(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().deleteFragmentCollection(
+			externalReferenceCode, groupId);
 	}
 
 	/**
@@ -239,6 +249,14 @@ public class FragmentCollectionLocalServiceUtil {
 			groupId, fragmentCollectionKey);
 	}
 
+	public static FragmentCollection
+		fetchFragmentCollectionByExternalReferenceCode(
+			String externalReferenceCode, long groupId) {
+
+		return getService().fetchFragmentCollectionByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the fragment collection matching the UUID and group.
 	 *
@@ -285,6 +303,15 @@ public class FragmentCollectionLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getFragmentCollection(fragmentCollectionId);
+	}
+
+	public static FragmentCollection
+			getFragmentCollectionByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getFragmentCollectionByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

@@ -32,6 +32,12 @@ const Projects: React.FC<ProjectsProps> = ({PageContainer = Container}) => {
 	return (
 		<PageContainer>
 			<ListView
+				initialContext={{
+					sort: {
+						direction: 'ASC',
+						key: 'name',
+					},
+				}}
 				managementToolbarProps={{
 					addButton: () => navigate('/project/create'),
 					applyFilters: true,

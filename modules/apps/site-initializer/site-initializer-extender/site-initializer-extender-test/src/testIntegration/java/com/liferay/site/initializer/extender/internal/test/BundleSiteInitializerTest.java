@@ -171,6 +171,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
+import com.liferay.portal.security.script.management.test.util.ScriptManagementConfigurationTestRule;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -245,7 +246,8 @@ public class BundleSiteInitializerTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE);
+			PermissionCheckerMethodTestRule.INSTANCE,
+			ScriptManagementConfigurationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {

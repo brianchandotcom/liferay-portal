@@ -4,6 +4,7 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import moment from 'moment';
 
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -20,6 +21,7 @@ export const test = mergeTests(
 	workflowPagesTest
 );
 
+let date;
 let journalName;
 
 test.beforeEach(async ({journalEditArticlePage, workflowPage}) => {
@@ -32,6 +34,8 @@ test.beforeEach(async ({journalEditArticlePage, workflowPage}) => {
 	await journalEditArticlePage.goto();
 
 	await journalEditArticlePage.submitArticleForWorkflow(journalName);
+
+	date = moment().format('M/D/YY h:mm A');
 });
 
 test('LPD-19748 Add workflow info to the View Change screen', async ({
@@ -60,6 +64,7 @@ test('LPD-19748 Workflow data is displayed in tab', async ({
 		'Create Date',
 		'Due Date',
 		'Usages',
+		'Activities',
 	];
 
 	await changeTrackingPage.goToReviewChanges(ctCollection.name);
@@ -173,6 +178,7 @@ test('LPD-23331 Workflow data is displayed when workflow task is approved', asyn
 		'Create Date',
 		'Due Date',
 		'Usages',
+		'Activities',
 	];
 
 	await workflowTasksPage.goToAssignedToMyRoles();
@@ -192,4 +198,36 @@ test('LPD-23331 Workflow data is displayed when workflow task is approved', asyn
 	for (const data of displayData) {
 		await expect(page.getByText(data, {exact: true})).toBeVisible();
 	}
+});
+
+test('LPD-23969 Activities tab is added to workflow info display', async ({
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	await changeTrackingPage.reviewChange(journalName);
+
+	await changeTrackingPage.selectTab('Workflow');
+
+	await page.getByRole('button', {exact: true, name: 'Activities'}).click();
+
+	await expect(
+		page.getByRole('cell', {exact: true, name: 'Activity Description'})
+	).toBeVisible();
+
+	await expect(
+		page.getByRole('cell', {exact: true, name: 'Date'})
+	).toBeVisible();
+
+	await expect(
+		page
+			.getByRole('row', {
+				exact: true,
+				name: `Task initially assigned to the Administrator role. Assigned initial task. ${date}`,
+			})
+			.getByRole('cell')
+			.nth(1)
+	).toBeVisible();
 });

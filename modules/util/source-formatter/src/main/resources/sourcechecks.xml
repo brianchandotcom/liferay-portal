@@ -619,10 +619,6 @@
 			<category name="Styling" />
 			<description name="Applies rules to enforce consistency in code style." />
 		</check>
-		<check name="JavaUpgradeMissingCTCollectionIdDuringUpdateCheck">
-			<category name="Bug Prevention" />
-			<description name="Finds missing `ctCollectionId` in where clause during update." />
-		</check>
 		<check name="JavaUpgradeModelPermissionsCheck">
 			<category name="Upgrade" />
 			<description name="Replace setGroupPermissions and setGuestPermissions by new implementation." />
@@ -871,6 +867,11 @@
 		<check name="JavaUpgradeIndexCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds cases where the service builder indexes are updated manually in Upgrade classes. This is not needed because Liferay takes care of it." />
+			<property name="enabled" value="false" />
+		</check>
+		<check name="JavaUpgradeMissingCTCollectionIdDuringUpdateCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds missing `ctCollectionId` in where clause during update." />
 			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaUpgradeMissingTestCheck">

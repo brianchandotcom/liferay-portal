@@ -11,6 +11,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {knowledgeBasePages} from '../../fixtures/knowledgeBasePagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
 const testFeatureFlagsEnabled = mergeTests(
 	apiHelpersTest,
@@ -45,6 +46,11 @@ testFeatureFlagsDisabled(
 			content,
 			title
 		);
+
+		await waitForSuccessAlert(
+			page,
+			`Success:${title} was successfully published.`
+		);
 		await expect(kbArticle).toBeVisible();
 
 		await knowledgeBasePage.goto(site.friendlyUrlPath);
@@ -71,6 +77,11 @@ testFeatureFlagsEnabled(
 			content,
 			title
 		);
+
+		await waitForSuccessAlert(
+			page,
+			`Success:${title} was successfully published.`
+		);
 		await expect(kbArticle).toBeVisible();
 
 		await knowledgeBaseViewArticlePage.goto(site.friendlyUrlPath, title);
@@ -90,9 +101,16 @@ testFeatureFlagsDisabled(
 	async ({knowledgeBaseEditArticlePage, knowledgeBasePage, page, site}) => {
 		await knowledgeBaseEditArticlePage.goto(site.friendlyUrlPath);
 
+		const title = getRandomString();
+
 		await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticle(
 			getRandomString(),
-			getRandomString()
+			title
+		);
+
+		await waitForSuccessAlert(
+			page,
+			`Success:${title} was successfully published.`
 		);
 
 		await knowledgeBasePage.goto(site.friendlyUrlPath);
@@ -108,9 +126,16 @@ testFeatureFlagsEnabled(
 	async ({knowledgeBaseEditArticlePage, knowledgeBasePage, page, site}) => {
 		await knowledgeBaseEditArticlePage.goto(site.friendlyUrlPath);
 
+		const title = getRandomString();
+
 		await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticleWithSchedule(
 			getRandomString(),
-			getRandomString()
+			title
+		);
+
+		await waitForSuccessAlert(
+			page,
+			`Success:${title} was successfully published.`
 		);
 
 		await knowledgeBasePage.goto(site.friendlyUrlPath);
@@ -145,6 +170,11 @@ testFeatureFlagsEnabled(
 			getRandomString(),
 			`${new Date().getFullYear() + 1}-01-01 00:00`,
 			title
+		);
+
+		await waitForSuccessAlert(
+			page,
+			`Success:${title} will be published on`
 		);
 		await expect(kbArticle).toBeVisible();
 

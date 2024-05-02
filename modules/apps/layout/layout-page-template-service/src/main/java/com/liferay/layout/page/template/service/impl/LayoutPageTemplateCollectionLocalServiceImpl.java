@@ -264,14 +264,6 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	}
 
 	@Override
-	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
-		String externalReferenceCode, long groupId) {
-
-		return layoutPageTemplateCollectionPersistence.fetchByERC_G(
-			externalReferenceCode, groupId);
-	}
-
-	@Override
 	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollectionByName(
 		long groupId, String name, int type) {
 

@@ -87,3 +87,8 @@ dd200f5a668d127f46ea3f001149d63dbee15d2b^..9441e2dc6c7e3998ab897bc35e2e87fb26f3c
 # Bundle Version 4.1.1
 #
 9441e2dc6c7e3998ab897bc35e2e87fb26f3c1db^..31feaee8166ab7b87ec60fcfa2e22c296e2866fe=LPD-11919
+
+#
+# Bundle Version 4.1.2
+#
+31feaee8166ab7b87ec60fcfa2e22c296e2866fe^..5dcbe297f193623c5ebfdec805889f3e91f7ce99=LPD-20503 LPD-21245

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal LPKG Deployer Implementation
 Bundle-SymbolicName: com.liferay.portal.lpkg.deployer.impl
-Bundle-Version: 4.0.23
+Bundle-Version: 4.0.24
 Import-Package:\
 	!com.liferay.portal.target.platform.indexer.internal,\
 	\

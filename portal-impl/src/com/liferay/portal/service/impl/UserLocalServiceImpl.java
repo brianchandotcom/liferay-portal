@@ -6263,8 +6263,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		if (user.isLockout()) {
-			checkLoginFailure(user);
-
 			throw new UserLockoutException.PasswordPolicyLockout(
 				user, passwordPolicy);
 		}

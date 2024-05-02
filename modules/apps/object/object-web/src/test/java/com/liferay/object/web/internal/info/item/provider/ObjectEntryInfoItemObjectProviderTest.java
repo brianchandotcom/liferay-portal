@@ -195,11 +195,11 @@ public class ObjectEntryInfoItemObjectProviderTest {
 		ERCInfoItemIdentifier ercInfoItemIdentifier = new ERCInfoItemIdentifier(
 			externalReferenceCode);
 
-		Assert.assertEquals(
-			objectEntry, _assertGetInfoItem(ercInfoItemIdentifier));
-
 		com.liferay.object.rest.dto.v1_0.ObjectEntry proxyObjectEntry =
 			_setUpProxyObjectEntry(externalReferenceCode, objectEntry);
+
+		Assert.assertEquals(
+			objectEntry, _assertGetInfoItem(ercInfoItemIdentifier));
 
 		Mockito.verifyNoInteractions(_objectEntryLocalService);
 		Mockito.verify(

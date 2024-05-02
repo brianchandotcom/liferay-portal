@@ -214,7 +214,7 @@ public class JavaUpgradeMissingCTCollectionIdDuringUpdateCheck
 	private static final String[] _METHOD_NAMES = {
 		"AutoBatchPreparedStatementUtil.autoBatch(",
 		"AutoBatchPreparedStatementUtil.concurrentAutoBatch(",
-		"StringBundler.concat(", "connection.prepareStatement("
+		"connection.prepareStatement(", "StringBundler.concat("
 	};
 
 	private static final Pattern _createTablePattern = Pattern.compile(

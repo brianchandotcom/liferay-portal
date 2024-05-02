@@ -6,12 +6,12 @@
 package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.remote.json.web.service.JSONWebServiceAction;
 import com.liferay.portal.remote.json.web.service.web.internal.action.JSONWebServiceInvokerAction;
+import com.liferay.portal.remote.json.web.service.web.internal.helper.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jodd.typeconverter.TypeConversionException;

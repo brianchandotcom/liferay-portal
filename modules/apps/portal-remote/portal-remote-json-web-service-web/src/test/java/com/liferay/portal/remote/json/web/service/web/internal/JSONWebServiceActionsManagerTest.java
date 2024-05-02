@@ -5,8 +5,8 @@
 
 package com.liferay.portal.remote.json.web.service.web.internal;
 
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
+import com.liferay.portal.remote.json.web.service.JSONWebServiceAction;
+import com.liferay.portal.remote.json.web.service.web.internal.helper.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;

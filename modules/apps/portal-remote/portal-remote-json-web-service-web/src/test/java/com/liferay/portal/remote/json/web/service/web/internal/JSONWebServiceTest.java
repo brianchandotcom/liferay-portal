@@ -5,8 +5,6 @@
 
 package com.liferay.portal.remote.json.web.service.web.internal;
 
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
-import com.liferay.portal.kernel.jsonwebservice.NoSuchJSONWebServiceException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -17,6 +15,8 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.remote.json.web.service.JSONWebServiceAction;
+import com.liferay.portal.remote.json.web.service.exception.NoSuchJSONWebServiceException;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.InvocationHandler;

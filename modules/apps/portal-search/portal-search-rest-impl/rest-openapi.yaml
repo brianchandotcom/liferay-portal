@@ -152,6 +152,10 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: scope
+                  schema:
+                      type: string
+                - in: query
                   name: search
                   schema:
                       type: string

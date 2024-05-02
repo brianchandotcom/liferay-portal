@@ -1,7 +1,12 @@
 import * as API from 'shared/api';
+import client from 'shared/apollo/client';
 import FilterBySegment from '../FilterBySegment';
 import React from 'react';
+import {ApolloProvider} from '@apollo/react-hooks';
 import {cleanup, fireEvent, render} from '@testing-library/react';
+import {MockedProvider} from '@apollo/react-testing';
+import {mockSegmentPageViewsReq} from 'test/graphql-data';
+import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {StaticRouter} from 'react-router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
@@ -11,17 +16,40 @@ jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
 	useParams: () => ({
 		channelId: '456',
-		groupId: '123'
+		groupId: '123',
+		title: 'Liferay DXP - Home',
+		touchpoint: 'http://liferay.com'
 	})
 }));
 
-const WrapperComponent = ({onFilterChange}) => (
-	<StaticRouter>
-		<FilterBySegment onFilterChange={onFilterChange} />
-	</StaticRouter>
+interface IWrapperComponentProps {
+	onFilterChange: (item: any) => void;
+	segmentPageViews: {segmentId: string; views: number}[];
+}
+
+const WrapperComponent: React.FC<IWrapperComponentProps> = ({
+	onFilterChange,
+	segmentPageViews
+}) => (
+	<ApolloProvider client={client}>
+		<StaticRouter>
+			<MockedProvider
+				mocks={[mockSegmentPageViewsReq({segmentPageViews})]}
+			>
+				<FilterBySegment
+					onFilterChange={onFilterChange}
+					rangeSelectors={{
+						rangeEnd: '',
+						rangeKey: RangeKeyTimeRanges.Last24Hours,
+						rangeStart: ''
+					}}
+				/>
+			</MockedProvider>
+		</StaticRouter>
+	</ApolloProvider>
 );
 
-const MOCK_SEGMENT = (name: string) => ({
+const MOCK_SEGMENT = (id: string, name: string) => ({
 	activeIndividualCount: 0,
 	activitiesCount: 0,
 	anonymousIndividualCount: 0,
@@ -30,7 +58,7 @@ const MOCK_SEGMENT = (name: string) => ({
 	dateModified: 1700512862880,
 	filter:
 		"(activities.filterByCount(filter='(activityKey eq ''Page#pageViewed#1fa4f8a263c3ba307844bb9d37ac12e238e9f128aa894c2151e4b7cf5aa5e814'' and day gt ''last24Hours'')',operator='ge',value=1))",
-	id: '654334205381399142',
+	id,
 	includeAnonymousUsers: false,
 	individualAddedDate: null,
 	individualCount: 1,
@@ -55,7 +83,15 @@ describe('FilterBySegment', () => {
 
 	it('should render', async () => {
 		const {container, getByText} = render(
-			<WrapperComponent onFilterChange={jest.fn()} />
+			<WrapperComponent
+				onFilterChange={jest.fn()}
+				segmentPageViews={[
+					{
+						segmentId: '123',
+						views: 100
+					}
+				]}
+			/>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -78,7 +114,15 @@ describe('FilterBySegment', () => {
 		);
 
 		const {container, getByText} = render(
-			<WrapperComponent onFilterChange={jest.fn()} />
+			<WrapperComponent
+				onFilterChange={jest.fn()}
+				segmentPageViews={[
+					{
+						segmentId: '123',
+						views: 100
+					}
+				]}
+			/>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -109,16 +153,24 @@ describe('FilterBySegment', () => {
 			Promise.resolve({
 				disableSearch: false,
 				items: [
-					MOCK_SEGMENT('Viewed Page'),
-					MOCK_SEGMENT('Viewed Form'),
-					MOCK_SEGMENT('Viewed Web Content')
+					MOCK_SEGMENT('123', 'Viewed Page'),
+					MOCK_SEGMENT('456', 'Viewed Form'),
+					MOCK_SEGMENT('789', 'Viewed Web Content')
 				],
 				total: 3
 			})
 		);
 
 		const {container, getByText} = render(
-			<WrapperComponent onFilterChange={jest.fn()} />
+			<WrapperComponent
+				onFilterChange={jest.fn()}
+				segmentPageViews={[
+					{
+						segmentId: '123',
+						views: 100
+					}
+				]}
+			/>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -140,13 +192,21 @@ describe('FilterBySegment', () => {
 		API.individualSegment.search.mockReturnValueOnce(
 			Promise.resolve({
 				disableSearch: false,
-				items: [MOCK_SEGMENT('Viewed Page')],
+				items: [MOCK_SEGMENT('123', 'Viewed Page')],
 				total: 1
 			})
 		);
 
 		const {container, getByRole, getByText} = render(
-			<WrapperComponent onFilterChange={jest.fn()} />
+			<WrapperComponent
+				onFilterChange={jest.fn()}
+				segmentPageViews={[
+					{
+						segmentId: '123',
+						views: 100
+					}
+				]}
+			/>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -183,16 +243,32 @@ describe('FilterBySegment', () => {
 			Promise.resolve({
 				disableSearch: false,
 				items: [
-					MOCK_SEGMENT('Viewed Page'),
-					MOCK_SEGMENT('Viewed Form'),
-					MOCK_SEGMENT('Viewed Web Content')
+					MOCK_SEGMENT('123', 'Viewed Page'),
+					MOCK_SEGMENT('456', 'Viewed Form'),
+					MOCK_SEGMENT('789', 'Viewed Web Content')
 				],
 				total: 3
 			})
 		);
 
 		const {container, getByRole, getByText} = render(
-			<WrapperComponent onFilterChange={onFilterChange} />
+			<WrapperComponent
+				onFilterChange={onFilterChange}
+				segmentPageViews={[
+					{
+						segmentId: '123',
+						views: 100
+					},
+					{
+						segmentId: '456',
+						views: 100
+					},
+					{
+						segmentId: '789',
+						views: 100
+					}
+				]}
+			/>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -207,7 +283,7 @@ describe('FilterBySegment', () => {
 		fireEvent.click(getByText('Viewed Page'));
 
 		expect(onFilterChange).toHaveBeenCalledWith(
-			expect.objectContaining(MOCK_SEGMENT('Viewed Page'))
+			expect.objectContaining(MOCK_SEGMENT('123', 'Viewed Page'))
 		);
 
 		expect(container.querySelector('.label')).toBeInTheDocument();
@@ -226,16 +302,32 @@ describe('FilterBySegment', () => {
 			Promise.resolve({
 				disableSearch: false,
 				items: [
-					MOCK_SEGMENT('Viewed Page'),
-					MOCK_SEGMENT('Viewed Form'),
-					MOCK_SEGMENT('Viewed Web Content')
+					MOCK_SEGMENT('123', 'Viewed Page'),
+					MOCK_SEGMENT('456', 'Viewed Form'),
+					MOCK_SEGMENT('789', 'Viewed Web Content')
 				],
 				total: 3
 			})
 		);
 
 		const {container, getByRole, getByText} = render(
-			<WrapperComponent onFilterChange={onFilterChange} />
+			<WrapperComponent
+				onFilterChange={onFilterChange}
+				segmentPageViews={[
+					{
+						segmentId: '123',
+						views: 100
+					},
+					{
+						segmentId: '456',
+						views: 100
+					},
+					{
+						segmentId: '789',
+						views: 100
+					}
+				]}
+			/>
 		);
 
 		await waitForLoadingToBeRemoved(container);
@@ -250,7 +342,7 @@ describe('FilterBySegment', () => {
 		fireEvent.click(getByText('Viewed Page'));
 
 		expect(onFilterChange).toHaveBeenCalledWith(
-			expect.objectContaining(MOCK_SEGMENT('Viewed Page'))
+			expect.objectContaining(MOCK_SEGMENT('123', 'Viewed Page'))
 		);
 
 		expect(container.querySelector('.label')).toBeInTheDocument();
@@ -266,5 +358,42 @@ describe('FilterBySegment', () => {
 		expect(onFilterChange).toHaveBeenCalledWith(
 			expect.objectContaining([])
 		);
+	});
+
+	it('should open dropdown w/ segment disabled if there are no views', async () => {
+		const onFilterChange = jest.fn();
+
+		// @ts-ignore
+		API.individualSegment.search.mockReturnValueOnce(
+			Promise.resolve({
+				disableSearch: false,
+				items: [MOCK_SEGMENT('123', 'Viewed Page')],
+				total: 3
+			})
+		);
+
+		const {container, getByText} = render(
+			<WrapperComponent
+				onFilterChange={onFilterChange}
+				segmentPageViews={[
+					{
+						segmentId: '123',
+						views: 0
+					}
+				]}
+			/>
+		);
+
+		await waitForLoadingToBeRemoved(container);
+
+		fireEvent.click(getByText('Filter'));
+
+		const viewedPageSegment = getByText('Viewed Page');
+
+		expect(viewedPageSegment).toHaveAttribute('disabled');
+
+		fireEvent.click(viewedPageSegment);
+
+		expect(onFilterChange).not.toHaveBeenCalledWith();
 	});
 });

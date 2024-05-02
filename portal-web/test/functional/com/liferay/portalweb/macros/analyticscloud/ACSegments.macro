@@ -775,7 +775,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewSegmentComposition(individualsPercent = null, individualsNumber = null, individualsType = null) {
-		if (${individualsType} == "Active") {
+		if (${individualsType} == "Active Last 30 Days") {
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_COMPOSITION_COUNT",
 				value1 = ${individualsNumber});
@@ -784,7 +784,7 @@ definition {
 				locator1 = "ACSegments#SEGMENT_COMPOSITION_PERCENT",
 				value1 = ${individualsPercent});
 		}
-		else if (${individualsType} == "Known") {
+		else if (${individualsType} == "Known Members") {
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_COMPOSITION_COUNT",
 				value1 = ${individualsNumber});

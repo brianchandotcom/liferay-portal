@@ -31,19 +31,19 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8493 | Test Summary: Segment Composition shows Active and Known individuals"
-	@ignore = "true"
 	@priority = 3
 	test SegmentCompositionShowsActiveAndKnownIndividuals {
-
-		// AC Refactor: Test blocked by LRAC-9056
-		// AC Refactor Ticket: LRAC-9337
-
 		task ("Create a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "testac@liferay.com",
-				userFirstName = "Test",
-				userLastName = "Test",
+				userFirstName = "TestAC",
+				userLastName = "TestDXP",
 				userScreenName = "testac");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "testac@liferay.com");
 		}
 
 		task ("Create a Site and Page and Sync DXP to AC") {
@@ -51,17 +51,14 @@ definition {
 
 			ACUtils.createBlogsAndAddToPage();
 
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Interact to the page and blog") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "testac@liferay.com",
-				userLoginFullName = "Test Test");
-
-			ACUtils.navigateToSitePage(
+			ACUtils.navigateToSitePageWithUser(
 				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title",
+				documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
+				emailList = "testac@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -71,7 +68,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = ${propertyName});
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToSegments();
 		}
@@ -81,7 +78,7 @@ definition {
 
 			ACUtils.setItemName(itemName = "Test Segment");
 
-			ACSegments.addStaticMember(tableMember = "Test Test");
+			ACSegments.addStaticMember(tableMember = "TestAC TestDXP");
 
 			ACSegments.saveSegment();
 
@@ -91,17 +88,15 @@ definition {
 
 			ACSegments.accessSegment(segmentName = "Test Segment");
 
-			// Active individuals informations does not show up properly on graphic.
+			ACSegments.viewSegmentComposition(
+				individualsNumber = 1,
+				individualsPercent = "100%",
+				individualsType = "Active Last 30 Days");
 
 			ACSegments.viewSegmentComposition(
 				individualsNumber = 1,
 				individualsPercent = "100%",
-				individualsType = "Active");
-
-			ACSegments.viewSegmentComposition(
-				individualsNumber = 1,
-				individualsPercent = "100%",
-				individualsType = "Known");
+				individualsType = "Known Members");
 		}
 	}
 

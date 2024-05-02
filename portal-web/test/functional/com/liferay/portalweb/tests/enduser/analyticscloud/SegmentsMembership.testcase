@@ -627,20 +627,15 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8510 | Test Summary: Segment membership shows known, anonymous, and total members"
-	@ignore = "true"
 	@priority = 5
 	test ViewMembershipShowsKnownAnonymousTotalMembers {
-
-		// AC Refactor: Segment data takes time to appear.
-		// AC Refactor ticket: LRAC-9251
-
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
 		task ("View the blogs page as different users") {
 			ACUtils.navigateToSitePageWithUser(
 				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title",
+				documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
 				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
@@ -678,25 +673,11 @@ definition {
 			ACNavigation.switchTab(tabName = "Membership");
 		}
 
-		// Timing issue will cause this test to fail
-		// The graph shows yesterdays date and would require a full day before you can actually see when a member was added
-
-		task ("Hover over most recent day") {
-			MouseOver.mouseOverInvisible(locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_RECENT_DATE_POINT");
-		}
-
 		task ("View membership card when hovering") {
-			ACSegments.viewSegmentMembershipChartRowNumbers(
-				row = "Total Members",
-				value = 3);
-
-			ACSegments.viewSegmentMembershipChartRowNumbers(
-				row = "Anonymous Members",
-				value = 0);
-
-			ACSegments.viewSegmentMembershipChartRowNumbers(
-				row = "Known Members",
-				value = 3);
+			ACSegments.viewSegmentMembershipLegendNumbers(
+				knownNumber = 3,
+				anonymousNumber = 0,
+				totalNumber = 3);
 		}
 	}
 

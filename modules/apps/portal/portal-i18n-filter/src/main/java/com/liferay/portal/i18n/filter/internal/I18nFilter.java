@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -242,6 +243,23 @@ public class I18nFilter extends BasePortalFilter {
 		if (Validator.isNull(requestedLanguageId)) {
 			requestedLanguageId = (String)httpServletRequest.getAttribute(
 				WebKeys.VIRTUAL_HOST_LANGUAGE_ID);
+		}
+
+		if (Validator.isNull(requestedLanguageId) &&
+			PropsValues.LOCALE_DEFAULT_REQUEST) {
+
+			Enumeration<Locale> enumeration = httpServletRequest.getLocales();
+
+			while (enumeration.hasMoreElements()) {
+				Locale requestLocale = enumeration.nextElement();
+
+				if (_language.isAvailableLocale(requestLocale)) {
+					requestedLanguageId = LocaleUtil.toLanguageId(
+						requestLocale);
+
+					break;
+				}
+			}
 		}
 
 		return requestedLanguageId;

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Locale;
 
@@ -68,7 +70,7 @@ public class I18nFilterTest {
 
 		Assert.assertNull(
 			_getPrependI18nLanguageId(
-				3, LocaleUtil.US, LocaleUtil.US, LocaleUtil.US, null));
+				3, LocaleUtil.US, LocaleUtil.US, LocaleUtil.US, null, null));
 	}
 
 	@Test
@@ -77,7 +79,7 @@ public class I18nFilterTest {
 
 		Assert.assertNull(
 			_getPrependI18nLanguageId(
-				3, LocaleUtil.US, LocaleUtil.US, LocaleUtil.SPAIN, null));
+				3, LocaleUtil.US, LocaleUtil.US, LocaleUtil.SPAIN, null, null));
 	}
 
 	@Test
@@ -86,7 +88,7 @@ public class I18nFilterTest {
 
 		Assert.assertNull(
 			_getPrependI18nLanguageId(
-				3, LocaleUtil.US, LocaleUtil.US, null, null));
+				3, LocaleUtil.US, LocaleUtil.US, null, null, null));
 	}
 
 	@Test
@@ -95,8 +97,8 @@ public class I18nFilterTest {
 
 		Assert.assertNull(
 			_getPrependI18nLanguageId(
-				3, LocaleUtil.ENGLISH, null, LocaleUtil.SPAIN,
-				LocaleUtil.SPAIN));
+				3, LocaleUtil.ENGLISH, null, LocaleUtil.SPAIN, LocaleUtil.SPAIN,
+				null));
 	}
 
 	@Test
@@ -106,7 +108,7 @@ public class I18nFilterTest {
 		Assert.assertEquals(
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			_getPrependI18nLanguageId(
-				3, LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.US, null));
+				3, LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.US, null, null));
 	}
 
 	@Test
@@ -117,7 +119,7 @@ public class I18nFilterTest {
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			_getPrependI18nLanguageId(
 				3, LocaleUtil.ENGLISH, LocaleUtil.SPAIN, LocaleUtil.SPAIN,
-				LocaleUtil.SPAIN));
+				LocaleUtil.SPAIN, null));
 	}
 
 	@Test
@@ -127,7 +129,8 @@ public class I18nFilterTest {
 		Assert.assertEquals(
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			_getPrependI18nLanguageId(
-				3, LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.SPAIN, null));
+				3, LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.SPAIN, null,
+				null));
 	}
 
 	@Test
@@ -137,7 +140,7 @@ public class I18nFilterTest {
 		Assert.assertEquals(
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			_getPrependI18nLanguageId(
-				3, LocaleUtil.US, LocaleUtil.SPAIN, null, null));
+				3, LocaleUtil.US, LocaleUtil.SPAIN, null, null, null));
 	}
 
 	@Test
@@ -146,7 +149,7 @@ public class I18nFilterTest {
 
 		Assert.assertNull(
 			_getPrependI18nLanguageId(
-				3, null, LocaleUtil.US, LocaleUtil.US, null));
+				3, null, LocaleUtil.US, LocaleUtil.US, null, null));
 	}
 
 	@Test
@@ -155,7 +158,7 @@ public class I18nFilterTest {
 
 		Assert.assertNull(
 			_getPrependI18nLanguageId(
-				3, null, LocaleUtil.US, LocaleUtil.SPAIN, null));
+				3, null, LocaleUtil.US, LocaleUtil.SPAIN, null, null));
 	}
 
 	@Test
@@ -163,7 +166,8 @@ public class I18nFilterTest {
 		throws Exception {
 
 		Assert.assertNull(
-			_getPrependI18nLanguageId(3, null, LocaleUtil.US, null, null));
+			_getPrependI18nLanguageId(
+				3, null, LocaleUtil.US, null, null, null));
 	}
 
 	@Test
@@ -173,7 +177,7 @@ public class I18nFilterTest {
 		Assert.assertEquals(
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			_getPrependI18nLanguageId(
-				3, null, null, LocaleUtil.SPAIN, LocaleUtil.SPAIN));
+				3, null, null, LocaleUtil.SPAIN, LocaleUtil.SPAIN, null));
 	}
 
 	@Test
@@ -183,7 +187,7 @@ public class I18nFilterTest {
 		Assert.assertEquals(
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			_getPrependI18nLanguageId(
-				3, null, LocaleUtil.SPAIN, LocaleUtil.US, null));
+				3, null, LocaleUtil.SPAIN, LocaleUtil.US, null, null));
 	}
 
 	@Test
@@ -193,7 +197,8 @@ public class I18nFilterTest {
 		Assert.assertEquals(
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			_getPrependI18nLanguageId(
-				3, null, LocaleUtil.SPAIN, LocaleUtil.SPAIN, LocaleUtil.SPAIN));
+				3, null, LocaleUtil.SPAIN, LocaleUtil.SPAIN, LocaleUtil.SPAIN,
+				null));
 	}
 
 	@Test
@@ -203,7 +208,7 @@ public class I18nFilterTest {
 		Assert.assertEquals(
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			_getPrependI18nLanguageId(
-				3, null, LocaleUtil.SPAIN, LocaleUtil.SPAIN, null));
+				3, null, LocaleUtil.SPAIN, LocaleUtil.SPAIN, null, null));
 	}
 
 	@Test
@@ -212,7 +217,8 @@ public class I18nFilterTest {
 
 		Assert.assertEquals(
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-			_getPrependI18nLanguageId(3, null, LocaleUtil.SPAIN, null, null));
+			_getPrependI18nLanguageId(
+				3, null, LocaleUtil.SPAIN, null, null, null));
 	}
 
 	@Test
@@ -221,12 +227,14 @@ public class I18nFilterTest {
 
 		Assert.assertEquals(
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-			_getPrependI18nLanguageId(3, null, null, null, LocaleUtil.SPAIN));
+			_getPrependI18nLanguageId(
+				3, null, null, null, LocaleUtil.SPAIN, null));
 	}
 
 	private String _getPrependI18nLanguageId(
 			int localePrependFriendlyURLStyle, Locale userLocale,
-			Locale sessionLocale, Locale cookieLocale, Locale virtualHostLocale)
+			Locale sessionLocale, Locale cookieLocale, Locale virtualHostLocale,
+			Locale preferredLocale)
 		throws Exception {
 
 		if (virtualHostLocale != null) {
@@ -276,18 +284,33 @@ public class I18nFilterTest {
 				_mockHttpServletResponse.getCookies());
 		}
 
-		Assert.assertTrue(
-			ReflectionTestUtil.invoke(
-				_i18nFilter, "isFilterEnabled",
-				new Class<?>[] {
-					HttpServletRequest.class, HttpServletResponse.class
-				},
-				_mockHttpServletRequest, _mockHttpServletResponse));
+		boolean localeDefaultRequest = false;
 
-		return ReflectionTestUtil.invoke(
-			_i18nFilter, "prependI18nLanguageId",
-			new Class<?>[] {HttpServletRequest.class, int.class},
-			_mockHttpServletRequest, localePrependFriendlyURLStyle);
+		if (preferredLocale != null) {
+			localeDefaultRequest = true;
+
+			_mockHttpServletRequest.setPreferredLocales(
+				ListUtil.fromArray(preferredLocale));
+		}
+
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "LOCALE_DEFAULT_REQUEST",
+					localeDefaultRequest)) {
+
+			Assert.assertTrue(
+				ReflectionTestUtil.invoke(
+					_i18nFilter, "isFilterEnabled",
+					new Class<?>[] {
+						HttpServletRequest.class, HttpServletResponse.class
+					},
+					_mockHttpServletRequest, _mockHttpServletResponse));
+
+			return ReflectionTestUtil.invoke(
+				_i18nFilter, "prependI18nLanguageId",
+				new Class<?>[] {HttpServletRequest.class, int.class},
+				_mockHttpServletRequest, localePrependFriendlyURLStyle);
+		}
 	}
 
 	@DeleteAfterTestRun

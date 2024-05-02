@@ -10,6 +10,7 @@ import com.liferay.analytics.batch.exportimport.internal.odata.entity.AnalyticsD
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.message.storage.model.AnalyticsAssociation;
 import com.liferay.analytics.message.storage.service.AnalyticsAssociationLocalService;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.batch.engine.BaseBatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
@@ -56,6 +57,15 @@ public class AnalyticsAssociationAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
+
+		if (!_analyticsSettingsManager.syncedContactSettingsEnabled(
+				contextCompany.getCompanyId())) {
+
+			return Page.of(
+				Collections.emptyList(),
+				Pagination.of(pagination.getPage(), pagination.getPageSize()),
+				0);
+		}
 
 		List<AnalyticsAssociation> analyticsAssociations = null;
 		int totalCount = 0;
@@ -125,6 +135,9 @@ public class AnalyticsAssociationAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 	@Reference
 	private AnalyticsAssociationLocalService _analyticsAssociationLocalService;
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference(target = DTOConverterConstants.DXP_ENTITY_DTO_CONVERTER)
 	private DTOConverter<BaseModel<?>, DXPEntity> _dxpEntityDTOConverter;

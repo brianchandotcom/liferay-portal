@@ -80,7 +80,7 @@ export default function ChangeTrackingWorkflowView({workflowData}) {
 						</ClayTable.Cell>
 
 						<ClayTable.Cell className="table-cell-expand">
-							<a href={Liferay.Util.escape(workflowData.usages)}>
+							<a href={workflowData.usages}>
 								{Liferay.Language.get('view-usages')}
 							</a>
 						</ClayTable.Cell>

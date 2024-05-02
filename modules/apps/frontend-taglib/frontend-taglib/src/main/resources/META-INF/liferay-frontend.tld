@@ -522,7 +522,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a navigable form for multiple section forms. The navigation is a side navigation box with links to each section that renders as a progressive step navigation positioned above the form.</description>
+		<description>Creates a navigable form for multiple section forms. Implements a side navigation box with links to each section that renders as progressive steps positioned above the form.</description>
 		<name>form-navigator-steps</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.FormNavigatorStepsTag</tag-class>
 		<body-content>JSP</body-content>

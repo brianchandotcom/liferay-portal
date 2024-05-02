@@ -5,7 +5,7 @@
 
 package com.liferay.portal.defaultpermissions.web.internal.portlet.action;
 
-import com.liferay.portal.defaultpermissions.configuration.PortalDefaultPermissionsConfiguration;
+import com.liferay.portal.defaultpermissions.configuration.manager.PortalDefaultPermissionsConfigurationManager;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -68,8 +68,8 @@ public class EditPortalDefaultPermissionsConfigurationMVCActionCommand
 				actionRequest, "modelResource");
 
 			Map<String, Map<String, String[]>> defaultPermissions =
-				_portalDefaultPermissionsConfiguration.getDefaultPermissions(
-					themeDisplay.getCompanyId());
+				_portalDefaultPermissionsConfigurationManager.
+					getDefaultPermissions(themeDisplay.getCompanyId());
 
 			Map<String, String[]> resourceDefaultPermissions =
 				defaultPermissions.get(modelResource);
@@ -100,8 +100,9 @@ public class EditPortalDefaultPermissionsConfigurationMVCActionCommand
 
 			defaultPermissions.put(modelResource, resourceDefaultPermissions);
 
-			_portalDefaultPermissionsConfiguration.setDefaultPermissions(
-				themeDisplay.getCompanyId(), defaultPermissions);
+			_portalDefaultPermissionsConfigurationManager.
+				saveDefaultPermissions(
+					themeDisplay.getCompanyId(), defaultPermissions);
 
 			jsonObject.put("success", true);
 		}
@@ -150,8 +151,8 @@ public class EditPortalDefaultPermissionsConfigurationMVCActionCommand
 	private JSONFactory _jsonFactory;
 
 	@Reference
-	private PortalDefaultPermissionsConfiguration
-		_portalDefaultPermissionsConfiguration;
+	private PortalDefaultPermissionsConfigurationManager
+		_portalDefaultPermissionsConfigurationManager;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

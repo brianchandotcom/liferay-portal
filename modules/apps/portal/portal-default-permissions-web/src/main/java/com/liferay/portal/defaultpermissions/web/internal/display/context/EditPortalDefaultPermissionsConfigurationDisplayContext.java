@@ -6,7 +6,7 @@
 package com.liferay.portal.defaultpermissions.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.defaultpermissions.configuration.PortalDefaultPermissionsConfiguration;
+import com.liferay.portal.defaultpermissions.configuration.manager.PortalDefaultPermissionsConfigurationManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -57,15 +57,15 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 
 	public EditPortalDefaultPermissionsConfigurationDisplayContext(
 			HttpServletRequest httpServletRequest,
-			PortalDefaultPermissionsConfiguration
-				portalDefaultPermissionsConfiguration,
+			PortalDefaultPermissionsConfigurationManager
+				portalDefaultPermissionsConfigurationManager,
 			RenderRequest renderRequest,
 			RoleTypeContributorProvider roleTypeContributorProvider)
 		throws PortalException {
 
 		_httpServletRequest = httpServletRequest;
-		_portalDefaultPermissionsConfiguration =
-			portalDefaultPermissionsConfiguration;
+		_portalDefaultPermissionsConfigurationManager =
+			portalDefaultPermissionsConfigurationManager;
 		_renderRequest = renderRequest;
 		_roleTypeContributorProvider = roleTypeContributorProvider;
 
@@ -287,7 +287,7 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		_defaultPermissions =
-			_portalDefaultPermissionsConfiguration.getDefaultPermissions(
+			_portalDefaultPermissionsConfigurationManager.getDefaultPermissions(
 				themeDisplay.getCompanyId());
 
 		return _defaultPermissions;
@@ -411,8 +411,8 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 	private List<String> _guestUnsupportedActions;
 	private final HttpServletRequest _httpServletRequest;
 	private String _modelResource;
-	private final PortalDefaultPermissionsConfiguration
-		_portalDefaultPermissionsConfiguration;
+	private final PortalDefaultPermissionsConfigurationManager
+		_portalDefaultPermissionsConfigurationManager;
 	private String _portletResource;
 	private final RenderRequest _renderRequest;
 	private Long _resourceGroupId;

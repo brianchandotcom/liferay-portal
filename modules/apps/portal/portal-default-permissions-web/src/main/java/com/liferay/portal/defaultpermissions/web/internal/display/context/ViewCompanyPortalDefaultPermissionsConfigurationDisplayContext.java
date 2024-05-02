@@ -9,8 +9,8 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.defaultpermissions.resource.PortalDefaultPermissionsModelResourceRegistry;
 import com.liferay.portal.defaultpermissions.web.internal.search.PortalDefaultPermissionsSearch;
 import com.liferay.portal.defaultpermissions.web.internal.search.PortalDefaultPermissionsSearchEntry;
-import com.liferay.portal.defaultpermissions.web.internal.search.PortalDefaultPermissionsSearchEntryClassNamePredicate;
-import com.liferay.portal.defaultpermissions.web.internal.search.PortalDefaultPermissionsSearchEntryLabelPredicate;
+import com.liferay.portal.defaultpermissions.web.internal.util.filter.PortalDefaultPermissionsSearchEntryClassNamePredicate;
+import com.liferay.portal.defaultpermissions.web.internal.util.filter.PortalDefaultPermissionsSearchEntryLabelPredicate;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -38,9 +38,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Stefano Motta
  */
-public class PortalDefaultPermissionsCompanyConfigurationDisplayContext {
+public class ViewCompanyPortalDefaultPermissionsConfigurationDisplayContext {
 
-	public PortalDefaultPermissionsCompanyConfigurationDisplayContext(
+	public ViewCompanyPortalDefaultPermissionsConfigurationDisplayContext(
 		HttpServletRequest httpServletRequest, Language language,
 		PortalDefaultPermissionsModelResourceRegistry
 			portalDefaultPermissionsModelResourceRegistry) {

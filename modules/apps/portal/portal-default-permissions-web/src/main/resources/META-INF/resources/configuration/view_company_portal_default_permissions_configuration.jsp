@@ -15,13 +15,13 @@
 	cssClass="mt-4"
 >
 	<clay:management-toolbar
-		managementToolbarDisplayContext="<%= new PortalDefaultPermissionsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, portalDefaultPermissionsCompanyConfigurationDisplayContext.getSearchContainer()) %>"
+		managementToolbarDisplayContext="<%= new PortalDefaultPermissionsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, viewCompanyPortalDefaultPermissionsConfigurationDisplayContext.getSearchContainer()) %>"
 	/>
 
 	<div data-qa-id="portal-default-permissions-search-container">
 		<liferay-ui:search-container
 			id="portalDefaultPermissionsSearchContainer"
-			searchContainer="<%= portalDefaultPermissionsCompanyConfigurationDisplayContext.getSearchContainer() %>"
+			searchContainer="<%= viewCompanyPortalDefaultPermissionsConfigurationDisplayContext.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.defaultpermissions.web.internal.search.PortalDefaultPermissionsSearchEntry"
@@ -34,7 +34,7 @@
 				/>
 
 				<liferay-ui:search-container-column-jsp
-					path="/configuration/portal_default_permissions_entry_action.jsp"
+					path="/configuration/view_company_portal_default_permissions_entry_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 
@@ -52,5 +52,5 @@
 			"namespace", liferayPortletResponse.getNamespace()
 		).build()
 	%>'
-	module="{portalDefaultPermissionsCompanyConfiguration} from portal-defaultpermissions-web"
+	module="{viewCompanyPortalDefaultPermissionsConfiguration} from portal-defaultpermissions-web"
 />

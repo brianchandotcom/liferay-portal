@@ -10,7 +10,8 @@ package com.liferay.portal.defaultpermissions.web.internal.constants;
  */
 public class PortalDefaultPermissionsWebKeys {
 
-	public static final String PORTAL_DEFAULT_PERMISSIONS_CONFIGURATION =
-		"PORTAL_DEFAULT_PERMISSIONS_CONFIGURATION";
+	public static final String
+		PORTAL_DEFAULT_PERMISSIONS_CONFIGURATION_MANAGER =
+			"PORTAL_DEFAULT_PERMISSIONS_CONFIGURATION_MANAGER";
 
 }

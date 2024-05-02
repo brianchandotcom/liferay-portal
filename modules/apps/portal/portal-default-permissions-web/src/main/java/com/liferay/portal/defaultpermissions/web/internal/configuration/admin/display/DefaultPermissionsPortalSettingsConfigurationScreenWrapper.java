@@ -3,14 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.defaultpermissions.web.internal.configuration.display;
+package com.liferay.portal.defaultpermissions.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
 import com.liferay.portal.defaultpermissions.resource.PortalDefaultPermissionsModelResourceRegistry;
-import com.liferay.portal.defaultpermissions.web.internal.display.context.PortalDefaultPermissionsCompanyConfigurationDisplayContext;
+import com.liferay.portal.defaultpermissions.web.internal.display.context.ViewCompanyPortalDefaultPermissionsConfigurationDisplayContext;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenFactory;
 
@@ -27,13 +28,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Stefano Motta
  */
 @Component(service = ConfigurationScreen.class)
-public class PortalDefaultPermissionsCompanyConfigurationScreenWrapper
+public class DefaultPermissionsPortalSettingsConfigurationScreenWrapper
 	extends ConfigurationScreenWrapper {
 
 	@Override
 	protected ConfigurationScreen getConfigurationScreen() {
 		return _portalSettingsConfigurationScreenFactory.create(
-			new DefaultPermissionsPortalConfigurationScreenContributor());
+			new DefaultPermissionsPortalSettingsConfigurationScreenContributor());
 	}
 
 	@Reference
@@ -52,7 +53,7 @@ public class PortalDefaultPermissionsCompanyConfigurationScreenWrapper
 	)
 	private ServletContext _servletContext;
 
-	private class DefaultPermissionsPortalConfigurationScreenContributor
+	private class DefaultPermissionsPortalSettingsConfigurationScreenContributor
 		implements PortalSettingsConfigurationScreenContributor {
 
 		@Override
@@ -63,7 +64,7 @@ public class PortalDefaultPermissionsCompanyConfigurationScreenWrapper
 		@Override
 		public String getJspPath() {
 			return "/configuration" +
-				"/portal_default_permissions_company_configuration.jsp";
+				"/view_company_portal_default_permissions_configuration.jsp";
 		}
 
 		@Override
@@ -101,9 +102,8 @@ public class PortalDefaultPermissionsCompanyConfigurationScreenWrapper
 			HttpServletResponse httpServletResponse) {
 
 			httpServletRequest.setAttribute(
-				PortalDefaultPermissionsCompanyConfigurationDisplayContext.
-					class.getName(),
-				new PortalDefaultPermissionsCompanyConfigurationDisplayContext(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				new ViewCompanyPortalDefaultPermissionsConfigurationDisplayContext(
 					httpServletRequest, _language,
 					_portalDefaultPermissionsModelResourceRegistry));
 		}

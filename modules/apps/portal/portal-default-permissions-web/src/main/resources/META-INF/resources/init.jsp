@@ -19,11 +19,11 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.defaultpermissions.configuration.PortalDefaultPermissionsConfiguration" %><%@
+page import="com.liferay.portal.defaultpermissions.configuration.manager.PortalDefaultPermissionsConfigurationManager" %><%@
 page import="com.liferay.portal.defaultpermissions.web.internal.constants.PortalDefaultPermissionsWebKeys" %><%@
 page import="com.liferay.portal.defaultpermissions.web.internal.display.context.EditPortalDefaultPermissionsConfigurationDisplayContext" %><%@
-page import="com.liferay.portal.defaultpermissions.web.internal.display.context.PortalDefaultPermissionsCompanyConfigurationDisplayContext" %><%@
 page import="com.liferay.portal.defaultpermissions.web.internal.display.context.PortalDefaultPermissionsManagementToolbarDisplayContext" %><%@
+page import="com.liferay.portal.defaultpermissions.web.internal.display.context.ViewCompanyPortalDefaultPermissionsConfigurationDisplayContext" %><%@
 page import="com.liferay.portal.defaultpermissions.web.internal.portlet.action.EditPortalDefaultPermissionsConfigurationMVCActionCommand" %><%@
 page import="com.liferay.portal.defaultpermissions.web.internal.search.PortalDefaultPermissionsSearchEntry" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
@@ -49,5 +49,5 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <portlet:defineObjects />
 
 <%
-PortalDefaultPermissionsCompanyConfigurationDisplayContext portalDefaultPermissionsCompanyConfigurationDisplayContext = (PortalDefaultPermissionsCompanyConfigurationDisplayContext)request.getAttribute(PortalDefaultPermissionsCompanyConfigurationDisplayContext.class.getName());
+ViewCompanyPortalDefaultPermissionsConfigurationDisplayContext viewCompanyPortalDefaultPermissionsConfigurationDisplayContext = (ViewCompanyPortalDefaultPermissionsConfigurationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>

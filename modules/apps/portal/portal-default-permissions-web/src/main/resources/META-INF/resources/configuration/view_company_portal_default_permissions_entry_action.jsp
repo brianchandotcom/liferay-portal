@@ -13,4 +13,4 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 PortalDefaultPermissionsSearchEntry portalDefaultPermissionsSearchEntry = (PortalDefaultPermissionsSearchEntry)row.getObject();
 %>
 
-<button class="btn btn-secondary btn-sm" data-qa-id="edit-<%= portalDefaultPermissionsSearchEntry.getLabel() %>" data-url="<%= portalDefaultPermissionsCompanyConfigurationDisplayContext.getEditURL(portalDefaultPermissionsSearchEntry.getClassName()) %>" type="button"><liferay-ui:message key="edit" /></button>
+<button class="btn btn-secondary btn-sm" data-qa-id="edit-<%= portalDefaultPermissionsSearchEntry.getLabel() %>" data-url="<%= viewCompanyPortalDefaultPermissionsConfigurationDisplayContext.getEditURL(portalDefaultPermissionsSearchEntry.getClassName()) %>" type="button"><liferay-ui:message key="edit" /></button>

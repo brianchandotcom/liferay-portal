@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.defaultpermissions.web.internal.configuration;
+package com.liferay.portal.defaultpermissions.web.internal.configuration.manager;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.defaultpermissions.configuration.PortalDefaultPermissionsCompanyConfiguration;
-import com.liferay.portal.defaultpermissions.configuration.PortalDefaultPermissionsConfiguration;
+import com.liferay.portal.defaultpermissions.configuration.manager.PortalDefaultPermissionsConfigurationManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -25,9 +25,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Stefano Motta
  */
-@Component(service = PortalDefaultPermissionsConfiguration.class)
-public class PortalDefaultPermissionsCompanyConfigurationImpl
-	implements PortalDefaultPermissionsConfiguration {
+@Component(service = PortalDefaultPermissionsConfigurationManager.class)
+public class CompanyPortalDefaultPermissionsConfigurationManagerImpl
+	implements PortalDefaultPermissionsConfigurationManager {
 
 	@Override
 	public Map<String, Map<String, String[]>> getDefaultPermissions(
@@ -58,7 +58,7 @@ public class PortalDefaultPermissionsCompanyConfigurationImpl
 	}
 
 	@Override
-	public void setDefaultPermissions(
+	public void saveDefaultPermissions(
 		long companyId, Map<String, Map<String, String[]>> defaultPermissions) {
 
 		try {
@@ -75,7 +75,7 @@ public class PortalDefaultPermissionsCompanyConfigurationImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalDefaultPermissionsCompanyConfigurationImpl.class);
+		CompanyPortalDefaultPermissionsConfigurationManagerImpl.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

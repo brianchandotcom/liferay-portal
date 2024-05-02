@@ -87,4 +87,21 @@ public class TestrayUtil {
 		return list;
 	}
 
+	public static int executeUpdate(String sql, List<Object> params)
+		throws SQLException {
+
+		try (Connection connection = DataAccess.getConnection()) {
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				sql);
+
+			if (ListUtil.isNotEmpty(params)) {
+				for (int i = 0; i < params.size(); i++) {
+					preparedStatement.setObject(i + 1, params.get(i));
+				}
+			}
+
+			return preparedStatement.executeUpdate();
+		}
+	}
+
 }

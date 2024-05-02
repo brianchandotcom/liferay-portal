@@ -619,6 +619,10 @@
 			<category name="Styling" />
 			<description name="Applies rules to enforce consistency in code style." />
 		</check>
+		<check name="JavaUpgradeMissingCTCollectionIdDuringUpdateCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds missing `ctCollectionId` in where clause during update." />
+		</check>
 		<check name="JavaUpgradeModelPermissionsCheck">
 			<category name="Upgrade" />
 			<description name="Replace setGroupPermissions and setGuestPermissions by new implementation." />

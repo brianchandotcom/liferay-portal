@@ -12,6 +12,7 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.testray.rest.dto.v1_0.TestrayBuildAutofill;
+import com.liferay.testray.rest.dto.v1_0.TestrayCaseResultTestFlowUpdate;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestFlow;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestSuite;
 import com.liferay.testray.rest.resource.v1_0.TestrayBuildAutofillResource;
@@ -89,6 +90,24 @@ public class Mutation {
 			testrayBuildAutofillResource ->
 				testrayBuildAutofillResource.postTestrayBuildAutofillBatch(
 					testrayBuildId1, testrayBuildId2, callbackURL, object));
+	}
+
+	@GraphQLField
+	public TestrayCaseResultTestFlowUpdate
+			updateTestrayTestFlowCaseResultByTestraySubtaskIdTestraySubtask(
+				@GraphQLName("testraySubtaskId") Long testraySubtaskId,
+				@GraphQLName("testrayCaseResultTestFlowUpdate")
+					TestrayCaseResultTestFlowUpdate
+						testrayCaseResultTestFlowUpdate)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_testrayTestFlowResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			testrayTestFlowResource ->
+				testrayTestFlowResource.
+					putTestrayTestFlowCaseResultByTestraySubtaskIdTestraySubtask(
+						testraySubtaskId, testrayCaseResultTestFlowUpdate));
 	}
 
 	@GraphQLField

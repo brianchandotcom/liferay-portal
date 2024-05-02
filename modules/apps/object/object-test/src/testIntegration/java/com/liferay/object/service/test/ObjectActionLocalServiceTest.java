@@ -215,7 +215,8 @@ public class ObjectActionLocalServiceTest {
 				ObjectActionTriggerConstants.KEY_STANDALONE, false));
 
 		try (Closeable closeable =
-				ScriptManagementConfigurationTestUtil.disable()) {
+				ScriptManagementConfigurationTestUtil.saveWithCloseable(
+					false)) {
 
 			AssertUtils.assertFailure(
 				ObjectActionExecutorKeyException.class,

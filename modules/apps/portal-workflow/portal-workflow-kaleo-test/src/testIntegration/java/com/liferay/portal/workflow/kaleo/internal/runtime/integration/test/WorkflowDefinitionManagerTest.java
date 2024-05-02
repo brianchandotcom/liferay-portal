@@ -62,7 +62,8 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 			getResourceInputStream("single-approver-workflow-definition.xml"));
 
 		try (Closeable closeable =
-				ScriptManagementConfigurationTestUtil.disable()) {
+				ScriptManagementConfigurationTestUtil.saveWithCloseable(
+					false)) {
 
 			AssertUtils.assertFailure(
 				KaleoDefinitionValidationException.NotAllowedScriptLanguage.

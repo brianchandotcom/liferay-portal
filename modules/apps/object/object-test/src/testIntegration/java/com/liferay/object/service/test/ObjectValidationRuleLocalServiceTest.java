@@ -117,7 +117,8 @@ public class ObjectValidationRuleLocalServiceTest {
 				"abcdefghijklmnopqrstuvwxyz", _VALID_DDM_SCRIPT));
 
 		try (Closeable closeable =
-				ScriptManagementConfigurationTestUtil.disable()) {
+				ScriptManagementConfigurationTestUtil.saveWithCloseable(
+					false)) {
 
 			AssertUtils.assertFailure(
 				ObjectValidationRuleEngineException.NotAllowedEngine.class,

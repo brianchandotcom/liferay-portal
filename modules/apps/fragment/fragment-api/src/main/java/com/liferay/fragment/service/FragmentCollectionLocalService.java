@@ -79,13 +79,14 @@ public interface FragmentCollectionLocalService
 		FragmentCollection fragmentCollection);
 
 	public FragmentCollection addFragmentCollection(
-			long userId, long groupId, String name, String description,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			String name, String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	public FragmentCollection addFragmentCollection(
-			long userId, long groupId, String fragmentCollectionKey,
-			String name, String description, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			String fragmentCollectionKey, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -135,6 +136,10 @@ public interface FragmentCollectionLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public FragmentCollection deleteFragmentCollection(
 			long fragmentCollectionId)
+		throws PortalException;
+
+	public FragmentCollection deleteFragmentCollection(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**
@@ -224,6 +229,10 @@ public interface FragmentCollectionLocalService
 	public FragmentCollection fetchFragmentCollection(
 		long groupId, String fragmentCollectionKey);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentCollection fetchFragmentCollectionByExternalReferenceCode(
+		String externalReferenceCode, long groupId);
+
 	/**
 	 * Returns the fragment collection matching the UUID and group.
 	 *
@@ -253,6 +262,11 @@ public interface FragmentCollectionLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentCollection getFragmentCollection(long fragmentCollectionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentCollection getFragmentCollectionByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

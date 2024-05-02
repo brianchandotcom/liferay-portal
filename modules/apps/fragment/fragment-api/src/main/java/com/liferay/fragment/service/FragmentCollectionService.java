@@ -48,17 +48,22 @@ public interface FragmentCollectionService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.fragment.service.impl.FragmentCollectionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the fragment collection remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link FragmentCollectionServiceUtil} if injection and service tracking are not available.
 	 */
 	public FragmentCollection addFragmentCollection(
-			long groupId, String name, String description,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long groupId, String name,
+			String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	public FragmentCollection addFragmentCollection(
-			long groupId, String fragmentCollectionKey, String name,
-			String description, ServiceContext serviceContext)
+			String externalReferenceCode, long groupId,
+			String fragmentCollectionKey, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public FragmentCollection deleteFragmentCollection(
 			long fragmentCollectionId)
+		throws PortalException;
+
+	public FragmentCollection deleteFragmentCollection(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	public void deleteFragmentCollections(long[] fragmentCollectionIds)

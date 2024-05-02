@@ -7,6 +7,7 @@ package com.liferay.fragment.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
@@ -30,7 +31,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FragmentCollectionModel
 	extends BaseModel<FragmentCollection>, CTModel<FragmentCollection>,
-			MVCCModel, ShardedModel, StagedGroupedModel {
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
+			StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -102,6 +104,23 @@ public interface FragmentCollectionModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this fragment collection.
+	 *
+	 * @return the external reference code of this fragment collection
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this fragment collection.
+	 *
+	 * @param externalReferenceCode the external reference code of this fragment collection
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the fragment collection ID of this fragment collection.

@@ -44,6 +44,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -63,8 +64,12 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 		runSQL("delete from DDMFormInstanceReport");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select formInstanceId, groupId, companyId, createDate from " +
-					"DDMFormInstance");
+				StringBundler.concat(
+					"select DDMFormInstance.formInstanceId, ",
+					"DDMFormInstance.groupId, DDMFormInstance.companyId, ",
+					"DDMFormInstance.createDate, DDMStructure.definition from ",
+					"DDMFormInstance inner join DDMStructure on ",
+					"DDMFormInstance.structureId = DDMStructure.structureId"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				StringBundler.concat(
 					"select DDMContent.data_, DDMFormInstanceRecord.",
@@ -105,6 +110,9 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 
 				ResultSet resultSet2 = preparedStatement2.executeQuery();
 
+				DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
+					_ddmFormDeserializer, resultSet1.getString("definition"));
+
 				while (resultSet2.next()) {
 					dataJSONObject = _processDDMFormValues(
 						dataJSONObject,
@@ -112,7 +120,8 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 							resultSet2.getString("data_"),
 							DDMFormDeserializeUtil.deserialize(
 								_ddmFormDeserializer,
-								resultSet2.getString("definition"))),
+								resultSet2.getString("definition")),
+							ddmForm.getDDMFormFieldsMap(true)),
 						resultSet2.getLong("formInstanceRecordId"));
 
 					dataJSONObject.put(
@@ -170,7 +179,9 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 		return null;
 	}
 
-	private DDMFormValues _getDDMFormValues(String data, DDMForm ddmForm)
+	private DDMFormValues _getDDMFormValues(
+			String data, DDMForm ddmForm,
+			Map<String, DDMFormField> ddmFormFieldsMap)
 		throws Exception {
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
@@ -193,9 +204,13 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 			ddmFormFieldValue.setInstanceId(jsonObject.getString("instanceId"));
 			ddmFormFieldValue.setName(jsonObject.getString("name"));
 
-			DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+			DDMFormField ddmFormField = ddmFormFieldsMap.get(
+				ddmFormFieldValue.getName());
 
-			if (ddmFormField == null) {
+			if ((ddmFormField == null) ||
+				!StringUtil.equals(
+					ddmFormField.getType(), ddmFormFieldValue.getType())) {
+
 				continue;
 			}
 

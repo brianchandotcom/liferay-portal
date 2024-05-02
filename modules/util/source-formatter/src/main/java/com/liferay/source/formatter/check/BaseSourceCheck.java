@@ -23,6 +23,7 @@ import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JSPSourceUtil;
+import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
@@ -808,6 +809,52 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected boolean isSubrepository() {
 		return _subrepository;
+	}
+
+	protected boolean isUpgradeProcess(String absolutePath, String content) {
+		Pattern pattern = Pattern.compile(
+			" class " + JavaSourceUtil.getClassName(absolutePath) +
+				"\\s+extends\\s+([\\w.]+) ");
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return false;
+		}
+
+		String extendedClassName = matcher.group(1);
+
+		if (extendedClassName.equals("UpgradeProcess")) {
+			return true;
+		}
+
+		pattern = Pattern.compile("\nimport (.*\\." + extendedClassName + ");");
+
+		matcher = pattern.matcher(content);
+
+		if (matcher.find()) {
+			extendedClassName = matcher.group(1);
+		}
+
+		if (!extendedClassName.contains(StringPool.PERIOD)) {
+			extendedClassName =
+				JavaSourceUtil.getPackageName(content) + StringPool.PERIOD +
+					extendedClassName;
+		}
+
+		if (!extendedClassName.startsWith("com.liferay.")) {
+			return false;
+		}
+
+		File file = JavaSourceUtil.getJavaFile(
+			extendedClassName, SourceUtil.getRootDirName(absolutePath),
+			getBundleSymbolicNamesMap(absolutePath));
+
+		if (file == null) {
+			return false;
+		}
+
+		return isUpgradeProcess(file.getAbsolutePath(), FileUtil.read(file));
 	}
 
 	protected synchronized void populateModelInformations() throws IOException {

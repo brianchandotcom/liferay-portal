@@ -5,10 +5,8 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
-import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -41,7 +39,7 @@ public class JavaUpgradeMissingCTCollectionIdDuringUpdateCheck
 
 		if (!absolutePath.contains("/upgrade/") ||
 			absolutePath.contains("-test/") || className.startsWith("Base") ||
-			!_isUpgradeProcess(absolutePath, content)) {
+			!isUpgradeProcess(absolutePath, content)) {
 
 			return content;
 		}
@@ -207,52 +205,6 @@ public class JavaUpgradeMissingCTCollectionIdDuringUpdateCheck
 		}
 
 		return _primaryKeysMap.get(tableName);
-	}
-
-	private boolean _isUpgradeProcess(String absolutePath, String content) {
-		Pattern pattern = Pattern.compile(
-			" class " + JavaSourceUtil.getClassName(absolutePath) +
-				"\\s+extends\\s+([\\w.]+) ");
-
-		Matcher matcher = pattern.matcher(content);
-
-		if (!matcher.find()) {
-			return false;
-		}
-
-		String extendedClassName = matcher.group(1);
-
-		if (extendedClassName.equals("UpgradeProcess")) {
-			return true;
-		}
-
-		pattern = Pattern.compile("\nimport (.*\\." + extendedClassName + ");");
-
-		matcher = pattern.matcher(content);
-
-		if (matcher.find()) {
-			extendedClassName = matcher.group(1);
-		}
-
-		if (!extendedClassName.contains(StringPool.PERIOD)) {
-			extendedClassName =
-				JavaSourceUtil.getPackageName(content) + StringPool.PERIOD +
-					extendedClassName;
-		}
-
-		if (!extendedClassName.startsWith("com.liferay.")) {
-			return false;
-		}
-
-		File file = JavaSourceUtil.getJavaFile(
-			extendedClassName, SourceUtil.getRootDirName(absolutePath),
-			getBundleSymbolicNamesMap(absolutePath));
-
-		if (file == null) {
-			return false;
-		}
-
-		return _isUpgradeProcess(file.getAbsolutePath(), FileUtil.read(file));
 	}
 
 	private static final String[] _METHOD_NAMES = {

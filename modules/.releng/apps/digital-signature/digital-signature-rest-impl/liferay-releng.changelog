@@ -242,3 +242,8 @@ da40da05131a2cb46b0fccaad3a3dd78dfdbc9e8^..0e43a2d64f5200c6f74c8051ddd99bd9c7bba
 # Bundle Version 1.0.53
 #
 e30ecf8cdf7b311afa745b0522beba7cb546f765^..e88f32885cb6b2243a913adcaa0e8dc9cce53a4c=LPD-15162 LPD-21241
+
+#
+# Bundle Version 1.0.54
+#
+e88f32885cb6b2243a913adcaa0e8dc9cce53a4c^..cae49e70a02989de9026501fd5d59dc811a0e378=LPD-17797 LPD-23385

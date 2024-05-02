@@ -5,8 +5,13 @@
 
 package com.liferay.jethr0;
 
+import com.liferay.jethr0.entity.dalo.BaseDALO;
 import com.liferay.jethr0.event.EventHandler;
+import com.liferay.jethr0.event.github.GitHubEventProcessor;
 import com.liferay.jethr0.event.liferay.LiferayEventHandlerFactory;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -46,6 +51,27 @@ public class Jethr0RestController {
 	public String ready() {
 		return "READY";
 	}
+
+	@PostMapping("/webhook")
+	public String webhook(@RequestBody String payload) {
+		try {
+			JSONObject payloadJSONObject = new JSONObject(payload);
+
+			_gitHubEventProcessor.sendMessage(payloadJSONObject.toString());
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+		}
+
+		return "{}";
+	}
+
+	private static final Log _log = LogFactory.getLog(BaseDALO.class);
+
+	@Autowired
+	private GitHubEventProcessor _gitHubEventProcessor;
 
 	@Autowired
 	private LiferayEventHandlerFactory _liferayEventHandlerFactory;

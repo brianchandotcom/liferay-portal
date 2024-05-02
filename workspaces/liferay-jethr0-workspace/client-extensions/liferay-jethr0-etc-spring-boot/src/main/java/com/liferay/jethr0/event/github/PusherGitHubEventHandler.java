@@ -161,7 +161,9 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 	private boolean _isUpstreamGitBranchEntity() throws InvalidJSONException {
 		GitBranchEntity gitBranchEntity = _getGitBranchEntity();
 
-		if (gitBranchEntity.getType() != GitBranchEntity.Type.UPSTREAM) {
+		if ((gitBranchEntity == null) ||
+			(gitBranchEntity.getType() != GitBranchEntity.Type.UPSTREAM)) {
+
 			return false;
 		}
 
@@ -169,6 +171,10 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 	}
 
 	private void _syncCentralSubrepository() throws InvalidJSONException {
+		if (!_isUpstreamGitBranchEntity()) {
+			return;
+		}
+
 		GitBranchEntity gitBranchEntity = _getGitBranchEntity();
 
 		Matcher matcher = _pattern.matcher(gitBranchEntity.getName());

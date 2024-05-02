@@ -7,10 +7,10 @@ package com.liferay.jethr0.event.github;
 
 import com.liferay.jethr0.event.BaseEventProcessor;
 import com.liferay.jethr0.event.EventHandlerFactory;
-
-import java.util.Map;
+import com.liferay.jethr0.event.jenkins.JenkinsEventHandlerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.JmsListener;
 
@@ -29,24 +29,22 @@ public class GitHubEventProcessor extends BaseEventProcessor {
 	}
 
 	@Override
-	public void sendMessage(
-		String message, Map<String, String> messageProperties) {
-
-		throw new UnsupportedOperationException(
-			"Unable to send messages to GitHub");
-	}
-
-	@Override
 	protected EventHandlerFactory getEventHandlerFactory() {
 		return _gitHubEventHandlerFactory;
 	}
 
 	@Override
 	protected String getOutboundQueueName() {
-		return null;
+		return _outboundQueueName;
 	}
 
 	@Autowired
 	private GitHubEventHandlerFactory _gitHubEventHandlerFactory;
+
+	@Autowired
+	private JenkinsEventHandlerFactory _jenkinsEventHandlerFactory;
+
+	@Value("${JETHR0_JMS_QUEUE_GITHUB_TO_JETHR0:github-to-jethr0}")
+	private String _outboundQueueName;
 
 }

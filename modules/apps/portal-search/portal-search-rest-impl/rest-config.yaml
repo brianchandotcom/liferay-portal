@@ -1,7 +1,7 @@
 apiDir: "../portal-search-rest-api/src/main/java"
 apiPackagePath: "com.liferay.portal.search.rest"
 application:
-    baseURI: "/portal-search-rest"
+    baseURI: "/search"
     className: "PortalSearchRESTApplication"
     name: "Liferay.Portal.Search.REST"
 author: "Petteri Karttunen"

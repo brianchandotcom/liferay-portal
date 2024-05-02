@@ -12,6 +12,7 @@ import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.testray.rest.dto.v1_0.TestrayCaseResultTestFlowUpdate;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestFlow;
 
 import java.util.Collections;
@@ -40,6 +41,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @Generated("")
 @ProviderType
 public interface TestrayTestFlowResource {
+
+	public TestrayCaseResultTestFlowUpdate
+			putTestrayTestFlowCaseResultByTestraySubtaskIdTestraySubtask(
+				Long testraySubtaskId,
+				TestrayCaseResultTestFlowUpdate testrayCaseResultTestFlowUpdate)
+		throws Exception;
 
 	public TestrayTestFlow postTestrayTestFlow(Long testrayTaskId)
 		throws Exception;

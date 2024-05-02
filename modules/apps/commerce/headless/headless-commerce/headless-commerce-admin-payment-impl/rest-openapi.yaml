@@ -80,6 +80,8 @@ components:
                 languageId:
                     example: en_US
                     type: string
+                payload:
+                    type: string
                 paymentIntegrationKey:
                     example: money-order
                     type: string

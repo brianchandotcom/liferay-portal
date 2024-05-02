@@ -11,7 +11,9 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,13 +43,21 @@ public class JournalArticleCTEntryConflictHelper
 			return false;
 		}
 
+		BasePersistence<?> basePersistence =
+			_journalArticleLocalService.getBasePersistence();
+
+		Session session = basePersistence.getCurrentSession();
+
+		session.evict(journalArticle);
+
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					targetCTCollectionId)) {
 
 			JournalArticle latestJournalArticle =
 				_journalArticleLocalService.fetchLatestArticle(
-					journalArticle.getResourcePrimKey());
+					journalArticle.getResourcePrimKey(),
+					WorkflowConstants.STATUS_ANY, false);
 
 			if ((latestJournalArticle != null) &&
 				(latestJournalArticle.getStatus() ==

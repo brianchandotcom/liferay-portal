@@ -35,6 +35,11 @@ definition {
 				userFirstName = "user1",
 				userLastName = "user1",
 				userScreenName = "user1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
 		}
 
 		task ("Connect the DXP to AC") {
@@ -58,19 +63,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8938 | Test Summary: All attributes of the individual appear in a list"
-	@ignore = "true"
 	@priority = 5
 	test AllIndividualAttributesAppearInList {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-14011
-
 		task ("Sign in as new user to view the site page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "user1@liferay.com",
-				userLoginFullName = "user1 user1");
-
-			ACUtils.navigateToSitePage(
+			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4,5",
+				emailList = "user1@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -96,15 +95,15 @@ definition {
 		}
 
 		task ("Assert attributes appear in list and assert some attribute values") {
-			for (var individualAttribute : list "birthDate,classPK,contactId,createDate,email,familyName,givenName,modifiedDate") {
+			for (var individualAttribute : list "birthDate,classPK,contactId,createDate,email,familyName,givenName,groupIds,jobTitle,modifiedDate,organizationIds,roleIds,teamIds,timeZoneId,userGroupIds,userId,uuid") {
 				ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = ${individualAttribute});
 			}
+
+			var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "user1@liferay.com");
 
 			ACIndividualsDashboard.assertIndividualAttributeValue(
 				individualAttribute = "birthDate",
 				individualAttributeValue = "2020-11-10T00:00:00.000Z");
-
-			var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "user1@liferay.com");
 
 			ACIndividualsDashboard.assertIndividualAttributeValue(
 				individualAttribute = "classPK",
@@ -121,6 +120,18 @@ definition {
 			ACIndividualsDashboard.assertIndividualAttributeValue(
 				individualAttribute = "givenName",
 				individualAttributeValue = "user1");
+
+			ACIndividualsDashboard.assertIndividualAttributeValue(
+				individualAttribute = "jobTitle",
+				individualAttributeValue = "lawyer");
+
+			ACIndividualsDashboard.assertIndividualAttributeValue(
+				individualAttribute = "timeZoneId",
+				individualAttributeValue = "UTC");
+
+			ACIndividualsDashboard.assertIndividualAttributeValue(
+				individualAttribute = "userId",
+				individualAttributeValue = "${userId}");
 		}
 	}
 

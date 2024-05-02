@@ -67,7 +67,7 @@ public class AggregateTestRule implements TestRule {
 		"com.liferay.portal.test.rule.PermissionCheckerMethodTestRule",
 		InitializeKernelUtilTestRule.class.getName(),
 		"com.liferay.portal.search.test.util.logging.ExpectedLogMethodTestRule",
-		"com.liferay.portal.security.script.management.test.util." +
+		"com.liferay.portal.security.script.management.test.util.test.rule." +
 			"ScriptManagementConfigurationTestRule"
 	};
 

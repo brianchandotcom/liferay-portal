@@ -145,7 +145,7 @@
 													"maxTerms": "10",
 													"order": "count:desc",
 													"parameterName": "resource-type",
-													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Resource Types$]"
+													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Resource Type$]"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}

@@ -96,13 +96,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				sectionLabel,
 			});
 
-			await visualizationModesPage.fieldSelectModalContainer
-				.getByLabel(fieldName)
-				.click();
-
-			await expect(
-				visualizationModesPage.page.getByLabel(fieldName)
-			).toBeChecked();
+			await visualizationModesPage.selectField({fieldName});
 
 			await saveFromModal({
 				page,
@@ -130,17 +124,14 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				sectionLabel,
 			});
 
-			await expect(
-				visualizationModesPage.page.getByLabel(oldFieldName)
-			).toBeChecked();
+			const oldCheckbox =
+				visualizationModesPage.getFieldCheckboxByLabel(oldFieldName);
 
-			await visualizationModesPage.fieldSelectModalContainer
-				.getByLabel(newFieldName)
-				.click();
+			await expect(oldCheckbox).toBeChecked();
 
-			await expect(
-				visualizationModesPage.page.getByLabel(newFieldName)
-			).toBeChecked();
+			await visualizationModesPage.selectField({fieldName: newFieldName});
+
+			await expect(oldCheckbox).not.toBeChecked();
 
 			await saveFromModal({
 				page,
@@ -199,13 +190,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				sectionLabel,
 			});
 
-			await visualizationModesPage.fieldSelectModalContainer
-				.getByLabel(fieldName)
-				.click();
-
-			await expect(
-				visualizationModesPage.page.getByLabel(fieldName)
-			).toBeChecked();
+			await visualizationModesPage.selectField({fieldName});
 
 			await saveFromModal({
 				page,
@@ -233,17 +218,14 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				sectionLabel,
 			});
 
-			await expect(
-				visualizationModesPage.page.getByLabel(oldFieldName)
-			).toBeChecked();
+			const oldCheckbox =
+				visualizationModesPage.getFieldCheckboxByLabel(oldFieldName);
 
-			await visualizationModesPage.fieldSelectModalContainer
-				.getByLabel(newFieldName)
-				.click();
+			await expect(oldCheckbox).toBeChecked();
 
-			await expect(
-				visualizationModesPage.page.getByLabel(newFieldName)
-			).toBeChecked();
+			await visualizationModesPage.selectField({fieldName: newFieldName});
+
+			await expect(oldCheckbox).not.toBeChecked();
 
 			await saveFromModal({
 				page,
@@ -284,12 +266,19 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		await test.step('Add fields', async () => {
 			await visualizationModesPage.openAddFieldsModal();
 
-			await visualizationModesPage.addRootField(SAMPLE_SCALAR_FIELD);
-			await visualizationModesPage.addRootField(SAMPLE_OBJECT_FIELD);
-			await visualizationModesPage.addChildField(
-				[SAMPLE_OBJECT_FIELD],
-				SAMPLE_OBJECT_CHILD_FIELD
-			);
+			await visualizationModesPage.selectField({
+				fieldName: SAMPLE_SCALAR_FIELD,
+			});
+
+			await visualizationModesPage.selectField({
+				dataId: `${SAMPLE_OBJECT_FIELD}.*`,
+				fieldName: SAMPLE_OBJECT_FIELD,
+			});
+
+			await visualizationModesPage.selectField({
+				dataId: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
+				fieldName: SAMPLE_OBJECT_CHILD_FIELD,
+			});
 
 			await saveFromModal({
 				page,
@@ -412,9 +401,9 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		await test.step('Add scalar array field', async () => {
 			await visualizationModesPage.openAddFieldsModal();
 
-			await visualizationModesPage.addRootField(
-				SAMPLE_SCALAR_ARRAY_FIELD
-			);
+			await visualizationModesPage.selectField({
+				fieldName: SAMPLE_SCALAR_ARRAY_FIELD,
+			});
 
 			await saveFromModal({
 				page,

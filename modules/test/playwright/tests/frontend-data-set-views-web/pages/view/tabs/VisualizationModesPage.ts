@@ -42,21 +42,6 @@ export class VisualizationModesPage {
 		this.viewPage = new ViewPage(page);
 	}
 
-	async addChildField(path: string[], field: string) {
-		this.openParentField(path);
-
-		await this.page
-			.locator(`[data-id$="${path.join('.')}.${field}"]`)
-			.getByText(field, {exact: true})
-			.check();
-	}
-
-	async addRootField(field: string) {
-		await this.addFieldsDialog.fields
-			.getByText(field, {exact: true})
-			.click();
-	}
-
 	async cancelAddFieldsModal() {
 		await this.addFieldsDialog.cancelButton.click();
 	}
@@ -78,6 +63,12 @@ export class VisualizationModesPage {
 		return this.page.locator('tr').filter({
 			has: this.page.getByText(text, {exact: true}).first(),
 		});
+	}
+
+	getFieldCheckboxByLabel(label: string) {
+		return this.fieldSelectModalContainer
+			.getByRole('treeitem', {name: label})
+			.locator('input[type="checkbox"]');
 	}
 
 	async goto({
@@ -152,20 +143,24 @@ export class VisualizationModesPage {
 			.waitFor();
 	}
 
-	async openParentField(path: string[]) {
-		let fullPath = '';
+	async selectField({
+		dataId,
+		fieldName,
+	}: {
+		dataId?: string;
+		fieldName: string;
+	}) {
+		const treeItem = this.fieldSelectModalContainer.locator(
+			`.treeview-link[data-id$="${dataId ?? fieldName}"]`
+		);
 
-		path.forEach(async (item) => {
-			fullPath += item;
-			const expandButton = this.page.locator(
-				`button[aria-controls='${fullPath}.*']`
-			);
-			fullPath += '.';
+		await treeItem
+			.getByText(fieldName, {
+				exact: true,
+			})
+			.click();
 
-			if (!(await expandButton.getAttribute('aria-expanded'))) {
-				await expandButton.click();
-			}
-		});
+		await expect(treeItem.locator('input[type="checkbox"]')).toBeChecked();
 	}
 
 	async selectTab(tabLabel: string) {

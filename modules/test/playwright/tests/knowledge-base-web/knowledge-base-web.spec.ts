@@ -10,12 +10,16 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {knowledgeBasePages} from '../../fixtures/knowledgeBasePagesTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {KnowledgeBaseEditArticlePage} from '../../pages/knowledge-base-web/KnowledgeBaseEditArticlePage';
+import getLoggedInPage from '../../utils/getLoggedInPage';
 import getRandomString from '../../utils/getRandomString';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
+import {KnowledgeBaseUrls} from './utils/knowledgeBaseUrls';
 
 const testFeatureFlagsEnabled = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
+		'LPD-11003': true,
 		'LPS-188058': true,
 	}),
 	isolatedSiteTest,
@@ -31,6 +35,57 @@ const testFeatureFlagsDisabled = mergeTests(
 	isolatedSiteTest,
 	knowledgeBasePages,
 	loginTest()
+);
+
+testFeatureFlagsEnabled(
+	'LPD-23801 error message is shown when an admin user tries to publish an article that an admin is currently editing',
+	async ({apiHelpers, browser, knowledgeBaseEditArticlePage, page, site}) => {
+		const content = getRandomString();
+		const title = getRandomString();
+
+		const knowledgeBaseArticle =
+			await apiHelpers.headlessDelivery.postSiteKnowledgeBaseArticle({
+				articleBody: content,
+				siteId: site.id,
+				title,
+			});
+
+		const knowledgeBaseUrls = new KnowledgeBaseUrls(site.friendlyUrlPath);
+
+		await page.goto(
+			knowledgeBaseUrls.getEditKBArticleUrl(knowledgeBaseArticle.id)
+		);
+		await expect(page.getByPlaceholder('Untitled Article')).toHaveValue(
+			title
+		);
+
+		const otherUserPage = await getLoggedInPage(
+			browser,
+			'demo.company.admin'
+		);
+		await otherUserPage.goto(
+			knowledgeBaseUrls.getEditKBArticleUrl(
+				knowledgeBaseArticle.id,
+				true,
+				knowledgeBaseUrls.home
+			)
+		);
+		await expect(
+			otherUserPage.getByPlaceholder('Untitled Article')
+		).toHaveValue(title);
+
+		await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticleWithSchedule(
+			`${content} test`,
+			`${title} test`
+		);
+		await expect(
+			page.getByText('Your changes cannot be saved.')
+		).toBeVisible();
+
+		const otherUserKnowledgeBaseEditArticlePage =
+			new KnowledgeBaseEditArticlePage(otherUserPage);
+		await otherUserKnowledgeBaseEditArticlePage.cancel();
+	}
 );
 
 testFeatureFlagsDisabled(

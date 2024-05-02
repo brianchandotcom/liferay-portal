@@ -9,6 +9,7 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {KnowledgeBasePage} from './KnowledgeBasePage';
 
 export class KnowledgeBaseEditArticlePage {
+	readonly cancelButton: Locator;
 	readonly contentFrameLocator: FrameLocator;
 	readonly contentTextBox: Locator;
 	readonly page: Page;
@@ -22,6 +23,7 @@ export class KnowledgeBaseEditArticlePage {
 	knowledgeBasePage: KnowledgeBasePage;
 
 	constructor(page: Page) {
+		this.cancelButton = page.getByRole('link', {name: 'Cancel'});
 		this.contentFrameLocator = page.frameLocator('iframe');
 		this.contentTextBox = this.contentFrameLocator.getByRole('textbox');
 		this.knowledgeBasePage = new KnowledgeBasePage(page);
@@ -41,6 +43,10 @@ export class KnowledgeBaseEditArticlePage {
 		await this.knowledgeBasePage.goto(siteUrl);
 
 		await this.knowledgeBasePage.goToCreateNewArticle();
+	}
+
+	async cancel() {
+		await this.cancelButton.click();
 	}
 
 	async publishNewKnowledgeBaseArticle(content: string, title: string) {

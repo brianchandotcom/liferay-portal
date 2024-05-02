@@ -52,8 +52,6 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 				.eq('r_subtaskToCaseResults_c_subtaskId', subtask.id)
 				.and()
 				.in('dueStatus', ['BLOCKED', 'FAILED', 'PASSED', 'TESTFIX'])
-				.and()
-				.ne('issues', '')
 				.build(),
 		[subtask.id]
 	);
@@ -137,7 +135,8 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 				dueStatus as string,
 				_issues,
 				commentSubtask,
-				subtask?.id
+				subtask?.id,
+				subtask.r_userToSubtasks_userId
 			);
 
 			revalidateSubtask();

@@ -149,7 +149,10 @@ function TouchpointRoutes({className, router}) {
 			>
 				{matchedRoute === Routes.SITES_TOUCHPOINTS_PATH && (
 					<BasePage.SubHeader>
-						<FilterBySegment onFilterChange={setSelectedSegment} />
+						<FilterBySegment
+							onFilterChange={setSelectedSegment}
+							rangeSelectors={pathRangeSelectors}
+						/>
 
 						<DropdownRangeKey
 							legacy={false}

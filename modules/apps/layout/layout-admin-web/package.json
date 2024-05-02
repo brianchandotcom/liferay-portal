@@ -30,5 +30,5 @@
 		"format": "liferay-npm-scripts fix",
 		"test": "liferay-npm-scripts test"
 	},
-	"version": "5.0.171"
+	"version": "5.0.172"
 }

@@ -22,7 +22,6 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -446,8 +445,7 @@ public class LayoutLookAndFeelDisplayContext {
 			() -> {
 				if (!Objects.equals(
 						cet.getType(),
-						ClientExtensionEntryConstants.TYPE_GLOBAL_JS) ||
-					!FeatureFlagManagerUtil.isEnabled("LPD-10981")) {
+						ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
 
 					return null;
 				}

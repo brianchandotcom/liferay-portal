@@ -10,7 +10,6 @@ import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.GlobalJSCET;
 import com.liferay.client.extension.type.ThemeFaviconCET;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -54,8 +53,7 @@ public class CETItemDescriptor
 			() -> {
 				if (!Objects.equals(
 						_cet.getType(),
-						ClientExtensionEntryConstants.TYPE_GLOBAL_JS) ||
-					!FeatureFlagManagerUtil.isEnabled("LPD-10981")) {
+						ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
 
 					return null;
 				}

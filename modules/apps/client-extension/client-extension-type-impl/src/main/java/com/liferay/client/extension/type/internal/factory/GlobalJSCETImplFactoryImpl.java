@@ -9,7 +9,6 @@ import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsEx
 import com.liferay.client.extension.type.GlobalJSCET;
 import com.liferay.client.extension.type.internal.GlobalJSCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -72,10 +71,6 @@ public class GlobalJSCETImplFactoryImpl
 			throw new ClientExtensionEntryTypeSettingsException(
 				"Invalid JavaScript URL: " + url, "javascript-url-x-is-invalid",
 				url);
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-10981")) {
-			return;
 		}
 
 		JSONObject scriptElementAttributesJSONObject =

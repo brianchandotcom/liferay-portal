@@ -21,15 +21,13 @@ GlobalJSCET globalJSCET = editClientExtensionEntryDisplayContext.getCET();
 	</div>
 </aui:field-wrapper>
 
-<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10981") %>'>
-	<aui:field-wrapper cssClass="form-group">
-		<react:component
-			module="{ScriptElementAttributesFormField} from client-extension-web"
-			props='<%=
-				HashMapBuilder.<String, Object>put(
-					"scriptElementAttributesJSON", globalJSCET.getScriptElementAttributesJSON()
-				).build()
-			%>'
-		/>
-	</aui:field-wrapper>
-</c:if>
+<aui:field-wrapper cssClass="form-group">
+	<react:component
+		module="{ScriptElementAttributesFormField} from client-extension-web"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"scriptElementAttributesJSON", globalJSCET.getScriptElementAttributesJSON()
+			).build()
+		%>'
+	/>
+</aui:field-wrapper>

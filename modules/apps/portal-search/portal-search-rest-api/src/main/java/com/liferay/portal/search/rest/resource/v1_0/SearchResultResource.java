@@ -39,7 +39,7 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * To access this resource, run:
  *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/portal-search-rest/v1.0
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/search/v1.0
  *
  * @author Petteri Karttunen
  * @generated
@@ -49,7 +49,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SearchResultResource {
 
 	public Page<SearchResult> postSearchPage(
-			String entryClassNames, String search, Filter filter,
+			String entryClassNames, String scope, String search, Filter filter,
 			Pagination pagination, Sort[] sorts,
 			SearchRequestBody searchRequestBody)
 		throws Exception;

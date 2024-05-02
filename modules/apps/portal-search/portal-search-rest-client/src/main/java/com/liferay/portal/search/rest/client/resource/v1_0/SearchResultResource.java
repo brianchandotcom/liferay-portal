@@ -36,14 +36,14 @@ public interface SearchResultResource {
 	}
 
 	public Page<SearchResult> postSearchPage(
-			String entryClassNames, String search, String filterString,
-			Pagination pagination, String sortString,
+			String entryClassNames, String scope, String search,
+			String filterString, Pagination pagination, String sortString,
 			SearchRequestBody searchRequestBody)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postSearchPageHttpResponse(
-			String entryClassNames, String search, String filterString,
-			Pagination pagination, String sortString,
+			String entryClassNames, String scope, String search,
+			String filterString, Pagination pagination, String sortString,
 			SearchRequestBody searchRequestBody)
 		throws Exception;
 
@@ -157,14 +157,14 @@ public interface SearchResultResource {
 		implements SearchResultResource {
 
 		public Page<SearchResult> postSearchPage(
-				String entryClassNames, String search, String filterString,
-				Pagination pagination, String sortString,
+				String entryClassNames, String scope, String search,
+				String filterString, Pagination pagination, String sortString,
 				SearchRequestBody searchRequestBody)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = postSearchPageHttpResponse(
-				entryClassNames, search, filterString, pagination, sortString,
-				searchRequestBody);
+				entryClassNames, scope, search, filterString, pagination,
+				sortString, searchRequestBody);
 
 			String content = httpResponse.getContent();
 
@@ -226,8 +226,8 @@ public interface SearchResultResource {
 		}
 
 		public HttpInvoker.HttpResponse postSearchPageHttpResponse(
-				String entryClassNames, String search, String filterString,
-				Pagination pagination, String sortString,
+				String entryClassNames, String scope, String search,
+				String filterString, Pagination pagination, String sortString,
 				SearchRequestBody searchRequestBody)
 			throws Exception {
 
@@ -259,6 +259,10 @@ public interface SearchResultResource {
 					"entryClassNames", String.valueOf(entryClassNames));
 			}
 
+			if (scope != null) {
+				httpInvoker.parameter("scope", String.valueOf(scope));
+			}
+
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
 			}
@@ -281,7 +285,7 @@ public interface SearchResultResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/portal-search-rest/v1.0/search");
+						"/o/search/v1.0/search");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

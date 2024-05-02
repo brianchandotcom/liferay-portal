@@ -310,7 +310,7 @@ public interface SuggestionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/portal-search-rest/v1.0/suggestions");
+						"/o/search/v1.0/suggestions");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

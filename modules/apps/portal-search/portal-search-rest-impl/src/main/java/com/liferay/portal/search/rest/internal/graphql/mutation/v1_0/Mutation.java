@@ -64,6 +64,7 @@ public class Mutation {
 	)
 	public java.util.Collection<SearchResult> createSearchPage(
 			@GraphQLName("entryClassNames") String entryClassNames,
+			@GraphQLName("scope") String scope,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -78,7 +79,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			searchResultResource -> {
 				Page paginationPage = searchResultResource.postSearchPage(
-					entryClassNames, search,
+					entryClassNames, scope, search,
 					_filterBiFunction.apply(searchResultResource, filterString),
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(searchResultResource, sortsString),

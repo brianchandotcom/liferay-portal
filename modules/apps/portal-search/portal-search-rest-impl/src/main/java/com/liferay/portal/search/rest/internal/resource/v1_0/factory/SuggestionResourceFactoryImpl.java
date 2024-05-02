@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/portal-search-rest/v1.0/Suggestion",
+	property = "resource.locator.key=/search/v1.0/Suggestion",
 	service = SuggestionResource.Factory.class
 )
 @Generated("")

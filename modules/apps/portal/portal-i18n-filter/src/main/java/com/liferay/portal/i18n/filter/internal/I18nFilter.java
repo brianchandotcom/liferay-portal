@@ -342,11 +342,6 @@ public class I18nFilter extends BasePortalFilter {
 				defaultLanguageId, requestedLanguageId);
 		}
 		else if (prependFriendlyUrlStyle == 2) {
-			if (PropsValues.LOCALE_DEFAULT_REQUEST) {
-				return LocaleUtil.toLanguageId(
-					_portal.getLocale(httpServletRequest));
-			}
-
 			return requestedLanguageId;
 		}
 		else if (prependFriendlyUrlStyle == 3) {

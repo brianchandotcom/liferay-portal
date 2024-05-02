@@ -14,6 +14,8 @@ public interface EventProcessor {
 
 	public void receiveMessage(String message);
 
+	public void sendMessage(String message);
+
 	public void sendMessage(
 		String message, Map<String, String> messageProperties);
 

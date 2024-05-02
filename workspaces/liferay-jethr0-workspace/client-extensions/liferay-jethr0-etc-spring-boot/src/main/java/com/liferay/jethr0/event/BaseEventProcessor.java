@@ -74,6 +74,11 @@ public abstract class BaseEventProcessor implements EventProcessor {
 	}
 
 	@Override
+	public void sendMessage(String message) {
+		sendMessage(message, null);
+	}
+
+	@Override
 	public void sendMessage(
 		String message, Map<String, String> messageProperties) {
 
@@ -84,6 +89,10 @@ public abstract class BaseEventProcessor implements EventProcessor {
 				@Override
 				public Message postProcessMessage(Message message)
 					throws JMSException {
+
+					if (messageProperties == null) {
+						return message;
+					}
 
 					for (Map.Entry<String, String> messageProperty :
 							messageProperties.entrySet()) {

@@ -55,7 +55,6 @@ import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.object.model.ObjectStateTransition;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.model.ObjectValidationRuleSetting;
-import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -920,9 +919,6 @@ public class ObjectEntryLocalServiceTest {
 				"No FileEntry exists with the key {fileEntryId=",
 				persistedFileEntryId2, "}"),
 			() -> _dlAppLocalService.getFileEntry(persistedFileEntryId2));
-
-		// Update object entry with object action
-
 	}
 
 	@Test
@@ -3938,9 +3934,6 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
-
-	@Inject
-	private ObjectActionLocalService _objectActionLocalService;
 
 	private ObjectDefinition _objectDefinition;
 

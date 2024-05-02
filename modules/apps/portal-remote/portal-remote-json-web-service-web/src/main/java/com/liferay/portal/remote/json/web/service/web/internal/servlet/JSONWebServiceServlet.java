@@ -6,13 +6,13 @@
 package com.liferay.portal.remote.json.web.service.web.internal.servlet;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.remote.json.web.service.JSONWebServiceActionsManager;
 import com.liferay.portal.remote.json.web.service.web.internal.JSONWebServiceServiceAction;
 import com.liferay.portal.servlet.JSONServlet;
 import com.liferay.portal.struts.JSONAction;

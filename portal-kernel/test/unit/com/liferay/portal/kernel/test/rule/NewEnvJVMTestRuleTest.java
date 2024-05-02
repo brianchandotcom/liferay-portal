@@ -45,9 +45,6 @@ public class NewEnvJVMTestRuleTest {
 		Assert.assertNull(_processId);
 
 		_processId = getProcessId();
-
-		_parentEnvironment = _fromString(
-			System.getProperty(_SYSTEM_PROPERTY_KEY_ENVIRONMENT));
 	}
 
 	@After
@@ -131,9 +128,12 @@ public class NewEnvJVMTestRuleTest {
 
 		Assert.assertEquals("ENV_VALUE", environment.get("ENV_KEY"));
 
-		_parentEnvironment.put("ENV_KEY", "ENV_VALUE");
+		Map<String, String> parentEnvironment = _fromString(
+			System.getProperty(_SYSTEM_PROPERTY_KEY_ENVIRONMENT));
 
-		Assert.assertEquals(_parentEnvironment, environment);
+		parentEnvironment.put("ENV_KEY", "ENV_VALUE");
+
+		Assert.assertEquals(parentEnvironment, environment);
 	}
 
 	@NewEnv.Environment(variables = {"USER=UNIT_TEST", "ENV_KEY=NEW_VALUE"})
@@ -153,10 +153,13 @@ public class NewEnvJVMTestRuleTest {
 			"UNIT_TEST", environment.get(_ENVIRONMENT_KEY_USER));
 		Assert.assertEquals("NEW_VALUE", environment.get("ENV_KEY"));
 
-		_parentEnvironment.put(_ENVIRONMENT_KEY_USER, "UNIT_TEST");
-		_parentEnvironment.put("ENV_KEY", "NEW_VALUE");
+		Map<String, String> parentEnvironment = _fromString(
+			System.getProperty(_SYSTEM_PROPERTY_KEY_ENVIRONMENT));
 
-		Assert.assertEquals(_parentEnvironment, environment);
+		parentEnvironment.put(_ENVIRONMENT_KEY_USER, "UNIT_TEST");
+		parentEnvironment.put("ENV_KEY", "NEW_VALUE");
+
+		Assert.assertEquals(parentEnvironment, environment);
 	}
 
 	@NewEnv.Environment(append = false, variables = "KEY1=VALUE1")
@@ -176,9 +179,12 @@ public class NewEnvJVMTestRuleTest {
 		Assert.assertNull(environment.get("ENV_KEY"));
 		Assert.assertNull(environment.get(_ENVIRONMENT_KEY_USER));
 
-		_parentEnvironment.put("KEY1", "VALUE1");
+		Map<String, String> parentEnvironment = _fromString(
+			System.getProperty(_SYSTEM_PROPERTY_KEY_ENVIRONMENT));
 
-		Assert.assertNotEquals(_parentEnvironment, environment);
+		parentEnvironment.put("KEY1", "VALUE1");
+
+		Assert.assertNotEquals(parentEnvironment, environment);
 	}
 
 	@Rule
@@ -265,7 +271,6 @@ public class NewEnvJVMTestRuleTest {
 		"KEY_ENVIRONMENT";
 
 	private final AtomicInteger _counter = new AtomicInteger();
-	private Map<String, String> _parentEnvironment;
 	private Integer _processId;
 
 }

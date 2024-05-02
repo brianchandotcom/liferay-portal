@@ -1,0 +1,35 @@
+@import 'atlas-variables';
+@import 'cadmin-variables';
+
+html#{$cadmin-selector} .cadmin .field-select-modal {
+	.selection-mode-multiple {
+		.custom-control-label {
+			line-height: 24px;
+		}
+
+		.field-label {
+			margin-left: 4px;
+		}
+
+		.treeview-group .autofit-col:has(> .custom-checkbox) {
+			width: 100%;
+		}
+
+		.treeview-link .custom-checkbox label {
+			display: block;
+			width: 100%;
+		}
+	}
+
+	.selection-mode-single .treeview-link {
+		color: $cadmin-gray-900;
+
+		.field-label {
+			padding: 3px;
+		}
+	}
+
+	.treeview-link {
+		margin: 0;
+	}
+}

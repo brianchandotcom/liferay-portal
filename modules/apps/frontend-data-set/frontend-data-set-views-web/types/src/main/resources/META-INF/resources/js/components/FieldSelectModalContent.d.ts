@@ -7,6 +7,7 @@ import {TreeView} from '@clayui/core';
 import {ComponentProps} from 'react';
 import {FDSViewType} from '../FDSViews';
 import {IField} from '../utils/types';
+import '../../css/components/FieldSelectModalContent.scss';
 interface IFieldTreeItem extends IField {
 	children?: IFieldTreeItem[];
 	initialChildren?: IFieldTreeItem[];

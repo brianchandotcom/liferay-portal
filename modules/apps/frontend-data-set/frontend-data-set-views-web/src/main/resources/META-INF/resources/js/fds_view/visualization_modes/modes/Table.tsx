@@ -21,6 +21,7 @@ import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
 import {IFDSViewSectionProps} from '../../../FDSView';
+import FieldSelectModalContent from '../../../components/FieldSelectModalContent';
 import OrderableTable from '../../../components/OrderableTable';
 import {
 	API_URL,
@@ -35,8 +36,7 @@ import '../../../../css/TableVisualizationMode.scss';
 import ClayAlert from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 
-import {EFieldType, IFDSField} from '../../../utils/types';
-import AddFieldsModalContent from './modal_content/AddFieldsModalContent';
+import {EFieldType, IFDSField, IField} from '../../../utils/types';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
@@ -110,7 +110,7 @@ interface IEditFDSFieldModalContentProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
 	fdsField: IFDSField;
 	namespace: string;
-	onSave: Function;
+	onSaveButtonClick: Function;
 }
 
 const EditFDSFieldModalContent = ({
@@ -118,7 +118,7 @@ const EditFDSFieldModalContent = ({
 	fdsClientExtensionCellRenderers,
 	fdsField,
 	namespace,
-	onSave,
+	onSaveButtonClick,
 }: IEditFDSFieldModalContentProps) => {
 	const [selectedFDSFieldRenderer, setSelectedFDSFieldRenderer] = useState(
 		fdsField.renderer ?? 'default'
@@ -172,9 +172,9 @@ const EditFDSFieldModalContent = ({
 
 		closeModal();
 
-		openDefaultSuccessToast();
+		onSaveButtonClick({editedFDSField});
 
-		onSave({editedFDSField});
+		openDefaultSuccessToast();
 	};
 
 	const fdsFieldNameInputId = `${namespace}fdsFieldNameInput`;
@@ -347,14 +347,17 @@ const EditFDSFieldModalContent = ({
 	);
 };
 
-function Table({
-	fdsClientExtensionCellRenderers,
-	fdsView,
-	namespace,
-	saveFDSFieldsURL,
-	title,
-}: IFDSViewSectionProps & {title?: string}) {
+function Table(props: IFDSViewSectionProps & {title?: string}) {
+	const {
+		fdsClientExtensionCellRenderers,
+		fdsView,
+		namespace,
+		saveFDSFieldsURL,
+		title,
+	} = props;
+
 	const [fdsFields, setFDSFields] = useState<Array<IFDSField> | null>(null);
+	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 
 	const reorderFDSFields = ({
 		fdsFieldsOrder,
@@ -426,7 +429,7 @@ function Table({
 		}
 	};
 
-	const handleDelete = ({item}: {item: IFDSField}) => {
+	const onDeleteButtonClick = ({item}: {item: IFDSField}) => {
 		openModal({
 			bodyHTML: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-this-field?-fragments-using-it-will-be-affected'
@@ -471,6 +474,80 @@ function Table({
 			status: 'warning',
 			title: Liferay.Language.get('delete-filter'),
 		});
+	};
+
+	const saveFDSFields = async ({
+		closeModal,
+		fields,
+	}: {
+		closeModal: Function;
+		fields: Array<IField>;
+	}) => {
+		setSaveButtonDisabled(true);
+
+		const creationData: Array<{name: string; type: string}> = [];
+		const deletionIds: Array<number> = [];
+
+		fields.forEach((field) => {
+			if (!field.id) {
+				creationData.push({
+					name: field.name,
+					type: field.type || 'string',
+				});
+			}
+		});
+
+		fdsFields?.forEach((fdsField) => {
+			if (!fields.find((field) => field.name === fdsField.name)) {
+				deletionIds.push(fdsField.id);
+			}
+		});
+
+		const formData = new FormData();
+
+		formData.append(
+			`${namespace}creationData`,
+			JSON.stringify(creationData)
+		);
+
+		deletionIds.forEach((id) => {
+			formData.append(`${namespace}deletionIds`, String(id));
+		});
+
+		formData.append(`${namespace}fdsViewId`, fdsView.id);
+
+		const response = await fetch(saveFDSFieldsURL, {
+			body: formData,
+			method: 'POST',
+		});
+
+		setSaveButtonDisabled(false);
+
+		if (!response.ok) {
+			openDefaultFailureToast();
+
+			return;
+		}
+
+		const createdFDSFields: Array<IFDSField> = await response.json();
+
+		closeModal();
+
+		const newFDSFields: Array<IFDSField> = [];
+
+		fdsFields?.forEach((fdsField) => {
+			if (!deletionIds.includes(fdsField.id)) {
+				newFDSFields.push(fdsField);
+			}
+		});
+
+		createdFDSFields.forEach((fdsField) => {
+			newFDSFields.push(fdsField);
+		});
+
+		setFDSFields(newFDSFields);
+
+		openDefaultSuccessToast();
 	};
 
 	const updateFDSFieldsOrder = async ({
@@ -534,49 +611,61 @@ function Table({
 	const onCreationButtonClick = () => {
 		openModal({
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
-				<AddFieldsModalContent
+				<FieldSelectModalContent
+					{...props}
 					closeModal={closeModal}
-					fdsView={fdsView}
-					namespace={namespace}
-					onSave={({
-						createdFDSFields,
-						deletedFDSFieldsIds,
+					onSaveButtonClick={({
+						selectedFields,
 					}: {
-						createdFDSFields: Array<IFDSField>;
-						deletedFDSFieldsIds: Array<number>;
+						selectedFields: Array<IField>;
 					}) => {
-						const newFDSFields: Array<IFDSField> = [];
-
-						fdsFields?.forEach((fdsField) => {
-							if (!deletedFDSFieldsIds.includes(fdsField.id)) {
-								newFDSFields.push(fdsField);
-							}
-						});
-
-						createdFDSFields.forEach((fdsField) => {
-							newFDSFields.push(fdsField);
-						});
-
-						setFDSFields(newFDSFields);
+						saveFDSFields({closeModal, fields: selectedFields});
 					}}
-					saveFDSFieldsURL={saveFDSFieldsURL}
-					savedFDSFields={fdsFields || []}
+					saveButtonDisabled={saveButtonDisabled}
+					selectedFields={
+						fdsFields
+							? fdsFields.map((fdsField) => ({
+									id: String(fdsField.id),
+									name: fdsField.name,
+							  }))
+							: []
+					}
+					selectionMode="multiple"
 				/>
 			),
 			size: 'full-screen',
 		});
 	};
 
-	const onEditFDSField = ({editedFDSField}: {editedFDSField: IFDSField}) => {
-		setFDSFields(
-			fdsFields?.map((fdsField) => {
-				if (fdsField.id === editedFDSField.id) {
-					return editedFDSField;
-				}
+	const onEditButtonClick = ({item}: {item: IFDSField}) => {
+		openModal({
+			className: 'overflow-auto',
+			contentComponent: ({closeModal}: {closeModal: Function}) => (
+				<EditFDSFieldModalContent
+					closeModal={closeModal}
+					fdsClientExtensionCellRenderers={
+						fdsClientExtensionCellRenderers
+					}
+					fdsField={item}
+					namespace={namespace}
+					onSaveButtonClick={({
+						editedFDSField,
+					}: {
+						editedFDSField: IFDSField;
+					}) => {
+						setFDSFields(
+							fdsFields?.map((fdsField) => {
+								if (fdsField.name === editedFDSField.name) {
+									return editedFDSField;
+								}
 
-				return fdsField;
-			}) || null
-		);
+								return fdsField;
+							}) || null
+						);
+					}}
+				/>
+			),
+		});
 	};
 
 	return fdsFields ? (
@@ -596,31 +685,12 @@ function Table({
 					{
 						icon: 'pencil',
 						label: Liferay.Language.get('edit'),
-						onClick: ({item}: {item: IFDSField}) => {
-							openModal({
-								className: 'overflow-auto',
-								contentComponent: ({
-									closeModal,
-								}: {
-									closeModal: Function;
-								}) => (
-									<EditFDSFieldModalContent
-										closeModal={closeModal}
-										fdsClientExtensionCellRenderers={
-											fdsClientExtensionCellRenderers
-										}
-										fdsField={item}
-										namespace={namespace}
-										onSave={onEditFDSField}
-									/>
-								),
-							});
-						},
+						onClick: onEditButtonClick,
 					},
 					{
 						icon: 'trash',
 						label: Liferay.Language.get('delete'),
-						onClick: handleDelete,
+						onClick: onDeleteButtonClick,
 					},
 				]}
 				creationMenuItems={[

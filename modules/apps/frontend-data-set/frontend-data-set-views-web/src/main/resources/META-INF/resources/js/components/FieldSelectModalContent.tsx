@@ -19,6 +19,8 @@ import {getFields} from '../api';
 import {IField} from '../utils/types';
 import AutoSearch from './AutoSearch';
 
+import '../../css/components/FieldSelectModalContent.scss';
+
 interface IFieldTreeItem extends IField {
 	children?: IFieldTreeItem[];
 	initialChildren?: IFieldTreeItem[];
@@ -140,22 +142,30 @@ function applyFilter({
 
 const Highlight = ({query, text}: {query?: string; text?: string}) => {
 	if (!query || !text) {
-		return <>{text ?? ''}</>;
+		return (
+			<span className="field-label font-weight-normal pl-1 text-3">
+				{text ?? ''}
+			</span>
+		);
 	}
 
 	const indexMatch = text.search(RegExp(query, 'i'));
 
-	return indexMatch > -1 ? (
-		<>
-			{text.substring(0, indexMatch)}
-			<mark className="bg-transparent border-0 font-weight-bold p-0 shadow-none">
-				{text.substring(indexMatch, indexMatch + query.length)}
-			</mark>
-			{text.substring(indexMatch + query.length)}
-		</>
-	) : (
-		<>{text}</>
-	);
+	if (indexMatch > -1) {
+		return (
+			<span className="field-label font-weight-normal pl-1 text-3">
+				{text.substring(0, indexMatch)}
+
+				<mark className="bg-transparent border-0 font-weight-bold p-0 shadow-none">
+					{text.substring(indexMatch, indexMatch + query.length)}
+				</mark>
+
+				{text.substring(indexMatch + query.length)}
+			</span>
+		);
+	}
+
+	return <>{text}</>;
 };
 
 const FieldSelectModalContent = ({
@@ -203,7 +213,9 @@ const FieldSelectModalContent = ({
 				setFields(updatedFields);
 			}
 		});
-	}, [selectedFields, fdsView]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const onSearch = (query: string) => {
 		setQuery(query);
@@ -272,7 +284,9 @@ const FieldSelectModalContent = ({
 							</ClayResultsBar>
 						)}
 
-						<div className="container-fluid container-fluid-max-xl px-4 py-2">
+						<div
+							className={`container-fluid container-fluid-max-xl px-4 py-2 selection-mode-${selectionMode}`}
+						>
 							<TreeView
 								className="bg-light"
 								expandedKeys={new Set(expandedKeys)}
@@ -298,36 +312,51 @@ const FieldSelectModalContent = ({
 									query,
 								}: IFieldTreeItem) => (
 									<TreeView.Item>
-										<TreeView.ItemStack
-											disabled={
-												initialChildren &&
-												!!initialChildren.length
-													? true
-													: false
-											}
-											expanderDisabled={false}
-										>
-											<ClayCheckbox checked>
-												<span className="font-weight-normal pl-1 text-3">
+										{selectionMode === 'single' ? (
+											<TreeView.ItemStack
+												disabled={
+													!!initialChildren?.length
+												}
+												expanderDisabled={false}
+											>
+												<ClayCheckbox checked />
+
+												<Highlight
+													query={query}
+													text={label}
+												/>
+											</TreeView.ItemStack>
+										) : (
+											<TreeView.ItemStack>
+												<ClayCheckbox checked>
 													<Highlight
 														query={query}
 														text={label}
 													/>
-												</span>
-											</ClayCheckbox>
-										</TreeView.ItemStack>
+												</ClayCheckbox>
+											</TreeView.ItemStack>
+										)}
 
 										<TreeView.Group items={children}>
 											{({label}: IFieldTreeItem) => (
 												<TreeView.Item>
 													<ClayCheckbox checked>
-														<span className="font-weight-normal pl-1 text-3">
+														{selectionMode ===
+															'multiple' && (
 															<Highlight
 																query={query}
 																text={label}
 															/>
-														</span>
+														)}
 													</ClayCheckbox>
+
+													{selectionMode ===
+														'single' && (
+														<Highlight
+															query={query}
+															text={label}
+														/>
+													)}
 												</TreeView.Item>
 											)}
 										</TreeView.Group>
@@ -351,7 +380,10 @@ const FieldSelectModalContent = ({
 									initialFields || [],
 									(field: IFieldTreeItem) => {
 										if (selectedKeys.has(field.name)) {
-											selectedFields.push(field);
+											selectedFields.push({
+												...field,
+												id: field.savedId,
+											});
 										}
 									}
 								);

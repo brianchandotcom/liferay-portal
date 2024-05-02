@@ -7,14 +7,10 @@
 
 import {IFDSViewSectionProps} from '../../../FDSView';
 import '../../../../css/TableVisualizationMode.scss';
-declare function Table({
-	fdsClientExtensionCellRenderers,
-	fdsView,
-	namespace,
-	saveFDSFieldsURL,
-	title,
-}: IFDSViewSectionProps & {
-	title?: string;
-}): JSX.Element;
+declare function Table(
+	props: IFDSViewSectionProps & {
+		title?: string;
+	}
+): JSX.Element;
 export declare function Fields(props: IFDSViewSectionProps): JSX.Element;
 export default Table;

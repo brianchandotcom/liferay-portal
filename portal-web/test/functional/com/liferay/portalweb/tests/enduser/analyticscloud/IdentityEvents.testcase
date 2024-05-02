@@ -355,13 +355,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8713 | Test Summary: Check Identity triggers upon logging in and check its properties (see reference document in comments)"
-	@ignore = "true"
 	@priority = 5
 	test CheckIdentityUponLogin {
-
-		// AC Bug: Unable to search using special characters
-		// AC Bug ticket: LRAC-13715
-
 		property proxy.server.enabled = "true";
 
 		task ("Sign out") {
@@ -377,11 +372,7 @@ definition {
 		}
 
 		task ("Get the DXP Instance ID in AC") {
-			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, "Combined");
-
-			var dataSourceName = StringUtil.trim(${dataSourceName});
-
-			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = ${dataSourceName});
+			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = ${assignedPropertyName});
 		}
 
 		task ("Start Har recording") {
@@ -413,7 +404,6 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12153 | Test Summary: Check if identity is sent after the first visit with an anonymous user and check if it is sent again after the login with the same user but as a known individual"
-	@ignore = "true"
 	@priority = 5
 	test CheckIfEventSentAgainAfterLoginAndIfUserClassifiedAsKnownIndividual {
 		property proxy.server.enabled = "true";
@@ -497,14 +487,15 @@ definition {
 				count = 1);
 		}
 
-		task ("Sign in as new user") {
-			ACUtils.launchDXP(userEmailAddress = "user1@liferay.com");
+		task ("Go to DXP") {
+			ACUtils.launchDXP();
 		}
 
-		task ("Visit the document") {
-			ACUtils.navigateToSitePage(
+		task ("Visit the document as new user") {
+			ACUtils.navigateToSitePageWithUser(
 				actionType = "View DM",
 				documentTitleList = "DM AC Title",
+				emailList = "user1@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -523,6 +514,14 @@ definition {
 			TestUtils.assertNotEquals(
 				actual = ${emailAddressHashed},
 				expected = "");
+		}
+
+		task ("Visit the document") {
+			ACUtils.navigateToSitePage(
+				actionType = "View DM",
+				documentTitleList = "DM AC Title,DM AC Title,DM AC Title,DM AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions") {

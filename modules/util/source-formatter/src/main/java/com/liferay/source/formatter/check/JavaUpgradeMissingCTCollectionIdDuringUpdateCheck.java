@@ -45,88 +45,92 @@ public class JavaUpgradeMissingCTCollectionIdDuringUpdateCheck
 		}
 
 		for (String methodName : _METHOD_NAMES) {
-			int x = -1;
-
-			while (true) {
-				x = content.indexOf(methodName, x + 1);
-
-				if (x == -1) {
-					break;
-				}
-
-				List<String> getParameterNames =
-					JavaSourceUtil.getParameterNames(
-						JavaSourceUtil.getMethodCall(content, x));
-
-				if (methodName.startsWith("AutoBatchPreparedStatementUtil.") &&
-					(getParameterNames.size() != 2)) {
-
-					continue;
-				}
-
-				String updateClause = null;
-
-				if (methodName.startsWith("AutoBatchPreparedStatementUtil.")) {
-					updateClause = getParameterNames.get(1);
-				}
-				else {
-					updateClause = StringUtil.trim(
-						JavaSourceUtil.getParameters(
-							JavaSourceUtil.getMethodCall(content, x)));
-				}
-
-				if (!updateClause.startsWith("\"update")) {
-					continue;
-				}
-
-				updateClause = updateClause.replaceAll("\n", "");
-				updateClause = updateClause.replaceAll("\\s{2,}", " ");
-
-				String tableName = updateClause.replaceFirst(
-					"\"update (\\w+).*", "$1");
-
-				int y = updateClause.indexOf("where ");
-
-				if (y == -1) {
-					continue;
-				}
-
-				String whereClause = updateClause.substring(y);
-
-				if (whereClause.contains("and ") ||
-					whereClause.contains("or ")) {
-
-					continue;
-				}
-
-				String columnName = whereClause.replaceFirst(
-					"where (\\w+).+", "$1");
-
-				if (!columnName.endsWith("Id") ||
-					columnName.equals("ctCollectionId")) {
-
-					continue;
-				}
-
-				List<String> primaryKeys = _getPrimaryKeysMap(tableName);
-
-				if (primaryKeys.isEmpty()) {
-					continue;
-				}
-
-				if (primaryKeys.contains(columnName) &&
-					primaryKeys.contains("ctCollectionId")) {
-
-					addMessage(
-						fileName,
-						"Missing 'ctCollectionId' in where clause during " +
-							"update",
-						getLineNumber(content, x));
-				}
-			}
+			_checkMissingCTCollectionIdDuringUpdate(
+				fileName, content, methodName);
 		}
 
 		return content;
+	}
+
+	private void _checkMissingCTCollectionIdDuringUpdate(
+			String fileName, String content, String methodName)
+		throws Exception {
+
+		int x = -1;
+
+		while (true) {
+			x = content.indexOf(methodName, x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			List<String> getParameterNames = JavaSourceUtil.getParameterNames(
+				JavaSourceUtil.getMethodCall(content, x));
+
+			if (methodName.startsWith("AutoBatchPreparedStatementUtil.") &&
+				(getParameterNames.size() != 2)) {
+
+				continue;
+			}
+
+			String updateClause = null;
+
+			if (methodName.startsWith("AutoBatchPreparedStatementUtil.")) {
+				updateClause = getParameterNames.get(1);
+			}
+			else {
+				updateClause = StringUtil.trim(
+					JavaSourceUtil.getParameters(
+						JavaSourceUtil.getMethodCall(content, x)));
+			}
+
+			if (!updateClause.startsWith("\"update")) {
+				continue;
+			}
+
+			updateClause = updateClause.replaceAll("\n", "");
+			updateClause = updateClause.replaceAll("\\s{2,}", " ");
+
+			String tableName = updateClause.replaceFirst(
+				"\"update (\\w+).*", "$1");
+
+			int y = updateClause.indexOf("where ");
+
+			if (y == -1) {
+				continue;
+			}
+
+			String whereClause = updateClause.substring(y);
+
+			if (whereClause.contains("and ") || whereClause.contains("or ")) {
+				continue;
+			}
+
+			String columnName = whereClause.replaceFirst(
+				"where (\\w+).+", "$1");
+
+			if (!columnName.endsWith("Id") ||
+				columnName.equals("ctCollectionId")) {
+
+				continue;
+			}
+
+			List<String> primaryKeys = _getPrimaryKeysMap(tableName);
+
+			if (primaryKeys.isEmpty()) {
+				continue;
+			}
+
+			if (primaryKeys.contains(columnName) &&
+				primaryKeys.contains("ctCollectionId")) {
+
+				addMessage(
+					fileName,
+					"Missing 'ctCollectionId' in where clause during update",
+					getLineNumber(content, x));
+			}
+		}
 	}
 
 	private List<String> _getPrimaryKeys(String tableContent) {

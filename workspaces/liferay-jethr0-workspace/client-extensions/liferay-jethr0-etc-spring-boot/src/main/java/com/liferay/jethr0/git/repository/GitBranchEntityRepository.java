@@ -31,6 +31,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -102,31 +104,25 @@ public class GitBranchEntityRepository
 		addAll(gitBranchEntities);
 
 		for (GitBranchEntity gitBranchEntity : gitBranchEntities) {
-			GitHubRef gitHubRef = _gitHubFactory.newGitHubRef(
-				gitBranchEntity.getURL());
-
 			GitUserEntity gitUserEntity = gitBranchEntity.getGitUserEntity();
 
-			if (gitUserEntity == null) {
-				gitUserEntity = _gitUserEntityRepository.createGitUserEntity(
-					gitHubRef);
-
-				gitBranchEntity.setGitUserEntity(gitUserEntity);
-
-				gitUserEntity.addGitBranchEntity(gitBranchEntity);
+			if (gitUserEntity != null) {
+				continue;
 			}
 
-			GitHubCommit gitHubCommit = gitHubRef.getGitHubCommit();
+			Matcher matcher = _gitHubBranchURLPattern.matcher(
+				String.valueOf(gitBranchEntity.getURL()));
 
-			gitBranchEntity.setLatestSHA(gitHubCommit.getSHA());
-
-			GitCommitEntity gitCommitEntity =
-				_gitCommitEntityRepository.getBySHA(gitHubCommit.getSHA());
-
-			if (gitCommitEntity == null) {
-				_gitCommitEntityRepository.createGitCommitEntity(
-					gitBranchEntity, gitHubCommit.getSHA());
+			if (!matcher.find()) {
+				continue;
 			}
+
+			gitUserEntity = _gitUserEntityRepository.createGitUserEntity(
+				matcher.group("userName"));
+
+			gitBranchEntity.setGitUserEntity(gitUserEntity);
+
+			gitUserEntity.addGitBranchEntity(gitBranchEntity);
 
 			update(gitBranchEntity);
 		}
@@ -361,6 +357,9 @@ public class GitBranchEntityRepository
 
 	private static final Log _log = LogFactory.getLog(
 		GitBranchEntityRepository.class);
+
+	private static final Pattern _gitHubBranchURLPattern = Pattern.compile(
+		"https://github.com/(?<userName>[^/]+)/(?<repositoryName>[^/]+)");
 
 	@Autowired
 	private BaseGitBranchToGitPullsEntityRelationshipDALO

@@ -66,6 +66,22 @@ public class GitUserEntityRepository
 		return create(jsonObject);
 	}
 
+	public GitUserEntity createGitUserEntity(String userName) {
+		URL url = StringUtil.toURL("https://github.com/" + userName);
+
+		GitUserEntity gitUserEntity = getByURL(url);
+
+		if (gitUserEntity != null) {
+			return gitUserEntity;
+		}
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("url", String.valueOf(url));
+
+		return create(jsonObject);
+	}
+
 	public GitUserEntity getByURL(URL url) {
 		for (GitUserEntity gitUserEntity : getAll()) {
 			if (Objects.equals(gitUserEntity.getURL(), url)) {

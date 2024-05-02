@@ -323,14 +323,6 @@ public class AssetListEntryLocalServiceWrapper
 	}
 
 	@Override
-	public AssetListEntry fetchAssetListEntry(
-		String externalReferenceCode, long groupId) {
-
-		return _assetListEntryLocalService.fetchAssetListEntry(
-			externalReferenceCode, groupId);
-	}
-
-	@Override
 	public AssetListEntry fetchAssetListEntryByExternalReferenceCode(
 		String externalReferenceCode, long groupId) {
 

@@ -292,12 +292,6 @@ public class AssetListEntryLocalServiceUtil {
 		return getService().fetchAssetListEntry(assetListEntryId);
 	}
 
-	public static AssetListEntry fetchAssetListEntry(
-		String externalReferenceCode, long groupId) {
-
-		return getService().fetchAssetListEntry(externalReferenceCode, groupId);
-	}
-
 	public static AssetListEntry fetchAssetListEntryByExternalReferenceCode(
 		String externalReferenceCode, long groupId) {
 

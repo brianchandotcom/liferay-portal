@@ -248,10 +248,6 @@ public interface AssetListEntryLocalService
 	public AssetListEntry fetchAssetListEntry(long assetListEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetListEntry fetchAssetListEntry(
-		String externalReferenceCode, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetListEntry fetchAssetListEntryByExternalReferenceCode(
 		String externalReferenceCode, long groupId);
 

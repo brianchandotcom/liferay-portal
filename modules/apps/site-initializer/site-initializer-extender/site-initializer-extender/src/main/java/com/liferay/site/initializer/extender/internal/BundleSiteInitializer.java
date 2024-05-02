@@ -1278,63 +1278,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addObjectOrUpdateActions(
-			ServiceContext serviceContext,
-			Map<String, String> stringUtilReplaceValues)
-		throws Exception {
-
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/object-actions");
-
-		if (SetUtil.isEmpty(resourcePaths)) {
-			return;
-		}
-
-		for (String resourcePath : resourcePaths) {
-			String json = SiteInitializerUtil.read(
-				resourcePath, _servletContext);
-
-			json = _replace(json, stringUtilReplaceValues);
-
-			if (json == null) {
-				continue;
-			}
-
-			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
-
-			JSONArray jsonArray = jsonObject.getJSONArray("object-actions");
-
-			if (JSONUtil.isEmpty(jsonArray)) {
-				continue;
-			}
-
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject objectActionJSONObject = jsonArray.getJSONObject(i);
-
-				JSONObject parametersJSONObject =
-					objectActionJSONObject.getJSONObject("parameters");
-
-				_objectActionLocalService.addOrUpdateObjectAction(
-					objectActionJSONObject.getString("externalReferenceCode"),
-					0, serviceContext.getUserId(),
-					jsonObject.getLong("objectDefinitionId"),
-					objectActionJSONObject.getBoolean("active"),
-					objectActionJSONObject.getString("conditionExpression"),
-					objectActionJSONObject.getString("description"),
-					SiteInitializerUtil.toMap(
-						objectActionJSONObject.getString("errorMessage")),
-					SiteInitializerUtil.toMap(
-						objectActionJSONObject.getString("label")),
-					objectActionJSONObject.getString("name"),
-					objectActionJSONObject.getString("objectActionExecutorKey"),
-					objectActionJSONObject.getString("objectActionTriggerKey"),
-					ObjectActionUtil.toParametersUnicodeProperties(
-						parametersJSONObject.toMap()),
-					objectActionJSONObject.getBoolean("system"));
-			}
-		}
-	}
-
 	private void _addOrganizationUser(
 			JSONArray jsonArray, ServiceContext serviceContext, long userId)
 		throws Exception {
@@ -3031,6 +2974,63 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (String resourcePath : resourcePaths) {
 			_addOrUpdateNotificationTemplate(
 				resourcePath, serviceContext, stringUtilReplaceValues);
+		}
+	}
+
+	private void _addOrUpdateObjectActions(
+			ServiceContext serviceContext,
+			Map<String, String> stringUtilReplaceValues)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/object-actions");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		for (String resourcePath : resourcePaths) {
+			String json = SiteInitializerUtil.read(
+				resourcePath, _servletContext);
+
+			json = _replace(json, stringUtilReplaceValues);
+
+			if (json == null) {
+				continue;
+			}
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
+
+			JSONArray jsonArray = jsonObject.getJSONArray("object-actions");
+
+			if (JSONUtil.isEmpty(jsonArray)) {
+				continue;
+			}
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject objectActionJSONObject = jsonArray.getJSONObject(i);
+
+				JSONObject parametersJSONObject =
+					objectActionJSONObject.getJSONObject("parameters");
+
+				_objectActionLocalService.addOrUpdateObjectAction(
+					objectActionJSONObject.getString("externalReferenceCode"),
+					0, serviceContext.getUserId(),
+					jsonObject.getLong("objectDefinitionId"),
+					objectActionJSONObject.getBoolean("active"),
+					objectActionJSONObject.getString("conditionExpression"),
+					objectActionJSONObject.getString("description"),
+					SiteInitializerUtil.toMap(
+						objectActionJSONObject.getString("errorMessage")),
+					SiteInitializerUtil.toMap(
+						objectActionJSONObject.getString("label")),
+					objectActionJSONObject.getString("name"),
+					objectActionJSONObject.getString("objectActionExecutorKey"),
+					objectActionJSONObject.getString("objectActionTriggerKey"),
+					ObjectActionUtil.toParametersUnicodeProperties(
+						parametersJSONObject.toMap()),
+					objectActionJSONObject.getBoolean("system"));
+			}
 		}
 	}
 

@@ -6,6 +6,7 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.poshi.core.util.ListUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
@@ -118,7 +119,7 @@ public class JavaUpgradeMissingCTCollectionIdDuringUpdateCheck
 
 			List<String> primaryKeys = _getPrimaryKeysMap(tableName);
 
-			if (primaryKeys.isEmpty()) {
+			if (ListUtil.isEmpty(primaryKeys)) {
 				continue;
 			}
 

@@ -40,8 +40,6 @@ export function ImageFileItem({
 	uploadedImages,
 	versionName,
 }: ImageFileItemProps) {
-	// const [{appStorefrontImages}, dispatch] = useAppContext();
-
 	const showProgress =
 		isProcessing && !uploadedFile.uploaded && uploadedFile.progress > 0;
 
@@ -134,13 +132,6 @@ export function ImageFileItem({
 								target.value;
 
 							uploadedImages[index].changed = true;
-
-							// dispatch({
-							// 	payload: {
-							// 		files: appStorefrontImages,
-							// 	},
-							// 	type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
-							// });
 						}}
 						placeholder="Image description"
 						value={uploadedImages[index].imageDescription}

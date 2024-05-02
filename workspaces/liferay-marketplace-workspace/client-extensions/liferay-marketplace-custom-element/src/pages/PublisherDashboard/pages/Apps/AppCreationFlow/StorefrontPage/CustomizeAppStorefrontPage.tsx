@@ -173,7 +173,8 @@ export function CustomizeAppStorefrontPage({
 										type:
 											TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
 									});
-								} catch (error) {
+								}
+								catch (error) {
 									console.error(error);
 
 									Liferay.Util.openToast({

@@ -37,36 +37,33 @@ const Header = () => {
 	] = useSolutionContext();
 
 	const handleUpload = (files: File[]) => {
-		if (
-			files.length > MAX_IMAGE_QUANTITY ||
-			headerImages?.length > MAX_IMAGE_QUANTITY
-		) {
+		const totalImages = (headerImages?.length || 0) + files.length;
+
+		if (totalImages > MAX_IMAGE_QUANTITY) {
 			return;
 		}
 
-		if ((headerImages?.length || 0) + files.length <= MAX_IMAGE_QUANTITY) {
-			const newUploadedFiles: UploadedFile[] = files.map((file) => ({
-				changed: false,
-				error: false,
-				file,
-				fileName: file.name,
-				id: crypto.randomUUID(),
-				index: 0,
-				preview: URL.createObjectURL(file),
-				progress: 0,
-				readableSize: filesize(file.size),
-				uploaded: false,
-			}));
+		const newUploadedFiles: UploadedFile[] = files.map((file) => ({
+			changed: false,
+			error: false,
+			file,
+			fileName: file.name,
+			id: crypto.randomUUID(),
+			index: 0,
+			preview: URL.createObjectURL(file),
+			progress: 0,
+			readableSize: filesize(file.size),
+			uploaded: false,
+		}));
 
-			dispatch({
-				payload: {
-					headerImages: headerImages?.length
-						? [...headerImages, ...newUploadedFiles]
-						: newUploadedFiles,
-				},
-				type: SolutionTypes.SET_HEADER,
-			});
-		}
+		dispatch({
+			payload: {
+				headerImages: headerImages
+					? [...headerImages, ...newUploadedFiles]
+					: newUploadedFiles,
+			},
+			type: SolutionTypes.SET_HEADER,
+		});
 	};
 
 	const handleDelete = async (id: string) => {
@@ -199,7 +196,7 @@ const Header = () => {
 						Add up to 5 images
 					</Form.Label>
 
-					{headerImages?.length > 0 && (
+					{!!headerImages?.length && (
 						<FileList
 							isProcessing={false}
 							onArrowClick={handleArrowClick}

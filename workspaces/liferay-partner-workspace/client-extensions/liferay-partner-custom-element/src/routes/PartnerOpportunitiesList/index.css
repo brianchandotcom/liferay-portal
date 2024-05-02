@@ -8,21 +8,21 @@ div:has(> table.custom-table)::-webkit-scrollbar {
 	width: 15px;
 }
 
-::-webkit-scrollbar-track {
+div:has(> table.custom-table)::-webkit-scrollbar-track {
 	background: #f7f7f8;
 }
 
-::-webkit-scrollbar-thumb {
+div:has(> table.custom-table)::-webkit-scrollbar-thumb {
 	background: #c9c9cf;
 	border: 3px solid #f7f7f8;
 	border-radius: 10px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+div:has(> table.custom-table)::-webkit-scrollbar-thumb:hover {
 	background: #a9a9af;
 }
 
-th {
+table.custom-table th {
 	background: white;
 	position: sticky !important;
 	top: 0;

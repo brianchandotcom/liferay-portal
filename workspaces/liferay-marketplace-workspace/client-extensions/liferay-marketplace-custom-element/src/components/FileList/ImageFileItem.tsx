@@ -21,6 +21,7 @@ type ImageFileItemProps = {
 	index: number;
 	isProcessing: boolean;
 	onArrowClick: (index: number, direction: string) => void;
+	onChangeInput: (newImagesInputs: UploadedFile[]) => void;
 	onDelete: (id: string, versionName?: string) => void;
 	position: number;
 	tooltip?: string;
@@ -33,6 +34,7 @@ export function ImageFileItem({
 	index,
 	isProcessing,
 	onArrowClick,
+	onChangeInput,
 	onDelete,
 	position,
 	tooltip,
@@ -132,6 +134,8 @@ export function ImageFileItem({
 								target.value;
 
 							uploadedImages[index].changed = true;
+
+							onChangeInput(uploadedImages);
 						}}
 						placeholder="Image description"
 						value={uploadedImages[index].imageDescription}

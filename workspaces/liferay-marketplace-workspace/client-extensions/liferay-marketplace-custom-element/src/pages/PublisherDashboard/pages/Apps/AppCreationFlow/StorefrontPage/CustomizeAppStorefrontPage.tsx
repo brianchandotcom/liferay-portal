@@ -55,39 +55,33 @@ export function CustomizeAppStorefrontPage({
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const handleUpload = (files: File[]) => {
-		if (
-			files.length > MAX_IMAGE_QUANTITY ||
-			appStorefrontImages?.length > MAX_IMAGE_QUANTITY
-		) {
+		const totalImages = (appStorefrontImages?.length || 0) + files.length;
+
+		if (totalImages > MAX_IMAGE_QUANTITY) {
 			return;
 		}
 
-		if (
-			(appStorefrontImages?.length || 0) + files.length <=
-			MAX_IMAGE_QUANTITY
-		) {
-			const newUploadedFiles: UploadedFile[] = files.map((file) => ({
-				changed: false,
-				error: false,
-				file,
-				fileName: file.name,
-				id: crypto.randomUUID(),
-				index: 0,
-				preview: URL.createObjectURL(file),
-				progress: 0,
-				readableSize: filesize(file.size),
-				uploaded: false,
-			}));
+		const newUploadedFiles: UploadedFile[] = files.map((file) => ({
+			changed: false,
+			error: false,
+			file,
+			fileName: file.name,
+			id: crypto.randomUUID(),
+			index: 0,
+			preview: URL.createObjectURL(file),
+			progress: 0,
+			readableSize: filesize(file.size),
+			uploaded: false,
+		}));
 
-			dispatch({
-				payload: {
-					files: appStorefrontImages?.length
-						? [...appStorefrontImages, ...newUploadedFiles]
-						: newUploadedFiles,
-				},
-				type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
-			});
-		}
+		dispatch({
+			payload: {
+				files: appStorefrontImages?.length
+					? [...appStorefrontImages, ...newUploadedFiles]
+					: newUploadedFiles,
+			},
+			type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+		});
 	};
 
 	const handleDelete = async (id: string) => {
@@ -195,6 +189,14 @@ export function CustomizeAppStorefrontPage({
 					<FileList
 						isProcessing={isLoading}
 						onArrowClick={handleArrowClick}
+						onChangeInput={(newImagesInputs) =>
+							dispatch({
+								payload: {
+									files: newImagesInputs,
+								},
+								type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+							})
+						}
 						onDelete={handleDelete}
 						type="image"
 						uploadedFiles={appStorefrontImages}

@@ -200,6 +200,14 @@ const Header = () => {
 						<FileList
 							isProcessing={false}
 							onArrowClick={handleArrowClick}
+							onChangeInput={(newImagesInputs) =>
+								dispatch({
+									payload: {
+										headerImages: newImagesInputs,
+									},
+									type: SolutionTypes.SET_HEADER,
+								})
+							}
 							onDelete={handleDelete}
 							type="image"
 							uploadedFiles={headerImages}

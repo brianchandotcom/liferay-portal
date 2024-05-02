@@ -15,13 +15,22 @@
 		"frontend-js-web": "*",
 		"react": "16.12.0"
 	},
+	"jest": {
+		"setupFiles": [
+			"<rootDir>/jest-setup.config.js"
+		],
+		"testMatch": [
+			"<rootDir>/src/main/resources/META-INF/resources/js/tests/**/*.spec.*"
+		]
+	},
 	"main": "js/index.ts",
 	"name": "@liferay/notification-web",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix"
+		"format": "liferay-npm-scripts fix",
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "1.0.77"
 }

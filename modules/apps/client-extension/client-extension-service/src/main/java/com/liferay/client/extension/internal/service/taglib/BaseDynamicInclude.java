@@ -12,7 +12,6 @@ import com.liferay.client.extension.type.GlobalJSCET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -102,20 +101,13 @@ public abstract class BaseDynamicInclude implements DynamicInclude {
 				printWriter.print(StringPool.SPACE);
 			}
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-10981")) {
-				printWriter.print(StringPool.SPACE);
-				printWriter.print(
-					_toScriptElementAttributes(
-						globalJSCET.getScriptElementAttributesJSON()));
-				printWriter.print(" src=\"");
-				printWriter.print(globalJSCET.getURL());
-				printWriter.print("\"></script>");
-			}
-			else {
-				printWriter.print(" data-senna-track=\"temporary\" src=\"");
-				printWriter.print(globalJSCET.getURL());
-				printWriter.print("\" type=\"text/javascript\"></script>");
-			}
+			printWriter.print(StringPool.SPACE);
+			printWriter.print(
+				_toScriptElementAttributes(
+					globalJSCET.getScriptElementAttributesJSON()));
+			printWriter.print(" src=\"");
+			printWriter.print(globalJSCET.getURL());
+			printWriter.print("\"></script>");
 		}
 	}
 

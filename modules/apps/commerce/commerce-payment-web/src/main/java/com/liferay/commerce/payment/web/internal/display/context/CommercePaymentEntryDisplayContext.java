@@ -261,6 +261,14 @@ public class CommercePaymentEntryDisplayContext {
 		return _relatedCommercePaymentEntry.getLanguageId();
 	}
 
+	public String getPayload() {
+		if (_relatedCommercePaymentEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return _relatedCommercePaymentEntry.getPayload();
+	}
+
 	public String getPaymentDate() {
 		if (_relatedCommercePaymentEntry == null) {
 			return StringPool.BLANK;

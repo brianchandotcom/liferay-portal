@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -74,6 +75,7 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 				authorizedCommercePaymentEntry.getErrorMessages(),
 				commercePaymentEntry.getLanguageId(),
 				commercePaymentEntry.getNote(),
+				commercePaymentEntry.getPayload(),
 				commercePaymentEntry.getPaymentIntegrationKey(),
 				commercePaymentEntry.getPaymentIntegrationType(),
 				authorizedCommercePaymentEntry.getPaymentStatus(),
@@ -150,6 +152,7 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 				cancelledCommercePaymentEntry.getErrorMessages(),
 				commercePaymentEntry.getLanguageId(),
 				commercePaymentEntry.getNote(),
+				commercePaymentEntry.getPayload(),
 				commercePaymentEntry.getPaymentIntegrationKey(),
 				commercePaymentEntry.getPaymentIntegrationType(),
 				cancelledCommercePaymentEntry.getPaymentStatus(),
@@ -208,58 +211,65 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 			commercePaymentIntegration.capture(
 				httpServletRequest, commercePaymentEntry);
 
-		User currentUser = _portal.getUser(httpServletRequest);
+		if (_toBeUpdate(commercePaymentEntry, capturedCommercePaymentEntry)) {
+			User currentUser = _portal.getUser(httpServletRequest);
 
-		PermissionThreadLocal.setPermissionChecker(
-			_defaultPermissionCheckerFactory.create(currentUser));
+			PermissionThreadLocal.setPermissionChecker(
+				_defaultPermissionCheckerFactory.create(currentUser));
 
-		commercePaymentEntry =
-			_commercePaymentEntryLocalService.updateCommercePaymentEntry(
-				commercePaymentEntry.getExternalReferenceCode(),
-				commercePaymentEntry.getCommercePaymentEntryId(),
-				commercePaymentEntry.getCommerceChannelId(),
-				commercePaymentEntry.getAmount(),
-				commercePaymentEntry.getCallbackURL(),
-				commercePaymentEntry.getCancelURL(),
-				commercePaymentEntry.getCurrencyCode(),
-				capturedCommercePaymentEntry.getErrorMessages(),
-				commercePaymentEntry.getLanguageId(),
-				commercePaymentEntry.getNote(),
-				commercePaymentEntry.getPaymentIntegrationKey(),
-				commercePaymentEntry.getPaymentIntegrationType(),
-				capturedCommercePaymentEntry.getPaymentStatus(),
-				commercePaymentEntry.getReasonKey(),
-				capturedCommercePaymentEntry.getRedirectURL(),
-				capturedCommercePaymentEntry.getTransactionCode(),
-				commercePaymentEntry.getType());
+			commercePaymentEntry =
+				_commercePaymentEntryLocalService.updateCommercePaymentEntry(
+					commercePaymentEntry.getExternalReferenceCode(),
+					commercePaymentEntry.getCommercePaymentEntryId(),
+					commercePaymentEntry.getCommerceChannelId(),
+					commercePaymentEntry.getAmount(),
+					commercePaymentEntry.getCallbackURL(),
+					commercePaymentEntry.getCancelURL(),
+					commercePaymentEntry.getCurrencyCode(),
+					capturedCommercePaymentEntry.getErrorMessages(),
+					commercePaymentEntry.getLanguageId(),
+					commercePaymentEntry.getNote(),
+					capturedCommercePaymentEntry.getPayload(),
+					commercePaymentEntry.getPaymentIntegrationKey(),
+					commercePaymentEntry.getPaymentIntegrationType(),
+					capturedCommercePaymentEntry.getPaymentStatus(),
+					commercePaymentEntry.getReasonKey(),
+					capturedCommercePaymentEntry.getRedirectURL(),
+					capturedCommercePaymentEntry.getTransactionCode(),
+					commercePaymentEntry.getType());
 
-		CommercePaymentEntryAuditConfiguration
-			commercePaymentEntryAuditConfiguration =
-				_getCommercePaymentEntryAuditConfiguration(
-					commercePaymentEntry.getCompanyId());
+			CommercePaymentEntryAuditConfiguration
+				commercePaymentEntryAuditConfiguration =
+					_getCommercePaymentEntryAuditConfiguration(
+						commercePaymentEntry.getCompanyId());
 
-		if (commercePaymentEntryAuditConfiguration.enabled()) {
-			CommercePaymentEntryAuditType commercePaymentEntryAuditType =
-				_commercePaymentEntryAuditTypeRegistry.
-					getCommercePaymentEntryAuditType(
-						CommercePaymentEntryAuditConstants.
-							TYPE_CAPTURE_PAYMENT);
+			if (commercePaymentEntryAuditConfiguration.enabled()) {
+				CommercePaymentEntryAuditType commercePaymentEntryAuditType =
+					_commercePaymentEntryAuditTypeRegistry.
+						getCommercePaymentEntryAuditType(
+							CommercePaymentEntryAuditConstants.
+								TYPE_CAPTURE_PAYMENT);
 
-			_commercePaymentEntryAuditLocalService.addCommercePaymentEntryAudit(
-				currentUser.getUserId(),
-				commercePaymentEntry.getCommercePaymentEntryId(),
-				commercePaymentEntry.getAmount(),
-				commercePaymentEntry.getCurrencyCode(),
-				commercePaymentEntryAuditType.getType(),
-				commercePaymentEntryAuditType.getLog(
-					HashMapBuilder.<String, Object>put(
-						CommercePaymentEntryAuditConstants.FIELD_CLASS_NAME_ID,
-						commercePaymentEntry.getClassNameId()
-					).put(
-						CommercePaymentEntryAuditConstants.FIELD_CLASS_PK,
-						String.valueOf(commercePaymentEntry.getClassPK())
-					).build()),
-				_createServiceContext(currentUser));
+				_commercePaymentEntryAuditLocalService.
+					addCommercePaymentEntryAudit(
+						currentUser.getUserId(),
+						commercePaymentEntry.getCommercePaymentEntryId(),
+						commercePaymentEntry.getAmount(),
+						commercePaymentEntry.getCurrencyCode(),
+						commercePaymentEntryAuditType.getType(),
+						commercePaymentEntryAuditType.getLog(
+							HashMapBuilder.<String, Object>put(
+								CommercePaymentEntryAuditConstants.
+									FIELD_CLASS_NAME_ID,
+								commercePaymentEntry.getClassNameId()
+							).put(
+								CommercePaymentEntryAuditConstants.
+									FIELD_CLASS_PK,
+								String.valueOf(
+									commercePaymentEntry.getClassPK())
+							).build()),
+						_createServiceContext(currentUser));
+			}
 		}
 
 		return commercePaymentEntry;
@@ -301,6 +311,7 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 				refundedCommercePaymentEntry.getErrorMessages(),
 				commercePaymentEntry.getLanguageId(),
 				commercePaymentEntry.getNote(),
+				commercePaymentEntry.getPayload(),
 				commercePaymentEntry.getPaymentIntegrationKey(),
 				commercePaymentEntry.getPaymentIntegrationType(),
 				refundedCommercePaymentEntry.getPaymentStatus(),
@@ -370,6 +381,31 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 
 		return _configurationProvider.getCompanyConfiguration(
 			CommercePaymentEntryAuditConfiguration.class, companyId);
+	}
+
+	private boolean _toBeUpdate(
+		CommercePaymentEntry commercePaymentEntry,
+		CommercePaymentEntry capturedCommercePaymentEntry) {
+
+		if (!StringUtil.equals(
+				commercePaymentEntry.getErrorMessages(),
+				capturedCommercePaymentEntry.getErrorMessages()) ||
+			!StringUtil.equals(
+				commercePaymentEntry.getPayload(),
+				capturedCommercePaymentEntry.getPayload()) ||
+			(commercePaymentEntry.getPaymentStatus() !=
+				capturedCommercePaymentEntry.getPaymentStatus()) ||
+			!StringUtil.equals(
+				commercePaymentEntry.getRedirectURL(),
+				capturedCommercePaymentEntry.getRedirectURL()) ||
+			!StringUtil.equals(
+				commercePaymentEntry.getTransactionCode(),
+				capturedCommercePaymentEntry.getTransactionCode())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

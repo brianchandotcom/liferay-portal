@@ -47,6 +47,7 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 		<aui:input name="classPK" type="hidden" value="<%= commercePaymentEntryDisplayContext.getClassPK() %>" />
 		<aui:input name="currencyCode" type="hidden" value="<%= commercePaymentEntryDisplayContext.getCurrencyCode() %>" />
 		<aui:input name="languageId" type="hidden" value="<%= commercePaymentEntryDisplayContext.getLanguageId() %>" />
+		<aui:input name="payload" type="hidden" value="<%= commercePaymentEntryDisplayContext.getPayload() %>" />
 		<aui:input name="paymentIntegrationKey" type="hidden" value="<%= commercePaymentEntryDisplayContext.getPaymentIntegrationKey() %>" />
 		<aui:input name="paymentIntegrationType" type="hidden" value="<%= commercePaymentEntryDisplayContext.getPaymentIntegrationType() %>" />
 		<aui:input name="transactionCode" type="hidden" value="<%= commercePaymentEntryDisplayContext.getTransactionCode() %>" />

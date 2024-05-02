@@ -84,6 +84,7 @@ public class PaymentDTOConverter
 					commercePaymentEntry::getExternalReferenceCode);
 				setId(commercePaymentEntry::getCommercePaymentEntryId);
 				setLanguageId(commercePaymentEntry::getLanguageId);
+				setPayload(commercePaymentEntry::getPayload);
 				setPaymentIntegrationKey(
 					commercePaymentEntry::getPaymentIntegrationKey);
 				setPaymentIntegrationType(

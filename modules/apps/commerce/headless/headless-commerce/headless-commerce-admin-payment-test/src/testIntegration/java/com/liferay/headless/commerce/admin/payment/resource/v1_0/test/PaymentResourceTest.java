@@ -252,7 +252,8 @@ public class PaymentResourceTest extends BasePaymentResourceTestCase {
 				(BigDecimal)GetterUtil.getNumber(payment.getAmount()),
 				payment.getCallbackURL(), payment.getCancelURL(),
 				payment.getCurrencyCode(), payment.getLanguageId(),
-				payment.getComment(), payment.getPaymentIntegrationKey(),
+				payment.getPayload(), payment.getComment(),
+				payment.getPaymentIntegrationKey(),
 				GetterUtil.getInteger(payment.getPaymentIntegrationType()),
 				payment.getReasonKey(), payment.getTransactionCode(),
 				GetterUtil.getInteger(payment.getType()), _serviceContext);

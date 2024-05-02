@@ -209,10 +209,6 @@ public interface TemplateEntryLocalService
 	public TemplateEntry fetchTemplateEntry(long templateEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TemplateEntry fetchTemplateEntry(
-		String externalReferenceCode, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TemplateEntry fetchTemplateEntryByDDMTemplateId(long ddmTemplateId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

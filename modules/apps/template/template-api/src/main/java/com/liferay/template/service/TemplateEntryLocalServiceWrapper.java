@@ -243,14 +243,6 @@ public class TemplateEntryLocalServiceWrapper
 	}
 
 	@Override
-	public TemplateEntry fetchTemplateEntry(
-		String externalReferenceCode, long groupId) {
-
-		return _templateEntryLocalService.fetchTemplateEntry(
-			externalReferenceCode, groupId);
-	}
-
-	@Override
 	public TemplateEntry fetchTemplateEntryByDDMTemplateId(long ddmTemplateId) {
 		return _templateEntryLocalService.fetchTemplateEntryByDDMTemplateId(
 			ddmTemplateId);

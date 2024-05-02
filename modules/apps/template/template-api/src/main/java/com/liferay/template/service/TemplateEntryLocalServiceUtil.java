@@ -220,12 +220,6 @@ public class TemplateEntryLocalServiceUtil {
 		return getService().fetchTemplateEntry(templateEntryId);
 	}
 
-	public static TemplateEntry fetchTemplateEntry(
-		String externalReferenceCode, long groupId) {
-
-		return getService().fetchTemplateEntry(externalReferenceCode, groupId);
-	}
-
 	public static TemplateEntry fetchTemplateEntryByDDMTemplateId(
 		long ddmTemplateId) {
 

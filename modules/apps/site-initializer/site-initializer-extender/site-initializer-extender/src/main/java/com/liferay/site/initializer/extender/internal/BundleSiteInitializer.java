@@ -590,7 +590,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addOrUpdateAccountEntryRestrictions(
 					accountEntryRestrictedObjectDefinitions, serviceContext));
 			_invoke(
-				() -> _addObjectOrUpdateActions(
+				() -> _addOrUpdateObjectActions(
 					serviceContext, stringUtilReplaceValues));
 			_invoke(
 				() -> _addOrUpdateObjectEntries(

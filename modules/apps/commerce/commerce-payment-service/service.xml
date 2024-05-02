@@ -30,6 +30,7 @@
 		<column name="errorMessages" type="String" />
 		<column name="languageId" type="String" />
 		<column name="note" type="String" />
+		<column name="payload" type="String" />
 		<column name="paymentIntegrationKey" type="String" />
 		<column name="paymentIntegrationType" type="int" />
 		<column name="paymentStatus" type="int" />

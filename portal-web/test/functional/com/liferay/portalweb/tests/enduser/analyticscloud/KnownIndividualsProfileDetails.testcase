@@ -131,7 +131,7 @@ definition {
 
 			ACIndividualsDashboard.assertIndividualAttributeValue(
 				individualAttribute = "userId",
-				individualAttributeValue = "${userId}");
+				individualAttributeValue = ${userId});
 		}
 	}
 

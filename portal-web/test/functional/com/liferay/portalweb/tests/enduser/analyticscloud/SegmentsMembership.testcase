@@ -675,8 +675,8 @@ definition {
 
 		task ("View membership card when hovering") {
 			ACSegments.viewSegmentMembershipLegendNumbers(
-				knownNumber = 3,
 				anonymousNumber = 0,
+				knownNumber = 3,
 				totalNumber = 3);
 		}
 	}

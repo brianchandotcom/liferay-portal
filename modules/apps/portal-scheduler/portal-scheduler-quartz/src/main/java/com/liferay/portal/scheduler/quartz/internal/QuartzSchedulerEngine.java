@@ -804,10 +804,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			_audit(jobKey, TriggerState.NORMAL);
 		}
 
-		public void jobScheduled(Trigger trigger) {
-			_audit(trigger.getJobKey(), TriggerState.NORMAL);
-		}
-
 		public void triggerFinalized(Trigger trigger) {
 			JobKey jobKey = trigger.getJobKey();
 

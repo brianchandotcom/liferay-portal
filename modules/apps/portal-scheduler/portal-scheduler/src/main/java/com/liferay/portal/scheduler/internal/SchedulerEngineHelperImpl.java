@@ -283,6 +283,11 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 		_schedulerEngine.schedule(
 			trigger, description, destinationName, message, storageType);
+
+		SchedulerResponse schedulerResponse = _schedulerEngine.getScheduledJob(
+			trigger.getJobName(), trigger.getGroupName(), storageType);
+
+		auditSchedulerJobs(schedulerResponse.getMessage(), TriggerState.NORMAL);
 	}
 
 	@Override

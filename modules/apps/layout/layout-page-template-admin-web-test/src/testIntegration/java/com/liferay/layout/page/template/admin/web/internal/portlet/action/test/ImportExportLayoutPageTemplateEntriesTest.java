@@ -1407,10 +1407,12 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionExecutorConstants.KEY_WEBHOOK,
 			ObjectActionTriggerConstants.KEY_STANDALONE,
 			UnicodePropertiesBuilder.put(
-				"script", StringPool.BLANK
+				"secret", "standalone"
+			).put(
+				"url", "https://standalone.com"
 			).build(),
 			false);
 	}

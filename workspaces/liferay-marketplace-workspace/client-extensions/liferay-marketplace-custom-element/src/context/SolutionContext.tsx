@@ -5,7 +5,16 @@
 
 import {ReactNode, createContext, useContext, useReducer} from 'react';
 
+import {UploadedFile} from '../components/FileList/FileList';
+
 export type InitialState = {
+	header: {
+		description: any;
+		headerImages: UploadedFile[];
+		headerVideo: string;
+		radioValue: string;
+		title: string;
+	};
 	productId: number;
 	profile: {
 		categories: {
@@ -13,7 +22,7 @@ export type InitialState = {
 			value: string;
 		}[];
 		description: string;
-		file: any;
+		file: UploadedFile;
 		name: string;
 		tags: {
 			label: string;
@@ -23,27 +32,42 @@ export type InitialState = {
 };
 
 export enum SolutionTypes {
+	SET_HEADER = 'SET_HEADER',
 	SET_PRODUCT_ID = 'SET_PRODUCT_ID',
 	SET_PROFILE = 'SET_PROFILE',
 }
 
 const solutionInitialState: InitialState = {
+	header: {
+		description: '',
+		headerImages: [],
+		headerVideo: '',
+		radioValue: '',
+		title: '',
+	},
 	productId: 0,
 	profile: {
 		categories: [],
 		description: '',
-		file: {},
+		file: {} as UploadedFile,
 		name: '',
 		tags: [],
 	},
 };
 
 type SolutionPayload = {
+	[SolutionTypes.SET_HEADER]: Partial<{
+		description: '';
+		headerImages: UploadedFile[];
+		headerVideo: '';
+		radioValue: '';
+		title: '';
+	}>;
 	[SolutionTypes.SET_PRODUCT_ID]: number;
 	[SolutionTypes.SET_PROFILE]: Partial<{
 		categories: [];
 		description: '';
-		file: {};
+		file: UploadedFile;
 		name: '';
 		tags: [];
 	}>;
@@ -67,6 +91,16 @@ const reducer = (state: InitialState, action: AppActions) => {
 				...state,
 				profile: {
 					...state.profile,
+					...action.payload,
+				},
+			};
+		}
+
+		case SolutionTypes.SET_HEADER: {
+			return {
+				...state,
+				header: {
+					...state.header,
 					...action.payload,
 				},
 			};

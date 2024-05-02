@@ -37,7 +37,7 @@ const tooltipInfo = {
 const Profile = () => {
 	const [
 		{
-			profile: {categories, file, tags},
+			profile: {categories, description, file, name, tags},
 		},
 		dispatch,
 	] = useSolutionContext();
@@ -139,6 +139,7 @@ const Profile = () => {
 				onChange={onChange}
 				placeholder="Enter solution name"
 				type="text"
+				value={name}
 			/>
 
 			<Form.Label
@@ -156,6 +157,7 @@ const Profile = () => {
 				onChange={onChange}
 				placeholder="Enter solution description"
 				type="textarea"
+				value={description}
 			/>
 
 			{!isLoading && (

@@ -32,6 +32,7 @@ import {Liferay} from '../../../../../../liferay/liferay';
 import fetcher from '../../../../../../services/fetcher';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {submitBase64EncodedFile} from '../../../../../../utils/util';
+import {swapImageElements} from '../../../../constants';
 
 export const ACCEPT_FILE_TYPES = {
 	'image/gif': ['.gif'],
@@ -112,18 +113,6 @@ export function CustomizeAppStorefrontPage({
 		});
 	};
 
-	const swapImageElements = (
-		imagesArray: UploadedFile[],
-		currentIndex: number,
-		newIndex: number
-	) => {
-		const value = imagesArray[currentIndex];
-		imagesArray[currentIndex] = imagesArray[newIndex];
-		imagesArray[newIndex] = value;
-
-		return imagesArray;
-	};
-
 	const handleArrowClick = (index: number, direction: string) => {
 		const newIndex = direction === 'up' ? index - 1 : index + 1;
 
@@ -184,8 +173,7 @@ export function CustomizeAppStorefrontPage({
 										type:
 											TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
 									});
-								}
-								catch (error) {
+								} catch (error) {
 									console.error(error);
 
 									Liferay.Util.openToast({
@@ -209,6 +197,7 @@ export function CustomizeAppStorefrontPage({
 						onDelete={handleDelete}
 						type="image"
 						uploadedFiles={appStorefrontImages}
+						uploadedImages={appStorefrontImages}
 					/>
 				)}
 

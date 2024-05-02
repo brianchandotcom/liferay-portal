@@ -65,6 +65,7 @@ type FileListProps = {
 	onDelete: (id: string, versionName?: string) => void;
 	type: 'document' | 'image';
 	uploadedFiles: UploadedFile[];
+	uploadedImages?: UploadedFile[];
 	versionName?: string;
 };
 
@@ -74,6 +75,7 @@ export function FileList({
 	onDelete,
 	type,
 	uploadedFiles,
+	uploadedImages,
 	versionName,
 }: FileListProps) {
 	return (
@@ -102,6 +104,7 @@ export function FileList({
 							position={uploadedFiles.length}
 							tooltip="Use the image description to provide more context about the screenshot, such as what is the user trying to accomplish, what are the business requirements met by this screen or anything else you feel would be helpful to guide your potential customer.  This content will be provided in the form of a mouse over of the image."
 							uploadedFile={uploadedFile}
+							uploadedImages={uploadedImages}
 							versionName={versionName}
 						/>
 					);

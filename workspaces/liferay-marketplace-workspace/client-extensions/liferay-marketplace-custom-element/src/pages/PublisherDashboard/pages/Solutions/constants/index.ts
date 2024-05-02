@@ -79,3 +79,5 @@ export const SOLUTION_FLOW_ITEMS = [
 		title: 'Review and submit solution',
 	},
 ];
+
+export const MAX_IMAGE_QUANTITY = 5;

@@ -5,14 +5,23 @@
 
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {useState} from 'react';
+import {filesize} from 'filesize';
 import ReactQuill from 'react-quill';
 
 import {DropzoneUpload} from '../../../../../../components/DropzoneUpload/DropzoneUpload';
+import {
+	FileList,
+	UploadedFile,
+} from '../../../../../../components/FileList/FileList';
 import Form from '../../../../../../components/MarketplaceForm';
+import {
+	SolutionTypes,
+	useSolutionContext,
+} from '../../../../../../context/SolutionContext';
 import i18n from '../../../../../../i18n';
+import {swapImageElements} from '../../../../constants';
 import {ACCEPT_FILE_TYPES} from '../../../Apps/AppCreationFlow/StorefrontPage/CustomizeAppStorefrontPage';
-import {MAX_SIZE_5MBS} from '../../constants';
+import {MAX_IMAGE_QUANTITY, MAX_SIZE_5MBS} from '../../constants';
 
 enum RadioOptions {
 	EMBED_VIDEO_URL = 'embed-video-url',
@@ -20,10 +29,74 @@ enum RadioOptions {
 }
 
 const Header = () => {
-	const [editorValue, setEditorValue] = useState('');
-	const [radioValue, setRadioValue] = useState('');
+	const [
+		{
+			header: {description, headerImages, radioValue, title},
+		},
+		dispatch,
+	] = useSolutionContext();
 
-	const handleUpload = (_files: File[]) => null;
+	const handleUpload = (files: File[]) => {
+		if (
+			files.length > MAX_IMAGE_QUANTITY ||
+			headerImages?.length > MAX_IMAGE_QUANTITY
+		) {
+			return;
+		}
+
+		if ((headerImages?.length || 0) + files.length <= MAX_IMAGE_QUANTITY) {
+			const newUploadedFiles: UploadedFile[] = files.map((file) => ({
+				changed: false,
+				error: false,
+				file,
+				fileName: file.name,
+				id: crypto.randomUUID(),
+				index: 0,
+				preview: URL.createObjectURL(file),
+				progress: 0,
+				readableSize: filesize(file.size),
+				uploaded: false,
+			}));
+
+			dispatch({
+				payload: {
+					headerImages: headerImages?.length
+						? [...headerImages, ...newUploadedFiles]
+						: newUploadedFiles,
+				},
+				type: SolutionTypes.SET_HEADER,
+			});
+		}
+	};
+
+	const handleDelete = async (id: string) => {
+		const files = headerImages.filter(
+			(uploadedFile) => uploadedFile.id !== id
+		);
+
+		dispatch({
+			payload: {
+				headerImages: files,
+			},
+			type: SolutionTypes.SET_HEADER,
+		});
+	};
+
+	const handleArrowClick = (index: number, direction: string) => {
+		const newIndex = direction === 'up' ? index - 1 : index + 1;
+
+		const files = swapImageElements(headerImages, index, newIndex);
+
+		files[index].changed = true;
+		files[newIndex].changed = true;
+
+		dispatch({
+			payload: {
+				headerImages,
+			},
+			type: SolutionTypes.SET_HEADER,
+		});
+	};
 
 	return (
 		<div className="mb-4 solutions-form-header">
@@ -31,25 +104,42 @@ const Header = () => {
 
 			<hr />
 
-			<Form.Label className="mt-2" htmlFor="title" required>
+			<Form.Label className="mt-2" htmlFor="title" info="Title" required>
 				Title
 			</Form.Label>
 
 			<Form.Input
 				name="title"
+				onChange={(event) =>
+					dispatch({
+						payload: {[event.target.name]: event.target.value},
+						type: SolutionTypes.SET_HEADER,
+					})
+				}
 				placeholder="Enter title header"
 				type="text"
+				value={title}
 			/>
 
-			<Form.Label className="mt-5" htmlFor="description" required>
+			<Form.Label
+				className="mt-5"
+				htmlFor="description"
+				info="Description"
+				required
+			>
 				{i18n.translate('description')}
 			</Form.Label>
 
 			<div className="rich-text-editor">
 				<ReactQuill
-					onChange={(value) => setEditorValue(value)}
+					onChange={(event: any) => {
+						dispatch({
+							payload: {description: event},
+							type: SolutionTypes.SET_HEADER,
+						});
+					}}
 					placeholder="Insert text here"
-					value={editorValue}
+					value={description as any}
 				/>
 			</div>
 
@@ -57,20 +147,19 @@ const Header = () => {
 				Content Media Type
 			</Form.Label>
 
-			<ClayRadioGroup className="d-flex flex-column mt-1">
-				<ClayRadio
-					label="Upload images"
-					onClick={() => {
-						setRadioValue(RadioOptions.UPLOAD_IMAGES);
-					}}
-					value="upload-images"
-				/>
+			<ClayRadioGroup
+				className="d-flex flex-column mt-1"
+				onChange={(event: any) => {
+					dispatch({
+						payload: {radioValue: event},
+						type: SolutionTypes.SET_HEADER,
+					});
+				}}
+				value={radioValue}
+			>
+				<ClayRadio label="Upload images" value="upload-images" />
 
-				<ClayRadio
-					label="Embed video URL"
-					onClick={() => setRadioValue(RadioOptions.EMBED_VIDEO_URL)}
-					value="embed-video-url"
-				/>
+				<ClayRadio label="Embed video URL" value="embed-video-url" />
 			</ClayRadioGroup>
 
 			{radioValue === RadioOptions.EMBED_VIDEO_URL && (
@@ -109,6 +198,17 @@ const Header = () => {
 					<Form.Label className="mb-4 mt-2" htmlFor="description">
 						Add up to 5 images
 					</Form.Label>
+
+					{headerImages?.length > 0 && (
+						<FileList
+							isProcessing={false}
+							onArrowClick={handleArrowClick}
+							onDelete={handleDelete}
+							type="image"
+							uploadedFiles={headerImages}
+							uploadedImages={headerImages}
+						/>
+					)}
 
 					<DropzoneUpload
 						acceptFileTypes={ACCEPT_FILE_TYPES}

@@ -15,8 +15,6 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
-import {useAppContext} from '../../pages/PublisherDashboard/pages/Apps/AppCreationFlow/AppContext/AppManageState';
-import {TYPES} from '../../pages/PublisherDashboard/pages/Apps/AppCreationFlow/AppContext/actionTypes';
 import CircularProgress from '../CircularProgress';
 
 type ImageFileItemProps = {
@@ -27,6 +25,7 @@ type ImageFileItemProps = {
 	position: number;
 	tooltip?: string;
 	uploadedFile: UploadedFile;
+	uploadedImages: any;
 	versionName?: string;
 };
 
@@ -38,9 +37,10 @@ export function ImageFileItem({
 	position,
 	tooltip,
 	uploadedFile,
+	uploadedImages,
 	versionName,
 }: ImageFileItemProps) {
-	const [{appStorefrontImages}, dispatch] = useAppContext();
+	// const [{appStorefrontImages}, dispatch] = useAppContext();
 
 	const showProgress =
 		isProcessing && !uploadedFile.uploaded && uploadedFile.progress > 0;
@@ -130,20 +130,20 @@ export function ImageFileItem({
 				<div className="align-items-center d-flex">
 					<ClayInput
 						onChange={({target}) => {
-							appStorefrontImages[index].imageDescription =
+							uploadedImages[index].imageDescription =
 								target.value;
 
-							appStorefrontImages[index].changed = true;
+							uploadedImages[index].changed = true;
 
-							dispatch({
-								payload: {
-									files: appStorefrontImages,
-								},
-								type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
-							});
+							// dispatch({
+							// 	payload: {
+							// 		files: appStorefrontImages,
+							// 	},
+							// 	type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+							// });
 						}}
 						placeholder="Image description"
-						value={appStorefrontImages[index].imageDescription}
+						value={uploadedImages[index].imageDescription}
 					/>
 
 					{tooltip && (

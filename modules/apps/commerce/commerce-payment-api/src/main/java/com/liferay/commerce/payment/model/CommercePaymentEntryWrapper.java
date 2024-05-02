@@ -55,6 +55,7 @@ public class CommercePaymentEntryWrapper
 		attributes.put("errorMessages", getErrorMessages());
 		attributes.put("languageId", getLanguageId());
 		attributes.put("note", getNote());
+		attributes.put("payload", getPayload());
 		attributes.put("paymentIntegrationKey", getPaymentIntegrationKey());
 		attributes.put("paymentIntegrationType", getPaymentIntegrationType());
 		attributes.put("paymentStatus", getPaymentStatus());
@@ -177,6 +178,12 @@ public class CommercePaymentEntryWrapper
 
 		if (note != null) {
 			setNote(note);
+		}
+
+		String payload = (String)attributes.get("payload");
+
+		if (payload != null) {
+			setPayload(payload);
 		}
 
 		String paymentIntegrationKey = (String)attributes.get(
@@ -413,6 +420,16 @@ public class CommercePaymentEntryWrapper
 	@Override
 	public String getNote() {
 		return model.getNote();
+	}
+
+	/**
+	 * Returns the payload of this commerce payment entry.
+	 *
+	 * @return the payload of this commerce payment entry
+	 */
+	@Override
+	public String getPayload() {
+		return model.getPayload();
 	}
 
 	/**
@@ -784,6 +801,16 @@ public class CommercePaymentEntryWrapper
 	@Override
 	public void setNote(String note) {
 		model.setNote(note);
+	}
+
+	/**
+	 * Sets the payload of this commerce payment entry.
+	 *
+	 * @param payload the payload of this commerce payment entry
+	 */
+	@Override
+	public void setPayload(String payload) {
+		model.setPayload(payload);
 	}
 
 	/**

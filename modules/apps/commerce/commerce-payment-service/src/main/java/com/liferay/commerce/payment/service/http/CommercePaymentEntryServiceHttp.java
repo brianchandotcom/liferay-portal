@@ -46,9 +46,9 @@ public class CommercePaymentEntryServiceHttp {
 				HttpPrincipal httpPrincipal, long classNameId, long classPK,
 				long commerceChannelId, java.math.BigDecimal amount,
 				String callbackURL, String cancelURL, String currencyCode,
-				String languageId, String note, String paymentIntegrationKey,
-				int paymentIntegrationType, String reasonKey,
-				String transactionCode, int type,
+				String languageId, String note, String payload,
+				String paymentIntegrationKey, int paymentIntegrationType,
+				String reasonKey, String transactionCode, int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -60,7 +60,7 @@ public class CommercePaymentEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, classNameId, classPK, commerceChannelId, amount,
-				callbackURL, cancelURL, currencyCode, languageId, note,
+				callbackURL, cancelURL, currencyCode, languageId, note, payload,
 				paymentIntegrationKey, paymentIntegrationType, reasonKey,
 				transactionCode, type, serviceContext);
 
@@ -99,9 +99,10 @@ public class CommercePaymentEntryServiceHttp {
 				long classNameId, long classPK, long commerceChannelId,
 				java.math.BigDecimal amount, String callbackURL,
 				String cancelURL, String currencyCode, String errorMessages,
-				String languageId, String note, String paymentIntegrationKey,
-				int paymentIntegrationType, int paymentStatus, String reasonKey,
-				String redirectURL, String transactionCode, int type,
+				String languageId, String note, String payload,
+				String paymentIntegrationKey, int paymentIntegrationType,
+				int paymentStatus, String reasonKey, String redirectURL,
+				String transactionCode, int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -114,7 +115,7 @@ public class CommercePaymentEntryServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, classNameId, classPK,
 				commerceChannelId, amount, callbackURL, cancelURL, currencyCode,
-				errorMessages, languageId, note, paymentIntegrationKey,
+				errorMessages, languageId, note, payload, paymentIntegrationKey,
 				paymentIntegrationType, paymentStatus, reasonKey, redirectURL,
 				transactionCode, type, serviceContext);
 
@@ -476,9 +477,10 @@ public class CommercePaymentEntryServiceHttp {
 				long commercePaymentEntryId, long commerceChannelId,
 				java.math.BigDecimal amount, String callbackURL,
 				String cancelURL, String currencyCode, String errorMessages,
-				String languageId, String note, String paymentIntegrationKey,
-				int paymentIntegrationType, int paymentStatus, String reasonKey,
-				String redirectURL, String transactionCode, int type)
+				String languageId, String note, String payload,
+				String paymentIntegrationKey, int paymentIntegrationType,
+				int paymentStatus, String reasonKey, String redirectURL,
+				String transactionCode, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -490,7 +492,7 @@ public class CommercePaymentEntryServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, commercePaymentEntryId,
 				commerceChannelId, amount, callbackURL, cancelURL, currencyCode,
-				errorMessages, languageId, note, paymentIntegrationKey,
+				errorMessages, languageId, note, payload, paymentIntegrationKey,
 				paymentIntegrationType, paymentStatus, reasonKey, redirectURL,
 				transactionCode, type);
 
@@ -660,16 +662,17 @@ public class CommercePaymentEntryServiceHttp {
 		new Class[] {
 			long.class, long.class, long.class, java.math.BigDecimal.class,
 			String.class, String.class, String.class, String.class,
-			String.class, String.class, int.class, String.class, String.class,
-			int.class, com.liferay.portal.kernel.service.ServiceContext.class
+			String.class, String.class, String.class, int.class, String.class,
+			String.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_addOrUpdateCommercePaymentEntryParameterTypes1 = new Class[] {
 			String.class, long.class, long.class, long.class,
 			java.math.BigDecimal.class, String.class, String.class,
 			String.class, String.class, String.class, String.class,
-			String.class, int.class, int.class, String.class, String.class,
-			String.class, int.class,
+			String.class, String.class, int.class, int.class, String.class,
+			String.class, String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommercePaymentEntryParameterTypes2 =
@@ -700,8 +703,8 @@ public class CommercePaymentEntryServiceHttp {
 		new Class[] {
 			String.class, long.class, long.class, java.math.BigDecimal.class,
 			String.class, String.class, String.class, String.class,
-			String.class, String.class, String.class, int.class, int.class,
-			String.class, String.class, String.class, int.class
+			String.class, String.class, String.class, String.class, int.class,
+			int.class, String.class, String.class, String.class, int.class
 		};
 	private static final Class<?>[]
 		_updateExternalReferenceCodeParameterTypes10 = new Class[] {

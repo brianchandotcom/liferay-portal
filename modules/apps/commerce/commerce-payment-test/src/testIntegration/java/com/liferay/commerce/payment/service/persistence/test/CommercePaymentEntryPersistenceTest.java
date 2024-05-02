@@ -157,6 +157,8 @@ public class CommercePaymentEntryPersistenceTest {
 
 		newCommercePaymentEntry.setNote(RandomTestUtil.randomString());
 
+		newCommercePaymentEntry.setPayload(RandomTestUtil.randomString());
+
 		newCommercePaymentEntry.setPaymentIntegrationKey(
 			RandomTestUtil.randomString());
 
@@ -239,6 +241,9 @@ public class CommercePaymentEntryPersistenceTest {
 		Assert.assertEquals(
 			existingCommercePaymentEntry.getNote(),
 			newCommercePaymentEntry.getNote());
+		Assert.assertEquals(
+			existingCommercePaymentEntry.getPayload(),
+			newCommercePaymentEntry.getPayload());
 		Assert.assertEquals(
 			existingCommercePaymentEntry.getPaymentIntegrationKey(),
 			newCommercePaymentEntry.getPaymentIntegrationKey());
@@ -706,6 +711,8 @@ public class CommercePaymentEntryPersistenceTest {
 		commercePaymentEntry.setLanguageId(RandomTestUtil.randomString());
 
 		commercePaymentEntry.setNote(RandomTestUtil.randomString());
+
+		commercePaymentEntry.setPayload(RandomTestUtil.randomString());
 
 		commercePaymentEntry.setPaymentIntegrationKey(
 			RandomTestUtil.randomString());

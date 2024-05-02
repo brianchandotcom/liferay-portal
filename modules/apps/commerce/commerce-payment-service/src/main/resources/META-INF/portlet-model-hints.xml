@@ -30,6 +30,9 @@
 		<field name="note" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="payload" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="paymentIntegrationKey" type="String" />
 		<field name="paymentIntegrationType" type="int" />
 		<field name="paymentStatus" type="int" />

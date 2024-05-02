@@ -71,7 +71,7 @@ public class CommercePaymentEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -109,6 +109,8 @@ public class CommercePaymentEntryCacheModel
 		sb.append(languageId);
 		sb.append(", note=");
 		sb.append(note);
+		sb.append(", payload=");
+		sb.append(payload);
 		sb.append(", paymentIntegrationKey=");
 		sb.append(paymentIntegrationKey);
 		sb.append(", paymentIntegrationType=");
@@ -218,6 +220,13 @@ public class CommercePaymentEntryCacheModel
 			commercePaymentEntryImpl.setNote(note);
 		}
 
+		if (payload == null) {
+			commercePaymentEntryImpl.setPayload("");
+		}
+		else {
+			commercePaymentEntryImpl.setPayload(payload);
+		}
+
 		if (paymentIntegrationKey == null) {
 			commercePaymentEntryImpl.setPaymentIntegrationKey("");
 		}
@@ -293,6 +302,7 @@ public class CommercePaymentEntryCacheModel
 		errorMessages = (String)objectInput.readObject();
 		languageId = objectInput.readUTF();
 		note = (String)objectInput.readObject();
+		payload = (String)objectInput.readObject();
 		paymentIntegrationKey = objectInput.readUTF();
 
 		paymentIntegrationType = objectInput.readInt();
@@ -382,6 +392,13 @@ public class CommercePaymentEntryCacheModel
 			objectOutput.writeObject(note);
 		}
 
+		if (payload == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(payload);
+		}
+
 		if (paymentIntegrationKey == null) {
 			objectOutput.writeUTF("");
 		}
@@ -442,6 +459,7 @@ public class CommercePaymentEntryCacheModel
 	public String errorMessages;
 	public String languageId;
 	public String note;
+	public String payload;
 	public String paymentIntegrationKey;
 	public int paymentIntegrationType;
 	public int paymentStatus;

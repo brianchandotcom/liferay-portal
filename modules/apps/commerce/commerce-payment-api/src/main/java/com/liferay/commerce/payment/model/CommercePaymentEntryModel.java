@@ -365,6 +365,21 @@ public interface CommercePaymentEntryModel
 	public void setNote(String note);
 
 	/**
+	 * Returns the payload of this commerce payment entry.
+	 *
+	 * @return the payload of this commerce payment entry
+	 */
+	@AutoEscape
+	public String getPayload();
+
+	/**
+	 * Sets the payload of this commerce payment entry.
+	 *
+	 * @param payload the payload of this commerce payment entry
+	 */
+	public void setPayload(String payload);
+
+	/**
 	 * Returns the payment integration key of this commerce payment entry.
 	 *
 	 * @return the payment integration key of this commerce payment entry

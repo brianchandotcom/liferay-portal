@@ -80,6 +80,8 @@ public class CommercePaymentEntryTable
 			"languageId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommercePaymentEntryTable, Clob> note = createColumn(
 		"note", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<CommercePaymentEntryTable, Clob> payload = createColumn(
+		"payload", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<CommercePaymentEntryTable, String>
 		paymentIntegrationKey = createColumn(
 			"paymentIntegrationKey", String.class, Types.VARCHAR,

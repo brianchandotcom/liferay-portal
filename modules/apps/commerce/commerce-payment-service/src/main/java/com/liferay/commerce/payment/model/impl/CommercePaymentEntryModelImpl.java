@@ -83,7 +83,7 @@ public class CommercePaymentEntryModelImpl
 		{"callbackURL", Types.CLOB}, {"cancelURL", Types.CLOB},
 		{"currencyCode", Types.VARCHAR}, {"errorMessages", Types.CLOB},
 		{"languageId", Types.VARCHAR}, {"note", Types.CLOB},
-		{"paymentIntegrationKey", Types.VARCHAR},
+		{"payload", Types.CLOB}, {"paymentIntegrationKey", Types.VARCHAR},
 		{"paymentIntegrationType", Types.INTEGER},
 		{"paymentStatus", Types.INTEGER}, {"reasonKey", Types.VARCHAR},
 		{"reasonName", Types.VARCHAR}, {"redirectURL", Types.CLOB},
@@ -112,6 +112,7 @@ public class CommercePaymentEntryModelImpl
 		TABLE_COLUMNS_MAP.put("errorMessages", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("note", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("payload", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("paymentIntegrationKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("paymentIntegrationType", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("paymentStatus", Types.INTEGER);
@@ -123,7 +124,7 @@ public class CommercePaymentEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePaymentEntry (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commercePaymentEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceChannelId LONG,amount BIGDECIMAL null,callbackURL TEXT null,cancelURL TEXT null,currencyCode VARCHAR(75) null,errorMessages TEXT null,languageId VARCHAR(75) null,note TEXT null,paymentIntegrationKey VARCHAR(75) null,paymentIntegrationType INTEGER,paymentStatus INTEGER,reasonKey VARCHAR(75) null,reasonName STRING null,redirectURL TEXT null,transactionCode VARCHAR(255) null,type_ INTEGER)";
+		"create table CommercePaymentEntry (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commercePaymentEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceChannelId LONG,amount BIGDECIMAL null,callbackURL TEXT null,cancelURL TEXT null,currencyCode VARCHAR(75) null,errorMessages TEXT null,languageId VARCHAR(75) null,note TEXT null,payload TEXT null,paymentIntegrationKey VARCHAR(75) null,paymentIntegrationType INTEGER,paymentStatus INTEGER,reasonKey VARCHAR(75) null,reasonName STRING null,redirectURL TEXT null,transactionCode VARCHAR(255) null,type_ INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommercePaymentEntry";
@@ -326,6 +327,8 @@ public class CommercePaymentEntryModelImpl
 				"languageId", CommercePaymentEntry::getLanguageId);
 			attributeGetterFunctions.put("note", CommercePaymentEntry::getNote);
 			attributeGetterFunctions.put(
+				"payload", CommercePaymentEntry::getPayload);
+			attributeGetterFunctions.put(
 				"paymentIntegrationKey",
 				CommercePaymentEntry::getPaymentIntegrationKey);
 			attributeGetterFunctions.put(
@@ -433,6 +436,10 @@ public class CommercePaymentEntryModelImpl
 				"note",
 				(BiConsumer<CommercePaymentEntry, String>)
 					CommercePaymentEntry::setNote);
+			attributeSetterBiConsumers.put(
+				"payload",
+				(BiConsumer<CommercePaymentEntry, String>)
+					CommercePaymentEntry::setPayload);
 			attributeSetterBiConsumers.put(
 				"paymentIntegrationKey",
 				(BiConsumer<CommercePaymentEntry, String>)
@@ -864,6 +871,26 @@ public class CommercePaymentEntryModelImpl
 
 	@JSON
 	@Override
+	public String getPayload() {
+		if (_payload == null) {
+			return "";
+		}
+		else {
+			return _payload;
+		}
+	}
+
+	@Override
+	public void setPayload(String payload) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_payload = payload;
+	}
+
+	@JSON
+	@Override
 	public String getPaymentIntegrationKey() {
 		if (_paymentIntegrationKey == null) {
 			return "";
@@ -1254,6 +1281,7 @@ public class CommercePaymentEntryModelImpl
 		commercePaymentEntryImpl.setErrorMessages(getErrorMessages());
 		commercePaymentEntryImpl.setLanguageId(getLanguageId());
 		commercePaymentEntryImpl.setNote(getNote());
+		commercePaymentEntryImpl.setPayload(getPayload());
 		commercePaymentEntryImpl.setPaymentIntegrationKey(
 			getPaymentIntegrationKey());
 		commercePaymentEntryImpl.setPaymentIntegrationType(
@@ -1311,6 +1339,8 @@ public class CommercePaymentEntryModelImpl
 			this.<String>getColumnOriginalValue("languageId"));
 		commercePaymentEntryImpl.setNote(
 			this.<String>getColumnOriginalValue("note"));
+		commercePaymentEntryImpl.setPayload(
+			this.<String>getColumnOriginalValue("payload"));
 		commercePaymentEntryImpl.setPaymentIntegrationKey(
 			this.<String>getColumnOriginalValue("paymentIntegrationKey"));
 		commercePaymentEntryImpl.setPaymentIntegrationType(
@@ -1512,6 +1542,14 @@ public class CommercePaymentEntryModelImpl
 			commercePaymentEntryCacheModel.note = null;
 		}
 
+		commercePaymentEntryCacheModel.payload = getPayload();
+
+		String payload = commercePaymentEntryCacheModel.payload;
+
+		if ((payload != null) && (payload.length() == 0)) {
+			commercePaymentEntryCacheModel.payload = null;
+		}
+
 		commercePaymentEntryCacheModel.paymentIntegrationKey =
 			getPaymentIntegrationKey();
 
@@ -1644,6 +1682,7 @@ public class CommercePaymentEntryModelImpl
 	private String _errorMessages;
 	private String _languageId;
 	private String _note;
+	private String _payload;
 	private String _paymentIntegrationKey;
 	private int _paymentIntegrationType;
 	private int _paymentStatus;
@@ -1704,6 +1743,7 @@ public class CommercePaymentEntryModelImpl
 		_columnOriginalValues.put("errorMessages", _errorMessages);
 		_columnOriginalValues.put("languageId", _languageId);
 		_columnOriginalValues.put("note", _note);
+		_columnOriginalValues.put("payload", _payload);
 		_columnOriginalValues.put(
 			"paymentIntegrationKey", _paymentIntegrationKey);
 		_columnOriginalValues.put(
@@ -1773,21 +1813,23 @@ public class CommercePaymentEntryModelImpl
 
 		columnBitmasks.put("note", 131072L);
 
-		columnBitmasks.put("paymentIntegrationKey", 262144L);
+		columnBitmasks.put("payload", 262144L);
 
-		columnBitmasks.put("paymentIntegrationType", 524288L);
+		columnBitmasks.put("paymentIntegrationKey", 524288L);
 
-		columnBitmasks.put("paymentStatus", 1048576L);
+		columnBitmasks.put("paymentIntegrationType", 1048576L);
 
-		columnBitmasks.put("reasonKey", 2097152L);
+		columnBitmasks.put("paymentStatus", 2097152L);
 
-		columnBitmasks.put("reasonName", 4194304L);
+		columnBitmasks.put("reasonKey", 4194304L);
 
-		columnBitmasks.put("redirectURL", 8388608L);
+		columnBitmasks.put("reasonName", 8388608L);
 
-		columnBitmasks.put("transactionCode", 16777216L);
+		columnBitmasks.put("redirectURL", 16777216L);
 
-		columnBitmasks.put("type_", 33554432L);
+		columnBitmasks.put("transactionCode", 33554432L);
+
+		columnBitmasks.put("type_", 67108864L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -30,6 +30,7 @@ create table CommercePaymentEntry (
 	errorMessages TEXT null,
 	languageId VARCHAR(75) null,
 	note TEXT null,
+	payload TEXT null,
 	paymentIntegrationKey VARCHAR(75) null,
 	paymentIntegrationType INTEGER,
 	paymentStatus INTEGER,

@@ -19,9 +19,9 @@ public class JobUtil {
 			return null;
 		}
 
-		if (jobName.contains("$(current_date)")) {
+		if (jobName.contains("$[current_date]")) {
 			jobName = jobName.replaceAll(
-				"\\$\\(current_date\\)", _simpleDateFormat.format(new Date()));
+				"\\$\\[current_date\\]", _simpleDateFormat.format(new Date()));
 		}
 
 		return jobName;

@@ -37,7 +37,7 @@ public class AddJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 
 		RoutineEntity routineEntity = jobEntity.getRoutineEntity();
 
-		if (routineEntity != null) {
+		if (routineEntity instanceof UpstreamBranchRoutineEntity) {
 			UpstreamBranchRoutineEntity upstreamBranchRoutineEntity =
 				(UpstreamBranchRoutineEntity)routineEntity;
 

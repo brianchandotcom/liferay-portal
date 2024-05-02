@@ -16,8 +16,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.AopInvocationHandler;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -34,10 +32,10 @@ public abstract class Pre7UpgradeProcess extends UpgradeProcess {
 
 	@Override
 	public void upgrade() throws UpgradeException {
-		try (Closeable closeable = _injectFieldProxy(
-				PortalBeanLocatorUtil.locate(
-					CounterLocalService.class.getName()),
-				"counterFinder", Pre7CounterFinderImpl.class)) {
+		try (Closeable closeable = _injectField(
+			PortalBeanLocatorUtil.locate(
+				CounterLocalService.class.getName()),
+			"counterFinder", Pre7CounterFinderImpl.class)) {
 
 			super.upgrade();
 		}
@@ -49,17 +47,11 @@ public abstract class Pre7UpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private Closeable _injectFieldProxy(
-			Object springServiceProxy, String fieldName, Class<?> wrapperClass)
+	private Closeable _injectField(
+		Object springService, String fieldName, Class<?> wrapperClass)
 		throws Exception {
 
-		AopInvocationHandler aopInvocationHandler =
-			ProxyUtil.fetchInvocationHandler(
-				springServiceProxy, AopInvocationHandler.class);
-
-		Object target = aopInvocationHandler.getTarget();
-
-		Class<?> clazz = target.getClass();
+		Class<?> clazz = springService.getClass();
 
 		Field field = null;
 
@@ -81,29 +73,30 @@ public abstract class Pre7UpgradeProcess extends UpgradeProcess {
 		if (field == null) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
-					"Unable to locate field ", fieldName, " in ", target));
+					"Unable to locate field ", fieldName, " in ",
+					springService));
 		}
 
 		final Field finalField = field;
 
-		Object previousValue = finalField.get(target);
+		Object previousValue = finalField.get(springService);
 
 		Constructor<?> constructor = wrapperClass.getDeclaredConstructor(
 			finalField.getType());
 
 		constructor.setAccessible(true);
 
-		finalField.set(target, constructor.newInstance(previousValue));
+		finalField.set(springService, constructor.newInstance(previousValue));
 
 		return new Closeable() {
 
 			@Override
 			public void close() throws IOException {
 				try {
-					finalField.set(target, previousValue);
+					finalField.set(springService, previousValue);
 				}
 				catch (ReflectiveOperationException
-							reflectiveOperationException) {
+					reflectiveOperationException) {
 
 					throw new IOException(reflectiveOperationException);
 				}

@@ -8,7 +8,7 @@
 	<ul class="list-unstyled tab-list">
 		<li class="facet-value">
 			<@clay.button
-				cssClass="tab-btn facet-clear btn-unstyled ${assetCategoriesSearchFacetDisplayContext.isNothingSelected()?then('selected-tab-btn', '')}"
+				cssClass="btn-unstyled facet-clear tab-btn ${assetCategoriesSearchFacetDisplayContext.isNothingSelected()?then('selected-tab-btn', '')}"
 				displayType="link"
 				onClick="${namespace}updateSelection(event)"
 				value="clear"
@@ -24,7 +24,7 @@
 		<#list entries as entry>
 			<li class="facet-value">
 				<@clay.button
-					cssClass="tab-btn facet-term btn-unstyled term-name ${(entry.isSelected())?then('selected-tab-btn', '')}"
+					cssClass="btn-unstyled facet-term tab-btn term-name ${(entry.isSelected())?then('selected-tab-btn', '')}"
 					data\-term\-id="${entry.getFilterValue()}"
 					disabled="true"
 					displayType="link"
@@ -42,7 +42,7 @@
 </#if>
 
 <@liferay_aui.script>
-	  function handleStyleTabs(event) {
+	function handleStyleTabs(event) {
 		const targetButton = event.currentTarget;
 		const buttons = document.querySelectorAll('.tab-btn');
 
@@ -51,7 +51,7 @@
 		});
 
 		targetButton.classList.add('selected-tab-btn');
-	  }
+	}
 
 	function ${namespace}updateSelection(event) {
 		handleStyleTabs(event);
@@ -61,11 +61,12 @@
 		if (form) {
 			Liferay.Search.FacetUtil.selectTerms(form, []);
 
-			  if (event.target.value === "clear") {
-				  Liferay.Search.FacetUtil.clearSelections(event);
-			  }
-
-			Liferay.Search.FacetUtil.changeSelection(event);
+			if (event.target.value === "clear") {
+				Liferay.Search.FacetUtil.clearSelections(event);
+			}
+			else {
+				Liferay.Search.FacetUtil.changeSelection(event);
+			}
 		}
 	}
 </@>

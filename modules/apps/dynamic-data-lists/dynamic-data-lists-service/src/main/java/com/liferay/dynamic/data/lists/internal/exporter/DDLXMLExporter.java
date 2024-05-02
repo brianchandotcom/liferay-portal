@@ -14,8 +14,12 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetVersionService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistry;
+import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
@@ -73,10 +77,19 @@ public class DDLXMLExporter extends BaseDDLExporter {
 
 			DDLRecordVersion recordVersion = record.getRecordVersion();
 
+			DDMStorageLink ddmStorageLink =
+				_ddmStorageLinkLocalService.getClassStorageLink(
+					recordVersion.getDDMStorageId());
+
+			DDMStructureVersion ddmStructureVersion =
+				_ddmStructureVersionLocalService.getDDMStructureVersion(
+					ddmStorageLink.getStructureVersionId());
+
 			Map<String, DDMFormFieldRenderedValue> values = getRenderedValues(
 				recordSet.getScope(), ddmFormFields.values(),
 				_ddmStorageEngineManager.getDDMFormValues(
-					recordVersion.getDDMStorageId()),
+					recordVersion.getDDMStorageId(),
+					ddmStructureVersion.getDDMForm()),
 				_htmlParser);
 
 			for (Map.Entry<String, DDMFormField> entry :
@@ -183,6 +196,12 @@ public class DDLXMLExporter extends BaseDDLExporter {
 
 	@Reference
 	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
+	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
+
+	@Reference
+	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 
 	@Reference
 	private HtmlParser _htmlParser;

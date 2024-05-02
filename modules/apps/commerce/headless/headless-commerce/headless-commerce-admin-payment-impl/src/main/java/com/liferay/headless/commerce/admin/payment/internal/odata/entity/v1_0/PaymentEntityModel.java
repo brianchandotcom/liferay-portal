@@ -30,7 +30,8 @@ public class PaymentEntityModel implements EntityModel {
 				"createDate",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
 				locale -> Field.CREATE_DATE),
-			new IntegerEntityField("id", locale -> Field.ENTRY_CLASS_PK));
+			new IntegerEntityField("id", locale -> Field.ENTRY_CLASS_PK),
+			new IntegerEntityField("classPK", locale -> "classPK"));
 	}
 
 	@Override

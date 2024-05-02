@@ -340,7 +340,7 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 			GetterUtil.getLong(payment.getChannelId()), payment.getAmount(),
 			payment.getCallbackURL(), payment.getCancelURL(),
 			payment.getCurrencyCode(), payment.getErrorMessages(),
-			payment.getLanguageId(), payment.getComment(),
+			payment.getLanguageId(), payment.getComment(), payment.getPayload(),
 			payment.getPaymentIntegrationKey(),
 			GetterUtil.getInteger(payment.getPaymentStatus()),
 			GetterUtil.getInteger(
@@ -469,6 +469,8 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 				payment.getLanguageId(), commercePaymentEntry.getLanguageId()),
 			GetterUtil.getString(
 				payment.getComment(), commercePaymentEntry.getNote()),
+			GetterUtil.getString(
+				payment.getPayload(), commercePaymentEntry.getPayload()),
 			GetterUtil.getString(
 				payment.getPaymentIntegrationKey(),
 				commercePaymentEntry.getPaymentIntegrationKey()),

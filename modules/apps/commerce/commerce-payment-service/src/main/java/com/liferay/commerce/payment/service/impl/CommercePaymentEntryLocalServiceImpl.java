@@ -76,7 +76,7 @@ public class CommercePaymentEntryLocalServiceImpl
 	public CommercePaymentEntry addCommercePaymentEntry(
 			long userId, long classNameId, long classPK, long commerceChannelId,
 			BigDecimal amount, String callbackURL, String cancelURL,
-			String currencyCode, String languageId, String note,
+			String currencyCode, String languageId, String note, String payload,
 			String paymentIntegrationKey, int paymentIntegrationType,
 			String reasonKey, String transactionCode, int type,
 			ServiceContext serviceContext)
@@ -111,6 +111,7 @@ public class CommercePaymentEntryLocalServiceImpl
 		commercePaymentEntry.setCurrencyCode(currencyCode);
 		commercePaymentEntry.setLanguageId(languageId);
 		commercePaymentEntry.setNote(note);
+		commercePaymentEntry.setPayload(payload);
 		commercePaymentEntry.setPaymentIntegrationKey(paymentIntegrationKey);
 		commercePaymentEntry.setPaymentIntegrationType(paymentIntegrationType);
 		commercePaymentEntry.setPaymentStatus(
@@ -140,9 +141,10 @@ public class CommercePaymentEntryLocalServiceImpl
 			long classPK, long commerceChannelId, BigDecimal amount,
 			String callbackURL, String cancelURL, String currencyCode,
 			String errorMessages, String languageId, String note,
-			String paymentIntegrationKey, int paymentIntegrationType,
-			int paymentStatus, String reasonKey, String redirectURL,
-			String transactionCode, int type, ServiceContext serviceContext)
+			String payload, String paymentIntegrationKey,
+			int paymentIntegrationType, int paymentStatus, String reasonKey,
+			String redirectURL, String transactionCode, int type,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isBlank(externalReferenceCode)) {
@@ -161,14 +163,14 @@ public class CommercePaymentEntryLocalServiceImpl
 				externalReferenceCode, commerceChannelId,
 				commercePaymentEntry.getCommercePaymentEntryId(), amount,
 				callbackURL, cancelURL, currencyCode, errorMessages, languageId,
-				note, paymentIntegrationKey, paymentIntegrationType,
+				note, payload, paymentIntegrationKey, paymentIntegrationType,
 				paymentStatus, reasonKey, redirectURL, transactionCode, type);
 		}
 
 		commercePaymentEntry =
 			commercePaymentEntryLocalService.addCommercePaymentEntry(
 				userId, classNameId, classPK, commerceChannelId, amount,
-				callbackURL, cancelURL, currencyCode, languageId, note,
+				callbackURL, cancelURL, currencyCode, languageId, note, payload,
 				paymentIntegrationKey, paymentIntegrationType, reasonKey,
 				transactionCode, type, serviceContext);
 
@@ -306,9 +308,10 @@ public class CommercePaymentEntryLocalServiceImpl
 			String externalReferenceCode, long commercePaymentEntryId,
 			long commerceChannelId, BigDecimal amount, String callbackURL,
 			String cancelURL, String currencyCode, String errorMessages,
-			String languageId, String note, String paymentIntegrationKey,
-			int paymentIntegrationType, int paymentStatus, String reasonKey,
-			String redirectURL, String transactionCode, int type)
+			String languageId, String note, String payload,
+			String paymentIntegrationKey, int paymentIntegrationType,
+			int paymentStatus, String reasonKey, String redirectURL,
+			String transactionCode, int type)
 		throws PortalException {
 
 		if (Validator.isBlank(externalReferenceCode)) {
@@ -339,6 +342,7 @@ public class CommercePaymentEntryLocalServiceImpl
 		commercePaymentEntry.setErrorMessages(errorMessages);
 		commercePaymentEntry.setLanguageId(languageId);
 		commercePaymentEntry.setNote(note);
+		commercePaymentEntry.setPayload(payload);
 		commercePaymentEntry.setPaymentIntegrationKey(paymentIntegrationKey);
 		commercePaymentEntry.setPaymentIntegrationType(paymentIntegrationType);
 		commercePaymentEntry.setPaymentStatus(paymentStatus);

@@ -240,7 +240,7 @@ public class CommercePaymentServlet extends HttpServlet {
 					commerceOrder.getCommerceOrderId(), commerceChannelId,
 					commerceOrder.getTotal(), null, null,
 					commerceCurrency.getCode(),
-					_language.getLanguageId(httpServletRequest), null,
+					_language.getLanguageId(httpServletRequest), null, null,
 					commerceOrder.getCommercePaymentMethodKey(),
 					commercePaymentIntegration.getPaymentIntegrationType(),
 					null, null, CommercePaymentEntryConstants.TYPE_PAYMENT,

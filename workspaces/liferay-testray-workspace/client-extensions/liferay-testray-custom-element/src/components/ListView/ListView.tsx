@@ -333,6 +333,15 @@ const ListView: React.FC<ListViewProps> = ({
 		tableProps.rowSelectable,
 	]);
 
+	useEffect(() => {
+		if (managementToolbarProps.applyFilters) {
+			dispatch({
+				payload: true,
+				type: ListViewTypes.SET_APPLY_FILTERS,
+			});
+		}
+	}, [dispatch, managementToolbarProps.applyFilters]);
+
 	if (loading || (isValidating && searchParams.get('filter'))) {
 		return <Loading />;
 	}

@@ -40,6 +40,7 @@ type ListViewColumns = {
 };
 
 export type InitialState = {
+	appliedFilter: boolean;
 	checkAll: boolean;
 	columns: ListViewColumns;
 	columnsFixed: string[];
@@ -55,6 +56,7 @@ export type InitialState = {
 };
 
 const initialState: InitialState = {
+	appliedFilter: false,
 	checkAll: false,
 	columns: {},
 	columnsFixed: [],
@@ -73,6 +75,7 @@ const initialState: InitialState = {
 };
 
 export enum ListViewTypes {
+	SET_APPLY_FILTERS = 'SET_APPLY_FILTERS',
 	SET_CHECKED_ALL_ROWS = 'SET_CHECKED_ALL_ROWS',
 	SET_CHECKED_ROW = 'SET_CHECKED_ROW',
 	SET_CLEAR = 'SET_CLEAR',
@@ -89,6 +92,7 @@ export enum ListViewTypes {
 }
 
 type ListViewPayload = {
+	[ListViewTypes.SET_APPLY_FILTERS]: boolean;
 	[ListViewTypes.SET_CHECKED_ALL_ROWS]: boolean;
 	[ListViewTypes.SET_CHECKED_ROW]: number | number[];
 	[ListViewTypes.SET_CLEAR]: null;
@@ -125,6 +129,12 @@ const getPinState = (state: InitialState, newFilter: ListViewFilter) => {
 
 const reducer = (state: InitialState, action: AppActions) => {
 	switch (action.type) {
+		case ListViewTypes.SET_APPLY_FILTERS:
+			return {
+				...state,
+				appliedFilter: action.payload,
+			};
+
 		case ListViewTypes.SET_CHECKED_ROW:
 			const rowIds = action.payload;
 
@@ -384,8 +394,12 @@ const ListViewContextProvider: React.FC<
 					...(filter && {
 						filters: filterInitialContext as ListViewFilter,
 					}),
-					...(page && {page: Number(page)}),
-					...(pageSize && {pageSize: Number(pageSize)}),
+					...(state.appliedFilter
+						? {page: Number(page)}
+						: {page: state.page}),
+					...(state.appliedFilter
+						? {pageSize: Number(pageSize)}
+						: {pageSize: state.pageSize}),
 				},
 				dispatch,
 			]}

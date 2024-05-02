@@ -19,7 +19,7 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 import {FUZZY_OPTIONS} from '../utils/constants';
 import Search from './Search';
 
-import '../../css/OrderableTable.scss';
+import '../../css/components/OrderableTable.scss';
 
 const ROW_DRAGGABLE = 'rowDraggable';
 

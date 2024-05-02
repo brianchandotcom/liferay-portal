@@ -5,7 +5,7 @@
 
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import React from 'react';
-import '../../css/OrderableTable.scss';
+import '../../css/components/OrderableTable.scss';
 interface IAction {
 	icon: string;
 	label: string;

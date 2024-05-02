@@ -5,6 +5,7 @@
 
 package com.liferay.dynamic.data.mapping.storage;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -26,6 +27,9 @@ public interface DDMStorageEngineManager {
 	public void deleteByClass(long classPK) throws PortalException;
 
 	public DDMFormValues getDDMFormValues(long classPK) throws PortalException;
+
+	public DDMFormValues getDDMFormValues(long classPK, DDMForm ddmForm)
+		throws PortalException;
 
 	public DDMFormValues getDDMFormValues(
 			long ddmStructureId, String fieldNamespace,

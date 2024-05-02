@@ -301,7 +301,9 @@ public abstract class BaseEntityDALO<T extends Entity>
 		return retryable.executeWithRetries();
 	}
 
-	private Set<JSONObject> _get(String filterString, String search, String sort) {
+	private Set<JSONObject> _get(
+		String filterString, String search, String sort) {
+
 		Set<JSONObject> jsonObjects = new HashSet<>();
 
 		int currentPage = 1;
@@ -329,7 +331,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 										String.valueOf(finalCurrentPage));
 
 									if (filterString != null) {
-										uriBuilder.queryParam("filter", filterString);
+										uriBuilder.queryParam(
+											"filter", filterString);
 									}
 
 									if (search != null) {

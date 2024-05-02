@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {IBaseVisualizationMode} from './types';
 declare const API_URL: {
 	FDS_ACTIONS: string;
 	FDS_CARDS_SECTIONS: string;
@@ -50,12 +51,7 @@ declare const FDS_DEFAULT_PROPS: {
 	};
 	style: 'fluid';
 };
-declare const DEFAULT_VISUALIZATION_MODES: {
-	label: string;
-	thumbnail: string;
-	type: string;
-	visualizationModeId: string;
-}[];
+declare const DEFAULT_VISUALIZATION_MODES: Array<IBaseVisualizationMode<any>>;
 declare const ALLOWED_ENDPOINTS_PARAMETERS: string[];
 export {
 	API_URL,

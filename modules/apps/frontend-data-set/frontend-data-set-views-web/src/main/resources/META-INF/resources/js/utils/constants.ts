@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {IBaseVisualizationMode} from './types';
+
 const API_URL = {
 	FDS_ACTIONS: '/o/data-set-manager/actions',
 	FDS_CARDS_SECTIONS: '/o/data-set-manager/cards-sections',
@@ -60,23 +62,23 @@ const FDS_DEFAULT_PROPS = {
 	style: 'fluid' as const,
 };
 
-const DEFAULT_VISUALIZATION_MODES = [
+const DEFAULT_VISUALIZATION_MODES: Array<IBaseVisualizationMode<any>> = [
 	{
 		label: Liferay.Language.get('cards'),
+		mode: 'cards',
 		thumbnail: 'cards2',
-		type: 'cards',
 		visualizationModeId: 'defaultCards',
 	},
 	{
 		label: Liferay.Language.get('list'),
+		mode: 'list',
 		thumbnail: 'list',
-		type: 'list',
 		visualizationModeId: 'defaultList',
 	},
 	{
 		label: Liferay.Language.get('table'),
+		mode: 'table',
 		thumbnail: 'table',
-		type: 'table',
 		visualizationModeId: 'defaultTable',
 	},
 ];

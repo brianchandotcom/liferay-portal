@@ -24,10 +24,10 @@ export enum EFieldType {
 	STRING = 'string',
 }
 
-export interface IBaseVisualizationMode<Type extends string> {
+export interface IBaseVisualizationMode<Mode extends string> {
 	label: string;
+	mode: Mode;
 	thumbnail: string;
-	type: Type;
 	visualizationModeId: string;
 }
 

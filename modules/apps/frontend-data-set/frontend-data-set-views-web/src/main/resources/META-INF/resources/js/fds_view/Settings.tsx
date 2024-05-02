@@ -77,13 +77,13 @@ const Settings = ({
 
 		(DEFAULT_VISUALIZATION_MODES as Array<TVisualizationMode>).forEach(
 			(view) => {
-				if (view.type === 'cards' && cards && cards.length) {
+				if (view.mode === 'cards' && cards && cards.length) {
 					activeViews.push(view);
 				}
-				if (view.type === 'list' && list && list.length) {
+				if (view.mode === 'list' && list && list.length) {
 					activeViews.push(view);
 				}
-				if (view.type === 'table' && table && table.length) {
+				if (view.mode === 'table' && table && table.length) {
 					activeViews.push(view);
 				}
 			}
@@ -95,14 +95,14 @@ const Settings = ({
 			if (
 				activeViews.find(
 					(view: TVisualizationMode) =>
-						view.type === fdsView.defaultVisualizationMode
+						view.mode === fdsView.defaultVisualizationMode
 				)
 			) {
 				return fdsView.defaultVisualizationMode;
 			}
 			else {
 				return activeViews.length
-					? activeViews[0].type
+					? activeViews[0].mode
 					: NOT_CONFIGURED_VISUALIZATION_MODE.type;
 			}
 		});
@@ -220,8 +220,8 @@ const Settings = ({
 								selectedKey={defaultVisualizationMode}
 							>
 								{visualizationModes.length ? (
-									({label, thumbnail, type}) => (
-										<Option key={type} textValue={label}>
+									({label, mode, thumbnail}) => (
+										<Option key={mode} textValue={label}>
 											<ClayIcon
 												className="mr-3"
 												symbol={thumbnail}

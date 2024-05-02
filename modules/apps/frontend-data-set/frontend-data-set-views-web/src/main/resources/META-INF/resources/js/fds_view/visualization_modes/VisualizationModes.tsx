@@ -10,12 +10,12 @@ import React, {ComponentType, useState} from 'react';
 import {IFDSViewSectionProps} from '../../FDSView';
 import {DEFAULT_VISUALIZATION_MODES} from '../../utils/constants';
 import {TVisualizationMode} from '../../utils/types';
-import Cards from './cards/Cards';
-import List from './list/List';
-import Table from './table/Table';
+import Cards from './modes/Cards';
+import List from './modes/List';
+import Table from './modes/Table';
 
 const VISUALIZATION_MODE_COMPONENT_MAP: {
-	[key in TVisualizationMode['type']]: ComponentType<IFDSViewSectionProps>;
+	[key in TVisualizationMode['mode']]: ComponentType<IFDSViewSectionProps>;
 } = {
 	cards: Cards,
 	list: List,
@@ -62,7 +62,7 @@ export default function VisualizationModes(props: IFDSViewSectionProps) {
 						(visualizationMode) => {
 							const Component =
 								VISUALIZATION_MODE_COMPONENT_MAP[
-									visualizationMode.type as TVisualizationMode['type']
+									visualizationMode.mode as TVisualizationMode['mode']
 								];
 
 							return (

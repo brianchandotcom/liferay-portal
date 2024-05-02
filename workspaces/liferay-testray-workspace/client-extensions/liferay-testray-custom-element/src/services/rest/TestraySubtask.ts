@@ -7,10 +7,10 @@ import Rest from '../../core/Rest';
 import SearchBuilder from '../../core/SearchBuilder';
 import yupSchema from '../../schema/yup';
 import {getUniqueList, waitTimeout} from '../../util';
-import {CaseResultStatuses, SubTaskStatuses} from '../../util/statuses';
+import {SubTaskStatuses} from '../../util/statuses';
+import fetcher from '../fetcher';
 import {Liferay} from '../liferay';
 import {liferayMessageBoardImpl} from './LiferayMessageBoard';
-import {testrayCaseResultImpl} from './TestrayCaseResult';
 import {testraySubtaskCaseResultImpl} from './TestraySubtaskCaseResults';
 import {APIResponse, TestraySubTask, TestraySubTaskCaseResult} from './types';
 
@@ -102,24 +102,10 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 	}
 
 	public async assignTo(subTask: TestraySubTask, userId: number) {
-		const caseResults = await this.getCaseResultsFromSubtask(subTask.id);
-
-		const caseResultIds = caseResults.map((caseResult) =>
-			Number(caseResult?.id)
-		);
-
 		const response = await this.update(subTask.id, {
 			dueStatus: SubTaskStatuses.IN_ANALYSIS,
 			userId,
 		});
-
-		await testrayCaseResultImpl.updateBatch(
-			caseResultIds,
-			caseResultIds.map(() => ({
-				dueStatus: CaseResultStatuses.IN_PROGRESS,
-				userId,
-			}))
-		);
 
 		return response;
 	}
@@ -129,19 +115,6 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			dueStatus: SubTaskStatuses.IN_ANALYSIS,
 			userId: Number(Liferay.ThemeDisplay.getUserId()),
 		});
-
-		const caseResults = await this.getCaseResultsFromSubtask(subTask.id);
-
-		const caseResultIds = caseResults.map((caseResult) =>
-			Number(caseResult?.id)
-		);
-
-		const userId = Number(Liferay.ThemeDisplay.getUserId());
-
-		await testrayCaseResultImpl.updateBatch(
-			caseResultIds,
-			caseResultIds.map(() => ({userId}))
-		);
 
 		return assignToMeUpdate;
 	}
@@ -177,7 +150,8 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 		dueStatus: string,
 		issues: string[],
 		subTaskcomment: Partial<SubtaskForm>,
-		subTaskId: number
+		subTaskId: number,
+		userId: number
 	) {
 		const _issues = issues.length ? issues.join(', ') : '';
 
@@ -201,22 +175,16 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			mbThreadId: subTaskcomment.mbThreadId,
 		});
 
-		const caseResults = await this.getCaseResultsFromSubtask(subTaskId);
-
-		const caseResultIds = caseResults.map((caseResult) =>
-			Number(caseResult?.id)
-		);
-
-		await testrayCaseResultImpl.updateBatch(
-			caseResultIds,
-			caseResultIds.map(() => ({
+		await fetcher.put(
+			`/testray-testflow/case-result/by-testray-subtaskId/${subTaskId}`,
+			{
 				comment: subTaskcomment.comment,
-				defaultMessageId: subTaskcomment.mbMessageId,
 				dueStatus,
 				issues: _issues,
 				mbMessageId: subTaskcomment.mbMessageId,
 				mbThreadId: subTaskcomment.mbThreadId,
-			}))
+				userId,
+			}
 		);
 
 		return subTaskUpdate;

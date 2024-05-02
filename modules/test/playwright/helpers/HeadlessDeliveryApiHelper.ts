@@ -64,6 +64,27 @@ export class HeadlessDeliveryApiHelper {
 		);
 	}
 
+	async postSiteKnowledgeBaseArticle({
+		articleBody,
+		siteId,
+		title,
+	}: {
+		articleBody: string;
+		siteId: string;
+		title: string;
+	}): Promise<KnowledgeBaseArticle> {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/knowledge-base-articles`,
+			{
+				data: {
+					articleBody,
+					title,
+				},
+				failOnStatusCode: true,
+			}
+		);
+	}
+
 	async postStructuredContent({
 		categoryIds,
 		contentStructureId,

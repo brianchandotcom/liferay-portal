@@ -122,8 +122,14 @@ public class TestrayProject {
 				_testrayServer.getHTTPAuthorization());
 
 			if (jsonObject.has("data")) {
-				return new TestrayRoutine(
+				TestrayRoutine newTestrayRoutine = new TestrayRoutine(
 					this, jsonObject.getJSONObject("data"));
+
+				_testrayRoutinesByName.put(
+					testrayRoutineName, newTestrayRoutine);
+				_testrayRoutinesByID.put(getID(), newTestrayRoutine);
+
+				return newTestrayRoutine;
 			}
 
 			throw new RuntimeException("Failed to create a routine");

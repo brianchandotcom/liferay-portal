@@ -120,6 +120,7 @@ const Table = <T extends BasicRow>({
 			CLAIM_STATUS: 'mdfClaimStatus',
 			DATE_SUBMITTED: 'submitDate',
 			PARTNER: 'companyName',
+			REQUEST_STATUS: 'mdfRequestStatus',
 			TYPE: 'partial',
 		};
 

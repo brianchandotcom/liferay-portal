@@ -7,17 +7,29 @@ import {useMemo} from 'react';
 
 import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
 import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
+import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
+import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
+import useGet from '../../../common/services/liferay/object/useGet';
 import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
 import getMDFActivityPeriod from '../utils/getMDFActivityPeriod';
 import getMDFBudgetInfos from '../utils/getMDFBudgetInfos';
 import getMDFDates from '../utils/getMDFDates';
 
 export default function useGetListItemsFromMDFRequests(
-	items?: MDFRequestDTO[]
+	page: number,
+	pageSize: number,
+	urlParams: URLSearchParams
 ) {
-	return useMemo(
+	const swrResponse = useGet<LiferayItems<MDFRequestDTO[]>>(
+		urlParams &&
+			`/o/${
+				LiferayAPIs.OBJECT
+			}/mdfrequests?${urlParams.toString()}&page=${page}&pageSize=${pageSize}`
+	);
+
+	const listItems = useMemo(
 		() =>
-			items?.map((item) => ({
+			swrResponse.data?.items?.map((item) => ({
 				[MDFColumnKey.BALANCE]: Number(item.totalPaidAmount)
 					? getIntlNumberFormat(item.currency).format(
 							Number(item.totalClaimedRequest) -
@@ -30,7 +42,7 @@ export default function useGetListItemsFromMDFRequests(
 					item.minDateActivity,
 					item.maxDateActivity
 				),
-				[MDFColumnKey.STATUS]: item.mdfRequestStatus?.name,
+				[MDFColumnKey.REQUEST_STATUS]: item.mdfRequestStatus?.name,
 				[MDFColumnKey.PARTNER]: item.companyName,
 				[MDFColumnKey.AMOUNT_PAID]: !Number(item.totalPaidAmount)
 					? '-'
@@ -45,6 +57,14 @@ export default function useGetListItemsFromMDFRequests(
 				...getMDFDates(item.submitDate, item.dateModified),
 				...getMDFBudgetInfos(item.totalMDFRequestAmount, item.currency),
 			})),
-		[items]
+		[swrResponse.data?.items]
 	);
+
+	return {
+		...swrResponse,
+		data: {
+			...swrResponse.data,
+			items: listItems,
+		},
+	};
 }

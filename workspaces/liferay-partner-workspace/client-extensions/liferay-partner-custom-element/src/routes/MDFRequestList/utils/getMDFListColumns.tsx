@@ -39,16 +39,17 @@ export default function getMDFListColumns(
 		const options = actions?.reduce<DropdownOption[]>(
 			(previousValue, currentValue) => {
 				const currentMDFRequestHasValidStatusToEdit =
-					row[MDFColumnKey.STATUS] === Status.DRAFT.name ||
-					row[MDFColumnKey.STATUS] === Status.REQUEST_MORE_INFO.name;
+					row[MDFColumnKey.REQUEST_STATUS] === Status.DRAFT.name ||
+					row[MDFColumnKey.REQUEST_STATUS] ===
+						Status.REQUEST_MORE_INFO.name;
 
 				const currentMDFRequestHasValidStatusToRemove =
 					(isChannel &&
 						currentValue === PermissionActionType.DELETE &&
-						row.STATUS === 'Approved') ||
+						row.REQUEST_STATUS === 'Approved') ||
 					(!isChannel &&
 						currentValue === PermissionActionType.DELETE &&
-						row.STATUS === 'Draft');
+						row.REQUEST_STATUS === 'Draft');
 
 				if (currentValue === PermissionActionType.VIEW) {
 					previousValue.push({
@@ -88,7 +89,7 @@ export default function getMDFListColumns(
 
 				if (
 					currentValue === PermissionActionType.COMPLETE &&
-					row[MDFColumnKey.STATUS] === Status.APPROVED.name
+					row[MDFColumnKey.REQUEST_STATUS] === Status.APPROVED.name
 				) {
 					previousValue.push({
 						icon: 'check',
@@ -124,7 +125,7 @@ export default function getMDFListColumns(
 
 				if (
 					currentValue === PermissionActionType.CANCEL &&
-					row[MDFColumnKey.STATUS] === Status.APPROVED.name
+					row[MDFColumnKey.REQUEST_STATUS] === Status.APPROVED.name
 				) {
 					previousValue.push({
 						icon: 'block',
@@ -236,7 +237,7 @@ export default function getMDFListColumns(
 			size: 'md',
 		},
 		{
-			columnKey: MDFColumnKey.STATUS,
+			columnKey: MDFColumnKey.REQUEST_STATUS,
 			label: 'Status',
 			render: (data) => <StatusLabel status={data as string} />,
 		},
@@ -267,10 +268,10 @@ export default function getMDFListColumns(
 			render: (_, row) => (
 				<div>
 					<p className="border-0 font-weight-normal mb-0">
-						{row['AMOUNT-CLAIMED']}
+						{row['AMOUNT_CLAIMED']}
 					</p>
 					<p className="mb-0 mt-0 text-neutral-7 text-paragraph-sm">
-						{row['AMOUNT-PAID']}
+						{row['AMOUNT_PAID']}
 					</p>
 				</div>
 			),
@@ -292,10 +293,10 @@ export default function getMDFListColumns(
 			render: (_, row) => (
 				<div>
 					<p className="border-0 font-weight-normal mb-0">
-						{row['DATE-SUBMITTED']}
+						{row['DATE_SUBMITTED']}
 					</p>
 					<p className="mb-0 mt-0 text-neutral-7 text-paragraph-sm">
-						{row['LAST-MODIFIED']}
+						{row['LAST_MODIFIED']}
 					</p>
 				</div>
 			),

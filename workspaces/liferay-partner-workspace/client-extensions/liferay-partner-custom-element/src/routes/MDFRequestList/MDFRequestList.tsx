@@ -22,20 +22,19 @@ import {MDFColumnKey} from '../../common/enums/mdfColumnKey';
 import {ObjectActionName} from '../../common/enums/objectActionName';
 import {PermissionActionType} from '../../common/enums/permissionActionType';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
+import {SortableTable} from '../../common/enums/sortableTable';
+import useDebounce from '../../common/hooks/useDebounce';
 import useIsChannel from '../../common/hooks/useIsChannel';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
 import usePermissionActions from '../../common/hooks/usePermissionActions';
 import useQueryParams from '../../common/hooks/useQueryParams';
-import MDFRequestDTO from '../../common/interfaces/dto/mdfRequestDTO';
 import {MDFRequestListItem} from '../../common/interfaces/mdfRequestListItem';
 import TableColumn from '../../common/interfaces/tableColumn';
 import {Liferay} from '../../common/services/liferay';
-import {LiferayAPIs} from '../../common/services/liferay/common/enums/apis';
-import LiferayItems from '../../common/services/liferay/common/interfaces/liferayItems';
-import useGet from '../../common/services/liferay/object/useGet';
 import {Filters} from '../../common/utils/constants/filters';
 import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
+import setURLParams from '../../common/utils/setURLParams';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromMDFRequests from './hooks/useGetListItemsFromMDFRequests';
@@ -61,27 +60,35 @@ const MDFRequestList = () => {
 		urlParams,
 		isChannel
 	);
+
 	const pagination = usePagination(urlParams);
 
-	const {data, isValidating, mutate} = useGet<LiferayItems<MDFRequestDTO[]>>(
-		filtersTerm &&
-			`/o/${LiferayAPIs.OBJECT}/mdfrequests?nestedFields=mdfReqToMDFClms&filter=${filtersTerm}&page=${pagination.activePage}&pageSize=${pagination.activeDelta}&sort=dateCreated:desc`
+	const [requestTableSort, setRequestTableSort] = useState<string>(
+		'dateCreated:desc'
 	);
 
-	const {data: dataCSV} = useGet<LiferayItems<MDFRequestDTO[]>>(
-		filtersTerm &&
-			`/o/${
-				LiferayAPIs.OBJECT
-			}/mdfrequests?nestedFields=mdfReqToMDFClms&filter=${filtersTerm}&page=${1}&pageSize=${-1}&sort=dateCreated:desc`
+	const debouncedRequestTableSort = useDebounce(requestTableSort, 1000);
+
+	const {data, isValidating, mutate} = useGetListItemsFromMDFRequests(
+		pagination.activePage,
+		pagination.activeDelta,
+		setURLParams({
+			filter: filtersTerm,
+			nestedFields: 'mdfReqToMDFClms',
+			sort: debouncedRequestTableSort,
+			urlParams,
+		})
 	);
 
-	const mdfRequestItemsCSV = dataCSV?.items;
-	const mdfRequestListItemsCSV =
-		useGetListItemsFromMDFRequests(mdfRequestItemsCSV) || [];
-
-	const mdfRequestItems = data?.items;
-	const mdfRequestListItems =
-		useGetListItemsFromMDFRequests(mdfRequestItems) || [];
+	const {data: dataCSV} = useGetListItemsFromMDFRequests(
+		pagination.activePage,
+		-1,
+		setURLParams({
+			filter: filtersTerm,
+			nestedFields: 'mdfReqToMDFClms',
+			urlParams,
+		})
+	);
 
 	const companiesEntries:
 		| React.OptionHTMLAttributes<HTMLOptionElement>[]
@@ -99,8 +106,7 @@ const MDFRequestList = () => {
 		(index) =>
 			userAccount?.accountBriefs.some(
 				(accountBrief) =>
-					accountBrief.id ===
-					mdfRequestItems?.[index].r_accToMDFReqs_accountEntryId
+					accountBrief.id === data?.items?.[index]['CAMPAIGN_NAME']
 			),
 		siteURL,
 		urlParams,
@@ -134,6 +140,12 @@ const MDFRequestList = () => {
 					<Table<MDFRequestListItem>
 						columns={columns}
 						rows={items}
+						setTableSort={setRequestTableSort}
+						sortable={[
+							SortableTable.DATE_SUBMITTED,
+							SortableTable.PARTNER,
+							SortableTable.STATUS,
+						]}
 						tableLayoutAuto
 					/>
 
@@ -261,13 +273,13 @@ const MDFRequestList = () => {
 
 						<div className="bd-highlight flex-shrink-2 mt-1">
 							{!!filters.searchTerm &&
-								!!mdfRequestItems?.length &&
+								!!data?.items?.length &&
 								!isValidating && (
 									<div>
 										<p className="font-weight-semi-bold m-0 ml-1 mt-3 text-paragraph-sm">
-											{mdfRequestItems?.length > 1
-												? `${mdfRequestItems?.length} results for ${filters.searchTerm}`
-												: `${mdfRequestItems?.length} result for ${filters.searchTerm}`}
+											{data?.items?.length > 1
+												? `${data?.items?.length} results for ${filters.searchTerm}`
+												: `${data?.items?.length} result for ${filters.searchTerm}`}
 										</p>
 									</div>
 								)}
@@ -310,14 +322,14 @@ const MDFRequestList = () => {
 				</div>
 
 				<div className="mb-2 mb-lg-0">
-					{!!mdfRequestItems?.length &&
+					{!!dataCSV?.items?.length &&
 						actions?.includes(PermissionActionType.EXPORT) && (
 							<CSVLink
 								className="btn btn-secondary mr-2"
-								data={mdfRequestListItemsCSV}
-								filename="MDF Requests.csv"
+								data={dataCSV?.items}
+								filename="MDF Claim.csv"
 							>
-								Export MDF Report
+								Export MDF Claim
 							</CSVLink>
 						)}
 
@@ -336,8 +348,7 @@ const MDFRequestList = () => {
 				</div>
 			</TableHeader>
 
-			{!isValidating &&
-				getTable(data?.totalCount, mdfRequestListItems, columns)}
+			{!isValidating && getTable(data?.totalCount, data?.items, columns)}
 
 			{isValidating && <ClayLoadingIndicator />}
 		</div>

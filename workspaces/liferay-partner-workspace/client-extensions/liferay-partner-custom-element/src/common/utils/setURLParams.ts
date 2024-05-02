@@ -5,15 +5,21 @@
 
 interface URLParamsProps {
 	filter: string;
+	nestedFields?: string;
 	sort?: string;
 	urlParams: URLSearchParams;
 }
 
 export default function setURLParams({
 	filter,
+	nestedFields,
 	sort,
 	urlParams,
 }: URLParamsProps) {
+	if (nestedFields) {
+		urlParams.set('nestedFields', nestedFields);
+	}
+
 	if (sort) {
 		urlParams.set('sort', sort);
 	}

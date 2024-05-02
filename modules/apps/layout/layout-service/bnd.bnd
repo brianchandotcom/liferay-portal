@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Layout Service
 Bundle-SymbolicName: com.liferay.layout.service
-Bundle-Version: 2.0.60
+Bundle-Version: 2.0.61
 Liferay-Require-SchemaVersion: 1.4.3
 Liferay-Service: true
 -dsannotations-options: inherit

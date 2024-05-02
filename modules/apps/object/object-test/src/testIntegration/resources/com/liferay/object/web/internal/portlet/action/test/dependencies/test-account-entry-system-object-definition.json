@@ -21,16 +21,14 @@
 			"active": true,
 			"conditionExpression": "",
 			"description": "",
-			"errorMessage": {
-			},
 			"label": {
 				"en_US": "testAction"
 			},
 			"name": "testAction",
-			"objectActionExecutorKey": "groovy",
+			"objectActionExecutorKey": "webhook",
 			"objectActionTriggerKey": "onAfterAdd",
 			"parameters": {
-				"script": "print(\"test\")"
+				"url": "www.liferay.com"
 			},
 			"status": {
 				"code": 0,

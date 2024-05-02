@@ -26,25 +26,6 @@
 			"conditionExpression": "",
 			"description": "",
 			"label": {
-				"en_US": "Action 1"
-			},
-			"name": "Action1",
-			"objectActionExecutorKey": "groovy",
-			"objectActionTriggerKey": "onAfterAdd",
-			"parameters": {
-				"script": "invalidFields = false;"
-			},
-			"status": {
-				"code": 0,
-				"label": "never-ran",
-				"label_i18n": "Never Ran"
-			}
-		},
-		{
-			"active": true,
-			"conditionExpression": "",
-			"description": "",
-			"label": {
 				"en_US": "Action 2"
 			},
 			"name": "Action2",
@@ -272,14 +253,14 @@
 	"objectValidationRules": [
 		{
 			"active": false,
-			"engine": "groovy",
+			"engine": "ddm",
 			"errorLabel": {
 				"en_US": "ErrorLabel"
 			},
 			"name": {
 				"en_US": "Validation"
 			},
-			"script": "println(\"Groovy\")"
+			"script": "script_placeholder"
 		}
 	],
 	"objectViews": [

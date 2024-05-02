@@ -920,9 +920,6 @@ public class ObjectEntryLocalServiceTest {
 				"No FileEntry exists with the key {fileEntryId=",
 				persistedFileEntryId2, "}"),
 			() -> _dlAppLocalService.getFileEntry(persistedFileEntryId2));
-
-		// Update object entry with object action
-
 	}
 
 	@Test

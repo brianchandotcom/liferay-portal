@@ -285,18 +285,19 @@ function getBreadcrumbFromURL(url) {
 		.join(' ');
 }
 
-function changeFocus(event) {
-	event.target.focus();
-}
-
-document.getElementById('searchIcon').addEventListener('click', changeFocus);
-
 const searchInput = document.getElementById('searchInput');
 const siteSearchWrapper = document.getElementById('siteSearchWrapper');
 
 searchInput.addEventListener('click', function () {
 	inputClicked = true;
 });
+
+function changeFocus() {
+	searchInput.focus();
+}
+
+const searchIcon = document.getElementById('searchIcon');
+searchIcon.addEventListener('click', changeFocus);
 
 window.addEventListener('keyup', (event) => {
 	if (event.code === 'Escape' || event.key === 'Escape') {

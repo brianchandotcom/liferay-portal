@@ -96,6 +96,15 @@ definition {
 		ACNavigation.goToSidebarOption(sidebarOption = "tests");
 	}
 
+	@summary = "Click to access the first item of the list"
+	macro openFirstItem() {
+		while ((IsElementNotPresent(locator1 = "ACNavigation#OPEN_FIRST_ITEM")) && (maxIterations = "50")) {
+			TestUtils.hardRefresh();
+		}
+
+		Click(locator1 = "ACNavigation#OPEN_FIRST_ITEM");
+	}
+
 	@summary = "Default summary"
 	macro openItem(itemName = null) {
 		var key_itemName = ${itemName};

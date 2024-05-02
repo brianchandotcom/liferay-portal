@@ -42,6 +42,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPEN_FIRST_ITEM</td>
+	<td>//div[@class='text-truncate']//a[@href]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPEN_ITEM</td>
 	<td>//a[contains(normalize-space(),'${key_itemName}')]</td>
 	<td></td>

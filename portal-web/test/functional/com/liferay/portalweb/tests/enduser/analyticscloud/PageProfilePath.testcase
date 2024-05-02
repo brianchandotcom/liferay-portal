@@ -349,9 +349,7 @@ definition {
 		}
 
 		task ("Navigate to page report entry") {
-			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, " ");
-
-			ACNavigation.openItem(itemName = "AC Page - Site Name - ${dataSourceName}");
+			ACNavigation.openFirstItem();
 		}
 
 		task ("Go to the Path tab") {

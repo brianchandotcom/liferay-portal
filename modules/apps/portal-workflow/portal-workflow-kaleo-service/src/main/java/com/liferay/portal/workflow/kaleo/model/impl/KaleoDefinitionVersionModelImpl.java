@@ -58,6 +58,7 @@ import java.util.function.Function;
  * @see KaleoDefinitionVersionImpl
  * @generated
  */
+@JSON(strict = true)
 public class KaleoDefinitionVersionModelImpl
 	extends BaseModelImpl<KaleoDefinitionVersion>
 	implements KaleoDefinitionVersionModel {
@@ -413,6 +414,7 @@ public class KaleoDefinitionVersionModelImpl
 
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -427,6 +429,7 @@ public class KaleoDefinitionVersionModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public long getCtCollectionId() {
 		return _ctCollectionId;
@@ -441,6 +444,7 @@ public class KaleoDefinitionVersionModelImpl
 		_ctCollectionId = ctCollectionId;
 	}
 
+	@JSON
 	@Override
 	public long getKaleoDefinitionVersionId() {
 		return _kaleoDefinitionVersionId;
@@ -455,6 +459,7 @@ public class KaleoDefinitionVersionModelImpl
 		_kaleoDefinitionVersionId = kaleoDefinitionVersionId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -469,6 +474,7 @@ public class KaleoDefinitionVersionModelImpl
 		_groupId = groupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -493,6 +499,7 @@ public class KaleoDefinitionVersionModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -523,6 +530,7 @@ public class KaleoDefinitionVersionModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -542,6 +550,7 @@ public class KaleoDefinitionVersionModelImpl
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -556,6 +565,7 @@ public class KaleoDefinitionVersionModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -576,6 +586,7 @@ public class KaleoDefinitionVersionModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public long getKaleoDefinitionId() {
 		return _kaleoDefinitionId;
@@ -590,6 +601,7 @@ public class KaleoDefinitionVersionModelImpl
 		_kaleoDefinitionId = kaleoDefinitionId;
 	}
 
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -618,6 +630,7 @@ public class KaleoDefinitionVersionModelImpl
 		return getColumnOriginalValue("name");
 	}
 
+	@JSON
 	@Override
 	public String getTitle() {
 		if (_title == null) {
@@ -726,6 +739,7 @@ public class KaleoDefinitionVersionModelImpl
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
+	@JSON
 	@Override
 	public String getDescription() {
 		if (_description == null) {
@@ -745,6 +759,7 @@ public class KaleoDefinitionVersionModelImpl
 		_description = description;
 	}
 
+	@JSON
 	@Override
 	public String getContent() {
 		if (_content == null) {
@@ -764,6 +779,7 @@ public class KaleoDefinitionVersionModelImpl
 		_content = content;
 	}
 
+	@JSON
 	@Override
 	public String getVersion() {
 		if (_version == null) {
@@ -792,6 +808,7 @@ public class KaleoDefinitionVersionModelImpl
 		return getColumnOriginalValue("version");
 	}
 
+	@JSON
 	@Override
 	public long getStartKaleoNodeId() {
 		return _startKaleoNodeId;
@@ -806,6 +823,7 @@ public class KaleoDefinitionVersionModelImpl
 		_startKaleoNodeId = startKaleoNodeId;
 	}
 
+	@JSON
 	@Override
 	public int getStatus() {
 		return _status;
@@ -820,6 +838,7 @@ public class KaleoDefinitionVersionModelImpl
 		_status = status;
 	}
 
+	@JSON
 	@Override
 	public long getStatusByUserId() {
 		return _statusByUserId;
@@ -850,6 +869,7 @@ public class KaleoDefinitionVersionModelImpl
 	public void setStatusByUserUuid(String statusByUserUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getStatusByUserName() {
 		if (_statusByUserName == null) {
@@ -869,6 +889,7 @@ public class KaleoDefinitionVersionModelImpl
 		_statusByUserName = statusByUserName;
 	}
 
+	@JSON
 	@Override
 	public Date getStatusDate() {
 		return _statusDate;

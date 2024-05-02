@@ -365,10 +365,10 @@ const NotificationsInfo = ({
 	useEffect(() => {
 		if (selectedItem.data.notifications) {
 			setSelectedItem((previousItem) => {
-				let recipientDetails = {};
+				const recipientDetails = {};
 
 				if (recipientType === 'assetCreator') {
-					recipientDetails = {assignmentType: ['user']};
+					recipientDetails.assignmentType = ['user'];
 
 					if (
 						selectedItem.data.notifications.recipients[
@@ -381,12 +381,8 @@ const NotificationsInfo = ({
 					}
 				}
 				else if (recipientType === 'taskAssignees') {
-					recipientDetails = {assignmentType: ['taskAssignees']};
+					recipientDetails.assignmentType = ['taskAssignees'];
 				}
-
-				const currentRecipient = {
-					...recipientDetails,
-				};
 
 				if (
 					previousItem.data.notifications.recipients[
@@ -399,16 +395,16 @@ const NotificationsInfo = ({
 						...previousItem.data.notifications.recipients[
 							notificationIndex
 						],
-						...currentRecipient,
+						...recipientDetails,
 					};
 				}
 				else {
 					previousItem.data.notifications.recipients[
 						notificationIndex
-					] = currentRecipient;
+					] = recipientDetails;
 				}
 
-				return previousItem;
+				return {...previousItem};
 			});
 		}
 

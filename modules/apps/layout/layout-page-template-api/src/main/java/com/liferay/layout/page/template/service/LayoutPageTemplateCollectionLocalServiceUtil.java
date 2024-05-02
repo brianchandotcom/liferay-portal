@@ -264,14 +264,6 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	}
 
 	public static LayoutPageTemplateCollection
-		fetchLayoutPageTemplateCollection(
-			String externalReferenceCode, long groupId) {
-
-		return getService().fetchLayoutPageTemplateCollection(
-			externalReferenceCode, groupId);
-	}
-
-	public static LayoutPageTemplateCollection
 		fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 			String externalReferenceCode, long groupId) {
 

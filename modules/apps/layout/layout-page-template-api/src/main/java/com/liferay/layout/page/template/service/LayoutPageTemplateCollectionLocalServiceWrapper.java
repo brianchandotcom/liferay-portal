@@ -293,14 +293,6 @@ public class LayoutPageTemplateCollectionLocalServiceWrapper
 	}
 
 	@Override
-	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
-		String externalReferenceCode, long groupId) {
-
-		return _layoutPageTemplateCollectionLocalService.
-			fetchLayoutPageTemplateCollection(externalReferenceCode, groupId);
-	}
-
-	@Override
 	public LayoutPageTemplateCollection
 		fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 			String externalReferenceCode, long groupId) {

@@ -232,10 +232,6 @@ public interface LayoutPageTemplateCollectionLocalService
 		long groupId, String layoutPageTemplateCollectionKey, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
-		String externalReferenceCode, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateCollection
 		fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 			String externalReferenceCode, long groupId);

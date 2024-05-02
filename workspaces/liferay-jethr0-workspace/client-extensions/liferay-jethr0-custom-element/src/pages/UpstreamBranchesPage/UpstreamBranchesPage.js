@@ -61,8 +61,8 @@ function UpstreamBranches() {
 								</Link>
 							</td>
 							<td>
-								{upstreamGitBranch.latestSHA &&
-									(<Link
+								{upstreamGitBranch.latestSHA && (
+									<Link
 										to={
 											'https://github.com/' +
 											upstreamGitBranch.userName +
@@ -76,8 +76,8 @@ function UpstreamBranches() {
 											0,
 											7
 										)}
-									</Link>)
-								}
+									</Link>
+								)}
 							</td>
 							<td>
 								<Link

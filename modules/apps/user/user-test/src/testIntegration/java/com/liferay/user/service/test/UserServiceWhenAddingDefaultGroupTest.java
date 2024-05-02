@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
@@ -17,8 +16,8 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -51,12 +50,12 @@ public class UserServiceWhenAddingDefaultGroupTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
+		long companyId = TestPropsValues.getCompanyId();
 
-		_parentGroup = GroupTestUtil.addGroupToCompany(_company.getCompanyId());
+		_parentGroup = GroupTestUtil.addGroupToCompany(companyId);
 
 		_childGroup = GroupTestUtil.addGroupToCompany(
-			_company.getCompanyId(), _parentGroup.getGroupId());
+			companyId, _parentGroup.getGroupId());
 
 		_childGroup.setMembershipRestriction(
 			GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS);
@@ -64,7 +63,7 @@ public class UserServiceWhenAddingDefaultGroupTest {
 		_childGroup = _groupLocalService.updateGroup(_childGroup);
 
 		_grandChildGroup1 = GroupTestUtil.addGroupToCompany(
-			_company.getCompanyId(), _childGroup.getGroupId());
+			companyId, _childGroup.getGroupId());
 
 		_grandChildGroup1.setMembershipRestriction(
 			GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS);
@@ -72,12 +71,13 @@ public class UserServiceWhenAddingDefaultGroupTest {
 		_grandChildGroup1 = _groupLocalService.updateGroup(_grandChildGroup1);
 
 		_grandChildGroup2 = GroupTestUtil.addGroupToCompany(
-			_company.getCompanyId(), _childGroup.getGroupId());
+			companyId, _childGroup.getGroupId());
 
-		_user = UserTestUtil.addUser(_company);
+		_user = UserTestUtil.addUser(
+			_companyLocalService.getCompany(companyId));
 
 		_companyLocalService.updatePreferences(
-			_company.getCompanyId(),
+			companyId,
 			UnicodePropertiesBuilder.put(
 				PropsKeys.ADMIN_DEFAULT_GROUP_NAMES,
 				StringBundler.concat(
@@ -99,8 +99,6 @@ public class UserServiceWhenAddingDefaultGroupTest {
 		_groupLocalService.deleteGroup(_childGroup);
 
 		_groupLocalService.deleteGroup(_parentGroup);
-
-		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Test
@@ -123,7 +121,6 @@ public class UserServiceWhenAddingDefaultGroupTest {
 	}
 
 	private Group _childGroup;
-	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

@@ -13,11 +13,12 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -46,26 +47,27 @@ public class UserServiceWhenAddingUserWithDefaultRolesTest {
 
 	@Test
 	public void testShouldAlwaysReceiveDefaultUserRole() throws Exception {
-		_company = CompanyTestUtil.addCompany();
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
 
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_company.getUserId(), true);
+				company.getUserId(), true);
 
 		portalPreferences.setValue(
 			"", PropsKeys.ADMIN_DEFAULT_ROLE_NAMES, StringPool.BLANK);
 
 		PortalPreferencesLocalServiceUtil.updatePreferences(
-			_company.getCompanyId(), PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			company.getCompanyId(), PortletKeys.PREFS_OWNER_TYPE_COMPANY,
 			PortletPreferencesFactoryUtil.toXML(portalPreferences));
 
 		String[] roleNames = _prefsProps.getStringArray(
-			_company.getCompanyId(), PropsKeys.ADMIN_DEFAULT_ROLE_NAMES,
+			company.getCompanyId(), PropsKeys.ADMIN_DEFAULT_ROLE_NAMES,
 			StringPool.NEW_LINE, PropsValues.ADMIN_DEFAULT_ROLE_NAMES);
 
 		Assert.assertFalse(ArrayUtil.contains(roleNames, RoleConstants.USER));
 
-		_user = UserTestUtil.addUser(_company);
+		_user = UserTestUtil.addUser(company);
 
 		long[] userRoleIds = _user.getRoleIds();
 
@@ -76,8 +78,8 @@ public class UserServiceWhenAddingUserWithDefaultRolesTest {
 			ArrayUtil.contains(userRoleIds, userRole.getRoleId()));
 	}
 
-	@DeleteAfterTestRun
-	private Company _company;
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private PrefsProps _prefsProps;

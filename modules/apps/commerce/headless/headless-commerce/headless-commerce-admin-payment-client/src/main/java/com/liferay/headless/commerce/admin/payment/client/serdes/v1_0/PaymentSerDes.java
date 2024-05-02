@@ -218,6 +218,20 @@ public class PaymentSerDes {
 			sb.append("\"");
 		}
 
+		if (payment.getPayload() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"payload\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(payment.getPayload()));
+
+			sb.append("\"");
+		}
+
 		if (payment.getPaymentIntegrationKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -495,6 +509,13 @@ public class PaymentSerDes {
 			map.put("languageId", String.valueOf(payment.getLanguageId()));
 		}
 
+		if (payment.getPayload() == null) {
+			map.put("payload", null);
+		}
+		else {
+			map.put("payload", String.valueOf(payment.getPayload()));
+		}
+
 		if (payment.getPaymentIntegrationKey() == null) {
 			map.put("paymentIntegrationKey", null);
 		}
@@ -658,6 +679,9 @@ public class PaymentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "languageId")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "payload")) {
+				return false;
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "paymentIntegrationKey")) {
 
@@ -783,6 +807,11 @@ public class PaymentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "languageId")) {
 				if (jsonParserFieldValue != null) {
 					payment.setLanguageId((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "payload")) {
+				if (jsonParserFieldValue != null) {
+					payment.setPayload((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

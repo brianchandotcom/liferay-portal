@@ -301,6 +301,27 @@ public class Payment implements Cloneable, Serializable {
 
 	protected String languageId;
 
+	public String getPayload() {
+		return payload;
+	}
+
+	public void setPayload(String payload) {
+		this.payload = payload;
+	}
+
+	public void setPayload(
+		UnsafeSupplier<String, Exception> payloadUnsafeSupplier) {
+
+		try {
+			payload = payloadUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String payload;
+
 	public String getPaymentIntegrationKey() {
 		return paymentIntegrationKey;
 	}

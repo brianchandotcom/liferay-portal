@@ -182,6 +182,7 @@ public abstract class BasePaymentResourceTestCase {
 		payment.setErrorMessages(regex);
 		payment.setExternalReferenceCode(regex);
 		payment.setLanguageId(regex);
+		payment.setPayload(regex);
 		payment.setPaymentIntegrationKey(regex);
 		payment.setReasonKey(regex);
 		payment.setRedirectURL(regex);
@@ -204,6 +205,7 @@ public abstract class BasePaymentResourceTestCase {
 		Assert.assertEquals(regex, payment.getErrorMessages());
 		Assert.assertEquals(regex, payment.getExternalReferenceCode());
 		Assert.assertEquals(regex, payment.getLanguageId());
+		Assert.assertEquals(regex, payment.getPayload());
 		Assert.assertEquals(regex, payment.getPaymentIntegrationKey());
 		Assert.assertEquals(regex, payment.getReasonKey());
 		Assert.assertEquals(regex, payment.getRedirectURL());
@@ -1239,6 +1241,14 @@ public abstract class BasePaymentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("payload", additionalAssertFieldName)) {
+				if (payment.getPayload() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"paymentIntegrationKey", additionalAssertFieldName)) {
 
@@ -1595,6 +1605,16 @@ public abstract class BasePaymentResourceTestCase {
 			if (Objects.equals("languageId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						payment1.getLanguageId(), payment2.getLanguageId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("payload", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						payment1.getPayload(), payment2.getPayload())) {
 
 					return false;
 				}
@@ -2275,6 +2295,52 @@ public abstract class BasePaymentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("payload")) {
+			Object object = payment.getPayload();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("paymentIntegrationKey")) {
 			Object object = payment.getPaymentIntegrationKey();
 
@@ -2693,6 +2759,7 @@ public abstract class BasePaymentResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				languageId = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				payload = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				paymentIntegrationKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				paymentIntegrationType = RandomTestUtil.randomInt();

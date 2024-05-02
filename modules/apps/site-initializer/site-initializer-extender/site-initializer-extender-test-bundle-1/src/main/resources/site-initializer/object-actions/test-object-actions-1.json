@@ -19,10 +19,11 @@
 				"en_US": "Test Object Action 2"
 			},
 			"name": "TestObjectAction2",
-			"objectActionExecutorKey": "groovy",
+			"objectActionExecutorKey": "webhook",
 			"objectActionTriggerKey": "onAfterAdd",
 			"parameters": {
-				"script": "System.out.println(\"onAfterAdd\")"
+				"secret": "test",
+				"url": "http://localhost:8080"
 			}
 		}
 	],

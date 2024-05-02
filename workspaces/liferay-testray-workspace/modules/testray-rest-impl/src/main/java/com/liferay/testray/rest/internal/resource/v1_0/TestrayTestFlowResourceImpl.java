@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.testray.rest.dto.v1_0.TestrayCaseResultTestFlowUpdate;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestFlow;
 import com.liferay.testray.rest.internal.util.TestrayUtil;
 import com.liferay.testray.rest.internal.util.comparator.TestrayCaseResultsComparator;
@@ -163,6 +165,56 @@ public class TestrayTestFlowResourceImpl
 		testrayTestFlow.setTestraySubtasksAmount(testraySubtasksAmount);
 
 		return testrayTestFlow;
+	}
+
+	@Override
+	public TestrayCaseResultTestFlowUpdate
+			putTestrayTestFlowCaseResultByTestraySubtaskIdTestraySubtask(
+				Long testraySubtaskId,
+				TestrayCaseResultTestFlowUpdate testrayCaseResultTestFlowUpdate)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("update O_[%COMPANY_ID%]_CaseResult set ");
+		sb.append("r_userToCaseResults_userId = ? ");
+
+		List<Object> params = new ArrayList<>();
+
+		params.add(testrayCaseResultTestFlowUpdate.getUserId());
+
+		if (Validator.isNotNull(
+				testrayCaseResultTestFlowUpdate.getDueStatus())) {
+
+			sb.append(", dueStatus_ = ? ");
+			params.add(testrayCaseResultTestFlowUpdate.getDueStatus());
+		}
+
+		if (Validator.isNotNull(testrayCaseResultTestFlowUpdate.getIssues())) {
+			sb.append(", issues_ = ? ");
+			params.add(testrayCaseResultTestFlowUpdate.getIssues());
+		}
+
+		if (Validator.isNotNull(testrayCaseResultTestFlowUpdate.getComment())) {
+			sb.append(", comment_ = ?, mbMessageId_ = ?, mbThreadId_ = ? ");
+			params.add(testrayCaseResultTestFlowUpdate.getComment());
+			params.add(testrayCaseResultTestFlowUpdate.getMbMessageId());
+			params.add(testrayCaseResultTestFlowUpdate.getMbThreadId());
+		}
+
+		sb.append("where r_subtaskToCaseResults_c_subtaskId = ?");
+
+		params.add(testraySubtaskId);
+
+		int rows = TestrayUtil.executeUpdate(
+			StringUtil.replace(
+				sb.toString(), "[%COMPANY_ID%]",
+				String.valueOf(contextCompany.getCompanyId())),
+			params);
+
+		testrayCaseResultTestFlowUpdate.setCaseResultAmount(rows);
+
+		return testrayCaseResultTestFlowUpdate;
 	}
 
 	private long _getTestrayBuildIdByTestrayTaskId(long testrayTaskId)

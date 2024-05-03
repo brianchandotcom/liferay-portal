@@ -1163,8 +1163,8 @@ public class ExpandoValueLocalServiceImpl
 		ExpandoValue value = new ExpandoValueImpl();
 
 		for (ExpandoColumn column : columns) {
-			value.setData(column.getDefaultData());
 			value.setColumn(column);
+			value.setData(column.getDefaultData());
 
 			Serializable attributeValue = doGetData(
 				companyId, className, tableName, column.getName(), classPK,
@@ -1199,8 +1199,8 @@ public class ExpandoValueLocalServiceImpl
 
 		ExpandoValue value = new ExpandoValueImpl();
 
-		value.setData(column.getDefaultData());
 		value.setColumn(column);
+		value.setData(column.getDefaultData());
 
 		return doGetData(
 			companyId, className, tableName, columnName, classPK, value,

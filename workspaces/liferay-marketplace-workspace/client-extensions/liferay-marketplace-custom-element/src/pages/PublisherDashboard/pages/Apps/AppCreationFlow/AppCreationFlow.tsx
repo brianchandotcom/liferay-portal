@@ -18,7 +18,7 @@ import {ReviewAndSubmitAppPage} from './ReviewAndSubmitAppPage/ReviewAndSubmitAp
 import {CustomizeAppStorefrontPage} from './StorefrontPage/CustomizeAppStorefrontPage';
 
 import './AppCreationFlow.scss';
-import AppToolBar from '../../../../../components/AppToolbar/AppToolbar';
+import AppToolbar from '../../../../../components/AppToolBar/AppToolBar';
 import {useAccount} from '../../../../../hooks/data/useAccounts';
 import {Liferay} from '../../../../../liferay/liferay';
 import {useAppContext} from './AppContext/AppManageState';
@@ -76,7 +76,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 
 	return (
 		<div className="app-creation-flow-container">
-			<AppToolBar
+			<AppToolbar
 				accountImage={account?.logoURL}
 				accountName={account?.name as string}
 				appImage={appLogo?.preview}
@@ -257,8 +257,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 								});
 
 								setCurrentFlow('licensingPrice');
-							}
-							else {
+							} else {
 								setAppFlowListState({
 									checkedItems: [
 										'create',
@@ -331,8 +330,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 								});
 
 								setCurrentFlow('licensingPrice');
-							}
-							else {
+							} else {
 								setAppFlowListState({
 									checkedItems: [
 										'create',

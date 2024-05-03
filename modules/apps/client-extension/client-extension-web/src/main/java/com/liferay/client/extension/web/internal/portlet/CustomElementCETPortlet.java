@@ -78,7 +78,9 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 		if (Validator.isNotNull(cssURLs)) {
 			dictionary.put(
 				"com.liferay.portlet.header-portal-css",
-				_prepareURLs(lastModified, cssURLs.split(StringPool.NEW_LINE)));
+				_prepareURLs(
+					cet.getCompanyId(), lastModified,
+					cssURLs.split(StringPool.NEW_LINE)));
 		}
 
 		String urls = cet.getURLs();
@@ -93,7 +95,7 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 
 		dictionary.put(
 			"com.liferay.portlet.header-portal-javascript",
-			_prepareURLs(lastModified, urlsArray));
+			_prepareURLs(cet.getCompanyId(), lastModified, urlsArray));
 
 		return dictionary;
 	}
@@ -149,9 +151,11 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 		printWriter.flush();
 	}
 
-	private String[] _prepareURLs(long lastModified, String[] urls) {
+	private String[] _prepareURLs(
+		long companyId, long lastModified, String[] urls) {
+
 		for (int i = 0; i < urls.length; i++) {
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-202104") &&
+			if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPS-202104") &&
 				!urls[i].contains("?t=") && !urls[i].contains("&t=")) {
 
 				urls[i] = HttpComponentsUtil.addParameter(

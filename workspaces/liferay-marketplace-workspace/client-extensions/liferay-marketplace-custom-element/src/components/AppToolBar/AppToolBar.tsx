@@ -3,103 +3,135 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 
 import {getAccountImage} from '../../utils/util';
 
-import './AppToolBar.scss';
+import './AppToolbar.scss';
 
 import ClayIcon from '@clayui/icon';
+import {ComponentProps} from 'react';
 import {Link} from 'react-router-dom';
 
-type AppToolBarProps = {
+import i18n from '../../i18n';
+
+type AppToolbarProps = {
 	accountImage?: string;
 	accountName: string;
 	appImage?: string;
 	appName?: string;
+	display?: {preview?: boolean; saveAsDraft?: boolean};
+	exitHref?: string;
+	exitProps?: ComponentProps<typeof Link>;
+	previewProps?: Omit<
+		ComponentProps<typeof ClayButtonWithIcon>,
+		'aria-label' | 'symbol'
+	>;
+	saveAsDraftProps?: ComponentProps<typeof ClayButton>;
 };
 
-export function AppToolBar({
+const AppToolbar: React.FC<AppToolbarProps> = ({
 	accountImage,
 	accountName,
 	appImage,
 	appName,
-}: AppToolBarProps) {
-	return (
-		<div className="container new-app-tool-bar-container">
-			<ClayManagementToolbar.ItemList expand>
-				<div className="d-flex justify-content-between">
-					<div className="d-flex">
-						<div className="new-app-tool-bar-main-account-logo">
-							<img
-								alt="Main account logo"
-								className="new-app-tool-bar-main-account-logo-img"
-								src={getAccountImage(accountImage)}
-							/>
-
-							<span className="new-app-tool-bar-main-account-logo-text">
-								{accountName}
-							</span>
-						</div>
-
-						<ClayIcon
-							aria-label="Arrow right"
-							className="new-app-tool-bar-arrow-right"
-							symbol="angle-right"
+	display = {preview: false, saveAsDraft: false},
+	exitHref,
+	exitProps,
+	previewProps,
+	saveAsDraftProps,
+}) => (
+	<div className="new-app-tool-bar-container">
+		<ClayManagementToolbar.ItemList expand>
+			<div className="d-flex justify-content-between">
+				<div className="d-flex">
+					<div className="new-app-tool-bar-main-account-logo">
+						<img
+							alt="Main account logo"
+							className="new-app-tool-bar-main-account-logo-img"
+							src={getAccountImage(accountImage)}
 						/>
 
-						<div className="new-app-tool-bar-new-app-logo">
-							{appImage ? (
-								<img
-									alt="New App logo"
-									className="new-app-tool-bar-new-app-logo-img"
-									src={appImage}
-								/>
-							) : (
-								<div className="bg-light px-5 py-3 rounded">
-									<ClayIcon
-										aria-label="New App logo"
-										className="text-muted"
-										symbol="picture"
-									/>
-								</div>
-							)}
-
-							<span className="new-app-tool-bar-new-app-logo-text">
-								{appName ?? 'New App'}
-							</span>
-						</div>
+						<span className="new-app-tool-bar-main-account-logo-text">
+							{accountName}
+						</span>
 					</div>
 
-					<div className="flex-shrink-0 new-app-tool-bar-status-container">
-						<ClayIcon
-							aria-label="Status"
-							className="new-app-tool-bar-status-icon"
-							symbol="circle"
-						/>
+					<ClayIcon
+						aria-label="Arrow right"
+						className="new-app-tool-bar-arrow-right"
+						symbol="angle-right"
+					/>
 
-						<span className="new-app-tool-bar-status-text">
-							Draft
+					<div className="new-app-tool-bar-new-app-logo">
+						{appImage ? (
+							<img
+								alt="New App logo"
+								className="new-app-tool-bar-new-app-logo-img"
+								src={appImage}
+							/>
+						) : (
+							<div className="bg-light px-5 py-3 rounded">
+								<ClayIcon
+									aria-label="New App logo"
+									className="text-muted"
+									symbol="picture"
+								/>
+							</div>
+						)}
+
+						<span className="new-app-tool-bar-new-app-logo-text">
+							{appName || 'New App'}
 						</span>
 					</div>
 				</div>
-			</ClayManagementToolbar.ItemList>
 
-			<ClayManagementToolbar.ItemList>
-				<ClayButton.Group className="new-app-tool-bar-button-container">
-					<Link to="../">
-						<ClayButton
-							className="new-app-tool-bar-button-exit"
-							displayType={null}
-						>
-							<span className="new-app-tool-bar-button-text">
-								Exit
-							</span>
-						</ClayButton>
-					</Link>
-				</ClayButton.Group>
-			</ClayManagementToolbar.ItemList>
-		</div>
-	);
-}
+				<div className="flex-shrink-0 new-app-tool-bar-status-container">
+					<ClayIcon
+						aria-label="Status"
+						className="new-app-tool-bar-status-icon"
+						symbol="circle"
+					/>
+
+					<span className="new-app-tool-bar-status-text">Draft</span>
+				</div>
+			</div>
+		</ClayManagementToolbar.ItemList>
+
+		<ClayManagementToolbar.ItemList>
+			<div className="align-items-center d-flex flex-row gap-3 justify-content-between mkt-gap-1">
+				<Link
+					className="new-app-tool-bar-button-text text-dark"
+					to={exitHref as string}
+					{...exitProps}
+				>
+					{i18n.translate('exit')}
+				</Link>
+
+				{display.saveAsDraft && (
+					<ClayButton
+						className="text-dark"
+						displayType="secondary"
+						size="xs"
+						{...saveAsDraftProps}
+					>
+						Save as Draft
+					</ClayButton>
+				)}
+
+				{display.preview && (
+					<ClayButtonWithIcon
+						{...(previewProps as any)}
+						aria-label="Preview"
+						color="blue"
+						size="xs"
+						symbol="shortcut"
+					/>
+				)}
+			</div>
+		</ClayManagementToolbar.ItemList>
+	</div>
+);
+
+export default AppToolbar;

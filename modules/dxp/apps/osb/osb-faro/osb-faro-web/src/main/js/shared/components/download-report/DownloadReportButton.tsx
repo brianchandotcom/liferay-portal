@@ -45,7 +45,7 @@ export const DownloadReportButton: React.FC<IDownloadReportButton> = ({
 		>
 			<ClayIcon className='mr-2' symbol='download' />
 
-			{Liferay.Language.get('download-report')}
+			{Liferay.Language.get('download-reports')}
 
 			{(loading || loadingCount > 0) && <Loading align={Align.Right} />}
 		</ClayButton>

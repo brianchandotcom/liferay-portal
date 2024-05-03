@@ -94,7 +94,7 @@ export const Modal = ({observer, onClose, onSubmit}) => (
 			}}
 		>
 			<ClayModal.Header>
-				{Liferay.Language.get('download-report')}
+				{Liferay.Language.get('download-reports')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>

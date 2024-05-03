@@ -21,13 +21,13 @@ export enum ReportType {
 
 interface IDownloadReportModal {
 	alertMessage: string;
+	dateRangeDescription?: string;
 	disabled?: boolean;
 	infoMessage: string;
 	observer: any;
 	onClose: () => void;
 	onSubmit: (rangeSelectors?: RangeSelectors) => void;
 	rangeSelectors?: RangeSelectors;
-	requiredDateRange?: boolean;
 	showDateRange?: boolean;
 	type?: ReportType;
 }
@@ -35,13 +35,15 @@ interface IDownloadReportModal {
 export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	alertMessage,
 	children,
+	dateRangeDescription = Liferay.Language.get(
+		'only-select-a-date-range-if-you-want-to-modify-the-current-date-filter'
+	),
 	disabled = false,
 	infoMessage,
 	observer,
 	onClose,
 	onSubmit,
 	rangeSelectors: initialRangeSelectors,
-	requiredDateRange = false,
 	showDateRange = true,
 	type
 }) => {
@@ -111,7 +113,7 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 			>
 				<div className='modal-content'>
 					<ClayModal.Header>
-						{Liferay.Language.get('download-report')}
+						{Liferay.Language.get('download-reports')}
 					</ClayModal.Header>
 
 					{openAlert && (
@@ -129,19 +131,11 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 						{showDateRange && (
 							<ClayForm.Group className='mb-0'>
 								<label htmlFor='timeRange'>
-									{requiredDateRange
-										? Liferay.Language.get('date-range')
-										: Liferay.Language.get(
-												'date-range-optional'
-										  )}
+									{Liferay.Language.get('date-range')}
 								</label>
 
 								<p>
-									<Text size={3}>
-										{Liferay.Language.get(
-											'only-select-a-date-range-if-you-want-to-modify-the-current-date-filter'
-										)}
-									</Text>
+									<Text size={3}>{dateRangeDescription}</Text>
 								</p>
 
 								<DropdownRangeKey

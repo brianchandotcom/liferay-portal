@@ -52,7 +52,7 @@ export default function SearchBar() {
 	);
 
 	return (
-		<form className="commerce-search" onSubmit={onSubmit}>
+		<form className="commerce-search d-flex" onSubmit={onSubmit}>
 			<div className="commerce-search__input">
 				<ClayInput
 					autoComplete="off"

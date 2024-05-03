@@ -68,11 +68,21 @@ function MiniCart({
 	const closeCart = () => {
 		setIsOpen(false);
 
+		if (toggleable) {
+			document.body.classList.remove('overflow-hidden');
+		}
+
 		if (editedItem) {
 			setEditedItem(null);
 		}
 	};
-	const openCart = () => setIsOpen(true);
+	const openCart = () => {
+		if (toggleable) {
+			document.body.classList.add('overflow-hidden');
+		}
+
+		setIsOpen(true);
+	};
 
 	const [replacementSKUList, setReplacementSKUList] = useState([]);
 

@@ -112,7 +112,7 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 				Arrays.asList(
 					ESImportUtil.getESImport(
 						absolutePortalURLBuilder,
-						"{default as init} from frontend-js-spa-web"))));
+						"{init} from frontend-js-spa-web"))));
 
 		initScriptData.writeTo(httpServletResponse.getWriter());
 	}

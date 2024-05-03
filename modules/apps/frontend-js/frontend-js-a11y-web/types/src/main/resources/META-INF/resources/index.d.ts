@@ -4,6 +4,6 @@
  */
 
 import type {A11yCheckerOptions} from './A11yChecker';
-export default function main(
+export declare function main(
 	props: Omit<A11yCheckerOptions, 'callback' | 'targets'>
 ): void;

@@ -5,6 +5,6 @@
 
 import TabsProvider from './TabsProvider';
 
-export default function main() {
+export function main() {
 	new TabsProvider();
 }

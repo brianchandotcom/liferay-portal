@@ -8,7 +8,7 @@ import React from 'react';
 
 import '../css/main.scss';
 
-export default function App() {
+export function App() {
 	return (
 		<div>
 			<ClayAlert title="Info">

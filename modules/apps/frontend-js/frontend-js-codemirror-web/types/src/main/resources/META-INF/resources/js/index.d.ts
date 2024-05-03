@@ -28,5 +28,4 @@ import 'codemirror/addon/fold/foldgutter.css';
 import 'codemirror/addon/hint/show-hint.css';
 import 'codemirror/lib/codemirror.css';
 import CodeMirror from 'codemirror';
-export default CodeMirror;
 export {CodeMirror};

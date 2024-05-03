@@ -33,6 +33,4 @@ import 'codemirror/lib/codemirror.css';
 
 import CodeMirror from 'codemirror';
 
-export default CodeMirror;
-
 export {CodeMirror};

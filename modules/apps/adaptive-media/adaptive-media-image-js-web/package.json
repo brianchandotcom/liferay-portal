@@ -1,5 +1,4 @@
 {
-	"main": "js/index.js",
 	"name": "adaptive-media-image-js-web",
 	"scripts": {
 		"checkFormat": "liferay-npm-scripts check",

@@ -132,7 +132,7 @@ public class A11yBottomJSPDynamicInclude implements DynamicInclude {
 				Arrays.asList(
 					ESImportUtil.getESImport(
 						absolutePortalURLBuilder,
-						"{default as main} from frontend-js-a11y-web"))));
+						"{main} from frontend-js-a11y-web"))));
 
 		scriptData.writeTo(httpServletResponse.getWriter());
 	}

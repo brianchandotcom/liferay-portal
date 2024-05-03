@@ -101,17 +101,18 @@ public class UpdatePasswordAction implements Action {
 					httpServletRequest.setAttribute(
 						WebKeys.TITLE_SET_PASSWORD, "set-password");
 				}
-			} else if (user == null) {
-
+			}
+			else if (user == null) {
 				ThemeDisplay themeDisplay =
-					(ThemeDisplay) httpServletRequest.getAttribute(
+					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
 				Layout createAccountUtilityPage =
 					LayoutUtilityPageEntryLayoutProviderUtil.
 						getDefaultLayoutUtilityPageEntryLayout(
 							themeDisplay.getScopeGroupId(),
-							LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD);
+							LayoutUtilityPageEntryConstants.
+								TYPE_FORGOT_PASSWORD);
 
 				if (createAccountUtilityPage != null) {
 					return actionMapping.getActionForward(

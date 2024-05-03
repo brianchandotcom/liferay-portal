@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -25,14 +25,12 @@ import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -73,13 +71,6 @@ public class SetPasswordMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		Ticket ticket = getTicket(actionRequest);
-
-		if ((ticket != null) &&
-			StringUtil.equals(actionRequest.getMethod(), HttpMethods.GET)) {
-
-			//resendAsPost(actionRequest, actionResponse);
-
-		}
 
 		actionRequest.setAttribute(WebKeys.TICKET, ticket);
 
@@ -199,48 +190,6 @@ public class SetPasswordMVCActionCommand extends BaseMVCActionCommand {
 		return true;
 	}
 
-	/* protected void resendAsPost(
-		ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException {
-
-		actionResponse.setHeader(
-			"Cache-Control", "no-cache, no-store, must-revalidate");
-		actionResponse.setHeader("Expires", "0");
-		actionResponse.setHeader("Pragma", "no-cache");
-
-		PrintWriter printWriter = httpServletResponse.getWriter();
-
-		Map<String, String[]> parameterMap =
-			httpServletRequest.getParameterMap();
-
-		StringBundler sb = new StringBundler(8 + (parameterMap.size() * 5));
-
-		sb.append("<html><body onload=\"document.fm.submit();\">");
-		sb.append("<form action=\"");
-		sb.append(PortalUtil.getPortalURL(httpServletRequest));
-		sb.append(PortalUtil.getPathContext());
-		sb.append("/c/portal/update_password\" method=\"post\" name=\"fm\">");
-
-		for (String name : parameterMap.keySet()) {
-			String value = ParamUtil.getString(httpServletRequest, name);
-
-			sb.append("<input name=\"");
-			sb.append(HtmlUtil.escapeAttribute(name));
-			sb.append("\" type=\"hidden\" value=\"");
-			sb.append(HtmlUtil.escapeAttribute(value));
-			sb.append("\"/>");
-		}
-
-		sb.append("<noscript>");
-		sb.append("<input type=\"submit\" value=\"Please continue here...\"/>");
-		sb.append("</noscript></form></body></html>");
-
-		printWriter.write(sb.toString());
-
-		printWriter.close();
-	}
-
-	 */
 	protected void updatePassword(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			ThemeDisplay themeDisplay, Ticket ticket)

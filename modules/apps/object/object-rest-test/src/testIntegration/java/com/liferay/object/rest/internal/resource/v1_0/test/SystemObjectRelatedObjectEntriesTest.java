@@ -256,11 +256,6 @@ public class SystemObjectRelatedObjectEntriesTest {
 	public void testGetManyToOneSystemObjectRelatedObjectEntries()
 		throws Exception {
 
-		String pkObjectFieldName = _objectDefinition.getPKObjectFieldName();
-
-		String objectDefinitionNameReference = pkObjectFieldName.substring(
-			0, pkObjectFieldName.length() - 2);
-
 		ObjectRelationship objectRelationship =
 			ObjectRelationshipTestUtil.addObjectRelationship(
 				_objectDefinition, _userSystemObjectDefinition,
@@ -269,20 +264,15 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 		_objectRelationships.add(objectRelationship);
 
-		String relatedObjectEntryFieldBase = StringBundler.concat(
-			"r_", objectRelationship.getName(), "_",
-			objectDefinitionNameReference);
-
 		// Default unrelated user
 
 		_testGetManyToOneSystemObjectRelatedObjectEntries(
-			StringPool.BLANK, 0, relatedObjectEntryFieldBase,
-			_user.getUserId());
+			StringPool.BLANK, 0, objectRelationship, _user.getUserId());
 
 		// New unrelated user
 
 		_testGetManyToOneSystemObjectRelatedObjectEntries(
-			StringPool.BLANK, 0, relatedObjectEntryFieldBase,
+			StringPool.BLANK, 0, objectRelationship,
 			_userAccountJSONObject.getLong("id"));
 
 		// Default related user
@@ -293,7 +283,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 		_testGetManyToOneSystemObjectRelatedObjectEntries(
 			_objectEntry.getExternalReferenceCode(),
-			_objectEntry.getObjectEntryId(), relatedObjectEntryFieldBase,
+			_objectEntry.getObjectEntryId(), objectRelationship,
 			_user.getUserId());
 
 		// New related user
@@ -849,7 +839,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 	private void _testGetManyToOneSystemObjectRelatedObjectEntries(
 			String expectedObjectEntryExternalReferenceCode,
-			long expectedObjectEntryId, String relatedObjectEntryFieldBase,
+			long expectedObjectEntryId, ObjectRelationship objectRelationship,
 			long userId)
 		throws Exception {
 
@@ -860,10 +850,18 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 		Assert.assertEquals(
 			expectedObjectEntryExternalReferenceCode,
-			jsonObject.get(relatedObjectEntryFieldBase + "ERC"));
+			jsonObject.get(
+				StringBundler.concat(
+					"r_", objectRelationship.getName(), "_",
+					StringUtil.removeLast(
+						_objectDefinition.getPKObjectFieldName(), "Id"),
+					"ERC")));
 		Assert.assertEquals(
 			expectedObjectEntryId,
-			jsonObject.getLong(relatedObjectEntryFieldBase + "Id"));
+			jsonObject.getLong(
+				StringBundler.concat(
+					"r_", objectRelationship.getName(), "_",
+					_objectDefinition.getPKObjectFieldName())));
 	}
 
 	private void _testGetSystemObjectRelatedObjectEntries(

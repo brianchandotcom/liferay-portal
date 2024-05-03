@@ -8,6 +8,7 @@ package com.liferay.fragment.entry.processor.internal.util;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.AlertTag;
 import com.liferay.info.exception.InfoItemPermissionException;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
@@ -36,7 +37,6 @@ import com.liferay.info.type.WebImage;
 import com.liferay.info.type.WebURL;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -76,6 +76,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -265,17 +266,7 @@ public class FragmentEntryProcessorHelperImpl
 				return StringPool.BLANK;
 			}
 
-			return StringBundler.concat(
-				"<span class=\"clearfix page-editor__editable\" ",
-				"data-lfr-editable-id=\"02-title\">",
-				_language.get(
-					fragmentEntryProcessorContext.getLocale(),
-					"restricted-content"),
-				"&nbsp;<svg class=\"lexicon-icon ",
-				"lexicon-icon-password-policies",
-				"\" role=\"presentation\" viewBox=\"0 0 512 512\">",
-				"<use xlink:href=\"/o/classic-theme/images/clay",
-				"/icons.svg#password-policies\"></use></svg></span>");
+			return _getRestrictedContentMessage(fragmentEntryProcessorContext);
 		}
 
 		JSONObject configJSONObject = editableValueJSONObject.getJSONObject(
@@ -799,6 +790,34 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return new InfoItemMappedField(fieldName, infoItemReference, object);
+	}
+
+	private String _getRestrictedContentMessage(
+		FragmentEntryProcessorContext fragmentEntryProcessorContext) {
+
+		AlertTag alertTag = new AlertTag();
+
+		alertTag.setDefaultTitleDisabled(true);
+		alertTag.setDisplayType("secondary");
+		alertTag.setMessage(
+			_language.get(
+				fragmentEntryProcessorContext.getHttpServletRequest(),
+				"this-content-cannot-be-displayed-due-to-permission-" +
+					"restrictions"));
+		alertTag.setSymbol("password-policies");
+
+		try {
+			return alertTag.doTagAsString(
+				fragmentEntryProcessorContext.getHttpServletRequest(),
+				fragmentEntryProcessorContext.getHttpServletResponse());
+		}
+		catch (JspException jspException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jspException);
+			}
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private String _getShortTimeStylePattern(Locale locale) {

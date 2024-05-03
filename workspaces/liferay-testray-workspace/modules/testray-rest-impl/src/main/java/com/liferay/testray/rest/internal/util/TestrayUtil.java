@@ -35,7 +35,7 @@ public class TestrayUtil {
 		sb.append(sql);
 		sb.append(") count");
 
-		List<Map<String, Object>> values = runSQL(sb.toString(), params);
+		List<Map<String, Object>> values = executeQuery(sb.toString(), params);
 
 		return GetterUtil.getLong(
 			values.get(
@@ -45,7 +45,7 @@ public class TestrayUtil {
 			));
 	}
 
-	public static List<Map<String, Object>> runSQL(
+	public static List<Map<String, Object>> executeQuery(
 			String sql, List<Object> params)
 		throws SQLException {
 

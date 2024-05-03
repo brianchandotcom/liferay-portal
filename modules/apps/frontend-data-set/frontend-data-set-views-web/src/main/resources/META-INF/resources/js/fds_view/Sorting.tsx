@@ -458,7 +458,11 @@ const Sorting = ({fdsView, namespace}: IFDSViewSectionProps) => {
 			setFDSSorts(
 				sortItems(
 					storedFDSSorts,
-					responseJSON.fdsSortsOrder
+
+					// @ts-ignore
+
+					storedFDSSorts?.[0]?.[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_SORT]
+						?.fdsSortsOrder as string
 				) as IFDSSort[]
 			);
 

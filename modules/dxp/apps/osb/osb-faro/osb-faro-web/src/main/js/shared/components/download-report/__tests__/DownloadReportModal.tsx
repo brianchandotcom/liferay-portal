@@ -81,7 +81,6 @@ const WrapperCSVComponent: React.FC<IWrapperCSVComponentProps> = ({
 
 				CSV_URL = url;
 			}}
-			requiredDateRange
 			type={ReportType.CSV}
 		/>
 	);
@@ -112,7 +111,6 @@ interface IWrapperComponent {
 	alertMessage: string;
 	infoMessage: string;
 	onSubmit: (rangeSelectors: RangeSelectors) => void;
-	requiredDateRange?: boolean;
 	type: ReportType;
 }
 
@@ -121,7 +119,6 @@ const WrapperComponent: React.FC<IWrapperComponent> = ({
 	children,
 	infoMessage,
 	onSubmit,
-	requiredDateRange = false,
 	type,
 	...otherProps
 }) => {
@@ -145,7 +142,6 @@ const WrapperComponent: React.FC<IWrapperComponent> = ({
 									observer={observer}
 									onClose={jest.fn()}
 									onSubmit={onSubmit}
-									requiredDateRange={requiredDateRange}
 									type={type}
 								>
 									{children}
@@ -311,7 +307,7 @@ describe('DownloadReportModal PDF', () => {
 		const {container, getByRole, getByTestId, getByText} = render(
 			<WrapperPDFomponent>
 				<ClayForm.Group>
-					<label>{Liferay.Language.get('select-reports')}</label>
+					<label>{Liferay.Language.get('dashboard-reports')}</label>
 
 					{Object.values(formattedContainers(containers)).map(
 						({id, label}) => (
@@ -358,7 +354,7 @@ describe('DownloadReportModal PDF', () => {
 			)
 		).toBeInTheDocument();
 
-		expect(getByText('Date Range (Optional)')).toBeInTheDocument();
+		expect(getByText('Date Range')).toBeInTheDocument();
 
 		expect(getByTestId('cancel')).toBeInTheDocument();
 		expect(getByTestId('submit')).toBeInTheDocument();

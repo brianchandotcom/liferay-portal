@@ -305,7 +305,7 @@ exports[`PagePathCard should render 1`] = `
                   </text>
                   <a
                     data-tooltip-align="right"
-                    href="/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.liferay.com/Liferay Home Page?rangeKey=30"
+                    href="/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.liferay.com/Liferay%20Home%20Page?rangeKey=30"
                     title="Go to Dashboard Page"
                   >
                     <text
@@ -688,7 +688,7 @@ exports[`PagePathCard should render 1`] = `
                   </text>
                   <a
                     data-tooltip-align="right"
-                    href="/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.site1.com/Site 1?rangeKey=30"
+                    href="/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.site1.com/Site%201?rangeKey=30"
                     title="Go to Dashboard Page"
                   >
                     <text
@@ -770,7 +770,7 @@ exports[`PagePathCard should render 1`] = `
                   </text>
                   <a
                     data-tooltip-align="right"
-                    href="/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.site2.com/Site 2?rangeKey=30"
+                    href="/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.site2.com/Site%202?rangeKey=30"
                     title="Go to Dashboard Page"
                   >
                     <text
@@ -852,7 +852,7 @@ exports[`PagePathCard should render 1`] = `
                   </text>
                   <a
                     data-tooltip-align="right"
-                    href="/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.site3.com/Site 3?rangeKey=30"
+                    href="/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fwww.site3.com/Site%203?rangeKey=30"
                     title="Go to Dashboard Page"
                   >
                     <text

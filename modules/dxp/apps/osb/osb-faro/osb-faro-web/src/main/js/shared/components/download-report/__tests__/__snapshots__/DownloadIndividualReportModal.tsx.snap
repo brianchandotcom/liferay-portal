@@ -28,7 +28,7 @@ exports[`DownloadReportIndividualModal CSV renders component 1`] = `
               class="modal-title"
               id="clay-modal-label-1"
             >
-              Download Report
+              Download Reports
             </h1>
             <button
               aria-label="close"
@@ -111,7 +111,7 @@ exports[`DownloadReportIndividualModal CSV renders component 1`] = `
         href="#download"
       />
     </svg>
-    Download Report
+    Download Reports
   </button>
 </div>
 `;

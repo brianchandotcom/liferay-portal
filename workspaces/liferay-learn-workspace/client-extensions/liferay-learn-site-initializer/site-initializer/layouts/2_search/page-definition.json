@@ -1,6 +1,5 @@
 {
 	"pageElement": {
-		"id": "3c81fef9-da73-ffce-0f52-0d6eb50192e2",
 		"pageElements": [
 			{
 				"definition": {
@@ -162,6 +161,12 @@
 					{
 						"definition": {
 							"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: var(--spacer-5);\n}",
+							"customCSSViewports": [
+								{
+									"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: var(--spacer-5);\nflex-wrap: wrap;\n}",
+									"id": "tablet"
+								}
+							],
 							"fragmentStyle": {
 								"paddingBottom": "24px",
 								"paddingLeft": "24px",
@@ -184,6 +189,15 @@
 									"fragmentStyle": {
 										"maxWidth": "300px"
 									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"maxWidth": "100%",
+												"width": "100%"
+											},
+											"id": "tablet"
+										}
+									],
 									"indexed": true,
 									"layout": {
 										"contentDisplay": "FlexColumn",

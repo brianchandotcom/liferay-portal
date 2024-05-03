@@ -5,7 +5,6 @@
 
 package com.liferay.document.library.web.internal.product.navigation.control.menu;
 
-import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -19,12 +18,12 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-
-import java.util.Objects;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -73,9 +72,15 @@ public class EditFileEntryHeaderProductNavigationControlMenuEntry
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
+		String mvcRenderCommandName = ParamUtil.getString(
+			httpServletRequest,
+			portletDisplay.getNamespace() + "mvcRenderCommandName");
+
 		if ((portletDisplay == null) ||
-			!Objects.equals(
-				portletDisplay.getId(), DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+			(!StringUtil.equals(
+				"/document_library/edit_file_entry", mvcRenderCommandName) &&
+			 !StringUtil.equals(
+				 "/document_library/view_file_entry", mvcRenderCommandName))) {
 
 			return false;
 		}

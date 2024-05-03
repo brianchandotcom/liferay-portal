@@ -28,6 +28,10 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 		document.querySelector('.friendly-url .form-text')
 	);
 
+	const friendlyURLinputRef = useRef(
+		document.getElementById(`${portletNamespace}urlTitle`)
+	);
+
 	const getUnique = (array, property) => {
 		return array
 			.map((element) => element[property])
@@ -93,6 +97,32 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 					.join('');
 		}
 	}, [inputAddon, inputAddonNodeRef, selectedItems]);
+
+	useEffect(() => {
+		const input = friendlyURLinputRef.current;
+
+		if (input) {
+			const mutationObserver = new MutationObserver((mutations) => {
+				mutations.forEach((mutation) => {
+					if (
+						mutation.type === 'attributes' &&
+						mutation.attributeName === 'disabled'
+					) {
+						setDisabled(mutation.target.disabled);
+					}
+				});
+			});
+
+			mutationObserver.observe(input, {
+				attributeFilter: ['disabled'],
+				attributes: true,
+			});
+
+			return () => {
+				mutationObserver.disconnect(input);
+			};
+		}
+	}, []);
 
 	return (
 		<ClayForm.Group>

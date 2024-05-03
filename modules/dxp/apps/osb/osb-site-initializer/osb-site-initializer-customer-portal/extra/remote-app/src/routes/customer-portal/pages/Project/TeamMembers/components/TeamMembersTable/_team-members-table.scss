@@ -5,6 +5,22 @@
 	}
 }
 
+.dropdown-menu {
+	.custom-checkbox {
+		margin-left: 0.625rem;
+	}
+
+	label {
+		font-size: 0.813rem;
+		padding-left: 0.625rem;
+	}
+
+	border-radius: 0.5rem;
+	line-height: initial;
+	min-width: 13.625rem;
+	padding: 0.75rem;
+}
+
 .page-link:hover {
 	z-index: 0;
 }

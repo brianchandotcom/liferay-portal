@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import PopoverIcon from '~/routes/customer-portal/components/ActivationStatus/DXPCloud/components/PopoverIcon';
 import i18n from '../../../../../../../../../../common/I18n';
 import getKebabCase from '../../../../../../../../../../common/utils/getKebabCase';
 import RolesDropdown from './components/RolesDropdown';
@@ -26,9 +27,19 @@ const RolesColumn = ({
 			supportSeatsCount={supportSeatsCount}
 		/>
 	) : (
-		<p className="m-0 text-truncate">
-			{i18n.translate(getKebabCase(currentRoleBriefName))}
-		</p>
+		<div className='d-flex'>
+			<p className="m-0 pt-1 text-truncate">
+				{currentRoleBriefName.map((roleBriefName, index) => (
+    				`${index === 0 ? '' : ', '}${i18n.translate(getKebabCase(roleBriefName))}`
+				))}
+			</p>
+
+			<PopoverIcon 
+				title={currentRoleBriefName.map((roleBriefName, index) => (
+    				`${index === 0 ? '' : ' '}${i18n.translate(getKebabCase(roleBriefName))}`
+				))} 
+			/>
+		</div>
 	);
 };
 

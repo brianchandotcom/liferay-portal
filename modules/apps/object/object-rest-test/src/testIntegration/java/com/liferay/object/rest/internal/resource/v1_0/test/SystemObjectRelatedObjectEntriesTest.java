@@ -268,14 +268,9 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 		_testGetManyToOneSystemObjectRelatedObjectEntries(
 			StringPool.BLANK, 0, objectRelationship, _user.getUserId());
-
-		// New unrelated user
-
 		_testGetManyToOneSystemObjectRelatedObjectEntries(
 			StringPool.BLANK, 0, objectRelationship,
 			_userAccountJSONObject.getLong("id"));
-
-		// Default related user
 
 		ObjectRelationshipTestUtil.relateObjectEntries(
 			_objectEntry.getObjectEntryId(), _user.getUserId(),
@@ -285,8 +280,6 @@ public class SystemObjectRelatedObjectEntriesTest {
 			_objectEntry.getExternalReferenceCode(),
 			_objectEntry.getObjectEntryId(), objectRelationship,
 			_user.getUserId());
-
-		// New related user
 
 		ObjectRelationshipTestUtil.relateObjectEntries(
 			_objectEntry.getObjectEntryId(),

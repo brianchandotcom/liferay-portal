@@ -11,16 +11,17 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 
 import java.io.IOException;
-import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alvaro Saugar
@@ -49,8 +50,8 @@ public class ForgotPasswordLayoutUtilityPageEntryViewRenderer
 
 	@Override
 	public void renderHTML(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		RequestDispatcher requestDispatcher =
@@ -58,9 +59,9 @@ public class ForgotPasswordLayoutUtilityPageEntryViewRenderer
 
 		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
+
 	@Reference
 	private Language _language;
-
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.utility.page.forgot.password)"

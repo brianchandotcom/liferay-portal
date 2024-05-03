@@ -33,9 +33,9 @@ public abstract class Pre7UpgradeProcess extends UpgradeProcess {
 	@Override
 	public void upgrade() throws UpgradeException {
 		try (Closeable closeable = _injectField(
-			PortalBeanLocatorUtil.locate(
-				CounterLocalService.class.getName()),
-			"counterFinder", Pre7CounterFinderImpl.class)) {
+				PortalBeanLocatorUtil.locate(
+					CounterLocalService.class.getName()),
+				"counterFinder", Pre7CounterFinderImpl.class)) {
 
 			super.upgrade();
 		}
@@ -48,7 +48,7 @@ public abstract class Pre7UpgradeProcess extends UpgradeProcess {
 	}
 
 	private Closeable _injectField(
-		Object springService, String fieldName, Class<?> wrapperClass)
+			Object springService, String fieldName, Class<?> wrapperClass)
 		throws Exception {
 
 		Class<?> clazz = springService.getClass();
@@ -96,7 +96,7 @@ public abstract class Pre7UpgradeProcess extends UpgradeProcess {
 					finalField.set(springService, previousValue);
 				}
 				catch (ReflectiveOperationException
-					reflectiveOperationException) {
+							reflectiveOperationException) {
 
 					throw new IOException(reflectiveOperationException);
 				}

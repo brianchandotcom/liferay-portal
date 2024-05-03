@@ -558,15 +558,13 @@ function Table(props: IFDSViewSectionProps & {title?: string}) {
 
 		const storedFDSFieldsOrder = responseJSON?.fdsFieldsOrder;
 
-		const storedFDSFields = fdsFields;
-
 		if (
-			storedFDSFields &&
+			fdsFields &&
 			storedFDSFieldsOrder &&
 			storedFDSFieldsOrder === fdsFieldsOrder
 		) {
 			setFDSFields(
-				sortItems(storedFDSFields, fdsFieldsOrder) as IFDSField[]
+				sortItems(fdsFields, storedFDSFieldsOrder) as IFDSField[]
 			);
 
 			openDefaultSuccessToast();

@@ -256,7 +256,15 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 
 		const storedFDSActionsOrder = responseJSON?.[actionTypeOrder];
 
-		if (storedFDSActionsOrder && storedFDSActionsOrder === order) {
+		if (
+			fdsActions &&
+			storedFDSActionsOrder &&
+			storedFDSActionsOrder === order
+		) {
+			setFDSActions(
+				sortItems(fdsActions, storedFDSActionsOrder) as IFDSAction[]
+			);
+
 			openDefaultSuccessToast();
 		}
 		else {

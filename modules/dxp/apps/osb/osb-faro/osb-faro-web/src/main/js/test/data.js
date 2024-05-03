@@ -73,6 +73,7 @@ export function mockIndividual(seed = 0, properties) {
 		activitiesCount: 1000,
 		colorId: String(seed),
 		dateCreated: getTimestamp(-2),
+		firstActivityDate: getTimestamp(-1),
 		id: String(seed),
 		image: '/path/to/portrait.png',
 		lastActivityDate: getTimestamp(),

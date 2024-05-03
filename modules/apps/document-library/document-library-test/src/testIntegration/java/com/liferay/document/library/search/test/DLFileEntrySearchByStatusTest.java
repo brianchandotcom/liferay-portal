@@ -62,27 +62,14 @@ public class DLFileEntrySearchByStatusTest {
 
 	@Test
 	public void testSearchFileAnyStatus() throws Exception {
-		String titlePrefix = "Document ";
+		String titlePrefix = "Document";
 
-		_dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			titlePrefix + StringUtil.randomString(), StringPool.BLANK,
-			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
-			null, null, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_addFileEntry(null, titlePrefix + StringUtil.randomString());
 
 		Date displayDate = new Date(System.currentTimeMillis() + Time.DAY);
 
-		_dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			titlePrefix + StringUtil.randomString(), StringPool.BLANK,
-			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
-			displayDate, null, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_addFileEntry(
+			displayDate, titlePrefix + " " + StringUtil.randomString());
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			_group.getGroupId());
@@ -102,27 +89,14 @@ public class DLFileEntrySearchByStatusTest {
 
 	@Test
 	public void testSearchFileApprovedStatus() throws Exception {
-		String titlePrefix = "Document ";
+		String titlePrefix = "Document";
 
-		_dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			titlePrefix + StringUtil.randomString(), StringPool.BLANK,
-			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
-			null, null, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_addFileEntry(null, titlePrefix + StringUtil.randomString());
 
 		Date displayDate = new Date(System.currentTimeMillis() + Time.DAY);
 
-		_dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			titlePrefix + StringUtil.randomString(), StringPool.BLANK,
-			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
-			displayDate, null, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_addFileEntry(
+			displayDate, titlePrefix + " " + StringUtil.randomString());
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			_group.getGroupId());
@@ -142,27 +116,13 @@ public class DLFileEntrySearchByStatusTest {
 
 	@Test
 	public void testSearchFileNoStatusOnlyApproved() throws Exception {
-		String titlePrefix = "Document ";
+		String titlePrefix = "Document";
 
-		_dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			titlePrefix + StringUtil.randomString(), StringPool.BLANK,
-			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
-			null, null, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_addFileEntry(null, titlePrefix + " " + StringUtil.randomString());
 
 		Date displayDate = new Date(System.currentTimeMillis() + Time.DAY);
 
-		_dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			titlePrefix + StringUtil.randomString(), StringPool.BLANK,
-			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
-			displayDate, null, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_addFileEntry(displayDate, titlePrefix + StringUtil.randomString());
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			_group.getGroupId());
@@ -181,17 +141,11 @@ public class DLFileEntrySearchByStatusTest {
 
 	@Test
 	public void testSearchScheduledFile() throws Exception {
-		Date displayDate = new Date(System.currentTimeMillis() + Time.DAY);
-
 		String title = "Document";
 
-		_dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			title, StringPool.BLANK, StringUtil.randomString(),
-			StringUtil.randomString(), new byte[0], displayDate, null, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_addFileEntry(
+			new Date(System.currentTimeMillis() + Time.DAY),
+			title + " " + StringUtil.randomString());
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			_group.getGroupId());
@@ -207,6 +161,18 @@ public class DLFileEntrySearchByStatusTest {
 		Assert.assertEquals(
 			searchContext.getAttribute("queryString") + "->" + hits, 1,
 			hits.getLength());
+	}
+
+	private void _addFileEntry(Date displayDate, String title)
+		throws Exception {
+
+		_dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			title, StringPool.BLANK, StringUtil.randomString(),
+			StringUtil.randomString(), new byte[0], displayDate, null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	@Inject

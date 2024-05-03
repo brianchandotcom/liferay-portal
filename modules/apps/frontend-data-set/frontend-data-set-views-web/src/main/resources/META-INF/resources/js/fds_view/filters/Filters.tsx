@@ -675,7 +675,7 @@ function Filters({fdsFilterClientExtensions, fdsView, namespace}: IProps) {
 
 			filtersOrdered = sortItems(
 				filtersOrdered,
-				fdsView.fdsFiltersOrder,
+				responseJSON.fdsFiltersOrder,
 				true
 			) as FilterCollection;
 

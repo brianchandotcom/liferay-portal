@@ -455,11 +455,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 
 		if (checkResourceActions) {
-			for (String modelResourceName : modelResourceNames) {
-				_checkResourceActions(
-					getModelResourceActions(modelResourceName),
-					modelResourceName);
-			}
+			_checkModelResourcesResourceActions(modelResourceNames);
 		}
 	}
 
@@ -483,10 +479,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		_readModelResources(document.getRootElement(), modelResourceNames);
 
-		for (String modelResourceName : modelResourceNames) {
-			_checkResourceActions(
-				getModelResourceActions(modelResourceName), modelResourceName);
-		}
+		_checkModelResourcesResourceActions(modelResourceNames);
 	}
 
 	@Override
@@ -734,6 +727,15 @@ public class ResourceActionsImpl implements ResourceActions {
 			if (guestUnsupportedActions.contains(actionId)) {
 				iterator.remove();
 			}
+		}
+	}
+
+	private void _checkModelResourcesResourceActions(
+		Set<String> modelResourceNames) {
+
+		for (String modelResourceName : modelResourceNames) {
+			_checkResourceActions(
+				getModelResourceActions(modelResourceName), modelResourceName);
 		}
 	}
 

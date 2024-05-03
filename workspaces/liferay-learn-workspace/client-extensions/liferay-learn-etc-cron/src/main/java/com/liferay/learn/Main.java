@@ -548,6 +548,10 @@ public class Main {
 	private JSONArray _getBreadcrumbJSONArray(File file) throws Exception {
 		JSONArray breadcrumbJSONArray = new JSONArray();
 
+		if (file == null) {
+			return breadcrumbJSONArray;
+		}
+
 		File parentMarkdownFile = null;
 
 		while ((parentMarkdownFile = _getParentMarkdownFile(file)) != null) {
@@ -562,6 +566,10 @@ public class Main {
 
 	private JSONArray _getChildrenJSONArray(File file) throws Exception {
 		JSONArray childrenJSONArray = new JSONArray();
+
+		if (file == null) {
+			return childrenJSONArray;
+		}
 
 		SnakeYamlFrontMatterVisitor snakeYamlFrontMatterVisitor =
 			new SnakeYamlFrontMatterVisitor();
@@ -732,6 +740,10 @@ public class Main {
 		throws Exception {
 
 		JSONObject navigationItemJSONObject = new JSONObject();
+
+		if (file == null) {
+			return navigationItemJSONObject;
+		}
 
 		navigationItemJSONObject.put(
 			"title",

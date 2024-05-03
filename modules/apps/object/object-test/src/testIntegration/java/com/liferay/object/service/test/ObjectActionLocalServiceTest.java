@@ -1898,13 +1898,15 @@ public class ObjectActionLocalServiceTest {
 			).build(),
 			false);
 
-		ObjectEntry objectEntry = _addObjectEntry(
-			0, objectDefinition.getObjectDefinitionId(),
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"attachment", StringPool.BLANK
 			).put(
 				"integer", String.valueOf(RandomTestUtil.randomInt())
-			).build());
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
 
 		_objectEntryLocalService.addOrUpdateObjectEntry(
 			objectEntry.getExternalReferenceCode(), TestPropsValues.getUserId(),
@@ -2150,16 +2152,6 @@ public class ObjectActionLocalServiceTest {
 		return _addObjectAction(
 			StringPool.BLANK, name, objectActionExecutorKey,
 			objectActionTriggerKey, unicodeProperties, system);
-	}
-
-	private ObjectEntry _addObjectEntry(
-			long groupId, long objectDefinitionId,
-			Map<String, Serializable> values)
-		throws Exception {
-
-		return _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), groupId, objectDefinitionId, values,
-			ServiceContextTestUtil.getServiceContext());
 	}
 
 	private void _assertGroovyObjectActionExecutorArguments(

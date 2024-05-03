@@ -5,20 +5,12 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.upgrade.BaseCompanyIdUpgradeProcess;
-import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.io.IOException;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -138,125 +130,6 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 					"'folder' and DLFolder.folderId = DLSyncEvent.typePK";
 
 			runSQL(connection, getUpdateSQL(selectSQL));
-		}
-
-	}
-
-	protected class PortletPreferencesTableUpdater extends TableUpdater {
-
-		public PortletPreferencesTableUpdater(String tableName) {
-			super(tableName, "", "");
-		}
-
-		@Override
-		public void update(Connection connection)
-			throws IOException, SQLException {
-
-			long[] companyIds = PortalInstancePool.getCompanyIds();
-
-			if (companyIds.length == 1) {
-				runSQL(connection, getUpdateSQL(String.valueOf(companyIds[0])));
-
-				return;
-			}
-
-			// Company
-
-			runSQL(
-				connection,
-				_getUpdateSQL(
-					"Company", "companyId", "ownerId",
-					PortletKeys.PREFS_OWNER_TYPE_COMPANY));
-
-			// Group
-
-			runSQL(
-				connection,
-				_getUpdateSQL(
-					"Group_", "groupId", "ownerId",
-					PortletKeys.PREFS_OWNER_TYPE_GROUP));
-
-			// Layout
-
-			runSQL(
-				connection,
-				_getUpdateSQL(
-					"Layout", "plid", "plid",
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT));
-
-			// LayoutRevision
-
-			runSQL(
-				connection,
-				_getUpdateSQL(
-					"LayoutRevision", "layoutRevisionId", "plid",
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT));
-
-			// Organization
-
-			runSQL(
-				connection,
-				_getUpdateSQL(
-					"Organization_", "organizationId", "ownerId",
-					PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION));
-
-			// PortletItem
-
-			runSQL(
-				connection,
-				_getUpdateSQL(
-					"PortletItem", "portletItemId", "ownerId",
-					PortletKeys.PREFS_OWNER_TYPE_ARCHIVED));
-
-			// User_
-
-			runSQL(
-				connection,
-				_getUpdateSQL(
-					"User_", "userId", "ownerId",
-					PortletKeys.PREFS_OWNER_TYPE_USER));
-		}
-
-		private String _getSelectSQL(
-				String foreignTableName, String foreignColumnName,
-				String columnName)
-			throws SQLException {
-
-			List<Long> companyIds = new ArrayList<>();
-
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						"select distinct companyId from " + foreignTableName);
-				ResultSet resultSet = preparedStatement.executeQuery()) {
-
-				while (resultSet.next()) {
-					long companyId = resultSet.getLong(1);
-
-					companyIds.add(companyId);
-				}
-			}
-
-			if (companyIds.size() == 1) {
-				return String.valueOf(companyIds.get(0));
-			}
-
-			return StringBundler.concat(
-				"select companyId from ", foreignTableName, " where ",
-				foreignTableName, ".", foreignColumnName, " = ", getTableName(),
-				".", columnName);
-		}
-
-		private String _getUpdateSQL(
-				String foreignTableName, String foreignColumnName,
-				String columnName, int ownerType)
-			throws IOException, SQLException {
-
-			return StringBundler.concat(
-				getUpdateSQL(
-					_getSelectSQL(
-						foreignTableName, foreignColumnName, columnName)),
-				" where ownerType = ", ownerType,
-				" and (companyId is null or companyId = 0)");
 		}
 
 	}

@@ -53,8 +53,8 @@ public class AssetTestUtil {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.createAssetEntry(
 			assetEntryId);
 
-		assetEntry.setClassName(className);
 		assetEntry.setGroupId(groupId);
+		assetEntry.setClassName(className);
 		assetEntry.setClassPK(RandomTestUtil.randomLong());
 		assetEntry.setVisible(true);
 		assetEntry.setPublishDate(publishDate);

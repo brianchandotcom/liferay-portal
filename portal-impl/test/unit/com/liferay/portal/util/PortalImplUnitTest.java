@@ -708,8 +708,8 @@ public class PortalImplUnitTest {
 
 		LayoutSet layoutSet = new LayoutSetImpl();
 
-		layoutSet.setGroupId(2000L);
 		layoutSet.setLayoutSetId(11L);
+		layoutSet.setGroupId(2000L);
 		layoutSet.setPrivateLayout(privateLayout);
 		layoutSet.setVirtualHostnames(virtualHostnames);
 
@@ -720,8 +720,8 @@ public class PortalImplUnitTest {
 
 		Layout layout = new LayoutImpl();
 
-		layout.setLayoutSet(layoutSet);
 		layout.setType(LayoutConstants.TYPE_CONTENT);
+		layout.setLayoutSet(layoutSet);
 
 		themeDisplay.setLayout(layout);
 

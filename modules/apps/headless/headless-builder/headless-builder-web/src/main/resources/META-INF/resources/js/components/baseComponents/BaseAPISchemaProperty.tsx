@@ -31,8 +31,8 @@ interface BaseAPISchemaPropertyProps {
 
 interface ParentObjectDefinitionProps {
 	modifiable?: boolean;
-	objectDefinitionName: string;
 	objectDefinitionERC: string;
+	objectDefinitionName: string;
 }
 
 export default function BaseAPISchemaProperty({
@@ -91,7 +91,7 @@ export default function BaseAPISchemaProperty({
 						objectDefinitionERC
 					))
 		);
-	}, [added, parentObjectDefinitionData]);
+	}, [added, modifiable, objectDefinitionERC, parentObjectDefinitionData]);
 
 	return (
 		<ClayButton

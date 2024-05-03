@@ -23,7 +23,7 @@ const headlessBuilderPagesTest = (featureFlags?: FeatureFlagsOptions) =>
 		},
 		schemaPage: async ({page}, use) => {
 			await use(new SchemaPage(page));
-		}
+		},
 	});
 
 export {headlessBuilderPagesTest};

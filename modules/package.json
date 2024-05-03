@@ -35,7 +35,8 @@
 			"apps/*/*/*",
 			"dxp/apps/*/*",
 			"dxp/apps/*/!(osb-faro/osb-faro-web)*/*",
-			"dxp/apps/osb/*/!(osb-faro/osb-faro-web)*/*"
+			"dxp/apps/osb/*/!(osb-faro/osb-faro-web)*/*",
+			"node-scripts"
 		]
 	}
 }

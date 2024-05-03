@@ -17,7 +17,7 @@
 
 	<#include "roles.ftl">
 
-	<#include "list_type_definition.ftl">
+	<#include "list_type_definitions.ftl">
 
 	<#include "default_groups.ftl">
 

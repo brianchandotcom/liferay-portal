@@ -4740,6 +4740,20 @@ public class DataFactory {
 		return listTypeDefinitionModel;
 	}
 
+	public List<ListTypeDefinitionModel> newListTypeDefinitionModels() {
+		List<ListTypeDefinitionModel> listTypeDefinitionModels =
+			new ArrayList<>(
+				BenchmarksPropsValues.MAX_LIST_TYPE_DEFINITION_COUNT);
+
+		for (int i = 1;
+			 i <= BenchmarksPropsValues.MAX_LIST_TYPE_DEFINITION_COUNT; i++) {
+
+			listTypeDefinitionModels.add(newListTypeDefinitionModel());
+		}
+
+		return listTypeDefinitionModels;
+	}
+
 	public List<ListTypeEntryModel> newListTypeEntryModels(
 		long listTypeDefinitionId) {
 

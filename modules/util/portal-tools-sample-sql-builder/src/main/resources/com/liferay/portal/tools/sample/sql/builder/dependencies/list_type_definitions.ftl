@@ -1,7 +1,8 @@
-<#assign listTypeDefinitionModel = dataFactory.newListTypeDefinitionModel() />
+<#list dataFactory.newListTypeDefinitionModels() as listTypeDefinitionModel>
 
-${dataFactory.toInsertSQL(listTypeDefinitionModel)}
+	${dataFactory.toInsertSQL(listTypeDefinitionModel)}
 
-<#list dataFactory.newListTypeEntryModels(listTypeDefinitionModel.getListTypeDefinitionId()) as listTypeEntryModel>
-	${dataFactory.toInsertSQL(listTypeEntryModel)}
+	<#list dataFactory.newListTypeEntryModels(listTypeDefinitionModel.getListTypeDefinitionId()) as listTypeEntryModel>
+		${dataFactory.toInsertSQL(listTypeEntryModel)}
+	</#list>
 </#list>

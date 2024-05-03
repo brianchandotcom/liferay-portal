@@ -200,9 +200,9 @@ function ObjectFieldsPanel({
 									}
 									parentObjectDefinitionData={{
 										modifiable: localUIData.modifiable,
-										objectDefinitionName: localUIData.name,
 										objectDefinitionERC:
 											localUIData.externalReferenceCode,
+										objectDefinitionName: localUIData.name,
 									}}
 									setSchemaUIData={setSchemaUIData}
 								/>

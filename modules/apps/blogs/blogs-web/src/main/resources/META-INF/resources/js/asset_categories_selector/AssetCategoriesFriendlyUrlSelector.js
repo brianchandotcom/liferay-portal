@@ -7,9 +7,12 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import classnames from 'classnames';
-import {openCategorySelectionModal} from 'frontend-js-web';
+import {
+	normalizeFriendlyURL,
+	openCategorySelectionModal,
+} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 function AssetVocabulariesCategoriesFriendlyUrlSelector({
 	automaticURL: initialDisabled,
@@ -20,6 +23,10 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 }) {
 	const [disabled, setDisabled] = useState(initialDisabled);
 	const [selectedItems, setSelectedItems] = useState(selectedCategories);
+
+	const inputAddonNodeRef = useRef(
+		document.querySelector('.friendly-url .form-text')
+	);
 
 	const getUnique = (array, property) => {
 		return array
@@ -75,13 +82,17 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 		});
 	};
 
-	const friendlyUrlAddon = useMemo(
-		() =>
-			selectedItems
-				.map((category) => category.label.replace(/ /g, '-') + '/')
-				.join(''),
-		[selectedItems]
-	);
+	useEffect(() => {
+		if (inputAddonNodeRef.current) {
+			inputAddonNodeRef.current.innerText =
+				inputAddon +
+				selectedItems
+					.map(
+						(category) => `${normalizeFriendlyURL(category.label)}/`
+					)
+					.join('');
+		}
+	}, [inputAddon, inputAddonNodeRef, selectedItems]);
 
 	return (
 		<ClayForm.Group>

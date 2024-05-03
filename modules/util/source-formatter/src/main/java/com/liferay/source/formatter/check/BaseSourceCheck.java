@@ -839,16 +839,23 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			serviceXMLFileName = StringUtil.replace(
 				serviceXMLFileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
-			String packagePath = "";
+			String packagePath = serviceXMLElement.attributeValue(
+				"api-package-path");
+
+			if (packagePath == null) {
+				packagePath = serviceXMLElement.attributeValue("package-path");
+			}
+
+			if (packagePath == null) {
+				continue;
+			}
+
 			String tablesSQLFilePath = "";
 
 			if (serviceXMLFileName.contains("/portal-impl/")) {
-				packagePath = "portal-impl";
 				tablesSQLFilePath = portalDir + "/sql/portal-tables.sql";
 			}
 			else {
-				packagePath = serviceXMLElement.attributeValue("package-path");
-
 				int x = serviceXMLFileName.lastIndexOf("/");
 
 				tablesSQLFilePath =

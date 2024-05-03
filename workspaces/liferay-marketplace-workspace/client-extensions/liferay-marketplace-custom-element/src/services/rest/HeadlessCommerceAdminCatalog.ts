@@ -17,17 +17,17 @@ class HeadlessCommerceAdminCatalog {
 		);
 	}
 
-	async createProduct({
-		appCategories,
-		appDescription,
-		appName,
+	async createVirtualProduct({
 		catalogId,
+		categories,
+		description,
+		name,
 		productChannels,
 	}: {
-		appCategories: Categories[];
-		appDescription: string;
-		appName: string;
 		catalogId: number;
+		categories: Partial<Categories>[];
+		description: string;
+		name: string;
 		productChannels?: Partial<Channel>[];
 	}) {
 		return fetcher.post(
@@ -35,9 +35,9 @@ class HeadlessCommerceAdminCatalog {
 			{
 				active: true,
 				catalogId,
-				categories: appCategories,
-				description: {en_US: appDescription},
-				name: {en_US: appName},
+				categories,
+				description: {en_US: description},
+				name: {en_US: name},
 				productChannels,
 				productConfiguration: {
 					allowBackOrder: true,
@@ -45,7 +45,15 @@ class HeadlessCommerceAdminCatalog {
 				},
 				productStatus: 2,
 				productType: 'virtual',
+				productVirtualSettings: {},
 			}
+		);
+	}
+
+	async updateProduct(productId: number, body: unknown) {
+		return fetcher.patch(
+			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}`,
+			body
 		);
 	}
 

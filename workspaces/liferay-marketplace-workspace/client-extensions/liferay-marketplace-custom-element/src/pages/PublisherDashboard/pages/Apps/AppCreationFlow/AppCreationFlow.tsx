@@ -18,7 +18,7 @@ import {ReviewAndSubmitAppPage} from './ReviewAndSubmitAppPage/ReviewAndSubmitAp
 import {CustomizeAppStorefrontPage} from './StorefrontPage/CustomizeAppStorefrontPage';
 
 import './AppCreationFlow.scss';
-import {AppToolBar} from '../../../../../components/AppToolBar/AppToolBar';
+import AppToolBar from '../../../../../components/AppToolbar/AppToolbar';
 import {useAccount} from '../../../../../hooks/data/useAccounts';
 import {Liferay} from '../../../../../liferay/liferay';
 import {useAppContext} from './AppContext/AppManageState';

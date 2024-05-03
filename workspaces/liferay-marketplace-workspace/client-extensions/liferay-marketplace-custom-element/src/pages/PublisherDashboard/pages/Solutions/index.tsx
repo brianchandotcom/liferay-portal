@@ -62,7 +62,7 @@ const Solutions = () => {
 				properties.featureFlags?.includes('LPD-20229') && (
 					<ClayButton
 						disabled={!(catalogId && catalogId > 0)}
-						onClick={() => navigate('/solution/publisher')}
+						onClick={() => navigate('/solutions/publisher')}
 					>
 						New Solution Template
 					</ClayButton>

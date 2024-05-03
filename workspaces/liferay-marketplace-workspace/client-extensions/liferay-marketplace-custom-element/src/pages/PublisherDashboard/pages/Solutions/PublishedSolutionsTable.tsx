@@ -119,7 +119,7 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 				},
 			]}
 			hasKebabButton
-			onClickRow={({id}) => navigate(`/solution/${id}`)}
+			onClickRow={({id}) => navigate(`${id}`)}
 			rows={items}
 		/>
 	);

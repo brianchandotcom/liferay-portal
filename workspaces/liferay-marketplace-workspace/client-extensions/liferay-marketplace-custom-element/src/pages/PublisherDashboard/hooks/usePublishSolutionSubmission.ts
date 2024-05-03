@@ -42,7 +42,8 @@ const usePublishSolutionSubmission = (
 			);
 
 			dispatch({payload: product, type: SolutionTypes.SET_PRODUCT});
-		} else {
+		}
+		else {
 			await headlessCommerceAdminCatalogImpl.updateProduct(
 				_product.productId as number,
 				{

@@ -14,7 +14,7 @@
 		</div>
 	</c:when>
 	<c:when test="<%= !user.isGuestUser() %>">
-		<div class="account-selector-root" id="<%= accountSelectorId %>"></div>
+		<div class="<%= (cssClasses != null) ? "account-selector-root " + cssClasses : "account-selector-root" %>" id="<%= accountSelectorId %>"></div>
 
 		<liferay-frontend:component
 			context='<%=

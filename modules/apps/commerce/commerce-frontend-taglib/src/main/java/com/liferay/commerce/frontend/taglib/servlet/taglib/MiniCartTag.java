@@ -164,6 +164,10 @@ public class MiniCartTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
+	public String getCssClasses() {
+		return _cssClasses;
+	}
+
 	public Map<String, String> getLabels() {
 		return _labels;
 	}
@@ -178,6 +182,10 @@ public class MiniCartTag extends IncludeTag {
 
 	public boolean isToggleable() {
 		return _toggleable;
+	}
+
+	public void setCssClasses(String cssClasses) {
+		_cssClasses = cssClasses;
 	}
 
 	public void setDisplayTotalItemsQuantity(
@@ -220,6 +228,7 @@ public class MiniCartTag extends IncludeTag {
 		_commerceCurrencyCode = null;
 		_commerceOrderHttpHelper = null;
 		_configurationProvider = null;
+		_cssClasses = StringPool.BLANK;
 		_displayTotalItemsQuantity = false;
 		_itemsQuantity = 0;
 		_labels = new HashMap<>();
@@ -253,6 +262,8 @@ public class MiniCartTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-commerce:cart:commerceCurrencyCode",
 			_commerceCurrencyCode);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:cart:cssClasses", _cssClasses);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:cart:displayDiscountLevels",
 			_isDisplayDiscountLevels());
@@ -343,6 +354,7 @@ public class MiniCartTag extends IncludeTag {
 	private String _commerceCurrencyCode;
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private ConfigurationProvider _configurationProvider;
+	private String _cssClasses = StringPool.BLANK;
 	private boolean _displayTotalItemsQuantity;
 	private int _itemsQuantity;
 	private Map<String, String> _labels = new HashMap<>();

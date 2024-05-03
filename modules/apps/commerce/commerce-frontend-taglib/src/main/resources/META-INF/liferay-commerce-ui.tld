@@ -14,6 +14,11 @@
 		<name>account-selector</name>
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.AccountSelectorTag</tag-class>
 		<body-content>empty</body-content>
+		<attribute>
+			<name>cssClasses</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>add-to-cart</name>
@@ -286,6 +291,11 @@
 		<name>mini-cart</name>
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.MiniCartTag</tag-class>
 		<body-content>empty</body-content>
+		<attribute>
+			<name>cssClasses</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		<attribute>
 			<name>displayTotalItemsQuantity</name>
 			<required>false</required>

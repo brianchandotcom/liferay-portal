@@ -199,6 +199,11 @@ public class BenchmarksPropsValues {
 			PropertiesHolder._get(
 				BenchmarksPropsKeys.MAX_JOURNAL_ARTICLE_VERSION_COUNT));
 
+	public static final int MAX_LIST_TYPE_DEFINITION_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.MAX_LIST_TYPE_DEFINITION_COUNT));
+
 	public static final int MAX_LIST_TYPE_ENTRY_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_LIST_TYPE_ENTRY_COUNT));
 

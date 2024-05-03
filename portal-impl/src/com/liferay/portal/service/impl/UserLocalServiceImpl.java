@@ -1900,10 +1900,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			PasswordModificationThreadLocal.setPasswordUnencrypted(password);
 
 			user.setPassword(PasswordEncryptorUtil.encrypt(password));
-			user.setPasswordUnencrypted(password);
 			user.setPasswordEncrypted(true);
-			user.setPasswordModified(true);
 			user.setPasswordModifiedDate(new Date());
+			user.setPasswordUnencrypted(password);
+			user.setPasswordModified(true);
 
 			user = userPersistence.update(user);
 
@@ -5231,10 +5231,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		user.setPassword(newEncPwd);
-		user.setPasswordUnencrypted(password1);
 		user.setPasswordEncrypted(true);
 		user.setPasswordReset(passwordReset);
 		user.setGraceLoginCount(0);
+		user.setPasswordUnencrypted(password1);
 
 		if (!silentUpdate) {
 			user.setPasswordModified(true);

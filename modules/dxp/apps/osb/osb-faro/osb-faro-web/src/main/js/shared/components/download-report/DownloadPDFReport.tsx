@@ -156,6 +156,7 @@ export type TransformedContainer = TReportContainer & {
 };
 
 export interface IDownloadReport {
+	dateRangeDescription?: string;
 	disabled: boolean;
 	showDateRange?: boolean;
 	subtitle: string;
@@ -181,6 +182,7 @@ export const formattedContainers = (
 	}, {} as ContainerList);
 
 const DownloadPDFReport: React.FC<IDownloadReport> = ({
+	dateRangeDescription,
 	disabled,
 	showDateRange,
 	subtitle,
@@ -221,6 +223,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 							['PDF']
 						) as string
 					}
+					dateRangeDescription={dateRangeDescription}
 					disabled={!filteredContainers.length}
 					infoMessage={Liferay.Language.get(
 						'the-dashboard-will-be-downloaded-exactly-as-it-is-displayed-on-your-screen.-please-verify-if-the-desired-tabs-and-filters-are-selected-before-proceeding'
@@ -254,7 +257,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 					<ClayForm.Group className='mt-3'>
 						<label>
 							<Text size={3}>
-								{Liferay.Language.get('select-reports')}
+								{Liferay.Language.get('dashboard-reports')}
 							</Text>
 						</label>
 

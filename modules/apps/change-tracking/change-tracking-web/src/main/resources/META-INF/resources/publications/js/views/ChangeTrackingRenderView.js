@@ -691,6 +691,10 @@ export default function ChangeTrackingRenderView({
 		) {
 			return (
 				<ChangeTrackingWorkflowView
+					namespace={namespace}
+					setShowWorkflowSuccessMessage={
+						setShowWorkflowSuccessMessage
+					}
 					workflowData={state.renderData.workflowData}
 				/>
 			);

@@ -1183,6 +1183,30 @@ public class GetEntryRenderDataMVCResourceCommand
 					return String.valueOf(workflowLogsJSONObject);
 				}
 			).put(
+				"assignButton",
+				JSONUtil.put(
+					"href",
+					PortletURLBuilder.createRenderURL(
+						_portal.getLiferayPortletResponse(resourceResponse),
+						PortletKeys.MY_WORKFLOW_TASK
+					).setMVCPath(
+						"/workflow_task_assign.jsp"
+					).setParameter(
+						"assigneeUserId", -1
+					).setParameter(
+						"assignMode", "assignTo"
+					).setParameter(
+						"workflowTaskId", workflowTask.getWorkflowTaskId()
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString()
+				).put(
+					"label",
+					_language.get(themeDisplay.getLocale(), "assign-to-...")
+				).put(
+					"modalHeight", "356px"
+				)
+			).put(
 				"assignedTo",
 				() -> {
 					if (!workflowTask.isAssignedToSingleUser()) {

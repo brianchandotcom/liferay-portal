@@ -10,7 +10,11 @@ import React, {useState} from 'react';
 
 import {WorkflowStatusLabel} from '../components/WorkflowStatusLabel';
 
-export default function ChangeTrackingWorkflowView({workflowData}) {
+export default function ChangeTrackingWorkflowView({
+	namespace,
+	setShowWorkflowSuccessMessage,
+	workflowData,
+}) {
 	const MAX_ITEMS_TO_SHOW = 10;
 
 	const [next, setNext] = useState(MAX_ITEMS_TO_SHOW);
@@ -47,6 +51,42 @@ export default function ChangeTrackingWorkflowView({workflowData}) {
 
 						<ClayTable.Cell className="table-cell-expand">
 							{workflowData.assignedTo}
+
+							<ClayButton
+								className="ml-2"
+								displayType="secondary"
+								onClick={() =>
+									Liferay.Util.openModal({
+										center: true,
+										customEvents: [
+											{
+												name: `${namespace}workflowTaskUpdated`,
+												onEvent() {
+													const iframe = document.querySelector(
+														'.liferay-modal iframe'
+													);
+
+													iframe.contentWindow.location.reload();
+
+													setShowWorkflowSuccessMessage(
+														true
+													);
+												},
+											},
+										],
+										height:
+										workflowData.assignButton.modalHeight,
+										onOpen: () =>
+											setShowWorkflowSuccessMessage(false),
+										size: 'lg',
+										title: workflowData.assignButton.label,
+										url: workflowData.assignButton.href,
+									})
+								}
+								size="xs"
+							>
+								{workflowData.assignButton.assignLabel}
+							</ClayButton>
 						</ClayTable.Cell>
 					</ClayTable.Row>
 

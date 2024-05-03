@@ -727,6 +727,14 @@
 														"backgroundColor": "colorNeutral0",
 														"width": "100%"
 													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"maxHeight": "60vh"
+															},
+															"id": "tablet"
+														}
+													],
 													"indexed": true,
 													"layout": {
 													}
@@ -741,6 +749,29 @@
 																"paddingRight": "4",
 																"paddingTop": "4"
 															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"maxHeight": ""
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"fragmentViewportStyle": {
+																		"height": "",
+																		"maxHeight": "",
+																		"overflow": "auto"
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"fragmentViewportStyle": {
+																		"maxHeight": "60vh",
+																		"overflow": "auto"
+																	},
+																	"id": "tablet"
+																}
+															],
 															"indexed": true,
 															"layout": {
 																"contentDisplay": "FlexRow",
@@ -2576,6 +2607,7 @@
 																	"indexed": true,
 																	"layout": {
 																		"contentDisplay": "FlexRow",
+																		"flexWrap": "Wrap",
 																		"justify": "Center",
 																		"widthType": "Fixed"
 																	}
@@ -3032,6 +3064,7 @@
 																	"indexed": true,
 																	"layout": {
 																		"contentDisplay": "FlexRow",
+																		"flexWrap": "Wrap",
 																		"justify": "Center",
 																		"widthType": "Fixed"
 																	}

@@ -747,6 +747,83 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationTemplate2);
 	}
 
+	@Test
+	public void testSendNotificationWithSystemObjectDefinition()
+		throws Exception {
+
+		ObjectDefinition accountEntryObjectDefinition =
+			objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(),
+				AccountEntry.class.getSimpleName());
+
+		NotificationTemplate notificationTemplate =
+			notificationTemplateLocalService.addNotificationTemplate(
+				NotificationTemplateUtil.createNotificationContext(
+					TestPropsValues.getUser(),
+					childObjectDefinition.getObjectDefinitionId(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
+					Arrays.asList(
+						createNotificationRecipientSetting(
+							"bcc", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
+						createNotificationRecipientSetting(
+							"cc",
+							"[%CURRENT_USER_EMAIL_ADDRESS%],cc@liferay.com"),
+						createNotificationRecipientSetting(
+							"from", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
+						createNotificationRecipientSetting(
+							"fromName",
+							Collections.singletonMap(
+								LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]")),
+						createNotificationRecipientSetting(
+							"to", "[%ACCOUNTENTRY_AUTHOR_EMAIL_ADDRESS%]")),
+					RandomTestUtil.randomString(),
+					NotificationConstants.TYPE_EMAIL, Collections.emptyList()));
+
+		ObjectAction objectAction = objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			accountEntryObjectDefinition.getObjectDefinitionId(), true,
+			StringPool.BLANK, RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_NOTIFICATION,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			UnicodePropertiesBuilder.put(
+				"notificationTemplateId",
+				notificationTemplate.getNotificationTemplateId()
+			).build(),
+			false);
+
+		User user = UserTestUtil.addOmniadminUser();
+
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			user.getUserId(), 0L, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null, null, null,
+			RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
+
+		_accountEntryLocalService.updateAccountEntry(accountEntry);
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 1,
+			notificationQueueEntries.size());
+
+		_assertNotificationQueueEntry(
+			user2.getEmailAddress(), true, user.getEmailAddress(),
+			notificationQueueEntries.get(0));
+
+		objectActionLocalService.deleteObjectAction(objectAction);
+	}
+
 	private AccountEntry _addAccountEntry() throws Exception {
 		return _accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(),

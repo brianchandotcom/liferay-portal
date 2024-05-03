@@ -177,24 +177,22 @@ export default class Blogs {
 			`#${this._config.namespace}urlOptions input`
 		);
 
-		if (!Liferay.FeatureFlags['LPD-11147']) {
-			if (urlOptions.length) {
-				urlOptions.forEach((option) => {
-					this._addEventListener(
-						option,
-						STR_CHANGE,
-						this._onChangeURLOptions.bind(this)
-					);
-				});
-			}
+		if (urlOptions.length) {
+			urlOptions.forEach((option) => {
+				this._addEventListener(
+					option,
+					STR_CHANGE,
+					this._onChangeURLOptions.bind(this)
+				);
+			});
+		}
 
-			const titleInput = this._getElementById('title');
+		const titleInput = this._getElementById('title');
 
-			if (titleInput) {
-				this._addEventListener(titleInput, STR_CHANGE, (event) => {
-					this.updateFriendlyURL(event.target.value);
-				});
-			}
+		if (titleInput) {
+			this._addEventListener(titleInput, STR_CHANGE, (event) => {
+				this.updateFriendlyURL(event.target.value);
+			});
 		}
 
 		const descriptionInput = this._getElementById('description');

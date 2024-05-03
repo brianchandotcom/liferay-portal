@@ -71,7 +71,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -1204,10 +1203,6 @@ public class ResourcePermissionLocalServiceImpl
 			ownerRole, siteMemberRole, guestPortletActions,
 			ownerPortletActionIds, groupPortletActionIds);
 
-		String rootModelResource =
-			ResourceActionsUtil.getPortletRootModelResource(
-				portlet.getRootPortletId());
-
 		List<String> modelResources =
 			ResourceActionsUtil.getPortletModelResources(
 				portlet.getRootPortletId());
@@ -1221,10 +1216,10 @@ public class ResourcePermissionLocalServiceImpl
 
 			List<String> groupModelActionIds = null;
 
-			if (Objects.equals(rootModelResource, modelResource)) {
+			if (ResourceActionsUtil.isRootModelResource(modelResource)) {
 				groupModelActionIds =
 					ResourceActionsUtil.getModelResourceGroupDefaultActions(
-						rootModelResource);
+						modelResource);
 			}
 
 			List<String> guestModelActionIds =

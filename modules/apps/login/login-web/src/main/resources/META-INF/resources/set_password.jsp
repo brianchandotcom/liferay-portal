@@ -1,45 +1,36 @@
 <%--
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
 
 <%@ include file="/init.jsp" %>
-<%@ page import="com.liferay.portal.kernel.model.Ticket" %>
 
 <%
-	//String currentURL = PortalUtil.getCurrentURL(request);
-	javax.servlet.http.HttpServletRequest httpServletRequest =
-		com.liferay.portal.kernel.util.PortalUtil.getOriginalServletRequest(
-			com.liferay.portal.kernel.util.PortalUtil.getHttpServletRequest(renderRequest));
 
-	String ticketId = ParamUtil.getString(httpServletRequest, "ticketId");
-System.out.println("ticketId2: " + ticketId);
+//String currentURL = PortalUtil.getCurrentURL(request);
+javax.servlet.http.HttpServletRequest httpServletRequest = com.liferay.portal.kernel.util.PortalUtil.getOriginalServletRequest(com.liferay.portal.kernel.util.PortalUtil.getHttpServletRequest(renderRequest));
 
-	String referer = ParamUtil.getString(request, WebKeys.REFERER, currentURL);
+String ticketId = ParamUtil.getString(httpServletRequest, "ticketId");
 
-	Ticket ticket = (Ticket)request.getAttribute(WebKeys.TICKET);
+String referer = ParamUtil.getString(request, WebKeys.REFERER, currentURL);
 
-	String ticketKey = ParamUtil.getString(httpServletRequest, "ticketKey");
-	System.out.println("ticketKey: " + ticketKey);
+Ticket ticket = (Ticket)request.getAttribute(WebKeys.TICKET);
 
-//	String ticketId = ParamUtil.getString(request, "ticketId");
-//System.out.println("ticketId: " + ticketId);
-//	String ticketKey = ParamUtil.getString(request, "ticketKey");
-//System.out.println("ticketKey: " + ticketKey);
+String ticketKey = ParamUtil.getString(httpServletRequest, "ticketKey");
 
-	if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") && Validator.isNotNull(ticketKey)) {
-		referer = themeDisplay.getPathMain();
-	}
+if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") && Validator.isNotNull(ticketKey)) {
+	referer = themeDisplay.getPathMain();
+}
 
-	String titlePage = (String)request.getAttribute(WebKeys.TITLE_SET_PASSWORD);
-	boolean showCancelButton = false;
+String titlePage = (String)request.getAttribute(WebKeys.TITLE_SET_PASSWORD);
+boolean showCancelButton = false;
 
-	if (Validator.isNull(titlePage)) {
-		titlePage = "change-password";
-		showCancelButton = true;
-	}
+if (Validator.isNull(titlePage)) {
+	titlePage = "change-password";
+	showCancelButton = true;
+}
 %>
 
 <div class="mt-4 sheet sheet-lg">
@@ -50,7 +41,6 @@ System.out.println("ticketId2: " + ticketId);
 					<liferay-ui:message key="<%= titlePage %>" />
 				</h2>
 			</div>
-
 		</div>
 	</div>
 
@@ -66,10 +56,6 @@ System.out.println("ticketId2: " + ticketId);
 							<liferay-ui:message key="your-password-reset-link-is-no-longer-valid" />
 						</c:otherwise>
 					</c:choose>
-
-
-
-
 				</div>
 			</c:when>
 			<c:when test="<%= SessionErrors.contains(request, UserLockoutException.LDAPLockout.class.getName()) %>">
@@ -81,9 +67,9 @@ System.out.println("ticketId2: " + ticketId);
 				<div class="alert alert-danger">
 
 					<%
-						UserLockoutException.PasswordPolicyLockout ule = (UserLockoutException.PasswordPolicyLockout)SessionErrors.get(request, UserLockoutException.PasswordPolicyLockout.class.getName());
+					UserLockoutException.PasswordPolicyLockout ule = (UserLockoutException.PasswordPolicyLockout)SessionErrors.get(request, UserLockoutException.PasswordPolicyLockout.class.getName());
 
-						Format dateFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.SHORT, FastDateFormatConstants.LONG, locale, TimeZone.getTimeZone(ule.user.getTimeZoneId()));
+					Format dateFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.SHORT, FastDateFormatConstants.LONG, locale, TimeZone.getTimeZone(ule.user.getTimeZoneId()));
 					%>
 
 					<liferay-ui:message arguments="<%= dateFormat.format(ule.user.getUnlockDate()) %>" key="this-account-is-locked-until-x" translateArguments="<%= false %>" />
@@ -109,7 +95,7 @@ System.out.println("ticketId2: " + ticketId);
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustBeLonger.class.getName()) %>">
 
 									<%
-										UserPasswordException.MustBeLonger upe = (UserPasswordException.MustBeLonger)SessionErrors.get(request, UserPasswordException.MustBeLonger.class.getName());
+									UserPasswordException.MustBeLonger upe = (UserPasswordException.MustBeLonger)SessionErrors.get(request, UserPasswordException.MustBeLonger.class.getName());
 									%>
 
 									<liferay-ui:message arguments="<%= String.valueOf(upe.minLength) %>" key="that-password-is-too-short" translateArguments="<%= false %>" />
@@ -120,7 +106,7 @@ System.out.println("ticketId2: " + ticketId);
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustComplyWithRegex.class.getName()) %>">
 
 									<%
-										UserPasswordException.MustComplyWithRegex upe = (UserPasswordException.MustComplyWithRegex)SessionErrors.get(request, UserPasswordException.MustComplyWithRegex.class.getName());
+									UserPasswordException.MustComplyWithRegex upe = (UserPasswordException.MustComplyWithRegex)SessionErrors.get(request, UserPasswordException.MustComplyWithRegex.class.getName());
 									%>
 
 									<liferay-ui:message arguments="<%= upe.regex %>" key="that-password-does-not-comply-with-the-regular-expression" translateArguments="<%= false %>" />
@@ -128,7 +114,7 @@ System.out.println("ticketId2: " + ticketId);
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustHaveMoreAlphanumeric.class.getName()) %>">
 
 									<%
-										UserPasswordException.MustHaveMoreAlphanumeric upe = (UserPasswordException.MustHaveMoreAlphanumeric)SessionErrors.get(request, UserPasswordException.MustHaveMoreAlphanumeric.class.getName());
+									UserPasswordException.MustHaveMoreAlphanumeric upe = (UserPasswordException.MustHaveMoreAlphanumeric)SessionErrors.get(request, UserPasswordException.MustHaveMoreAlphanumeric.class.getName());
 									%>
 
 									<liferay-ui:message arguments="<%= String.valueOf(upe.minAlphanumeric) %>" key="that-password-must-contain-at-least-x-alphanumeric-characters" translateArguments="<%= false %>" />
@@ -136,7 +122,7 @@ System.out.println("ticketId2: " + ticketId);
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustHaveMoreLowercase.class.getName()) %>">
 
 									<%
-										UserPasswordException.MustHaveMoreLowercase upe = (UserPasswordException.MustHaveMoreLowercase)SessionErrors.get(request, UserPasswordException.MustHaveMoreLowercase.class.getName());
+									UserPasswordException.MustHaveMoreLowercase upe = (UserPasswordException.MustHaveMoreLowercase)SessionErrors.get(request, UserPasswordException.MustHaveMoreLowercase.class.getName());
 									%>
 
 									<liferay-ui:message arguments="<%= String.valueOf(upe.minLowercase) %>" key="that-password-must-contain-at-least-x-lowercase-characters" translateArguments="<%= false %>" />
@@ -144,7 +130,7 @@ System.out.println("ticketId2: " + ticketId);
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustHaveMoreNumbers.class.getName()) %>">
 
 									<%
-										UserPasswordException.MustHaveMoreNumbers upe = (UserPasswordException.MustHaveMoreNumbers)SessionErrors.get(request, UserPasswordException.MustHaveMoreNumbers.class.getName());
+									UserPasswordException.MustHaveMoreNumbers upe = (UserPasswordException.MustHaveMoreNumbers)SessionErrors.get(request, UserPasswordException.MustHaveMoreNumbers.class.getName());
 									%>
 
 									<liferay-ui:message arguments="<%= String.valueOf(upe.minNumbers) %>" key="that-password-must-contain-at-least-x-numbers" translateArguments="<%= false %>" />
@@ -152,7 +138,7 @@ System.out.println("ticketId2: " + ticketId);
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustHaveMoreSymbols.class.getName()) %>">
 
 									<%
-										UserPasswordException.MustHaveMoreSymbols upe = (UserPasswordException.MustHaveMoreSymbols)SessionErrors.get(request, UserPasswordException.MustHaveMoreSymbols.class.getName());
+									UserPasswordException.MustHaveMoreSymbols upe = (UserPasswordException.MustHaveMoreSymbols)SessionErrors.get(request, UserPasswordException.MustHaveMoreSymbols.class.getName());
 									%>
 
 									<liferay-ui:message arguments="<%= String.valueOf(upe.minSymbols) %>" key="that-password-must-contain-at-least-x-symbols" translateArguments="<%= false %>" />
@@ -160,7 +146,7 @@ System.out.println("ticketId2: " + ticketId);
 								<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustHaveMoreUppercase.class.getName()) %>">
 
 									<%
-										UserPasswordException.MustHaveMoreUppercase upe = (UserPasswordException.MustHaveMoreUppercase)SessionErrors.get(request, UserPasswordException.MustHaveMoreUppercase.class.getName());
+									UserPasswordException.MustHaveMoreUppercase upe = (UserPasswordException.MustHaveMoreUppercase)SessionErrors.get(request, UserPasswordException.MustHaveMoreUppercase.class.getName());
 									%>
 
 									<liferay-ui:message arguments="<%= String.valueOf(upe.minUppercase) %>" key="that-password-must-contain-at-least-x-uppercase-characters" translateArguments="<%= false %>" />

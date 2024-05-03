@@ -93,7 +93,7 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			layoutPageTemplateCollectionLocalService.
-				fetchLayoutPageTemplateCollection(
+				getLayoutPageTemplateCollectionByExternalReferenceCode(
 					externalReferenceCode, groupId);
 
 		_layoutPageTemplateCollectionModelResourcePermission.check(
@@ -148,7 +148,7 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			layoutPageTemplateCollectionLocalService.
-				fetchLayoutPageTemplateCollection(
+				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 					externalReferenceCode, groupId);
 
 		if (layoutPageTemplateCollection != null) {

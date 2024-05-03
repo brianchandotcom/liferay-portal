@@ -94,7 +94,7 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 
 		Assert.assertNull(
 			_layoutPageTemplateCollectionLocalService.
-				fetchLayoutPageTemplateCollection(
+				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 					externalReferenceCode, _group.getGroupId()));
 	}
 
@@ -116,7 +116,7 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 
 		Assert.assertNotNull(
 			_layoutPageTemplateCollectionLocalService.
-				fetchLayoutPageTemplateCollection(
+				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 					externalReferenceCode, _group.getGroupId()));
 	}
 

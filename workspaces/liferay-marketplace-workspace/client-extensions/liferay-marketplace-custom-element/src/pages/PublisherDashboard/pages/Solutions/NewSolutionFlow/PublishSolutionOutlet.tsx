@@ -6,7 +6,6 @@
 import ClayButton from '@clayui/button';
 import {Link, Outlet} from 'react-router-dom';
 
-import AppToolbar from '../../../../../components/AppToolbar/AppToolbar';
 import {useAccount} from '../../../../../hooks/data/useAccounts';
 
 import './PublishSolutionOutlet.scss';
@@ -15,6 +14,7 @@ import 'react-quill/dist/quill.snow.css';
 import {useModal} from '@clayui/modal';
 import {useMemo} from 'react';
 
+import AppToolbar from '../../../../../components/AppToolBar/AppToolBar';
 import Modal from '../../../../../components/Modal';
 import {useSolutionContext} from '../../../../../context/SolutionContext';
 import usePublishSolutionHeader from '../../../hooks/usePublishSolutionHeader';

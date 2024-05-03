@@ -900,12 +900,12 @@ pre[class*='language-'] {
 .token.constant,
 .token.symbol,
 .token.deleted {
-	color: var(--danger-l1);
+	color: var(--color-danger-l1, #F48989);
 }
 
 .token.boolean,
 .token.number {
-	color: var(--chart-3);
+	color: var(--color-chart-3, #AD9EE9);
 }
 
 .token.selector,
@@ -923,23 +923,23 @@ pre[class*='language-'] {
 .language-css .token.string,
 .style .token.string,
 .token.variable {
-	color: var(--secondary-l1);
+	color: var(--color-secondary-l1, #FFCB48);
 }
 
 .token.atrule,
 .token.attr-value,
 .token.function,
 .token.class-name {
-	color: var(--success-l1);
+	color: var(--color-state-success-lighten-1, #9AD091);
 }
 
 .token.keyword {
-	color: var(--primary-l3);
+	color: var(--color-primary-l3, #F0F5FF);
 }
 
 .token.regex,
 .token.important {
-	color: var(--chart-4);
+	color: var(--color-chart-4, #FE8856);
 }
 
 .token.important,

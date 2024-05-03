@@ -105,8 +105,16 @@ public class AccountSelectorTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
+	public String getCssClasses() {
+		return _cssClasses;
+	}
+
 	public String getSpritemap() {
 		return _spritemap;
+	}
+
+	public void setCssClasses(String cssClasses) {
+		_cssClasses = cssClasses;
 	}
 
 	@Override
@@ -150,6 +158,7 @@ public class AccountSelectorTag extends IncludeTag {
 		_commerceChannelId = 0;
 		_commerceOrder = null;
 		_commerceOrderTypeLocalService = null;
+		_cssClasses = StringPool.BLANK;
 		_editOrderURL = null;
 		_setCurrentAccountURL = null;
 		_spritemap = null;
@@ -217,6 +226,8 @@ public class AccountSelectorTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-commerce:account-selector:createNewOrderURL",
 			_addCommerceOrderURL);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:account-selector:cssClasses", _cssClasses);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:account-selector:selectOrderURL", _editOrderURL);
 		httpServletRequest.setAttribute(
@@ -327,6 +338,7 @@ public class AccountSelectorTag extends IncludeTag {
 	private long _commerceChannelId;
 	private CommerceOrder _commerceOrder;
 	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
+	private String _cssClasses = StringPool.BLANK;
 	private String _editOrderURL;
 	private String _setCurrentAccountURL;
 	private String _spritemap;

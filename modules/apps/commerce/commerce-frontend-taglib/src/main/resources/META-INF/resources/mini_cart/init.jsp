@@ -28,6 +28,7 @@ String checkoutURL = (String)request.getAttribute("liferay-commerce:cart:checkou
 long commerceChannelGroupId = (long)request.getAttribute("liferay-commerce:cart:commerceChannelGroupId");
 long commerceChannelId = (long)request.getAttribute("liferay-commerce:cart:commerceChannelId");
 String commerceCurrencyCode = (String)request.getAttribute("liferay-commerce:cart:commerceCurrencyCode");
+String cssClasses = (String)request.getAttribute("liferay-commerce:cart:cssClasses");
 boolean displayDiscountLevels = (boolean)request.getAttribute("liferay-commerce:cart:displayDiscountLevels");
 boolean displayTotalItemsQuantity = (boolean)request.getAttribute("liferay-commerce:cart:displayTotalItemsQuantity");
 int itemsQuantity = (int)request.getAttribute("liferay-commerce:cart:itemsQuantity");

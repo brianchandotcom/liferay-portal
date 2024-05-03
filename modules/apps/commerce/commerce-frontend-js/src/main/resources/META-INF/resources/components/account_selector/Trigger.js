@@ -25,7 +25,8 @@ const Trigger = React.forwardRef(
 		>
 			{currentAccount ? (
 				<>
-					<Sticker size="xl" {...currentAccount} />
+					<Sticker {...currentAccount} />
+
 					<div className="d-flex flex-column">
 						<div className="account-name">
 							<span className="text-truncate-inline">
@@ -35,7 +36,7 @@ const Trigger = React.forwardRef(
 							</span>
 						</div>
 
-						<div className="d-flex">
+						<div className="d-flex order-info">
 							{currentOrder?.id ? (
 								<>
 									<span className="order-id">

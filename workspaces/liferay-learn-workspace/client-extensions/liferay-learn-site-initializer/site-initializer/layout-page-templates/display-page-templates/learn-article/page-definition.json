@@ -5,6 +5,12 @@
 			{
 				"definition": {
 					"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: relative;\n}",
+					"customCSSViewports": [
+						{
+							"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: relative;\nflex-wrap: wrap;\n}",
+							"id": "landscapeMobile"
+						}
+					],
 					"fragmentStyle": {
 						"paddingBottom": "4",
 						"paddingLeft": "4",
@@ -26,6 +32,12 @@
 					{
 						"definition": {
 							"customCSS": ".[$FRAGMENT_CLASS$] > div {\n  display: flex;\n  height: 100%;\n}",
+							"customCSSViewports": [
+								{
+									"customCSS": ".[$FRAGMENT_CLASS$] > div {\n  display: flex;\n  height: 100%;\n  width: 100%;\n  .component-html {\n    width: 100%;\n  }\n}",
+									"id": "landscapeMobile"
+								}
+							],
 							"fragment": {
 								"key": "BASIC_COMPONENT-html"
 							},
@@ -50,6 +62,16 @@
 								"marginRight": "3",
 								"maxWidth": "336px"
 							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"marginRight": "0",
+										"maxWidth": "100%",
+										"width": "100%"
+									},
+									"id": "landscapeMobile"
+								}
+							],
 							"indexed": true
 						},
 						"id": "79f87ec5-c193-644a-338d-b517885caedf",
@@ -57,6 +79,12 @@
 					},
 					{
 						"definition": {
+							"customCSSViewports": [
+								{
+									"customCSS": ".[$FRAGMENT_CLASS$] {\n  .learn-article {\n    padding: var(--spacer-4) var(--spacer-2, 0.5rem);\n  }\n  .learn-article-page-nav {\n    display: none;\n  }\n}",
+									"id": "landscapeMobile"
+								}
+							],
 							"indexed": true,
 							"layout": {
 								"contentDisplay": "FlexRow",

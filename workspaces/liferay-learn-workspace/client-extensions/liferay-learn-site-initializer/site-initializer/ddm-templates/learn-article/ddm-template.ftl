@@ -88,7 +88,7 @@
 
 				<#if showChildrenCards && childrenJSONArray.length() gt 0>
 					<div class="learn-card-container">
-						<#list childrenJSONArray.length()-1..0 as i>
+						<#list 0..childrenJSONArray.length()-1 as i>
 							<a class="learn-card" href="${childrenJSONArray.getJSONObject(i).getString("url")}">
 								<h4>${childrenJSONArray.getJSONObject(i).getString("title")}</h4>
 							</a>

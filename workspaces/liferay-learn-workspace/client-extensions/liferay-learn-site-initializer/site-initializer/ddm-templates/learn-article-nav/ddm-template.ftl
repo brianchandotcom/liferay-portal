@@ -34,7 +34,7 @@
 	breadcrumbJSONArray = navigationJSONObject.getJSONArray("breadcrumb")
 	childrenJSONArray = navigationJSONObject.getJSONArray("children")
 	parentJSONObject = navigationJSONObject.getJSONObject("parent")
-	productJSONObject = breadcrumbJSONArray.getJSONObject(breadcrumbJSONArray.length()-1)!{}
+	productJSONObject = breadcrumbJSONArray.getJSONObject(breadcrumbJSONArray.length()-1)!navigationJSONObject.getJSONObject("self")
 	siblingsJSONArray = navigationJSONObject.getJSONArray("siblings")
 />
 

@@ -4,7 +4,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import CodeMirror from '@liferay/frontend-js-codemirror-web';
+import {CodeMirror} from '@liferay/frontend-js-codemirror-web';
 import {CodeMirrorKeyboardMessage} from 'frontend-js-components-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 

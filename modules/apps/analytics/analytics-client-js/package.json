@@ -32,7 +32,6 @@
 		"Analytics"
 	],
 	"license": "MIT",
-	"main": "index.js",
 	"name": "analytics-client-js",
 	"repository": {
 		"type": "git",

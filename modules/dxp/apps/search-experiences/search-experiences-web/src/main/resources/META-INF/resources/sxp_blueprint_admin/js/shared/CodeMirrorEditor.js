@@ -4,7 +4,7 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import CodeMirror from '@liferay/frontend-js-codemirror-web';
+import {CodeMirror} from '@liferay/frontend-js-codemirror-web';
 import getCN from 'classnames';
 import React, {useContext, useEffect, useRef} from 'react';
 

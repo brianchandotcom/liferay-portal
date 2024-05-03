@@ -5,7 +5,7 @@
 
 import {MapBase} from '@liferay/map-common';
 
-export default function ({inputName, mapName}) {
+export function GeoLocationField({inputName, mapName}) {
 	MapBase.get(mapName, (map) => {
 		map.on('positionChange', (event) => {
 			const inputNode = document.querySelector(

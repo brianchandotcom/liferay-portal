@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import CodeMirror from '@liferay/frontend-js-codemirror-web';
+import {CodeMirror} from '@liferay/frontend-js-codemirror-web';
 import React, {ReactNode} from 'react';
 import {ICodeMirrorEditor} from './CodeMirrorEditor';
 import {SidebarCategory} from './Sidebar';

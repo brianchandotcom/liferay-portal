@@ -5,6 +5,6 @@
 
 import CollapseProvider from './CollapseProvider';
 
-export default function main() {
+export function main() {
 	new CollapseProvider();
 }

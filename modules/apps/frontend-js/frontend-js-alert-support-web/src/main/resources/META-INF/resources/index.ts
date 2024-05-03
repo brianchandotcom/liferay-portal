@@ -7,7 +7,7 @@ import {delegate} from 'frontend-js-web';
 
 let handle: ReturnType<typeof delegate> | undefined;
 
-export default function main() {
+export function main() {
 	if (!handle) {
 		handle = delegate(
 			document.body,

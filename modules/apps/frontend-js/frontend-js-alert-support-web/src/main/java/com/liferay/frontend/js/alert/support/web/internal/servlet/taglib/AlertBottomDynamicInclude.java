@@ -47,7 +47,7 @@ public class AlertBottomDynamicInclude implements DynamicInclude {
 				Arrays.asList(
 					ESImportUtil.getESImport(
 						absolutePortalURLBuilder,
-						"{default as main} from " +
+						"{main} from " +
 							"frontend-js-alert-support-web"))));
 
 		scriptData.writeTo(httpServletResponse.getWriter());

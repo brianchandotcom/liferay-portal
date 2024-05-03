@@ -76,23 +76,6 @@ const PublisherDashboardRouter = () => {
 
 				<Route
 					element={
-						<SolutionContextProvider>
-							<PublishSolutionOutlet />
-						</SolutionContextProvider>
-					}
-					path="solution/publisher/:id?"
-				>
-					<Route element={<Create />} path="" />
-					<Route element={<CompanyProfile />} path="company" />
-					<Route element={<ContactUs />} path="contact" />
-					<Route element={<Details />} path="details" />
-					<Route element={<Header />} path="header" />
-					<Route element={<Profile />} path="profile" />
-					<Route element={<Submit />} path="submit" />
-				</Route>
-
-				<Route
-					element={
 						<PublishedDashboardOutlet
 							accountsSearch={accountsSearch}
 							catalogId={catalogId}
@@ -103,13 +86,34 @@ const PublisherDashboardRouter = () => {
 						<Route element={<Apps />} index />
 						<Route element={<App />} path="app/:appId" />
 					</Route>
+
 					<Route element={<Accounts />} path="accounts" />
 					<Route element={<Members />} path="members" />
 					<Route element={<Projects />} path="projects" />
-					<Route element={<Solutions />} path="solutions" />
-					<Route path="solution/:appId">
-						<Route element={<SolutionsDetails />} index />
+
+					<Route path="solutions">
+						<Route element={<Solutions />} index />
+						<Route element={<SolutionsDetails />} path=":appId" />
 					</Route>
+				</Route>
+
+				<Route
+					element={
+						<SolutionContextProvider
+							catalogId={catalogId as number}
+						>
+							<PublishSolutionOutlet />
+						</SolutionContextProvider>
+					}
+					path="solutions/:id?/publisher"
+				>
+					<Route element={<Create />} path="" />
+					<Route element={<CompanyProfile />} path="company" />
+					<Route element={<ContactUs />} path="contact" />
+					<Route element={<Details />} path="details" />
+					<Route element={<Header />} path="header" />
+					<Route element={<Profile />} path="profile" />
+					<Route element={<Submit />} path="submit" />
 				</Route>
 			</Routes>
 		</HashRouter>

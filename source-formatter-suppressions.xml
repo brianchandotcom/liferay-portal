@@ -218,7 +218,6 @@
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/layout/contentpage/ContentPagesWithSelectionPanel\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/layout/pagetemplate/contentpagetemplate/ContentPageTemplatesExportImport\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/layout/pagetemplate/displaypagetemplate/DisplayPageTemplatesWithMapping\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/layout/pagetemplate/displaypagetemplate/DisplayPageTemplatesWithSelectionPanel\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/layout/pagetemplate/masterspagetemplate/MastersPageTemplatesExportImport\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/sitenavigation/navigationmenu/NavigationMenusWithStaging\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/stylebooks/staging/StyleBooksWithStaging\.testcase" />

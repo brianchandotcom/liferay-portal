@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -19,6 +20,8 @@ import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
 import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -66,12 +69,12 @@ public class ForgotPasswordPortlet extends MVCPortlet {
 				"/login.jsp");
 		}
 
-		javax.servlet.http.HttpServletRequest httpServletRequest =
-			com.liferay.portal.kernel.util.PortalUtil.getOriginalServletRequest(
-				com.liferay.portal.kernel.util.PortalUtil.getHttpServletRequest(renderRequest));
+		HttpServletRequest httpServletRequest =
+			_portal.getOriginalServletRequest(
+				_portal.getHttpServletRequest(renderRequest));
 
-		String currentUrl =
-			(String) httpServletRequest.getAttribute("CURRENT_URL");
+		String currentUrl = (String)httpServletRequest.getAttribute(
+			"CURRENT_URL");
 
 		String updatePasswordURL = "/portal/update_password";
 
@@ -106,6 +109,9 @@ public class ForgotPasswordPortlet extends MVCPortlet {
 
 		return true;
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.login.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"

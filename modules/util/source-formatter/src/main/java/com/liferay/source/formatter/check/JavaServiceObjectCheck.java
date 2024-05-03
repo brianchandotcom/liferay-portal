@@ -46,11 +46,10 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		}
 
 		String javaTermContent = _formatGetterMethodCalls(
-			javaTerm, fileContent, fileName, absolutePath, importNames);
+			javaTerm, fileContent, fileName, importNames);
 
 		return _formatSetterMethodCalls(
-			javaTerm, javaTermContent, fileContent, fileName, absolutePath,
-			importNames);
+			javaTerm, javaTermContent, fileContent, fileName, importNames);
 	}
 
 	@Override
@@ -60,7 +59,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 
 	private String _formatGetterMethodCalls(
 			JavaTerm javaTerm, String fileContent, String fileName,
-			String absolutePath, List<String> importNames)
+			List<String> importNames)
 		throws IOException {
 
 		String content = javaTerm.getContent();
@@ -82,8 +81,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 				matcher.group(3), TextFormatter.I);
 
 			if (_isBooleanColumn(
-					absolutePath, variableTypeName, getterObjectName,
-					importNames)) {
+					variableTypeName, getterObjectName, importNames)) {
 
 				return StringUtil.replaceFirst(
 					content, "get", "is", matcher.start(2));
@@ -95,7 +93,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 
 	private String _formatSetterMethodCalls(
 			JavaTerm javaTerm, String content, String fileContent,
-			String fileName, String absolutePath, List<String> importNames)
+			String fileName, List<String> importNames)
 		throws IOException {
 
 		Matcher matcher1 = _setterCallsPattern.matcher(content);
@@ -136,8 +134,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 				populateModelInformations();
 
 				Object[] modelInformation = getModelInformation(
-					_getPackagePath(
-						absolutePath, variableTypeName, importNames));
+					_getPackagePath(variableTypeName, importNames));
 
 				if (modelInformation == null) {
 					continue outerLoop;
@@ -220,8 +217,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 	}
 
 	private String _getPackagePath(
-		String absolutePath, String variableTypeName,
-		List<String> importNames) {
+		String variableTypeName, List<String> importNames) {
 
 		int x = variableTypeName.lastIndexOf(StringPool.PERIOD);
 
@@ -245,10 +241,6 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 				return StringUtil.replaceLast(
 					importName, ".model." + variableTypeName, StringPool.BLANK);
 			}
-		}
-
-		if (absolutePath.contains("/portal-impl/")) {
-			return "portal-impl";
 		}
 
 		return StringPool.BLANK;
@@ -304,14 +296,14 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 	}
 
 	private boolean _isBooleanColumn(
-			String absolutePath, String variableTypeName,
-			String getterObjectName, List<String> importNames)
+			String variableTypeName, String getterObjectName,
+			List<String> importNames)
 		throws IOException {
 
 		populateModelInformations();
 
 		Object[] modelInformation = getModelInformation(
-			_getPackagePath(absolutePath, variableTypeName, importNames));
+			_getPackagePath(variableTypeName, importNames));
 
 		if (modelInformation == null) {
 			return false;

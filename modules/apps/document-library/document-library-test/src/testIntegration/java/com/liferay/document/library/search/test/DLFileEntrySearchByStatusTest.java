@@ -71,20 +71,7 @@ public class DLFileEntrySearchByStatusTest {
 		_addFileEntry(
 			displayDate, titlePrefix + " " + StringUtil.randomString());
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			_group.getGroupId());
-
-		searchContext.setAttribute("status", WorkflowConstants.STATUS_ANY);
-		searchContext.setKeywords(titlePrefix);
-
-		Indexer<DLFileEntry> indexer = _indexerRegistry.getIndexer(
-			DLFileEntry.class);
-
-		Hits hits = indexer.search(searchContext);
-
-		Assert.assertEquals(
-			searchContext.getAttribute("queryString") + "->" + hits, 2,
-			hits.getLength());
+		_assertHits(2, titlePrefix, true, WorkflowConstants.STATUS_ANY);
 	}
 
 	@Test
@@ -98,20 +85,7 @@ public class DLFileEntrySearchByStatusTest {
 		_addFileEntry(
 			displayDate, titlePrefix + " " + StringUtil.randomString());
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			_group.getGroupId());
-
-		searchContext.setAttribute("status", WorkflowConstants.STATUS_APPROVED);
-		searchContext.setKeywords(titlePrefix);
-
-		Indexer<DLFileEntry> indexer = _indexerRegistry.getIndexer(
-			DLFileEntry.class);
-
-		Hits hits = indexer.search(searchContext);
-
-		Assert.assertEquals(
-			searchContext.getAttribute("queryString") + "->" + hits, 1,
-			hits.getLength());
+		_assertHits(1, titlePrefix, true, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Test
@@ -124,19 +98,7 @@ public class DLFileEntrySearchByStatusTest {
 
 		_addFileEntry(displayDate, titlePrefix + StringUtil.randomString());
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			_group.getGroupId());
-
-		searchContext.setKeywords(titlePrefix);
-
-		Indexer<DLFileEntry> indexer = _indexerRegistry.getIndexer(
-			DLFileEntry.class);
-
-		Hits hits = indexer.search(searchContext);
-
-		Assert.assertEquals(
-			searchContext.getAttribute("queryString") + "->" + hits, 1,
-			hits.getLength());
+		_assertHits(1, titlePrefix, false, WorkflowConstants.STATUS_ANY);
 	}
 
 	@Test
@@ -147,20 +109,7 @@ public class DLFileEntrySearchByStatusTest {
 			new Date(System.currentTimeMillis() + Time.DAY),
 			title + " " + StringUtil.randomString());
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			_group.getGroupId());
-
-		searchContext.setAttribute("status", WorkflowConstants.STATUS_ANY);
-		searchContext.setKeywords(title);
-
-		Indexer<DLFileEntry> indexer = _indexerRegistry.getIndexer(
-			DLFileEntry.class);
-
-		Hits hits = indexer.search(searchContext);
-
-		Assert.assertEquals(
-			searchContext.getAttribute("queryString") + "->" + hits, 1,
-			hits.getLength());
+		_assertHits(1, title, true, WorkflowConstants.STATUS_ANY);
 	}
 
 	private void _addFileEntry(Date displayDate, String title)
@@ -173,6 +122,29 @@ public class DLFileEntrySearchByStatusTest {
 			title, StringPool.BLANK, StringUtil.randomString(),
 			StringUtil.randomString(), new byte[0], displayDate, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	private void _assertHits(
+			int expectedCount, String keywords, boolean setStatus, int status)
+		throws Exception {
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			_group.getGroupId());
+
+		if (setStatus) {
+			searchContext.setAttribute("status", status);
+		}
+
+		searchContext.setKeywords(keywords);
+
+		Indexer<DLFileEntry> indexer = _indexerRegistry.getIndexer(
+			DLFileEntry.class);
+
+		Hits hits = indexer.search(searchContext);
+
+		Assert.assertEquals(
+			searchContext.getAttribute("queryString") + "->" + hits,
+			expectedCount, hits.getLength());
 	}
 
 	@Inject

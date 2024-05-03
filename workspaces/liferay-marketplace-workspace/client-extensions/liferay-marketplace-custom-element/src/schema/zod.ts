@@ -109,6 +109,14 @@ const zodSchema = {
 		newsSubscription: z.boolean(),
 		password: z.string().optional(),
 	}),
+	solutionPublishing: {
+		profile: z.object({
+			categories: z.array(z.any()).nonempty(),
+			description: z.string().min(3),
+			name: z.string().min(3),
+			tags: z.array(z.any()).nonempty(),
+		}),
+	},
 };
 
 export {zodResolver};

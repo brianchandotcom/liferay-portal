@@ -18,7 +18,6 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.option.CommerceOptionType;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.converter.SkuDTOConverterContext;
@@ -159,8 +158,7 @@ public class SelectDateCommerceOptionTypeImpl implements CommerceOptionType {
 
 		_reactRenderer.renderReact(
 			new ComponentDescriptor(
-				_npmResolver.resolveModuleName("commerce-frontend-js") +
-					"/components/product_options/ProductOptionSelect"),
+				"{ProductOptionSelect} from commerce-frontend-js"),
 			HashMapBuilder.<String, Object>put(
 				"accountId",
 				() -> {
@@ -241,9 +239,6 @@ public class SelectDateCommerceOptionTypeImpl implements CommerceOptionType {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 	@Reference
 	private Portal _portal;

@@ -100,8 +100,8 @@ function handleDateOptionRel(form, namespace) {
 	const optionValueSelectDate = new OptionValueSelectDate();
 
 	const handleOnLabelInput = () => {
-		optionValueSelectDate.setDate(slugify.default(dateInput.value));
-		optionValueSelectDate.setTime(slugify.default(timeInput.value));
+		optionValueSelectDate.setDate(slugify(dateInput.value));
+		optionValueSelectDate.setTime(slugify(timeInput.value));
 		optionValueSelectDate.setTimezone(timeZoneInput.value);
 		optionValueSelectDate.setDuration(durationInput.value);
 		optionValueSelectDate.setDurationType(durationTypeInput.value);

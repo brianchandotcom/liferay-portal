@@ -100,8 +100,9 @@ const seeAllResultsLink = fragmentElement.querySelector(
 
 const searchSubmitLink = fragmentElement.querySelector('.search-submit');
 
-const searchSuggestionItem =
-	searchSuggestionItemTemplate.content.querySelector('a');
+const searchSuggestionItem = searchSuggestionItemTemplate.content.querySelector(
+	'a'
+);
 
 function updateSearch() {
 	searchSuggestions.innerHTML = '';
@@ -115,7 +116,8 @@ function updateSearch() {
 			searchSubmitURL + '?q=' + searchSuggestionsInputValue;
 		suggestions.classList.add('performing-search');
 		performSearch(searchSuggestionsInputValue);
-	} else {
+	}
+	else {
 		suggestions.classList.remove(
 			'loading-search',
 			'performing-search',
@@ -198,14 +200,15 @@ function performSearch(query) {
 							suggestion.attributes.assetSearchSummary;
 
 						if (suggestionContentTextValue) {
-							suggestionContentTextValue =
-								suggestionContentTextValue.substring(0, 500);
+							suggestionContentTextValue = suggestionContentTextValue.substring(
+								0,
+								500
+							);
 
-							suggestionContent.innerHTML =
-								suggestionContentTextValue.replace(
-									searchTermRegExp,
-									`<b>$1</b>`
-								);
+							suggestionContent.innerHTML = suggestionContentTextValue.replace(
+								searchTermRegExp,
+								`<b>$1</b>`
+							);
 						}
 
 						const suggestionURL = suggestionLink.querySelector(
@@ -224,7 +227,8 @@ function performSearch(query) {
 						suggestions.classList.remove('loading-search');
 					}
 				}
-			} else {
+			}
+			else {
 				suggestions.classList.remove('search-results-found');
 				suggestions.classList.remove('loading-search');
 			}
@@ -285,19 +289,15 @@ function getBreadcrumbFromURL(url) {
 		.join(' ');
 }
 
+const inputElements = ['input', 'textarea'];
 const searchInput = document.getElementById('searchInput');
 const siteSearchWrapper = document.getElementById('siteSearchWrapper');
-
-searchInput.addEventListener('click', function () {
-	inputClicked = true;
-});
 
 function changeFocus() {
 	searchInput.focus();
 }
 
-const searchIcon = document.getElementById('searchIcon');
-searchIcon.addEventListener('click', changeFocus);
+document.getElementById('searchIcon').addEventListener('click', changeFocus);
 
 window.addEventListener('keyup', (event) => {
 	if (event.code === 'Escape' || event.key === 'Escape') {
@@ -310,8 +310,9 @@ window.addEventListener('keyup', (event) => {
 	}
 
 	if (
-		event.code === 'Slash' &&
-		!document.activeElement.classList.contains('search-bar-keywords-input')
+		(event.code === 'Slash' || event.key === '/') &&
+		inputElements.indexOf(document.activeElement.tagName.toLowerCase()) ===
+			-1
 	) {
 		searchInput.focus();
 
@@ -320,6 +321,5 @@ window.addEventListener('keyup', (event) => {
 		}
 
 		siteSearchWrapper.classList.add('search-open');
-		inputClicked = false;
 	}
 });

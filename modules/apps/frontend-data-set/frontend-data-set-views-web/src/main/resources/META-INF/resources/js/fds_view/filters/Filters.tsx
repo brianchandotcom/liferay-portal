@@ -561,9 +561,18 @@ function Filters({fdsFilterClientExtensions, fdsView, namespace}: IProps) {
 		const storedFDSFiltersOrder = responseJSON?.fdsFiltersOrder;
 
 		if (
+			filters &&
 			storedFDSFiltersOrder &&
 			storedFDSFiltersOrder === fdsFiltersOrder
 		) {
+			setFilters(
+				sortItems(
+					filters,
+					storedFDSFiltersOrder,
+					true
+				) as FilterCollection
+			);
+
 			openDefaultSuccessToast();
 		}
 		else {

@@ -587,7 +587,13 @@ const Sorting = ({fdsView, namespace}: IFDSViewSectionProps) => {
 
 		const storedFDSSortsOrder = responseJSON?.fdsSortsOrder;
 
-		if (storedFDSSortsOrder && storedFDSSortsOrder === fdsSortsOrder) {
+		if (
+			fdsSorts &&
+			storedFDSSortsOrder &&
+			storedFDSSortsOrder === fdsSortsOrder
+		) {
+			setFDSSorts(sortItems(fdsSorts, storedFDSSortsOrder) as IFDSSort[]);
+
 			openDefaultSuccessToast();
 		}
 		else {

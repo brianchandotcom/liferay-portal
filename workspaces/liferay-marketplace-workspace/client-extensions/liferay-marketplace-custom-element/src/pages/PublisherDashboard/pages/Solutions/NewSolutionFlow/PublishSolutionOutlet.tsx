@@ -4,79 +4,84 @@
  */
 
 import ClayButton from '@clayui/button';
-import {Outlet, useLocation, useNavigate, useParams} from 'react-router-dom';
+import {Link, Outlet} from 'react-router-dom';
 
-import {AppToolBar} from '../../../../../components/AppToolBar/AppToolBar';
-import {AppFlowList} from '../../../../../components/NewAppFlowList/AppFlowList';
+import AppToolbar from '../../../../../components/AppToolbar/AppToolbar';
 import {useAccount} from '../../../../../hooks/data/useAccounts';
 
 import './PublishSolutionOutlet.scss';
 import {SOLUTION_FLOW_ITEMS} from '../constants';
 
 import 'react-quill/dist/quill.snow.css';
+import {useModal} from '@clayui/modal';
+import {useMemo} from 'react';
 
-const button = {
-	back: 'Back',
-	continue: 'Continue',
-};
+import Modal from '../../../../../components/Modal';
+import {useSolutionContext} from '../../../../../context/SolutionContext';
+import usePublishSolutionHeader from '../../../hooks/usePublishSolutionHeader';
+import usePublishSolutionNavigation from '../../../hooks/usePublishSolutionNavigation';
+import usePublishSolutionSubmission from '../../../hooks/usePublishSolutionSubmission';
+import PublishNav from '../components/PublishNav';
 
 const PublishSolutionOutlet = () => {
+	usePublishSolutionHeader();
+
 	const {data: account} = useAccount();
-	const location = useLocation();
-	const navigate = useNavigate();
+	const [context, dispatch] = useSolutionContext();
 
-	const {id} = useParams();
-	const paths = location.pathname.split('/');
-	const lastPath = paths.at(id ? -2 : -1);
+	const {
+		activeIndex,
+		activeRoute,
+		onClickContinue,
+		onClickPrevious,
+		onExit,
+	} = usePublishSolutionNavigation();
 
-	let activeIndex = SOLUTION_FLOW_ITEMS.findIndex(
-		({path}) => path === lastPath
-	);
+	const {onSaveAsDraft} = usePublishSolutionSubmission(context, dispatch);
 
-	if (activeIndex === -1) {
-		activeIndex = 0;
-	}
+	const {observer, onOpenChange, open} = useModal();
 
-	const activeRoute =
-		SOLUTION_FLOW_ITEMS[activeIndex] || SOLUTION_FLOW_ITEMS[0];
+	const parsedSchema = useMemo(() => {
+		const parseSchema = activeRoute?.parseSchema;
 
-	const onClickButton = (buttonName: string) => {
-		const isContinue = buttonName === button.continue;
+		if (parseSchema) {
+			return parseSchema(context);
+		}
 
-		SOLUTION_FLOW_ITEMS.map((_, index) => {
-			if (index === activeIndex) {
-				SOLUTION_FLOW_ITEMS[index].selected = false;
-
-				SOLUTION_FLOW_ITEMS[
-					isContinue ? index + 1 : index - 1
-				].selected = true;
-
-				if (isContinue) {
-					SOLUTION_FLOW_ITEMS[index].checked = true;
-				}
-				else {
-					SOLUTION_FLOW_ITEMS[index - 1].checked = false;
-				}
-
-				return SOLUTION_FLOW_ITEMS;
-			}
-		});
-
-		navigate(
-			SOLUTION_FLOW_ITEMS[isContinue ? activeIndex + 1 : activeIndex - 1]
-				.path
-		);
-	};
+		return null;
+	}, [activeRoute, context]);
 
 	return (
 		<>
-			<AppToolBar
+			<AppToolbar
 				accountImage={account?.logoURL}
 				accountName={account?.name as string}
+				appImage={context.profile.file?.preview}
+				appName={context.profile.name}
+				display={{preview: true, saveAsDraft: true}}
+				exitProps={{
+					onClick: () => {
+						onOpenChange(true);
+					},
+					to: undefined as any,
+				}}
+				previewProps={{
+					disabled: true,
+					onClick: () => alert('Preview...'),
+				}}
+				saveAsDraftProps={{
+					disabled: activeIndex < 1,
+					onClick: onSaveAsDraft,
+				}}
 			/>
 
+			<hr />
+
 			<div className="d-flex justify-content-center mt-8">
-				<AppFlowList appFlowListItems={SOLUTION_FLOW_ITEMS as any} />
+				<PublishNav
+					activeIndex={activeIndex}
+					items={SOLUTION_FLOW_ITEMS}
+				/>
 
 				<div className="ml-8 solutions-body-container">
 					<h1 className="header-title mb-4">{activeRoute.title}</h1>
@@ -94,21 +99,54 @@ const PublishSolutionOutlet = () => {
 							<ClayButton
 								className="mr-4"
 								displayType="secondary"
-								onClick={() => onClickButton(button.back)}
+								onClick={onClickPrevious}
 							>
 								Back
 							</ClayButton>
 						)}
 
 						<ClayButton
+							disabled={
+								parsedSchema ? !parsedSchema.success : false
+							}
 							displayType="primary"
-							onClick={() => onClickButton(button.continue)}
+							onClick={onClickContinue}
 						>
 							Continue
 						</ClayButton>
 					</div>
 				</div>
 			</div>
+
+			<Modal
+				last={
+					<>
+						<ClayButton
+							displayType="secondary"
+							onClick={() => onSaveAsDraft().then(onExit)}
+						>
+							Save as a draft & exit
+						</ClayButton>
+
+						<Link
+							className="btn btn-primary ml-2"
+							to="../solutions"
+						>
+							Exit
+						</Link>
+					</>
+				}
+				observer={observer}
+				size={'md' as any}
+				title="Exit from creating a solution"
+				visible={open}
+			>
+				<p>
+					All progress and information related to the creation of the
+					solution will be lost unless you save the solution as a
+					draft, Do you still want to exit?
+				</p>
+			</Modal>
 		</>
 	);
 };

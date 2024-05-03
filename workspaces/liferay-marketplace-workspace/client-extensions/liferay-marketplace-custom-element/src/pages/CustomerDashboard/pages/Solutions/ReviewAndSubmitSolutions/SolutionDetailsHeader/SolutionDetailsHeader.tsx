@@ -47,7 +47,7 @@ const SolutionsDetailsHeader = ({selectedSolution}: SolutionDetailsHeader) => {
 			<ClayButton
 				className="align-items-center d-flex"
 				displayType="unstyled"
-				onClick={() => navigate('../solutions')}
+				onClick={() => navigate('..')}
 			>
 				<ClayIcon className="mr-2" symbol="order-arrow-left" />
 				<h5 className="mt-1">{i18n.translate('back-to-solutions')}</h5>

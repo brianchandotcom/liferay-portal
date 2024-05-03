@@ -6,12 +6,13 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeCompanyId;
+import com.liferay.portal.kernel.upgrade.BaseCompanyIdUpgradeProcess;
 
 /**
  * @author István András Dézsi
  */
-public class UpgradePortletPreferencesCompanyId extends UpgradeCompanyId {
+public class UpgradePortletPreferencesCompanyId
+	extends BaseCompanyIdUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

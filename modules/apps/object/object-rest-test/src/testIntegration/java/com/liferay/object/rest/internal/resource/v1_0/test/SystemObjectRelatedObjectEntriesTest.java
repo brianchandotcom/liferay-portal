@@ -256,8 +256,6 @@ public class SystemObjectRelatedObjectEntriesTest {
 	public void testGetManyToOneSystemObjectRelatedObjectEntries()
 		throws Exception {
 
-		// Default unrelated user
-
 		ObjectRelationship objectRelationship =
 			ObjectRelationshipTestUtil.addObjectRelationship(
 				_objectDefinition, _userSystemObjectDefinition,
@@ -265,15 +263,6 @@ public class SystemObjectRelatedObjectEntriesTest {
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_objectRelationships.add(objectRelationship);
-
-		_testGetManyToOneSystemObjectRelatedObjectEntries(
-			StringPool.BLANK, 0, objectRelationship, _user.getUserId());
-
-		// New unrelated user
-
-		_testGetManyToOneSystemObjectRelatedObjectEntries(
-			StringPool.BLANK, 0, objectRelationship,
-			_userAccountJSONObject.getLong("id"));
 
 		// Default related user
 
@@ -286,6 +275,11 @@ public class SystemObjectRelatedObjectEntriesTest {
 			_objectEntry.getObjectEntryId(), objectRelationship,
 			_user.getUserId());
 
+		// Default unrelated user
+
+		_testGetManyToOneSystemObjectRelatedObjectEntries(
+			StringPool.BLANK, 0, objectRelationship, _user.getUserId());
+
 		// New related user
 
 		ObjectRelationshipTestUtil.relateObjectEntries(
@@ -297,6 +291,12 @@ public class SystemObjectRelatedObjectEntriesTest {
 			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		Assert.assertNotNull(jsonObject.get(objectRelationship.getName()));
+
+		// New unrelated user
+
+		_testGetManyToOneSystemObjectRelatedObjectEntries(
+			StringPool.BLANK, 0, objectRelationship,
+			_userAccountJSONObject.getLong("id"));
 	}
 
 	@Test

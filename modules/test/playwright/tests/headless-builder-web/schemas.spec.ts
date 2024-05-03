@@ -163,7 +163,7 @@ const objectDefinitionData = {
 
 const objectDefinition1Data = {
 	active: true,
-	externalReferenceCode: `objectDefinition1`,
+	externalReferenceCode: `customObjectDefinition1`,
 	label: {
 		en_US: `objectDefinition1`,
 	},
@@ -172,7 +172,7 @@ const objectDefinition1Data = {
 		{
 			DBType: 'String',
 			businessType: 'Text',
-			externalReferenceCode: 'ObjectFieldERC',
+			externalReferenceCode: 'ObjectField1ERC',
 			indexed: true,
 			indexedAsKeyword: false,
 			indexedLanguageId: 'en_US',
@@ -195,7 +195,7 @@ const objectDefinition1Data = {
 				en_US: 'Test Modifiable System Object',
 			},
 			name: 'testModifiableSystem',
-			objectDefinitionExternalReferenceCode1: 'objectDefinition1',
+			objectDefinitionExternalReferenceCode1: 'customObjectDefinition1',
 			objectDefinitionExternalReferenceCode2: 'L_API_APPLICATION',
 			objectDefinitionName2: 'APIApplication',
 			parameterObjectFieldId: 0,
@@ -211,7 +211,7 @@ const objectDefinition1Data = {
 				en_US: 'Test Unmodifiable System Object',
 			},
 			name: 'testUnmodifiableSystem',
-			objectDefinitionExternalReferenceCode1: 'objectDefinition1',
+			objectDefinitionExternalReferenceCode1: 'customObjectDefinition1',
 			objectDefinitionExternalReferenceCode2: 'L_ORGANIZATION',
 			objectDefinitionName2: 'Organization',
 			parameterObjectFieldId: 0,
@@ -243,8 +243,8 @@ const objectDefinition1Data = {
 				en_US: 'Test Custom Object',
 			},
 			name: 'testCustom',
-			objectDefinitionExternalReferenceCode1: 'objectDefinition1',
-			objectDefinitionExternalReferenceCode2: 'objectDefinition',
+			objectDefinitionExternalReferenceCode1: 'customObjectDefinition1',
+			objectDefinitionExternalReferenceCode2: 'customObjectDefinition',
 			objectDefinitionName2: 'objectDefinition',
 			parameterObjectFieldId: 0,
 			parameterObjectFieldName: '',
@@ -461,7 +461,7 @@ testFeatureFlagsDisabled(
 			'disabled'
 		);
 
-		// Assert that custom obejct properties are enabled
+		// Assert that custom object properties are enabled
 
 		await schemaPage.page
 			.getByRole('button', {name: 'ObjectDefinition'})
@@ -563,7 +563,7 @@ testFeatureFlagsEnabled(
 			'disabled'
 		);
 
-		// Assert that unmodifiable whitelisted system object properties are disabled with FF
+		// Assert that unmodifiable allowed system object properties are enabled with FF
 
 		await schemaPage.page.getByRole('button', {name: 'Account'}).click();
 		expectElementToNotHaveClass(

@@ -326,7 +326,7 @@
 													<div class="arrow"></div>
 
 													<div class="tooltip-inner">
-														<#assign articleTooltipURL = "https://learn.liferay.com/en/w/dxp/system-administration/configuring-liferay/feature-flags#beta-features-and-feature-flags" />
+														<#assign articleTooltipURL = "https://learn.liferay.com/web/guest/w/dxp/system-administration/configuring-liferay/feature-flags" />
 
 														<a href="${articleTooltipURL}" target="_blank">
 															${languageUtil.get(locale, "learn-about-the-feature-availability-statuses", "Learn about the feature availability statuses.")}

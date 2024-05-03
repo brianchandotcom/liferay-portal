@@ -28,7 +28,7 @@ export default class DetailsCard extends React.PureComponent {
 		const individual = entity.toJS();
 
 		const {
-			dateCreated,
+			firstActivityDate,
 			id,
 			name,
 			properties: {email, jobTitle}
@@ -45,11 +45,11 @@ export default class DetailsCard extends React.PureComponent {
 
 					{email && <div className='email'>{email}</div>}
 
-					{dateCreated && (
+					{firstActivityDate && (
 						<div className='first-seen'>
 							{sub(Liferay.Language.get('first-seen-x'), [
 								formatDateToTimeZone(
-									dateCreated,
+									firstActivityDate,
 									'LL',
 									timeZoneId
 								)

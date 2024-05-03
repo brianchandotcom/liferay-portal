@@ -7,11 +7,15 @@ package com.liferay.login.web.internal.portlet.action;
 
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
@@ -32,10 +36,9 @@ public class LoginMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		javax.servlet.http.HttpServletRequest httpServletRequest =
-			com.liferay.portal.kernel.util.PortalUtil.getOriginalServletRequest(
-				com.liferay.portal.kernel.util.PortalUtil.getHttpServletRequest(
-					renderRequest));
+		HttpServletRequest httpServletRequest =
+			_portal.getOriginalServletRequest(
+				_portal.getHttpServletRequest(renderRequest));
 
 		String currentUrl = (String)httpServletRequest.getAttribute(
 			"CURRENT_URL");
@@ -48,5 +51,8 @@ public class LoginMVCRenderCommand implements MVCRenderCommand {
 
 		return "/login.jsp";
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -160,16 +160,18 @@ export default function ({
 			openCookieConsentModal({});
 		});
 
-		declineAllButton.addEventListener('click', () => {
-			cookieBanner.style.display = 'none';
+		if (declineAllButton !== null) {
+			declineAllButton.addEventListener('click', () => {
+				cookieBanner.style.display = 'none';
 
-			declineAllCookies(
-				optionalConsentCookieTypeNames,
-				requiredConsentCookieTypeNames
-			);
+				declineAllCookies(
+					optionalConsentCookieTypeNames,
+					requiredConsentCookieTypeNames
+				);
 
-			setUserConfigCookie();
-		});
+				setUserConfigCookie();
+			});
+		}
 	}
 }
 

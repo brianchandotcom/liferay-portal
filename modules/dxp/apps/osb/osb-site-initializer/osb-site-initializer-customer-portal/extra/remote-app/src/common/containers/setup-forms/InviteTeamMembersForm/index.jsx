@@ -83,6 +83,7 @@ const InviteTeamMembersPage = ({
 		false
 	);
 	const [showEmptyEmailError, setshowEmptyEmailError] = useState(false);
+	const [roleSelectorFilled, setRoleSelectorFilled] = useState(false);
 
 	const projectHasSLAGoldPlatinum =
 		project?.slaCurrent?.includes(SLA_TYPES.gold) ||
@@ -102,16 +103,16 @@ const InviteTeamMembersPage = ({
 				setFieldValue(
 					'invites[0].role',
 					availableAdministratorAssets < 1
-						? accountMember
-						: roles?.find(
-								({name}) =>
-									name === ROLE_TYPES?.requester.name ||
-									name === ROLE_TYPES?.admin.name
-						  )
+						? [accountMember]
+						: [roles?.find(
+							({ name }) =>
+								name === ROLE_TYPES?.requester.name ||
+								name === ROLE_TYPES?.admin.name
+						)]
 				);
 
 				for (let i = 1; i < INITIAL_INVITES_COUNT; i++) {
-					setFieldValue(`invites[${i}].role`, accountMember);
+					setFieldValue(`invites[${i}].role`, [accountMember]);
 				}
 
 				setAccountRoles(roles);
@@ -270,24 +271,34 @@ const InviteTeamMembersPage = ({
 					}
 				}
 
-				await associateUserAccountWithAccountRole({
-					context,
-					variables: {
-						accountKey: project.accountKey,
-						accountRoleId: inviteMember.role.id,
-						emailAddress: inviteMember.email,
-					},
-				});
 
-				await associateContactRoleNameByEmailByProject({
-					accountKey: project.accountKey,
-					emailURI: encodeURI(inviteMember.email),
-					firstName: inviteMember.givenName,
-					lastName: inviteMember.familyName,
-					provisioningServerAPI,
-					roleName: inviteMember.role.raysourceName,
-					sessionId,
-				});
+				const inviteMemberRolesSelected = []
+				const invitedMemberRoles = inviteMember.role
+
+				invitedMemberRoles?.map((roleInvited) => {
+					inviteMemberRolesSelected.push(roleInvited);
+				})
+
+				for (const inviteRole of inviteMemberRolesSelected) {
+					await associateUserAccountWithAccountRole({
+						context,
+						variables: {
+							accountKey: project.accountKey,
+							accountRoleId: inviteRole.id,
+							emailAddress: inviteMember.email,
+						},
+					});
+				
+					await associateContactRoleNameByEmailByProject({
+						accountKey: project.accountKey,
+						emailURI: encodeURI(inviteMember.email),
+						firstName: inviteMember.givenName,
+						lastName: inviteMember.familyName,
+						provisioningServerAPI,
+						roleName: inviteRole.raysourceName,
+						sessionId,
+					});
+				  }
 
 				invitedAccounts.push(inviteMember);
 			} catch (error) {
@@ -299,6 +310,7 @@ const InviteTeamMembersPage = ({
 				});
 			}
 		}
+
 		if (invitedAccounts.length) {
 			const newMembersData = await addTeamMemberInvitation({
 				context: {
@@ -307,16 +319,15 @@ const InviteTeamMembersPage = ({
 				},
 				notifyOnNetworkStatusChange: false,
 				variables: {
-					TeamMembersInvitation: invitedAccounts.map(
-						({email, familyName, givenName, role}) => ({
+					TeamMembersInvitation: invitedAccounts.flatMap(({ email, familyName, givenName, role }) => (
+						role?.map((roleInvited) => ({
 							email,
 							familyName,
 							givenName,
-							r_accountEntryToDXPCloudEnvironment_accountEntryId:
-								project?.id,
-							role: role.key,
-						})
-					),
+							r_accountEntryToDXPCloudEnvironment_accountEntryId: project?.id,
+							role: roleInvited,
+						}))
+					)),
 				},
 			});
 
@@ -349,7 +360,7 @@ const InviteTeamMembersPage = ({
 				),
 				middleButton: (
 					<Button
-						disabled={baseButtonDisabled || isLoadingUserInvitation}
+						disabled={baseButtonDisabled || isLoadingUserInvitation || !roleSelectorFilled}
 						displayType="primary"
 						isLoading={isLoadingUserInvitation}
 						onClick={handleSubmit}
@@ -412,15 +423,36 @@ const InviteTeamMembersPage = ({
 										placeholderEmail={`username@${
 											project?.code?.toLowerCase() ||
 											'example'
-										}.com`}
-										selectOnChange={(roleId) =>
-											setFieldValue(
-												`invites[${index}].role`,
-												accountRoles?.find(
-													({id}) => id === +roleId
+											}.com`}
+										selectOnChange={(roleSelected) => {
+											const isPartnerMember = roleSelected.partnerMemberRoles.active;
+
+											if (isPartnerMember) {
+												const memberRoles = roleSelected.partnerMemberRoles.roles;
+												const updatedMemberRoles = memberRoles.filter(role => role.active);
+
+												return updatedMemberRoles?.map((updateRole, roleIndex) => {
+													setFieldValue(
+														`invites[${index}].role[${roleIndex}]`,
+														accountRoles?.find(
+															({ id }) => id === +updateRole.value
+														)
+													)
+												})
+											}
+
+											const accountRoleItem = Object.values(roleSelected).filter(role => role.active);
+
+											return accountRoleItem?.map((updateRole, roleIndex) => {
+												setFieldValue(
+													`invites[${index}].role[${roleIndex}]`,
+													accountRoles?.find(
+														({ id }) => id === +updateRole.value
+													)
 												)
-											)
-										}
+											})
+										}}
+										setRoleSelectorFilled={setRoleSelectorFilled}
 									/>
 								))}
 							</ClayForm.Group>
@@ -474,7 +506,7 @@ const InviteTeamMembersPage = ({
 											if (!hasEmptyEmails) {
 												push(
 													getInitialInvite(
-														accountMemberRole
+														[accountMemberRole]
 													)
 												);
 											}

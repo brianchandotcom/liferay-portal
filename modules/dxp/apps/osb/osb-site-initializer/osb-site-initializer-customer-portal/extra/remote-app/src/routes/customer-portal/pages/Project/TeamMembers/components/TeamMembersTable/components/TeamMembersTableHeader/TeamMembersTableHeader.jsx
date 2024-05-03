@@ -43,7 +43,7 @@ const TeamMembersTableHeader = ({
 						project={{
 							...koroneikiAccount,
 							id:
-								koroneikiAccount.r_accountEntryToKoroneikiAccount_accountEntryId,
+								koroneikiAccount?.r_accountEntryToKoroneikiAccount_accountEntryId,
 						}}
 						sessionId={sessionId}
 					/>

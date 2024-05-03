@@ -36,12 +36,12 @@ public class UserJSONTransformer extends ObjectTransformer {
 		}
 
 		if (hidePrivateUserData) {
-			user.setPasswordUnencrypted(StringPool.BLANK);
 			user.setReminderQueryQuestion(StringPool.BLANK);
 			user.setReminderQueryAnswer(StringPool.BLANK);
 			user.setEmailAddress(StringPool.BLANK);
 			user.setFacebookId(0);
 			user.setComments(StringPool.BLANK);
+			user.setPasswordUnencrypted(StringPool.BLANK);
 		}
 
 		super.transform(jsonContext, object);

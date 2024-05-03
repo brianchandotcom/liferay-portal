@@ -40,8 +40,8 @@ public class FriendlyURLMapperTrackerImplTest {
 
 		Portlet portlet = new PortletImpl();
 
-		portlet.setPortletClass(MVCPortlet.class.getName());
 		portlet.setPortletId(_PORTLET_NAME);
+		portlet.setPortletClass(MVCPortlet.class.getName());
 
 		FriendlyURLMapperTracker friendlyURLMapperTracker =
 			new FriendlyURLMapperTrackerImpl(portlet);

@@ -504,11 +504,11 @@ public class ImageToolUtil {
 		Image image = new ImageImpl();
 
 		image.setCompanyId(CompanyThreadLocal.getCompanyId());
-		image.setTextObj(bytes);
 		image.setType(imageBag.getType());
 		image.setHeight(renderedImage.getHeight());
 		image.setWidth(renderedImage.getWidth());
 		image.setSize(size);
+		image.setTextObj(bytes);
 
 		return image;
 	}

@@ -281,6 +281,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		User user = _userPersistence.create(0);
 
 		user.setCompanyId(companyId);
+		user.setScreenName(screenName);
 		user.setEmailAddress(emailAddress);
 		user.setOpenId(StringPool.BLANK);
 		user.setLanguageId(locale.toString());
@@ -291,7 +292,6 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 			LDAPUtil.getAttributeString(
 				attributes, userMappings, UserConverterKeys.JOB_TITLE));
 		user.setPasswordUnencrypted(password);
-		user.setScreenName(screenName);
 
 		String status = LDAPUtil.getAttributeString(
 			attributes, userMappings, UserConverterKeys.STATUS);

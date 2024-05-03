@@ -14,3 +14,24 @@
 .cp-badge-error-message {
 	width: 250px;
 }
+
+.role-selector-container {
+	.dropdown-toggle {
+		border-radius: 0.5rem;
+		color: var(--color-neutral-8);
+		font-size: 1rem;
+		font-weight: 400;
+		height: 3rem;
+		margin-top: 1px;
+		padding: 0.688rem 1rem !important;
+	}
+
+	.role-selector-label {
+		color: var(--color-neutral-8);
+		font-weight: 800;
+	}
+
+	.role-selector-required-icon {
+		color: var(--color-state-warning);
+	}
+}

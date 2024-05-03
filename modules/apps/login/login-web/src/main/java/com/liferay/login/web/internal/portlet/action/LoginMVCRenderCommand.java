@@ -32,6 +32,20 @@ public class LoginMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		javax.servlet.http.HttpServletRequest httpServletRequest =
+			com.liferay.portal.kernel.util.PortalUtil.getOriginalServletRequest(
+				com.liferay.portal.kernel.util.PortalUtil.getHttpServletRequest(
+					renderRequest));
+
+		String currentUrl = (String)httpServletRequest.getAttribute(
+			"CURRENT_URL");
+
+		String updatePasswordURL = "/portal/update_password";
+
+		if (currentUrl.contains(updatePasswordURL)) {
+			return "/set_password.jsp";
+		}
+
 		return "/login.jsp";
 	}
 

@@ -1697,7 +1697,7 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddOrUpdateObjectEntryWithObjectActions() throws Exception {
+	public void testAddOrUpdateObjectEntry() throws Exception {
 		_assertCount(0);
 
 		Map<String, Serializable> values =

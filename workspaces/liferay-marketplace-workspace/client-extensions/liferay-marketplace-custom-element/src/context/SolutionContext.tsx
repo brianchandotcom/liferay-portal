@@ -24,10 +24,18 @@ export enum SolutionTypes {
 	SET_PRODUCT = 'SET_PRODUCT',
 	SET_PRODUCT_ID = 'SET_PRODUCT_ID',
 	SET_PROFILE = 'SET_PROFILE',
+	SET_DETAILS = 'SET_DETAILS',
 }
 
 type SolutionPayload = {
 	[SolutionTypes.SET_CLEANUP]: undefined;
+	[SolutionTypes.SET_DETAILS]: Partial<{
+		textImagesBlock: {
+			description: string;
+			images: UploadedFile[];
+			title: string;
+		};
+	}>;
 	[SolutionTypes.SET_HEADER]: Partial<{
 		description: '';
 		headerImages: UploadedFile[];
@@ -49,6 +57,13 @@ type SolutionPayload = {
 export type SolutionInitialState = {
 	_product?: Product;
 	catalogId: number;
+	details: {
+		textImagesBlock: {
+			description: string;
+			images: UploadedFile[];
+			title: string;
+		};
+	};
 	header: {
 		description: any;
 		headerImages: UploadedFile[];
@@ -77,6 +92,13 @@ export type SolutionInitialState = {
 
 const solutionInitialState: SolutionInitialState = {
 	catalogId: 0,
+	details: {
+		textImagesBlock: {
+			description: '',
+			images: [],
+			title: '',
+		},
+	},
 	header: {
 		description: '',
 		headerImages: [],
@@ -174,6 +196,19 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 				...state,
 				header: {
 					...state.header,
+					...action.payload,
+				},
+			};
+		}
+
+		case SolutionTypes.SET_DETAILS: {
+			// eslint-disable-next-line no-console
+			console.log(action.payload);
+
+			return {
+				...state,
+				details: {
+					textImagesBlock: {...state.details.textImagesBlock},
 					...action.payload,
 				},
 			};

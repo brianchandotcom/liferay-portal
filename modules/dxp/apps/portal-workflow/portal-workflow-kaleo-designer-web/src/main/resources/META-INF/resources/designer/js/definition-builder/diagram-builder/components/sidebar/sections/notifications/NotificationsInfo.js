@@ -145,8 +145,8 @@ const NotificationsInfo = ({
 				...previousItem.data.notifications.recipients,
 			];
 
-			newRecipients[notificationIndex] = {
-				...newRecipients[notificationIndex],
+			newRecipients[notificationIndex][0] = {
+				...newRecipients[notificationIndex][0],
 				assignmentType: ['roleId'],
 				roleId: role.id,
 				sectionsData: {
@@ -175,8 +175,8 @@ const NotificationsInfo = ({
 				...previousItem.data.notifications.recipients,
 			];
 
-			newRecipients[notificationIndex] = {
-				...newRecipients[notificationIndex],
+			newRecipients[notificationIndex][0] = {
+				...newRecipients[notificationIndex][0],
 				assignmentType: ['roleType'],
 				autoCreate: values.map(({autoCreate}) => autoCreate),
 				roleKey: values.map(({roleKey}) => roleKey),
@@ -203,8 +203,8 @@ const NotificationsInfo = ({
 				...previousItem.data.notifications.recipients,
 			];
 
-			newRecipients[notificationIndex] = {
-				...newRecipients[notificationIndex],
+			newRecipients[notificationIndex][0] = {
+				...newRecipients[notificationIndex][0],
 				assignmentType: ['scriptedRecipient'],
 				script: [target.value],
 			};
@@ -291,9 +291,11 @@ const NotificationsInfo = ({
 					notificationTypes: initialValues.notificationTypesValues,
 					recipients: !previousItem.data.notifications?.recipients
 						? [
-								{
-									assignmentType: ['user'],
-								},
+								[
+									{
+										assignmentType: ['user'],
+									},
+								],
 						  ]
 						: [...previousItem.data.notifications.recipients],
 					template: initialValues.templateValues,
@@ -324,8 +326,8 @@ const NotificationsInfo = ({
 				...previousItem.data.notifications.recipients,
 			];
 
-			newRecipients[notificationIndex] = {
-				...newRecipients[notificationIndex],
+			newRecipients[notificationIndex][0] = {
+				...newRecipients[notificationIndex][0],
 				assignmentType: ['user'],
 				emailAddress: values.map(({emailAddress}) => emailAddress),
 				sectionsData: values.map((values) => values),
@@ -373,11 +375,11 @@ const NotificationsInfo = ({
 					if (
 						selectedItem.data.notifications.recipients[
 							notificationIndex
-						]
+						]?.[0]
 					) {
 						delete selectedItem.data.notifications?.recipients?.[
 							notificationIndex
-						].emailAddress;
+						][0].emailAddress;
 					}
 				}
 				else if (recipientType === 'taskAssignees') {
@@ -387,21 +389,21 @@ const NotificationsInfo = ({
 				if (
 					previousItem.data.notifications.recipients[
 						notificationIndex
-					]
+					]?.[0]
 				) {
 					previousItem.data.notifications.recipients[
 						notificationIndex
-					] = {
+					][0] = {
 						...previousItem.data.notifications.recipients[
 							notificationIndex
-						],
+						][0],
 						...recipientDetails,
 					};
 				}
 				else {
 					previousItem.data.notifications.recipients[
 						notificationIndex
-					] = recipientDetails;
+					] = [recipientDetails];
 				}
 
 				return {...previousItem};
@@ -469,14 +471,14 @@ const NotificationsInfo = ({
 					setSelectedItem((previousItem) => {
 						previousItem.data.notifications.recipients[
 							notificationIndex
-						] = {
+						][0] = {
 							...previousItem.data.notifications.recipients[
 								notificationIndex
-							],
+							][0],
 							scriptLanguage: [scriptLanguage],
 						};
 
-						return previousItem;
+						return {...previousItem};
 					})
 				}
 				identifier={identifier}

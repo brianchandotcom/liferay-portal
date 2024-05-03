@@ -189,18 +189,27 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 
 					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11147") %>'>
 						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="friendly-url">
+							<div class="form-group" id="<portlet:namespace />urlOptions">
+								<p>
+									<liferay-ui:message key="customize-the-url-of-this-blog-entry-to-your-preference-or-stick-to-the-default-setting-based-on-the-entry-title" />
+
+									<clay:link
+										href="<%= blogsEditEntryDisplayContext.getFriendlyURLSeparatorCompanyConfigurationURL() %>"
+										label="check-instance-settings-for-more-url-separator-configurations"
+									/>
+								</p>
+
+								<aui:input checked="<%= automaticURL %>" helpMessage="the-url-will-be-based-on-the-entry-title" label="use-the-default-url" name="automaticURL" type="radio" value="<%= true %>" />
+
+								<aui:input checked="<%= !automaticURL %>" label="use-a-customized-url" name="automaticURL" type="radio" value="<%= false %>" />
+							</div>
+
 							<div class="form-group">
 								<react:component
 									module="{AssetCategoriesFriendlyUrlSelector} from blogs-web"
 									props='<%=
 										HashMapBuilder.<String, Object>put(
 											"automaticURL", automaticURL
-										).put(
-											"customFriendlyURL", blogsEditEntryDisplayContext.getFriendlyURL()
-										).put(
-											"friendlyUrlInfo", LanguageUtil.format(request, "there-is-a-limit-of-x-characters-in-encoded-format-for-friendly-urls-(e.g.-x)", new String[] {String.valueOf(250), "/blogs"}, false)
-										).put(
-											"friendlyURLSeparatorCompanyConfigurationURL", blogsEditEntryDisplayContext.getFriendlyURLSeparatorCompanyConfigurationURL()
 										).put(
 											"inputAddon", StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping()) + StringPool.SLASH
 										).put(
@@ -211,6 +220,15 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 									%>'
 								/>
 							</div>
+
+							<liferay-friendly-url:input
+								className="<%= BlogsEntry.class.getName() %>"
+								classPK="<%= blogsEditEntryDisplayContext.getEntryId() %>"
+								disabled="<%= automaticURL %>"
+								inputAddon='<%= StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping(), 40) + StringPool.SLASH %>'
+								localizable="<%= false %>"
+								name="urlTitle"
+							/>
 						</aui:fieldset>
 					</c:if>
 

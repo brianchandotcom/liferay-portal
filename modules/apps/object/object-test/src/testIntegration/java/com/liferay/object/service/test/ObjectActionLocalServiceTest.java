@@ -1869,6 +1869,10 @@ public class ObjectActionLocalServiceTest {
 							).build()),
 						false)));
 
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
 		_objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
@@ -2383,20 +2387,6 @@ public class ObjectActionLocalServiceTest {
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId());
-	}
-
-	private ObjectDefinition _publishCustomObjectDefinition(
-			boolean enableLocalization, List<ObjectField> objectFields)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				enableLocalization, _objectDefinitionLocalService,
-				objectFields);
-
-		return _objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId());
 	}
 
 	private void _testAddObjectActionWithCircularReference(

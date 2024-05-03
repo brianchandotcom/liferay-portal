@@ -17,13 +17,13 @@ import getDealStatus from '../utils/getDealStatus';
 export default function useGetListItemsFromDealRegistration(
 	page: number,
 	pageSize: number,
-	filtersTerm: string,
-	sort: string
+	urlParams: URLSearchParams
 ) {
 	const swrResponse = useGet<LiferayItems<DealRegistrationDTO[]>>(
-		filtersTerm &&
-			`/o/${LiferayAPIs.OBJECT}/${ResourceName.LEADS_SALESFORCE}?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=${sort}
-			 `
+		urlParams &&
+			`/o/${LiferayAPIs.OBJECT}/${
+				ResourceName.LEADS_SALESFORCE
+			}?${urlParams.toString()}&page=${page}&pageSize=${pageSize}`
 	);
 
 	const listItems = useMemo(

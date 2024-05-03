@@ -117,9 +117,13 @@ const Table = <T extends BasicRow>({
 
 	const getColumnkeyFromObjectString = (columnKey: string) => {
 		const columnMap: {[key: string]: string} = {
+			ACCOUNT_NAME: 'prospectAccountName',
 			CLAIM_STATUS: 'mdfClaimStatus',
 			DATE_SUBMITTED: 'submitDate',
+			DEAL_DATE_SUBMITTED: 'dateCreated',
 			PARTNER: 'companyName',
+			PARTNER_ACCOUNT_NAME: 'partnerAccountName',
+			PARTNER_NAME: 'partnerFirstName',
 			REQUEST_STATUS: 'mdfRequestStatus',
 			TYPE: 'partial',
 		};

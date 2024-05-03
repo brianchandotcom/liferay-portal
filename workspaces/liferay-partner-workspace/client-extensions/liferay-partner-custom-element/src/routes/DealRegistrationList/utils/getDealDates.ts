@@ -15,7 +15,7 @@ export default function getDealDates(startDate?: string, dateCreated?: string) {
 		);
 
 		return {
-			[DealRegistrationColumnKey.DATE_SUBMITTED]: startDateCustomFormat,
+			[DealRegistrationColumnKey.DEAL_DATE_SUBMITTED]: startDateCustomFormat,
 			[DealRegistrationColumnKey.DATE_CREATED]: dateCreated,
 		};
 	}

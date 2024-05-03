@@ -146,7 +146,9 @@ public class EditableValuesMappingExportImportContentProcessor
 		throws Exception {
 
 		String mappedField = editableJSONObject.getString(
-			"mappedField", editableJSONObject.getString("fieldId"));
+			"collectionFieldId",
+			editableJSONObject.getString(
+				"mappedField", editableJSONObject.getString("fieldId")));
 
 		if (!mappedField.startsWith(_TEMPLATE)) {
 			return;
@@ -228,9 +230,12 @@ public class EditableValuesMappingExportImportContentProcessor
 
 		long classNameId = editableJSONObject.getLong("classNameId");
 		long classPK = editableJSONObject.getLong("classPK");
+		String collectionFieldId = editableJSONObject.getString(
+			"collectionFieldId");
 		String mappedField = editableJSONObject.getString("mappedField");
 
 		if (((classNameId == 0) || (classPK == 0)) &&
+			Validator.isNull(collectionFieldId) &&
 			Validator.isNull(mappedField)) {
 
 			return;
@@ -321,7 +326,9 @@ public class EditableValuesMappingExportImportContentProcessor
 		PortletDataContext portletDataContext, JSONObject editableJSONObject) {
 
 		String mappedField = editableJSONObject.getString(
-			"mappedField", editableJSONObject.getString("fieldId"));
+			"collectionFieldId",
+			editableJSONObject.getString(
+				"mappedField", editableJSONObject.getString("fieldId")));
 
 		if (mappedField.startsWith(_TEMPLATE)) {
 			long templateEntryId = GetterUtil.getLong(
@@ -334,7 +341,11 @@ public class EditableValuesMappingExportImportContentProcessor
 			long importedTemplateEntryId = MapUtil.getLong(
 				templateEntryIds, templateEntryId, templateEntryId);
 
-			if (editableJSONObject.has("mappedField")) {
+			if (editableJSONObject.has("collectionFieldId")) {
+				editableJSONObject.put(
+					"collectionFieldId", _TEMPLATE + importedTemplateEntryId);
+			}
+			else if (editableJSONObject.has("mappedField")) {
 				editableJSONObject.put(
 					"mappedField", _TEMPLATE + importedTemplateEntryId);
 			}

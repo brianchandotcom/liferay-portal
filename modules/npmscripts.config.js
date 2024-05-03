@@ -839,6 +839,7 @@ module.exports = {
 			'webpack',
 			'alloy-ui',
 			'react-dnd-test-utils',
+			'minimist',
 		],
 	},
 };

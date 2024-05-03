@@ -1,0 +1,12 @@
+{
+	"bin": {
+		"node-scripts": "./bin.js"
+	},
+	"dependencies": {
+		"minimist": "^1.2.8"
+	},
+	"main": "index.js",
+	"name": "@liferay/node-scripts",
+	"type": "module",
+	"version": "1.0.0"
+}

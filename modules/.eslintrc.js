@@ -27,6 +27,7 @@ config = {
 		MODULE_PATH: true,
 	},
 	rules: {
+		'@liferay/import-extensions': 'off',
 		'@liferay/no-extraneous-dependencies': [
 			'error',
 			[

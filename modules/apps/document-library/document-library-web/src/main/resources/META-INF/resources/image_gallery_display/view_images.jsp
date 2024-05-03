@@ -277,7 +277,7 @@ PortletURL embeddedPlayerURL = PortletURLBuilder.createRenderURL(
 
 	imageViewer.TPL_CLOSE = imageViewer.TPL_CLOSE.replace(
 		/<\s*span[^>]*>(.*?)<\s*\/\s*span>/,
-		Liferay.Util.getLexiconIconTpl('times', 'icon-monospaced')
+		Liferay.Util.getLexiconIconTpl('times', 'icon-monospaced text-white')
 	);
 
 	var TPL_PLAYER_PAUSE =

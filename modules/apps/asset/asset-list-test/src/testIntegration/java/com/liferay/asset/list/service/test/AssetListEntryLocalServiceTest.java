@@ -71,8 +71,10 @@ public class AssetListEntryLocalServiceTest {
 	public void testAddAssetListEntryWithExistingExternalReferenceCode()
 		throws PortalException {
 
-		_addAssetListEntry("externalReferenceCode");
-		_addAssetListEntry("externalReferenceCode");
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_addAssetListEntry(externalReferenceCode);
+		_addAssetListEntry(externalReferenceCode);
 	}
 
 	@Test
@@ -80,7 +82,7 @@ public class AssetListEntryLocalServiceTest {
 		throws PortalException {
 
 		AssetListEntry assetListEntry = _addAssetListEntry(
-			"externalReferenceCode");
+			RandomTestUtil.randomString());
 
 		_assetListEntryLocalService.deleteAssetListEntry(
 			assetListEntry.getExternalReferenceCode(),

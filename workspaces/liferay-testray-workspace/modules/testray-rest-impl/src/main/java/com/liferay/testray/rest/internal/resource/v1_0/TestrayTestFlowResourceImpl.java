@@ -64,7 +64,7 @@ public class TestrayTestFlowResourceImpl
 		sb.append("and cr.r_caseToCaseResult_c_caseId = c.c_caseId_ order by ");
 		sb.append("cr.errors_ ");
 
-		List<Map<String, Object>> values = TestrayUtil.runSQL(
+		List<Map<String, Object>> values = TestrayUtil.executeQuery(
 			StringUtil.replace(
 				sb.toString(), "[%COMPANY_ID%]",
 				String.valueOf(contextCompany.getCompanyId())),

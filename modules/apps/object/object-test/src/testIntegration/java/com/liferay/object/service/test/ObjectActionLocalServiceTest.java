@@ -1833,6 +1833,9 @@ public class ObjectActionLocalServiceTest {
 		_objectActionLocalService.deleteObjectAction(systemObjectAction);
 	}
 
+	/**
+	 * LPS-189995
+	 */
 	@Test
 	public void testOnAfterUpdateObjectActionWithAttachmentObjectField()
 		throws Exception {

@@ -74,7 +74,7 @@ public class TestrayBuildAutofillResourceImpl
 		params.add(testrayBuildId1);
 		params.add(testrayBuildId2);
 
-		List<Map<String, Object>> values = TestrayUtil.runSQL(
+		List<Map<String, Object>> values = TestrayUtil.executeQuery(
 			StringUtil.replace(
 				sql, "[%COMPANY_ID%]",
 				String.valueOf(contextCompany.getCompanyId())),

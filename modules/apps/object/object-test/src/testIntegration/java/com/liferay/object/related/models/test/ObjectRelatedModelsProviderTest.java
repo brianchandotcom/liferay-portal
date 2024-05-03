@@ -437,6 +437,19 @@ public class ObjectRelatedModelsProviderTest {
 			_objectRelationship.getObjectRelationshipId(),
 			objectEntry8.getObjectEntryId());
 
+		// Remove object entry to assert empty one to many relationship
+
+		_updateObjectEntry(
+			objectEntry7.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				_relationshipObjectField.getName(), 0
+			).build());
+
+		ObjectRelationshipTestUtil.assertGetRelatedModels(
+			0, _objectRelatedModelsProvider,
+			_objectRelationship.getObjectRelationshipId(),
+			objectEntry7.getObjectEntryId());
+
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			_objectRelationship);
 

@@ -159,6 +159,108 @@ const objectDefinitionData = {
 	},
 }
 
+const objectDefinition1Data = {
+	active: true,
+	externalReferenceCode: `objectDefinition1`,
+	label: {
+		en_US: `objectDefinition1`,
+	},
+	name: `ObjectDefinition1`,
+	objectFields: [
+		{
+			DBType: 'String',
+			businessType: 'Text',
+			externalReferenceCode: 'ObjectFieldERC',
+			indexed: true,
+			indexedAsKeyword: false,
+			indexedLanguageId: 'en_US',
+			label: {
+				en_US: 'Object Field',
+			},
+			listTypeDefinitionId: 0,
+			name: 'objectField',
+			required: false,
+			state: false,
+			system: false,
+			type: 'String',
+		},
+	],
+	objectRelationships: [
+		{
+			deletionType: 'cascade',
+			externalReferenceCode: 'modifiable-system',
+			label: {
+				en_US: 'Test Modifiable System Object',
+			},
+			name: 'testModifiableSystem',
+			objectDefinitionExternalReferenceCode1: 'objectDefinition1',
+			objectDefinitionExternalReferenceCode2: 'L_API_APPLICATION',
+			objectDefinitionName2: 'APIApplication',
+			parameterObjectFieldId: 0,
+			parameterObjectFieldName: '',
+			reverse: false,
+			system: false,
+			type: 'oneToMany',
+		},
+		{
+			deletionType: 'cascade',
+			externalReferenceCode: 'unmodifiable-system',
+			label: {
+				en_US: 'Test Unmodifiable System Object',
+			},
+			name: 'testUnmodifiableSystem',
+			objectDefinitionExternalReferenceCode1: 'objectDefinition1',
+			objectDefinitionExternalReferenceCode2: 'L_ORGANIZATION',
+			objectDefinitionName2: 'Organization',
+			parameterObjectFieldId: 0,
+			parameterObjectFieldName: '',
+			reverse: false,
+			system: false,
+			type: 'oneToMany',
+		},
+		{
+			deletionType: 'cascade',
+			externalReferenceCode: 'unmodifiable-system-whitelisted',
+			label: {
+				en_US: 'Test Unmodifiable Whitelisted System Object',
+			},
+			name: 'testUnmodifiableSystemWhitelisted',
+			objectDefinitionExternalReferenceCode1: 'objectDefinition1',
+			objectDefinitionExternalReferenceCode2: 'L_ACCOUNT',
+			objectDefinitionName2: 'AccountEntry',
+			parameterObjectFieldId: 0,
+			parameterObjectFieldName: '',
+			reverse: false,
+			system: false,
+			type: 'oneToMany',
+		},
+		{
+			deletionType: 'cascade',
+			externalReferenceCode: 'custom',
+			label: {
+				en_US: 'Test Custom Object',
+			},
+			name: 'testCustom',
+			objectDefinitionExternalReferenceCode1: 'objectDefinition1',
+			objectDefinitionExternalReferenceCode2: 'objectDefinition',
+			objectDefinitionName2: 'objectDefinition',
+			parameterObjectFieldId: 0,
+			parameterObjectFieldName: '',
+			reverse: false,
+			system: false,
+			type: 'oneToMany',
+		},
+	],
+	pluralLabel: {
+		en_US: `objectDefinitions1`,
+	},
+	portlet: true,
+	scope: 'company',
+	status: {
+		code: 0,
+	}
+}
+
 const applicationData = {
 	apiApplicationToAPISchemas: [
 		{

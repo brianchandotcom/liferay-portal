@@ -9,13 +9,9 @@ import React from 'react';
 
 import {getInitials} from './util/index';
 
-function AccountSticker({logoURL, name, size}) {
+function AccountSticker({logoURL, name}) {
 	return (
-		<ClaySticker
-			className="current-account-thumbnail"
-			shape="user-icon"
-			size={size}
-		>
+		<ClaySticker className="current-account-thumbnail" shape="user-icon">
 			{logoURL ? (
 				<ClaySticker.Image alt={name} src={logoURL} />
 			) : (
@@ -29,7 +25,6 @@ AccountSticker.propTypes = {
 	className: PropTypes.string,
 	logoURL: PropTypes.string,
 	name: PropTypes.string,
-	size: PropTypes.string,
 };
 
 export default AccountSticker;

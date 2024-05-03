@@ -14,7 +14,7 @@
 		</div>
 	</c:when>
 	<c:otherwise>
-		<div class="cart-root" id="<%= miniCartId %>"></div>
+		<div class="<%= (cssClasses != null) ? "cart-root " + cssClasses : "cart-root" %>" id="<%= miniCartId %>"></div>
 
 		<liferay-frontend:component
 			context='<%=

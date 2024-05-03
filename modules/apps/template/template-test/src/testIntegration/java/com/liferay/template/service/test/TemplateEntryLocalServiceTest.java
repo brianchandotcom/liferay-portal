@@ -73,8 +73,9 @@ public class TemplateEntryLocalServiceTest {
 			externalReferenceCode, _group.getGroupId());
 
 		Assert.assertNull(
-			_templateEntryLocalService.fetchTemplateEntry(
-				externalReferenceCode, _group.getGroupId()));
+			_templateEntryLocalService.
+				fetchTemplateEntryByExternalReferenceCode(
+					externalReferenceCode, _group.getGroupId()));
 	}
 
 	@Test
@@ -89,8 +90,9 @@ public class TemplateEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertNotNull(
-			_templateEntryLocalService.fetchTemplateEntry(
-				externalReferenceCode, _group.getGroupId()));
+			_templateEntryLocalService.
+				fetchTemplateEntryByExternalReferenceCode(
+					externalReferenceCode, _group.getGroupId()));
 	}
 
 	@DeleteAfterTestRun

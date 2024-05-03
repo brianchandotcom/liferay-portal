@@ -159,6 +159,18 @@
 		"cssVariableMapping": "color-brand-primary-lighten-6",
 		"value": "#FBFCFE"
 	},
+	"colorChart3": {
+		"cssVariableMapping": "color-chart-3",
+		"value": "#AD9EE9"
+	},
+	"colorChart4": {
+		"cssVariableMapping": "color-chart-4",
+		"value": "#FE8856"
+	},
+	"colorDangerL1": {
+		"cssVariableMapping": "color-danger-l1",
+		"value": "#F48989"
+	},
 	"colorNeutral00": {
 		"cssVariableMapping": "color-neutral-0",
 		"value": "#FFFFFF"
@@ -202,6 +214,14 @@
 	"colorNeutral10": {
 		"cssVariableMapping": "color-neutral-10",
 		"value": "#282934"
+	},
+	"colorPrimaryL3": {
+		"cssVariableMapping": "color-primary-l3",
+		"value": "#F0F5FF"
+	},
+	"colorSecondaryL1": {
+		"cssVariableMapping": "color-secondary-l1",
+		"value": "#FFCB48"
 	},
 	"colorStateError": {
 		"cssVariableMapping": "color-state-error",

@@ -439,7 +439,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public Layout fetchFirstLayout(
 		long groupId, boolean privateLayout, boolean published) {
 
-		// We need to ensure that virtual layouts are merged
+		// Eensure that virtual layouts are merged. See LPD-24277.
 
 		List<Layout> layouts = layoutLocalService.getLayouts(
 			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,

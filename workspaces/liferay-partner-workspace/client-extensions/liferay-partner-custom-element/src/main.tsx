@@ -42,9 +42,7 @@ const appRoutes: AppRouteComponent = {
 	[AppRouteType.MDF_REQUEST_MANAGER_STATUS]: <MDFRequestManagerStatus />,
 	[AppRouteType.MDF_CLAIM_MANAGER_STATUS]: <MDFClaimManagerStatus />,
 	[AppRouteType.DEAL_REGISTRATION_FORM]: <DealRegistrationForm />,
-	[AppRouteType.DEAL_REGISTRATION_LIST]: (
-		<DealRegistrationList sort="dateCreated:desc" />
-	),
+	[AppRouteType.DEAL_REGISTRATION_LIST]: <DealRegistrationList />,
 	[AppRouteType.PARTNER_OPPORTUNITIES_LIST]: (
 		<PartnerOpportunitiesList
 			name="Partner Opportunities"

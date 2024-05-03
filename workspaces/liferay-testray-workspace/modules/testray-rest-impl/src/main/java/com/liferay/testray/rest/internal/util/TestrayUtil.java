@@ -26,25 +26,6 @@ import java.util.Map;
  */
 public class TestrayUtil {
 
-	public static long getTotalCount(String sql, List<Object> params)
-		throws SQLException {
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("select COUNT(*) as count FROM ( ");
-		sb.append(sql);
-		sb.append(") count");
-
-		List<Map<String, Object>> values = executeQuery(sb.toString(), params);
-
-		return GetterUtil.getLong(
-			values.get(
-				0
-			).get(
-				"count"
-			));
-	}
-
 	public static List<Map<String, Object>> executeQuery(
 			String sql, List<Object> params)
 		throws SQLException {
@@ -102,6 +83,25 @@ public class TestrayUtil {
 
 			return preparedStatement.executeUpdate();
 		}
+	}
+
+	public static long getTotalCount(String sql, List<Object> params)
+		throws SQLException {
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("select COUNT(*) as count FROM ( ");
+		sb.append(sql);
+		sb.append(") count");
+
+		List<Map<String, Object>> values = executeQuery(sb.toString(), params);
+
+		return GetterUtil.getLong(
+			values.get(
+				0
+			).get(
+				"count"
+			));
 	}
 
 }

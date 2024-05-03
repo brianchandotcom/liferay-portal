@@ -3,24 +3,30 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayInput} from '@clayui/form';
+import { ClayInput } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {useEffect, useMemo} from 'react';
-import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
+import { useEffect, useMemo, useState } from 'react';
+import { useAppPropertiesContext } from '~/common/contexts/AppPropertiesContext';
 import useCurrentKoroneikiAccount from '~/common/hooks/useCurrentKoroneikiAccount';
 import useProvisioningLicenseKeys from '~/common/hooks/useProvisioningLicenseKeys';
+import RoleSelectorDropdown from '~/routes/customer-portal/components/RoleSelectorDropdown';
 import useUserAccountsByAccountExternalReferenceCode from '~/routes/customer-portal/pages/Project/TeamMembers/components/TeamMembersTable/hooks/useUserAccountsByAccountExternalReferenceCode';
 import i18n from '../../../../I18n';
-import {Input, Select} from '../../../../components';
+import { Input } from '../../../../components';
 import useBannedDomains from '../../../../hooks/useBannedDomains';
-import {ROLE_TYPES} from '../../../../utils/constants/';
-import {liferayDomains} from '../../../../utils/constants/liferayDomains';
+import { ROLE_TYPES } from '../../../../utils/constants/';
+import { liferayDomains } from '../../../../utils/constants/liferayDomains';
 import {
 	isLiferayDomain,
 	isValidEmail,
 } from '../../../../utils/validations.form';
 
 const FETCH_DELAY_AFTER_TYPING = 500;
+const partnerMemberRoles = [
+	ROLE_TYPES.partnerMarketingUser.key,
+	ROLE_TYPES.partnerSalesUser.key,
+	ROLE_TYPES.partnerTechnicalUser.key
+]
 
 const TeamMemberInputs = ({
 	administratorsAssetsAvailable,
@@ -32,9 +38,18 @@ const TeamMemberInputs = ({
 	options,
 	placeholderEmail,
 	selectOnChange,
+	setRoleSelectorFilled,
 }) => {
 	const {accountSettingsURL, featureFlags} = useAppPropertiesContext();
 	const provisioningService = useProvisioningLicenseKeys();
+
+	const [radioOptions, setRadioOptions] = useState({});
+	const [selectedAccountRoleName, setSelectedAccountRoleName] = useState([])
+	const [updateModal, setUpdateModal] = useState(0);
+
+	useEffect(() => {
+		setTimeout(() => setUpdateModal(new Date().getTime()), 500)
+	}, []);
 
 	const bannedDomains = useBannedDomains(
 		invite?.email,
@@ -100,6 +115,7 @@ const TeamMemberInputs = ({
 
 				return {
 					...option,
+					active: selectedAccountRoleName?.includes(option.label),
 					disabled:
 						administratorsAssetsAvailable !== -1 &&
 						administratorsAssetsAvailable === 0 &&
@@ -107,12 +123,23 @@ const TeamMemberInputs = ({
 						!isAdministratorOrRequestorRoleSelected,
 				};
 			}),
-		[
-			administratorsAssetsAvailable,
-			isAdministratorOrRequestorRoleSelected,
-			options,
-		]
+		[administratorsAssetsAvailable, isAdministratorOrRequestorRoleSelected, options, selectedAccountRoleName]
 	);
+
+	useEffect(() => {
+		setRadioOptions(optionsFormatted.reduce((previousItem, item) => {
+			if (!partnerMemberRoles.includes(item.label)) {
+				previousItem[item.label] = item;
+
+				return previousItem;
+			}
+
+			previousItem.partnerMemberRoles.roles.push(item);
+			previousItem.partnerMemberRoles.active = previousItem.partnerMemberRoles.active ? true : item.active
+
+			return previousItem;
+		}, { partnerMemberRoles: { active: undefined, roles: [] } }))
+	}, [optionsFormatted, selectedAccountRoleName, setRadioOptions])
 
 	return (
 		<>
@@ -157,14 +184,24 @@ const TeamMemberInputs = ({
 				</ClayInput.GroupItem>
 
 				<ClayInput.GroupItem className="m-0">
-					<Select
-						groupStyle="m-0"
-						label={i18n.translate('role')}
-						name={`invites[${id}].role.id`}
-						onChange={(event) => selectOnChange(event.target.value)}
-						options={optionsFormatted}
-						required
-					/>
+					<div className='mx-3 my-1 role-selector-container w-100'>
+						<div>
+							<span className='role-selector-label'>{i18n.translate('role')}</span> 
+							
+							<span className='role-selector-required-icon'> *</span>
+						</div>
+						
+						<RoleSelectorDropdown
+							isTeamMemberInviteForm
+							key={updateModal}
+							radioOptions={radioOptions}
+							selectOnChange={selectOnChange}
+							selectedAccountRoleName={selectedAccountRoleName}
+							setRadioOptions={setRadioOptions}
+							setRoleSelectorFilled={setRoleSelectorFilled}
+							setSelectedAccountRoleName={setSelectedAccountRoleName}
+						/>
+					</div>
 				</ClayInput.GroupItem>
 			</ClayInput.Group>
 

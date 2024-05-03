@@ -8,9 +8,9 @@ export default function getInitialInvite(initialRole) {
 		email: '',
 		familyName: '',
 		givenName: '',
-		role: initialRole || {
+		role: initialRole || [{
 			id: 0,
 			name: '',
-		},
+		}],
 	};
 }

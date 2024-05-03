@@ -286,6 +286,11 @@ public class SystemObjectRelatedObjectEntriesTest {
 			_userAccountJSONObject.getLong("id"), objectRelationship,
 			_user.getUserId());
 
+		_testGetManyToOneSystemObjectRelatedObjectEntries(
+			_objectEntry.getExternalReferenceCode(),
+			_objectEntry.getObjectEntryId(), objectRelationship,
+			_userAccountJSONObject.getLong("id"));
+
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 

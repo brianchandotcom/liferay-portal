@@ -6,6 +6,7 @@ interface IIndividual {
 	activitiesCount: number;
 	dateCreated: string;
 	demographics: Map<string, any>;
+	firstActivityDate: string;
 	id: string;
 	lastActivityDate: string;
 	name: string;
@@ -19,6 +20,7 @@ export default class Individual
 		activitiesCount: 0,
 		dateCreated: null,
 		demographics: Map(),
+		firstActivityDate: null,
 		id: null,
 		lastActivityDate: null,
 		name: '',
@@ -30,6 +32,7 @@ export default class Individual
 	activitiesCount: number;
 	dateCreated: string;
 	demographics: Map<string, any>;
+	firstActivityDate: string;
 	id: string;
 	lastActivityDate: string;
 	name: string;

@@ -72,12 +72,15 @@ export default function ModalContent({content, onClose}: IProps) {
 						/>
 					)}
 
-					{content?.[PartnerOpportunitiesColumnKey.ACCOUNT_NAME] && (
+					{content?.[
+						PartnerOpportunitiesColumnKey.OPPORTUNITY_ACCOUNT_NAME
+					] && (
 						<ModalFormatedInformation
 							className="col mb-2"
 							information={
 								content?.[
-									PartnerOpportunitiesColumnKey.ACCOUNT_NAME
+									PartnerOpportunitiesColumnKey
+										.OPPORTUNITY_ACCOUNT_NAME
 								] as string
 							}
 							label="Account Name"

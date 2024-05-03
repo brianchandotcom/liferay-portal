@@ -1,6 +1,9 @@
-.autofit-col-expand {
-	min-inline-size: min-content;
-	padding-right: 0 !important;
+.autofit-col {
+	padding-left: 0 !important;
+}
+
+.autofit-row {
+	display: ruby;
 }
 
 .lexicon-icon-order-arrow {

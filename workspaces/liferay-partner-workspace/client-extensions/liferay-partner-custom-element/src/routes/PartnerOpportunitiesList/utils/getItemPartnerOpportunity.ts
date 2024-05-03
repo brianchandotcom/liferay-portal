@@ -28,7 +28,7 @@ export default function getItemPartnerOpportunity(
 					customFormatDateOptions.SHORT_MONTH
 			  )
 			: '- ',
-		[PartnerOpportunitiesColumnKey.ACCOUNT_NAME]: item.accountName
+		[PartnerOpportunitiesColumnKey.OPPORTUNITY_ACCOUNT_NAME]: item.accountName
 			? item.accountName
 			: ' - ',
 		[PartnerOpportunitiesColumnKey.CURRENCY]: item.currency

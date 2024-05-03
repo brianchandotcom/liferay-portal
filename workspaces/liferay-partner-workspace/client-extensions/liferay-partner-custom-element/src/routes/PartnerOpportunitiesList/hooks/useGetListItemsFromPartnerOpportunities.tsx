@@ -15,12 +15,13 @@ import getItemPartnerOpportunity from '../utils/getItemPartnerOpportunity';
 export default function useGetListItemsFromPartnerOpportunities(
 	page: number,
 	pageSize: number,
-	filtersTerm: string,
-	sort: string
+	urlParams: URLSearchParams
 ) {
 	const swrResponse = useGet<LiferayItems<OpportunityPartnerRoleDTO[]>>(
-		filtersTerm &&
-			`/o/${LiferayAPIs.OBJECT}/${ResourceName.OPPORTUNITIES_PARTNER_ROLE_SALESFORCE}?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=${sort}`
+		urlParams &&
+			`/o/${LiferayAPIs.OBJECT}/${
+				ResourceName.OPPORTUNITIES_PARTNER_ROLE_SALESFORCE
+			}?${urlParams.toString()}&page=${page}&pageSize=${pageSize}`
 	);
 
 	const listItems = useMemo(

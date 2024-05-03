@@ -17,8 +17,12 @@ import Table from '../../common/components/Table';
 import TableHeader from '../../common/components/TableHeader';
 import Search from '../../common/components/TableHeader/Search';
 import {PartnerOpportunitiesColumnKey} from '../../common/enums/partnerOpportunitiesColumnKey';
+import {SortableTable} from '../../common/enums/sortableTable';
+import useDebounce from '../../common/hooks/useDebounce';
 import usePagination from '../../common/hooks/usePagination';
+import useQueryParams from '../../common/hooks/useQueryParams';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
+import setURLParams from '../../common/utils/setURLParams';
 import ModalContent from './components/ModalContent';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromPartnerOpportunities from './hooks/useGetListItemsFromPartnerOpportunities';
@@ -27,13 +31,9 @@ import PartnerOpportunitiesItem from './interfaces/partnerOpportunitiesItem';
 interface IProps {
 	isRenewalListing?: boolean;
 	name: string;
-	sort: string;
 }
 
-const BASE_PAGE = 1;
-const MAX_ITEMS = 200;
-
-const PartnerOpportunitiesList = ({isRenewalListing, name, sort}: IProps) => {
+const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 	const [openOpportunitiesFilter, setOpenOpportunitiesFilter] = useState(
 		JSON.parse(sessionStorage.getItem('openOpportunitiesFilter')!) === null
 			? true
@@ -58,18 +58,32 @@ const PartnerOpportunitiesList = ({isRenewalListing, name, sort}: IProps) => {
 	});
 
 	const pagination = usePagination();
+
+	const urlParams = useQueryParams();
+
+	const [opportunitiesTableSort, setOpportunitiesTableSort] = useState<
+		string
+	>('partnerAccountName:asc');
+
+	const debouncedDealRegistrationTableSort = useDebounce(
+		opportunitiesTableSort,
+		1000
+	);
+
 	const {data, isValidating} = useGetListItemsFromPartnerOpportunities(
 		pagination.activePage,
 		pagination.activeDelta,
-		filtersTerm,
-		sort
+		setURLParams({
+			filter: filtersTerm,
+			sort: debouncedDealRegistrationTableSort,
+			urlParams,
+		})
 	);
 
 	const {data: dataCSV} = useGetListItemsFromPartnerOpportunities(
-		BASE_PAGE,
-		MAX_ITEMS,
-		filtersTerm,
-		sort
+		pagination.activePage,
+		pagination.maxItemsSF,
+		setURLParams({filter: filtersTerm, urlParams})
 	);
 
 	const {totalCount: totalPagination} = data;
@@ -82,7 +96,7 @@ const PartnerOpportunitiesList = ({isRenewalListing, name, sort}: IProps) => {
 			label: 'Partner Account Name',
 		},
 		{
-			columnKey: PartnerOpportunitiesColumnKey.ACCOUNT_NAME,
+			columnKey: PartnerOpportunitiesColumnKey.OPPORTUNITY_ACCOUNT_NAME,
 			label: 'Account Name',
 		},
 		{
@@ -154,6 +168,13 @@ const PartnerOpportunitiesList = ({isRenewalListing, name, sort}: IProps) => {
 						columns={columns}
 						customClickOnRow={handleCustomClickOnRow}
 						rows={items}
+						setTableSort={setOpportunitiesTableSort}
+						sortable={[
+							SortableTable.ACCOUNT_NAME,
+							SortableTable.CLOSE_DATE,
+							SortableTable.PARTNER_ACCOUNT_NAME,
+							SortableTable.STAGE,
+						]}
 						tableLayoutAuto
 					/>
 

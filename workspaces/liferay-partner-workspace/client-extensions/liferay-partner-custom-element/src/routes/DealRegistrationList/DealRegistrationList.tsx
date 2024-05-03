@@ -68,9 +68,9 @@ const DealRegistrationList = () => {
 		},
 	});
 
-	const urlParams = useQueryParams();
+	const pagination = usePagination();
 
-	const pagination = usePagination(urlParams);
+	const urlParams = useQueryParams();
 
 	const siteURL = useLiferayNavigate();
 

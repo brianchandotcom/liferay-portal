@@ -44,16 +44,12 @@ const appRoutes: AppRouteComponent = {
 	[AppRouteType.DEAL_REGISTRATION_FORM]: <DealRegistrationForm />,
 	[AppRouteType.DEAL_REGISTRATION_LIST]: <DealRegistrationList />,
 	[AppRouteType.PARTNER_OPPORTUNITIES_LIST]: (
-		<PartnerOpportunitiesList
-			name="Partner Opportunities"
-			sort="closeDate:desc"
-		/>
+		<PartnerOpportunitiesList name="Partner Opportunities" />
 	),
 	[AppRouteType.RENEWALS_OPPORTUNITIES_LIST]: (
 		<PartnerOpportunitiesList
 			isRenewalListing={true}
 			name="Renewal Opportunities"
-			sort="closeDate:asc"
 		/>
 	),
 	[AppRouteType.DASHBOARD_DEALS_CHART]: <DealsChart />,

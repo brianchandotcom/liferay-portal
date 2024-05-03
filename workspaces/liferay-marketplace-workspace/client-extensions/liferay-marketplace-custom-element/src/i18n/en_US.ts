@@ -133,6 +133,7 @@ export default {
 		'Enter your solution details. This information will be used for submission, presentation, customer support, and search capabilities.',
 	'environment': 'Environment',
 	'environment-type': 'Environment Type',
+	'exit': 'Exit',
 	'expiration-date': 'Expiration Date',
 	'expired': 'Expired',
 	'explore-over-800-apps-available-in-the-liferay-marketplace-from-a-variety-of-publishers-apps-allow-you-to-accelerate-your-liferay-development-get-to-market-faster':
@@ -354,6 +355,8 @@ export default {
 	'we-are-happy-to-have-you-interested-in-the-liferay-marketplace-at-the-moment-we-are-working-on-enhancing-the-experience-for-our-publishers-in-the-marketplace-if-you-are-an-existing-liferay-developer-or-partner-you-can-choose-to-join-our-pilot-group-of-publishers-to-submit-apps-to-the-marketplace-continue-to-request-a-publisher-account':
 		'We are happy to have you interested in the Liferay Marketplace. At the moment, we are working on enhancing the experience for our publishers in the Marketplace.  If you are an existing Liferay developer or partner, you can choose to join our pilot group of publishers to submit apps to the Marketplace.  Continue to request a publisher account.',
 	'x-is-required': '{0} is required',
+	'x-saved-as-a-draft-successfully':
+		'<b>{0}</b> saved as a <b>draft</b> successfully',
 	'yes': 'Yes',
 	'you-can-put-anything-you-want-here-but-a-good-guideline-is-no-more-than-4-5-paragraphs-this-field-does-not-allow-any-markup-tags-its-just-text-please-do-not-use-misleading-names-information-or-icons-descriptions-should-be-as-concise-as-possible-ensure-your-icons-images-descriptions-and-tags-are-free-of-profanity-or-other-offensive-material':
 		'You can put anything you want here, but a good guideline is no more than 4-5 paragraphs. This field does not allow any markup tags - it’s just text Please do not use misleading names, information, or icons. Descriptions should be as concise as possible. Ensure your icons, images, descriptions, and tags are free of profanity or other offensive material.',

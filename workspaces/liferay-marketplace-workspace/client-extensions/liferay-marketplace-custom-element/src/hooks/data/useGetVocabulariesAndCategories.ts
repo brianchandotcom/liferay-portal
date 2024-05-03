@@ -24,7 +24,7 @@ const useGetVocabulariesAndCategories = (vocabulariesName: string[]) => {
 			const categories = await HeadlessAdminTaxonomyImpl.getTaxonomyCategories(
 				vocabulary.id,
 				new URLSearchParams({
-					fields: 'name',
+					fields: 'id,name',
 				})
 			);
 
@@ -33,7 +33,7 @@ const useGetVocabulariesAndCategories = (vocabulariesName: string[]) => {
 				categories: categories?.items?.map(
 					(category: ProductCategories) => ({
 						label: category.name,
-						value: category.name,
+						value: category.id,
 					})
 				),
 			};

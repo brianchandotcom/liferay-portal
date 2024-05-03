@@ -58,7 +58,7 @@ type ILiferay = {
 			message: string;
 			onClick?: ({event}: {event: any}) => void;
 			title?: string;
-			type?: 'danger' | 'success';
+			type?: 'danger' | 'info' | 'success';
 		}) => void;
 	};
 	authToken: string;

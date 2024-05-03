@@ -63,5 +63,5 @@ test {
 	systemProperty "maven.debug", System.properties["maven.debug"]
 	systemProperty "maven.repo.local", System.properties["maven.repo.local"]
 	systemProperty "repository.url", System.properties["repository.url"]
-	systemProperty "bundle.support.version", jar.archiveVersion
+	systemProperty "bundle.support.version", jar.archiveVersion.get()
 }

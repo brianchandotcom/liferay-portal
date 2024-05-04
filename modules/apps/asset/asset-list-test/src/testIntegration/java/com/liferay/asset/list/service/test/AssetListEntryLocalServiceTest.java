@@ -56,8 +56,9 @@ public class AssetListEntryLocalServiceTest {
 		_addAssetListEntry(externalReferenceCode);
 
 		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.fetchAssetListEntry(
-				externalReferenceCode, _group.getGroupId());
+			_assetListEntryLocalService.
+				fetchAssetListEntryByExternalReferenceCode(
+					externalReferenceCode, _group.getGroupId());
 
 		Assert.assertNotNull(assetListEntry);
 
@@ -89,9 +90,10 @@ public class AssetListEntryLocalServiceTest {
 			assetListEntry.getGroupId());
 
 		Assert.assertNull(
-			_assetListEntryLocalService.fetchAssetListEntry(
-				assetListEntry.getExternalReferenceCode(),
-				assetListEntry.getGroupId()));
+			_assetListEntryLocalService.
+				fetchAssetListEntryByExternalReferenceCode(
+					assetListEntry.getExternalReferenceCode(),
+					assetListEntry.getGroupId()));
 	}
 
 	private AssetListEntry _addAssetListEntry(String externalReferenceCode)

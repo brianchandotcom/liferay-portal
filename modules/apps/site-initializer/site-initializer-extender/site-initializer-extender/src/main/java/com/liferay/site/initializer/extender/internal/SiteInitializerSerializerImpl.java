@@ -104,11 +104,11 @@ public class SiteInitializerSerializerImpl
 		try {
 			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
+			_serializeDDMStructures(groupId, zipWriter);
+			_serializeDDMTemplates(groupId, zipWriter);
 			_serializeDocuments(
 				groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				"documents/group", zipWriter);
-			_serializeDDMStructures(groupId, zipWriter);
-			_serializeDDMTemplates(groupId, zipWriter);
 			_serializeJournalArticles(
 				groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				"journal-articles", zipWriter);

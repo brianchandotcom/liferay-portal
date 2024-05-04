@@ -29,10 +29,12 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -683,11 +685,17 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
+	@BeanReference(type = CompanyLocalService.class)
+	protected CompanyLocalService companyLocalService;
+
 	@BeanReference(type = PortletLocalService.class)
 	protected PortletLocalService portletLocalService;
 
 	@BeanReference(type = ResourceActionLocalService.class)
 	protected ResourceActionLocalService resourceActionLocalService;
+
+	@BeanReference(type = ResourcePermissionLocalService.class)
+	protected ResourcePermissionLocalService resourcePermissionLocalService;
 
 	@BeanReference(type = RoleLocalService.class)
 	protected RoleLocalService roleLocalService;
@@ -742,6 +750,12 @@ public class ResourceActionsImpl implements ResourceActions {
 							getModelResourceActions(modelResourceName));
 					}
 				});
+
+			companyLocalService.forEachCompanyId(
+				companyId ->
+					resourcePermissionLocalService.
+						populateDefaultModelResourcePermissions(
+							companyId, modelResourceNames));
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

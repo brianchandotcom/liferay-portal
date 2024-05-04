@@ -30,7 +30,6 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -521,49 +520,18 @@ public class SiteInitializerSerializerImpl
 			ObjectDefinition objectDefinition, ZipWriter zipWriter)
 		throws Exception {
 
-		JSONArray fieldsJSONArray = _jsonFactory.createJSONArray();
+		JSONArray objectFieldsJSONArray = JSONUtil.toJSONArray(
+			_objectFieldLocalService.getCustomObjectFields(
+				objectDefinition.getObjectDefinitionId()),
+			objectField -> {
+				if (StringUtil.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
-		for (ObjectField objectField :
-				_objectFieldLocalService.getCustomObjectFields(
-					objectDefinition.getObjectDefinitionId())) {
+					return null;
+				}
 
-			if (StringUtil.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
-
-				continue;
-			}
-
-			JSONArray fieldSettingsJSONArray = _jsonFactory.createJSONArray();
-
-			for (ObjectFieldSetting objectFieldSetting :
-					objectField.getObjectFieldSettings()) {
-
-				fieldSettingsJSONArray.put(
-					JSONUtil.put(
-						"name", objectFieldSetting.getName()
-					).put(
-						"value", objectFieldSetting.getValue()
-					));
-			}
-
-			String listTypeDefinitionIdString = "0";
-
-			ListTypeDefinition listTypeDefinition =
-				_listTypeDefinitionLocalService.fetchListTypeDefinition(
-					objectField.getListTypeDefinitionId());
-
-			if (listTypeDefinition != null) {
-				String listTypeDefinitionName = _normalize(
-					listTypeDefinition.getName(LocaleUtil.US));
-
-				listTypeDefinitionIdString =
-					"[$LIST_TYPE_DEFINITION_ID:" + listTypeDefinitionName +
-						"$]";
-			}
-
-			fieldsJSONArray.put(
-				JSONUtil.put(
+				return JSONUtil.put(
 					"businessType", objectField.getBusinessType()
 				).put(
 					"DBType", objectField.getDBType()
@@ -573,17 +541,39 @@ public class SiteInitializerSerializerImpl
 					"label",
 					JSONUtil.put("en_US", objectField.getLabel(LocaleUtil.US))
 				).put(
-					"listTypeDefinitionId", listTypeDefinitionIdString
+					"listTypeDefinitionId",
+					() -> {
+						ListTypeDefinition listTypeDefinition =
+							_listTypeDefinitionLocalService.
+								fetchListTypeDefinition(
+									objectField.getListTypeDefinitionId());
+
+						if (listTypeDefinition == null) {
+							return "0";
+						}
+
+						String name = _normalize(
+							listTypeDefinition.getName(LocaleUtil.US));
+
+						return "[$LIST_TYPE_DEFINITION_ID:" + name + "$]";
+					}
 				).put(
 					"name", objectField.getName()
 				).put(
-					"objectFieldSettings", fieldSettingsJSONArray
+					"objectFieldSettings",
+					JSONUtil.toJSONArray(
+						objectField.getObjectFieldSettings(),
+						objectFieldSetting -> JSONUtil.put(
+							"name", objectFieldSetting.getName()
+						).put(
+							"value", objectFieldSetting.getValue()
+						))
 				).put(
 					"required", objectField.isRequired()
 				).put(
 					"state", objectField.isState()
-				));
-		}
+				);
+			});
 
 		_addZipEntry(
 			"object-definitions/" +
@@ -595,7 +585,7 @@ public class SiteInitializerSerializerImpl
 				"name",
 				StringUtil.removeSubstring(objectDefinition.getName(), "C_")
 			).put(
-				"objectFields", fieldsJSONArray
+				"objectFields", objectFieldsJSONArray
 			).put(
 				"pluralLabel", objectDefinition.getPluralLabel(LocaleUtil.US)
 			).put(

@@ -876,9 +876,7 @@ public class FragmentEntryProcessorHelperImpl
 			return true;
 		}
 		catch (InfoItemPermissionException infoItemPermissionException) {
-			_log.error(
-				"Unable to check display object permissions",
-				infoItemPermissionException);
+			_log.error(infoItemPermissionException);
 
 			return false;
 		}

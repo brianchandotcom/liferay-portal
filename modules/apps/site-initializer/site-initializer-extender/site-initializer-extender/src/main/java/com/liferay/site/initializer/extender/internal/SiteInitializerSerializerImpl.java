@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Organization;
@@ -59,6 +60,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
@@ -115,11 +117,11 @@ public class SiteInitializerSerializerImpl
 			_serializeLayoutPageTemplates(groupId, zipWriter);
 			_serializeLayoutUtilityPageEntries(groupId, zipWriter);
 			_serializeLayouts(groupId, "layouts", zipWriter);
-			_serializeObjectDefinitions(
-				_groupLocalService.getGroup(
-					groupId
-				).getCompanyId(),
-				zipWriter);
+
+			Group group = _groupLocalService.getGroup(groupId);
+
+			_serializeObjectDefinitions(group.getCompanyId(), zipWriter);
+
 			_serializeStyleBookEntries(groupId, zipWriter);
 			_serializeUserAccounts(groupId, zipWriter);
 
@@ -515,99 +517,103 @@ public class SiteInitializerSerializerImpl
 		}
 	}
 
+	private void _serializeObjectDefinition(
+			ObjectDefinition objectDefinition, ZipWriter zipWriter)
+		throws Exception {
+
+		JSONArray fieldsJSONArray = _jsonFactory.createJSONArray();
+
+		for (ObjectField objectField :
+				_objectFieldLocalService.getCustomObjectFields(
+					objectDefinition.getObjectDefinitionId())) {
+
+			if (StringUtil.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+				continue;
+			}
+
+			JSONArray fieldSettingsJSONArray = _jsonFactory.createJSONArray();
+
+			for (ObjectFieldSetting objectFieldSetting :
+					objectField.getObjectFieldSettings()) {
+
+				fieldSettingsJSONArray.put(
+					JSONUtil.put(
+						"name", objectFieldSetting.getName()
+					).put(
+						"value", objectFieldSetting.getValue()
+					));
+			}
+
+			String listTypeDefinitionIdString = "0";
+
+			ListTypeDefinition listTypeDefinition =
+				_listTypeDefinitionLocalService.fetchListTypeDefinition(
+					objectField.getListTypeDefinitionId());
+
+			if (listTypeDefinition != null) {
+				String listTypeDefinitionName = _normalize(
+					listTypeDefinition.getName(LocaleUtil.US));
+
+				listTypeDefinitionIdString =
+					"[$LIST_TYPE_DEFINITION_ID:" + listTypeDefinitionName +
+						"$]";
+			}
+
+			fieldsJSONArray.put(
+				JSONUtil.put(
+					"businessType", objectField.getBusinessType()
+				).put(
+					"DBType", objectField.getDBType()
+				).put(
+					"indexedAsKeyword", objectField.isIndexedAsKeyword()
+				).put(
+					"label",
+					JSONUtil.put("en_US", objectField.getLabel(LocaleUtil.US))
+				).put(
+					"listTypeDefinitionId", listTypeDefinitionIdString
+				).put(
+					"name", objectField.getName()
+				).put(
+					"objectFieldSettings", fieldSettingsJSONArray
+				).put(
+					"required", objectField.isRequired()
+				).put(
+					"state", objectField.isState()
+				));
+		}
+
+		_addZipEntry(
+			"object-definitions/" +
+				_normalize(objectDefinition.getLabel(LocaleUtil.US)),
+			JSONUtil.put(
+				"label",
+				JSONUtil.put("en_US", objectDefinition.getLabel(LocaleUtil.US))
+			).put(
+				"name",
+				StringUtil.removeSubstring(objectDefinition.getName(), "C_")
+			).put(
+				"objectFields", fieldsJSONArray
+			).put(
+				"pluralLabel", objectDefinition.getPluralLabel(LocaleUtil.US)
+			).put(
+				"scope", objectDefinition.getScope()
+			),
+			zipWriter);
+	}
+
 	private void _serializeObjectDefinitions(
-			Long companyId, ZipWriter zipWriter)
+			long companyId, ZipWriter zipWriter)
 		throws Exception {
 
 		for (ObjectDefinition objectDefinition :
 				_objectDefinitionLocalService.getObjectDefinitions(
-					companyId, true, false, 0)) {
+					companyId, true, false,
+					WorkflowConstants.STATUS_APPROVED)) {
 
-			JSONArray fieldsJSONArray = _jsonFactory.createJSONArray();
-
-			for (ObjectField objectField :
-					_objectFieldLocalService.getCustomObjectFields(
-						objectDefinition.getObjectDefinitionId())) {
-
-				if (StringUtil.equals(
-						objectField.getBusinessType(),
-						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
-
-					continue;
-				}
-
-				JSONArray fieldSettingsJSONArray =
-					_jsonFactory.createJSONArray();
-
-				for (ObjectFieldSetting objectFieldSetting :
-						objectField.getObjectFieldSettings()) {
-
-					fieldSettingsJSONArray.put(
-						JSONUtil.put(
-							"name", objectFieldSetting.getName()
-						).put(
-							"value", objectFieldSetting.getValue()
-						));
-				}
-
-				String listTypeDefinitionIdString = "0";
-
-				ListTypeDefinition listTypeDefinition =
-					_listTypeDefinitionLocalService.fetchListTypeDefinition(
-						objectField.getListTypeDefinitionId());
-
-				if (listTypeDefinition != null) {
-					String listTypeDefinitionName = _normalize(
-						listTypeDefinition.getName(LocaleUtil.US));
-
-					listTypeDefinitionIdString =
-						"[$LIST_TYPE_DEFINITION_ID:" + listTypeDefinitionName +
-							"$]";
-				}
-
-				fieldsJSONArray.put(
-					JSONUtil.put(
-						"businessType", objectField.getBusinessType()
-					).put(
-						"DBType", objectField.getDBType()
-					).put(
-						"indexedAsKeyword", objectField.isIndexedAsKeyword()
-					).put(
-						"label",
-						JSONUtil.put(
-							"en_US", objectField.getLabel(LocaleUtil.US))
-					).put(
-						"listTypeDefinitionId", listTypeDefinitionIdString
-					).put(
-						"name", objectField.getName()
-					).put(
-						"objectFieldSettings", fieldSettingsJSONArray
-					).put(
-						"required", objectField.isRequired()
-					).put(
-						"state", objectField.isState()
-					));
-			}
-
-			_addZipEntry(
-				"object-definitions/" +
-					_normalize(objectDefinition.getLabel(LocaleUtil.US)),
-				JSONUtil.put(
-					"label",
-					JSONUtil.put(
-						"en_US", objectDefinition.getLabel(LocaleUtil.US))
-				).put(
-					"name",
-					StringUtil.removeSubstring(objectDefinition.getName(), "C_")
-				).put(
-					"objectFields", fieldsJSONArray
-				).put(
-					"pluralLabel",
-					objectDefinition.getPluralLabel(LocaleUtil.US)
-				).put(
-					"scope", objectDefinition.getScope()
-				),
-				zipWriter);
+			_serializeObjectDefinition(objectDefinition, zipWriter);
 		}
 	}
 

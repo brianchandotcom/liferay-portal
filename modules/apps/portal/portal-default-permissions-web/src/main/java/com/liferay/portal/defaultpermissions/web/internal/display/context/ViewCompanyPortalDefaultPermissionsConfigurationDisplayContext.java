@@ -47,23 +47,15 @@ public class ViewCompanyPortalDefaultPermissionsConfigurationDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 		_language = language;
-
-		PortletRequest portletRequest =
-			(PortletRequest)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		PortletResponse portletResponse =
-			(PortletResponse)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
-			portletRequest);
-
-		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
-			portletResponse);
-
 		_portalDefaultPermissionsModelResourceRegistry =
 			portalDefaultPermissionsModelResourceRegistry;
+
+		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST));
+		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE));
 	}
 
 	public String getEditURL(String className) {

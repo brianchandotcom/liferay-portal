@@ -116,17 +116,13 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 	}
 
 	public List<String> getCurrentActions(Role role) {
-		Map<String, Map<String, String[]>> defaultPermissions =
-			_getDefaultPermissions();
+		Map<String, String[]> defaultPermissions = _getDefaultPermissions();
 
-		Map<String, String[]> resourceDefaultPermissions =
-			defaultPermissions.get(getModelResource());
-
-		if (resourceDefaultPermissions == null) {
+		if (defaultPermissions == null) {
 			return Collections.emptyList();
 		}
 
-		String[] actions = resourceDefaultPermissions.get(role.getName());
+		String[] actions = defaultPermissions.get(role.getName());
 
 		if (actions == null) {
 			return Collections.emptyList();
@@ -167,6 +163,8 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 			"resourceGroupId", _getResourceGroupId()
 		).setParameter(
 			"roleTypes", _getRoleTypesParam()
+		).setParameter(
+			"scope", _portalDefaultPermissionsConfigurationManager.getScope()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildPortletURL();
@@ -272,12 +270,14 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 			"resourceGroupId", _getResourceGroupId()
 		).setParameter(
 			"roleTypes", _getRoleTypesParam()
+		).setParameter(
+			"scope", _portalDefaultPermissionsConfigurationManager.getScope()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
 	}
 
-	private Map<String, Map<String, String[]>> _getDefaultPermissions() {
+	private Map<String, String[]> _getDefaultPermissions() {
 		if (_defaultPermissions != null) {
 			return _defaultPermissions;
 		}
@@ -288,7 +288,8 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 
 		_defaultPermissions =
 			_portalDefaultPermissionsConfigurationManager.getDefaultPermissions(
-				themeDisplay.getCompanyId());
+				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
+				getModelResource());
 
 		return _defaultPermissions;
 	}
@@ -406,7 +407,7 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 	};
 
 	private List<String> _actions;
-	private Map<String, Map<String, String[]>> _defaultPermissions;
+	private Map<String, String[]> _defaultPermissions;
 	private final Group _group;
 	private List<String> _guestUnsupportedActions;
 	private final HttpServletRequest _httpServletRequest;

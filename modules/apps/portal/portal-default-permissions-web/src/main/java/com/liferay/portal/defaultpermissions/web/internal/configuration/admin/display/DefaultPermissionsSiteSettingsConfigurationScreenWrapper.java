@@ -8,12 +8,13 @@ package com.liferay.portal.defaultpermissions.web.internal.configuration.admin.d
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
 import com.liferay.portal.defaultpermissions.resource.PortalDefaultPermissionsModelResourceRegistry;
-import com.liferay.portal.defaultpermissions.web.internal.display.context.ViewCompanyPortalDefaultPermissionsConfigurationDisplayContext;
+import com.liferay.portal.defaultpermissions.web.internal.display.context.ViewGroupPortalDefaultPermissionsConfigurationDisplayContext;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
-import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenFactory;
+import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
+import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenFactory;
 
 import java.util.Locale;
 
@@ -28,13 +29,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Stefano Motta
  */
 @Component(service = ConfigurationScreen.class)
-public class DefaultPermissionsPortalSettingsConfigurationScreenWrapper
+public class DefaultPermissionsSiteSettingsConfigurationScreenWrapper
 	extends ConfigurationScreenWrapper {
 
 	@Override
 	protected ConfigurationScreen getConfigurationScreen() {
-		return _portalSettingsConfigurationScreenFactory.create(
-			new DefaultPermissionsPortalSettingsConfigurationScreenContributor());
+		return _siteSettingsConfigurationScreenFactory.create(
+			new DefaultPermissionsSiteSettingsConfigurationScreenContributor());
 	}
 
 	@Reference
@@ -44,17 +45,17 @@ public class DefaultPermissionsPortalSettingsConfigurationScreenWrapper
 	private PortalDefaultPermissionsModelResourceRegistry
 		_portalDefaultPermissionsModelResourceRegistry;
 
-	@Reference
-	private PortalSettingsConfigurationScreenFactory
-		_portalSettingsConfigurationScreenFactory;
-
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.defaultpermissions.web)"
 	)
 	private ServletContext _servletContext;
 
-	private class DefaultPermissionsPortalSettingsConfigurationScreenContributor
-		implements PortalSettingsConfigurationScreenContributor {
+	@Reference
+	private SiteSettingsConfigurationScreenFactory
+		_siteSettingsConfigurationScreenFactory;
+
+	private class DefaultPermissionsSiteSettingsConfigurationScreenContributor
+		implements SiteSettingsConfigurationScreenContributor {
 
 		@Override
 		public String getCategoryKey() {
@@ -69,7 +70,7 @@ public class DefaultPermissionsPortalSettingsConfigurationScreenWrapper
 
 		@Override
 		public String getKey() {
-			return "default-permissions-company-configuration";
+			return "default-permissions-group-configuration";
 		}
 
 		@Override
@@ -78,17 +79,12 @@ public class DefaultPermissionsPortalSettingsConfigurationScreenWrapper
 		}
 
 		@Override
-		public String getSaveMVCActionCommandName() {
-			return null;
-		}
-
-		@Override
 		public ServletContext getServletContext() {
 			return _servletContext;
 		}
 
 		@Override
-		public boolean isVisible() {
+		public boolean isVisible(Group group) {
 			if (FeatureFlagManagerUtil.isEnabled("LPD-21265")) {
 				return true;
 			}
@@ -103,7 +99,7 @@ public class DefaultPermissionsPortalSettingsConfigurationScreenWrapper
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				new ViewCompanyPortalDefaultPermissionsConfigurationDisplayContext(
+				new ViewGroupPortalDefaultPermissionsConfigurationDisplayContext(
 					httpServletRequest, _language,
 					_portalDefaultPermissionsModelResourceRegistry));
 		}

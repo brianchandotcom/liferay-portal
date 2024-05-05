@@ -12,7 +12,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.testray.rest.dto.v1_0.TestrayBuildAutofill;
-import com.liferay.testray.rest.dto.v1_0.TestrayCaseResultTestFlowUpdate;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestFlow;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestSuite;
 import com.liferay.testray.rest.resource.v1_0.TestrayBuildAutofillResource;
@@ -93,12 +92,10 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public TestrayCaseResultTestFlowUpdate
-			updateTestrayTestFlowCaseResultByTestraySubtaskIdTestraySubtask(
+	public TestrayTestFlow
+			updateTestrayTestFlowByTestraySubtaskIdTestraySubtask(
 				@GraphQLName("testraySubtaskId") Long testraySubtaskId,
-				@GraphQLName("testrayCaseResultTestFlowUpdate")
-					TestrayCaseResultTestFlowUpdate
-						testrayCaseResultTestFlowUpdate)
+				@GraphQLName("testrayTestFlow") TestrayTestFlow testrayTestFlow)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -106,8 +103,8 @@ public class Mutation {
 			this::_populateResourceContext,
 			testrayTestFlowResource ->
 				testrayTestFlowResource.
-					putTestrayTestFlowCaseResultByTestraySubtaskIdTestraySubtask(
-						testraySubtaskId, testrayCaseResultTestFlowUpdate));
+					putTestrayTestFlowByTestraySubtaskIdTestraySubtask(
+						testraySubtaskId, testrayTestFlow));
 	}
 
 	@GraphQLField

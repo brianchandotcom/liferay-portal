@@ -44,6 +44,252 @@ public class TestrayTestFlow implements Serializable {
 	}
 
 	@Schema
+	public Integer getCaseResultAmount() {
+		if (_caseResultAmountSupplier != null) {
+			caseResultAmount = _caseResultAmountSupplier.get();
+
+			_caseResultAmountSupplier = null;
+		}
+
+		return caseResultAmount;
+	}
+
+	public void setCaseResultAmount(Integer caseResultAmount) {
+		this.caseResultAmount = caseResultAmount;
+
+		_caseResultAmountSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCaseResultAmount(
+		UnsafeSupplier<Integer, Exception> caseResultAmountUnsafeSupplier) {
+
+		_caseResultAmountSupplier = () -> {
+			try {
+				return caseResultAmountUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer caseResultAmount;
+
+	@JsonIgnore
+	private Supplier<Integer> _caseResultAmountSupplier;
+
+	@Schema
+	public String getComment() {
+		if (_commentSupplier != null) {
+			comment = _commentSupplier.get();
+
+			_commentSupplier = null;
+		}
+
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+
+		_commentSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setComment(
+		UnsafeSupplier<String, Exception> commentUnsafeSupplier) {
+
+		_commentSupplier = () -> {
+			try {
+				return commentUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String comment;
+
+	@JsonIgnore
+	private Supplier<String> _commentSupplier;
+
+	@Schema
+	public String getDueStatus() {
+		if (_dueStatusSupplier != null) {
+			dueStatus = _dueStatusSupplier.get();
+
+			_dueStatusSupplier = null;
+		}
+
+		return dueStatus;
+	}
+
+	public void setDueStatus(String dueStatus) {
+		this.dueStatus = dueStatus;
+
+		_dueStatusSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDueStatus(
+		UnsafeSupplier<String, Exception> dueStatusUnsafeSupplier) {
+
+		_dueStatusSupplier = () -> {
+			try {
+				return dueStatusUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String dueStatus;
+
+	@JsonIgnore
+	private Supplier<String> _dueStatusSupplier;
+
+	@Schema
+	public String getIssues() {
+		if (_issuesSupplier != null) {
+			issues = _issuesSupplier.get();
+
+			_issuesSupplier = null;
+		}
+
+		return issues;
+	}
+
+	public void setIssues(String issues) {
+		this.issues = issues;
+
+		_issuesSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setIssues(
+		UnsafeSupplier<String, Exception> issuesUnsafeSupplier) {
+
+		_issuesSupplier = () -> {
+			try {
+				return issuesUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String issues;
+
+	@JsonIgnore
+	private Supplier<String> _issuesSupplier;
+
+	@Schema
+	public Long getMbMessageId() {
+		if (_mbMessageIdSupplier != null) {
+			mbMessageId = _mbMessageIdSupplier.get();
+
+			_mbMessageIdSupplier = null;
+		}
+
+		return mbMessageId;
+	}
+
+	public void setMbMessageId(Long mbMessageId) {
+		this.mbMessageId = mbMessageId;
+
+		_mbMessageIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setMbMessageId(
+		UnsafeSupplier<Long, Exception> mbMessageIdUnsafeSupplier) {
+
+		_mbMessageIdSupplier = () -> {
+			try {
+				return mbMessageIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long mbMessageId;
+
+	@JsonIgnore
+	private Supplier<Long> _mbMessageIdSupplier;
+
+	@Schema
+	public Long getMbThreadId() {
+		if (_mbThreadIdSupplier != null) {
+			mbThreadId = _mbThreadIdSupplier.get();
+
+			_mbThreadIdSupplier = null;
+		}
+
+		return mbThreadId;
+	}
+
+	public void setMbThreadId(Long mbThreadId) {
+		this.mbThreadId = mbThreadId;
+
+		_mbThreadIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setMbThreadId(
+		UnsafeSupplier<Long, Exception> mbThreadIdUnsafeSupplier) {
+
+		_mbThreadIdSupplier = () -> {
+			try {
+				return mbThreadIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long mbThreadId;
+
+	@JsonIgnore
+	private Supplier<Long> _mbThreadIdSupplier;
+
+	@Schema
 	public Integer getTestraySubtasksAmount() {
 		if (_testraySubtasksAmountSupplier != null) {
 			testraySubtasksAmount = _testraySubtasksAmountSupplier.get();
@@ -85,6 +331,47 @@ public class TestrayTestFlow implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _testraySubtasksAmountSupplier;
 
+	@Schema
+	public Long getUserId() {
+		if (_userIdSupplier != null) {
+			userId = _userIdSupplier.get();
+
+			_userIdSupplier = null;
+		}
+
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+
+		_userIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setUserId(
+		UnsafeSupplier<Long, Exception> userIdUnsafeSupplier) {
+
+		_userIdSupplier = () -> {
+			try {
+				return userIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long userId;
+
+	@JsonIgnore
+	private Supplier<Long> _userIdSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -112,6 +399,90 @@ public class TestrayTestFlow implements Serializable {
 
 		sb.append("{");
 
+		Integer caseResultAmount = getCaseResultAmount();
+
+		if (caseResultAmount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"caseResultAmount\": ");
+
+			sb.append(caseResultAmount);
+		}
+
+		String comment = getComment();
+
+		if (comment != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"comment\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(comment));
+
+			sb.append("\"");
+		}
+
+		String dueStatus = getDueStatus();
+
+		if (dueStatus != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dueStatus\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(dueStatus));
+
+			sb.append("\"");
+		}
+
+		String issues = getIssues();
+
+		if (issues != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"issues\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(issues));
+
+			sb.append("\"");
+		}
+
+		Long mbMessageId = getMbMessageId();
+
+		if (mbMessageId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"mbMessageId\": ");
+
+			sb.append(mbMessageId);
+		}
+
+		Long mbThreadId = getMbThreadId();
+
+		if (mbThreadId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"mbThreadId\": ");
+
+			sb.append(mbThreadId);
+		}
+
 		Integer testraySubtasksAmount = getTestraySubtasksAmount();
 
 		if (testraySubtasksAmount != null) {
@@ -122,6 +493,18 @@ public class TestrayTestFlow implements Serializable {
 			sb.append("\"testraySubtasksAmount\": ");
 
 			sb.append(testraySubtasksAmount);
+		}
+
+		Long userId = getUserId();
+
+		if (userId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userId\": ");
+
+			sb.append(userId);
 		}
 
 		sb.append("}");

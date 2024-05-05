@@ -34,7 +34,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
-import com.liferay.testray.rest.dto.v1_0.TestrayCaseResultTestFlowUpdate;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestFlow;
 import com.liferay.testray.rest.resource.v1_0.TestrayTestFlowResource;
 
@@ -71,7 +70,7 @@ public abstract class BaseTestrayTestFlowResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/testray-rest/v1.0/testray-testflow/case-result/by-testray-subtaskId/{testraySubtaskId}' -d $'{"caseResultAmount": ___, "comment": ___, "dueStatus": ___, "issues": ___, "mbMessageId": ___, "mbThreadId": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/testray-rest/v1.0/testray-testflow/by-testray-subtaskId/{testraySubtaskId}' -d $'{"caseResultAmount": ___, "comment": ___, "dueStatus": ___, "issues": ___, "mbMessageId": ___, "mbThreadId": ___, "testraySubtasksAmount": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -88,21 +87,20 @@ public abstract class BaseTestrayTestFlowResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/testray-testflow/case-result/by-testray-subtaskId/{testraySubtaskId}"
+		"/testray-testflow/by-testray-subtaskId/{testraySubtaskId}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
-	public TestrayCaseResultTestFlowUpdate
-			putTestrayTestFlowCaseResultByTestraySubtaskIdTestraySubtask(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("testraySubtaskId")
-				Long testraySubtaskId,
-				TestrayCaseResultTestFlowUpdate testrayCaseResultTestFlowUpdate)
+	public TestrayTestFlow putTestrayTestFlowByTestraySubtaskIdTestraySubtask(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("testraySubtaskId")
+			Long testraySubtaskId,
+			TestrayTestFlow testrayTestFlow)
 		throws Exception {
 
-		return new TestrayCaseResultTestFlowUpdate();
+		return new TestrayTestFlow();
 	}
 
 	/**

@@ -21,12 +21,12 @@ import {Liferay} from '../../../services/liferay';
 import {
 	PickList,
 	TestrayCaseResult,
-	TestraySubTask,
-	TestraySubTaskCaseResult,
-	testraySubTaskImpl,
+	TestraySubtask,
+	TestraySubtaskCaseResult,
+	testraySubtaskImpl,
 } from '../../../services/rest';
 import {testraySubtaskCaseResultImpl} from '../../../services/rest/TestraySubtaskCaseResults';
-import {SubTaskStatuses} from '../../../util/statuses';
+import {SubtaskStatuses} from '../../../util/statuses';
 
 type SubtasksCaseResultsProps = {
 	forceRefetch: number;
@@ -34,10 +34,10 @@ type SubtasksCaseResultsProps = {
 
 type OutletContext = {
 	data: {
-		testraySubtask: TestraySubTask;
+		testraySubtask: TestraySubtask;
 	};
 	mutate: {
-		mutateSubtask: KeyedMutator<TestraySubTask>;
+		mutateSubtask: KeyedMutator<TestraySubtask>;
 	};
 };
 
@@ -55,7 +55,7 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 	} = useOutletContext<OutletContext>();
 
 	const getFloatingBoxAlerts = (
-		subtasksCaseResults: TestraySubTaskCaseResult[],
+		subtasksCaseResults: TestraySubtaskCaseResult[],
 		selectRows: number[]
 	) => {
 		const alerts = [];
@@ -69,7 +69,7 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 		}
 
 		const subtaskStatusCheck = () => {
-			if (testraySubtask.dueStatus?.key !== SubTaskStatuses.IN_ANALYSIS) {
+			if (testraySubtask.dueStatus?.key !== SubtaskStatuses.IN_ANALYSIS) {
 				return [
 					{
 						text: i18n.sub(
@@ -107,11 +107,11 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 
 	const onSplitSubtasks = async (
 		dispatch: Dispatch<any>,
-		mutate: KeyedMutator<TestraySubTaskCaseResult>,
-		selectedCaseResults: TestraySubTaskCaseResult[]
+		mutate: KeyedMutator<TestraySubtaskCaseResult>,
+		selectedCaseResults: TestraySubtaskCaseResult[]
 	) => {
 		setIsLoading(true);
-		const {currentSubtask, newSubtask} = await testraySubTaskImpl.split(
+		const {currentSubtask, newSubtask} = await testraySubtaskImpl.split(
 			selectedCaseResults,
 			Number(subtaskId),
 			Number(taskId)
@@ -238,7 +238,7 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 			{({items}, {dispatch, listViewContext: {selectedRows}, mutate}) => {
 				const alerts = getFloatingBoxAlerts(items, selectedRows);
 
-				const selectedCaseResults: TestraySubTaskCaseResult[] = selectedRows.map(
+				const selectedCaseResults: TestraySubtaskCaseResult[] = selectedRows.map(
 					(rowId) => items.find(({id}) => rowId === id)
 				);
 

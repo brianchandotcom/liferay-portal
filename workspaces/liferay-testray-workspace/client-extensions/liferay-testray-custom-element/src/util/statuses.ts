@@ -35,7 +35,7 @@ export enum TaskStatuses {
 	PROCESSING = 'PROCESSING',
 }
 
-export enum SubTaskStatuses {
+export enum SubtaskStatuses {
 	COMPLETE = 'COMPLETE',
 	IN_ANALYSIS = 'INANALYSIS',
 	MERGED = 'MERGED',

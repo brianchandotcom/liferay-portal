@@ -305,7 +305,7 @@ export type TestrayRun = {
 	testrayRunName: string;
 } & CaseResultAggregation;
 
-export type TestraySubTask = {
+export type TestraySubtask = {
 	actions: ObjectActionsItems;
 	caseResultIssues: string[];
 	dateCreated: string;
@@ -316,24 +316,24 @@ export type TestraySubTask = {
 	issues: string;
 	mbMessageId: number;
 	mbThreadId: number;
-	mergedToSubtaskId: TestraySubTask;
+	mergedToSubtaskId: TestraySubtask;
 	name: string;
 	number: number;
-	r_mergedToTestraySubtask_c_subtaskId: TestraySubTask;
-	r_splitFromTestraySubtask_c_subtask: TestraySubTask;
+	r_mergedToTestraySubtask_c_subtaskId: TestraySubtask;
+	r_splitFromTestraySubtask_c_subtask: TestraySubtask;
 	r_taskToSubtasks_c_task: TestrayTask;
 	r_userToSubtasks_user: UserAccount;
 	r_userToSubtasks_userId: number;
 	score: number;
-	splitFromSubtask: TestraySubTask;
+	splitFromSubtask: TestraySubtask;
 	statusUpdateDate: string;
 	subtaskToCaseResults?: TestrayCaseResult[];
-	subtaskToSubtasksCasesResults: TestraySubTaskCaseResult[];
+	subtaskToSubtasksCasesResults: TestraySubtaskCaseResult[];
 	task: TestrayTask;
 	user: UserAccount;
 };
 
-export type TestraySubTaskCaseResult = {
+export type TestraySubtaskCaseResult = {
 	build?: TestrayBuild;
 	case?: TestrayCase;
 	errors: string;
@@ -346,10 +346,10 @@ export type TestraySubTaskCaseResult = {
 	r_componentToCaseResult_c_component?: TestrayComponent;
 	r_runToCaseResult_c_run?: TestrayRun;
 	r_runToCaseResult_c_runId?: number;
-	r_subtaskToCaseResults_c_subtask?: TestraySubTask;
+	r_subtaskToCaseResults_c_subtask?: TestraySubtask;
 	r_userToCaseResults_user?: UserAccount;
 	runId?: number;
-	subTask?: TestraySubTask;
+	subtask?: TestraySubtask;
 	user?: UserAccount;
 };
 

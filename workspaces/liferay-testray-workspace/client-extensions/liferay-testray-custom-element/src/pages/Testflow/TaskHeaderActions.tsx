@@ -14,7 +14,7 @@ import i18n from '../../i18n';
 import {Liferay} from '../../services/liferay';
 import {
 	APIResponse,
-	TestraySubTask,
+	TestraySubtask,
 	TestrayTask,
 	TestrayTaskUser,
 	testrayTaskImpl,
@@ -25,7 +25,7 @@ import TestflowAssignUserModal, {TestflowAssigUserType} from './modal';
 
 type OutletContext = {
 	data: {
-		testraySubtasks: APIResponse<TestraySubTask>;
+		testraySubtasks: APIResponse<TestraySubtask>;
 		testrayTask: TestrayTask & {
 			actions: {
 				[key: string]: string;
@@ -49,7 +49,7 @@ const TaskHeaderActions = () => {
 
 	const {mutatePartial: mutateTaskPartial} = useMutate(mutateTask);
 
-	const subTaskAllCompleted = testraySubtasks?.totalCount === 0;
+	const subtaskAllCompleted = testraySubtasks?.totalCount === 0;
 
 	const [modalType, setModalType] = useState<TestflowAssigUserType>(
 		'select-users'
@@ -170,7 +170,7 @@ const TaskHeaderActions = () => {
 					<ClayButton
 						displayType="secondary"
 						onClick={() => {
-							const fn = subTaskAllCompleted
+							const fn = subtaskAllCompleted
 								? (task: TestrayTask) =>
 										testrayTaskImpl.complete(task)
 								: (task: TestrayTask) =>
@@ -184,7 +184,7 @@ const TaskHeaderActions = () => {
 						}}
 					>
 						{i18n.translate(
-							subTaskAllCompleted ? 'complete' : 'abandon'
+							subtaskAllCompleted ? 'complete' : 'abandon'
 						)}
 					</ClayButton>
 				)}

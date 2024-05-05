@@ -5,13 +5,13 @@
 
 import Rest from '../../core/Rest';
 import yupSchema from '../../schema/yup';
-import {TestraySubTaskCaseResult} from './types';
+import {TestraySubtaskCaseResult} from './types';
 
 type SubtaskCaseResultForm = typeof yupSchema.subtaskToCaseResult.__outputType;
 
 class TestraySubtaskCaseResultImpl extends Rest<
 	SubtaskCaseResultForm,
-	TestraySubTaskCaseResult
+	TestraySubtaskCaseResult
 > {
 	constructor() {
 		super({

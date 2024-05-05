@@ -30,16 +30,16 @@ import i18n from '~/i18n';
 import {Liferay} from '~/services/liferay';
 import {
 	PickList,
-	TestraySubTask,
+	TestraySubtask,
 	TestrayTask,
 	TestrayTaskUser,
 	UserAccount,
 } from '~/services/rest';
-import {testraySubTaskImpl} from '~/services/rest/TestraySubtask';
+import {testraySubtaskImpl} from '~/services/rest/TestraySubtask';
 import {StatusesProgressScore, chartClassNames} from '~/util/constants';
 import {getTimeFromNow} from '~/util/date';
 import {getTruncateText} from '~/util/getTruncateText';
-import {SubTaskStatuses} from '~/util/statuses';
+import {SubtaskStatuses} from '~/util/statuses';
 
 import SubtaskCompleteModal from './Subtask/SubtaskCompleteModal';
 import useSubtasksActions from './Subtask/useSubtasksActions';
@@ -97,7 +97,7 @@ const TestFlowTasks = () => {
 		return <Loading />;
 	}
 
-	const getFloatingBoxAlerts = (subtasks: TestraySubTask[]) => {
+	const getFloatingBoxAlerts = (subtasks: TestraySubtask[]) => {
 		const alerts = [];
 
 		if (subtasks.length === 1) {
@@ -125,13 +125,13 @@ const TestFlowTasks = () => {
 	};
 
 	const onMergeSubtasks = async (
-		subtasks: TestraySubTask[],
+		subtasks: TestraySubtask[],
 		mutate: KeyedMutator<any>,
 		dispatch: Dispatch<any>
 	) => {
 		setIsLoading(true);
 
-		await testraySubTaskImpl.mergedToSubtask(subtasks);
+		await testraySubtaskImpl.mergedToSubtask(subtasks);
 
 		updateItemFromList(
 			mutate,
@@ -152,10 +152,10 @@ const TestFlowTasks = () => {
 
 	const searchBuilder = new SearchBuilder({useURIEncode: false});
 
-	const subTaskFilter = searchBuilder
+	const subtaskFilter = searchBuilder
 		.eq('taskId', taskId as string)
 		.and()
-		.ne('dueStatus', SubTaskStatuses.MERGED)
+		.ne('dueStatus', SubtaskStatuses.MERGED)
 		.build();
 
 	return (
@@ -303,7 +303,7 @@ const TestFlowTasks = () => {
 						filterSchema: 'subtasks',
 						title: i18n.translate('subtasks'),
 					}}
-					resource={testraySubTaskImpl.resource}
+					resource={testraySubtaskImpl.resource}
 					tableProps={{
 						actions,
 						bodyVerticalAlignment: 'top',
@@ -366,7 +366,7 @@ const TestFlowTasks = () => {
 								key: 'user',
 								render: (
 									_: any,
-									subtask: TestraySubTask & {
+									subtask: TestraySubtask & {
 										actions: {
 											[key: string]: string;
 										};
@@ -389,7 +389,7 @@ const TestFlowTasks = () => {
 										<AssignToMe
 											hidden={!subtask.actions.update}
 											onClick={() =>
-												testraySubTaskImpl
+												testraySubtaskImpl
 													.assignToMe(subtask)
 													.then(() => {
 														updateItemFromList(
@@ -413,17 +413,17 @@ const TestFlowTasks = () => {
 						rowWrap: true,
 					}}
 					transformData={(response) =>
-						testraySubTaskImpl.transformDataFromList(response)
+						testraySubtaskImpl.transformDataFromList(response)
 					}
 					variables={{
-						filter: subTaskFilter,
+						filter: subtaskFilter,
 					}}
 				>
 					{(
 						{items},
 						{dispatch, listViewContext: {selectedRows}, mutate}
 					) => {
-						const selectedSubtasks: TestraySubTask[] = selectedRows.map(
+						const selectedSubtasks: TestraySubtask[] = selectedRows.map(
 							(rowId) => items.find(({id}) => rowId === id)
 						);
 

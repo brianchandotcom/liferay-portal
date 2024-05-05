@@ -19,10 +19,10 @@ import QATable from '../../../components/Table/QATable';
 import i18n from '../../../i18n';
 import {
 	MessageBoardMessage,
-	TestraySubTask,
+	TestraySubtask,
 	TestrayTask,
 } from '../../../services/rest';
-import {testraySubTaskImpl} from '../../../services/rest/TestraySubtask';
+import {testraySubtaskImpl} from '../../../services/rest/TestraySubtask';
 import {getTimeFromNow} from '../../../util/date';
 import SubtasksCaseResults from './SubtaskCaseResults';
 import SubtaskHeaderActions from './SubtaskHeaderActions';
@@ -32,7 +32,7 @@ type OutletContext = {
 		mbMessage: MessageBoardMessage;
 		mergedSubtaskNames: string;
 		splitSubtaskNames: string;
-		testraySubtask: TestraySubTask & {
+		testraySubtask: TestraySubtask & {
 			actions: {
 				[key: string]: string;
 			};
@@ -40,7 +40,7 @@ type OutletContext = {
 		testrayTask: TestrayTask;
 	};
 	mutate: {
-		mutateSubtask: KeyedMutator<TestraySubTask>;
+		mutateSubtask: KeyedMutator<TestraySubtask>;
 	};
 };
 
@@ -99,7 +99,7 @@ const Subtasks = () => {
 									) : (
 										<AssignToMe
 											onClick={() =>
-												testraySubTaskImpl
+												testraySubtaskImpl
 													.assignToMe(testraySubtask)
 													.then(mutateSubtask as any)
 													.then(() =>

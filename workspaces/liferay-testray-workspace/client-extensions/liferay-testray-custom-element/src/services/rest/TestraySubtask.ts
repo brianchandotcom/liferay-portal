@@ -176,7 +176,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 		});
 
 		await fetcher.put(
-			`/testray-testflow/case-result/by-testray-subtaskId/${subTaskId}`,
+			`/testray-testflow/by-testray-subtaskId/${subTaskId}`,
 			{
 				comment: subTaskcomment.comment,
 				dueStatus,

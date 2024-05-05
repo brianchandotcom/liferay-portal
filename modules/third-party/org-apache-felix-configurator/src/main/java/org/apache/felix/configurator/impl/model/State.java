@@ -18,14 +18,14 @@
  */
 package org.apache.felix.configurator.impl.model;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.RandomAccessFile;
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -83,10 +83,15 @@ public class State extends AbstractState implements Serializable {
         if ( f == null || !f.exists() ) {
             return new State();
         }
-        try ( final ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f)) ) {
+		try (RandomAccessFile randomAccessFile = new RandomAccessFile(f, "r")) {
+			byte[] bytes = new byte[(int)randomAccessFile.length()];
 
-            return (State) ois.readObject();
-        }
+			randomAccessFile.readFully(bytes);
+
+			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
+
+			return (State) ois.readObject();
+		}
     }
 
     public static void writeState(final File f, final State state)
@@ -95,9 +100,17 @@ public class State extends AbstractState implements Serializable {
             // do nothing, no file system support
             return;
         }
-        try ( final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f)) ) {
-            oos.writeObject(state);
-        }
+		try (RandomAccessFile randomAccessFile = new RandomAccessFile(f, "rw")) {
+			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+			ObjectOutputStream oos = new ObjectOutputStream(byteArrayOutputStream);
+
+			oos.writeObject(state);
+
+			oos.close();
+
+			randomAccessFile.write(byteArrayOutputStream.toByteArray());
+		}
     }
 
     public Long getLastModified(final long bundleId) {

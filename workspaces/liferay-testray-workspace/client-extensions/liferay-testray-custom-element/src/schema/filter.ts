@@ -19,7 +19,7 @@ import {
 import {
 	BuildStatuses,
 	CaseResultStatuses,
-	SubTaskStatuses,
+	SubtaskStatuses,
 	TaskStatuses,
 } from '../util/statuses';
 
@@ -884,15 +884,15 @@ const filterSchema = {
 				options: [
 					{
 						label: i18n.translate('complete'),
-						value: SubTaskStatuses.COMPLETE,
+						value: SubtaskStatuses.COMPLETE,
 					},
 					{
 						label: i18n.translate('in-analysis'),
-						value: SubTaskStatuses.IN_ANALYSIS,
+						value: SubtaskStatuses.IN_ANALYSIS,
 					},
 					{
 						label: i18n.translate('open'),
-						value: SubTaskStatuses.OPEN,
+						value: SubtaskStatuses.OPEN,
 					},
 				],
 				type: 'checkbox',

@@ -5,9 +5,9 @@
 
 import {
 	APIResponse,
-	TestraySubTask,
+	TestraySubtask,
 	TestrayTask,
-	testraySubTaskImpl,
+	testraySubtaskImpl,
 } from '../../services/rest';
 import {TaskStatuses} from '../../util/statuses';
 import {useFetch} from '../useFetch';
@@ -26,8 +26,8 @@ const useSubtaskScore = ({
 		selfCompleted: 0,
 	};
 
-	const {data: testraySubtasks} = useFetch<APIResponse<TestraySubTask>>(
-		testraySubTaskImpl.resource,
+	const {data: testraySubtasks} = useFetch<APIResponse<TestraySubtask>>(
+		testraySubtaskImpl.resource,
 		{
 			params: {
 				fields: 'r_userToSubtasks_userId,dueStatus,score',

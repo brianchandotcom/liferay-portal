@@ -230,6 +230,7 @@ renderResponse.setTitle(headerTitle);
 				<liferay-ui:message key="media-files-must-be-one-of-the-following-formats" /> <%= StringUtil.merge(dlPortletInstanceSettings.getMimeTypes(), StringPool.COMMA_AND_SPACE) %>.
 			</liferay-ui:error>
 
+			<liferay-ui:error exception="<%= FileExtensionException.MismatchExtension.class %>" message="the-file-extension-cannot-be-different-from-the-file-name-extension" />
 			<liferay-ui:error exception="<%= FileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 			<liferay-ui:error exception="<%= FileNameExtensionException.class %>" message="the-file-name-cannot-be-empty-or-without-extension" />
 			<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />

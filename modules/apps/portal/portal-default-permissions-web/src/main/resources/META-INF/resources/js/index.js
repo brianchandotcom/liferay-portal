@@ -4,4 +4,5 @@
  */
 
 export {default as editPortalDefaultPermissionsConfiguration} from './editPortalDefaultPermissionsConfiguration';
-export {default as viewCompanyPortalDefaultPermissionsConfiguration} from './viewCompanyPortalDefaultPermissionsConfiguration';
+export {default as viewPortalDefaultPermissionsButtonPropsTransformer} from './viewPortalDefaultPermissionsButtonPropsTransformer';
+export {default as viewPortalDefaultPermissionsDropdownPropsTransformer} from './viewPortalDefaultPermissionsDropdownPropsTransformer';

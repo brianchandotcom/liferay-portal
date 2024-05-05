@@ -5,6 +5,7 @@
 
 package com.liferay.portal.defaultpermissions.web.internal.portlet.action;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.defaultpermissions.configuration.manager.PortalDefaultPermissionsConfigurationManager;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -61,50 +63,102 @@ public class EditPortalDefaultPermissionsConfigurationMVCActionCommand
 		hideDefaultSuccessMessage(actionRequest);
 
 		try {
+			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+			String modelResource = ParamUtil.getString(
+				actionRequest, "modelResource");
+			String scope = ParamUtil.getString(actionRequest, "scope");
+
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			String modelResource = ParamUtil.getString(
-				actionRequest, "modelResource");
+			if (cmd.equals("reset")) {
+				if (!scope.equals(
+						ExtendedObjectClassDefinition.Scope.GROUP.toString())) {
 
-			Map<String, Map<String, String[]>> defaultPermissions =
-				_portalDefaultPermissionsConfigurationManager.
-					getDefaultPermissions(themeDisplay.getCompanyId());
-
-			Map<String, String[]> resourceDefaultPermissions =
-				defaultPermissions.get(modelResource);
-
-			if (resourceDefaultPermissions == null) {
-				resourceDefaultPermissions = new HashMap<>();
-			}
-
-			for (long roleId :
-					StringUtil.split(
-						ParamUtil.getString(
-							actionRequest, "rolesSearchContainerPrimaryKeys"),
-						0L)) {
-
-				Role role = _roleLocalService.fetchRole(roleId);
-
-				if (role == null) {
-					continue;
+					return;
 				}
 
-				resourceDefaultPermissions.put(
-					role.getName(),
-					ArrayUtil.toStringArray(
-						_getCheckedActionIds(
-							actionRequest, roleId,
-							value -> !Objects.equals(value, "indeterminate"))));
+				Map<String, Map<String, String[]>> defaultPermissions =
+					_groupPortalDefaultPermissionsConfigurationManager.
+						getDefaultPermissions(
+							themeDisplay.getCompanyId(),
+							themeDisplay.getSiteGroupId());
+
+				defaultPermissions.remove(modelResource);
+
+				_groupPortalDefaultPermissionsConfigurationManager.
+					saveDefaultPermissions(
+						themeDisplay.getSiteGroupId(), defaultPermissions);
+
+				jsonObject.put("success", true);
 			}
+			else {
+				Map<String, Map<String, String[]>> defaultPermissions = null;
 
-			defaultPermissions.put(modelResource, resourceDefaultPermissions);
+				if (scope.equals(
+						ExtendedObjectClassDefinition.Scope.GROUP.toString())) {
 
-			_portalDefaultPermissionsConfigurationManager.
-				saveDefaultPermissions(
-					themeDisplay.getCompanyId(), defaultPermissions);
+					defaultPermissions =
+						_groupPortalDefaultPermissionsConfigurationManager.
+							getDefaultPermissions(
+								themeDisplay.getCompanyId(),
+								themeDisplay.getSiteGroupId());
+				}
+				else {
+					defaultPermissions =
+						_companyPortalDefaultPermissionsConfigurationManager.
+							getDefaultPermissions(
+								themeDisplay.getCompanyId(),
+								themeDisplay.getSiteGroupId());
+				}
 
-			jsonObject.put("success", true);
+				Map<String, String[]> resourceDefaultPermissions =
+					defaultPermissions.get(modelResource);
+
+				if (resourceDefaultPermissions == null) {
+					resourceDefaultPermissions = new HashMap<>();
+				}
+
+				for (long roleId :
+						StringUtil.split(
+							ParamUtil.getString(
+								actionRequest,
+								"rolesSearchContainerPrimaryKeys"),
+							0L)) {
+
+					Role role = _roleLocalService.fetchRole(roleId);
+
+					if (role == null) {
+						continue;
+					}
+
+					resourceDefaultPermissions.put(
+						role.getName(),
+						ArrayUtil.toStringArray(
+							_getCheckedActionIds(
+								actionRequest, roleId,
+								value -> !Objects.equals(
+									value, "indeterminate"))));
+				}
+
+				defaultPermissions.put(
+					modelResource, resourceDefaultPermissions);
+
+				if (scope.equals(
+						ExtendedObjectClassDefinition.Scope.GROUP.toString())) {
+
+					_groupPortalDefaultPermissionsConfigurationManager.
+						saveDefaultPermissions(
+							themeDisplay.getSiteGroupId(), defaultPermissions);
+				}
+				else {
+					_companyPortalDefaultPermissionsConfigurationManager.
+						saveDefaultPermissions(
+							themeDisplay.getCompanyId(), defaultPermissions);
+				}
+
+				jsonObject.put("success", true);
+			}
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -147,12 +201,16 @@ public class EditPortalDefaultPermissionsConfigurationMVCActionCommand
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditPortalDefaultPermissionsConfigurationMVCActionCommand.class);
 
-	@Reference
-	private JSONFactory _jsonFactory;
+	@Reference(target = "(portal.default.permissions.scope=company)")
+	private PortalDefaultPermissionsConfigurationManager
+		_companyPortalDefaultPermissionsConfigurationManager;
+
+	@Reference(target = "(portal.default.permissions.scope=group)")
+	private PortalDefaultPermissionsConfigurationManager
+		_groupPortalDefaultPermissionsConfigurationManager;
 
 	@Reference
-	private PortalDefaultPermissionsConfigurationManager
-		_portalDefaultPermissionsConfigurationManager;
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

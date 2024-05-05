@@ -11,9 +11,9 @@ import AssignModal from '../../../components/AssignModal';
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../services/liferay';
-import {TestraySubTask, UserAccount} from '../../../services/rest';
-import {testraySubTaskImpl} from '../../../services/rest/TestraySubtask';
-import {SubTaskStatuses} from '../../../util/statuses';
+import {TestraySubtask, UserAccount} from '../../../services/rest';
+import {testraySubtaskImpl} from '../../../services/rest/TestraySubtask';
+import {SubtaskStatuses} from '../../../util/statuses';
 import SubtaskCompleteModal from './SubtaskCompleteModal';
 
 type SubtaskHeaderActionsProps = {
@@ -22,10 +22,10 @@ type SubtaskHeaderActionsProps = {
 
 type OutletContext = {
 	data: {
-		testraySubtask: TestraySubTask;
+		testraySubtask: TestraySubtask;
 	};
 	mutate: {
-		mutateSubtask: KeyedMutator<TestraySubTask>;
+		mutateSubtask: KeyedMutator<TestraySubtask>;
 	};
 	revalidate: {
 		revalidateSubtask: () => void;
@@ -42,7 +42,7 @@ const SubtaskHeaderActions: React.FC<SubtaskHeaderActionsProps> = ({
 	} = useOutletContext<OutletContext>();
 	const {modal: assignUserModal} = useFormModal({
 		onSave: (user: UserAccount) =>
-			testraySubTaskImpl
+			testraySubtaskImpl
 				.assignTo(testraySubtask, user.id)
 				.then(mutateSubtask)
 				.then(() => setForceRefetch(new Date().getTime())),
@@ -61,8 +61,8 @@ const SubtaskHeaderActions: React.FC<SubtaskHeaderActionsProps> = ({
 				subtask={testraySubtask}
 			/>
 
-			{[SubTaskStatuses.COMPLETE, SubTaskStatuses.OPEN].includes(
-				testraySubtask.dueStatus.key as SubTaskStatuses
+			{[SubtaskStatuses.COMPLETE, SubtaskStatuses.OPEN].includes(
+				testraySubtask.dueStatus.key as SubtaskStatuses
 			) ? (
 				<ClayButton
 					className="mb-3 ml-3"
@@ -70,7 +70,7 @@ const SubtaskHeaderActions: React.FC<SubtaskHeaderActionsProps> = ({
 					onClick={() => assignUserModal.open()}
 				>
 					{i18n.translate(
-						testraySubtask.dueStatus.key === SubTaskStatuses.OPEN
+						testraySubtask.dueStatus.key === SubtaskStatuses.OPEN
 							? 'assign-and-begin-analysis'
 							: 'assign-and-reanalyze'
 					)}
@@ -107,7 +107,7 @@ const SubtaskHeaderActions: React.FC<SubtaskHeaderActionsProps> = ({
 					<ClayButton
 						displayType="secondary"
 						onClick={() =>
-							testraySubTaskImpl
+							testraySubtaskImpl
 								.returnToOpen(testraySubtask)
 								.then(mutateSubtask)
 								.then(() =>

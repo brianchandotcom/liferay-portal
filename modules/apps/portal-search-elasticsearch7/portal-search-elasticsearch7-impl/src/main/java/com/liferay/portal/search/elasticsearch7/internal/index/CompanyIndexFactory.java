@@ -44,20 +44,7 @@ public class CompanyIndexFactory
 	}
 
 	@Override
-	public boolean createIndices(IndicesClient indicesClient, long companyId) {
-		String indexName = _companyIndexFactoryHelper.getIndexName(companyId);
-
-		if (_companyIndexFactoryHelper.hasIndex(indicesClient, indexName)) {
-			return false;
-		}
-
-		_companyIndexFactoryHelper.createIndex(indexName, indicesClient);
-
-		return true;
-	}
-
-	@Override
-	public boolean deleteIndices(IndicesClient indicesClient, long companyId) {
+	public boolean deleteIndex(IndicesClient indicesClient, long companyId) {
 		String indexName = _companyIndexFactoryHelper.getIndexName(companyId);
 
 		Company company = _companyLocalService.fetchCompany(companyId);
@@ -84,8 +71,23 @@ public class CompanyIndexFactory
 	}
 
 	@Override
+	public boolean initializeIndex(
+		IndicesClient indicesClient, long companyId) {
+
+		String indexName = _companyIndexFactoryHelper.getIndexName(companyId);
+
+		if (_companyIndexFactoryHelper.hasIndex(indicesClient, indexName)) {
+			return false;
+		}
+
+		_companyIndexFactoryHelper.createIndex(indexName, indicesClient);
+
+		return true;
+	}
+
+	@Override
 	public void onElasticsearchConfigurationUpdate() {
-		_createCompanyIndexes();
+		_initializeCompanyIndexes();
 
 		_updateMaxResultWindow();
 	}
@@ -104,7 +106,7 @@ public class CompanyIndexFactory
 	protected void activate(BundleContext bundleContext) {
 		_elasticsearchConfigurationWrapper.register(this);
 
-		_createCompanyIndexes();
+		_initializeCompanyIndexes();
 	}
 
 	@Deactivate
@@ -112,7 +114,7 @@ public class CompanyIndexFactory
 		_elasticsearchConfigurationWrapper.unregister(this);
 	}
 
-	private synchronized void _createCompanyIndexes() {
+	private synchronized void _initializeCompanyIndexes() {
 		for (Long companyId :
 				IndexFactoryCompanyIdRegistryUtil.getCompanyIds()) {
 
@@ -120,7 +122,7 @@ public class CompanyIndexFactory
 				RestHighLevelClient restHighLevelClient =
 					_elasticsearchConnectionManager.getRestHighLevelClient();
 
-				createIndices(restHighLevelClient.indices(), companyId);
+				initializeIndex(restHighLevelClient.indices(), companyId);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {

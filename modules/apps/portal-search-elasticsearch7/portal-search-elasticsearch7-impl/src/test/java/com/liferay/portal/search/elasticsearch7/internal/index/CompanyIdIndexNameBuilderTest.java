@@ -205,7 +205,7 @@ public class CompanyIdIndexNameBuilderTest {
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchFixture.getRestHighLevelClient();
 
-		_companyIndexFactory.createIndices(
+		_companyIndexFactory.initializeIndex(
 			restHighLevelClient.indices(), companyId);
 	}
 

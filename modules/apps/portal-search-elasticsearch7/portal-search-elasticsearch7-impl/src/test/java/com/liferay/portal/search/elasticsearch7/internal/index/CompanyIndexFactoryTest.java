@@ -593,7 +593,7 @@ public class CompanyIndexFactoryTest {
 
 		IndicesClient indicesClient = restHighLevelClient.indices();
 
-		_companyIndexFactory.createIndices(
+		_companyIndexFactory.initializeIndex(
 			indicesClient, RandomTestUtil.randomLong());
 	}
 
@@ -603,7 +603,7 @@ public class CompanyIndexFactoryTest {
 
 		IndicesClient indicesClient = restHighLevelClient.indices();
 
-		_companyIndexFactory.deleteIndices(
+		_companyIndexFactory.deleteIndex(
 			indicesClient, RandomTestUtil.randomLong());
 	}
 

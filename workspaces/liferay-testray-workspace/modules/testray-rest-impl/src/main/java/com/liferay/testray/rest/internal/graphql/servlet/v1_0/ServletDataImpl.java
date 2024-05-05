@@ -95,10 +95,10 @@ public class ServletDataImpl implements ServletData {
 							TestrayBuildAutofillResourceImpl.class,
 							"postTestrayBuildAutofillBatch"));
 					put(
-						"mutation#updateTestrayTestFlowCaseResultByTestraySubtaskIdTestraySubtask",
+						"mutation#updateTestrayTestFlowByTestraySubtaskIdTestraySubtask",
 						new ObjectValuePair<>(
 							TestrayTestFlowResourceImpl.class,
-							"putTestrayTestFlowCaseResultByTestraySubtaskIdTestraySubtask"));
+							"putTestrayTestFlowByTestraySubtaskIdTestraySubtask"));
 					put(
 						"mutation#createTestrayTestFlow",
 						new ObjectValuePair<>(

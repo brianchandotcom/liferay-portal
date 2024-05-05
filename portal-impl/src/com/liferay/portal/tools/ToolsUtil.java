@@ -69,7 +69,7 @@ public class ToolsUtil {
 
 	public static final int PLUGINS_MAX_DIR_LEVEL = 3;
 
-	public static final int PORTAL_MAX_DIR_LEVEL = 7;
+	public static final int PORTAL_MAX_DIR_LEVEL = 10;
 
 	public static String encodeEnvironmentProperty(String property) {
 		StringBundler sb = new StringBundler();

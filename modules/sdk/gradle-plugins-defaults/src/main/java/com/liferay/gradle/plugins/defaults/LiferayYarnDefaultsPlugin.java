@@ -12,12 +12,26 @@ import com.liferay.gradle.plugins.defaults.internal.util.CIUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.YarnPlugin;
 import com.liferay.gradle.plugins.node.task.YarnInstallTask;
+import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.FileTime;
+import java.nio.file.attribute.PosixFilePermissions;
+
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
 import org.gradle.StartParameter;
-import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.UncheckedIOException;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.tasks.TaskProvider;
 
@@ -52,28 +66,90 @@ public class LiferayYarnDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskYarnInstallProvider(
-		final Project project,
+		Project project,
 		TaskProvider<YarnInstallTask> yarnInstallTaskProvider) {
 
 		yarnInstallTaskProvider.configure(
-			new Action<YarnInstallTask>() {
+			yarnInstallTask -> {
+				Gradle gradle = project.getGradle();
 
-				@Override
-				public void execute(YarnInstallTask yarnInstallTask) {
-					Gradle gradle = project.getGradle();
+				StartParameter startParameter = gradle.getStartParameter();
 
-					StartParameter startParameter = gradle.getStartParameter();
+				String buildProfile = System.getProperty("build.profile");
 
-					String buildProfile = System.getProperty("build.profile");
+				if (startParameter.isParallelProjectExecutionEnabled() ||
+					Validator.isNotNull(buildProfile)) {
 
-					if (startParameter.isParallelProjectExecutionEnabled() ||
-						Validator.isNotNull(buildProfile)) {
-
-						yarnInstallTask.setEnabled(false);
-					}
+					yarnInstallTask.setEnabled(false);
 				}
+				else {
+					yarnInstallTask.doFirst(
+						task -> {
+							Project rootProject = project.getRootProject();
 
+							File directory = new File(
+								rootProject.getBuildDir(), "node-scripts");
+
+							try {
+								_unzip(_RESOURCE_NAME, directory.toPath());
+							}
+							catch (IOException ioException) {
+								throw new UncheckedIOException(ioException);
+							}
+						});
+				}
 			});
 	}
+
+	private void _unzip(String name, Path destinationDirectoryPath)
+		throws IOException {
+
+		Files.createDirectories(destinationDirectoryPath);
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		try (InputStream inputStream = classLoader.getResourceAsStream(name);
+			ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
+
+			ZipEntry zipEntry = null;
+
+			while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+				Path path = destinationDirectoryPath.resolve(
+					zipEntry.getName());
+
+				if (zipEntry.isDirectory()) {
+					if (!Files.exists(path)) {
+						Files.createDirectory(path);
+					}
+				}
+				else {
+					Files.copy(
+						zipInputStream, path,
+						StandardCopyOption.REPLACE_EXISTING);
+				}
+
+				File file = path.toFile();
+
+				FileTime fileTime = zipEntry.getLastModifiedTime();
+
+				file.setLastModified(fileTime.toMillis());
+
+				if (OSDetector.isWindows()) {
+					file.setExecutable(true);
+					file.setReadable(true);
+					file.setWritable(true);
+				}
+				else {
+					Files.setPosixFilePermissions(
+						path, PosixFilePermissions.fromString("rwxrwxrwx"));
+				}
+			}
+		}
+	}
+
+	private static final String _RESOURCE_NAME =
+		"com/liferay/gradle/plugins/defaults/dependencies/node-scripts.zip";
 
 }

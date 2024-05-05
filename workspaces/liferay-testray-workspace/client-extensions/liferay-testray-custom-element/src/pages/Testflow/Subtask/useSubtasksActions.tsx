@@ -12,10 +12,10 @@ import useModalContext from '../../../hooks/useModalContext';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../services/liferay';
-import {TestraySubTask} from '../../../services/rest';
-import {testraySubTaskImpl} from '../../../services/rest/TestraySubtask';
+import {TestraySubtask} from '../../../services/rest';
+import {testraySubtaskImpl} from '../../../services/rest/TestraySubtask';
 import {Action} from '../../../types';
-import {SubTaskStatuses} from '../../../util/statuses';
+import {SubtaskStatuses} from '../../../util/statuses';
 import {UserListView} from '../../Manage/User';
 
 type OutletContext = {
@@ -36,7 +36,7 @@ const useSubtasksActions = () => {
 	const actionsRef = useRef([
 		{
 			action: (subtask, mutate) =>
-				testraySubTaskImpl.assignToMe(subtask).then(() => {
+				testraySubtaskImpl.assignToMe(subtask).then(() => {
 					updateItemFromList(
 						mutate,
 						0,
@@ -49,12 +49,12 @@ const useSubtasksActions = () => {
 					revalidateSubtask();
 				}),
 			hidden: ({dueStatus}) =>
-				dueStatus?.key === SubTaskStatuses.IN_ANALYSIS,
+				dueStatus?.key === SubtaskStatuses.IN_ANALYSIS,
 			icon: 'user',
 			name: ({dueStatus}) =>
 				i18n.sub(
 					'assign-to-me-and-x',
-					dueStatus.key === SubTaskStatuses.OPEN
+					dueStatus.key === SubtaskStatuses.OPEN
 						? 'begin-analysis'
 						: 'reanalyze'
 				),
@@ -72,7 +72,7 @@ const useSubtasksActions = () => {
 							}}
 							tableProps={{
 								onClickRow: (user) => {
-									testraySubTaskImpl
+									testraySubtaskImpl
 										.assignTo(subtask, user.id)
 										.then(() => {
 											updateItemFromList(
@@ -97,15 +97,15 @@ const useSubtasksActions = () => {
 				}),
 			icon: 'user',
 			name: ({dueStatus}) => {
-				if (dueStatus.key === SubTaskStatuses.IN_ANALYSIS) {
+				if (dueStatus.key === SubtaskStatuses.IN_ANALYSIS) {
 					return i18n.translate('assign');
 				}
 
-				if (dueStatus.key === SubTaskStatuses.OPEN) {
+				if (dueStatus.key === SubtaskStatuses.OPEN) {
 					return i18n.translate('assign-and-begin-analysis');
 				}
 
-				if (dueStatus.key === SubTaskStatuses.COMPLETE) {
+				if (dueStatus.key === SubtaskStatuses.COMPLETE) {
 					return i18n.translate('assign-and-reanalyze');
 				}
 			},
@@ -115,14 +115,14 @@ const useSubtasksActions = () => {
 			action: (subtask) => completeModal.open(subtask),
 			hidden: ({dueStatus, user}) =>
 				user?.id !== Number(Liferay.ThemeDisplay.getUserId()) ||
-				dueStatus.key !== SubTaskStatuses.IN_ANALYSIS,
+				dueStatus.key !== SubtaskStatuses.IN_ANALYSIS,
 			icon: 'polls',
 			name: i18n.sub('complete-x', ''),
 			permission: 'UPDATE',
 		},
 		{
 			action: (subtask, mutate) =>
-				testraySubTaskImpl.returnToOpen(subtask).then(() => {
+				testraySubtaskImpl.returnToOpen(subtask).then(() => {
 					updateItemFromList(
 						mutate,
 						0,
@@ -134,12 +134,12 @@ const useSubtasksActions = () => {
 
 					revalidateSubtask();
 				}),
-			hidden: ({dueStatus}) => dueStatus.key !== SubTaskStatuses.COMPLETE,
+			hidden: ({dueStatus}) => dueStatus.key !== SubtaskStatuses.COMPLETE,
 			icon: 'polls',
 			name: i18n.translate('return-to-open'),
 			permission: 'UPDATE',
 		},
-	] as Action<TestraySubTask>[]);
+	] as Action<TestraySubtask>[]);
 
 	return {
 		actions: actionsRef.current,

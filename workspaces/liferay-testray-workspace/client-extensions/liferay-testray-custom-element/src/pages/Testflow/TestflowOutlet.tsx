@@ -14,16 +14,16 @@ import useSearchBuilder from '../../hooks/useSearchBuilder';
 import i18n from '../../i18n';
 import {
 	APIResponse,
-	TestraySubTask,
+	TestraySubtask,
 	TestrayTask,
 	TestrayTaskCaseTypes,
 	TestrayTaskUser,
-	testraySubTaskImpl,
+	testraySubtaskImpl,
 	testrayTaskImpl,
 	testrayTaskUsersImpl,
 } from '../../services/rest';
 import {testrayTaskCaseTypesImpl} from '../../services/rest/TestrayTaskCaseTypes';
-import {SubTaskStatuses, TaskStatuses} from '../../util/statuses';
+import {SubtaskStatuses, TaskStatuses} from '../../util/statuses';
 import TestflowLoading from './TestflowLoading';
 
 const TestflowNavigationOutlet = () => {
@@ -98,18 +98,18 @@ const TestflowOutlet = () => {
 
 	const searchBuilder = useSearchBuilder({useURIEncode: false});
 
-	const subTaskFilter = searchBuilder
+	const subtaskFilter = searchBuilder
 		.eq('taskId', taskId)
 		.and()
-		.in('dueStatus', [SubTaskStatuses.IN_ANALYSIS, SubTaskStatuses.OPEN])
+		.in('dueStatus', [SubtaskStatuses.IN_ANALYSIS, SubtaskStatuses.OPEN])
 		.build();
 
 	const {data: testraySubtasks, revalidate: revalidateSubtask} = useFetch<
-		APIResponse<TestraySubTask>
-	>(testraySubTaskImpl.resource, {
+		APIResponse<TestraySubtask>
+	>(testraySubtaskImpl.resource, {
 		params: {
 			fields: 'id',
-			filter: subTaskFilter,
+			filter: subtaskFilter,
 			pageSize: 1,
 		},
 	});

@@ -244,6 +244,15 @@ public class BNDExportsCheck extends BaseFileCheck {
 				continue;
 			}
 
+			if (bundleSymbolicName.endsWith(".test.util")) {
+				String s = bundleSymbolicName.substring(
+					0, bundleSymbolicName.length() - 10);
+
+				if (line.startsWith(s + ".test.rule")) {
+					continue;
+				}
+			}
+
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(definitionKey);

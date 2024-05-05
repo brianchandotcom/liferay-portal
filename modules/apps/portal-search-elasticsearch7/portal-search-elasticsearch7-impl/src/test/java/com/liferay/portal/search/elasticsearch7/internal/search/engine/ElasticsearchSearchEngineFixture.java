@@ -20,7 +20,6 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexFactory;
 import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexFactoryHelper;
-import com.liferay.portal.search.elasticsearch7.internal.index.IndexConfigurationDynamicUpdatesExecutor;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.ElasticsearchEngineAdapterFixture;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
@@ -86,9 +85,7 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		_elasticsearchConnectionManager = elasticsearchConnectionManager;
 		_elasticsearchSearchEngine = _createElasticsearchSearchEngine(
 			elasticsearchConnectionFixture, elasticsearchConfigurationWrapper,
-			elasticsearchConnectionManager,
-			Mockito.mock(IndexConfigurationDynamicUpdatesExecutor.class),
-			indexNameBuilder);
+			elasticsearchConnectionManager, indexNameBuilder);
 		_frameworkUtilMockedStatic = _createFrameworkUtil();
 		_indexNameBuilder = indexNameBuilder;
 	}
@@ -198,8 +195,6 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		ElasticsearchClientResolver elasticsearchClientResolver,
 		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper,
 		ElasticsearchConnectionManager elasticsearchConnectionManager,
-		IndexConfigurationDynamicUpdatesExecutor
-			indexConfigurationDynamicUpdatesExecutor,
 		IndexNameBuilder indexNameBuilder) {
 
 		ElasticsearchSearchEngine elasticsearchSearchEngine =
@@ -208,10 +203,6 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchEngine, "_elasticsearchConnectionManager",
 			elasticsearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			elasticsearchSearchEngine,
-			"_indexConfigurationDynamicUpdatesExecutor",
-			indexConfigurationDynamicUpdatesExecutor);
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchEngine, "_indexFactory",
 			_createCompanyIndexFactory(

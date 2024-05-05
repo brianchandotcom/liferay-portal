@@ -38,26 +38,6 @@ components:
                     format: int64
                     type: integer
             type: object
-        TestrayCaseResultTestFlowUpdate:
-            properties:
-                caseResultAmount:
-                    format: int32
-                    type: integer
-                comment:
-                    type: string
-                dueStatus:
-                    type: string
-                issues:
-                    type: string
-                mbMessageId:
-                    format: int64
-                    type: integer
-                mbThreadId:
-                    format: int64
-                    type: integer
-                userId:
-                    format: int64
-                    type: integer
         TestrayCaseTypeMetric:
             properties:
                 testrayCaseTypeId:
@@ -138,8 +118,26 @@ components:
             type: object
         TestrayTestFlow:
             properties:
+                caseResultAmount:
+                    format: int32
+                    type: integer
+                comment:
+                    type: string
+                dueStatus:
+                    type: string
+                issues:
+                    type: string
+                mbMessageId:
+                    format: int64
+                    type: integer
+                mbThreadId:
+                    format: int64
+                    type: integer
                 testraySubtasksAmount:
                     format: int32
+                    type: integer
+                userId:
+                    format: int64
                     type: integer
             type: object
         TestrayTestSuite:
@@ -481,9 +479,9 @@ paths:
                     description:
                         Invalid answer provided
             tags: ["TestrayTestSuite"]
-    "/testray-testflow/case-result/by-testray-subtaskId/{testraySubtaskId}":
+    "/testray-testflow/by-testray-subtaskId/{testraySubtaskId}":
         put:
-            operationId: putTestrayTestFlowCaseResultByTestraySubtaskIdTestraySubtask
+            operationId: putTestrayTestFlowByTestraySubtaskIdTestraySubtask
             parameters:
                 - in: path
                   name: testraySubtaskId
@@ -495,27 +493,27 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/TestrayCaseResultTestFlowUpdate"
+                            $ref: "#/components/schemas/TestrayTestFlow"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/TestrayCaseResultTestFlowUpdate"
+                            $ref: "#/components/schemas/TestrayTestFlow"
             responses:
                 204:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/TestrayCaseResultTestFlowUpdate"
+                                $ref: "#/components/schemas/TestrayTestFlow"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/TestrayCaseResultTestFlowUpdate"
+                                $ref: "#/components/schemas/TestrayTestFlow"
                 400:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/TestrayCaseResultTestFlowUpdate"
+                                $ref: "#/components/schemas/TestrayTestFlow"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/TestrayCaseResultTestFlowUpdate"
+                                $ref: "#/components/schemas/TestrayTestFlow"
                     description:
                         Invalid answer provided
             tags: ["TestrayTestFlow"]

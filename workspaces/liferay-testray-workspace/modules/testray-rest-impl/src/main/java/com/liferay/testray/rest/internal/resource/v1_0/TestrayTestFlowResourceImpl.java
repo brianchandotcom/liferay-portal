@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.testray.rest.dto.v1_0.TestrayCaseResultTestFlowUpdate;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestFlow;
 import com.liferay.testray.rest.internal.util.TestrayUtil;
 import com.liferay.testray.rest.internal.util.comparator.TestrayCaseResultsComparator;
@@ -168,10 +167,8 @@ public class TestrayTestFlowResourceImpl
 	}
 
 	@Override
-	public TestrayCaseResultTestFlowUpdate
-			putTestrayTestFlowCaseResultByTestraySubtaskIdTestraySubtask(
-				Long testraySubtaskId,
-				TestrayCaseResultTestFlowUpdate testrayCaseResultTestFlowUpdate)
+	public TestrayTestFlow putTestrayTestFlowByTestraySubtaskIdTestraySubtask(
+			Long testraySubtaskId, TestrayTestFlow testrayTestFlow)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(6);
@@ -181,25 +178,23 @@ public class TestrayTestFlowResourceImpl
 
 		List<Object> params = new ArrayList<>();
 
-		params.add(testrayCaseResultTestFlowUpdate.getUserId());
+		params.add(testrayTestFlow.getUserId());
 
-		if (Validator.isNotNull(
-				testrayCaseResultTestFlowUpdate.getDueStatus())) {
-
+		if (Validator.isNotNull(testrayTestFlow.getDueStatus())) {
 			sb.append(", dueStatus_ = ? ");
-			params.add(testrayCaseResultTestFlowUpdate.getDueStatus());
+			params.add(testrayTestFlow.getDueStatus());
 		}
 
-		if (Validator.isNotNull(testrayCaseResultTestFlowUpdate.getIssues())) {
+		if (Validator.isNotNull(testrayTestFlow.getIssues())) {
 			sb.append(", issues_ = ? ");
-			params.add(testrayCaseResultTestFlowUpdate.getIssues());
+			params.add(testrayTestFlow.getIssues());
 		}
 
-		if (Validator.isNotNull(testrayCaseResultTestFlowUpdate.getComment())) {
+		if (Validator.isNotNull(testrayTestFlow.getComment())) {
 			sb.append(", comment_ = ?, mbMessageId_ = ?, mbThreadId_ = ? ");
-			params.add(testrayCaseResultTestFlowUpdate.getComment());
-			params.add(testrayCaseResultTestFlowUpdate.getMbMessageId());
-			params.add(testrayCaseResultTestFlowUpdate.getMbThreadId());
+			params.add(testrayTestFlow.getComment());
+			params.add(testrayTestFlow.getMbMessageId());
+			params.add(testrayTestFlow.getMbThreadId());
 		}
 
 		sb.append("where r_subtaskToCaseResults_c_subtaskId = ?");
@@ -212,9 +207,9 @@ public class TestrayTestFlowResourceImpl
 				String.valueOf(contextCompany.getCompanyId())),
 			params);
 
-		testrayCaseResultTestFlowUpdate.setCaseResultAmount(rows);
+		testrayTestFlow.setCaseResultAmount(rows);
 
-		return testrayCaseResultTestFlowUpdate;
+		return testrayTestFlow;
 	}
 
 	private long _getTestrayBuildIdByTestrayTaskId(long testrayTaskId)

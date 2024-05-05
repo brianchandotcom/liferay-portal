@@ -5,6 +5,8 @@
 
 package com.liferay.portal.defaultpermissions.configuration.manager;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+
 import java.util.Map;
 
 /**
@@ -13,9 +15,14 @@ import java.util.Map;
 public interface PortalDefaultPermissionsConfigurationManager {
 
 	public Map<String, Map<String, String[]>> getDefaultPermissions(
-		long companyId);
+		long companyId, long groupId);
+
+	public Map<String, String[]> getDefaultPermissions(
+		long companyId, long groupId, String className);
+
+	public ExtendedObjectClassDefinition.Scope getScope();
 
 	public void saveDefaultPermissions(
-		long companyId, Map<String, Map<String, String[]>> defaultPermissions);
+		long primaryKey, Map<String, Map<String, String[]>> defaultPermissions);
 
 }

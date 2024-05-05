@@ -8,6 +8,7 @@ package com.liferay.portal.file.install.internal;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.io.BigEndianCodec;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -22,7 +23,9 @@ import com.liferay.portal.util.PropsValues;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -66,12 +69,59 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class DirectoryWatcher extends Thread implements BundleListener {
 
-	public DirectoryWatcher(BundleContext bundleContext) {
+	public DirectoryWatcher(BundleContext bundleContext) throws IOException {
 		super("fileinstall-directory-watcher");
 
 		setDaemon(true);
 
 		_bundleContext = bundleContext;
+
+		Bundle bundle = bundleContext.getBundle();
+
+		_checksumRandomAccessFile = new RandomAccessFile(
+			bundle.getDataFile("bundles.checksum"), "rw");
+
+		long length = _checksumRandomAccessFile.length();
+
+		if (length > 0) {
+			int entryCount = (int)(length / 16);
+
+			byte[] bytes = new byte[entryCount * 16];
+
+			_checksumRandomAccessFile.readFully(bytes);
+
+			int index = 0;
+
+			for (int i = 0; i < entryCount; i++) {
+				_bundleChecksums.put(
+					BigEndianCodec.getLong(bytes, index),
+					BigEndianCodec.getLong(bytes, index + 8));
+
+				index += 16;
+			}
+
+			int actualEntryCount = _bundleChecksums.size();
+
+			if (actualEntryCount < entryCount) {
+				index = 0;
+
+				for (Map.Entry<Long, Long> entry :
+						_bundleChecksums.entrySet()) {
+
+					BigEndianCodec.putLong(bytes, index, entry.getKey());
+					BigEndianCodec.putLong(bytes, index + 8, entry.getValue());
+
+					index += 16;
+				}
+
+				_checksumRandomAccessFile.seek(0);
+
+				int fileSize = actualEntryCount * 16;
+
+				_checksumRandomAccessFile.write(bytes, 0, fileSize);
+				_checksumRandomAccessFile.setLength(fileSize);
+			}
+		}
 
 		_systemBundle = bundleContext.getBundle(
 			Constants.SYSTEM_BUNDLE_LOCATION);
@@ -182,7 +232,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 	}
 
-	public void close() {
+	public void close() throws IOException {
 		_bundleContext.removeBundleListener(this);
 
 		interrupt();
@@ -197,6 +247,8 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 
 		_fileInstallers.close();
+
+		_checksumRandomAccessFile.close();
 	}
 
 	public Scanner getScanner() {
@@ -350,6 +402,16 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 	}
 
+	private long _getChecksum(Bundle bundle) {
+		Long checksum = _bundleChecksums.get(bundle.getBundleId());
+
+		if (checksum == null) {
+			return Long.MIN_VALUE;
+		}
+
+		return checksum;
+	}
+
 	/**
 	 * @see com.liferay.portal.fragment.bundle.watcher.internal.PortalFragmentBundleWatcher#_getFragmentHost
 	 */
@@ -456,7 +518,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				Artifact artifact = new Artifact();
 
 				artifact.setBundleId(bundle.getBundleId());
-				artifact.setChecksum(Util.loadChecksum(bundle, _bundleContext));
+				artifact.setChecksum(_getChecksum(bundle));
 				artifact.setFile(new File(path));
 
 				_setArtifact(new File(path), artifact);
@@ -550,12 +612,10 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 		Bundle bundle = _bundleContext.getBundle(location);
 
-		if ((bundle != null) &&
-			(Util.loadChecksum(bundle, _bundleContext) != checksum)) {
-
+		if ((bundle != null) && (_getChecksum(bundle) != checksum)) {
 			bundle.update(bufferedInputStream);
 
-			Util.storeChecksum(bundle, checksum, _bundleContext);
+			_putChecksum(bundle, checksum);
 
 			return bundle;
 		}
@@ -609,9 +669,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 					if (version.equals(currentVersion)) {
 						bufferedInputStream.reset();
 
-						if (Util.loadChecksum(currentBundle, _bundleContext) !=
-								checksum) {
-
+						if (_getChecksum(currentBundle) != checksum) {
 							if (_log.isWarnEnabled()) {
 								_log.warn(
 									StringBundler.concat(
@@ -624,8 +682,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 							_stopTransient(currentBundle);
 
-							Util.storeChecksum(
-								currentBundle, checksum, _bundleContext);
+							_putChecksum(currentBundle, checksum);
 
 							currentBundle.update(bufferedInputStream);
 
@@ -652,7 +709,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				return bundle;
 			}
 
-			Util.storeChecksum(bundle, checksum, _bundleContext);
+			_putChecksum(bundle, checksum);
 
 			modified.set(true);
 
@@ -781,6 +838,24 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 				_setStateChanged(false);
 			}
+		}
+	}
+
+	private void _putChecksum(Bundle bundle, long checksum) {
+		long bundleId = bundle.getBundleId();
+
+		_bundleChecksums.put(bundleId, checksum);
+
+		byte[] bytes = new byte[16];
+
+		BigEndianCodec.putLong(bytes, 0, bundleId);
+		BigEndianCodec.putLong(bytes, 8, checksum);
+
+		try {
+			_checksumRandomAccessFile.write(bytes);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 	}
 
@@ -1054,7 +1129,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 			_stopTransient(bundle);
 
-			Util.storeChecksum(bundle, artifact.getChecksum(), _bundleContext);
+			_putChecksum(bundle, artifact.getChecksum());
 
 			try (InputStream inputStream = url.openStream()) {
 				bundle.update(inputStream);
@@ -1088,7 +1163,9 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DirectoryWatcher.class);
 
+	private final Map<Long, Long> _bundleChecksums = new HashMap<>();
 	private final BundleContext _bundleContext;
+	private final RandomAccessFile _checksumRandomAccessFile;
 	private final Set<Bundle> _consistentlyFailingBundles = new HashSet<>();
 	private final Map<File, Artifact> _currentManagedArtifacts =
 		new HashMap<>();

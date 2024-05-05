@@ -8,12 +8,17 @@
 import {test} from '@playwright/test';
 
 import {PortalDefaultPermissionsConfigurationPage} from '../pages/portal-default-permissions-web/PortalDefaultPermissionsConfigurationPage';
+import {PortalDefaultPermissionsSiteConfigurationPage} from '../pages/portal-default-permissions-web/PortalDefaultPermissionsSiteConfigurationPage';
 
 const portalDefaultPermissionsPagesTest = test.extend<{
 	defaultPermissionsConfigurationPage: PortalDefaultPermissionsConfigurationPage;
+	defaultPermissionsSiteConfigurationPage: PortalDefaultPermissionsSiteConfigurationPage;
 }>({
 	defaultPermissionsConfigurationPage: async ({page}, use) => {
 		await use(new PortalDefaultPermissionsConfigurationPage(page));
+	},
+	defaultPermissionsSiteConfigurationPage: async ({page}, use) => {
+		await use(new PortalDefaultPermissionsSiteConfigurationPage(page));
 	},
 });
 

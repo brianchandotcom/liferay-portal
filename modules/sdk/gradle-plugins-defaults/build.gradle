@@ -1,3 +1,5 @@
+task zipNodeScripts(type: Zip)
+
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
@@ -36,7 +38,13 @@ dependencies {
 	implementation group: "jakarta.xml.bind", name: "jakarta.xml.bind-api", version: "2.3.2"
 }
 
+jarSources {
+	mustRunAfter zipNodeScripts
+}
+
 processResources {
+	dependsOn zipNodeScripts
+
 	into("com/liferay/gradle/plugins/defaults/dependencies") {
 		from "../../../tools/sdk/dependencies/net.sourceforge.pmd/rulesets/java/standard-rules.xml"
 	}
@@ -44,4 +52,15 @@ processResources {
 
 updateFileVersions {
 	match(/classpath group: "com\.liferay", name: "com\.liferay\.gradle\.plugins\.defaults", version: "(\d.+)"/, "../../../portal-web/build-test.gradle")
+}
+
+zipNodeScripts {
+	archiveFileName = "node-scripts.zip"
+	destinationDirectory = file("src/main/resources/com/liferay/gradle/plugins/defaults/dependencies")
+
+	ext {
+		autoClean = false
+	}
+
+	from "src/main/resources/com/liferay/gradle/plugins/defaults/dependencies/node-scripts"
 }

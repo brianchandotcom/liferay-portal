@@ -220,7 +220,9 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 					_getDisplayPageInfoFieldType()
 				).uniqueId(
 					_getUniqueId(
-						layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+						String.valueOf(
+							layoutPageTemplateEntry.
+								getLayoutPageTemplateEntryId()))
 				).name(
 					layoutPageTemplateEntry.getName()
 				).labelInfoLocalizedValue(
@@ -242,7 +244,8 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 				URLInfoFieldType.INSTANCE
 			).uniqueId(
 				_getUniqueId(
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+					String.valueOf(
+						layoutPageTemplateEntry.getLayoutPageTemplateEntryId()))
 			).name(
 				layoutPageTemplateEntry.getName()
 			).attribute(
@@ -289,9 +292,9 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		return StringPool.BLANK;
 	}
 
-	private String _getUniqueId(long layoutPageTemplateEntryId) {
+	private String _getUniqueId(String id) {
 		return LayoutPageTemplateEntry.class.getSimpleName() +
-			StringPool.UNDERLINE + layoutPageTemplateEntryId;
+			StringPool.UNDERLINE + id;
 	}
 
 	private String _getURLSeparator() {

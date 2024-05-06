@@ -157,11 +157,11 @@ definition {
 		task ("Check if the page name is displayed correctly") {
 			MouseOver(
 				key_pageName = "Snúið Vinsælar",
-				locator1 = "ACSites#PATH_PAGE_NAME_SANKEY");
+				locator1 = "ACPagePath#PATH_PAGE_NAME_SANKEY");
 
 			AssertElementPresent(
 				key_pageName = "Snúið Vinsælar þú - Site Name - ${dataSourceName}",
-				locator1 = "ACSites#PATH_PAGE_NAME_POPOVER");
+				locator1 = "ACPagePath#PATH_PAGE_NAME_POPOVER");
 		}
 	}
 

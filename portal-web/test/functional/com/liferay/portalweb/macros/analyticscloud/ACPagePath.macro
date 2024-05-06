@@ -20,17 +20,17 @@ definition {
 
 	@summary = "Removes the segment in page filter"
 	macro removeSegmentFilter() {
-		Click(locator1 = "ACSites#REMOVE_SEGMENT_FILTER");
+		Click(locator1 = "ACPagePath#REMOVE_SEGMENT_FILTER");
 	}
 
 	@summary = "Default summary"
 	macro searchSegmentFilterBar(searchItem = null, cardTitle = null) {
 		Type(
-			locator1 = "ACSites#SEARCH_SEGMENT_FILTER_BAR",
+			locator1 = "ACPagePath#SEARCH_SEGMENT_FILTER_BAR",
 			value1 = ${searchItem});
 
 		KeyPress(
-			locator1 = "ACSites#SEARCH_SEGMENT_FILTER_BAR",
+			locator1 = "ACPagePath#SEARCH_SEGMENT_FILTER_BAR",
 			value1 = "\ENTER");
 	}
 
@@ -39,7 +39,7 @@ definition {
 		var key_pageTotal = ${pageTotal};
 
 		AssertTextEquals(
-			locator1 = "ACSites#PAGE_PATH_TOTAL",
+			locator1 = "ACPagePath#PAGE_PATH_TOTAL",
 			value1 = ${pageTotal});
 	}
 

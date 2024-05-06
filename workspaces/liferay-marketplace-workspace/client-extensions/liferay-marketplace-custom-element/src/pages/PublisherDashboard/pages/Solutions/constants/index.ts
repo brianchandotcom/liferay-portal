@@ -41,6 +41,8 @@ export const SOLUTION_FLOW_ITEMS = [
 			'design-the-storefront-for-your-solution-this-will-set-the-information-displayed-on-the-solutions-page-this-section-is-dedicated-to-creating-the-solutions-detail-content'
 		),
 		label: i18n.translate('solution-details'),
+		parseSchema: (context: SolutionInitialState) =>
+			zodSchema.solutionPublishing.details.safeParse(context.details),
 		path: 'details',
 		title: i18n.translate('customize-storefront-solutions-details'),
 	},

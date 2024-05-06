@@ -264,7 +264,7 @@ public abstract class BasePortletPreferencesUpgradeProcess
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				_getSelectSQL(ownerType, ownerId, plid))) {
+				_getCompanyIdSelectSQL(ownerType, ownerId, plid))) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
@@ -276,41 +276,9 @@ public abstract class BasePortletPreferencesUpgradeProcess
 		return 0;
 	}
 
-	private Map<String, PreferenceValues> _getPreferenceValuesMap(
-			PreparedStatement selectPreparedStatement)
-		throws Exception {
+	private String _getCompanyIdSelectSQL(
+		int ownerType, long ownerId, long plid) {
 
-		Map<String, PreferenceValues> preferenceValuesMap = new HashMap<>();
-
-		try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
-			while (resultSet.next()) {
-				long portletPreferenceValueId = resultSet.getLong(
-					"portletPreferenceValueId");
-				String name = resultSet.getString("name");
-
-				String value = resultSet.getString("smallValue");
-
-				if (Validator.isBlank(value)) {
-					value = resultSet.getString("largeValue");
-				}
-
-				boolean readOnly = resultSet.getBoolean("readOnly");
-
-				PreferenceValues preferenceValues =
-					preferenceValuesMap.computeIfAbsent(
-						name, key -> new PreferenceValues());
-
-				preferenceValues._portletPreferenceValueIds.add(
-					portletPreferenceValueId);
-				preferenceValues._readOnly |= readOnly;
-				preferenceValues._values.add(value);
-			}
-		}
-
-		return preferenceValuesMap;
-	}
-
-	private String _getSelectSQL(int ownerType, long ownerId, long plid) {
 		String foreignColumnName;
 		String foreignTableName;
 
@@ -361,6 +329,40 @@ public abstract class BasePortletPreferencesUpgradeProcess
 		}
 
 		return sb.toString();
+	}
+
+	private Map<String, PreferenceValues> _getPreferenceValuesMap(
+			PreparedStatement selectPreparedStatement)
+		throws Exception {
+
+		Map<String, PreferenceValues> preferenceValuesMap = new HashMap<>();
+
+		try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
+			while (resultSet.next()) {
+				long portletPreferenceValueId = resultSet.getLong(
+					"portletPreferenceValueId");
+				String name = resultSet.getString("name");
+
+				String value = resultSet.getString("smallValue");
+
+				if (Validator.isBlank(value)) {
+					value = resultSet.getString("largeValue");
+				}
+
+				boolean readOnly = resultSet.getBoolean("readOnly");
+
+				PreferenceValues preferenceValues =
+					preferenceValuesMap.computeIfAbsent(
+						name, key -> new PreferenceValues());
+
+				preferenceValues._portletPreferenceValueIds.add(
+					portletPreferenceValueId);
+				preferenceValues._readOnly |= readOnly;
+				preferenceValues._values.add(value);
+			}
+		}
+
+		return preferenceValuesMap;
 	}
 
 	private String _toXMLString(Map<String, PreferenceValues> preferenceMap) {

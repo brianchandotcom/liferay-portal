@@ -128,7 +128,14 @@ public class ObjectDefinitionUtil {
 				setEnableComments(
 					serviceBuilderObjectDefinition::isEnableComments);
 				setEnableIndexedSearch(
-					serviceBuilderObjectDefinition::isEnableIndexedSearch);
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPD-23379")) {
+							return null;
+						}
+
+						return serviceBuilderObjectDefinition.
+							isEnableIndexedSearch();
+					});
 				setEnableLocalization(
 					serviceBuilderObjectDefinition::isEnableLocalization);
 				setEnableObjectEntryDraft(

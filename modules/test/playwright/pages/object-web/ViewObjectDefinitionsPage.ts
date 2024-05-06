@@ -102,6 +102,12 @@ export class ViewObjectDefinitionsPage {
 		await this.deleteObjectFolderButton.click();
 	}
 
+	async editObjectDefinitionFDSLink(objectDefinitionLabel: string) {
+		await this.frontendDataSetEntries.filter({
+			hasText: objectDefinitionLabel
+		}).click();
+	}
+
 	getObjectFolderCardHeaderERC = (objectFolderERC: string) => {
 		return this.objectFolderCardHeader
 			.getByRole('strong')

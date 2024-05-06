@@ -8,7 +8,6 @@ package com.liferay.portal.upgrade.v7_4_x.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -68,7 +67,9 @@ public class UpgradePortletPreferencesCompanyIdTest {
 					CompanyConstants.SYSTEM, PortletKeys.PREFS_OWNER_ID_DEFAULT,
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _testLayout.getPlid(),
 					"test", null,
-					_getPortletPreferencesXML(_NAME, _MULTIPLE_VALUES));
+					"<portlet-preferences><preference><name>testName</name>" +
+						"<value>testValue1</value><value>testValue2</value>" +
+							"</preference></portlet-preferences>");
 
 			Assert.assertEquals(
 				CompanyConstants.SYSTEM, portletPreferences.getCompanyId());
@@ -113,36 +114,6 @@ public class UpgradePortletPreferencesCompanyIdTest {
 		}
 	}
 
-	private String _getPortletPreferencesXML(String name, String[] values) {
-		StringBundler sb = new StringBundler();
-
-		sb.append("<portlet-preferences>");
-
-		if ((name != null) || (values != null)) {
-			sb.append("<preference>");
-
-			if (name != null) {
-				sb.append("<name>");
-				sb.append(name);
-				sb.append("</name>");
-			}
-
-			if (values != null) {
-				for (String value : values) {
-					sb.append("<value>");
-					sb.append(value);
-					sb.append("</value>");
-				}
-			}
-
-			sb.append("</preference>");
-		}
-
-		sb.append("</portlet-preferences>");
-
-		return sb.toString();
-	}
-
 	private List<PortletPreferenceValue> _getPortletPreferenceValues(
 			long portletPreferencesId)
 		throws Exception {
@@ -156,10 +127,6 @@ public class UpgradePortletPreferencesCompanyIdTest {
 
 		return _portletPreferenceValueLocalService.dynamicQuery(dynamicQuery);
 	}
-
-	private static final String[] _MULTIPLE_VALUES = {"value1", "value2"};
-
-	private static final String _NAME = "name";
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

@@ -52,26 +52,28 @@ public class AntiSamySanitizerPublisherManagedServiceFactory
 
 	@Override
 	public void updated(String pid, Dictionary<String, ?> properties) {
-		AntiSamyClassNameConfiguration antiSamyClassNameConfiguration =
-			ConfigurableUtil.createConfigurable(
-				AntiSamyClassNameConfiguration.class, properties);
+		if (_sanitizerServiceRegistration != null) {
+			AntiSamyClassNameConfiguration antiSamyClassNameConfiguration =
+				ConfigurableUtil.createConfigurable(
+					AntiSamyClassNameConfiguration.class, properties);
 
-		String className = antiSamyClassNameConfiguration.className();
+			String className = antiSamyClassNameConfiguration.className();
 
-		Bundle bundle = FrameworkUtil.getBundle(
-			AntiSamyClassNameConfiguration.class);
+			Bundle bundle = FrameworkUtil.getBundle(
+				AntiSamyClassNameConfiguration.class);
 
-		URL url = bundle.getResource(
-			antiSamyClassNameConfiguration.configurationFileURL());
+			URL url = bundle.getResource(
+				antiSamyClassNameConfiguration.configurationFileURL());
 
-		if (url == null) {
-			throw new IllegalStateException(
-				"Unable to find " +
-					antiSamyClassNameConfiguration.configurationFileURL());
+			if (url == null) {
+				throw new IllegalStateException(
+					"Unable to find " +
+						antiSamyClassNameConfiguration.configurationFileURL());
+			}
+
+			_antiSamySanitizerImpl.addPolicy(className, url);
+			_classNames.put(pid, className);
 		}
-
-		_antiSamySanitizerImpl.addPolicy(className, url);
-		_classNames.put(pid, className);
 	}
 
 	@Activate

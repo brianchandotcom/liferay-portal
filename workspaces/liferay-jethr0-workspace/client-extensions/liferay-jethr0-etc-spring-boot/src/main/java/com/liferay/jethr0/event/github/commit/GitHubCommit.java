@@ -53,6 +53,16 @@ public class GitHubCommit {
 		return sha;
 	}
 
+	public String getShortSHA() {
+		String sha = getSHA();
+
+		if (StringUtil.isNullOrEmpty(sha)) {
+			return null;
+		}
+
+		return sha.substring(0, 7);
+	}
+
 	private final GitHubFactory _gitHubFactory;
 	private final JSONObject _jsonObject;
 

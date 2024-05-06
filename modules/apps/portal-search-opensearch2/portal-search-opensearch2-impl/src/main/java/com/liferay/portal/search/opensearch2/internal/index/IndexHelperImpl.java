@@ -74,7 +74,7 @@ public class IndexHelperImpl implements IndexHelper {
 		String indexName, OpenSearchIndicesClient openSearchIndicesClient) {
 
 		MappingsFactory mappingsFactory = new MappingsFactory(
-			_jsonFactory, openSearchIndicesClient,
+			indexName, _jsonFactory, openSearchIndicesClient,
 			_openSearchConfigurationWrapper);
 
 		SettingsFactory settingsFactory = new SettingsFactory(
@@ -89,7 +89,7 @@ public class IndexHelperImpl implements IndexHelper {
 
 			_executeMappingsContributors(indexName, mappingsFactory);
 
-			mappingsFactory.addOptionalDefaultMappings(indexName);
+			mappingsFactory.addOptionalDefaultMappings();
 		}
 
 		_executeCompanyIndexListenersAfterCreate(indexName);
@@ -435,13 +435,13 @@ public class IndexHelperImpl implements IndexHelper {
 			OpenSearchClient openSearchClient =
 				_openSearchConnectionManager.getOpenSearchClient();
 
-			MappingsFactory mappingsFactory = new MappingsFactory(
-				_jsonFactory, openSearchClient.indices(),
-				_openSearchConfigurationWrapper);
-
 			_companyLocalService.forEachCompanyId(
 				companyId -> indexConfigurationContributor.contributeMappings(
-					getIndexName(companyId), mappingsFactory),
+					getIndexName(companyId),
+					new MappingsFactory(
+						getIndexName(companyId), _jsonFactory,
+						openSearchClient.indices(),
+						_openSearchConfigurationWrapper)),
 				IndexFactoryCompanyIdRegistryUtil.getCompanyIds());
 		}
 		catch (OpenSearchConnectionNotInitializedException

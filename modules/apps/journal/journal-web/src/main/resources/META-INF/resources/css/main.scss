@@ -160,6 +160,10 @@ $productMenuWidth: 320px;
 			@include media-breakpoint-between(sm, md) {
 				margin-top: $toolbarHeight;
 			}
+
+			.friendly-url {
+				margin-bottom: 0.25rem;
+			}
 		}
 
 		.contextual-sidebar-content {

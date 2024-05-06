@@ -10,6 +10,20 @@ export enum PRODUCT_CATEGORIES {
 	MARKETPLACE_SOLUTION_TAGS = 'marketplace-solution-tags',
 }
 
+export enum PRODUCT_SPECIFICATION_CATEGORY {}
+
+export enum PRODUCT_SPECIFICATION_KEY {
+	SOLUTION_COMPANY_DESCRIPTION = 'solution-company-description',
+	SOLUTION_COMPANY_EMAIL = 'solution-company-email',
+	SOLUTION_COMPANY_PHONE = 'solution-company-phone',
+	SOLUTION_COMPANY_WEBSITE = 'solution-company-website',
+	SOLUTION_CONTACT_EMAIL = 'solution-contact-email',
+	SOLUTION_HEADER_DESCRIPTION = 'solution-header-description',
+	SOLUTION_HEADER_TITLE = 'solution-header-title',
+	SOLUTION_HEADER_VIDEO_DESCRIPTION = 'solution-header-video-description',
+	SOLUTION_HEADER_VIDEO_URL = 'solution-header-video-url',
+}
+
 export enum PRODUCT_WORKFLOW_STATUS_CODE {
 	APPROVED = 0,
 	DRAFT = 2,

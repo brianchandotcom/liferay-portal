@@ -441,7 +441,7 @@ interface Product {
 	description: {[key: string]: string};
 	externalReferenceCode: string;
 	finalPrice?: number;
-	id?: number;
+	id: number;
 	images: ProductImages[];
 	modifiedDate: string;
 	name: {[key: string]: string};

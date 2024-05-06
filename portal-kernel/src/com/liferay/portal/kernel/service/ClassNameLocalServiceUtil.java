@@ -278,6 +278,24 @@ public class ClassNameLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static java.util.function.Supplier<Long> getLazyClassNameId(
+		String className) {
+
+		return getService().getLazyClassNameId(className);
+	}
+
+	public static java.util.function.Supplier<Long[]> getLazyClassNameIds(
+		String[] classNames) {
+
+		return getService().getLazyClassNameIds(classNames);
+	}
+
+	public static java.util.function.Supplier<long[]>
+		getLazyClassNameIdsLongArray(String[] classNames) {
+
+		return getService().getLazyClassNameIdsLongArray(classNames);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -324,6 +324,27 @@ public class ClassNameLocalServiceWrapper
 		return _classNameLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.function.Supplier<Long> getLazyClassNameId(
+		String className) {
+
+		return _classNameLocalService.getLazyClassNameId(className);
+	}
+
+	@Override
+	public java.util.function.Supplier<Long[]> getLazyClassNameIds(
+		String[] classNames) {
+
+		return _classNameLocalService.getLazyClassNameIds(classNames);
+	}
+
+	@Override
+	public java.util.function.Supplier<long[]> getLazyClassNameIdsLongArray(
+		String[] classNames) {
+
+		return _classNameLocalService.getLazyClassNameIdsLongArray(classNames);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

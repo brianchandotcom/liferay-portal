@@ -6,6 +6,8 @@ liferay-partner-etc-spring-boot-oauth-application-headless-server:
     name: Liferay Partner Etc Spring Boot OAuth Application Headless Server
     scopes:
         - Liferay.Headless.Admin.User.everything
+        - c_activity.everything.read
+        - c_activity.everything.write
         - c_mdfclaim.everything.read
         - c_mdfclaim.everything.write
         - c_mdfrequest.everything.read
@@ -16,4 +18,9 @@ liferay-partner-etc-spring-boot-object-action-mdf-claim-status-management:
     name: Liferay Partner Etc Spring Boot Object Action MDF Claim Status Management
     oAuth2ApplicationExternalReferenceCode: liferay-partner-etc-spring-boot-oauth-application-headless-server
     resourcePath: /object/action/mdf/claim/status/management
+    type: objectAction
+liferay-partner-etc-spring-boot-object-action-mdf-request-status-management:
+    name: Liferay Partner Etc Spring Boot Object Action MDF Request Status Management
+    oAuth2ApplicationExternalReferenceCode: liferay-partner-etc-spring-boot-oauth-application-headless-server
+    resourcePath: /object/action/mdf/request/status/management
     type: objectAction

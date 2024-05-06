@@ -46,51 +46,6 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 				"/o/c/activities"
 			).queryParam(
 				"filter",
-				"activityStatus eq 'approved' and startDate le " +
-					_toString(zonedDateTime)
-			).queryParam(
-				"page", "1"
-			).queryParam(
-				"pageSize", "-1"
-			).build());
-
-		if (responseJSONObject.getInt("totalCount") > 0) {
-			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
-
-			for (int i = 0; i < itemsJSONArray.length(); i++) {
-				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
-
-				JSONObject activityStatusJSONObject =
-					itemJSONObject.getJSONObject("activityStatus");
-
-				activityStatusJSONObject.put(
-					"key", "active"
-				).put(
-					"name", "Active"
-				);
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Activating activity ",
-							itemJSONObject.getLong("id"), " with name ",
-							itemJSONObject.getString("name")));
-				}
-			}
-
-			try {
-				_put(itemsJSONArray.toString(), "/o/c/activities/batch");
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-			}
-		}
-
-		responseJSONObject = _get(
-			uriBuilder -> uriBuilder.path(
-				"/o/c/activities"
-			).queryParam(
-				"filter",
 				"activityStatus eq 'active' and endDate lt " +
 					_toString(zonedDateTime.minusDays(_EXPIRATION_DAYS))
 			).queryParam(

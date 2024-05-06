@@ -55,6 +55,14 @@ public class Individual {
 		return _embeddedResources;
 	}
 
+	public Date getFirstActivityDate() {
+		if (_firstActivityDate == null) {
+			return null;
+		}
+
+		return new Date(_firstActivityDate.getTime());
+	}
+
 	public String getId() {
 		return _id;
 	}
@@ -99,6 +107,12 @@ public class Individual {
 
 	public void setEmbeddedResources(Map<String, Object> embeddedResources) {
 		_embeddedResources = embeddedResources;
+	}
+
+	public void setFirstActivityDate(Date firstActivityDate) {
+		if (firstActivityDate != null) {
+			_firstActivityDate = new Date(firstActivityDate.getTime());
+		}
 	}
 
 	public void setId(String id) {
@@ -151,6 +165,7 @@ public class Individual {
 	private Date _dateModified;
 	private Map<String, List<Field>> _demographics = new HashMap<>();
 	private Map<String, Object> _embeddedResources = new HashMap<>();
+	private Date _firstActivityDate;
 	private String _id;
 	private Date _lastActivityDate;
 

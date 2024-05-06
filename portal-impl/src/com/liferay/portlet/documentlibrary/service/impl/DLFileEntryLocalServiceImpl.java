@@ -441,6 +441,7 @@ public class DLFileEntryLocalServiceImpl
 		// File version
 
 		String oldStoreFileName = latestDLFileVersion.getStoreFileName();
+		String oldVersion = latestDLFileVersion.getVersion();
 
 		latestDLFileVersion = _dlFileVersionPersistence.fetchByPrimaryKey(
 			latestDLFileVersion.getFileVersionId());
@@ -465,12 +466,29 @@ public class DLFileEntryLocalServiceImpl
 
 		// File
 
-		DLStoreUtil.copyFileVersion(
-			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName(), oldStoreFileName,
-			latestDLFileVersion.getStoreFileName());
+		try {
+			DLStoreUtil.copyFileVersion(
+				user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(), oldStoreFileName,
+				latestDLFileVersion.getStoreFileName());
 
-		_registerPWCDeletionCallback(dlFileEntry, oldStoreFileName);
+			_registerPWCDeletionCallback(dlFileEntry, oldStoreFileName);
+		}
+		catch (NoSuchFileException noSuchFileException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Using version of the file as file name for file version " +
+						latestDLFileVersion,
+					noSuchFileException);
+			}
+
+			DLStoreUtil.copyFileVersion(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(), oldVersion,
+				latestDLFileVersion.getStoreFileName());
+
+			_registerPWCDeletionCallback(dlFileEntry, oldVersion);
+		}
 
 		unlockFileEntry(fileEntryId);
 	}
@@ -522,10 +540,25 @@ public class DLFileEntryLocalServiceImpl
 		DLFileVersion latestDLFileVersion = dlFileEntry.getLatestFileVersion(
 			true);
 
-		DLStoreUtil.copyFileVersion(
-			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName(), dlFileVersion.getStoreFileName(),
-			latestDLFileVersion.getStoreFileName());
+		try {
+			DLStoreUtil.copyFileVersion(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(), dlFileVersion.getStoreFileName(),
+				latestDLFileVersion.getStoreFileName());
+		}
+		catch (NoSuchFileException noSuchFileException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Using version of the file as file name for file version " +
+						dlFileVersion,
+					noSuchFileException);
+			}
+
+			DLStoreUtil.copyFileVersion(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(), dlFileVersion.getVersion(),
+				latestDLFileVersion.getStoreFileName());
+		}
 
 		return dlFileEntry;
 	}
@@ -2897,7 +2930,7 @@ public class DLFileEntryLocalServiceImpl
 		catch (NoSuchFileException noSuchFileException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Using version label as file name for file version " +
+					"Using version of the file as file name for file version " +
 						dlFileVersion,
 					noSuchFileException);
 			}
@@ -3480,10 +3513,25 @@ public class DLFileEntryLocalServiceImpl
 			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName(), previousDLFileVersion.getStoreFileName());
 
-		DLStoreUtil.copyFileVersion(
-			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName(), latestDLFileVersion.getStoreFileName(),
-			lastDLFileVersion.getStoreFileName());
+		try {
+			DLStoreUtil.copyFileVersion(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(), latestDLFileVersion.getStoreFileName(),
+				lastDLFileVersion.getStoreFileName());
+		}
+		catch (NoSuchFileException noSuchFileException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Using version of the file as file name for file version " +
+						latestDLFileVersion,
+					noSuchFileException);
+			}
+
+			DLStoreUtil.copyFileVersion(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(), latestDLFileVersion.getVersion(),
+				lastDLFileVersion.getStoreFileName());
+		}
 
 		// Latest file version
 

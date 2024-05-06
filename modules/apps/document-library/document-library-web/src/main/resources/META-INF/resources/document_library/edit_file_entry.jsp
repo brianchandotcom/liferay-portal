@@ -329,6 +329,8 @@ renderResponse.setTitle(headerTitle);
 								/>
 							</c:if>
 						</div>
+
+						<aui:input label="automatically-populate-with-the-uploaded-file-name" name="changeFileName" type="checkbox" value="true" />
 					</c:if>
 
 					<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
@@ -763,7 +765,14 @@ renderResponse.setTitle(headerTitle);
 				titleElement.value = fileFileName.replace(/\.[^.]*$/, '');
 			}
 
-			if (fileNameElement && !fileNameElement.value) {
+			var autoChangeFileName = document.getElementById(
+				'<portlet:namespace />changeFileName'
+			);
+
+			if (
+				fileNameElement &&
+				(!fileNameElement.value || autoChangeFileName.checked)
+			) {
 				fileNameElement.value = fileFileName;
 			}
 

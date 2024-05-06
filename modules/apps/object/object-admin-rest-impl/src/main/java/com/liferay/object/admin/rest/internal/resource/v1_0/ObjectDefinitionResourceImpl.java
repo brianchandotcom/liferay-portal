@@ -215,6 +215,10 @@ public class ObjectDefinitionResourceImpl
 		com.liferay.object.model.ObjectDefinition
 			serviceBuilderObjectDefinition;
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-23379")) {
+			objectDefinition.setEnableIndexedSearch(() -> true);
+		}
+
 		if (GetterUtil.getBoolean(objectDefinition.getSystem())) {
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.addSystemObjectDefinition(
@@ -502,6 +506,10 @@ public class ObjectDefinitionResourceImpl
 					titleObjectFieldId);
 		}
 		else {
+			if (!FeatureFlagManagerUtil.isEnabled("LPD-23379")) {
+				objectDefinition.setEnableIndexedSearch(() -> true);
+			}
+
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.updateCustomObjectDefinition(
 					objectDefinition.getExternalReferenceCode(),

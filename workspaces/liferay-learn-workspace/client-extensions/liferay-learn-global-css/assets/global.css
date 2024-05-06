@@ -705,8 +705,16 @@ pre[class*='language-'] {
 		border-color: var(--color-brand-primary-darken-1, #0053f0);
 	}
 
+	a {
+		display: block;
+	}
+
 	h4 {
 		font-size: 1.125rem;
+		margin: 0;
+	}
+
+	p {
 		margin: 0;
 	}
 

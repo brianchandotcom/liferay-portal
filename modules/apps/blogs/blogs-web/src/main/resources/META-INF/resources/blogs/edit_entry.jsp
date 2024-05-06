@@ -205,6 +205,22 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 							</div>
 
 							<div class="form-group">
+								<label class='<%= automaticURL ? "disabled" : StringPool.BLANK %>''>
+									<liferay-ui:message key="add-categories-to-url" />
+								</label>
+
+								<div class="input-group">
+									<div class="input-group-item">
+										<input class="form-control" disabled="<%= true %>" type="text" />
+									</div>
+
+									<div class="input-group-item input-group-item-shrink">
+										<button class="btn btn-secondary" disabled="<%= true %>" type="button">
+											<liferay-ui:message key="select" />
+										</button>
+									</div>
+								</div>
+
 								<react:component
 									module="{AssetCategoriesFriendlyUrlSelector} from blogs-web"
 									props='<%=

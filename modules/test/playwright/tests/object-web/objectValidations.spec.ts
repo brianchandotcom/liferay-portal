@@ -390,3 +390,50 @@ test('cannot select a object field that already has an entry in a new composite 
 		)
 	).toBeVisible();
 });
+
+test('cannot add unique composite key validation with just one field', async ({
+	editObjectValidationPage,
+	modalAddObjectValidationPage,
+	objectValidationsFDSPage,
+	page,
+	viewObjectDefinitionsPage,
+}) => {
+	viewObjectDefinitionsPage.goto();
+
+	await expect(
+		page.locator(`a:has-text("${objectDefinition1.label['en_US']}")`)
+	).toBeVisible();
+
+	viewObjectDefinitionsPage.editObjectDefinitionFDSLink(
+		objectDefinition1.label['en_US']
+	);
+
+	objectValidationsFDSPage.goto();
+
+	await objectValidationsFDSPage.addObjectValidationButton.click();
+
+	const validationLabel = 'UniqueCompositeKeyValidation' + getRandomInt();
+
+	await modalAddObjectValidationPage.fillObjectValidationInputs(
+		validationLabel,
+		'Composite Key'
+	);
+
+	const newValidationLink = page.getByText(validationLabel);
+
+	await expect(newValidationLink).toBeVisible();
+
+	await newValidationLink.click();
+
+	await editObjectValidationPage.uniqueCompositeKeyTab.click();
+
+	await editObjectValidationPage.addObjectFieldsButton.click();
+
+	await editObjectValidationPage.clickSelectAllFields();
+
+	await editObjectValidationPage.saveObjectValidationButton.click();
+
+	await expect(
+		editObjectValidationPage.addTwoObjectFieldsErrorMessage
+	).toBeVisible();
+});

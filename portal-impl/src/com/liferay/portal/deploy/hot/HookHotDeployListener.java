@@ -1700,7 +1700,7 @@ public class HookHotDeployListener
 				String paramName = initParamElement.elementText("param-name");
 				String paramValue = initParamElement.elementText("param-value");
 
-				properties.put("init.param." + paramName, paramValue);
+				properties.put("init-param." + paramName, paramValue);
 			}
 
 			Tuple filterTuple = filterTuples.get(servletFilterName);

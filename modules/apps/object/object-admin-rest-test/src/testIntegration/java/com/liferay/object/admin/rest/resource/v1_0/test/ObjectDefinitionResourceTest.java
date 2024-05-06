@@ -276,6 +276,7 @@ public class ObjectDefinitionResourceTest
 					objectDefinitionsJSONObject.getString("items"))));
 	}
 
+	@FeatureFlags("LPD-23379")
 	@Override
 	@Test
 	public void testPostObjectDefinition() throws Exception {
@@ -392,6 +393,15 @@ public class ObjectDefinitionResourceTest
 
 		assertEquals(postObjectDefinition, randomObjectDefinition);
 		assertValid(postObjectDefinition);
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		randomObjectDefinition.setEnableIndexedSearch((Boolean)null);
+
+		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
+			randomObjectDefinition);
+
+		Assert.assertTrue(postObjectDefinition.getEnableIndexedSearch());
 	}
 
 	@Override

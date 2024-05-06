@@ -24,7 +24,7 @@ import org.junit.Test;
  * @author Mariano Álvaro Sáiz
  */
 @NewEnv(type = NewEnv.Type.JVM)
-@NewEnv.JVMArgsLine("-Djava.locale.providers=JRE,COMPAT,CLDR")
+@NewEnv.JVMArgsLine("-Djava.locale.providers=CLDR")
 public class NumericDDMFormFieldUtilTest {
 
 	@ClassRule
@@ -47,7 +47,7 @@ public class NumericDDMFormFieldUtilTest {
 	@Test
 	public void testGetDecimalFormatWithDecimalComma() throws Exception {
 		DecimalFormat decimalFormat = NumericDDMFormFieldUtil.getDecimalFormat(
-			LocaleUtil.PORTUGAL);
+			LocaleUtil.BRAZIL);
 
 		Assert.assertEquals("1,2345678", decimalFormat.format(1.2345678));
 		Assert.assertEquals(

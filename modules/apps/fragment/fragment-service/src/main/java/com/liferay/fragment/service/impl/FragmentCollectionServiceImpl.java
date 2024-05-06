@@ -135,6 +135,16 @@ public class FragmentCollectionServiceImpl
 	}
 
 	@Override
+	public FragmentCollection getFragmentCollectionByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return fragmentCollectionLocalService.
+			getFragmentCollectionByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
+	@Override
 	public List<FileEntry> getFragmentCollectionFileEntries(
 			long fragmentCollectionId)
 		throws PortalException {

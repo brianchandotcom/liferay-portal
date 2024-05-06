@@ -22,7 +22,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -52,9 +51,7 @@ public class AntiSamySanitizerPublisherManagedServiceFactory
 	}
 
 	@Override
-	public void updated(String pid, Dictionary<String, ?> properties)
-		throws ConfigurationException {
-
+	public void updated(String pid, Dictionary<String, ?> properties) {
 		AntiSamyClassNameConfiguration antiSamyClassNameConfiguration =
 			ConfigurableUtil.createConfigurable(
 				AntiSamyClassNameConfiguration.class, properties);

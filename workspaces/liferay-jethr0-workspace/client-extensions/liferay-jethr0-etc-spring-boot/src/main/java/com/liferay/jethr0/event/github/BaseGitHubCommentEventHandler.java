@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.github;
 
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.user.GitHubUser;
@@ -50,7 +51,7 @@ public abstract class BaseGitHubCommentEventHandler
 				"Missing \"comment\" from message JSON");
 		}
 
-		GitHubFactory gitHubFactory = getGitHubFactory();
+		GitHubFactory gitHubFactory = Jethr0ContextUtil.getGitHubFactory();
 
 		return gitHubFactory.newGitHubComment(commentJSONObject);
 	}

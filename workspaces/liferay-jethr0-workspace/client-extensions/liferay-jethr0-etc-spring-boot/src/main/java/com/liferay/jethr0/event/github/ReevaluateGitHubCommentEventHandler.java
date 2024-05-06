@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.github;
 
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
@@ -65,7 +66,8 @@ public class ReevaluateGitHubCommentEventHandler
 	private JobEntity _createJobEntity(String jenkinsBuildID)
 		throws InvalidJSONException {
 
-		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+		JobEntityRepository jobEntityRepository =
+			Jethr0ContextUtil.getJobEntityRepository();
 
 		JobEntity jobEntity = jobEntityRepository.create(
 			null, "ci:reevaluate:" + jenkinsBuildID, null, 3, null,

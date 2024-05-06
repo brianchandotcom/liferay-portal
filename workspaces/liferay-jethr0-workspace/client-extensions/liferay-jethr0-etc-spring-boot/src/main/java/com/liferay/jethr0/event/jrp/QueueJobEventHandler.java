@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.jrp;
 
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
@@ -24,15 +25,16 @@ public class QueueJobEventHandler extends BaseJRPEventHandler {
 
 		jobEntity.setState(JobEntity.State.QUEUED);
 
-		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+		JobEntityRepository jobEntityRepository =
+			Jethr0ContextUtil.getJobEntityRepository();
 
 		jobEntityRepository.update(jobEntity);
 
-		BuildQueue buildQueue = getBuildQueue();
+		BuildQueue buildQueue = Jethr0ContextUtil.getBuildQueue();
 
 		buildQueue.addJobEntity(jobEntity);
 
-		JenkinsQueue jenkinsQueue = getJenkinsQueue();
+		JenkinsQueue jenkinsQueue = Jethr0ContextUtil.getJenkinsQueue();
 
 		jenkinsQueue.invoke();
 

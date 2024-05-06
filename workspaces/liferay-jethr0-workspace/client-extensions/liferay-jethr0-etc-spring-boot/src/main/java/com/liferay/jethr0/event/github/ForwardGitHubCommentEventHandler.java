@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.github;
 
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
@@ -82,7 +83,8 @@ public class ForwardGitHubCommentEventHandler
 		portalPullRequestJobEntity.setForwardReceiverUserName(
 			_getForwardReceiverUserName());
 
-		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+		JobEntityRepository jobEntityRepository =
+			Jethr0ContextUtil.getJobEntityRepository();
 
 		jobEntityRepository.update(portalPullRequestJobEntity);
 
@@ -238,7 +240,8 @@ public class ForwardGitHubCommentEventHandler
 		int priority = 3;
 		JobEntity.Type type = JobEntity.Type.FORWARD_PULL_REQUEST;
 
-		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+		JobEntityRepository jobEntityRepository =
+			Jethr0ContextUtil.getJobEntityRepository();
 
 		JobEntity jobEntity = jobEntityRepository.create(
 			null, name, null, priority, null, JobEntity.State.OPENED, type);

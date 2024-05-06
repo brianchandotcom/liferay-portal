@@ -93,7 +93,7 @@ function Body({
 
 						<ClayForm.Text>
 							{Liferay.Language.get(
-								'filter-source-determines-the-values-to-be-offered-in-this-filter-to-the-user'
+								'the-filter-source-determines-the-values-to-be-offered-in-this-filter-to-the-user'
 							)}
 						</ClayForm.Text>
 					</ClayLayout.SheetSection>

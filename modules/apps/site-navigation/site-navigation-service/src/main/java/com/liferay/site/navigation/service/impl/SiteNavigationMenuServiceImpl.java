@@ -39,7 +39,22 @@ public class SiteNavigationMenuServiceImpl
 
 	@Override
 	public SiteNavigationMenu addSiteNavigationMenu(
-			long groupId, String name, int type, boolean auto,
+			String externalReferenceCode, long groupId, String name, int type,
+			boolean auto, ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU);
+
+		return siteNavigationMenuLocalService.addSiteNavigationMenu(
+			externalReferenceCode, getUserId(), groupId, name, type, auto,
+			serviceContext);
+	}
+
+	@Override
+	public SiteNavigationMenu addSiteNavigationMenu(
+			String externalReferenceCode, long groupId, String name, int type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -48,12 +63,14 @@ public class SiteNavigationMenuServiceImpl
 			SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU);
 
 		return siteNavigationMenuLocalService.addSiteNavigationMenu(
-			getUserId(), groupId, name, type, auto, serviceContext);
+			externalReferenceCode, getUserId(), groupId, name, type,
+			serviceContext);
 	}
 
 	@Override
 	public SiteNavigationMenu addSiteNavigationMenu(
-			long groupId, String name, int type, ServiceContext serviceContext)
+			String externalReferenceCode, long groupId, String name,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -61,20 +78,7 @@ public class SiteNavigationMenuServiceImpl
 			SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU);
 
 		return siteNavigationMenuLocalService.addSiteNavigationMenu(
-			getUserId(), groupId, name, type, serviceContext);
-	}
-
-	@Override
-	public SiteNavigationMenu addSiteNavigationMenu(
-			long groupId, String name, ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU);
-
-		return siteNavigationMenuLocalService.addSiteNavigationMenu(
-			getUserId(), groupId, name, serviceContext);
+			externalReferenceCode, getUserId(), groupId, name, serviceContext);
 	}
 
 	@Override

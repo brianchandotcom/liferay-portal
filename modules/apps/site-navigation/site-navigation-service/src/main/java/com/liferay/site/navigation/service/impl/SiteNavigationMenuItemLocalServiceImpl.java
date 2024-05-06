@@ -64,17 +64,11 @@ public class SiteNavigationMenuItemLocalServiceImpl
 
 		if (siteNavigationMenuItem == null) {
 			siteNavigationMenuItem = addSiteNavigationMenuItem(
-				userId, groupId, siteNavigationMenuId,
+				externalReferenceCode, userId, groupId, siteNavigationMenuId,
 				parentSiteNavigationMenuItemId, type,
 				siteNavigationMenuItemPersistence.countByS_P(
 					siteNavigationMenuId, parentSiteNavigationMenuItemId),
 				typeSettings, serviceContext);
-
-			siteNavigationMenuItem.setExternalReferenceCode(
-				externalReferenceCode);
-
-			siteNavigationMenuItem = siteNavigationMenuItemPersistence.update(
-				siteNavigationMenuItem);
 		}
 		else {
 			siteNavigationMenuItem = updateSiteNavigationMenuItem(
@@ -88,9 +82,10 @@ public class SiteNavigationMenuItemLocalServiceImpl
 
 	@Override
 	public SiteNavigationMenuItem addSiteNavigationMenuItem(
-			long userId, long groupId, long siteNavigationMenuId,
-			long parentSiteNavigationMenuItemId, String type, int order,
-			String typeSettings, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
+			String type, int order, String typeSettings,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
@@ -113,6 +108,7 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			siteNavigationMenuItemPersistence.create(siteNavigationMenuItemId);
 
 		siteNavigationMenuItem.setUuid(serviceContext.getUuid());
+		siteNavigationMenuItem.setExternalReferenceCode(externalReferenceCode);
 		siteNavigationMenuItem.setGroupId(groupId);
 		siteNavigationMenuItem.setCompanyId(user.getCompanyId());
 		siteNavigationMenuItem.setUserId(userId);
@@ -131,9 +127,9 @@ public class SiteNavigationMenuItemLocalServiceImpl
 
 	@Override
 	public SiteNavigationMenuItem addSiteNavigationMenuItem(
-			long userId, long groupId, long siteNavigationMenuId,
-			long parentSiteNavigationMenuItemId, String type,
-			String typeSettings, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
+			String type, String typeSettings, ServiceContext serviceContext)
 		throws PortalException {
 
 		int siteNavigationMenuItemCount =
@@ -141,7 +137,7 @@ public class SiteNavigationMenuItemLocalServiceImpl
 				siteNavigationMenuId, parentSiteNavigationMenuItemId);
 
 		return addSiteNavigationMenuItem(
-			userId, groupId, siteNavigationMenuId,
+			externalReferenceCode, userId, groupId, siteNavigationMenuId,
 			parentSiteNavigationMenuItemId, type, siteNavigationMenuItemCount,
 			typeSettings, serviceContext);
 	}

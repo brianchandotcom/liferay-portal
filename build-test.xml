@@ -4499,6 +4499,12 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-selenium-script-management-config">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.security.script.management.configuration.ScriptManagementConfiguration.config" force="true">allowScriptContentToBeExecutedOrIncluded="true"</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-selenium-sharepoint-properties">
 		<sequential>
 			<if>
@@ -13423,6 +13429,7 @@ captcha.enforce.disabled=true</echo>
 		<prepare-selenium-recaptcha-properties />
 		<prepare-selenium-required-properties />
 		<prepare-selenium-sharepoint-properties />
+		<prepare-selenium-script-management-config />
 		<prepare-selenium-site-initializer-raylife-d2c-paypal-properties />
 		<prepare-selenium-testcase-properties />
 

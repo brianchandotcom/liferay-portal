@@ -5,7 +5,6 @@
 
 package com.liferay.jethr0.event.github;
 
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 
 import org.json.JSONObject;
@@ -29,10 +28,8 @@ public class ReopenGitHubCommentEventHandler
 		return gitHubPullRequest.toString();
 	}
 
-	protected ReopenGitHubCommentEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
+	protected ReopenGitHubCommentEventHandler(JSONObject messageJSONObject) {
+		super(messageJSONObject);
 	}
 
 }

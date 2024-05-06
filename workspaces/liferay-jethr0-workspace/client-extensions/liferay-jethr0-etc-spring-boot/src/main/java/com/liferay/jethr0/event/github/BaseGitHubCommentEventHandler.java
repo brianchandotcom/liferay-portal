@@ -5,10 +5,9 @@
 
 package com.liferay.jethr0.event.github;
 
-import com.liferay.jethr0.util.Jethr0ContextUtil;
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.user.GitHubUser;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 
 import org.json.JSONObject;
 
@@ -34,10 +33,8 @@ public abstract class BaseGitHubCommentEventHandler
 		return true;
 	}
 
-	protected BaseGitHubCommentEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
+	protected BaseGitHubCommentEventHandler(JSONObject messageJSONObject) {
+		super(messageJSONObject);
 	}
 
 	protected GitHubComment getGitHubComment() throws InvalidJSONException {

@@ -5,9 +5,8 @@
 
 package com.liferay.jethr0.event.jrp;
 
-import com.liferay.jethr0.event.BaseEventHandlerFactory;
 import com.liferay.jethr0.event.EventHandler;
-import com.liferay.jethr0.event.EventHandlerContext;
+import com.liferay.jethr0.event.EventHandlerFactory;
 import com.liferay.jethr0.util.StringUtil;
 
 import org.json.JSONObject;
@@ -18,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class JRPEventHandlerFactory extends BaseEventHandlerFactory {
+public class JRPEventHandlerFactory implements EventHandlerFactory {
 
 	@Override
 	public EventHandler newEventHandler(JSONObject messageJSONObject)
@@ -31,27 +30,20 @@ public class JRPEventHandlerFactory extends BaseEventHandlerFactory {
 				"Missing \"eventType\" from message JSON");
 		}
 
-		EventHandlerContext eventHandlerContext = getEventHandlerContext();
-
 		if (eventType.equals("CREATE_BUILD")) {
-			return new CreateBuildEventHandler(
-				eventHandlerContext, messageJSONObject);
+			return new CreateBuildEventHandler(messageJSONObject);
 		}
 		else if (eventType.equals("CREATE_BUILD_RUN")) {
-			return new CreateBuildRunEventHandler(
-				eventHandlerContext, messageJSONObject);
+			return new CreateBuildRunEventHandler(messageJSONObject);
 		}
 		else if (eventType.equals("CREATE_JENKINS_COHORT")) {
-			return new CreateJenkinsCohortEventHandler(
-				eventHandlerContext, messageJSONObject);
+			return new CreateJenkinsCohortEventHandler(messageJSONObject);
 		}
 		else if (eventType.equals("CREATE_JOB")) {
-			return new CreateJobEventHandler(
-				eventHandlerContext, messageJSONObject);
+			return new CreateJobEventHandler(messageJSONObject);
 		}
 		else if (eventType.equals("QUEUE_JOB")) {
-			return new QueueJobEventHandler(
-				eventHandlerContext, messageJSONObject);
+			return new QueueJobEventHandler(messageJSONObject);
 		}
 
 		throw new IllegalArgumentException(

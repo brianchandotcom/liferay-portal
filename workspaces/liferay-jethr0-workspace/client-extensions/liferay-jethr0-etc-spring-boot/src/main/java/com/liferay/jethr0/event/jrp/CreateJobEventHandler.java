@@ -5,12 +5,11 @@
 
 package com.liferay.jethr0.event.jrp;
 
-import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.util.StringUtil;
 
 import org.json.JSONArray;
@@ -82,10 +81,8 @@ public class CreateJobEventHandler extends BaseJRPEventHandler {
 		return jobEntity.toString();
 	}
 
-	protected CreateJobEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
+	protected CreateJobEventHandler(JSONObject messageJSONObject) {
+		super(messageJSONObject);
 	}
 
 }

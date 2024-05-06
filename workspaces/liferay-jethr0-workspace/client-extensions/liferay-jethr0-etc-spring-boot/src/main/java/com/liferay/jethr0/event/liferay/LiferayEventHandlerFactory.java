@@ -5,9 +5,8 @@
 
 package com.liferay.jethr0.event.liferay;
 
-import com.liferay.jethr0.event.BaseEventHandlerFactory;
 import com.liferay.jethr0.event.EventHandler;
-import com.liferay.jethr0.event.EventHandlerContext;
+import com.liferay.jethr0.event.EventHandlerFactory;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.util.regex.Matcher;
@@ -21,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class LiferayEventHandlerFactory extends BaseEventHandlerFactory {
+public class LiferayEventHandlerFactory implements EventHandlerFactory {
 
 	@Override
 	public EventHandler newEventHandler(JSONObject messageJSONObject)
@@ -35,40 +34,30 @@ public class LiferayEventHandlerFactory extends BaseEventHandlerFactory {
 		}
 
 		if (entityType.equals("Job")) {
-			EventHandlerContext eventHandlerContext = getEventHandlerContext();
-
 			String objectActionTriggerKey = messageJSONObject.optString(
 				"objectActionTriggerKey");
 
 			if (objectActionTriggerKey.equals("onAfterDelete")) {
-				return new DeleteJobLiferayEventHandler(
-					eventHandlerContext, messageJSONObject);
+				return new DeleteJobLiferayEventHandler(messageJSONObject);
 			}
 			else if (objectActionTriggerKey.equals("onAfterUpdate")) {
-				return new UpdateJobLiferayEventHandler(
-					eventHandlerContext, messageJSONObject);
+				return new UpdateJobLiferayEventHandler(messageJSONObject);
 			}
 
-			return new AddJobLiferayEventHandler(
-				eventHandlerContext, messageJSONObject);
+			return new AddJobLiferayEventHandler(messageJSONObject);
 		}
 		else if (entityType.equals("Routine")) {
-			EventHandlerContext eventHandlerContext = getEventHandlerContext();
-
 			String objectActionTriggerKey = messageJSONObject.optString(
 				"objectActionTriggerKey");
 
 			if (objectActionTriggerKey.equals("onAfterDelete")) {
-				return new DeleteRoutineLiferayEventHandler(
-					eventHandlerContext, messageJSONObject);
+				return new DeleteRoutineLiferayEventHandler(messageJSONObject);
 			}
 			else if (objectActionTriggerKey.equals("onAfterUpdate")) {
-				return new UpdateRoutineLiferayEventHandler(
-					eventHandlerContext, messageJSONObject);
+				return new UpdateRoutineLiferayEventHandler(messageJSONObject);
 			}
 
-			return new AddRoutineLiferayEventHandler(
-				eventHandlerContext, messageJSONObject);
+			return new AddRoutineLiferayEventHandler(messageJSONObject);
 		}
 
 		throw new IllegalArgumentException(

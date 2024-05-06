@@ -5,12 +5,11 @@
 
 package com.liferay.jethr0.event.jrp;
 
-import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.event.BaseEventHandler;
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -23,10 +22,8 @@ import org.json.JSONObject;
  */
 public abstract class BaseJRPEventHandler extends BaseEventHandler {
 
-	protected BaseJRPEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
+	protected BaseJRPEventHandler(JSONObject messageJSONObject) {
+		super(messageJSONObject);
 	}
 
 	protected JSONObject getBuildJSONObject() throws InvalidJSONException {

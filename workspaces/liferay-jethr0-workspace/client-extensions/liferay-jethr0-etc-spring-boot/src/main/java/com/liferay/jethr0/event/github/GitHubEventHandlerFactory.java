@@ -5,9 +5,8 @@
 
 package com.liferay.jethr0.event.github;
 
-import com.liferay.jethr0.event.BaseEventHandlerFactory;
 import com.liferay.jethr0.event.EventHandler;
-import com.liferay.jethr0.event.EventHandlerContext;
+import com.liferay.jethr0.event.EventHandlerFactory;
 import com.liferay.jethr0.util.StringUtil;
 
 import org.json.JSONObject;
@@ -18,13 +17,11 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
+public class GitHubEventHandlerFactory implements EventHandlerFactory {
 
 	@Override
 	public EventHandler newEventHandler(JSONObject messageJSONObject)
 		throws IllegalArgumentException {
-
-		EventHandlerContext eventHandlerContext = getEventHandlerContext();
 
 		String action = messageJSONObject.optString("action");
 
@@ -38,35 +35,35 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 
 					if (body.startsWith("ci:close")) {
 						return new CloseGitHubCommentEventHandler(
-							eventHandlerContext, messageJSONObject);
+							messageJSONObject);
 					}
 					else if (body.startsWith("ci:forward")) {
 						return new ForwardGitHubCommentEventHandler(
-							eventHandlerContext, messageJSONObject);
+							messageJSONObject);
 					}
 					else if (body.startsWith("ci:help")) {
 						return new HelpGitHubCommentEventHandler(
-							eventHandlerContext, messageJSONObject);
+							messageJSONObject);
 					}
 					else if (body.startsWith("ci:merge")) {
 						return new MergeGitHubCommentEventHandler(
-							eventHandlerContext, messageJSONObject);
+							messageJSONObject);
 					}
 					else if (body.startsWith("ci:reevaluate")) {
 						return new ReevaluateGitHubCommentEventHandler(
-							eventHandlerContext, messageJSONObject);
+							messageJSONObject);
 					}
 					else if (body.startsWith("ci:reopen")) {
 						return new ReopenGitHubCommentEventHandler(
-							eventHandlerContext, messageJSONObject);
+							messageJSONObject);
 					}
 					else if (body.startsWith("ci:report")) {
 						return new ReportGitHubCommentEventHandler(
-							eventHandlerContext, messageJSONObject);
+							messageJSONObject);
 					}
 					else if (body.startsWith("ci:stop")) {
 						return new StopGitHubCommentEventHandler(
-							eventHandlerContext, messageJSONObject);
+							messageJSONObject);
 					}
 					else if (body.startsWith("ci:test")) {
 						JSONObject repositoryJSONObject =
@@ -77,35 +74,35 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 
 						if (repositoryName.startsWith("com-liferay-")) {
 							return new SubrepositoryTestGitHubCommentEventHandler(
-								eventHandlerContext, messageJSONObject);
+								messageJSONObject);
 						}
 						else if (repositoryName.equals(
 									"liferay-fix-pack-builder-ee")) {
 
 							return new FixpackTestGitHubCommentEventHandler(
-								eventHandlerContext, messageJSONObject);
+								messageJSONObject);
 						}
 						else if (repositoryName.equals("liferay-jenkins-ee")) {
 							return new JenkinsTestGitHubCommentEventHandler(
-								eventHandlerContext, messageJSONObject);
+								messageJSONObject);
 						}
 						else if (repositoryName.equals("liferay-plugins") ||
 								 repositoryName.equals("liferay-plugins-ee")) {
 
 							return new PluginsTestGitHubCommentEventHandler(
-								eventHandlerContext, messageJSONObject);
+								messageJSONObject);
 						}
 						else if (repositoryName.equals("liferay-portal") ||
 								 repositoryName.equals("liferay-portal-ee")) {
 
 							return new PortalTestGitHubCommentEventHandler(
-								eventHandlerContext, messageJSONObject);
+								messageJSONObject);
 						}
 						else if (repositoryName.equals(
 									"liferay-qa-websites-ee")) {
 
 							return new QAWebsitesTestGitHubCommentEventHandler(
-								eventHandlerContext, messageJSONObject);
+								messageJSONObject);
 						}
 
 						throw new IllegalArgumentException(
@@ -129,33 +126,33 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 
 					if (repositoryName.startsWith("com-liferay")) {
 						return new SubrepositoryOpenGitHubPullRequestEventHandler(
-							eventHandlerContext, messageJSONObject);
+							messageJSONObject);
 					}
 					else if (repositoryName.equals(
 								"liferay-fix-pack-builder-ee")) {
 
 						return new FixpackOpenGitHubPullRequestEventHandler(
-							eventHandlerContext, messageJSONObject);
+							messageJSONObject);
 					}
 					else if (repositoryName.equals("liferay-jenkins-ee")) {
 						return new JenkinsOpenGitHubPullRequestEventHandler(
-							eventHandlerContext, messageJSONObject);
+							messageJSONObject);
 					}
 					else if (repositoryName.equals("liferay-plugins") ||
 							 repositoryName.equals("liferay-plugins-ee")) {
 
 						return new PluginsOpenGitHubPullRequestEventHandler(
-							eventHandlerContext, messageJSONObject);
+							messageJSONObject);
 					}
 					else if (repositoryName.equals("liferay-portal") ||
 							 repositoryName.equals("liferay-portal-ee")) {
 
 						return new PortalOpenGitHubPullRequestEventHandler(
-							eventHandlerContext, messageJSONObject);
+							messageJSONObject);
 					}
 					else if (repositoryName.equals("liferay-qa-websites-ee")) {
 						return new QAWebsitesOpenGitHubPullRequestEventHandler(
-							eventHandlerContext, messageJSONObject);
+							messageJSONObject);
 					}
 
 					throw new IllegalArgumentException(
@@ -168,7 +165,7 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 
 				if (pullRequestJSONObject != null) {
 					return new SynchronizeGitHubPullRequestEventHandler(
-						eventHandlerContext, messageJSONObject);
+						messageJSONObject);
 				}
 			}
 
@@ -179,8 +176,7 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 		JSONObject pusherJSONObject = messageJSONObject.optJSONObject("pusher");
 
 		if (pusherJSONObject != null) {
-			return new PusherGitHubEventHandler(
-				eventHandlerContext, messageJSONObject);
+			return new PusherGitHubEventHandler(messageJSONObject);
 		}
 
 		throw new IllegalArgumentException("Invalid message JSON");

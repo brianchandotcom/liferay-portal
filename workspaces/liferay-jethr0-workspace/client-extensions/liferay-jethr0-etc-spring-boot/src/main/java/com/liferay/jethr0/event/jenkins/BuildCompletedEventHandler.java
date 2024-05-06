@@ -5,14 +5,13 @@
 
 package com.liferay.jethr0.event.jenkins;
 
-import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 
 import org.json.JSONObject;
 
@@ -71,10 +70,8 @@ public class BuildCompletedEventHandler extends BaseJenkinsEventHandler {
 		return buildRunEntity.toString();
 	}
 
-	protected BuildCompletedEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
+	protected BuildCompletedEventHandler(JSONObject messageJSONObject) {
+		super(messageJSONObject);
 	}
 
 }

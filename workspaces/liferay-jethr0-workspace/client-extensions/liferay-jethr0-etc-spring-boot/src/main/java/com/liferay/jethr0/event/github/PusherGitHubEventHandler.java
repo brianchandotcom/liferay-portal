@@ -5,11 +5,9 @@
 
 package com.liferay.jethr0.event.github;
 
-import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.commit.GitHubCommit;
 import com.liferay.jethr0.event.github.repository.GitHubRepository;
 import com.liferay.jethr0.event.github.user.GitHubUser;
@@ -24,6 +22,7 @@ import com.liferay.jethr0.job.RepositoryArchiveJobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.routine.UpstreamBranchRoutineEntity;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.util.JobUtil;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -79,10 +78,8 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 		return null;
 	}
 
-	protected PusherGitHubEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
+	protected PusherGitHubEventHandler(JSONObject messageJSONObject) {
+		super(messageJSONObject);
 	}
 
 	private JobEntity _createMergeCentralSubrepositoryJobEntity()

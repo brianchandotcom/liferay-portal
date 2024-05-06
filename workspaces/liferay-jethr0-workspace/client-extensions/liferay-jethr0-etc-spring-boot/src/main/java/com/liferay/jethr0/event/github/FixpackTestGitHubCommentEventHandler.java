@@ -5,7 +5,6 @@
 
 package com.liferay.jethr0.event.github;
 
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.job.JobEntity;
 
 import org.json.JSONObject;
@@ -17,9 +16,9 @@ public class FixpackTestGitHubCommentEventHandler
 	extends BaseTestGitHubCommentEventHandler {
 
 	protected FixpackTestGitHubCommentEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
+		JSONObject messageJSONObject) {
 
-		super(eventHandlerContext, messageJSONObject);
+		super(messageJSONObject);
 	}
 
 	@Override

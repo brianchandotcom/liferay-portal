@@ -5,13 +5,12 @@
 
 package com.liferay.jethr0.event.jrp;
 
-import com.liferay.jethr0.util.Jethr0ContextUtil;
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -61,10 +60,8 @@ public class CreateJenkinsCohortEventHandler extends BaseJRPEventHandler {
 		return jenkinsCohortEntity.toString();
 	}
 
-	protected CreateJenkinsCohortEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
+	protected CreateJenkinsCohortEventHandler(JSONObject messageJSONObject) {
+		super(messageJSONObject);
 	}
 
 }

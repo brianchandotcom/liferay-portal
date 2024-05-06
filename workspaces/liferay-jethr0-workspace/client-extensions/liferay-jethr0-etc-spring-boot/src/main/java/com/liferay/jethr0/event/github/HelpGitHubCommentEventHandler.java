@@ -5,7 +5,6 @@
 
 package com.liferay.jethr0.event.github;
 
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.issue.GitHubIssue;
 
@@ -38,10 +37,8 @@ public class HelpGitHubCommentEventHandler
 		return gitHubComment.getBody();
 	}
 
-	protected HelpGitHubCommentEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
+	protected HelpGitHubCommentEventHandler(JSONObject messageJSONObject) {
+		super(messageJSONObject);
 	}
 
 	private String _getAvailableTestSuitesMessage()

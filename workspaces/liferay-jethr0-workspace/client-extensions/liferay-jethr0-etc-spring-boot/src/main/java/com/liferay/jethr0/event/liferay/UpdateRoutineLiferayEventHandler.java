@@ -5,11 +5,10 @@
 
 package com.liferay.jethr0.event.liferay;
 
-import com.liferay.jethr0.util.Jethr0ContextUtil;
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 import com.liferay.jethr0.routine.scheduler.RoutineEntityScheduler;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 
 import org.json.JSONObject;
 
@@ -48,10 +47,8 @@ public class UpdateRoutineLiferayEventHandler
 		return String.valueOf(routineEntity);
 	}
 
-	protected UpdateRoutineLiferayEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject jsonObject) {
-
-		super(eventHandlerContext, jsonObject);
+	protected UpdateRoutineLiferayEventHandler(JSONObject messageJSONObject) {
+		super(messageJSONObject);
 	}
 
 }

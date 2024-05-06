@@ -5,7 +5,6 @@
 
 package com.liferay.jethr0.event.github;
 
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.commit.GitHubCommit;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
@@ -49,10 +48,8 @@ public abstract class BaseTestGitHubCommentEventHandler
 		return pullRequestJobEntity.toString();
 	}
 
-	protected BaseTestGitHubCommentEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
+	protected BaseTestGitHubCommentEventHandler(JSONObject messageJSONObject) {
+		super(messageJSONObject);
 	}
 
 	protected PullRequestJobEntity createPullRequestJobEntity(String testSuite)

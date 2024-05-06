@@ -5,11 +5,10 @@
 
 package com.liferay.jethr0.event.liferay;
 
-import com.liferay.jethr0.util.Jethr0ContextUtil;
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 
 import org.json.JSONObject;
 
@@ -37,10 +36,8 @@ public class DeleteJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 		return String.valueOf(jobEntity);
 	}
 
-	protected DeleteJobLiferayEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject jsonObject) {
-
-		super(eventHandlerContext, jsonObject);
+	protected DeleteJobLiferayEventHandler(JSONObject messageJSONObject) {
+		super(messageJSONObject);
 	}
 
 }

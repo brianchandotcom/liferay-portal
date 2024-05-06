@@ -5,10 +5,8 @@
 
 package com.liferay.jethr0.event.liferay;
 
-import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.commit.GitCommitEntity;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
@@ -17,6 +15,7 @@ import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.routine.UpstreamBranchRoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.util.JobUtil;
 
 import org.json.JSONObject;
@@ -102,10 +101,8 @@ public class AddJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 		return jobEntity.toString();
 	}
 
-	protected AddJobLiferayEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject jsonObject) {
-
-		super(eventHandlerContext, jsonObject);
+	protected AddJobLiferayEventHandler(JSONObject messageJSONObject) {
+		super(messageJSONObject);
 	}
 
 }

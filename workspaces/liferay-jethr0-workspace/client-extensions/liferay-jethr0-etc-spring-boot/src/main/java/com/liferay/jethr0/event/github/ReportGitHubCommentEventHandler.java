@@ -5,13 +5,12 @@
 
 package com.liferay.jethr0.event.github;
 
-import com.liferay.jethr0.util.Jethr0ContextUtil;
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.event.github.user.GitHubUser;
 import com.liferay.jethr0.job.GenerateTestrayCSVJobEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.util.regex.Matcher;
@@ -39,10 +38,8 @@ public class ReportGitHubCommentEventHandler
 		return generateTestrayCSVJobEntity.toString();
 	}
 
-	protected ReportGitHubCommentEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
+	protected ReportGitHubCommentEventHandler(JSONObject messageJSONObject) {
+		super(messageJSONObject);
 	}
 
 	private GenerateTestrayCSVJobEntity _createGenerateTestrayCSVJobEntity()

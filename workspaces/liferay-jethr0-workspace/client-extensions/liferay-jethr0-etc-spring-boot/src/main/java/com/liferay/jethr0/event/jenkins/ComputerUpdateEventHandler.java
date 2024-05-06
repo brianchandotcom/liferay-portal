@@ -5,10 +5,9 @@
 
 package com.liferay.jethr0.event.jenkins;
 
-import com.liferay.jethr0.util.Jethr0ContextUtil;
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 
 import org.json.JSONObject;
 
@@ -30,10 +29,8 @@ public class ComputerUpdateEventHandler extends BaseJenkinsEventHandler {
 		return jenkinsNodeEntity.toString();
 	}
 
-	protected ComputerUpdateEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
+	protected ComputerUpdateEventHandler(JSONObject messageJSONObject) {
+		super(messageJSONObject);
 	}
 
 }

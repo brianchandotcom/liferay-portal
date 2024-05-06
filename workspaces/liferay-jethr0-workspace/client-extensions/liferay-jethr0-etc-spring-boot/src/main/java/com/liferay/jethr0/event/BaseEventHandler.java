@@ -5,11 +5,11 @@
 
 package com.liferay.jethr0.event;
 
-import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.event.jrp.JRPEventProcessor;
 import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.util.StringUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -22,10 +22,7 @@ import org.json.JSONObject;
  */
 public abstract class BaseEventHandler implements EventHandler {
 
-	protected BaseEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		_eventHandlerContext = eventHandlerContext;
+	protected BaseEventHandler(JSONObject messageJSONObject) {
 		_messageJSONObject = messageJSONObject;
 	}
 
@@ -94,7 +91,6 @@ public abstract class BaseEventHandler implements EventHandler {
 		jrpEventProcessor.sendMessage(jsonObject.toString(), messageProperties);
 	}
 
-	private final EventHandlerContext _eventHandlerContext;
 	private final JSONObject _messageJSONObject;
 
 }

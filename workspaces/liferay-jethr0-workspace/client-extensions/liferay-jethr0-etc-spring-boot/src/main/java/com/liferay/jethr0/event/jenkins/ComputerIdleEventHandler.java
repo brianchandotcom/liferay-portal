@@ -5,16 +5,15 @@
 
 package com.liferay.jethr0.event.jenkins;
 
-import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import org.json.JSONObject;
@@ -86,10 +85,8 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 		return jenkinsNodeEntity.toString();
 	}
 
-	protected ComputerIdleEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
+	protected ComputerIdleEventHandler(JSONObject messageJSONObject) {
+		super(messageJSONObject);
 	}
 
 }

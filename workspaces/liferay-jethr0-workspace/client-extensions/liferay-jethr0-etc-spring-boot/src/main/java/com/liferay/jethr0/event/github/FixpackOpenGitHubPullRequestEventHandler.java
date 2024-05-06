@@ -5,7 +5,6 @@
 
 package com.liferay.jethr0.event.github;
 
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.job.JobEntity;
 
 import java.io.IOException;
@@ -22,9 +21,9 @@ public class FixpackOpenGitHubPullRequestEventHandler
 	extends BaseOpenGitHubPullRequestEventHandler {
 
 	protected FixpackOpenGitHubPullRequestEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
+		JSONObject messageJSONObject) {
 
-		super(eventHandlerContext, messageJSONObject);
+		super(messageJSONObject);
 	}
 
 	@Override

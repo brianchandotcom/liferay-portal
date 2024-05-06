@@ -5,7 +5,6 @@
 
 package com.liferay.jethr0.entity;
 
-import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
@@ -28,6 +27,7 @@ import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.job.repository.JobPrioritizerEntityRepository;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 import com.liferay.jethr0.routine.scheduler.RoutineEntityScheduler;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.util.StringUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,9 +136,12 @@ public class EntityInitializer {
 		Jethr0ContextUtil.setGitHubClient(_gitHubClient);
 		Jethr0ContextUtil.setGitHubFactory(_gitHubFactory);
 		Jethr0ContextUtil.setJenkinsClient(_jenkinsClient);
-		Jethr0ContextUtil.setBuildRunEntityRepository(_buildRunEntityRepository);
-		Jethr0ContextUtil.setGitBranchEntityRepository(_gitBranchEntityRepository);
-		Jethr0ContextUtil.setGitCommitEntityRepository(_gitCommitEntityRepository);
+		Jethr0ContextUtil.setBuildRunEntityRepository(
+			_buildRunEntityRepository);
+		Jethr0ContextUtil.setGitBranchEntityRepository(
+			_gitBranchEntityRepository);
+		Jethr0ContextUtil.setGitCommitEntityRepository(
+			_gitCommitEntityRepository);
 		Jethr0ContextUtil.setGitPullRequestEntityRepository(
 			_gitPullRequestEntityRepository);
 		Jethr0ContextUtil.setGitUserEntityRepository(_gitUserEntityRepository);
@@ -157,7 +160,8 @@ public class EntityInitializer {
 			_jobPrioritizerEntityRepository);
 		Jethr0ContextUtil.setJobQueue(_jobQueue);
 		Jethr0ContextUtil.setJRPEventProcessor(_jrpEventProcessor);
-		Jethr0ContextUtil.setLiferayPortalURL(StringUtil.toURL(_liferayPortalURL));
+		Jethr0ContextUtil.setLiferayPortalURL(
+			StringUtil.toURL(_liferayPortalURL));
 		Jethr0ContextUtil.setRoutineEntityRepository(_routineEntityRepository);
 		Jethr0ContextUtil.setRoutineEntityScheduler(_routineEntityScheduler);
 	}

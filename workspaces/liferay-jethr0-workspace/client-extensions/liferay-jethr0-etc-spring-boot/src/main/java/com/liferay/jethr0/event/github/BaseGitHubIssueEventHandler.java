@@ -5,8 +5,6 @@
 
 package com.liferay.jethr0.event.github;
 
-import com.liferay.jethr0.util.Jethr0ContextUtil;
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.event.github.issue.GitHubIssue;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
@@ -18,6 +16,7 @@ import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.PortalPullRequestJobEntity;
 import com.liferay.jethr0.job.PullRequestJobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.util.PropertiesUtil;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -73,10 +72,8 @@ public abstract class BaseGitHubIssueEventHandler
 		return true;
 	}
 
-	protected BaseGitHubIssueEventHandler(
-		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
-
-		super(eventHandlerContext, messageJSONObject);
+	protected BaseGitHubIssueEventHandler(JSONObject messageJSONObject) {
+		super(messageJSONObject);
 	}
 
 	protected boolean checkLiferayGitHubUser() throws InvalidJSONException {

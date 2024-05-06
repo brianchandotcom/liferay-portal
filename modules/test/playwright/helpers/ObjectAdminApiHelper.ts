@@ -62,7 +62,7 @@ export class ObjectAdminApiHelper {
 	): Promise<ObjectField> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${externalReferenceCode}/object-fields`,
-			{data: objectField as any}
+			{data: objectField}
 		);
 	}
 

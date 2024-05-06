@@ -137,6 +137,7 @@ export function ModalAddObjectValidation({
 
 						<SingleSelect<LabelValueObject>
 							error={errors.engine}
+							id="objectValidationType"
 							items={newObjectValidationRuleEngines}
 							label={Liferay.Language.get('type')}
 							onSelectionChange={(value) => {

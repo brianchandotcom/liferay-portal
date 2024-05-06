@@ -158,6 +158,7 @@ function ModalSelectObjectFields<T extends ModalItem>() {
 											!!selected.length &&
 											items.length !== selected.length
 										}
+										name="selectAllObjectFields"
 										onChange={() => {
 											const disabledItems = selected.filter(
 												(item) => item.disableCheckbox

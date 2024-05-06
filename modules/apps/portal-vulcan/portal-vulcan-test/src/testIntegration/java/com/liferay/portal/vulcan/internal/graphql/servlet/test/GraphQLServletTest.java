@@ -107,7 +107,7 @@ public class GraphQLServletTest {
 						new GraphQLField(
 							"createTestDTO",
 							Collections.singletonMap(
-								"testDTO", _toGraphQLStringV1(_testDTOV1)),
+								"testDTO", _toGraphQLString(_testDTOV1)),
 							new GraphQLField("id"), new GraphQLField("map"),
 							new GraphQLField("string"),
 							new GraphQLField("version"))),
@@ -126,7 +126,7 @@ public class GraphQLServletTest {
 						new GraphQLField(
 							"createTestDTO",
 							Collections.singletonMap(
-								"testDTO", _toGraphQLStringV2(_testDTOV2)),
+								"testDTO", _toGraphQLString(_testDTOV2)),
 							new GraphQLField("id"), new GraphQLField("map"),
 							new GraphQLField("string"),
 							new GraphQLField("version"))),
@@ -145,7 +145,7 @@ public class GraphQLServletTest {
 						new GraphQLField(
 							"createTestDTO",
 							Collections.singletonMap(
-								"testDTO", _toGraphQLStringV2(_testDTOV2)),
+								"testDTO", _toGraphQLString(_testDTOV2)),
 							new GraphQLField("id"), new GraphQLField("map"),
 							new GraphQLField("string"),
 							new GraphQLField("version"))),
@@ -162,7 +162,7 @@ public class GraphQLServletTest {
 					new GraphQLField(
 						"createTestDTO",
 						Collections.singletonMap(
-							"testDTO", _toGraphQLStringV2(_testDTOV2)),
+							"testDTO", _toGraphQLString(_testDTOV2)),
 						new GraphQLField("id"), new GraphQLField("map"),
 						new GraphQLField("string"),
 						new GraphQLField("version")),
@@ -1162,18 +1162,14 @@ public class GraphQLServletTest {
 		Assert.assertEquals(expectedPageSize, jsonObject.getInt("pageSize"));
 	}
 
-	private String _toGraphQLStringV1(TestDTOV1 testDTO) throws Exception {
+	private String _toGraphQLString(Object objectDTO) throws Exception {
 		StringBuilder sb = new StringBuilder("{");
 
-		for (Field field : ReflectionUtil.getDeclaredFields(TestDTOV1.class)) {
+		for (Field field : ReflectionUtil.getDeclaredFields(objectDTO.getClass())) {
 			if (ArrayUtil.isEmpty(
 					field.getAnnotationsByType(
 						com.liferay.portal.vulcan.graphql.annotation.
-							GraphQLField.class)) &&
-				!field.getName(
-				).endsWith(
-					"VersionOnly"
-				)) {
+							GraphQLField.class))) {
 
 				continue;
 			}
@@ -1185,38 +1181,7 @@ public class GraphQLServletTest {
 			sb.append(field.getName());
 			sb.append(": ");
 
-			_appendGraphQLFieldValue(sb, field.get(testDTO));
-		}
-
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	private String _toGraphQLStringV2(TestDTOV2 testDTO) throws Exception {
-		StringBuilder sb = new StringBuilder("{");
-
-		for (Field field : ReflectionUtil.getDeclaredFields(TestDTOV2.class)) {
-			if (ArrayUtil.isEmpty(
-					field.getAnnotationsByType(
-						com.liferay.portal.vulcan.graphql.annotation.
-							GraphQLField.class)) &&
-				field.getName(
-				).endsWith(
-					"versionOnly"
-				)) {
-
-				continue;
-			}
-
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append(field.getName());
-			sb.append(": ");
-
-			_appendGraphQLFieldValue(sb, field.get(testDTO));
+			_appendGraphQLFieldValue(sb, field.get(objectDTO));
 		}
 
 		sb.append("}");

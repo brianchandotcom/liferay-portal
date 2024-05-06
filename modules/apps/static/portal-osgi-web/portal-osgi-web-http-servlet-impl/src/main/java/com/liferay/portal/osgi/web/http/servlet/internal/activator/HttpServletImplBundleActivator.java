@@ -8,7 +8,6 @@ package com.liferay.portal.osgi.web.http.servlet.internal.activator;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.servlet.PortletSessionListenerManager;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -20,6 +19,7 @@ import com.liferay.portal.osgi.web.http.servlet.internal.servlet.HttpServletEndp
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -147,9 +147,11 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 
 			ServletContext servletContext = servletConfig.getServletContext();
 
+			ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+
 			Map<String, Object> attributesMap =
 				HashMapBuilder.<String, Object>put(
-					"http.servlet.endpoint.id", SecureRandomUtil.nextLong()
+					"http.servlet.endpoint.id", threadLocalRandom.nextLong()
 				).put(
 					ListUtil.fromEnumeration(
 						servletConfig.getInitParameterNames()),

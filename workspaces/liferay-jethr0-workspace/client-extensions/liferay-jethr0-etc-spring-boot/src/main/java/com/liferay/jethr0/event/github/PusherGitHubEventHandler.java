@@ -48,10 +48,32 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 
 	@Override
 	public String process() throws InvalidJSONException, IOException {
+		GitBranchEntity gitBranchEntity = _getGitBranchEntity();
+
+		GitHubCommit headGitHubCommit = _getHeadGitHubCommit();
+
+		if ((gitBranchEntity != null) && (headGitHubCommit != null)) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringUtil.combine(
+						"Pusher started for ", gitBranchEntity.getURL(), " at ",
+						headGitHubCommit.getShortSHA()));
+			}
+		}
+
 		_updateUpstreamGitBranchEntity();
 		_updateUpstreamGitBranchMirror();
 
 		_syncCentralSubrepository();
+
+		if ((gitBranchEntity != null) && (headGitHubCommit != null)) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringUtil.combine(
+						"Pusher completed for ", gitBranchEntity.getURL(),
+						" at ", headGitHubCommit.getShortSHA()));
+			}
+		}
 
 		return null;
 	}
@@ -275,6 +297,14 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 					JenkinsQueue jenkinsQueue = getJenkinsQueue();
 
 					jenkinsQueue.invoke();
+				}
+
+				if ((gitBranchEntity != null) && (headGitHubCommit != null)) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							StringUtil.combine(
+								"Pusher started job ", jobEntity.getId()));
+					}
 				}
 			}
 			catch (Exception exception) {

@@ -25,7 +25,9 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 	const [selectedItems, setSelectedItems] = useState(selectedCategories);
 
 	const inputAddonNodeRef = useRef(
-		document.querySelector('.friendly-url .form-text')
+		document.querySelector(
+			`[for="${portletNamespace}urlTitle"] + .form-text`
+		)
 	);
 
 	const friendlyURLinputRef = useRef(

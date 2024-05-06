@@ -311,8 +311,8 @@ public abstract class BasePortletPreferencesUpgradeProcess
 	}
 
 	private String _getSelectSQL(int ownerType, long ownerId, long plid) {
-		String foreignColumnName = "";
-		String foreignTableName = "";
+		String foreignColumnName;
+		String foreignTableName;
 
 		if (ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
 			foreignColumnName = "plid";
@@ -343,34 +343,18 @@ public abstract class BasePortletPreferencesUpgradeProcess
 				"Invalid ownerType: " + ownerType);
 		}
 
-		StringBundler sb = new StringBundler(2);
+		StringBundler sb = new StringBundler(8);
 
-		sb.append(
-			"select companyId from "
-		).append(
-			foreignTableName
-		).append(
-			" where "
-		).append(
-			foreignTableName
-		).append(
-			"."
-		).append(
-			foreignColumnName
-		).append(
-			" = "
-		);
+		sb.append("select companyId from ");
+		sb.append(foreignTableName);
+		sb.append(" where ");
+		sb.append(foreignTableName);
+		sb.append(".");
+		sb.append(foreignColumnName);
+		sb.append(" = ");
 
 		if (ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
-			sb.append(
-				plid
-			).append(
-				" union all select companyId from LayoutRevision where "
-			).append(
-				"layoutRevisionId = "
-			).append(
-				plid
-			);
+			sb.append(plid);
 		}
 		else {
 			sb.append(ownerId);

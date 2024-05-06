@@ -31,16 +31,17 @@ public class SegmentsExperienceServiceWrapper
 
 	@Override
 	public SegmentsExperience addSegmentsExperience(
-			long groupId, long segmentsEntryId, long plid,
-			java.util.Map<java.util.Locale, String> nameMap, boolean active,
+			String externalReferenceCode, long groupId, long segmentsEntryId,
+			long plid, java.util.Map<java.util.Locale, String> nameMap,
+			boolean active,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				typeSettingsUnicodeProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperienceService.addSegmentsExperience(
-			groupId, segmentsEntryId, plid, nameMap, active,
-			typeSettingsUnicodeProperties, serviceContext);
+			externalReferenceCode, groupId, segmentsEntryId, plid, nameMap,
+			active, typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Override
@@ -78,6 +79,15 @@ public class SegmentsExperienceServiceWrapper
 	}
 
 	@Override
+	public SegmentsExperience deleteSegmentsExperience(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperienceService.deleteSegmentsExperience(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public SegmentsExperience fetchSegmentsExperience(
 			long groupId, String segmentsExperienceKey, long plid)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -111,6 +121,16 @@ public class SegmentsExperienceServiceWrapper
 
 		return _segmentsExperienceService.getSegmentsExperience(
 			groupId, segmentsExperienceKey, plid);
+	}
+
+	@Override
+	public SegmentsExperience getSegmentsExperienceByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperienceService.
+			getSegmentsExperienceByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	@Override

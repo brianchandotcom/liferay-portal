@@ -33,16 +33,16 @@ public class SegmentsExperienceServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsExperienceServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static SegmentsExperience addSegmentsExperience(
-			long groupId, long segmentsEntryId, long plid,
-			Map<java.util.Locale, String> nameMap, boolean active,
+			String externalReferenceCode, long groupId, long segmentsEntryId,
+			long plid, Map<java.util.Locale, String> nameMap, boolean active,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				typeSettingsUnicodeProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addSegmentsExperience(
-			groupId, segmentsEntryId, plid, nameMap, active,
-			typeSettingsUnicodeProperties, serviceContext);
+			externalReferenceCode, groupId, segmentsEntryId, plid, nameMap,
+			active, typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	public static SegmentsExperience appendSegmentsExperience(
@@ -75,6 +75,14 @@ public class SegmentsExperienceServiceUtil {
 		return getService().deleteSegmentsExperience(segmentsExperienceId);
 	}
 
+	public static SegmentsExperience deleteSegmentsExperience(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().deleteSegmentsExperience(
+			externalReferenceCode, groupId);
+	}
+
 	public static SegmentsExperience fetchSegmentsExperience(
 			long groupId, String segmentsExperienceKey, long plid)
 		throws PortalException {
@@ -105,6 +113,15 @@ public class SegmentsExperienceServiceUtil {
 
 		return getService().getSegmentsExperience(
 			groupId, segmentsExperienceKey, plid);
+	}
+
+	public static SegmentsExperience
+			getSegmentsExperienceByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getSegmentsExperienceByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	public static List<SegmentsExperience> getSegmentsExperiences(

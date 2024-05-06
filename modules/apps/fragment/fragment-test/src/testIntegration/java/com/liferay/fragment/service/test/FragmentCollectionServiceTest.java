@@ -7,6 +7,8 @@ package com.liferay.fragment.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.exception.DuplicateFragmentCollectionExternalReferenceCodeException;
+import com.liferay.fragment.exception.NoSuchCollectionException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.test.util.FragmentTestUtil;
@@ -14,9 +16,15 @@ import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparat
 import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -25,6 +33,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -80,6 +89,50 @@ public class FragmentCollectionServiceTest {
 		Assert.assertEquals(name, fragmentCollection.getName());
 	}
 
+	@Test(expected = PrincipalException.class)
+	public void testAddFragmentCollectionByExternalReferenceCodeWithoutPermissions()
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			Company company = _companyLocalService.fetchCompany(
+				TestPropsValues.getCompanyId());
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(company.getGuestUser()));
+
+			String externalReferenceCode = StringUtil.randomString();
+
+			_fragmentCollectionService.addFragmentCollection(
+				externalReferenceCode, _group.getGroupId(),
+				RandomTestUtil.randomString(), null,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
+	}
+
+	@Test(
+		expected = DuplicateFragmentCollectionExternalReferenceCodeException.class
+	)
+	public void testAddFragmentCollectionWithExistingExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		_fragmentCollectionService.addFragmentCollection(
+			externalReferenceCode, _group.getGroupId(),
+			RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_fragmentCollectionService.addFragmentCollection(
+			externalReferenceCode, _group.getGroupId(),
+			RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
 	@Test
 	public void testAddFragmentCollectionWithFragmentCollectionKey()
 		throws Exception {
@@ -112,6 +165,58 @@ public class FragmentCollectionServiceTest {
 		Assert.assertNull(
 			_fragmentCollectionService.fetchFragmentCollection(
 				fragmentCollection.getFragmentCollectionId()));
+	}
+
+	@Test(expected = NoSuchCollectionException.class)
+	public void testDeleteFragmentCollectionByExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		_fragmentCollectionService.addFragmentCollection(
+			externalReferenceCode, _group.getGroupId(),
+			RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_fragmentCollectionService.deleteFragmentCollection(
+			externalReferenceCode, _group.getGroupId());
+
+		_fragmentCollectionService.getFragmentCollectionByExternalReferenceCode(
+			externalReferenceCode, _group.getGroupId());
+	}
+
+	@Test(expected = PrincipalException.class)
+	public void testDeleteFragmentCollectionByExternalReferenceCodeWithoutPermissions()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		_fragmentCollectionService.addFragmentCollection(
+			externalReferenceCode, _group.getGroupId(),
+			RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			Company company = _companyLocalService.fetchCompany(
+				TestPropsValues.getCompanyId());
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(company.getGuestUser()));
+
+			_fragmentCollectionService.deleteFragmentCollection(
+				externalReferenceCode, _group.getGroupId());
+
+			Assert.assertNull(
+				_fragmentCollectionService.
+					getFragmentCollectionByExternalReferenceCode(
+						externalReferenceCode, _group.getGroupId()));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
 	}
 
 	@Test
@@ -458,6 +563,9 @@ public class FragmentCollectionServiceTest {
 
 		Assert.assertEquals(name, fragmentCollection.getName());
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private FragmentCollectionService _fragmentCollectionService;

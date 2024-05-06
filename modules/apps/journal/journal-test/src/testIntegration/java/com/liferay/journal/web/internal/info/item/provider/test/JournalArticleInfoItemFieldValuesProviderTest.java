@@ -171,9 +171,6 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 	public void testGetInfoItemFieldValuesOfModifiedDDMStructure()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
 		String fieldName1 = RandomTestUtil.randomString();
 
 		String content = DDMStructureTestUtil.getSampleStructuredContent(
@@ -189,6 +186,9 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 			DDMFormFieldTypeConstants.RICH_TEXT,
 			new Locale[] {LocaleUtil.getSiteDefault()},
 			LocaleUtil.getSiteDefault());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName(), 0, ddmForm,

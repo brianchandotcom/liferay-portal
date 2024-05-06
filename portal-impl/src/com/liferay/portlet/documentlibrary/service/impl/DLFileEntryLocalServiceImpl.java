@@ -478,7 +478,7 @@ public class DLFileEntryLocalServiceImpl
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Using version label as file name for file version " +
-					oldStoreFileName,
+						oldStoreFileName,
 					noSuchFileException);
 			}
 
@@ -540,24 +540,7 @@ public class DLFileEntryLocalServiceImpl
 		DLFileVersion latestDLFileVersion = dlFileEntry.getLatestFileVersion(
 			true);
 
-		try {
-			DLStoreUtil.copyFileVersion(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), dlFileVersion.getStoreFileName(),
-				latestDLFileVersion.getStoreFileName());
-		}
-		catch (NoSuchFileException noSuchFileException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Using version label as file name for file version " +
-					dlFileVersion, noSuchFileException);
-			}
-
-			DLStoreUtil.copyFileVersion(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), dlFileVersion.getVersion(),
-				latestDLFileVersion.getStoreFileName());
-		}
+		_copyFileVersion(dlFileEntry, dlFileVersion, latestDLFileVersion);
 
 		return dlFileEntry;
 	}
@@ -2726,6 +2709,32 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
+	private void _copyFileVersion(
+			DLFileEntry dlFileEntry, DLFileVersion fromDLFileVersion,
+			DLFileVersion toDLFileVersion)
+		throws PortalException {
+
+		try {
+			DLStoreUtil.copyFileVersion(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(), fromDLFileVersion.getStoreFileName(),
+				toDLFileVersion.getStoreFileName());
+		}
+		catch (NoSuchFileException noSuchFileException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Using version label as file name for file version " +
+						fromDLFileVersion,
+					noSuchFileException);
+			}
+
+			DLStoreUtil.copyFileVersion(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(), fromDLFileVersion.getVersion(),
+				toDLFileVersion.getStoreFileName());
+		}
+	}
+
 	private void _deleteFile(
 			long companyId, long repositoryId, String name,
 			String storeFileName)
@@ -3512,25 +3521,7 @@ public class DLFileEntryLocalServiceImpl
 			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName(), previousDLFileVersion.getStoreFileName());
 
-		try {
-			DLStoreUtil.copyFileVersion(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), latestDLFileVersion.getStoreFileName(),
-				lastDLFileVersion.getStoreFileName());
-		}
-		catch (NoSuchFileException noSuchFileException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Using version label as file name for file version " +
-					latestDLFileVersion,
-					noSuchFileException);
-			}
-
-			DLStoreUtil.copyFileVersion(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), latestDLFileVersion.getVersion(),
-				lastDLFileVersion.getStoreFileName());
-		}
+		_copyFileVersion(dlFileEntry, latestDLFileVersion, lastDLFileVersion);
 
 		// Latest file version
 

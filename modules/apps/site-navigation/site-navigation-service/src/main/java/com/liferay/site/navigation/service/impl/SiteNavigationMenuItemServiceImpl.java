@@ -35,13 +35,13 @@ public class SiteNavigationMenuItemServiceImpl
 
 	@Override
 	public SiteNavigationMenuItem addSiteNavigationMenuItem(
-			long groupId, long siteNavigationMenuId,
-			long parentSiteNavigationMenuItemId, String type,
-			String typeSettings, ServiceContext serviceContext)
+			String externalReferenceCode, long groupId,
+			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
+			String type, String typeSettings, ServiceContext serviceContext)
 		throws PortalException {
 
 		return siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-			getUserId(), groupId, siteNavigationMenuId,
+			externalReferenceCode, getUserId(), groupId, siteNavigationMenuId,
 			parentSiteNavigationMenuItemId, type, typeSettings, serviceContext);
 	}
 

@@ -25,7 +25,7 @@ public class ObjectDefinitionTestUtil {
 	public static ObjectDefinition addObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, false, false, false,
+				TestPropsValues.getUserId(), 0, false, true, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				com.liferay.object.test.util.ObjectDefinitionTestUtil.
 					getRandomName(),

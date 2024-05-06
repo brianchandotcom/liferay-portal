@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.segments.exception.DuplicateSegmentsExperienceExternalReferenceCodeException;
 import com.liferay.segments.exception.NoSuchExperienceException;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
@@ -122,6 +123,9 @@ public class SegmentsExperiencePersistenceTest {
 
 		newSegmentsExperience.setUuid(RandomTestUtil.randomString());
 
+		newSegmentsExperience.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newSegmentsExperience.setGroupId(RandomTestUtil.nextLong());
 
 		newSegmentsExperience.setCompanyId(RandomTestUtil.nextLong());
@@ -166,6 +170,9 @@ public class SegmentsExperiencePersistenceTest {
 		Assert.assertEquals(
 			existingSegmentsExperience.getUuid(),
 			newSegmentsExperience.getUuid());
+		Assert.assertEquals(
+			existingSegmentsExperience.getExternalReferenceCode(),
+			newSegmentsExperience.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingSegmentsExperience.getSegmentsExperienceId(),
 			newSegmentsExperience.getSegmentsExperienceId());
@@ -213,6 +220,28 @@ public class SegmentsExperiencePersistenceTest {
 			Time.getShortTimestamp(
 				existingSegmentsExperience.getLastPublishDate()),
 			Time.getShortTimestamp(newSegmentsExperience.getLastPublishDate()));
+	}
+
+	@Test(
+		expected = DuplicateSegmentsExperienceExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		SegmentsExperience segmentsExperience = addSegmentsExperience();
+
+		SegmentsExperience newSegmentsExperience = addSegmentsExperience();
+
+		newSegmentsExperience.setGroupId(segmentsExperience.getGroupId());
+
+		newSegmentsExperience = _persistence.update(newSegmentsExperience);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newSegmentsExperience);
+
+		newSegmentsExperience.setExternalReferenceCode(
+			segmentsExperience.getExternalReferenceCode());
+
+		_persistence.update(newSegmentsExperience);
 	}
 
 	@Test
@@ -337,6 +366,15 @@ public class SegmentsExperiencePersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_G() throws Exception {
+		_persistence.countByERC_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_G("null", 0L);
+
+		_persistence.countByERC_G((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SegmentsExperience newSegmentsExperience = addSegmentsExperience();
 
@@ -369,12 +407,12 @@ public class SegmentsExperiencePersistenceTest {
 	protected OrderByComparator<SegmentsExperience> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"SegmentsExperience", "mvccVersion", true, "ctCollectionId", true,
-			"uuid", true, "segmentsExperienceId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "segmentsEntryId", true,
-			"segmentsExperienceKey", true, "plid", true, "name", true,
-			"priority", true, "active", true, "typeSettings", true,
-			"lastPublishDate", true);
+			"uuid", true, "externalReferenceCode", true, "segmentsExperienceId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"segmentsEntryId", true, "segmentsExperienceKey", true, "plid",
+			true, "name", true, "priority", true, "active", true,
+			"typeSettings", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -695,6 +733,17 @@ public class SegmentsExperiencePersistenceTest {
 			ReflectionTestUtil.<Integer>invoke(
 				segmentsExperience, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "priority"));
+
+		Assert.assertEquals(
+			segmentsExperience.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				segmentsExperience, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(segmentsExperience.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				segmentsExperience, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected SegmentsExperience addSegmentsExperience() throws Exception {
@@ -707,6 +756,9 @@ public class SegmentsExperiencePersistenceTest {
 		segmentsExperience.setCtCollectionId(RandomTestUtil.nextLong());
 
 		segmentsExperience.setUuid(RandomTestUtil.randomString());
+
+		segmentsExperience.setExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		segmentsExperience.setGroupId(RandomTestUtil.nextLong());
 

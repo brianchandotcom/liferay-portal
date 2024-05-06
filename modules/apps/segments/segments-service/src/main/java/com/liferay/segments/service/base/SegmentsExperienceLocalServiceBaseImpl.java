@@ -271,6 +271,23 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 		return segmentsExperiencePersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	@Override
+	public SegmentsExperience fetchSegmentsExperienceByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return segmentsExperiencePersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
+	public SegmentsExperience getSegmentsExperienceByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return segmentsExperiencePersistence.findByERC_G(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the segments experience with the primary key.
 	 *

@@ -69,7 +69,7 @@ public class SegmentsExperienceCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -77,6 +77,8 @@ public class SegmentsExperienceCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", segmentsExperienceId=");
 		sb.append(segmentsExperienceId);
 		sb.append(", groupId=");
@@ -125,6 +127,14 @@ public class SegmentsExperienceCacheModel
 		}
 		else {
 			segmentsExperienceImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			segmentsExperienceImpl.setExternalReferenceCode("");
+		}
+		else {
+			segmentsExperienceImpl.setExternalReferenceCode(
+				externalReferenceCode);
 		}
 
 		segmentsExperienceImpl.setSegmentsExperienceId(segmentsExperienceId);
@@ -201,6 +211,7 @@ public class SegmentsExperienceCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		segmentsExperienceId = objectInput.readLong();
 
@@ -237,6 +248,13 @@ public class SegmentsExperienceCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(segmentsExperienceId);
@@ -292,6 +310,7 @@ public class SegmentsExperienceCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long segmentsExperienceId;
 	public long groupId;
 	public long companyId;

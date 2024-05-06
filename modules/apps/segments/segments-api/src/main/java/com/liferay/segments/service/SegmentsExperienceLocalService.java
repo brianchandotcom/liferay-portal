@@ -268,6 +268,10 @@ public interface SegmentsExperienceLocalService
 	public SegmentsExperience fetchSegmentsExperience(
 		long groupId, String segmentsExperienceKey, long plid);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsExperience fetchSegmentsExperienceByExternalReferenceCode(
+		String externalReferenceCode, long groupId);
+
 	/**
 	 * Returns the segments experience matching the UUID and group.
 	 *
@@ -318,6 +322,11 @@ public interface SegmentsExperienceLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperience getSegmentsExperience(
 			long groupId, String segmentsExperienceKey, long plid)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsExperience getSegmentsExperienceByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

@@ -33,6 +33,10 @@ public class SegmentsExperienceTable
 			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<SegmentsExperienceTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<SegmentsExperienceTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<SegmentsExperienceTable, Long> segmentsExperienceId =
 		createColumn(
 			"segmentsExperienceId", Long.class, Types.BIGINT,

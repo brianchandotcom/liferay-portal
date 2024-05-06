@@ -359,6 +359,15 @@ public class SegmentsExperienceLocalServiceWrapper
 			groupId, segmentsExperienceKey, plid);
 	}
 
+	@Override
+	public SegmentsExperience fetchSegmentsExperienceByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return _segmentsExperienceLocalService.
+			fetchSegmentsExperienceByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the segments experience matching the UUID and group.
 	 *
@@ -442,6 +451,16 @@ public class SegmentsExperienceLocalServiceWrapper
 
 		return _segmentsExperienceLocalService.getSegmentsExperience(
 			groupId, segmentsExperienceKey, plid);
+	}
+
+	@Override
+	public SegmentsExperience getSegmentsExperienceByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperienceLocalService.
+			getSegmentsExperienceByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	/**

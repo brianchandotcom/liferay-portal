@@ -316,6 +316,14 @@ public class SegmentsExperienceLocalServiceUtil {
 			groupId, segmentsExperienceKey, plid);
 	}
 
+	public static SegmentsExperience
+		fetchSegmentsExperienceByExternalReferenceCode(
+			String externalReferenceCode, long groupId) {
+
+		return getService().fetchSegmentsExperienceByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the segments experience matching the UUID and group.
 	 *
@@ -389,6 +397,15 @@ public class SegmentsExperienceLocalServiceUtil {
 
 		return getService().getSegmentsExperience(
 			groupId, segmentsExperienceKey, plid);
+	}
+
+	public static SegmentsExperience
+			getSegmentsExperienceByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getSegmentsExperienceByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

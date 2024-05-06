@@ -6,11 +6,35 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 
-export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
+export const test = mergeTests(
+	apiHelpersTest,
+	featureFlagsTest({
+		'LPS-187854': true,
+	}),
+	loginTest(),
+	objectPagesTest
+);
+
+let objectDefinition: ObjectDefinition;
+
+test.beforeEach(async ({apiHelpers}) => {
+	const newObjectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFolderExternalReferenceCode: 'default',
+			status: {code: 0},
+		});
+
+	objectDefinition = newObjectDefinition;
+});
+
+test.afterEach(async ({apiHelpers}) => {
+	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
+});
 
 export const createdEntities = {
 	listTypeDefinitionIds: [],
@@ -55,12 +79,6 @@ test.describe('Manage object fields through Model Builder', () => {
 		const listTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-			});
-
 		await viewObjectDefinitionsPage.goto();
 
 		await viewObjectDefinitionsPage.openObjectFolder('default');
@@ -85,10 +103,6 @@ test.describe('Manage object fields through Model Builder', () => {
 
 		// Clean up
 
-		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition.id
-		);
-
 		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
 			listTypeDefinition.id
 		);
@@ -97,8 +111,6 @@ test.describe('Manage object fields through Model Builder', () => {
 	test('all picklist definitions are listed during object field creation', async ({
 		apiHelpers,
 		modelBuilderPage,
-		page,
-		viewObjectDefinitionsPage,
 	}) => {
 		const listTypeDefinitions = await Promise.all(
 			Array(22)
@@ -123,13 +135,7 @@ test.describe('Manage object fields through Model Builder', () => {
 			createdEntities.objectDefinitionIds.push(objectDefinition.id)
 		);
 
-		await page.goto('/');
-
-		await viewObjectDefinitionsPage.goto();
-
-		await viewObjectDefinitionsPage.openObjectFolder('default');
-
-		await viewObjectDefinitionsPage.viewInModelBuilder();
+		await modelBuilderPage.goto({objectFolderName: 'Default'});
 
 		await modelBuilderPage.openNewFieldModal(objectDefinition[0].name);
 
@@ -153,12 +159,85 @@ test.describe('Manage object fields through Model Builder', () => {
 		);
 	});
 
-	test('can delete object field', async ({apiHelpers, modelBuilderPage}) => {
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
-			});
+	test('cannot delete an objectField that belongs to a unique composite key validation through Model Builder', async ({
+		apiHelpers,
+		modelBuilderPage,
+		page,
+	}) => {
+		const integerFieldName = 'integerField' + getRandomInt();
 
+		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
+			objectDefinition.externalReferenceCode,
+			{
+				DBType: 'Integer',
+				businessType: 'Integer',
+				externalReferenceCode: integerFieldName,
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: '',
+				label: {en_US: integerFieldName},
+				listTypeDefinitionId: 0,
+				localized: false,
+				name: integerFieldName,
+				readOnly: 'false',
+				required: false,
+				state: false,
+				system: false,
+			}
+		);
+
+		const objectValidationName =
+			'Unique Composite Key Object Validation' + getRandomInt();
+
+		await apiHelpers.objectAdmin.postObjectValidation(
+			objectDefinition.externalReferenceCode,
+			{
+				active: true,
+				engine: 'compositeKey',
+				engineLabel: 'Composite Key',
+				errorLabel: {
+					en_US: 'Unique composite key object validation error',
+				},
+				name: {
+					en_US: objectValidationName,
+				},
+				objectValidationRuleSettings: [
+					{
+						name: 'compositeKeyObjectFieldExternalReferenceCode',
+						value: 'textField',
+					},
+					{
+						name: 'compositeKeyObjectFieldExternalReferenceCode',
+						value: integerFieldName,
+					},
+				],
+				outputType: 'fullValidation',
+				script: '',
+				system: false,
+			}
+		);
+
+		await modelBuilderPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderPage.leftSidebarItems
+			.filter({hasText: objectDefinition.name})
+			.click();
+
+		await modelBuilderPage.clickShowAllFieldsButton(objectDefinition.name);
+
+		await page.getByText(integerFieldName).click();
+
+		await modelBuilderPage.deleteButton.click();
+
+		await expect(page.getByText('Deletion Not Allowed')).toBeVisible();
+		await expect(
+			page.getByText(
+				`The object field "${integerFieldName}" cannot be deleted because it is used in a unique composite key validation. To remove this object field, you must first delete the associated unique composite key validation.`
+			)
+		).toBeVisible();
+	});
+
+	test('can delete object field', async ({apiHelpers, modelBuilderPage}) => {
 		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
 			objectDefinition.externalReferenceCode,
 			{
@@ -185,9 +264,7 @@ test.describe('Manage object fields through Model Builder', () => {
 			.filter({hasText: objectDefinition.name})
 			.click();
 
-		await modelBuilderPage.clickObjectDefinitionShowAllFieldsButton(
-			objectDefinition.name
-		);
+		await modelBuilderPage.clickShowAllFieldsButton(objectDefinition.name);
 
 		await modelBuilderPage.objectDefinitionNodes
 			.filter({hasText: objectDefinition.name})
@@ -203,11 +280,5 @@ test.describe('Manage object fields through Model Builder', () => {
 				.filter({hasText: objectDefinition.name})
 				.getByText('intField')
 		).toBeHidden();
-
-		// Clean up
-
-		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition.id
-		);
 	});
 });

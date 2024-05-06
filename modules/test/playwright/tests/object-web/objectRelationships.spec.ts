@@ -62,7 +62,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 			})
 		).toBeVisible();
 
-		await modelBuilderPage.clickObjectDefinitionShowAllFieldsButton(
+		await modelBuilderPage.clickShowAllFieldsButton(
 			objectDefinition2.label['en_US']
 		);
 

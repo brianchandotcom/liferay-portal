@@ -6,6 +6,7 @@
 package com.liferay.segments.internal.upgrade.registry;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
@@ -94,6 +95,19 @@ public class SegmentsServiceUpgradeStepRegistrator
 		registry.register(
 			"2.8.1", "3.0.0",
 			UpgradeProcessFactory.dropColumns("SegmentsEntry", "type_"));
+
+		registry.register(
+			"3.0.0", "3.1.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"SegmentsExperience", "segmentsExperienceId"}
+					};
+				}
+
+			});
 	}
 
 	@Reference

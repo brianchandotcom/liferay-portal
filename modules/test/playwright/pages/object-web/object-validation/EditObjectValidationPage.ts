@@ -6,7 +6,7 @@
 import {Locator, Page} from '@playwright/test';
 
 export class EditObjectValidationPage {
-	readonly addFieldsButton: Locator;
+	readonly addObjectFieldsButton: Locator;
 	readonly page: Page;
 	readonly saveObjectFieldsButton: Locator;
 	readonly saveObjectValidationButton: Locator;
@@ -14,7 +14,7 @@ export class EditObjectValidationPage {
 	readonly uniqueCompositeKeyTab: Locator;
 
 	constructor(page: Page) {
-		this.addFieldsButton = page
+		this.addObjectFieldsButton = page
 			.frameLocator('iframe')
 			.getByRole('button', {name: 'Add Fields'});
 		this.page = page;
@@ -34,5 +34,11 @@ export class EditObjectValidationPage {
 	async clickSelectAllFields() {
 		await this.selectAllFields.click();
 		await this.saveObjectFieldsButton.click();
+	}
+
+	getObjectFieldAlreadyHasEntryErrorLocator(objectFields: string) {
+		return this.page.getByText(
+			`The selected fields "${objectFields}" cannot be added to the unique composite key since they already contain data. Modifying the unique composite key in this manner would impact data integrity.`
+		);
 	}
 }

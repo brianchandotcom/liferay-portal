@@ -102,7 +102,7 @@ test('can create and use a object unique composite key validation', async ({
 
 	await editObjectValidationPage.uniqueCompositeKeyTab.click();
 
-	await editObjectValidationPage.addFieldsButton.click();
+	await editObjectValidationPage.addObjectFieldsButton.click();
 
 	await editObjectValidationPage.clickSelectAllFields();
 
@@ -294,7 +294,7 @@ test('check if only specific object field business types (AutoIncrement, Integer
 
 	await editObjectValidationPage.uniqueCompositeKeyTab.click();
 
-	await editObjectValidationPage.addFieldsButton.click();
+	await editObjectValidationPage.addObjectFieldsButton.click();
 
 	await expect(page.getByText(autoIncrementFieldName)).toBeVisible();
 	await expect(page.getByText(dateFieldName)).not.toBeVisible();
@@ -307,4 +307,86 @@ test('check if only specific object field business types (AutoIncrement, Integer
 	await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
 		listTypeDefinition.id
 	);
+});
+
+test('cannot select a object field that already has an entry in a new composite key validation', async ({
+	apiHelpers,
+	editObjectValidationPage,
+	modalAddObjectValidationPage,
+	objectValidationsFDSPage,
+	page,
+	viewObjectDefinitionsPage,
+}) => {
+	await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
+		objectDefinition1.externalReferenceCode,
+		{
+			DBType: 'Integer',
+			businessType: 'Integer',
+			externalReferenceCode: 'integerField',
+			indexed: true,
+			indexedAsKeyword: false,
+			indexedLanguageId: '',
+			label: {en_US: 'integerField'},
+			listTypeDefinitionId: 0,
+			localized: false,
+			name: 'integerField',
+			readOnly: 'false',
+			required: false,
+			state: false,
+			system: false,
+		}
+	);
+
+	const applicationName = 'c/' + objectDefinition1.name.toLowerCase() + 's';
+
+	const textObjectEntry = {
+		textField: 'entry',
+	};
+
+	await apiHelpers.objectEntry.postObjectEntry(
+		textObjectEntry,
+		applicationName
+	);
+
+	viewObjectDefinitionsPage.goto();
+
+	await expect(
+		page.locator(`a:has-text("${objectDefinition1.label['en_US']}")`)
+	).toBeVisible();
+
+	viewObjectDefinitionsPage.editObjectDefinitionFDSLink(
+		objectDefinition1.label['en_US']
+	);
+
+	objectValidationsFDSPage.goto();
+
+	await objectValidationsFDSPage.addObjectValidationButton.click();
+
+	const objectValidationLabel =
+		'UniqueCompositeKeyValidation' + getRandomInt();
+
+	await modalAddObjectValidationPage.fillObjectValidationInputs(
+		objectValidationLabel,
+		'Composite Key'
+	);
+
+	const newValidationLink = page.getByText(objectValidationLabel);
+
+	await expect(newValidationLink).toBeVisible();
+
+	await newValidationLink.click();
+
+	await editObjectValidationPage.uniqueCompositeKeyTab.click();
+
+	await editObjectValidationPage.addObjectFieldsButton.click();
+
+	await editObjectValidationPage.clickSelectAllFields();
+
+	await editObjectValidationPage.saveObjectValidationButton.click();
+
+	await expect(
+		editObjectValidationPage.getObjectFieldAlreadyHasEntryErrorLocator(
+			'textField, integerField'
+		)
+	).toBeVisible();
 });

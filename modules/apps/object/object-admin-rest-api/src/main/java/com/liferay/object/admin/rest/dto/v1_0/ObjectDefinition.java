@@ -433,6 +433,47 @@ public class ObjectDefinition implements Serializable {
 	private Supplier<Boolean> _enableCommentsSupplier;
 
 	@Schema
+	public Boolean getEnableIndexedSearch() {
+		if (_enableIndexedSearchSupplier != null) {
+			enableIndexedSearch = _enableIndexedSearchSupplier.get();
+
+			_enableIndexedSearchSupplier = null;
+		}
+
+		return enableIndexedSearch;
+	}
+
+	public void setEnableIndexedSearch(Boolean enableIndexedSearch) {
+		this.enableIndexedSearch = enableIndexedSearch;
+
+		_enableIndexedSearchSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEnableIndexedSearch(
+		UnsafeSupplier<Boolean, Exception> enableIndexedSearchUnsafeSupplier) {
+
+		_enableIndexedSearchSupplier = () -> {
+			try {
+				return enableIndexedSearchUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean enableIndexedSearch;
+
+	@JsonIgnore
+	private Supplier<Boolean> _enableIndexedSearchSupplier;
+
+	@Schema
 	public Boolean getEnableLocalization() {
 		if (_enableLocalizationSupplier != null) {
 			enableLocalization = _enableLocalizationSupplier.get();
@@ -1717,6 +1758,18 @@ public class ObjectDefinition implements Serializable {
 			sb.append("\"enableComments\": ");
 
 			sb.append(enableComments);
+		}
+
+		Boolean enableIndexedSearch = getEnableIndexedSearch();
+
+		if (enableIndexedSearch != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enableIndexedSearch\": ");
+
+			sb.append(enableIndexedSearch);
 		}
 
 		Boolean enableLocalization = getEnableLocalization();

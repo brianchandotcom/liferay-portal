@@ -5,7 +5,6 @@
 
 package com.liferay.portal.upgrade.v7_4_x;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.BaseCompanyIdUpgradeProcess;
 
 /**
@@ -16,21 +15,18 @@ public class UpgradePortletPreferencesCompanyId
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		super.doUpgrade();
+		disableProcessConcurrently();
 
-		runSQL(
-			StringBundler.concat(
-				"update PortletPreferenceValue set companyId = (select ",
-				"PortletPreferences.companyId from PortletPreferences where ",
-				"PortletPreferences.portletPreferencesId = ",
-				"PortletPreferenceValue.portletPreferencesId) where companyId ",
-				"is null or companyId = 0"));
+		super.doUpgrade();
 	}
 
 	@Override
 	protected TableUpdater[] getTableUpdaters() {
 		return new TableUpdater[] {
-			new PortletPreferencesTableUpdater("PortletPreferences")
+			new PortletPreferencesTableUpdater("PortletPreferences"),
+			new TableUpdater(
+				"PortletPreferenceValue", "PortletPreferences",
+				"portletPreferencesId")
 		};
 	}
 

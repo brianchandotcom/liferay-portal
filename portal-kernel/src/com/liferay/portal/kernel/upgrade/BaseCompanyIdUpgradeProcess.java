@@ -28,9 +28,15 @@ import java.util.List;
  */
 public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 
+	protected void disableProcessConcurrently() {
+		_processConcurrently = false;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
+		if ((DBManagerUtil.getDBType() == DBType.SQLSERVER) ||
+			!_processConcurrently) {
+
 			for (TableUpdater tableUpdater : getTableUpdaters()) {
 				_addCompanyIdColumn(tableUpdater);
 			}
@@ -271,5 +277,7 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 			tableUpdater.update(connection);
 		}
 	}
+
+	private boolean _processConcurrently = true;
 
 }

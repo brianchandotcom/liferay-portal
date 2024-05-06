@@ -97,7 +97,7 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 	public void whenIndexCreated(String indexName) {
 		MappingsFactory mappingsFactory = _getMappingsFactory();
 
-		mappingsFactory.addOptionalDefaultMappings(indexName);
+		mappingsFactory.addOptionalDefaultMappings();
 	}
 
 	private MappingsFactory _getMappingsFactory() {
@@ -105,7 +105,7 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 			_openSearchConnectionManager.getOpenSearchClient();
 
 		return new MappingsFactory(
-			new JSONFactoryImpl(), openSearchClient.indices(),
+			null, new JSONFactoryImpl(), openSearchClient.indices(),
 			_openSearchConfigurationWrapper);
 	}
 

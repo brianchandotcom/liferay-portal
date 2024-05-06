@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.github;
 
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.event.github.user.GitHubUser;
@@ -62,7 +63,8 @@ public class ReportGitHubCommentEventHandler
 
 		String testrayBuildID = testrayBuildIDMatcher.group("testrayBuildID");
 
-		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+		JobEntityRepository jobEntityRepository =
+			Jethr0ContextUtil.getJobEntityRepository();
 
 		GitHubUser receiverGitHubUser =
 			gitHubPullRequest.getReceiverGitHubUser();

@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.liferay;
 
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.event.EventHandlerContext;
@@ -27,9 +28,10 @@ public class AddJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 
 	@Override
 	public String process() {
-		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+		JobEntityRepository jobEntityRepository =
+			Jethr0ContextUtil.getJobEntityRepository();
 		BuildEntityRepository buildEntityRepository =
-			getBuildEntityRepository();
+			Jethr0ContextUtil.getBuildEntityRepository();
 
 		JobEntity jobEntity = jobEntityRepository.add(getJobJSONObject());
 
@@ -57,7 +59,7 @@ public class AddJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 
 				if (previousGitCommitEntity == null) {
 					RoutineEntityRepository routineEntityRepository =
-						getRoutineEntityRepository();
+						Jethr0ContextUtil.getRoutineEntityRepository();
 
 					upstreamBranchRoutineEntity.setPreviousGitCommitEntity(
 						latestGitCommitEntity);
@@ -88,11 +90,11 @@ public class AddJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 		}
 
 		if (jobEntity.getState() == JobEntity.State.QUEUED) {
-			BuildQueue buildQueue = getBuildQueue();
+			BuildQueue buildQueue = Jethr0ContextUtil.getBuildQueue();
 
 			buildQueue.addJobEntity(jobEntity);
 
-			JenkinsQueue jenkinsQueue = getJenkinsQueue();
+			JenkinsQueue jenkinsQueue = Jethr0ContextUtil.getJenkinsQueue();
 
 			jenkinsQueue.invoke();
 		}

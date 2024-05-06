@@ -8,9 +8,7 @@ package com.liferay.jethr0;
 import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.entity.EntityInitializer;
-import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.jenkins.JenkinsEventProcessor;
-import com.liferay.jethr0.event.jrp.JRPEventProcessor;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.queue.JobQueue;
 
@@ -39,15 +37,6 @@ public class Jethr0SpringBootApplication {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext configurableApplicationContext =
 			SpringApplication.run(Jethr0SpringBootApplication.class, args);
-
-		EventHandlerContext eventHandlerContext =
-			configurableApplicationContext.getBean(EventHandlerContext.class);
-
-		eventHandlerContext.setJenkinsEventProcessor(
-			configurableApplicationContext.getBean(
-				JenkinsEventProcessor.class));
-		eventHandlerContext.setJRPEventProcessor(
-			configurableApplicationContext.getBean(JRPEventProcessor.class));
 
 		EntityInitializer entityInitializer =
 			configurableApplicationContext.getBean(EntityInitializer.class);

@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.liferay;
 
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.queue.JobQueue;
@@ -19,7 +20,8 @@ public class DeleteJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 
 	@Override
 	public String process() {
-		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+		JobEntityRepository jobEntityRepository =
+			Jethr0ContextUtil.getJobEntityRepository();
 
 		JSONObject jobJSONObject = getJobJSONObject();
 
@@ -27,7 +29,7 @@ public class DeleteJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 			jobJSONObject.getLong("id"));
 
 		if (jobEntity != null) {
-			JobQueue jobQueue = getJobQueue();
+			JobQueue jobQueue = Jethr0ContextUtil.getJobQueue();
 
 			jobQueue.removeJobEntity(jobEntity);
 		}

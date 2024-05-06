@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.github;
 
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.event.jenkins.client.JenkinsClient;
@@ -42,7 +43,7 @@ public class PortalTestGitHubCommentEventHandler
 
 		URL distPortalJobURL = _getDistPortalJobURL();
 
-		JenkinsClient jenkinsClient = getJenkinsClient();
+		JenkinsClient jenkinsClient = Jethr0ContextUtil.getJenkinsClient();
 
 		String response = jenkinsClient.requestGet(
 			StringUtil.toURL(
@@ -166,7 +167,8 @@ public class PortalTestGitHubCommentEventHandler
 		portalPullRequestJobEntity.setPortalBundlesDistURL(
 			distPortalBundlesBuildURL);
 
-		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+		JobEntityRepository jobEntityRepository =
+			Jethr0ContextUtil.getJobEntityRepository();
 
 		jobEntityRepository.update(portalPullRequestJobEntity);
 
@@ -174,7 +176,7 @@ public class PortalTestGitHubCommentEventHandler
 
 		gitHubPullRequest.comment("The test will run with a prebuilt bundle.");
 
-		JenkinsClient jenkinsClient = getJenkinsClient();
+		JenkinsClient jenkinsClient = Jethr0ContextUtil.getJenkinsClient();
 
 		String response = jenkinsClient.requestGet(
 			StringUtil.toURL(distPortalBundlesBuildURL + "/git-hash"));

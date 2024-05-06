@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.github;
 
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.SubrepositoryPullRequestJobEntity;
@@ -68,7 +69,8 @@ public class SubrepositoryOpenGitHubPullRequestEventHandler
 		subrepositoryPullRequestJobEntity.setPortalUpstreamBranchName(
 			portalBranchName);
 
-		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+		JobEntityRepository jobEntityRepository =
+			Jethr0ContextUtil.getJobEntityRepository();
 
 		jobEntityRepository.update(subrepositoryPullRequestJobEntity);
 

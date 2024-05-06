@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.github;
 
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.event.github.issue.GitHubIssue;
@@ -102,7 +103,7 @@ public abstract class BaseGitHubIssueEventHandler
 	protected void closeGitHubPullRequest(String body)
 		throws InvalidJSONException {
 
-		GitHubClient gitHubClient = getGitHubClient();
+		GitHubClient gitHubClient = Jethr0ContextUtil.getGitHubClient();
 
 		GitBranchEntity upstreamGitBranchEntity = getUpstreamGitBranchEntity();
 
@@ -181,7 +182,8 @@ public abstract class BaseGitHubIssueEventHandler
 
 		GitBranchEntity upstreamGitBranchEntity = getUpstreamGitBranchEntity();
 
-		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+		JobEntityRepository jobEntityRepository =
+			Jethr0ContextUtil.getJobEntityRepository();
 
 		GitHubIssue gitHubIssue = getGitHubIssue();
 
@@ -296,7 +298,7 @@ public abstract class BaseGitHubIssueEventHandler
 				"Missing \"issue\" from message JSON");
 		}
 
-		GitHubFactory gitHubFactory = getGitHubFactory();
+		GitHubFactory gitHubFactory = Jethr0ContextUtil.getGitHubFactory();
 
 		return gitHubFactory.newGitHubIssue(issueJSONObject);
 	}
@@ -343,7 +345,7 @@ public abstract class BaseGitHubIssueEventHandler
 		}
 
 		GitBranchEntityRepository gitBranchEntityRepository =
-			getGitBranchEntityRepository();
+			Jethr0ContextUtil.getGitBranchEntityRepository();
 
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 
@@ -381,7 +383,7 @@ public abstract class BaseGitHubIssueEventHandler
 		}
 
 		GitBranchEntityRepository gitBranchEntityRepository =
-			getGitBranchEntityRepository();
+			Jethr0ContextUtil.getGitBranchEntityRepository();
 
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 

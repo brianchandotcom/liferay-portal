@@ -5,12 +5,20 @@
 
 package com.liferay.jethr0.entity;
 
+import com.liferay.jethr0.util.Jethr0ContextUtil;
+import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
+import com.liferay.jethr0.event.github.GitHubFactory;
+import com.liferay.jethr0.event.github.client.GitHubClient;
+import com.liferay.jethr0.event.jenkins.JenkinsEventProcessor;
+import com.liferay.jethr0.event.jenkins.client.JenkinsClient;
+import com.liferay.jethr0.event.jrp.JRPEventProcessor;
 import com.liferay.jethr0.git.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.git.repository.GitCommitEntityRepository;
 import com.liferay.jethr0.git.repository.GitPullRequestEntityRepository;
 import com.liferay.jethr0.git.repository.GitUserEntityRepository;
+import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
@@ -20,9 +28,10 @@ import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.job.repository.JobPrioritizerEntityRepository;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 import com.liferay.jethr0.routine.scheduler.RoutineEntityScheduler;
-import com.liferay.jethr0.util.ContextUtil;
+import com.liferay.jethr0.util.StringUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -122,31 +131,42 @@ public class EntityInitializer {
 
 		_routineEntityScheduler.initialize();
 
-		ContextUtil.setBuildEntityRepository(_buildEntityRepository);
-		ContextUtil.setBuildRunEntityRepository(_buildRunEntityRepository);
-		ContextUtil.setGitBranchEntityRepository(_gitBranchEntityRepository);
-		ContextUtil.setGitCommitEntityRepository(_gitCommitEntityRepository);
-		ContextUtil.setGitPullRequestEntityRepository(
+		Jethr0ContextUtil.setBuildEntityRepository(_buildEntityRepository);
+		Jethr0ContextUtil.setBuildQueue(_buildQueue);
+		Jethr0ContextUtil.setGitHubClient(_gitHubClient);
+		Jethr0ContextUtil.setGitHubFactory(_gitHubFactory);
+		Jethr0ContextUtil.setJenkinsClient(_jenkinsClient);
+		Jethr0ContextUtil.setBuildRunEntityRepository(_buildRunEntityRepository);
+		Jethr0ContextUtil.setGitBranchEntityRepository(_gitBranchEntityRepository);
+		Jethr0ContextUtil.setGitCommitEntityRepository(_gitCommitEntityRepository);
+		Jethr0ContextUtil.setGitPullRequestEntityRepository(
 			_gitPullRequestEntityRepository);
-		ContextUtil.setGitUserEntityRepository(_gitUserEntityRepository);
-		ContextUtil.setJenkinsCohortEntityRepository(
+		Jethr0ContextUtil.setGitUserEntityRepository(_gitUserEntityRepository);
+		Jethr0ContextUtil.setJenkinsCohortEntityRepository(
 			_jenkinsCohortEntityRepository);
-		ContextUtil.setJenkinsNodeEntityRepository(
+		Jethr0ContextUtil.setJenkinsEventProcessor(_jenkinsEventProcessor);
+		Jethr0ContextUtil.setJenkinsNodeEntityRepository(
 			_jenkinsNodeEntityRepository);
-		ContextUtil.setJenkinsServerEntityRepository(
+		Jethr0ContextUtil.setJenkinsQueue(_jenkinsQueue);
+		Jethr0ContextUtil.setJenkinsServerEntityRepository(
 			_jenkinsServerEntityRepository);
-		ContextUtil.setJobComparatorEntityRepository(
+		Jethr0ContextUtil.setJobComparatorEntityRepository(
 			_jobComparatorEntityRepository);
-		ContextUtil.setJobEntityRepository(_jobEntityRepository);
-		ContextUtil.setJobPrioritizerEntityRepository(
+		Jethr0ContextUtil.setJobEntityRepository(_jobEntityRepository);
+		Jethr0ContextUtil.setJobPrioritizerEntityRepository(
 			_jobPrioritizerEntityRepository);
-		ContextUtil.setJobQueue(_jobQueue);
-		ContextUtil.setRoutineEntityRepository(_routineEntityRepository);
-		ContextUtil.setRoutineEntityScheduler(_routineEntityScheduler);
+		Jethr0ContextUtil.setJobQueue(_jobQueue);
+		Jethr0ContextUtil.setJRPEventProcessor(_jrpEventProcessor);
+		Jethr0ContextUtil.setLiferayPortalURL(StringUtil.toURL(_liferayPortalURL));
+		Jethr0ContextUtil.setRoutineEntityRepository(_routineEntityRepository);
+		Jethr0ContextUtil.setRoutineEntityScheduler(_routineEntityScheduler);
 	}
 
 	@Autowired
 	private BuildEntityRepository _buildEntityRepository;
+
+	@Autowired
+	private BuildQueue _buildQueue;
 
 	@Autowired
 	private BuildRunEntityRepository _buildRunEntityRepository;
@@ -158,16 +178,31 @@ public class EntityInitializer {
 	private GitCommitEntityRepository _gitCommitEntityRepository;
 
 	@Autowired
+	private GitHubClient _gitHubClient;
+
+	@Autowired
+	private GitHubFactory _gitHubFactory;
+
+	@Autowired
 	private GitPullRequestEntityRepository _gitPullRequestEntityRepository;
 
 	@Autowired
 	private GitUserEntityRepository _gitUserEntityRepository;
 
 	@Autowired
+	private JenkinsClient _jenkinsClient;
+
+	@Autowired
 	private JenkinsCohortEntityRepository _jenkinsCohortEntityRepository;
 
 	@Autowired
+	private JenkinsEventProcessor _jenkinsEventProcessor;
+
+	@Autowired
 	private JenkinsNodeEntityRepository _jenkinsNodeEntityRepository;
+
+	@Autowired
+	private JenkinsQueue _jenkinsQueue;
 
 	@Autowired
 	private JenkinsServerEntityRepository _jenkinsServerEntityRepository;
@@ -183,6 +218,14 @@ public class EntityInitializer {
 
 	@Autowired
 	private JobQueue _jobQueue;
+
+	@Autowired
+	private JRPEventProcessor _jrpEventProcessor;
+
+	@Value(
+		"${com.liferay.lxc.dxp.server.protocol}://${com.liferay.lxc.dxp.main.domain}"
+	)
+	private String _liferayPortalURL;
 
 	@Autowired
 	private RoutineEntityRepository _routineEntityRepository;

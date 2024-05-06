@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.jenkins;
 
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
@@ -18,7 +19,7 @@ public class ComputerUpdateEventHandler extends BaseJenkinsEventHandler {
 
 	@Override
 	public String process() throws InvalidJSONException {
-		JenkinsQueue jenkinsQueue = getJenkinsQueue();
+		JenkinsQueue jenkinsQueue = Jethr0ContextUtil.getJenkinsQueue();
 
 		if (!jenkinsQueue.isInitialized()) {
 			return "{\"message\": \"Jenkins queue is not initialized\"}";

@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.jrp;
 
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.event.BaseEventHandler;
 import com.liferay.jethr0.event.EventHandlerContext;
@@ -70,7 +71,8 @@ public abstract class BaseJRPEventHandler extends BaseEventHandler {
 			throw new InvalidJSONException("Missing \"id\" from job JSON");
 		}
 
-		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+		JobEntityRepository jobEntityRepository =
+			Jethr0ContextUtil.getJobEntityRepository();
 
 		return jobEntityRepository.getById(jobEntityId);
 	}

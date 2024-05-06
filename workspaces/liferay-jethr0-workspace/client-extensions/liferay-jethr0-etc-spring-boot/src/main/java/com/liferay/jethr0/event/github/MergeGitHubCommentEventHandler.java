@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.github;
 
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
@@ -126,7 +127,8 @@ public class MergeGitHubCommentEventHandler
 	private JobEntity _createMergePortalSubrepositoryJobEntity()
 		throws InvalidJSONException {
 
-		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+		JobEntityRepository jobEntityRepository =
+			Jethr0ContextUtil.getJobEntityRepository();
 
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 
@@ -279,7 +281,7 @@ public class MergeGitHubCommentEventHandler
 				gitHubPullRequest.getBaseRepositoryName(), "/",
 				gitHubPullRequest.getBaseBranchName(), "/", gitRepoFilePath));
 
-		GitHubClient gitHubClient = getGitHubClient();
+		GitHubClient gitHubClient = Jethr0ContextUtil.getGitHubClient();
 
 		Matcher gitRepoMatcher = _gitRepoPattern.matcher(
 			gitHubClient.requestGet(gitRepoFileURL));

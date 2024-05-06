@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.liferay;
 
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.queue.JobQueue;
@@ -19,7 +20,8 @@ public class UpdateJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 
 	@Override
 	public String process() {
-		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+		JobEntityRepository jobEntityRepository =
+			Jethr0ContextUtil.getJobEntityRepository();
 
 		JSONObject jobJSONObject = getJobJSONObject();
 
@@ -29,7 +31,7 @@ public class UpdateJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 		if (jobEntity != null) {
 			jobEntity.setJSONObject(jobJSONObject);
 
-			JobQueue jobQueue = getJobQueue();
+			JobQueue jobQueue = Jethr0ContextUtil.getJobQueue();
 
 			jobQueue.sort();
 		}

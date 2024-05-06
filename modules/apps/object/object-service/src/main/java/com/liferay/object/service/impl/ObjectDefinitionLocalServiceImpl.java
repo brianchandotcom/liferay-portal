@@ -179,18 +179,18 @@ public class ObjectDefinitionLocalServiceImpl
 	@Override
 	public ObjectDefinition addCustomObjectDefinition(
 			long userId, long objectFolderId, boolean enableComments,
-			boolean enableLocalization, boolean enableObjectEntryDraft,
-			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
-			boolean portlet, String scope, String storageType,
-			List<ObjectField> objectFields)
+			boolean enableIndexedSearch, boolean enableLocalization,
+			boolean enableObjectEntryDraft, Map<Locale, String> labelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
+			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
+			String storageType, List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
 			null, userId, objectFolderId, null, null, enableComments,
-			enableLocalization, enableObjectEntryDraft, labelMap, true, name,
-			panelAppOrder, panelCategoryKey, null, null, pluralLabelMap,
-			portlet, scope, storageType, false, null, 0,
+			enableIndexedSearch, enableLocalization, enableObjectEntryDraft,
+			labelMap, true, name, panelAppOrder, panelCategoryKey, null, null,
+			pluralLabelMap, portlet, scope, storageType, false, null, 0,
 			WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
@@ -273,7 +273,7 @@ public class ObjectDefinitionLocalServiceImpl
 				systemObjectDefinitionManager.getExternalReferenceCode(),
 				userId, objectFolderId,
 				systemObjectDefinitionManager.getModelClassName(),
-				table.getTableName(), false,
+				table.getTableName(), false, true,
 				systemObjectDefinitionManager.getLabelMap(), false,
 				systemObjectDefinitionManager.getName(), null, null,
 				primaryKeyColumn.getName(), primaryKeyColumn.getName(),
@@ -367,21 +367,21 @@ public class ObjectDefinitionLocalServiceImpl
 	public ObjectDefinition addSystemObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
 			String className, String dbTableName, boolean enableComments,
-			Map<Locale, String> labelMap, boolean modifiable, String name,
-			String panelAppOrder, String panelCategoryKey,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
-			String titleObjectFieldName, int version, int status,
-			List<ObjectField> objectFields)
+			boolean enableIndexedSearch, Map<Locale, String> labelMap,
+			boolean modifiable, String name, String panelAppOrder,
+			String panelCategoryKey, String pkObjectFieldDBColumnName,
+			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
+			boolean portlet, String scope, String titleObjectFieldName,
+			int version, int status, List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, className,
-			dbTableName, enableComments, false, false, labelMap, modifiable,
-			name, panelAppOrder, panelCategoryKey, pkObjectFieldDBColumnName,
-			pkObjectFieldName, pluralLabelMap, portlet, scope,
-			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true,
-			titleObjectFieldName, version, status, objectFields);
+			dbTableName, enableComments, enableIndexedSearch, false, false,
+			labelMap, modifiable, name, panelAppOrder, panelCategoryKey,
+			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap,
+			portlet, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+			true, titleObjectFieldName, version, status, objectFields);
 	}
 
 	@Override
@@ -1095,11 +1095,12 @@ public class ObjectDefinitionLocalServiceImpl
 			long descriptionObjectFieldId, long objectFolderId,
 			long titleObjectFieldId, boolean accountEntryRestricted,
 			boolean active, boolean enableCategorization,
-			boolean enableComments, boolean enableLocalization,
-			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
-			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, boolean portlet,
-			Map<Locale, String> pluralLabelMap, String scope, int status)
+			boolean enableComments, boolean enableIndexedSearch,
+			boolean enableLocalization, boolean enableObjectEntryDraft,
+			boolean enableObjectEntryHistory, Map<Locale, String> labelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
+			boolean portlet, Map<Locale, String> pluralLabelMap, String scope,
+			int status)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -1151,10 +1152,11 @@ public class ObjectDefinitionLocalServiceImpl
 			externalReferenceCode, objectDefinition,
 			accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
 			objectFolderId, titleObjectFieldId, accountEntryRestricted, active,
-			null, enableCategorization, enableComments, enableLocalization,
-			enableObjectEntryDraft, enableObjectEntryHistory, labelMap, name,
-			panelAppOrder, panelCategoryKey, portlet, null, null,
-			pluralLabelMap, scope, status);
+			null, enableCategorization, enableComments, enableIndexedSearch,
+			enableLocalization, enableObjectEntryDraft,
+			enableObjectEntryHistory, labelMap, name, panelAppOrder,
+			panelCategoryKey, portlet, null, null, pluralLabelMap, scope,
+			status);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1342,13 +1344,14 @@ public class ObjectDefinitionLocalServiceImpl
 	private ObjectDefinition _addObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
 			String className, String dbTableName, boolean enableComments,
-			boolean enableLocalization, boolean enableObjectEntryDraft,
-			Map<Locale, String> labelMap, boolean modifiable, String name,
-			String panelAppOrder, String panelCategoryKey,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
-			String storageType, boolean system, String titleObjectFieldName,
-			int version, int status, List<ObjectField> objectFields)
+			boolean enableIndexedSearch, boolean enableLocalization,
+			boolean enableObjectEntryDraft, Map<Locale, String> labelMap,
+			boolean modifiable, String name, String panelAppOrder,
+			String panelCategoryKey, String pkObjectFieldDBColumnName,
+			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
+			boolean portlet, String scope, String storageType, boolean system,
+			String titleObjectFieldName, int version, int status,
+			List<ObjectField> objectFields)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -1402,6 +1405,7 @@ public class ObjectDefinitionLocalServiceImpl
 			StringUtil.equals(
 				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 		objectDefinition.setEnableComments(enableComments);
+		objectDefinition.setEnableIndexedSearch(enableIndexedSearch);
 		objectDefinition.setEnableLocalization(enableLocalization);
 		objectDefinition.setEnableObjectEntryDraft(enableObjectEntryDraft);
 		objectDefinition.setModifiable(modifiable);
@@ -1874,12 +1878,13 @@ public class ObjectDefinitionLocalServiceImpl
 			long descriptionObjectFieldId, long objectFolderId,
 			long titleObjectFieldId, boolean accountEntryRestricted,
 			boolean active, String dbTableName, boolean enableCategorization,
-			boolean enableComments, boolean enableLocalization,
-			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
-			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, boolean portlet,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<Locale, String> pluralLabelMap, String scope, int status)
+			boolean enableComments, boolean enableIndexedSearch,
+			boolean enableLocalization, boolean enableObjectEntryDraft,
+			boolean enableObjectEntryHistory, Map<Locale, String> labelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
+			boolean portlet, String pkObjectFieldDBColumnName,
+			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
+			String scope, int status)
 		throws PortalException {
 
 		long oldObjectFolderId = objectDefinition.getObjectFolderId();
@@ -1994,6 +1999,7 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateScope(scope, objectDefinition.getStorageType());
 
 		objectDefinition.setDBTableName(dbTableName);
+		objectDefinition.setEnableIndexedSearch(enableIndexedSearch);
 		objectDefinition.setEnableLocalization(enableLocalization);
 		objectDefinition.setName(name);
 		objectDefinition.setPKObjectFieldDBColumnName(

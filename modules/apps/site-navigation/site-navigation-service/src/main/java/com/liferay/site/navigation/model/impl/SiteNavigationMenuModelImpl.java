@@ -66,12 +66,13 @@ public class SiteNavigationMenuModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"siteNavigationMenuId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"type_", Types.INTEGER},
-		{"auto_", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP}
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"siteNavigationMenuId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
+		{"type_", Types.INTEGER}, {"auto_", Types.BOOLEAN},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -81,6 +82,7 @@ public class SiteNavigationMenuModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("siteNavigationMenuId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -95,7 +97,7 @@ public class SiteNavigationMenuModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SiteNavigationMenu (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,siteNavigationMenuId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,auto_ BOOLEAN,lastPublishDate DATE null,primary key (siteNavigationMenuId, ctCollectionId))";
+		"create table SiteNavigationMenu (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,siteNavigationMenuId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,auto_ BOOLEAN,lastPublishDate DATE null,primary key (siteNavigationMenuId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SiteNavigationMenu";
 
@@ -127,32 +129,38 @@ public class SiteNavigationMenuModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPE_COLUMN_BITMASK = 16L;
+	public static final long NAME_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long TYPE_COLUMN_BITMASK = 32L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SITENAVIGATIONMENUID_COLUMN_BITMASK = 64L;
+	public static final long SITENAVIGATIONMENUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -270,6 +278,9 @@ public class SiteNavigationMenuModelImpl
 				"ctCollectionId", SiteNavigationMenu::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", SiteNavigationMenu::getUuid);
 			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				SiteNavigationMenu::getExternalReferenceCode);
+			attributeGetterFunctions.put(
 				"siteNavigationMenuId",
 				SiteNavigationMenu::getSiteNavigationMenuId);
 			attributeGetterFunctions.put(
@@ -319,6 +330,10 @@ public class SiteNavigationMenuModelImpl
 				"uuid",
 				(BiConsumer<SiteNavigationMenu, String>)
 					SiteNavigationMenu::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<SiteNavigationMenu, String>)
+					SiteNavigationMenu::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"siteNavigationMenuId",
 				(BiConsumer<SiteNavigationMenu, Long>)
@@ -427,6 +442,35 @@ public class SiteNavigationMenuModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -747,6 +791,8 @@ public class SiteNavigationMenuModelImpl
 		siteNavigationMenuImpl.setMvccVersion(getMvccVersion());
 		siteNavigationMenuImpl.setCtCollectionId(getCtCollectionId());
 		siteNavigationMenuImpl.setUuid(getUuid());
+		siteNavigationMenuImpl.setExternalReferenceCode(
+			getExternalReferenceCode());
 		siteNavigationMenuImpl.setSiteNavigationMenuId(
 			getSiteNavigationMenuId());
 		siteNavigationMenuImpl.setGroupId(getGroupId());
@@ -776,6 +822,8 @@ public class SiteNavigationMenuModelImpl
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		siteNavigationMenuImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
+		siteNavigationMenuImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		siteNavigationMenuImpl.setSiteNavigationMenuId(
 			this.<Long>getColumnOriginalValue("siteNavigationMenuId"));
 		siteNavigationMenuImpl.setGroupId(
@@ -886,6 +934,18 @@ public class SiteNavigationMenuModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			siteNavigationMenuCacheModel.uuid = null;
+		}
+
+		siteNavigationMenuCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			siteNavigationMenuCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			siteNavigationMenuCacheModel.externalReferenceCode = null;
 		}
 
 		siteNavigationMenuCacheModel.siteNavigationMenuId =
@@ -1010,6 +1070,7 @@ public class SiteNavigationMenuModelImpl
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _siteNavigationMenuId;
 	private long _groupId;
 	private long _companyId;
@@ -1057,6 +1118,8 @@ public class SiteNavigationMenuModelImpl
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
+		_columnOriginalValues.put(
 			"siteNavigationMenuId", _siteNavigationMenuId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1099,27 +1162,29 @@ public class SiteNavigationMenuModelImpl
 
 		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("siteNavigationMenuId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("siteNavigationMenuId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("name", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("type_", 2048L);
+		columnBitmasks.put("name", 2048L);
 
-		columnBitmasks.put("auto_", 4096L);
+		columnBitmasks.put("type_", 4096L);
 
-		columnBitmasks.put("lastPublishDate", 8192L);
+		columnBitmasks.put("auto_", 8192L);
+
+		columnBitmasks.put("lastPublishDate", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

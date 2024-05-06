@@ -36,32 +36,6 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.site.navigation.service.impl.SiteNavigationMenuLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static SiteNavigationMenu addSiteNavigationMenu(
-			long userId, long groupId, String name, int type, boolean auto,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addSiteNavigationMenu(
-			userId, groupId, name, type, auto, serviceContext);
-	}
-
-	public static SiteNavigationMenu addSiteNavigationMenu(
-			long userId, long groupId, String name, int type,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addSiteNavigationMenu(
-			userId, groupId, name, type, serviceContext);
-	}
-
-	public static SiteNavigationMenu addSiteNavigationMenu(
-			long userId, long groupId, String name,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addSiteNavigationMenu(
-			userId, groupId, name, serviceContext);
-	}
 
 	/**
 	 * Adds the site navigation menu to the database. Also notifies the appropriate model listeners.
@@ -77,6 +51,37 @@ public class SiteNavigationMenuLocalServiceUtil {
 		SiteNavigationMenu siteNavigationMenu) {
 
 		return getService().addSiteNavigationMenu(siteNavigationMenu);
+	}
+
+	public static SiteNavigationMenu addSiteNavigationMenu(
+			String externalReferenceCode, long userId, long groupId,
+			String name, int type, boolean auto,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addSiteNavigationMenu(
+			externalReferenceCode, userId, groupId, name, type, auto,
+			serviceContext);
+	}
+
+	public static SiteNavigationMenu addSiteNavigationMenu(
+			String externalReferenceCode, long userId, long groupId,
+			String name, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addSiteNavigationMenu(
+			externalReferenceCode, userId, groupId, name, type, serviceContext);
+	}
+
+	public static SiteNavigationMenu addSiteNavigationMenu(
+			String externalReferenceCode, long userId, long groupId,
+			String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addSiteNavigationMenu(
+			externalReferenceCode, userId, groupId, name, serviceContext);
 	}
 
 	/**
@@ -145,6 +150,14 @@ public class SiteNavigationMenuLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deleteSiteNavigationMenu(siteNavigationMenu);
+	}
+
+	public static SiteNavigationMenu deleteSiteNavigationMenu(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().deleteSiteNavigationMenu(
+			externalReferenceCode, groupId);
 	}
 
 	public static void deleteSiteNavigationMenus(long groupId)
@@ -256,6 +269,14 @@ public class SiteNavigationMenuLocalServiceUtil {
 		return getService().fetchSiteNavigationMenu(groupId, type);
 	}
 
+	public static SiteNavigationMenu
+		fetchSiteNavigationMenuByExternalReferenceCode(
+			String externalReferenceCode, long groupId) {
+
+		return getService().fetchSiteNavigationMenuByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	public static SiteNavigationMenu fetchSiteNavigationMenuByName(
 		long groupId, String name) {
 
@@ -333,6 +354,15 @@ public class SiteNavigationMenuLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getSiteNavigationMenu(siteNavigationMenuId);
+	}
+
+	public static SiteNavigationMenu
+			getSiteNavigationMenuByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getSiteNavigationMenuByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

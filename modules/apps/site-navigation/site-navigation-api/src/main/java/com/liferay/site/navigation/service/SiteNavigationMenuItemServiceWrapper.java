@@ -31,15 +31,15 @@ public class SiteNavigationMenuItemServiceWrapper
 
 	@Override
 	public SiteNavigationMenuItem addSiteNavigationMenuItem(
-			long groupId, long siteNavigationMenuId,
-			long parentSiteNavigationMenuItemId, String type,
-			String typeSettings,
+			String externalReferenceCode, long groupId,
+			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
+			String type, String typeSettings,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _siteNavigationMenuItemService.addSiteNavigationMenuItem(
-			groupId, siteNavigationMenuId, parentSiteNavigationMenuItemId, type,
-			typeSettings, serviceContext);
+			externalReferenceCode, groupId, siteNavigationMenuId,
+			parentSiteNavigationMenuItemId, type, typeSettings, serviceContext);
 	}
 
 	@Override
@@ -66,6 +66,15 @@ public class SiteNavigationMenuItemServiceWrapper
 
 		_siteNavigationMenuItemService.deleteSiteNavigationMenuItems(
 			siteNavigationMenuId);
+	}
+
+	@Override
+	public SiteNavigationMenuItem fetchSiteNavigationMenuItem(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _siteNavigationMenuItemService.fetchSiteNavigationMenuItem(
+			externalReferenceCode, groupId);
 	}
 
 	/**

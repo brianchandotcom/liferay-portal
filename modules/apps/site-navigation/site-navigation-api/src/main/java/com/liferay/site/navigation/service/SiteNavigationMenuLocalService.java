@@ -63,20 +63,6 @@ public interface SiteNavigationMenuLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.site.navigation.service.impl.SiteNavigationMenuLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the site navigation menu local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SiteNavigationMenuLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public SiteNavigationMenu addSiteNavigationMenu(
-			long userId, long groupId, String name, int type, boolean auto,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public SiteNavigationMenu addSiteNavigationMenu(
-			long userId, long groupId, String name, int type,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public SiteNavigationMenu addSiteNavigationMenu(
-			long userId, long groupId, String name,
-			ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	 * Adds the site navigation menu to the database. Also notifies the appropriate model listeners.
@@ -91,6 +77,21 @@ public interface SiteNavigationMenuLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public SiteNavigationMenu addSiteNavigationMenu(
 		SiteNavigationMenu siteNavigationMenu);
+
+	public SiteNavigationMenu addSiteNavigationMenu(
+			String externalReferenceCode, long userId, long groupId,
+			String name, int type, boolean auto, ServiceContext serviceContext)
+		throws PortalException;
+
+	public SiteNavigationMenu addSiteNavigationMenu(
+			String externalReferenceCode, long userId, long groupId,
+			String name, int type, ServiceContext serviceContext)
+		throws PortalException;
+
+	public SiteNavigationMenu addSiteNavigationMenu(
+			String externalReferenceCode, long userId, long groupId,
+			String name, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException
@@ -146,6 +147,10 @@ public interface SiteNavigationMenuLocalService
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SiteNavigationMenu deleteSiteNavigationMenu(
 			SiteNavigationMenu siteNavigationMenu)
+		throws PortalException;
+
+	public SiteNavigationMenu deleteSiteNavigationMenu(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	public void deleteSiteNavigationMenus(long groupId) throws PortalException;
@@ -233,6 +238,10 @@ public interface SiteNavigationMenuLocalService
 	public SiteNavigationMenu fetchSiteNavigationMenu(long groupId, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SiteNavigationMenu fetchSiteNavigationMenuByExternalReferenceCode(
+		String externalReferenceCode, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SiteNavigationMenu fetchSiteNavigationMenuByName(
 		long groupId, String name);
 
@@ -284,6 +293,11 @@ public interface SiteNavigationMenuLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SiteNavigationMenu getSiteNavigationMenu(long siteNavigationMenuId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SiteNavigationMenu getSiteNavigationMenuByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

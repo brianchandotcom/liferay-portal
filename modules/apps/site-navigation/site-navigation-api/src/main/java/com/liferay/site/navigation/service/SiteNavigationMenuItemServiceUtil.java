@@ -32,15 +32,15 @@ public class SiteNavigationMenuItemServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.site.navigation.service.impl.SiteNavigationMenuItemServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static SiteNavigationMenuItem addSiteNavigationMenuItem(
-			long groupId, long siteNavigationMenuId,
-			long parentSiteNavigationMenuItemId, String type,
-			String typeSettings,
+			String externalReferenceCode, long groupId,
+			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
+			String type, String typeSettings,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addSiteNavigationMenuItem(
-			groupId, siteNavigationMenuId, parentSiteNavigationMenuItemId, type,
-			typeSettings, serviceContext);
+			externalReferenceCode, groupId, siteNavigationMenuId,
+			parentSiteNavigationMenuItemId, type, typeSettings, serviceContext);
 	}
 
 	public static SiteNavigationMenuItem deleteSiteNavigationMenuItem(
@@ -63,6 +63,14 @@ public class SiteNavigationMenuItemServiceUtil {
 		throws PortalException {
 
 		getService().deleteSiteNavigationMenuItems(siteNavigationMenuId);
+	}
+
+	public static SiteNavigationMenuItem fetchSiteNavigationMenuItem(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().fetchSiteNavigationMenuItem(
+			externalReferenceCode, groupId);
 	}
 
 	/**

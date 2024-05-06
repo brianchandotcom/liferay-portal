@@ -48,33 +48,6 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 				serviceContext);
 	}
 
-	@Override
-	public SiteNavigationMenuItem addSiteNavigationMenuItem(
-			long userId, long groupId, long siteNavigationMenuId,
-			long parentSiteNavigationMenuItemId, String type, int order,
-			String typeSettings,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-			userId, groupId, siteNavigationMenuId,
-			parentSiteNavigationMenuItemId, type, order, typeSettings,
-			serviceContext);
-	}
-
-	@Override
-	public SiteNavigationMenuItem addSiteNavigationMenuItem(
-			long userId, long groupId, long siteNavigationMenuId,
-			long parentSiteNavigationMenuItemId, String type,
-			String typeSettings,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-			userId, groupId, siteNavigationMenuId,
-			parentSiteNavigationMenuItemId, type, typeSettings, serviceContext);
-	}
-
 	/**
 	 * Adds the site navigation menu item to the database. Also notifies the appropriate model listeners.
 	 *
@@ -91,6 +64,33 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 
 		return _siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
 			siteNavigationMenuItem);
+	}
+
+	@Override
+	public SiteNavigationMenuItem addSiteNavigationMenuItem(
+			String externalReferenceCode, long userId, long groupId,
+			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
+			String type, int order, String typeSettings,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+			externalReferenceCode, userId, groupId, siteNavigationMenuId,
+			parentSiteNavigationMenuItemId, type, order, typeSettings,
+			serviceContext);
+	}
+
+	@Override
+	public SiteNavigationMenuItem addSiteNavigationMenuItem(
+			String externalReferenceCode, long userId, long groupId,
+			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
+			String type, String typeSettings,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+			externalReferenceCode, userId, groupId, siteNavigationMenuId,
+			parentSiteNavigationMenuItemId, type, typeSettings, serviceContext);
 	}
 
 	/**
@@ -176,6 +176,15 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 
 		return _siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
 			siteNavigationMenuItem);
+	}
+
+	@Override
+	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
+			externalReferenceCode, groupId);
 	}
 
 	@Override

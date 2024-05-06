@@ -7,6 +7,7 @@ package com.liferay.site.navigation.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
@@ -30,7 +31,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SiteNavigationMenuModel
 	extends BaseModel<SiteNavigationMenu>, CTModel<SiteNavigationMenu>,
-			MVCCModel, ShardedModel, StagedGroupedModel {
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
+			StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -102,6 +104,23 @@ public interface SiteNavigationMenuModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this site navigation menu.
+	 *
+	 * @return the external reference code of this site navigation menu
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this site navigation menu.
+	 *
+	 * @param externalReferenceCode the external reference code of this site navigation menu
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the site navigation menu ID of this site navigation menu.

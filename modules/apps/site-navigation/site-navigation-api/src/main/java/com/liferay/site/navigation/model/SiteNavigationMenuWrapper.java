@@ -39,6 +39,7 @@ public class SiteNavigationMenuWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("siteNavigationMenuId", getSiteNavigationMenuId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -72,6 +73,13 @@ public class SiteNavigationMenuWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long siteNavigationMenuId = (Long)attributes.get(
@@ -185,6 +193,16 @@ public class SiteNavigationMenuWrapper
 	@Override
 	public long getCtCollectionId() {
 		return model.getCtCollectionId();
+	}
+
+	/**
+	 * Returns the external reference code of this site navigation menu.
+	 *
+	 * @return the external reference code of this site navigation menu
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -370,6 +388,16 @@ public class SiteNavigationMenuWrapper
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Sets the external reference code of this site navigation menu.
+	 *
+	 * @param externalReferenceCode the external reference code of this site navigation menu
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

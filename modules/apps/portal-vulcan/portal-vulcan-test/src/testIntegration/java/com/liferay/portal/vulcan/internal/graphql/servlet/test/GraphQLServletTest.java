@@ -633,7 +633,7 @@ public class GraphQLServletTest {
 		}
 
 		public String getExtendedString() {
-			return _extendedString + " " + version + " version";
+			return _extendedString;
 		}
 
 		public long getId() {
@@ -698,7 +698,7 @@ public class GraphQLServletTest {
 		}
 
 		public String getExtendedString() {
-			return _extendedString + " " + version +" version";
+			return _extendedString;
 		}
 
 		public long getId() {

@@ -30,6 +30,8 @@ export default function useGetListItemsFromMDFRequests(
 	const listItems = useMemo(
 		() =>
 			swrResponse.data?.items?.map((item) => ({
+				[MDFColumnKey.ACCOUNT_ENTRY_ID]:
+					item.r_accToMDFReqs_accountEntryId,
 				[MDFColumnKey.BALANCE]: Number(item.totalPaidAmount)
 					? getIntlNumberFormat(item.currency).format(
 							Number(item.totalClaimedRequest) -

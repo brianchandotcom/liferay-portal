@@ -10,7 +10,6 @@ import AppToolbar from '../../../../../components/AppToolbar/AppToolbar';
 import {useAccount} from '../../../../../hooks/data/useAccounts';
 
 import './PublishSolutionOutlet.scss';
-import {SOLUTION_FLOW_ITEMS} from '../constants';
 
 import 'react-quill/dist/quill.snow.css';
 import {useModal} from '@clayui/modal';
@@ -35,6 +34,7 @@ const PublishSolutionOutlet = () => {
 		onClickContinue,
 		onClickPrevious,
 		onExit,
+		publishSolutionSteps,
 	} = usePublishSolutionNavigation();
 
 	const {onSaveAsDraft} = usePublishSolutionSubmission(context, dispatch);
@@ -74,26 +74,30 @@ const PublishSolutionOutlet = () => {
 					onClick: onSaveAsDraft,
 				}}
 			/>
+			<details>
+				<pre>{JSON.stringify(context._product, null, 2)}</pre>
+			</details>
 
 			<hr />
 
 			<div className="d-flex justify-content-center mt-8">
 				<PublishNav
 					activeIndex={activeIndex}
-					items={SOLUTION_FLOW_ITEMS}
+					items={publishSolutionSteps}
 				/>
 
 				<div className="ml-8 solutions-body-container">
 					<h1 className="header-title mb-4">{activeRoute.title}</h1>
-
 					{activeRoute.description}
+
+					<details>
+						<pre>{JSON.stringify(context.profile, null, 2)}</pre>
+					</details>
 
 					<div className="mt-6 solutions-form">
 						<Outlet />
 					</div>
-
 					<hr className="my-6" />
-
 					<div className="d-flex justify-content-end">
 						{activeIndex !== 0 && (
 							<ClayButton

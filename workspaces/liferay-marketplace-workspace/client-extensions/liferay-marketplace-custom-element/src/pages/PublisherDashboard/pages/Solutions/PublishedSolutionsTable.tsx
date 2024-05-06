@@ -70,7 +70,11 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 			Actions={({row}) => (
 				<TableKebabButton
 					items={[
-						{disabled: true, label: i18n.translate('edit')},
+						{
+							label: i18n.translate('edit'),
+							onClick: () =>
+								navigate(`${row.productId}/publisher/profile`),
+						},
 						{
 							label: i18n.translate('delete'),
 							onClick: () => handleDeleteSolution(row),

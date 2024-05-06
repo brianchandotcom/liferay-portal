@@ -12,10 +12,16 @@ const usePublishSolutionNavigation = () => {
 	const navigate = useNavigate();
 	const {id} = useParams();
 
-	const paths = location.pathname.split('/');
-	const lastPath = paths.at(id ? -2 : -1);
+	const [, ..._publishSolutionSteps] = SOLUTION_FLOW_ITEMS;
 
-	let activeIndex = SOLUTION_FLOW_ITEMS.findIndex(
+	const publishSolutionSteps = id
+		? _publishSolutionSteps
+		: SOLUTION_FLOW_ITEMS;
+
+	const paths = location.pathname.split('/');
+	const lastPath = paths.at(-1);
+
+	let activeIndex = publishSolutionSteps.findIndex(
 		({path}) => path === lastPath
 	);
 
@@ -24,14 +30,14 @@ const usePublishSolutionNavigation = () => {
 	}
 
 	const activeRoute =
-		SOLUTION_FLOW_ITEMS[activeIndex] || SOLUTION_FLOW_ITEMS[0];
+		publishSolutionSteps[activeIndex] || publishSolutionSteps[0];
 
 	const onClickPrevious = () => {
-		navigate(SOLUTION_FLOW_ITEMS[activeIndex - 1].path);
+		navigate(publishSolutionSteps[activeIndex - 1].path);
 	};
 
 	const onClickContinue = () => {
-		navigate(SOLUTION_FLOW_ITEMS[activeIndex + 1].path);
+		navigate(publishSolutionSteps[activeIndex + 1].path);
 	};
 
 	const onExit = () => navigate('../solutions');
@@ -42,6 +48,7 @@ const usePublishSolutionNavigation = () => {
 		onClickContinue,
 		onClickPrevious,
 		onExit,
+		publishSolutionSteps,
 	};
 };
 

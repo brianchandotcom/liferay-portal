@@ -4,6 +4,7 @@
  */
 
 import {UploadedImage} from '../../components/FileList/FileList';
+import {axios} from '../../utils/axios';
 import fetcher from '../fetcher';
 
 class HeadlessCommerceAdminCatalog {
@@ -14,6 +15,23 @@ class HeadlessCommerceAdminCatalog {
 		return fetcher.post(
 			`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${externalReferenceCode}/images`,
 			image
+		);
+	}
+
+	async createProductImageByExternalReferenceCodeAxios(
+		externalReferenceCode: string,
+		body: unknown,
+		onUploadProgressCallback: (progress: number) => void = () => null
+	) {
+		return axios.post(
+			`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${externalReferenceCode}/images`,
+			body,
+			{
+				onUploadProgress: (event) =>
+					onUploadProgressCallback(
+						Math.round((event.loaded * 100) / Number(event.total))
+					),
+			}
 		);
 	}
 

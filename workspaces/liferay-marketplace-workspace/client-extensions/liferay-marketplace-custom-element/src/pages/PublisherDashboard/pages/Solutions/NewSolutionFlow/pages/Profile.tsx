@@ -15,7 +15,6 @@ import {
 	useSolutionContext,
 } from '../../../../../../context/SolutionContext';
 import {ProductVocabulary} from '../../../../../../enums/ProductVocabulary';
-import {useGetVocabulariesAndCategories} from '../../../../../../hooks/data/useGetVocabulariesAndCategories';
 import i18n from '../../../../../../i18n';
 import {getIconSpriteMap} from '../../../../../../liferay/constants';
 
@@ -38,18 +37,18 @@ const Profile = () => {
 	const [
 		{
 			profile: {categories, description, file, name, tags},
+			references: {vocabulariesAndCategories},
 		},
 		dispatch,
 	] = useSolutionContext();
 
-	const {data = {}, isLoading} = useGetVocabulariesAndCategories([
-		ProductVocabulary.SOLUTION_CATEGORY,
-		ProductVocabulary.SOLUTION_TAGS,
-	]);
-
 	const defaultSourceItems = {
-		categories: data[ProductVocabulary.SOLUTION_CATEGORY]?.categories ?? [],
-		tags: data[ProductVocabulary.SOLUTION_TAGS]?.categories ?? [],
+		categories:
+			vocabulariesAndCategories[ProductVocabulary.SOLUTION_CATEGORY]
+				?.categories ?? [],
+		tags:
+			vocabulariesAndCategories[ProductVocabulary.SOLUTION_TAGS]
+				?.categories ?? [],
 	};
 
 	const [multiSelectText, setMultiSelectText] = useState({
@@ -160,79 +159,77 @@ const Profile = () => {
 				value={description}
 			/>
 
-			{!isLoading && (
-				<div className="form-multiselect">
-					<Form.Label
-						className="mt-5"
-						htmlFor="categories"
-						info={tooltipInfo.categories}
-						required
-					>
-						{i18n.translate('categories')}
-					</Form.Label>
+			<div className="form-multiselect">
+				<Form.Label
+					className="mt-5"
+					htmlFor="categories"
+					info={tooltipInfo.categories}
+					required
+				>
+					{i18n.translate('categories')}
+				</Form.Label>
 
-					<ClayMultiSelect
-						{...{placeholder: 'Select categories'}}
-						inputName="description-selector"
-						items={categories}
-						key={`cat-${categories.length}`}
-						onChange={(value: string) =>
-							onChangeMultiSelect({
-								target: {
-									name: 'categories',
-									value,
-								},
-							})
-						}
-						onItemsChange={(value: {[key: string]: string}[]) =>
-							onChange({
-								target: {name: 'categories', value},
-							})
-						}
-						sourceItems={getFilteredItems(
-							categories,
-							defaultSourceItems?.categories
-						)}
-						spritemap={getIconSpriteMap()}
-						value={multiSelectText?.categories}
-					/>
+				<ClayMultiSelect
+					{...{placeholder: 'Select categories'}}
+					inputName="description-selector"
+					items={categories}
+					key={`cat-${categories.length}`}
+					onChange={(value: string) =>
+						onChangeMultiSelect({
+							target: {
+								name: 'categories',
+								value,
+							},
+						})
+					}
+					onItemsChange={(value: {[key: string]: string}[]) =>
+						onChange({
+							target: {name: 'categories', value},
+						})
+					}
+					sourceItems={getFilteredItems(
+						categories,
+						defaultSourceItems?.categories
+					)}
+					spritemap={getIconSpriteMap()}
+					value={multiSelectText?.categories}
+				/>
 
-					<Form.Label
-						className="mt-5"
-						htmlFor="tags"
-						info={tooltipInfo.tags}
-						required
-					>
-						{i18n.translate('tags')}
-					</Form.Label>
+				<Form.Label
+					className="mt-5"
+					htmlFor="tags"
+					info={tooltipInfo.tags}
+					required
+				>
+					{i18n.translate('tags')}
+				</Form.Label>
 
-					<ClayMultiSelect
-						{...{placeholder: 'Select tags'}}
-						inputName="tags-selector"
-						items={tags}
-						key={`tags-${tags.length}`}
-						onChange={(value: string) =>
-							onChangeMultiSelect({
-								target: {
-									name: 'tags',
-									value,
-								},
-							})
-						}
-						onItemsChange={(value: {[key: string]: string}[]) =>
-							onChange({
-								target: {name: 'tags', value},
-							})
-						}
-						sourceItems={getFilteredItems(
-							tags,
-							defaultSourceItems?.tags
-						)}
-						spritemap={getIconSpriteMap()}
-						value={multiSelectText?.tags}
-					/>
-				</div>
-			)}
+				<ClayMultiSelect
+					{...{placeholder: 'Select tags'}}
+					inputName="tags-selector"
+					items={tags}
+					key={`tags-${tags.length}`}
+					onChange={(value: string) =>
+						onChangeMultiSelect({
+							target: {
+								name: 'tags',
+								value,
+							},
+						})
+					}
+					onItemsChange={(value: {[key: string]: string}[]) =>
+						onChange({
+							target: {name: 'tags', value},
+						})
+					}
+					sourceItems={getFilteredItems(
+						tags,
+						defaultSourceItems?.tags
+					)}
+					spritemap={getIconSpriteMap()}
+					value={multiSelectText?.tags}
+				/>
+			</div>
 		</div>
 	);
 };

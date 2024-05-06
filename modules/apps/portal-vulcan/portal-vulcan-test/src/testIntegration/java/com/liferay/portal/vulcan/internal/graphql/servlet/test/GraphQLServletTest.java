@@ -75,22 +75,22 @@ public class GraphQLServletTest {
 
 		_testDTOV1 = new TestDTOV1();
 
-		TestServletDataV1 testServletData = new TestServletDataV1(_testDTOV1);
+		TestServletDataV1 testServletDataV1 = new TestServletDataV1(_testDTOV1);
 
 		_testDTOV2 = new TestDTOV2();
 
 		TestServletDataV2 testServletDataV2 = new TestServletDataV2(_testDTOV2);
 
-		_serviceRegistrationV1 = bundleContext.registerService(
-			ServletData.class, testServletData, null);
-		_serviceRegistrationV2 = bundleContext.registerService(
+		_serviceRegistration1 = bundleContext.registerService(
+			ServletData.class, testServletDataV1, null);
+		_serviceRegistration2 = bundleContext.registerService(
 			ServletData.class, testServletDataV2, null);
 	}
 
 	@After
 	public void tearDown() {
-		_serviceRegistrationV1.unregister();
-		_serviceRegistrationV2.unregister();
+		_serviceRegistration1.unregister();
+		_serviceRegistration2.unregister();
 	}
 
 	@Test
@@ -184,7 +184,8 @@ public class GraphQLServletTest {
 						new GraphQLField(
 							"testDTO", new GraphQLField("extendedString"),
 							new GraphQLField("id"), new GraphQLField("map"),
-							new GraphQLField("string"), new GraphQLField("version"))),
+							new GraphQLField("string"),
+							new GraphQLField("version"))),
 					"query"),
 				"JSONObject/data", "JSONObject/testPath_v1_0",
 				"JSONObject/testDTO"));
@@ -303,7 +304,8 @@ public class GraphQLServletTest {
 					new GraphQLField(
 						"testDTO", new GraphQLField("extendedString"),
 						new GraphQLField("id"), new GraphQLField("map"),
-						new GraphQLField("string"), new GraphQLField("version")),
+						new GraphQLField("string"),
+						new GraphQLField("version")),
 					"query"),
 				"JSONObject/data", "JSONObject/testDTO"));
 
@@ -606,8 +608,6 @@ public class GraphQLServletTest {
 
 	public static class TestDTOV1 {
 
-		final double version = 1.0;
-
 		public TestDTOV1() {
 			this(
 				RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
@@ -644,10 +644,6 @@ public class GraphQLServletTest {
 			return map;
 		}
 
-		public String getOneVersionOnly() {
-			return "1.0 only text";
-		}
-
 		public String getString() {
 			return string;
 		}
@@ -665,13 +661,14 @@ public class GraphQLServletTest {
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
 		protected String string;
 
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		protected int version = 1;
+
 		private String _extendedString;
 
 	}
 
 	public static class TestDTOV2 {
-
-		final double version = 2.0;
 
 		public TestDTOV2() {
 			this(
@@ -713,10 +710,6 @@ public class GraphQLServletTest {
 			return string;
 		}
 
-		public String getTwoVersionOnly() {
-			return "2.0 only text";
-		}
-
 		public double getVersion() {
 			return version;
 		}
@@ -729,6 +722,9 @@ public class GraphQLServletTest {
 
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
 		protected String string;
+
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		protected int version = 2;
 
 		private String _extendedString;
 
@@ -799,11 +795,6 @@ public class GraphQLServletTest {
 				return _testDTO.getExtendedString();
 			}
 
-			@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-			public String oneVersionOnly() {
-				return _testDTO.getOneVersionOnly();
-			}
-
 			private final TestDTOV1 _testDTO;
 
 		}
@@ -815,13 +806,13 @@ public class GraphQLServletTest {
 
 	public static class TestQueryV2 {
 
-		public TestQueryV2(TestDTOV2 testDTO) {
-			_testDTO = testDTO;
+		public TestQueryV2(TestDTOV2 testDTOV2) {
+			_testDTOV2 = testDTOV2;
 		}
 
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
 		public TestDTOV2 testDTO() {
-			return _testDTO;
+			return _testDTOV2;
 		}
 
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
@@ -857,17 +848,12 @@ public class GraphQLServletTest {
 				return _testDTO.getExtendedString();
 			}
 
-			@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-			public String twoVersionOnly() {
-				return _testDTO.getTwoVersionOnly();
-			}
-
 			private final TestDTOV2 _testDTO;
 
 		}
 
-		private static TestDTOV2 _testDTO;
 		private static TestDTOPage _testDTOPage;
+		private static TestDTOV2 _testDTOV2;
 
 	}
 
@@ -931,8 +917,8 @@ public class GraphQLServletTest {
 
 	public class TestServletDataV1 implements ServletData {
 
-		public TestServletDataV1(TestDTOV1 testDTO) {
-			_testQuery = new TestQueryV1(testDTO);
+		public TestServletDataV1(TestDTOV1 testDTOV1) {
+			_testQueryV1 = new TestQueryV1(testDTOV1);
 		}
 
 		@Override
@@ -942,7 +928,7 @@ public class GraphQLServletTest {
 
 		@Override
 		public Object getMutation() {
-			return _testMutation;
+			return _testMutationV1;
 		}
 
 		@Override
@@ -952,7 +938,7 @@ public class GraphQLServletTest {
 
 		@Override
 		public TestQueryV1 getQuery() {
-			return _testQuery;
+			return _testQueryV1;
 		}
 
 		@Override
@@ -960,15 +946,15 @@ public class GraphQLServletTest {
 			return false;
 		}
 
-		private final TestMutationV1 _testMutation = new TestMutationV1();
-		private final TestQueryV1 _testQuery;
+		private final TestMutationV1 _testMutationV1 = new TestMutationV1();
+		private final TestQueryV1 _testQueryV1;
 
 	}
 
 	public class TestServletDataV2 implements ServletData {
 
 		public TestServletDataV2(TestDTOV2 testDTO) {
-			_testQuery = new TestQueryV2(testDTO);
+			_testQueryV2 = new TestQueryV2(testDTO);
 		}
 
 		@Override
@@ -978,7 +964,7 @@ public class GraphQLServletTest {
 
 		@Override
 		public Object getMutation() {
-			return _testMutation;
+			return _testMutationV2;
 		}
 
 		@Override
@@ -988,7 +974,7 @@ public class GraphQLServletTest {
 
 		@Override
 		public TestQueryV2 getQuery() {
-			return _testQuery;
+			return _testQueryV2;
 		}
 
 		@Override
@@ -996,8 +982,8 @@ public class GraphQLServletTest {
 			return false;
 		}
 
-		private final TestMutationV2 _testMutation = new TestMutationV2();
-		private final TestQueryV2 _testQuery;
+		private final TestMutationV2 _testMutationV2 = new TestMutationV2();
+		private final TestQueryV2 _testQueryV2;
 
 	}
 
@@ -1049,6 +1035,7 @@ public class GraphQLServletTest {
 			JSONUtil.toStringMap(jsonObject.getJSONObject("map")));
 		Assert.assertEquals(
 			expectedTestDTO.getString(), jsonObject.get("string"));
+		Assert.assertEquals(1, jsonObject.getInt("version"));
 	}
 
 	private void _assertEqualsV2(
@@ -1067,6 +1054,7 @@ public class GraphQLServletTest {
 			JSONUtil.toStringMap(jsonObject.getJSONObject("map")));
 		Assert.assertEquals(
 			expectedTestDTO.getString(), jsonObject.get("string"));
+		Assert.assertEquals(2, jsonObject.getInt("version"));
 	}
 
 	private void _assertGraphQLSchemaField(
@@ -1165,7 +1153,9 @@ public class GraphQLServletTest {
 	private String _toGraphQLString(Object objectDTO) throws Exception {
 		StringBuilder sb = new StringBuilder("{");
 
-		for (Field field : ReflectionUtil.getDeclaredFields(objectDTO.getClass())) {
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(objectDTO.getClass())) {
+
 			if (ArrayUtil.isEmpty(
 					field.getAnnotationsByType(
 						com.liferay.portal.vulcan.graphql.annotation.
@@ -1192,8 +1182,8 @@ public class GraphQLServletTest {
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
-	private ServiceRegistration<ServletData> _serviceRegistrationV1;
-	private ServiceRegistration<ServletData> _serviceRegistrationV2;
+	private ServiceRegistration<ServletData> _serviceRegistration1;
+	private ServiceRegistration<ServletData> _serviceRegistration2;
 	private TestDTOV1 _testDTOV1;
 	private TestDTOV2 _testDTOV2;
 

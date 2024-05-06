@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
+import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.search.test.util.AssertUtils;
-import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 

@@ -1220,9 +1220,11 @@ public abstract class Base${schemaName}ResourceImpl
 	}
 
 	public void setContextHttpServletRequest(HttpServletRequest contextHttpServletRequest) {
-		if ((contextHttpServletRequest != null) && (contextHttpServletRequest.getAttribute(WebKeys.CTX) == null)) {
-			contextHttpServletRequest.setAttribute(WebKeys.CTX, ServletContextPool.get(StringPool.BLANK));
-		}
+		<#if !freeMarkerTool.isVersionCompatible(configYAML, 6)>
+			if ((contextHttpServletRequest != null) && (contextHttpServletRequest.getAttribute(WebKeys.CTX) == null)) {
+				contextHttpServletRequest.setAttribute(WebKeys.CTX, ServletContextPool.get(StringPool.BLANK));
+			}
+		</#if>
 
 		this.contextHttpServletRequest = contextHttpServletRequest;
 	}

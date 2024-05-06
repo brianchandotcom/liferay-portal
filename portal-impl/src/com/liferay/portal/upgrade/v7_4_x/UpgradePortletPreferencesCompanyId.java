@@ -23,7 +23,8 @@ public class UpgradePortletPreferencesCompanyId
 				"update PortletPreferenceValue set companyId = (select ",
 				"PortletPreferences.companyId from PortletPreferences where ",
 				"PortletPreferences.portletPreferencesId = ",
-				"PortletPreferenceValue.portletPreferencesId)"));
+				"PortletPreferenceValue.portletPreferencesId) where companyId ",
+				"is null or companyId = 0"));
 	}
 
 	@Override

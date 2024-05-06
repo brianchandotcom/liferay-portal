@@ -6,6 +6,7 @@
 package com.liferay.fragment.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.exception.DuplicateFragmentCollectionExternalReferenceCodeException;
 import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
@@ -21,6 +22,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -105,6 +108,24 @@ public class FragmentCollectionLocalServiceTest {
 		FragmentTestUtil.addFragmentCollection(_group.getGroupId(), null);
 	}
 
+	@Test(
+		expected = DuplicateFragmentCollectionExternalReferenceCodeException.class
+	)
+	public void testAddLayoutPageTemplateCollectionWithExistingExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		_fragmentCollectionLocalService.addFragmentCollection(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_fragmentCollectionLocalService.addFragmentCollection(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
 	@Test
 	public void testAddMultipleFragmentCollections() throws PortalException {
 		int originalFragmentCollectionsCount =
@@ -166,6 +187,26 @@ public class FragmentCollectionLocalServiceTest {
 		Assert.assertNull(
 			_fragmentCollectionLocalService.fetchFragmentCollection(
 				fragmentCollection.getFragmentCollectionId()));
+	}
+
+	@Test
+	public void testDeleteLayoutPageTemplateCollectionByExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		_fragmentCollectionLocalService.addFragmentCollection(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_fragmentCollectionLocalService.deleteFragmentCollection(
+			externalReferenceCode, _group.getGroupId());
+
+		Assert.assertNull(
+			_fragmentCollectionLocalService.
+				fetchFragmentCollectionByExternalReferenceCode(
+					externalReferenceCode, _group.getGroupId()));
 	}
 
 	@Test

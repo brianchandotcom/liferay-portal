@@ -14,10 +14,10 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.solr8.internal.SolrUnitTestRequirements;
 import com.liferay.portal.search.solr8.internal.indexing.SolrIndexingFixture;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.document.BulkDocumentRequestExecutorImpl;
+import com.liferay.portal.search.test.rule.logging.ExpectedLogMethodTestRule;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.logging.ExpectedLog;
-import com.liferay.portal.search.test.util.logging.ExpectedLogMethodTestRule;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;

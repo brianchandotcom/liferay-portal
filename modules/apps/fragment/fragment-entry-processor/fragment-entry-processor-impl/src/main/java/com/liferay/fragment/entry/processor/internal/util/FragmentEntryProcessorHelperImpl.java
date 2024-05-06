@@ -266,7 +266,29 @@ public class FragmentEntryProcessorHelperImpl
 				return StringPool.BLANK;
 			}
 
-			return _getRestrictedContentMessage(fragmentEntryProcessorContext);
+			AlertTag alertTag = new AlertTag();
+
+			alertTag.setDefaultTitleDisabled(true);
+			alertTag.setDisplayType("secondary");
+			alertTag.setMessage(
+				_language.get(
+					fragmentEntryProcessorContext.getHttpServletRequest(),
+					"this-content-cannot-be-displayed-due-to-permission-" +
+						"restrictions"));
+			alertTag.setSymbol("password-policies");
+
+			try {
+				return alertTag.doTagAsString(
+					fragmentEntryProcessorContext.getHttpServletRequest(),
+					fragmentEntryProcessorContext.getHttpServletResponse());
+			}
+			catch (JspException jspException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(jspException);
+				}
+			}
+
+			return StringPool.BLANK;
 		}
 
 		JSONObject configJSONObject = editableValueJSONObject.getJSONObject(
@@ -790,34 +812,6 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return new InfoItemMappedField(fieldName, infoItemReference, object);
-	}
-
-	private String _getRestrictedContentMessage(
-		FragmentEntryProcessorContext fragmentEntryProcessorContext) {
-
-		AlertTag alertTag = new AlertTag();
-
-		alertTag.setDefaultTitleDisabled(true);
-		alertTag.setDisplayType("secondary");
-		alertTag.setMessage(
-			_language.get(
-				fragmentEntryProcessorContext.getHttpServletRequest(),
-				"this-content-cannot-be-displayed-due-to-permission-" +
-					"restrictions"));
-		alertTag.setSymbol("password-policies");
-
-		try {
-			return alertTag.doTagAsString(
-				fragmentEntryProcessorContext.getHttpServletRequest(),
-				fragmentEntryProcessorContext.getHttpServletResponse());
-		}
-		catch (JspException jspException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jspException);
-			}
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private String _getShortTimeStylePattern(Locale locale) {

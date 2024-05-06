@@ -173,6 +173,16 @@ public class ObjectDefinitionSerDes {
 			sb.append(objectDefinition.getEnableComments());
 		}
 
+		if (objectDefinition.getEnableIndexedSearch() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enableIndexedSearch\": ");
+
+			sb.append(objectDefinition.getEnableIndexedSearch());
+		}
+
 		if (objectDefinition.getEnableLocalization() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -676,6 +686,15 @@ public class ObjectDefinitionSerDes {
 				String.valueOf(objectDefinition.getEnableComments()));
 		}
 
+		if (objectDefinition.getEnableIndexedSearch() == null) {
+			map.put("enableIndexedSearch", null);
+		}
+		else {
+			map.put(
+				"enableIndexedSearch",
+				String.valueOf(objectDefinition.getEnableIndexedSearch()));
+		}
+
 		if (objectDefinition.getEnableLocalization() == null) {
 			map.put("enableLocalization", null);
 		}
@@ -986,6 +1005,14 @@ public class ObjectDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "enableComments")) {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setEnableComments(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "enableIndexedSearch")) {
+
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setEnableIndexedSearch(
 						(Boolean)jsonParserFieldValue);
 				}
 			}

@@ -103,9 +103,11 @@ export class ViewObjectDefinitionsPage {
 	}
 
 	async editObjectDefinitionFDSLink(objectDefinitionLabel: string) {
-		await this.frontendDataSetEntries.filter({
-			hasText: objectDefinitionLabel
-		}).click();
+		await this.frontendDataSetEntries
+			.filter({
+				hasText: objectDefinitionLabel,
+			})
+			.click();
 	}
 
 	getObjectFolderCardHeaderERC = (objectFolderERC: string) => {

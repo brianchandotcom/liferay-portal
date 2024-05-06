@@ -68,7 +68,7 @@
 																"fieldKey": "AssetCategory_vocabulary",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": "[$CAPABILITY#DEVELOPMENT-AND-TOOLING$]"
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/development-and-tooling.json$]"
 																}
 															}
 														}
@@ -171,7 +171,7 @@
 																		"fieldKey": "AssetCategory_name",
 																		"itemReference": {
 																			"className": "com.liferay.asset.kernel.model.AssetCategory",
-																			"classPK": "[$CAPABILITY#DEVELOPMENT-AND-TOOLING$]"
+																			"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/development-and-tooling.json$]"
 																		}
 																	}
 																}
@@ -260,7 +260,7 @@
 												"fieldKey": "AssetCategory_description",
 												"itemReference": {
 													"className": "com.liferay.asset.kernel.model.AssetCategory",
-													"classPK": "[$CAPABILITY#DEVELOPMENT-AND-TOOLING$]"
+													"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/development-and-tooling.json$]"
 												}
 											}
 										}
@@ -469,7 +469,7 @@
 													"federatedSearchKey": "",
 													"filterField": "assetCategoryIds",
 													"filterQueryType": "match",
-													"filterValue": "[$CAPABILITY#DEVELOPMENT-AND-TOOLING$]",
+													"filterValue": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/development-and-tooling.json$]",
 													"immutable": "true",
 													"invisible": "true",
 													"occur": "filter",

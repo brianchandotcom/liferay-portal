@@ -68,7 +68,7 @@
 																"fieldKey": "AssetCategory_vocabulary",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": "[$CAPABILITY#DXP-SELF-HOSTED-INSTALLATION-MAINTENANCE-AND-ADMINISTRATION$]"
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/dxp-self-hosted-installation-maintenance-and-administration.json$]"
 																}
 															}
 														}
@@ -171,7 +171,7 @@
 																		"fieldKey": "AssetCategory_name",
 																		"itemReference": {
 																			"className": "com.liferay.asset.kernel.model.AssetCategory",
-																			"classPK": "[$CAPABILITY#DXP-SELF-HOSTED-INSTALLATION-MAINTENANCE-AND-ADMINISTRATION$]"
+																			"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/dxp-self-hosted-installation-maintenance-and-administration.json$]"
 																		}
 																	}
 																}
@@ -260,7 +260,7 @@
 												"fieldKey": "AssetCategory_description",
 												"itemReference": {
 													"className": "com.liferay.asset.kernel.model.AssetCategory",
-													"classPK": "[$CAPABILITY#DXP-SELF-HOSTED-INSTALLATION-MAINTENANCE-AND-ADMINISTRATION$]"
+													"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/dxp-self-hosted-installation-maintenance-and-administration.json$]"
 												}
 											}
 										}
@@ -469,7 +469,7 @@
 													"federatedSearchKey": "",
 													"filterField": "assetCategoryIds",
 													"filterQueryType": "match",
-													"filterValue": "[$CAPABILITY#DXP-SELF-HOSTED-INSTALLATION-MAINTENANCE-AND-ADMINISTRATION$]",
+													"filterValue": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/dxp-self-hosted-installation-maintenance-and-administration.json$]",
 													"immutable": "true",
 													"invisible": "true",
 													"occur": "filter",

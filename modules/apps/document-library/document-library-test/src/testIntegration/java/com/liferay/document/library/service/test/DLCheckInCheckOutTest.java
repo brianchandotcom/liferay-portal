@@ -419,22 +419,7 @@ public class DLCheckInCheckOutTest {
 
 	@Test
 	public void testCheckOutOldStoreFile() throws Exception {
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
-			_fileEntry.getFileEntryId());
-
-		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-		DLStoreUtil.updateFile(
-			DLStoreRequest.builder(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName()
-			).versionLabel(
-				dlFileVersion.getVersion()
-			).build(),
-			new UnsyncByteArrayInputStream(_TEST_CONTENT.getBytes()));
-		DLStoreUtil.deleteFile(
-			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName(), dlFileVersion.getStoreFileName());
+		_renameDLStoreFile();
 
 		Folder folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
 
@@ -505,22 +490,7 @@ public class DLCheckInCheckOutTest {
 
 	@Test
 	public void testUpdateFileEntryOldStoreFile() throws Exception {
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
-			_fileEntry.getFileEntryId());
-
-		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-		DLStoreUtil.updateFile(
-			DLStoreRequest.builder(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName()
-			).versionLabel(
-				dlFileVersion.getVersion()
-			).build(),
-			new UnsyncByteArrayInputStream(_TEST_CONTENT.getBytes()));
-		DLStoreUtil.deleteFile(
-			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName(), dlFileVersion.getStoreFileName());
+		_renameDLStoreFile();
 
 		DLAppServiceUtil.checkOutFileEntry(
 			_fileEntry.getFileEntryId(), _serviceContext);
@@ -661,6 +631,25 @@ public class DLCheckInCheckOutTest {
 			fileEntryId, fileName, ContentTypes.TEXT_PLAIN, fileName, null,
 			null, null, DLVersionNumberIncrease.MINOR, inputStream,
 			content.length(), null, null, null, _serviceContext);
+	}
+
+	private void _renameDLStoreFile() throws Exception {
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
+			_fileEntry.getFileEntryId());
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		DLStoreUtil.updateFile(
+			DLStoreRequest.builder(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName()
+			).versionLabel(
+				dlFileVersion.getVersion()
+			).build(),
+			new UnsyncByteArrayInputStream(_TEST_CONTENT.getBytes()));
+		DLStoreUtil.deleteFile(
+			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(), dlFileVersion.getStoreFileName());
 	}
 
 	private static final String _FILE_NAME = "test1.txt";

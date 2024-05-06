@@ -280,6 +280,12 @@
 			{
 				"definition": {
 					"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: var(--spacer-4);\n}",
+					"customCSSViewports": [
+						{
+							"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: var(--spacer-4);\nflex-wrap: wrap;\n}",
+							"id": "tablet"
+						}
+					],
 					"fragmentStyle": {
 						"paddingBottom": "4",
 						"paddingLeft": "4",
@@ -303,6 +309,15 @@
 							"fragmentStyle": {
 								"maxWidth": "300px"
 							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"maxWidth": "100%",
+										"width": "100%"
+									},
+									"id": "tablet"
+								}
+							],
 							"indexed": true,
 							"layout": {
 								"widthType": "Fixed"

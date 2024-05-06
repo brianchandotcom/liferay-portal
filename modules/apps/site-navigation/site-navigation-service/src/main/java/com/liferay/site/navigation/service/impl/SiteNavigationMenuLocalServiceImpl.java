@@ -153,6 +153,18 @@ public class SiteNavigationMenuLocalServiceImpl
 	}
 
 	@Override
+	public SiteNavigationMenu deleteSiteNavigationMenu(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		SiteNavigationMenu siteNavigationMenu =
+			siteNavigationMenuPersistence.findByERC_G(
+				externalReferenceCode, groupId);
+
+		return deleteSiteNavigationMenu(siteNavigationMenu);
+	}
+
+	@Override
 	public void deleteSiteNavigationMenus(long groupId) throws PortalException {
 		for (SiteNavigationMenu siteNavigationMenu :
 				getSiteNavigationMenus(groupId)) {

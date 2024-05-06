@@ -9,8 +9,12 @@ import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLRes
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -33,5 +37,15 @@ public class BlogsAssetDisplayPageFriendlyURLResolver
 	public boolean isURLSeparatorConfigurable() {
 		return true;
 	}
+
+	@Override
+	protected boolean isSameFriendlyURL(String url1, String url2) {
+		return Objects.equals(
+			_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(url1),
+			_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(url2));
+	}
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 }

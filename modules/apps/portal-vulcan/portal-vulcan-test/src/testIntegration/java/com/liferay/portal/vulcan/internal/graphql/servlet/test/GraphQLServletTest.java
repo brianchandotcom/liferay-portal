@@ -12,9 +12,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -23,9 +21,9 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
-import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+import com.liferay.portal.vulcan.internal.graphql.servlet.test.v1_0.TestDTO;
+import com.liferay.portal.vulcan.internal.graphql.servlet.test.v1_0.TestServletData;
 import com.liferay.portal.vulcan.internal.test.util.PaginationConfigurationTestUtil;
 
 import java.lang.reflect.Field;
@@ -35,8 +33,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.ws.rs.NotFoundException;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -73,18 +69,22 @@ public class GraphQLServletTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		_testDTOV1 = new TestDTOV1();
+		_testDTOV1 = new TestDTO();
 
-		TestServletDataV1 testServletDataV1 = new TestServletDataV1(_testDTOV1);
+		TestServletData servletDataV1 = new TestServletData(_testDTOV1);
 
-		_testDTOV2 = new TestDTOV2();
+		_testDTOV2 =
+			new com.liferay.portal.vulcan.internal.graphql.servlet.test.v2_0.
+				TestDTO();
 
-		TestServletDataV2 testServletDataV2 = new TestServletDataV2(_testDTOV2);
+		ServletData servletDataV2 =
+			new com.liferay.portal.vulcan.internal.graphql.servlet.test.v2_0.
+				TestServletData(_testDTOV2);
 
 		_serviceRegistration1 = bundleContext.registerService(
-			ServletData.class, testServletDataV1, null);
+			ServletData.class, servletDataV1, null);
 		_serviceRegistration2 = bundleContext.registerService(
-			ServletData.class, testServletDataV2, null);
+			ServletData.class, servletDataV2, null);
 	}
 
 	@After
@@ -382,14 +382,15 @@ public class GraphQLServletTest {
 					"queryDepthLimit", 2
 				).build());
 
-			_assertEqualsV1(
-				true, _testDTOV1,
+			_assertEqualsV2(
+				true, _testDTOV2,
 				JSONUtil.getValueAsJSONObject(
 					_invoke(
 						new GraphQLField(
 							"testDTO", new GraphQLField("extendedString"),
 							new GraphQLField("id"), new GraphQLField("map"),
-							new GraphQLField("string")),
+							new GraphQLField("string"),
+							new GraphQLField("version")),
 						"query"),
 					"JSONObject/data", "JSONObject/testDTO"));
 		}
@@ -583,280 +584,6 @@ public class GraphQLServletTest {
 			false, namespacedQueryFieldsJSONArray, false, "testDTOPage");
 	}
 
-	public static class TestDTOPage {
-
-		public TestDTOPage(int page, int pageSize) {
-			this.page = page;
-			this.pageSize = pageSize;
-		}
-
-		public int getPage() {
-			return page;
-		}
-
-		public int getPageSize() {
-			return pageSize;
-		}
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		protected int page;
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		protected int pageSize;
-
-	}
-
-	public static class TestDTOV1 {
-
-		public TestDTOV1() {
-			this(
-				RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-				HashMapBuilder.put(
-					"a" + RandomTestUtil.randomString(),
-					RandomTestUtil.randomString()
-				).put(
-					"a" + RandomTestUtil.randomString(),
-					RandomTestUtil.randomString()
-				).build(),
-				RandomTestUtil.randomString());
-		}
-
-		public TestDTOV1(
-			String extendedString, long id, Map<String, String> map,
-			String string) {
-
-			_extendedString = extendedString;
-
-			this.id = id;
-			this.map = map;
-			this.string = string;
-		}
-
-		public String getExtendedString() {
-			return _extendedString;
-		}
-
-		public long getId() {
-			return id;
-		}
-
-		public Map<String, String> getMap() {
-			return map;
-		}
-
-		public String getString() {
-			return string;
-		}
-
-		public double getVersion() {
-			return version;
-		}
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		protected long id;
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		protected Map<String, String> map;
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		protected String string;
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		protected int version = 1;
-
-		private String _extendedString;
-
-	}
-
-	public static class TestDTOV2 {
-
-		public TestDTOV2() {
-			this(
-				RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-				HashMapBuilder.put(
-					"a" + RandomTestUtil.randomString(),
-					RandomTestUtil.randomString()
-				).put(
-					"a" + RandomTestUtil.randomString(),
-					RandomTestUtil.randomString()
-				).build(),
-				RandomTestUtil.randomString());
-		}
-
-		public TestDTOV2(
-			String extendedString, long id, Map<String, String> map,
-			String string) {
-
-			_extendedString = extendedString;
-
-			this.id = id;
-			this.map = map;
-			this.string = string;
-		}
-
-		public String getExtendedString() {
-			return _extendedString;
-		}
-
-		public long getId() {
-			return id;
-		}
-
-		public Map<String, String> getMap() {
-			return map;
-		}
-
-		public String getString() {
-			return string;
-		}
-
-		public double getVersion() {
-			return version;
-		}
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		protected long id;
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		protected Map<String, String> map;
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		protected String string;
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		protected int version = 2;
-
-		private String _extendedString;
-
-	}
-
-	public static class TestMutationV1 {
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		public TestDTOV1 createTestDTO(
-			@GraphQLName("testDTO") TestDTOV1 testDTO) {
-
-			return testDTO;
-		}
-
-	}
-
-	public static class TestMutationV2 {
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		public TestDTOV2 createTestDTO(
-			@GraphQLName("testDTO") TestDTOV2 testDTO) {
-
-			return testDTO;
-		}
-
-	}
-
-	public static class TestQueryV1 {
-
-		public TestQueryV1(TestDTOV1 testDTO) {
-			_testDTO = testDTO;
-		}
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		public TestDTOV1 testDTO() {
-			return _testDTO;
-		}
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		public TestDTOPage testDTOPage(
-			@GraphQLName("page") int page,
-			@GraphQLName("pageSize") int pageSize) {
-
-			return new TestDTOPage(page, pageSize);
-		}
-
-		public TestDTOV1 testNoPermissionOverDTO()
-			throws PrincipalException.MustHavePermission {
-
-			throw new PrincipalException.MustHavePermission(
-				0L, StringUtil.randomString());
-		}
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		public TestDTOV1 testNotFoundDTO() {
-			throw new NotFoundException();
-		}
-
-		@GraphQLTypeExtension(TestDTOV1.class)
-		public class TestGraphQLTypeExtension {
-
-			public TestGraphQLTypeExtension(TestDTOV1 testDTO) {
-				_testDTO = testDTO;
-			}
-
-			@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-			public String extendedString() {
-				return _testDTO.getExtendedString();
-			}
-
-			private final TestDTOV1 _testDTO;
-
-		}
-
-		private static TestDTOV1 _testDTO;
-		private static TestDTOPage _testDTOPage;
-
-	}
-
-	public static class TestQueryV2 {
-
-		public TestQueryV2(TestDTOV2 testDTOV2) {
-			_testDTOV2 = testDTOV2;
-		}
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		public TestDTOV2 testDTO() {
-			return _testDTOV2;
-		}
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		public TestDTOPage testDTOPage(
-			@GraphQLName("page") int page,
-			@GraphQLName("pageSize") int pageSize) {
-
-			return new TestDTOPage(page, pageSize);
-		}
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		public TestDTOV2 testNoPermissionOverDTO()
-			throws PrincipalException.MustHavePermission {
-
-			throw new PrincipalException.MustHavePermission(
-				0L, StringUtil.randomString());
-		}
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		public TestDTOV2 testNotFoundDTO() {
-			throw new NotFoundException();
-		}
-
-		@GraphQLTypeExtension(TestDTOV2.class)
-		public class TestGraphQLTypeExtension {
-
-			public TestGraphQLTypeExtension(TestDTOV2 testDTO) {
-				_testDTO = testDTO;
-			}
-
-			@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-			public String extendedString() {
-				return _testDTO.getExtendedString();
-			}
-
-			private final TestDTOV2 _testDTO;
-
-		}
-
-		private static TestDTOPage _testDTOPage;
-		private static TestDTOV2 _testDTOV2;
-
-	}
-
 	public class GraphQLField {
 
 		public GraphQLField(String key, GraphQLField... graphQLFields) {
@@ -915,78 +642,6 @@ public class GraphQLServletTest {
 
 	}
 
-	public class TestServletDataV1 implements ServletData {
-
-		public TestServletDataV1(TestDTOV1 testDTOV1) {
-			_testQueryV1 = new TestQueryV1(testDTOV1);
-		}
-
-		@Override
-		public String getApplicationName() {
-			return "test";
-		}
-
-		@Override
-		public Object getMutation() {
-			return _testMutationV1;
-		}
-
-		@Override
-		public String getPath() {
-			return "/test-path-graphql/v1_0";
-		}
-
-		@Override
-		public TestQueryV1 getQuery() {
-			return _testQueryV1;
-		}
-
-		@Override
-		public boolean isJaxRsResourceInvocation() {
-			return false;
-		}
-
-		private final TestMutationV1 _testMutationV1 = new TestMutationV1();
-		private final TestQueryV1 _testQueryV1;
-
-	}
-
-	public class TestServletDataV2 implements ServletData {
-
-		public TestServletDataV2(TestDTOV2 testDTO) {
-			_testQueryV2 = new TestQueryV2(testDTO);
-		}
-
-		@Override
-		public String getApplicationName() {
-			return "test";
-		}
-
-		@Override
-		public Object getMutation() {
-			return _testMutationV2;
-		}
-
-		@Override
-		public String getPath() {
-			return "/test-path-graphql/v2_0";
-		}
-
-		@Override
-		public TestQueryV2 getQuery() {
-			return _testQueryV2;
-		}
-
-		@Override
-		public boolean isJaxRsResourceInvocation() {
-			return false;
-		}
-
-		private final TestMutationV2 _testMutationV2 = new TestMutationV2();
-		private final TestQueryV2 _testQueryV2;
-
-	}
-
 	private void _appendGraphQLFieldValue(StringBuilder sb, Object value) {
 		if (value instanceof Map) {
 			Map<String, Object> map = (Map)value;
@@ -1020,7 +675,7 @@ public class GraphQLServletTest {
 	}
 
 	private void _assertEqualsV1(
-		boolean assertExtendedProperties, TestDTOV1 expectedTestDTO,
+		boolean assertExtendedProperties, TestDTO expectedTestDTO,
 		JSONObject jsonObject) {
 
 		if (assertExtendedProperties) {
@@ -1039,7 +694,9 @@ public class GraphQLServletTest {
 	}
 
 	private void _assertEqualsV2(
-		boolean assertExtendedProperties, TestDTOV2 expectedTestDTO,
+		boolean assertExtendedProperties,
+		com.liferay.portal.vulcan.internal.graphql.servlet.test.v2_0.TestDTO
+			expectedTestDTO,
 		JSONObject jsonObject) {
 
 		if (assertExtendedProperties) {
@@ -1094,7 +751,7 @@ public class GraphQLServletTest {
 			sb.append("query is available at query/");
 		}
 
-		sb.append("testPath_v1_0/");
+		sb.append("testPath_v2_0/");
 		sb.append(operationName);
 
 		return sb.toString();
@@ -1184,7 +841,8 @@ public class GraphQLServletTest {
 
 	private ServiceRegistration<ServletData> _serviceRegistration1;
 	private ServiceRegistration<ServletData> _serviceRegistration2;
-	private TestDTOV1 _testDTOV1;
-	private TestDTOV2 _testDTOV2;
+	private TestDTO _testDTOV1;
+	private com.liferay.portal.vulcan.internal.graphql.servlet.test.v2_0.TestDTO
+		_testDTOV2;
 
 }

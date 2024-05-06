@@ -70,7 +70,7 @@ testFeatureFlagsDisabled(
 			);
 		}
 
-		const application = await apiHelpers.object.postObjectEntry(
+		const application = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				apiApplicationToAPISchemas: [
 					{
@@ -116,7 +116,7 @@ testFeatureFlagsDisabled(
 				.toBe(204);
 		}
 
-		await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+		await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 			'headless-builder/applications',
 			application.externalReferenceCode
 		);
@@ -163,7 +163,7 @@ testFeatureFlagsDisabled(
 				},
 			});
 
-		const application = await apiHelpers.object.postObjectEntry(
+		const application = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				apiApplicationToAPISchemas: [
 					{
@@ -202,7 +202,7 @@ testFeatureFlagsDisabled(
 			'ObjectDefinition',
 		]);
 
-		await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+		await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 			'headless-builder/applications',
 			application.externalReferenceCode
 		);
@@ -253,7 +253,7 @@ testFeatureFlagsEnabled(
 				},
 			});
 
-		const application = await apiHelpers.object.postObjectEntry(
+		const application = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				apiApplicationToAPISchemas: [
 					{
@@ -294,7 +294,7 @@ testFeatureFlagsEnabled(
 			'ObjectDefinition',
 		]);
 
-		await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+		await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 			'headless-builder/applications',
 			application.externalReferenceCode
 		);

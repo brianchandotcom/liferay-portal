@@ -23,7 +23,7 @@ test('can associate and disassociate schema', async ({
 	headlessBuilderPage,
 	page,
 }) => {
-	const application = await apiHelpers.object.postObjectEntry(
+	const application = await apiHelpers.objectEntry.postObjectEntry(
 		{
 			apiApplicationToAPISchemas: [
 				{
@@ -42,7 +42,7 @@ test('can associate and disassociate schema', async ({
 		'headless-builder/applications'
 	);
 
-	const endpoint = await apiHelpers.object.postObjectEntry(
+	const endpoint = await apiHelpers.objectEntry.postObjectEntry(
 		{
 			description: 'Test API Endpoint',
 			externalReferenceCode: 'basic-endpoint',
@@ -87,7 +87,7 @@ test('can associate and disassociate schema', async ({
 
 	await expect(responseBodySchemaContent).toEqual('Select a Schema');
 
-	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		application.externalReferenceCode
 	);
@@ -177,7 +177,7 @@ test('can see schema unique fields as path parameter properties', async ({
 	headlessBuilderPage,
 	page,
 }) => {
-	const application = await apiHelpers.object.postObjectEntry(
+	const application = await apiHelpers.objectEntry.postObjectEntry(
 		{
 			apiApplicationToAPISchemas: [
 				{
@@ -196,7 +196,7 @@ test('can see schema unique fields as path parameter properties', async ({
 		'headless-builder/applications'
 	);
 
-	const endpoint = await apiHelpers.object.postObjectEntry(
+	const endpoint = await apiHelpers.objectEntry.postObjectEntry(
 		{
 			description: 'Test API Endpoint',
 			externalReferenceCode: 'basic-endpoint',
@@ -227,7 +227,7 @@ test('can see schema unique fields as path parameter properties', async ({
 	await expect(page.getByRole('menuitem', {name: 'ID'})).toBeVisible();
 	await expect(page.getByRole('menuitem', {name: 'Title'})).toBeVisible();
 
-	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		application.externalReferenceCode
 	);
@@ -277,7 +277,7 @@ test('can list site scoped endpoint', async ({
 			},
 		});
 
-	const studentApplication = await apiHelpers.object.postObjectEntry(
+	const studentApplication = await apiHelpers.objectEntry.postObjectEntry(
 		{
 			apiApplicationToAPISchemas: [
 				{
@@ -328,7 +328,7 @@ test('can list site scoped endpoint', async ({
 	await applicationPage.goToEndpointsTab();
 	await applicationPage.goToEditEndpoint('/gettest/{entryerc}/');
 
-	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		studentApplication.externalReferenceCode
 	);

@@ -75,12 +75,12 @@ test.describe('Manage object entries through page templates', () => {
 			customBoolean: false,
 		};
 
-		await apiHelpers.object.postObjectEntry(
+		await apiHelpers.objectEntry.postObjectEntry(
 			trueObjectEntry,
 			'c/customobjects'
 		);
 
-		await apiHelpers.object.postObjectEntry(
+		await apiHelpers.objectEntry.postObjectEntry(
 			falseObjectEntry,
 			'c/customobjects'
 		);

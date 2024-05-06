@@ -104,7 +104,10 @@ test('can create and use a object unique composite key validation', async ({
 		textField: 'entry',
 	};
 
-	await apiHelpers.object.postObjectEntry(textObjectEntry, applicationName);
+	await apiHelpers.objectEntry.postObjectEntry(
+		textObjectEntry,
+		applicationName
+	);
 
 	await viewObjectEntriesPage.goto(objectDefinition.id);
 

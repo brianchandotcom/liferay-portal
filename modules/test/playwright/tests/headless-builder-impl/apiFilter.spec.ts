@@ -99,7 +99,7 @@ test('can GET with API Filter', async ({apiHelpers}) => {
 	).toBeSuccessful();
 	for (let i = 0; i <= 25; i++) {
 		expect(
-			await apiHelpers.object.postObjectDefinitionRandomObjectEntries(
+			await apiHelpers.objectEntry.postObjectDefinitionRandomObjectEntries(
 				'textField',
 				`value${i}`,
 				objectDefinition.restContextPath

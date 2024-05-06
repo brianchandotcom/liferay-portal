@@ -37,7 +37,7 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 	// Get the id of the tags object from the site initializer
 
 	const {id: objectId} =
-		await apiHelpers.object.getObjectEntryByExternalReferenceCode(
+		await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode(
 			OBJECT_DEFINITION_PATH,
 			TAGS_OBJECT_ERC
 		);

@@ -61,7 +61,7 @@ test('can export as JSONT', async ({apiHelpers, dataMigrationCenterPage}) => {
 		stockObjectDefinition
 	);
 
-	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
+	await apiHelpers.objectEntry.postObjectEntry(stockObjectEntry, 'c/stocks');
 
 	expect(
 		JSON.parse(
@@ -119,7 +119,7 @@ test('can export as JSON with excluded fields', async ({
 		stockObjectDefinition
 	);
 
-	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
+	await apiHelpers.objectEntry.postObjectEntry(stockObjectEntry, 'c/stocks');
 
 	expect(
 		JSON.parse(
@@ -282,7 +282,7 @@ test('can export as JSON with all field types mapped', async ({
 		},
 	});
 
-	const objectEntry = await apiHelpers.object.postObjectEntry(
+	const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 		{
 			customAttachment: {
 				fileBase64:
@@ -357,7 +357,7 @@ test('can export as JSONL with excluded fields', async ({
 		stockObjectDefinition
 	);
 
-	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
+	await apiHelpers.objectEntry.postObjectEntry(stockObjectEntry, 'c/stocks');
 
 	expect(
 		await dataMigrationCenterPage.exportFile(

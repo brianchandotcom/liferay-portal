@@ -23,7 +23,7 @@ test('can get updated title in response after publish', async ({
 	headlessBuilderPage,
 	page,
 }) => {
-	const application = await apiHelpers.object.postObjectEntry(
+	const application = await apiHelpers.objectEntry.postObjectEntry(
 		{
 			apiApplicationToAPISchemas: [
 				{
@@ -54,14 +54,14 @@ test('can get updated title in response after publish', async ({
 
 	expect(
 		(
-			await apiHelpers.object.getObjectEntryByExternalReferenceCode(
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode(
 				'headless-builder/applications',
 				application.externalReferenceCode
 			)
 		).title
 	).toEqual(`${application.title} 1`);
 
-	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		application.externalReferenceCode
 	);

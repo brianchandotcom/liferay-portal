@@ -77,7 +77,7 @@ test('can create post endpoint and can not disassociate request api schema', asy
 	headlessBuilderPage,
 	page,
 }) => {
-	await apiHelpers.object.postObjectEntry(
+	await apiHelpers.objectEntry.postObjectEntry(
 		application,
 		'headless-builder/applications'
 	);
@@ -102,7 +102,7 @@ test('can create post endpoint and can not disassociate request api schema', asy
 		page.getByText('Please select a request body schema.')
 	).toBeVisible();
 
-	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		application.externalReferenceCode
 	);
@@ -113,7 +113,7 @@ test('can create post endpoint and can not edit http method', async ({
 	applicationPage,
 	headlessBuilderPage,
 }) => {
-	await apiHelpers.object.postObjectEntry(
+	await apiHelpers.objectEntry.postObjectEntry(
 		application,
 		'headless-builder/applications'
 	);
@@ -131,7 +131,7 @@ test('can create post endpoint and can not edit http method', async ({
 
 	await expect(isDisabled).toBeTruthy();
 
-	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		application.externalReferenceCode
 	);
@@ -268,7 +268,7 @@ test('can create post endpoint with different request and response schema', asyn
 		},
 	});
 
-	await apiHelpers.object.postObjectEntry(
+	await apiHelpers.objectEntry.postObjectEntry(
 		studentSubjectsApplication,
 		'headless-builder/applications'
 	);
@@ -305,7 +305,7 @@ test('can create post endpoint with different request and response schema', asyn
 	await expect(apiExplorerPage.getEndpointLocator('/student')).toBeVisible();
 
 	await page.goto('/');
-	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		studentSubjectsApplication.externalReferenceCode
 	);
@@ -323,7 +323,7 @@ test('can create post method endpoint with company scope', async ({
 	headlessBuilderPage,
 	page,
 }) => {
-	await apiHelpers.object.postObjectEntry(
+	await apiHelpers.objectEntry.postObjectEntry(
 		application,
 		'headless-builder/applications'
 	);
@@ -350,7 +350,7 @@ test('can create post method endpoint with company scope', async ({
 	).toBeVisible();
 
 	await page.goto('/');
-	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		application.externalReferenceCode
 	);

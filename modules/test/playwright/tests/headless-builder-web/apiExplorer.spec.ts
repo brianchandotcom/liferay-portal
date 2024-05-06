@@ -53,11 +53,11 @@ test('can see filter and sort parameters for collection endpoints', async ({
 	apiHelpers,
 	page,
 }) => {
-	await apiHelpers.object.postObjectEntry(
+	await apiHelpers.objectEntry.postObjectEntry(
 		application,
 		'headless-builder/applications'
 	);
-	const collectionEndpoint = await apiHelpers.object.postObjectEntry(
+	const collectionEndpoint = await apiHelpers.objectEntry.postObjectEntry(
 		{
 			description: 'Test collection API Endpoint',
 			externalReferenceCode: 'basic-collection-endpoint',
@@ -80,7 +80,7 @@ test('can see filter and sort parameters for collection endpoints', async ({
 	);
 
 	await page.goto('/');
-	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		application.externalReferenceCode
 	);
@@ -91,12 +91,12 @@ test('can see get endpoint path with erc parameter', async ({
 	apiHelpers,
 	page,
 }) => {
-	await apiHelpers.object.postObjectEntry(
+	await apiHelpers.objectEntry.postObjectEntry(
 		application,
 		'headless-builder/applications'
 	);
 
-	const singleElementEndpoint = await apiHelpers.object.postObjectEntry(
+	const singleElementEndpoint = await apiHelpers.objectEntry.postObjectEntry(
 		{
 			description: 'Test Single Element API Endpoint',
 			externalReferenceCode: 'basic-singleElement-endpoint',
@@ -126,7 +126,7 @@ test('can see get endpoint path with erc parameter', async ({
 	});
 
 	await page.goto('/');
-	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		application.externalReferenceCode
 	);
@@ -137,12 +137,12 @@ test('can see get endpoint path with id parameter', async ({
 	apiHelpers,
 	page,
 }) => {
-	await apiHelpers.object.postObjectEntry(
+	await apiHelpers.objectEntry.postObjectEntry(
 		application,
 		'headless-builder/applications'
 	);
 
-	await apiHelpers.object.postObjectEntry(
+	await apiHelpers.objectEntry.postObjectEntry(
 		singleElementIdEndpoint,
 		'headless-builder/endpoints'
 	);
@@ -159,7 +159,7 @@ test('can see get endpoint path with id parameter', async ({
 	});
 
 	await page.goto('/');
-	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		application.externalReferenceCode
 	);
@@ -170,12 +170,12 @@ test('cannot see filter and sort parameters for singleElement endpoints', async 
 	apiHelpers,
 	page,
 }) => {
-	await apiHelpers.object.postObjectEntry(
+	await apiHelpers.objectEntry.postObjectEntry(
 		application,
 		'headless-builder/applications'
 	);
 
-	await apiHelpers.object.postObjectEntry(
+	await apiHelpers.objectEntry.postObjectEntry(
 		singleElementIdEndpoint,
 		'headless-builder/endpoints'
 	);
@@ -188,7 +188,7 @@ test('cannot see filter and sort parameters for singleElement endpoints', async 
 	);
 
 	await page.goto('/');
-	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+	await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		application.externalReferenceCode
 	);

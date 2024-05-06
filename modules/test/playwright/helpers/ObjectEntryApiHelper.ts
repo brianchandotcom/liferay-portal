@@ -6,7 +6,7 @@
 import {liferayConfig} from '../liferay.config';
 import {ApiHelpers} from './ApiHelpers';
 
-export class ObjectApiHelper {
+export class ObjectEntryApiHelper {
 	readonly apiHelpers: ApiHelpers;
 
 	constructor(apiHelpers: ApiHelpers) {

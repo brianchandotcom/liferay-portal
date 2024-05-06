@@ -507,8 +507,11 @@ test('can import CSV file with an unexisting field', async ({
 	).toBeVisible();
 
 	expect(
-		(await apiHelpers.object.getObjectDefinitionObjectEntries('c/tests'))
-			.items
+		(
+			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+				'c/tests'
+			)
+		).items
 	).toEqual([
 		{
 			actions: expect.any(Object),
@@ -570,7 +573,7 @@ test('can import CSV file with custom columns order', async ({
 
 	expect(
 		(
-			await apiHelpers.object.getObjectDefinitionObjectEntriesByScope(
+			await apiHelpers.objectEntry.getObjectDefinitionObjectEntriesByScope(
 				'c/tests',
 				'Guest'
 			)
@@ -637,7 +640,7 @@ test('can import CSV file with multiple site scoped object entries', async ({
 
 	expect(
 		(
-			await apiHelpers.object.getObjectDefinitionObjectEntriesByScope(
+			await apiHelpers.objectEntry.getObjectDefinitionObjectEntriesByScope(
 				'c/tests',
 				'Guest'
 			)
@@ -749,7 +752,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 
 	expect(
 		(
-			await apiHelpers.object.getObjectDefinitionObjectEntriesByScope(
+			await apiHelpers.objectEntry.getObjectDefinitionObjectEntriesByScope(
 				'c/tests',
 				'Guest'
 			)
@@ -860,8 +863,11 @@ test('can import CSV file with new and modified existing company scoped object e
 	).toBeVisible();
 
 	expect(
-		(await apiHelpers.object.getObjectDefinitionObjectEntries('c/tests'))
-			.items
+		(
+			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+				'c/tests'
+			)
+		).items
 	).toEqual([
 		{
 			actions: expect.any(Object),

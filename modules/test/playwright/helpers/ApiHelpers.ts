@@ -28,7 +28,7 @@ import {HeadlessSiteApiHelper} from './HeadlessSiteApiHelper';
 import {ListTypeAdminApiHelper} from './ListTypeAdminApiHelper';
 import {NotificationApiHelper} from './NotificationApiHelper';
 import {ObjectAdminApiHelper} from './ObjectAdminApiHelper';
-import {ObjectApiHelper} from './ObjectApiHelper';
+import {ObjectEntryApiHelper} from './ObjectEntryApiHelper';
 import {JSONWebServicesClassNameApiHelper} from './json-web-services/JSONWebServicesClassNameApiHelper';
 import {JSONWebServicesCompanyApiHelper} from './json-web-services/JSONWebServicesCompanyApiHelper';
 import {JSONWebServicesDDMApiHelper} from './json-web-services/JSONWebServicesDDMApiHelper';
@@ -77,8 +77,8 @@ export class ApiHelpers {
 	readonly jsonWebServicesLayoutSetPrototype: JSONWebServicesLayoutSetPrototypeApiHelper;
 	readonly listTypeAdmin: ListTypeAdminApiHelper;
 	readonly notification: NotificationApiHelper;
-	readonly object: ObjectApiHelper;
 	readonly objectAdmin: ObjectAdminApiHelper;
+	readonly objectEntry: ObjectEntryApiHelper;
 	readonly page: Page;
 
 	private static readonly _authorization = `Basic ${btoa(
@@ -123,8 +123,8 @@ export class ApiHelpers {
 			new JSONWebServicesLayoutSetPrototypeApiHelper(this);
 		this.listTypeAdmin = new ListTypeAdminApiHelper(this);
 		this.notification = new NotificationApiHelper(this);
-		this.object = new ObjectApiHelper(this);
 		this.objectAdmin = new ObjectAdminApiHelper(this);
+		this.objectEntry = new ObjectEntryApiHelper(this);
 		this.page = page;
 	}
 

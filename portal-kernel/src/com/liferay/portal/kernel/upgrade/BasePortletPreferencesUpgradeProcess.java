@@ -409,35 +409,6 @@ public abstract class BasePortletPreferencesUpgradeProcess
 		return portletPreferencesElement.toXMLString();
 	}
 
-	private void _updateCompanyId(
-			long companyId, long portletPreferencesId,
-			boolean updatePortletPreferenceValue)
-		throws Exception {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update PortletPreferences set companyId = ? where " +
-					"portletPreferencesId = ?")) {
-
-			preparedStatement.setLong(1, companyId);
-			preparedStatement.setLong(2, portletPreferencesId);
-
-			preparedStatement.executeUpdate();
-		}
-
-		if (updatePortletPreferenceValue) {
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						"update PortletPreferenceValue set companyId = ? " +
-							"where portletPreferencesId = ?")) {
-
-				preparedStatement.setLong(1, companyId);
-				preparedStatement.setLong(2, portletPreferencesId);
-
-				preparedStatement.executeUpdate();
-			}
-		}
-	}
-
 	private void _updatePortletPreferences() throws Exception {
 		StringBundler sb = new StringBundler(5);
 
@@ -490,7 +461,8 @@ public abstract class BasePortletPreferencesUpgradeProcess
 				return;
 			}
 
-			_updateCompanyId(companyId, portletPreferencesId, false);
+			_updatePortletPreferencesCompanyId(
+				companyId, portletPreferencesId, false);
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -505,6 +477,35 @@ public abstract class BasePortletPreferencesUpgradeProcess
 
 			if (!preferences.equals(newPreferences)) {
 				preparedStatement.setString(1, newPreferences);
+				preparedStatement.setLong(2, portletPreferencesId);
+
+				preparedStatement.executeUpdate();
+			}
+		}
+	}
+
+	private void _updatePortletPreferencesCompanyId(
+			long companyId, long portletPreferencesId,
+			boolean updatePortletPreferenceValue)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update PortletPreferences set companyId = ? where " +
+					"portletPreferencesId = ?")) {
+
+			preparedStatement.setLong(1, companyId);
+			preparedStatement.setLong(2, portletPreferencesId);
+
+			preparedStatement.executeUpdate();
+		}
+
+		if (updatePortletPreferenceValue) {
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"update PortletPreferenceValue set companyId = ? " +
+							"where portletPreferencesId = ?")) {
+
+				preparedStatement.setLong(1, companyId);
 				preparedStatement.setLong(2, portletPreferencesId);
 
 				preparedStatement.executeUpdate();
@@ -567,7 +568,8 @@ public abstract class BasePortletPreferencesUpgradeProcess
 				return;
 			}
 
-			_updateCompanyId(companyId, portletPreferencesId, true);
+			_updatePortletPreferencesCompanyId(
+				companyId, portletPreferencesId, true);
 		}
 
 		String portletId = (String)values[5];

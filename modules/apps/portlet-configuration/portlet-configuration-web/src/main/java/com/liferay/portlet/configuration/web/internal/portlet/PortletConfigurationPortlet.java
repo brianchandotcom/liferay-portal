@@ -1065,8 +1065,12 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	private void _updateScope(ActionRequest actionRequest) throws Exception {
 		Portlet portlet = ActionUtil.getPortlet(actionRequest);
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		PortletPreferences portletPreferences =
-			ActionUtil.getLayoutPortletSetup(actionRequest, portlet);
+			themeDisplay.getStrictLayoutPortletSetup(
+				themeDisplay.getLayout(), portlet.getPortletId());
 
 		actionRequest = ActionUtil.getWrappedActionRequest(
 			actionRequest, portletPreferences);
@@ -1099,9 +1103,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			portletTitle, oldScopeName, newScopeName);
 
 		if (!newPortletTitle.equals(portletTitle)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			portletPreferences.setValue(
 				"portletSetupTitle_" + themeDisplay.getLanguageId(),
 				newPortletTitle);

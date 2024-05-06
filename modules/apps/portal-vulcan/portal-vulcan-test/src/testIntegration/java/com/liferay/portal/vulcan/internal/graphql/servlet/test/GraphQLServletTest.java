@@ -88,24 +88,6 @@ public class GraphQLServletTest {
 
 	@Test
 	public void testMutation() throws Exception {
-		TestDTO testDTO = new TestDTO();
-
-		_assertEquals(
-			false, testDTO,
-			JSONUtil.getValueAsJSONObject(
-				_invoke(
-					new GraphQLField(
-						"createTestDTO",
-						Collections.singletonMap(
-							"testDTO", _toGraphQLString(testDTO)),
-						new GraphQLField("id"), new GraphQLField("map"),
-						new GraphQLField("string")),
-					"mutation"),
-				"JSONObject/data", "JSONObject/createTestDTO"));
-	}
-
-	@Test
-	public void testMutationWithGraphQLNamespace() throws Exception {
 
 		// With namespace
 
@@ -147,6 +129,49 @@ public class GraphQLServletTest {
 
 	@Test
 	public void testQuery() throws Exception {
+
+		// With namespace
+
+		_assertEquals(
+			true, _testDTO,
+			JSONUtil.getValueAsJSONObject(
+				_invoke(
+					new GraphQLField(
+						"testPath_v1_0",
+						new GraphQLField(
+							"testDTO", new GraphQLField("extendedString"),
+							new GraphQLField("id"), new GraphQLField("map"),
+							new GraphQLField("string"))),
+					"query"),
+				"JSONObject/data", "JSONObject/testPath_v1_0",
+				"JSONObject/testDTO"));
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"testPath_v1_0",
+						new GraphQLField(
+							"testNoPermissionOverDTO", new GraphQLField("id"))),
+					"query"),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"testPath_v1_0",
+						new GraphQLField(
+							"testNotFoundDTO", new GraphQLField("id"))),
+					"query"),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Without namespace (backwards compatibility)
+
 		_assertEquals(
 			true, _testDTO,
 			JSONUtil.getValueAsJSONObject(
@@ -157,6 +182,25 @@ public class GraphQLServletTest {
 						new GraphQLField("string")),
 					"query"),
 				"JSONObject/data", "JSONObject/testDTO"));
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"testNoPermissionOverDTO", new GraphQLField("id")),
+					"query"),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField("testNotFoundDTO", new GraphQLField("id")),
+					"query"),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
 	}
 
 	@Test
@@ -326,82 +370,6 @@ public class GraphQLServletTest {
 			0, () -> _test(-1, -1, null, -1));
 		PaginationConfigurationTestUtil.withPageSizeLimit(
 			0, () -> _test(-1, -1, null, 0));
-	}
-
-	@Test
-	public void testQueryWithGraphQLNamespace() throws Exception {
-
-		// With namespace
-
-		_assertEquals(
-			true, _testDTO,
-			JSONUtil.getValueAsJSONObject(
-				_invoke(
-					new GraphQLField(
-						"testPath_v1_0",
-						new GraphQLField(
-							"testDTO", new GraphQLField("extendedString"),
-							new GraphQLField("id"), new GraphQLField("map"),
-							new GraphQLField("string"))),
-					"query"),
-				"JSONObject/data", "JSONObject/testPath_v1_0",
-				"JSONObject/testDTO"));
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				_invoke(
-					new GraphQLField(
-						"testPath_v1_0",
-						new GraphQLField(
-							"testNoPermissionOverDTO", new GraphQLField("id"))),
-					"query"),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				_invoke(
-					new GraphQLField(
-						"testPath_v1_0",
-						new GraphQLField(
-							"testNotFoundDTO", new GraphQLField("id"))),
-					"query"),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Without namespace (backwards compatibility)
-
-		_assertEquals(
-			true, _testDTO,
-			JSONUtil.getValueAsJSONObject(
-				_invoke(
-					new GraphQLField(
-						"testDTO", new GraphQLField("extendedString"),
-						new GraphQLField("id"), new GraphQLField("map"),
-						new GraphQLField("string")),
-					"query"),
-				"JSONObject/data", "JSONObject/testDTO"));
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				_invoke(
-					new GraphQLField(
-						"testNoPermissionOverDTO", new GraphQLField("id")),
-					"query"),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				_invoke(
-					new GraphQLField("testNotFoundDTO", new GraphQLField("id")),
-					"query"),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
 	}
 
 	@Test

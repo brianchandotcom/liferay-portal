@@ -203,7 +203,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			localizedFriendlyURL = getURLSeparator() + urlTitle;
 		}
 
-		if (!Objects.equals(originalFriendlyURL, localizedFriendlyURL)) {
+		if (!isSameFriendlyURL(originalFriendlyURL, localizedFriendlyURL)) {
 			return new LayoutFriendlyURLComposite(
 				layout, localizedFriendlyURL, true);
 		}
@@ -297,6 +297,10 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		}
 
 		return locale;
+	}
+
+	protected boolean isSameFriendlyURL(String url1, String url2) {
+		return Objects.equals(url1, url2);
 	}
 
 	protected boolean useOriginalFriendlyURL() {

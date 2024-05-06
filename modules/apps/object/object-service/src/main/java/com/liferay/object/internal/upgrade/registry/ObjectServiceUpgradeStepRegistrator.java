@@ -18,6 +18,7 @@ import com.liferay.object.internal.upgrade.v3_17_0.util.ObjectStateFlowTable;
 import com.liferay.object.internal.upgrade.v3_17_0.util.ObjectStateTable;
 import com.liferay.object.internal.upgrade.v3_17_0.util.ObjectStateTransitionTable;
 import com.liferay.object.internal.upgrade.v3_19_0.util.ObjectFilterTable;
+import com.liferay.object.internal.upgrade.v3_21_0.ObjectDefinitionUpgradeProcess;
 import com.liferay.object.internal.upgrade.v3_22_0.ObjectFieldUpgradeProcess;
 import com.liferay.object.internal.upgrade.v3_24_0.ObjectFieldSettingUpgradeProcess;
 import com.liferay.object.internal.upgrade.v3_27_0.ObjectActionUpgradeProcess;
@@ -199,9 +200,7 @@ public class ObjectServiceUpgradeStepRegistrator
 				"ObjectViewFilterColumn", "json", "TEXT"));
 
 		registry.register(
-			"3.20.0", "3.21.0",
-			new com.liferay.object.internal.upgrade.v3_21_0.
-				ObjectDefinitionUpgradeProcess());
+			"3.20.0", "3.21.0", new ObjectDefinitionUpgradeProcess());
 
 		registry.register("3.21.0", "3.22.0", new ObjectFieldUpgradeProcess());
 
@@ -455,6 +454,11 @@ public class ObjectServiceUpgradeStepRegistrator
 					"businessType in ('",
 					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION, "', '",
 					ObjectFieldConstants.BUSINESS_TYPE_FORMULA, "')")));
+
+		registry.register(
+			"9.1.1", "9.2.0",
+			new com.liferay.object.internal.upgrade.v9_2_0.
+				ObjectDefinitionUpgradeProcess());
 	}
 
 	@Reference

@@ -15,6 +15,7 @@ export const testFeatureFlagsEnabled = mergeTests(
 	loginTest(),
 	featureFlagsTest({
 		'LPD-10701': true,
+		'LPD-16311': true,
 	}),
 	documentLibraryPagesTest
 );
@@ -45,5 +46,28 @@ testFeatureFlagsEnabled(
 		);
 
 		await documentLibraryPage.deleteAllFileEntries();
+	}
+);
+
+testFeatureFlagsEnabled(
+	'LPD-16313 Identify at a glance if a Document is visible for guests',
+	async ({documentLibraryEditFilePage, documentLibraryPage, page}) => {
+
+		const title = getRandomString();
+
+		await documentLibraryEditFilePage.publishNewFileWithoutGuestViewPermission(
+			title
+		);
+
+		await documentLibraryPage.assertPrivateContentIcon();
+
+		await documentLibraryPage.changeView('table');
+		await documentLibraryPage.assertPrivateContentIcon();
+
+		await documentLibraryPage.changeView('list');
+		await documentLibraryPage.assertPrivateContentIcon();
+
+		await documentLibraryPage.deleteAllFileEntries();
+
 	}
 );

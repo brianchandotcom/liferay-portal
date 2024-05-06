@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {expect, Locator, Page} from '@playwright/test';
 
 import {DocumentLibraryPage} from './DocumentLibraryPage';
 
@@ -15,6 +15,7 @@ export class DocumentLibraryEditFilePage {
 	readonly publishButton: Locator;
 	readonly scheduleButton: Locator;
 	readonly titleSelector: Locator;
+	readonly permissionViewSelector: Locator;
 
 	constructor(page: Page) {
 		this.documentLibraryPage = new DocumentLibraryPage(page);
@@ -27,6 +28,7 @@ export class DocumentLibraryEditFilePage {
 		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
 		this.scheduleButton = page.getByRole('button', {name: 'Schedule'});
 		this.titleSelector = page.getByLabel('Title');
+		this.permissionViewSelector = page.getByLabel('Viewable by');
 	}
 
 	async goto() {
@@ -79,4 +81,20 @@ export class DocumentLibraryEditFilePage {
 			await this.publishButton.click();
 		}
 	}
+	async publishNewFileWithoutGuestViewPermission(title: string) {
+		await this.goto();
+
+		await this.titleSelector.fill(title);
+		await this.permissionViewSelector.selectOption('Site Member');
+		await this.publishButton.click();
+
+	}
+
+	async assertPrivateContentIcon() {
+		await expect(
+			this.page.getByLabel('Not Visible to Guest Users').locator('use')
+		).toBeVisible({timeout: 1000});
+	}
+
+
 }

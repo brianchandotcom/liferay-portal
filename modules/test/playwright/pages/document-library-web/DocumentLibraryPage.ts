@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {expect, Locator, Page} from '@playwright/test';
 
 import {PORTLET_URLS} from '../../utils/portletUrls';
 
@@ -26,6 +26,19 @@ export class DocumentLibraryPage {
 		await this.page.goto(
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.documentLibrary}`
 		);
+	}
+	async assertPrivateContentIcon() {
+		await expect(
+			this.page.getByLabel('Not Visible to Guest Users').locator('use')
+		).toBeVisible({timeout: 1000});
+	}
+
+	async changeView(viewName: string) {
+		await this.page
+			.getByLabel('Select View, Currently Selected: ')
+			.waitFor();
+		await this.page.getByLabel('Select View, Currently Selected: ').click();
+		await this.page.getByRole('menuitem', {name: viewName}).click();
 	}
 
 	async deleteAllFileEntries() {

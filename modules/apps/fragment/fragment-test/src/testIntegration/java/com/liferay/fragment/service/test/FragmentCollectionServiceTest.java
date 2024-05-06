@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionService;
-import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.test.util.FragmentTestUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
@@ -25,12 +24,10 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.sql.Timestamp;
 
@@ -56,9 +53,8 @@ public class FragmentCollectionServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.fragment.service"));
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -78,11 +74,10 @@ public class FragmentCollectionServiceTest {
 				null, _group.getGroupId(), name, StringPool.BLANK,
 				serviceContext);
 
-		FragmentCollection persistedFragmentCollection =
-			_fragmentCollectionPersistence.findByPrimaryKey(
-				fragmentCollection.getFragmentCollectionId());
+		fragmentCollection = _fragmentCollectionService.fetchFragmentCollection(
+			fragmentCollection.getFragmentCollectionId());
 
-		Assert.assertEquals(name, persistedFragmentCollection.getName());
+		Assert.assertEquals(name, fragmentCollection.getName());
 	}
 
 	@Test
@@ -100,11 +95,10 @@ public class FragmentCollectionServiceTest {
 				null, _group.getGroupId(), RandomTestUtil.randomString(), name,
 				StringPool.BLANK, serviceContext);
 
-		FragmentCollection persistedFragmentCollection =
-			_fragmentCollectionPersistence.findByPrimaryKey(
-				fragmentCollection.getFragmentCollectionId());
+		fragmentCollection = _fragmentCollectionService.fetchFragmentCollection(
+			fragmentCollection.getFragmentCollectionId());
 
-		Assert.assertEquals(name, persistedFragmentCollection.getName());
+		Assert.assertEquals(name, fragmentCollection.getName());
 	}
 
 	@Test
@@ -116,7 +110,7 @@ public class FragmentCollectionServiceTest {
 			fragmentCollection.getFragmentCollectionId());
 
 		Assert.assertNull(
-			_fragmentCollectionPersistence.fetchByPrimaryKey(
+			_fragmentCollectionService.fetchFragmentCollection(
 				fragmentCollection.getFragmentCollectionId()));
 	}
 
@@ -135,11 +129,11 @@ public class FragmentCollectionServiceTest {
 			});
 
 		Assert.assertNull(
-			_fragmentCollectionPersistence.fetchByPrimaryKey(
+			_fragmentCollectionService.fetchFragmentCollection(
 				fragmentCollection1.getFragmentCollectionId()));
 
 		Assert.assertNull(
-			_fragmentCollectionPersistence.fetchByPrimaryKey(
+			_fragmentCollectionService.fetchFragmentCollection(
 				fragmentCollection2.getFragmentCollectionId()));
 	}
 
@@ -148,11 +142,9 @@ public class FragmentCollectionServiceTest {
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		FragmentCollection persistedFragmentCollection =
+		Assert.assertNotNull(
 			_fragmentCollectionService.fetchFragmentCollection(
-				fragmentCollection.getFragmentCollectionId());
-
-		Assert.assertEquals(fragmentCollection, persistedFragmentCollection);
+				fragmentCollection.getFragmentCollectionId()));
 	}
 
 	@Test
@@ -461,15 +453,11 @@ public class FragmentCollectionServiceTest {
 				ServiceContextTestUtil.getServiceContext(
 					_group, TestPropsValues.getUserId()));
 
-		FragmentCollection persistedFragmentCollection =
-			_fragmentCollectionPersistence.findByPrimaryKey(
-				fragmentCollection.getFragmentCollectionId());
+		fragmentCollection = _fragmentCollectionService.fetchFragmentCollection(
+			fragmentCollection.getFragmentCollectionId());
 
-		Assert.assertEquals(name, persistedFragmentCollection.getName());
+		Assert.assertEquals(name, fragmentCollection.getName());
 	}
-
-	@Inject
-	private FragmentCollectionPersistence _fragmentCollectionPersistence;
 
 	@Inject
 	private FragmentCollectionService _fragmentCollectionService;

@@ -10,7 +10,6 @@ import com.liferay.client.extension.web.internal.frontend.data.set.model.CETFDSE
 import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder.DropdownItemListWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -60,20 +59,16 @@ public class CETFDSActionProvider implements FDSActionProvider {
 			).build();
 		}
 
-		DropdownItemListWrapper dropdownItemListWrapper =
-			DropdownItemListBuilder.add(
-				dropdownItem -> _buildEditClientExtensionEntryAction(
-					cetFDSEntry, dropdownItem, httpServletRequest)
-			).add(
-				dropdownItem -> _buildDeleteClientExtensionEntryAction(
-					cetFDSEntry, dropdownItem, httpServletRequest)
-			);
-
-		dropdownItemListWrapper = dropdownItemListWrapper.add(
+		return DropdownItemListBuilder.add(
+			dropdownItem -> _buildEditClientExtensionEntryAction(
+				cetFDSEntry, dropdownItem, httpServletRequest)
+		).add(
+			dropdownItem -> _buildDeleteClientExtensionEntryAction(
+				cetFDSEntry, dropdownItem, httpServletRequest)
+		).add(
 			dropdownItem -> _buildExportClientExtensionEntryAction(
-				cetFDSEntry, dropdownItem, httpServletRequest));
-
-		return dropdownItemListWrapper.build();
+				cetFDSEntry, dropdownItem, httpServletRequest)
+		).build();
 	}
 
 	private void _buildDeleteClientExtensionEntryAction(

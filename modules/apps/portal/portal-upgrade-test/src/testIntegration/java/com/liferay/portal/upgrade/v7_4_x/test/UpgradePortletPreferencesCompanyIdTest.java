@@ -106,6 +106,8 @@ public class UpgradePortletPreferencesCompanyIdTest {
 	protected void assertCompanyIds(
 		long companyId, List<PortletPreferenceValue> portletPreferenceValues) {
 
+		Assert.assertNotEquals(0, portletPreferenceValues.size());
+
 		for (PortletPreferenceValue portletPreferenceValue :
 				portletPreferenceValues) {
 

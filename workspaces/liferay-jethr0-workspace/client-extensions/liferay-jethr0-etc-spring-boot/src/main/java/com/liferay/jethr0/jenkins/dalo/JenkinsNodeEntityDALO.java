@@ -9,6 +9,9 @@ import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntityFactory;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +21,24 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class JenkinsNodeEntityDALO extends BaseEntityDALO<JenkinsNodeEntity> {
+
+	public JenkinsNodeEntity getByName(String name) {
+		if (StringUtil.isNullOrEmpty(name)) {
+			return null;
+		}
+
+		String filterString = "name eq '" + name + "'";
+
+		for (JenkinsNodeEntity jenkinsNodeEntity :
+				getAll(filterString, null, null)) {
+
+			if (Objects.equals(jenkinsNodeEntity.getName(), name)) {
+				return jenkinsNodeEntity;
+			}
+		}
+
+		return null;
+	}
 
 	@Override
 	public EntityFactory<JenkinsNodeEntity> getEntityFactory() {

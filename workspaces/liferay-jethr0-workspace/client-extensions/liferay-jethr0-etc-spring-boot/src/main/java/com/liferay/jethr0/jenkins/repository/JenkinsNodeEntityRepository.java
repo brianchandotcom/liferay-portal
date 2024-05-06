@@ -35,6 +35,15 @@ public class JenkinsNodeEntityRepository
 			"r_jenkinsServerToJenkinsNodes_c_jenkinsServerId",
 			jenkinsServerEntity.getId());
 
+		JenkinsNodeEntity jenkinsNodeEntity = getByName(
+			nodeJSONObject.getString("name"));
+
+		if (jenkinsNodeEntity != null) {
+			update(jenkinsNodeEntity);
+
+			return jenkinsNodeEntity;
+		}
+
 		return create(nodeJSONObject);
 	}
 
@@ -137,6 +146,23 @@ public class JenkinsNodeEntityRepository
 
 			create(nodeJSONObject);
 		}
+	}
+
+	public JenkinsNodeEntity getByName(String name) {
+		for (JenkinsNodeEntity jenkinsNodeEntity : getAll()) {
+			if (Objects.equals(name, jenkinsNodeEntity.getName())) {
+				return jenkinsNodeEntity;
+			}
+		}
+
+		JenkinsNodeEntity jenkinsNodeEntity = _jenkinsNodeEntityDALO.getByName(
+			name);
+
+		if (jenkinsNodeEntity != null) {
+			add(jenkinsNodeEntity);
+		}
+
+		return jenkinsNodeEntity;
 	}
 
 	@Override

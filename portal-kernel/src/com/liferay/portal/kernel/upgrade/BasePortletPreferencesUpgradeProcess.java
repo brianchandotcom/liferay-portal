@@ -409,7 +409,9 @@ public abstract class BasePortletPreferencesUpgradeProcess
 		return portletPreferencesElement.toXMLString();
 	}
 
-	private void _updateCompanyId(long companyId, long portletPreferencesId)
+	private void _updateCompanyId(
+			long companyId, long portletPreferencesId,
+			boolean updatePortletPreferenceValue)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -422,7 +424,7 @@ public abstract class BasePortletPreferencesUpgradeProcess
 			preparedStatement.executeUpdate();
 		}
 
-		if (!hasColumn("PortletPreferences", "preferences")) {
+		if (updatePortletPreferenceValue) {
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						"update PortletPreferenceValue set companyId = ? " +
@@ -488,7 +490,7 @@ public abstract class BasePortletPreferencesUpgradeProcess
 				return;
 			}
 
-			_updateCompanyId(companyId, portletPreferencesId);
+			_updateCompanyId(companyId, portletPreferencesId, false);
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -565,7 +567,7 @@ public abstract class BasePortletPreferencesUpgradeProcess
 				return;
 			}
 
-			_updateCompanyId(companyId, portletPreferencesId);
+			_updateCompanyId(companyId, portletPreferencesId, true);
 		}
 
 		String portletId = (String)values[5];

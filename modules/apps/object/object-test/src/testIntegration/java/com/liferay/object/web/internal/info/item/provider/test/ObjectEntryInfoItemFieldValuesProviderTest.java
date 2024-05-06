@@ -13,11 +13,16 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.type.KeyLocalizedLabelPair;
+import com.liferay.list.type.entry.util.ListTypeEntryUtil;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
+import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
@@ -60,7 +65,9 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -114,6 +121,16 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
+		_listTypeEntryKey = RandomTestUtil.randomString();
+
+		_listTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				null, TestPropsValues.getUserId(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				false,
+				Collections.singletonList(
+					ListTypeEntryUtil.createListTypeEntry(_listTypeEntryKey)));
+
 		_childObjectDefinition = _addObjectDefinition(
 			new AttachmentObjectFieldBuilder(
 			).labelMap(
@@ -126,6 +143,18 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 					_createObjectFieldSetting(
 						"fileSource", "documentsAndMedia"),
 					_createObjectFieldSetting("maximumFileSize", "100"))
+			).build(),
+			new PicklistObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).listTypeDefinitionId(
+				_listTypeDefinition.getListTypeDefinitionId()
+			).name(
+				"picklistObjectFieldName"
+			).objectFieldSettings(
+				Collections.emptyList()
+			).state(
+				false
 			).build());
 
 		_childObjectDefinition =
@@ -193,6 +222,8 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				parentObjectEntry.getObjectEntryId()
 			).put(
 				"attachmentObjectFieldName", fileEntry.getFileEntryId()
+			).put(
+				"picklistObjectFieldName", _listTypeEntryKey
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
@@ -257,9 +288,20 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		Assert.assertEquals(
 			parentTextObjectFieldNameValue,
 			parentTextObjectFieldNameInfoFieldValue.getValue());
+
+		InfoFieldValue<Object> picklistObjectFieldNameInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("picklistObjectFieldName");
+
+		for (KeyLocalizedLabelPair keyLocalizedLabelPair :
+				(ArrayList<KeyLocalizedLabelPair>)
+					picklistObjectFieldNameInfoFieldValue.getValue()) {
+
+			Assert.assertEquals(
+				_listTypeEntryKey, keyLocalizedLabelPair.getKey());
+		}
 	}
 
-	private ObjectDefinition _addObjectDefinition(ObjectField objectField)
+	private ObjectDefinition _addObjectDefinition(ObjectField... objectFields)
 		throws Exception {
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
@@ -269,7 +311,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			true, ObjectDefinitionConstants.SCOPE_SITE,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-			Arrays.asList(objectField));
+			Arrays.asList(objectFields));
 	}
 
 	private void _assertInfoFieldValue(
@@ -340,6 +382,14 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@DeleteAfterTestRun
+	private ListTypeDefinition _listTypeDefinition;
+
+	@Inject
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	private String _listTypeEntryKey;
 
 	@Inject
 	private ObjectActionLocalService _objectActionLocalService;

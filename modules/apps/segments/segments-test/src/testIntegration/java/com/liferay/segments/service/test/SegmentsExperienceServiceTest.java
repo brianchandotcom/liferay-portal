@@ -90,7 +90,7 @@ public class SegmentsExperienceServiceTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.addSegmentsExperience(
-				_group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				null, _group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
 				_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 				UnicodePropertiesBuilder.create(
 					true
@@ -166,7 +166,7 @@ public class SegmentsExperienceServiceTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.addSegmentsExperience(
-				_group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				null, _group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
 				_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(
@@ -628,7 +628,7 @@ public class SegmentsExperienceServiceTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.addSegmentsExperience(
-				_group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				null, _group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
 				_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(
@@ -663,7 +663,7 @@ public class SegmentsExperienceServiceTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.addSegmentsExperience(
-				_group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				null, _group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
 				_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 				UnicodePropertiesBuilder.create(
 					true
@@ -768,8 +768,8 @@ public class SegmentsExperienceServiceTest {
 			_group.getGroupId());
 
 		return _segmentsExperienceService.addSegmentsExperience(
-			_group.getGroupId(), segmentsEntry.getSegmentsEntryId(), _classPK,
-			RandomTestUtil.randomLocaleStringMap(), true,
+			null, _group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+			_classPK, RandomTestUtil.randomLocaleStringMap(), true,
 			new UnicodeProperties(true), serviceContext);
 	}
 

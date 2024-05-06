@@ -90,7 +90,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 			SegmentsExperience defaultSegmentsExperience =
 				_segmentsExperienceLocalService.addDefaultSegmentsExperience(
-					userId, classPK, new ServiceContext());
+					null, userId, classPK, new ServiceContext());
 
 			defaultSegmentsExperienceId =
 				defaultSegmentsExperience.getSegmentsExperienceId();

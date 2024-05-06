@@ -869,7 +869,7 @@ public class LayoutConverterTest {
 			).buildString());
 
 		_segmentsExperienceLocalService.addDefaultSegmentsExperience(
-			PrincipalThreadLocal.getUserId(), layout.getPlid(),
+			null, PrincipalThreadLocal.getUserId(), layout.getPlid(),
 			ServiceContextThreadLocal.getServiceContext());
 
 		for (Map<String, String[]> portletIdsMap : portletIdsMaps) {

@@ -74,7 +74,7 @@ public class DuplicateSegmentsExperienceMVCActionCommand
 
 		SegmentsExperience duplicatedSegmentsExperience =
 			_segmentsExperienceService.addSegmentsExperience(
-				serviceContext.getScopeGroupId(),
+				null, serviceContext.getScopeGroupId(),
 				segmentsExperience.getSegmentsEntryId(),
 				segmentsExperience.getPlid(),
 				Collections.singletonMap(

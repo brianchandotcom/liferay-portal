@@ -135,7 +135,8 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 
 		try {
 			if (!_objectDefinition.isAccountEntryRestricted() &&
-				_objectDefinition.isDefaultStorageType()) {
+				_objectDefinition.isDefaultStorageType() &&
+				_objectDefinition.isEnableIndexedSearch()) {
 
 				return _getCollectionInfoPageByIndexer(collectionQuery);
 			}

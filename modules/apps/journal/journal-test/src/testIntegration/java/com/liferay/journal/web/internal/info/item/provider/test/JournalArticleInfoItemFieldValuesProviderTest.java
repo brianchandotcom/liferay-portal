@@ -410,14 +410,15 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 
 		ddmFormField.setDataType("string");
 		ddmFormField.setIndexType("text");
-		ddmFormField.setLocalizable(true);
-		ddmFormField.setRepeatable(false);
 
 		LocalizedValue label = new LocalizedValue(locale);
 
 		label.addString(locale, "Field_" + LocaleUtil.toLanguageId(locale));
 
 		ddmFormField.setLabel(label);
+
+		ddmFormField.setLocalizable(true);
+		ddmFormField.setRepeatable(false);
 
 		return ddmFormField;
 	}

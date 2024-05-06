@@ -299,7 +299,7 @@
 				"pageElements": [
 					{
 						"definition": {
-							"customCSS": ".[$FRAGMENT_CLASS$] {\nflex: 0 0 300px;\n}",
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n.custom-control-label::before {\n    border-color: var(--gray-600, #6B6C7E);\n}\n.custom-control-label-text {\n    font-size: 13px;\n    font-weight: 400;\n}\n.search-facet-display-vocabulary .treeview-vocabulary-display .tree-item-category {\n    padding-left: 0rem;\n }\n\t\n.portlet {\n   margin-bottom: 0rem;\n}\n\t\n.panel-body {\n    padding: 0rem;\n}\n\t\n.treeview .custom-control {\n    margin: 0rem;\n  }\n\t\n.treeview .btn {\n    padding: 0px;\n    margin-right: 0.5rem;\n}\n\t\n.panel-header {\n\t  padding: 0.75rem 1.25rem 0rem 0rem;\n}\n}",
 							"fragmentStyle": {
 								"maxWidth": "300px"
 							},
@@ -340,7 +340,7 @@
 													"maxTerms": "100",
 													"order": "key:asc",
 													"parameterName": "feature",
-													"vocabularyIds": "33633,32435"
+													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Feature$]"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
@@ -381,7 +381,7 @@
 													"maxTerms": "100",
 													"order": "key:asc",
 													"parameterName": "deployment-approach",
-													"vocabularyIds": "33623,32425"
+													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Deployment Approach$]"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
@@ -424,7 +424,6 @@
 												"widgetConfig": {
 													"displayInDocumentForm": "false",
 													"displayStyle": "ddmTemplate_LEARN_SEARCH_RESULTS",
-													"displayStyleGroupId": "32201",
 													"federatedSearchKey": "",
 													"fieldsToDisplay": "",
 													"highlightEnabled": "true",
@@ -455,7 +454,7 @@
 													"federatedSearchKey": "",
 													"filterField": "assetCategoryIds",
 													"filterQueryType": "match",
-													"filterValue": "[$CAPABILITY#CLOUD$]",
+													"filterValue": "[$CAPABILITY#PERSONALIZATION$]",
 													"immutable": "true",
 													"invisible": "true",
 													"occur": "filter",

@@ -299,7 +299,7 @@
 				"pageElements": [
 					{
 						"definition": {
-							"customCSS": ".[$FRAGMENT_CLASS$] {\nflex: 0 0 300px;\n}",
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n.custom-control-label::before {\n    border-color: var(--gray-600, #6B6C7E);\n}\n.custom-control-label-text {\n    font-size: 13px;\n    font-weight: 400;\n}\n.search-facet-display-vocabulary .treeview-vocabulary-display .tree-item-category {\n    padding-left: 0rem;\n }\n\t\n.portlet {\n   margin-bottom: 0rem;\n}\n\t\n.panel-body {\n    padding: 0rem;\n}\n\t\n.treeview .custom-control {\n    margin: 0rem;\n  }\n\t\n.treeview .btn {\n    padding: 0px;\n    margin-right: 0.5rem;\n}\n\t\n.panel-header {\n\t  padding: 0.75rem 1.25rem 0rem 0rem;\n}\n}",
 							"fragmentStyle": {
 								"maxWidth": "300px"
 							},

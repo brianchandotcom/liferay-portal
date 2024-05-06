@@ -43,8 +43,8 @@ public class SegmentsExperienceServiceImpl
 
 	@Override
 	public SegmentsExperience addSegmentsExperience(
-			long groupId, long segmentsEntryId, long plid,
-			Map<Locale, String> nameMap, boolean active,
+			String externalReferenceCode, long groupId, long segmentsEntryId,
+			long plid, Map<Locale, String> nameMap, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -56,8 +56,8 @@ public class SegmentsExperienceServiceImpl
 		}
 
 		return segmentsExperienceLocalService.addSegmentsExperience(
-			getUserId(), groupId, segmentsEntryId, plid, nameMap, active,
-			typeSettingsUnicodeProperties, serviceContext);
+			externalReferenceCode, getUserId(), groupId, segmentsEntryId, plid,
+			nameMap, active, typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Override

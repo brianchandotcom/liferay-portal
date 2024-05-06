@@ -60,13 +60,15 @@ public class SegmentsExperienceLocalServiceImpl
 
 	@Override
 	public SegmentsExperience addDefaultSegmentsExperience(
-			long userId, long plid, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long plid,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Layout layout = _layoutLocalService.getLayout(plid);
 
 		return addSegmentsExperience(
-			userId, layout.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
+			externalReferenceCode, userId, layout.getGroupId(),
+			SegmentsEntryConstants.ID_DEFAULT,
 			SegmentsExperienceConstants.KEY_DEFAULT, layout.getPlid(),
 			Collections.singletonMap(
 				LocaleUtil.getSiteDefault(),
@@ -77,9 +79,9 @@ public class SegmentsExperienceLocalServiceImpl
 
 	@Override
 	public SegmentsExperience addSegmentsExperience(
-			long userId, long groupId, long segmentsEntryId, long plid,
-			Map<Locale, String> nameMap, boolean active,
-			UnicodeProperties typeSettingsUnicodeProperties,
+			String externalReferenceCode, long userId, long groupId,
+			long segmentsEntryId, long plid, Map<Locale, String> nameMap,
+			boolean active, UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -87,28 +89,30 @@ public class SegmentsExperienceLocalServiceImpl
 			groupId, _getPublishedLayoutPlid(plid));
 
 		return addSegmentsExperience(
-			userId, groupId, segmentsEntryId, plid, nameMap, lowestPriority - 1,
-			active, typeSettingsUnicodeProperties, serviceContext);
+			externalReferenceCode, userId, groupId, segmentsEntryId, plid,
+			nameMap, lowestPriority - 1, active, typeSettingsUnicodeProperties,
+			serviceContext);
 	}
 
 	@Override
 	public SegmentsExperience addSegmentsExperience(
-			long userId, long groupId, long segmentsEntryId, long plid,
-			Map<Locale, String> nameMap, int priority, boolean active,
+			String externalReferenceCode, long userId, long groupId,
+			long segmentsEntryId, long plid, Map<Locale, String> nameMap,
+			int priority, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addSegmentsExperience(
-			userId, groupId, segmentsEntryId,
+			externalReferenceCode, userId, groupId, segmentsEntryId,
 			String.valueOf(counterLocalService.increment()), plid, nameMap,
 			priority, active, typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Override
 	public SegmentsExperience addSegmentsExperience(
-			long userId, long groupId, long segmentsEntryId,
-			String segmentsExperienceKey, long plid,
+			String externalReferenceCode, long userId, long groupId,
+			long segmentsEntryId, String segmentsExperienceKey, long plid,
 			Map<Locale, String> nameMap, int priority, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
@@ -131,6 +135,7 @@ public class SegmentsExperienceLocalServiceImpl
 			segmentsExperiencePersistence.create(segmentsExperienceId);
 
 		segmentsExperience.setUuid(serviceContext.getUuid());
+		segmentsExperience.setExternalReferenceCode(externalReferenceCode);
 		segmentsExperience.setGroupId(groupId);
 		segmentsExperience.setCompanyId(user.getCompanyId());
 		segmentsExperience.setUserId(user.getUserId());
@@ -183,7 +188,7 @@ public class SegmentsExperienceLocalServiceImpl
 			groupId, _getPublishedLayoutPlid(plid));
 
 		return addSegmentsExperience(
-			userId, groupId, segmentsEntryId, plid, nameMap,
+			null, userId, groupId, segmentsEntryId, plid, nameMap,
 			highestPriority + 1, active, typeSettingsUnicodeProperties,
 			serviceContext);
 	}

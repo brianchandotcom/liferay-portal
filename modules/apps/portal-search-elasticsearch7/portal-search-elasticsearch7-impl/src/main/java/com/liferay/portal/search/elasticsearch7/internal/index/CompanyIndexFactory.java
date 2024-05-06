@@ -18,7 +18,6 @@ import com.liferay.portal.search.elasticsearch7.internal.index.util.IndexFactory
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRequest;
 import com.liferay.portal.search.index.IndexNameBuilder;
-import com.liferay.portal.search.spi.model.index.contributor.IndexContributor;
 
 import org.elasticsearch.client.IndicesClient;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -72,8 +71,6 @@ public class CompanyIndexFactory
 		if (!_companyIndexFactoryHelper.hasIndex(indicesClient, indexName)) {
 			return false;
 		}
-
-		_executeIndexContributorsBeforeRemove(indexName);
 
 		_companyIndexFactoryHelper.deleteIndex(
 			indexName, indicesClient, companyId, true);
@@ -132,29 +129,6 @@ public class CompanyIndexFactory
 						exception);
 				}
 			}
-		}
-	}
-
-	private void _executeIndexContributorBeforeRemove(
-		IndexContributor indexContributor, String indexName) {
-
-		try {
-			indexContributor.onBeforeRemove(indexName);
-		}
-		catch (Throwable throwable) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to apply contributor ", indexContributor,
-					" when removing index ", indexName),
-				throwable);
-		}
-	}
-
-	private void _executeIndexContributorsBeforeRemove(String indexName) {
-		for (IndexContributor indexContributor :
-				_companyIndexFactoryHelper.getIndexContributors()) {
-
-			_executeIndexContributorBeforeRemove(indexContributor, indexName);
 		}
 	}
 

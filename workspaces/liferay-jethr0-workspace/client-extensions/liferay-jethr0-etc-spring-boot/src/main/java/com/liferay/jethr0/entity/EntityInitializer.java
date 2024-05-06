@@ -20,6 +20,7 @@ import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.job.repository.JobPrioritizerEntityRepository;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 import com.liferay.jethr0.routine.scheduler.RoutineEntityScheduler;
+import com.liferay.jethr0.util.ContextUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -120,6 +121,28 @@ public class EntityInitializer {
 		_routineEntityRepository.initializeRelationships();
 
 		_routineEntityScheduler.initialize();
+
+		ContextUtil.setBuildEntityRepository(_buildEntityRepository);
+		ContextUtil.setBuildRunEntityRepository(_buildRunEntityRepository);
+		ContextUtil.setGitBranchEntityRepository(_gitBranchEntityRepository);
+		ContextUtil.setGitCommitEntityRepository(_gitCommitEntityRepository);
+		ContextUtil.setGitPullRequestEntityRepository(
+			_gitPullRequestEntityRepository);
+		ContextUtil.setGitUserEntityRepository(_gitUserEntityRepository);
+		ContextUtil.setJenkinsCohortEntityRepository(
+			_jenkinsCohortEntityRepository);
+		ContextUtil.setJenkinsNodeEntityRepository(
+			_jenkinsNodeEntityRepository);
+		ContextUtil.setJenkinsServerEntityRepository(
+			_jenkinsServerEntityRepository);
+		ContextUtil.setJobComparatorEntityRepository(
+			_jobComparatorEntityRepository);
+		ContextUtil.setJobEntityRepository(_jobEntityRepository);
+		ContextUtil.setJobPrioritizerEntityRepository(
+			_jobPrioritizerEntityRepository);
+		ContextUtil.setJobQueue(_jobQueue);
+		ContextUtil.setRoutineEntityRepository(_routineEntityRepository);
+		ContextUtil.setRoutineEntityScheduler(_routineEntityScheduler);
 	}
 
 	@Autowired

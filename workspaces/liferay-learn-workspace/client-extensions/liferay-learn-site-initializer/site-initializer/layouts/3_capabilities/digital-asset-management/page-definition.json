@@ -68,7 +68,7 @@
 																"fieldKey": "AssetCategory_vocabulary",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": "[$CAPABILITY#DIGITAL-ASSET-MANAGEMENT$]"
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/digital-asset-management.json$]"
 																}
 															}
 														}
@@ -171,7 +171,7 @@
 																		"fieldKey": "AssetCategory_name",
 																		"itemReference": {
 																			"className": "com.liferay.asset.kernel.model.AssetCategory",
-																			"classPK": "[$CAPABILITY#DIGITAL-ASSET-MANAGEMENT$]"
+																			"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/digital-asset-management.json$]"
 																		}
 																	}
 																}
@@ -260,7 +260,7 @@
 												"fieldKey": "AssetCategory_description",
 												"itemReference": {
 													"className": "com.liferay.asset.kernel.model.AssetCategory",
-													"classPK": "[$CAPABILITY#DIGITAL-ASSET-MANAGEMENT$]"
+													"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/digital-asset-management.json$]"
 												}
 											}
 										}
@@ -469,7 +469,7 @@
 													"federatedSearchKey": "",
 													"filterField": "assetCategoryIds",
 													"filterQueryType": "match",
-													"filterValue": "[$CAPABILITY#DIGITAL-ASSET-MANAGEMENT$]",
+													"filterValue": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/digital-asset-management.json$]",
 													"immutable": "true",
 													"invisible": "true",
 													"occur": "filter",

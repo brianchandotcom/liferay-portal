@@ -68,7 +68,7 @@
 																"fieldKey": "AssetCategory_vocabulary",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": "[$CAPABILITY#CONTENT-MANAGEMENT-SYSTEM$]"
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/content-management-system.json$]"
 																}
 															}
 														}
@@ -171,7 +171,7 @@
 																		"fieldKey": "AssetCategory_name",
 																		"itemReference": {
 																			"className": "com.liferay.asset.kernel.model.AssetCategory",
-																			"classPK": "[$CAPABILITY#CONTENT-MANAGEMENT-SYSTEM$]"
+																			"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/content-management-system.json$]"
 																		}
 																	}
 																}
@@ -260,7 +260,7 @@
 												"fieldKey": "AssetCategory_description",
 												"itemReference": {
 													"className": "com.liferay.asset.kernel.model.AssetCategory",
-													"classPK": "[$CAPABILITY#CONTENT-MANAGEMENT-SYSTEM$]"
+													"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/content-management-system.json$]"
 												}
 											}
 										}
@@ -470,7 +470,7 @@
 													"federatedSearchKey": "",
 													"filterField": "assetCategoryIds",
 													"filterQueryType": "match",
-													"filterValue": "[$CAPABILITY#CONTENT-MANAGEMENT-SYSTEM$]",
+													"filterValue": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/content-management-system.json$]",
 													"immutable": "true",
 													"invisible": "true",
 													"occur": "filter",

@@ -68,7 +68,7 @@
 																"fieldKey": "AssetCategory_vocabulary",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": "[$CAPABILITY#COMMERCE$]"
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/commerce.json$]"
 																}
 															}
 														}
@@ -171,7 +171,7 @@
 																		"fieldKey": "AssetCategory_name",
 																		"itemReference": {
 																			"className": "com.liferay.asset.kernel.model.AssetCategory",
-																			"classPK": "[$CAPABILITY#COMMERCE$]"
+																			"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/commerce.json$]"
 																		}
 																	}
 																}
@@ -260,7 +260,7 @@
 												"fieldKey": "AssetCategory_description",
 												"itemReference": {
 													"className": "com.liferay.asset.kernel.model.AssetCategory",
-													"classPK": "[$CAPABILITY#COMMERCE$]"
+													"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/commerce.json$]"
 												}
 											}
 										}
@@ -469,7 +469,7 @@
 													"federatedSearchKey": "",
 													"filterField": "assetCategoryIds",
 													"filterQueryType": "match",
-													"filterValue": "[$CAPABILITY#COMMERCE$]",
+													"filterValue": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/commerce.json$]",
 													"immutable": "true",
 													"invisible": "true",
 													"occur": "filter",

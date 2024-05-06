@@ -171,7 +171,7 @@
 																		"fieldKey": "AssetCategory_name",
 																		"itemReference": {
 																			"className": "com.liferay.asset.kernel.model.AssetCategory",
-																			"classPK": "[$CAPABILITY#CLOUD$]"
+																			"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/cloud.json$$]"
 																		}
 																	}
 																}
@@ -260,7 +260,7 @@
 												"fieldKey": "AssetCategory_description",
 												"itemReference": {
 													"className": "com.liferay.asset.kernel.model.AssetCategory",
-													"classPK": "[$CAPABILITY#CLOUD$]"
+													"classPK": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/cloud.json$]"
 												}
 											}
 										}
@@ -468,7 +468,7 @@
 													"federatedSearchKey": "",
 													"filterField": "assetCategoryIds",
 													"filterQueryType": "match",
-													"filterValue": "[$CAPABILITY#CLOUD$]",
+													"filterValue": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/capability/cloud.json$]",
 													"immutable": "true",
 													"invisible": "true",
 													"occur": "filter",

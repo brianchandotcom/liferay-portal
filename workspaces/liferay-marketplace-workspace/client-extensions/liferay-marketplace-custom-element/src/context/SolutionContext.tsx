@@ -29,10 +29,18 @@ export type ContentBlock =
 	| {
 			content: {
 				description: string;
-				images: any[];
+				files: UploadedFile[];
 				title: string;
 			};
 			type: 'text-images-block';
+	  }
+	| {
+			content: {
+				description: string;
+				title: string;
+				video: string;
+			};
+			type: 'text-video-block';
 	  };
 
 export enum SolutionTypes {

@@ -110,6 +110,28 @@ const zodSchema = {
 		password: z.string().optional(),
 	}),
 	solutionPublishing: {
+		details: z
+			.array(z.any())
+			.min(2)
+			.superRefine((blocks: any, ctx: any) => {
+				console.log('blocks', blocks);
+				blocks.forEach((block: any) => {
+					console.log('aaa', block);
+
+					console.log('ctx', ctx);
+
+					if (block.type === 'text-images-block') {
+						ctx.addIssue({
+							content: {
+								description: z.string().min(3),
+								title: z.string().min(3),
+							},
+						});
+					}
+
+					return z.NEVER;
+				});
+			}),
 		profile: z.object({
 			categories: z.array(z.any()).nonempty(),
 			description: z.string().min(3),

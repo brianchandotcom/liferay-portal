@@ -87,6 +87,16 @@ public class FragmentCollectionServiceWrapper
 	}
 
 	@Override
+	public FragmentCollection getFragmentCollectionByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fragmentCollectionService.
+			getFragmentCollectionByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry>
 			getFragmentCollectionFileEntries(long fragmentCollectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {

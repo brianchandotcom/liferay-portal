@@ -13,7 +13,38 @@ import {
 import {useParams} from 'react-router-dom';
 
 import {UploadedFile} from '../components/FileList/FileList';
+import {PRODUCT_SPECIFICATION_KEY} from '../enums/Product';
+import {ProductVocabulary} from '../enums/ProductVocabulary';
+import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
 import HeadlessCommerceAdminCatalogImpl from '../services/rest/HeadlessCommerceAdminCatalog';
+
+export enum SolutionTypes {
+	SET_CLEANUP = 'SET_CLEANUP',
+	SET_HEADER = 'SET_HEADER',
+	SET_PRODUCT = 'SET_PRODUCT',
+	SET_PRODUCT_ID = 'SET_PRODUCT_ID',
+	SET_PROFILE = 'SET_PROFILE',
+}
+
+type SolutionPayload = {
+	[SolutionTypes.SET_CLEANUP]: undefined;
+	[SolutionTypes.SET_HEADER]: Partial<{
+		description: '';
+		headerImages: UploadedFile[];
+		headerVideo: '';
+		radioValue: '';
+		title: '';
+	}>;
+	[SolutionTypes.SET_PRODUCT]: Product;
+	[SolutionTypes.SET_PRODUCT_ID]: number;
+	[SolutionTypes.SET_PROFILE]: Partial<{
+		categories: [];
+		description: '';
+		file: UploadedFile;
+		name: '';
+		tags: [];
+	}>;
+};
 
 export type SolutionInitialState = {
 	_product?: Product;
@@ -39,14 +70,10 @@ export type SolutionInitialState = {
 			value: string;
 		}[];
 	};
+	references: {
+		vocabulariesAndCategories: any;
+	};
 };
-
-export enum SolutionTypes {
-	SET_HEADER = 'SET_HEADER',
-	SET_PRODUCT_ID = 'SET_PRODUCT_ID',
-	SET_PRODUCT = 'SET_PRODUCT',
-	SET_PROFILE = 'SET_PROFILE',
-}
 
 const solutionInitialState: SolutionInitialState = {
 	catalogId: 0,
@@ -65,30 +92,20 @@ const solutionInitialState: SolutionInitialState = {
 		name: '',
 		tags: [],
 	},
-};
-
-type SolutionPayload = {
-	[SolutionTypes.SET_HEADER]: Partial<{
-		description: '';
-		headerImages: UploadedFile[];
-		headerVideo: '';
-		radioValue: '';
-		title: '';
-	}>;
-	[SolutionTypes.SET_PRODUCT]: Product;
-	[SolutionTypes.SET_PRODUCT_ID]: number;
-	[SolutionTypes.SET_PROFILE]: Partial<{
-		categories: [];
-		description: '';
-		file: UploadedFile;
-		name: '';
-		tags: [];
-	}>;
+	references: {vocabulariesAndCategories: {}},
 };
 
 export type AppActions = ActionMap<SolutionPayload>[keyof ActionMap<
 	SolutionPayload
 >];
+
+const filterProductVocabularies = (product: Product, vocabulary: string) =>
+	product.categories
+		.filter(
+			(category) =>
+				category.vocabulary.toLowerCase() === vocabulary.toLowerCase()
+		)
+		.map(({id, name}) => ({label: name, value: `${id}`}));
 
 const reducer = (state: SolutionInitialState, action: AppActions) => {
 	switch (action.type) {
@@ -100,9 +117,45 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 		}
 
 		case SolutionTypes.SET_PRODUCT: {
+			const _product = action.payload;
+
+			const productSpecifications = _product.productSpecifications || [];
+
+			const getSpecificationValue = (
+				specificationKey: PRODUCT_SPECIFICATION_KEY
+			) =>
+				productSpecifications.find(
+					(productSpecification) =>
+						productSpecification.specificationKey ===
+						specificationKey
+				)?.value?.en_US;
+
 			return {
 				...state,
-				_product: action.payload,
+				_product,
+				header: ({
+					description: getSpecificationValue(
+						PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_DESCRIPTION
+					),
+					title: getSpecificationValue(
+						PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_TITLE
+					),
+				} as unknown) as SolutionInitialState['header'],
+				profile: {
+					categories: filterProductVocabularies(
+						_product,
+						ProductVocabulary.SOLUTION_CATEGORY
+					),
+					description: _product.description.en_US,
+					file: {
+						preview: _product.thumbnail,
+					},
+					name: _product.name.en_US,
+					tags: filterProductVocabularies(
+						_product,
+						ProductVocabulary.SOLUTION_TAGS
+					),
+				} as SolutionInitialState['profile'],
 			};
 		}
 
@@ -144,24 +197,43 @@ export default function SolutionContextProvider({
 	catalogId,
 	children,
 }: SolutionContextProviderProps) {
-	const {appId} = useParams();
-
 	const [state, dispatch] = useReducer(reducer, solutionInitialState);
+	const {id: productId} = useParams();
+
+	const {data = {}} = useGetVocabulariesAndCategories([
+		ProductVocabulary.PRODUCT_TYPE,
+		ProductVocabulary.SOLUTION_CATEGORY,
+		ProductVocabulary.SOLUTION_TAGS,
+	]);
 
 	useEffect(() => {
-		if (!appId) {
+		if (!productId) {
 			return;
 		}
 
-		HeadlessCommerceAdminCatalogImpl.getProduct(appId as string)
+		HeadlessCommerceAdminCatalogImpl.getProduct(
+			productId as string,
+			new URLSearchParams({nestedFields: 'productSpecifications'})
+		)
 			.then((response) =>
 				dispatch({payload: response, type: SolutionTypes.SET_PRODUCT})
 			)
 			.catch(console.error);
-	}, [appId]);
+	}, [productId]);
 
 	return (
-		<SolutionContext.Provider value={[{...state, catalogId}, dispatch]}>
+		<SolutionContext.Provider
+			value={[
+				{
+					...state,
+					catalogId,
+					references: {
+						vocabulariesAndCategories: data,
+					},
+				},
+				dispatch,
+			]}
+		>
 			{children}
 		</SolutionContext.Provider>
 	);

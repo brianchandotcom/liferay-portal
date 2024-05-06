@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -17,7 +18,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -37,6 +41,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsActionKeys;
+import com.liferay.segments.exception.DuplicateSegmentsExperienceExternalReferenceCodeException;
+import com.liferay.segments.exception.NoSuchExperienceException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -106,6 +112,62 @@ public class SegmentsExperienceServiceTest {
 		Assert.assertEquals(
 			"value",
 			actualTypeSettingsUnicodeProperties.getProperty("property"));
+	}
+
+	@Test(expected = PrincipalException.class)
+	public void testAddSegmentsExperienceByExternalReferenceCodeWithoutPermissions()
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			Company company = _companyLocalService.fetchCompany(
+				TestPropsValues.getCompanyId());
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(company.getGuestUser()));
+
+			String externalReferenceCode = StringUtil.randomString();
+
+			SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+				_group.getGroupId());
+
+			_segmentsExperienceService.addSegmentsExperience(
+				externalReferenceCode, _group.getGroupId(),
+				segmentsEntry.getSegmentsEntryId(), _classPK,
+				RandomTestUtil.randomLocaleStringMap(), true,
+				new UnicodeProperties(true),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
+	}
+
+	@Test(
+		expected = DuplicateSegmentsExperienceExternalReferenceCodeException.class
+	)
+	public void testAddSegmentsExperienceWithExistingExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		_segmentsExperienceService.addSegmentsExperience(
+			externalReferenceCode, _group.getGroupId(),
+			segmentsEntry.getSegmentsEntryId(), _classPK,
+			RandomTestUtil.randomLocaleStringMap(), true,
+			new UnicodeProperties(true),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_segmentsExperienceService.addSegmentsExperience(
+			externalReferenceCode, _group.getGroupId(),
+			segmentsEntry.getSegmentsEntryId(), _classPK,
+			RandomTestUtil.randomLocaleStringMap(), true,
+			new UnicodeProperties(true),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	@Test
@@ -217,6 +279,67 @@ public class SegmentsExperienceServiceTest {
 
 		Assert.assertEquals(
 			StringPool.BLANK, segmentsExperience.getTypeSettings());
+	}
+
+	@Test(expected = NoSuchExperienceException.class)
+	public void testDeleteSegmentsExperienceByExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		_segmentsExperienceService.addSegmentsExperience(
+			null, _group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+			_classPK, RandomTestUtil.randomLocaleStringMap(), true,
+			new UnicodeProperties(true),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsExperienceService.deleteSegmentsExperience(
+			externalReferenceCode, _group.getGroupId());
+
+		_segmentsExperienceService.getSegmentsExperienceByExternalReferenceCode(
+			externalReferenceCode, _group.getGroupId());
+	}
+
+	@Test(expected = PrincipalException.class)
+	public void testDeleteSegmentsExperienceByExternalReferenceCodeWithoutPermissions()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		_segmentsExperienceService.addSegmentsExperience(
+			externalReferenceCode, _group.getGroupId(),
+			segmentsEntry.getSegmentsEntryId(), _classPK,
+			RandomTestUtil.randomLocaleStringMap(), true,
+			new UnicodeProperties(true),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			Company company = _companyLocalService.fetchCompany(
+				TestPropsValues.getCompanyId());
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(company.getGuestUser()));
+
+			_segmentsExperienceService.deleteSegmentsExperience(
+				externalReferenceCode, _group.getGroupId());
+
+			Assert.assertNull(
+				_segmentsExperienceService.
+					getSegmentsExperienceByExternalReferenceCode(
+						externalReferenceCode, _group.getGroupId()));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
 	}
 
 	@Test
@@ -787,6 +910,9 @@ public class SegmentsExperienceServiceTest {
 	}
 
 	private long _classPK;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

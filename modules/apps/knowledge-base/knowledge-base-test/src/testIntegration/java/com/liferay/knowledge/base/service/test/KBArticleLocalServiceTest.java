@@ -1639,7 +1639,8 @@ public class KBArticleLocalServiceTest {
 			Assert.assertEquals(duplicateLock.getLockId(), lock.getLockId());
 		}
 
-		_kbArticleLocalService.unlockKBArticle(resourcePrimKey);
+		_kbArticleLocalService.unlockKBArticle(
+			previousUser.getUserId(), resourcePrimKey);
 
 		Assert.assertFalse(
 			LockManagerUtil.isLocked(

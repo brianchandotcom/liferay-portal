@@ -308,7 +308,7 @@ public abstract class BasePortletPreferencesUpgradeProcess
 		}
 		else {
 			throw new IllegalArgumentException(
-				"Invalid ownerType: " + ownerType);
+				"Invalid owner type: " + ownerType);
 		}
 
 		StringBundler sb = new StringBundler(8);

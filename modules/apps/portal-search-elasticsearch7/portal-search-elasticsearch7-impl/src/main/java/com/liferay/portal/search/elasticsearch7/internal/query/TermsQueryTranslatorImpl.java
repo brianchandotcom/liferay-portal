@@ -24,10 +24,9 @@ public class TermsQueryTranslatorImpl implements TermsQueryTranslator {
 	@Override
 	public QueryBuilder translate(TermsQuery termsQuery) {
 		String field = termsQuery.getField();
-		int maxTermsCount = 65536;
 		String[] terms = termsQuery.getValues();
 
-		if (terms.length <= maxTermsCount) {
+		if (terms.length <= _MAX_TERMS_COUNT) {
 			return QueryBuilders.termsQuery(field, terms);
 		}
 
@@ -37,7 +36,7 @@ public class TermsQueryTranslatorImpl implements TermsQueryTranslator {
 		for (String term : terms) {
 			termsList.add(term);
 
-			if (termsList.size() == maxTermsCount) {
+			if (termsList.size() == _MAX_TERMS_COUNT) {
 				boolQueryBuilder.should(
 					QueryBuilders.termsQuery(
 						field, termsList.toArray(new String[0])));
@@ -54,5 +53,7 @@ public class TermsQueryTranslatorImpl implements TermsQueryTranslator {
 
 		return boolQueryBuilder;
 	}
+
+	private static final Integer _MAX_TERMS_COUNT = 65536;
 
 }

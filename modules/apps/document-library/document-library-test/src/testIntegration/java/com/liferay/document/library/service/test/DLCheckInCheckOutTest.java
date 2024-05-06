@@ -9,10 +9,15 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.exception.FileEntryLockException;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.store.DLStoreRequest;
+import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.Group;
@@ -413,6 +418,43 @@ public class DLCheckInCheckOutTest {
 	}
 
 	@Test
+	public void testCheckOutOldStoreFile() throws Exception {
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
+			_fileEntry.getFileEntryId());
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		DLStoreUtil.updateFile(
+			DLStoreRequest.builder(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName()
+			).versionLabel(
+				dlFileVersion.getVersion()
+			).build(),
+			new UnsyncByteArrayInputStream(_TEST_CONTENT.getBytes()));
+		DLStoreUtil.deleteFile(
+			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(), dlFileVersion.getStoreFileName());
+
+		Folder folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
+
+		Date lastPostDate = folder.getLastPostDate();
+
+		DLAppServiceUtil.checkOutFileEntry(
+			_fileEntry.getFileEntryId(), _serviceContext);
+
+		folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
+
+		DateTestUtil.assertEquals(lastPostDate, folder.getLastPostDate());
+
+		FileVersion fileVersion = _fileEntry.getLatestFileVersion();
+
+		Assert.assertEquals("PWC", fileVersion.getVersion());
+
+		getAssetEntry(fileVersion.getFileVersionId(), true);
+	}
+
+	@Test
 	public void testUpdateFileEntry() throws Exception {
 		Folder folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
 
@@ -431,6 +473,55 @@ public class DLCheckInCheckOutTest {
 
 	@Test
 	public void testUpdateFileEntry2() throws Exception {
+		DLAppServiceUtil.checkOutFileEntry(
+			_fileEntry.getFileEntryId(), _serviceContext);
+
+		Folder folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
+
+		Date lastPostDate = folder.getLastPostDate();
+
+		FileEntry fileEntry = updateFileEntry(_fileEntry.getFileEntryId());
+
+		Assert.assertEquals("1.0", fileEntry.getVersion());
+
+		FileVersion fileVersion = fileEntry.getLatestFileVersion();
+
+		Assert.assertEquals("PWC", fileVersion.getVersion());
+
+		DLAppServiceUtil.checkInFileEntry(
+			_fileEntry.getFileEntryId(), DLVersionNumberIncrease.MINOR,
+			StringPool.BLANK, _serviceContext);
+
+		folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
+
+		Assert.assertFalse(lastPostDate.after(folder.getLastPostDate()));
+
+		fileEntry = DLAppServiceUtil.getFileEntry(_fileEntry.getFileEntryId());
+
+		Assert.assertEquals("1.1", fileEntry.getVersion());
+
+		getAssetEntry(fileVersion.getFileVersionId(), false);
+	}
+
+	@Test
+	public void testUpdateFileEntryOldStoreFile() throws Exception {
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
+			_fileEntry.getFileEntryId());
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		DLStoreUtil.updateFile(
+			DLStoreRequest.builder(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName()
+			).versionLabel(
+				dlFileVersion.getVersion()
+			).build(),
+			new UnsyncByteArrayInputStream(_TEST_CONTENT.getBytes()));
+		DLStoreUtil.deleteFile(
+			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(), dlFileVersion.getStoreFileName());
+
 		DLAppServiceUtil.checkOutFileEntry(
 			_fileEntry.getFileEntryId(), _serviceContext);
 

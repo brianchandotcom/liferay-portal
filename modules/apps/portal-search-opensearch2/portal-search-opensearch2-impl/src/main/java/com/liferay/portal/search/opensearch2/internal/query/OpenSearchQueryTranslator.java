@@ -608,7 +608,6 @@ public class OpenSearchQueryTranslator
 
 	@Override
 	public QueryVariant visit(MatchQuery matchQuery) {
-		String field = matchQuery.getField();
 		MatchQuery.Type type = matchQuery.getType();
 		Object value = matchQuery.getValue();
 
@@ -628,17 +627,16 @@ public class OpenSearchQueryTranslator
 			}
 
 			if (type == MatchQuery.Type.PHRASE) {
-				return _translateMatchPhraseQuery(
-					field, matchQuery, stringValue);
+				return _translateMatchPhraseQuery(matchQuery, stringValue);
 			}
 			else if (type == MatchQuery.Type.PHRASE_PREFIX) {
 				return _translateMatchPhrasePrefixQuery(
-					field, matchQuery, stringValue);
+					matchQuery, stringValue);
 			}
 		}
 
 		if ((type == null) || (type == MatchQuery.Type.BOOLEAN)) {
-			return _translateMatchQuery(field, matchQuery, value);
+			return _translateMatchQuery(matchQuery, value);
 		}
 
 		throw new IllegalArgumentException("Invalid match query type " + type);
@@ -1233,7 +1231,7 @@ public class OpenSearchQueryTranslator
 	}
 
 	private QueryVariant _translateMatchPhrasePrefixQuery(
-		String field, MatchQuery matchQuery, String value) {
+		MatchQuery matchQuery, String value) {
 
 		org.opensearch.client.opensearch._types.query_dsl.
 			MatchPhrasePrefixQuery.Builder builder =
@@ -1256,7 +1254,7 @@ public class OpenSearchQueryTranslator
 	}
 
 	private QueryVariant _translateMatchPhraseQuery(
-		String field, MatchQuery matchQuery, String value) {
+		MatchQuery matchQuery, String value) {
 
 		org.opensearch.client.opensearch._types.query_dsl.MatchPhraseQuery.
 			Builder builder = QueryBuilders.matchPhrase();
@@ -1274,7 +1272,7 @@ public class OpenSearchQueryTranslator
 	}
 
 	private QueryVariant _translateMatchQuery(
-		String field, MatchQuery matchQuery, Object value) {
+		MatchQuery matchQuery, Object value) {
 
 		org.opensearch.client.opensearch._types.query_dsl.MatchQuery.Builder
 			builder = QueryBuilders.match();

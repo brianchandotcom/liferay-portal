@@ -239,6 +239,21 @@ public abstract class BasePortletPreferencesUpgradeProcess
 			String portletId, String xml)
 		throws Exception;
 
+	private void _deletePortletPreferences(
+			long portletPreferencesId, boolean deletePortletPreferenceValue)
+		throws Exception {
+
+		runSQL(
+			"delete from PortletPreferences where portletPreferencesId = " +
+				portletPreferencesId);
+
+		if (deletePortletPreferenceValue) {
+			runSQL(
+				"delete from PortletPreferenceValue where " +
+					"portletPreferencesId = " + portletPreferencesId);
+		}
+	}
+
 	private long _getCompanyId(int ownerType, long ownerId, long plid)
 		throws Exception {
 
@@ -468,9 +483,7 @@ public abstract class BasePortletPreferencesUpgradeProcess
 			companyId = _getCompanyId(ownerType, ownerId, plid);
 
 			if (companyId <= 0) {
-				runSQL(
-					"delete from PortletPreferences where " +
-						"portletPreferencesId = " + portletPreferencesId);
+				_deletePortletPreferences(portletPreferencesId, false);
 
 				return;
 			}
@@ -547,13 +560,7 @@ public abstract class BasePortletPreferencesUpgradeProcess
 			companyId = _getCompanyId(ownerType, ownerId, plid);
 
 			if (companyId <= 0) {
-				runSQL(
-					"delete from PortletPreferences where " +
-						"portletPreferencesId = " + portletPreferencesId);
-
-				runSQL(
-					"delete from PortletPreferenceValue where " +
-						"portletPreferencesId = " + portletPreferencesId);
+				_deletePortletPreferences(portletPreferencesId, true);
 
 				return;
 			}

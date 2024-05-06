@@ -204,7 +204,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		URL jenkinsURL = getJenkinsURL();
 
 		JenkinsServerEntity jenkinsServerEntity =
-			jenkinsServerEntityRepository.getByURL(jenkinsURL);
+			jenkinsServerEntityRepository.createByURL(jenkinsURL);
 
 		if (jenkinsServerEntity == null) {
 			throw new InvalidJSONException(

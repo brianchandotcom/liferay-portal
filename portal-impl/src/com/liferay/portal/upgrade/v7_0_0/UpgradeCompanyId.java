@@ -57,7 +57,8 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 			new TableUpdater(
 				"PasswordPolicyRel", "PasswordPolicy", "passwordPolicyId"),
 			new TableUpdater("PasswordTracker", "User_", "userId"),
-			new PortletPreferencesTableUpdater("PortletPreferences"),
+			new BaseCompanyIdUpgradeProcess.PortletPreferencesTableUpdater(
+				"PortletPreferences"),
 			new TableUpdater(
 				"RatingsStats", "classPK",
 				new String[][] {
@@ -130,6 +131,23 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 					"'folder' and DLFolder.folderId = DLSyncEvent.typePK";
 
 			runSQL(connection, getUpdateSQL(selectSQL));
+		}
+
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link BaseCompanyIdUpgradeProcess.PortletPreferencesTableUpdater}
+	 */
+	@Deprecated
+	protected class PortletPreferencesTableUpdater extends TableUpdater {
+
+		public PortletPreferencesTableUpdater(String tableName) {
+			super(tableName, "", "");
+		}
+
+		@Override
+		public void update(Connection connection) throws Exception {
+			super.update(connection);
 		}
 
 	}

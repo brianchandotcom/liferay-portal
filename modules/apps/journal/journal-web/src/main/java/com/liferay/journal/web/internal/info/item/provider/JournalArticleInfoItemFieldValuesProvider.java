@@ -123,7 +123,7 @@ public class JournalArticleInfoItemFieldValuesProvider
 		JournalArticle article) {
 
 		return _ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
-			article, article.getDDMFormValues());
+			article, article.getDDMFormValues(true));
 	}
 
 	private List<InfoFieldValue<Object>> _getDDMTemplateInfoFieldValues(

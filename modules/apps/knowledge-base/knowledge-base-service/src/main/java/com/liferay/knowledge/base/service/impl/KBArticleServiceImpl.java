@@ -295,10 +295,11 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		_kbArticleModelResourcePermission.check(
 			permissionChecker, resourcePrimKey, KBActionKeys.UPDATE);
 
-		kbArticleLocalService.unlockKBArticle(resourcePrimKey);
+		long userId = getUserId();
 
-		return kbArticleLocalService.lockKBArticle(
-			getUserId(), resourcePrimKey);
+		kbArticleLocalService.unlockKBArticle(userId, resourcePrimKey, true);
+
+		return kbArticleLocalService.lockKBArticle(userId, resourcePrimKey);
 	}
 
 	@Override
@@ -838,7 +839,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		_kbArticleModelResourcePermission.check(
 			getPermissionChecker(), resourcePrimKey, KBActionKeys.UPDATE);
 
-		kbArticleLocalService.unlockKBArticle(resourcePrimKey);
+		kbArticleLocalService.unlockKBArticle(getUserId(), resourcePrimKey);
 	}
 
 	@Override

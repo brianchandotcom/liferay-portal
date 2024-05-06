@@ -98,7 +98,11 @@ function UpstreamBranchPage() {
 
 	if (upstreamGitBranch) {
 		upstreamBranchTitle =
-			upstreamGitBranch.repositoryName + '/' + upstreamGitBranch.name;
+			upstreamGitBranch.userName +
+			'/' +
+			upstreamGitBranch.repositoryName +
+			'/' +
+			upstreamGitBranch.name;
 	}
 
 	const breadcrumbs = [

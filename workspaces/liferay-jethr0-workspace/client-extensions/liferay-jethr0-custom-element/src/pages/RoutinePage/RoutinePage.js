@@ -155,6 +155,8 @@ function RoutineInformation({routine}) {
 							routine.upstreamGitBranch.id
 						}
 						fieldValue={
+							routine.upstreamGitBranch.userName +
+							'/' +
 							routine.upstreamGitBranch.repositoryName +
 							'/' +
 							routine.upstreamGitBranch.name

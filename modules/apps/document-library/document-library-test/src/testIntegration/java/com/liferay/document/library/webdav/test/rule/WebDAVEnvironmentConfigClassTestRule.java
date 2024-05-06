@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.document.library.webdav.test;
+package com.liferay.document.library.webdav.test.rule;
 
+import com.liferay.document.library.webdav.test.BaseWebDAVTestCase;
 import com.liferay.portal.kernel.test.rule.ClassTestRule;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.webdav.methods.Method;

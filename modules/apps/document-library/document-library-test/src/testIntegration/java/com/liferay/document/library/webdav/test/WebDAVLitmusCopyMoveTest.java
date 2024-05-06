@@ -6,6 +6,7 @@
 package com.liferay.document.library.webdav.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.webdav.test.rule.WebDAVEnvironmentConfigClassTestRule;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.webdav.methods.Method;

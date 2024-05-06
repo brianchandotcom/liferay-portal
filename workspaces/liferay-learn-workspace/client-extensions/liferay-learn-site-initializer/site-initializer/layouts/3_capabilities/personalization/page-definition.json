@@ -165,7 +165,7 @@
 																},
 																"text": {
 																	"defaultFragmentInlineValue": {
-																		"value": "/site-initializer/taxonomy-vocabularies/capability/personalization.json"
+																		"value": "Personalization"
 																	},
 																	"mapping": {
 																		"fieldKey": "AssetCategory_name",
@@ -254,7 +254,7 @@
 										},
 										"text": {
 											"defaultFragmentInlineValue": {
-												"value": "<p>Liferay provides powerful out-of-the-box features for building and delivering personalized experiences to users. /site-initializer/taxonomy-vocabularies/capability/personalization.json features empower you to deliver novel site experiences that differ based on defined user segments, design and execute A/B Tests, and more.<div>Check these articles for an introduction:<ul><li><a href=/w/dxp/site-building/personalizing-site-experience>Personalizing Site Experience</a><li><a href=/w/dxp/site-building/personalizing-site-experience/segmentation/creating-and-managing-user-segments>Creating and Managing User Segments</a><li><a href=/w/dxp/site-building/optimizing-sites/ab-testing/ab-testing>A/B Testing</a><li><a href=/w/dxp/site-building/personalizing-site-experience/enabling-automated-live-chat-systems>Enabling Automated Live Chat Systems</a></ul></div>"
+												"value": "<p>Liferay provides powerful out-of-the-box features for building and delivering personalized experiences to users. Personalization features empower you to deliver novel site experiences that differ based on defined user segments, design and execute A/B Tests, and more.<div>Check these articles for an introduction:<ul><li><a href=/w/dxp/site-building/personalizing-site-experience>Personalizing Site Experience</a><li><a href=/w/dxp/site-building/personalizing-site-experience/segmentation/creating-and-managing-user-segments>Creating and Managing User Segments</a><li><a href=/w/dxp/site-building/optimizing-sites/ab-testing/ab-testing>A/B Testing</a><li><a href=/w/dxp/site-building/personalizing-site-experience/enabling-automated-live-chat-systems>Enabling Automated Live Chat Systems</a></ul></div>"
 											},
 											"mapping": {
 												"fieldKey": "AssetCategory_description",

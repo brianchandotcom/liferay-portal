@@ -165,7 +165,7 @@
 																},
 																"text": {
 																	"defaultFragmentInlineValue": {
-																		"value": "/site-initializer/taxonomy-vocabularies/capability/integration.json"
+																		"value": "Integration"
 																	},
 																	"mapping": {
 																		"fieldKey": "AssetCategory_name",
@@ -254,7 +254,7 @@
 										},
 										"text": {
 											"defaultFragmentInlineValue": {
-												"value": "<p>Liferay is designed to be standards-compliant and highly interoperable. Connect Liferay DXP with external systems using SOAP, REST, GraphQL, and more  to unite third-party software, legacy systems, and data.<p>Headless APIs, Remote Apps (Client Extensions), API Builder, and /site-initializer/taxonomy-vocabularies/capability/integration.jsons with SSO platforms are some of the examples of the features in this area.<div>Check these articles for an introduction:<ul><li><a href=/w/dxp/headless-delivery/using-liferay-as-a-headless-platform>Using Liferay as a Headless Platform</a><li><a href=/w/dxp/liferay-development/integrating-external-applications>Integrating External Applications</a><li><a href=/w/dxp/headless-delivery/api-builder>API Builder</a><li><a href=/w/dxp/installation-and-upgrades/securing-liferay/configuring-sso>Configuring Single Sign-On</a></ul></div>"
+												"value": "<p>Liferay is designed to be standards-compliant and highly interoperable. Connect Liferay DXP with external systems using SOAP, REST, GraphQL, and more  to unite third-party software, legacy systems, and data.<p>Headless APIs, Remote Apps (Client Extensions), API Builder, and integrations with SSO platforms are some of the examples of the features in this area.<div>Check these articles for an introduction:<ul><li><a href=/w/dxp/headless-delivery/using-liferay-as-a-headless-platform>Using Liferay as a Headless Platform</a><li><a href=/w/dxp/liferay-development/integrating-external-applications>Integrating External Applications</a><li><a href=/w/dxp/headless-delivery/api-builder>API Builder</a><li><a href=/w/dxp/installation-and-upgrades/securing-liferay/configuring-sso>Configuring Single Sign-On</a></ul></div>"
 											},
 											"mapping": {
 												"fieldKey": "AssetCategory_description",

@@ -47,8 +47,7 @@ public class ClayTooltipBottomDynamicInclude implements DynamicInclude {
 				Arrays.asList(
 					ESImportUtil.getESImport(
 						absolutePortalURLBuilder,
-						"{as main} from " +
-							"frontend-js-tooltip-support-web"))));
+						"{main} from frontend-js-tooltip-support-web"))));
 
 		scriptData.writeTo(httpServletResponse.getWriter());
 	}

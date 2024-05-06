@@ -47,8 +47,7 @@ public class TabsBottomDynamicInclude implements DynamicInclude {
 				Arrays.asList(
 					ESImportUtil.getESImport(
 						absolutePortalURLBuilder,
-						"{main} from " +
-							"frontend-js-tabs-support-web"))));
+						"{main} from frontend-js-tabs-support-web"))));
 
 		scriptData.writeTo(httpServletResponse.getWriter());
 	}

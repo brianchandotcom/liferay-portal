@@ -86,8 +86,7 @@ public class WalkthroughBottomJSPDynamicInclude implements DynamicInclude {
 				Arrays.asList(
 					ESImportUtil.getESImport(
 						absolutePortalURLBuilder,
-						"{main} from " +
-							"frontend-js-walkthrough-web"))));
+						"{main} from frontend-js-walkthrough-web"))));
 
 		scriptData.writeTo(httpServletResponse.getWriter());
 	}

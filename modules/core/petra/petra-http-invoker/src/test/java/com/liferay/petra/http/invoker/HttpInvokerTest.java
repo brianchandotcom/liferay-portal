@@ -12,11 +12,9 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 
 import java.net.HttpURLConnection;
-import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -40,11 +38,15 @@ public class HttpInvokerTest {
 	public static Iterable<Object[]> data() {
 		List<Object[]> testData = new ArrayList<>();
 
-		String[] methods = {"GET", "DELETE", "PUT", "POST", "PATCH"};
+		HttpInvoker.HttpMethod[] methods = {
+			HttpInvoker.HttpMethod.GET, HttpInvoker.HttpMethod.DELETE,
+			HttpInvoker.HttpMethod.PUT, HttpInvoker.HttpMethod.POST,
+			HttpInvoker.HttpMethod.PATCH
+		};
 		String[] protocols = {"http", "https"};
 
 		for (String protocol : protocols) {
-			for (String method : methods) {
+			for (HttpInvoker.HttpMethod method : methods) {
 				testData.add(
 					new Object[] {
 						method, String.format("%s://foo.demo", protocol)
@@ -55,40 +57,20 @@ public class HttpInvokerTest {
 		return testData;
 	}
 
-	public HttpInvokerTest(String methodName, String urlString) {
-		_methodName = methodName;
+	public HttpInvokerTest(HttpInvoker.HttpMethod method, String urlString) {
+		_method = method;
 		_urlString = urlString;
 	}
 
 	@Test
-	public void test() throws IOException {
-		URL url = new URL(_urlString);
+	public void testGetHttpURLConnection() throws IOException {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)url.openConnection();
-
-		try {
-			HttpURLConnection setMethodHttpURLConnection = httpURLConnection;
-
-			if (Objects.equals(url.getProtocol(), "https")) {
-				Class<?> clazz = httpURLConnection.getClass();
-
-				Field field = clazz.getDeclaredField("delegate");
-
-				field.setAccessible(true);
-
-				setMethodHttpURLConnection = (HttpURLConnection)field.get(
-					httpURLConnection);
-			}
-
-			_methodField.set(setMethodHttpURLConnection, _methodName);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new IOException(reflectiveOperationException);
-		}
+		HttpURLConnection httpURLConnection = httpInvoker.getHttpURLConnection(
+			_method, _urlString);
 
 		Assert.assertEquals(
-			_urlString, _methodName, httpURLConnection.getRequestMethod());
+			_urlString, _method.name(), httpURLConnection.getRequestMethod());
 	}
 
 	private static final Field _methodField;
@@ -104,7 +86,7 @@ public class HttpInvokerTest {
 		}
 	}
 
-	private final String _methodName;
+	private final HttpInvoker.HttpMethod _method;
 	private final String _urlString;
 
 }

@@ -14,7 +14,6 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBArticleService;
-import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.web.internal.KBUtil;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
@@ -35,6 +34,8 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -96,8 +97,16 @@ public class DisplayPortlet extends BaseKBPortlet {
 			KBFolder.class.getName(),
 			new KBFolderKBArticleSelector(
 				_kbArticleService, _kbFolderService,
-				_kbFolderLocalService.createKBFolder(
-					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID)));
+				ProxyUtil.newDelegateProxyInstance(
+					KBFolder.class.getClassLoader(), KBFolder.class,
+					new Object() {
+
+						public long getKbFolderId() {
+							return KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+						}
+
+					},
+					ProxyFactory.newDummyInstance(KBFolder.class))));
 	}
 
 	@Override
@@ -284,9 +293,6 @@ public class DisplayPortlet extends BaseKBPortlet {
 
 	@Reference
 	private KBArticleService _kbArticleService;
-
-	@Reference
-	private KBFolderLocalService _kbFolderLocalService;
 
 	@Reference
 	private KBFolderService _kbFolderService;

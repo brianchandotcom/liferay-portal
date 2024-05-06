@@ -18,6 +18,23 @@ import {ProductVocabulary} from '../enums/ProductVocabulary';
 import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
 import HeadlessCommerceAdminCatalogImpl from '../services/rest/HeadlessCommerceAdminCatalog';
 
+export type ContentBlock =
+	| {
+			content: {
+				description: string;
+				title: string;
+			};
+			type: 'text-block';
+	  }
+	| {
+			content: {
+				description: string;
+				images: any[];
+				title: string;
+			};
+			type: 'text-images-block';
+	  };
+
 export enum SolutionTypes {
 	SET_CLEANUP = 'SET_CLEANUP',
 	SET_HEADER = 'SET_HEADER',
@@ -25,6 +42,8 @@ export enum SolutionTypes {
 	SET_PRODUCT_ID = 'SET_PRODUCT_ID',
 	SET_PROFILE = 'SET_PROFILE',
 	SET_DETAILS = 'SET_DETAILS',
+	SET_NEW_BLOCK = 'SET_NEW_BLOCK',
+	SET_UPDATE_BLOCK = 'SET_UPDATE_BLOCK',
 }
 
 type SolutionPayload = {
@@ -37,33 +56,29 @@ type SolutionPayload = {
 		};
 	}>;
 	[SolutionTypes.SET_HEADER]: Partial<{
-		description: '';
+		description: string;
 		headerImages: UploadedFile[];
-		headerVideo: '';
-		radioValue: '';
-		title: '';
+		headerVideo: string;
+		radioValue: 'embed-video-url' | 'upload-images';
+		title: string;
 	}>;
+	[SolutionTypes.SET_NEW_BLOCK]: ContentBlock;
 	[SolutionTypes.SET_PRODUCT]: Product;
 	[SolutionTypes.SET_PRODUCT_ID]: number;
 	[SolutionTypes.SET_PROFILE]: Partial<{
-		categories: [];
-		description: '';
+		categories: any[];
+		description: string;
 		file: UploadedFile;
-		name: '';
-		tags: [];
+		name: string;
+		tags: any[];
 	}>;
+	[SolutionTypes.SET_UPDATE_BLOCK]: {block: ContentBlock; index: number};
 };
 
 export type SolutionInitialState = {
 	_product?: Product;
 	catalogId: number;
-	details: {
-		textImagesBlock: {
-			description: string;
-			images: UploadedFile[];
-			title: string;
-		};
-	};
+	details: ContentBlock[];
 	header: {
 		description: any;
 		headerImages: UploadedFile[];
@@ -92,13 +107,7 @@ export type SolutionInitialState = {
 
 const solutionInitialState: SolutionInitialState = {
 	catalogId: 0,
-	details: {
-		textImagesBlock: {
-			description: '',
-			images: [],
-			title: '',
-		},
-	},
+	details: [],
 	header: {
 		description: '',
 		headerImages: [],
@@ -201,16 +210,27 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 			};
 		}
 
-		case SolutionTypes.SET_DETAILS: {
-			// eslint-disable-next-line no-console
-			console.log(action.payload);
+		case SolutionTypes.SET_NEW_BLOCK: {
+			return {
+				...state,
+				details: [...state.details, action.payload],
+			};
+		}
+
+		case SolutionTypes.SET_UPDATE_BLOCK: {
+			const details = state.details;
+
+			const newDetails = details.map((detail, index) => {
+				if (index === action.payload.index) {
+					return action.payload.block;
+				}
+
+				return detail;
+			});
 
 			return {
 				...state,
-				details: {
-					textImagesBlock: {...state.details.textImagesBlock},
-					...action.payload,
-				},
+				details: newDetails,
 			};
 		}
 
@@ -255,6 +275,8 @@ export default function SolutionContextProvider({
 			)
 			.catch(console.error);
 	}, [productId]);
+
+	// dispatch({payload: {content: {}, type: "text-images-block"}, type: SolutionTypes.SET_DETAILS});
 
 	return (
 		<SolutionContext.Provider

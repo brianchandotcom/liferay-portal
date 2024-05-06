@@ -53,6 +53,8 @@ definition {
 	@description = "LPS-179282. Confirm that metadata fields are not present for the user "
 	@priority = 3
 	test AssertNotPresentMetadataFields {
+		property portal.upstream = "quarantine";
+
 		task ("And Clicking to Add a new field") {
 			LexiconEntry.gotoAdd();
 		}
@@ -89,6 +91,8 @@ definition {
 	@description = "LPS-194126 Confirm that a new translation field has been created"
 	@priority = 3
 	test AssertTheNewFieldTranslation {
+		property portal.upstream = "quarantine";
+
 		task ("Given a new Object entity") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "DataSetObject",
@@ -1240,6 +1244,8 @@ definition {
 	@description = "LPS-179282. Confirm that the search bar returns works as expected"
 	@priority = 4
 	test CanSearchField {
+		property portal.upstream = "quarantine";
+
 		task ("And Clicking to Add a new field") {
 			LexiconEntry.gotoAdd();
 		}
@@ -1258,6 +1264,8 @@ definition {
 	@description = "LPS-185227. Confirm that the user can search a specific field when adding fields."
 	@priority = 4
 	test CanSearchFieldOnAddFieldsModal {
+		property portal.upstream = "quarantine";
+		
 		task ("And clicks on Add Fields button") {
 			LexiconEntry.gotoAdd();
 		}

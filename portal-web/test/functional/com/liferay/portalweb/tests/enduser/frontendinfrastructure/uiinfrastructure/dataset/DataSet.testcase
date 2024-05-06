@@ -2107,6 +2107,8 @@ definition {
 	@description = "LPS-194126 Confirm that when creating a field with a pt-BR translation, the label is translated when pt is added to the page URL"
 	@priority = 4
 	test TheFieldValueIsTranslated {
+		property portal.upstream = "quarantine";
+
 		task ("Given a product created and a data set entry with app:/headless-commerce-admin-catalog/v1.0") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Product Management",

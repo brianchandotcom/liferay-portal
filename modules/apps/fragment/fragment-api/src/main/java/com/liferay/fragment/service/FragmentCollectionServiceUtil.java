@@ -80,6 +80,15 @@ public class FragmentCollectionServiceUtil {
 		return getService().fetchFragmentCollection(fragmentCollectionId);
 	}
 
+	public static FragmentCollection
+			getFragmentCollectionByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getFragmentCollectionByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	public static List<com.liferay.portal.kernel.repository.model.FileEntry>
 			getFragmentCollectionFileEntries(long fragmentCollectionId)
 		throws PortalException {

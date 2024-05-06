@@ -5,6 +5,6 @@ application:
     className: "HeadlessCommercePunchOutApplication"
     name: "Liferay.Headless.Commerce.PunchOut"
 author: "Jaclyn Ong"
-compatibilityVersion: 5
+compatibilityVersion: 6
 forcePredictableSchemaPropertyName: false
 generateGraphQL: false

@@ -69,7 +69,7 @@ public class SiteNavigationMenuCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -77,6 +77,8 @@ public class SiteNavigationMenuCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", siteNavigationMenuId=");
 		sb.append(siteNavigationMenuId);
 		sb.append(", groupId=");
@@ -117,6 +119,14 @@ public class SiteNavigationMenuCacheModel
 		}
 		else {
 			siteNavigationMenuImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			siteNavigationMenuImpl.setExternalReferenceCode("");
+		}
+		else {
+			siteNavigationMenuImpl.setExternalReferenceCode(
+				externalReferenceCode);
 		}
 
 		siteNavigationMenuImpl.setSiteNavigationMenuId(siteNavigationMenuId);
@@ -174,6 +184,7 @@ public class SiteNavigationMenuCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		siteNavigationMenuId = objectInput.readLong();
 
@@ -204,6 +215,13 @@ public class SiteNavigationMenuCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(siteNavigationMenuId);
@@ -240,6 +258,7 @@ public class SiteNavigationMenuCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long siteNavigationMenuId;
 	public long groupId;
 	public long companyId;

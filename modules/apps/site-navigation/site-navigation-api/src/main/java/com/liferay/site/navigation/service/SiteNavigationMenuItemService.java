@@ -47,9 +47,9 @@ public interface SiteNavigationMenuItemService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.site.navigation.service.impl.SiteNavigationMenuItemServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the site navigation menu item remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SiteNavigationMenuItemServiceUtil} if injection and service tracking are not available.
 	 */
 	public SiteNavigationMenuItem addSiteNavigationMenuItem(
-			long groupId, long siteNavigationMenuId,
-			long parentSiteNavigationMenuItemId, String type,
-			String typeSettings, ServiceContext serviceContext)
+			String externalReferenceCode, long groupId,
+			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
+			String type, String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
@@ -61,6 +61,11 @@ public interface SiteNavigationMenuItemService extends BaseService {
 		throws PortalException;
 
 	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SiteNavigationMenuItem fetchSiteNavigationMenuItem(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

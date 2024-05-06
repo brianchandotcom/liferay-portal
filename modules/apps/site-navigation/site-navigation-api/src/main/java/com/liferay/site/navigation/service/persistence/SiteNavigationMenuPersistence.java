@@ -1713,6 +1713,59 @@ public interface SiteNavigationMenuPersistence
 	public int filterCountByG_A(long groupId, boolean auto);
 
 	/**
+	 * Returns the site navigation menu where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchMenuException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching site navigation menu
+	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
+	 */
+	public SiteNavigationMenu findByERC_G(
+			String externalReferenceCode, long groupId)
+		throws NoSuchMenuException;
+
+	/**
+	 * Returns the site navigation menu where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	 */
+	public SiteNavigationMenu fetchByERC_G(
+		String externalReferenceCode, long groupId);
+
+	/**
+	 * Returns the site navigation menu where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	 */
+	public SiteNavigationMenu fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache);
+
+	/**
+	 * Removes the site navigation menu where externalReferenceCode = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the site navigation menu that was removed
+	 */
+	public SiteNavigationMenu removeByERC_G(
+			String externalReferenceCode, long groupId)
+		throws NoSuchMenuException;
+
+	/**
+	 * Returns the number of site navigation menus where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the number of matching site navigation menus
+	 */
+	public int countByERC_G(String externalReferenceCode, long groupId);
+
+	/**
 	 * Caches the site navigation menu in the entity cache if it is enabled.
 	 *
 	 * @param siteNavigationMenu the site navigation menu

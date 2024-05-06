@@ -33,6 +33,10 @@ public class SiteNavigationMenuTable
 			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<SiteNavigationMenuTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<SiteNavigationMenuTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<SiteNavigationMenuTable, Long> siteNavigationMenuId =
 		createColumn(
 			"siteNavigationMenuId", Long.class, Types.BIGINT,

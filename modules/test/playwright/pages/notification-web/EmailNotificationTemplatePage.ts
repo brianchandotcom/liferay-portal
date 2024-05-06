@@ -1,0 +1,72 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Locator, Page} from '@playwright/test';
+
+import {NotificationTemplatesPage} from './NotificationTemplatesPage';
+
+export class EmailNotificationTemplatePage {
+	readonly page: Page;
+	readonly accountRolesGroupTitle: Locator;
+	readonly backURLButton: Locator;
+	readonly basicInfoName: Locator;
+	readonly contentSubject: Locator;
+	readonly notificationTemplatesPage: NotificationTemplatesPage;
+	readonly organizationRolesGroupTitle: Locator;
+	readonly primaryRecipientRoles: Locator;
+	readonly primaryRecipientType: Locator;
+	readonly regularRolesGroupTitle: Locator;
+	readonly saveButton: Locator;
+	readonly secondaryRecipientRolesBCC: Locator;
+	readonly secondaryRecipientRolesCC: Locator;
+	readonly secondaryRecipientTypeBCC: Locator;
+	readonly secondaryRecipientTypeCC: Locator;
+	readonly senderEmailAddress: Locator;
+	readonly senderName: Locator;
+
+	constructor(page: Page) {
+		this.page = page;
+		this.accountRolesGroupTitle = page
+			.getByText('Account Roles', {exact: true})
+			.locator('visible=true');
+		this.backURLButton = page.getByTitle('Back', {exact: true}).first();
+		this.basicInfoName = page.getByLabel('Name' + 'Mandatory').first();
+		this.contentSubject = page.getByLabel('Subject' + 'Mandatory');
+		this.notificationTemplatesPage = new NotificationTemplatesPage(page);
+		this.organizationRolesGroupTitle = page
+			.getByText('Organization Roles')
+			.locator('visible=true');
+		this.primaryRecipientType = page.getByLabel('Type' + 'Mandatory');
+		this.primaryRecipientRoles = page.getByLabel('Role' + 'Mandatory');
+		this.regularRolesGroupTitle = page
+			.getByText('Regular Roles')
+			.locator('visible=true');
+		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.secondaryRecipientRolesBCC = page
+			.getByLabel('Role', {exact: true})
+			.last();
+		this.secondaryRecipientRolesCC = page
+			.getByLabel('Role', {exact: true})
+			.first();
+		this.secondaryRecipientTypeBCC = page
+			.getByLabel('Type', {exact: true})
+			.last();
+		this.secondaryRecipientTypeCC = page
+			.getByLabel('Type', {exact: true})
+			.first();
+		this.senderEmailAddress = page.getByLabel(
+			'Email Address' + 'Mandatory'
+		);
+		this.senderName = page.getByLabel('Name' + 'Mandatory').last();
+	}
+
+	async goto() {
+		await this.notificationTemplatesPage.goto();
+
+		await this.notificationTemplatesPage.newNotificationTemplateButton.click();
+
+		await this.notificationTemplatesPage.emailNotificationDropdownItem.click();
+	}
+}

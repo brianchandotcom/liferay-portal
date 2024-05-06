@@ -105,6 +105,7 @@ export function PrimaryRecipient({
 		<>
 			<SingleSelect<LabelValueObject>
 				disabled={values.system}
+				id="primaryRecipientType"
 				items={recipientOptions}
 				label={Liferay.Language.get('type')}
 				onSelectionChange={(value) => {
@@ -131,6 +132,7 @@ export function PrimaryRecipient({
 						helpMessage={Liferay.Language.get(
 							'you-can-use-a-comma-to-enter-multiple-users'
 						)}
+						id="primaryRecipients"
 						label={Liferay.Language.get('recipients')}
 						name="recipients"
 						onChange={(translation) => {
@@ -157,6 +159,7 @@ export function PrimaryRecipient({
 					<MultipleSelect
 						disabled={values.system}
 						error={errors.to}
+						id="primaryRecipientRoles"
 						label={Liferay.Language.get('role')}
 						options={toRolesList}
 						placeholder={Liferay.Language.get('select-role')}

@@ -124,6 +124,7 @@ export function MultipleSelect({
 		>
 			<ClayAutocomplete onBlur={onBlur}>
 				<ClayMultiSelect<MultiSelectItem>
+					id={id}
 					items={multiSelectItems as MultiSelectItem[]}
 					loadingState={4}
 					onChange={setQuery}

@@ -31,6 +31,7 @@ import {config as layoutSetPrototypeWebConfig} from './tests/layout-set-prototyp
 import {config as layoutTaglib} from './tests/layout-taglib/config';
 import {config as lockedItemsConfig} from './tests/locked-items-web/config';
 import {config as loginWebConfig} from './tests/login-web/config';
+import {config as notificationWebConfig} from './tests/notification-web/config';
 import {config as objectWebConfig} from './tests/object-web/config';
 import {config as osbFaroWebConfig} from './tests/osb-faro-web/config';
 import {config as portalDefaultPermissionsWebConfig} from './tests/portal-default-permissions-web/config';
@@ -77,6 +78,7 @@ export default defineConfig({
 		layoutTaglib,
 		lockedItemsConfig,
 		loginWebConfig,
+		notificationWebConfig,
 		objectWebConfig,
 		osbFaroWebConfig,
 		portalDefaultPermissionsWebConfig,

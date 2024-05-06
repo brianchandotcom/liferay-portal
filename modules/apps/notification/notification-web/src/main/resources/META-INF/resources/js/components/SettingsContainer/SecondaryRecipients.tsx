@@ -131,6 +131,7 @@ export function SecondaryRecipient({
 						<div className="col-lg-6">
 							<SingleSelect<LabelValueObject>
 								disabled={values.system}
+								id="secondaryRecipientTypeCC"
 								items={recipientOptions}
 								label={Liferay.Language.get('type')}
 								onSelectionChange={(value) => {
@@ -156,8 +157,9 @@ export function SecondaryRecipient({
 									feedbackMessage={Liferay.Language.get(
 										'you-can-use-a-comma-to-enter-multiple-users'
 									)}
+									id="secondaryRecipientsCC"
 									label={Liferay.Language.get('recipients')}
-									name="cc"
+									name="secondaryRecipientsCC"
 									onChange={({target}) =>
 										setValues({
 											...values,
@@ -184,6 +186,7 @@ export function SecondaryRecipient({
 								<div className="lfr__notification-template-email-notification-settings-multiple-select">
 									<MultipleSelect
 										disabled={values.system}
+										id="secondaryRecipientRolesCC"
 										label={Liferay.Language.get('role')}
 										options={ccRolesList}
 										placeholder={Liferay.Language.get(
@@ -244,6 +247,7 @@ export function SecondaryRecipient({
 						<div className="col-lg-6">
 							<SingleSelect<LabelValueObject>
 								disabled={values.system}
+								id="secondaryRecipientTypeBCC"
 								items={recipientOptions}
 								label={Liferay.Language.get('type')}
 								onSelectionChange={(value) => {
@@ -269,8 +273,9 @@ export function SecondaryRecipient({
 									feedbackMessage={Liferay.Language.get(
 										'you-can-use-a-comma-to-enter-multiple-users'
 									)}
+									id="secondaryRecipientsBCC"
 									label={Liferay.Language.get('recipients')}
-									name="bcc"
+									name="secondaryRecipientsBCC"
 									onChange={({target}) =>
 										setValues({
 											...values,
@@ -297,6 +302,7 @@ export function SecondaryRecipient({
 								<div className="lfr__notification-template-email-notification-settings-multiple-select">
 									<MultipleSelect
 										disabled={values.system}
+										id="secondaryRecipientRolesBCC"
 										label={Liferay.Language.get('role')}
 										options={bccRolesList}
 										placeholder={Liferay.Language.get(

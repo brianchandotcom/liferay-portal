@@ -64,6 +64,7 @@ export default function ContentContainer({
 				})}
 				disabled={values.system}
 				error={errors.subject}
+				id="subject"
 				label={Liferay.Language.get('subject')}
 				name="subject"
 				onChange={(translation) => {

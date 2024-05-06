@@ -30,6 +30,7 @@ export function Sender({
 				<Input
 					disabled={values.system}
 					error={errors.from}
+					id="fromAddress"
 					label={Liferay.Language.get('email-address')}
 					name="fromAddress"
 					onChange={({target}) =>
@@ -52,6 +53,7 @@ export function Sender({
 				<InputLocalized
 					disabled={values.system}
 					error={errors.fromName}
+					id="fromName"
 					label={Liferay.Language.get('name')}
 					name="fromName"
 					onChange={(translation) => {

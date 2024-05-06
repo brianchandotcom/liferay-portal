@@ -71,7 +71,9 @@ export function SingleSelect<T extends SingleSelectOption>({
 				as={as}
 				defaultSelectedKey={defaultSelectedKey}
 				disabled={disabled}
+				id={id}
 				items={items}
+				name={id}
 				onSelectionChange={onSelectionChange}
 				placeholder={placeholder}
 				selectedKey={selectedKey}

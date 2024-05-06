@@ -1588,7 +1588,7 @@ export function mockTouchpointsReq(items, mockVariables = {}) {
 				start: 0,
 				terms: 'test',
 				title: '',
-				touchpoint: '',
+				touchpoint: null,
 				...getSafeRangeSelectors({
 					rangeKey: RangeKeyTimeRanges.Last30Days
 				}),

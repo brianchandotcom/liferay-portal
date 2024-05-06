@@ -1420,7 +1420,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	private ObjectEntry _addObjectEntry() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, false, false, false,
+				TestPropsValues.getUserId(), 0, false, true, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null,
 				"control_panel.sites",

@@ -121,8 +121,15 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 
 			infoFieldValues.add(
 				_getInfoFieldValue(
-					groupFriendlyURL, infoItemReference, layout,
-					layoutPageTemplateEntry));
+					groupFriendlyURL,
+					String.valueOf(
+						layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
+					infoItemReference, layout, layoutPageTemplateEntry));
+			infoFieldValues.add(
+				_getInfoFieldValue(
+					groupFriendlyURL,
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey(),
+					infoItemReference, layout, layoutPageTemplateEntry));
 		}
 
 		return infoFieldValues;
@@ -235,7 +242,7 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 	}
 
 	private InfoFieldValue<Object> _getInfoFieldValue(
-		String groupFriendlyURL, InfoItemReference infoItemReference,
+		String groupFriendlyURL, String id, InfoItemReference infoItemReference,
 		Layout layout, LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
 		return new InfoFieldValue<>(
@@ -243,9 +250,7 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 			).infoFieldType(
 				URLInfoFieldType.INSTANCE
 			).uniqueId(
-				_getUniqueId(
-					String.valueOf(
-						layoutPageTemplateEntry.getLayoutPageTemplateEntryId()))
+				_getUniqueId(id)
 			).name(
 				layoutPageTemplateEntry.getName()
 			).attribute(

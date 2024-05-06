@@ -106,7 +106,7 @@ const MDFRequestList = () => {
 		(index) =>
 			userAccount?.accountBriefs.some(
 				(accountBrief) =>
-					accountBrief.id === data?.items?.[index]['CAMPAIGN_NAME']
+					accountBrief.id === data?.items?.[index].ACCOUNT_ENTRY_ID
 			),
 		siteURL,
 		urlParams,
@@ -327,9 +327,9 @@ const MDFRequestList = () => {
 							<CSVLink
 								className="btn btn-secondary mr-2"
 								data={dataCSV?.items}
-								filename="MDF Claim.csv"
+								filename="MDF Requests.csv"
 							>
-								Export MDF Claim
+								Export MDF Report
 							</CSVLink>
 						)}
 

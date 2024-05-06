@@ -6,11 +6,13 @@
 package com.liferay.journal.web.internal.info.item.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
@@ -25,9 +27,13 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -53,9 +59,11 @@ import java.io.File;
 
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -157,6 +165,71 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 
 		Assert.assertEquals(
 			HTMLInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+	}
+
+	@Test
+	public void testGetInfoItemFieldValuesOfModifiedDDMStructure()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		String fieldName1 = RandomTestUtil.randomString();
+
+		String content = DDMStructureTestUtil.getSampleStructuredContent(
+			fieldName1,
+			Collections.singletonList(
+				HashMapBuilder.put(
+					LocaleUtil.US, "example"
+				).build()),
+			LocaleUtil.toLanguageId(LocaleUtil.US));
+
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			fieldName1, "string", "text", true,
+			DDMFormFieldTypeConstants.RICH_TEXT,
+			new Locale[] {LocaleUtil.getSiteDefault()},
+			LocaleUtil.getSiteDefault());
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName(), 0, ddmForm,
+			LocaleUtil.getSiteDefault(), serviceContext);
+
+		JournalArticle journalArticle =
+			_journalArticleLocalService.addArticleDefaultValues(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				_classNameLocalService.getClassNameId(DDMStructure.class),
+				ddmStructure.getStructureId(),
+				HashMapBuilder.put(
+					LocaleUtil.US, RandomTestUtil.randomString()
+				).build(),
+				null, content, ddmStructure.getStructureId(), null, null, 0, 0,
+				0, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false,
+				0, 0, null, null, serviceContext);
+
+		ServiceContext originalServiceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ServiceContextThreadLocal.pushServiceContext(
+			_getServiceContext(_getThemeDisplay()));
+
+		try {
+			_assertInfoFieldValue(fieldName1, journalArticle);
+
+			String fieldName2 = RandomTestUtil.randomString();
+
+			ddmForm.addDDMFormField(
+				_getDDMFormField(LocaleUtil.getDefault(), fieldName2, "text"));
+
+			_ddmStructureLocalService.updateStructure(
+				ddmStructure.getUserId(), ddmStructure.getStructureId(),
+				ddmForm, ddmStructure.getDDMFormLayout(), serviceContext);
+
+			_assertInfoFieldValue(fieldName2, journalArticle);
+		}
+		finally {
+			ServiceContextThreadLocal.pushServiceContext(
+				originalServiceContext);
+		}
 	}
 
 	@Test
@@ -262,6 +335,18 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 		}
 	}
 
+	private void _assertInfoFieldValue(
+		String fieldName, JournalArticle journalArticle) {
+
+		InfoItemFieldValues infoItemFieldValues =
+			_infoItemFieldValuesProvider.getInfoItemFieldValues(journalArticle);
+
+		Map<String, Object> infoItemFieldValuesMap = infoItemFieldValues.getMap(
+			LocaleUtil.getSiteDefault());
+
+		Assert.assertTrue(infoItemFieldValuesMap.containsKey(fieldName));
+	}
+
 	private Tuple _createJournalArticleWithPredefinedValues(String ddmName)
 		throws Exception {
 
@@ -318,6 +403,25 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 		return new Tuple(ddmStructure, ddmTemplate);
 	}
 
+	private DDMFormField _getDDMFormField(
+		Locale locale, String name, String type) {
+
+		DDMFormField ddmFormField = new DDMFormField(name, type);
+
+		ddmFormField.setDataType("string");
+		ddmFormField.setIndexType("text");
+		ddmFormField.setLocalizable(true);
+		ddmFormField.setRepeatable(false);
+
+		LocalizedValue label = new LocalizedValue(locale);
+
+		label.addString(locale, "Field_" + LocaleUtil.toLanguageId(locale));
+
+		ddmFormField.setLabel(label);
+
+		return ddmFormField;
+	}
+
 	private File _getFile() throws Exception {
 		Class<?> clazz = getClass();
 
@@ -348,8 +452,20 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 		return serviceContext;
 	}
 
-	private ThemeDisplay _getThemeDisplay() {
+	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		themeDisplay.setLayout(layout);
+		themeDisplay.setLayoutSet(layout.getLayoutSet());
+		themeDisplay.setLayoutTypePortlet(
+			(LayoutTypePortlet)layout.getLayoutType());
+
+		themeDisplay.setRealUser(TestPropsValues.getUser());
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -362,12 +478,19 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setURLCurrent("http://localhost:8080/currentURL");
+		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
 	}
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

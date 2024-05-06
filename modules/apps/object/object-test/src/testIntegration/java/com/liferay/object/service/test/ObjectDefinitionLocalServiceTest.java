@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventTable;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -1712,7 +1713,10 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Test
 	public void testPublishCustomObjectDefinition() throws Exception {
-		ObjectDefinition objectDefinition =
+
+		// Failed to publish object definition when disabling entry translation
+
+		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
@@ -1732,7 +1736,33 @@ public class ObjectDefinitionLocalServiceTest {
 				"because translation is enabled for custom fields",
 			() -> _objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				objectDefinition.getObjectDefinitionId()));
+				objectDefinition1.getObjectDefinitionId()));
+
+		// Publish object definition after enabling or disabling the indexed
+		// search
+
+		ObjectDefinition objectDefinition2 = null;
+		ObjectDefinition objectDefinition3 = null;
+
+		try {
+			objectDefinition2 = _publishCustomObjectDefinition(false);
+
+			Assert.assertNull(
+				IndexerRegistryUtil.getIndexer(
+					objectDefinition2.getClassName()));
+
+			objectDefinition3 = _publishCustomObjectDefinition(true);
+
+			Assert.assertNotNull(
+				IndexerRegistryUtil.getIndexer(
+					objectDefinition3.getClassName()));
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition2);
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition3);
+		}
 	}
 
 	@Test
@@ -1932,7 +1962,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
 				externalReferenceCode, objectDefinition.getObjectDefinitionId(),
 				0, 0, objectFolder.getObjectFolderId(), 0, false,
-				objectDefinition.isActive(), true, false, true, false, false,
+				objectDefinition.isActive(), true, false, false, false, false,
 				false, LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
 				null, false, LocalizedMapUtil.getLocalizedMap("Ables"),
 				objectDefinition.getScope(), objectDefinition.getStatus());
@@ -1945,6 +1975,7 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition.getObjectFolderId());
 		Assert.assertEquals(0, objectDefinition.getTitleObjectFieldId());
 		Assert.assertFalse(objectDefinition.isActive());
+		Assert.assertFalse(objectDefinition.isEnableIndexedSearch());
 		Assert.assertFalse(objectDefinition.isEnableObjectEntryHistory());
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Able"),
@@ -1963,6 +1994,7 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinition.getScope(), objectDefinition.getStatus());
 
 		Assert.assertFalse(objectDefinition.isActive());
+		Assert.assertTrue(objectDefinition.isEnableIndexedSearch());
 		Assert.assertTrue(objectDefinition.isEnableObjectEntryHistory());
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Baker"),
@@ -1980,12 +2012,13 @@ public class ObjectDefinitionLocalServiceTest {
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
 				null, objectDefinition.getObjectDefinitionId(), 0, 0, 0, 0,
-				false, true, true, false, true, false, false, true,
+				false, true, true, false, false, false, false, true,
 				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie", null,
 				null, false, LocalizedMapUtil.getLocalizedMap("Charlies"),
 				objectDefinition.getScope(), objectDefinition.getStatus());
 
 		Assert.assertTrue(objectDefinition.isActive());
+		Assert.assertTrue(objectDefinition.isEnableIndexedSearch());
 		Assert.assertTrue(objectDefinition.isEnableObjectEntryHistory());
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Charlie"),
@@ -2458,6 +2491,30 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 	}
 
+	private ObjectDefinition _publishCustomObjectDefinition(
+			boolean enableIndexedSearch)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), 0, false, enableIndexedSearch,
+				false, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		return _objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+	}
+
 	private void _testAddObjectDefinition(boolean modifiable, boolean system)
 		throws Exception {
 
@@ -2486,6 +2543,7 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(externalReferenceCode, objectDefinition.getLabel());
 		Assert.assertFalse(objectDefinition.isEnableCategorization());
 		Assert.assertFalse(objectDefinition.isEnableComments());
+		Assert.assertFalse(objectDefinition.isEnableIndexedSearch());
 		Assert.assertFalse(objectDefinition.isEnableLocalization());
 		Assert.assertFalse(objectDefinition.isEnableObjectEntryHistory());
 		Assert.assertEquals(modifiable, objectDefinition.isModifiable());

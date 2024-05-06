@@ -15,11 +15,9 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -34,7 +32,6 @@ import com.liferay.portal.upgrade.v7_4_x.UpgradePortletPreferencesCompanyId;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -58,14 +55,6 @@ public class UpgradePortletPreferencesCompanyIdTest {
 		_testGroup = GroupTestUtil.addGroup();
 
 		_testLayout = LayoutTestUtil.addTypePortletLayout(_testGroup);
-
-		_testPortlet = _portletLocalService.getPortletById(
-			_testLayout.getCompanyId(), _getPortletId());
-	}
-
-	@After
-	public void tearDown() {
-		_portletLocalService.destroyPortlet(_testPortlet);
 	}
 
 	@Test
@@ -78,7 +67,7 @@ public class UpgradePortletPreferencesCompanyIdTest {
 				_portletPreferencesLocalService.addPortletPreferences(
 					CompanyConstants.SYSTEM, PortletKeys.PREFS_OWNER_ID_DEFAULT,
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _testLayout.getPlid(),
-					_testPortlet.getPortletId(), _testPortlet,
+					"test", null,
 					_getPortletPreferencesXML(_NAME, _MULTIPLE_VALUES));
 
 			Assert.assertEquals(
@@ -122,10 +111,6 @@ public class UpgradePortletPreferencesCompanyIdTest {
 			Assert.assertEquals(
 				companyId, portletPreferenceValue.getCompanyId());
 		}
-	}
-
-	private String _getPortletId() {
-		return String.valueOf(_PORTLET_ID);
 	}
 
 	private String _getPortletPreferencesXML(String name, String[] values) {
@@ -176,11 +161,6 @@ public class UpgradePortletPreferencesCompanyIdTest {
 
 	private static final String _NAME = "name";
 
-	private static final int _PORTLET_ID = 1000;
-
-	@Inject
-	private PortletLocalService _portletLocalService;
-
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
@@ -193,8 +173,5 @@ public class UpgradePortletPreferencesCompanyIdTest {
 
 	@DeleteAfterTestRun
 	private Layout _testLayout;
-
-	@DeleteAfterTestRun
-	private Portlet _testPortlet;
 
 }

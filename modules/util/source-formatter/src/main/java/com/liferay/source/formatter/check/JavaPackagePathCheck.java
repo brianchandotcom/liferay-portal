@@ -246,8 +246,14 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 			}
 		}
 
-		bundleSymbolicName = bundleSymbolicName.replaceAll(
-			"\\.(api|service|test)$", StringPool.BLANK);
+		if (bundleSymbolicName.endsWith(".test.util")) {
+			bundleSymbolicName = bundleSymbolicName.substring(
+				0, bundleSymbolicName.length() - 10);
+		}
+		else {
+			bundleSymbolicName = bundleSymbolicName.replaceAll(
+				"\\.(api|service|test)$", StringPool.BLANK);
+		}
 
 		if (packageName.contains(bundleSymbolicName)) {
 			return;

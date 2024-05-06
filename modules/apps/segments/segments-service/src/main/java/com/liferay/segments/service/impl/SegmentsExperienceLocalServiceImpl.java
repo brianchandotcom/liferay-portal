@@ -267,6 +267,19 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	@Override
+	public SegmentsExperience deleteSegmentsExperience(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		SegmentsExperience segmentsExperience =
+			segmentsExperiencePersistence.findByERC_G(
+				externalReferenceCode, groupId);
+
+		return segmentsExperienceLocalService.deleteSegmentsExperience(
+			segmentsExperience);
+	}
+
+	@Override
 	public void deleteSegmentsExperiences(long groupId, long plid)
 		throws PortalException {
 

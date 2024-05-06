@@ -9,6 +9,7 @@ import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
@@ -32,6 +33,7 @@ import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelect
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -62,7 +64,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -247,8 +248,29 @@ public class BlogsEditEntryDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public JSONArray getFriendlyURLAssetCategoriesJSONArray() {
+	public JSONArray getFriendlyURLAssetCategoriesJSONArray()
+		throws PortalException {
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-11147")) {
+			long[] friendlyURLAssetCategoryIds = ParamUtil.getLongValues(
+				_httpServletRequest, "friendlyURLAssetCategoryIds");
+
+			for (long friendlyURLAssetCategoryId :
+					friendlyURLAssetCategoryIds) {
+
+				AssetCategory assetCategory =
+					AssetCategoryLocalServiceUtil.getCategory(
+						friendlyURLAssetCategoryId);
+
+				_populateJSONArray(jsonArray, assetCategory);
+			}
+
+			if (jsonArray.length() > 0) {
+				return jsonArray;
+			}
+		}
 
 		FriendlyURLEntry friendlyURLEntry = _getFriendlyURLEntry();
 
@@ -264,15 +286,8 @@ public class BlogsEditEntryDisplayContext {
 			return jsonArray;
 		}
 
-		Locale locale = _themeDisplay.getLocale();
-
 		for (AssetCategory assetCategory : assetEntry.getCategories()) {
-			jsonArray.put(
-				JSONUtil.put(
-					"label", assetCategory.getTitle(locale)
-				).put(
-					"value", assetCategory.getCategoryId()
-				));
+			_populateJSONArray(jsonArray, assetCategory);
 		}
 
 		return jsonArray;
@@ -647,6 +662,17 @@ public class BlogsEditEntryDisplayContext {
 			itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, itemSelectedEventName,
 				blogsItemSelectorCriterion, imageItemSelectorCriterion));
+	}
+
+	private void _populateJSONArray(
+		JSONArray jsonArray, AssetCategory assetCategory) {
+
+		jsonArray.put(
+			JSONUtil.put(
+				"label", assetCategory.getTitle(_themeDisplay.getLocale())
+			).put(
+				"value", assetCategory.getCategoryId()
+			));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

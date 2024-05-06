@@ -34,7 +34,7 @@ public class HttpInvokerTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Parameterized.Parameters(name = "Testcase-{index}: testing {0} {1}")
+	@Parameterized.Parameters(name = "Testcase-{index}: testing {1} {0}")
 	public static Iterable<Object[]> data() {
 		List<Object[]> testData = new ArrayList<>();
 
@@ -47,19 +47,16 @@ public class HttpInvokerTest {
 
 		for (String protocol : protocols) {
 			for (HttpInvoker.HttpMethod method : methods) {
-				testData.add(
-					new Object[] {
-						method, String.format("%s://foo.demo", protocol)
-					});
+				testData.add(new Object[] {method, protocol});
 			}
 		}
 
 		return testData;
 	}
 
-	public HttpInvokerTest(HttpInvoker.HttpMethod method, String urlString) {
+	public HttpInvokerTest(HttpInvoker.HttpMethod method, String protocol) {
 		_method = method;
-		_urlString = urlString;
+		_protocol = protocol;
 	}
 
 	@Test
@@ -67,10 +64,10 @@ public class HttpInvokerTest {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		HttpURLConnection httpURLConnection = httpInvoker.getHttpURLConnection(
-			_method, _urlString);
+			_method, String.format("%s://foo.demo", _protocol));
 
 		Assert.assertEquals(
-			_urlString, _method.name(), httpURLConnection.getRequestMethod());
+			_protocol, _method.name(), httpURLConnection.getRequestMethod());
 	}
 
 	private static final Field _methodField;
@@ -87,6 +84,6 @@ public class HttpInvokerTest {
 	}
 
 	private final HttpInvoker.HttpMethod _method;
-	private final String _urlString;
+	private final String _protocol;
 
 }

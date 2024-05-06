@@ -3,15 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import ClayPanel from '@clayui/panel';
 import ClayTable from '@clayui/table';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {WorkflowStatusLabel} from '../components/WorkflowStatusLabel';
 
 export default function ChangeTrackingWorkflowView({workflowData}) {
-	const workflowActivities = JSON.parse(workflowData.activities);
+	const MAX_ITEMS_TO_SHOW = 10;
 
+	const [next, setNext] = useState(MAX_ITEMS_TO_SHOW);
+
+	const workflowActivities = JSON.parse(workflowData.activities);
 	const workflowCommentsURL = JSON.parse(workflowData.comments);
 
 	return (
@@ -130,7 +134,8 @@ export default function ChangeTrackingWorkflowView({workflowData}) {
 
 						{Object.keys(workflowActivities)
 							.reverse()
-							.map((id) => (
+							.slice(0, next)
+							?.map((id) => (
 								<tr key={id}>
 									<td className="bg-white">
 										{workflowActivities[id].description}
@@ -143,6 +148,17 @@ export default function ChangeTrackingWorkflowView({workflowData}) {
 									</td>
 								</tr>
 							))}
+
+						{next < Object.keys(workflowActivities)?.length && (
+							<ClayButton
+								borderless
+								onClick={() =>
+									setNext(next + MAX_ITEMS_TO_SHOW)
+								}
+							>
+								{Liferay.Language.get('view-more')}
+							</ClayButton>
+						)}
 					</ClayPanel>
 				</ClayTable.Row>
 			</ClayTable>

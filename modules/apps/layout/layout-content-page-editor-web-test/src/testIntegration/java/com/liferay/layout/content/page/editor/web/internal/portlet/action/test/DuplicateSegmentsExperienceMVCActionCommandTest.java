@@ -88,7 +88,7 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.addSegmentsExperience(
-				_group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				null, _group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
 				_layout.getPlid(),
 				Collections.singletonMap(
 					LocaleUtil.getSiteDefault(), "Experience"),

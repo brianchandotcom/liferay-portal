@@ -345,7 +345,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 		SegmentsExperience segmentsExperience1 =
 			_segmentsExperienceLocalService.addSegmentsExperience(
-				TestPropsValues.getUserId(), layout.getGroupId(),
+				null, TestPropsValues.getUserId(), layout.getGroupId(),
 				segmentsEntry1.getSegmentsEntryId(), layout.getPlid(),
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
@@ -357,7 +357,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 		SegmentsExperience segmentsExperience2 =
 			_segmentsExperienceLocalService.addSegmentsExperience(
-				TestPropsValues.getUserId(), layout.getGroupId(),
+				null, TestPropsValues.getUserId(), layout.getGroupId(),
 				segmentsEntry2.getSegmentsEntryId(), layout.getPlid(),
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()

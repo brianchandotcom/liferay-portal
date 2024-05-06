@@ -149,7 +149,7 @@ public class AddSegmentsExperienceMVCActionCommand
 		}
 
 		return _segmentsExperienceService.addSegmentsExperience(
-			serviceContext.getScopeGroupId(),
+			null, serviceContext.getScopeGroupId(),
 			ParamUtil.getLong(actionRequest, "segmentsEntryId"), classPK,
 			Collections.singletonMap(
 				LocaleUtil.getSiteDefault(),

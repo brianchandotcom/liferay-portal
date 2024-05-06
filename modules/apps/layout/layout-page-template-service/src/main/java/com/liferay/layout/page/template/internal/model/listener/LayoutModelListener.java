@@ -151,7 +151,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		}
 
 		return _segmentsExperienceLocalService.addDefaultSegmentsExperience(
-			layout.getUserId(), layout.getPlid(), serviceContext);
+			null, layout.getUserId(), layout.getPlid(), serviceContext);
 	}
 
 	private void _copySiteNavigationMenuId(

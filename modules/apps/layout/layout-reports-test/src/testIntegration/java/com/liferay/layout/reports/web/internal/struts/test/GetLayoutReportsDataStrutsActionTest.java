@@ -127,7 +127,7 @@ public class GetLayoutReportsDataStrutsActionTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomLong(), layout.getPlid(),
 				RandomTestUtil.randomLocaleStringMap(), true,
 				new UnicodeProperties(true),

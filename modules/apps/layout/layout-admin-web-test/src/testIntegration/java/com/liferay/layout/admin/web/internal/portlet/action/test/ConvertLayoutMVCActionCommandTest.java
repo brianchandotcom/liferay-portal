@@ -121,7 +121,7 @@ public class ConvertLayoutMVCActionCommandTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addDefaultSegmentsExperience(
-				TestPropsValues.getUserId(), originalLayout.getPlid(),
+				null, TestPropsValues.getUserId(), originalLayout.getPlid(),
 				_serviceContext);
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(

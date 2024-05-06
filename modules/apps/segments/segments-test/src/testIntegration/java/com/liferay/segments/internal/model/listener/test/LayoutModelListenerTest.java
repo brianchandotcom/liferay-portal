@@ -58,7 +58,7 @@ public class LayoutModelListenerTest {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_segmentsExperienceLocalService.addSegmentsExperience(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			SegmentsEntryConstants.ID_DEFAULT, layout.getPlid(),
 			RandomTestUtil.randomLocaleStringMap(), true,
 			new UnicodeProperties(true),

@@ -459,7 +459,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
-				TestPropsValues.getUserId(), layout.getGroupId(),
+				null, TestPropsValues.getUserId(), layout.getGroupId(),
 				segmentsEntry.getSegmentsEntryId(), layout.getPlid(),
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()

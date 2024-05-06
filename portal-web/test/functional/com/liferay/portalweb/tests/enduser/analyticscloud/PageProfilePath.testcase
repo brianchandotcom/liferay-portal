@@ -290,6 +290,19 @@ definition {
 	@description = "Feature ID: LRAC-14836 | Automation ID: LRAC-15062 | Test Summary: Remove segments from the filter"
 	@priority = 5
 	test RemoveSegmentFromFilter {
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
 		task ("Create a site and a blog and add to a page") {
 			ACUtils.addSiteAndPage();
 
@@ -303,7 +316,14 @@ definition {
 		task ("Visit the page, then close the sessions") {
 			ACUtils.navigateToSitePage(
 				actionType = "View Blog",
-				documentTitleList = "Blog test,Blog test,Blog test,Blog test",
+				documentTitleList = "Blog test,Blog test,Blog test",
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			ACUtils.navigateToSitePageWithUser(
+				actionType = "View Blog",
+				documentTitleList = "Blog test,Blog test,Blog test,Blog test,Blog test,Blog test",
+				emailList = "userea@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 
@@ -316,20 +336,14 @@ definition {
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
-		task ("Add a new dynamic segment") {
+		task ("Add a new static segment") {
 			ACNavigation.goToSegments();
 
-			ACSegments.createDynamicSegment();
+			ACSegments.createStaticSegment();
 
-			ACUtils.setItemName(itemName = "Dynamic Segment Test");
-		}
+			ACUtils.setItemName(itemName = "Static Segment Test");
 
-		task ("Add an email field") {
-			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
-
-			ACSegments.addSegmentField(segmentField = "email");
-
-			ACSegments.selectOperator(operator = "is unknown");
+			ACSegments.addStaticMember(tableMember = "userfn userln");
 		}
 
 		task ("Save the segment") {
@@ -358,10 +372,8 @@ definition {
 			ACUtils.waitForLoading();
 		}
 
-		task ("Observe that the data appears") {
-			AssertElementNotPresent(
-				key_textValue = "There are no data found.",
-				locator1 = "ACUtils#GENERIC_TEXT");
+		task ("Get the Total Views for the main page in the Path Analysis graph") {
+			var pagePathTotalWithoutFilter = selenium.getText("ACPagePath#MAIN_PAGE_PATH_TOTAL");
 		}
 
 		task ("Click Filter button") {
@@ -369,21 +381,33 @@ definition {
 		}
 
 		task ("Click Segment for filter") {
-			ACPagePath.clickFilterSegment(segmentName = "Dynamic Segment Test");
+			ACUtils.waitForLoading();
+
+			ACPagePath.clickFilterSegment(segmentName = "Static Segment Test");
 		}
 
-		task ("Observe that the empty state appears after add the filter") {
-			ACUtils.viewGenericText(textValueList = "There are no data found.,Check back later to verify if data has been received from your data sources.");
+		task ("Check if the Total Views number was modified after adding the filter") {
+			ACUtils.waitForLoading();
+
+			var pagePathTotalWithFilter = selenium.getText("ACPagePath#MAIN_PAGE_PATH_TOTAL");
+
+			TestUtils.assertNotEquals(
+				actual = ${pagePathTotalWithFilter},
+				expected = ${pagePathTotalWithoutFilter});
 		}
 
 		task ("Remove segment from filter") {
 			ACPagePath.removeSegmentFilter();
+
+			ACUtils.waitForLoading();
 		}
 
-		task ("Observe that the data appears after remove the filter") {
-			AssertElementNotPresent(
-				key_textValue = "There are no data found.",
-				locator1 = "ACUtils#GENERIC_TEXT");
+		task ("Check if the Total Views number was modified after removing the filter") {
+			var pagePathTotalActual = selenium.getText("ACPagePath#MAIN_PAGE_PATH_TOTAL");
+
+			TestUtils.assertEquals(
+				actual = ${pagePathTotalActual},
+				expected = ${pagePathTotalWithoutFilter});
 		}
 	}
 

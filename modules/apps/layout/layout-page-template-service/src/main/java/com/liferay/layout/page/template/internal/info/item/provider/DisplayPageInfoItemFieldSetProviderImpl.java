@@ -120,38 +120,9 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 				layoutPageTemplateEntry.getPlid());
 
 			infoFieldValues.add(
-				new InfoFieldValue<>(
-					InfoField.builder(
-					).infoFieldType(
-						URLInfoFieldType.INSTANCE
-					).uniqueId(
-						_getUniqueId(
-							layoutPageTemplateEntry.
-								getLayoutPageTemplateEntryId())
-					).name(
-						layoutPageTemplateEntry.getName()
-					).attribute(
-						URLInfoFieldType.NOFOLLOW, Boolean.TRUE
-					).labelInfoLocalizedValue(
-						InfoLocalizedValue.singleValue(
-							layoutPageTemplateEntry.getName())
-					).build(),
-					new FunctionInfoLocalizedValue<>(
-						locale -> {
-							WebURL webURL = new WebURL(
-								StringBundler.concat(
-									groupFriendlyURL + _getURLSeparator(),
-									layout.getFriendlyURL(locale),
-									StringPool.SLASH,
-									_portal.getClassNameId(
-										infoItemReference.getClassName()),
-									StringPool.SLASH,
-									_getInfoItemIdentifier(infoItemReference)));
-
-							webURL.setNofollow(true);
-
-							return webURL;
-						})));
+				_getInfoFieldValue(
+					groupFriendlyURL, infoItemReference, layout,
+					layoutPageTemplateEntry));
 		}
 
 		return infoFieldValues;
@@ -259,6 +230,42 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		}
 
 		return infoFieldSetEntries;
+	}
+
+	private InfoFieldValue<Object> _getInfoFieldValue(
+		String groupFriendlyURL, InfoItemReference infoItemReference,
+		Layout layout, LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		return new InfoFieldValue<>(
+			InfoField.builder(
+			).infoFieldType(
+				URLInfoFieldType.INSTANCE
+			).uniqueId(
+				_getUniqueId(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+			).name(
+				layoutPageTemplateEntry.getName()
+			).attribute(
+				URLInfoFieldType.NOFOLLOW, Boolean.TRUE
+			).labelInfoLocalizedValue(
+				InfoLocalizedValue.singleValue(
+					layoutPageTemplateEntry.getName())
+			).build(),
+			new FunctionInfoLocalizedValue<>(
+				locale -> {
+					WebURL webURL = new WebURL(
+						StringBundler.concat(
+							groupFriendlyURL + _getURLSeparator(),
+							layout.getFriendlyURL(locale), StringPool.SLASH,
+							_portal.getClassNameId(
+								infoItemReference.getClassName()),
+							StringPool.SLASH,
+							_getInfoItemIdentifier(infoItemReference)));
+
+					webURL.setNofollow(true);
+
+					return webURL;
+				}));
 	}
 
 	private String _getInfoItemIdentifier(InfoItemReference infoItemReference) {

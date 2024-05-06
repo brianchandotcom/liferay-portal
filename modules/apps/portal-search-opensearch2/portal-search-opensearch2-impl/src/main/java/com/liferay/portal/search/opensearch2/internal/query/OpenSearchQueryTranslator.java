@@ -991,10 +991,9 @@ public class OpenSearchQueryTranslator
 	@Override
 	public QueryVariant visit(TermsQuery termsQuery) {
 		String field = termsQuery.getField();
-		int maxTermsCount = 65536;
 		String[] terms = termsQuery.getValues();
 
-		if (terms.length <= maxTermsCount) {
+		if (terms.length <= _MAX_TERMS_COUNT) {
 			return _getTermsQuery(termsQuery, field, terms);
 		}
 
@@ -1004,7 +1003,7 @@ public class OpenSearchQueryTranslator
 		for (String term : terms) {
 			termsList.add(term);
 
-			if (termsList.size() == maxTermsCount) {
+			if (termsList.size() == _MAX_TERMS_COUNT) {
 				builder.should(
 					_getTermsQuery(
 						termsQuery, field, termsList.toArray(new String[0])
@@ -1420,6 +1419,8 @@ public class OpenSearchQueryTranslator
 		throw new IllegalArgumentException(
 			"Invalid shape relation " + shapeRelation);
 	}
+
+	private static final Integer _MAX_TERMS_COUNT = 65536;
 
 	private final GeoTranslator _geoTranslator = new GeoTranslator();
 	private final OpenSearchScoreFunctionTranslator

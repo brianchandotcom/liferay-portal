@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.test.util.logging;
+package com.liferay.portal.search.test.rule.logging;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.MethodTestRule;
+import com.liferay.portal.search.test.util.logging.ExpectedLog;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;

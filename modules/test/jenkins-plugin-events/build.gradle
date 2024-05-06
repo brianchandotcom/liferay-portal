@@ -19,10 +19,12 @@ dependencies {
 }
 
 generateJenkinsPluginClassManifest {
+	mustRunAfter generatePomFileForMavenPublication
 	mustRunAfter processResources
 }
 
 generateJenkinsSupportDynamicLoadingManifest {
+	mustRunAfter generatePomFileForMavenPublication
 	mustRunAfter processResources
 }
 

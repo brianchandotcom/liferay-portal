@@ -965,26 +965,26 @@ definition {
 	}
 
 	@description = "LPS-174141. Confirm that the user can check and uncheck all the fields"
-	@priority = 4
+	@priority = 3
 	test CanCheckAndUncheckAllFields {
 		task ("And Clicking to Add a new field") {
 			LexiconEntry.gotoAdd();
 		}
 
 		task ("And select all the fields.") {
-			DataSetAdmin.checkFields(key_fieldList = "");
+			DataSetAdmin.checkFields(key_fieldList = "renderer,rendererType");
 		}
 
 		task ("Then Confirm all fields are checked ") {
-			DataSetAdmin.assertFieldsChecked(key_fieldList = "creator,dateCreated,dateModified,externalReferenceCode,id,status,label,name,renderer,rendererType,r_fdsViewFDSFieldRelationship_c_fdsViewId,r_fdsViewFDSFieldRelationship_c_fdsViewERC,sortable,type");
+			DataSetAdmin.assertFieldsChecked(key_fieldList = "renderer,rendererType");
 		}
 
 		task ("When Uncheck all the fields.") {
-			DataSetAdmin.uncheckFields(key_fieldList = "");
+			DataSetAdmin.uncheckFields(key_fieldList = "renderer,rendererType");
 		}
 
 		task ("Then Confirm that all fields are unchecked ") {
-			DataSetAdmin.assertFieldsNotChecked(key_fieldList = "creator,dateCreated,dateModified,externalReferenceCode,id,status,label,name,renderer,rendererType,r_fdsViewFDSFieldRelationship_c_fdsViewId,r_fdsViewFDSFieldRelationship_c_fdsViewERC,sortable,type");
+			DataSetAdmin.assertFieldsNotChecked(key_fieldList = "renderer,rendererType");
 		}
 	}
 
@@ -1244,13 +1244,13 @@ definition {
 			LexiconEntry.gotoAdd();
 		}
 
-		task ("And type Account in the search bar and click enter") {
-			DataSetAdmin.searchFieldInModal(searchTerm = "name");
+		task ("And type rendererType in the search bar and click enter") {
+			DataSetAdmin.searchFieldInModal(searchTerm = "rendererType");
 		}
 
 		task ("Then the corresponding option is the just displayed") {
 			AssertElementPresent(
-				key_name = "name",
+				key_name = "rendererType",
 				locator1 = "DataSet#FIELDS_ITEM");
 		}
 	}

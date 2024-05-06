@@ -969,7 +969,7 @@ public class GraphQLServletTest {
 
 		@Override
 		public String getPath() {
-			return "/test-path-graphql/V2_0";
+			return "/test-path-graphql/v2_0";
 		}
 
 		@Override

@@ -7,16 +7,6 @@
 			text-decoration: none;
 		}
 
-		.collapse-container {
-			position: relative;
-		}
-
-		.collapse-container .tooltip {
-			margin-top: -100px;
-			transform: translateX(-40%);
-			width: 140px;
-		}
-
 		.empty-container {
 			background-color: var(--color-neutral-0);
 			border-color: var(--color-neutral-3);
@@ -40,7 +30,7 @@
 		}
 
 		.icon-container {
-			background-color: #E7EFFF;
+			background-color: var(--color-brand-primary-lighten-5, #E7EFFF);
 			border-radius: 0.5rem;
 			margin-bottom: 2rem;
 			max-width: 9rem;
@@ -57,7 +47,7 @@
 		}
 
 		.link-container>svg {
-			fill: #0B5FFF;
+			fill: var(--link-color, #0B5FFF);
 			height: 0.75rem;
 			width: 0.75rem;
 		}
@@ -151,7 +141,7 @@
 		}
 
 		.search-icon>svg {
-			fill: #0B5FFF;
+			fill: var(--link-color, #0B5FFF);
 			height: 2rem;
 			margin: 1.5rem 3.5rem;
 			width: 2rem;
@@ -232,7 +222,7 @@
 							</span>
 						</div>
 
-						<div class="collapse collapse-container panel-collapse pl-3 pr-3" id="collapsePanelId-${searchEntry.getClassPK()}">
+						<div class="collapse panel-collapse pl-3 pr-3" id="collapsePanelId-${searchEntry.getClassPK()}">
 							<div class="description search-results-entry-content">
 								<#assign
 									url = ""

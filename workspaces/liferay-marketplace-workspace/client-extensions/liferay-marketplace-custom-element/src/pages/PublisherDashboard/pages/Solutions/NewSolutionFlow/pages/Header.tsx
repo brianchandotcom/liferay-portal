@@ -4,7 +4,6 @@
  */
 
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {filesize} from 'filesize';
 import ReactQuill from 'react-quill';
@@ -15,6 +14,7 @@ import {
 	UploadedFile,
 } from '../../../../../../components/FileList/FileList';
 import Form from '../../../../../../components/MarketplaceForm';
+import VideoThumbnail from '../../../../../../components/VideoThumbnail';
 import {
 	HeaderContentTypeImages,
 	SolutionTypes,
@@ -230,9 +230,9 @@ const Header = () => {
 					</Form.HelpMessage>
 
 					<div className="border d-flex flex-row mt-5 p-4 rounded">
-						<div className="align-items-center d-flex justify-content-center rounded video-player">
-							<ClayIcon symbol="video" />
-						</div>
+						<VideoThumbnail
+							videoURL={contentType.content.headerVideoUrl}
+						/>
 
 						<Form.Input
 							className="ml-3"

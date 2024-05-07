@@ -3,14 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayIcon from '@clayui/icon';
 import ReactQuill from 'react-quill';
 
 import Form from '../../../../../../components/MarketplaceForm';
+import VideoThumbnail from '../../../../../../components/VideoThumbnail';
+import {TextVideoBlock} from '../../../../../../context/SolutionContext';
 import i18n from '../../../../../../i18n';
 import {BlockTypeProps} from './BlockPropsType';
 
-const TextAndVideos: React.FC<BlockTypeProps> = ({block, onChange}) => {
+const TextAndVideos: React.FC<BlockTypeProps<TextVideoBlock>> = ({
+	block,
+	onChange,
+}) => {
 	const {content} = block;
 
 	return (
@@ -58,8 +62,12 @@ const TextAndVideos: React.FC<BlockTypeProps> = ({block, onChange}) => {
 
 				<Form.Input
 					name="video-url"
+					onChange={({target: {value}}) =>
+						onChange({videoUrl: value})
+					}
 					placeholder="http://"
 					type="text"
+					value={content.videoUrl}
 				/>
 
 				<Form.HelpMessage>
@@ -67,9 +75,7 @@ const TextAndVideos: React.FC<BlockTypeProps> = ({block, onChange}) => {
 				</Form.HelpMessage>
 
 				<div className="border d-flex flex-row mt-5 p-4 rounded">
-					<div className="align-items-center d-flex justify-content-center rounded video-player">
-						<ClayIcon symbol="video" />
-					</div>
+					<VideoThumbnail videoURL={content.videoUrl} />
 
 					<Form.Input
 						className="ml-3"

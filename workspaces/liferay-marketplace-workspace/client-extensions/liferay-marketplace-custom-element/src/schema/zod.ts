@@ -7,9 +7,10 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {z} from 'zod';
 
 import i18n from '../i18n';
+import {removeHTMLTags} from '../utils/string';
 
 const baseContentSchema = z.object({
-	description: z.string().min(1),
+	description: z.string().min(1).refine(removeHTMLTags),
 	title: z.string().min(1),
 });
 

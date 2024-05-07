@@ -8,3 +8,7 @@ export function removeUnnecessaryURLString(str: string) {
 
 	return str.substring(index);
 }
+
+export function removeHTMLTags(value: string) {
+	return value.replace(/<\/?[^>]+(>|$)/g, '');
+}

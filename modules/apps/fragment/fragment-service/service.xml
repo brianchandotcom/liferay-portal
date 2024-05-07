@@ -48,7 +48,7 @@
 			<finder-column comparator="LIKE" name="name" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="FragmentComposition" remote-service="true" uuid="true">
+	<entity external-reference-code="group" local-service="true" name="FragmentComposition" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -119,7 +119,7 @@
 			<finder-column name="status" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="FragmentEntry" remote-service="true" uuid="true" versioned="true">
+	<entity external-reference-code="group" local-service="true" name="FragmentEntry" remote-service="true" uuid="true" versioned="true">
 
 		<!-- PK fields -->
 

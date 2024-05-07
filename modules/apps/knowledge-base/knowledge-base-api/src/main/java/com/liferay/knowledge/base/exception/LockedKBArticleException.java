@@ -61,6 +61,10 @@ public class LockedKBArticleException extends PortalException {
 		_cmd = cmd;
 	}
 
+	public void setLock(Lock lock) {
+		_lock = lock;
+	}
+
 	private Lock _getLock(Throwable throwable) {
 		if (throwable instanceof DuplicateLockException) {
 			DuplicateLockException duplicateLockException =

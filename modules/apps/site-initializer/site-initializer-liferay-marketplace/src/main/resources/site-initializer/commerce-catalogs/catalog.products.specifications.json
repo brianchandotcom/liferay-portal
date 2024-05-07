@@ -182,5 +182,77 @@
 		"facetable": true,
 		"key": "ram",
 		"title": "Ram in GB"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-SOLUTION-COMPANY-DESCRIPTION",
+		"description": "Solution company description",
+		"facetable": true,
+		"key": "solution-company-description",
+		"title": "Solution Company Description"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-SOLUTION-COMPANY-EMAIL",
+		"description": "Solution company email",
+		"facetable": true,
+		"key": "solution-company-email",
+		"title": "Solution Company Email"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-SOLUTION-COMPANY-PHONE",
+		"description": "Solution company phone",
+		"facetable": true,
+		"key": "solution-company-phone",
+		"title": "Solution Company Phone"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-SOLUTION-COMPANY-WEBSITE",
+		"description": "Solution company website",
+		"facetable": true,
+		"key": "solution-company-website",
+		"title": "Solution Company Website"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-SOLUTION-CONTACT-EMAIL",
+		"description": "Solution contact email",
+		"facetable": true,
+		"key": "solution-contact-email",
+		"title": "Solution Contact Email"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-SOLUTION-HEADER-DESCRIPTION",
+		"description": "Solution header description",
+		"facetable": true,
+		"key": "solution-header-description",
+		"title": "Solution Header Description"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-SOLUTION-HEADER-TITLE",
+		"description": "Solution header title",
+		"facetable": true,
+		"key": "solution-header-title",
+		"title": "Solution Header Title"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-SOLUTION-HEADER-VIDEO-DESCRIPTION",
+		"description": "Solution header video description",
+		"facetable": true,
+		"key": "solution-header-video-description",
+		"title": "Solution Header Video Description"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-SOLUTION-HEADER-VIDEO-URL",
+		"description": "Solution header video url",
+		"facetable": true,
+		"key": "solution-header-video-url",
+		"title": "Solution Header Video URL"
 	}
 ]

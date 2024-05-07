@@ -13,6 +13,7 @@ export class ModelBuilderPage {
 	readonly createNewObjectDefinitionButton: Locator;
 	readonly deleteObjectDefinitionOption: Locator;
 	readonly deleteObjectRelationshipButton: Locator;
+	readonly deleteTrashButton: Locator;
 	readonly editObjectFolderDetailsButton: Locator;
 	readonly fitViewButton: Locator;
 	readonly goToFolderButton: Locator;
@@ -52,6 +53,9 @@ export class ModelBuilderPage {
 		this.deleteObjectRelationshipButton = page.getByLabel(
 			'Delete Relationship'
 		);
+		this.deleteTrashButton = page
+			.getByRole('tabpanel')
+			.getByTitle('Delete');
 		this.editObjectFolderDetailsButton = page.locator(
 			'button[name=editObjectFolderButton]'
 		);

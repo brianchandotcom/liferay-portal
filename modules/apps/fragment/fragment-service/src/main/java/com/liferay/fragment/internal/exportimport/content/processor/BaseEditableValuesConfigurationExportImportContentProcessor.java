@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Objects;
@@ -93,6 +95,13 @@ public abstract class
 				fragmentConfigurationField.getName());
 
 			if (jsonObject != null) {
+				String className = jsonObject.getString("className");
+
+				if (Validator.isNotNull(className)) {
+					jsonObject.put(
+						"classNameId", PortalUtil.getClassNameId(className));
+				}
+
 				replaceImportContentReferences(portletDataContext, jsonObject);
 			}
 		}

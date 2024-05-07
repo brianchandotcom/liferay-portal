@@ -55,6 +55,11 @@ public class
 			return;
 		}
 
+		configurationValueJSONObject.put(
+			"className",
+			_portal.getClassName(
+				configurationValueJSONObject.getLong("classNameId")));
+
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.fetchAssetListEntry(
 				configurationValueJSONObject.getLong("classPK"));
@@ -102,5 +107,8 @@ public class
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private Portal _portal;
 
 }

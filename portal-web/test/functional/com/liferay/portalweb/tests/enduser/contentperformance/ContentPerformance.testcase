@@ -134,7 +134,9 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Widget Page Name");
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+			Navigator.gotoSitePage(
+				pageName = "Widget Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Open Content Performance panel") {
@@ -296,7 +298,9 @@ definition {
 		}
 
 		task ("Navigate to Widget page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+			Navigator.gotoSitePage(
+				pageName = "Widget Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Open content performance panel") {
@@ -751,7 +755,9 @@ definition {
 		}
 
 		task ("Navigate to Widget page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+			Navigator.gotoSitePage(
+				pageName = "Widget Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Open content performance panel") {
@@ -1345,7 +1351,9 @@ definition {
 		}
 
 		task ("Navigate to Widget page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+			Navigator.gotoSitePage(
+				pageName = "Widget Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Open content performance panel") {
@@ -1359,7 +1367,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
-				value1 = "web/test-site-name/3");
+				value1 = "web/test-site-name");
 
 			AssertVisible(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
 		}

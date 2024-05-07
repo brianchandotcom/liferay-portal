@@ -455,7 +455,9 @@ definition {
 		}
 
 		task ("Go to widget pages crieted") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+			Navigator.gotoSitePage(
+				pageName = "Widget Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert 'AB Test' icon is not present") {

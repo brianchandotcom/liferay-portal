@@ -10,6 +10,7 @@ import {DocumentLibraryPage} from './DocumentLibraryPage';
 export class DocumentLibraryEditFilePage {
 	readonly documentLibraryPage: DocumentLibraryPage;
 	readonly page: Page;
+	readonly backButton: Locator;
 	readonly publishDateSelector: Locator;
 	readonly saveButton: Locator;
 	readonly publishButton: Locator;
@@ -20,6 +21,7 @@ export class DocumentLibraryEditFilePage {
 	constructor(page: Page) {
 		this.documentLibraryPage = new DocumentLibraryPage(page);
 		this.page = page;
+		this.backButton = page.getByRole('link', { name: 'Back' });
 		this.publishButton = page.getByRole('button', {
 			exact: true,
 			name: 'Publish',
@@ -35,6 +37,15 @@ export class DocumentLibraryEditFilePage {
 		await this.documentLibraryPage.goto();
 
 		await this.documentLibraryPage.goToCreateNewFile();
+	}
+	async goBack(){
+		await this.backButton.click();
+	}
+
+	async assertPrivateContentIcon() {
+		await expect(
+			this.page.getByLabel('Not Visible to Guest Users').locator('use')
+		).toBeVisible({timeout: 1000});
 	}
 
 	async publishNewBasicFileEntry(title: string) {
@@ -88,12 +99,6 @@ export class DocumentLibraryEditFilePage {
 		await this.permissionViewSelector.selectOption('Site Member');
 		await this.publishButton.click();
 
-	}
-
-	async assertPrivateContentIcon() {
-		await expect(
-			this.page.getByLabel('Not Visible to Guest Users').locator('use')
-		).toBeVisible({timeout: 1000});
 	}
 
 

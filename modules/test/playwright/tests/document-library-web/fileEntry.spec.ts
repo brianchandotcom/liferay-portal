@@ -51,7 +51,7 @@ testFeatureFlagsEnabled(
 
 testFeatureFlagsEnabled(
 	'LPD-16313 Identify at a glance if a Document is visible for guests',
-	async ({documentLibraryEditFilePage, documentLibraryPage, page}) => {
+	async ({documentLibraryEditFilePage , documentLibraryPage, page}) => {
 
 		const title = getRandomString();
 
@@ -69,5 +69,27 @@ testFeatureFlagsEnabled(
 
 		await documentLibraryPage.deleteAllFileEntries();
 
+	}
+);
+
+testFeatureFlagsEnabled(
+	'LPD-16313 Show icon in the content admin and content editor',
+	async ({documentLibraryEditFilePage, documentLibraryPage, page}) => {
+
+		const title = getRandomString();
+
+		await documentLibraryEditFilePage.publishNewFileWithoutGuestViewPermission(
+			title
+		);
+
+		await documentLibraryPage.editFileEntry(title);
+		await documentLibraryEditFilePage.assertPrivateContentIcon();
+		await documentLibraryEditFilePage.goBack();
+
+		await page.getByRole('link', { name: title }).click();
+		await documentLibraryEditFilePage.assertPrivateContentIcon();
+		await documentLibraryEditFilePage.goBack();
+
+		await documentLibraryPage.deleteAllFileEntries();
 	}
 );

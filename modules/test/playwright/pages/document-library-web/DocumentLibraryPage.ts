@@ -56,6 +56,14 @@ export class DocumentLibraryPage {
 		await this.page.getByRole('menuitem', {name: 'Edit'}).click();
 	}
 
+	async editFileEntry(entryTitle: string) {
+		await this.page
+			.locator(`.card-body:has-text('${entryTitle}')`)
+			.getByLabel('Actions')
+			.click();
+		await this.page.getByRole('menuitem', {name: 'Edit'}).click();
+	}
+
 	async openNewButton() {
 		await this.page.getByRole('button', {name: 'New'}).click();
 	}

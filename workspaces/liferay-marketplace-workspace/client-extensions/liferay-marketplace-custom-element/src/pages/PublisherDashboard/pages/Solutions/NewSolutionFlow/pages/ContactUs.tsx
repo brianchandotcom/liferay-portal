@@ -4,24 +4,44 @@
  */
 
 import Form from '../../../../../../components/MarketplaceForm';
+import {
+	SolutionTypes,
+	useSolutionContext,
+} from '../../../../../../context/SolutionContext';
 import i18n from '../../../../../../i18n';
 
-const ContactUs = () => (
-	<div>
-		<h3>{i18n.translate('contact-us')}</h3>
+const ContactUs = () => {
+	const [{contactUs}, dispatch] = useSolutionContext();
 
-		<hr />
+	return (
+		<div>
+			<h3>{i18n.translate('contact-us')}</h3>
 
-		<Form.Label className="mt-3" htmlFor="email" required>
-			Email
-		</Form.Label>
+			<hr />
 
-		<Form.Input
-			name="email"
-			placeholder="name@yourdomain.com"
-			type="name@yourdomain.com"
-		/>
-	</div>
-);
+			<Form.Label
+				className="mt-3"
+				htmlFor="email"
+				info={i18n.translate('email')}
+				required
+			>
+				{i18n.translate('email')}
+			</Form.Label>
+
+			<Form.Input
+				name="email"
+				onChange={(event) =>
+					dispatch({
+						payload: event.target.value,
+						type: SolutionTypes.SET_CONTACT_US,
+					})
+				}
+				placeholder="name@yourdomain.com"
+				type="name@yourdomain.com"
+				value={contactUs}
+			/>
+		</div>
+	);
+};
 
 export default ContactUs;

@@ -38,5 +38,15 @@
 		"title": {
 			"en_US": "App Support and Help"
 		}
+	},
+	{
+		"description": {
+			"en_US": "Solution Metadata."
+		},
+		"key": "solution-metadata",
+		"priority": 2,
+		"title": {
+			"en_US": "Solution Metadata"
+		}
 	}
 ]

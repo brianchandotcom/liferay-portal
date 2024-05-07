@@ -63,8 +63,8 @@ public class SiteNavigationMenuLocalServiceTest {
 	public void testAddAutoSiteNavigationMenu() throws Exception {
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), RandomTestUtil.randomString(),
 				SiteNavigationConstants.TYPE_DEFAULT, false,
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
@@ -90,8 +90,8 @@ public class SiteNavigationMenuLocalServiceTest {
 	public void testAddSiteNavigationMenu() throws Exception {
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -106,8 +106,8 @@ public class SiteNavigationMenuLocalServiceTest {
 	public void testAddSiteNavigationMenuByType() throws Exception {
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), RandomTestUtil.randomString(),
 				SiteNavigationConstants.TYPE_DEFAULT,
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));

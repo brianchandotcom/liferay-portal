@@ -62,7 +62,7 @@ public class AddSiteNavigationMenuMVCActionCommand
 
 			SiteNavigationMenu siteNavigationMenu =
 				_siteNavigationMenuService.addSiteNavigationMenu(
-					serviceContext.getScopeGroupId(), name,
+					null, serviceContext.getScopeGroupId(), name,
 					SiteNavigationConstants.TYPE_DEFAULT,
 					!scopeGroup.isCompany(), serviceContext);
 

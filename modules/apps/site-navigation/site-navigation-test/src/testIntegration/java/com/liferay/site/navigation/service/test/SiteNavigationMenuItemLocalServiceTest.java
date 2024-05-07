@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -152,53 +153,61 @@ public class SiteNavigationMenuItemLocalServiceTest {
 
 		SiteNavigationMenuItem siteNavigationMenuItem1 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, 0, StringPool.BLANK,
 				serviceContext);
 		SiteNavigationMenuItem siteNavigationMenuItem2 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, 1, StringPool.BLANK,
 				serviceContext);
 		SiteNavigationMenuItem siteNavigationMenuItem3 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, 2, StringPool.BLANK,
 				serviceContext);
 		SiteNavigationMenuItem siteNavigationMenuItem4 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, 3, StringPool.BLANK,
 				serviceContext);
 
 		SiteNavigationMenuItem siteNavigationMenuItem3Child1 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(),
 				siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
 				SiteNavigationMenuItemTypeConstants.LAYOUT, 0, StringPool.BLANK,
 				serviceContext);
 		SiteNavigationMenuItem siteNavigationMenuItem3Child2 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(),
 				siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
 				SiteNavigationMenuItemTypeConstants.LAYOUT, 1, StringPool.BLANK,
 				serviceContext);
 		SiteNavigationMenuItem siteNavigationMenuItem3Child3 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(),
 				siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
 				SiteNavigationMenuItemTypeConstants.LAYOUT, 2, StringPool.BLANK,
 				serviceContext);
 		SiteNavigationMenuItem siteNavigationMenuItem3Child4 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(),
 				siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
 				SiteNavigationMenuItemTypeConstants.LAYOUT, 3, StringPool.BLANK,
@@ -206,21 +215,24 @@ public class SiteNavigationMenuItemLocalServiceTest {
 
 		SiteNavigationMenuItem siteNavigationMenuItem3Child2Child1 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(),
 				siteNavigationMenuItem3Child2.getSiteNavigationMenuItemId(),
 				SiteNavigationMenuItemTypeConstants.LAYOUT, 0, StringPool.BLANK,
 				serviceContext);
 		SiteNavigationMenuItem siteNavigationMenuItem3Child2Child2 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(),
 				siteNavigationMenuItem3Child2.getSiteNavigationMenuItemId(),
 				SiteNavigationMenuItemTypeConstants.LAYOUT, 1, StringPool.BLANK,
 				serviceContext);
 		SiteNavigationMenuItem siteNavigationMenuItem3Child2Child3 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(),
 				siteNavigationMenuItem3Child2.getSiteNavigationMenuItemId(),
 				SiteNavigationMenuItemTypeConstants.LAYOUT, 2, StringPool.BLANK,
@@ -292,30 +304,32 @@ public class SiteNavigationMenuItemLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			_siteNavigationMenu.getSiteNavigationMenuId(), 0,
-			SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), _siteNavigationMenu.getSiteNavigationMenuId(),
+			0, SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 			serviceContext);
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
 
 		SiteNavigationMenuItem childSiteNavigationMenuItem1 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(),
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
 
 		_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			_siteNavigationMenu.getSiteNavigationMenuId(), 0,
-			SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), _siteNavigationMenu.getSiteNavigationMenuId(),
+			0, SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 			serviceContext);
 
 		_siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
@@ -398,25 +412,29 @@ public class SiteNavigationMenuItemLocalServiceTest {
 
 		SiteNavigationMenuItem siteNavigationMenuItem1 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
 		SiteNavigationMenuItem siteNavigationMenuItem2 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
 		SiteNavigationMenuItem siteNavigationMenuItem3 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
 		SiteNavigationMenuItem siteNavigationMenuItem4 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
@@ -511,14 +529,16 @@ public class SiteNavigationMenuItemLocalServiceTest {
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
 
 		SiteNavigationMenuItem childSiteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(),
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
@@ -533,9 +553,9 @@ public class SiteNavigationMenuItemLocalServiceTest {
 	@Test(expected = SiteNavigationMenuItemNameException.class)
 	public void testInvalidSiteNavigationMenuItemName() throws PortalException {
 		_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			_siteNavigationMenu.getSiteNavigationMenuId(), 0,
-			SiteNavigationMenuItemTypeConstants.LAYOUT,
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), _siteNavigationMenu.getSiteNavigationMenuId(),
+			0, SiteNavigationMenuItemTypeConstants.LAYOUT,
 			UnicodePropertiesBuilder.put(
 				"name", StringUtil.randomString(1000)
 			).buildString(),
@@ -546,9 +566,9 @@ public class SiteNavigationMenuItemLocalServiceTest {
 	@Test(expected = InvalidSiteNavigationMenuItemTypeException.class)
 	public void testInvalidSiteNavigationMenuItemType() throws PortalException {
 		_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			_siteNavigationMenu.getSiteNavigationMenuId(), 0,
-			"invalidMenuItemType", StringPool.BLANK,
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), _siteNavigationMenu.getSiteNavigationMenuId(),
+			0, "invalidMenuItemType", StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
@@ -559,7 +579,8 @@ public class SiteNavigationMenuItemLocalServiceTest {
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(
@@ -578,14 +599,15 @@ public class SiteNavigationMenuItemLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			_siteNavigationMenu.getSiteNavigationMenuId(), 0,
-			SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), _siteNavigationMenu.getSiteNavigationMenuId(),
+			0, SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 			serviceContext);
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
@@ -603,7 +625,8 @@ public class SiteNavigationMenuItemLocalServiceTest {
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
@@ -639,14 +662,16 @@ public class SiteNavigationMenuItemLocalServiceTest {
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
 
 		SiteNavigationMenuItem childSiteNavigationMenuItem1 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(),
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
@@ -654,7 +679,8 @@ public class SiteNavigationMenuItemLocalServiceTest {
 
 		SiteNavigationMenuItem childSiteNavigationMenuItem2 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(),
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
@@ -681,35 +707,40 @@ public class SiteNavigationMenuItemLocalServiceTest {
 
 		SiteNavigationMenuItem siteNavigationMenuItem1 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
 
 		SiteNavigationMenuItem siteNavigationMenuItem2 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
 
 		SiteNavigationMenuItem siteNavigationMenuItem3 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
 
 		SiteNavigationMenuItem siteNavigationMenuItem3Child1 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
 
 		SiteNavigationMenuItem siteNavigationMenuItem3Child1Child1 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
@@ -802,14 +833,16 @@ public class SiteNavigationMenuItemLocalServiceTest {
 
 		SiteNavigationMenuItem siteNavigationMenuItem1 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
 
 		SiteNavigationMenuItem childSiteNavigationMenuItem11 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(),
 				siteNavigationMenuItem1.getSiteNavigationMenuItemId(),
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
@@ -817,7 +850,8 @@ public class SiteNavigationMenuItemLocalServiceTest {
 
 		SiteNavigationMenuItem childSiteNavigationMenuItem12 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(),
 				siteNavigationMenuItem1.getSiteNavigationMenuItemId(),
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
@@ -825,14 +859,16 @@ public class SiteNavigationMenuItemLocalServiceTest {
 
 		SiteNavigationMenuItem siteNavigationMenuItem2 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
 				serviceContext);
 
 		SiteNavigationMenuItem childSiteNavigationMenuItem21 =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				_siteNavigationMenu.getSiteNavigationMenuId(),
 				siteNavigationMenuItem2.getSiteNavigationMenuItemId(),
 				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,

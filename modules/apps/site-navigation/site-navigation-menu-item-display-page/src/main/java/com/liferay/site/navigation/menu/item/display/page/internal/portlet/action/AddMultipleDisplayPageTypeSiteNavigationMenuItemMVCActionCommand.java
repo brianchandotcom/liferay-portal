@@ -208,8 +208,8 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-				groupId, siteNavigationMenuId, parentSiteNavigationMenuItemId,
-				siteNavigationMenuItemType,
+				null, groupId, siteNavigationMenuId,
+				parentSiteNavigationMenuItemId, siteNavigationMenuItemType,
 				UnicodePropertiesBuilder.create(
 					true
 				).put(

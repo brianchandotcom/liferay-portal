@@ -78,7 +78,7 @@ public class AddSiteNavigationMenuItemMVCActionCommand
 		try {
 			SiteNavigationMenuItem siteNavigationMenuItem =
 				_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-					themeDisplay.getScopeGroupId(), siteNavigationMenuId,
+					null, themeDisplay.getScopeGroupId(), siteNavigationMenuId,
 					parentSiteNavigationMenuItemId, type,
 					typeSettingsUnicodeProperties.toString(), serviceContext);
 

@@ -161,7 +161,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 					layout.getParentPlid(), siteNavigationMenuId);
 
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				serviceContext.getUserId(), layout.getGroupId(),
+				null, serviceContext.getUserId(), layout.getGroupId(),
 				siteNavigationMenuId, parentSiteNavigationMenuItemId,
 				SiteNavigationMenuItemTypeConstants.LAYOUT,
 				siteNavigationMenuItemType.getTypeSettingsFromLayout(layout),

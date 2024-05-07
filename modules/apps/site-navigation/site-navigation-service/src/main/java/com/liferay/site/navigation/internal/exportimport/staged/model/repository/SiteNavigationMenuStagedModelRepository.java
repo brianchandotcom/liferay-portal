@@ -48,9 +48,10 @@ public class SiteNavigationMenuStagedModelRepository
 		}
 
 		return _siteNavigationMenuLocalService.addSiteNavigationMenu(
-			userId, siteNavigationMenu.getGroupId(),
-			siteNavigationMenu.getName(), siteNavigationMenu.getType(),
-			siteNavigationMenu.isAuto(), serviceContext);
+			siteNavigationMenu.getExternalReferenceCode(), userId,
+			siteNavigationMenu.getGroupId(), siteNavigationMenu.getName(),
+			siteNavigationMenu.getType(), siteNavigationMenu.isAuto(),
+			serviceContext);
 	}
 
 	@Override

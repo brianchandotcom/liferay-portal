@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -66,12 +67,14 @@ public class SiteNavigationMenuItemURLTest {
 
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
-				TestPropsValues.getUserId(), _group.getGroupId(), "Menu",
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), "Menu",
 				SiteNavigationConstants.TYPE_DEFAULT, true, serviceContext);
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.URL,
 				UnicodePropertiesBuilder.put(
@@ -107,12 +110,14 @@ public class SiteNavigationMenuItemURLTest {
 
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
-				TestPropsValues.getUserId(), _group.getGroupId(), "Menu",
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), "Menu",
 				SiteNavigationConstants.TYPE_DEFAULT, true, serviceContext);
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.URL,
 				UnicodePropertiesBuilder.put(

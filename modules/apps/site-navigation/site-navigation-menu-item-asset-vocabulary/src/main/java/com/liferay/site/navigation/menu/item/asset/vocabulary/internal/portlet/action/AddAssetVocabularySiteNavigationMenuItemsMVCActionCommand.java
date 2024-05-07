@@ -82,8 +82,8 @@ public class AddAssetVocabularySiteNavigationMenuItemsMVCActionCommand
 
 				SiteNavigationMenuItem siteNavigationMenuItem =
 					_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-						themeDisplay.getScopeGroupId(), siteNavigationMenuId,
-						parentSiteNavigationMenuItemId,
+						null, themeDisplay.getScopeGroupId(),
+						siteNavigationMenuId, parentSiteNavigationMenuItemId,
 						SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY,
 						UnicodePropertiesBuilder.create(
 							true

@@ -23,9 +23,8 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 		super(props);
 
 		const {
-			ctEntriesCount,
-			ctMappingInfos,
 			hasUnapprovedChanges,
+			isEmpty,
 			learnLink,
 			publishURL,
 			redirect,
@@ -40,9 +39,8 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 			unscheduleURL,
 		} = props;
 
-		this.ctEntriesCount = ctEntriesCount;
-		this.ctMappingInfos = ctMappingInfos;
 		this.hasUnapprovedChanges = hasUnapprovedChanges;
+		this.isEmpty = isEmpty;
 		this.learnLink = learnLink;
 		this.publishURL = publishURL;
 		this.redirect = redirect;
@@ -62,7 +60,7 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 			formError: null,
 			scheduleButtonDisabled:
 				!!this.unresolvedConflicts.length ||
-				(!this.ctEntriesCount && !this.ctMappingInfos.length) ||
+				isEmpty ||
 				(this.hasUnapprovedChanges && !this.unapprovedChangesAllowed)
 					? true
 					: false,

@@ -129,11 +129,19 @@ export async function getRoutineById({id, setRoutine}) {
 	}
 }
 
-export async function getRoutines({setRoutines}) {
+export async function getRoutinesPage({page, pageSize, setRoutinesPage}) {
+	if (!page) {
+		page = 1;
+	}
+
+	if (!pageSize) {
+		pageSize = 25;
+	}
+
 	const response = await liferayRequest({
 		graphqlQuery: `{
 			c {
-				routines {
+				routines (page: ${page}, pageSize: ${pageSize}) {
 					items {
 						dateCreated
 						dateModified
@@ -151,6 +159,9 @@ export async function getRoutines({setRoutines}) {
 							name
 						}
 					}
+					page
+					pageSize
+					totalCount
 				}
 			}
 		}`,
@@ -175,8 +186,15 @@ export async function getRoutines({setRoutines}) {
 		routines.push(routine);
 	}
 
-	if (setRoutines) {
-		setRoutines(routines);
+	let routinesPage = {
+		page: result.data.c.routines.page,
+		pageSize: result.data.c.routines.pageSize,
+		routines: routines,
+		totalCount: result.data.c.routines.totalCount,
+	};
+
+	if (setRoutinesPage) {
+		setRoutinesPage(routinesPage);
 	}
 }
 

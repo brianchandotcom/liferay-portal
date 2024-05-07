@@ -21,6 +21,7 @@
 		"@clayui/link": "^3.88.0",
 		"@clayui/navigation-bar": "^3.104.0",
 		"@clayui/panel": "^3.104.0",
+		"@clayui/pagination-bar": "^3.114.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-router-dom": "^6.15.0",

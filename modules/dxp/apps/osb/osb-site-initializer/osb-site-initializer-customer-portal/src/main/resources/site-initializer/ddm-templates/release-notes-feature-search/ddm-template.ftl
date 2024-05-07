@@ -13,7 +13,7 @@
 			color: var(--btn-default-color);
 			cursor: pointer;
 			line-height: normal;
-			padding: 1px;
+			padding: 0.063rem;
 		}
 
 		.collapse-container {
@@ -21,9 +21,9 @@
 		}
 
 		.collapse-container .tooltip {
-			margin-top: -100px;
+			margin-top: -6.25rem;
 			transform: translateX(-40%);
-			width: 140px;
+			width: 8.75rem;
 		}
 
 		.empty-container {
@@ -49,7 +49,7 @@
 		}
 
 		.icon-container {
-			background-color: #E7EFFF;
+			background-color: var(--color-brand-primary-lighten-5, #E7EFFF);
 			border-radius: 0.5rem;
 			margin-bottom: 2rem;
 			max-width: 9rem;
@@ -72,7 +72,7 @@
 		}
 
 		.link-container>svg {
-			fill: #0B5FFF;
+			fill: var(--link-color, #0B5FFF);
 			height: 0.75rem;
 			width: 0.75rem;
 		}
@@ -166,7 +166,7 @@
 		}
 
 		.search-icon>svg {
-			fill: #0B5FFF;
+			fill: var(--link-color, #0B5FFF);
 			height: 2rem;
 			margin: 1.5rem 3.5rem;
 			width: 2rem;

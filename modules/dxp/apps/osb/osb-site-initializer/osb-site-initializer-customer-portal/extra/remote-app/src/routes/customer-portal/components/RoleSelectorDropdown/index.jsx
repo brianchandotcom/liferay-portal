@@ -7,7 +7,8 @@ import { Button } from '@clayui/core';
 import DropDown from '@clayui/drop-down';
 import { ClayCheckbox } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import { Fragment, useState } from 'react';
+import { ClayTooltipProvider } from '@clayui/tooltip';
+import { Fragment, useMemo, useState } from 'react';
 import i18n from '~/common/I18n';
 import getKebabCase from '~/common/utils/getKebabCase';
 import RadioRoles from '../RadioRoles';
@@ -51,6 +52,20 @@ const RoleSelectorDropdown = ({
 				setSelectedAccountRoleName([accountRoleItem[0].label]) ;
 		}}
 	};
+
+	const atLeastOnePartnerMemberSelected = useMemo(() => {
+		if (radioOptions.partnerMemberRoles?.active) {
+			if(radioOptions.partnerMemberRoles?.roles.some(({active}) => active)){
+				return true
+			}
+		}
+
+		if (!radioOptions.partnerMemberRoles?.active) {
+			return true;
+		}
+		
+		return false
+	}, [radioOptions])
 
 	return (
 		<DropDown
@@ -134,8 +149,6 @@ const RoleSelectorDropdown = ({
 										const atLeastOneMemberIsFilled = radioOptions.partnerMemberRoles.roles.some(activeMemberRoles);
 
 										setAtLeastOneFieldIsFilled(atLeastOneMemberIsFilled);
-
-
 									}}
 								>
 									{i18n.translate(getKebabCase(role.label))
@@ -157,7 +170,16 @@ const RoleSelectorDropdown = ({
 								))
 
 								setRadioOptions(newObject);
-								setAtLeastOneFieldIsFilled(true);
+
+								const accountRoleActiveItem = Object.values(newObject).filter(role => role.active)
+
+								if (accountRoleActiveItem[0].label === selectedAccountRoleName[0]) {
+									setAtLeastOneFieldIsFilled(false);
+								}
+								else {
+									setAtLeastOneFieldIsFilled(true);
+								}
+
 							}}
 							selected={accountRole.active && accountRole.label}
 						>
@@ -169,21 +191,26 @@ const RoleSelectorDropdown = ({
 				</Fragment>
 			})}
 			
-			<Button 
-				className="btn btn-sm px-2 py-2 w-100"
-				disabled={!atLeastOneFieldIsFilled}
-				onClick={() => {
-					if (isTeamMemberInviteForm) {
-						selectOnChange(radioOptions);
-						setRoleSelectorFilled(true);
-					}
-					
-					handleOnClick(radioOptions);
-					setActive(false);
-				}}
-			>
-				{i18n.translate('apply')}
-			</Button>
+
+			<ClayTooltipProvider>
+				<Button 
+					className="btn btn-sm px-2 py-2 w-100"
+					data-tooltip-align="right"
+					disabled={!atLeastOneFieldIsFilled}
+					onClick={() => {
+						if (isTeamMemberInviteForm) {
+							selectOnChange(radioOptions);
+							setRoleSelectorFilled(true);
+						}
+						
+						handleOnClick(radioOptions);
+						setActive(false);
+					}}
+					title={!atLeastOnePartnerMemberSelected && i18n.translate('partner-members-must-have-at-least-one-role-assigned')}
+				>
+					{i18n.translate('apply')}
+				</Button>
+			</ClayTooltipProvider>
 		</DropDown>
 	);
 };

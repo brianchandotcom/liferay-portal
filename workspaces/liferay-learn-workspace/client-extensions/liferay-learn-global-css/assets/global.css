@@ -373,9 +373,7 @@ pre[class*='language-'] {
 		table,
 		.table-striped {
 			tbody
-				tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
-					.table-divider
-				) {
+				tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(.table-divider) {
 				&,
 				td,
 				th {
@@ -842,8 +840,11 @@ pre[class*='language-'] {
 }
 
 .search-capability {
-	.panel-body {
-		padding: 0;
+	.input-group .input-group-inset-item-after {
+		border-bottom-right-radius: 3rem;
+		border-left-width: 0;
+		border-top-right-radius: 3rem;
+		width: 4.5rem;
 	}
 
 	.input-group-inset-after.form-control {
@@ -854,18 +855,15 @@ pre[class*='language-'] {
 		padding: 1rem;
 	}
 
-	.input-group .input-group-inset-item-after {
-		border-bottom-right-radius: 3rem;
-		border-left-width: 0;
-		border-top-right-radius: 3rem;
-		width: 4.5rem;
-	}
-
 	.lexicon-icon {
 		color: var(--primary);
 		fill: var(--primary);
 		height: 2rem;
 		width: 2rem;
+	}
+
+	.panel-body {
+		padding: 0;
 	}
 }
 

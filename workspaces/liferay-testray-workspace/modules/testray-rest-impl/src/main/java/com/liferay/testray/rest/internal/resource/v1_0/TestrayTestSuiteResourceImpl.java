@@ -30,6 +30,8 @@ import com.liferay.testray.rest.resource.v1_0.TestrayTestSuiteResource;
 import java.io.File;
 import java.io.Serializable;
 
+import java.sql.Timestamp;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -257,7 +259,7 @@ public class TestrayTestSuiteResourceImpl
 			HashMapBuilder.<String, Serializable>put(
 				"attachments", _addTestrayAttachments(testcaseNode)
 			).put(
-				"closedDate", testrayBuildTime
+				"closedDate", Timestamp.valueOf(testrayBuildTime)
 			).put(
 				"dueStatus",
 				() -> {
@@ -295,7 +297,7 @@ public class TestrayTestSuiteResourceImpl
 			).put(
 				"r_runToCaseResult_c_runId", testrayRunId
 			).put(
-				"startDate", testrayBuildTime
+				"startDate", Timestamp.valueOf(testrayBuildTime)
 			).put(
 				"warnings",
 				GetterUtil.getInteger(
@@ -486,7 +488,8 @@ public class TestrayTestSuiteResourceImpl
 			HashMapBuilder.<String, Serializable>put(
 				"description", _getTestrayBuildDescription(propertiesMap)
 			).put(
-				"dueDate", propertiesMap.get("testray.build.time")
+				"dueDate",
+				Timestamp.valueOf(propertiesMap.get("testray.build.date"))
 			).put(
 				"dueStatus", "ACTIVATED"
 			).put(
@@ -955,7 +958,7 @@ public class TestrayTestSuiteResourceImpl
 
 		_addTestrayCases(
 			contextCompany.getCompanyId(), element, testrayBuildId,
-			propertiesMap.get("testray.build.time"), testrayProjectId,
+			propertiesMap.get("testray.build.date"), testrayProjectId,
 			testrayRunId);
 	}
 

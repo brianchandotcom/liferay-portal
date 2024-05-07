@@ -56,6 +56,8 @@ import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.sql.Timestamp;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -315,7 +317,7 @@ public class TestrayImportResultsDispatchTaskExecutor
 			HashMapBuilder.<String, Serializable>put(
 				"attachments", _addTestrayAttachments(testcaseNode)
 			).put(
-				"closedDate", testrayBuildTime
+				"closedDate", Timestamp.valueOf(testrayBuildTime)
 			).put(
 				"dueStatus",
 				() -> {
@@ -353,7 +355,7 @@ public class TestrayImportResultsDispatchTaskExecutor
 			).put(
 				"r_runToCaseResult_c_runId", testrayRunId
 			).put(
-				"startDate", testrayBuildTime
+				"startDate", Timestamp.valueOf(testrayBuildTime)
 			).put(
 				"warnings",
 				GetterUtil.getInteger(
@@ -569,7 +571,8 @@ public class TestrayImportResultsDispatchTaskExecutor
 			HashMapBuilder.<String, Serializable>put(
 				"description", _getTestrayBuildDescription(propertiesMap)
 			).put(
-				"dueDate", propertiesMap.get("testray.build.date")
+				"dueDate",
+				Timestamp.valueOf(propertiesMap.get("testray.build.date"))
 			).put(
 				"dueStatus", "ACTIVATED"
 			).put(

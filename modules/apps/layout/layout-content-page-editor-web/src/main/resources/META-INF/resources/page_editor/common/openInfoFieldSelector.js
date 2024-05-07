@@ -16,10 +16,13 @@ export function openInfoFieldSelector({itemType, onCancel, onSave}) {
 	);
 
 	openSelectionModal({
+		buttonAddLabel: Liferay.Language.get('save'),
+		height: '70vh',
 		multiple: true,
 		onClose: onCancel,
 		onSelect: (items) =>
 			onSave(items.map((item) => JSON.parse(item.value))),
+		size: 'lg',
 		title: Liferay.Language.get('manage-form-fields'),
 		url: url.toString(),
 	});

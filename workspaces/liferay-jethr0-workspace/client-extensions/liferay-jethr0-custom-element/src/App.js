@@ -21,34 +21,36 @@ import './App.css';
 
 function App() {
 	return (
-		<HashRouter>
-			<Routes>
-				<Route element={<BuildPage />} path="/builds/:id" />
-				<Route element={<CreateJobPage />} path="/jobs/create" />
-				<Route
-					element={<CreateRoutinePage />}
-					path="/routines/create"
-				/>
-				<Route element={<JobPage />} path="/jobs/:id" />
-				<Route element={<JobQueuePage />} path="/" />
-				<Route element={<JobsPage />} path="/jobs" />
-				<Route element={<NotFoundPage />} path="*" />
-				<Route element={<RoutinePage />} path="/routines/:id" />
-				<Route
-					element={<CreateJobPage />}
-					path="/routines/:routineId/create-job"
-				/>
-				<Route element={<RoutinesPage />} path="/routines" />
-				<Route
-					element={<UpstreamBranchesPage />}
-					path="/upstream-branches"
-				/>
-				<Route
-					element={<UpstreamBranchPage />}
-					path="/upstream-branches/:id"
-				/>
-			</Routes>
-		</HashRouter>
+		<div>
+			<HashRouter>
+				<Routes>
+					<Route element={<BuildPage />} path="/builds/:id" />
+					<Route element={<CreateJobPage />} path="/jobs/create" />
+					<Route
+						element={<CreateRoutinePage />}
+						path="/routines/create"
+					/>
+					<Route element={<JobPage />} path="/jobs/:id" />
+					<Route element={<JobQueuePage />} path="/" />
+					<Route element={<JobsPage />} path="/jobs" />
+					<Route element={<NotFoundPage />} path="*" />
+					<Route element={<RoutinePage />} path="/routines/:id" />
+					<Route
+						element={<CreateJobPage />}
+						path="/routines/:routineId/create-job"
+					/>
+					<Route element={<RoutinesPage />} path="/routines" />
+					<Route
+						element={<UpstreamBranchesPage />}
+						path="/upstream-branches"
+					/>
+					<Route
+						element={<UpstreamBranchPage />}
+						path="/upstream-branches/:id"
+					/>
+				</Routes>
+			</HashRouter>
+		</div>
 	);
 }
 

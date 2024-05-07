@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -101,7 +102,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 
 		DataRecordCollectionResource dataRecordCollectionResource =
 			builder.authentication(
-				"test@liferay.com", "test"
+				"test@liferay.com", TestPropsValues.USER_PASSWORD
 			).locale(
 				LocaleUtil.getDefault()
 			).build();
@@ -200,7 +201,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 
 		DataRecordCollectionResource dataRecordCollectionResource =
 			dataRecordCollectionResourceBuilder.authentication(
-				"test@liferay.com", "test"
+				"test@liferay.com", TestPropsValues.USER_PASSWORD
 			).locale(
 				LocaleUtil.getDefault()
 			).build();
@@ -220,7 +221,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 
 		DataListViewResource dataListViewResource =
 			dataListViewResourceBuilder.authentication(
-				"test@liferay.com", "test"
+				"test@liferay.com", TestPropsValues.USER_PASSWORD
 			).locale(
 				LocaleUtil.getDefault()
 			).build();
@@ -328,7 +329,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 
 		DataRecordCollectionResource dataRecordCollectionResource =
 			builder.authentication(
-				"test@liferay.com", "test"
+				"test@liferay.com", TestPropsValues.USER_PASSWORD
 			).locale(
 				LocaleUtil.getDefault()
 			).build();

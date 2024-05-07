@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.constants;
 
+import com.liferay.commerce.country.CommerceCountryManager;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -56,6 +57,7 @@ public class CommerceSAPConstants {
 		{
 			SAP_ENTRY_NAME,
 			StringBundler.concat(
+				CommerceCountryManager.class.getName(), "*\n",
 				CommerceInventoryWarehouseItemService.class.getName(),
 				"#getStockQuantity\n", CommerceOrderItemService.class.getName(),
 				"#addOrUpdateCommerceOrderItem\n",

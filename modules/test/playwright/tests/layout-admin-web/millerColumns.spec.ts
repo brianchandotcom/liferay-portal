@@ -32,9 +32,10 @@ test('changes the permissions of a group of pages', async ({
 
 	// Create two random pages
 
-	const pageNames = [getRandomString(), getRandomString()];
+	const firstName = getRandomString();
+	const secondName = getRandomString();
 
-	for (const pageName of pageNames) {
+	for (const pageName of [firstName, secondName]) {
 		await apiHelpers.headlessDelivery.createSitePage({
 			siteId: site.id,
 			title: pageName,
@@ -47,27 +48,30 @@ test('changes the permissions of a group of pages', async ({
 
 	// Select the first page and change the Guest-View permission
 
-	await pagesAdminPage.selectPageAndChangePermissions(pageNames[0], [
-		'guest_ACTION_VIEW',
-	]);
+	await pagesAdminPage.selectPageAndChangePermissions(
+		[firstName],
+		['guest_ACTION_VIEW']
+	);
 
 	// Select the second page (keeping the first page checked) and open the modal of permissions
 
 	await page
-		.getByLabel(`Select ${pageNames[1]}`, {
+		.getByLabel(`Select ${secondName}`, {
 			exact: true,
 		})
 		.check();
 
 	await page.getByRole('button', {name: 'Permissions'}).click();
 
-	await page.waitForTimeout(3000);
+	const permissionsFrame = page.frameLocator('iframe[title="Permissions"]');
+
+	await permissionsFrame
+		.getByRole('cell', {exact: true, name: 'Role'})
+		.waitFor();
 
 	// Check that the Guest-View permission value for both pages is indeterminate
 
-	const permission = await page
-		.frameLocator('iframe[title="Permissions"]')
-		.locator('#guest_ACTION_VIEW');
+	const permission = await permissionsFrame.locator('#guest_ACTION_VIEW');
 
 	await expect(permission).toHaveValue('indeterminate');
 
@@ -75,9 +79,10 @@ test('changes the permissions of a group of pages', async ({
 
 	// Change the Guest-View permission for both pages
 
-	await pagesAdminPage.selectPageAndChangePermissions(pageNames[1], [
-		'guest_ACTION_VIEW',
-	]);
+	await pagesAdminPage.selectPageAndChangePermissions(
+		[firstName, secondName],
+		['guest_ACTION_VIEW']
+	);
 
 	// Refresh the admin page
 
@@ -85,7 +90,7 @@ test('changes the permissions of a group of pages', async ({
 
 	// Check if the pages are retricted pages
 
-	for (const pageName of pageNames) {
+	for (const pageName of [firstName, secondName]) {
 		await expect(
 			page.getByLabel(`${pageName}. Restricted Page`)
 		).toBeVisible();

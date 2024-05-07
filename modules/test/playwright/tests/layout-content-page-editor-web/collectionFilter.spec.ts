@@ -130,8 +130,6 @@ test('filters a web content collection by single and multiple categories', async
 
 	await pageEditorPage.goToEditMode(layout, wemSite.friendlyUrlPath);
 
-	await page.waitForTimeout(1000);
-
 	// Go to edit mode of the created page and select the Collection Filter fragment
 
 	await pageEditorPage.selectFragment(collectionFilterId);
@@ -139,8 +137,6 @@ test('filters a web content collection by single and multiple categories', async
 	// Set Filter configuration for categories
 
 	await page.getByLabel('Select', {exact: true}).click();
-
-	await page.waitForTimeout(1000);
 
 	await page.getByLabel(collectionName).check();
 
@@ -153,14 +149,10 @@ test('filters a web content collection by single and multiple categories', async
 		.getByRole('link', {name: 'Animals'})
 		.click();
 
-	await page.waitForTimeout(1000);
-
 	await page
 		.frameLocator('iframe[title="Select"]')
 		.getByRole('button', {name: 'Select This Level'})
 		.click();
-
-	await page.waitForTimeout(1000);
 
 	// Check the option to show the label with the selected vocabulary
 
@@ -394,14 +386,10 @@ test('enables search field in dropdown list of Collection Filter', async ({
 		.getByRole('link', {name: 'Animals'})
 		.click();
 
-	await page.waitForTimeout(1000);
-
 	await page
 		.frameLocator('iframe[title="Select"]')
 		.getByRole('button', {name: 'Select This Level'})
 		.click();
-
-	await page.waitForTimeout(1000);
 
 	await page.getByLabel('Include Search Field').check();
 

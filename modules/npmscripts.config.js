@@ -782,64 +782,34 @@ module.exports = {
 			'youtube-web',
 		],
 		'allowed-non-global-dependencies': [
+			'@liferay/npm-scripts',
+			'@vscode/ripgrep',
+			'alloy-ui',
+			'axios',
+			'browser-tabs-lock',
+			'ckeditor4',
 			'codemirror',
+			'core-js',
 			'd3',
+			'es-module-shims',
+			'fetch-mock',
+			'fs',
+			'gulp',
+			'hash.js',
 			'history',
 			'jest-fetch-mock',
-			'fetch-mock',
-			'gulp',
-			'liferay-theme-tasks',
-			'ckeditor4',
-			'alloy-ui',
-			'resize-observer-polyfill',
-			'webpack',
-			'react-dnd-test-utils',
-			'fs',
-
-			// Dependencies not expected to be shared
-
-			'@vscode/ripgrep',
-			'es-module-shims',
-			'liferay-font-awesome',
-			'swagger-ui-react',
-
-			// Needs to be removed
-
-			'axios',
-
-			// Causes bugs
-
-			'path-to-regexp',
-
-			// Doesn't support ESM
-
 			'leaflet',
-
-			// Node Shims
-
+			'liferay-font-awesome',
+			'liferay-theme-tasks',
+			'minimist',
 			'os-browserify',
 			'path-browserify',
-			'timers-browserify',
-
-			// Analytics Client Bundle
-
-			'browser-tabs-lock',
-			'hash.js',
-			'core-js',
-
-			'jest-fetch-mock',
-			'fetch-mock',
-			'gulp',
-			'liferay-theme-tasks',
-			'history',
-			'resize-observer-polyfill',
-			'ckeditor4',
-			'fetch-mock',
-			'@liferay/npm-scripts',
-			'webpack',
-			'alloy-ui',
+			'path-to-regexp',
 			'react-dnd-test-utils',
-			'minimist',
+			'resize-observer-polyfill',
+			'swagger-ui-react',
+			'timers-browserify',
+			'webpack',
 		],
 	},
 };

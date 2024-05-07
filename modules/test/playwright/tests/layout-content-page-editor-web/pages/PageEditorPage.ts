@@ -182,6 +182,27 @@ export class PageEditorPage {
 		await this.goToEditMode(layout, site.friendlyUrlPath);
 	}
 
+	async deleteExperience(name: string) {
+		await this.openExperienceSelector();
+
+		await this.page.on('dialog', async (dialog) => await dialog.accept());
+
+		await this.page
+			.locator('.dropdown-menu__experience', {
+				hasText: name,
+			})
+			.getByLabel('Delete Experience')
+			.click();
+
+		await this.closeExperienceSelector();
+
+		await waitForSuccessAlert(
+			this.page,
+			'Success:The experience was deleted successfully.',
+			{autoClose: false}
+		);
+	}
+
 	async deleteFragment(fragmentId: string) {
 		await this.selectFragment(fragmentId);
 		await this.page.keyboard.press('Backspace');

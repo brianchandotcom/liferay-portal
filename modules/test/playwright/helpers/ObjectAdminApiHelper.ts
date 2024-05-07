@@ -56,6 +56,16 @@ export class ObjectAdminApiHelper {
 		);
 	}
 
+	async postObjectFieldByExternalReferenceCode(
+		objectDefinitionExternalReferenceCode: string,
+		objectField: Partial<ObjectField>
+	) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${objectDefinitionExternalReferenceCode}/object-fields`,
+			{data: objectField}
+		);
+	}
+
 	async postObjectRelationship(
 		objectRelationship: Partial<ObjectRelationship>
 	) {

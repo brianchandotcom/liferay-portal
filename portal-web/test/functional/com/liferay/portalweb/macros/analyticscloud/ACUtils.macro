@@ -1060,6 +1060,8 @@ definition {
 				locator1 = "ACSettings#SEARCH_BAR",
 				value1 = "\ENTER");
 		}
+
+		ACUtils.waitForLoading();
 	}
 
 	@summary = "Default summary"

@@ -32,11 +32,7 @@
 				},
 				{
 					"name": "showFilesInDocumentsAndMedia",
-					"value": "true"
-				},
-				{
-					"name": "storageDLFolderPath",
-					"value": "/MDFClaimFile"
+					"value": "false"
 				}
 			],
 			"required": false,

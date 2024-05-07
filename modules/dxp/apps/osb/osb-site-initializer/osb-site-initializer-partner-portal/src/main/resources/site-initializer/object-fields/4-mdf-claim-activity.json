@@ -77,11 +77,38 @@
 				},
 				{
 					"name": "showFilesInDocumentsAndMedia",
-					"value": "true"
+					"value": "false"
+				}
+			],
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"externalReferenceCode": "MDF-CLAIM-ACT-LIST-QUALI-LEADS-FILE",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "List of Qualified Leads File"
+			},
+			"name": "listOfQualifiedLeadsFile",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "csv, xlsx, xls"
 				},
 				{
-					"name": "storageDLFolderPath",
-					"value": "/MDFClaimActivity"
+					"name": "maximumFileSize",
+					"value": "3"
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputer"
+				},
+				{
+					"name": "showFilesInDocumentsAndMedia",
+					"value": "false"
 				}
 			],
 			"required": false,
@@ -125,13 +152,13 @@
 		{
 			"DBType": "Long",
 			"businessType": "Attachment",
-			"externalReferenceCode": "625cecf7-ed42-4758-9b0d-ee7ff7e9e345",
+			"externalReferenceCode": "MDF-CLAIM-ACT-EVENT-PROG-FILE",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Telemarketing Script"
+				"en_US": "Event Program File"
 			},
-			"name": "telemarketingScript",
+			"name": "eventProgramFile",
 			"objectFieldSettings": [
 				{
 					"name": "acceptedFileExtensions",
@@ -147,11 +174,38 @@
 				},
 				{
 					"name": "showFilesInDocumentsAndMedia",
-					"value": "true"
+					"value": "false"
+				}
+			],
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"externalReferenceCode": "MDF-CLAIM-ACT-TEL-SCRIPT-FILE",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Telemarketing Script File"
+			},
+			"name": "telemarketingScriptFile",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "jpeg, jpg, pdf, png, tif, tiff, doc, docx"
 				},
 				{
-					"name": "storageDLFolderPath",
-					"value": "/MDFClaimActivityTelemarketingScript"
+					"name": "maximumFileSize",
+					"value": "3"
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputer"
+				},
+				{
+					"name": "showFilesInDocumentsAndMedia",
+					"value": "false"
 				}
 			],
 			"required": false,

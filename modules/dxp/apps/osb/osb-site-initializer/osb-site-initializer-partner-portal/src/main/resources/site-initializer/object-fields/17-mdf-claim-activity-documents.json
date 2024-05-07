@@ -36,6 +36,68 @@
 			"type": "Long"
 		},
 		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"externalReferenceCode": "MDF-CLAIM-ACT-DOC-PROOF-PERF-FILES",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Proof Of Performance Files"
+			},
+			"name": "proofOfPerformanceFiles",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "jpeg, jpg, pdf, png, tif, tiff, doc, docx"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": "3"
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputer"
+				},
+				{
+					"name": "showFilesInDocumentsAndMedia",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"externalReferenceCode": "MDF-CLAIM-ACT-DOC-ALL-CONT-FILES",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "All Contents File"
+			},
+			"name": "allContentsFile",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "doc, docx, jpeg, jpg, pdf, tif, tiff, txt"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": "3"
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputer"
+				},
+				{
+					"name": "showFilesInDocumentsAndMedia",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"type": "Long"
+		},
+		{
 			"DBType": "String",
 			"businessType": "Picklist",
 			"externalReferenceCode": "1ec07d25-6732-4c32-a193-a5ad78c0804d",

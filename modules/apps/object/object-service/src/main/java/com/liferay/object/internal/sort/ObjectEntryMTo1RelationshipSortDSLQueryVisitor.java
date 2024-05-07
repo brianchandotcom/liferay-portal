@@ -62,17 +62,14 @@ public class ObjectEntryMTo1RelationshipSortDSLQueryVisitor
 
 		if (!contains(dslQuery, relatedDynamicObjectDefinitionTable)) {
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-				_getDynamicObjectDefinitionTable(
-					relationshipSort.getObjectDefinition(), dbColumnName);
+				(DynamicObjectDefinitionTable)getAliasedTable(
+					StringUtil.removeLast(
+						formatedRelationshipPathName,
+						"_" + objectRelationship.getName()),
+					_getDynamicObjectDefinitionTable(
+						relationshipSort.getObjectDefinition(), dbColumnName));
 
 			if (!contains(dslQuery, dynamicObjectDefinitionTable)) {
-				dynamicObjectDefinitionTable =
-					(DynamicObjectDefinitionTable)getAliasedTable(
-						StringUtil.removeLast(
-							formatedRelationshipPathName,
-							"_" + objectRelationship.getName()),
-						dynamicObjectDefinitionTable);
-
 				dslQuery = addLeftJoin(
 					dynamicObjectDefinitionTable.getPrimaryKeyColumn(),
 					dslQuery, null, dynamicObjectDefinitionTable);

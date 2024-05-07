@@ -515,7 +515,7 @@ translationTest(
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('option', {
-				name: 'Catalan Language: Translating 3/4',
+				name: 'Catalan Language: Translating 1/2',
 			}),
 			trigger: translationButton,
 		});

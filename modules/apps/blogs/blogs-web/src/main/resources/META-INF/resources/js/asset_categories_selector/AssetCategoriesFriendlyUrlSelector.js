@@ -143,7 +143,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 						inputName={
 							portletNamespace + 'friendlyURLAssetCategoryIds'
 						}
-						items={selectedItems}
+						items={disabled ? [] : selectedItems}
 						onItemsChange={handleItemsChange}
 					/>
 				</ClayInput.GroupItem>

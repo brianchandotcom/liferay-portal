@@ -265,4 +265,37 @@ test('LPD-23969 Activities tab is added to workflow info display', async ({
 			.getByRole('cell')
 			.nth(1)
 	).toBeVisible();
+
+	await expect(
+		page.getByRole('button', {exact: true, name: 'View More'})
+	).toBeHidden();
+});
+
+test('LPD-25058 View More button is added to workflow Activities tab for many rows', async ({
+	changeTrackingPage,
+	ctCollection,
+	page,
+	workflowTasksPage,
+}) => {
+	await workflowTasksPage.goToAssignedToMyRoles();
+
+	await workflowTasksPage.assignToMe(journalName);
+
+	await workflowTasksPage.reject(journalName);
+
+	await workflowTasksPage.resubmit(journalName);
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	await changeTrackingPage.reviewChange(journalName);
+
+	await changeTrackingPage.selectTab('Workflow');
+
+	await page.getByRole('button', {exact: true, name: 'Activities'}).click();
+
+	await page.getByRole('button', {exact: true, name: 'View More'}).click();
+
+	await expect(
+		page.getByRole('button', {exact: true, name: 'View More'})
+	).toBeHidden();
 });

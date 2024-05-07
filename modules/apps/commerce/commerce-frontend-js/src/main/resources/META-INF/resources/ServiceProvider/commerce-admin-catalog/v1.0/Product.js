@@ -19,5 +19,8 @@ export default function Product(basePath) {
 
 		getProductById: (productId) =>
 			AJAX.GET(resolveProductsPath(basePath, productId)),
+
+		updateProduct: (productId, json) =>
+			AJAX.PATCH(resolveProductsPath(basePath, productId), json),
 	};
 }

@@ -1,0 +1,7 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"element-text": {
+			"collectionFieldId": "ddmTemplate__ddmTemplate_${TEMPLATE_ENTRY_ID}"
+		}
+	}
+}

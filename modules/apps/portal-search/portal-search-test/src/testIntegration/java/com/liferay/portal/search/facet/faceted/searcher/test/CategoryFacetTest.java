@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.category.CategoryFacetFactory;
 import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.test.rule.Inject;
@@ -116,6 +116,37 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 		searchContext.setGroupIds(new long[] {_group.getGroupId()});
 
 		Facet facet = categoryFacetFactory.newInstance(searchContext);
+
+		searchContext.addFacet(facet);
+
+		Hits hits = search(searchContext);
+
+		Map<String, Integer> frequencies = Collections.singletonMap(
+			_getAssetVocabularyCategoryId(assetCategory), 1);
+
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, frequencies);
+	}
+
+	@Test
+	public void testSelection() throws Exception {
+		String title = RandomTestUtil.randomString();
+
+		AssetCategory assetCategory = addCategory(title);
+
+		long categoryId = assetCategory.getCategoryId();
+
+		addUser(_group, categoryId);
+
+		SearchContext searchContext = getSearchContext(
+			assetCategory.getTitleCurrentValue());
+
+		searchContext.setCategoryIds(new long[] {categoryId});
+		searchContext.setGroupIds(new long[] {_group.getGroupId()});
+
+		Facet facet = categoryFacetFactory.newInstance(searchContext);
+
+		facet.select(_getAssetVocabularyCategoryId(assetCategory));
 
 		searchContext.addFacet(facet);
 

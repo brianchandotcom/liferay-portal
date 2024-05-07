@@ -382,6 +382,11 @@ public class CTCollectionWrapper
 	}
 
 	@Override
+	public boolean isEmpty() {
+		return model.isEmpty();
+	}
+
+	@Override
 	public boolean isProduction() {
 		return model.isProduction();
 	}

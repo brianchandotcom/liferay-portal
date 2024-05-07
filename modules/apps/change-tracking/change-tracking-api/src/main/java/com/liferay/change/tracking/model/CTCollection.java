@@ -51,6 +51,8 @@ public interface CTCollection extends CTCollectionModel, PersistedModel {
 
 	public String getUserName();
 
+	public boolean isEmpty();
+
 	public boolean isProduction();
 
 }

@@ -26,11 +26,20 @@ public class JavaFeatureFlagManagerUtilCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		Matcher matcher1 = _getterUtilGetBooleanPattern.matcher(content);
+		_checkGetterUtilGetBooleanMethodCall(fileName, content);
+		_checkIsEnabledMethodCall(fileName, content);
 
-		while (matcher1.find()) {
+		return content;
+	}
+
+	private void _checkGetterUtilGetBooleanMethodCall(
+		String fileName, String content) {
+
+		Matcher matcher = _getterUtilGetBooleanPattern.matcher(content);
+
+		while (matcher.find()) {
 			List<String> parameterList = JavaSourceUtil.getParameterList(
-				JavaSourceUtil.getMethodCall(content, matcher1.start()));
+				JavaSourceUtil.getMethodCall(content, matcher.start()));
 
 			if (parameterList.size() != 1) {
 				continue;
@@ -56,13 +65,9 @@ public class JavaFeatureFlagManagerUtilCheck extends BaseFileCheck {
 					fileName,
 					"Use 'FeatureFlagManagerUtil.isEnabled' instead of " +
 						"'PropsUtil.get' for feature flag",
-					getLineNumber(content, matcher1.start()));
+					getLineNumber(content, matcher.start()));
 			}
 		}
-
-		_checkIsEnabledMethodCall(fileName, content);
-
-		return content;
 	}
 
 	private void _checkIsEnabledMethodCall(String fileName, String content) {

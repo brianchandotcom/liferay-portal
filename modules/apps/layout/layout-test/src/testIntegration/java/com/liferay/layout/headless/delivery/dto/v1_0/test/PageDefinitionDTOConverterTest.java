@@ -656,7 +656,7 @@ public class PageDefinitionDTOConverterTest {
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
 				fragmentName, StringPool.BLANK, html, StringPool.BLANK, false,
 				configuration, null, 0, false, FragmentConstants.TYPE_COMPONENT,

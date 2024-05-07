@@ -385,7 +385,7 @@ public class GetLayoutReportsLayoutItemDataStrutsActionTest {
 				_serviceContext);
 
 		return _fragmentEntryLocalService.addFragmentEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(), null,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			"Fragment Entry HTML", StringPool.BLANK, cacheable, null, null, 0,

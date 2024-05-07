@@ -146,7 +146,7 @@ public class CopyFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		_fragmentCompositionService.addFragmentComposition(
-			themeDisplay.getScopeGroupId(), fragmentCollectionId,
+			null, themeDisplay.getScopeGroupId(), fragmentCollectionId,
 			StringPool.BLANK,
 			StringBundler.concat(
 				fragmentComposition.getName(), StringPool.SPACE,
@@ -174,7 +174,7 @@ public class CopyFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		_fragmentEntryService.addFragmentEntry(
-			themeDisplay.getScopeGroupId(), fragmentCollectionId,
+			null, themeDisplay.getScopeGroupId(), fragmentCollectionId,
 			StringPool.BLANK,
 			StringBundler.concat(
 				fragmentEntry.getName(), StringPool.SPACE,

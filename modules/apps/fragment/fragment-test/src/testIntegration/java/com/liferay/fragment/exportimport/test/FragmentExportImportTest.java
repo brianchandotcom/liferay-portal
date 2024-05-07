@@ -215,7 +215,7 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 				StringPool.BLANK, serviceContext);
 
 		return _fragmentEntryLocalService.addFragmentEntry(
-			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollection.getFragmentCollectionId(), null,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			"Original HTML Fragment" + _HTML, StringPool.BLANK, false,

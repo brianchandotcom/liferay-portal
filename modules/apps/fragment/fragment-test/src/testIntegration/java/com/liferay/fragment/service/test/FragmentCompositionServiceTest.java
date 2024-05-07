@@ -73,7 +73,7 @@ public class FragmentCompositionServiceTest {
 
 		FragmentComposition fragmentComposition =
 			_fragmentCompositionService.addFragmentComposition(
-				_group.getGroupId(),
+				null, _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
 				fragmentCompositionKey, name, description, data,
 				previewFileEntryId, status, serviceContext);

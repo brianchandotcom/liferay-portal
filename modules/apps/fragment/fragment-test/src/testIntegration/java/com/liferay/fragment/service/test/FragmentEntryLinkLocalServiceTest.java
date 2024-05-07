@@ -106,7 +106,7 @@ public class FragmentEntryLinkLocalServiceTest {
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		_fragmentEntry = _fragmentEntryLocalService.addFragmentEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_fragmentCollection.getFragmentCollectionId(), null,
 			"Fragment Name", StringPool.BLANK, "<div>test</div>",
 			StringPool.BLANK, false, _read("configuration-light.json"), null, 0,
@@ -115,7 +115,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		_fragmentEntryWithFreeMarker =
 			_fragmentEntryLocalService.addFragmentEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), null,
 				"Fragment Name", StringPool.BLANK,
 				_read("fragment-freemarker.html"), StringPool.BLANK, false,
@@ -592,7 +592,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), null,
 				"Fragment Name", RandomTestUtil.randomString(),
 				"<div>test</div>", RandomTestUtil.randomString(), false,
@@ -646,7 +646,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), null,
 				"Fragment Name", StringPool.BLANK, StringUtil.randomString(),
 				StringPool.BLANK, false, _read("configuration-light.json"),
@@ -700,7 +700,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), null,
 				"Fragment Name", StringPool.BLANK,
 				_read("fragment-configuration.html"), StringPool.BLANK, false,
@@ -746,7 +746,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), null,
 				"Fragment Name", StringPool.BLANK,
 				_read("fragment-editable.html"), StringPool.BLANK, false,
@@ -791,7 +791,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), null,
 				"Fragment Name", StringPool.BLANK,
 				_read("fragment-editable.html"), StringPool.BLANK, false,

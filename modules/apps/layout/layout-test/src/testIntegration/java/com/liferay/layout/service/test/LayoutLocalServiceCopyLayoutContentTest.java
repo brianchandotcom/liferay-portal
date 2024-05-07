@@ -884,7 +884,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 				RandomTestUtil.randomString(), null, serviceContext);
 
 		return _fragmentEntryLocalService.addFragmentEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(), null,
 			RandomTestUtil.randomString(), null, html, null, false, null, null,
 			0, false, FragmentConstants.TYPE_COMPONENT, null,

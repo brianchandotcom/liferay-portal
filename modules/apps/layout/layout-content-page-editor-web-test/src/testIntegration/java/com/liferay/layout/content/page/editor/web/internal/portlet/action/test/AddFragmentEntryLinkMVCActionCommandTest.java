@@ -202,7 +202,7 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 				StringUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		return _fragmentEntryLocalService.addFragmentEntry(
-			TestPropsValues.getUserId(), groupId,
+			null, TestPropsValues.getUserId(), groupId,
 			fragmentCollection.getFragmentCollectionId(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),

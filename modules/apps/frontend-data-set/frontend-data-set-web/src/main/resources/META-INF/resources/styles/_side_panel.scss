@@ -23,7 +23,7 @@
 		top: 0;
 		z-index: 10;
 	}
-	
+
 	.fds-side-panel-title {
 		font-weight: 600;
 	}
@@ -118,15 +118,15 @@
 		z-index: 1;
 
 		&.fds-side-panel-close-menu {
-			position: absolute;
 			opacity: 1;
+			position: absolute;
 			right: 16px;
 			top: 4px;
 		}
 
 		&.fds-side-panel-close-simple {
-			position: absolute;
 			opacity: 1;
+			position: absolute;
 			right: 20px;
 			top: 29px;
 		}

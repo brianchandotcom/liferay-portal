@@ -111,7 +111,7 @@ export default class SidePanel extends React.Component {
 		this.setState({
 			onAfterSubmit: event.onSubmit || null,
 			size: event.size || this.defaultSize,
-			title: event.title
+			title: event.title,
 		});
 	}
 
@@ -384,12 +384,13 @@ export default class SidePanel extends React.Component {
 							open={this.open}
 						/>
 					)}
-					
+
 					{this.state.title && (
-						<div className='fds-side-panel-header'>
-							<div className='fds-side-panel-title'>
-								<h3 className='mb-0'>{this.state.title}</h3>
+						<div className="fds-side-panel-header">
+							<div className="fds-side-panel-title">
+								<h3 className="mb-0">{this.state.title}</h3>
 							</div>
+
 							<ClayButton
 								aria-label={Liferay.Language.get('close')}
 								className={classNames(
@@ -406,7 +407,7 @@ export default class SidePanel extends React.Component {
 								<ClayIcon symbol="times" />
 							</ClayButton>
 						</div>
-					)} 
+					)}
 
 					<div className="tab-content">
 						<div className="loader">

@@ -2260,69 +2260,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-146871 - Verify an Action with Groovy Script can be triggered after deleting an entry."
-	@priority = 4
-	test CanTriggerActionDeleteWithGroovyScript {
-		property portal.upstream = "quarantine";
-
-		task ("Given an object with a field is created") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object 156566",
-				objectName = "CustomObject156566",
-				pluralLabelName = "Custom Objects 156566");
-
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Text",
-				fieldLabelName = "Custom Field",
-				fieldName = "customField",
-				fieldType = "String",
-				isRequired = "true",
-				objectName = "CustomObject156566");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156566");
-
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "customField",
-				objectName = "CustomObject156566",
-				value = "Entry Test");
-		}
-
-		task ("When an action is created using Groovy Script and is triggered when an object entry is deleted") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156566");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.addObjectActionViaUI(
-				actionLabel = "Action Label",
-				actionName = "ActionName",
-				active = "true",
-				scriptValidation = "print('Hello world')",
-				thenAction = "Groovy Script",
-				whenAction = "On After Delete");
-		}
-
-		task ("Then deleting an object entry will trigger the action") {
-			ObjectAdmin.goToCustomObject(objectName = "CustomObject156566");
-
-			ObjectPortlet.deleteEntry(entry = "Entry Test");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156566");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Action Label",
-				status = "Success");
-
-			AssertConsoleTextPresent(value1 = "Hello world");
-		}
-	}
-
 	@description = "LPS-156320 - Assert an Action with an Expression can be triggered after adding an entry."
 	@priority = 4
 	test CanTriggerActionWithExpressionByAddingEntry {

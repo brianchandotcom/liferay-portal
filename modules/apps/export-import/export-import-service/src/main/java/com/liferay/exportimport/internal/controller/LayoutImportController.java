@@ -883,6 +883,17 @@ public class LayoutImportController implements ImportController {
 
 			layoutSetPrototypeUuid = GetterUtil.getString(
 				headerElement.attributeValue("type-uuid"));
+
+			LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
+				group.getGroupId(), false);
+
+			if (layoutSet != null) {
+				layoutSet.setThemeId(
+					GetterUtil.getString(
+						headerElement.attributeValue("theme-id")));
+
+				_layoutSetLocalService.updateLayoutSet(layoutSet);
+			}
 		}
 
 		if (Validator.isNotNull(layoutSetPrototypeUuid)) {

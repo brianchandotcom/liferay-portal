@@ -292,3 +292,40 @@ test('allows creating experiences with different fragments', async ({
 
 	await expect(pageEditorPage.getFragment(headingId)).toBeVisible();
 });
+
+test('allows editing and deleting an experience', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+
+	// Create a page and go to edit mode
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+
+	// Create new experienc
+
+	await pageEditorPage.createExperience('E1');
+
+	// Edit it
+
+	await pageEditorPage.editExperienceName('E1', 'E2');
+
+	// Delete it
+
+	await pageEditorPage.deleteExperience('E2');
+
+	await pageEditorPage.openExperienceSelector();
+
+	await expect(
+		page.locator('.dropdown-menu__experience', {
+			hasText: 'E2',
+		})
+	).not.toBeVisible();
+});

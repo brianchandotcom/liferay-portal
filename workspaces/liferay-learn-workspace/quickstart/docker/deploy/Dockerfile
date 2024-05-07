@@ -29,6 +29,6 @@ LABEL org.label-schema.vcs-url="${LABEL_VCS_URL}"
 LABEL org.label-schema.vendor="Liferay, Inc."
 LABEL org.label-schema.version="${LABEL_VERSION}"
 
-USER liferay:liferay
+USER root
 
 WORKDIR /opt/liferay

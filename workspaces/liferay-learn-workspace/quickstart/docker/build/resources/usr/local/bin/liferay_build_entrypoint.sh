@@ -14,7 +14,7 @@ function main {
 
 	cd /mnt/liferay-learn-workspace || exit
 
-	./gradlew clean createDockerfile
+	./gradlew --gradle-user-home="$HOME"/.gradle clean createDockerfile
 }
 
 main "${@}"

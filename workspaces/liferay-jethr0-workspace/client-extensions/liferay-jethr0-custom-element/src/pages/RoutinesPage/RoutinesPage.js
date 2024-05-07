@@ -5,6 +5,7 @@
 
 import {Heading} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
+import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 
@@ -14,60 +15,36 @@ import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0ContainerFluid';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
-import {getRoutines} from '../../objects/routines/RoutineUtil';
+import {getRoutinesPage} from '../../objects/routines/RoutineUtil';
 import {toLocaleString} from '../../services/DateUtil';
 
-function Routines() {
-	const [routines, setRoutines] = useState(null);
-
-	if (!routines) {
-		getRoutines({setRoutines});
-	}
-
-	if (!routines) {
-		return <div>Loading...</div>;
-	}
-
-	return (
-		<Jethr0Table>
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Type</th>
-					<th>Create Date</th>
-					<th>Job Name</th>
-					<th>Job Priority</th>
-					<th>Job Type</th>
-				</tr>
-			</thead>
-			<tbody>
-				{routines?.map((routine) => {
-					return (
-						<tr key={routine.id}>
-							<th className="font-weight-semi-bold">
-								<Link
-									title={routine.id}
-									to={'/routines/' + routine.id}
-								>
-									{routine.id}
-								</Link>
-							</th>
-							<td>{routine.name}</td>
-							<td>{routine.type.name}</td>
-							<td>{toLocaleString(routine.dateCreated)}</td>
-							<td>{routine.jobName}</td>
-							<td>{routine.jobPriority}</td>
-							<td>{routine.jobType.name}</td>
-						</tr>
-					);
-				})}
-			</tbody>
-		</Jethr0Table>
-	);
-}
-
 function RoutinesPage() {
+	const [routinesPage, setRoutinesPage] = useState(null);
+
+	const deltas = [
+		{
+			label: 25
+		},
+		{
+			label: 50
+		},
+		{
+			label: 100
+		}
+	];
+
+	if (!routinesPage) {
+		getRoutinesPage({page: 1, pageSize: 25, setRoutinesPage});
+	}
+
+	function setActiveDelta({activeDelta, routinesPage}) {
+		getRoutinesPage({page: routinesPage.page, pageSize: activeDelta, setRoutinesPage});
+	}
+
+	function setActivePage({activePage, routinesPage}) {
+		getRoutinesPage({page: activePage, pageSize: routinesPage.pageSize, setRoutinesPage});
+	}
+
 	const breadcrumbs = [
 		{active: false, link: '/', name: 'Home'},
 		{active: true, link: '/routines', name: 'Routines'},
@@ -93,8 +70,54 @@ function RoutinesPage() {
 						/>
 					</ClayLayout.Row>
 				</Jethr0ContainerFluid>
-				<Routines />
+				<Jethr0Table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Type</th>
+							<th>Create Date</th>
+							<th>Job Name</th>
+							<th>Job Priority</th>
+							<th>Job Type</th>
+						</tr>
+					</thead>
+					<tbody>
+						{routinesPage?.routines.map((routine) => {
+							return (
+								<tr key={routine.id}>
+									<th className="font-weight-semi-bold">
+										<Link
+											title={routine.id}
+											to={'/routines/' + routine.id}
+										>
+											{routine.id}
+										</Link>
+									</th>
+									<td>{routine.name}</td>
+									<td>{routine.type.name}</td>
+									<td>{toLocaleString(routine.dateCreated)}</td>
+									<td>{routine.jobName}</td>
+									<td>{routine.jobPriority}</td>
+									<td>{routine.jobType.name}</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</Jethr0Table>
 			</Jethr0Card>
+			{routinesPage &&
+				<ClayPaginationBarWithBasicItems
+					activeDelta={routinesPage.pageSize}
+					defaultActive={routinesPage.page}
+					deltas={deltas}
+					ellipsisBuffer={3}
+					onActiveChange={(activePage) => {setActivePage({activePage, routinesPage})}}
+					onDeltaChange={(activeDelta) => {setActiveDelta({activeDelta, routinesPage})}}
+					showDeltasDropDown={true}
+					totalItems={routinesPage.totalCount}
+				/>
+			}
 		</ClayLayout.Container>
 	);
 }

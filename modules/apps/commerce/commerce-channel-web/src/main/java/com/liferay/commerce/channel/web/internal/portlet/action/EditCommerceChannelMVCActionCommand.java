@@ -396,7 +396,7 @@ public class EditCommerceChannelMVCActionCommand
 		if (!Objects.equals(newFileEntry.getExtension(), "jrxml")) {
 			_dlAppLocalService.deleteFileEntry(newFileEntry.getFileEntryId());
 
-			throw new FileExtensionException();
+			throw new FileExtensionException.InvalidExtension();
 		}
 
 		if (!_commerceReportExporter.isValidJRXMLTemplate(

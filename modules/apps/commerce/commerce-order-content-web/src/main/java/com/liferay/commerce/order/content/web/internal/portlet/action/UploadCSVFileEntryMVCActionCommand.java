@@ -105,7 +105,7 @@ public class UploadCSVFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			String extension = _file.getExtension(fileName);
 
 			if (!extension.equals("csv")) {
-				throw new FileExtensionException(
+				throw new FileExtensionException.InvalidExtension(
 					"Invalid extension for file name " + fileName);
 			}
 

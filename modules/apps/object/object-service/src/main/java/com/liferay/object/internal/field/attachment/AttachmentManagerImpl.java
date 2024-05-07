@@ -212,7 +212,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 				getAcceptedFileExtensions(objectFieldId),
 				FileUtil.getExtension(fileName), true)) {
 
-			throw new FileExtensionException(
+			throw new FileExtensionException.InvalidExtension(
 				"Invalid file extension for " + fileName);
 		}
 	}

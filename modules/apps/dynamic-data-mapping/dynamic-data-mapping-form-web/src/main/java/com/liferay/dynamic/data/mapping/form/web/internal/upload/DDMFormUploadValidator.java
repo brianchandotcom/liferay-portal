@@ -64,7 +64,7 @@ public class DDMFormUploadValidator {
 		}
 
 		if (extension == null) {
-			throw new FileExtensionException(
+			throw new FileExtensionException.InvalidExtension(
 				"Invalid file extension for " + fileName);
 		}
 	}

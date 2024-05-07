@@ -137,7 +137,7 @@ public final class DLValidatorImpl implements DLValidator {
 		}
 
 		if (!validFileExtension) {
-			throw new FileExtensionException(fileName);
+			throw new FileExtensionException.InvalidExtension(fileName);
 		}
 	}
 

@@ -56,7 +56,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -1349,17 +1348,18 @@ public class ResourceActionsImpl implements ResourceActions {
 	private static final ResourceActionsBag _dummyResourceActionsBag =
 		new ResourceActionsBag();
 
-	private final Map<String, Double> _modelResourceWeights = new HashMap<>();
+	private final Map<String, Double> _modelResourceWeights =
+		new ConcurrentHashMap<>();
 	private final Set<String> _organizationModelResources =
 		ConcurrentHashMap.newKeySet();
 	private final Set<String> _portalModelResources =
 		ConcurrentHashMap.newKeySet();
 	private final Map<String, String> _portletRootModelResources =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 	private final Map<String, ResourceActionsBag> _resourceActionsBags =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 	private final Map<String, Set<String>> _resourceReferences =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 
 	private static class ResourceActionsBag {
 

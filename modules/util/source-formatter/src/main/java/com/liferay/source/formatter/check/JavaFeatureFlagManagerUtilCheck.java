@@ -60,10 +60,33 @@ public class JavaFeatureFlagManagerUtilCheck extends BaseFileCheck {
 			}
 		}
 
+		_checkIsEnabledMethodCall(fileName, content);
+
 		return content;
+	}
+
+	private void _checkIsEnabledMethodCall(String fileName, String content) {
+		Matcher matcher = _isEnabledPattern.matcher(content);
+
+		while (matcher.find()) {
+			String variableTypeName = getVariableTypeName(
+				content, null, content, fileName, matcher.group(1));
+
+			if (variableTypeName == null) {
+				continue;
+			}
+
+			if (variableTypeName.equals("FeatureFlagManager")) {
+				addMessage(
+					fileName, "Use 'FeatureFlagManagerUtil.isEnabled' instead",
+					getLineNumber(content, matcher.start()));
+			}
+		}
 	}
 
 	private static final Pattern _getterUtilGetBooleanPattern = Pattern.compile(
 		"GetterUtil\\.getBoolean\\(");
+	private static final Pattern _isEnabledPattern = Pattern.compile(
+		"\\W(\\w+)\\.isEnabled\\(");
 
 }

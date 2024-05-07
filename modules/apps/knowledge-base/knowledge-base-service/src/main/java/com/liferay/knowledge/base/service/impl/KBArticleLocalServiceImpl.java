@@ -1165,6 +1165,22 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			return null;
 		}
 
+		if (userId <= 0) {
+			Lock lock = _lockManager.fetchLock(
+				KBArticleConstants.getClassName(), resourcePrimKey);
+
+			if (lock != null) {
+				LockedKBArticleException lockedKBArticleException =
+					new LockedKBArticleException();
+
+				lockedKBArticleException.setLock(lock);
+
+				throw lockedKBArticleException;
+			}
+
+			return null;
+		}
+
 		try {
 			return _lockManager.lock(
 				userId, KBArticleConstants.getClassName(), resourcePrimKey,

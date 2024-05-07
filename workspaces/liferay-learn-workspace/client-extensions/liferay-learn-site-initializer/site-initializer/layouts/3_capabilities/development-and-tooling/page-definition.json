@@ -191,7 +191,8 @@
 									{
 										"definition": {
 											"cssClasses": [
-												"learn-search"
+												"learn-search",
+												"search-capability"
 											],
 											"fragmentStyle": {
 												"marginTop": "4",
@@ -199,6 +200,19 @@
 											},
 											"widgetInstance": {
 												"widgetConfig": {
+													"destination": "",
+													"displayStyle": "ddmTemplate_LEARN_SEARCH_BAR",
+													"displayStyleGroupId": "32323",
+													"federatedSearchKey": "",
+													"invisible": "false",
+													"keywordsParameterName": "q",
+													"scopeParameterName": "scope",
+													"searchScope": "this-site",
+													"showStagedResults": "false",
+													"suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
+													"suggestionsDisplayThreshold": "2",
+													"suggestionsEnabled": "true",
+													"useAdvancedSearchSyntax": "false"
 												},
 												"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
 											}

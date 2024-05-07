@@ -55,7 +55,12 @@ test('checks the correct label for restricted pages in the preview selector', as
 		.getByText('Success:Your request completed successfully.')
 		.waitFor();
 
-	await page.waitForTimeout(3000);
+	const loadingAnimation = await page.locator(
+		'.style-book-editor__page-preview .loading-animation'
+	);
+
+	await loadingAnimation.waitFor();
+	await loadingAnimation.waitFor({state: 'hidden'});
 
 	// Check the restricted page label in the preview selector
 

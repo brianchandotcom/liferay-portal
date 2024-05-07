@@ -6,6 +6,7 @@
 import {Page} from '@playwright/test';
 
 import {PORTLET_URLS} from '../../utils/portletUrls';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
 export class CollectionsPage {
 	readonly page: Page;
@@ -31,7 +32,7 @@ export class CollectionsPage {
 
 		await this.page.getByRole('button', {name: 'Save'}).click();
 
-		await this.page.waitForTimeout(3000);
+		await waitForSuccessAlert(this.page);
 
 		return {
 			classPK: await this.getCollectionClassPK(name, siteUrl),
@@ -53,7 +54,7 @@ export class CollectionsPage {
 
 		await this.page.getByRole('button', {name: 'Save'}).click();
 
-		await this.page.waitForTimeout(3000);
+		await waitForSuccessAlert(this.page);
 	}
 
 	/**
@@ -65,12 +66,13 @@ export class CollectionsPage {
 			.getByLabel('Item Type')
 			.selectOption({label: 'Web Content Article'});
 
-		await this.page.waitForTimeout(3000);
-
-		await this.page
+		const select = await this.page
 			.locator('.asset-subtype:not(.hide)')
-			.getByLabel('Item Subtype')
-			.selectOption({label: 'Basic Web Content'});
+			.getByLabel('Item Subtype');
+
+		await select.waitFor();
+
+		await select.selectOption({label: 'Basic Web Content'});
 	}
 
 	/**

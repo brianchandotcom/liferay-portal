@@ -83,7 +83,10 @@ test('checks that the fragment is hidden from Site Search Results', async ({
 	await searchBar.click();
 	await searchBar.fill('Heading');
 
-	await page.waitForTimeout(3000);
+	await page.locator('.search-bar-suggestions .loading-animation').waitFor();
+	await page
+		.locator('.search-bar-suggestions .loading-animation')
+		.waitFor({state: 'hidden'});
 
 	// Check that there are results
 
@@ -118,7 +121,10 @@ test('checks that the fragment is hidden from Site Search Results', async ({
 	await searchBar.click();
 	await searchBar.fill('Heading');
 
-	await page.waitForTimeout(3000);
+	await page.locator('.search-bar-suggestions .loading-animation').waitFor();
+	await page
+		.locator('.search-bar-suggestions .loading-animation')
+		.waitFor({state: 'hidden'});
 
 	// Check that there are no results
 

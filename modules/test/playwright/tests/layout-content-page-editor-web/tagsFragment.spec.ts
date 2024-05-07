@@ -133,9 +133,11 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 
 	await page.locator('.table-list-title').getByRole('link').first().click();
 
-	await page.waitForTimeout(1000);
+	const grid = await page.getByRole('grid');
 
-	expect(await page.getByRole('grid')).toHaveText('RabbitsCatsDogs');
+	await grid.waitFor();
+
+	await expect(grid).toHaveText('RabbitsCatsDogs');
 
 	// Remove the tag created on Global
 

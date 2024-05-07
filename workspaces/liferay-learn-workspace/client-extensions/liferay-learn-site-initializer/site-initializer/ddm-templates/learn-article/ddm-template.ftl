@@ -89,9 +89,27 @@
 				<#if showChildrenCards && childrenJSONArray.length() gt 0>
 					<div class="learn-card-container">
 						<#list 0..childrenJSONArray.length()-1 as i>
-							<a class="learn-card" href="${childrenJSONArray.getJSONObject(i).getString("url")}">
-								<h4>${childrenJSONArray.getJSONObject(i).getString("title")}</h4>
-							</a>
+							<#assign childJSONObject = childrenJSONArray.getJSONObject(i) />
+
+							<div class="learn-card">
+								<a href="${childJSONObject.getString("url")}">
+									<h4>${childJSONObject.getString("title")}</h4>
+								</a>
+
+								<#if childJSONObject.getJSONArray("children")?? && childJSONObject.getJSONArray("children").length() gt 0>
+									<#assign grandchildrenJSONArray = childJSONObject.getJSONArray("children") />
+
+									<div class="mt-2 subsection">
+										<#list 0..grandchildrenJSONArray.length()-1 as j>
+											<#assign grandchildJSONObject = grandchildrenJSONArray.getJSONObject(j) />
+
+											<a href="${grandchildJSONObject.getString("url")}">
+												${grandchildJSONObject.getString("title")}
+											</a>
+										</#list>
+									</div>
+								</#if>
+							</div>
 						</#list>
 					</div>
 				</#if>

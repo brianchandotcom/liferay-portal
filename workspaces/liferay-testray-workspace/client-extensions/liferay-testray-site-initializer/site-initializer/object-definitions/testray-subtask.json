@@ -84,15 +84,21 @@
 			"type": "String"
 		},
 		{
-			"DBType": "Date",
+			"DBType": "DateTime",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Status Update Date"
 			},
 			"name": "statusUpdateDate",
+			"objectFieldSettings": [
+				{
+					"name": "timeStorage",
+					"value": "convertToUTC"
+				}
+			],
 			"required": false,
-			"type": "Date"
+			"type": "DateTime"
 		},
 		{
 			"DBType": "String",

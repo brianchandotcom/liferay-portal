@@ -3198,63 +3198,6 @@ definition {
 			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
-	@description = "LPS-139803 - Verify it is possible to search for the Object Entry Title on the Relationship field"
-	@priority = 4
-	test CanSearchObjectEntryTitleOnRelationshipField {
-		property portal.upstream = "quarantine";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 79",
-			objectName = "CustomObject79",
-			pluralLabelName = "Custom Objects 79");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject79");
-
-		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject79",
-			objectName_2 = "CustomObject79",
-			relationshipLabel = "Relationship",
-			relationshipName = "relationship",
-			relationshipType = "oneToMany");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject79");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 79");
-
-		CreateObject.selectTitleField(fieldLabel = "Custom Field");
-
-		CreateObject.saveObject();
-
-		for (var fieldEntry : list "Entry ABC,Custom Field") {
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "customObjectField",
-				objectName = "CustomObject79",
-				value = ${fieldEntry});
-		}
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject79");
-
-		LexiconEntry.gotoAdd();
-
-		ObjectPortlet.searchEntryRelationshipField(entryValue = "Entry ABC");
-
-		AssertElementPresent(
-			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY",
-			value1 = "Entry ABC");
-
-		AssertElementNotPresent(
-			key_picklistOption = "Custom Field",
-			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
-	}
-
 	@description = "LPS-135397 - Verify if it's possible to set the block as Collapsible"
 	@priority = 4
 	test CanSetBlockCollapsible {

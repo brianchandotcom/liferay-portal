@@ -24,6 +24,15 @@ const blocksContentSchemas = {
 	}),
 };
 
+const contentMediaTypeImage = z.object({
+	headerImages: z.array(z.any()).min(1),
+});
+
+const contentMediaTypeVideo = z.object({
+	headerVideoDescription: z.string().optional(),
+	headerVideoUrl: z.string().url().min(1),
+});
+
 const zodSchema = {
 	accountCreator: z.object({
 		accounts: z.any().array().optional(),
@@ -157,6 +166,20 @@ const zodSchema = {
 				})
 			)
 			.min(2),
+		header: z
+			.object({
+				contentType: z.object({
+					content: z.lazy(() =>
+						z.union([contentMediaTypeImage, contentMediaTypeVideo])
+					),
+					type: z.enum(['upload-images', 'embed-video-url']),
+				}),
+				description: z.string().min(1),
+				title: z.string().min(1),
+			})
+			.refine((data) => {
+				return !!removeHTMLTags(data.description);
+			}),
 		profile: z.object({
 			categories: z.array(z.any()).nonempty(),
 			description: z.string().min(3),

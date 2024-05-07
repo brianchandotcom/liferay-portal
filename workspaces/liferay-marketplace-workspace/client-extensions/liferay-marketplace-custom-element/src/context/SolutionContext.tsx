@@ -18,6 +18,25 @@ import {ProductVocabulary} from '../enums/ProductVocabulary';
 import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
 import HeadlessCommerceAdminCatalogImpl from '../services/rest/HeadlessCommerceAdminCatalog';
 
+export type HeaderContentTypeImages = {
+	content: {
+		headerImages: UploadedFile[];
+	};
+	type: 'upload-images';
+};
+
+export type HeaderContentTypeEmbeded = {
+	content: {
+		headerVideoDescription?: string;
+		headerVideoUrl?: string;
+	};
+	type: 'embed-video-url';
+};
+
+export type HeaderContentType =
+	| HeaderContentTypeEmbeded
+	| HeaderContentTypeImages;
+
 export type ContentBlock =
 	| {
 			content: {
@@ -67,10 +86,8 @@ type SolutionPayload = {
 	[SolutionTypes.SET_CONTACT_US]: string;
 	[SolutionTypes.SET_DETAILS]: ContentBlock[];
 	[SolutionTypes.SET_HEADER]: Partial<{
+		contentType: HeaderContentType;
 		description: string;
-		headerImages: UploadedFile[];
-		headerVideo: string;
-		radioValue: 'embed-video-url' | 'upload-images';
 		title: string;
 	}>;
 	[SolutionTypes.SET_NEW_BLOCK]: ContentBlock;
@@ -98,10 +115,8 @@ export type SolutionInitialState = {
 	contactUs: string;
 	details: ContentBlock[];
 	header: {
+		contentType: HeaderContentType;
 		description: any;
-		headerImages: UploadedFile[];
-		headerVideo: string;
-		radioValue: string;
 		title: string;
 	};
 	productId: number;
@@ -134,10 +149,13 @@ const solutionInitialState: SolutionInitialState = {
 	contactUs: '',
 	details: [],
 	header: {
+		contentType: {
+			content: {
+				headerImages: [] as UploadedFile[],
+			},
+			type: 'upload-images',
+		},
 		description: '',
-		headerImages: [],
-		headerVideo: '',
-		radioValue: '',
 		title: '',
 	},
 	productId: 0,

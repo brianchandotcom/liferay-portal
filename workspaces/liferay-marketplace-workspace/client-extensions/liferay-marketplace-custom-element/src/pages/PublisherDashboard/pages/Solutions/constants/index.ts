@@ -33,6 +33,8 @@ export const SOLUTION_FLOW_ITEMS = [
 			'design-the-storefront-for-your-solution-this-will-set-the-information-displayed-on-the-solutions-page-this-section-is-dedicated-to-creating-the-solutions-header'
 		),
 		label: i18n.translate('solution-header'),
+		parseSchema: (context: SolutionInitialState) =>
+			zodSchema.solutionPublishing.header.safeParse(context.header),
 		path: 'header',
 		title: i18n.translate('customize-solution-header'),
 	},

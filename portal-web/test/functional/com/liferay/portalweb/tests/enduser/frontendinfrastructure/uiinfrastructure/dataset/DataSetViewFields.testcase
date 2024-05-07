@@ -1265,7 +1265,7 @@ definition {
 	@priority = 4
 	test CanSearchFieldOnAddFieldsModal {
 		property portal.upstream = "quarantine";
-		
+
 		task ("And clicks on Add Fields button") {
 			LexiconEntry.gotoAdd();
 		}

@@ -1,0 +1,13 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"name": "collection",
+					"type": "collectionSelector"
+				}
+			],
+			"label": "Collection"
+		}
+	]
+}

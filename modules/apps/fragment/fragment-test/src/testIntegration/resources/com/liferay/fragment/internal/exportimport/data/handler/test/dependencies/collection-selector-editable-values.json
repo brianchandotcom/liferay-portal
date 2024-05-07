@@ -1,0 +1,10 @@
+{
+	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
+		"collection": {
+			"className": "${CLASS_NAME}",
+			"classNameId": "${CLASS_NAME_ID}",
+			"classPK": "${CLASS_PK}",
+			"type": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+		}
+	}
+}

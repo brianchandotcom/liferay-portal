@@ -6,10 +6,14 @@
 package com.liferay.fragment.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -19,6 +23,8 @@ import com.liferay.fragment.test.util.FragmentTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -28,6 +34,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -104,6 +112,83 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 		Assert.assertNotNull(importedStagedModel);
 
 		validateImportedStagedModel(stagedModel, importedStagedModel);
+	}
+
+	@Test
+	public void testStageFragmentEntryLinkWithCollectionSelector()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId());
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				externalReferenceCode, TestPropsValues.getUserId(),
+				stagingGroup.getGroupId(), RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_DYNAMIC, serviceContext);
+
+		String configuration = _read("configuration-collection-selector.json");
+
+		String editableValues = StringUtil.replace(
+			_read("collection-selector-editable-values.json"),
+			new String[] {"${CLASS_NAME}", "${CLASS_NAME_ID}", "${CLASS_PK}"},
+			new String[] {
+				assetListEntry.getModelClassName(),
+				String.valueOf(
+					_portal.getClassNameId(assetListEntry.getModelClassName())),
+				String.valueOf(assetListEntry.getAssetListEntryId())
+			});
+
+		StagedModel stagedModel =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0, 0,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
+				StringPool.BLANK, configuration, editableValues,
+				StringPool.BLANK, 0, StringPool.BLANK,
+				FragmentConstants.TYPE_COMPONENT, serviceContext);
+
+		ExportImportThreadLocal.setPortletImportInProcess(true);
+
+		try {
+			exportImportStagedModel(stagedModel);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
+
+		StagedModel importedStagedModel = getStagedModel(
+			stagedModel.getUuid(), liveGroup);
+
+		Assert.assertNotNull(importedStagedModel);
+
+		AssetListEntry importedAssetListEntry =
+			_assetListEntryLocalService.
+				fetchAssetListEntryByExternalReferenceCode(
+					externalReferenceCode, liveGroup.getGroupId());
+
+		Assert.assertNotNull(importedAssetListEntry);
+
+		FragmentEntryLink fragmentEntryLink =
+			(FragmentEntryLink)importedStagedModel;
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			fragmentEntryLink.getEditableValues());
+
+		JSONObject freemarkerJSONObject = jsonObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+		JSONObject collectionJSONObject = freemarkerJSONObject.getJSONObject(
+			"collection");
+
+		Assert.assertEquals(
+			importedAssetListEntry.getAssetListEntryId(),
+			collectionJSONObject.getLong("classPK"));
 	}
 
 	@Test
@@ -287,12 +372,21 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 	}
 
 	@Inject
+	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
+	@Inject
+	private JSONFactory _jsonFactory;
+
 	private Layout _layout;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

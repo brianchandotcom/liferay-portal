@@ -78,6 +78,12 @@ const zodSchema = {
 		street2: z.string().optional(),
 		zip: z.string().min(1),
 	}),
+	company: z.object({
+		description: z.string().min(1),
+		email: z.string().min(1),
+		phone: z.string().min(1),
+		website: z.string().min(1),
+	}),
 	contactSales: z.object({
 		accountName: z
 			.string()
@@ -126,6 +132,12 @@ const zodSchema = {
 		password: z.string().optional(),
 	}),
 	solutionPublishing: {
+		company: z.object({
+			description: z.string().min(1),
+			email: z.string().min(1),
+			phone: z.string().min(1),
+			website: z.string().min(1),
+		}),
 		contactUs: z.string().min(1),
 		details: z
 			.array(

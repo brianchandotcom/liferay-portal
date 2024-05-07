@@ -271,6 +271,34 @@ public class GraphQLServletTest {
 					"query"),
 				"JSONObject/data", "JSONObject/testDTO"));
 
+		_assertEqualsV1(
+			true, _testDTOV1,
+			JSONUtil.getValueAsJSONObject(
+				_invoke(
+					new GraphQLField(
+						"testPath",
+						new GraphQLField(
+							"testDTOV1", new GraphQLField("extendedString"),
+							new GraphQLField("id"), new GraphQLField("map"),
+							new GraphQLField("string"),
+							new GraphQLField("version"))),
+					"query"),
+				"JSONObject/data", "JSONObject/testDTOV1"));
+
+		_assertEqualsV2(
+			true, _testDTOV2,
+			JSONUtil.getValueAsJSONObject(
+				_invoke(
+					new GraphQLField(
+						"testPath",
+						new GraphQLField(
+							"testDTOV2", new GraphQLField("extendedString"),
+							new GraphQLField("id"), new GraphQLField("map"),
+							new GraphQLField("string"),
+							new GraphQLField("version"))),
+					"query"),
+				"JSONObject/data", "JSONObject/testDTOV2"));
+
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
@@ -308,6 +336,30 @@ public class GraphQLServletTest {
 						new GraphQLField("version")),
 					"query"),
 				"JSONObject/data", "JSONObject/testDTO"));
+
+		_assertEqualsV1(
+			true, _testDTOV1,
+			JSONUtil.getValueAsJSONObject(
+				_invoke(
+					new GraphQLField(
+						"testDTOV1", new GraphQLField("extendedString"),
+						new GraphQLField("id"), new GraphQLField("map"),
+						new GraphQLField("string"),
+						new GraphQLField("version")),
+					"query"),
+				"JSONObject/data", "JSONObject/testDTOV1"));
+
+		_assertEqualsV2(
+			true, _testDTOV2,
+			JSONUtil.getValueAsJSONObject(
+				_invoke(
+					new GraphQLField(
+						"testDTOV2", new GraphQLField("extendedString"),
+						new GraphQLField("id"), new GraphQLField("map"),
+						new GraphQLField("string"),
+						new GraphQLField("version")),
+					"query"),
+				"JSONObject/data", "JSONObject/testDTOV2"));
 
 		Assert.assertEquals(
 			"Not Found",

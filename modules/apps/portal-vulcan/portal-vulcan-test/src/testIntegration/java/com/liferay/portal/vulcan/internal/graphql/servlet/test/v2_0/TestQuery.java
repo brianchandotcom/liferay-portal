@@ -38,6 +38,11 @@ public class TestQuery {
 	}
 
 	@GraphQLField
+	public TestDTO testDTOV2() {
+		return _testDTO;
+	}
+
+	@GraphQLField
 	public TestDTO testNoPermissionOverDTO()
 		throws PrincipalException.MustHavePermission {
 

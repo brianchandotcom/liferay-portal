@@ -10,10 +10,15 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.search.JournalArticleBlueprint;
+import com.liferay.journal.test.util.search.JournalArticleContent;
+import com.liferay.journal.test.util.search.JournalArticleTitle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -26,13 +31,17 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.category.CategoryFacetFactory;
+import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
@@ -74,6 +83,8 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 		long categoryId = assetCategory.getCategoryId();
 
+		addJournalArticle(_group, assetCategory.getTitleCurrentValue());
+
 		addUser(_group, categoryId);
 
 		SearchContext searchContext = getSearchContext(
@@ -87,6 +98,10 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 		searchContext.addFacet(facet);
 
 		Hits hits = search(searchContext);
+
+		assertEntryClassNames(
+			Arrays.asList(JournalArticle.class.getName(), User.class.getName()),
+			hits, searchContext);
 
 		Map<String, Integer> frequencies = Collections.singletonMap(
 			_getAssetVocabularyCategoryId(assetCategory), 1);
@@ -136,6 +151,8 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 		long categoryId = assetCategory.getCategoryId();
 
+		addJournalArticle(_group, assetCategory.getTitleCurrentValue());
+
 		addUser(_group, categoryId);
 
 		SearchContext searchContext = getSearchContext(
@@ -151,6 +168,10 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 		searchContext.addFacet(facet);
 
 		Hits hits = search(searchContext);
+
+		assertEntryClassNames(
+			Collections.singletonList(User.class.getName()), hits,
+			searchContext);
 
 		Map<String, Integer> frequencies = Collections.singletonMap(
 			_getAssetVocabularyCategoryId(assetCategory), 1);
@@ -171,6 +192,34 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 		return assetCategory;
 	}
 
+	protected void addJournalArticle(Group group, String title)
+		throws Exception {
+
+		journalArticleSearchFixture.addArticle(
+			new JournalArticleBlueprint() {
+				{
+					setGroupId(group.getGroupId());
+					setJournalArticleContent(
+						new JournalArticleContent() {
+							{
+								put(
+									LocaleUtil.US,
+									RandomTestUtil.randomString());
+
+								setDefaultLocale(LocaleUtil.US);
+								setName("content");
+							}
+						});
+					setJournalArticleTitle(
+						new JournalArticleTitle() {
+							{
+								put(LocaleUtil.US, title);
+							}
+						});
+				}
+			});
+	}
+
 	protected void addUser(Group group, long... categoryIds) throws Exception {
 		_user = UserTestUtil.addUser(group.getGroupId());
 
@@ -181,6 +230,14 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 		serviceContext.setAssetCategoryIds(categoryIds);
 
 		UserTestUtil.updateUser(_user, serviceContext);
+	}
+
+	protected void assertEntryClassNames(
+		List<String> entryClassNames, Hits hits, SearchContext searchContext) {
+
+		DocumentsAssert.assertValuesIgnoreRelevance(
+			(String)searchContext.getAttribute("queryString"), hits.getDocs(),
+			Field.ENTRY_CLASS_NAME, entryClassNames);
 	}
 
 	@Inject

@@ -700,6 +700,11 @@
 			<category name="Bug Prevention" />
 			<description name="Finds calls to deprecated classes `com.liferay.portal.kernel.util.CharPool` and `com.liferay.portal.kernel.util.StringPool`." />
 		</check>
+		<check name="JavaFeatureFlagManagerUtilCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that `FeatureFlagManagerUtil.isEnabled` should be used (instead of `PropsUtil.get` in `GetterUtil.getBoolean`)." />
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JavaFinderCacheCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that the method `BasePersistenceImpl.fetchByPrimaryKey` is overridden, when using `FinderPath`." />
@@ -707,11 +712,6 @@
 		<check name="JavaFinderImplCustomSQLCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that hardcoded SQL values in `*FinderImpl` classes match the SQL in the `.xml` file in the `custom-sql` directory." />
-		</check>
-		<check name="JavaGetFeatureFlagCheck">
-			<category name="Bug Prevention" />
-			<description name="Checks that `FeatureFlagManagerUtil.isEnabled` should be used (instead of `PropsUtil.get` in `GetterUtil.getBoolean`)." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaHelperUtilCheck">
 			<category name="Naming Conventions" />

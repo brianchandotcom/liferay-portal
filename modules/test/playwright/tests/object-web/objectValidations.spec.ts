@@ -45,48 +45,49 @@ test.afterEach(async ({apiHelpers}) => {
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition2.id);
 });
 
-test('can create and use a object unique composite key validation', async ({
-	apiHelpers,
-	editObjectValidationPage,
-	modalAddObjectValidationPage,
-	objectValidationsFDSPage,
-	page,
-	viewObjectDefinitionsPage,
-	viewObjectEntriesPage,
-}) => {
-	await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
-		objectDefinition1.externalReferenceCode,
-		{
-			DBType: 'Integer',
-			businessType: 'Integer',
-			externalReferenceCode: 'integerField',
-			indexed: true,
-			indexedAsKeyword: false,
-			indexedLanguageId: '',
-			label: {en_US: 'integerField'},
-			listTypeDefinitionId: 0,
-			localized: false,
-			name: 'integerField',
-			readOnly: 'false',
-			required: false,
-			state: false,
-			system: false,
-		}
-	);
+test.describe('Object Unique Composite Key Validation', () => {
+	test('can create and use a object unique composite key validation', async ({
+		apiHelpers,
+		editObjectValidationPage,
+		modalAddObjectValidationPage,
+		objectValidationsFDSPage,
+		page,
+		viewObjectDefinitionsPage,
+		viewObjectEntriesPage,
+	}) => {
+		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
+			objectDefinition1.externalReferenceCode,
+			{
+				DBType: 'Integer',
+				businessType: 'Integer',
+				externalReferenceCode: 'integerField',
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: '',
+				label: {en_US: 'integerField'},
+				listTypeDefinitionId: 0,
+				localized: false,
+				name: 'integerField',
+				readOnly: 'false',
+				required: false,
+				state: false,
+				system: false,
+			}
+		);
 
-	viewObjectDefinitionsPage.goto();
+		viewObjectDefinitionsPage.goto();
 
-	await expect(
-		page.locator(`a:has-text("${objectDefinition1.label['en_US']}")`)
-	).toBeVisible();
+		await expect(
+			page.locator(`a:has-text("${objectDefinition1.label['en_US']}")`)
+		).toBeVisible();
 
-	viewObjectDefinitionsPage.editObjectDefinitionFDSLink(
-		objectDefinition1.label['en_US']
-	);
+		viewObjectDefinitionsPage.editObjectDefinitionFDSLink(
+			objectDefinition1.label['en_US']
+		);
 
-	objectValidationsFDSPage.goto();
+		objectValidationsFDSPage.goto();
 
-	await objectValidationsFDSPage.addObjectValidationButton.click();
+		await objectValidationsFDSPage.addObjectValidationButton.click();
 
 	const objectValidationLabel =
 		'UniqueCompositeKeyValidation' + getRandomInt();
@@ -98,185 +99,189 @@ test('can create and use a object unique composite key validation', async ({
 
 	const newValidationLink = page.getByText(objectValidationLabel);
 
-	await newValidationLink.click();
+		await newValidationLink.click();
 
-	await editObjectValidationPage.uniqueCompositeKeyTab.click();
+		await editObjectValidationPage.uniqueCompositeKeyTab.click();
 
-	await editObjectValidationPage.addObjectFieldsButton.click();
+		await editObjectValidationPage.addObjectFieldsButton.click();
 
-	await editObjectValidationPage.clickSelectAllFields();
+		await editObjectValidationPage.clickSelectAllFields();
 
 	await editObjectValidationPage.saveObjectValidationButton.click();
 
-	const applicationName = 'c/' + objectDefinition1.name.toLowerCase() + 's';
+		const applicationName =
+			'c/' + objectDefinition1.name.toLowerCase() + 's';
 
-	const textObjectEntry = {
-		textField: 'entry',
-	};
+		const textObjectEntry = {
+			textField: 'entry',
+		};
 
-	await apiHelpers.objectEntry.postObjectEntry(
-		textObjectEntry,
-		applicationName
-	);
+		await apiHelpers.objectEntry.postObjectEntry(
+			textObjectEntry,
+			applicationName
+		);
 
-	await viewObjectEntriesPage.goto(objectDefinition1.id);
-
-	await viewObjectEntriesPage.addObjectEntryButton.click();
-
-	await viewObjectEntriesPage.fillObjectEntry('integerField', '0');
-	await viewObjectEntriesPage.fillObjectEntry('textField', 'entry');
-
-	await viewObjectEntriesPage.saveObjectEntryButton.click();
-	await viewObjectEntriesPage.assertErrorWithDuplicateEntryValue();
-
-	await viewObjectEntriesPage.backButton.click();
+		await viewObjectEntriesPage.goto(objectDefinition1.id);
 
 	await viewObjectEntriesPage.addObjectEntryButton.click();
 
-	await viewObjectEntriesPage.fillObjectEntry('integerField', '123');
-	await viewObjectEntriesPage.fillObjectEntry('textField', 'entry 2');
+		await viewObjectEntriesPage.fillObjectEntry('integerField', '0');
+		await viewObjectEntriesPage.fillObjectEntry('textField', 'entry');
 
-	await viewObjectEntriesPage.saveObjectEntryButton.click();
-	await expect(viewObjectEntriesPage.successMessage).toBeVisible();
-});
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+		await viewObjectEntriesPage.assertErrorWithDuplicateEntryValue();
 
-test('check if only specific object field business types (AutoIncrement, Integer, Picklist, Relationship, Text) will be accepted in unique composite key validation', async ({
-	apiHelpers,
-	editObjectValidationPage,
-	modalAddObjectValidationPage,
-	objectValidationsFDSPage,
-	page,
-	viewObjectDefinitionsPage,
-}) => {
-	const autoIncrementFieldName = 'autoIncrementField' + getRandomInt();
-	const dateFieldName = 'dateField' + getRandomInt();
-	const integerFieldName = 'integerField' + getRandomInt();
-	const objectRelationshipLabel = 'objectRelationshipLabel' + getRandomInt();
-	const objectRelationshipName =
-		'objectRelationshipName' + Math.floor(Math.random() * 99);
-	const picklistFieldName = 'picklistField' + getRandomInt();
+		await viewObjectEntriesPage.backButton.click();
 
-	await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
-		objectDefinition1.externalReferenceCode,
-		{
-			DBType: 'String',
-			businessType: 'AutoIncrement',
-			externalReferenceCode: autoIncrementFieldName,
-			indexed: true,
-			indexedAsKeyword: false,
-			indexedLanguageId: '',
-			label: {en_US: autoIncrementFieldName},
-			listTypeDefinitionId: 0,
-			localized: false,
-			name: autoIncrementFieldName,
-			objectFieldSettings: [
-				{
-					name: 'initialValue',
-					value: '1234',
-				},
-			],
-			readOnly: 'false',
-			required: false,
-			state: false,
-			system: false,
-		}
-	);
+	await viewObjectEntriesPage.addObjectEntryButton.click();
 
-	await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
-		objectDefinition1.externalReferenceCode,
-		{
-			DBType: 'Date',
-			businessType: 'Date',
-			externalReferenceCode: dateFieldName,
-			indexed: true,
-			indexedAsKeyword: false,
-			indexedLanguageId: '',
-			label: {en_US: dateFieldName},
-			listTypeDefinitionId: 0,
-			localized: false,
-			name: dateFieldName,
-			readOnly: 'false',
-			required: false,
-			state: false,
-			system: false,
-		}
-	);
+		await viewObjectEntriesPage.fillObjectEntry('integerField', '123');
+		await viewObjectEntriesPage.fillObjectEntry('textField', 'entry 2');
 
-	await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
-		objectDefinition1.externalReferenceCode,
-		{
-			DBType: 'Integer',
-			businessType: 'Integer',
-			externalReferenceCode: integerFieldName,
-			indexed: true,
-			indexedAsKeyword: false,
-			indexedLanguageId: '',
-			label: {en_US: integerFieldName},
-			listTypeDefinitionId: 0,
-			localized: false,
-			name: integerFieldName,
-			readOnly: 'false',
-			required: false,
-			state: false,
-			system: false,
-		}
-	);
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+	});
 
-	const objectRelationshipData: Partial<ObjectRelationship> = {
-		label: {
-			en_US: objectRelationshipLabel,
-		},
-		name: objectRelationshipName,
-		objectDefinitionExternalReferenceCode1:
-			objectDefinition2.externalReferenceCode,
-		objectDefinitionExternalReferenceCode2:
+	test('check if only specific object field business types (AutoIncrement, Integer, Picklist, Relationship, Text) will be accepted in unique composite key validation', async ({
+		apiHelpers,
+		editObjectValidationPage,
+		modalAddObjectValidationPage,
+		objectValidationsFDSPage,
+		page,
+		viewObjectDefinitionsPage,
+	}) => {
+		const autoIncrementFieldName = 'autoIncrementField' + getRandomInt();
+		const dateFieldName = 'dateField' + getRandomInt();
+		const integerFieldName = 'integerField' + getRandomInt();
+		const objectRelationshipLabel =
+			'objectRelationshipLabel' + getRandomInt();
+		const objectRelationshipName =
+			'objectRelationshipName' + Math.floor(Math.random() * 99);
+		const picklistFieldName = 'picklistField' + getRandomInt();
+
+		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
 			objectDefinition1.externalReferenceCode,
-		objectDefinitionId1: objectDefinition2.id,
-		objectDefinitionId2: objectDefinition1.id,
-		objectDefinitionName2: objectDefinition1.name,
-		type: 'oneToMany' as ObjectRelationshipType,
-	};
+			{
+				DBType: 'String',
+				businessType: 'AutoIncrement',
+				externalReferenceCode: autoIncrementFieldName,
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: '',
+				label: {en_US: autoIncrementFieldName},
+				listTypeDefinitionId: 0,
+				localized: false,
+				name: autoIncrementFieldName,
+				objectFieldSettings: [
+					{
+						name: 'initialValue',
+						value: '1234',
+					},
+				],
+				readOnly: 'false',
+				required: false,
+				state: false,
+				system: false,
+			}
+		);
 
-	await apiHelpers.objectAdmin.postObjectRelationship(objectRelationshipData);
+		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
+			objectDefinition1.externalReferenceCode,
+			{
+				DBType: 'Date',
+				businessType: 'Date',
+				externalReferenceCode: dateFieldName,
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: '',
+				label: {en_US: dateFieldName},
+				listTypeDefinitionId: 0,
+				localized: false,
+				name: dateFieldName,
+				readOnly: 'false',
+				required: false,
+				state: false,
+				system: false,
+			}
+		);
 
-	const listTypeDefinition =
-		await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
+			objectDefinition1.externalReferenceCode,
+			{
+				DBType: 'Integer',
+				businessType: 'Integer',
+				externalReferenceCode: integerFieldName,
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: '',
+				label: {en_US: integerFieldName},
+				listTypeDefinitionId: 0,
+				localized: false,
+				name: integerFieldName,
+				readOnly: 'false',
+				required: false,
+				state: false,
+				system: false,
+			}
+		);
 
-	await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
-		objectDefinition1.externalReferenceCode,
-		{
-			DBType: 'String',
-			businessType: 'Picklist',
-			externalReferenceCode: picklistFieldName,
-			indexed: true,
-			indexedAsKeyword: false,
-			indexedLanguageId: '',
-			label: {en_US: picklistFieldName},
-			listTypeDefinitionExternalReferenceCode:
-				listTypeDefinition.externalReferenceCode,
-			listTypeDefinitionId: listTypeDefinition.id,
-			localized: false,
-			name: picklistFieldName,
-			readOnly: 'false',
-			required: false,
-			state: false,
-			system: false,
-		}
-	);
+		const objectRelationshipData: Partial<ObjectRelationship> = {
+			label: {
+				en_US: objectRelationshipLabel,
+			},
+			name: objectRelationshipName,
+			objectDefinitionExternalReferenceCode1:
+				objectDefinition2.externalReferenceCode,
+			objectDefinitionExternalReferenceCode2:
+				objectDefinition1.externalReferenceCode,
+			objectDefinitionId1: objectDefinition2.id,
+			objectDefinitionId2: objectDefinition1.id,
+			objectDefinitionName2: objectDefinition1.name,
+			type: 'oneToMany' as ObjectRelationshipType,
+		};
 
-	viewObjectDefinitionsPage.goto();
+		await apiHelpers.objectAdmin.postObjectRelationship(
+			objectRelationshipData
+		);
 
-	await expect(
-		page.locator(`a:has-text("${objectDefinition1.label['en_US']}")`)
-	).toBeVisible();
+		const listTypeDefinition =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-	viewObjectDefinitionsPage.editObjectDefinitionFDSLink(
-		objectDefinition1.label['en_US']
-	);
+		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
+			objectDefinition1.externalReferenceCode,
+			{
+				DBType: 'String',
+				businessType: 'Picklist',
+				externalReferenceCode: picklistFieldName,
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: '',
+				label: {en_US: picklistFieldName},
+				listTypeDefinitionExternalReferenceCode:
+					listTypeDefinition.externalReferenceCode,
+				listTypeDefinitionId: listTypeDefinition.id,
+				localized: false,
+				name: picklistFieldName,
+				readOnly: 'false',
+				required: false,
+				state: false,
+				system: false,
+			}
+		);
 
-	objectValidationsFDSPage.goto();
+		viewObjectDefinitionsPage.goto();
 
-	await objectValidationsFDSPage.addObjectValidationButton.click();
+		await expect(
+			page.locator(`a:has-text("${objectDefinition1.label['en_US']}")`)
+		).toBeVisible();
+
+		viewObjectDefinitionsPage.editObjectDefinitionFDSLink(
+			objectDefinition1.label['en_US']
+		);
+
+		objectValidationsFDSPage.goto();
+
+		await objectValidationsFDSPage.addObjectValidationButton.click();
 
 	const objectValidationLabel =
 		'UniqueCompositeKeyValidation' + getRandomInt();
@@ -288,79 +293,80 @@ test('check if only specific object field business types (AutoIncrement, Integer
 
 	const newValidationLink = page.getByText(objectValidationLabel);
 
-	await expect(newValidationLink).toBeVisible();
+		await expect(newValidationLink).toBeVisible();
 
-	await newValidationLink.click();
+		await newValidationLink.click();
 
-	await editObjectValidationPage.uniqueCompositeKeyTab.click();
+		await editObjectValidationPage.uniqueCompositeKeyTab.click();
 
-	await editObjectValidationPage.addObjectFieldsButton.click();
+		await editObjectValidationPage.addObjectFieldsButton.click();
 
-	await expect(page.getByText(autoIncrementFieldName)).toBeVisible();
-	await expect(page.getByText(dateFieldName)).not.toBeVisible();
-	await expect(page.getByText(integerFieldName)).toBeVisible();
-	await expect(page.getByText(objectRelationshipLabel)).toBeVisible();
-	await expect(page.getByText(picklistFieldName)).toBeVisible();
+		await expect(page.getByText(autoIncrementFieldName)).toBeVisible();
+		await expect(page.getByText(dateFieldName)).not.toBeVisible();
+		await expect(page.getByText(integerFieldName)).toBeVisible();
+		await expect(page.getByText(objectRelationshipLabel)).toBeVisible();
+		await expect(page.getByText(picklistFieldName)).toBeVisible();
 
 	// Clean Up
 
-	await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
-		listTypeDefinition.id
-	);
-});
+		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
+			listTypeDefinition.id
+		);
+	});
 
-test('cannot select a object field that already has an entry in a new composite key validation', async ({
-	apiHelpers,
-	editObjectValidationPage,
-	modalAddObjectValidationPage,
-	objectValidationsFDSPage,
-	page,
-	viewObjectDefinitionsPage,
-}) => {
-	await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
-		objectDefinition1.externalReferenceCode,
-		{
-			DBType: 'Integer',
-			businessType: 'Integer',
-			externalReferenceCode: 'integerField',
-			indexed: true,
-			indexedAsKeyword: false,
-			indexedLanguageId: '',
-			label: {en_US: 'integerField'},
-			listTypeDefinitionId: 0,
-			localized: false,
-			name: 'integerField',
-			readOnly: 'false',
-			required: false,
-			state: false,
-			system: false,
-		}
-	);
+	test('cannot select a object field that already has an entry in a new composite key validation', async ({
+		apiHelpers,
+		editObjectValidationPage,
+		modalAddObjectValidationPage,
+		objectValidationsFDSPage,
+		page,
+		viewObjectDefinitionsPage,
+	}) => {
+		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
+			objectDefinition1.externalReferenceCode,
+			{
+				DBType: 'Integer',
+				businessType: 'Integer',
+				externalReferenceCode: 'integerField',
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: '',
+				label: {en_US: 'integerField'},
+				listTypeDefinitionId: 0,
+				localized: false,
+				name: 'integerField',
+				readOnly: 'false',
+				required: false,
+				state: false,
+				system: false,
+			}
+		);
 
-	const applicationName = 'c/' + objectDefinition1.name.toLowerCase() + 's';
+		const applicationName =
+			'c/' + objectDefinition1.name.toLowerCase() + 's';
 
-	const textObjectEntry = {
-		textField: 'entry',
-	};
+		const textObjectEntry = {
+			textField: 'entry',
+		};
 
-	await apiHelpers.objectEntry.postObjectEntry(
-		textObjectEntry,
-		applicationName
-	);
+		await apiHelpers.objectEntry.postObjectEntry(
+			textObjectEntry,
+			applicationName
+		);
 
-	viewObjectDefinitionsPage.goto();
+		viewObjectDefinitionsPage.goto();
 
-	await expect(
-		page.locator(`a:has-text("${objectDefinition1.label['en_US']}")`)
-	).toBeVisible();
+		await expect(
+			page.locator(`a:has-text("${objectDefinition1.label['en_US']}")`)
+		).toBeVisible();
 
-	viewObjectDefinitionsPage.editObjectDefinitionFDSLink(
-		objectDefinition1.label['en_US']
-	);
+		viewObjectDefinitionsPage.editObjectDefinitionFDSLink(
+			objectDefinition1.label['en_US']
+		);
 
-	objectValidationsFDSPage.goto();
+		objectValidationsFDSPage.goto();
 
-	await objectValidationsFDSPage.addObjectValidationButton.click();
+		await objectValidationsFDSPage.addObjectValidationButton.click();
 
 	const objectValidationLabel =
 		'UniqueCompositeKeyValidation' + getRandomInt();
@@ -372,64 +378,64 @@ test('cannot select a object field that already has an entry in a new composite 
 
 	const newValidationLink = page.getByText(objectValidationLabel);
 
-	await expect(newValidationLink).toBeVisible();
+		await expect(newValidationLink).toBeVisible();
 
-	await newValidationLink.click();
+		await newValidationLink.click();
 
-	await editObjectValidationPage.uniqueCompositeKeyTab.click();
+		await editObjectValidationPage.uniqueCompositeKeyTab.click();
 
-	await editObjectValidationPage.addObjectFieldsButton.click();
+		await editObjectValidationPage.addObjectFieldsButton.click();
 
-	await editObjectValidationPage.clickSelectAllFields();
+		await editObjectValidationPage.clickSelectAllFields();
 
 	await editObjectValidationPage.saveObjectValidationButton.click();
 
-	await expect(
-		editObjectValidationPage.getObjectFieldAlreadyHasEntryErrorLocator(
-			'textField, integerField'
-		)
-	).toBeVisible();
-});
+		await expect(
+			editObjectValidationPage.getObjectFieldAlreadyHasEntryErrorLocator(
+				'textField, integerField'
+			)
+		).toBeVisible();
+	});
 
-test('cannot add unique composite key validation with just one field', async ({
-	editObjectValidationPage,
-	modalAddObjectValidationPage,
-	objectValidationsFDSPage,
-	page,
-	viewObjectDefinitionsPage,
-}) => {
-	viewObjectDefinitionsPage.goto();
+	test('cannot add unique composite key validation with just one field', async ({
+		editObjectValidationPage,
+		modalAddObjectValidationPage,
+		objectValidationsFDSPage,
+		page,
+		viewObjectDefinitionsPage,
+	}) => {
+		viewObjectDefinitionsPage.goto();
 
-	await expect(
-		page.locator(`a:has-text("${objectDefinition1.label['en_US']}")`)
-	).toBeVisible();
+		await expect(
+			page.locator(`a:has-text("${objectDefinition1.label['en_US']}")`)
+		).toBeVisible();
 
-	viewObjectDefinitionsPage.editObjectDefinitionFDSLink(
-		objectDefinition1.label['en_US']
-	);
+		viewObjectDefinitionsPage.editObjectDefinitionFDSLink(
+			objectDefinition1.label['en_US']
+		);
 
-	objectValidationsFDSPage.goto();
+		objectValidationsFDSPage.goto();
 
-	await objectValidationsFDSPage.addObjectValidationButton.click();
+		await objectValidationsFDSPage.addObjectValidationButton.click();
 
-	const validationLabel = 'UniqueCompositeKeyValidation' + getRandomInt();
+		const validationLabel = 'UniqueCompositeKeyValidation' + getRandomInt();
 
-	await modalAddObjectValidationPage.fillObjectValidationInputs(
-		validationLabel,
-		'Composite Key'
-	);
+		await modalAddObjectValidationPage.fillObjectValidationInputs(
+			validationLabel,
+			'Composite Key'
+		);
 
-	const newValidationLink = page.getByText(validationLabel);
+		const newValidationLink = page.getByText(validationLabel);
 
-	await expect(newValidationLink).toBeVisible();
+		await expect(newValidationLink).toBeVisible();
 
-	await newValidationLink.click();
+		await newValidationLink.click();
 
-	await editObjectValidationPage.uniqueCompositeKeyTab.click();
+		await editObjectValidationPage.uniqueCompositeKeyTab.click();
 
-	await editObjectValidationPage.addObjectFieldsButton.click();
+		await editObjectValidationPage.addObjectFieldsButton.click();
 
-	await editObjectValidationPage.clickSelectAllFields();
+		await editObjectValidationPage.clickSelectAllFields();
 
 	await editObjectValidationPage.saveObjectValidationButton.click();
 

@@ -119,6 +119,7 @@ function RoutinesPage() {
 					</tbody>
 				</Jethr0Table>
 			</Jethr0Card>
+
 			{routinesPage && (
 				<ClayPaginationBarWithBasicItems
 					activeDelta={routinesPage.pageSize}

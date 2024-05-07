@@ -56,6 +56,7 @@ function BuildInformation({build}) {
 					Jenkins Job Name: {build.jenkinsJobName}
 				</ClayPanel.Body>
 			</ClayPanel>
+
 			{parameters && (
 				<ClayPanel
 					collapsable
@@ -105,7 +106,9 @@ function BuildPage() {
 			<ClayLayout.Container>
 				<Jethr0Card>
 					<Jethr0NavigationBar active="Jobs" />
+
 					<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
+
 					<Heading level={3} weight="lighter">
 						{'Build #' + id}
 					</Heading>
@@ -138,11 +141,15 @@ function BuildPage() {
 		<ClayLayout.Container>
 			<Jethr0Card>
 				<Jethr0NavigationBar active="Jobs" />
+
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
+
 				<Heading level={3} weight="lighter">
 					{buildName}
 				</Heading>
+
 				<BuildInformation build={build} />
+
 				<BuildRuns buildId={id} />
 			</Jethr0Card>
 		</ClayLayout.Container>

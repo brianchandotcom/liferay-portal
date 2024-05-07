@@ -276,12 +276,15 @@ function JobPage() {
 				<Jethr0NavigationBar
 					active={job.routine ? 'Routines' : 'Jobs'}
 				/>
+
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
+
 				<Jethr0ContainerFluid>
 					<ClayLayout.Row justify="between">
 						<Heading level={3} weight="lighter">
 							{jobName}
 						</Heading>
+
 						<Jethr0ButtonsRow
 							buttons={[
 								{
@@ -297,7 +300,9 @@ function JobPage() {
 						/>
 					</ClayLayout.Row>
 				</Jethr0ContainerFluid>
+
 				<JobInformation job={job} />
+
 				<JobBuilds job={job} />
 			</Jethr0Card>
 		</ClayLayout.Container>

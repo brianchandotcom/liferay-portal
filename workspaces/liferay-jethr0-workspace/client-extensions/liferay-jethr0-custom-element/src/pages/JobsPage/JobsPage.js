@@ -116,6 +116,7 @@ function JobsPage() {
 					</tbody>
 				</Jethr0Table>
 			</Jethr0Card>
+
 			{jobsPage && (
 				<ClayPaginationBarWithBasicItems
 					activeDelta={jobsPage.pageSize}

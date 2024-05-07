@@ -8,6 +8,21 @@ import {z} from 'zod';
 
 import i18n from '../i18n';
 
+const baseContentSchema = z.object({
+	description: z.string().min(1),
+	title: z.string().min(1),
+});
+
+const blocksContentSchemas = {
+	textBlock: baseContentSchema,
+	textImages: baseContentSchema.extend({
+		files: z.array(z.any()).optional(),
+	}),
+	textVideo: baseContentSchema.extend({
+		videoUrl: z.string().optional(),
+	}),
+};
+
 const zodSchema = {
 	accountCreator: z.object({
 		accounts: z.any().array().optional(),
@@ -111,27 +126,23 @@ const zodSchema = {
 	}),
 	solutionPublishing: {
 		details: z
-			.array(z.any())
-			.min(2)
-			.superRefine((blocks: any, ctx: any) => {
-				console.log('blocks', blocks);
-				blocks.forEach((block: any) => {
-					console.log('aaa', block);
-
-					console.log('ctx', ctx);
-
-					if (block.type === 'text-images-block') {
-						ctx.addIssue({
-							content: {
-								description: z.string().min(3),
-								title: z.string().min(3),
-							},
-						});
-					}
-
-					return z.NEVER;
-				});
-			}),
+			.array(
+				z.object({
+					content: z.lazy(() =>
+						z.union([
+							blocksContentSchemas.textImages,
+							blocksContentSchemas.textVideo,
+							blocksContentSchemas.textBlock,
+						])
+					),
+					type: z.enum([
+						'text-images-block',
+						'text-video-block',
+						'text-block',
+					]),
+				})
+			)
+			.min(2),
 		profile: z.object({
 			categories: z.array(z.any()).nonempty(),
 			description: z.string().min(3),

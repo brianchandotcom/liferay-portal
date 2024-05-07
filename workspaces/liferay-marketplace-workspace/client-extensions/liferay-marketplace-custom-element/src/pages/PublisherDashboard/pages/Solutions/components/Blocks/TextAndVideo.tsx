@@ -15,7 +15,12 @@ const TextAndVideos: React.FC<any> = ({block, onChange}) => {
 	return (
 		<>
 			<div className="p-4">
-				<Form.Label className="mt-2" htmlFor="title" required>
+				<Form.Label
+					className="mt-2"
+					htmlFor="title"
+					info="title"
+					required
+				>
 					Title
 				</Form.Label>
 
@@ -27,7 +32,12 @@ const TextAndVideos: React.FC<any> = ({block, onChange}) => {
 					value={content.title}
 				/>
 
-				<Form.Label className="mt-5" htmlFor="description" required>
+				<Form.Label
+					className="mt-5"
+					htmlFor="description"
+					info="description"
+					required
+				>
 					{i18n.translate('description')}
 				</Form.Label>
 
@@ -41,7 +51,9 @@ const TextAndVideos: React.FC<any> = ({block, onChange}) => {
 			</div>
 
 			<div className="p-4">
-				<Form.Label htmlFor="url">Video URL</Form.Label>
+				<Form.Label htmlFor="url" info="video">
+					Video URL
+				</Form.Label>
 
 				<Form.Input
 					name="video-url"

@@ -45,8 +45,6 @@ const Details = () => {
 	const {observer, onOpenChange, open} = useModal();
 	const [selectedBlock, setSelectedBlock] = useState('');
 
-	console.log('te', blocks);
-
 	return (
 		<div className="solutions-form-details">
 			<Form.Label className="mt-3" htmlFor="minimum-blocks" required>

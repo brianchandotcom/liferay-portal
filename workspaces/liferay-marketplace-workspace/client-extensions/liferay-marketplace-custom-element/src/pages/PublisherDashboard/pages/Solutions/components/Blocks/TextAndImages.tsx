@@ -24,7 +24,12 @@ const TextAndImages: React.FC<any> = ({block, onChange}) => {
 	return (
 		<>
 			<div className="p-4">
-				<Form.Label className="mt-2" htmlFor="title" required>
+				<Form.Label
+					className="mt-2"
+					htmlFor="title"
+					info="title"
+					required
+				>
 					Title
 				</Form.Label>
 
@@ -33,10 +38,15 @@ const TextAndImages: React.FC<any> = ({block, onChange}) => {
 					onChange={(event) => onChange({title: event.target.value})}
 					placeholder="Enter title header"
 					type="text"
-					value={content.title}
+					value={content?.title}
 				/>
 
-				<Form.Label className="mt-5" htmlFor="description" required>
+				<Form.Label
+					className="mt-5"
+					htmlFor="description"
+					info="description"
+					required
+				>
 					{i18n.translate('description')}
 				</Form.Label>
 
@@ -50,6 +60,8 @@ const TextAndImages: React.FC<any> = ({block, onChange}) => {
 			</div>
 
 			<div className="p-4">
+				<Form.Label info="images">Add up to 5 images</Form.Label>
+
 				{!!content.files?.length && (
 					<FileList
 						isProcessing={false}

@@ -66,6 +66,19 @@ public class SiteNavigationServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"2.4.0", "2.5.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"SiteNavigationMenu", "siteNavigationMenuId"}
+					};
+				}
+
+			});
 	}
 
 }

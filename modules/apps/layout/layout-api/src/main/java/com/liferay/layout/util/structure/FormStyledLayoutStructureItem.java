@@ -9,6 +9,9 @@ import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
@@ -58,6 +61,23 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 
 	public String getAlign() {
 		return _align;
+	}
+
+	public String getClassName() {
+		if (_classNameId <= 0) {
+			return null;
+		}
+
+		try {
+			return PortalUtil.getClassName(_classNameId);
+		}
+		catch (RuntimeException runtimeException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(runtimeException);
+			}
+		}
+
+		return null;
 	}
 
 	public long getClassNameId() {
@@ -266,6 +286,9 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 			setWidthType(itemConfigJSONObject.getString("widthType"));
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FormStyledLayoutStructureItem.class);
 
 	private String _align = "";
 	private long _classNameId;

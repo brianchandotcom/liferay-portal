@@ -12,14 +12,18 @@ import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcru
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
-import {getJobQueueOrderedJobs} from '../../objects/jobs/JobUtil';
+import {getJobQueueOrderedJobsPage} from '../../objects/jobs/JobUtil';
 import {toLocaleString} from '../../services/DateUtil';
 
 function JobQueue() {
-	const [jobs, setJobs] = useState(null);
+	const [jobsPage, setJobsPage] = useState(null);
 
-	if (!jobs) {
-		getJobQueueOrderedJobs({setJobs});
+	if (!jobsPage) {
+		getJobQueueOrderedJobsPage({setJobsPage});
+	}
+
+	if (!jobsPage) {
+		return (<div>...</div>);
 	}
 
 	return (
@@ -45,7 +49,7 @@ function JobQueue() {
 				</tr>
 			</thead>
 			<tbody>
-				{jobs?.map((job, index) => {
+				{jobsPage?.jobs?.map((job, index) => {
 					let completedBuilds = 0;
 					let openedBuilds = 0;
 					let runningBuilds = 0;

@@ -21,18 +21,6 @@ import {toLocaleString} from '../../services/DateUtil';
 function RoutinesPage() {
 	const [routinesPage, setRoutinesPage] = useState(null);
 
-	const deltas = [
-		{
-			label: 25
-		},
-		{
-			label: 50
-		},
-		{
-			label: 100
-		}
-	];
-
 	if (!routinesPage) {
 		getRoutinesPage({page: 1, pageSize: 25, setRoutinesPage});
 	}
@@ -48,6 +36,18 @@ function RoutinesPage() {
 	const breadcrumbs = [
 		{active: false, link: '/', name: 'Home'},
 		{active: true, link: '/routines', name: 'Routines'},
+	];
+
+	const deltas = [
+		{
+			label: 25
+		},
+		{
+			label: 50
+		},
+		{
+			label: 100
+		}
 	];
 
 	return (

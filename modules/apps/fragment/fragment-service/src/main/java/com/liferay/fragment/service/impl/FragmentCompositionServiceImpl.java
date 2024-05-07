@@ -72,6 +72,23 @@ public class FragmentCompositionServiceImpl
 	}
 
 	@Override
+	public FragmentComposition deleteFragmentComposition(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		FragmentComposition fragmentComposition =
+			fragmentCompositionPersistence.findByERC_G(
+				externalReferenceCode, groupId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), fragmentComposition.getGroupId(),
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
+		return fragmentCompositionLocalService.deleteFragmentComposition(
+			fragmentComposition);
+	}
+
+	@Override
 	public FragmentComposition fetchFragmentComposition(
 		long fragmentCompositionId) {
 
@@ -85,6 +102,23 @@ public class FragmentCompositionServiceImpl
 
 		return fragmentCompositionLocalService.fetchFragmentComposition(
 			groupId, fragmentCompositionKey);
+	}
+
+	@Override
+	public FragmentComposition getFragmentCompositionByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		FragmentComposition fragmentComposition =
+			fragmentCompositionLocalService.
+				getFragmentCompositionByExternalReferenceCode(
+					externalReferenceCode, groupId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), fragmentComposition.getGroupId(),
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
+		return fragmentComposition;
 	}
 
 	@Override

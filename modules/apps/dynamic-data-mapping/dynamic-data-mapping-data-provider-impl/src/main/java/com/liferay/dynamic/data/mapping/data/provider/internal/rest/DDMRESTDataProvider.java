@@ -51,6 +51,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -160,7 +161,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 	private void _addParameter(
 		DDMDataProviderRequest ddmDataProviderRequest,
 		String ddmDataProviderRequestParameterName, String parameterName,
-		Map<String, String> parametersMap) {
+		Map<String, List<String>> parametersMap) {
 
 		_addParameter(
 			parameterName, parametersMap,
@@ -169,14 +170,16 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 	}
 
 	private void _addParameter(
-		String parameterName, Map<String, String> parametersMap,
+		String parameterName, Map<String, List<String>> parametersMap,
 		Object parameterValue) {
 
 		if (parameterValue == null) {
 			return;
 		}
 
-		parametersMap.put(parameterName, GetterUtil.getString(parameterValue));
+		parametersMap.put(
+			parameterName,
+			Collections.singletonList(GetterUtil.getString(parameterValue)));
 	}
 
 	private DDMDataProviderResponse _createDDMDataProviderResponse(
@@ -278,7 +281,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			DDMRESTDataProviderSettings ddmRESTDataProviderSettings)
 		throws Exception {
 
-		Map<String, String> parametersMap = new HashMap<>();
+		Map<String, List<String>> parametersMap = new HashMap<>();
 
 		Map<String, Object> ddmDataProviderRequestParameters =
 			ddmDataProviderRequest.getParameters();
@@ -306,9 +309,11 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 				continue;
 			}
 
+			List<String> parameterValues = parametersMap.get(parameterName);
+
 			url = StringUtil.replaceFirst(
 				url, String.format("{%s}", parameterName),
-				HtmlUtil.escapeURL(parametersMap.get(parameterName)));
+				HtmlUtil.escapeURL(parameterValues.get(0)));
 
 			parametersMap.remove(parameterName);
 		}
@@ -353,7 +358,10 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 				queryParameterValue = queryParameterParts[1];
 			}
 
-			parametersMap.put(queryParameterParts[0], queryParameterValue);
+			List<String> queryParameterValues = parametersMap.computeIfAbsent(
+				queryParameterParts[0], key -> new ArrayList<>());
+
+			queryParameterValues.add(queryParameterValue);
 		}
 
 		String absoluteURL = url;
@@ -367,9 +375,11 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			"%s@%s?", ddmDataProviderRequest.getDDMDataProviderId(),
 			absoluteURL);
 
-		for (Map.Entry<String, String> entry : parametersMap.entrySet()) {
-			portalCacheKey = portalCacheKey.concat(
-				String.format("%s=%s&", entry.getKey(), entry.getValue()));
+		for (Map.Entry<String, List<String>> entry : parametersMap.entrySet()) {
+			for (String value : entry.getValue()) {
+				portalCacheKey = portalCacheKey.concat(
+					String.format("%s=%s&", entry.getKey(), value));
+			}
 		}
 
 		portalCacheKey = StringUtil.removeLast(
@@ -450,9 +460,13 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		try {
 			List<String> parameters = new ArrayList<>();
 
-			for (Map.Entry<String, String> entry : parametersMap.entrySet()) {
-				parameters.add(entry.getKey());
-				parameters.add(entry.getValue());
+			for (Map.Entry<String, List<String>> entry :
+					parametersMap.entrySet()) {
+
+				for (String value : entry.getValue()) {
+					parameters.add(entry.getKey());
+					parameters.add(value);
+				}
 			}
 
 			response = jsonWebServiceClient.doGet(

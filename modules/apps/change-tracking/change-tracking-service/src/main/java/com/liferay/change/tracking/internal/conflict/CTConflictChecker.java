@@ -145,6 +145,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			connection, ctPersistence, conflictInfos, primaryKeyName);
 
 		if (_modificationCTEntries != null) {
+			_checkCTEntries(ctPersistence, conflictInfos);
+
 			_checkModifications(
 				connection, ctPersistence, conflictInfos, primaryKeyName);
 		}
@@ -161,8 +163,6 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		}
 
 		_checkMissingRequirements(connection, ctPersistence, conflictInfos);
-
-		_checkCTEntries(ctPersistence, conflictInfos);
 
 		return conflictInfos;
 	}
@@ -313,7 +313,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			return;
 		}
 
-		for (CTEntry ctEntry : _ctEntries) {
+		for (CTEntry ctEntry : _modificationCTEntries.values()) {
 			if (ctEntryConflictHelper.hasModificationConflict(
 					ctEntry, _targetCTCollectionId)) {
 

@@ -36,6 +36,14 @@ public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
 
 		String urlTitle = super.getUrlTitle(languageId, false);
 
+		if (Validator.isNull(urlTitle)) {
+			urlTitle = super.getUrlTitle(languageId, true);
+
+			if (Validator.isNull(urlTitle)) {
+				return StringPool.BLANK;
+			}
+		}
+
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			FriendlyURLEntry.class.getName(), getFriendlyURLEntryId());
 

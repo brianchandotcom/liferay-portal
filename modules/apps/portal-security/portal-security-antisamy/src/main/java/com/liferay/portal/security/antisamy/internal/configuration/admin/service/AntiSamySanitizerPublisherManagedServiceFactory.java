@@ -40,9 +40,11 @@ public class AntiSamySanitizerPublisherManagedServiceFactory
 
 	@Override
 	public void deleted(String pid) {
-		String className = _classNames.get(pid);
+		if (_sanitizerServiceRegistration != null) {
+			String className = _classNames.get(pid);
 
-		_antiSamySanitizerImpl.removePolicy(className);
+			_antiSamySanitizerImpl.removePolicy(className);
+		}
 	}
 
 	@Override

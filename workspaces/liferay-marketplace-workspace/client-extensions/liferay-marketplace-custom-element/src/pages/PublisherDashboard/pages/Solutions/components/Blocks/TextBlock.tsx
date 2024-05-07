@@ -7,8 +7,9 @@ import ReactQuill from 'react-quill';
 
 import Form from '../../../../../../components/MarketplaceForm';
 import i18n from '../../../../../../i18n';
+import {BlockTypeProps} from './BlockPropsType';
 
-const TextBlock: React.FC<any> = ({block, onChange}) => (
+const TextBlock: React.FC<BlockTypeProps> = ({block, onChange}) => (
 	<div className="p-4">
 		<Form.Label className="mt-2" htmlFor="title" required>
 			Title

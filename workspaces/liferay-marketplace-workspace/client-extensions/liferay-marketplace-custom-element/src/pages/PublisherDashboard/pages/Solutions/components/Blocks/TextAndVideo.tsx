@@ -8,8 +8,9 @@ import ReactQuill from 'react-quill';
 
 import Form from '../../../../../../components/MarketplaceForm';
 import i18n from '../../../../../../i18n';
+import {BlockTypeProps} from './BlockPropsType';
 
-const TextAndVideos: React.FC<any> = ({block, onChange}) => {
+const TextAndVideos: React.FC<BlockTypeProps> = ({block, onChange}) => {
 	const {content} = block;
 
 	return (

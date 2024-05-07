@@ -159,7 +159,7 @@ const Details = () => {
 
 									dispatch({
 										payload: {
-											content: {} as any,
+											content: {},
 											type: selectedBlock,
 										} as any,
 										type: SolutionTypes.SET_NEW_BLOCK,

@@ -23,7 +23,7 @@ function JobQueue() {
 	}
 
 	if (!jobsPage) {
-		return (<div>...</div>);
+		return <div>...</div>;
 	}
 
 	return (

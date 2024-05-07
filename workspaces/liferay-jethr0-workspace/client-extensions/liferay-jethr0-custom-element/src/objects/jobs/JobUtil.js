@@ -129,7 +129,11 @@ export function getJobParameter({jobParameters, key}) {
 	}
 }
 
-export async function getJobQueueOrderedJobsPage({page, pageSize, setJobsPage}) {
+export async function getJobQueueOrderedJobsPage({
+	page,
+	pageSize,
+	setJobsPage,
+}) {
 	const response = await liferayRequest({
 		urlPath: '/o/c/jobprioritizers',
 		urlSearchParams: new URLSearchParams({
@@ -147,12 +151,18 @@ export async function getJobQueueOrderedJobsPage({page, pageSize, setJobsPage}) 
 			orderedJobIds: JSON.parse(jobPrioritizer.prioritizedJobIds),
 			page,
 			pageSize,
-			setJobsPage
+			setJobsPage,
 		});
 	}
 }
 
-export async function getJobsPage({orderedJobIds, page, pageSize, setJobs, setJobsPage}) {
+export async function getJobsPage({
+	orderedJobIds,
+	page,
+	pageSize,
+	setJobs,
+	setJobsPage,
+}) {
 	let filter = '';
 
 	if (orderedJobIds) {
@@ -238,14 +248,14 @@ export async function getJobsPage({orderedJobIds, page, pageSize, setJobs, setJo
 	}
 
 	const jobsPage = {
-		jobs: jobs,
+		jobs,
 		page: result.data.c.jobs.page,
 		pageSize: result.data.c.jobs.pageSize,
 		totalCount: result.data.c.jobs.totalCount,
 	};
 
 	if (setJobsPage) {
-		setJobsPage(jobsPage)
+		setJobsPage(jobsPage);
 	}
 }
 

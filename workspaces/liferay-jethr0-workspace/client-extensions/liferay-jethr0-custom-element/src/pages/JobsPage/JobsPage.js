@@ -34,7 +34,11 @@ function JobsPage() {
 	}
 
 	function setActivePage({activePage, jobsPage}) {
-		getJobsPage({page: activePage, pageSize: jobsPage.pageSize, setJobsPage});
+		getJobsPage({
+			page: activePage,
+			pageSize: jobsPage.pageSize,
+			setJobsPage,
+		});
 	}
 
 	const breadcrumbs = [
@@ -44,14 +48,14 @@ function JobsPage() {
 
 	const deltas = [
 		{
-			label: 25
+			label: 25,
 		},
 		{
-			label: 50
+			label: 50,
 		},
 		{
-			label: 100
-		}
+			label: 100,
+		},
 	];
 
 	return (
@@ -89,7 +93,10 @@ function JobsPage() {
 							return (
 								<tr key={job.id}>
 									<th className="font-weight-semi-bold">
-										<Link title={job.id} to={'/jobs/' + job.id}>
+										<Link
+											title={job.id}
+											to={'/jobs/' + job.id}
+										>
 											{job.id}
 										</Link>
 									</th>
@@ -106,18 +113,22 @@ function JobsPage() {
 					</tbody>
 				</Jethr0Table>
 			</Jethr0Card>
-			{jobsPage &&
+			{jobsPage && (
 				<ClayPaginationBarWithBasicItems
 					activeDelta={jobsPage.pageSize}
 					defaultActive={jobsPage.page}
 					deltas={deltas}
 					ellipsisBuffer={3}
-					onActiveChange={(activePage) => {setActivePage({activePage, jobsPage})}}
-					onDeltaChange={(activeDelta) => {setActiveDelta({activeDelta, jobsPage})}}
+					onActiveChange={(activePage) => {
+						setActivePage({activePage, jobsPage});
+					}}
+					onDeltaChange={(activeDelta) => {
+						setActiveDelta({activeDelta, jobsPage});
+					}}
 					showDeltasDropDown={true}
 					totalItems={jobsPage.totalCount}
 				/>
-			}
+			)}
 		</ClayLayout.Container>
 	);
 }

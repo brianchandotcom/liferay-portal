@@ -26,11 +26,19 @@ function RoutinesPage() {
 	}
 
 	function setActiveDelta({activeDelta, routinesPage}) {
-		getRoutinesPage({page: routinesPage.page, pageSize: activeDelta, setRoutinesPage});
+		getRoutinesPage({
+			page: routinesPage.page,
+			pageSize: activeDelta,
+			setRoutinesPage,
+		});
 	}
 
 	function setActivePage({activePage, routinesPage}) {
-		getRoutinesPage({page: activePage, pageSize: routinesPage.pageSize, setRoutinesPage});
+		getRoutinesPage({
+			page: activePage,
+			pageSize: routinesPage.pageSize,
+			setRoutinesPage,
+		});
 	}
 
 	const breadcrumbs = [
@@ -40,14 +48,14 @@ function RoutinesPage() {
 
 	const deltas = [
 		{
-			label: 25
+			label: 25,
 		},
 		{
-			label: 50
+			label: 50,
 		},
 		{
-			label: 100
-		}
+			label: 100,
+		},
 	];
 
 	return (
@@ -96,7 +104,9 @@ function RoutinesPage() {
 									</th>
 									<td>{routine.name}</td>
 									<td>{routine.type.name}</td>
-									<td>{toLocaleString(routine.dateCreated)}</td>
+									<td>
+										{toLocaleString(routine.dateCreated)}
+									</td>
 									<td>{routine.jobName}</td>
 									<td>{routine.jobPriority}</td>
 									<td>{routine.jobType.name}</td>
@@ -106,18 +116,22 @@ function RoutinesPage() {
 					</tbody>
 				</Jethr0Table>
 			</Jethr0Card>
-			{routinesPage &&
+			{routinesPage && (
 				<ClayPaginationBarWithBasicItems
 					activeDelta={routinesPage.pageSize}
 					defaultActive={routinesPage.page}
 					deltas={deltas}
 					ellipsisBuffer={3}
-					onActiveChange={(activePage) => {setActivePage({activePage, routinesPage})}}
-					onDeltaChange={(activeDelta) => {setActiveDelta({activeDelta, routinesPage})}}
+					onActiveChange={(activePage) => {
+						setActivePage({activePage, routinesPage});
+					}}
+					onDeltaChange={(activeDelta) => {
+						setActiveDelta({activeDelta, routinesPage});
+					}}
 					showDeltasDropDown={true}
 					totalItems={routinesPage.totalCount}
 				/>
-			}
+			)}
 		</ClayLayout.Container>
 	);
 }

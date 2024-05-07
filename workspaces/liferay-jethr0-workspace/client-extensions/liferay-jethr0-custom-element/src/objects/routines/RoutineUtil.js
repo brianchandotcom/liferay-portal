@@ -186,10 +186,10 @@ export async function getRoutinesPage({page, pageSize, setRoutinesPage}) {
 		routines.push(routine);
 	}
 
-	let routinesPage = {
+	const routinesPage = {
 		page: result.data.c.routines.page,
 		pageSize: result.data.c.routines.pageSize,
-		routines: routines,
+		routines,
 		totalCount: result.data.c.routines.totalCount,
 	};
 

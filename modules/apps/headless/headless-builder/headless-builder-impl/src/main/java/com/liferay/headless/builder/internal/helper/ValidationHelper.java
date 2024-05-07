@@ -15,15 +15,15 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -146,9 +146,9 @@ public class ValidationHelper {
 		}
 	}
 
-	private static final Collection<String>
-		_allowedUnmodifiableSystemObjectDefinitionNames = Arrays.asList(
-			"User", "AccountEntry");
+	private static final Set<String>
+		_allowedUnmodifiableSystemObjectDefinitionNames = SetUtil.fromArray(
+			"AccountEntry", "User");
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

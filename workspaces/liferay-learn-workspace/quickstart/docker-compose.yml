@@ -31,13 +31,12 @@ services:
         environment:
             - JAVA_VERSION=zulu11
         volumes:
-            - ./:/mnt/liferay-learn-workspace
+            - ../:/mnt/liferay-learn-workspace
             - ${LIFERAY_LEARN_DIR}:/mnt/liferay-learn
-            - home-liferay:/home/liferay
             - shared-data:/opt/liferay/osgi/client-extensions
             - shared-data:/public_html/images
     liferay:
-        build: docker/liferay
+        build: ../build/docker
         container_name: liferay
         depends_on:
             database:
@@ -66,6 +65,5 @@ services:
             - liferay-data:/opt/liferay/data
             - shared-data:/opt/liferay/osgi/client-extensions
 volumes:
-    home-liferay:
     liferay-data:
     shared-data:

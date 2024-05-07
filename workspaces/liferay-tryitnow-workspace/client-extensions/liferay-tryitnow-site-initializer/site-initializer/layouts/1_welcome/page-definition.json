@@ -196,7 +196,7 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Welcome to your trial!"
+																		"en_US": "Welcome to your Pre-Built Trial!"
 																	}
 																}
 															}
@@ -228,7 +228,7 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "In this guided trial, you will see an example of how easy it is to build a solution using and extending Liferay DXP's Low-Code / No-Code capabilities."
+																		"en_US": "In this guided trial, you will see an example of how easy it is to build a solution using and extending Liferay DXP's low-code and no-code capabilities."
 																	}
 																}
 															}
@@ -261,7 +261,7 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Don’t forget to open a new tab in your browser with the “Trial Guide” you’ll find, once you login on the next page."
+																		"en_US": "To start the trial, please log in on the next page using the credentials of one of the users listed there. However, if this is your first time logging in, these users will be inactive, so you'll need to use the credentials you received in the welcome email."
 																	}
 																}
 															}
@@ -294,7 +294,7 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Sign in with one of the users in the next page to get started."
+																		"en_US": "Once you log in, open the Trial Guide, preferably in a new tab so you can keep it open, and your journey will begin! "
 																	}
 																}
 															}

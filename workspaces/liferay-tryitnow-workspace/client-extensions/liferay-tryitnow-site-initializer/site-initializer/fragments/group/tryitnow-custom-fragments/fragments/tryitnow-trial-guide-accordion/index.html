@@ -221,7 +221,10 @@
 		}
 
 		async function updateStep(data, success, error) {
-			const apiResponse = await fetch('/o/c/m2h8progresstrackers/' + data.id + '?p_auth=' + Liferay.authToken, {headers: {
+			const apiResponse = await fetch('/o/c/m2h8progresstrackers/' + data.id + '?p_auth=' + Liferay.authToken, {
+				method:"PUT",
+				body: JSON.stringify(data),
+				headers: {
 					'Content-Type': 'application/json'
 				}});
 

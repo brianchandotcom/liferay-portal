@@ -765,7 +765,7 @@
 												"definition": {
 													"collectionConfig": {
 														"collectionReference": {
-															"className": "com.liferay.object.internal.info.collection.provider.OneToManyObjectRelationshipRelatedInfoCollectionProvider_[$COMPANY_ID$]_C_J3Y7Ticket_relatedTicket"
+															"className": "com.liferay.object.internal.info.collection.provider.OneToManyObjectRelationshipRelatedInfoCollectionProvider_[$COMPANY_ID$]_C_J3Y7Ticket_j3y7TicketToJ3Y7Tickets"
 														},
 														"collectionType": "CollectionProvider"
 													},

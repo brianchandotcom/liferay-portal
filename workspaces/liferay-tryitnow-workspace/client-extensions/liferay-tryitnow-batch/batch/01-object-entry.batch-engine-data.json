@@ -44,6 +44,11 @@
 			"done": false,
 			"externalReferenceCode": "STEP_7",
 			"stepNumber": 7
+		},
+		{
+			"done": false,
+			"externalReferenceCode": "STEP_8",
+			"stepNumber": 8
 		}
 	]
 }

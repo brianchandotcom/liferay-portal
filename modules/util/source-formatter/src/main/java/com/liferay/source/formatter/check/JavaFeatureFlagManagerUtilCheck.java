@@ -5,6 +5,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
@@ -25,6 +26,16 @@ public class JavaFeatureFlagManagerUtilCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
+
+		int pos = fileName.lastIndexOf(StringPool.SLASH);
+
+		String shortFileName = fileName.substring(pos + 1);
+
+		if (absolutePath.contains("/feature-flag/") ||
+			shortFileName.equals("FeatureFlagManagerUtil.java")) {
+
+			return content;
+		}
 
 		_checkGetterUtilGetBooleanMethodCall(fileName, content);
 		_checkIsEnabledMethodCall(fileName, content);

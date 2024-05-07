@@ -45,17 +45,28 @@ export function ModalAddObjectValidation({
 		onClose: () => setShowAddObjectRelationshipModal(false),
 	});
 
-	let newObjectValidationRuleEngines = [...objectValidationRuleEngines];
+	const getObjectValidationRuleEngines = () => {
+		let newObjectValidationRuleEngines = [...objectValidationRuleEngines];
 
-	if (
-		Liferay.FeatureFlags['LPD-11179'] &&
-		!allowScriptContentToBeExecutedOrIncluded
-	) {
-		newObjectValidationRuleEngines = objectValidationRuleEngines.filter(
-			(objectValidationRuleEngine) =>
-				objectValidationRuleEngine.value !== 'groovy'
-		);
-	}
+		if (
+			Liferay.FeatureFlags['LPD-11179'] &&
+			!allowScriptContentToBeExecutedOrIncluded
+		) {
+			newObjectValidationRuleEngines = newObjectValidationRuleEngines.filter(
+				(objectValidationRuleEngine) =>
+					objectValidationRuleEngine.value !== 'groovy'
+			);
+		}
+
+		if (!Liferay.FeatureFlags['LPS-187854']) {
+			newObjectValidationRuleEngines = newObjectValidationRuleEngines.filter(
+				(objectValidationRuleEngine) =>
+					objectValidationRuleEngine.value !== 'compositeKey'
+			);
+		}
+
+		return newObjectValidationRuleEngines;
+	};
 
 	const onSubmit = async (objectValidation: Partial<ObjectValidation>) => {
 		try {
@@ -138,7 +149,7 @@ export function ModalAddObjectValidation({
 						<SingleSelect<LabelValueObject>
 							error={errors.engine}
 							id="objectValidationType"
-							items={newObjectValidationRuleEngines}
+							items={getObjectValidationRuleEngines()}
 							label={Liferay.Language.get('type')}
 							onSelectionChange={(value) => {
 								setValues({

@@ -98,6 +98,10 @@ public class InfoCollectionProviderItemsDisplayContext {
 		InfoCollectionProvider<?> infoCollectionProvider =
 			_getInfoCollectionProvider();
 
+		if (infoCollectionProvider == null) {
+			return _infoItemFieldValuesProvider;
+		}
+
 		_infoItemFieldValuesProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class,
@@ -115,6 +119,10 @@ public class InfoCollectionProviderItemsDisplayContext {
 
 		InfoCollectionProvider<?> infoCollectionProvider =
 			_getInfoCollectionProvider();
+
+		if (infoCollectionProvider == null) {
+			return searchContainer;
+		}
 
 		CollectionQuery collectionQuery = new CollectionQuery();
 

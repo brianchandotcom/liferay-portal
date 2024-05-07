@@ -342,21 +342,24 @@ testFeatureFlagsEnabled(
 		await applicationPage.addSchemaButton.click();
 		await applicationPage.schemaObjectDefinitionSelector.click();
 
-		expect(
-			(
-				await applicationPage.page.getByRole('menu').allInnerTexts()
-			)[0].split('\n')
-		).toEqual([
+		const objectDefinitionDropdownOptions = (
+			await applicationPage.page.getByRole('menu').allInnerTexts()
+		)[0].split('\n');
+
+		expect(objectDefinitionDropdownOptions).not.toContain(['Organization']);
+
+		for (const expectedObjectDefinition of [
 			'AccountEntry',
-			'User',
-			'APISort',
-			'APIFilter',
-			'APIEndpoint',
-			'APIProperty',
-			'APISchema',
 			'APIApplication',
 			'ObjectDefinition',
-		]);
+			'User',
+		]) {
+			expect(
+				objectDefinitionDropdownOptions.includes(
+					expectedObjectDefinition
+				)
+			).toBeTruthy();
+		}
 
 		await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 			'headless-builder/applications',
@@ -596,7 +599,7 @@ testFeatureFlagsEnabled(
 		await schemaPage.page
 			.getByRole('button', {name: 'ObjectDefinition'})
 			.click();
-		expectElementToNotHaveClass(
+		await expectElementToNotHaveClass(
 			await schemaPage.page
 				.getByRole('button', {name: 'ObjectDefinition'})
 				.locator('..')

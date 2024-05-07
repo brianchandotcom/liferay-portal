@@ -15,11 +15,14 @@ import Form from '../../../../../../components/MarketplaceForm';
 import i18n from '../../../../../../i18n';
 import {ACCEPT_FILE_TYPES} from '../../../Apps/AppCreationFlow/StorefrontPage/CustomizeAppStorefrontPage';
 import {MAX_IMAGE_QUANTITY, MAX_SIZE_5MBS} from '../../constants';
+import {BlockTypeProps} from './BlockPropsType';
 
-// import {BlockTypeProps} from './BlockPropsType';
+type TextAndImagesProps = {
+	content: {description: string; files: UploadedFile[]; title: string};
+};
 
-const TextAndImages: React.FC<any> = ({block, onChange}) => {
-	const {content} = block;
+const TextAndImages: React.FC<BlockTypeProps> = ({block, onChange}) => {
+	const {content} = block as TextAndImagesProps;
 
 	return (
 		<>

@@ -45,24 +45,18 @@ export type ContentBlock =
 
 export enum SolutionTypes {
 	SET_CLEANUP = 'SET_CLEANUP',
+	SET_DETAILS = 'SET_DETAILS',
 	SET_HEADER = 'SET_HEADER',
+	SET_NEW_BLOCK = 'SET_NEW_BLOCK',
 	SET_PRODUCT = 'SET_PRODUCT',
 	SET_PRODUCT_ID = 'SET_PRODUCT_ID',
 	SET_PROFILE = 'SET_PROFILE',
-	SET_DETAILS = 'SET_DETAILS',
-	SET_NEW_BLOCK = 'SET_NEW_BLOCK',
 	SET_UPDATE_BLOCK = 'SET_UPDATE_BLOCK',
 }
 
 type SolutionPayload = {
 	[SolutionTypes.SET_CLEANUP]: undefined;
-	[SolutionTypes.SET_DETAILS]: Partial<{
-		textImagesBlock: {
-			description: string;
-			images: UploadedFile[];
-			title: string;
-		};
-	}>;
+	[SolutionTypes.SET_DETAILS]: ContentBlock[];
 	[SolutionTypes.SET_HEADER]: Partial<{
 		description: string;
 		headerImages: UploadedFile[];
@@ -283,8 +277,6 @@ export default function SolutionContextProvider({
 			)
 			.catch(console.error);
 	}, [productId]);
-
-	// dispatch({payload: {content: {}, type: "text-images-block"}, type: SolutionTypes.SET_DETAILS});
 
 	return (
 		<SolutionContext.Provider

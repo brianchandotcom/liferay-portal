@@ -494,7 +494,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			_cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
 				cpDefinitionOptionRelId);
 
-		if (cpDefinitionOptionRel.isDefinedExternally()) {
+		if ((cpDefinitionOptionRel != null) &&
+			cpDefinitionOptionRel.isDefinedExternally()) {
+
 			return _cpCollectionProviderHelper.getCPDefinitionOptionValueRels(
 				cpDefinitionOptionRel, null, Pagination.of(end, start));
 		}

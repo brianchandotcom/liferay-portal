@@ -154,7 +154,9 @@ public class Main {
 			System.getenv("LIFERAY_LEARN_ETC_CRON_LIFERAY_OAUTH_CLIENT_SECRET"),
 			liferaySiteFriendlyUrlPath, new URL(liferayUrl), baseDirFile,
 			GetterUtil.getBoolean(
-				System.getenv("LIFERAY_LEARN_ETC_CRON_OFFLINE")));
+				System.getenv("LIFERAY_LEARN_ETC_CRON_OFFLINE")),
+			GetterUtil.getBoolean(
+				System.getenv("LIFERAY_LEARN_ETC_SKIP_DIFF_CHECK")));
 
 		String exceptionMessage = null;
 
@@ -223,13 +225,14 @@ public class Main {
 			String latestHashFileName, String liferayDataDefinitionKey,
 			String liferayOAuthClientId, String liferayOAuthClientSecret,
 			String liferaySiteFriendlyUrlPath, URL liferayURL, File baseDir,
-			boolean offline)
+			boolean offline, boolean skipDiffCheck)
 		throws Exception {
 
 		_liferayOAuthClientId = liferayOAuthClientId;
 		_liferayOAuthClientSecret = liferayOAuthClientSecret;
 		_liferayURL = liferayURL;
 		_offline = offline;
+		_skipDiffCheck = skipDiffCheck;
 
 		_lastestHashFileName = latestHashFileName;
 
@@ -354,7 +357,7 @@ public class Main {
 					String relativeFileName = StringUtil.removeSubstring(
 						fileName, _baseDirName);
 
-					if (!_diffFileNames.isEmpty() &&
+					if (!_skipDiffCheck && !_diffFileNames.isEmpty() &&
 						!_diffFileNames.contains(relativeFileName)) {
 
 						System.out.println(
@@ -366,7 +369,8 @@ public class Main {
 
 					File file = new File(fileName);
 
-					if (StringUtil.equals(
+					if (!_skipDiffCheck &&
+						StringUtil.equals(
 							DigestUtils.md5Hex(file.toString()),
 							_getMD5Hex(siteStructuredContent))) {
 
@@ -407,7 +411,7 @@ public class Main {
 						String relativeFileName = StringUtil.removeSubstring(
 							fileName, _baseDirName);
 
-						if (!_diffFileNames.isEmpty() &&
+						if (!_skipDiffCheck && !_diffFileNames.isEmpty() &&
 							!_diffFileNames.contains(relativeFileName)) {
 
 							System.out.println(
@@ -428,7 +432,7 @@ public class Main {
 					String relativeFileName = StringUtil.removeSubstring(
 						fileName, _baseDirName);
 
-					if (!_diffFileNames.isEmpty() &&
+					if (!_skipDiffCheck && !_diffFileNames.isEmpty() &&
 						!_diffFileNames.contains(relativeFileName)) {
 
 						System.out.println(
@@ -1675,6 +1679,7 @@ public class Main {
 	private String _oldHash = StringPool.BLANK;
 	private Parser _parser;
 	private SiteResource _siteResource;
+	private final boolean _skipDiffCheck;
 	private final Map<String, Long> _structuredContentFolderIds =
 		new HashMap<>();
 	private StructuredContentFolderResource _structuredContentFolderResource;

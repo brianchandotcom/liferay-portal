@@ -165,6 +165,41 @@ test('LPD-22673 View Usages link is added to workflow info display', async ({
 	await expect(page.getByText(`Usages: ${journalName}`)).toBeVisible();
 });
 
+test('LPD-23974 Comments link is added to workflow info display', async ({
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	await changeTrackingPage.reviewChange(journalName);
+
+	await changeTrackingPage.selectTab('Workflow');
+
+	await page.getByRole('link', {exact: true, name: '0 Comments'}).click();
+
+	await expect(
+		page.getByTestId('headerTitle').getByText(`Review: ${journalName}`)
+	).toBeVisible();
+
+	await page.getByRole('button', {name: 'Comments'}).click();
+
+	await page
+		.frameLocator('iframe')
+		.getByRole('textbox')
+		.fill('Sample Comment');
+
+	await page.getByRole('button', {name: 'Reply'}).click();
+
+	await page.getByRole('link', {name: 'Back'}).click();
+
+	await changeTrackingPage.selectTab('Workflow');
+
+	await expect(
+		page.getByRole('link', {exact: true, name: '1 Comment'})
+	).toBeVisible();
+});
+
 test('LPD-23331 Workflow data is displayed when workflow task is approved', async ({
 	changeTrackingPage,
 	ctCollection,

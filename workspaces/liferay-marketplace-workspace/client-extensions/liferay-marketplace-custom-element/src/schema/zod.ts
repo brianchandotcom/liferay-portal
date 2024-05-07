@@ -126,6 +126,7 @@ const zodSchema = {
 		password: z.string().optional(),
 	}),
 	solutionPublishing: {
+		contactUs: z.string().min(1),
 		details: z
 			.array(
 				z.object({

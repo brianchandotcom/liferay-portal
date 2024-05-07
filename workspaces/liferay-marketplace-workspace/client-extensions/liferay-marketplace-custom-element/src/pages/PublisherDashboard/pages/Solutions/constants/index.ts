@@ -59,6 +59,8 @@ export const SOLUTION_FLOW_ITEMS = [
 			'define-contact-us-information-for-your-solution-this-will-inform-users-about-this-versions-updates-on-the-storefront'
 		),
 		label: i18n.translate('contact-us'),
+		parseSchema: (context: SolutionInitialState) =>
+			zodSchema.solutionPublishing.contactUs.safeParse(context.contactUs),
 		path: 'contact',
 		title: i18n.translate('provide-contact-us-details'),
 	},

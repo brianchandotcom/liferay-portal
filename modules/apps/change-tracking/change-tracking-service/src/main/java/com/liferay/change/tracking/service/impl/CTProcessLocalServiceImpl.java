@@ -72,6 +72,11 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 					ctCollection);
 		}
 
+		if (ctCollection.isEmpty()) {
+			throw new IllegalStateException(
+				"Change tracking collection is empty " + ctCollection);
+		}
+
 		if (toCTCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 			ctCollection.setStatus(WorkflowConstants.STATUS_PENDING);
 

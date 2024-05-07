@@ -46,7 +46,7 @@
 		}
 
 		.features-container>svg {
-			fill: #0B5FFF;
+			fill: var(--link-color, #0B5FFF);
 			height: 0.75rem;
 			width: 0.75rem;
 		}
@@ -158,7 +158,7 @@
 		}
 
 		.search-icon>svg {
-			fill: #0B5FFF;
+			fill: var(--link-color, #0B5FFF);
 			height: 2rem;
 			margin: 1.5rem 3.5rem;
 			width: 2rem;

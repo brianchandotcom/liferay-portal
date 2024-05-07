@@ -13,6 +13,7 @@ export {default as duplicateCpDefinitionAutocomplete} from './duplicateCpDefinit
 export {default as editCpDefinition} from './edit_cp_definition';
 export {default as editCpDefinitionOptionValueRel} from './editCpDefinitionOptionValueRel';
 export {default as editCpDefinitionOptionValueAutocomplete} from './editCpDefinitionOptionValueAutocomplete';
+export {default as editCpDefinitionVisibility} from './edit_cp_definition_visibility';
 export {default as editCpInstanceUnitOfMeasure} from './edit_cp_instance_unit_of_measure';
 export {default as EditDisplayLayout} from './EditDisplayLayout';
 export {default as InstanceDetails} from './InstanceDetails';

@@ -12,7 +12,7 @@ import com.liferay.portal.search.highlight.FieldConfigBuilderFactory;
 import com.liferay.portal.search.highlight.HighlightBuilder;
 import com.liferay.portal.search.highlight.HighlightBuilderFactory;
 import com.liferay.portal.search.highlight.Highlights;
-import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 

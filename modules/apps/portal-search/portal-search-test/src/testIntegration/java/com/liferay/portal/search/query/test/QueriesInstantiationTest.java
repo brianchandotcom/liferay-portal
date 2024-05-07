@@ -46,7 +46,7 @@ import com.liferay.portal.search.query.TermsSetQuery;
 import com.liferay.portal.search.query.WildcardQuery;
 import com.liferay.portal.search.query.WrapperQuery;
 import com.liferay.portal.search.script.Script;
-import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 

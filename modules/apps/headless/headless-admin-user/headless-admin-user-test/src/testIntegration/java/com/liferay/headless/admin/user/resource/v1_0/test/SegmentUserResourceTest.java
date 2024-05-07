@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.test.util.SegmentsTestUtil;

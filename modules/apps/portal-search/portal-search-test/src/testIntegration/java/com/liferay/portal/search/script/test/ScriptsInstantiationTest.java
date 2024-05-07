@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.ScriptField;
 import com.liferay.portal.search.script.Scripts;
-import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 

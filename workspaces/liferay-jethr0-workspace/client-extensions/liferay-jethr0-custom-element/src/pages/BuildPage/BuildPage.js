@@ -32,7 +32,7 @@ function BuildInformation({build}) {
 		);
 	}
 
-	const parameters = JSON.parse(build.parameters);
+	const parameters = build.parameters;
 
 	return (
 		<>

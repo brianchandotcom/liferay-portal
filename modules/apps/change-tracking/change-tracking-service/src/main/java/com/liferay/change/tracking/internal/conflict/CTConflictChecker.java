@@ -397,9 +397,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			List<ConflictInfo> conflictInfos)
 		throws PortalException {
 
-		if (!_ctEntryLocalService.hasCTEntries(
-				_sourceCTCollectionId, _modelClassNameId)) {
-
+		if (_ctEntries.isEmpty()) {
 			return;
 		}
 
@@ -631,10 +629,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		Set<Long> verifyPrimaryKeys = new HashSet<>();
 		Set<Long> ignorablePrimaryKeys = new HashSet<>();
 
-		for (CTEntry ctEntry :
-				_ctEntryLocalService.getCTEntries(
-					_sourceCTCollectionId, _modelClassNameId)) {
-
+		for (CTEntry ctEntry : _ctEntries) {
 			if (ctEntry.getChangeType() !=
 					CTConstants.CT_CHANGE_TYPE_ADDITION) {
 

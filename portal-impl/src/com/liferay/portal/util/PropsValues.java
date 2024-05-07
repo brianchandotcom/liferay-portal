@@ -967,6 +967,10 @@ public class PropsValues {
 			PropsUtil.get(
 				PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_SCORES_THRESHOLD));
 
+	public static final boolean IP_GEOCODER_COUNTRY_CODE_CACHE_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.IP_GEOCODER_COUNTRY_CODE_CACHE_ENABLED));
+
 	public static final boolean JAVASCRIPT_BAREBONE_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.JAVASCRIPT_BAREBONE_ENABLED));

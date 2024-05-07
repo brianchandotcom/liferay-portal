@@ -50,6 +50,7 @@ Immutable.Map {
         "activitiesCount": 0,
         "dateCreated": null,
         "demographics": Immutable.Map {},
+        "firstActivityDate": null,
         "id": null,
         "lastActivityDate": null,
         "name": "",

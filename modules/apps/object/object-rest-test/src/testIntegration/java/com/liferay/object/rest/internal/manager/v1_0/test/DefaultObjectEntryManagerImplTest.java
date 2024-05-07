@@ -4025,14 +4025,22 @@ public class DefaultObjectEntryManagerImplTest
 			List<ObjectField> objectFields)
 		throws Exception {
 
+		return _createObjectDefinition(
+			objectFields, ObjectDefinitionConstants.SCOPE_COMPANY);
+	}
+
+	private ObjectDefinition _createObjectDefinition(
+			List<ObjectField> objectFields, String scope)
+		throws Exception {
+
 		ObjectDefinition objectDefinition =
 			objectDefinitionLocalService.addCustomObjectDefinition(
 				adminUser.getUserId(), 0, false, true, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
+				true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				objectFields);
 
 		return objectDefinitionLocalService.publishCustomObjectDefinition(
 			adminUser.getUserId(), objectDefinition.getObjectDefinitionId());

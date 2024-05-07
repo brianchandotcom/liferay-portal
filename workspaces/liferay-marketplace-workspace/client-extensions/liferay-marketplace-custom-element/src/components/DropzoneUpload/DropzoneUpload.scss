@@ -16,6 +16,14 @@
 			border-color: #e57878;
 		}
 
+		&-disabled {
+			-ms-user-select: none;
+			-webkit-user-select: none;
+			filter: saturate(0) opacity(0.5);
+			pointer-events: none;
+			user-select: none;
+		}
+
 		transition: border-color 0.3s;
 	}
 

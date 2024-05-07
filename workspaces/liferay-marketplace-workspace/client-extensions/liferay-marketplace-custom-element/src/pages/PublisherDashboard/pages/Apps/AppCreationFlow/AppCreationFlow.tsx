@@ -257,8 +257,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 								});
 
 								setCurrentFlow('licensingPrice');
-							}
-							else {
+							} else {
 								setAppFlowListState({
 									checkedItems: [
 										'create',
@@ -331,8 +330,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 								});
 
 								setCurrentFlow('licensingPrice');
-							}
-							else {
+							} else {
 								setAppFlowListState({
 									checkedItems: [
 										'create',

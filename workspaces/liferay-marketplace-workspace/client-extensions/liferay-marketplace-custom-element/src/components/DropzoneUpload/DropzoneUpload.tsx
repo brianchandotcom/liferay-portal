@@ -4,7 +4,7 @@
  */
 
 import classnames from 'classnames';
-import Dropzone from 'react-dropzone';
+import Dropzone, {FileRejection} from 'react-dropzone';
 
 import './DropzoneUpload.scss';
 
@@ -16,9 +16,11 @@ interface DropzoneUploadProps {
 	};
 	buttonText: string;
 	description: string;
+	disabled?: boolean;
 	maxFiles: number;
 	maxSize?: number;
 	multiple: boolean;
+	onDropRejected?: (files: FileRejection[]) => void;
 	onHandleUpload: (files: File[], versionName?: string) => void;
 	showDocumentIcon?: boolean;
 	title: string;
@@ -29,9 +31,11 @@ export function DropzoneUpload({
 	acceptFileTypes,
 	buttonText,
 	description,
+	disabled = false,
 	maxFiles,
 	maxSize,
 	multiple,
+	onDropRejected,
 	onHandleUpload,
 	showDocumentIcon = true,
 	title,
@@ -40,15 +44,18 @@ export function DropzoneUpload({
 	return (
 		<Dropzone
 			accept={acceptFileTypes}
+			disabled={disabled}
 			maxFiles={maxFiles}
 			maxSize={maxSize}
 			multiple={multiple}
 			onDropAccepted={(file) => onHandleUpload(file, versionName)}
+			onDropRejected={onDropRejected}
 		>
 			{({getInputProps, getRootProps, isDragActive, isDragReject}) => (
 				<div
 					className={classnames('dropzone-upload-container', {
 						'dropzone-upload-container-active': isDragActive,
+						'dropzone-upload-container-disabled': disabled,
 						'dropzone-upload-container-reject': isDragReject,
 					})}
 					{...getRootProps()}
@@ -66,7 +73,7 @@ export function DropzoneUpload({
 					<div className="dropzone-upload-text-container">
 						<span className="dropzone-upload-text">{title}</span>
 
-						<button className="dropzone-upload-button">
+						<button className="dropzone-upload-button ml-2">
 							<span className="dropzone-upload-button-text">
 								{buttonText}
 							</span>
@@ -77,7 +84,7 @@ export function DropzoneUpload({
 						{description}
 					</span>
 
-					<input {...getInputProps()} />
+					{!disabled && <input {...getInputProps()} />}
 				</div>
 			)}
 		</Dropzone>

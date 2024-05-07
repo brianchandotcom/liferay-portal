@@ -16,6 +16,7 @@ export default {
 	'activation-status': 'Activation Status',
 	'active': 'Active',
 	'add-packages': 'Add Package(s)',
+	'add-up-to-5-images': 'Add up to 5 images',
 	'additional-apps-requested': 'Additional Apps Requested',
 	'address': 'Address',
 	'all-orders': 'All Orders',
@@ -68,6 +69,7 @@ export default {
 	'contact-sales': 'Contact Sales',
 	'contact-support': 'Contact Support',
 	'contact-us': 'Contact Us',
+	'content-media-type': 'Content Media Type',
 	'content-policy': 'Content policy',
 	'continue': 'Continue',
 	'coupon-code': 'Coupon Code',
@@ -128,6 +130,7 @@ export default {
 	'enter-the-required-ram': 'Enter the required RAM',
 	'enter-the-required-ram-0-is-a-valid-value':
 		'Enter the required RAM (0 is a valid value)',
+	'enter-title-header': 'Enter title header',
 	'enter-your-contact-details-in-the-fields-below-in-the-request-description-enter-the-name-and-a-brief-description-of-the-app-you-would-like-to-submit-we-will-be-in-contact-regarding-your-request':
 		'Enter your contact details in the fields below. In the Request Description, enter the name and a brief description of the app you would like to submit. We will be in contact regarding your request.',
 	'enter-your-solution-details-this-information-will-be-used-for-submission-presentation-customer-support-and-search-capabilities':
@@ -164,6 +167,7 @@ export default {
 	'in-the-future-you-will-be-able-to-submit-your-app-source-code-for-additional-support-and-partnership-opportunities-with-liferay':
 		'In the future, you will be able to submit your app source code for additional support and partnership opportunities with Liferay.',
 	'income': 'Income',
+	'insert-text-here': 'Insert text here',
 	'installation': 'Installation',
 	'instance-size': 'Instance Size',
 	'insufficient-resource-requirements': 'Insufficient Resource Requirements',
@@ -196,6 +200,7 @@ export default {
 		'Manage all your app purchases and subscriptions in one place, read other users reviews, get notifications when updates are available and get the most out of our Apps catalog.',
 	'manage-all-your-apps-in-one-place': 'Manage All Your Apps in One Place',
 	'manage-license-keys': 'Manage License Key(s)',
+	'maximum-number-of-upload-reached': 'Maximum Number of Upload Reached',
 	'monetize-your-apps-and-solutions': 'Monetize your apps and solutions',
 	'more-info': 'More Info',
 	'name': 'Name',
@@ -209,6 +214,8 @@ export default {
 	'not-seeing-a-specific-project': 'Not seeing a specific Project?',
 	'number-of-cpus': 'Number of CPUs',
 	'on-hold': 'On Hold',
+	'only-gif-jpg-png-are-allowed-ax-file-size-is-5mb':
+		'Only gif, jpg, png are allowed. Max file size is 5MB',
 	'only-jar-war-files-are-allowed-max-file-size-is-500mb':
 		'Only JAR, WAR files are allowed. Max file size is 500MB.',
 	'only-zip-files-are-allowed-max-file-size-is-500-mb':
@@ -323,6 +330,7 @@ export default {
 		'This key is expired and cannot be downloaded.',
 	'this-order-must-be-completed-before-downloading-this-app.':
 		'This order must be completed before downloading this app.',
+	'title': 'Title',
 	'total': 'Total',
 	'trial': 'Trial',
 	'trial-resources': 'Trial Resources',
@@ -331,6 +339,8 @@ export default {
 	'type': 'Type',
 	'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard':
 		'Unable to download your license file.  Please try again and/or contact support via the manage menu on the dashboard.',
+	'upload-at-least-one-image-or-add-a-video-url':
+		'Upload at least one image, or add a video url',
 	'upload-image': 'Upload image',
 	'upload-liferay-plugin-packages': 'Upload Liferay Plugin Packages',
 	'upload-zip-files': 'Upload ZIP Files',
@@ -350,21 +360,29 @@ export default {
 	'via-liferay-experience-cloud-integration': 'Via Liferay SaaS Integration',
 	'via-liferay-plugin-packages': 'Via Liferay Plugin Packages',
 	'via-zip-upload': 'Via ZIP Upload',
+	'video-description': 'Video description',
+	'video-url': 'Video URL',
 	'view-details': 'View details',
+	'sebsite': 'Website',
 	'we-are-happy-to-have-you-interested-in-the-liferay-marketplace-at-the-moment-we-are-working-on-enhancing-the-experience-for-our-customers-in-the-marketplace-and-access-is-invite-only-if-you-are-an-existing-liferay-customer-please-keep-an-eye-out-for-an-announcement-related-to-the-new-marketplace-in-the-coming-months':
 		'We are happy to have you interested in the Liferay Marketplace. At the moment, we are working on enhancing the experience for our customers in the Marketplace and access is invite only. If you are an existing Liferay customer, please keep an eye out for an announcement related to the new Marketplace in the coming months!',
 	'we-are-happy-to-have-you-interested-in-the-liferay-marketplace-at-the-moment-we-are-working-on-enhancing-the-experience-for-our-publishers-in-the-marketplace-if-you-are-an-existing-liferay-developer-or-partner-you-can-choose-to-join-our-pilot-group-of-publishers-to-submit-apps-to-the-marketplace-continue-to-request-a-publisher-account':
 		'We are happy to have you interested in the Liferay Marketplace. At the moment, we are working on enhancing the experience for our publishers in the Marketplace.  If you are an existing Liferay developer or partner, you can choose to join our pilot group of publishers to submit apps to the Marketplace.  Continue to request a publisher account.',
+	'website': 'Website',
 	'x-is-required': '{0} is required',
 	'x-saved-as-a-draft-successfully':
 		'<b>{0}</b> saved as a <b>draft</b> successfully',
 	'x-will-be-deleted-and-this-action-cant-be-undone-are-you-sure-you-want-to-delete-it':
 		'{0} will be deleted and this action can’t be undone. Are you sure you want to delete it?',
 	'yes': 'Yes',
+	'you-can-paste-links-directly-from-youTube':
+		'You can paste links directly from YouTube.',
 	'you-can-put-anything-you-want-here-but-a-good-guideline-is-no-more-than-4-5-paragraphs-this-field-does-not-allow-any-markup-tags-its-just-text-please-do-not-use-misleading-names-information-or-icons-descriptions-should-be-as-concise-as-possible-ensure-your-icons-images-descriptions-and-tags-are-free-of-profanity-or-other-offensive-material':
 		'You can put anything you want here, but a good guideline is no more than 4-5 paragraphs. This field does not allow any markup tags - it’s just text Please do not use misleading names, information, or icons. Descriptions should be as concise as possible. Ensure your icons, images, descriptions, and tags are free of profanity or other offensive material.',
 	'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb':
 		'You can upload one or many ZIP files. Max total size is 500MB.',
+	'you-cannot-upload-more-than-5-files':
+		'You cannot upload more than 5 files.',
 	'your-request-completed-successfully':
 		'Your request completed successfully',
 	'zip-files-must-be-in-universal-file-format-archive-uffa-the-specially-structured-zip-encoded-archive-used-to-package-client-extension-project-outputs-this-format-must-support-the-following-use-cases-deliver-batch-engine-data-files-compatible-with-all-deployment-targets-deliver-dxp-configuration-resource-compatible-with-all-deployment-targets-deliver-static-resources-compatible-with-all-deployment-targets-deliver-the-infrastructure-metadata-necessary-to-deploy-to-lxc-sm-for-more-information-see':

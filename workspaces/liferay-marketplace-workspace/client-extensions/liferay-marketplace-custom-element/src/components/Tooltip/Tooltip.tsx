@@ -37,6 +37,7 @@ export function Tooltip({tooltip, tooltipText}: TooltipProps) {
 					)}
 
 					<ClayIcon
+						aria-label="tooltip"
 						className="tooltip-icon"
 						symbol="question-circle"
 					/>

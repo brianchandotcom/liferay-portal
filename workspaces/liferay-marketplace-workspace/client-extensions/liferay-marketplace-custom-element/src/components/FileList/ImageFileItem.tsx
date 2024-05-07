@@ -87,13 +87,14 @@ export function ImageFileItem({
 				) : (
 					<div className="d-flex">
 						<img
-							alt=""
+							alt="image"
 							className="image-file-item-uploaded-preview"
 							src={uploadedFile?.preview}
 						/>
 
 						{uploadedFile.uploaded && (
 							<ClayIcon
+								aria-label="image"
 								className={classNames(
 									'image-file-item-icon-check',
 									{

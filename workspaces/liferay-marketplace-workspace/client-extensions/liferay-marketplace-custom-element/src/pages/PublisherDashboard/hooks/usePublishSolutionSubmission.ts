@@ -59,14 +59,13 @@ const usePublishSolutionSubmission = (
 			return _product;
 		}
 
-		const product = await headlessCommerceAdminCatalogImpl.createVirtualProduct(
-			{
+		const product =
+			await headlessCommerceAdminCatalogImpl.createVirtualProduct({
 				catalogId,
 				categories: productCategories,
 				description,
 				name,
-			}
-		);
+			});
 
 		product.productSpecifications = [];
 
@@ -94,10 +93,12 @@ const usePublishSolutionSubmission = (
 
 	const syncSolutionHeader = async (product: Product) => {
 		const {
-			header: {description, headerImages, headerVideo, radioValue, title},
+			header: {
+				description,
+				contentType: {type, content},
+				title,
+			},
 		} = context;
-
-		const headerVideoDescription = '';
 
 		const {productId, productSpecifications = []} = product;
 
@@ -111,7 +112,6 @@ const usePublishSolutionSubmission = (
 			);
 
 			if (specification && specification.value.en_US === value) {
-
 				// No need to update the specification if the value is equal.
 
 				return;
@@ -131,8 +131,7 @@ const usePublishSolutionSubmission = (
 
 			if (specification) {
 				specification.value.en_US = value;
-			}
-			else {
+			} else {
 				productSpecifications.push(result);
 			}
 		};
@@ -147,17 +146,17 @@ const usePublishSolutionSubmission = (
 			title
 		);
 
-		if (radioValue === 'embed-video-url') {
-			if (headerVideoDescription) {
+		if (type === 'embed-video-url') {
+			if (content.headerVideoDescription) {
 				await _updateSpecification(
 					PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_VIDEO_DESCRIPTION,
-					headerVideoDescription
+					content.headerVideoDescription
 				);
 			}
 
 			await _updateSpecification(
 				PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_VIDEO_URL,
-				headerVideo
+				content.headerVideoUrl as string
 			);
 
 			return;
@@ -167,7 +166,7 @@ const usePublishSolutionSubmission = (
 		// the app icon defined as priority 0
 
 		let priority = 0;
-		for (const image of headerImages) {
+		for (const image of content.headerImages) {
 			priority++;
 
 			if (image.uploaded) {

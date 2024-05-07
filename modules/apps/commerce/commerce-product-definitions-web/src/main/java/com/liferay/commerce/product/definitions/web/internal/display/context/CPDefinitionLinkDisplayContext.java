@@ -13,9 +13,9 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
-import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -66,17 +66,25 @@ public class CPDefinitionLinkDisplayContext
 
 	public List<DropdownItem> getBulkActionDropdownItems() {
 		return ListUtil.fromArray(
-			new FDSActionDropdownItem(
+			DropdownItemBuilder.putData(
+				Constants.ACTION, "bulkDeleteProductRelations"
+			).putData(
+				Constants.CMD, Constants.DELETE
+			).setHref(
 				PortletURLBuilder.createActionURL(
 					cpRequestHelper.getRenderResponse()
 				).setActionName(
 					"/cp_definitions/edit_cp_definition_link"
 				).setCMD(
 					Constants.DELETE
-				).buildString(),
-				"trash", "delete", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				null));
+				).buildString()
+			).setIcon(
+				"trash"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "delete")
+			).setQuickAction(
+				true
+			).build());
 	}
 
 	public CPDefinitionLink getCPDefinitionLink() throws PortalException {

@@ -11,6 +11,23 @@
 	will-change: transform, box-shadow, opacity, width;
 	z-index: 999;
 
+	.fds-side-panel-header {
+		align-items: center;
+		background: #f7f7f7;
+		border-bottom: 1px solid #e7e7ed;
+		display: flex;
+		height: 65px;
+		justify-content: space-between;
+		padding: 0 1rem;
+		position: sticky;
+		top: 0;
+		z-index: 10;
+	}
+	
+	.fds-side-panel-title {
+		font-weight: 600;
+	}
+
 	iframe {
 		height: 100%;
 		width: 100%;
@@ -95,21 +112,20 @@
 	}
 
 	.fds-side-panel-close {
-		opacity: 0.5;
-		position: absolute;
-		right: 0;
-		top: 0;
+		opacity: 1;
 		transition: top ease-in-out 0.1s, right ease-in-out 0.1s,
 			opacity ease-in 0.2s;
 		z-index: 1;
 
 		&.fds-side-panel-close-menu {
+			position: absolute;
 			opacity: 1;
 			right: 16px;
 			top: 4px;
 		}
 
 		&.fds-side-panel-close-simple {
+			position: absolute;
 			opacity: 1;
 			right: 20px;
 			top: 29px;

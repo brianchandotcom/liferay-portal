@@ -8468,6 +8468,40 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/DocumentFolder"
             tags: ["DocumentFolder"]
+    "/document-shortcuts/{documentShortcutId}":
+        get:
+            description:
+                Retrieves the document shortcut.
+            operationId: getDocumentShortcut
+            parameters:
+                - in: path
+                  name: documentShortcutId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentShortcut"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DocumentShortcut"
+            tags: ["DocumentShortcut"]
     "/documents/{documentId}":
         delete:
             description:

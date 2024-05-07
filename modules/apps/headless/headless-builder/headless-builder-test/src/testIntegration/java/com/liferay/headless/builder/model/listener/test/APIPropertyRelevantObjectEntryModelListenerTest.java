@@ -70,25 +70,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Arrays.asList(_objectField1, _objectField2),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		SystemObjectDefinitionManager userSystemObjectDefinitionManager =
-			_systemObjectDefinitionManagerRegistry.
-				getSystemObjectDefinitionManager("User");
-
-		ObjectDefinition userSystemObjectDefinition =
-			_objectDefinitionLocalService.fetchSystemObjectDefinition(
-				userSystemObjectDefinitionManager.getName());
-
-		_userSystemObjectField = ObjectFieldTestUtil.addCustomObjectField(
-			TestPropsValues.getUserId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, userSystemObjectDefinition,
-			_SYSTEM_OBJECT_FIELD_NAME);
-
-		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
-			_objectDefinition, userSystemObjectDefinition,
-			TestPropsValues.getUserId(),
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	@Test
@@ -146,6 +127,25 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		Assert.assertEquals(
 			"An API property must be related to an API schema.",
 			jsonObject.get("title"));
+
+		SystemObjectDefinitionManager userSystemObjectDefinitionManager =
+			_systemObjectDefinitionManagerRegistry.
+				getSystemObjectDefinitionManager("User");
+
+		ObjectDefinition userSystemObjectDefinition =
+			_objectDefinitionLocalService.fetchSystemObjectDefinition(
+				userSystemObjectDefinitionManager.getName());
+
+		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition, userSystemObjectDefinition,
+			TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_userSystemObjectField = ObjectFieldTestUtil.addCustomObjectField(
+			TestPropsValues.getUserId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, userSystemObjectDefinition,
+			"x" + RandomTestUtil.randomString());
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -684,9 +684,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			).toString(),
 			apiPropertiesJSONArray.toString(), JSONCompareMode.LENIENT);
 	}
-
-	private static final String _SYSTEM_OBJECT_FIELD_NAME =
-		"x" + RandomTestUtil.randomString();
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;

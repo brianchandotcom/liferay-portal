@@ -89,14 +89,14 @@ const BudgetClaimPanel = ({
 							component={PRMForm.InputFile}
 							displayType="secondary"
 							label="Third Party Invoice"
-							name={`${budgetFieldName}.invoice`}
+							name={`${budgetFieldName}.invoiceFile`}
 							onAccept={(liferayFile: LiferayFile) => {
-								if (budget.invoice?.documentId) {
-									deleteDocument(budget.invoice?.documentId);
+								if (budget.invoiceFile?.documentId) {
+									deleteDocument(budget.invoiceFile?.documentId);
 								}
 
 								setFieldValue(
-									`${budgetFieldName}.invoice`,
+									`${budgetFieldName}.invoiceFile`,
 									liferayFile
 								);
 							}}

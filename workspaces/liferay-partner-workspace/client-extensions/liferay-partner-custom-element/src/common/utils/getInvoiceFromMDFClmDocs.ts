@@ -10,7 +10,7 @@ import getNameFromMDFClaimDocument from './getNameFromMDFClaimDocument';
 export default function getInvoiceFromMDFClmDocs(mdfClaimDto: MDFClaimDTO) {
 	return mdfClaimDto.mdfClmToMDFClmDocs?.reduce<LiferayFile[]>(
 		(accumulatorDocuments, currentDocument) => {
-			const reimbursementInvoiceFile = {
+			const reimbursementInvoice = {
 				documentId: currentDocument.file?.id,
 				link: currentDocument.file?.link,
 				name:
@@ -19,7 +19,7 @@ export default function getInvoiceFromMDFClmDocs(mdfClaimDto: MDFClaimDTO) {
 				objectId: currentDocument.id,
 			};
 
-			accumulatorDocuments?.push(reimbursementInvoiceFile);
+			accumulatorDocuments?.push(reimbursementInvoice);
 
 			return accumulatorDocuments;
 		},

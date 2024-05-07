@@ -11,12 +11,12 @@ export function getPOPDocument(
 	mdfClaimActivityDocumentDTO: MDFClaimActivityDocumentDTO
 ): LiferayFile {
 	return {
-		documentId: mdfClaimActivityDocumentDTO.proofOfPerformanceFile?.id,
-		link: mdfClaimActivityDocumentDTO.proofOfPerformanceFile?.link,
+		documentId: mdfClaimActivityDocumentDTO.proofOfPerformanceFiles?.id,
+		link: mdfClaimActivityDocumentDTO.proofOfPerformanceFiles?.link,
 		name:
-			mdfClaimActivityDocumentDTO.proofOfPerformanceFile?.name &&
+			mdfClaimActivityDocumentDTO.proofOfPerformanceFiles?.name &&
 			getNameFromMDFClaimDocument(
-				mdfClaimActivityDocumentDTO.proofOfPerformanceFile.name
+				mdfClaimActivityDocumentDTO.proofOfPerformanceFiles.name
 			),
 		objectId: mdfClaimActivityDocumentDTO.id,
 	};

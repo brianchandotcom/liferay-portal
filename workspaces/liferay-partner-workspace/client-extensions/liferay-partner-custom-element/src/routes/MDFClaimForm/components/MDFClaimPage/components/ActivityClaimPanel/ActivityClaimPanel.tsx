@@ -247,21 +247,28 @@ const ActivityClaimPanel = ({
 							/>
 						))}
 
-						{isBudgetSelected &&
+							{isBudgetSelected &&
 							errors?.activities &&
 							!isBudgetSelected.includes(activityIndex) &&
 							(isButtonClicked || isEdit) && (
-								<ClayAlert
-									displayType="danger"
-									hideCloseIcon={true}
-								>
-									{
-										(errors?.activities[activityIndex] as {
-											budgets?: string;
-										})?.budgets
-									}
-								</ClayAlert>
-							)}
+									<>
+										{((errors.activities[activityIndex] as {
+											budgets?: boolean;
+										})?.budgets) && (
+										<ClayAlert
+											displayType="danger"
+											hideCloseIcon={true}
+										>
+											{
+												(errors?.activities[activityIndex] as {
+													budgets?: string;
+												})?.budgets
+											}
+										</ClayAlert>
+										)}
+									</>
+								)
+							}
 
 						<div className="align-items-center d-flex justify-content-between">
 							<PRMFormik.Field
@@ -269,20 +276,20 @@ const ActivityClaimPanel = ({
 								description="You can downloaded the Excel Template, fill it out, and upload it back here"
 								displayType="secondary"
 								label="List of Qualified Leads"
-								name={`activities[${activityIndex}].listOfQualifiedLeads`}
+								name={`activities[${activityIndex}].listOfQualifiedLeadsFile`}
 								onAccept={(liferayFile: LiferayFile) => {
 									if (
-										activity.listOfQualifiedLeads
+										activity.listOfQualifiedLeadsFile
 											?.documentId
 									) {
 										deleteDocument(
-											activity.listOfQualifiedLeads
+											activity.listOfQualifiedLeadsFile
 												?.documentId
 										);
 									}
 
 									setFieldValue(
-										`activities[${activityIndex}].listOfQualifiedLeads`,
+										`activities[${activityIndex}].listOfQualifiedLeadsFile`,
 										liferayFile
 									);
 								}}

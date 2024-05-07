@@ -21,7 +21,7 @@ export default interface MDFClaimActivityDocumentDTO
 	eventPhotos?: LiferayFile & number;
 	id?: number;
 	images?: LiferayFile & number;
-	proofOfPerformanceFile?: LiferayFile & number;
+	proofOfPerformanceFiles?: LiferayFile & number;
 	r_accToMDFClmActDocs_accountEntryId?: number;
 	r_mdfClmActToMDFActDocs_c_mdfClaimActivityId?: number;
 }

@@ -25,7 +25,7 @@ const claimSchema = object({
 						schema
 							.of(
 								object({
-									invoice: mixed().when('selected', {
+									invoiceFile: mixed().when('selected', {
 										is: (selected: boolean) => selected,
 										then: (schema) =>
 											schema
@@ -33,14 +33,14 @@ const claimSchema = object({
 													'fileSize',
 													validateDocument.fileSize
 														.message,
-													(invoice) => {
+													(invoiceFile) => {
 														if (
-															invoice &&
-															!invoice.documentId
+															invoiceFile &&
+															!invoiceFile.documentId
 														) {
 															return (
 																Math.ceil(
-																	invoice.size /
+																	invoiceFile.size /
 																		1000
 																) <=
 																validateDocument
@@ -57,13 +57,13 @@ const claimSchema = object({
 													'fileType',
 													validateDocument.document
 														.message,
-													(invoice) => {
+													(invoiceFile) => {
 														if (
-															invoice &&
-															!invoice.documentId
+															invoiceFile &&
+															!invoiceFile.documentId
 														) {
 															return validateDocument.document.types.includes(
-																invoice.type
+																invoiceFile.type
 															);
 														}
 
@@ -105,7 +105,7 @@ const claimSchema = object({
 									value.some((item: any) => item.selected)
 							),
 				}),
-				eventProgram: mixed().when(['selected', 'typeActivity'], {
+				eventProgramFile: mixed().when(['selected', 'typeActivity'], {
 					is: (selected: boolean, typeActivity: LiferayPicklist) =>
 						selected && typeActivity.key === TypeActivityKey.EVENT,
 					then: (schema) =>
@@ -114,14 +114,14 @@ const claimSchema = object({
 							.test(
 								'fileSize',
 								validateDocument.fileSize.message,
-								(eventProgram) => {
+								(eventProgramFile) => {
 									if (
-										eventProgram &&
-										!eventProgram.documentId
+										eventProgramFile &&
+										!eventProgramFile.documentId
 									) {
 										return (
 											Math.ceil(
-												eventProgram.size / 1000
+												eventProgramFile.size / 1000
 											) <=
 											validateDocument.fileSize.maxSize
 										);
@@ -133,13 +133,13 @@ const claimSchema = object({
 							.test(
 								'fileType',
 								validateDocument.document.message,
-								(eventProgram) => {
+								(eventProgramFile) => {
 									if (
-										eventProgram &&
-										!eventProgram.documentId
+										eventProgramFile &&
+										!eventProgramFile.documentId
 									) {
 										return validateDocument.document.types.includes(
-											eventProgram.type
+											eventProgramFile.type
 										);
 									}
 
@@ -147,7 +147,7 @@ const claimSchema = object({
 								}
 							),
 				}),
-				listOfQualifiedLeads: mixed()
+				listOfQualifiedLeadsFile: mixed()
 					.when('selected', {
 						is: (selected: boolean) => selected,
 						then: (schema) =>
@@ -155,14 +155,14 @@ const claimSchema = object({
 								.test(
 									'fileSize',
 									validateDocument.fileSize.message,
-									(listOfQualifiedLeads) => {
+									(listOfQualifiedLeadsFile) => {
 										if (
-											listOfQualifiedLeads &&
-											!listOfQualifiedLeads.documentId
+											listOfQualifiedLeadsFile &&
+											!listOfQualifiedLeadsFile.documentId
 										) {
 											return (
 												Math.ceil(
-													listOfQualifiedLeads.size /
+													listOfQualifiedLeadsFile.size /
 														1000
 												) <=
 												validateDocument.fileSize
@@ -177,13 +177,13 @@ const claimSchema = object({
 									'fileType',
 									validateDocument.listOfLeadsDocuments
 										.message,
-									(listOfQualifiedLeads) => {
+									(listOfQualifiedLeadsFile) => {
 										if (
-											listOfQualifiedLeads &&
-											!listOfQualifiedLeads.documentId
+											listOfQualifiedLeadsFile &&
+											!listOfQualifiedLeadsFile.documentId
 										) {
 											return validateDocument.listOfLeadsDocuments.types.includes(
-												listOfQualifiedLeads.type
+												listOfQualifiedLeadsFile.type
 											);
 										}
 
@@ -196,7 +196,7 @@ const claimSchema = object({
 							selected: boolean,
 							typeActivity: LiferayPicklist
 						) =>
-							checkRequiredListOfQualifiedLeads(
+						checkRequiredListOfQualifiedLeads(
 								selected,
 								typeActivity
 							),
@@ -265,21 +265,21 @@ const claimSchema = object({
 								),
 					}
 				),
-				telemarketingScript: mixed().when('selected', {
+				telemarketingScriptFile: mixed().when('selected', {
 					is: (selected: boolean) => selected,
 					then: (schema) =>
 						schema
 							.test(
 								'fileSize',
 								validateDocument.fileSize.message,
-								(telemarketingScript) => {
+								(telemarketingScriptFile) => {
 									if (
-										telemarketingScript &&
-										!telemarketingScript.documentId
+										telemarketingScriptFile &&
+										!telemarketingScriptFile.documentId
 									) {
 										return (
 											Math.ceil(
-												telemarketingScript.size / 1000
+												telemarketingScriptFile.size / 1000
 											) <=
 											validateDocument.fileSize.maxSize
 										);
@@ -291,13 +291,13 @@ const claimSchema = object({
 							.test(
 								'fileType',
 								validateDocument.listOfLeadsDocuments.message,
-								(telemarketingScript) => {
+								(telemarketingScriptFile) => {
 									if (
-										telemarketingScript &&
-										!telemarketingScript.documentId
+										telemarketingScriptFile &&
+										!telemarketingScriptFile.documentId
 									) {
 										return validateDocument.document.types.includes(
-											telemarketingScript.type
+											telemarketingScriptFile.type
 										);
 									}
 
@@ -348,7 +348,7 @@ const claimSchema = object({
 				Boolean(
 					activities?.some((activity) =>
 						Boolean(
-							activity.budgets?.some((budget) => budget.invoice)
+							activity.budgets?.some((budget) => budget.invoiceFile)
 						)
 					)
 				)
@@ -359,14 +359,14 @@ const claimSchema = object({
 				.test(
 					'fileSize',
 					validateDocument.fileSize.message,
-					(reimbursementInvoiceFile) => {
+					(reimbursementInvoice) => {
 						if (
-							reimbursementInvoiceFile &&
-							!reimbursementInvoiceFile.documentId
+							reimbursementInvoice &&
+							!reimbursementInvoice.documentId
 						) {
 							return (
 								Math.ceil(
-									reimbursementInvoiceFile.size / 1000
+									reimbursementInvoice.size / 1000
 								) <= validateDocument.fileSize.maxSize
 							);
 						}
@@ -377,13 +377,13 @@ const claimSchema = object({
 				.test(
 					'fileType',
 					validateDocument.document.message,
-					(reimbursementInvoiceFile) => {
+					(reimbursementInvoice) => {
 						if (
-							reimbursementInvoiceFile &&
-							!reimbursementInvoiceFile.documentId
+							reimbursementInvoice &&
+							!reimbursementInvoice.documentId
 						) {
 							return validateDocument.document.types.includes(
-								reimbursementInvoiceFile.type
+								reimbursementInvoice.type
 							);
 						}
 

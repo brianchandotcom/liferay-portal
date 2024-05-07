@@ -20,29 +20,29 @@ const submitDocuments = async (
 
 	if (mdfClaim.activities?.length) {
 		for (const activity of mdfClaim.activities) {
-			if (activity.eventProgram && !activity.eventProgram.documentId) {
-				activity.eventProgram.documentId = await uploadDocument(
-					activity.eventProgram,
+			if (activity.eventProgramFile && !activity.eventProgramFile.documentId) {
+				activity.eventProgramFile.documentId = await uploadDocument(
+					activity.eventProgramFile,
 					claimParentFolderId
 				);
 			}
 
 			if (
-				activity.listOfQualifiedLeads &&
-				!activity.listOfQualifiedLeads.documentId
+				activity.listOfQualifiedLeadsFile &&
+				!activity.listOfQualifiedLeadsFile.documentId
 			) {
-				activity.listOfQualifiedLeads.documentId = await uploadDocument(
-					activity.listOfQualifiedLeads,
+				activity.listOfQualifiedLeadsFile.documentId = await uploadDocument(
+					activity.listOfQualifiedLeadsFile,
 					claimParentFolderId
 				);
 			}
 
 			if (
-				activity.telemarketingScript &&
-				!activity.telemarketingScript.documentId
+				activity.telemarketingScriptFile &&
+				!activity.telemarketingScriptFile.documentId
 			) {
-				activity.telemarketingScript.documentId = await uploadDocument(
-					activity.telemarketingScript,
+				activity.telemarketingScriptFile.documentId = await uploadDocument(
+					activity.telemarketingScriptFile,
 					claimParentFolderId
 				);
 			}
@@ -84,9 +84,9 @@ const submitDocuments = async (
 
 			if (activity.budgets?.length) {
 				for (const budget of activity.budgets) {
-					if (budget.invoice && !budget.invoice.documentId) {
-						budget.invoice.documentId = await uploadDocument(
-							budget.invoice,
+					if (budget.invoiceFile && !budget.invoiceFile.documentId) {
+						budget.invoiceFile.documentId = await uploadDocument(
+							budget.invoiceFile,
 							claimParentFolderId
 						);
 					}

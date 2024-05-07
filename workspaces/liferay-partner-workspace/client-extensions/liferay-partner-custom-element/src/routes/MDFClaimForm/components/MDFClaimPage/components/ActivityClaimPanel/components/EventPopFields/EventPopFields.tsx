@@ -31,13 +31,13 @@ const EventPopFields = ({
 				description="Only files with the following extensions wil be accepted: doc, docx, jpg, jpeg, png, tif, tiff, pdf"
 				displayType="secondary"
 				label="Event Program"
-				name={`activities[${currentActivityIndex}].eventProgram`}
+				name={`activities[${currentActivityIndex}].eventProgramFile`}
 				onAccept={(liferayFile: LiferayFile) => {
-					if (activity.eventProgram?.documentId) {
-						deleteDocument(activity.eventProgram?.documentId);
+					if (activity.eventProgramFile?.documentId) {
+						deleteDocument(activity.eventProgramFile?.documentId);
 					}
 					setFieldValue(
-						`activities[${currentActivityIndex}].eventProgram`,
+						`activities[${currentActivityIndex}].eventProgramFile`,
 						liferayFile
 					);
 				}}

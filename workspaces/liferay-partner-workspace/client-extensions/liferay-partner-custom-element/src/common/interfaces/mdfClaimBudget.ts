@@ -8,7 +8,7 @@ import LiferayObject from './liferayObject';
 
 export default interface MDFClaimBudget extends Partial<LiferayObject> {
 	expenseName?: string;
-	invoice?: LiferayFile & number;
+	invoiceFile?: LiferayFile & number;
 	invoiceAmount: number;
 	r_bgtToMDFClmBgts_c_budgetId?: number;
 	selected: boolean;

@@ -139,7 +139,7 @@
 				},
 				{
 					"name": "showFilesInDocumentsAndMedia",
-					"value": "true"
+					"value": "false"
 				},
 				{
 					"name": "storageDLFolderPath",

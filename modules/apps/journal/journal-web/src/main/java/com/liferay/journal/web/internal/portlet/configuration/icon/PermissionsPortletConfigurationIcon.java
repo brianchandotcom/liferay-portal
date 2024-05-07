@@ -9,7 +9,7 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -95,7 +95,7 @@ public class PermissionsPortletConfigurationIcon
 				_portal.getHttpServletRequest(portletRequest));
 
 			if ((article != null) &&
-				_featureFlagManager.isEnabled("LPD-15596")) {
+				FeatureFlagManagerUtil.isEnabled("LPD-15596")) {
 
 				return true;
 			}
@@ -116,9 +116,6 @@ public class PermissionsPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PermissionsPortletConfigurationIcon.class);
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private Language _language;

@@ -6,7 +6,7 @@
 package com.liferay.saved.content.web.internal.product.navigation.personal.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -40,7 +40,7 @@ public class MySavedContentPersonalMenuEntry extends BasePersonalMenuEntry {
 
 	@Override
 	public boolean isActive(PortletRequest portletRequest, String portletId) {
-		if (!_featureFlagManager.isEnabled("LPS-197909")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-197909")) {
 			return false;
 		}
 
@@ -52,7 +52,7 @@ public class MySavedContentPersonalMenuEntry extends BasePersonalMenuEntry {
 			PortletRequest portletRequest, PermissionChecker permissionChecker)
 		throws PortalException {
 
-		if (!_featureFlagManager.isEnabled("LPS-197909")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-197909")) {
 			return false;
 		}
 
@@ -68,9 +68,6 @@ public class MySavedContentPersonalMenuEntry extends BasePersonalMenuEntry {
 
 		return super.isShow(portletRequest, permissionChecker);
 	}
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private SavedContentPermission _savedContentPermission;

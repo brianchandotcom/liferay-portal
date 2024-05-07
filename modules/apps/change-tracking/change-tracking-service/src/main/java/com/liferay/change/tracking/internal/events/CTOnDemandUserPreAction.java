@@ -8,7 +8,7 @@ package com.liferay.change.tracking.internal.events;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -41,7 +41,7 @@ public class CTOnDemandUserPreAction extends Action {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		if (!_featureFlagManager.isEnabled("LPS-187436")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-187436")) {
 			return;
 		}
 
@@ -106,9 +106,6 @@ public class CTOnDemandUserPreAction extends Action {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTOnDemandUserPreAction.class);
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private Portal _portal;

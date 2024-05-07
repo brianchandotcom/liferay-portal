@@ -19,7 +19,7 @@ import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -113,7 +113,7 @@ public class UserContentRecommendationInfoItemCollectionProvider
 			ServiceContextThreadLocal.getServiceContext();
 
 		try {
-			if (_featureFlagManager.isEnabled("LRAC-14771") &&
+			if (FeatureFlagManagerUtil.isEnabled("LRAC-14771") &&
 				_analyticsSettingsManager.isAnalyticsEnabled(
 					serviceContext.getCompanyId())) {
 
@@ -137,9 +137,6 @@ public class UserContentRecommendationInfoItemCollectionProvider
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private Language _language;

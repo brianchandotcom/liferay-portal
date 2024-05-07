@@ -10,7 +10,7 @@ import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLay
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -60,7 +60,7 @@ public class CreateAccountNavigationPostPageInclude implements PageInclude {
 		String mvcRenderCommandName = httpServletRequest.getParameter(
 			"mvcRenderCommandName");
 
-		if (_featureFlagManager.isEnabled("LPD-6378")) {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-6378")) {
 			PortletConfig portletConfig =
 				(PortletConfig)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_CONFIG);
@@ -96,7 +96,7 @@ public class CreateAccountNavigationPostPageInclude implements PageInclude {
 		try {
 			String url = StringPool.BLANK;
 
-			if (_featureFlagManager.isEnabled("LPD-6378")) {
+			if (FeatureFlagManagerUtil.isEnabled("LPD-6378")) {
 				Layout layout =
 					_layoutUtilityPageEntryLayoutProvider.
 						getDefaultLayoutUtilityPageEntryLayout(
@@ -180,9 +180,6 @@ public class CreateAccountNavigationPostPageInclude implements PageInclude {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreateAccountNavigationPostPageInclude.class);
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 
 import com.maxmind.db.CHMCache;
 import com.maxmind.geoip2.DatabaseReader;
@@ -27,6 +28,7 @@ import java.io.IOException;
 
 import java.net.InetAddress;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +50,20 @@ public class IPGeocoderImpl implements IPGeocoder {
 	public IPInfo getIPInfo(HttpServletRequest httpServletRequest) {
 		String ipAddress = _getIPAddress(httpServletRequest);
 
-		return new IPInfo(_getCountryCode(ipAddress), ipAddress);
+		String countryCode = null;
+
+		if (_countryCodeCache.containsKey(ipAddress)) {
+			countryCode = _countryCodeCache.get(ipAddress);
+		}
+		else {
+			countryCode = _getCountryCode(ipAddress);
+
+			if (PropsValues.IP_GEOCODER_COUNTRY_CODE_CACHE_ENABLED) {
+				_countryCodeCache.put(ipAddress, countryCode);
+			}
+		}
+
+		return new IPInfo(countryCode, ipAddress);
 	}
 
 	@Activate
@@ -161,6 +176,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 	private static final Log _log = LogFactoryUtil.getLog(IPGeocoderImpl.class);
 
+	private volatile Map<String, String> _countryCodeCache = new HashMap<>();
 	private final DCLSingleton<DatabaseReader> _databaseReaderDCLSingleton =
 		new DCLSingleton<>();
 

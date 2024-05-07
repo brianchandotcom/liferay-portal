@@ -62,4 +62,62 @@ test.describe('Manage object fields through Model Builder', () => {
 			ListTypeDefinition.id
 		);
 	});
+
+	test('can delete object field', async ({apiHelpers, modelBuilderPage}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
+			objectDefinition.externalReferenceCode,
+			{
+				DBType: 'Integer',
+				label: {
+					en_US: 'intField',
+				},
+
+				listTypeDefinitionId: 0,
+				localized: false,
+				name: 'intField',
+				objectFieldSettings: [],
+				readOnly: 'false',
+				readOnlyConditionExpression: '',
+				required: false,
+				state: false,
+				system: false,
+			}
+		);
+
+		await modelBuilderPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderPage.leftSidebarItems
+			.filter({hasText: objectDefinition.name})
+			.click();
+
+		await modelBuilderPage.clickObjectDefinitionShowAllFieldsButton(
+			objectDefinition.name
+		);
+
+		await modelBuilderPage.objectDefinitionNodes
+			.filter({hasText: objectDefinition.name})
+			.getByText('integer', {exact: true})
+			.click();
+
+		await modelBuilderPage.deleteTrashButton.click();
+
+		await modelBuilderPage.modalDeleteObjectDefinitionConfirmationButton.click();
+
+		await expect(
+			modelBuilderPage.objectDefinitionNodes
+				.filter({hasText: objectDefinition.name})
+				.getByText('intField')
+		).toBeHidden();
+
+		// Clean up
+
+		await apiHelpers.objectAdmin.deleteObjectDefinition(
+			objectDefinition.id
+		);
+	});
 });

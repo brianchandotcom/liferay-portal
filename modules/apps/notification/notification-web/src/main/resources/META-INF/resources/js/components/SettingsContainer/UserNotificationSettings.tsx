@@ -14,6 +14,7 @@ import React, {useEffect, useState} from 'react';
 
 interface Role {
 	description: string;
+	externalReferenceCode: string;
 	id: number;
 	name: string;
 	roleType: string;
@@ -70,7 +71,7 @@ export function UserNotificationSettings({
 		const roles = {
 			children: items
 				.filter(({name}) => name !== 'Guest')
-				.map(({name}) => {
+				.map(({externalReferenceCode, name}) => {
 					const selectedRole = !!(values.recipients as Partial<
 						UserNotificationRecipients
 					>[]).find((recipient) => recipient.roleName === name);
@@ -78,7 +79,7 @@ export function UserNotificationSettings({
 					return {
 						checked: selectedRole,
 						label: name,
-						value: name,
+						value: externalReferenceCode,
 					};
 				}),
 			label: '',

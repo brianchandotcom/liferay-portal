@@ -10,12 +10,15 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.context.CommerceContextThreadLocal;
 import com.liferay.commerce.context.CommerceGroupThreadLocal;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,18 +41,25 @@ public class CommerceContextPreAction extends Action {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		CommerceContext commerceContext = _commerceContextFactory.create(
-			httpServletRequest);
-
-		httpServletRequest.setAttribute(
-			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
-
 		try {
+			CommerceChannel commerceChannel =
+				_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
+					_portal.getScopeGroupId(httpServletRequest));
+
+			if (commerceChannel == null) {
+				return;
+			}
+
+			CommerceContext commerceContext = _commerceContextFactory.create(
+				httpServletRequest);
+
+			httpServletRequest.setAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
+
 			CommerceContextThreadLocal.set(commerceContext);
 
 			CommerceGroupThreadLocal.set(
-				_groupLocalService.fetchGroup(
-					commerceContext.getCommerceChannelGroupId()));
+				_groupLocalService.fetchGroup(commerceChannel.getGroupId()));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -61,6 +71,9 @@ public class CommerceContextPreAction extends Action {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceContextPreAction.class);
 
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
@@ -69,5 +82,8 @@ public class CommerceContextPreAction extends Action {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

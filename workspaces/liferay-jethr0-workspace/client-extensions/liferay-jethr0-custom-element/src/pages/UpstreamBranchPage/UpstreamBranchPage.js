@@ -119,7 +119,9 @@ function UpstreamBranchPage() {
 		<ClayLayout.Container>
 			<Jethr0Card>
 				<Jethr0NavigationBar active="Upstream Branches" />
+
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
+
 				<Jethr0ContainerFluid>
 					<ClayLayout.Row justify="between">
 						<Heading level={3} weight="lighter">
@@ -127,6 +129,7 @@ function UpstreamBranchPage() {
 						</Heading>
 					</ClayLayout.Row>
 				</Jethr0ContainerFluid>
+
 				<UpstreamBranchInformation upstreamBranch={upstreamGitBranch} />
 			</Jethr0Card>
 		</ClayLayout.Container>

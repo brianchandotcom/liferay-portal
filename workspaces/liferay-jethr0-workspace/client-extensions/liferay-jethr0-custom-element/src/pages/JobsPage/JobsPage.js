@@ -61,7 +61,10 @@ function JobsPage() {
 	return (
 		<ClayLayout.Container>
 			<Jethr0Card>
+				<Jethr0NavigationBar active="Jobs" />
+
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
+
 				<Jethr0ContainerFluid>
 					<ClayLayout.Row justify="between">
 						<Heading level={3} weight="lighter">
@@ -74,7 +77,7 @@ function JobsPage() {
 						/>
 					</ClayLayout.Row>
 				</Jethr0ContainerFluid>
-				<Jethr0NavigationBar active="Jobs" />
+
 				<Jethr0Table>
 					<thead>
 						<tr>

@@ -112,10 +112,13 @@ function JobQueuePage() {
 		<ClayLayout.Container>
 			<Jethr0Card>
 				<Jethr0NavigationBar active="Home" />
+
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
+
 				<Heading level={3} weight="lighter">
 					Job Queue
 				</Heading>
+
 				<JobQueue />
 			</Jethr0Card>
 		</ClayLayout.Container>

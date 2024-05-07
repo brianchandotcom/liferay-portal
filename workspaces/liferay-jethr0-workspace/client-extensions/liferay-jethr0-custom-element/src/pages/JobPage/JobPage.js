@@ -134,21 +134,25 @@ function JobInformation({job}) {
 					fieldType="STRING"
 					fieldValue={job.name}
 				/>
+
 				<Jethr0InformationField
 					fieldLabel="Job ID"
 					fieldType="STRING"
 					fieldValue={job.id}
 				/>
+
 				<Jethr0InformationField
 					fieldLabel="Job State"
 					fieldType="STRING"
 					fieldValue={job.state.name}
 				/>
+
 				<Jethr0InformationField
 					fieldLabel="Job Type"
 					fieldType="STRING"
 					fieldValue={job.type.name}
 				/>
+
 				{job.routine && (
 					<Jethr0InformationField
 						fieldLabel="Routine"
@@ -157,21 +161,25 @@ function JobInformation({job}) {
 						fieldValue={job.routine.name}
 					/>
 				)}
+
 				<Jethr0InformationField
 					fieldLabel="Create Date"
 					fieldType="DATE"
 					fieldValue={job.dateCreated}
 				/>
+
 				<Jethr0InformationField
 					fieldLabel="Modified Date"
 					fieldType="DATE"
 					fieldValue={job.dateModified}
 				/>
+
 				<Jethr0InformationField
 					fieldLabel="Start Date"
 					fieldType="DATE"
 					fieldValue={job.startDate}
 				/>
+
 				{jobDefinition.jobDefinitionParameters &&
 					jobParameters?.map((jobParameter) => {
 						let parameter;

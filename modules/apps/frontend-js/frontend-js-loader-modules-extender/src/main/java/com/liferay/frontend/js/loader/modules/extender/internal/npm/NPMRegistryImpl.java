@@ -348,7 +348,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		_serviceTracker.close();
 
+		_activationThreadLocal.set(Boolean.TRUE);
+
 		_bundleTracker.close();
+
+		_activationThreadLocal.set(Boolean.FALSE);
 	}
 
 	@Modified

@@ -694,7 +694,7 @@ pre[class*='language-'] {
 .learn-card,
 .section-card {
 	border: 1px solid rgba(9, 16, 24, 0.12);
-	border-radius: var(--border-radius-lg);
+	border-radius: var(--border-radius);
 	box-shadow: 0 6px 15px -6px rgba(9, 16, 29, 0.06);
 	cursor: pointer;
 	flex: 0 0 calc(50% - var(--spacer-3));

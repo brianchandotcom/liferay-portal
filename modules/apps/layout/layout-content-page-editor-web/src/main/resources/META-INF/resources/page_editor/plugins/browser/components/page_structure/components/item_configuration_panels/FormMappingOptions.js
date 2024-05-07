@@ -65,6 +65,7 @@ export default function FormMappingOptions({
 	return (
 		<>
 			<SelectField
+				className="mb-2"
 				field={{
 					hideLabel,
 					label: Liferay.Language.get('content-type'),

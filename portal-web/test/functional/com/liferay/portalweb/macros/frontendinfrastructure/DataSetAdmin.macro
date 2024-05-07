@@ -50,15 +50,15 @@ definition {
 			}
 
 			if (isSet(title)) {
-				if (IsElementPresent(key_fieldName = "add-here-the-title-of-the-modal", locator1 = "DataSet#PRESELECT_VALUE_INPUT")) {
+				if (IsElementPresent(key_fieldName = "Add the title of the modal.", locator1 = "DataSet#PRESELECT_VALUE_INPUT")) {
 					Type(
-						key_fieldName = "add-here-the-title-of-the-modal",
+						key_fieldName = "Add the title of the modal.",
 						locator1 = "DataSet#PRESELECT_VALUE_INPUT",
 						value1 = ${title});
 				}
 				else {
 					Type(
-						key_fieldName = "add-here-the-title-of-the-side-panel",
+						key_fieldName = "Add the title of the side panel.",
 						locator1 = "DataSet#PRESELECT_VALUE_INPUT",
 						value1 = ${title});
 				}
@@ -742,15 +742,15 @@ definition {
 		}
 
 		if (isSet(newTitle)) {
-			if (IsElementPresent(key_fieldName = "add-here-the-title-of-the-modal", locator1 = "DataSet#PRESELECT_VALUE_INPUT")) {
+			if (IsElementPresent(key_fieldName = "Add the title of the modal.", locator1 = "DataSet#PRESELECT_VALUE_INPUT")) {
 				Type(
-					key_fieldName = "add-here-the-title-of-the-modal",
+					key_fieldName = "Add the title of the modal.",
 					locator1 = "DataSet#PRESELECT_VALUE_INPUT",
 					value1 = ${newTitle});
 			}
 			else {
 				Type(
-					key_fieldName = "add-here-the-title-of-the-side-panel",
+					key_fieldName = "Add the title of the side panel.",
 					locator1 = "DataSet#PRESELECT_VALUE_INPUT",
 					value1 = ${newTitle});
 			}

@@ -153,7 +153,7 @@ definition {
 
 		task ("And Title field is displayed") {
 			AssertElementPresent(
-				key_placeholder = "add-here-the-title-of-the-modal",
+				key_placeholder = "Add the title of the modal.",
 				locator1 = "FrontendDataSet#PLACEHOLDER");
 		}
 
@@ -211,7 +211,7 @@ definition {
 
 		task ("Then the Panel Title field is displayed") {
 			AssertElementPresent(
-				key_fieldName = "add-here-the-title-of-the-side-panel",
+				key_fieldName = "Add the title of the side panel",
 				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
 				value1 = "");
 		}
@@ -309,7 +309,7 @@ definition {
 				value1 = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
 
 			AssertElementPresent(
-				key_fieldName = "add-here-the-title-of-the-modal",
+				key_fieldName = "Add the title of the modal.",
 				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
 				value1 = "Edit side panel");
 
@@ -454,7 +454,7 @@ definition {
 				value1 = "Small");
 
 			AssertElementPresent(
-				key_fieldName = "add-here-the-title-of-the-modal",
+				key_fieldName = "Add the title of the modal.",
 				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
 				value1 = "Edit item Action");
 		}
@@ -2555,12 +2555,12 @@ definition {
 
 		task ("Then an error message is displayed") {
 			Type(
-				key_fieldName = "add-here-the-title-of-the-side-panel",
+				key_fieldName = "Add the title of the side panel",
 				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
 				value1 = "test");
 
 			Type(
-				key_fieldName = "add-here-the-title-of-the-side-panel",
+				key_fieldName = "Add the title of the side panel",
 				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
 				value1 = "");
 
@@ -3845,7 +3845,7 @@ definition {
 
 		task ("And go to Edit page for the action item created and leave the required fields, label, title and url empty") {
 			Type(
-				key_fieldName = "add-here-the-title-of-the-modal",
+				key_fieldName = "Add the title of the modal.",
 				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
 				value1 = "");
 

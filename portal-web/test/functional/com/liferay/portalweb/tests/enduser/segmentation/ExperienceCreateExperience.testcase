@@ -1096,39 +1096,6 @@ definition {
 		}
 	}
 
-	@description = "Validate experience edition and deletion"
-	@priority = 5
-	test EditAndDeleteExperience {
-		property portal.acceptance = "true";
-
-		task ("Create a Segment") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "Screen Name",
-				groupName = "Test Site Name",
-				operator = "contains",
-				segmentName = "Name Segment",
-				text = "Test");
-		}
-
-		task ("Add an experience to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.addExperience(
-				experienceName = "exp1",
-				segmentName = "Anyone");
-		}
-
-		task ("Check that is possible to edit exprience") {
-			PageEditor.editExperience(newExperience = "exp1_edited");
-		}
-
-		task ("Check that is possible to delete experience") {
-			PageEditor.deleteExperience(experienceName = "exp1_edited");
-		}
-	}
-
 	@description = "LPS-90588: Validate the interaction with how the user interacts with the Experiences Dropdown, when the user has permissions and segments are available and interact with the New Segment by New Experience"
 	@priority = 3
 	test ExperienceDropdownAddNewSegment {

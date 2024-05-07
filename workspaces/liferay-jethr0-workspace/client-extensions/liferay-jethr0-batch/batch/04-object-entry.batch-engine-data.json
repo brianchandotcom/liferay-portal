@@ -17,6 +17,10 @@
 		{
 			"externalReferenceCode": "liferay",
 			"url": "https://github.com/liferay"
+		},
+		{
+			"externalReferenceCode": "liferay-ac",
+			"url": "https://github.com/liferay-ac"
 		}
 	]
 }

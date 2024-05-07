@@ -129,6 +129,12 @@
 			"r_gitUserToGitBranches_c_gitUserERC": "brianchandotcom",
 			"type": "upstream",
 			"url": "https://github.com/brianchandotcom/liferay-portal/tree/master"
+		},
+		{
+			"externalReferenceCode": "liferayPortalMasterFaro48x",
+			"r_gitUserToGitBranches_c_gitUserERC": "liferay-ac",
+			"type": "upstream",
+			"url": "https://github.com/liferay-ac/liferay-portal/tree/faro-v4.8.x"
 		}
 	]
 }

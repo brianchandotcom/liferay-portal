@@ -21,6 +21,50 @@
 			"type": "cron"
 		},
 		{
+			"cron": "0 0 16 ? * * *",
+			"externalReferenceCode": "analyticsCloudAcceptanceController",
+			"jobName": "ci:test:analytics-cloud-acceptance - master - $[current_date]",
+			"jobParameters": "[{\"key\":\"osbAsahBranchURL\",\"value\":\"https://github.com/liferay/com-liferay-osb-asah-private/tree/latest\"},{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal/tree/master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"master\"},{\"key\":\"testrayProjectName\",\"value\":\"Analytics Cloud\"},{\"key\":\"testrayRoutineName\",\"value\":\"[master] ci:test:analytics-cloud-acceptance\"},{\"key\":\"testSuiteName\",\"value\":\"analytics-cloud-acceptance\"}]",
+			"jobPriority": 5,
+			"jobType": "portalUpstream",
+			"name": "ci:test:analytics-cloud-acceptance - master",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalMaster",
+			"type": "upstreamBranchCron"
+		},
+		{
+			"cron": "0 0 18 ? * * *",
+			"externalReferenceCode": "analyticsCloudQuarantineController",
+			"jobName": "ci:test:analytics-cloud-quarantine - master - $[current_date]",
+			"jobParameters": "[{\"key\":\"osbAsahBranchURL\",\"value\":\"https://github.com/liferay/com-liferay-osb-asah-private/tree/7.0.x\"},{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal/tree/master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"master\"},{\"key\":\"testrayProjectName\",\"value\":\"Analytics Cloud\"},{\"key\":\"testrayRoutineName\",\"value\":\"[master] ci:test:analytics-cloud-quarantine\"},{\"key\":\"testSuiteName\",\"value\":\"analytics-cloud-quarantine\"}]",
+			"jobPriority": 5,
+			"jobType": "portalUpstream",
+			"name": "ci:test:analytics-cloud-quarantine - master",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalMaster",
+			"type": "upstreamBranchCron"
+		},
+		{
+			"cron": "0 0 20 ? * * *",
+			"externalReferenceCode": "analyticsCloudReleaseController",
+			"jobName": "ci:test:analytics-cloud-release - faro-v4.8.x - $[current_date]",
+			"jobParameters": "[{\"key\":\"osbAsahBranchURL\",\"value\":\"https://github.com/liferay/com-liferay-osb-asah-private/tree/4.7.x\"},{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay-ac/liferay-portal/tree/faro-v4.8.x\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"master\"},{\"key\":\"testrayProjectName\",\"value\":\"Analytics Cloud\"},{\"key\":\"testrayRoutineName\",\"value\":\"[master] ci:test:analytics-cloud-release\"},{\"key\":\"testSuiteName\",\"value\":\"analytics-cloud-release\"}]",
+			"jobPriority": 5,
+			"jobType": "portalUpstream",
+			"name": "ci:test:analytics-cloud-release - faro-v4.8.x",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalMasterFaro48x",
+			"type": "upstreamBranchCron"
+		},
+		{
+			"cron": "0 0 16 ? * * *",
+			"externalReferenceCode": "analyticsCloudUpstreamController",
+			"jobName": "ci:test:analytics-cloud-upstream - master - $[current_date]",
+			"jobParameters": "[{\"key\":\"osbAsahBranchURL\",\"value\":\"https://github.com/liferay/com-liferay-osb-asah-private/tree/7.0.x\"},{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal/tree/master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"master\"},{\"key\":\"testrayProjectName\",\"value\":\"Analytics Cloud\"},{\"key\":\"testrayRoutineName\",\"value\":\"[master] ci:test:analytics-cloud-upstream\"},{\"key\":\"testSuiteName\",\"value\":\"analytics-cloud-upstream\"}]",
+			"jobPriority": 5,
+			"jobType": "portalUpstream",
+			"name": "ci:test:analytics-cloud-upstream - master",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalMaster",
+			"type": "upstreamBranchCron"
+		},
+		{
 			"cron": "0 0/30 * ? * *",
 			"externalReferenceCode": "approveGitHubCollaboratorInvitesController",
 			"jobName": "Approve GitHub Collaborator Invites - $[current_date]",

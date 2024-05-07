@@ -39,11 +39,8 @@ import {RangeKeyTimeRanges, SessionEntityTypes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {useQuery} from '@apollo/react-hooks';
 import {useSelectedPoint} from 'shared/hooks/useSelectedPoint';
-import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 import {withEmpty} from 'cerebro-shared/hocs/utils';
 import {withError, withLoading, WrapSafeResults} from 'shared/hoc/util';
-
-const DEFAULT_SESSIONS_DELTA = 50;
 
 const formatTimestamp = (timestamp: number) => {
 	const date = new Date(timestamp);
@@ -63,36 +60,38 @@ const PaginatedVerticalTimeline = compose<any>(
 
 interface IProfileCardProps extends React.HTMLAttributes<HTMLElement> {
 	channelId: string;
+	delta: number;
 	entity: Individual;
 	interval: Interval;
 	onChangeInterval: (interval: Interval) => void;
+	onDeltaChange: (delta: number) => void;
+	onPageChange: (page: number) => void;
 	onRangeSelectorsChange: (rangeSelectors: RangeSelectors) => void;
+	onQueryChange: (query: string) => void;
+	page: number;
+	query: string;
 	rangeSelectors: RangeSelectors;
+	resetPage: () => void;
 	tabId: string;
-	timeZoneId: string;
+	timeZoneId?: string;
 }
 
 const ProfileCard: React.FC<IProfileCardProps> = ({
 	channelId,
+	delta,
 	entity: {id: entityId},
 	interval,
 	onChangeInterval,
+	onDeltaChange,
+	onPageChange,
+	onQueryChange,
 	onRangeSelectorsChange,
+	page,
+	query,
 	rangeSelectors,
+	resetPage,
 	timeZoneId
 }) => {
-	const {
-		delta,
-		onDeltaChange,
-		onPageChange,
-		onQueryChange,
-		page,
-		query,
-		resetPage
-	} = useStatefulPagination(null, {
-		initialDelta: DEFAULT_SESSIONS_DELTA
-	});
-
 	const {hasSelectedPoint, onPointSelect, selectedPoint} = useSelectedPoint();
 	const [searchValue, setSearchValue] = useState<string>('');
 

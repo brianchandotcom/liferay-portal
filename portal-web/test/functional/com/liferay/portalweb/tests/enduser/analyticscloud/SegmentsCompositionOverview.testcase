@@ -57,15 +57,15 @@ definition {
 		task ("Interact to the page and blog") {
 			ACUtils.navigateToSitePageWithUser(
 				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
+				documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
 				emailList = "testac@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Launch AC and navigate to Segments") {
-			ACUtils.closeAllSessionsAndWait();
-
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});

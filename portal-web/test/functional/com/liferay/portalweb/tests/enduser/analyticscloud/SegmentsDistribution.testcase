@@ -60,20 +60,17 @@ definition {
 	@priority = 5
 	test CanDistributionChartFilteredDateProperty {
 		task ("View AC Page as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-
-			ACUtils.navigateToSitePage(
+			ACUtils.navigateToSitePageWithUser(
 				actionType = "View WC",
-				documentTitleList = "1,2,3,4",
+				documentTitleList = "1,2,3,4,5,6",
+				emailList = "userea@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
-			ACUtils.closeAllSessionsAndWait();
-
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});

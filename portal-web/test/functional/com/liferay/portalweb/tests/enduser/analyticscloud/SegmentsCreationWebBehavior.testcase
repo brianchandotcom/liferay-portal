@@ -192,7 +192,7 @@ definition {
 
 		ACUtils.createDMAndAddToPage();
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "ac@liferay.com",
@@ -209,7 +209,7 @@ definition {
 
 		ACUtils.navigateToSitePageWithUser(
 			actionType = "Download DM",
-			documentTitleList = "DM AC Title",
+			documentTitleList = "DM AC Title,DM AC Title,DM AC Title",
 			emailList = "ac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
@@ -218,7 +218,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = ${propertyName});
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToSegments();
 
@@ -232,7 +232,7 @@ definition {
 			documentTitle = "DM AC Title",
 			indexField = 1);
 
-		ACSegments.setOccurence(occurenceNumber = 4);
+		ACSegments.setOccurence(occurenceNumber = 3);
 
 		ACSegments.saveSegment();
 
@@ -269,8 +269,6 @@ definition {
 
 		ACUtils.createWCAndAddToPage();
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
 		JSONUser.addUser(
 			userEmailAddress = "ac@liferay.com",
 			userFirstName = "ac",
@@ -282,13 +280,12 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "ac@liferay.com");
 
-		ACDXPSettings.syncNewContactData();
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
-
-		ACUtils.navigateToSitePage(
+		ACUtils.navigateToSitePageWithUser(
+			actionType = "View WC",
+			documentTitleList = "1,2,3",
+			emailList = "ac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -296,7 +293,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = ${propertyName});
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToSegments();
 
@@ -308,7 +305,7 @@ definition {
 
 		ACSegments.editWebBehaviorCriterion(
 			indexField = 1,
-			occurenceNumber = 4,
+			occurenceNumber = 3,
 			searchTerm = "Web Content AC Title",
 			timeOption = "since",
 			timePeriod = "Last 7 days");

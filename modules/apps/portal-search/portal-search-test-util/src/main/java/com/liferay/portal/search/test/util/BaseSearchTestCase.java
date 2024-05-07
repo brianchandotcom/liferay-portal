@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
+import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.randomizerbumpers.BBCodeRandomizerBumper;
 
 import java.util.Locale;

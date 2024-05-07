@@ -219,6 +219,7 @@ public interface JobEntity extends Entity {
 		PORTAL_PULL_REQUEST("portalPullRequest", "Portal Pull Request"),
 		PORTAL_PULL_REQUEST_SF("portalPullRequestSF", "Portal Pull Request SF"),
 		PORTAL_RELEASE("portalRelease", "Portal Release"),
+		PORTAL_UPSTREAM("portalUpstream", "Portal Upstream"),
 		PORTAL_UPSTREAM_ACCEPTANCE(
 			"portalUpstreamAcceptance", "Portal Upstream Acceptance"),
 		PORTAL_UPSTREAM_TEST_SUITE(

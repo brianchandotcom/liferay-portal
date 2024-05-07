@@ -238,6 +238,39 @@
 			"type": "upstreamBranchCron"
 		},
 		{
+			"cron": "0 0 0,8,16 ? * * *",
+			"externalReferenceCode": "portalUpstreamControllerRelease2023Q3AcceptanceUpstream",
+			"jobName": "ci:test:acceptance-upstream - release-2023.q3 - $[current_date]",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal-ee/tree/release-2023.q3\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"release-2023.q3\"},{\"key\":\"testSuiteName\",\"value\":\"acceptance-upstream\"}]",
+			"jobPriority": 3,
+			"jobType": "portalUpstream",
+			"name": "ci:test:acceptance-upstream - release-2023.q3",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalEERelease2023Q3",
+			"type": "upstreamBranchCron"
+		},
+		{
+			"cron": "0 0 2,10,18 ? * * *",
+			"externalReferenceCode": "portalUpstreamControllerRelease2023Q4AcceptanceUpstream",
+			"jobName": "ci:test:acceptance-upstream - release-2023.q4 - $[current_date]",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal-ee/tree/release-2023.q4\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"release-2023.q4\"},{\"key\":\"testSuiteName\",\"value\":\"acceptance-upstream\"}]",
+			"jobPriority": 3,
+			"jobType": "portalUpstream",
+			"name": "ci:test:acceptance-upstream - release-2023.q4",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalEERelease2023Q4",
+			"type": "upstreamBranchCron"
+		},
+		{
+			"cron": "0 0 4,12,20 ? * * *",
+			"externalReferenceCode": "portalUpstreamControllerRelease2024Q1AcceptanceUpstream",
+			"jobName": "ci:test:acceptance-upstream - release-2024.q1 - $[current_date]",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal-ee/tree/release-2024.q1\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"release-2024.q1\"},{\"key\":\"testSuiteName\",\"value\":\"acceptance-upstream\"}]",
+			"jobPriority": 3,
+			"jobType": "portalUpstream",
+			"name": "ci:test:acceptance-upstream - release-2024.q1",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalEERelease2024Q1",
+			"type": "upstreamBranchCron"
+		},
+		{
 			"cron": "0 0 0 ? * 2 *",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE62xUpstream",
 			"jobName": "ci:test:upstream - ee-6.2.x - $[current_date]",

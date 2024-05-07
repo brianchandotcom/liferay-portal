@@ -634,6 +634,31 @@
 			"label": "Portal Release"
 		},
 		{
+			"externalReferenceCode": "portalUpstream",
+			"jobDefinitionsToJobDefinitionParameters": [
+				{
+					"externalReferenceCode": "jenkinsBranchURL"
+				},
+				{
+					"externalReferenceCode": "portalBranchSHA"
+				},
+				{
+					"externalReferenceCode": "portalBranchURL"
+				},
+				{
+					"externalReferenceCode": "portalBuildProfile"
+				},
+				{
+					"externalReferenceCode": "portalUpstreamBranchName"
+				},
+				{
+					"externalReferenceCode": "testSuiteName"
+				}
+			],
+			"key": "portalUpstream",
+			"label": "Portal Upstream"
+		},
+		{
 			"externalReferenceCode": "portalUpstreamAcceptance",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{

@@ -565,6 +565,14 @@
 					}
 				},
 				{
+					"externalReferenceCode": "portalUpstream",
+					"key": "portalUpstream",
+					"name": "Portal Upstream",
+					"name_i18n": {
+						"en-US": "Portal Upstream"
+					}
+				},
+				{
 					"externalReferenceCode": "portalUpstreamAcceptance",
 					"key": "portalUpstreamAcceptance",
 					"name": "Portal Upstream Acceptance",

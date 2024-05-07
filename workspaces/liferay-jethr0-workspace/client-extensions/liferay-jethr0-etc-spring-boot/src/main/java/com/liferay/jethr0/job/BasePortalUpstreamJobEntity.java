@@ -5,8 +5,6 @@
 
 package com.liferay.jethr0.job;
 
-import com.liferay.jethr0.util.StringUtil;
-
 import java.net.URL;
 
 import org.json.JSONObject;
@@ -18,19 +16,18 @@ public abstract class BasePortalUpstreamJobEntity
 	extends BaseJobEntity implements PortalUpstreamJobEntity {
 
 	@Override
+	public URL getOSBAsahBranchURL() {
+		return getParameterValueURL("osbAsahBranchURL");
+	}
+
+	@Override
 	public String getPortalBranchSHA() {
 		return getParameterValue("portalBranchSHA");
 	}
 
 	@Override
 	public URL getPortalBranchURL() {
-		String upstreamBranchURL = getParameterValue("portalBranchURL");
-
-		if (StringUtil.isNullOrEmpty(upstreamBranchURL)) {
-			return null;
-		}
-
-		return StringUtil.toURL(upstreamBranchURL);
+		return getParameterValueURL("portalBranchURL");
 	}
 
 	@Override
@@ -44,8 +41,28 @@ public abstract class BasePortalUpstreamJobEntity
 	}
 
 	@Override
+	public String getTestrayBuildName() {
+		return getParameterValue("testrayBuildName");
+	}
+
+	@Override
+	public String getTestrayProjectName() {
+		return getParameterValue("testrayProjectName");
+	}
+
+	@Override
+	public String getTestrayRoutineName() {
+		return getParameterValue("testrayRoutineName");
+	}
+
+	@Override
 	public String getTestSuiteName() {
 		return getParameterValue("testSuiteName");
+	}
+
+	@Override
+	public void setOSBAsahBranchURL(URL osbAsahBranchURL) {
+		setParameterValueURL("osbAsahBranchURL", osbAsahBranchURL);
 	}
 
 	@Override
@@ -55,12 +72,27 @@ public abstract class BasePortalUpstreamJobEntity
 
 	@Override
 	public void setPortalBranchURL(URL portalBranchURL) {
-		setParameterValue("portalBranchURL", String.valueOf(portalBranchURL));
+		setParameterValueURL("portalBranchURL", portalBranchURL);
 	}
 
 	@Override
 	public void setPortalBuildProfile(String portalBuildProfile) {
 		setParameterValue("portalBuildProfile", portalBuildProfile);
+	}
+
+	@Override
+	public void setTestrayBuildName(String testrayBuildName) {
+		setParameterValue("testrayBuildName", testrayBuildName);
+	}
+
+	@Override
+	public void setTestrayProjectName(String testrayProjectName) {
+		setParameterValue("testrayProjectName", testrayProjectName);
+	}
+
+	@Override
+	public void setTestrayRoutineName(String testrayRoutineName) {
+		setParameterValue("testrayRoutineName", testrayRoutineName);
 	}
 
 	@Override

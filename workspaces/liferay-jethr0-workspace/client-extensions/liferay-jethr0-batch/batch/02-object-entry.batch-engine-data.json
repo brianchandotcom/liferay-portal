@@ -104,6 +104,14 @@
 			"valueRegex": "https?://.+"
 		},
 		{
+			"externalReferenceCode": "osbAsahBranchURL",
+			"key": "osbAsahBranchURL",
+			"label": "OSB Asah URL",
+			"type": "url",
+			"valueDescription": "e.g. https://github.com/[user]/com-liferay-osb-asah-private/tree/[branch]",
+			"valueRegex": "https://github.com/[^/]+/com-liferay-osb-asah-private/tree/[^/]+"
+		},
+		{
 			"externalReferenceCode": "pluginName",
 			"key": "pluginName",
 			"label": "Plugin Name",

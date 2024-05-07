@@ -28,11 +28,18 @@ public class TestSuitePortalUpstreamJobEntity
 
 		initialBuildParameters.put(
 			"CI_TEST_SUITE", String.valueOf(getTestSuiteName()));
+		initialBuildParameters.put(
+			"OSB_ASAH_GITHUB_URL", String.valueOf(getOSBAsahBranchURL()));
 		initialBuildParameters.put("PORTAL_GIT_COMMIT", getPortalBranchSHA());
 		initialBuildParameters.put(
 			"PORTAL_GITHUB_URL", String.valueOf(getPortalBranchURL()));
 		initialBuildParameters.put(
 			"TEST_PORTAL_BUILD_PROFILE", getPortalBuildProfile());
+		initialBuildParameters.put("TESTRAY_BUILD_NAME", getTestrayBuildName());
+		initialBuildParameters.put(
+			"TESTRAY_PROJECT_NAME", getTestrayProjectName());
+		initialBuildParameters.put(
+			"TESTRAY_ROUTINE_NAME", getTestrayRoutineName());
 
 		return initialBuildParameters;
 	}

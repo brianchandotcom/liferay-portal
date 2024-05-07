@@ -367,6 +367,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 		RoleSearchTerms searchTerms =
 			(RoleSearchTerms)roleSearchContainer.getSearchTerms();
 
+		setKeywords(searchTerms.getKeywords());
+
 		boolean filterGroupRoles = !ResourceActionsUtil.isPortalModelResource(
 			getModelResource());
 
@@ -468,7 +470,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 				RoleVisibilityConfiguration.class,
 				_themeDisplay.getCompanyId());
 
-		if (Validator.isNull(searchTerms.getKeywords())) {
+		if (Validator.isNull(_getKeywords())) {
 			if (stricterRoleVisibilityConfiguration.
 					restrictPermissionSelectorRoleVisibility()) {
 
@@ -628,6 +630,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 			"updateRolePermissions"
 		).setMVCPath(
 			"/edit_permissions.jsp"
+		).setKeywords(
+			_getKeywords()
 		).setPortletResource(
 			_getPortletResource()
 		).setParameter(
@@ -658,6 +662,10 @@ public class PortletConfigurationPermissionsDisplayContext {
 		).buildPortletURL();
 	}
 
+	public void setKeywords(String keywords) {
+		_keywords = keywords;
+	}
+
 	private int[] _getGroupRoleTypes(Group group, int[] defaultRoleTypes) {
 		if (group == null) {
 			return defaultRoleTypes;
@@ -672,6 +680,16 @@ public class PortletConfigurationPermissionsDisplayContext {
 		}
 
 		return defaultRoleTypes;
+	}
+
+	private String _getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+
+		return _keywords;
 	}
 
 	private String _getPortletResource() {
@@ -743,6 +761,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 	private final long _groupId;
 	private List<String> _guestUnsupportedActions;
 	private final HttpServletRequest _httpServletRequest;
+	private String _keywords;
 	private String _modelResource;
 	private String _modelResourceDescription;
 	private String _portletResource;

@@ -369,11 +369,11 @@ translationTest(
 
 		await markAsTranslatedButton.click();
 
-		const confirmMarkAsTranslatedButton = page
-			.getByLabel('Mark ca_ES as Translated')
-			.getByRole('button', {name: 'Mark as Translated'});
+		await expect(
+			page.getByRole('heading', {name: 'Mark "ca_ES" as Translated'})
+		).toBeVisible();
 
-		await confirmMarkAsTranslatedButton.click();
+		await page.getByRole('button', {name: 'Mark as Translated'}).click();
 
 		await translationButton.click();
 

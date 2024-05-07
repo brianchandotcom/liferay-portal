@@ -1,12 +1,12 @@
 [
 	{
 		"externalReferenceCode": "ERC-001",
-		"name": "Test Account LXC - SM",
+		"name": "Test Account Liferay PaaS",
 		"type": "business"
 	},
 	{
 		"externalReferenceCode": "ERC-002",
-		"name": "Test Account DXP",
+		"name": "Test Account Liferay Self-Hosted",
 		"type": "business"
 	},
 	{

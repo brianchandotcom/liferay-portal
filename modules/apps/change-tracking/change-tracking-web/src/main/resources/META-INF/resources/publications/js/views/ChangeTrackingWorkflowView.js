@@ -19,15 +19,13 @@ export default function ChangeTrackingWorkflowView({
 
 	const [next, setNext] = useState(MAX_ITEMS_TO_SHOW);
 
-	const workflowActivities = JSON.parse(workflowData.activities);
-	const workflowCommentsURL = JSON.parse(workflowData.comments);
-
 	return (
 		<div>
 			<ClayTable
 				borderless
 				className="publications-render-table table table-autofit table-nowrap"
 				hover={false}
+				striped
 			>
 				<ClayTable.Head />
 
@@ -52,41 +50,47 @@ export default function ChangeTrackingWorkflowView({
 						<ClayTable.Cell className="table-cell-expand">
 							{workflowData.assignedTo}
 
-							<ClayButton
-								className="ml-2"
-								displayType="secondary"
-								onClick={() =>
-									Liferay.Util.openModal({
-										center: true,
-										customEvents: [
-											{
-												name: `${namespace}workflowTaskUpdated`,
-												onEvent() {
-													const iframe = document.querySelector(
-														'.liferay-modal iframe'
-													);
+							{workflowData.assignButton && (
+								<ClayButton
+									className="ml-2"
+									displayType="secondary"
+									onClick={() =>
+										Liferay.Util.openModal({
+											center: true,
+											customEvents: [
+												{
+													name: `${namespace}workflowTaskUpdated`,
+													onEvent() {
+														const iframe = document.querySelector(
+															'.liferay-modal iframe'
+														);
 
-													iframe.contentWindow.location.reload();
+														iframe.contentWindow.location.reload();
 
-													setShowWorkflowSuccessMessage(
-														true
-													);
+														setShowWorkflowSuccessMessage(
+															true
+														);
+													},
 												},
-											},
-										],
-										height:
-										workflowData.assignButton.modalHeight,
-										onOpen: () =>
-											setShowWorkflowSuccessMessage(false),
-										size: 'lg',
-										title: workflowData.assignButton.label,
-										url: workflowData.assignButton.href,
-									})
-								}
-								size="xs"
-							>
-								{workflowData.assignButton.assignLabel}
-							</ClayButton>
+											],
+											height:
+												workflowData.assignButton
+													.modalHeight,
+											onOpen: () =>
+												setShowWorkflowSuccessMessage(
+													false
+												),
+											size: 'lg',
+											title:
+												workflowData.assignButton.label,
+											url: workflowData.assignButton.href,
+										})
+									}
+									size="xs"
+								>
+									{workflowData.assignButton.label}
+								</ClayButton>
+							)}
 						</ClayTable.Cell>
 					</ClayTable.Row>
 
@@ -140,10 +144,10 @@ export default function ChangeTrackingWorkflowView({
 						<ClayTable.Cell className="table-cell-expand">
 							<a
 								href={Liferay.Util.escape(
-									workflowCommentsURL.url
+									workflowData.comments.url
 								)}
 							>
-								{workflowCommentsURL.title}
+								{workflowData.comments.title}
 							</a>
 						</ClayTable.Cell>
 					</ClayTable.Row>
@@ -172,24 +176,28 @@ export default function ChangeTrackingWorkflowView({
 							{Liferay.Language.get('date')}
 						</th>
 
-						{Object.keys(workflowActivities)
+						{Object.keys(workflowData.activities)
 							.reverse()
 							.slice(0, next)
 							?.map((id) => (
 								<tr key={id}>
 									<td className="bg-white">
-										{workflowActivities[id].description}
+										{
+											workflowData.activities[id]
+												.description
+										}
 										&nbsp;
-										{workflowActivities[id].comment}
+										{workflowData.activities[id].comment}
 									</td>
 
 									<td className="bg-white">
-										{workflowActivities[id].createDate}
+										{workflowData.activities[id].createDate}
 									</td>
 								</tr>
 							))}
 
-						{next < Object.keys(workflowActivities)?.length && (
+						{next <
+							Object.keys(workflowData.activities)?.length && (
 							<ClayButton
 								borderless
 								onClick={() =>

@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -646,11 +645,11 @@ public class GetEntryRenderDataMVCResourceCommand
 				jsonObject.put("workflowActions", workflowActionsJSONArray);
 			}
 
-			Map<String, Object> workflowData = _getWorkflowData(
+			JSONObject workflowDataJSONObject = _getWorkflowDataJSONObject(
 				ctEntry, rightModel, resourceResponse, themeDisplay);
 
-			if (workflowData != null) {
-				jsonObject.put("workflowData", workflowData);
+			if (workflowDataJSONObject != null) {
+				jsonObject.put("workflowData", workflowDataJSONObject);
 			}
 		}
 
@@ -1122,10 +1121,13 @@ public class GetEntryRenderDataMVCResourceCommand
 			));
 	}
 
-	private <T extends BaseModel<T>> Map<String, Object> _getWorkflowData(
+	private <T extends BaseModel<T>> JSONObject _getWorkflowDataJSONObject(
 			CTEntry ctEntry, T model, ResourceResponse resourceResponse,
 			ThemeDisplay themeDisplay)
 		throws Exception {
+
+		long currentCTCollectionId =
+			CTCollectionThreadLocal.getCTCollectionId();
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -1143,7 +1145,7 @@ public class GetEntryRenderDataMVCResourceCommand
 			Format format = FastDateFormatFactoryUtil.getDateTime(
 				themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
-			return LinkedHashMapBuilder.<String, Object>put(
+			return JSONUtil.put(
 				"activities",
 				() -> {
 					JSONObject workflowLogsJSONObject =
@@ -1180,32 +1182,38 @@ public class GetEntryRenderDataMVCResourceCommand
 							));
 					}
 
-					return String.valueOf(workflowLogsJSONObject);
+					return workflowLogsJSONObject;
 				}
 			).put(
 				"assignButton",
-				JSONUtil.put(
-					"href",
-					PortletURLBuilder.createRenderURL(
-						_portal.getLiferayPortletResponse(resourceResponse),
-						PortletKeys.MY_WORKFLOW_TASK
-					).setMVCPath(
-						"/workflow_task_assign.jsp"
-					).setParameter(
-						"assigneeUserId", -1
-					).setParameter(
-						"assignMode", "assignTo"
-					).setParameter(
-						"workflowTaskId", workflowTask.getWorkflowTaskId()
-					).setWindowState(
-						LiferayWindowState.POP_UP
-					).buildString()
-				).put(
-					"label",
-					_language.get(themeDisplay.getLocale(), "assign-to-...")
-				).put(
-					"modalHeight", "356px"
-				)
+				() -> {
+					if (currentCTCollectionId != ctEntry.getCtCollectionId()) {
+						return null;
+					}
+
+					return JSONUtil.put(
+						"href",
+						PortletURLBuilder.createRenderURL(
+							_portal.getLiferayPortletResponse(resourceResponse),
+							PortletKeys.MY_WORKFLOW_TASK
+						).setMVCPath(
+							"/workflow_task_assign.jsp"
+						).setParameter(
+							"assigneeUserId", -1
+						).setParameter(
+							"assignMode", "assignTo"
+						).setParameter(
+							"workflowTaskId", workflowTask.getWorkflowTaskId()
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).buildString()
+					).put(
+						"label",
+						_language.get(themeDisplay.getLocale(), "assign-to-...")
+					).put(
+						"modalHeight", "356px"
+					);
+				}
 			).put(
 				"assignedTo",
 				() -> {
@@ -1339,7 +1347,7 @@ public class GetEntryRenderDataMVCResourceCommand
 						"workflowTaskId", workflowTask.getWorkflowTaskId()
 					).buildString();
 				}
-			).build();
+			);
 		}
 	}
 

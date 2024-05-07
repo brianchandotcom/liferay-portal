@@ -77,4 +77,44 @@ export class WorkflowTasksPage {
 
 		await waitForSuccessAlert(this.page);
 	}
+
+	async reject(articleTitle: string) {
+		const row = await this.page
+			.getByRole('row')
+			.filter({hasText: articleTitle});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page
+				.locator('.dropdown-menu:visible')
+				.getByText('Reject', {exact: true}),
+			trigger: row.locator('.dropdown-toggle'),
+		});
+
+		await this.page.getByRole('button', {name: 'Done'}).click();
+
+		await waitForSuccessAlert(this.page);
+	}
+
+	async resubmit(articleTitle: string) {
+		await this.goto();
+
+		await this.page.reload();
+
+		const row = await this.page
+			.getByRole('row')
+			.filter({hasText: articleTitle});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page
+				.locator('.dropdown-menu:visible')
+				.getByText('Resubmit', {exact: true}),
+			trigger: row.locator('.dropdown-toggle'),
+		});
+
+		await this.page.getByRole('button', {name: 'Done'}).click();
+
+		await waitForSuccessAlert(this.page);
+	}
 }

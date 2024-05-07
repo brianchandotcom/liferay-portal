@@ -1207,7 +1207,7 @@ definition {
 			activitiesOption = "has",
 			atLeastMost = "at least",
 			occurenceNumber = 1,
-			searchTerm = "'AC Page - Site Name'",
+			searchTerm = "AC Page - Site Name",
 			timeOption = "since",
 			timePeriod = "Last 24 hours");
 

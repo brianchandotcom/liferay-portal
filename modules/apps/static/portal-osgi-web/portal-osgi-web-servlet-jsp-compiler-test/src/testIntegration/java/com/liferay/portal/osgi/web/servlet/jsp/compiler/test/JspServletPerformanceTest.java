@@ -203,6 +203,7 @@ public class JspServletPerformanceTest {
 					"<html><body>", _FILE_NAME_TEST_JSP, "</body></html>"));
 
 			jarOutputStream.closeEntry();
+			jarOutputStream.finish();
 
 			return new UnsyncByteArrayInputStream(
 				unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,

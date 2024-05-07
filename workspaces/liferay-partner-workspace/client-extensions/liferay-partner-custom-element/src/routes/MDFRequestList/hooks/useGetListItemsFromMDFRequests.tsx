@@ -7,6 +7,7 @@ import {useMemo} from 'react';
 
 import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
 import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
+import {MDFRequestListItem} from '../../../common/interfaces/mdfRequestListItem';
 import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
 import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
 import useGet from '../../../common/services/liferay/object/useGet';
@@ -16,6 +17,7 @@ import getMDFBudgetInfos from '../utils/getMDFBudgetInfos';
 import getMDFDates from '../utils/getMDFDates';
 
 export default function useGetListItemsFromMDFRequests(
+	isCSV: boolean,
 	page: number,
 	pageSize: number,
 	urlParams: URLSearchParams
@@ -27,11 +29,9 @@ export default function useGetListItemsFromMDFRequests(
 			}/mdfrequests?${urlParams.toString()}&page=${page}&pageSize=${pageSize}`
 	);
 
-	const listItems = useMemo(
-		() =>
-			swrResponse.data?.items?.map((item) => ({
-				[MDFColumnKey.ACCOUNT_ENTRY_ID]:
-					item.r_accToMDFReqs_accountEntryId,
+	const listItems = useMemo(() => {
+		return swrResponse.data?.items?.map((item) => {
+			const baseItem: MDFRequestListItem = {
 				[MDFColumnKey.BALANCE]: Number(item.totalPaidAmount)
 					? getIntlNumberFormat(item.currency).format(
 							Number(item.totalClaimedRequest) -
@@ -58,9 +58,16 @@ export default function useGetListItemsFromMDFRequests(
 					  ),
 				...getMDFDates(item.submitDate, item.dateModified),
 				...getMDFBudgetInfos(item.totalMDFRequestAmount, item.currency),
-			})),
-		[swrResponse.data?.items]
-	);
+			};
+
+			isCSV
+				? delete baseItem[MDFColumnKey.ACCOUNT_ENTRY_ID]
+				: (baseItem[MDFColumnKey.ACCOUNT_ENTRY_ID] =
+						item.r_accToMDFReqs_accountEntryId);
+
+			return baseItem;
+		});
+	}, [isCSV, swrResponse.data?.items]);
 
 	return {
 		...swrResponse,

@@ -70,6 +70,7 @@ const MDFRequestList = () => {
 	const debouncedRequestTableSort = useDebounce(requestTableSort, 1000);
 
 	const {data, isValidating, mutate} = useGetListItemsFromMDFRequests(
+		false,
 		pagination.activePage,
 		pagination.activeDelta,
 		setURLParams({
@@ -81,8 +82,9 @@ const MDFRequestList = () => {
 	);
 
 	const {data: dataCSV} = useGetListItemsFromMDFRequests(
+		true,
 		pagination.activePage,
-		-1,
+		pagination.maxItems,
 		setURLParams({
 			filter: filtersTerm,
 			nestedFields: 'mdfReqToMDFClms',

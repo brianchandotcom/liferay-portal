@@ -6,5 +6,5 @@
 import {MDFColumnKey} from '../enums/mdfColumnKey';
 
 export type MDFRequestListItem = {
-	[key in MDFColumnKey]?: string;
+	[key in MDFColumnKey]?: number | string;
 };

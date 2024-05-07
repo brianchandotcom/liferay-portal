@@ -58,23 +58,31 @@ public class ObjectEntryMTo1RelationshipSortDSLQueryVisitor
 		DynamicObjectDefinitionTable relatedDynamicObjectDefinitionTable =
 			(DynamicObjectDefinitionTable)getAliasedTable(
 				formatedRelationshipPathName,
-				_toDynamicObjectDefinitionTable(relatedObjectDefinition));
+				new DynamicObjectDefinitionTable(
+					relatedObjectDefinition,
+					objectFieldLocalService.getObjectFields(
+						relatedObjectDefinition.getObjectDefinitionId(),
+						relatedObjectDefinition.getDBTableName()),
+					relatedObjectDefinition.getDBTableName()));
+
+		ObjectDefinition objectDefinition =
+			relationshipSort.getObjectDefinition();
+
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			(DynamicObjectDefinitionTable)getAliasedTable(
+				StringUtil.removeLast(
+					formatedRelationshipPathName,
+					"_" + objectRelationship.getName()),
+				objectFieldLocalService.getTable(
+					objectDefinition.getObjectDefinitionId(), dbColumnName));
+
+		if (!contains(dslQuery, dynamicObjectDefinitionTable)) {
+			dslQuery = addLeftJoin(
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn(), dslQuery,
+				null, dynamicObjectDefinitionTable);
+		}
 
 		if (!contains(dslQuery, relatedDynamicObjectDefinitionTable)) {
-			DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-				(DynamicObjectDefinitionTable)getAliasedTable(
-					StringUtil.removeLast(
-						formatedRelationshipPathName,
-						"_" + objectRelationship.getName()),
-					_getDynamicObjectDefinitionTable(
-						relationshipSort.getObjectDefinition(), dbColumnName));
-
-			if (!contains(dslQuery, dynamicObjectDefinitionTable)) {
-				dslQuery = addLeftJoin(
-					dynamicObjectDefinitionTable.getPrimaryKeyColumn(),
-					dslQuery, null, dynamicObjectDefinitionTable);
-			}
-
 			dslQuery = addLeftJoin(
 				(Column<DynamicObjectDefinitionTable, Long>)
 					dynamicObjectDefinitionTable.getColumn(dbColumnName),
@@ -103,41 +111,6 @@ public class ObjectEntryMTo1RelationshipSortDSLQueryVisitor
 			));
 
 		return updateParents(baseASTNode, allBaseASTNodes);
-	}
-
-	private DynamicObjectDefinitionTable _getDynamicObjectDefinitionTable(
-			ObjectDefinition objectDefinition, String objectFieldName)
-		throws PortalException {
-
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_toDynamicObjectDefinitionTable(objectDefinition);
-
-		Column<DynamicObjectDefinitionTable, Long> column =
-			(Column<DynamicObjectDefinitionTable, Long>)
-				dynamicObjectDefinitionTable.getColumn(objectFieldName);
-
-		if (column == null) {
-			dynamicObjectDefinitionTable = new DynamicObjectDefinitionTable(
-				objectDefinition,
-				objectFieldLocalService.getObjectFields(
-					objectDefinition.getObjectDefinitionId(),
-					objectDefinition.getExtensionDBTableName()),
-				objectDefinition.getExtensionDBTableName());
-		}
-
-		return dynamicObjectDefinitionTable;
-	}
-
-	private DynamicObjectDefinitionTable _toDynamicObjectDefinitionTable(
-			ObjectDefinition objectDefinition)
-		throws PortalException {
-
-		return new DynamicObjectDefinitionTable(
-			objectDefinition,
-			objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId(),
-				objectDefinition.getDBTableName()),
-			objectDefinition.getDBTableName());
 	}
 
 }

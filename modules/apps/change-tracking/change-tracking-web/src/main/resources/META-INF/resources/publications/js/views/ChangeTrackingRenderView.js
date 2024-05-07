@@ -178,6 +178,8 @@ export default function ChangeTrackingRenderView({
 		view: VIEW_UNIFIED,
 	});
 
+	const currentContentType = state.contentType;
+
 	useEffect(() => {
 		setLoading(true);
 
@@ -236,6 +238,7 @@ export default function ChangeTrackingRenderView({
 
 				if (
 					newState.view === VIEW_UNIFIED &&
+					currentContentType !== CONTENT_TYPE_WORKFLOW &&
 					((newState.contentType === CONTENT_TYPE_RENDER &&
 						!Object.prototype.hasOwnProperty.call(
 							json,
@@ -275,6 +278,7 @@ export default function ChangeTrackingRenderView({
 			});
 	}, [
 		childEntries,
+		currentContentType,
 		dataURL,
 		parentEntries,
 		refresh,
@@ -1188,6 +1192,7 @@ export default function ChangeTrackingRenderView({
 					state.contentType === CONTENT_TYPE_PARENTS ||
 					state.contentType === CONTENT_TYPE_CHILDREN
 				}
+				striped={state.contentType !== CONTENT_TYPE_WORKFLOW}
 			>
 				<ClayTable.Head>{renderToolbar()}</ClayTable.Head>
 
@@ -1240,9 +1245,11 @@ export default function ChangeTrackingRenderView({
 						getTableRows(state.children)}
 
 					{state.contentType === CONTENT_TYPE_WORKFLOW && (
-						<td className="publications-render-view-content">
-							{renderWorkflowView()}
-						</td>
+						<tr>
+							<td className="publications-render-view-content">
+								{renderWorkflowView()}
+							</td>
+						</tr>
 					)}
 				</ClayTable.Body>
 			</ClayTable>

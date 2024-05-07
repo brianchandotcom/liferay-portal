@@ -497,7 +497,7 @@ public class DDMStructureStagedModelDataHandlerTest
 				"key", "countryId"));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"password", "test"));
+				"password", TestPropsValues.USER_PASSWORD));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"url",

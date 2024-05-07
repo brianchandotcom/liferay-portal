@@ -858,10 +858,10 @@ public class LayoutStructureRenderer {
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem)
 		throws Exception {
 
-		if ((infoForm == null) ||
-			!_hasAddPermission(
-				PortalUtil.getClassName(
-					formStyledLayoutStructureItem.getClassNameId()))) {
+		String className = formStyledLayoutStructureItem.getClassName();
+
+		if (Validator.isNull(className) || (infoForm == null) ||
+			!_hasAddPermission(className)) {
 
 			return;
 		}

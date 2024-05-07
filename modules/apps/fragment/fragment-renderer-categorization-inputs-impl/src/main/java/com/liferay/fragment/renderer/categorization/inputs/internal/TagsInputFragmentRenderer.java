@@ -31,8 +31,8 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.PrintWriter;
@@ -99,13 +99,20 @@ public class TagsInputFragmentRenderer implements FragmentRenderer {
 				return;
 			}
 
-			String className = _portal.getClassName(
-				formStyledLayoutStructureItem.getClassNameId());
+			String className = formStyledLayoutStructureItem.getClassName();
+
+			if (Validator.isNull(className)) {
+				return;
+			}
 
 			InfoItemCategorizationProvider<Object>
 				infoItemCategorizationProvider =
 					_infoItemServiceRegistry.getFirstInfoItemService(
 						InfoItemCategorizationProvider.class, className);
+
+			if (infoItemCategorizationProvider == null) {
+				return;
+			}
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
@@ -247,8 +254,5 @@ public class TagsInputFragmentRenderer implements FragmentRenderer {
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

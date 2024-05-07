@@ -38,9 +38,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.PrintWriter;
@@ -133,8 +133,11 @@ public class CategoriesInputFragmentRenderer implements FragmentRenderer {
 				return;
 			}
 
-			String className = _portal.getClassName(
-				formStyledLayoutStructureItem.getClassNameId());
+			String className = formStyledLayoutStructureItem.getClassName();
+
+			if (Validator.isNull(className)) {
+				return;
+			}
 
 			InfoItemCategorizationProvider<Object>
 				infoItemCategorizationProvider =
@@ -319,8 +322,5 @@ public class CategoriesInputFragmentRenderer implements FragmentRenderer {
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

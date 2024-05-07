@@ -650,6 +650,13 @@ public class ObjectEntryResourceTest {
 				).build()
 			).build());
 
+		_objectDefinition6 = ObjectDefinitionTestUtil.publishObjectDefinition(
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_TEXT,
+					false)));
+
 		objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
 
 		_siteScopedObjectDefinition1 =
@@ -827,6 +834,8 @@ public class ObjectEntryResourceTest {
 			_objectDefinition4);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition5);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition6);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_siteScopedObjectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(
@@ -4945,6 +4954,51 @@ public class ObjectEntryResourceTest {
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
 			},
 			Type.ONE_TO_MANY);
+	}
+
+	@Test
+	public void testGetObjectEntriesWithPageSize() throws Exception {
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_NEW_OBJECT_FIELD_VALUE_1);
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_NEW_OBJECT_FIELD_VALUE_1);
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_NEW_OBJECT_FIELD_VALUE_1);
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_NEW_OBJECT_FIELD_VALUE_1);
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_NEW_OBJECT_FIELD_VALUE_1);
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_NEW_OBJECT_FIELD_VALUE_1);
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_NEW_OBJECT_FIELD_VALUE_1);
+
+		_assertPagination(7, _objectDefinition6);
+
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_NEW_OBJECT_FIELD_VALUE_1);
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_NEW_OBJECT_FIELD_VALUE_1);
+
+		_assertPagination(9, _objectDefinition6);
+
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_NEW_OBJECT_FIELD_VALUE_1);
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_NEW_OBJECT_FIELD_VALUE_1);
+
+		_assertPagination(11, _objectDefinition6);
 	}
 
 	@Test
@@ -9451,6 +9505,33 @@ public class ObjectEntryResourceTest {
 			objectFieldValue);
 	}
 
+	private void _assertPagination(
+			int expectedSize, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, objectDefinition.getRESTContextPath() + "?page=1&pageSize=5",
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(5, itemsJSONArray.length());
+
+		Assert.assertEquals(1, jsonObject.getLong("page"));
+		Assert.assertEquals(5, jsonObject.getLong("pageSize"));
+		Assert.assertEquals(expectedSize, jsonObject.getLong("totalCount"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, objectDefinition.getRESTContextPath() + "?pageSize=-1",
+			Http.Method.GET);
+
+		itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(expectedSize, itemsJSONArray.length());
+
+		Assert.assertEquals(expectedSize, jsonObject.getLong("totalCount"));
+	}
+
 	private JSONArray _createObjectEntriesJSONArray(
 			String[] externalReferenceCodeValues, String objectFieldName,
 			String[] objectFieldValues)
@@ -11784,6 +11865,7 @@ public class ObjectEntryResourceTest {
 	private ObjectDefinition _objectDefinition3;
 	private ObjectDefinition _objectDefinition4;
 	private ObjectDefinition _objectDefinition5;
+	private ObjectDefinition _objectDefinition6;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

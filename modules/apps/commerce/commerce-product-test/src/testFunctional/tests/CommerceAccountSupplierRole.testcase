@@ -2395,7 +2395,7 @@ definition {
 			CommerceOrders.viewOrderShipmentDetails(
 				addressAddress = "Test Address",
 				addressCity = "Test City",
-				addressCountry = "united-states",
+				addressCountry = "United States",
 				addressStreet1 = "Test Street",
 				addressZipCode = "Test Zip Code",
 				carrierShippingMethod = "Flat Rate");
@@ -2417,7 +2417,7 @@ definition {
 			CommerceOrders.viewOrderShipmentDetails(
 				addressAddress = "Test Address Edit",
 				addressCity = "Test City Edit",
-				addressCountry = "brazil",
+				addressCountry = "Brazil",
 				addressStreet1 = "Test Street Edit",
 				addressZipCode = "Test Zip Code Edit",
 				carrierBaseTrackingURL = "www.variableratecarriersite.com/",

@@ -16,9 +16,12 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryService;
+import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
@@ -76,6 +79,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -109,7 +113,9 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParserUtil;
@@ -119,6 +125,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
@@ -1333,6 +1340,94 @@ public class DefaultObjectEntryManagerImplTest
 					}
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY));
+	}
+
+	@Test
+	public void testAddObjectEntryWithAttachmentObjectField() throws Exception {
+		String folderName = RandomTestUtil.randomString();
+
+		ObjectDefinition objectDefinition = _createObjectDefinition(
+			Collections.singletonList(
+				new AttachmentObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"attachmentObjectFieldName"
+				).objectFieldSettings(
+					Arrays.asList(
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.
+								NAME_ACCEPTED_FILE_EXTENSIONS,
+							"txt"),
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+							ObjectFieldSettingConstants.VALUE_USER_COMPUTER),
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE,
+							"100"),
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.
+								NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+							"true"),
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.
+								NAME_STORAGE_DL_FOLDER_PATH,
+							"/" + folderName))
+				).build()),
+			ObjectDefinitionConstants.SCOPE_SITE);
+
+		_user = _addUser();
+
+		_addRoleUser(
+			new String[] {
+				ObjectActionKeys.ADD_OBJECT_ENTRY, ActionKeys.PERMISSIONS
+			},
+			objectDefinition, _user);
+
+		String fileName = RandomTestUtil.randomString() + ".txt";
+
+		Group group = _groupLocalService.getGroup(
+			companyId, GroupConstants.GUEST);
+
+		_defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"attachmentObjectFieldName",
+						() -> {
+							com.liferay.portal.kernel.repository.model.FileEntry
+								fileEntry = TempFileEntryUtil.addTempFileEntry(
+									group.getGroupId(),
+									TestPropsValues.getUserId(),
+									objectDefinition.getPortletId(),
+									TempFileEntryUtil.getTempFileName(fileName),
+									FileUtil.createTempFile(
+										RandomTestUtil.randomString(
+										).getBytes()),
+									ContentTypes.TEXT_PLAIN);
+
+							return fileEntry.getFileEntryId();
+						}
+					).put(
+						"externalReferenceCode", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			String.valueOf(group.getGroupId()));
+
+		DLFolder dlFolder = _dlFolderService.getFolder(
+			group.getGroupId(), 0, folderName);
+
+		Assert.assertNotNull(dlFolder);
+
+		Assert.assertNotNull(
+			_dlFileEntryService.getFileEntryByFileName(
+				group.getGroupId(), dlFolder.getFolderId(), fileName));
+
+		objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
 	}
 
 	@Test
@@ -4219,6 +4314,12 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private DLFileEntryService _dlFileEntryService;
+
+	@Inject
+	private DLFolderService _dlFolderService;
 
 	@Inject
 	private DLURLHelper _dlURLHelper;

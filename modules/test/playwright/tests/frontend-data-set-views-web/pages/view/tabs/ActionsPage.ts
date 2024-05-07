@@ -25,7 +25,6 @@ export class ActionsPage {
 			iconsList: Locator;
 			searchInput: Locator;
 		};
-		titleInput: Locator;
 		typeSelect: Locator;
 		urlText: Locator;
 		variantSelect: Locator;
@@ -64,7 +63,6 @@ export class ActionsPage {
 				iconsList: page.getByRole('listitem'),
 				searchInput: page.getByPlaceholder('Search'),
 			},
-			titleInput: page.getByLabel('TitleRequired', {exact: true}),
 			typeSelect: page.getByLabel('TypeRequired', {exact: true}),
 			urlText: page.getByPlaceholder('Add a URL here.'),
 			variantSelect: page.getByLabel('VariantRequired', {exact: true}),
@@ -137,9 +135,9 @@ export class ActionsPage {
 				? `${actionProps.name} title`
 				: `${actionProps.title}`;
 
-			await this.page.getByPlaceholder('add-here-the-title').click();
+			await this.page.getByPlaceholder('Add the title').click();
 			await this.page
-				.getByPlaceholder('add-here-the-title')
+				.getByPlaceholder('Add the title')
 				.fill(`${actionTitle}`);
 		}
 

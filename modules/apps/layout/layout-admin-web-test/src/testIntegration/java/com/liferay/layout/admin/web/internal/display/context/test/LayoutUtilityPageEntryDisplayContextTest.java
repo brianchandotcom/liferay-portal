@@ -72,13 +72,13 @@ public class LayoutUtilityPageEntryDisplayContextTest {
 	public void testGetSearchContainerWithKeywords() throws Exception {
 		_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			RandomTestUtil.randomLong(), 0, false, "Custom 404",
+			RandomTestUtil.randomLong(), 0, false, "custom 404",
 			LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 		_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			RandomTestUtil.randomLong(), 0, false, "Custom 500",
+			RandomTestUtil.randomLong(), 0, false, "custom 500",
 			LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR, 0,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
@@ -105,7 +105,7 @@ public class LayoutUtilityPageEntryDisplayContextTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry1 =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomLong(), 0, false, "Custom 404",
+				RandomTestUtil.randomLong(), 0, false, "custom 404",
 				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
@@ -124,7 +124,7 @@ public class LayoutUtilityPageEntryDisplayContextTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry2 =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomLong(), 0, false, "Custom 500",
+				RandomTestUtil.randomLong(), 0, false, "custom 500",
 				LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR,
 				0,
 				ServiceContextTestUtil.getServiceContext(

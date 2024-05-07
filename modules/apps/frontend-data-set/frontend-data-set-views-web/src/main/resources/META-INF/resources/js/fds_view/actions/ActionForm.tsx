@@ -294,8 +294,7 @@ const ActionForm = ({
 			!translationExists({
 				translations: labelTranslations,
 			}) ||
-			((actionData.type === ACTION_TYPE.MODAL ||
-				actionData.type === ACTION_TYPE.SIDEPANEL) &&
+			(actionData.type === ACTION_TYPE.MODAL &&
 				!translationExists({
 					translations: titleTranslations,
 				}))
@@ -668,10 +667,13 @@ const ActionForm = ({
 									}}
 									placeholder={Liferay.Language.get(
 										actionData.type === ACTION_TYPE.MODAL
-											? 'add-here-the-title-of-the-modal'
-											: 'add-here-the-title-of-the-side-panel'
+											? 'add-the-title-of-the-modal'
+											: 'add-the-title-of-the-side-panel'
 									)}
-									required
+									required={
+										actionData.type !==
+										ACTION_TYPE.SIDEPANEL
+									}
 									translations={titleTranslations}
 								/>
 							</ClayLayout.Col>

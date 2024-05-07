@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -292,9 +291,14 @@ public class FormItemManager {
 			long groupId)
 		throws PortalException {
 
+		String className = formStyledLayoutStructureItem.getClassName();
+
+		if (Validator.isNull(className)) {
+			return Collections.emptyList();
+		}
+
 		String itemClassName = _infoSearchClassMapperRegistry.getClassName(
-			_portal.getClassName(
-				formStyledLayoutStructureItem.getClassNameId()));
+			className);
 
 		InfoItemFormProvider<?> infoItemFormProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
@@ -403,8 +407,5 @@ public class FormItemManager {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 }

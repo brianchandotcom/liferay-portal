@@ -439,15 +439,15 @@ public class FragmentEntryLinkManager {
 			return null;
 		}
 
-		long classNameId = formStyledLayoutStructureItem.getClassNameId();
+		String className = formStyledLayoutStructureItem.getClassName();
 
-		if (classNameId <= 0) {
+		if (Validator.isNull(className)) {
 			return null;
 		}
 
 		InfoItemFormProvider<Object> infoItemFormProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class, _portal.getClassName(classNameId));
+				InfoItemFormProvider.class, className);
 
 		if (infoItemFormProvider != null) {
 			try {

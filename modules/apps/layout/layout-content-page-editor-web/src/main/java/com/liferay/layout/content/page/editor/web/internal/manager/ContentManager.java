@@ -246,11 +246,15 @@ public class ContentManager {
 				continue;
 			}
 
+			String className = formStyledLayoutStructureItem.getClassName();
+
+			if (Validator.isNull(className)) {
+				continue;
+			}
+
 			InfoPermissionProvider<?> infoPermissionProvider =
 				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoPermissionProvider.class,
-					_portal.getClassName(
-						formStyledLayoutStructureItem.getClassNameId()));
+					InfoPermissionProvider.class, className);
 
 			if ((infoPermissionProvider == null) ||
 				(infoPermissionProvider.hasViewPermission(

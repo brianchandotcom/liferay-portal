@@ -396,13 +396,18 @@ public class RenderLayoutStructureDisplayContext {
 			return null;
 		}
 
+		String className = formStyledLayoutStructureItem.getClassName();
+
+		if (Validator.isNull(className)) {
+			return null;
+		}
+
 		InfoItemServiceRegistry infoItemServiceRegistry =
 			ServletContextUtil.getInfoItemServiceRegistry();
 
 		InfoItemFormProvider<Object> infoItemFormProvider =
 			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class,
-				PortalUtil.getClassName(classNameId));
+				InfoItemFormProvider.class, className);
 
 		if (infoItemFormProvider != null) {
 			try {

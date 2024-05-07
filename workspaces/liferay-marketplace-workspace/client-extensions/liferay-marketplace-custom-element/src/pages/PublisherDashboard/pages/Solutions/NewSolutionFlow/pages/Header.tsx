@@ -37,7 +37,7 @@ const Header = () => {
 
 	const [
 		{
-			header: {description, contentType, title},
+			header: {contentType, description, title},
 		},
 		dispatch,
 	] = useSolutionContext();
@@ -84,9 +84,9 @@ const Header = () => {
 	};
 
 	const handleDelete = async (id: string) => {
-		const files = (
-			contentType as HeaderContentTypeImages
-		).content.headerImages.filter((uploadedFile) => uploadedFile.id !== id);
+		const files = (contentType as HeaderContentTypeImages).content.headerImages.filter(
+			(uploadedFile) => uploadedFile.id !== id
+		);
 
 		dispatch({
 			payload: {
@@ -180,7 +180,12 @@ const Header = () => {
 				className="d-flex flex-column mt-1"
 				onChange={(event: any) =>
 					dispatch({
-						payload: {contentType: {type: event, content: {}}},
+						payload: {
+							contentType: {
+								...contentType,
+								type: event,
+							},
+						},
 						type: SolutionTypes.SET_HEADER,
 					})
 				}
@@ -213,9 +218,9 @@ const Header = () => {
 								type: SolutionTypes.SET_HEADER,
 							})
 						}
-						value={contentType.content.headerVideoUrl}
 						placeholder="https://"
 						type="text"
+						value={contentType.content.headerVideoUrl}
 					/>
 
 					<Form.HelpMessage>
@@ -241,15 +246,16 @@ const Header = () => {
 												headerVideoDescription:
 													event.target.value,
 											},
-											type: ContentMediaType.EMBED_VIDEO_URL,
+											type:
+												ContentMediaType.EMBED_VIDEO_URL,
 										},
 									},
 									type: SolutionTypes.SET_HEADER,
 								})
 							}
-							value={contentType.content.headerVideoDescription}
 							placeholder={i18n.translate('video-description')}
 							type="text"
+							value={contentType.content.headerVideoDescription}
 						/>
 					</div>
 				</>
@@ -272,7 +278,8 @@ const Header = () => {
 											content: {
 												headerImages: newImagesInputs,
 											},
-											type: ContentMediaType.UPLOAD_IMAGES,
+											type:
+												ContentMediaType.UPLOAD_IMAGES,
 										},
 									},
 									type: SolutionTypes.SET_HEADER,

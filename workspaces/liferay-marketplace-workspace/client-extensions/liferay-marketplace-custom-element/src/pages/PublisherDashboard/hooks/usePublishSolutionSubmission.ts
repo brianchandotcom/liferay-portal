@@ -59,13 +59,14 @@ const usePublishSolutionSubmission = (
 			return _product;
 		}
 
-		const product =
-			await headlessCommerceAdminCatalogImpl.createVirtualProduct({
+		const product = await headlessCommerceAdminCatalogImpl.createVirtualProduct(
+			{
 				catalogId,
 				categories: productCategories,
 				description,
 				name,
-			});
+			}
+		);
 
 		product.productSpecifications = [];
 
@@ -94,8 +95,8 @@ const usePublishSolutionSubmission = (
 	const syncSolutionHeader = async (product: Product) => {
 		const {
 			header: {
+				contentType: {content, type},
 				description,
-				contentType: {type, content},
 				title,
 			},
 		} = context;
@@ -112,6 +113,7 @@ const usePublishSolutionSubmission = (
 			);
 
 			if (specification && specification.value.en_US === value) {
+
 				// No need to update the specification if the value is equal.
 
 				return;
@@ -131,7 +133,8 @@ const usePublishSolutionSubmission = (
 
 			if (specification) {
 				specification.value.en_US = value;
-			} else {
+			}
+			else {
 				productSpecifications.push(result);
 			}
 		};

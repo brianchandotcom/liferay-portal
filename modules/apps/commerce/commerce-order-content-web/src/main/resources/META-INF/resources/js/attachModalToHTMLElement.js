@@ -15,6 +15,7 @@ export default function ({HTMLElementId, modalContent, modalTitle}) {
 				bodyHTML: modalContent,
 				containerProps: {
 					center: true,
+					className: 'commerce-modal',
 				},
 				size: 'lg',
 				title: modalTitle,

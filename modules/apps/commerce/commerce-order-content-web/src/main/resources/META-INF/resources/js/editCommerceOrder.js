@@ -14,6 +14,9 @@ export default function ({commerceOrderImporterTypeKey, title, url}) {
 		event.preventDefault();
 
 		openModal({
+			containerProps: {
+				className: 'commerce-modal',
+			},
 			id: commerceOrderImporterTypeKey,
 			iframeBodyCssClass: '',
 			title,

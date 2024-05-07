@@ -22,6 +22,7 @@ export default function ({namespace, viewReturnableCommerceOrderItemsURL}) {
 			openModal({
 				containerProps: {
 					center: true,
+					className: 'commerce-modal',
 				},
 				headerHTML: `
 					<div class="d-inline-flex flex-row align-items-center">

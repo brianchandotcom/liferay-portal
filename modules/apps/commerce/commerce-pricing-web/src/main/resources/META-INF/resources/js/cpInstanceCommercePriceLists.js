@@ -35,7 +35,7 @@ function openSelectionModal({namespace, url}) {
 			},
 		],
 		containerProps: {
-			className: 'add-price-entry-modal modal-height-lg',
+			className: 'commerce-modal add-price-entry-modal modal-height-lg',
 		},
 		id: `${namespace}addPriceEntryDialog`,
 		iframeBodyCssClass: '',

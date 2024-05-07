@@ -44,7 +44,7 @@ export function OpenTermsOfUseModalPropsTransformer({
 					},
 				],
 				containerProps: {
-					className: 'modal-height-xl',
+					className: 'commerce-modal modal-height-xl',
 				},
 				id: dialogId,
 				iframeBodyCssClass: '',

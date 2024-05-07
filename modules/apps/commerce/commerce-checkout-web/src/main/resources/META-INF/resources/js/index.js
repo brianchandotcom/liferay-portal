@@ -19,6 +19,7 @@ export function attachModalToHTMLElement({
 				bodyHTML: modalContent,
 				containerProps: {
 					center: true,
+					className: 'commerce-modal',
 				},
 				size: 'lg',
 				title: modalTitle,

@@ -141,9 +141,7 @@ definition {
 		}
 
 		task ("And the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -260,9 +258,7 @@ definition {
 		}
 
 		task ("And the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -386,9 +382,7 @@ definition {
 		}
 
 		task ("And the customer order is splitted") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -516,9 +510,7 @@ definition {
 		}
 
 		task ("And the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -652,9 +644,7 @@ definition {
 		}
 
 		task ("And the customer order is splitted") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -806,9 +796,7 @@ definition {
 		}
 
 		task ("And the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -944,9 +932,7 @@ definition {
 		}
 
 		task ("And the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -1091,9 +1077,7 @@ definition {
 		}
 
 		task ("And the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -1237,9 +1221,7 @@ definition {
 		}
 
 		task ("And the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -1362,9 +1344,7 @@ definition {
 		}
 
 		task ("And the admin reaches the Orders Admin page and accepts the order") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -1635,9 +1615,7 @@ definition {
 		}
 
 		task ("And the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -1869,9 +1847,7 @@ definition {
 		}
 
 		task ("And the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -2015,9 +1991,7 @@ definition {
 		}
 
 		task ("And the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -2152,9 +2126,7 @@ definition {
 		}
 
 		task ("And the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -2261,9 +2233,7 @@ definition {
 		}
 
 		task ("And the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -2395,9 +2365,7 @@ definition {
 		}
 
 		task ("When the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -2530,9 +2498,7 @@ definition {
 		}
 
 		task ("When the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -2783,9 +2749,7 @@ definition {
 		}
 
 		task ("When the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -2899,9 +2863,7 @@ definition {
 		}
 
 		task ("When the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -3064,9 +3026,7 @@ definition {
 		}
 
 		task ("When the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -3193,9 +3153,7 @@ definition {
 		}
 
 		task ("When the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -3347,9 +3305,7 @@ definition {
 		}
 
 		task ("When the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -3457,9 +3413,7 @@ definition {
 		}
 
 		task ("And the admin reaches the Orders Admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}

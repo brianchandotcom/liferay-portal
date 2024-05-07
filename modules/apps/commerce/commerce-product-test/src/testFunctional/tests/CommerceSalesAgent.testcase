@@ -87,10 +87,7 @@ definition {
 		task ("Then when the admin login again, he will see the new User inside Commerce Account A that the Sales Agent created previously") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
@@ -371,10 +368,7 @@ definition {
 		task ("Then when the admin login again, he will see all the changes that the Sales Agent marked previously") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 

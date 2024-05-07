@@ -280,12 +280,10 @@ definition {
 				userEmailAddress = "buyer@liferay.com");
 
 			var virtualItemURLs = CommerceJSONOrdersAPI.getOrderField(
-				email = "test@liferay.com",
 				jsonPath = "$..virtualItemURLs[:1]",
 				orderId = ${orderId},
 				parameter = "nestedFields",
-				parameterValue = "orderItems",
-				password = "test");
+				parameterValue = "orderItems");
 		}
 
 		task ("Then the buyer will not be able to download the resource") {
@@ -384,10 +382,7 @@ definition {
 		task ("And the admin logs in again") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 		}
 
 		task ("And the admin changes the order status to 'completed'") {
@@ -603,10 +598,7 @@ definition {
 		task ("And the admin logs in again") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 		}
 
 		task ("And the admin changes the order status to 'completed'") {
@@ -716,10 +708,7 @@ definition {
 		task ("And the admin logs in again") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 		}
 
 		task ("And the admin changes the order status to 'completed'") {

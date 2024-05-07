@@ -1519,10 +1519,7 @@ definition {
 		task ("When the admin logs in") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 		}
 
 		task ("And navigates to the orders page") {

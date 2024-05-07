@@ -169,13 +169,6 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 
 				_userLocalService.addRoleUser(role.getRoleId(), user);
 
-				orderResource = OrderResource.builder(
-				).authentication(
-					user.getEmailAddress(), "test"
-				).locale(
-					LocaleUtil.getDefault()
-				).build();
-
 				Order order3 = orderResource.postOrder(randomOrder());
 
 				Page<Order> page = orderResource.getOrdersPage(
@@ -235,9 +228,16 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 
 	@Test
 	public void testGetOrderWithNestedFields() throws Exception {
+		User omniAdminUser = UserTestUtil.addOmniadminUser();
+
+		String password = RandomTestUtil.randomString();
+
+		_userLocalService.updatePassword(
+			omniAdminUser.getUserId(), password, password, false, true);
+
 		OrderResource orderResource = OrderResource.builder(
 		).authentication(
-			"test@liferay.com", "test"
+			omniAdminUser.getEmailAddress(), password
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(

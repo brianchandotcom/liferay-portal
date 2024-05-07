@@ -14,7 +14,6 @@ import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceEntry;
-import com.liferay.headless.commerce.admin.pricing.client.resource.v2_0.PriceEntryResource;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -244,13 +243,6 @@ public class PriceEntryResourceTest extends BasePriceEntryResourceTestCase {
 	private void _testPostPriceListIdPriceEntryWithPriceOnApplicationOnBasePriceList()
 		throws Exception {
 
-		PriceEntryResource priceEntryResource = PriceEntryResource.builder(
-		).authentication(
-			"test@liferay.com", "test"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
-
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.addCommercePriceList(
 				RandomTestUtil.randomString(), testGroup.getGroupId(),
@@ -279,13 +271,6 @@ public class PriceEntryResourceTest extends BasePriceEntryResourceTestCase {
 
 	private void _testPostPriceListIdPriceEntryWithPriceOnApplicationOnPriceList()
 		throws Exception {
-
-		PriceEntryResource priceEntryResource = PriceEntryResource.builder(
-		).authentication(
-			"test@liferay.com", "test"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
 
 		PriceEntry randomPriceEntry = randomPriceEntry();
 

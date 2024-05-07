@@ -556,9 +556,7 @@ definition {
 		}
 
 		task ("When the admin removes Commerce Account in AG1") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			AccountGroups.openAccountGroupsAdmin();
 
@@ -1034,9 +1032,7 @@ definition {
 		}
 
 		task ("When deleting that product from the products page in the admin control panel") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
+			User.logoutAndLoginPG();
 
 			CommerceProducts.openProductsAdmin();
 
@@ -1397,9 +1393,7 @@ definition {
 		}
 
 		task ("Given the Show Order Creation Time checkbox is unchecked in global settings") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			SystemSettings.openSystemSettingsAdmin();
 

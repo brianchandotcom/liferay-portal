@@ -689,10 +689,7 @@ definition {
 		task ("When Toggle Default of the value from the option is deactivated") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceProducts.openProductsAdmin();
 
@@ -874,10 +871,7 @@ definition {
 		task ("When Toggle Default of the value from the option is deactivated") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceProducts.openProductsAdmin();
 
@@ -2801,10 +2795,7 @@ definition {
 		task ("And the admin logs in") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 		}
 
 		task ("And navigates to the ABS Sensor Product Detail page") {

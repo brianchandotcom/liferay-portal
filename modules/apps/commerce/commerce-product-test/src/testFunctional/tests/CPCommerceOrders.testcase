@@ -1243,9 +1243,7 @@ definition {
 		task ("And the admin goes into orders portlet") {
 			User.logoutPG();
 
-			User.loginUserPG(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+			User.loginUserPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -1340,9 +1338,7 @@ definition {
 		}
 
 		task ("When the admin Orders page is reached by the admin") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -2241,9 +2237,7 @@ definition {
 		}
 
 		task ("When the admin Orders page is reached by the admin") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 		}
@@ -2788,9 +2782,7 @@ definition {
 		}
 
 		task ("When the admin changes the active account on Minium") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
 
@@ -2889,9 +2881,7 @@ definition {
 		}
 
 		task ("When the admin clicks 'Quote Processed' in the order details") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -3207,12 +3197,10 @@ definition {
 
 		task ("Then the admin can view the printed note is added in the open order via API") {
 			var printedNote = CommerceJSONOrdersAPI.getOrderField(
-				email = "test@liferay.com",
 				jsonPath = "$.printedNote",
 				orderId = ${orderId},
 				parameter = "fields",
-				parameterValue = "printedNote",
-				password = "test");
+				parameterValue = "printedNote");
 
 			TestUtils.assertEquals(
 				actual = ${printedNote},
@@ -3233,12 +3221,10 @@ definition {
 
 		task ("Then the admin can view the printed note is added in the placed order via API") {
 			var printedNote = CommerceJSONOrdersAPI.getOrderField(
-				email = "test@liferay.com",
 				jsonPath = "$.printedNote",
 				orderId = ${orderId},
 				parameter = "fields",
-				parameterValue = "printedNote",
-				password = "test");
+				parameterValue = "printedNote");
 
 			TestUtils.assertEquals(
 				actual = ${printedNote},
@@ -3270,10 +3256,7 @@ definition {
 		task ("And the admin checks out an order ") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
@@ -3840,10 +3823,7 @@ definition {
 
 		User.logoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
@@ -3966,10 +3946,7 @@ definition {
 
 		User.logoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		CommerceOrders.openOrdersAdmin();
 

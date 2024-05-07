@@ -439,9 +439,7 @@ definition {
 		}
 
 		task ("And given ABS Sensor as Discontinued and set a new Replacement") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
+			User.logoutAndLoginPG();
 
 			CommerceProducts.openProductsAdmin();
 

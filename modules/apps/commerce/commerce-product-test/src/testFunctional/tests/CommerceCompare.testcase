@@ -251,9 +251,7 @@ definition {
 		}
 
 		task ("And given the admin changes the Products Limit in the product comparison table to 3") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/compare");
 

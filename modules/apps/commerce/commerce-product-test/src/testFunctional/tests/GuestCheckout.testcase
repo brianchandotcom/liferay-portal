@@ -711,9 +711,7 @@ definition {
 		}
 
 		task ("Then admin can view the order with the status 'Quote Requested' in the Orders admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -808,9 +806,7 @@ definition {
 		}
 
 		task ("Then the quote request is placed with the status 'Quote Requested' in the Orders Page") {
-			User.loginPG(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+			User.loginPG();
 
 			CommerceOrders.openOrdersAdmin();
 

@@ -129,9 +129,7 @@ definition {
 		}
 
 		task ("And the admin splits the order") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -173,9 +171,7 @@ definition {
 		}
 
 		task ("Then the quantity of 'Simple Product' in the customer order is updated to the same one as the supplier order") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -243,9 +239,7 @@ definition {
 		}
 
 		task ("Then following the workflow of the shipment, the outstanding quantity of that product from the customer order is correctly decreased by 1 and equals 5") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -716,9 +710,7 @@ definition {
 		}
 
 		task ("When admin unlinks the Supplier account for Supplier Channel") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceChannels.openChannelsAdmin();
 
@@ -2987,9 +2979,7 @@ definition {
 		}
 
 		task ("And the admin splits the order") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -4553,9 +4543,7 @@ definition {
 		}
 
 		task ("And the admin splits the order") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 

@@ -234,9 +234,7 @@ definition {
 		}
 
 		task ("Then the item in the order (admin) shows the requested delivery date as empty") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -254,9 +252,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given the Money Order payment is activated") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceChannels.openChannelsAdmin();
 
@@ -690,9 +686,7 @@ definition {
 		}
 
 		task ("Then the item in the order (admin) shows the requested delivery date as empty") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -796,9 +790,7 @@ definition {
 		}
 
 		task ("And given the warehouse quanitity for one of the ordered products is set to 0") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
+			User.logoutAndLoginPG();
 
 			CommerceProducts.openProductsAdmin();
 

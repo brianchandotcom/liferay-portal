@@ -216,10 +216,7 @@ definition {
 
 		User.logoutPG();
 
-		CommerceLogin.speedwellLogin(
-			password = "test",
-			urlAppend = "web/speedwell",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.speedwellLogin(urlAppend = "web/speedwell");
 
 		CommerceNavigator.gotoSpeedwellAccountDropdownItem(dropdownItem = "My Account");
 

@@ -1018,9 +1018,7 @@ definition {
 		}
 
 		task ("When the admin modified the discount and save it as draft") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceNavigator.goToDiscountAdmin();
 

@@ -245,10 +245,7 @@ definition {
 		task ("Then when the admin login again, he will see the new User inside Commerce Account A that the Sales Agent created previously") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
@@ -689,10 +686,7 @@ definition {
 		task ("Then when the admin login again, he will see all the changes that the Channel Account Manager marked previously") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
@@ -788,9 +782,7 @@ definition {
 		task ("When the admin user edits the entry(salesagent1 -> salesagent2)") {
 			User.logoutPG();
 
-			User.loginPG(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+			User.loginPG();
 
 			Account.openAccountsAdmin();
 
@@ -895,9 +887,7 @@ definition {
 		task ("When the admin user removes the entry") {
 			User.logoutPG();
 
-			User.loginPG(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+			User.loginPG();
 
 			Account.openAccountsAdmin();
 

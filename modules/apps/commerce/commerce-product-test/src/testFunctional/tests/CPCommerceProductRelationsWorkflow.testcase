@@ -75,9 +75,7 @@ definition {
 		}
 
 		task ("But when the admin logs in") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 		}
 
 		task ("And accepts all the notifications received by the category manager") {
@@ -172,9 +170,7 @@ definition {
 		}
 
 		task ("But when the admin logs in") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 		}
 
 		task ("And accepts the notification received by the category manager") {
@@ -257,9 +253,7 @@ definition {
 		}
 
 		task ("But when the admin logs in") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 		}
 
 		task ("And rejects the notification received by the category manager") {
@@ -311,9 +305,7 @@ definition {
 		}
 
 		task ("And the admin accepts the re-submited notification") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			Notifications.gotoNotifications();
 
@@ -398,9 +390,7 @@ definition {
 		}
 
 		task ("But when the admin logs in") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 		}
 
 		task ("And rejects all the notifications received by the category manager") {
@@ -470,9 +460,7 @@ definition {
 		}
 
 		task ("And the admin accepts all the re-submited notifications") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			var notificationCount = 0;
 
@@ -603,9 +591,7 @@ definition {
 		}
 
 		task ("When the admin logs in") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 		}
 
 		task ("Then the Admin can see the details of the requested") {

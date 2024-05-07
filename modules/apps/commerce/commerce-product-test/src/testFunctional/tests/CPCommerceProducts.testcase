@@ -1481,12 +1481,10 @@ definition {
 				userEmailAddress = "buyer@liferay.com");
 
 			var virtualItemURLs = CommerceJSONOrdersAPI.getOrderField(
-				email = "test@liferay.com",
 				jsonPath = "$..virtualItemURLs[:1]",
 				orderId = ${orderId},
 				parameter = "nestedFields",
-				parameterValue = "orderItems",
-				password = "test");
+				parameterValue = "orderItems");
 		}
 
 		task ("Then the buyer will not be able to download the resource") {
@@ -1999,10 +1997,11 @@ definition {
 		task ("When a product is created with an image using JSON") {
 			var baseURL = PropsUtil.get("portal.url");
 			var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = "Master");
+			var userLoginInfo = JSONUtil2.formatJSONUser();
 
 			var curl = '''
 				${baseURL}/o/headless-commerce-admin-catalog/v1.0/products \
-					-u test@liferay.com:test \
+					-u ${userLoginInfo} \
 					-H 'accept: application/json' \
 					-H 'Content-Type: application/json' \
 					-d '{

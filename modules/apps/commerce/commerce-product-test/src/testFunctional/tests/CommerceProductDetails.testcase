@@ -2006,9 +2006,7 @@ definition {
 		}
 
 		task ("When a special character in the Product URL Separator under the Catalog of Instance Settings is set") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			PortalSettings.gotoConfiguration(
 				configurationCategory = "Catalog",

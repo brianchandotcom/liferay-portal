@@ -63,6 +63,14 @@ definition {
 			User._clickSignInLink(localization = ${localization});
 		}
 
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = JSONUtil2.getDefaultUserEmail();
+		}
+
+		if (!(isSet(password))) {
+			var password = JSONUtil2.getDefaultUserPassword();
+		}
+
 		if (isSet(authenticationMethod) && (${authenticationMethod} == "By Screen Name")) {
 			Type(
 				locator1 = "TextInput#SCREEN_NAME",

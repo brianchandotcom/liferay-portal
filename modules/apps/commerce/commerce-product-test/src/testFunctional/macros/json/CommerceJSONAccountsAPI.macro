@@ -343,10 +343,11 @@ definition {
 		}
 
 		var accountType = StringUtil.lowerCase(${accountType});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${baseURL}/o/headless-admin-user/v1.0/accounts \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
@@ -712,9 +713,11 @@ definition {
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
 			site = "true");
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${portalURL}/o/headless-batch-engine/v1.0/export-task/${className}/${contentType} \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-H Content-Type: application/json
 		''';
 
@@ -732,10 +735,11 @@ definition {
 		}
 
 		var payload = ${contentJSON};
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${baseURL}/o/headless-batch-engine/v1.0/import-task/com.liferay.headless.admin.user.dto.v1_0.Role?createStrategy=UPSERT \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '${payload}'

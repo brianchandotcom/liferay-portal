@@ -1395,9 +1395,7 @@ definition {
 		task ("Delete manually ABS Sensor to avoid problems during the tearDown (COMMERCE-11085)") {
 			User.logoutPG();
 
-			User.loginPG(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+			User.loginPG();
 
 			CommerceProducts.openProductsAdmin();
 
@@ -1506,9 +1504,7 @@ definition {
 		}
 
 		task ("Given the template page is unmarked as Default") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "Minium");
 

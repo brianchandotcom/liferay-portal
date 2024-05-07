@@ -1134,9 +1134,7 @@ definition {
 		}
 
 		task ("Given that the Diagram is configured into the visibility with the Account Groups") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			AccountGroups.openAccountGroupsAdmin();
 

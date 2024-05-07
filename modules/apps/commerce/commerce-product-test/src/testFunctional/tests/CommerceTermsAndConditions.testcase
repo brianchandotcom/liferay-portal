@@ -216,10 +216,7 @@ definition {
 
 		User.logoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		User.openUsersAdmin();
 
@@ -342,10 +339,7 @@ definition {
 
 		User.logoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		User.openUsersAdmin();
 
@@ -802,10 +796,7 @@ definition {
 
 		User.logoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		CommerceOrders.openOrdersAdmin();
 
@@ -1116,10 +1107,7 @@ definition {
 
 		User.logoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		CommerceOrders.openOrdersAdmin();
 
@@ -1198,10 +1186,7 @@ definition {
 
 		User.logoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		CommerceOrders.openOrdersAdmin();
 

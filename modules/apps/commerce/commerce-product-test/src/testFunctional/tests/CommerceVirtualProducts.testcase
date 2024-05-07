@@ -406,10 +406,7 @@ definition {
 		task ("And the admin logs in again") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 		}
 
 		task ("And the admin changes the order status to 'completed'") {
@@ -575,10 +572,7 @@ definition {
 		task ("And the admin logs in again") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 		}
 
 		task ("And the admin changes the order status to 'completed'") {
@@ -893,10 +887,7 @@ definition {
 		task ("And the admin logs in again") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 		}
 
 		task ("And the admin changes the order status to 'Processing'") {
@@ -1100,10 +1091,7 @@ definition {
 		task ("And the admin logs in again") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 		}
 
 		task ("Then the Virtual Setting for the item are different") {
@@ -1222,10 +1210,7 @@ definition {
 		task ("And the admin logs in again") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 		}
 
 		task ("And the admin check the setting in the Items page") {

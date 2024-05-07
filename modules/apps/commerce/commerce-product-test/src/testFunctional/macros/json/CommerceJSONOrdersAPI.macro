@@ -475,11 +475,11 @@ definition {
 		}
 
 		if (!(isSet(email))) {
-			var email = "test@liferay.com";
+			var email = JSONUtil2.getDefaultUserEmail();
 		}
 
 		if (!(isSet(password))) {
-			var password = "test";
+			var password = JSONUtil2.getDefaultUserPassword();
 		}
 
 		var curl = '''
@@ -578,11 +578,11 @@ definition {
 		}
 
 		if (!(isSet(email))) {
-			var email = "test@liferay.com";
+			var email = JSONUtil2.getDefaultUserEmail();
 		}
 
 		if (!(isSet(password))) {
-			var password = "test";
+			var password = JSONUtil2.getDefaultUserPassword();
 		}
 
 		var curl = '''
@@ -616,11 +616,11 @@ definition {
 		}
 
 		if (!(isSet(email))) {
-			var email = "test@liferay.com";
+			var email = JSONUtil2.getDefaultUserEmail();
 		}
 
 		if (!(isSet(password))) {
-			var password = "test";
+			var password = JSONUtil2.getDefaultUserPassword();
 		}
 
 		var curl = '''
@@ -645,11 +645,11 @@ definition {
 		}
 
 		if (!(isSet(email))) {
-			var email = "test@liferay.com";
+			var email = JSONUtil2.getDefaultUserEmail();
 		}
 
 		if (!(isSet(password))) {
-			var password = "test";
+			var password = JSONUtil2.getDefaultUserPassword();
 		}
 
 		var curl = '''

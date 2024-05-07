@@ -83,10 +83,7 @@ definition {
 
 		User.logoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		CommerceOrders.openOrdersAdmin();
 
@@ -389,10 +386,7 @@ definition {
 
 		User.logoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		CommerceOrders.openOrdersAdmin();
 
@@ -466,10 +460,7 @@ definition {
 		task ("When admin creates shipment for the order") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -587,10 +578,7 @@ definition {
 		task ("And given Variable Rate shipping method configured and tracking URL set") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceChannels.openChannelsAdmin();
 
@@ -771,10 +759,7 @@ definition {
 		task ("When admin creates shipment for the order") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -917,10 +902,7 @@ definition {
 		task ("When admin creates shipment for the order") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -1044,10 +1026,7 @@ definition {
 		task ("When admin creates shipment for the order") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -1171,10 +1150,7 @@ definition {
 		task ("When admin creates shipment for the order, checks a shipment item ERC is created automatically and edits that shipment item ERC") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -1326,10 +1302,7 @@ definition {
 		task ("When admin creates shipment for the order") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -1426,10 +1399,7 @@ definition {
 		task ("When admin creates shipment for the order and edits the shipment item ERC of the first product") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -1565,10 +1535,7 @@ definition {
 		task ("And admin creates shipment for the first order") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -1643,10 +1610,7 @@ definition {
 		task ("And admin creates shipment of the second order") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -1948,10 +1912,7 @@ definition {
 		task ("When admin creates shipment for the order") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceOrders.openOrdersAdmin();
 
@@ -2339,10 +2300,7 @@ definition {
 
 		User.logoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		CommerceOrders.openOrdersAdmin();
 
@@ -2733,10 +2691,7 @@ definition {
 
 		User.logoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		CommerceOrders.openOrdersAdmin();
 
@@ -2865,10 +2820,7 @@ definition {
 
 		User.logoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		CommerceOrders.openOrdersAdmin();
 
@@ -3040,10 +2992,7 @@ definition {
 
 		User.logoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		CommerceOrders.openOrdersAdmin();
 

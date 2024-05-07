@@ -24,9 +24,10 @@ definition {
 
 		var warehouseId = CommerceJSONWarehousesAndInventoriesAPI._getWarehouseId(warehouseName = ${warehouseName});
 		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses/${warehouseId}/skus/by-sku/${sku}/replenishment-items \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
@@ -56,9 +57,11 @@ definition {
 			var externalReferenceCode = "";
 		}
 
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
@@ -121,9 +124,11 @@ definition {
 			for (var warehouseId : list ${warehouseIds}) {
 				echo("Get warehouseItems for warehouseId: ${warehouseId}");
 
+				var userLoginInfo = JSONUtil2.formatJSONUser();
+
 				var curlWarehouseItems = '''
 						${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses/${warehouseId}/warehouseItems?pageSize=200 \
-						-u test@liferay.com:test \
+						-u ${userLoginInfo} \
 						-H 'accept: application/json' \
 					''';
 
@@ -135,7 +140,7 @@ definition {
 
 						var curlWarehouse = '''
 								${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouseItems/${warehouseItemId} \
-								-u test@liferay.com:test \
+								-u ${userLoginInfo} \
 								-H 'accept: application/json' \
 							''';
 
@@ -154,7 +159,7 @@ definition {
 				if (${warehouseId} != "") {
 					var curlWarehouse = '''
 							${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses/${warehouseId} \
-							-u test@liferay.com:test \
+							-u ${userLoginInfo} \
 							-H 'accept: application/json' \
 						''';
 

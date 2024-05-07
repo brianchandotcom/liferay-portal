@@ -1132,10 +1132,7 @@ definition {
 		task ("And the virtual host signs in to the page") {
 			User.logoutPG();
 
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "http://www.able.com:8080",
-				userEmailAddress = "test@liferay.com");
+			User.firstLoginUI(specificURL = "http://www.able.com:8080");
 		}
 
 		task ("And Uuid of the product is acquired") {

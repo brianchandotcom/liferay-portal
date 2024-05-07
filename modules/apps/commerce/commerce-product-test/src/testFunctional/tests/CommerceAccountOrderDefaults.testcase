@@ -1296,9 +1296,7 @@ definition {
 		task ("When there is no default price list for Account per Channel") {
 			User.logoutPG();
 
-			User.loginPG(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+			User.loginPG();
 
 			Account.openAccountsAdmin();
 
@@ -3282,9 +3280,7 @@ definition {
 		task ("Given the settings are changed for price lists eligibility") {
 			User.logoutPG();
 
-			User.loginPG(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+			User.loginPG();
 
 			CommercePriceLists.openPriceListsAdmin();
 

@@ -25,6 +25,7 @@ import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResou
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -359,13 +360,6 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 	}
 
 	private void _testPostProductIdSkuWithOptionId() throws Exception {
-		SkuResource skuResource = SkuResource.builder(
-		).authentication(
-			"test@liferay.com", "test"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
-
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 			_cpDefinitionOptionValueRels.get(0);
 
@@ -393,13 +387,6 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 	}
 
 	private void _testPostProductIdSkuWithOptionIdKey() throws Exception {
-		SkuResource skuResource = SkuResource.builder(
-		).authentication(
-			"test@liferay.com", "test"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
-
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 			_cpDefinitionOptionValueRels.get(0);
 
@@ -430,13 +417,6 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 	}
 
 	private void _testPostProductIdSkuWithOptionKey() throws Exception {
-		SkuResource skuResource = SkuResource.builder(
-		).authentication(
-			"test@liferay.com", "test"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
-
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 			_cpDefinitionOptionValueRels.get(0);
 
@@ -464,9 +444,16 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 	private void _testPostProductIdSkuWithSkuVirtualSettings()
 		throws Exception {
 
+		User omniAdminUser = UserTestUtil.addOmniadminUser();
+
+		String password = RandomTestUtil.randomString();
+
+		_userLocalService.updatePassword(
+			omniAdminUser.getUserId(), password, password, false, true);
+
 		SkuResource skuResource = SkuResource.builder(
 		).authentication(
-			"test@liferay.com", "test"
+			omniAdminUser.getEmailAddress(), password
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(
@@ -556,5 +543,8 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

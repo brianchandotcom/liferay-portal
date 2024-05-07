@@ -682,9 +682,7 @@ definition {
 		task ("And a business account is created") {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-			CommerceAcceleratorsInitializer.createNewAccountViaFront(
-				accountName = "Commerce Account",
-				adminEmailAddress = "test@liferay.com");
+			CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
 		}
 
 		task ("And add something to the cart") {

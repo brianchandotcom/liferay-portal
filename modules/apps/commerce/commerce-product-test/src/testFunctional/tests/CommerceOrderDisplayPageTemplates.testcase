@@ -454,9 +454,7 @@ definition {
 				productUnitPrice = 24,
 				shippingMethod = "Standard");
 
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 		}
 
 		task ("And a new Commerce Order type display page template with fragments is created and mapped with the order related fields") {

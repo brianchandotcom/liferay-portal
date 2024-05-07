@@ -890,10 +890,7 @@ definition {
 
 		CommerceLogin.miniumLogoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
@@ -967,10 +964,7 @@ definition {
 
 		User.logoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
@@ -1234,10 +1228,7 @@ definition {
 
 		CommerceLogin.miniumLogoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
 
@@ -1366,10 +1357,7 @@ definition {
 
 		User.logoutPG();
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
 
@@ -1516,10 +1504,7 @@ definition {
 
 		CommerceLogin.speedwellLogout();
 
-		CommerceLogin.speedwellLogin(
-			password = "test",
-			urlAppend = "web/speedwell",
-			userEmailAddress = "test@liferay.com");
+		CommerceLogin.speedwellLogin(urlAppend = "web/speedwell");
 
 		Refresh();
 

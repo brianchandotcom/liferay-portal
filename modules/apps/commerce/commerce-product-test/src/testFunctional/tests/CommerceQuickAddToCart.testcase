@@ -556,10 +556,7 @@ definition {
 		task ("When the admin logs in") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 		}
 
 		task ("And minimum quantity is changed to 4 for the same product (e.g. MIN55860)") {
@@ -1162,10 +1159,7 @@ definition {
 		task ("When the admin logs in") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 		}
 
 		task ("And the SKU is configured as purchasable") {
@@ -1270,10 +1264,7 @@ definition {
 		task ("When the admin logs in") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 		}
 
 		task ("And allowed quantities are changed to 8,9 for the same product (e.g. MIN55860)") {
@@ -1372,10 +1363,7 @@ definition {
 		task ("When the admin logs in") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 		}
 
 		task ("And allowed quantities are changed to 6,7 for the same product") {
@@ -1566,10 +1554,7 @@ definition {
 		task ("When the admin logs in") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 		}
 
 		task ("And maximum quantity is changed to 4 for the same product (e.g. MIN55860)") {

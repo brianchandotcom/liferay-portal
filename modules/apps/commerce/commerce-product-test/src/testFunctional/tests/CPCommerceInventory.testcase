@@ -134,9 +134,7 @@ definition {
 		}
 
 		task ("And the admin searches for the MIN93015 on the inventory admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
+			User.logoutAndLoginPG();
 
 			CommerceNavigator.gotoPortlet(
 				category = "Inventory Management",
@@ -245,9 +243,7 @@ definition {
 		}
 
 		task ("And the admin searches for the MIN93015 on the inventory admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
+			User.logoutAndLoginPG();
 
 			CommerceInventory.openInventoryAdmin();
 
@@ -348,9 +344,7 @@ definition {
 		}
 
 		task ("And the admin searches for the MIN93015 on the inventory admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
+			User.logoutAndLoginPG();
 
 			CommerceInventory.openInventoryAdmin();
 
@@ -493,9 +487,7 @@ definition {
 		}
 
 		task ("And the admin searches for MIN93015 on the inventory admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
+			User.logoutAndLoginPG();
 
 			CommerceInventory.openInventoryAdmin();
 
@@ -581,9 +573,7 @@ definition {
 		}
 
 		task ("And the admin searches for MIN93015 on the inventory admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
+			User.logoutAndLoginPG();
 
 			CommerceInventory.openInventoryAdmin();
 
@@ -809,9 +799,7 @@ definition {
 		}
 
 		task ("And the admin searches for MIN93015 on the inventory admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
+			User.logoutAndLoginPG();
 
 			CommerceInventory.openInventoryAdmin();
 

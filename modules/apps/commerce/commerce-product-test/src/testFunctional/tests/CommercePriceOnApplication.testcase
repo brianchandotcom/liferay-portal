@@ -772,9 +772,7 @@ definition {
 		}
 
 		task ("When the admin unmarks the sku as 'Price on Application'") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceProducts.openProductsAdmin();
 
@@ -1204,9 +1202,7 @@ definition {
 		}
 
 		task ("When the admin sets up the account group eligibility for Account Group Name that contains Commerce Account 2") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommercePriceLists.openPriceListsAdmin();
 
@@ -1480,9 +1476,7 @@ definition {
 		}
 
 		task ("But if the admin inverts the priority for the two price lists created before") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommercePriceLists.openPriceListsAdmin();
 
@@ -1707,9 +1701,7 @@ definition {
 		}
 
 		task ("When the admin sets up the account group eligibility for Account Group Name that contains Commerce Account 2") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommercePromotions.openPromotionsAdmin();
 
@@ -2098,10 +2090,7 @@ definition {
 		task ("When the admin logs in") {
 			User.logoutPG();
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 		}
 
 		task ("And sets MIN55861 as Price on Application also on Minium Base Price List") {
@@ -2522,9 +2511,7 @@ definition {
 		}
 
 		task ("And admin can view the order with the status 'Quote Requested' in the Orders admin page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceOrders.openOrdersAdmin();
 

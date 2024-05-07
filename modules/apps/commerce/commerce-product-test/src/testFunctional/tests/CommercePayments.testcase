@@ -133,10 +133,7 @@ definition {
 		}
 
 		task ("When the order status is changed from Pending to Cancelled") {
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "test@liferay.com");
+			CommerceLogin.miniumLogin(urlAppend = "web/minium");
 
 			CommerceOrders.openOrdersAdmin();
 

@@ -36,9 +36,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given admin user enable subscription in one product") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceEntry.activeProductPaymentSubscription(productName = "ABS Sensor");
 		}
@@ -210,9 +208,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given admin user enable subscription in two products") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceEntry.activeProductPaymentSubscription(productName = "ABS Sensor");
 
@@ -326,9 +322,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given admin user enable subscription in two products") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceEntry.activeProductPaymentSubscription(productName = "ABS Sensor");
 
@@ -454,9 +448,7 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given admin user enable subscription in one product") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceEntry.activeProductPaymentSubscription(productName = "ABS Sensor");
 		}
@@ -640,9 +632,7 @@ definition {
 		}
 
 		task ("And given admin user add a new descount and promotion") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			User.logoutAndLoginPG();
 
 			CommerceNavigator.goToDiscountAdmin();
 

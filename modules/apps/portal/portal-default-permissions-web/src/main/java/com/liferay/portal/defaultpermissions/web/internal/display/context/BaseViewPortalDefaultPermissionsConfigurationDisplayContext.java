@@ -7,8 +7,8 @@ package com.liferay.portal.defaultpermissions.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.defaultpermissions.web.internal.search.PortalDefaultPermissionsSearch;
 import com.liferay.portal.defaultpermissions.web.internal.search.PortalDefaultPermissionsSearchEntry;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,7 +32,8 @@ public abstract class
 
 	public abstract PortletURL getPortletURL();
 
-	public abstract PortalDefaultPermissionsSearch getSearchContainer();
+	public abstract SearchContainer<PortalDefaultPermissionsSearchEntry>
+		getSearchContainer();
 
 	protected List<PortalDefaultPermissionsSearchEntry> filter(
 		List<PortalDefaultPermissionsSearchEntry>

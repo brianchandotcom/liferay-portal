@@ -13,6 +13,7 @@ import com.liferay.portal.defaultpermissions.resource.PortalDefaultPermissionsMo
 import com.liferay.portal.defaultpermissions.web.internal.search.PortalDefaultPermissionsSearch;
 import com.liferay.portal.defaultpermissions.web.internal.search.PortalDefaultPermissionsSearchEntry;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -39,10 +40,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Stefano Motta
  */
-public class ViewCompanyPortalDefaultPermissionsConfigurationDisplayContext
+public class CompanyViewPortalDefaultPermissionsConfigurationDisplayContext
 	extends BaseViewPortalDefaultPermissionsConfigurationDisplayContext {
 
-	public ViewCompanyPortalDefaultPermissionsConfigurationDisplayContext(
+	public CompanyViewPortalDefaultPermissionsConfigurationDisplayContext(
 		HttpServletRequest httpServletRequest, Language language,
 		PortalDefaultPermissionsModelResourceRegistry
 			portalDefaultPermissionsModelResourceRegistry) {
@@ -125,8 +126,10 @@ public class ViewCompanyPortalDefaultPermissionsConfigurationDisplayContext
 		).buildPortletURL();
 	}
 
-	public PortalDefaultPermissionsSearch getSearchContainer() {
-		PortalDefaultPermissionsSearch searchContainer =
+	public SearchContainer<PortalDefaultPermissionsSearchEntry>
+		getSearchContainer() {
+
+		SearchContainer<PortalDefaultPermissionsSearchEntry> searchContainer =
 			new PortalDefaultPermissionsSearch(
 				_liferayPortletRequest, getPortletURL());
 

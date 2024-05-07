@@ -8,7 +8,7 @@ package com.liferay.portal.defaultpermissions.web.internal.configuration.admin.d
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
 import com.liferay.portal.defaultpermissions.resource.PortalDefaultPermissionsModelResourceRegistry;
-import com.liferay.portal.defaultpermissions.web.internal.display.context.ViewCompanyPortalDefaultPermissionsConfigurationDisplayContext;
+import com.liferay.portal.defaultpermissions.web.internal.display.context.CompanyViewPortalDefaultPermissionsConfigurationDisplayContext;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -103,7 +103,7 @@ public class DefaultPermissionsPortalSettingsConfigurationScreenWrapper
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				new ViewCompanyPortalDefaultPermissionsConfigurationDisplayContext(
+				new CompanyViewPortalDefaultPermissionsConfigurationDisplayContext(
 					httpServletRequest, _language,
 					_portalDefaultPermissionsModelResourceRegistry));
 		}

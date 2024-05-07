@@ -812,8 +812,14 @@ public class KBArticleLocalServiceUtil {
 		getService().subscribeKBArticle(userId, groupId, resourcePrimKey);
 	}
 
-	public static void unlockKBArticle(long resourcePrimKey) {
-		getService().unlockKBArticle(resourcePrimKey);
+	public static void unlockKBArticle(long userId, long resourcePrimKey) {
+		getService().unlockKBArticle(userId, resourcePrimKey);
+	}
+
+	public static void unlockKBArticle(
+		long userId, long resourcePrimKey, boolean force) {
+
+		getService().unlockKBArticle(userId, resourcePrimKey, force);
 	}
 
 	public static void unsubscribeGroupKBArticles(long userId, long groupId)

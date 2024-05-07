@@ -592,7 +592,10 @@ public interface KBArticleLocalService
 			long userId, long groupId, long resourcePrimKey)
 		throws PortalException;
 
-	public void unlockKBArticle(long resourcePrimKey);
+	public void unlockKBArticle(long userId, long resourcePrimKey);
+
+	public void unlockKBArticle(
+		long userId, long resourcePrimKey, boolean force);
 
 	public void unsubscribeGroupKBArticles(long userId, long groupId)
 		throws PortalException;

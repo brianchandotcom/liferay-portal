@@ -927,8 +927,15 @@ public class KBArticleLocalServiceWrapper
 	}
 
 	@Override
-	public void unlockKBArticle(long resourcePrimKey) {
-		_kbArticleLocalService.unlockKBArticle(resourcePrimKey);
+	public void unlockKBArticle(long userId, long resourcePrimKey) {
+		_kbArticleLocalService.unlockKBArticle(userId, resourcePrimKey);
+	}
+
+	@Override
+	public void unlockKBArticle(
+		long userId, long resourcePrimKey, boolean force) {
+
+		_kbArticleLocalService.unlockKBArticle(userId, resourcePrimKey, force);
 	}
 
 	@Override

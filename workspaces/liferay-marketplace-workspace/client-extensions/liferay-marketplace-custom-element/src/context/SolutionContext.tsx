@@ -45,6 +45,7 @@ export type ContentBlock =
 
 export enum SolutionTypes {
 	SET_CLEANUP = 'SET_CLEANUP',
+	SET_COMPANY = 'SET_COMPANY',
 	SET_CONTACT_US = 'SET_CONTACT_US',
 	SET_DETAILS = 'SET_DETAILS',
 	SET_HEADER = 'SET_HEADER',
@@ -57,6 +58,12 @@ export enum SolutionTypes {
 
 type SolutionPayload = {
 	[SolutionTypes.SET_CLEANUP]: undefined;
+	[SolutionTypes.SET_COMPANY]: Partial<{
+		description: string;
+		email: string;
+		phone: string;
+		website: string;
+	}>;
 	[SolutionTypes.SET_CONTACT_US]: string;
 	[SolutionTypes.SET_DETAILS]: ContentBlock[];
 	[SolutionTypes.SET_HEADER]: Partial<{
@@ -82,6 +89,12 @@ type SolutionPayload = {
 export type SolutionInitialState = {
 	_product?: Product;
 	catalogId: number;
+	company: {
+		description: string;
+		email: string;
+		phone: string;
+		website: string;
+	};
 	contactUs: string;
 	details: ContentBlock[];
 	header: {
@@ -112,6 +125,12 @@ export type SolutionInitialState = {
 
 const solutionInitialState: SolutionInitialState = {
 	catalogId: 0,
+	company: {
+		description: '',
+		email: '',
+		phone: '',
+		website: '',
+	},
 	contactUs: '',
 	details: [],
 	header: {
@@ -146,6 +165,16 @@ const filterProductVocabularies = (product: Product, vocabulary: string) =>
 
 const reducer = (state: SolutionInitialState, action: AppActions) => {
 	switch (action.type) {
+		case SolutionTypes.SET_COMPANY: {
+			return {
+				...state,
+				company: {
+					...state.company,
+					...action.payload,
+				},
+			};
+		}
+
 		case SolutionTypes.SET_CONTACT_US: {
 			return {
 				...state,

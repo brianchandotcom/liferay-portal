@@ -51,6 +51,8 @@ export const SOLUTION_FLOW_ITEMS = [
 			'define-profile-company-information-for-your-solution-this-will-inform-users-about-this-versions-updates-on-the-storefront'
 		),
 		label: i18n.translate('company-profile'),
+		parseSchema: (context: SolutionInitialState) =>
+			zodSchema.solutionPublishing.company.safeParse(context.company),
 		path: 'company',
 		title: i18n.translate('provide-company-profile-details'),
 	},

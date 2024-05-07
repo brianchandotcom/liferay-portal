@@ -11,6 +11,10 @@
 	},
 	"items": [
 		{
+			"externalReferenceCode": "brianchandotcom",
+			"url": "https://github.com/brianchandotcom"
+		},
+		{
 			"externalReferenceCode": "liferay",
 			"url": "https://github.com/liferay"
 		}

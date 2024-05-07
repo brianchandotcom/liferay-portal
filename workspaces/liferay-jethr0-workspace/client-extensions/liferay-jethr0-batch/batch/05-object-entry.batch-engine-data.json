@@ -59,10 +59,22 @@
 			"url": "https://github.com/liferay/liferay-portal-ee/tree/7.0.x"
 		},
 		{
+			"externalReferenceCode": "liferayPortalEE70xBChan",
+			"r_gitUserToGitBranches_c_gitUserERC": "brianchandotcom",
+			"type": "upstream",
+			"url": "https://github.com/brianchandotcom/liferay-portal-ee/tree/7.0.x"
+		},
+		{
 			"externalReferenceCode": "liferayPortalEE71x",
 			"r_gitUserToGitBranches_c_gitUserERC": "liferay",
 			"type": "upstream",
 			"url": "https://github.com/liferay/liferay-portal-ee/tree/7.1.x"
+		},
+		{
+			"externalReferenceCode": "liferayPortalEE71xBChan",
+			"r_gitUserToGitBranches_c_gitUserERC": "brianchandotcom",
+			"type": "upstream",
+			"url": "https://github.com/brianchandotcom/liferay-portal-ee/tree/7.1.x"
 		},
 		{
 			"externalReferenceCode": "liferayPortalEE72x",
@@ -71,10 +83,22 @@
 			"url": "https://github.com/liferay/liferay-portal-ee/tree/7.2.x"
 		},
 		{
+			"externalReferenceCode": "liferayPortalEE72xBChan",
+			"r_gitUserToGitBranches_c_gitUserERC": "brianchandotcom",
+			"type": "upstream",
+			"url": "https://github.com/brianchandotcom/liferay-portal-ee/tree/7.2.x"
+		},
+		{
 			"externalReferenceCode": "liferayPortalEE73x",
 			"r_gitUserToGitBranches_c_gitUserERC": "liferay",
 			"type": "upstream",
 			"url": "https://github.com/liferay/liferay-portal-ee/tree/7.3.x"
+		},
+		{
+			"externalReferenceCode": "liferayPortalEE73xBChan",
+			"r_gitUserToGitBranches_c_gitUserERC": "brianchandotcom",
+			"type": "upstream",
+			"url": "https://github.com/brianchandotcom/liferay-portal-ee/tree/7.3.x"
 		},
 		{
 			"externalReferenceCode": "liferayPortalEERelease2023Q3",
@@ -99,6 +123,12 @@
 			"r_gitUserToGitBranches_c_gitUserERC": "liferay",
 			"type": "upstream",
 			"url": "https://github.com/liferay/liferay-portal/tree/master"
+		},
+		{
+			"externalReferenceCode": "liferayPortalMasterBChan",
+			"r_gitUserToGitBranches_c_gitUserERC": "brianchandotcom",
+			"type": "upstream",
+			"url": "https://github.com/brianchandotcom/liferay-portal/tree/master"
 		}
 	]
 }

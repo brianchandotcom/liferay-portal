@@ -1575,6 +1575,57 @@ components:
             required:
                 - name
             type: object
+        DocumentShortcut:
+            description:
+                Represents a document shortcut.
+            properties:
+                assetLibraryKey:
+                    # @review
+                    description:
+                        The key of the asset library to which the folder is scoped.
+                    readOnly: true
+                    type: string
+                dateCreated:
+                    description:
+                        The shorcut's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        The last time a field of the shorcut changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                folderId:
+                    description:
+                        The shorcut's folder ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                id:
+                    description:
+                        The shorcut's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                siteId:
+                    description:
+                        The ID of the site to which this shortcut is scoped.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                targetDocumentId:
+                    description:
+                        The ID of the document to which this shortcut is scoped.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                title:
+                    description:
+                        The title of the document to which this shortcut is scoped.
+                    type: string
+            type: object
         Experience:
             description:
                 # @review

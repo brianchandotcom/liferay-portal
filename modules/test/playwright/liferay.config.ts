@@ -8,6 +8,9 @@ const liferayConfig = {
 		baseUrl: process.env.PORTAL_URL
 			? process.env.PORTAL_URL
 			: 'http://localhost:8080',
+		password: process.env.LIFERAY_USER_PASSWORD
+			? process.env.LIFERAY_USER_PASSWORD
+			: 'test',
 	},
 };
 

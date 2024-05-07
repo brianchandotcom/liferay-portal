@@ -427,7 +427,7 @@ definition {
 		task ("Visit the page, then close the sessions") {
 			ACUtils.navigateToSitePage(
 				actionType = "View Blog",
-				documentTitleList = "Blog test",
+				documentTitleList = "Blog test,Blog test,Blog test,Blog test,Blog test",
 				pageName = "AC Page",
 				siteName = "Site Name");
 
@@ -440,19 +440,15 @@ definition {
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
-		task ("Create four dynamic segments") {
+		task ("Create four static segments") {
 			for (var n : list "1,2,3,4") {
 				ACNavigation.goToSegments();
 
-				ACSegments.createDynamicSegment();
+				ACSegments.createStaticSegment();
 
-				ACUtils.setItemName(itemName = "Dynamic Segment Test ${n}");
+				ACUtils.setItemName(itemName = "Static Segment Test ${n}");
 
-				ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
-
-				ACSegments.addSegmentField(segmentField = "email");
-
-				ACSegments.editTextCriterion(textInput = "test@liferay.com");
+				ACSegments.addStaticMember(tableMember = "Test Test");
 
 				ACSegments.saveSegment();
 			}
@@ -487,7 +483,7 @@ definition {
 		}
 
 		task ("View segments on the list") {
-			ACPagePath.viewSegmentDropdown(nameList = "Dynamic Segment Test 1,Dynamic Segment Test 2,Dynamic Segment Test 3,Dynamic Segment Test 4");
+			ACPagePath.viewSegmentDropdown(nameList = "Static Segment Test 1,Static Segment Test 2,Static Segment Test 3,Static Segment Test 4");
 		}
 	}
 

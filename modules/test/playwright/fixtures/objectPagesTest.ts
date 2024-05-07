@@ -11,6 +11,7 @@ import {ModalEditObjectFolderPage} from '../pages/object-web/ModalEditObjectFold
 import {ModelBuilderPage} from '../pages/object-web/ModelBuilderPage';
 import {ViewObjectDefinitionsPage} from '../pages/object-web/ViewObjectDefinitionsPage';
 import {ViewObjectEntriesPage} from '../pages/object-web/object-entries/ViewObjectEntriesPage';
+import {ObjectFieldsPage} from '../pages/object-web/object-fields/ObjectFieldsPage';
 import {EditObjectValidationPage} from '../pages/object-web/object-validation/EditObjectValidationPage';
 import {ModalAddObjectValidationPage} from '../pages/object-web/object-validation/ModalAddObjectValidationPage';
 import {ObjectValidationsFDSPage} from '../pages/object-web/object-validation/ObjectValidationsFDSPage';
@@ -22,6 +23,7 @@ const objectPagesTest = test.extend<{
 	modalAddObjectValidationPage: ModalAddObjectValidationPage;
 	modalEditObjectFolderPage: ModalEditObjectFolderPage;
 	modelBuilderPage: ModelBuilderPage;
+	objectFieldsPage: ObjectFieldsPage;
 	objectValidationsFDSPage: ObjectValidationsFDSPage;
 	viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
 	viewObjectEntriesPage: ViewObjectEntriesPage;
@@ -43,6 +45,9 @@ const objectPagesTest = test.extend<{
 	},
 	modelBuilderPage: async ({page}, use) => {
 		await use(new ModelBuilderPage(page));
+	},
+	objectFieldsPage: async ({page}, use) => {
+		await use(new ObjectFieldsPage(page));
 	},
 	objectValidationsFDSPage: async ({page}, use) => {
 		await use(new ObjectValidationsFDSPage(page));

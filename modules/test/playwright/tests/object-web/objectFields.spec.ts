@@ -282,3 +282,75 @@ test.describe('Manage object fields through Model Builder', () => {
 		).toBeHidden();
 	});
 });
+
+test.describe('Manage objectFields through Objects Admin UI', () => {
+	test('cannot delete an objectField that belongs to a unique composite key validation through Objects Admin UI', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+	}) => {
+		const integerFieldName = 'integerField' + getRandomInt();
+
+		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
+			objectDefinition.externalReferenceCode,
+			{
+				DBType: 'Integer',
+				businessType: 'Integer',
+				externalReferenceCode: integerFieldName,
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: '',
+				label: {en_US: integerFieldName},
+				listTypeDefinitionId: 0,
+				localized: false,
+				name: integerFieldName,
+				readOnly: 'false',
+				required: false,
+				state: false,
+				system: false,
+			}
+		);
+
+		const objectValidationName =
+			'Unique Composite Key Object Validation' + getRandomInt();
+
+		await apiHelpers.objectAdmin.postObjectValidation(
+			objectDefinition.externalReferenceCode,
+			{
+				active: true,
+				engine: 'compositeKey',
+				engineLabel: 'Composite Key',
+				errorLabel: {
+					en_US: 'Unique composite key object validation error',
+				},
+				name: {
+					en_US: objectValidationName,
+				},
+				objectValidationRuleSettings: [
+					{
+						name: 'compositeKeyObjectFieldExternalReferenceCode',
+						value: 'textField',
+					},
+					{
+						name: 'compositeKeyObjectFieldExternalReferenceCode',
+						value: integerFieldName,
+					},
+				],
+				outputType: 'fullValidation',
+				script: '',
+				system: false,
+			}
+		);
+
+		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+		await objectFieldsPage.deleteObjectField(-1);
+
+		await expect(page.getByText('Deletion Not Allowed')).toBeVisible();
+		await expect(
+			page.getByText(
+				`The object field "${integerFieldName}" cannot be deleted because it is used in a unique composite key validation. To remove this object field, you must first delete the associated unique composite key validation.`
+			)
+		).toBeVisible();
+	});
+});

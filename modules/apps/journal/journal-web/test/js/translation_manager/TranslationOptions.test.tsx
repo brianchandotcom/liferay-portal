@@ -7,6 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
 import React from 'react';
 
+import TranslationFilter from '../../../src/main/resources/META-INF/resources/js/translation_manager/TranslationFilter';
 import TranslationOptions from '../../../src/main/resources/META-INF/resources/js/translation_manager/TranslationOptions';
 
 const DEFAULT_FIELDS = {
@@ -71,6 +72,21 @@ describe('TranslationOptions', () => {
 			);
 
 			expect(resetTranslationsButton).toBeDisabled();
+		});
+	});
+
+	describe('Translation Filter Picker', () => {
+		it('all fields option is selected by default', () => {
+			render(
+				<TranslationFilter
+					{...DEFAULT_PROPS}
+					selectedLanguageId="ca_ES"
+				/>
+			);
+
+			const resetTranslationsButton = screen.getByText('all-fields');
+
+			expect(resetTranslationsButton).toBeInTheDocument();
 		});
 	});
 });

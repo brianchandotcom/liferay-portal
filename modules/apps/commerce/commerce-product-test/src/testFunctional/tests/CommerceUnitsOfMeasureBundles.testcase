@@ -856,7 +856,8 @@ definition {
 				cartItemOption = "blue",
 				cartItemPriceValue = "70.00",
 				cartItemQuantity = 1,
-				cartItemSku = "BLUE");
+				cartItemSku = "BLUE",
+				optionName = "Color");
 
 			FrontStore.viewMiniCartItem(
 				bundledItems = "2 × ABS Sensor UOM1KEY",
@@ -864,7 +865,8 @@ definition {
 				cartItemOption = "white",
 				cartItemPriceValue = "80.00",
 				cartItemQuantity = 1,
-				cartItemSku = "WHITE");
+				cartItemSku = "WHITE",
+				optionName = "Color");
 		}
 	}
 

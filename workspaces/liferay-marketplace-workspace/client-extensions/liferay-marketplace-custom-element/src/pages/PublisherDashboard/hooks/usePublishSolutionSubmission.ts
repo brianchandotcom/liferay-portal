@@ -23,6 +23,7 @@ const usePublishSolutionSubmission = (
 	context: SolutionInitialState,
 	dispatch: ReturnType<typeof useSolutionContext>[1]
 ) => {
+	console.log('context:', context);
 	const syncProfile = async () => {
 		const {
 			_product,
@@ -94,11 +95,7 @@ const usePublishSolutionSubmission = (
 
 	const syncSolutionHeader = async (product: Product) => {
 		const {
-			header: {
-				contentType: {content, type},
-				description,
-				title,
-			},
+			header: {contentType, description, title},
 		} = context;
 
 		const {productId, productSpecifications = []} = product;
@@ -149,17 +146,17 @@ const usePublishSolutionSubmission = (
 			title
 		);
 
-		if (type === 'embed-video-url') {
-			if (content.headerVideoDescription) {
+		if (contentType.type === 'embed-video-url') {
+			if (contentType.content?.headerVideoDescription) {
 				await _updateSpecification(
 					PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_VIDEO_DESCRIPTION,
-					content.headerVideoDescription
+					contentType.content.headerVideoDescription
 				);
 			}
 
 			await _updateSpecification(
 				PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_VIDEO_URL,
-				content.headerVideoUrl as string
+				contentType.content.headerVideoUrl as string
 			);
 
 			return;
@@ -169,7 +166,7 @@ const usePublishSolutionSubmission = (
 		// the app icon defined as priority 0
 
 		let priority = 0;
-		for (const image of content.headerImages) {
+		for (const image of contentType.content.headerImages) {
 			priority++;
 
 			if (image.uploaded) {

@@ -87,12 +87,6 @@ const zodSchema = {
 		street2: z.string().optional(),
 		zip: z.string().min(1),
 	}),
-	company: z.object({
-		description: z.string().min(1),
-		email: z.string().min(1),
-		phone: z.string().min(1),
-		website: z.string().min(1),
-	}),
 	contactSales: z.object({
 		accountName: z
 			.string()
@@ -153,15 +147,15 @@ const zodSchema = {
 				z.object({
 					content: z.lazy(() =>
 						z.union([
+							blocksContentSchemas.textBlock,
 							blocksContentSchemas.textImages,
 							blocksContentSchemas.textVideo,
-							blocksContentSchemas.textBlock,
 						])
 					),
 					type: z.enum([
+						'text-block',
 						'text-images-block',
 						'text-video-block',
-						'text-block',
 					]),
 				})
 			)
@@ -172,14 +166,12 @@ const zodSchema = {
 					content: z.lazy(() =>
 						z.union([contentMediaTypeImage, contentMediaTypeVideo])
 					),
-					type: z.enum(['upload-images', 'embed-video-url']),
+					type: z.enum(['embed-video-url', 'upload-images']),
 				}),
 				description: z.string().min(1),
 				title: z.string().min(1),
 			})
-			.refine((data) => {
-				return !!removeHTMLTags(data.description);
-			}),
+			.refine((data) => !!removeHTMLTags(data.description)),
 		profile: z.object({
 			categories: z.array(z.any()).nonempty(),
 			description: z.string().min(3),

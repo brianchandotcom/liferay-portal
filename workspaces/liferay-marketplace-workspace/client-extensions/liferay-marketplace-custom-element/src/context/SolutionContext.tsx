@@ -18,6 +18,42 @@ import {ProductVocabulary} from '../enums/ProductVocabulary';
 import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
 import HeadlessCommerceAdminCatalogImpl from '../services/rest/HeadlessCommerceAdminCatalog';
 
+export type TextBlock = {
+	content: {
+		description: string;
+		title: string;
+	};
+	type: 'text-block';
+};
+
+export type TextImageBlock = {
+	content: {
+		description: string;
+		files: UploadedFile[];
+		title: string;
+	};
+	type: 'text-images-block';
+};
+
+export type TextVideoBlock = {
+	content: {
+		description: string;
+		title: string;
+		videoUrl: string;
+	};
+	type: 'text-video-block';
+};
+
+export type ContentBlock = TextBlock | TextImageBlock | TextVideoBlock;
+
+export type HeaderContentTypeEmbeded = {
+	content: {
+		headerVideoDescription?: string;
+		headerVideoUrl: string;
+	};
+	type: 'embed-video-url';
+};
+
 export type HeaderContentTypeImages = {
 	content: {
 		headerImages: UploadedFile[];
@@ -25,42 +61,9 @@ export type HeaderContentTypeImages = {
 	type: 'upload-images';
 };
 
-export type HeaderContentTypeEmbeded = {
-	content: {
-		headerVideoDescription?: string;
-		headerVideoUrl?: string;
-	};
-	type: 'embed-video-url';
-};
-
 export type HeaderContentType =
 	| HeaderContentTypeEmbeded
 	| HeaderContentTypeImages;
-
-export type ContentBlock =
-	| {
-			content: {
-				description: string;
-				title: string;
-			};
-			type: 'text-block';
-	  }
-	| {
-			content: {
-				description: string;
-				files: UploadedFile[];
-				title: string;
-			};
-			type: 'text-images-block';
-	  }
-	| {
-			content: {
-				description: string;
-				title: string;
-				video: string;
-			};
-			type: 'text-video-block';
-	  };
 
 export enum SolutionTypes {
 	SET_CLEANUP = 'SET_CLEANUP',

@@ -581,7 +581,7 @@ public class DDMRESTDataProviderTest {
 
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"password", "test"));
+				"password", TestPropsValues.USER_PASSWORD));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"timeout", "1000"));

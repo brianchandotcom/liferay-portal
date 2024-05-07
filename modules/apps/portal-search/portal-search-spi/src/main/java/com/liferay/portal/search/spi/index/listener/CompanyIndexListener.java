@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.spi.model.index.contributor;
+package com.liferay.portal.search.spi.index.listener;
 
 /**
  * @author Adam Brandizzi
  */
-public interface IndexContributor {
+public interface CompanyIndexListener {
 
 	public default void onAfterCreate(String indexName) {
 	}

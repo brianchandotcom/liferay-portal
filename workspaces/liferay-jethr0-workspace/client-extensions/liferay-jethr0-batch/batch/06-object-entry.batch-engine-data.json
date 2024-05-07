@@ -238,6 +238,17 @@
 			"type": "upstreamBranchCron"
 		},
 		{
+			"cron": "0 0 0 ? * 2 *",
+			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE62xUpstream",
+			"jobName": "ci:test:upstream - ee-6.2.x - $[current_date]",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal-ee/tree/ee-6.2.x\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"ee-6.2.x\"},{\"key\":\"testrayProjectName\",\"value\":\"Liferay Portal 6.2\"},{\"key\":\"testrayRoutineName\",\"value\":\"EE Development (ee-6.2.x)\"},{\"key\":\"testSuiteName\",\"value\":\"upstream\"}]",
+			"jobPriority": 5,
+			"jobType": "portalUpstreamTestSuite",
+			"name": "ci:test:upstream - ee-6.2.x",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalEE62x",
+			"type": "upstreamBranchCron"
+		},
+		{
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerEE70xBundles",
 			"jobName": "ci:test:bundles - 7.0.x - $[current_date]",
 			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal-ee/tree/7.0.x\"},{\"key\":\"portalBuildProfile\",\"value\":\"dxp\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"7.0.x\"},{\"key\":\"testSuiteName\",\"value\":\"bundles\"}]",
@@ -801,6 +812,28 @@
 			"jobPriority": 5,
 			"jobType": "portalUpstreamTestSuite",
 			"name": "ci:test:workflow-metrics - master",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalMaster",
+			"type": "upstreamBranchCron"
+		},
+		{
+			"cron": "0 0 18 ? * * *",
+			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterUpstreamDXP",
+			"jobName": "ci:test:upstream-dxp - master - $[current_date]",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal/tree/master\"},{\"key\":\"portalBuildProfile\",\"value\":\"dxp\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"master\"},{\"key\":\"testSuiteName\",\"value\":\"upstream-dxp\"}]",
+			"jobPriority": 5,
+			"jobType": "portalUpstreamTestSuite",
+			"name": "ci:test:upstream-dxp - master",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalMaster",
+			"type": "upstreamBranchCron"
+		},
+		{
+			"cron": "0 0 0 ? * * *",
+			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterWorkflow",
+			"jobName": "ci:test:workflow - master - $[current_date]",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal/tree/master\"},{\"key\":\"portalBuildProfile\",\"value\":\"dxp\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"master\"},{\"key\":\"testSuiteName\",\"value\":\"workflow\"}]",
+			"jobPriority": 5,
+			"jobType": "portalUpstreamTestSuite",
+			"name": "ci:test:workflow - master",
 			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalMaster",
 			"type": "upstreamBranchCron"
 		},

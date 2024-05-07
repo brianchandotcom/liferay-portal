@@ -70,63 +70,6 @@
 				},
 				{
 					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "RETURN_NOTE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Note"
-					},
-					"name": "note",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Picklist",
-					"defaultValue": "draft",
-					"externalReferenceCode": "RETURN_STATUS",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Return Status"
-					},
-					"listTypeDefinitionExternalReferenceCode": "L_COMMERCE_RETURN_STATUSES",
-					"name": "returnStatus",
-					"required": true,
-					"state": true,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Aggregation",
-					"externalReferenceCode": "RETURN_REQUESTED_ITEMS",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Requested Items"
-					},
-					"name": "requestedItems",
-					"objectFieldSettings": [
-						{
-							"name": "objectRelationshipName",
-							"value": "commerceReturnToCommerceReturnItems"
-						},
-						{
-							"name": "function",
-							"value": "COUNT"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
 					"businessType": "Aggregation",
 					"externalReferenceCode": "RETURN_CHANNEL_TOTAL_ACCEPTED",
 					"indexed": false,
@@ -211,6 +154,125 @@
 					"state": false,
 					"system": true,
 					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "RETURN_NOTE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Note"
+					},
+					"name": "note",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Aggregation",
+					"externalReferenceCode": "RETURN_REQUESTED_ITEMS",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Requested Items"
+					},
+					"name": "requestedItems",
+					"objectFieldSettings": [
+						{
+							"name": "objectRelationshipName",
+							"value": "commerceReturnToCommerceReturnItems"
+						},
+						{
+							"name": "function",
+							"value": "COUNT"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "draft",
+					"externalReferenceCode": "RETURN_STATUS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Return Status"
+					},
+					"listTypeDefinitionExternalReferenceCode": "L_COMMERCE_RETURN_STATUSES",
+					"name": "returnStatus",
+					"required": true,
+					"state": true,
+					"system": true,
+					"type": "String"
+				}
+			],
+			"objectValidationRules": [
+				{
+					"active": true,
+					"engine": "javaDelegate#commerce-return-account-entry-id-validation-rule-engine",
+					"engineLabel": "javaDelegate#commerce-return-account-entry-id-validation-rule-engine",
+					"errorLabel": {
+						"en_US": "Account Entry ID is invalid"
+					},
+					"externalReferenceCode": "COMMERCE_RETURN_ACCOUNT_ENTRY_ID_VALIDATION",
+					"name": {
+						"en_US": "Account Entry ID Validation"
+					},
+					"objectDefinitionExternalReferenceCode": "L_COMMERCE_RETURN",
+					"outputType": "fullValidation",
+					"system": true
+				},
+				{
+					"active": true,
+					"engine": "javaDelegate#commerce-return-commerce-order-id-validation-rule-engine",
+					"engineLabel": "javaDelegate#commerce-return-commerce-order-id-validation-rule-engine",
+					"errorLabel": {
+						"en_US": "Commerce Order ID is invalid"
+					},
+					"externalReferenceCode": "COMMERCE_RETURN_COMMERCE_ORDER_ID_VALIDATION",
+					"name": {
+						"en_US": "Commerce Order ID Validation"
+					},
+					"objectDefinitionExternalReferenceCode": "L_COMMERCE_RETURN",
+					"outputType": "fullValidation",
+					"system": true
+				},
+				{
+					"active": true,
+					"engine": "javaDelegate#commerce-return-commerce-order-status-validation-rule-engine",
+					"engineLabel": "javaDelegate#commerce-return-commerce-order-status-validation-rule-engine",
+					"errorLabel": {
+						"en_US": "Commerce Order Status is invalid"
+					},
+					"externalReferenceCode": "COMMERCE_RETURN_COMMERCE_ORDER_STATUS_VALIDATION",
+					"name": {
+						"en_US": "Commerce Order Status Validation"
+					},
+					"objectDefinitionExternalReferenceCode": "L_COMMERCE_RETURN",
+					"outputType": "fullValidation",
+					"system": true
+				},
+				{
+					"active": true,
+					"engine": "javaDelegate#commerce-return-return-status-validation-rule-engine",
+					"engineLabel": "javaDelegate#commerce-return-return-status-validation-rule-engine",
+					"errorLabel": {
+						"en_US": "Return Status is invalid"
+					},
+					"externalReferenceCode": "COMMERCE_RETURN_RETURN_STATUS_VALIDATION",
+					"name": {
+						"en_US": "Return Status Validation"
+					},
+					"objectDefinitionExternalReferenceCode": "L_COMMERCE_RETURN",
+					"outputType": "fullValidation",
+					"system": true
 				}
 			],
 			"pluralLabel": {

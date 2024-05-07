@@ -17,6 +17,7 @@ function NotFoundPage() {
 	return (
 		<ClayLayout.Container>
 			<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
+
 			<Jethr0Card>
 				<div>404 - Not Found</div>
 			</Jethr0Card>

@@ -69,10 +69,9 @@ export class ModelBuilderPage {
 		this.leftSidebarItems = page.locator(
 			'li.treeview-item div.autofit-row'
 		);
-		this.modalDeleteObjectDefinitionConfirmationButton = page.getByRole(
-			'button',
-			{exact: true, name: 'Delete'}
-		);
+		this.modalDeleteObjectDefinitionConfirmationButton = page
+			.getByRole('dialog')
+			.getByRole('button', {exact: true, name: 'Delete'});
 		this.modalDeleteObjectDefinitionTextField = page.getByPlaceholder(
 			'Confirm Object Definition Name'
 		);

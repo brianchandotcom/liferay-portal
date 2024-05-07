@@ -36,7 +36,7 @@ interface IBodyProps {
 	picklists: IPickList[];
 	preselectedValues?: any[];
 	selectedPicklist?: IPickList;
-	sourceType: ESelectionFilterSourceType | undefined;
+	source: ESelectionFilterSourceType | undefined;
 }
 
 function Body({
@@ -51,7 +51,7 @@ function Body({
 	picklists,
 	preselectedValues = [],
 	selectedPicklist,
-	sourceType,
+	source,
 }: IBodyProps) {
 	const [preselectedValueInput, setPreselectedValueInput] = useState('');
 
@@ -111,10 +111,7 @@ function Body({
 							)}
 							name={sourceOptionFormElementId}
 							onChange={(event) => {
-								onSourceChange(
-									event.target
-										.value as ESelectionFilterSourceType
-								);
+								onSourceChange(event.target.value as ESelectionFilterSourceType);
 							}}
 							options={[
 								{
@@ -134,7 +131,7 @@ function Body({
 							]}
 							required
 							title={Liferay.Language.get('source')}
-							value={sourceType || ''}
+							value={source || ''}
 						/>
 					</ClayForm.Group>
 				</>
@@ -142,7 +139,7 @@ function Body({
 
 			{Liferay.FeatureFlags['LPD-10754'] ? (
 				<>
-					{sourceType === ESelectionFilterSourceType.PICKLIST && (
+					{source === ESelectionFilterSourceType.PICKLIST && (
 						<ObjectPicklist
 							includeMode={includeMode}
 							multiple={multiple}

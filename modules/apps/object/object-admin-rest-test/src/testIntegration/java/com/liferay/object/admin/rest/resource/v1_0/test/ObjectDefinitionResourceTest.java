@@ -329,6 +329,7 @@ public class ObjectDefinitionResourceTest
 						name = "a" + RandomTestUtil.randomString();
 						readOnly = ReadOnly.FALSE;
 						required = false;
+						state = false;
 						system = true;
 					}
 				}

@@ -1471,7 +1471,9 @@ public class ViewChangesDisplayContext {
 
 					if (_ctDisplayRendererRegistry.isWorkflowEnabled(
 							ctEntry, model) &&
-						(changeType != CTConstants.CT_CHANGE_TYPE_DELETION)) {
+						(changeType != CTConstants.CT_CHANGE_TYPE_DELETION) &&
+						((Integer)modelAttributes.get("status") !=
+							WorkflowConstants.STATUS_DRAFT)) {
 
 						modelInfo._jsonObject.put("showWorkflow", true);
 					}

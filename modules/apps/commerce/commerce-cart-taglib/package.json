@@ -3,7 +3,7 @@
 	},
 	"name": "commerce-cart-taglib",
 	"scripts": {
-		"build": "liferay-npm-scripts build",
+		"build": "node ../../../sdk/node-build/index.mjs",
 		"checkFormat": "liferay-npm-scripts check"
 	},
 	"version": "5.0.32"

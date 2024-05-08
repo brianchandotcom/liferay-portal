@@ -5,7 +5,7 @@
 	"main": "js/index.js",
 	"name": "@liferay/fragment-renderer-collection-filter-impl",
 	"scripts": {
-		"build": "liferay-npm-scripts build",
+		"build": "node ../../../sdk/node-build/index.mjs",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},

@@ -26,7 +26,7 @@
 	"name": "@liferay/headless-builder-web",
 	"private": true,
 	"scripts": {
-		"build": "liferay-npm-scripts build",
+		"build": "node ../../../../sdk/node-build/index.mjs",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},

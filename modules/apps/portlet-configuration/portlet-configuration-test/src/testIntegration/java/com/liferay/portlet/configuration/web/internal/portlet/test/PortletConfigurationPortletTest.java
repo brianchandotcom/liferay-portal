@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -47,6 +48,7 @@ import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -116,6 +118,8 @@ public class PortletConfigurationPortletTest {
 			TestPropsValues.getCompanyId());
 
 		_group = GroupTestUtil.addGroup();
+
+		_locale = _portal.getSiteDefaultLocale(_group);
 	}
 
 	@Test
@@ -338,9 +342,10 @@ public class PortletConfigurationPortletTest {
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
 
-		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(LocaleUtil.US));
+		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(_locale));
 		themeDisplay.setLayoutTypePortlet(
 			(LayoutTypePortlet)layout.getLayoutType());
+		themeDisplay.setLocale(_locale);
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 		themeDisplay.setScopeGroupId(_group.getGroupId());
@@ -363,6 +368,11 @@ public class PortletConfigurationPortletTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private Locale _locale;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject(
 		filter = "component.name=com.liferay.portlet.configuration.web.internal.portlet.PortletConfigurationPortlet"

@@ -46,6 +46,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionResponse;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -94,16 +95,16 @@ public class PortletConfigurationPortletTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		String portletId = "TEST_PORTLET_" + RandomTestUtil.randomString();
+		String testPortletId = "TEST_PORTLET_" + RandomTestUtil.randomString();
 
 		_serviceRegistration = bundleContext.registerService(
 			Portlet.class, new MVCPortlet(),
 			HashMapDictionaryBuilder.put(
-				"javax.portlet.name", portletId
+				"javax.portlet.name", testPortletId
 			).build());
 
-		_portlet = _portletLocalService.getPortletById(
-			TestPropsValues.getCompanyId(), portletId);
+		_testPortlet = _portletLocalService.getPortletById(
+			TestPropsValues.getCompanyId(), testPortletId);
 	}
 
 	@AfterClass
@@ -126,7 +127,7 @@ public class PortletConfigurationPortletTest {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		LayoutTestUtil.addPortletToLayout(
-			layout, _portlet.getPortletId(),
+			layout, _testPortlet.getPortletId(),
 			HashMapBuilder.put(
 				"portletSetupTitle_en_US",
 				new String[] {RandomTestUtil.randomString()}
@@ -153,12 +154,12 @@ public class PortletConfigurationPortletTest {
 		_portletPreferencesLocalService.addPortletPreferences(
 			_company.getCompanyId(), _group.getGroupId(),
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, PortletKeys.PREFS_PLID_SHARED,
-			_portlet.getPortletId(), _portlet, defaultPreferences);
+			_testPortlet.getPortletId(), _testPortlet, defaultPreferences);
 
 		_portletPreferencesLocalService.addPortletPreferences(
 			_company.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-			_portlet.getPortletId(), _portlet, defaultPreferences);
+			_testPortlet.getPortletId(), _testPortlet, defaultPreferences);
 
 		_assertUpdateScope(
 			layout, _group.getGroupId(), PortletKeys.PREFS_PLID_SHARED);
@@ -240,7 +241,7 @@ public class PortletConfigurationPortletTest {
 			_portletPreferencesLocalService.getPreferences(
 				_company.getCompanyId(), preferencesOwnerId,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, preferencesPlid,
-				_portlet.getPortletId());
+				_testPortlet.getPortletId());
 
 		Assert.assertEquals(
 			"company",
@@ -274,7 +275,7 @@ public class PortletConfigurationPortletTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setParameter(
-			"portletResource", _portlet.getPortletId());
+			"portletResource", _testPortlet.getPortletId());
 		mockHttpServletRequest.setParameter("scope", "company");
 
 		mockActionRequest.setAttribute(
@@ -283,7 +284,7 @@ public class PortletConfigurationPortletTest {
 		mockActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
 		mockActionRequest.setParameter(
-			"portletResource", _portlet.getPortletId());
+			"portletResource", _testPortlet.getPortletId());
 		mockActionRequest.setParameter("scope", "company");
 
 		return mockActionRequest;
@@ -351,12 +352,11 @@ public class PortletConfigurationPortletTest {
 		return themeDisplay;
 	}
 
-	private static com.liferay.portal.kernel.model.Portlet _portlet;
-
 	@Inject
 	private static PortletLocalService _portletLocalService;
 
 	private static ServiceRegistration<?> _serviceRegistration;
+	private static com.liferay.portal.kernel.model.Portlet _testPortlet;
 
 	private Company _company;
 

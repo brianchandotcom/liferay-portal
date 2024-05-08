@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {DocumentLibraryPage} from './DocumentLibraryPage';
 
@@ -13,6 +13,7 @@ export class DocumentLibraryEditFilePage {
 	readonly backButton: Locator;
 	readonly publishDateSelector: Locator;
 	readonly saveButton: Locator;
+	readonly selectForUpdateButton: Locator;
 	readonly publishButton: Locator;
 	readonly scheduleButton: Locator;
 	readonly titleSelector: Locator;
@@ -21,13 +22,14 @@ export class DocumentLibraryEditFilePage {
 	constructor(page: Page) {
 		this.documentLibraryPage = new DocumentLibraryPage(page);
 		this.page = page;
-		this.backButton = page.getByRole('link', { name: 'Back' });
+		this.backButton = page.getByRole('link', {name: 'Back'});
 		this.publishButton = page.getByRole('button', {
 			exact: true,
 			name: 'Publish',
 		});
 		this.publishDateSelector = page.getByLabel('Publish Date');
 		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
+		this.selectForUpdateButton = page.getByLabel('Upload', {exact: true});
 		this.scheduleButton = page.getByRole('button', {name: 'Schedule'});
 		this.titleSelector = page.getByLabel('Title');
 		this.permissionViewSelector = page.getByLabel('Viewable by');
@@ -38,14 +40,48 @@ export class DocumentLibraryEditFilePage {
 
 		await this.documentLibraryPage.goToCreateNewFile();
 	}
-	async goBack(){
+
+	async assertPrivateFileIconInSelectPopUp(assetType: string) {
+		await expect(
+			this.page
+				.frameLocator(`iframe[title="Select ${assetType}"]`)
+				.getByLabel('Not Visible to Guest Users')
+				.last()
+				.locator('use')
+		).toBeVisible({timeout: 1000});
+	}
+
+	async assertPrivateFileIcon() {
+		await expect(
+			this.page
+				.getByLabel('Not Visible to Guest Users')
+				.last()
+				.locator('use')
+		).toBeVisible({timeout: 1000});
+	}
+
+	async changeViewInItemSelctor(assetType: string, viewType: string) {
+		await this.page
+			.frameLocator(`iframe[title="Select ${assetType}"]`)
+			.getByLabel('Select View, Currently Selected: ')
+			.waitFor();
+		await this.page
+			.frameLocator(`iframe[title="Select ${assetType}"]`)
+			.getByLabel('Select View, Currently Selected: ')
+			.click();
+		await this.page
+			.frameLocator(`iframe[title="Select ${assetType}"]`)
+			.getByRole('menuitem', {name: viewType})
+			.click();
+	}
+	async goBack() {
 		await this.backButton.click();
 	}
 
-	async assertPrivateContentIcon() {
-		await expect(
-			this.page.getByLabel('Not Visible to Guest Users').locator('use')
-		).toBeVisible({timeout: 1000});
+	async goToNewFileDifferentType(type: string) {
+		await this.documentLibraryPage.goto();
+
+		await this.documentLibraryPage.goToCreateNewFileWithDifferentType(type);
 	}
 
 	async publishNewBasicFileEntry(title: string) {
@@ -92,14 +128,19 @@ export class DocumentLibraryEditFilePage {
 			await this.publishButton.click();
 		}
 	}
+
 	async publishNewFileWithoutGuestViewPermission(title: string) {
 		await this.goto();
 
 		await this.titleSelector.fill(title);
-		await this.permissionViewSelector.selectOption('Site Member');
+		if (await this.permissionViewSelector.isVisible()) {
+			await this.permissionViewSelector.selectOption('Site Member');
+		}
+		else {
+			await this.page.getByRole('button', {name: 'Permissions'}).click();
+			await this.permissionViewSelector.selectOption('Site Member');
+		}
+
 		await this.publishButton.click();
-
 	}
-
-
 }

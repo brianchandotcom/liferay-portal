@@ -44,52 +44,106 @@ testFeatureFlagsEnabled(
 				moment(new Date(scheduleDate)).format('M/D/YY h:mm A') +
 				'.'
 		);
-
-		await documentLibraryPage.deleteAllFileEntries();
+		await documentLibraryPage.deleteFileEntry(title);
 	}
 );
 
 testFeatureFlagsEnabled(
 	'LPD-16313 Identify at a glance if a Document is visible for guests',
-	async ({documentLibraryEditFilePage , documentLibraryPage, page}) => {
-
+	async ({documentLibraryEditFilePage, documentLibraryPage}) => {
 		const title = getRandomString();
 
 		await documentLibraryEditFilePage.publishNewFileWithoutGuestViewPermission(
 			title
 		);
 
+		await documentLibraryPage.changeView('cards');
+
 		await documentLibraryPage.assertPrivateContentIcon();
 
 		await documentLibraryPage.changeView('table');
+
 		await documentLibraryPage.assertPrivateContentIcon();
 
 		await documentLibraryPage.changeView('list');
+
 		await documentLibraryPage.assertPrivateContentIcon();
 
-		await documentLibraryPage.deleteAllFileEntries();
-
+		await documentLibraryPage.deleteFileEntry(title);
 	}
 );
 
 testFeatureFlagsEnabled(
 	'LPD-16313 Show icon in the content admin and content editor',
 	async ({documentLibraryEditFilePage, documentLibraryPage, page}) => {
-
 		const title = getRandomString();
 
 		await documentLibraryEditFilePage.publishNewFileWithoutGuestViewPermission(
 			title
 		);
 
+		await documentLibraryPage.changeView('cards');
+
 		await documentLibraryPage.editFileEntry(title);
-		await documentLibraryEditFilePage.assertPrivateContentIcon();
+
+		await documentLibraryEditFilePage.assertPrivateFileIcon();
+
 		await documentLibraryEditFilePage.goBack();
 
-		await page.getByRole('link', { name: title }).click();
-		await documentLibraryEditFilePage.assertPrivateContentIcon();
-		await documentLibraryEditFilePage.goBack();
+		await page.getByRole('link', {name: title}).click();
 
-		await documentLibraryPage.deleteAllFileEntries();
+		await documentLibraryEditFilePage.assertPrivateFileIcon();
+
+		await documentLibraryPage.deleteFileEntry(title);
+	}
+);
+
+testFeatureFlagsEnabled(
+	'LPD-16313 Show icon in the DL item selector',
+	async ({
+		documentLibraryEditDocumentTypesPage,
+		documentLibraryEditFilePage,
+		documentLibraryPage,
+	}) => {
+		const dTypeTitle = getRandomString();
+		const title = getRandomString();
+
+		await documentLibraryEditDocumentTypesPage.createNewDLTypeWithUploadField(
+			dTypeTitle
+		);
+
+		await documentLibraryEditFilePage.publishNewFileWithoutGuestViewPermission(
+			title
+		);
+
+		await documentLibraryEditFilePage.goToNewFileDifferentType(dTypeTitle);
+
+		await documentLibraryEditFilePage.selectForUpdateButton.click();
+
+		await documentLibraryEditFilePage.assertPrivateFileIconInSelectPopUp(
+			'Document'
+		);
+
+		await documentLibraryEditFilePage.changeViewInItemSelctor(
+			'Document',
+			'List'
+		);
+
+		await documentLibraryEditFilePage.assertPrivateFileIconInSelectPopUp(
+			'Document'
+		);
+
+		await documentLibraryEditFilePage.changeViewInItemSelctor(
+			'Document',
+			'Table'
+		);
+
+		await documentLibraryEditFilePage.assertPrivateFileIconInSelectPopUp(
+			'Document'
+		);
+
+		await documentLibraryPage.deleteFileEntry(title);
+
+		await documentLibraryPage.deleteDocumentType(dTypeTitle);
 	}
 );

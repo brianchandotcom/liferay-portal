@@ -133,7 +133,7 @@ components:
                 mbThreadId:
                     format: int64
                     type: integer
-                testraySubtasksAmount:
+                subtaskAmount:
                     format: int32
                     type: integer
                 userId:

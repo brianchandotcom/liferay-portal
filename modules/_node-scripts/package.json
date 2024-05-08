@@ -3,10 +3,9 @@
 		"node-scripts": "./bin.js"
 	},
 	"dependencies": {
-		"minimist": "^1.2.8"
+		"esbuild": "^0.20.2",
+		"resolve": "^1.19.0"
 	},
-	"exports": "./index.js",
 	"name": "@liferay/node-scripts",
-	"type": "module",
 	"version": "1.0.0"
 }

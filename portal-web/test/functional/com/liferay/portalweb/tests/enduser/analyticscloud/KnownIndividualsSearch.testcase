@@ -319,20 +319,11 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9032 | Test Summary: Search and Clear Field"
-	@ignore = "true"
-	@priority = 1
+	@priority = 4
 	test SearchAndClearField {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-14011
-
 		var usernameList = "user1,user2";
 		var emailList = "user1@liferay.com,user2@liferay.com";
 		var nameList = "user1 user1,user2 user2";
-
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
 
 		task ("Add 2 new users and sync the Contact Data") {
 			for (var name : list ${usernameList}) {
@@ -341,24 +332,33 @@ definition {
 					userFirstName = ${name},
 					userLastName = ${name},
 					userScreenName = ${name});
-			}
 
-			ACDXPSettings.syncNewContactData();
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "${name}@liferay.com");
+			}
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Sign in with the new user to visit the site pages") {
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4,5",
 				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
-			ACUtils.closeAllSessionsAndWait();
-
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = ${propertyName});
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Go to the Individual > KnownIndividual") {

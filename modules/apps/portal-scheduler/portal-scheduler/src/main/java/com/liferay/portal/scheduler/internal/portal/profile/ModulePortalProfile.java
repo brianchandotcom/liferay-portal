@@ -5,6 +5,7 @@
 
 package com.liferay.portal.scheduler.internal.portal.profile;
 
+import com.liferay.portal.kernel.scheduler.SchedulerEngineAuditor;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -13,6 +14,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.profile.BaseDSModulePortalProfile;
 import com.liferay.portal.profile.PortalProfile;
+import com.liferay.portal.scheduler.internal.SchedulerEngineAuditorImpl;
 import com.liferay.portal.scheduler.internal.SchedulerEngineHelperImpl;
 
 import java.util.ArrayList;
@@ -49,6 +51,10 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 			BundleContext bundleContext = componentContext.getBundleContext();
 
 			bundleContext.registerService(
+				SchedulerEngineAuditor.class,
+				ProxyFactory.newDummyInstance(SchedulerEngineAuditor.class),
+				new HashMapDictionary<String, Object>());
+			bundleContext.registerService(
 				SchedulerEngineHelper.class,
 				ProxyFactory.newDummyInstance(SchedulerEngineHelper.class),
 				new HashMapDictionary<String, Object>());
@@ -56,6 +62,7 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 
 		init(
 			componentContext, supportedPortalProfileNames,
+			SchedulerEngineAuditorImpl.class.getName(),
 			SchedulerEngineHelperImpl.class.getName());
 	}
 

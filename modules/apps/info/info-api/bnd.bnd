@@ -32,4 +32,5 @@ Export-Package:\
 	com.liferay.info.permission.provider,\
 	com.liferay.info.search,\
 	com.liferay.info.sort,\
+	com.liferay.info.staging,\
 	com.liferay.info.type

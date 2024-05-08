@@ -957,9 +957,9 @@ public class TestrayTestSuiteResourceImpl
 			testrayBuildId, propertiesMap.get("testray.run.id"));
 
 		_addTestrayCases(
-			contextCompany.getCompanyId(), element, testrayBuildId,
-			propertiesMap.get("testray.build.date"), testrayProjectId,
-			testrayRunId);
+			contextCompany.getCompanyId(), element,
+			propertiesMap.get("testray.build.date"), testrayBuildId,
+			testrayProjectId, testrayRunId);
 	}
 
 	@Reference(

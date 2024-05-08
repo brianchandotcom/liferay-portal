@@ -40,6 +40,7 @@ export interface IField {
 	label?: string;
 	name: string;
 	selected?: boolean;
+	sortable?: boolean;
 	type?: string;
 	visible?: boolean;
 }
@@ -54,6 +55,13 @@ export interface IFDSField {
 	rendererLabel?: string;
 	sortable: boolean;
 	type: string;
+}
+export interface IFieldTreeItem extends IField {
+	children?: IFieldTreeItem[];
+	initialChildren?: IFieldTreeItem[];
+	query?: string;
+	savedId?: string;
+	selected?: boolean;
 }
 export interface IFilter {
 	fieldName: string;

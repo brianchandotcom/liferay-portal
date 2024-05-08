@@ -111,6 +111,7 @@ interface IEditFDSFieldModalContentProps {
 	fdsField: IFDSField;
 	namespace: string;
 	onSaveButtonClick: Function;
+	sortable: boolean;
 }
 
 const EditFDSFieldModalContent = ({
@@ -119,13 +120,14 @@ const EditFDSFieldModalContent = ({
 	fdsField,
 	namespace,
 	onSaveButtonClick,
+	sortable,
 }: IEditFDSFieldModalContentProps) => {
 	const [selectedFDSFieldRenderer, setSelectedFDSFieldRenderer] = useState(
 		fdsField.renderer ?? 'default'
 	);
 
 	const [fdsFieldSortable, setFSDFieldSortable] = useState<boolean>(
-		fdsField.sortable ?? fdsField.type !== EFieldType.OBJECT
+		fdsField.sortable
 	);
 
 	const fdsInternalCellRendererNames = FDS_INTERNAL_CELL_RENDERERS.map(
@@ -306,7 +308,7 @@ const EditFDSFieldModalContent = ({
 				<ClayForm.Group>
 					<ClayCheckbox
 						checked={fdsFieldSortable}
-						disabled={fdsField.type === EFieldType.OBJECT}
+						disabled={!sortable}
 						inline
 						label={Liferay.Language.get('sortable')}
 						onChange={({target: {checked}}) =>
@@ -485,13 +487,18 @@ function Table(props: IFDSViewSectionProps & {title?: string}) {
 	}) => {
 		setSaveButtonDisabled(true);
 
-		const creationData: Array<{name: string; type: string}> = [];
+		const creationData: Array<{
+			name: string;
+			sortable: boolean;
+			type: string;
+		}> = [];
 		const deletionIds: Array<number> = [];
 
 		fields.forEach((field) => {
 			if (!field.id) {
 				creationData.push({
 					name: field.name,
+					sortable: field.sortable || false,
 					type: field.type || 'string',
 				});
 			}
@@ -663,6 +670,7 @@ function Table(props: IFDSViewSectionProps & {title?: string}) {
 							}) || null
 						);
 					}}
+					sortable={isSortable(treeItems, item)}
 				/>
 			),
 		});
@@ -762,6 +770,22 @@ export function Fields(props: IFDSViewSectionProps) {
 			<Table {...props} title={Liferay.Language.get('fields')} />
 		</ClayLayout.ContainerFluid>
 	);
+}
+
+function isSortable(
+	treeItems: Array<IFieldTreeItem>,
+	selectedItem: IFDSField
+): boolean {
+	let isSortable = false;
+	visit(treeItems, (treeItem: IFieldTreeItem) => {
+		if (treeItem.name === selectedItem.name) {
+			isSortable = treeItem.sortable || false;
+
+			return;
+		}
+	});
+
+	return isSortable;
 }
 
 export default Table;

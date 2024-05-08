@@ -362,6 +362,7 @@ export default function _JournalPortlet({
 
 						if (url.searchParams.has(key)) {
 							articleId = url.searchParams.get(key);
+							document.getElementById(`${namespace}articleId`).value = articleId;
 						}
 					}
 

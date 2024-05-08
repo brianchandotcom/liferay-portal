@@ -571,7 +571,9 @@ public class Main {
 		return breadcrumbJSONArray;
 	}
 
-	private JSONArray _getChildrenJSONArray(File file) throws Exception {
+	private JSONArray _getChildrenJSONArray(File file, boolean nested)
+		throws Exception {
+
 		JSONArray childrenJSONArray = new JSONArray();
 
 		if (file == null) {
@@ -626,12 +628,22 @@ public class Main {
 			File tocFile = new File(filePathString);
 
 			if (!tocFile.exists() || tocFile.isDirectory()) {
-				_warn("Nonexistent or invalid TOC file " + tocFile.getPath());
+				_warn(
+					StringBundler.concat(
+						"Nonexistent or invalid TOC file ", tocFile.getPath(),
+						" in file ", file.getPath()));
 
 				continue;
 			}
 
-			childrenJSONArray.put(_getNavigationItemJSONObject(tocFile));
+			JSONObject childJSONObject = _getNavigationItemJSONObject(tocFile);
+
+			if (nested) {
+				childJSONObject.put(
+					"children", _getChildrenJSONArray(tocFile, false));
+			}
+
+			childrenJSONArray.put(childJSONObject);
 		}
 
 		return childrenJSONArray;
@@ -780,13 +792,14 @@ public class Main {
 		navigationJSONObject.put(
 			"breadcrumb", _getBreadcrumbJSONArray(file)
 		).put(
-			"children", _getChildrenJSONArray(file)
+			"children", _getChildrenJSONArray(file, true)
 		).put(
 			"parent", _getNavigationItemJSONObject(_getParentMarkdownFile(file))
 		).put(
 			"self", _getNavigationItemJSONObject(file)
 		).put(
-			"siblings", _getChildrenJSONArray(_getParentMarkdownFile(file))
+			"siblings",
+			_getChildrenJSONArray(_getParentMarkdownFile(file), false)
 		);
 
 		return navigationJSONObject;

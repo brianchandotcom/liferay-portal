@@ -241,11 +241,11 @@ export default function _JournalPortlet({
 	};
 
 	const handlePublishButtonClick = (event) => {
+		lockHolder.lock?.lock();
+
 		if (Liferay.FeatureFlags['LPS-141392']) {
 			return;
 		}
-
-		lockHolder.lock?.lock();
 
 		document
 			.querySelectorAll('.journal-alert-container')
@@ -362,15 +362,17 @@ export default function _JournalPortlet({
 
 						if (url.searchParams.has(key)) {
 							articleId = url.searchParams.get(key);
-							document.getElementById(`${namespace}articleId`).value = articleId;
+							document.getElementById(
+								`${namespace}articleId`
+							).value = articleId;
 						}
 					}
-
-					lockHolder.lock?.unlock();
 				}
 			})
 			.catch((error) => {
 				console.error(error);
+			})
+			.finally(() => {
 				lockHolder.lock?.unlock();
 			});
 	};

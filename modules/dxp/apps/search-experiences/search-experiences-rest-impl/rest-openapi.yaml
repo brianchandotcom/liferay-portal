@@ -609,6 +609,9 @@ openapi: "3.0.1"
 paths:
     "/search":
         post:
+            description:
+                This API is only for the Blueprints application's preview. For a search API, use search/v1.0/search
+                instead.
             operationId: postSearch
             parameters:
                 - in: query

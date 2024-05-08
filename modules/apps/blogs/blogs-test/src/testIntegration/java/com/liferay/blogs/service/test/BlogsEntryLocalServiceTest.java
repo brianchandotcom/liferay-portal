@@ -415,6 +415,23 @@ public class BlogsEntryLocalServiceTest {
 		Assert.assertEquals(urlTitle, entry.getUrlTitle());
 	}
 
+	@Test
+	public void testAddEntryWithURLTitleWithSlashPrefix() throws Exception {
+		String expectedUrlTitle = StringUtil.toLowerCase(
+			StringUtil.randomString());
+
+		String bakedUrlTitle = "///////" + expectedUrlTitle;
+
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			StringUtil.randomString(), StringUtil.randomString(), bakedUrlTitle,
+			StringUtil.randomString(), StringUtil.randomString(), new Date(),
+			true, true, new String[0], null, null, null,
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(expectedUrlTitle, entry.getUrlTitle());
+	}
+
 	@Test(expected = EntryContentException.class)
 	public void testAddEntryWithVeryLongContent() throws Exception {
 		int maxLength = ModelHintsUtil.getMaxLength(
@@ -1072,6 +1089,28 @@ public class BlogsEntryLocalServiceTest {
 
 		BlogsEntryLocalServiceUtil.updateEntryResources(
 			entry, new String[] {ActionKeys.ADD_DISCUSSION}, null);
+	}
+
+	@Test
+	public void testUpdateEntryWithURLTitleWithSlashPrefix() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		String expectedUrlTitle = entry.getUrlTitle();
+
+		String bakedUrlTitle = "///////" + expectedUrlTitle;
+
+		entry = BlogsEntryLocalServiceUtil.updateEntry(
+			_user.getUserId(), entry.getEntryId(), entry.getTitle(),
+			entry.getSubtitle(), bakedUrlTitle, entry.getDescription(),
+			entry.getContent(), entry.getDisplayDate(), false, false, null,
+			null, null, null, serviceContext);
+
+		Assert.assertEquals(expectedUrlTitle, entry.getUrlTitle());
 	}
 
 	@Test

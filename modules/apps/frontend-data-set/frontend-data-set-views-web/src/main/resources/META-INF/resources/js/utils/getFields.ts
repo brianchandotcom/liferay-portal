@@ -11,10 +11,10 @@ import {
 } from '@liferay/frontend-data-set-web';
 import {fetch} from 'frontend-js-web';
 
-import {FDSViewType} from './FDSViews';
-import {OBJECT_RELATIONSHIP} from './utils/constants';
-import openDefaultFailureToast from './utils/openDefaultFailureToast';
-import {EFieldFormat, EFieldType, IField, IPickList} from './utils/types';
+import {FDSViewType} from '../FDSViews';
+import {OBJECT_RELATIONSHIP} from './constants';
+import openDefaultFailureToast from './openDefaultFailureToast';
+import {EFieldFormat, EFieldType, IField, IPickList} from './types';
 
 const INVALID_FIELDS = ['actions', 'scopeKey', 'x-class-name', 'x-schema-name'];
 
@@ -146,7 +146,7 @@ function getValidFields({
 	return fields;
 }
 
-export async function getFields(fdsView: FDSViewType) {
+export default async function getFields(fdsView: FDSViewType) {
 	const {restApplication, restSchema} = fdsView[
 		OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW
 	];
@@ -174,29 +174,4 @@ export async function getFields(fdsView: FDSViewType) {
 		schemaName: restSchema,
 		schemas,
 	});
-}
-
-export async function getAllPicklists(
-	page: number = 1,
-	items: IPickList[] = []
-) {
-	const response = await fetch(
-		`/o/headless-admin-list-type/v1.0/list-type-definitions?pageSize=100&page=${page}`
-	);
-
-	if (!response.ok) {
-		openDefaultFailureToast();
-
-		return [];
-	}
-
-	const responseJSON = await response.json();
-
-	items = [...items, ...responseJSON.items];
-
-	if (responseJSON.lastPage > page) {
-		items = await getAllPicklists(page + 1, items);
-	}
-
-	return items;
 }

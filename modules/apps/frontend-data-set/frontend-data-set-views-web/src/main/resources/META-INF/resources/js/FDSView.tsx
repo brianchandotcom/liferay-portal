@@ -11,7 +11,6 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {FDSViewType} from './FDSViews';
-import {getFields} from './api';
 import Actions from './fds_view/Actions';
 import Details from './fds_view/Details';
 import Pagination from './fds_view/Pagination';
@@ -21,6 +20,7 @@ import SortingDeprecated from './fds_view/SortingDeprecated';
 import Filters from './fds_view/filters/Filters';
 import VisualizationModes from './fds_view/visualization_modes/VisualizationModes';
 import {API_URL, OBJECT_RELATIONSHIP} from './utils/constants';
+import getFields from './utils/getFields';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 import {IFieldTreeItem} from './utils/types';
 

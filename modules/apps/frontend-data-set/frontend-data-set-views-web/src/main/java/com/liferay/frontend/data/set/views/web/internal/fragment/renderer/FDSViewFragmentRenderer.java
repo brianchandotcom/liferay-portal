@@ -949,9 +949,15 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 				if (FeatureFlagManagerUtil.isEnabled("LPD-19465")) {
 					return JSONUtil.put(
+						"active", properties.get("default")
+					).put(
+						"default", properties.get("default")
+					).put(
 						"direction", properties.get("orderType")
 					).put(
 						"key", properties.get("fieldName")
+					).put(
+						"label", properties.get("label")
 					);
 				}
 

@@ -176,16 +176,15 @@ public class CookiesManagerImpl implements CookiesManager {
 
 		cookie.setValue(encodedCookieValue);
 		cookie.setVersion(0);
+		cookie.setPath(_getContextPath(httpServletRequest));
+
+		httpServletResponse.addCookie(cookie);
 
 		if (httpServletRequest != null) {
 			Map<String, Cookie> cookiesMap = _getCookiesMap(httpServletRequest);
 
-			cookie.setPath(_getContextPath(httpServletRequest));
-
 			cookiesMap.put(StringUtil.toUpperCase(cookie.getName()), cookie);
 		}
-
-		httpServletResponse.addCookie(cookie);
 
 		if (_log.isWarnEnabled() &&
 			(_knownCookies.get(cookie.getName()) != null) &&
@@ -213,7 +212,6 @@ public class CookiesManagerImpl implements CookiesManager {
 			CookiesConstants.NAME_COOKIE_SUPPORT, "true");
 
 		cookieSupportCookie.setMaxAge(CookiesConstants.MAX_AGE);
-		cookieSupportCookie.setPath(_getContextPath(httpServletRequest));
 
 		return addCookie(
 			CookiesConstants.CONSENT_TYPE_NECESSARY, cookieSupportCookie, null,
@@ -492,10 +490,12 @@ public class CookiesManagerImpl implements CookiesManager {
 	}
 
 	private String _getContextPath(HttpServletRequest httpServletRequest) {
-		String contextPath = httpServletRequest.getContextPath();
+		if (httpServletRequest != null) {
+			String contextPath = httpServletRequest.getContextPath();
 
-		if (Validator.isNotNull(contextPath)) {
-			return contextPath;
+			if (Validator.isNotNull(contextPath)) {
+				return contextPath;
+			}
 		}
 
 		return StringPool.SLASH;

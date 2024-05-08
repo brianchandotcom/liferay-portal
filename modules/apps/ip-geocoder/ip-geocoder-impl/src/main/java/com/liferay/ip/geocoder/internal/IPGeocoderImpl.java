@@ -12,6 +12,7 @@ import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;
 import com.liferay.ip.geocoder.internal.configuration.IPGeocoderConfiguration;
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -96,7 +97,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 			if (inetAddress.isAnyLocalAddress() ||
 				inetAddress.isLoopbackAddress()) {
 
-				return null;
+				return StringPool.BLANK;
 			}
 
 			DatabaseReader databaseReader =
@@ -107,7 +108,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 				inetAddress);
 
 			if (countryResponse == null) {
-				return null;
+				return StringPool.BLANK;
 			}
 
 			Country country = countryResponse.getCountry();
@@ -125,7 +126,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 			}
 		}
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	private File _getFile() throws IOException {

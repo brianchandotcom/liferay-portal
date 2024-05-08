@@ -9,6 +9,7 @@ import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.context.contributor.RequestContextContributor;
 
@@ -42,7 +43,7 @@ public class IPGeocoderCountryRequestContextContributor
 			_log.debug(ipInfo);
 		}
 
-		if (ipInfo.getCountryCode() != null) {
+		if (Validator.isNotNull(ipInfo.getCountryCode())) {
 			context.put(KEY, ipInfo.getCountryCode());
 		}
 	}

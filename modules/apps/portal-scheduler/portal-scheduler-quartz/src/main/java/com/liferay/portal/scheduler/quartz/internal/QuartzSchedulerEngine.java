@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineAuditor;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -766,7 +767,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		QuartzSchedulerEngine.class);
 
 	private static final Snapshot<SchedulerEngineHelper>
-		_schedulerEngineHelperSnapshot = new Snapshot<>(
+		_schedulerEngineAuditorSnapshot = new Snapshot<>(
 			QuartzSchedulerEngine.class, SchedulerEngineHelper.class, null,
 			true);
 
@@ -791,6 +792,9 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		target = "(&(release.bundle.symbolic.name=com.liferay.portal.scheduler.quartz)(release.schema.version=1.0.2))"
 	)
 	private Release _release;
+
+	@Reference
+	private SchedulerEngineAuditor _schedulerEngineAuditor;
 
 	private volatile boolean _schedulerEngineEnabled;
 
@@ -819,7 +823,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
 				SchedulerEngineHelper schedulerEngineHelper =
-					_schedulerEngineHelperSnapshot.get();
+					_schedulerEngineAuditorSnapshot.get();
 
 				schedulerEngineHelper.delete(
 					jobKey.getName(), jobKey.getGroup(),
@@ -836,13 +840,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 
 		private void _audit(JobKey jobKey, TriggerState triggerState) {
-			SchedulerEngineHelper schedulerEngineHelper =
-				_schedulerEngineHelperSnapshot.get();
-
-			if (schedulerEngineHelper == null) {
-				return;
-			}
-
 			try {
 				JobDetail jobDetail = _scheduler.getJobDetail(jobKey);
 
@@ -852,7 +849,8 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 				message.setValues(new HashMap<>(jobDataMap.getWrappedMap()));
 
-				schedulerEngineHelper.auditSchedulerJobs(message, triggerState);
+				_schedulerEngineAuditor.auditSchedulerJobs(
+					message, triggerState);
 			}
 			catch (Exception exception) {
 				_log.error(

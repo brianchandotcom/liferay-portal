@@ -127,11 +127,7 @@ public class PortletConfigurationPortletTest {
 			_testPortlet.getPortletId(), _testPortlet,
 			_getDefaultPreferences(
 				HashMapBuilder.put(
-					"lfrScopeLayoutUuid", StringPool.BLANK
-				).put(
-					"lfrScopeType", StringPool.BLANK
-				).put(
-					"portletSetupTitle_en_US", "blogs"
+					"portletSetupTitle_en_US", RandomTestUtil.randomString()
 				).put(
 					"portletSetupUseCustomTitle", Boolean.TRUE.toString()
 				).build()));
@@ -158,11 +154,7 @@ public class PortletConfigurationPortletTest {
 
 		String defaultPreferences = _getDefaultPreferences(
 			HashMapBuilder.put(
-				"lfrScopeLayoutUuid", StringPool.BLANK
-			).put(
-				"lfrScopeType", StringPool.BLANK
-			).put(
-				"portletSetupTitle_en_US", "blogs"
+				"portletSetupTitle_en_US", RandomTestUtil.randomString()
 			).put(
 				"portletSetupUseCustomTitle", Boolean.TRUE.toString()
 			).build());

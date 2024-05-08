@@ -582,7 +582,9 @@ public class Mutation {
 					callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "This API is only for the Blueprints application's preview. For a search API, use search/v1.0/search instead."
+	)
 	public SearchResponse createSearch(
 			@GraphQLName("query") String query,
 			@GraphQLName("pageSize") int pageSize,

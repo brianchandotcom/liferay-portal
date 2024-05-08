@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -23,7 +22,6 @@ const usePublishSolutionSubmission = (
 	context: SolutionInitialState,
 	dispatch: ReturnType<typeof useSolutionContext>[1]
 ) => {
-	console.log('context:', context);
 	const syncProfile = async () => {
 		const {
 			_product,
@@ -84,8 +82,7 @@ const usePublishSolutionSubmission = (
 				title: {
 					en_US: file.fileName,
 				},
-			},
-			console.info
+			}
 		);
 
 		dispatch({payload: product, type: SolutionTypes.SET_PRODUCT});
@@ -110,7 +107,6 @@ const usePublishSolutionSubmission = (
 			);
 
 			if (specification && specification.value.en_US === value) {
-
 				// No need to update the specification if the value is equal.
 
 				return;
@@ -130,8 +126,7 @@ const usePublishSolutionSubmission = (
 
 			if (specification) {
 				specification.value.en_US = value;
-			}
-			else {
+			} else {
 				productSpecifications.push(result);
 			}
 		};
@@ -191,8 +186,7 @@ const usePublishSolutionSubmission = (
 					title: {
 						en_US: image.imageDescription || image.file.name,
 					},
-				},
-				console.info
+				}
 			);
 
 			image.uploaded = true;
@@ -200,8 +194,6 @@ const usePublishSolutionSubmission = (
 	};
 
 	const onSave = async () => {
-		console.log(context);
-
 		const product = await syncProfile();
 
 		await syncSolutionHeader(product);

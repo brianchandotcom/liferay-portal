@@ -225,7 +225,7 @@ const Header = () => {
 
 					<Form.HelpMessage>
 						{i18n.translate(
-							'you-can-paste-links-directly-from-youTube'
+							'you-can-paste-links-directly-from-youtube'
 						)}
 					</Form.HelpMessage>
 
@@ -264,7 +264,7 @@ const Header = () => {
 			{contentType.type === ContentMediaType.UPLOAD_IMAGES && (
 				<>
 					<Form.Label className="mb-4 mt-2" htmlFor="description">
-						{i18n.translate('add-up-to-5-images')}
+						{i18n.sub('add-up-to-x-images', MAX_FILES.toString())}
 					</Form.Label>
 
 					{!!contentType.content.headerImages?.length && (
@@ -306,7 +306,7 @@ const Header = () => {
 						maxSize={MAX_SIZE_5MBS}
 						multiple
 						onDropRejected={(fileList) => {
-							if (fileList.length > 5) {
+							if (fileList.length > MAX_FILES) {
 								onOpenChange(true);
 							}
 						}}
@@ -327,11 +327,10 @@ const Header = () => {
 						{i18n.translate('maximum-number-of-upload-reached')}
 					</ClayModal.Header>
 					<ClayModal.Body className="pb-8">
-						<span className="">
-							{i18n.translate(
-								'you-cannot-upload-more-than-5-files'
-							)}
-						</span>
+						{i18n.sub(
+							'you-cannot-upload-more-than-x-files',
+							MAX_FILES.toString()
+						)}
 					</ClayModal.Body>
 				</ClayModal>
 			)}

@@ -1,0 +1,112 @@
+{
+	"configuration": {
+		"className": "com.liferay.notification.rest.dto.v1_0.NotificationTemplate",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"description": "Sends email notifications to applicants to inform them that their applications have been approved.",
+			"editorType": "richText",
+			"externalReferenceCode": "D4B8_APPLICATION_APPROVED_APPLICANT_EMAIL",
+			"name": "D4B8 Application Approved, Applicant, Email",
+			"name_i18n": {
+				"en_US": "D4B8 Application Approved, Applicant, Email"
+			},
+			"recipientType": "email",
+			"recipients": [
+				{
+					"from": "sales@clarity.com",
+					"fromName": {
+						"en_US": "Clarity Vision Solutions"
+					},
+					"to": {
+						"en_US": "[%D4B8DISTRIBUTORAPPLICATION_APPLICANTEMAIL%]"
+					}
+				}
+			],
+			"subject": {
+				"en_US": "Sweet things are in store for you!"
+			},
+			"type": "email",
+			"typeLabel": "Email"
+		},
+		{
+			"description": "Sends email notifications to applicants to inform them that their applications have been denied.",
+			"editorType": "richText",
+			"externalReferenceCode": "D4B8_APPLICATION_DENIED_APPLICANT_EMAIL",
+			"name": "D4B8 Application Denied, Applicant, Email",
+			"name_i18n": {
+				"en_US": "D4B8 Application Denied, Applicant, Email"
+			},
+			"recipientType": "email",
+			"recipients": [
+				{
+					"from": "sales@clarity.com",
+					"fromName": {
+						"en_US": "Clarity Vision Solutions"
+					},
+					"to": {
+						"en_US": "[%D4B8DISTRIBUTORAPPLICATION_APPLICANTEMAIL%]"
+					}
+				}
+			],
+			"subject": {
+				"en_US": "Application Decision Update"
+			},
+			"type": "email",
+			"typeLabel": "Email"
+		},
+		{
+			"description": "Sends email notifications to applicants to indicate their applications have been received.",
+			"editorType": "richText",
+			"externalReferenceCode": "D4B8_APPLICATION_RECEIVED_APPLICANT_EMAIL",
+			"name": "D4B8 Application Received, Applicant, Email",
+			"name_i18n": {
+				"en_US": "D4B8 Application Received, Applicant, Email"
+			},
+			"recipientType": "email",
+			"recipients": [
+				{
+					"from": "sales@clarity.com",
+					"fromName": {
+						"en_US": "Clarity Vision Solutions"
+					},
+					"to": {
+						"en_US": "[%D4B8DISTRIBUTORAPPLICATION_APPLICANTEMAIL%]"
+					}
+				}
+			],
+			"subject": {
+				"en_US": "Thank you for submitting your application!"
+			},
+			"type": "email",
+			"typeLabel": "Email"
+		},
+		{
+			"description": "Sends user notifications to an administrative role whenever a distributor application is submitted.",
+			"editorType": "richText",
+			"externalReferenceCode": "D4B8_APPLICATION_SUBMITTED_ADMIN_USER",
+			"name": "D4B8 Application Submitted, Admin, User",
+			"name_i18n": {
+				"en_US": "D4B8 Application Submitted, Admin, User"
+			},
+			"recipientType": "role",
+			"recipients": [
+				{
+					"roleName": "D4B8 Business Development Manager"
+				}
+			],
+			"subject": {
+				"en_US": "APP-[%D4B8DISTRIBUTORAPPLICATION_ID%]: [%D4B8DISTRIBUTORAPPLICATION_APPLICANTNAME%] submitted a distributor application for [%D4B8DISTRIBUTORAPPLICATION_BUSINESSNAME%]."
+			},
+			"type": "userNotification",
+			"typeLabel": "User Notification"
+		}
+	]
+}

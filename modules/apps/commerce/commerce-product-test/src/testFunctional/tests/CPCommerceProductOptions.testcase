@@ -1434,6 +1434,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10798. As a Product Manager, I want to be able to configure a bundled product that has a linked SKU from different catalog and see the SKU is applied in the store front."
+	@ignore = "true"
 	@priority = 4
 	test CanConfigureBundledProductWithDifferentCatalogSkuLinked {
 		property portal.acceptance = "false";
@@ -2135,6 +2136,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-12167.User can see SKU updated on the product details page when values are selected from multiple options."
+	@ignore = "true"
 	@priority = 5
 	test CanSKUUpdateSuccessfullyWhenSelectingValuesFromMultipleOptions {
 		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";

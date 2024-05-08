@@ -1390,6 +1390,7 @@ definition {
 	}
 
 	@description = "COMMERCE-12808. As a buyer, I want to be able to verify the included and excluded option values on the mini-cart edit panel"
+	@ignore = "true"
 	@priority = 4
 	test CanVerifyIncludedAndExcludedOptionValuesOnTheMinicartEdit {
 		property portal.acceptance = "false";

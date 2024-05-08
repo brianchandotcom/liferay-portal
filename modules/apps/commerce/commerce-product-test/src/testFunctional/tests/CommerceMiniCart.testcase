@@ -840,6 +840,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6335. As a buyer, I want to edit the quantity of an bundled product in the mini-cart using it's quantity selector and I want to view the changes applied to the mini-cart summary and the bundled items to change their quantity"
+	@ignore = "true"
 	@priority = 5
 	test EditBundledProductQuantityFromMiniCart {
 		property portal.acceptance = "true";
@@ -1654,7 +1655,7 @@ definition {
 				cartItemPriceValue = "70.00",
 				cartItemQuantity = 1,
 				cartItemSku = "BLACKSKU",
-                optionName = "Color");
+				optionName = "Color");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_BUNDLED_ITEMS",

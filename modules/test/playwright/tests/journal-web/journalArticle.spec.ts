@@ -392,6 +392,93 @@ translationTest(
 );
 
 translationTest(
+	'LPD-24942: This is a test for translations filter button in web content',
+	async ({journalEditArticlePage, journalPage, page, site}) => {
+		await journalPage.goto();
+
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		await journalEditArticlePage.fillTitle(getRandomString());
+
+		const translationButton = page.getByRole('combobox', {
+			name: 'Select a language',
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Not Translated',
+			}),
+			trigger: translationButton,
+		});
+
+		const translationFilterButton = page.getByRole('combobox', {
+			name: 'Select a Filter',
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				exact: true,
+				name: 'Translated',
+			}),
+			trigger: translationFilterButton,
+		});
+
+		const fieldsWrapper = page.getByRole('button', {name: 'Fields'});
+
+		const metadataWapper = page.getByRole('button', {name: 'Metadata'});
+
+		const noResultsWrapper = page.getByText('No Results Found');
+
+		await expect(fieldsWrapper).not.toBeVisible();
+
+		await expect(metadataWapper).not.toBeVisible();
+
+		await expect(noResultsWrapper).toBeVisible();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'All Fields',
+			}),
+			trigger: translationFilterButton,
+		});
+
+		await journalEditArticlePage.fillTitle(getRandomString());
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				exact: true,
+				name: 'Translated',
+			}),
+			trigger: translationFilterButton,
+		});
+
+		await expect(fieldsWrapper).not.toBeVisible();
+
+		await expect(metadataWapper).toBeVisible();
+
+		await expect(noResultsWrapper).not.toBeVisible();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Untranslated',
+			}),
+			trigger: translationFilterButton,
+		});
+
+		await expect(fieldsWrapper).toBeVisible();
+
+		await expect(metadataWapper).not.toBeVisible();
+
+		await expect(noResultsWrapper).not.toBeVisible();
+	}
+);
+
+translationTest(
 	'LPD-17245: Add error message in Translation for concurrent users',
 	async ({
 		apiHelpers,

@@ -322,7 +322,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			urlTitle = friendlyURLEntry.getUrlTitle();
 		}
 
+		urlTitle = _sanitizeUrlTitle(urlTitle);
+
 		entry.setUrlTitle(urlTitle);
+
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);
@@ -1197,6 +1200,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		if (Validator.isNull(urlTitle)) {
 			urlTitle = _getUniqueUrlTitle(entry, title);
 		}
+
+		urlTitle = _sanitizeUrlTitle(urlTitle);
 
 		String oldUrlTitle = entry.getUrlTitle();
 
@@ -2291,6 +2296,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			blogsEntryPersistence.update(entry);
 		}
+	}
+
+	private String _sanitizeUrlTitle(String urlTitle) {
+		while (urlTitle.startsWith(StringPool.SLASH)) {
+			urlTitle = urlTitle.substring(1);
+		}
+
+		return urlTitle;
 	}
 
 	private BlogsEntry _startWorkflowInstance(

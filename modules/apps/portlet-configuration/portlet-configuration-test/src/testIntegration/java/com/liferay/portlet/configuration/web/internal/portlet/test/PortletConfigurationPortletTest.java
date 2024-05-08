@@ -138,7 +138,7 @@ public class PortletConfigurationPortletTest {
 
 		ReflectionTestUtil.invoke(
 			_portlet, "_updateScope", new Class<?>[] {ActionRequest.class},
-			_getMockActionRequestForScopeTest(layout));
+			_getMockActionRequest(layout));
 
 		PortletPreferences portletPreferences =
 			_portletPreferencesLocalService.getPreferences(
@@ -179,7 +179,7 @@ public class PortletConfigurationPortletTest {
 
 		ReflectionTestUtil.invoke(
 			_portlet, "_updateScope", new Class<?>[] {ActionRequest.class},
-			_getMockActionRequestForScopeTest(layout));
+			_getMockActionRequest(layout));
 
 		PortletPreferences portletPreferences =
 			_portletPreferencesLocalService.getPreferences(
@@ -275,6 +275,33 @@ public class PortletConfigurationPortletTest {
 		return sb.toString();
 	}
 
+	private MockActionRequest _getMockActionRequest(Layout layout)
+		throws Exception {
+
+		MockActionRequest mockActionRequest = new MockActionRequest();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockActionRequest.setParameter("scope", "company");
+
+		mockHttpServletRequest.setParameter("scope", "company");
+
+		mockActionRequest.setParameter(
+			"portletResource", _testPortlet.getPortletId());
+
+		mockHttpServletRequest.setParameter(
+			"portletResource", _testPortlet.getPortletId());
+
+		mockActionRequest.setAttribute(
+			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
+
+		mockActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+
+		return mockActionRequest;
+	}
+
 	private MockActionRequest _getMockActionRequest(
 			List<String> plids, List<Long> roleIds)
 		throws Exception {
@@ -310,33 +337,6 @@ public class PortletConfigurationPortletTest {
 
 		mockActionRequest.setParameter(
 			"rolesSearchContainerPrimaryKeys", roleSearchContainerPrimaryKeys);
-
-		return mockActionRequest;
-	}
-
-	private MockActionRequest _getMockActionRequestForScopeTest(Layout layout)
-		throws Exception {
-
-		MockActionRequest mockActionRequest = new MockActionRequest();
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockActionRequest.setParameter("scope", "company");
-
-		mockHttpServletRequest.setParameter("scope", "company");
-
-		mockActionRequest.setParameter(
-			"portletResource", _testPortlet.getPortletId());
-
-		mockHttpServletRequest.setParameter(
-			"portletResource", _testPortlet.getPortletId());
-
-		mockActionRequest.setAttribute(
-			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
-
-		mockActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
 
 		return mockActionRequest;
 	}

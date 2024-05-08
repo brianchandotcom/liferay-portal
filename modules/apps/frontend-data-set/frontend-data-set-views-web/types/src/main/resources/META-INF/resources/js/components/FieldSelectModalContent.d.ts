@@ -14,14 +14,15 @@ export declare function visit(
 ): void;
 declare const FieldSelectModalContent: ({
 	closeModal,
+	fieldTreeItems,
 	onSaveButtonClick,
 	saveButtonDisabled,
 	selectedFields,
 	selectionMode,
-	treeItems,
 }: {
 	closeModal: Function;
 	fdsView: FDSViewType;
+	fieldTreeItems: Array<IFieldTreeItem>;
 	onSaveButtonClick: ({
 		selectedFields,
 	}: {
@@ -30,6 +31,5 @@ declare const FieldSelectModalContent: ({
 	saveButtonDisabled: boolean;
 	selectedFields: Array<IField>;
 	selectionMode?: ComponentProps<typeof TreeView>['selectionMode'];
-	treeItems: Array<IFieldTreeItem>;
 }) => JSX.Element;
 export default FieldSelectModalContent;

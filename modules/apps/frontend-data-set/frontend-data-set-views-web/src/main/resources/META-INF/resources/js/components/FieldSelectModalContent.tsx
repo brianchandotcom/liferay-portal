@@ -161,14 +161,15 @@ const Highlight = ({query, text}: {query?: string; text?: string}) => {
 
 const FieldSelectModalContent = ({
 	closeModal,
+	fieldTreeItems,
 	onSaveButtonClick,
 	saveButtonDisabled,
 	selectedFields,
 	selectionMode = 'single',
-	treeItems,
 }: {
 	closeModal: Function;
 	fdsView: FDSViewType;
+	fieldTreeItems: Array<IFieldTreeItem>;
 	onSaveButtonClick: ({
 		selectedFields,
 	}: {
@@ -177,11 +178,10 @@ const FieldSelectModalContent = ({
 	saveButtonDisabled: boolean;
 	selectedFields: Array<IField>;
 	selectionMode?: ComponentProps<typeof TreeView>['selectionMode'];
-	treeItems: Array<IFieldTreeItem>;
 }) => {
 	const [initialFields, setInitialFields] = useState<Array<
 		IFieldTreeItem
-	> | null>(treeItems);
+	> | null>(fieldTreeItems);
 	const [selectedKeys, setSelectedKeys] = useState<Set<React.Key>>(
 		new Set<React.Key>()
 	);

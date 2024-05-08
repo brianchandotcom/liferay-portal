@@ -360,10 +360,10 @@ function Table(props: IFDSViewSectionProps & {title?: string}) {
 	const {
 		fdsClientExtensionCellRenderers,
 		fdsView,
+		fieldTreeItems,
 		namespace,
 		saveFDSFieldsURL,
 		title,
-		treeItems,
 	} = props;
 
 	const [fdsFields, setFDSFields] = useState<Array<IFDSField> | null>(null);
@@ -629,6 +629,7 @@ function Table(props: IFDSViewSectionProps & {title?: string}) {
 				<FieldSelectModalContent
 					{...props}
 					closeModal={closeModal}
+					fieldTreeItems={fieldTreeItems}
 					onSaveButtonClick={({
 						selectedFields,
 					}: {
@@ -646,7 +647,6 @@ function Table(props: IFDSViewSectionProps & {title?: string}) {
 							: []
 					}
 					selectionMode="multiple"
-					treeItems={treeItems}
 				/>
 			),
 			size: 'full-screen',
@@ -679,7 +679,7 @@ function Table(props: IFDSViewSectionProps & {title?: string}) {
 							}) || null
 						);
 					}}
-					sortable={isSortable(treeItems, item)}
+					sortable={isSortable(fieldTreeItems, item)}
 				/>
 			),
 		});
@@ -782,13 +782,13 @@ export function Fields(props: IFDSViewSectionProps) {
 }
 
 function isSortable(
-	treeItems: Array<IFieldTreeItem>,
+	fieldTreeItems: Array<IFieldTreeItem>,
 	selectedItem: IFDSField
 ): boolean {
 	let isSortable = false;
-	visit(treeItems, (treeItem: IFieldTreeItem) => {
-		if (treeItem.name === selectedItem.name) {
-			isSortable = treeItem.sortable || false;
+	visit(fieldTreeItems, (fieldTreeItem: IFieldTreeItem) => {
+		if (fieldTreeItem.name === selectedItem.name) {
+			isSortable = fieldTreeItem.sortable || false;
 
 			return;
 		}

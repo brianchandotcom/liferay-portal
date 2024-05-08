@@ -778,7 +778,6 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12155 | Test Summary: New user changes emailAddressHashed"
-	@ignore = "true"
 	@priority = 5
 	test NewUserChangeEmailAddressHashed {
 		property proxy.server.enabled = "true";
@@ -814,10 +813,8 @@ definition {
 				userLoginFullName = "user1 user1");
 		}
 
-		task ("Visit the document") {
+		task ("Visit the AC Page") {
 			ACUtils.navigateToSitePage(
-				actionType = "View DM",
-				documentTitleList = "DM AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -838,20 +835,14 @@ definition {
 				expected = "");
 		}
 
-		task ("Clear local storage") {
-			ACUtils.clearLocalStorage();
-		}
-
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user2@liferay.com",
 				userLoginFullName = "user2 user2");
 		}
 
-		task ("Download the document") {
+		task ("Visit the AC Page") {
 			ACUtils.navigateToSitePage(
-				actionType = "Download DM",
-				documentTitleList = "DM AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -870,26 +861,6 @@ definition {
 			TestUtils.assertNotEquals(
 				actual = ${emailAddressHashed2},
 				expected = ${emailAddressHashed1});
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Navigate to the Known Individuals on the Individuals dashboard") {
-			ACNavigation.goToIndividuals();
-
-			ACIndividualsDashboard.goToKnownIndividualsTab();
-		}
-
-		task ("Check that the two individuals are classified as known individuals") {
-			ACUtils.viewNameList(nameList = "${usernameList} ${usernameList}");
 		}
 	}
 

@@ -36,25 +36,22 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8588 | Test Summary: Assert segment overview shows criteria"
-	@ignore = "true"
 	@priority = 3
 	test AssertSegmentOverviewShowsCriteria {
 		property test.run.type = "single";
-
-		// AC Bug ticket: LRAC-15408
 
 		task ("Create Blog and Add to Page") {
 			ACUtils.createBlogsAndAddToPage();
 		}
 
 		task ("Conect DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Navigate to Page and Blog") {
 			ACUtils.navigateToSitePage(
 				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title",
+				documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -66,7 +63,7 @@ definition {
 		task ("Launch AC and Switch Property") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = ${propertyName});
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Go to Segments and Create Dynamic Segment") {

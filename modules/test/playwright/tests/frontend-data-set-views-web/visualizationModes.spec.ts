@@ -307,7 +307,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 					)
 					.locator('td')
 					.nth(SORTABLE_COLUMN_INDEX)
-			).toHaveText('true');
+			).toHaveText('false');
 		});
 
 		await test.step('Edit a field', async () => {
@@ -378,11 +378,16 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 	});
 
-	test('Configure table visualization mode with scalar array fields @LPD-11769', async ({
+	test('Configure table visualization mode with array fields @LPD-11769', async ({
 		page,
 		visualizationModesPage,
 	}) => {
+		const SAMPLE_COMPLEX_ARRAY_FIELD = 'auditEvents[]*';
+		const SAMPLE_COMPLEX_ARRAY_CHILD_FIELD = 'auditEvents[]creator.name';
 		const SAMPLE_SCALAR_ARRAY_FIELD = 'keywords';
+		const SAMPLE_FULL_COMPLEX_FIELD = 'creator.*';
+		const SAMPLE_COMPLEX_OBJECT_CHILD_FIELD = 'creator.givenName';
+		const SORTABLE_COLUMN_INDEX = 5;
 		const TYPE_COLUMN_INDEX = 3;
 
 		await test.step('Navigate to table visualization mode page', async () => {
@@ -401,22 +406,69 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		await test.step('Add scalar array field', async () => {
 			await visualizationModesPage.openAddFieldsModal();
 
-			await visualizationModesPage.selectField({
-				fieldName: SAMPLE_SCALAR_ARRAY_FIELD,
-			});
+			await visualizationModesPage.searchAndSelecteField(
+				SAMPLE_SCALAR_ARRAY_FIELD
+			);
+			await visualizationModesPage.searchAndSelecteField(
+				SAMPLE_COMPLEX_ARRAY_FIELD
+			);
+			await visualizationModesPage.searchAndSelecteField(
+				SAMPLE_COMPLEX_ARRAY_CHILD_FIELD
+			);
+			await visualizationModesPage.searchAndSelecteField(
+				SAMPLE_COMPLEX_OBJECT_CHILD_FIELD
+			);
+			await visualizationModesPage.searchAndSelecteField(
+				SAMPLE_FULL_COMPLEX_FIELD
+			);
 
 			await saveFromModal({
 				page,
 			});
 		});
 
-		await test.step('Check if field shows the correct type', async () => {
+		await test.step('Check if fields show the correct type', async () => {
 			await expect(
 				visualizationModesPage
 					.getRowByText(SAMPLE_SCALAR_ARRAY_FIELD)
 					.locator('td')
 					.nth(TYPE_COLUMN_INDEX)
 			).toHaveText('array');
+
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_SCALAR_ARRAY_FIELD)
+					.locator('td')
+					.nth(SORTABLE_COLUMN_INDEX)
+			).toHaveText('false');
+
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_COMPLEX_ARRAY_FIELD)
+					.locator('td')
+					.nth(TYPE_COLUMN_INDEX)
+			).toHaveText('array');
+
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_COMPLEX_ARRAY_FIELD)
+					.locator('td')
+					.nth(SORTABLE_COLUMN_INDEX)
+			).toHaveText('false');
+
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_COMPLEX_OBJECT_CHILD_FIELD)
+					.locator('td')
+					.nth(TYPE_COLUMN_INDEX)
+			).toHaveText('string');
+
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_FULL_COMPLEX_FIELD)
+					.locator('td')
+					.nth(TYPE_COLUMN_INDEX)
+			).toHaveText('object');
 		});
 	});
 });

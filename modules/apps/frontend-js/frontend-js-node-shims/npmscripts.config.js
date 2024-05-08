@@ -4,21 +4,6 @@
  */
 
 module.exports = {
-	build: {
-		exports: [
-			'assert',
-			'buffer',
-			'domain-browser',
-			'events',
-			'os-browserify',
-			'path-browserify',
-			'process',
-			'string_decoder',
-			'timers-browserify',
-			'url',
-			'util',
-		],
-	},
 	check: false,
 	fix: false,
 };

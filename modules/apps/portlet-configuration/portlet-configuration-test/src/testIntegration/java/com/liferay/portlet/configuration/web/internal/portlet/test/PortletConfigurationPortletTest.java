@@ -131,20 +131,8 @@ public class PortletConfigurationPortletTest {
 				new String[] {Boolean.TRUE.toString()}
 			).build());
 
-		ReflectionTestUtil.invoke(
-			_portlet, "_updateScope", new Class<?>[] {ActionRequest.class},
-			_getMockActionRequest(layout));
-
-		PortletPreferences portletPreferences =
-			_portletPreferencesLocalService.getPreferences(
-				_company.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-				_testPortlet.getPortletId());
-
-		String scope = portletPreferences.getValue(
-			"lfrScopeType", StringPool.BLANK);
-
-		Assert.assertEquals("company", scope);
+		_assertUpdateScope(
+			layout, PortletKeys.PREFS_OWNER_ID_DEFAULT, layout.getPlid());
 	}
 
 	@Test
@@ -168,20 +156,8 @@ public class PortletConfigurationPortletTest {
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
 			_testPortlet.getPortletId(), _testPortlet, defaultPreferences);
 
-		ReflectionTestUtil.invoke(
-			_portlet, "_updateScope", new Class<?>[] {ActionRequest.class},
-			_getMockActionRequest(layout));
-
-		PortletPreferences portletPreferences =
-			_portletPreferencesLocalService.getPreferences(
-				_company.getCompanyId(), _group.getGroupId(),
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-				PortletKeys.PREFS_PLID_SHARED, _testPortlet.getPortletId());
-
-		String scope = portletPreferences.getValue(
-			"lfrScopeType", StringPool.BLANK);
-
-		Assert.assertEquals("company", scope);
+		_assertUpdateScope(
+			layout, _group.getGroupId(), PortletKeys.PREFS_PLID_SHARED);
 	}
 
 	@Test
@@ -246,6 +222,25 @@ public class PortletConfigurationPortletTest {
 						ResourceConstants.SCOPE_INDIVIDUAL, plid, roleId));
 			}
 		}
+	}
+
+	private void _assertUpdateScope(
+			Layout layout, long preferencesOwnerId, long preferencesPlid)
+		throws Exception {
+
+		ReflectionTestUtil.invoke(
+			_portlet, "_updateScope", new Class<?>[] {ActionRequest.class},
+			_getMockActionRequest(layout));
+
+		PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.getPreferences(
+				_company.getCompanyId(), preferencesOwnerId,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, preferencesPlid,
+				_testPortlet.getPortletId());
+
+		Assert.assertEquals(
+			"company",
+			portletPreferences.getValue("lfrScopeType", StringPool.BLANK));
 	}
 
 	private String _getDefaultPreferences(HashMap<String, String> preferences) {

@@ -416,7 +416,7 @@ definition {
 			outputParameterName = "Object Name",
 			outputParameterPath = "$.items..customField",
 			outputParameterType = "List",
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			url = "http://localhost:8080/o/c/customobject213s",
 			username = "test@liferay.com");
 
@@ -487,7 +487,7 @@ definition {
 			outputParameterName = "Object Name",
 			outputParameterPath = "$.items..customField",
 			outputParameterType = "List",
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			url = "http://localhost:8080/o/c/customobject214s",
 			username = "test@liferay.com");
 

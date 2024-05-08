@@ -31,7 +31,7 @@ definition {
 
 		task ("And Given an OAuth application with headless scopes is created on www.able.com") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@liferay.com");
 

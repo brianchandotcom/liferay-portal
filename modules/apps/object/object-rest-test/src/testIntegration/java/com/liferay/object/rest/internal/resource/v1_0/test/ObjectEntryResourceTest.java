@@ -211,7 +211,7 @@ public class ObjectEntryResourceTest {
 			TaxonomyCategoryResource.builder();
 
 		_taxonomyCategoryResource = builder.authentication(
-			"test@liferay.com", "test"
+			"test@liferay.com", TestPropsValues.USER_PASSWORD
 		).locale(
 			LocaleUtil.getDefault()
 		).build();

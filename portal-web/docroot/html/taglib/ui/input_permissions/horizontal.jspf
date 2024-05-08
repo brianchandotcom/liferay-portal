@@ -39,6 +39,12 @@ ServiceContext#deriveDefaultPermissions(long, String).
 		<%
 		for (String roleName : roleNames) {
 			Role role = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), roleName);
+
+			List<String> roleDefaultPermissions = Collections.emptyList();
+
+			if ((defaultPermissions != null) && (defaultPermissions.get(roleName) != null)) {
+				roleDefaultPermissions = Arrays.asList(defaultPermissions.get(roleName));
+			}
 		%>
 
 			<tr>
@@ -63,7 +69,7 @@ ServiceContext#deriveDefaultPermissions(long, String).
 							checked = guestPermissions.contains(action);
 						}
 						else {
-							checked = guestDefaultActions.contains(action) && inputPermissionsViewRole.equals(RoleConstants.GUEST);
+							checked = (guestDefaultActions.contains(action) || roleDefaultPermissions.contains(action)) && inputPermissionsViewRole.equals(RoleConstants.GUEST);
 						}
 					}
 					else if (roleName.equals(defaultGroupRole.getName())) {
@@ -71,8 +77,11 @@ ServiceContext#deriveDefaultPermissions(long, String).
 							checked = groupPermissions.contains(action);
 						}
 						else {
-							checked = groupDefaultActions.contains(action);
+							checked = groupDefaultActions.contains(action) || roleDefaultPermissions.contains(action);
 						}
+					}
+					else {
+						checked = roleDefaultPermissions.contains(action);
 					}
 
 					String checkboxFieldId = null;
@@ -125,6 +134,12 @@ ServiceContext#deriveDefaultPermissions(long, String).
 			for (Role role : supportedRoles) {
 				String checkboxFieldId = uniqueNamespace + "rolePermissions_" + role.getRoleId();
 				String checkboxFieldName = namespace + "rolePermissions_" + role.getRoleId();
+
+				List<String> roleDefaultPermissions = Collections.emptyList();
+
+				if ((defaultPermissions != null) && (defaultPermissions.get(role.getName()) != null)) {
+					roleDefaultPermissions = Arrays.asList(defaultPermissions.get(role.getName()));
+				}
 			%>
 
 				<tr>
@@ -135,12 +150,14 @@ ServiceContext#deriveDefaultPermissions(long, String).
 					<%
 					for (int i = 0; i < supportedActions.size(); i++) {
 						String action = (String)supportedActions.get(i);
+
+						boolean checked = roleDefaultPermissions.contains(action);
 					%>
 
 						<td class="table-column-text-center">
 							<label class="hide-accessible sr-only" for="<%= checkboxFieldId %>"><liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())} %>" key="give-x-permission-to-users-with-role-x" translateArguments="<%= false %>" /></label>
 
-							<input id="<%= checkboxFieldId %>" name="<%= checkboxFieldName %>" title="<%= LanguageUtil.format(request, "give-x-permission-to-users-with-role-x", new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())}, false) %>" type="checkbox" value="<%= action %>" />
+							<input <%= checked ? "checked" : "" %> id="<%= checkboxFieldId %>" name="<%= checkboxFieldName %>" title="<%= LanguageUtil.format(request, "give-x-permission-to-users-with-role-x", new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())}, false) %>" type="checkbox" value="<%= action %>" />
 						</td>
 
 					<%

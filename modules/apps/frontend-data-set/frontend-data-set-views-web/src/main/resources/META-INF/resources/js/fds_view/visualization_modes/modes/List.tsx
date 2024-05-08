@@ -17,7 +17,7 @@ import FieldSelectModalContent from '../../../components/FieldSelectModalContent
 import {API_URL, OBJECT_RELATIONSHIP} from '../../../utils/constants';
 import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
-import {IField} from '../../../utils/types';
+import {IField, IFieldTreeItem} from '../../../utils/types';
 import FieldAssignmentControls from '../components/FieldAssignmentControls';
 
 interface IFDSListSection {
@@ -31,16 +31,21 @@ interface IListSection {
 	field?: IField;
 	label: string;
 	name: IFDSListSection['name'];
+	treeItems: Array<IFieldTreeItem>;
 }
 
 export default function List(props: IFDSViewSectionProps) {
-	const {fdsView} = props;
+	const {fdsView, treeItems} = props;
 
 	const [listSections, setListSections] = useState<Array<IListSection>>([
-		{label: Liferay.Language.get('title'), name: 'title'},
-		{label: Liferay.Language.get('description'), name: 'description'},
-		{label: Liferay.Language.get('image'), name: 'image'},
-		{label: Liferay.Language.get('symbol'), name: 'symbol'},
+		{label: Liferay.Language.get('title'), name: 'title', treeItems},
+		{
+			label: Liferay.Language.get('description'),
+			name: 'description',
+			treeItems,
+		},
+		{label: Liferay.Language.get('image'), name: 'image', treeItems},
+		{label: Liferay.Language.get('symbol'), name: 'symbol', treeItems},
 	]);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 
@@ -73,7 +78,11 @@ export default function List(props: IFDSViewSectionProps) {
 				);
 
 				if (!fdsListSection) {
-					return listSection;
+					return {
+						label: listSection.label,
+						name: listSection.name,
+						treeItems,
+					};
 				}
 
 				return {
@@ -288,7 +297,7 @@ function ListSection({
 	onSelect,
 	saveButtonDisabled,
 }: IListSectionProps) {
-	const {field, label} = listSection;
+	const {field, label, treeItems} = listSection;
 
 	const openSelectFieldModal = () => {
 		openModal({
@@ -308,6 +317,7 @@ function ListSection({
 					}}
 					saveButtonDisabled={saveButtonDisabled}
 					selectedFields={field ? [field] : []}
+					treeItems={treeItems}
 				/>
 			),
 			size: 'full-screen',

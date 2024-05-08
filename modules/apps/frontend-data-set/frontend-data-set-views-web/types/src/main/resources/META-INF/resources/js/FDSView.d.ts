@@ -7,6 +7,7 @@
 
 import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
 import {FDSViewType} from './FDSViews';
+import {IFieldTreeItem} from './utils/types';
 interface IFDSViewSectionProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
 	fdsFilterClientExtensions: IClientExtensionRenderer[];
@@ -17,6 +18,7 @@ interface IFDSViewSectionProps {
 	onFDSViewUpdate: (data: FDSViewType) => void;
 	saveFDSFieldsURL: string;
 	spritemap: string;
+	treeItems: Array<IFieldTreeItem>;
 }
 interface IFDSViewProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];

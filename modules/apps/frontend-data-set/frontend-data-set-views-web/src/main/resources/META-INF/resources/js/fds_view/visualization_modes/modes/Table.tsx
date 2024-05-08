@@ -21,7 +21,9 @@ import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
 import {IFDSViewSectionProps} from '../../../FDSView';
-import FieldSelectModalContent from '../../../components/FieldSelectModalContent';
+import FieldSelectModalContent, {
+	visit,
+} from '../../../components/FieldSelectModalContent';
 import OrderableTable from '../../../components/OrderableTable';
 import {
 	API_URL,
@@ -36,7 +38,12 @@ import '../../../../css/TableVisualizationMode.scss';
 import ClayAlert from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 
-import {EFieldType, IFDSField, IField} from '../../../utils/types';
+import {
+	EFieldType,
+	IFDSField,
+	IField,
+	IFieldTreeItem,
+} from '../../../utils/types';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
@@ -356,6 +363,7 @@ function Table(props: IFDSViewSectionProps & {title?: string}) {
 		namespace,
 		saveFDSFieldsURL,
 		title,
+		treeItems,
 	} = props;
 
 	const [fdsFields, setFDSFields] = useState<Array<IFDSField> | null>(null);
@@ -638,6 +646,7 @@ function Table(props: IFDSViewSectionProps & {title?: string}) {
 							: []
 					}
 					selectionMode="multiple"
+					treeItems={treeItems}
 				/>
 			),
 			size: 'full-screen',

@@ -11,6 +11,7 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {FDSViewType} from './FDSViews';
+import {getFields} from './api';
 import Actions from './fds_view/Actions';
 import Details from './fds_view/Details';
 import Pagination from './fds_view/Pagination';
@@ -21,6 +22,7 @@ import Filters from './fds_view/filters/Filters';
 import VisualizationModes from './fds_view/visualization_modes/VisualizationModes';
 import {API_URL, OBJECT_RELATIONSHIP} from './utils/constants';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
+import {IFieldTreeItem} from './utils/types';
 
 const NAVIGATION_BAR_ITEMS = [
 	{
@@ -68,6 +70,7 @@ interface IFDSViewSectionProps {
 	onFDSViewUpdate: (data: FDSViewType) => void;
 	saveFDSFieldsURL: string;
 	spritemap: string;
+	treeItems: Array<IFieldTreeItem>;
 }
 
 interface IFDSViewProps {
@@ -92,6 +95,7 @@ const FDSView = ({
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [fdsView, setFDSView] = useState<FDSViewType>();
 	const [loading, setLoading] = useState(true);
+	const [treeItems, setTreeItems] = useState<Array<IFieldTreeItem>>([]);
 
 	useEffect(() => {
 		const getFDSView = async () => {
@@ -109,7 +113,11 @@ const FDSView = ({
 			if (responseJSON?.id) {
 				setFDSView(responseJSON);
 
-				setLoading(false);
+				getFields(responseJSON).then((fields) => {
+					setTreeItems(fields);
+
+					setLoading(false);
+				});
 			}
 			else {
 				openDefaultFailureToast();
@@ -156,6 +164,7 @@ const FDSView = ({
 						}}
 						saveFDSFieldsURL={saveFDSFieldsURL}
 						spritemap={spritemap}
+						treeItems={treeItems}
 					/>
 				)
 			)}

@@ -17,7 +17,7 @@ import FieldSelectModalContent from '../../../components/FieldSelectModalContent
 import {API_URL, OBJECT_RELATIONSHIP} from '../../../utils/constants';
 import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
-import {IField} from '../../../utils/types';
+import {IField, IFieldTreeItem} from '../../../utils/types';
 import FieldAssignmentControls from '../components/FieldAssignmentControls';
 
 interface IFDSCardsSection {
@@ -31,16 +31,21 @@ interface ICardsSection {
 	field?: IField;
 	label: string;
 	name: IFDSCardsSection['name'];
+	treeItems: Array<IFieldTreeItem>;
 }
 
 export default function Cards(props: IFDSViewSectionProps) {
-	const {fdsView} = props;
+	const {fdsView, treeItems} = props;
 
 	const [cardsSections, setCardsSections] = useState<Array<ICardsSection>>([
-		{label: Liferay.Language.get('title'), name: 'title'},
-		{label: Liferay.Language.get('description'), name: 'description'},
-		{label: Liferay.Language.get('image'), name: 'image'},
-		{label: Liferay.Language.get('symbol'), name: 'symbol'},
+		{label: Liferay.Language.get('title'), name: 'title', treeItems},
+		{
+			label: Liferay.Language.get('description'),
+			name: 'description',
+			treeItems,
+		},
+		{label: Liferay.Language.get('image'), name: 'image', treeItems},
+		{label: Liferay.Language.get('symbol'), name: 'symbol', treeItems},
 	]);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 
@@ -73,7 +78,11 @@ export default function Cards(props: IFDSViewSectionProps) {
 				);
 
 				if (!fdsCardsSection) {
-					return {label: cardsSection.label, name: cardsSection.name};
+					return {
+						label: cardsSection.label,
+						name: cardsSection.name,
+						treeItems,
+					};
 				}
 
 				return {
@@ -289,7 +298,7 @@ function CardsSection({
 	onSelect,
 	saveButtonDisabled,
 }: ICardsSectionProps) {
-	const {field, label} = cardsSection;
+	const {field, label, treeItems} = cardsSection;
 
 	const openSelectFieldModal = () => {
 		openModal({
@@ -309,6 +318,7 @@ function CardsSection({
 					}}
 					saveButtonDisabled={saveButtonDisabled}
 					selectedFields={field ? [field] : []}
+					treeItems={treeItems}
 				/>
 			),
 			size: 'full-screen',

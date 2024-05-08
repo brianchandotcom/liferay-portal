@@ -72,6 +72,26 @@ public class SiteNavigationMenuItemServiceImpl
 	}
 
 	@Override
+	public SiteNavigationMenuItem fetchSiteNavigationMenuItem(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			siteNavigationMenuItemLocalService.
+				fetchSiteNavigationMenuItemByExternalReferenceCode(
+					externalReferenceCode, groupId);
+
+		if (siteNavigationMenuItem != null) {
+			_siteNavigationMenuModelResourcePermission.check(
+				getPermissionChecker(),
+				siteNavigationMenuItem.getSiteNavigationMenuId(),
+				ActionKeys.VIEW);
+		}
+
+		return siteNavigationMenuItem;
+	}
+
+	@Override
 	public List<Long> getParentSiteNavigationMenuItemIds(
 		long siteNavigationMenuId, String typeSettingsKeyword) {
 

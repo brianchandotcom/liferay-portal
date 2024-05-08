@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Browser, Page} from '@playwright/test';
+import {BrowserContext, Page} from '@playwright/test';
 
 import createTempFile, {
 	TempFileMissingError,
@@ -16,14 +16,13 @@ import performLogin, {LoginScreenName} from './performLogin';
  *
  * The provided `loggedInPage` is guaranteed to be at the home page.
  *
- * @param browser a Browser instance
+ * @param browserContext a BrowserContext instance
  * @param screenName the screen name to use for performing the login
  */
 export default async function getLoggedInPage(
-	browser: Browser,
+	browserContext: BrowserContext,
 	screenName: LoginScreenName
 ): Promise<Page> {
-	const browserContext = await browser.newContext();
 	const loggedInPage = await browserContext.newPage();
 	const tempFile = `loggedInPageTest-${screenName}.json`;
 

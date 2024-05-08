@@ -78,6 +78,7 @@ function getValidFields({
 					}),
 					label: propertyKey,
 					name: `${contextPath}${propertyKey}${FDS_ARRAY_FIELD_NAME_PARENT_SUFFIX}`,
+					sortable: false,
 					type: type ? type : 'array',
 				});
 
@@ -93,6 +94,7 @@ function getValidFields({
 					}),
 					label: propertyKey,
 					name: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_PARENT_SUFFIX}`,
+					sortable: false,
 					type: type ? type : 'object',
 				});
 
@@ -120,6 +122,7 @@ function getValidFields({
 						}),
 						label: propertyKey,
 						name: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_PARENT_SUFFIX}`,
+						sortable: false,
 						type: schemas[parentSchemaName[0]]?.type || 'object',
 					});
 
@@ -131,6 +134,11 @@ function getValidFields({
 				format: propertyValue.format,
 				label: propertyKey,
 				name: `${contextPath}${propertyKey}`,
+				sortable:
+					type !== 'object' &&
+					type !== 'array' &&
+					!contextPath.includes(FDS_NESTED_FIELD_NAME_DELIMITER) &&
+					!contextPath.includes(FDS_ARRAY_FIELD_NAME_DELIMITER),
 				type,
 			});
 		});

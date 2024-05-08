@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -52,6 +53,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.List;
 import java.util.Locale;
 
+import javax.ws.rs.core.Application;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -61,6 +64,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Marcellus Tavares
@@ -80,6 +88,19 @@ public class DDMRESTDataProviderTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"accessLocalNetwork", true
 			).build());
+
+		Bundle bundle = FrameworkUtil.getBundle(DDMRESTDataProviderTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			Application.class, new TestDDMDataProviderApplication(),
+			HashMapDictionaryBuilder.put(
+				"osgi.jaxrs.application.base", "/ddm"
+			).put(
+				"osgi.jaxrs.name",
+				TestDDMDataProviderApplication.class.getName()
+			).build());
 	}
 
 	@AfterClass
@@ -89,6 +110,10 @@ public class DDMRESTDataProviderTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"accessLocalNetwork", false
 			).build());
+
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
 	@Before
@@ -250,6 +275,28 @@ public class DDMRESTDataProviderTest {
 
 		Assert.assertEquals("Brazil", keyValuePair.getKey());
 		Assert.assertEquals("Brazil", keyValuePair.getValue());
+
+		String firstName = RandomTestUtil.randomString();
+		String lastName = RandomTestUtil.randomString();
+
+		ddmDataProviderId = _addDDMDataProviderInstance(
+			_createDDMDataProviderDDMFormValues(
+				false, false, null, null, outputParameterId, "$.fullName",
+				"text", null, null,
+				String.format(
+					"http://localhost:8080/o/ddm/get-full-name?name=%s&name=%s",
+					firstName, lastName)),
+			false);
+
+		ddmDataProviderResponse = _ddmDataProvider.getData(
+			DDMDataProviderRequest.Builder.newBuilder(
+			).withDDMDataProviderId(
+				String.valueOf(ddmDataProviderId)
+			).build());
+
+		Assert.assertEquals(
+			firstName + StringPool.SPACE + lastName,
+			ddmDataProviderResponse.getOutput(outputParameterId, String.class));
 	}
 
 	@Test
@@ -657,6 +704,8 @@ public class DDMRESTDataProviderTest {
 
 	private static final String _GET_COUNTRY_BY_NAME_URL =
 		"http://localhost:8080/api/jsonws/country/get-country-by-name";
+
+	private static ServiceRegistration<Application> _serviceRegistration;
 
 	@Inject
 	private CountryLocalService _countryLocalService;

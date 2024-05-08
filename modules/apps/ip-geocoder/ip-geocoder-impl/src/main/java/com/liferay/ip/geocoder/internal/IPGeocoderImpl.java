@@ -5,6 +5,9 @@
 
 package com.liferay.ip.geocoder.internal;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;
 import com.liferay.ip.geocoder.internal.configuration.IPGeocoderConfiguration;
@@ -28,6 +31,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,12 +53,24 @@ public class IPGeocoderImpl implements IPGeocoder {
 	public IPInfo getIPInfo(HttpServletRequest httpServletRequest) {
 		String ipAddress = _getIPAddress(httpServletRequest);
 
-		return new IPInfo(_getCountryCode(ipAddress), ipAddress);
+		if (!_countryCodes.containsKey(ipAddress)) {
+			_countryCodes.put(ipAddress, _getCountryCode(ipAddress));
+		}
+
+		return new IPInfo(_countryCodes.get(ipAddress), ipAddress);
 	}
 
 	@Activate
 	protected void activate(Map<String, String> properties) {
 		_properties = properties;
+
+		CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.newBuilder();
+
+		cacheBuilder.expireAfterAccess(1, TimeUnit.HOURS);
+
+		Cache<String, String> countryCodesCache = cacheBuilder.build();
+
+		_countryCodes = countryCodesCache.asMap();
 	}
 
 	private DatabaseReader _createDatabaseReader() {
@@ -161,6 +178,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 	private static final Log _log = LogFactoryUtil.getLog(IPGeocoderImpl.class);
 
+	private ConcurrentMap<String, String> _countryCodes;
 	private final DCLSingleton<DatabaseReader> _databaseReaderDCLSingleton =
 		new DCLSingleton<>();
 

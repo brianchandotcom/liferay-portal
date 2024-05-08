@@ -33,6 +33,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionService;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
+import com.liferay.portal.workflow.util.KaleoDefinitionThreadLocal;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -111,12 +112,26 @@ public class WorkflowDefinitionManagerImpl
 
 			serviceContext.setCompanyId(companyId);
 
-			List<KaleoDefinition> kaleoDefinitions =
-				_kaleoDefinitionService.getScopeKaleoDefinitions(
-					WorkflowDefinitionConstants.SCOPE_ALL, true, start, end,
-					KaleoDefinitionOrderByComparator.getOrderByComparator(
-						orderByComparator, _kaleoWorkflowModelConverter),
-					serviceContext);
+			List<KaleoDefinition> kaleoDefinitions = null;
+
+			if (KaleoDefinitionThreadLocal.
+					isSkipKaleoDefinitionResourcePermissionCheck()) {
+
+				kaleoDefinitions =
+					_kaleoDefinitionLocalService.getScopeKaleoDefinitions(
+						WorkflowDefinitionConstants.SCOPE_ALL, true, start, end,
+						KaleoDefinitionOrderByComparator.getOrderByComparator(
+							orderByComparator, _kaleoWorkflowModelConverter),
+						serviceContext);
+			}
+			else {
+				kaleoDefinitions =
+					_kaleoDefinitionService.getScopeKaleoDefinitions(
+						WorkflowDefinitionConstants.SCOPE_ALL, true, start, end,
+						KaleoDefinitionOrderByComparator.getOrderByComparator(
+							orderByComparator, _kaleoWorkflowModelConverter),
+						serviceContext);
+			}
 
 			int size = kaleoDefinitions.size();
 
@@ -191,6 +206,14 @@ public class WorkflowDefinitionManagerImpl
 
 			serviceContext.setCompanyId(companyId);
 
+			if (KaleoDefinitionThreadLocal.
+					isSkipKaleoDefinitionResourcePermissionCheck()) {
+
+				return _kaleoWorkflowModelConverter.toWorkflowDefinition(
+					_kaleoDefinitionLocalService.getKaleoDefinition(
+						name, serviceContext));
+			}
+
 			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
 				_kaleoDefinitionService.getKaleoDefinition(
 					name, serviceContext));
@@ -217,21 +240,54 @@ public class WorkflowDefinitionManagerImpl
 			List<KaleoDefinition> kaleoDefinitions = null;
 
 			if (active == null) {
-				kaleoDefinitions =
-					_kaleoDefinitionService.getScopeKaleoDefinitions(
-						WorkflowDefinitionConstants.SCOPE_ALL, start, end,
-						KaleoDefinitionOrderByComparator.getOrderByComparator(
-							orderByComparator, _kaleoWorkflowModelConverter),
-						serviceContext);
+				if (KaleoDefinitionThreadLocal.
+						isSkipKaleoDefinitionResourcePermissionCheck()) {
+
+					kaleoDefinitions =
+						_kaleoDefinitionLocalService.getScopeKaleoDefinitions(
+							WorkflowDefinitionConstants.SCOPE_ALL, start, end,
+							KaleoDefinitionOrderByComparator.
+								getOrderByComparator(
+									orderByComparator,
+									_kaleoWorkflowModelConverter),
+							serviceContext);
+				}
+				else {
+					kaleoDefinitions =
+						_kaleoDefinitionService.getScopeKaleoDefinitions(
+							WorkflowDefinitionConstants.SCOPE_ALL, start, end,
+							KaleoDefinitionOrderByComparator.
+								getOrderByComparator(
+									orderByComparator,
+									_kaleoWorkflowModelConverter),
+							serviceContext);
+				}
 			}
 			else {
-				kaleoDefinitions =
-					_kaleoDefinitionService.getScopeKaleoDefinitions(
-						WorkflowDefinitionConstants.SCOPE_ALL, active, start,
-						end,
-						KaleoDefinitionOrderByComparator.getOrderByComparator(
-							orderByComparator, _kaleoWorkflowModelConverter),
-						serviceContext);
+				if (KaleoDefinitionThreadLocal.
+						isSkipKaleoDefinitionResourcePermissionCheck()) {
+
+					kaleoDefinitions =
+						_kaleoDefinitionLocalService.getScopeKaleoDefinitions(
+							WorkflowDefinitionConstants.SCOPE_ALL, active,
+							start, end,
+							KaleoDefinitionOrderByComparator.
+								getOrderByComparator(
+									orderByComparator,
+									_kaleoWorkflowModelConverter),
+							serviceContext);
+				}
+				else {
+					kaleoDefinitions =
+						_kaleoDefinitionService.getScopeKaleoDefinitions(
+							WorkflowDefinitionConstants.SCOPE_ALL, active,
+							start, end,
+							KaleoDefinitionOrderByComparator.
+								getOrderByComparator(
+									orderByComparator,
+									_kaleoWorkflowModelConverter),
+							serviceContext);
+				}
 			}
 
 			int size = kaleoDefinitions.size();
@@ -273,6 +329,14 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		try {
+			if (KaleoDefinitionThreadLocal.
+					isSkipKaleoDefinitionResourcePermissionCheck()) {
+
+				return _kaleoWorkflowModelConverter.toWorkflowDefinition(
+					_kaleoDefinitionLocalService.getKaleoDefinition(
+						workflowDefinitionId));
+			}
+
 			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
 				_kaleoDefinitionService.getKaleoDefinition(
 					workflowDefinitionId));
@@ -294,6 +358,15 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		try {
+			if (KaleoDefinitionThreadLocal.
+					isSkipKaleoDefinitionResourcePermissionCheck()) {
+
+				return _kaleoWorkflowModelConverter.toWorkflowDefinition(
+					_kaleoDefinitionVersionLocalService.
+						getKaleoDefinitionVersion(
+							companyId, name, getVersion(version)));
+			}
+
 			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
 				_kaleoDefinitionVersionService.getKaleoDefinitionVersion(
 					companyId, name, getVersion(version)));
@@ -316,9 +389,20 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		try {
-			List<KaleoDefinitionVersion> kaleoDefinitionVersions =
-				_kaleoDefinitionVersionService.getKaleoDefinitionVersions(
-					companyId, name);
+			List<KaleoDefinitionVersion> kaleoDefinitionVersions = null;
+
+			if (KaleoDefinitionThreadLocal.
+					isSkipKaleoDefinitionResourcePermissionCheck()) {
+
+				kaleoDefinitionVersions =
+					_kaleoDefinitionVersionLocalService.
+						getKaleoDefinitionVersions(companyId, name);
+			}
+			else {
+				kaleoDefinitionVersions =
+					_kaleoDefinitionVersionService.getKaleoDefinitionVersions(
+						companyId, name);
+			}
 
 			int size = kaleoDefinitionVersions.size();
 

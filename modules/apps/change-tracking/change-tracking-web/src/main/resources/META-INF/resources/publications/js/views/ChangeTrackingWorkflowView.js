@@ -11,8 +11,7 @@ import React, {useState} from 'react';
 import {WorkflowStatusLabel} from '../components/WorkflowStatusLabel';
 
 export default function ChangeTrackingWorkflowView({
-	namespace,
-	setShowWorkflowSuccessMessage,
+	openWorkflowAssignModal,
 	workflowData,
 }) {
 	const MAX_ITEMS_TO_SHOW = 10;
@@ -55,36 +54,12 @@ export default function ChangeTrackingWorkflowView({
 									className="ml-2"
 									displayType="secondary"
 									onClick={() =>
-										Liferay.Util.openModal({
-											center: true,
-											customEvents: [
-												{
-													name: `${namespace}workflowTaskUpdated`,
-													onEvent() {
-														const iframe = document.querySelector(
-															'.liferay-modal iframe'
-														);
-
-														iframe.contentWindow.location.reload();
-
-														setShowWorkflowSuccessMessage(
-															true
-														);
-													},
-												},
-											],
-											height:
-												workflowData.assignButton
-													.modalHeight,
-											onOpen: () =>
-												setShowWorkflowSuccessMessage(
-													false
-												),
-											size: 'lg',
-											title:
-												workflowData.assignButton.label,
-											url: workflowData.assignButton.href,
-										})
+										openWorkflowAssignModal(
+											workflowData.assignButton.href,
+											workflowData.assignButton.label,
+											workflowData.assignButton
+												.modalHeight
+										)
 									}
 									size="xs"
 								>

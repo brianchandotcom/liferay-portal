@@ -685,6 +685,31 @@ export default function ChangeTrackingRenderView({
 		);
 	};
 
+	const openWorkflowAssignModal = (href, label, modalHeight) => {
+		Liferay.Util.openModal({
+			center: true,
+			customEvents: [
+				{
+					name: `${namespace}workflowTaskUpdated`,
+					onEvent() {
+						const iframe = document.querySelector(
+							'.liferay-modal iframe'
+						);
+
+						iframe.contentWindow.location.reload();
+
+						setShowWorkflowSuccessMessage(true);
+					},
+				},
+			],
+			height: modalHeight,
+			onOpen: () => setShowWorkflowSuccessMessage(false),
+			size: 'lg',
+			title: label,
+			url: href,
+		});
+	};
+
 	const renderWorkflowView = () => {
 		if (
 			state.contentType === CONTENT_TYPE_WORKFLOW &&
@@ -695,10 +720,7 @@ export default function ChangeTrackingRenderView({
 		) {
 			return (
 				<ChangeTrackingWorkflowView
-					namespace={namespace}
-					setShowWorkflowSuccessMessage={
-						setShowWorkflowSuccessMessage
-					}
+					openWorkflowAssignModal={openWorkflowAssignModal}
 					workflowData={state.renderData.workflowData}
 				/>
 			);
@@ -828,28 +850,11 @@ export default function ChangeTrackingRenderView({
 			workflowActionsDropdownItems.push({
 				label: workflowAction.label,
 				onClick: () =>
-					Liferay.Util.openModal({
-						center: true,
-						customEvents: [
-							{
-								name: `${namespace}workflowTaskUpdated`,
-								onEvent() {
-									const iframe = document.querySelector(
-										'.liferay-modal iframe'
-									);
-
-									iframe.contentWindow.location.reload();
-
-									setShowWorkflowSuccessMessage(true);
-								},
-							},
-						],
-						height: workflowAction.modalHeight,
-						onOpen: () => setShowWorkflowSuccessMessage(false),
-						size: 'lg',
-						title: workflowAction.label,
-						url: workflowAction.href,
-					}),
+					openWorkflowAssignModal(
+						workflowAction.href,
+						workflowAction.label,
+						workflowAction.modalHeight
+					),
 				symbolLeft: 'workflow',
 			});
 		});

@@ -490,18 +490,9 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9026 | Test Summary: Search for an Individual in the individual List"
-	@ignore = "true"
 	@priority = 4
 	test SearchIndividualList {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-14011
-
 		var emailList = "randy.smith@liferay.com,maria.rau@liferay.com";
-
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
 
 		task ("Add new users in DXP and sync the Contact Data") {
 			JSONUser.addUser(
@@ -519,23 +510,25 @@ definition {
 				userScreenName = "Mariasn");
 		}
 
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Sign in with the new user to visit the site pages") {
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4,5",
 				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
-			ACUtils.closeAllSessionsAndWait();
-
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = ${propertyName});
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Go to the Individual > KnownIndividual") {

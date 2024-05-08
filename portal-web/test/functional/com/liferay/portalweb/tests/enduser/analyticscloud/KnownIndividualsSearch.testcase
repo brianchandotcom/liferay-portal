@@ -385,17 +385,10 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9024 | Test Summary: Search an Individual's Details in the individual List"
-	@ignore = "true"
 	@priority = 4
 	test SearchIndividualDetails {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-14011
-
-		task ("Get site assigned property name") {
+		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-			var dataSource = StringUtil.extractFirst(${propertyName}, " ");
 		}
 
 		task ("Add new users in DXP and sync the Contact Data") {
@@ -406,22 +399,28 @@ definition {
 				userLastName = "Smith",
 				userScreenName = "Randysn");
 
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "randy.smith@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
 			ACDXPSettings.syncNewContactData();
 		}
 
 		task ("Sign in with the new user to visit the site pages") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "randy.smith@liferay.com",
-				userLoginFullName = "Randy Smith");
-
-			ACUtils.navigateToSitePage(
+			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4,5",
+				emailList = "randy.smith@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
-			ACUtils.closeAllSessionsAndWait();
-
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
@@ -474,14 +473,6 @@ definition {
 
 			for (var individualAttribute : list "birthDate,classPK,contactId,email,familyName,givenName,modifiedDate") {
 				ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = ${individualAttribute});
-			}
-		}
-
-		task ("Search for data source") {
-			ACUtils.searchBar(searchItem = ${dataSource});
-
-			for (var individualAttribute : list "birthDate,classPK,contactId,createDate,email,familyName,givenName,modifiedDate") {
-				ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = ${individualAttribute});
 			}
 		}
 

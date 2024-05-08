@@ -1648,11 +1648,13 @@ definition {
 			CommerceNavigator.gotoMiniCart();
 
 			FrontStore.viewMiniCartItem(
+				bundledItems = "Black(1 × U-Joint )",
 				cartItemName = "Bundled Product",
 				cartItemOption = "black",
 				cartItemPriceValue = "70.00",
 				cartItemQuantity = 1,
-				cartItemSku = "BLACKSKU");
+				cartItemSku = "BLACKSKU",
+                optionName = "Color");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_BUNDLED_ITEMS",

@@ -172,7 +172,8 @@ definition {
 				cartItemOption = "blue",
 				cartItemPriceValue = "30.00",
 				cartItemQuantity = 1,
-				cartItemSku = "BLUE");
+				cartItemSku = "BLUE",
+				optionName = "Color");
 
 			FrontStore.viewMiniCartItem(
 				bundledItems = "1 × ABS Sensor UOM2KEY",
@@ -180,7 +181,8 @@ definition {
 				cartItemOption = "white",
 				cartItemPromoPriceValue = "20.00",
 				cartItemQuantity = 1,
-				cartItemSku = "WHITE");
+				cartItemSku = "WHITE",
+				optionName = "Color");
 		}
 	}
 
@@ -370,7 +372,8 @@ definition {
 				cartItemOption = "blue",
 				cartItemPriceValue = "70.00",
 				cartItemQuantity = 1,
-				cartItemSku = "BLUE");
+				cartItemSku = "BLUE",
+				optionName = "Color");
 
 			FrontStore.viewMiniCartItem(
 				bundledItems = "1 × ABS Sensor uom2",
@@ -378,7 +381,8 @@ definition {
 				cartItemOption = "white",
 				cartItemPriceValue = "60.00",
 				cartItemQuantity = 1,
-				cartItemSku = "WHITE");
+				cartItemSku = "WHITE",
+				optionName = "Color");
 		}
 	}
 
@@ -529,7 +533,8 @@ definition {
 				cartItemOption = "blue",
 				cartItemPriceValue = "50.00",
 				cartItemQuantity = 1,
-				cartItemSku = "BLUE");
+				cartItemSku = "BLUE",
+				optionName = "Color");
 
 			FrontStore.viewMiniCartItem(
 				bundledItems = "1 × ABS Sensor UOM2KEY",
@@ -537,7 +542,8 @@ definition {
 				cartItemOption = "white",
 				cartItemPromoPriceValue = "26.67",
 				cartItemQuantity = 1,
-				cartItemSku = "WHITE");
+				cartItemSku = "WHITE",
+				optionName = "Color");
 		}
 	}
 
@@ -669,7 +675,8 @@ definition {
 				cartItemOption = "blue",
 				cartItemPriceValue = "50.00",
 				cartItemQuantity = 2,
-				cartItemSku = "BLUE");
+				cartItemSku = "BLUE",
+				optionName = "Color");
 
 			FrontStore.viewMiniCartItem(
 				bundledItems = "1 × ABS Sensor UOM2KEY",
@@ -677,7 +684,8 @@ definition {
 				cartItemOption = "white",
 				cartItemPromoPriceValue = "26.67",
 				cartItemQuantity = 1,
-				cartItemSku = "WHITE");
+				cartItemSku = "WHITE",
+				optionName = "Color");
 		}
 
 		task ("When adding WHITE(UOM2) using the quick add to cart") {
@@ -693,7 +701,8 @@ definition {
 				cartItemOption = "blue",
 				cartItemPriceValue = "50.00",
 				cartItemQuantity = 2,
-				cartItemSku = "BLUE");
+				cartItemSku = "BLUE",
+				optionName = "Color");
 
 			FrontStore.viewMiniCartItem(
 				bundledItems = "2 × ABS Sensor UOM2KEY",
@@ -701,7 +710,8 @@ definition {
 				cartItemOption = "white",
 				cartItemPromoPriceValue = "26.66",
 				cartItemQuantity = 2,
-				cartItemSku = "WHITE");
+				cartItemSku = "WHITE",
+				optionName = "Color");
 		}
 	}
 

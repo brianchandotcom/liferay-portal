@@ -76,8 +76,6 @@ public class InvokerFilterHelper {
 
 		_filterMappingsMap.clear();
 		_filterNames.clear();
-
-		clearFilterChainsCache();
 	}
 
 	public void init(FilterConfig filterConfig) throws ServletException {

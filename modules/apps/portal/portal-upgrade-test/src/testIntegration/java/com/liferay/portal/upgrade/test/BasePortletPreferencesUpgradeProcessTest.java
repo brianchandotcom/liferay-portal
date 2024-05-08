@@ -42,7 +42,7 @@ import org.junit.runner.RunWith;
  * @author István András Dézsi
  */
 @RunWith(Arquillian.class)
-public class PortletPreferencesUpgradeProcessTest
+public class BasePortletPreferencesUpgradeProcessTest
 	extends BasePortletPreferencesUpgradeProcess {
 
 	@ClassRule
@@ -78,7 +78,7 @@ public class PortletPreferencesUpgradeProcessTest
 				_getPortletPreferenceValues(
 					portletPreferences.getPortletPreferencesId());
 
-			assertCompanyIds(CompanyConstants.SYSTEM, portletPreferenceValues);
+			_assertCompanyIds(CompanyConstants.SYSTEM, portletPreferenceValues);
 
 			upgrade();
 
@@ -95,7 +95,7 @@ public class PortletPreferencesUpgradeProcessTest
 			portletPreferenceValues = _getPortletPreferenceValues(
 				portletPreferences.getPortletPreferencesId());
 
-			assertCompanyIds(
+			_assertCompanyIds(
 				TestPropsValues.getCompanyId(), portletPreferenceValues);
 		}
 	}
@@ -122,7 +122,7 @@ public class PortletPreferencesUpgradeProcessTest
 				_getPortletPreferenceValues(
 					portletPreferences.getPortletPreferencesId());
 
-			assertCompanyIds(CompanyConstants.SYSTEM, portletPreferenceValues);
+			_assertCompanyIds(CompanyConstants.SYSTEM, portletPreferenceValues);
 
 			upgrade();
 
@@ -139,12 +139,12 @@ public class PortletPreferencesUpgradeProcessTest
 			portletPreferenceValues = _getPortletPreferenceValues(
 				portletPreferences.getPortletPreferencesId());
 
-			assertCompanyIds(
+			_assertCompanyIds(
 				TestPropsValues.getCompanyId(), portletPreferenceValues);
 		}
 	}
 
-	protected void assertCompanyIds(
+	private void _assertCompanyIds(
 		long companyId, List<PortletPreferenceValue> portletPreferenceValues) {
 
 		Assert.assertNotEquals(0, portletPreferenceValues.size());

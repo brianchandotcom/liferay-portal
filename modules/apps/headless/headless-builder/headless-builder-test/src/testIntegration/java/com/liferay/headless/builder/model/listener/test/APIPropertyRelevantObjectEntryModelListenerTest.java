@@ -17,9 +17,6 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.test.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.system.SystemObjectDefinitionManager;
-import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -128,24 +125,21 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			"An API property must be related to an API schema.",
 			jsonObject.get("title"));
 
-		SystemObjectDefinitionManager userSystemObjectDefinitionManager =
-			_systemObjectDefinitionManagerRegistry.
-				getSystemObjectDefinitionManager("User");
-
 		ObjectDefinition userSystemObjectDefinition =
-			_objectDefinitionLocalService.fetchSystemObjectDefinition(
-				userSystemObjectDefinitionManager.getName());
+			_objectDefinitionLocalService.fetchSystemObjectDefinition("User");
 
-		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
-			_objectDefinition, userSystemObjectDefinition,
-			TestPropsValues.getUserId(),
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition, userSystemObjectDefinition,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		_userSystemObjectField = ObjectFieldTestUtil.addCustomObjectField(
-			TestPropsValues.getUserId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, userSystemObjectDefinition,
-			"x" + RandomTestUtil.randomString());
+		ObjectField userSystemObjectField =
+			ObjectFieldTestUtil.addCustomObjectField(
+				TestPropsValues.getUserId(),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, userSystemObjectDefinition,
+				"x" + RandomTestUtil.randomString());
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -154,9 +148,9 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 				"name", RandomTestUtil.randomString()
 			).put(
 				"objectFieldERC",
-				_userSystemObjectField.getExternalReferenceCode()
+				userSystemObjectField.getExternalReferenceCode()
 			).put(
-				"objectRelationshipNames", _objectRelationship.getName()
+				"objectRelationshipNames", objectRelationship.getName()
 			).put(
 				"r_apiSchemaToAPIProperties_c_apiSchemaId",
 				apiSchemaJSONObject.get("id")
@@ -691,23 +685,10 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	@Inject
-	private ObjectEntryLocalService _objectEntryLocalService;
-
 	@DeleteAfterTestRun
 	private ObjectField _objectField1;
 
 	@DeleteAfterTestRun
 	private ObjectField _objectField2;
-
-	@DeleteAfterTestRun
-	private ObjectRelationship _objectRelationship;
-
-	@Inject
-	private SystemObjectDefinitionManagerRegistry
-		_systemObjectDefinitionManagerRegistry;
-
-	@DeleteAfterTestRun
-	private ObjectField _userSystemObjectField;
 
 }

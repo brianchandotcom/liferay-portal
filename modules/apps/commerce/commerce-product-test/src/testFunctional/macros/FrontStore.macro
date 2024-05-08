@@ -873,7 +873,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMiniCartItem(cartItemPriceInactiveValue = null, cartItemName = null, cartItemPromoPriceValue = null, cartItemQuantity = null, bundledItems = null, cartItemSku = null, cartItemPriceValue = null, cartItemUOMKey = null) {
+	macro viewMiniCartItem(cartItemPriceInactiveValue = null, cartItemName = null, cartItemPromoPriceValue = null, cartItemQuantity = null, bundledItems = null, cartItemSku = null, cartItemPriceValue = null, cartItemUOMKey = null, optionName = null) {
 		if (!(isSet(cartItemPriceOnApplication))) {
 			var cartItemPriceOnApplication = "false";
 		}
@@ -909,9 +909,11 @@ definition {
 					locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_SHOW_OPTIONS_PANEL_COLLAPSED");
 
 				for (var bundledItem : list ${bundledItems}) {
-					AssertElementPresent(
-						key_cartItemName = ${optionName},
-						locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_H6");
+					if (isSet(optionName)) {
+						AssertElementPresent(
+							key_cartItemName = ${optionName},
+							locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_H6");
+					}
 
 					AssertElementPresent(
 						key_cartItemSku = ${bundledItem},

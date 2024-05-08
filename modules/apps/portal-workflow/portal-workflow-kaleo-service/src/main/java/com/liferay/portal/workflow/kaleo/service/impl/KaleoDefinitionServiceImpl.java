@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoDefinitionServiceBaseImpl;
+import com.liferay.portal.workflow.util.KaleoDefinitionThreadLocal;
 
 import java.util.List;
 
@@ -148,7 +149,10 @@ public class KaleoDefinitionServiceImpl extends KaleoDefinitionServiceBaseImpl {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (permissionChecker == null) {
+		if ((permissionChecker == null) ||
+			KaleoDefinitionThreadLocal.
+				isSkipKaleoDefinitionResourcePermissionCheck()) {
+
 			return;
 		}
 

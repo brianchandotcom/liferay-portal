@@ -256,6 +256,38 @@ public class HttpInvoker {
 		return fileName;
 	}
 
+	private HttpURLConnection _getHttpURLConnection(
+			HttpMethod httpMethod, String urlString)
+		throws IOException {
+
+		URL url = new URL(urlString);
+
+		HttpURLConnection httpURLConnection =
+			(HttpURLConnection)url.openConnection();
+
+		try {
+			HttpURLConnection setMethodHttpURLConnection = httpURLConnection;
+
+			if (Objects.equals(url.getProtocol(), "https")) {
+				Class<?> clazz = httpURLConnection.getClass();
+
+				Field field = clazz.getDeclaredField("delegate");
+
+				field.setAccessible(true);
+
+				setMethodHttpURLConnection = (HttpURLConnection)field.get(
+					httpURLConnection);
+			}
+
+			_methodField.set(setMethodHttpURLConnection, httpMethod.name());
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new IOException(reflectiveOperationException);
+		}
+
+		return httpURLConnection;
+	}
+
 	private String _getQueryString() throws IOException {
 		StringBuilder sb = new StringBuilder();
 
@@ -305,30 +337,8 @@ public class HttpInvoker {
 			urlString += queryString;
 		}
 
-		URL url = new URL(urlString);
-
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)url.openConnection();
-
-		try {
-			HttpURLConnection setMethodHttpURLConnection = httpURLConnection;
-
-			if (Objects.equals(url.getProtocol(), "https")) {
-				Class<?> clazz = httpURLConnection.getClass();
-
-				Field field = clazz.getDeclaredField("delegate");
-
-				field.setAccessible(true);
-
-				setMethodHttpURLConnection = (HttpURLConnection)field.get(
-					httpURLConnection);
-			}
-
-			_methodField.set(setMethodHttpURLConnection, _httpMethod.name());
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new IOException(reflectiveOperationException);
-		}
+		HttpURLConnection httpURLConnection = _getHttpURLConnection(
+			_httpMethod, urlString);
 
 		if (_encodedUserNameAndPassword != null) {
 			httpURLConnection.setRequestProperty(

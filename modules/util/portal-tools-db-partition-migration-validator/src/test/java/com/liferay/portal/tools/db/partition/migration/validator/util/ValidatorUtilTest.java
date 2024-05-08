@@ -88,8 +88,8 @@ public class ValidatorUtilTest {
 	}
 
 	@Test
-	public void testValidatePartitionedTables() throws Exception {
-		_testValidatePartitionedTables(
+	public void testValidateTables() throws Exception {
+		_testValidateTables(
 			new ArrayList<>(
 				Arrays.asList("table1", "table2", "table3", "table5")),
 			new ArrayList<>(
@@ -100,7 +100,7 @@ public class ValidatorUtilTest {
 					"[WARN] Table table2 is not present in the target database",
 					"[WARN] Table table4 is not present in the source " +
 						"database")));
-		_testValidatePartitionedTables(
+		_testValidateTables(
 			new ArrayList<>(Arrays.asList("table1", "table3", "table4")),
 			new ArrayList<>(
 				Arrays.asList(
@@ -111,7 +111,7 @@ public class ValidatorUtilTest {
 					"[WARN] Table table2 is not present in the source database",
 					"[WARN] Table table5 is not present in the source " +
 						"database")));
-		_testValidatePartitionedTables(
+		_testValidateTables(
 			new ArrayList<>(
 				Arrays.asList(
 					"table1", "table2", "table3", "table4", "table5")),
@@ -303,7 +303,7 @@ public class ValidatorUtilTest {
 		unsafeRunnable.run();
 	}
 
-	private void _testValidatePartitionedTables(
+	private void _testValidateTables(
 			List<String> sourceTableNames, List<String> targetTableNames,
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {

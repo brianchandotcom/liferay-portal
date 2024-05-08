@@ -60,76 +60,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8992 | Test Summary: Clicking an associated segment navigates to segment profile"
-	@ignore = "true"
-	@priority = 3
-	test AssertIndividualOverviewAssociatedSegmentProfile {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-14011
-
-		property test.run.type = "single";
-
-		var emailList = "user1@liferay.com,user2@liferay.com";
-
-		task ("View the page as different users") {
-			ACUtils.navigateToSitePageWithUser(
-				emailList = ${emailList},
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch to new property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Add 2 new Static Segments") {
-			for (var segmentName : list "Static Segment Test1,Static Segment Test2") {
-				ACNavigation.goToSegments();
-
-				ACSegments.createStaticSegment();
-
-				ACUtils.setItemName(itemName = ${segmentName});
-
-				if (${segmentName} == "Static Segment Test1") {
-					ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2");
-				}
-
-				if (${segmentName} == "Static Segment Test2") {
-					ACSegments.addStaticMultiMember(tableMember = "user1 user1");
-				}
-
-				ACSegments.saveSegment();
-			}
-		}
-
-		task ("Go to the Individual > KnownIndividual > Segments") {
-			ACNavigation.goToIndividuals();
-
-			ACIndividualsDashboard.goToKnownIndividualsTab();
-
-			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "user1 user1");
-		}
-
-		task ("Assert clicking an associated segment in Associated Segment card list navigates to segment profile") {
-			ACUtils.searchBar(
-				cardTitle = "Associated Segments",
-				searchItem = "Test1");
-
-			ACIndividualsDashboard.assertSegmentInAssociatedSegmentsCard(itemName = "Static Segment Test1");
-
-			ACNavigation.openItem(itemName = "Static Segment Test1");
-
-			ACNavigation.switchTab(tabName = "Membership");
-
-			ACUtils.viewNameList(nameList = "user1 user1");
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8993 | Test Summary: Selecting a Segment in Individuals"
 	@priority = 3
 	test AssertIndividualsSegmentSelected {
@@ -408,20 +338,17 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8948 | Test Summary: Segments the individual Belongs To appear in the list"
-	@ignore = "true"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8948 | Test Summary: Segments the individual Belongs To appear in the list and Clicking an associated segment navigates to segment profile"
 	@priority = 5
 	test SegmentsIndividualBelongsToAppearInList {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-14011
-
 		property test.run.type = "single";
 
 		var emailList = "user1@liferay.com,user2@liferay.com";
 
 		task ("View the page as different users") {
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4,5",
 				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
@@ -455,13 +382,21 @@ definition {
 			}
 		}
 
-		task ("Go to the Individual > KnownIndividual > Segments") {
+		task ("Go to the Individual > KnownIndividual") {
 			ACNavigation.goToIndividuals();
 
 			ACIndividualsDashboard.goToKnownIndividualsTab();
 
 			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "user1 user1");
+		}
 
+		task ("Check if the Associated Segment appears in the overview tab") {
+			for (var individualAttribute : list "Static Segment Test1,Static Segment Test2") {
+				ACIndividualsDashboard.assertSegmentInAssociatedSegmentsCard(itemName = ${individualAttribute});
+			}
+		}
+
+		task ("Go to the Segments tab") {
 			ACNavigation.switchTab(tabName = "Segments");
 		}
 
@@ -471,13 +406,19 @@ definition {
 			}
 		}
 
-		task ("Go to the Individual > KnownIndividual > Segments") {
+		task ("Go to the Individual > KnownIndividual") {
 			ACNavigation.goToIndividuals();
 
 			ACIndividualsDashboard.goToKnownIndividualsTab();
 
 			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "user2 user2");
+		}
 
+		task ("Check if the Associated Segment appears in the overview tab") {
+			ACIndividualsDashboard.assertSegmentInAssociatedSegmentsCard(itemName = "Static Segment Test1");
+		}
+
+		task ("Go to the Segments tab") {
 			ACNavigation.switchTab(tabName = "Segments");
 		}
 
@@ -485,6 +426,14 @@ definition {
 			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Static Segment Test1");
 
 			ACIndividualsDashboard.assertNoIndividualAttribute(key_individualAttribute = "Static Segment Test2");
+		}
+
+		task ("Check that clicking an associated segment in Associated Segment card list navigates to segment profile") {
+			ACNavigation.openItem(itemName = "Static Segment Test1");
+
+			ACNavigation.switchTab(tabName = "Membership");
+
+			ACUtils.viewNameList(nameList = "user1 user1,user2 user2");
 		}
 	}
 

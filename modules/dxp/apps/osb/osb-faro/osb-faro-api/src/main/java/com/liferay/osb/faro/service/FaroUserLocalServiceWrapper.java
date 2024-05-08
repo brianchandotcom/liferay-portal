@@ -125,6 +125,13 @@ public class FaroUserLocalServiceWrapper
 		_faroUserLocalService.deleteFaroUsers(groupId);
 	}
 
+	@Override
+	public void deleteFaroUsers(com.liferay.portal.kernel.model.User liveUser)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_faroUserLocalService.deleteFaroUsers(liveUser);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

@@ -119,6 +119,13 @@ public class FaroUserLocalServiceUtil {
 		getService().deleteFaroUsers(groupId);
 	}
 
+	public static void deleteFaroUsers(
+			com.liferay.portal.kernel.model.User liveUser)
+		throws PortalException {
+
+		getService().deleteFaroUsers(liveUser);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

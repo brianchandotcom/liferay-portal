@@ -4,7 +4,7 @@
 			"en_US": "Data about this app or solution."
 		},
 		"key": "product-metadata",
-		"priority": 3,
+		"priority": 1,
 		"title": {
 			"en_US": "Product Metadata"
 		}
@@ -14,7 +14,7 @@
 			"en_US": "Pricing and licensing approach for this app or solution in the Marketplace."
 		},
 		"key": "pricing-licensing-terms",
-		"priority": 1,
+		"priority": 2,
 		"title": {
 			"en_US": "Pricing and Licensing Terms"
 		}
@@ -34,7 +34,7 @@
 			"en_US": "Support and help references for this app or solution."
 		},
 		"key": "app-support-and-help",
-		"priority": 2,
+		"priority": 4,
 		"title": {
 			"en_US": "App Support and Help"
 		}
@@ -44,7 +44,7 @@
 			"en_US": "Solution Metadata."
 		},
 		"key": "solution-metadata",
-		"priority": 2,
+		"priority": 5,
 		"title": {
 			"en_US": "Solution Metadata"
 		}

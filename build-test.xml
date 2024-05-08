@@ -13081,6 +13081,15 @@ captcha.enforce.disabled=true</echo>
 		</if>
 
 		<if>
+			<isset property="default.admin.password" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					default.admin.password=${default.admin.password}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="site.initializer.partner.portal.consumer.key" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">

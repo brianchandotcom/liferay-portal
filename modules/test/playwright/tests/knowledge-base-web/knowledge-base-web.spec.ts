@@ -16,21 +16,21 @@ import getRandomString from '../../utils/getRandomString';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {KnowledgeBaseUrls} from './utils/knowledgeBaseUrls';
 
-const testFeatureFlagsEnabled = mergeTests(
+const testFeatureFlagsDisabled = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
-		'LPD-11003': true,
-		'LPS-188058': true,
+		'LPD-11003': false,
+		'LPS-188058': false,
 	}),
 	isolatedSiteTest,
 	knowledgeBasePages,
 	loginTest()
 );
-
-const testFeatureFlagsDisabled = mergeTests(
+const testFeatureFlagsEnabled = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
-		'LPS-188058': false,
+		'LPD-11003': true,
+		'LPS-188058': true,
 	}),
 	isolatedSiteTest,
 	knowledgeBasePages,
@@ -49,12 +49,12 @@ testFeatureFlagsEnabled(
 				siteId: site.id,
 				title,
 			});
-
 		const knowledgeBaseUrls = new KnowledgeBaseUrls(site.friendlyUrlPath);
 
 		await page.goto(
 			knowledgeBaseUrls.getEditKBArticleUrl(knowledgeBaseArticle.id)
 		);
+
 		await expect(page.getByPlaceholder('Untitled Article')).toHaveValue(
 			title
 		);
@@ -66,6 +66,7 @@ testFeatureFlagsEnabled(
 				browserContext,
 				'demo.company.admin'
 			);
+
 			await otherUserPage.goto(
 				knowledgeBaseUrls.getEditKBArticleUrl(
 					knowledgeBaseArticle.id,
@@ -73,6 +74,7 @@ testFeatureFlagsEnabled(
 					knowledgeBaseUrls.home
 				)
 			);
+
 			await expect(
 				otherUserPage.getByPlaceholder('Untitled Article')
 			).toHaveValue(title);
@@ -81,12 +83,14 @@ testFeatureFlagsEnabled(
 				`${content} test`,
 				`${title} test`
 			);
+
 			await expect(
 				page.getByText('Your changes cannot be saved.')
 			).toBeVisible();
 
 			const otherUserKnowledgeBaseEditArticlePage =
 				new KnowledgeBaseEditArticlePage(otherUserPage);
+
 			await otherUserKnowledgeBaseEditArticlePage.cancel();
 		}
 		finally {
@@ -100,10 +104,10 @@ testFeatureFlagsDisabled(
 	async ({knowledgeBaseEditArticlePage, knowledgeBasePage, page, site}) => {
 		const content = getRandomString();
 		const title = getRandomString();
+
 		const kbArticle = page.getByRole('link', {name: title});
 
 		await knowledgeBaseEditArticlePage.goto(site.friendlyUrlPath);
-
 		await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticle(
 			content,
 			title
@@ -113,10 +117,12 @@ testFeatureFlagsDisabled(
 			page,
 			`Success:${title} was successfully published.`
 		);
+
 		await expect(kbArticle).toBeVisible();
 
 		await knowledgeBasePage.goto(site.friendlyUrlPath);
 		await knowledgeBasePage.deleteKnowledgeBaseArticle(title);
+
 		await expect(kbArticle).toBeHidden();
 	}
 );
@@ -131,10 +137,10 @@ testFeatureFlagsEnabled(
 	}) => {
 		const content = getRandomString();
 		const title = getRandomString();
+
 		const kbArticle = page.getByRole('link', {name: title});
 
 		await knowledgeBaseEditArticlePage.goto(site.friendlyUrlPath);
-
 		await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticleWithSchedule(
 			content,
 			title
@@ -144,6 +150,7 @@ testFeatureFlagsEnabled(
 			page,
 			`Success:${title} was successfully published.`
 		);
+
 		await expect(kbArticle).toBeVisible();
 
 		await knowledgeBaseViewArticlePage.goto(site.friendlyUrlPath, title);
@@ -177,6 +184,7 @@ testFeatureFlagsDisabled(
 
 		await knowledgeBasePage.goto(site.friendlyUrlPath);
 		await knowledgeBasePage.deleteAll(false);
+
 		await expect(
 			page.getByRole('heading', {name: 'Knowledge base is empty.'})
 		).toBeVisible();
@@ -208,7 +216,6 @@ testFeatureFlagsEnabled(
 				'[id="_com_liferay_knowledge_base_web_portlet_AdminPortlet_recycleBinAlert"]'
 			)
 		).toBeVisible();
-
 		await expect(
 			page.getByRole('heading', {name: 'Knowledge base is empty.'})
 		).toBeVisible();
@@ -224,10 +231,10 @@ testFeatureFlagsEnabled(
 		site,
 	}) => {
 		const title = getRandomString();
+
 		const kbArticle = page.getByRole('link', {name: title});
 
 		await knowledgeBaseEditArticlePage.goto(site.friendlyUrlPath);
-
 		await knowledgeBaseEditArticlePage.scheduleNewKnowledgeBaseArticle(
 			getRandomString(),
 			`${new Date().getFullYear() + 1}-01-01 00:00`,
@@ -238,11 +245,12 @@ testFeatureFlagsEnabled(
 			page,
 			`Success:${title} will be published on`
 		);
+
 		await expect(kbArticle).toBeVisible();
 
 		await knowledgeBaseViewArticlePage.goto(site.friendlyUrlPath, title);
-
 		await knowledgeBaseViewArticlePage.deleteKnowledgeBaseArticle();
+
 		await expect(
 			page.locator(
 				'[id="_com_liferay_knowledge_base_web_portlet_AdminPortlet_recycleBinAlert"]'

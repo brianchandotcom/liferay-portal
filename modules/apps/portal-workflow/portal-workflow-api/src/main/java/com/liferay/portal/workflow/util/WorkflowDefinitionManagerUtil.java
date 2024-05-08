@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.util;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -43,8 +44,19 @@ public class WorkflowDefinitionManagerUtil {
 		WorkflowDefinitionManager workflowDefinitionManager =
 			_workflowDefinitionManagerSnapshot.get();
 
-		return workflowDefinitionManager.getActiveWorkflowDefinitions(
-			companyId, start, end, orderByComparator);
+		List<WorkflowDefinition> workflowDefinitions = null;
+
+		try (SafeCloseable safeCloseable =
+				KaleoDefinitionThreadLocal.
+					setSkipKaleoDefinitionResourcePermissionCheckWithSafeCloseable(
+						true)) {
+
+			workflowDefinitions =
+				workflowDefinitionManager.getActiveWorkflowDefinitions(
+					companyId, start, end, orderByComparator);
+		}
+
+		return workflowDefinitions;
 	}
 
 	public static int getActiveWorkflowDefinitionsCount(long companyId)
@@ -76,8 +88,19 @@ public class WorkflowDefinitionManagerUtil {
 		WorkflowDefinitionManager workflowDefinitionManager =
 			_workflowDefinitionManagerSnapshot.get();
 
-		return workflowDefinitionManager.getLatestWorkflowDefinitions(
-			companyId, start, end, orderByComparator);
+		List<WorkflowDefinition> workflowDefinitions = null;
+
+		try (SafeCloseable safeCloseable =
+				KaleoDefinitionThreadLocal.
+					setSkipKaleoDefinitionResourcePermissionCheckWithSafeCloseable(
+						true)) {
+
+			workflowDefinitions =
+				workflowDefinitionManager.getLatestWorkflowDefinitions(
+					companyId, start, end, orderByComparator);
+		}
+
+		return workflowDefinitions;
 	}
 
 	public static WorkflowDefinition getWorkflowDefinition(
@@ -87,8 +110,19 @@ public class WorkflowDefinitionManagerUtil {
 		WorkflowDefinitionManager workflowDefinitionManager =
 			_workflowDefinitionManagerSnapshot.get();
 
-		return workflowDefinitionManager.getWorkflowDefinition(
-			companyId, name, version);
+		WorkflowDefinition workflowDefinition = null;
+
+		try (SafeCloseable safeCloseable =
+				KaleoDefinitionThreadLocal.
+					setSkipKaleoDefinitionResourcePermissionCheckWithSafeCloseable(
+						true)) {
+
+			workflowDefinition =
+				workflowDefinitionManager.getWorkflowDefinition(
+					companyId, name, version);
+		}
+
+		return workflowDefinition;
 	}
 
 	public static List<WorkflowDefinition> getWorkflowDefinitions(
@@ -99,8 +133,19 @@ public class WorkflowDefinitionManagerUtil {
 		WorkflowDefinitionManager workflowDefinitionManager =
 			_workflowDefinitionManagerSnapshot.get();
 
-		return workflowDefinitionManager.getWorkflowDefinitions(
-			companyId, name, start, end, orderByComparator);
+		List<WorkflowDefinition> workflowDefinitions = null;
+
+		try (SafeCloseable safeCloseable =
+				KaleoDefinitionThreadLocal.
+					setSkipKaleoDefinitionResourcePermissionCheckWithSafeCloseable(
+						true)) {
+
+			workflowDefinitions =
+				workflowDefinitionManager.getWorkflowDefinitions(
+					companyId, name, start, end, orderByComparator);
+		}
+
+		return workflowDefinitions;
 	}
 
 	public static int getWorkflowDefinitionsCount(long companyId, String name)

@@ -169,6 +169,14 @@
 					"name": "applicationState",
 					"objectFieldSettings": [
 						{
+							"name": "defaultValue",
+							"value": "open"
+						},
+						{
+							"name": "defaultValueType",
+							"value": "inputAsValue"
+						},
+						{
 							"name": "stateFlow",
 							"value": {
 								"objectStates": [
@@ -237,14 +245,6 @@
 									}
 								]
 							}
-						},
-						{
-							"name": "defaultValueType",
-							"value": "inputAsValue"
-						},
-						{
-							"name": "defaultValue",
-							"value": "open"
 						}
 					],
 					"readOnly": "false",
@@ -487,12 +487,12 @@
 							"value": "jpeg, jpg, pdf, png"
 						},
 						{
-							"name": "maximumFileSize",
-							"value": 100
-						},
-						{
 							"name": "fileSource",
 							"value": "userComputer"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": 100
 						},
 						{
 							"name": "showFilesInDocumentsAndMedia",
@@ -569,12 +569,12 @@
 							"value": "jpeg, jpg, pdf, png"
 						},
 						{
-							"name": "maximumFileSize",
-							"value": 100
-						},
-						{
 							"name": "fileSource",
 							"value": "userComputer"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": 100
 						},
 						{
 							"name": "showFilesInDocumentsAndMedia",
@@ -1800,12 +1800,12 @@
 							"value": "jpeg, jpg, pdf, png"
 						},
 						{
-							"name": "maximumFileSize",
-							"value": 100
-						},
-						{
 							"name": "fileSource",
 							"value": "userComputer"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": 100
 						},
 						{
 							"name": "showFilesInDocumentsAndMedia",
@@ -2009,6 +2009,185 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "default",
+			"objectLayouts": [
+				{
+					"defaultObjectLayout": true,
+					"name": {
+						"en_US": "Evaluation Layout"
+					},
+					"objectDefinitionExternalReferenceCode": "D4B8_APPLICATION_EVALUATION",
+					"objectLayoutTabs": [
+						{
+							"name": {
+								"en_US": "Review"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "General Details"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "r_applicationToEvaluations_c_d4b8DistributorApplicationId",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "interviewNotes",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "attachment",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								},
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "Assessment"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "recommendations",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "recommendationComments",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "assessmentScore",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								},
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "Resolution"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "decision",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								}
+							],
+							"priority": 0
+						}
+					]
+				}
+			],
+			"objectViews": [
+				{
+					"defaultObjectView": true,
+					"name": {
+						"en_US": "Evaluation View"
+					},
+					"objectDefinitionExternalReferenceCode": "D4B8_APPLICATION_EVALUATION",
+					"objectViewColumns": [
+						{
+							"label": {
+								"en_US": "ID"
+							},
+							"objectFieldName": "id",
+							"priority": 0
+						},
+						{
+							"label": {
+								"en_US": "Distributor Application"
+							},
+							"objectFieldName": "r_applicationToEvaluations_c_d4b8DistributorApplicationId",
+							"priority": 1
+						},
+						{
+							"label": {
+								"en_US": "Author"
+							},
+							"objectFieldName": "creator",
+							"priority": 2
+						},
+						{
+							"label": {
+								"en_US": "Assessment Score"
+							},
+							"objectFieldName": "assessmentScore",
+							"priority": 3
+						},
+						{
+							"label": {
+								"en_US": "Decision"
+							},
+							"objectFieldName": "decision",
+							"priority": 4
+						},
+						{
+							"label": {
+								"en_US": "Create Date"
+							},
+							"objectFieldName": "createDate",
+							"priority": 5
+						},
+						{
+							"label": {
+								"en_US": "Modified Date"
+							},
+							"objectFieldName": "modifiedDate",
+							"priority": 6
+						}
+					]
+				}
+			],
 			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
 				"en_US": "D4B8 Application Evaluations"

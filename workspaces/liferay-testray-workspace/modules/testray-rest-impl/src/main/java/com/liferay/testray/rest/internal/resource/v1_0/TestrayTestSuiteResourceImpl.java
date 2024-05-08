@@ -141,8 +141,8 @@ public class TestrayTestSuiteResourceImpl
 	}
 
 	private void _addTestrayCase(
-			long companyId, Node testcaseNode, long testrayBuildId,
-			String testrayBuildTime,
+			long companyId, Node testcaseNode, String testrayBuildDate,
+			long testrayBuildId,
 			Map<String, Serializable> testrayCasePropertiesMap,
 			long testrayProjectId, long testrayRunId)
 		throws Exception {
@@ -239,14 +239,14 @@ public class TestrayTestSuiteResourceImpl
 		}
 
 		_addTestrayCaseResult(
-			companyId, testcaseNode, testrayBuildId, testrayBuildTime,
+			companyId, testcaseNode, testrayBuildDate, testrayBuildId,
 			testrayCaseId, testrayCasePropertiesMap, testrayComponentId,
 			testrayRunId);
 	}
 
 	private void _addTestrayCaseResult(
-			long companyId, Node testcaseNode, long testrayBuildId,
-			String testrayBuildTime, long testrayCaseId,
+			long companyId, Node testcaseNode, String testrayBuildDate,
+			long testrayBuildId, long testrayCaseId,
 			Map<String, Serializable> testrayCasePropertiesMap,
 			long testrayComponentId, long testrayRunId)
 		throws Exception {
@@ -259,7 +259,7 @@ public class TestrayTestSuiteResourceImpl
 			HashMapBuilder.<String, Serializable>put(
 				"attachments", _addTestrayAttachments(testcaseNode)
 			).put(
-				"closedDate", Timestamp.valueOf(testrayBuildTime)
+				"closedDate", Timestamp.valueOf(testrayBuildDate)
 			).put(
 				"dueStatus",
 				() -> {
@@ -297,7 +297,7 @@ public class TestrayTestSuiteResourceImpl
 			).put(
 				"r_runToCaseResult_c_runId", testrayRunId
 			).put(
-				"startDate", Timestamp.valueOf(testrayBuildTime)
+				"startDate", Timestamp.valueOf(testrayBuildDate)
 			).put(
 				"warnings",
 				GetterUtil.getInteger(
@@ -325,8 +325,8 @@ public class TestrayTestSuiteResourceImpl
 	}
 
 	private void _addTestrayCases(
-			long companyId, Element element, long testrayBuildId,
-			String testrayBuildTime, long testrayProjectId, long testrayRunId)
+			long companyId, Element element, String testrayBuildDate,
+			long testrayBuildId, long testrayProjectId, long testrayRunId)
 		throws Exception {
 
 		NodeList testCaseNodeList = element.getElementsByTagName("testcase");
@@ -338,7 +338,7 @@ public class TestrayTestSuiteResourceImpl
 				_getTestrayCaseProperties((Element)testcaseNode);
 
 			_addTestrayCase(
-				companyId, testcaseNode, testrayBuildId, testrayBuildTime,
+				companyId, testcaseNode, testrayBuildDate, testrayBuildId,
 				testrayCasePropertiesMap, testrayProjectId, testrayRunId);
 		}
 	}

@@ -223,7 +223,7 @@ public class TestrayImportResultsDispatchTaskExecutor
 
 	private void _addTestrayCase(
 			long companyId, ServiceContext serviceContext, Node testcaseNode,
-			long testrayBuildId, String testrayBuildTime,
+			String testrayBuildDate, long testrayBuildId,
 			Map<String, Serializable> testrayCasePropertiesMap,
 			long testrayProjectId, long testrayRunId, long userId)
 		throws Exception {
@@ -301,14 +301,14 @@ public class TestrayImportResultsDispatchTaskExecutor
 		}
 
 		_addTestrayCaseResult(
-			serviceContext, testcaseNode, testrayBuildId, testrayBuildTime,
+			serviceContext, testcaseNode, testrayBuildDate, testrayBuildId,
 			testrayCaseId, testrayCasePropertiesMap, testrayComponentId,
 			testrayRunId, userId);
 	}
 
 	private void _addTestrayCaseResult(
 			ServiceContext serviceContext, Node testcaseNode,
-			long testrayBuildId, String testrayBuildTime, long testrayCaseId,
+			String testrayBuildDate, long testrayBuildId, long testrayCaseId,
 			Map<String, Serializable> testrayCasePropertiesMap,
 			long testrayComponentId, long testrayRunId, long userId)
 		throws Exception {
@@ -317,7 +317,7 @@ public class TestrayImportResultsDispatchTaskExecutor
 			HashMapBuilder.<String, Serializable>put(
 				"attachments", _addTestrayAttachments(testcaseNode)
 			).put(
-				"closedDate", Timestamp.valueOf(testrayBuildTime)
+				"closedDate", Timestamp.valueOf(testrayBuildDate)
 			).put(
 				"dueStatus",
 				() -> {
@@ -355,7 +355,7 @@ public class TestrayImportResultsDispatchTaskExecutor
 			).put(
 				"r_runToCaseResult_c_runId", testrayRunId
 			).put(
-				"startDate", Timestamp.valueOf(testrayBuildTime)
+				"startDate", Timestamp.valueOf(testrayBuildDate)
 			).put(
 				"warnings",
 				GetterUtil.getInteger(
@@ -381,7 +381,7 @@ public class TestrayImportResultsDispatchTaskExecutor
 
 	private void _addTestrayCases(
 			long companyId, Element element, ServiceContext serviceContext,
-			long testrayBuildId, String testrayBuildTime, long testrayProjectId,
+			String testrayBuildDate, long testrayBuildId, long testrayProjectId,
 			long testrayRunId, long userId)
 		throws Exception {
 
@@ -394,8 +394,8 @@ public class TestrayImportResultsDispatchTaskExecutor
 				_getTestrayCaseProperties((Element)testcaseNode);
 
 			_addTestrayCase(
-				companyId, serviceContext, testcaseNode, testrayBuildId,
-				testrayBuildTime, testrayCasePropertiesMap, testrayProjectId,
+				companyId, serviceContext, testcaseNode, testrayBuildDate,
+				testrayBuildId, testrayCasePropertiesMap, testrayProjectId,
 				testrayRunId, userId);
 		}
 	}
@@ -1245,9 +1245,9 @@ public class TestrayImportResultsDispatchTaskExecutor
 			propertiesMap.get("testray.run.id"), userId);
 
 		_addTestrayCases(
-			companyId, element, serviceContext, testrayBuildId,
-			propertiesMap.get("testray.build.time"), testrayProjectId,
-			testrayRunId, userId);
+			companyId, element, serviceContext,
+			propertiesMap.get("testray.build.date"), testrayBuildId,
+			testrayProjectId, testrayRunId, userId);
 	}
 
 	private void _uploadToTestray(

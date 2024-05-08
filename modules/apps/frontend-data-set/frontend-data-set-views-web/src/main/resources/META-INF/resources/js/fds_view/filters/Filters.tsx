@@ -16,10 +16,11 @@ import {fetch, openModal, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {FDSViewType} from '../../FDSViews';
-import {getAllPicklists, getFields} from '../../api';
 import OrderableTable from '../../components/OrderableTable';
 import ValidationFeedback from '../../components/ValidationFeedback';
 import {API_URL, OBJECT_RELATIONSHIP} from '../../utils/constants';
+import getAllPicklists from '../../utils/getAllPicklists';
+import getFields from '../../utils/getFields';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {

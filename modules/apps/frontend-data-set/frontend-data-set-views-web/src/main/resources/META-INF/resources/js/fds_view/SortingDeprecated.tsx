@@ -15,10 +15,10 @@ import React, {useEffect, useState} from 'react';
 
 import {IFDSViewSectionProps} from '../FDSView';
 import {FDSViewType} from '../FDSViews';
-import {getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
 import RequiredMark from '../components/RequiredMark';
 import {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP} from '../utils/constants';
+import getFields from '../utils/getFields';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 import {IField} from '../utils/types';

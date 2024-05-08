@@ -299,3 +299,26 @@ test('LPD-25058 View More button is added to workflow Activities tab for many ro
 		page.getByRole('button', {exact: true, name: 'View More'})
 	).toBeHidden();
 });
+
+test('LPD-24645 Workflow tab is not present for draft', async ({
+	changeTrackingPage,
+	ctCollection,
+	journalEditArticlePage,
+	page,
+}) => {
+	const title = getRandomString();
+
+	await journalEditArticlePage.goto();
+
+	await journalEditArticlePage.fillTitle(title);
+
+	await page.getByRole('button', {name: 'Save as Draft'}).click();
+
+	await page.getByText('Version: 1.0 Draft').waitFor();
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	await changeTrackingPage.reviewChange(title);
+
+	await changeTrackingPage.viewDisplayTab('Workflow', {isHidden: true});
+});

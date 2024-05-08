@@ -449,7 +449,8 @@ public class TestrayStatusMetricResourceImpl
 		params.add(pagination.getPageSize());
 		params.add(pagination.getStartPosition());
 
-		List<Map<String, Object>> values = TestrayUtil.runSQL(sql, params);
+		List<Map<String, Object>> values = TestrayUtil.executeQuery(
+			sql, params);
 
 		return Page.of(
 			transform(

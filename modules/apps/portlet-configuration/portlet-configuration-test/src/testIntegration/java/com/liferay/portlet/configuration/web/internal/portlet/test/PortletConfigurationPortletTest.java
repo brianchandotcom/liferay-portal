@@ -121,16 +121,15 @@ public class PortletConfigurationPortletTest {
 	public void testEditScopeForLayoutPortlet() throws Exception {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
-		_portletPreferencesLocalService.addPortletPreferences(
-			_company.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-			_testPortlet.getPortletId(), _testPortlet,
-			_getDefaultPreferences(
-				HashMapBuilder.put(
-					"portletSetupTitle_en_US", RandomTestUtil.randomString()
-				).put(
-					"portletSetupUseCustomTitle", Boolean.TRUE.toString()
-				).build()));
+		LayoutTestUtil.addPortletToLayout(
+			layout, _testPortlet.getPortletId(),
+			HashMapBuilder.put(
+				"portletSetupTitle_en_US",
+				new String[] {RandomTestUtil.randomString()}
+			).put(
+				"portletSetupUseCustomTitle",
+				new String[] {Boolean.TRUE.toString()}
+			).build());
 
 		ReflectionTestUtil.invoke(
 			_portlet, "_updateScope", new Class<?>[] {ActionRequest.class},

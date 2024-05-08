@@ -204,12 +204,12 @@ public class BaseCommerceContextHttp implements CommerceContext {
 				return null;
 			}
 
-			long groupId = commerceChannel.getGroupId();
-
 			HttpServletRequest originalHttpServletRequest =
 				_portal.getOriginalServletRequest(_httpServletRequest);
 
 			HttpSession httpSession = originalHttpServletRequest.getSession();
+
+			long groupId = commerceChannel.getGroupId();
 
 			String uuid = (String)httpSession.getAttribute(
 				CommerceOrder.class.getName() + StringPool.POUND + groupId);

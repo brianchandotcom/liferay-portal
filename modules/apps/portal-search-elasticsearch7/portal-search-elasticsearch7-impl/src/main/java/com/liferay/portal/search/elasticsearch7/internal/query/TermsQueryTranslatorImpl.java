@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.TermsQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,7 +28,7 @@ public class TermsQueryTranslatorImpl implements TermsQueryTranslator {
 		String[] terms = termsQuery.getValues();
 
 		if (terms.length <= maxTermsCount) {
-			return new TermsQueryBuilder(field, terms);
+			return QueryBuilders.termsQuery(field, terms);
 		}
 
 		ArrayList<String> termsList = new ArrayList<>();
@@ -39,7 +39,7 @@ public class TermsQueryTranslatorImpl implements TermsQueryTranslator {
 
 			if (termsList.size() == maxTermsCount) {
 				boolQueryBuilder.should(
-					new TermsQueryBuilder(
+					QueryBuilders.termsQuery(
 						field, termsList.toArray(new String[0])));
 
 				termsList.clear();
@@ -48,7 +48,8 @@ public class TermsQueryTranslatorImpl implements TermsQueryTranslator {
 
 		if (!termsList.isEmpty()) {
 			boolQueryBuilder.should(
-				new TermsQueryBuilder(field, termsList.toArray(new String[0])));
+				QueryBuilders.termsQuery(
+					field, termsList.toArray(new String[0])));
 		}
 
 		return boolQueryBuilder;

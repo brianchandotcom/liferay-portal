@@ -14,7 +14,6 @@ import com.liferay.portal.remote.json.web.service.exception.NoSuchJSONWebService
 import java.lang.reflect.Method;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,18 +39,6 @@ public class JSONWebServiceActionsManagerUtil {
 
 		return jsonWebServiceActionsManager.getJSONWebServiceAction(
 			httpServletRequest);
-	}
-
-	public static JSONWebServiceAction getJSONWebServiceAction(
-			HttpServletRequest httpServletRequest, String path, String method,
-			Map<String, Object> parameterMap)
-		throws NoSuchJSONWebServiceException {
-
-		JSONWebServiceActionsManager jsonWebServiceActionsManager =
-			_jsonWebServiceActionsManagerSnapshot.get();
-
-		return jsonWebServiceActionsManager.getJSONWebServiceAction(
-			httpServletRequest, path, method, parameterMap);
 	}
 
 	public static JSONWebServiceActionMapping getJSONWebServiceActionMapping(
@@ -90,14 +77,6 @@ public class JSONWebServiceActionsManagerUtil {
 		jsonWebServiceActionsManager.registerJSONWebServiceAction(
 			contextName, contextPath, actionObject, actionClass, actionMethod,
 			path, method);
-	}
-
-	public static int unregisterJSONWebServiceActions(Object actionObject) {
-		JSONWebServiceActionsManager jsonWebServiceActionsManager =
-			_jsonWebServiceActionsManagerSnapshot.get();
-
-		return jsonWebServiceActionsManager.unregisterJSONWebServiceActions(
-			actionObject);
 	}
 
 	private static final Snapshot<JSONWebServiceActionsManager>

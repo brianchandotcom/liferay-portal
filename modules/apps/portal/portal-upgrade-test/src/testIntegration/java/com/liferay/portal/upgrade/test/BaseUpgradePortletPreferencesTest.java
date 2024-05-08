@@ -164,9 +164,8 @@ public class BaseUpgradePortletPreferencesTest
 
 	@Override
 	protected String upgradePreferences(
-			long companyId, long ownerId, int ownerType, long plid,
-			String portletId, String xml)
-		throws Exception {
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, String xml) {
 
 		javax.portlet.PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.fromXML(
@@ -176,8 +175,7 @@ public class BaseUpgradePortletPreferencesTest
 	}
 
 	private List<PortletPreferenceValue> _getPortletPreferenceValues(
-			long portletPreferencesId)
-		throws Exception {
+		long portletPreferencesId) {
 
 		DynamicQuery dynamicQuery =
 			_portletPreferenceValueLocalService.dynamicQuery();

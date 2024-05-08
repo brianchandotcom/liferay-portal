@@ -342,23 +342,12 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 	public void unlockLayoutsByUserId(long companyId, long userId)
 		throws PortalException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			_lockLocalService.getActionableDynamicQuery();
+		for (com.liferay.portal.lock.model.Lock lock :
+				_lockLocalService.getLocks(
+					companyId, userId, _CLASS_NAME_LAYOUT)) {
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				dynamicQuery.add(
-					RestrictionsFactoryUtil.eq("companyId", companyId));
-				dynamicQuery.add(
-					RestrictionsFactoryUtil.eq(
-						"className", Layout.class.getName()));
-				dynamicQuery.add(RestrictionsFactoryUtil.eq("userId", userId));
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(com.liferay.portal.lock.model.Lock lock) -> _lockManager.unlock(
-				lock.getClassName(), lock.getKey()));
-
-		actionableDynamicQuery.performActions();
+			_lockLocalService.unlock(_CLASS_NAME_LAYOUT, lock.getKey());
+		}
 	}
 
 	@Activate
@@ -502,6 +491,8 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 		return LockedLayoutType.CONTENT_PAGE;
 	}
+
+	private static final String _CLASS_NAME_LAYOUT = Layout.class.getName();
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

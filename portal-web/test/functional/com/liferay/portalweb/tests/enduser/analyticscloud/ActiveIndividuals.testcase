@@ -334,49 +334,4 @@ definition {
 		AssertElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8139 | Test Summary: Active individual graph shows activities from today when switched to the 24hr filter"
-	@ignore = "true"
-	@priority = 5
-	test GraphShowsActivitiesFromTodayWhenSwitchedTo24HrFilter {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-13994
-
-		ACUtils.createDMAndAddToPage();
-
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		JSONUser.addUser(
-			userEmailAddress = "ac@liferay.com",
-			userFirstName = "ac",
-			userLastName = "ac",
-			userScreenName = "ac");
-
-		ACDXPSettings.syncNewContactData();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
-
-		ACUtils.navigateToSitePage(
-			actionType = "View DM",
-			documentTitleList = "DM AC Title,DM AC Title,DM AC Title,DM AC Title",
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${propertyName});
-
-		ACNavigation.goToIndividuals();
-
-		ACTimeFilter.clickTimeFilterButton();
-
-		ACTimeFilter.setLast24Hours();
-
-		ACUtils.assertActiveIndividualChart(timeFilter = "Last 24 hours");
-	}
-
 }

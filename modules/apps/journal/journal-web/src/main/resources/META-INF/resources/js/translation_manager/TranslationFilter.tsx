@@ -19,6 +19,7 @@ const Trigger = React.forwardRef(
 	({children, ...otherProps}, ref: LegacyRef<HTMLButtonElement>) => (
 		<button
 			{...otherProps}
+			aria-label={Liferay.Language.get('select-a-filter')}
 			className="btn btn-block btn-secondary btn-sm form-control-select"
 			ref={ref}
 			tabIndex={0}

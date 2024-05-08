@@ -44,6 +44,7 @@ export interface IField {
 	label?: string;
 	name: string;
 	selected?: boolean;
+	sortable?: boolean;
 	type?: string;
 	visible?: boolean;
 }

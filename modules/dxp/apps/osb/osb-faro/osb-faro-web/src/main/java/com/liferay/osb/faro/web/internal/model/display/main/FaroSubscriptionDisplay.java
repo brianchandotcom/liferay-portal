@@ -283,6 +283,13 @@ public class FaroSubscriptionDisplay {
 		OSBOfferingEntry osbOfferingEntry) {
 
 		int value = DateUtil.compareTo(
+			osbOfferingEntry.getStartDate(), DateUtil.newDate());
+
+		if (value > 0) {
+			return false;
+		}
+
+		value = DateUtil.compareTo(
 			osbOfferingEntry.getStartDate(),
 			baseOSBOfferingEntry.getStartDate());
 

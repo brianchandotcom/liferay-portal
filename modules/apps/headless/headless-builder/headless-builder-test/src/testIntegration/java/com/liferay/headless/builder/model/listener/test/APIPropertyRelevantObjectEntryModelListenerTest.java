@@ -17,7 +17,8 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.test.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -32,8 +33,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -70,6 +74,18 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Arrays.asList(_objectField1, _objectField2),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		for (ObjectField objectField : _objectFields) {
+			ObjectFieldLocalServiceUtil.deleteObjectField(objectField);
+		}
+
+		for (ObjectRelationship objectRelationship : _objectRelationships) {
+			ObjectRelationshipLocalServiceUtil.deleteObjectRelationship(
+				objectRelationship);
+		}
 	}
 
 	@Test
@@ -136,16 +152,22 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
 				userSystemObjectDefinitionManager.getName());
 
-		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
-			_objectDefinition, userSystemObjectDefinition,
-			TestPropsValues.getUserId(),
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition, userSystemObjectDefinition,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		_userSystemObjectField = ObjectFieldTestUtil.addCustomObjectField(
-			TestPropsValues.getUserId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, userSystemObjectDefinition,
-			"x" + RandomTestUtil.randomString());
+		_objectRelationships.add(objectRelationship);
+
+		ObjectField userSystemObjectField =
+			ObjectFieldTestUtil.addCustomObjectField(
+				TestPropsValues.getUserId(),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, userSystemObjectDefinition,
+				"x" + RandomTestUtil.randomString());
+
+		_objectFields.add(userSystemObjectField);
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -154,9 +176,9 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 				"name", RandomTestUtil.randomString()
 			).put(
 				"objectFieldERC",
-				_userSystemObjectField.getExternalReferenceCode()
+				userSystemObjectField.getExternalReferenceCode()
 			).put(
-				"objectRelationshipNames", _objectRelationship.getName()
+				"objectRelationshipNames", objectRelationship.getName()
 			).put(
 				"r_apiSchemaToAPIProperties_c_apiSchemaId",
 				apiSchemaJSONObject.get("id")
@@ -691,23 +713,18 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	@Inject
-	private ObjectEntryLocalService _objectEntryLocalService;
-
 	@DeleteAfterTestRun
 	private ObjectField _objectField1;
 
 	@DeleteAfterTestRun
 	private ObjectField _objectField2;
 
-	@DeleteAfterTestRun
-	private ObjectRelationship _objectRelationship;
+	private final List<ObjectField> _objectFields = new ArrayList<>();
+	private final List<ObjectRelationship> _objectRelationships =
+		new ArrayList<>();
 
 	@Inject
 	private SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
-
-	@DeleteAfterTestRun
-	private ObjectField _userSystemObjectField;
 
 }

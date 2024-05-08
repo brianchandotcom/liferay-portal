@@ -298,15 +298,15 @@ public class DBPartitionMigrationValidatorExportTest extends DatabaseMockUtil {
 			List<Release> releases, List<String> tableNames)
 		throws Exception {
 
-		mockCompanies(companies);
-		mockDatabaseConnection(
+		mockGetColumns(tableNames);
+		mockGetCompanies(companies);
+		mockGetCompanyIds(companyIds);
+		mockGetCompanyInfos(companyInfoIds);
+		mockGetConnection(
 			_PASSWORD, StringUtil.replace(_URL, "lportal", _SCHEMA_NAME),
 			_USER);
-		mockDefaultPartition(defaultPartition);
-		mockGetCompanyIds(companyIds);
-		mockGetCompanyInfoIds(companyInfoIds);
-		mockReleases(releases);
-		mockTables(tableNames);
+		mockGetReleases(releases);
+		mockGetTables(defaultPartition);
 	}
 
 	private static final String _PASSWORD = RandomTestUtil.randomString();

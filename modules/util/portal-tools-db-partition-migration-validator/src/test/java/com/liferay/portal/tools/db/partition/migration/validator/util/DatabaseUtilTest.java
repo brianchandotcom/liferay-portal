@@ -30,56 +30,15 @@ public class DatabaseUtilTest extends DatabaseMockUtil {
 
 	@Before
 	public void setUp() throws SQLException {
-		mockCompanies(Collections.emptyList());
-		mockDatabaseConnection(
+		mockGetColumns(Collections.emptyList());
+		mockGetCompanies(Collections.emptyList());
+		mockGetCompanyIds(Collections.emptyList());
+		mockGetCompanyInfos(Collections.emptyList());
+		mockGetConnection(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
-		mockDefaultPartition(true);
-		mockGetCompanyIds(Collections.emptyList());
-		mockGetCompanyInfoIds(Collections.emptyList());
-		mockReleases(Collections.emptyList());
-		mockTables(Collections.emptyList());
-	}
-
-	@Test
-	public void testCompanyId() throws Exception {
-		List<Long> companyInfoIds = new ArrayList<>();
-
-		companyInfoIds.add(RandomTestUtil.randomLong());
-
-		_testCompanyId(
-			companyInfoIds,
-			liferayDatabase -> Assert.assertEquals(
-				companyInfoIds.get(0),
-				(Long)liferayDatabase.getExportedCompanyId()));
-
-		companyInfoIds.add(RandomTestUtil.randomLong());
-
-		try {
-			_testCompanyId(companyInfoIds, liferayDatabase -> Assert.fail());
-		}
-		catch (Exception exception) {
-			Assert.assertTrue(
-				exception instanceof UnsupportedOperationException);
-
-			Assert.assertEquals(
-				"Database schema has to have a single company or database " +
-					"partitioning must be enabled",
-				exception.getMessage());
-		}
-	}
-
-	@Test
-	public void testDefaultPartition() throws Exception {
-		_testDefaultPartition(
-			true,
-			liferayDatabase -> Assert.assertTrue(
-				liferayDatabase.isExportedCompanyDefault()));
-
-		_testDefaultPartition(
-			false,
-			liferayDatabase -> Assert.assertFalse(
-				liferayDatabase.isExportedCompanyDefault()));
+		mockGetReleases(Collections.emptyList());
+		mockGetTables(true);
 	}
 
 	@Test
@@ -91,7 +50,7 @@ public class DatabaseUtilTest extends DatabaseMockUtil {
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
-		mockCompanies(Arrays.asList(company1, company2));
+		mockGetCompanies(Arrays.asList(company1, company2));
 
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
 			connection);
@@ -104,10 +63,57 @@ public class DatabaseUtilTest extends DatabaseMockUtil {
 	}
 
 	@Test
-	public void testGetPartitionedTableNames() throws Exception {
-		mockGetCompanyIds(Collections.singletonList(25000L));
-		mockTables(
+	public void testGetExportedCompanyId() throws Exception {
+		List<Long> companyIds = new ArrayList<>();
+
+		companyIds.add(RandomTestUtil.randomLong());
+
+		_testGetExportedCompanyId(
+			companyIds,
+			liferayDatabase -> Assert.assertEquals(
+				companyIds.get(0),
+				(Long)liferayDatabase.getExportedCompanyId()));
+
+		companyIds.add(RandomTestUtil.randomLong());
+
+		try {
+			_testGetExportedCompanyId(
+				companyIds, liferayDatabase -> Assert.fail());
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(
+				exception instanceof UnsupportedOperationException);
+			Assert.assertEquals(
+				"Database schema has to have a single company or database " +
+					"partitioning must be enabled",
+				exception.getMessage());
+		}
+	}
+
+	@Test
+	public void testGetReleases() throws Exception {
+		Release module1Release = new Release(
+			Version.parseVersion("14.2.4"), "module1", 0, true);
+		Release module2Release = new Release(
+			Version.parseVersion("2.0.1"), "module2", 1, false);
+
+		mockGetReleases(Arrays.asList(module1Release, module2Release));
+
+		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
+			connection);
+
+		List<Release> releases = liferayDatabase.getReleases();
+
+		Assert.assertEquals(releases.toString(), 2, releases.size());
+		Assert.assertEquals(module1Release, releases.get(0));
+		Assert.assertEquals(module2Release, releases.get(1));
+	}
+
+	@Test
+	public void testGetTableNames() throws Exception {
+		mockGetColumns(
 			Arrays.asList("Table1", "Company", "Table2", "Object_x_25000"));
+		mockGetCompanyIds(Collections.singletonList(25000L));
 
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
 			connection);
@@ -122,38 +128,31 @@ public class DatabaseUtilTest extends DatabaseMockUtil {
 	}
 
 	@Test
-	public void testGetReleases() throws Exception {
-		Release module1Release = new Release(
-			Version.parseVersion("14.2.4"), "module1", 0, true);
-		Release module2Release = new Release(
-			Version.parseVersion("2.0.1"), "module2", 1, false);
-
-		mockReleases(Arrays.asList(module1Release, module2Release));
-
-		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
-			connection);
-
-		List<Release> releases = liferayDatabase.getReleases();
-
-		Assert.assertEquals(releases.toString(), 2, releases.size());
-		Assert.assertEquals(module1Release, releases.get(0));
-		Assert.assertEquals(module2Release, releases.get(1));
+	public void testIsExportedCompanyDefault() throws Exception {
+		_testIsExportedCompanyDefault(
+			liferayDatabase -> Assert.assertFalse(
+				liferayDatabase.isExportedCompanyDefault()),
+			false);
+		_testIsExportedCompanyDefault(
+			liferayDatabase -> Assert.assertTrue(
+				liferayDatabase.isExportedCompanyDefault()),
+			true);
 	}
 
-	private void _testCompanyId(
-			List<Long> companyInfoIds, Consumer<LiferayDatabase> consumer)
+	private void _testGetExportedCompanyId(
+			List<Long> companyIds, Consumer<LiferayDatabase> consumer)
 		throws Exception {
 
-		mockGetCompanyInfoIds(companyInfoIds);
+		mockGetCompanyInfos(companyIds);
 
 		consumer.accept(DatabaseUtil.exportLiferayDatabase(connection));
 	}
 
-	private void _testDefaultPartition(
-			boolean defaultPartition, Consumer<LiferayDatabase> consumer)
+	private void _testIsExportedCompanyDefault(
+			Consumer<LiferayDatabase> consumer, boolean defaultPartition)
 		throws Exception {
 
-		mockDefaultPartition(defaultPartition);
+		mockGetTables(defaultPartition);
 
 		consumer.accept(DatabaseUtil.exportLiferayDatabase(connection));
 	}

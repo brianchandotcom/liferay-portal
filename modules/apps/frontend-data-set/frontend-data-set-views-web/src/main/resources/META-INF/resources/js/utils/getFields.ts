@@ -14,7 +14,7 @@ import {fetch} from 'frontend-js-web';
 import {FDSViewType} from '../FDSViews';
 import {OBJECT_RELATIONSHIP} from './constants';
 import openDefaultFailureToast from './openDefaultFailureToast';
-import {EFieldFormat, EFieldType, IField, IPickList} from './types';
+import {EFieldFormat, EFieldType, IField} from './types';
 
 const INVALID_FIELDS = ['actions', 'scopeKey', 'x-class-name', 'x-schema-name'];
 

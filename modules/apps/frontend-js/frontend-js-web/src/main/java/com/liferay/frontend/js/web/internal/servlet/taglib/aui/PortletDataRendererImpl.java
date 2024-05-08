@@ -5,6 +5,7 @@
 
 package com.liferay.frontend.js.web.internal.servlet.taglib.aui;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
@@ -280,7 +281,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 		Map<ESImport, ESImport> esImportsMap,
 		Collection<PortletData> portletDatas) {
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		for (PortletData portletData : portletDatas) {
 			for (JSFragment jsFragment : portletData.getJSFragments()) {
@@ -364,7 +365,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 	}
 
 	private String _computeRawCode(Collection<PortletData> portletDatas) {
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		for (PortletData portletData : portletDatas) {
 			for (JSFragment jsFragment : portletData.getJSFragments()) {

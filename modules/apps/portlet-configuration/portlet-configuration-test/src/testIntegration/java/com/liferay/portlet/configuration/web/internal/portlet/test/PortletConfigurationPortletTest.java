@@ -328,22 +328,7 @@ public class PortletConfigurationPortletTest {
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(_company);
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		themeDisplay.setLayout(layout);
-		themeDisplay.setLayoutSet(layout.getLayoutSet());
-
-		themeDisplay.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-		themeDisplay.setSiteGroupId(_group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		return themeDisplay;
+		return _getThemeDisplay(LayoutTestUtil.addTypeContentLayout(_group));
 	}
 
 	private ThemeDisplay _getThemeDisplay(Layout layout) throws Exception {

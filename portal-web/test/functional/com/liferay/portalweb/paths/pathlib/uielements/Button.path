@@ -381,6 +381,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOWNLOAD_BUTTON_ON_PORTLET</td>
+	<td>//button[@type='button']//span[text()='Download']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOWNLOAD_SIDEBAR</td>
 	<td>//div[contains(@class,'sidebar-section')]//a[contains(@class,'btn') and contains(.,'Download')]</td>
 	<td></td>

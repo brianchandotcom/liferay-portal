@@ -1,11 +1,15 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.kernel.jsonwebservice;
+package com.liferay.portal.remote.json.web.service.web.internal.helper;
 
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.remote.json.web.service.JSONWebServiceAction;
+import com.liferay.portal.remote.json.web.service.JSONWebServiceActionMapping;
+import com.liferay.portal.remote.json.web.service.JSONWebServiceActionsManager;
+import com.liferay.portal.remote.json.web.service.exception.NoSuchJSONWebServiceException;
 
 import java.lang.reflect.Method;
 

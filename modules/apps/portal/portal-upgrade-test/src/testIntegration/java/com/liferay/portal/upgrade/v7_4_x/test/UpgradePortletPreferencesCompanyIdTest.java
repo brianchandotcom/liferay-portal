@@ -117,8 +117,7 @@ public class UpgradePortletPreferencesCompanyIdTest {
 	}
 
 	private List<PortletPreferenceValue> _getPortletPreferenceValues(
-			long portletPreferencesId)
-		throws Exception {
+		long portletPreferencesId) {
 
 		DynamicQuery dynamicQuery =
 			_portletPreferenceValueLocalService.dynamicQuery();

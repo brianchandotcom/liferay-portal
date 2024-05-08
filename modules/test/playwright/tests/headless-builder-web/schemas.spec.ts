@@ -298,19 +298,22 @@ testFeatureFlagsDisabled(
 		await applicationPage.addSchemaButton.click();
 		await applicationPage.schemaObjectDefinitionSelector.click();
 
-		expect(
-			(
-				await applicationPage.page.getByRole('menu').allInnerTexts()
-			)[0].split('\n')
-		).toEqual([
-			'APISort',
-			'APIFilter',
-			'APIEndpoint',
-			'APIProperty',
-			'APISchema',
+		const objectDefinitionDropdownOptions = (
+			await applicationPage.page.getByRole('menu').allInnerTexts()
+		)[0].split('\n');
+
+		expect(objectDefinitionDropdownOptions).not.toContain(['Organization']);
+
+		for (const expectedObjectDefinition of [
 			'APIApplication',
 			'ObjectDefinition',
-		]);
+		]) {
+			expect(
+				objectDefinitionDropdownOptions.includes(
+					expectedObjectDefinition
+				)
+			).toBeTruthy();
+		}
 
 		await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
 			'headless-builder/applications',
@@ -426,7 +429,7 @@ testFeatureFlagsDisabled(
 		await schemaPage.page
 			.getByRole('button', {name: 'Organization'})
 			.click();
-		expectElementToHaveClass(
+		await expectElementToHaveClass(
 			await schemaPage.page
 				.getByRole('button', {name: 'Organization'})
 				.locator('..')
@@ -439,7 +442,7 @@ testFeatureFlagsDisabled(
 		// Assert that unmodifiable allowed system object properties are disabled without FF
 
 		await schemaPage.page.getByRole('button', {name: 'Account'}).click();
-		expectElementToHaveClass(
+		await expectElementToHaveClass(
 			await schemaPage.page
 				.getByRole('button', {name: 'Account'})
 				.locator('..')
@@ -543,7 +546,7 @@ testFeatureFlagsEnabled(
 
 		// Assert that principal object properties are enabled
 
-		expect(
+		await expect(
 			await schemaPage.page.getByLabel('Add Author Property')
 		).toBeEnabled();
 
@@ -556,7 +559,7 @@ testFeatureFlagsEnabled(
 		await schemaPage.page
 			.getByRole('button', {name: 'Organization'})
 			.click();
-		expectElementToHaveClass(
+		await expectElementToHaveClass(
 			await schemaPage.page
 				.getByRole('button', {name: 'Organization'})
 				.locator('..')

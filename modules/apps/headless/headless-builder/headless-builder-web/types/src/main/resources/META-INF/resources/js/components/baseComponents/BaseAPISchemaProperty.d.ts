@@ -11,13 +11,14 @@ interface BaseAPISchemaPropertyProps {
 	objectRelationshipName?: string;
 	setSchemaUIData: Dispatch<SetStateAction<APISchemaUIData>>;
 }
-interface ParentObjectDefinitionProps {
-	objectDefinitionERC: string;
-	objectDefinitionIsModifiable?: boolean;
-	objectDefinitionName: string;
+interface ObjectDefinitionProps {
+	externalReferenceCode: string;
+	modifiable?: boolean;
+	name: string;
 }
 export default function BaseAPISchemaProperty({
 	added,
+	objectDefinition,
 	objectField,
 	objectRelationshipName,
 	setSchemaUIData,

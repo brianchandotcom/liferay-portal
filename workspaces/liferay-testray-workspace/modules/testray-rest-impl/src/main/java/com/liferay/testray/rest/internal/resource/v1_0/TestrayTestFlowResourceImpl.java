@@ -162,7 +162,7 @@ public class TestrayTestFlowResourceImpl
 
 		TestrayTestFlow testrayTestFlow = new TestrayTestFlow();
 
-		testrayTestFlow.setTestraySubtasksAmount(testraySubtasksAmount);
+		testrayTestFlow.setSubtaskAmount(testraySubtasksAmount);
 
 		return testrayTestFlow;
 	}

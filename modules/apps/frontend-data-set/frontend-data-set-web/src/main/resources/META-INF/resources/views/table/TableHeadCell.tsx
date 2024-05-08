@@ -9,6 +9,7 @@ import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import React, {useContext, useEffect, useState} from 'react';
 
+import {TSorting} from '../..';
 import ViewsContext from '../ViewsContext';
 
 // @ts-ignore
@@ -48,25 +49,44 @@ const TableHeadCell = ({
 	function handleSortingCellClick(event: any) {
 		event.preventDefault();
 
-		const updatedSortedElements = sortingMatch
-			? sorts.map((element) =>
-					element.key === sortingKey
-						? {
-								...element,
-								direction:
-									element.direction === 'asc'
-										? 'desc'
-										: 'asc',
-						  }
-						: element
-			  )
-			: [
-					{
-						direction: 'asc',
-						fieldName,
-						key: sortingKey,
-					},
-			  ];
+		let updatedSortedElements: TSorting[] = [];
+
+		if (Liferay.FeatureFlags['LPD-19465']) {
+			updatedSortedElements = sorts.map((element) =>
+				element.key === sortingKey
+					? {
+							...element,
+							active: true,
+							direction:
+								element.direction === 'asc' ? 'desc' : 'asc',
+					  }
+					: {
+							...element,
+							active: false,
+					  }
+			);
+		}
+		else {
+			updatedSortedElements = sortingMatch
+				? sorts.map((element) =>
+						element.key === sortingKey
+							? {
+									...element,
+									direction:
+										element.direction === 'asc'
+											? 'desc'
+											: 'asc',
+							  }
+							: element
+				  )
+				: [
+						{
+							direction: 'asc',
+							fieldName,
+							key: sortingKey,
+						},
+				  ];
+		}
 
 		viewsDispatch({
 			type: VIEWS_ACTION_TYPES.UPDATE_SORTING,
@@ -86,7 +106,12 @@ const TableHeadCell = ({
 				<span className="inline-item inline-item-after">
 					<ClayIcon
 						symbol={
-							sortingMatch?.direction === 'asc'
+							Liferay.FeatureFlags['LPD-19465']
+								? sortingMatch?.active &&
+								  sortingMatch?.direction === 'asc'
+									? 'order-arrow-up'
+									: 'order-arrow-down'
+								: sortingMatch?.direction === 'asc'
 								? 'order-arrow-up'
 								: 'order-arrow-down'
 						}
@@ -103,23 +128,29 @@ const TableHeadCell = ({
 		>
 			{!hideColumnLabel && label}
 
-			<span className="inline-item inline-item-after sorting-icons-wrapper">
-				<ClayIcon
-					className={classNames(
-						'sorting-icon',
-						sortingMatch?.direction === 'asc' && 'active'
-					)}
-					symbol="order-arrow-up"
-				/>
+			{(Liferay.FeatureFlags['LPD-19465'] ? sortingMatch : true) && (
+				<span className="inline-item inline-item-after sorting-icons-wrapper">
+					<ClayIcon
+						className={classNames('sorting-icon', {
+							active: Liferay.FeatureFlags['LPD-19465']
+								? sortingMatch?.direction === 'asc' &&
+								  sortingMatch?.active
+								: sortingMatch?.direction === 'asc',
+						})}
+						symbol="order-arrow-up"
+					/>
 
-				<ClayIcon
-					className={classNames(
-						'sorting-icon',
-						sortingMatch?.direction === 'desc' && 'active'
-					)}
-					symbol="order-arrow-down"
-				/>
-			</span>
+					<ClayIcon
+						className={classNames('sorting-icon', {
+							active: Liferay.FeatureFlags['LPD-19465']
+								? sortingMatch?.direction === 'desc' &&
+								  sortingMatch?.active
+								: sortingMatch?.direction === 'desc',
+						})}
+						symbol="order-arrow-down"
+					/>
+				</span>
+			)}
 		</ClayButton>
 	);
 

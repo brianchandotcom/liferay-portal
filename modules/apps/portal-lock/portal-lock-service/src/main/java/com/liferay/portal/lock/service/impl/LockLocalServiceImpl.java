@@ -107,6 +107,11 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<Lock> getLocks(long companyId, long userId, String className) {
+		return lockPersistence.findByC_U_C(companyId, userId, className);
+	}
+
+	@Override
 	public boolean hasLock(long userId, String className, long key) {
 		return hasLock(userId, className, String.valueOf(key));
 	}

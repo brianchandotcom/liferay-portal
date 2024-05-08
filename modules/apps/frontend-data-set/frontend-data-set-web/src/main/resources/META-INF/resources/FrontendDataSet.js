@@ -212,6 +212,10 @@ const FrontendDataSet = ({
 			[]
 		);
 
+		const activeSorts = Liferay.FeatureFlags['LPD-19465']
+			? sorts.filter((sort) => sort.active)
+			: sorts;
+
 		return loadData(
 			apiURL,
 			currentURL,
@@ -219,7 +223,7 @@ const FrontendDataSet = ({
 			searchParam,
 			paginationDelta,
 			pageNumber,
-			sorts
+			activeSorts
 		);
 	}, [
 		apiURL,

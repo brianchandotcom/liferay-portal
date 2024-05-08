@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.remote.json.web.service.JSONWebServiceAction;
 import com.liferay.portal.remote.json.web.service.web.internal.action.JSONWebServiceInvokerAction;
-import com.liferay.portal.remote.json.web.service.web.internal.helper.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jodd.typeconverter.TypeConversionException;
@@ -110,9 +109,7 @@ public class JSONWebServiceSecureTest extends BaseJSONWebServiceTestCase {
 
 		JSONWebServiceAction jsonWebServiceAction =
 			new JSONWebServiceInvokerAction(
-				JSONWebServiceActionsManagerUtil.
-					getJSONWebServiceActionsManager(),
-				mockHttpServletRequest);
+				jsonWebServiceActionsManager, mockHttpServletRequest);
 
 		jsonWebServiceAction.invoke();
 	}
@@ -129,9 +126,7 @@ public class JSONWebServiceSecureTest extends BaseJSONWebServiceTestCase {
 
 		JSONWebServiceAction jsonWebServiceAction =
 			new JSONWebServiceInvokerAction(
-				JSONWebServiceActionsManagerUtil.
-					getJSONWebServiceActionsManager(),
-				mockHttpServletRequest);
+				jsonWebServiceActionsManager, mockHttpServletRequest);
 
 		jsonWebServiceAction.invoke();
 	}
@@ -146,9 +141,7 @@ public class JSONWebServiceSecureTest extends BaseJSONWebServiceTestCase {
 
 		JSONWebServiceAction jsonWebServiceAction =
 			new JSONWebServiceInvokerAction(
-				JSONWebServiceActionsManagerUtil.
-					getJSONWebServiceActionsManager(),
-				mockHttpServletRequest);
+				jsonWebServiceActionsManager, mockHttpServletRequest);
 
 		jsonWebServiceAction.invoke();
 	}
@@ -163,9 +156,7 @@ public class JSONWebServiceSecureTest extends BaseJSONWebServiceTestCase {
 
 		JSONWebServiceAction jsonWebServiceAction =
 			new JSONWebServiceInvokerAction(
-				JSONWebServiceActionsManagerUtil.
-					getJSONWebServiceActionsManager(),
-				mockHttpServletRequest);
+				jsonWebServiceActionsManager, mockHttpServletRequest);
 
 		try {
 			jsonWebServiceAction.invoke();
@@ -203,9 +194,7 @@ public class JSONWebServiceSecureTest extends BaseJSONWebServiceTestCase {
 
 		JSONWebServiceAction jsonWebServiceAction =
 			new JSONWebServiceInvokerAction(
-				JSONWebServiceActionsManagerUtil.
-					getJSONWebServiceActionsManager(),
-				mockHttpServletRequest);
+				jsonWebServiceActionsManager, mockHttpServletRequest);
 
 		jsonWebServiceAction.invoke();
 	}

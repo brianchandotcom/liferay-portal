@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.remote.json.web.service.JSONWebServiceAction;
 import com.liferay.portal.remote.json.web.service.web.internal.action.JSONWebServiceInvokerAction;
-import com.liferay.portal.remote.json.web.service.web.internal.helper.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.InvocationHandler;
@@ -973,8 +972,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		mockHttpServletRequest.setContent(content.getBytes());
 
 		return new JSONWebServiceInvokerAction(
-			JSONWebServiceActionsManagerUtil.getJSONWebServiceActionsManager(),
-			mockHttpServletRequest);
+			jsonWebServiceActionsManager, mockHttpServletRequest);
 	}
 
 	private final MockedStatic<ServiceContextFactory>

@@ -18,7 +18,6 @@ import com.liferay.portal.remote.json.web.service.JSONWebServiceAction;
 import com.liferay.portal.remote.json.web.service.JSONWebServiceActionsManager;
 import com.liferay.portal.remote.json.web.service.exception.NoSuchJSONWebServiceException;
 import com.liferay.portal.remote.json.web.service.web.internal.action.JSONWebServiceInvokerAction;
-import com.liferay.portal.remote.json.web.service.web.internal.helper.JSONWebServiceActionsManagerUtil;
 
 import java.lang.reflect.Method;
 
@@ -59,6 +58,8 @@ public abstract class BaseJSONWebServiceTestCase {
 			_bundleContext.registerService(
 				JSONWebServiceActionsManager.class,
 				jsonWebServiceActionsManagerImpl, null);
+
+		jsonWebServiceActionsManager = jsonWebServiceActionsManagerImpl;
 	}
 
 	protected static void registerAction(Object action) {
@@ -96,7 +97,7 @@ public abstract class BaseJSONWebServiceTestCase {
 			String method = JSONWebServiceMappingResolverUtil.resolveHttpMethod(
 				actionMethod);
 
-			JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
+			jsonWebServiceActionsManager.registerJSONWebServiceAction(
 				servletContextName, StringPool.BLANK, action, actionClass,
 				actionMethod, path, method);
 		}
@@ -130,7 +131,7 @@ public abstract class BaseJSONWebServiceTestCase {
 			HttpServletRequest httpServletRequest)
 		throws NoSuchJSONWebServiceException {
 
-		return JSONWebServiceActionsManagerUtil.getJSONWebServiceAction(
+		return jsonWebServiceActionsManager.getJSONWebServiceAction(
 			httpServletRequest);
 	}
 
@@ -214,6 +215,8 @@ public abstract class BaseJSONWebServiceTestCase {
 
 		return jsonDeserializer.deserialize(json);
 	}
+
+	protected static JSONWebServiceActionsManager jsonWebServiceActionsManager;
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();

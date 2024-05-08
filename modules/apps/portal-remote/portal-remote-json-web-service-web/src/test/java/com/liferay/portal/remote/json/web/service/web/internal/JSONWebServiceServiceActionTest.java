@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.remote.json.web.service.JSONWebServiceAction;
-import com.liferay.portal.remote.json.web.service.web.internal.helper.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.File;
@@ -55,7 +54,7 @@ public class JSONWebServiceServiceActionTest
 		initPortalServices();
 
 		_jsonWebServiceServiceAction = new JSONWebServiceServiceAction(
-			JSONWebServiceActionsManagerUtil.getJSONWebServiceActionsManager());
+			jsonWebServiceActionsManager);
 	}
 
 	@After

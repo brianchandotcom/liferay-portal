@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.remote.json.web.service.JSONWebServiceAction;
 import com.liferay.portal.remote.json.web.service.web.internal.action.JSONWebServiceInvokerAction;
-import com.liferay.portal.remote.json.web.service.web.internal.helper.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
@@ -260,8 +259,7 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 		mockHttpServletRequest.setContent(content.getBytes());
 
 		return new JSONWebServiceInvokerAction(
-			JSONWebServiceActionsManagerUtil.getJSONWebServiceActionsManager(),
-			mockHttpServletRequest);
+			jsonWebServiceActionsManager, mockHttpServletRequest);
 	}
 
 }

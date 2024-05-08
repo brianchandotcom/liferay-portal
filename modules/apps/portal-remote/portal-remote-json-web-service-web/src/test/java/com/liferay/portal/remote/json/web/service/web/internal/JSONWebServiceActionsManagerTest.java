@@ -6,7 +6,6 @@
 package com.liferay.portal.remote.json.web.service.web.internal;
 
 import com.liferay.portal.remote.json.web.service.JSONWebServiceAction;
-import com.liferay.portal.remote.json.web.service.web.internal.helper.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -92,7 +91,7 @@ public class JSONWebServiceActionsManagerTest
 		mockHttpServletRequest.setAttribute("a", "qwe");
 
 		JSONWebServiceAction jsonWebServiceAction =
-			JSONWebServiceActionsManagerUtil.getJSONWebServiceAction(
+			jsonWebServiceActionsManager.getJSONWebServiceAction(
 				mockHttpServletRequest);
 
 		Assert.assertEquals(expectedString, jsonWebServiceAction.invoke());

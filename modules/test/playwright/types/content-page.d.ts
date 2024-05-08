@@ -51,10 +51,12 @@ type PageElement = {
 		};
 		fragmentConfig?: Record<string, any>;
 		fragmentFields?: FragmentField[];
+		gutters?: boolean;
 		layout?: {};
 		listStyle?: string;
 		numberOfColumns?: number;
 		numberOfItems?: number;
+		size?: number;
 		widgetInstance?: {
 			widgetName: string;
 		};

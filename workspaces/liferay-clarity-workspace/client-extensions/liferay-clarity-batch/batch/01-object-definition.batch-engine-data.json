@@ -20,6 +20,106 @@
 			},
 			"modifiable": true,
 			"name": "D4B8DistributorApplication",
+			"objectActions": [
+				{
+					"active": true,
+					"conditionExpression": "applicationState == \"approved\" AND status == 0",
+					"description": "On after update, send notifications to applicants when state is ‘Approved’.",
+					"label": {
+						"en_US": "Application Approved"
+					},
+					"name": "applicationApproved",
+					"objectActionExecutorKey": "notification",
+					"objectActionTriggerKey": "onAfterUpdate",
+					"parameters": {
+						"notificationTemplateExternalReferenceCode": "D4B8_APPLICATION_APPROVED_APPLICANT_EMAIL",
+						"type": "email"
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
+					}
+				},
+				{
+					"active": true,
+					"conditionExpression": "applicationState == \"denied\" AND status == 0",
+					"description": "On after update, send notifications to applicants when state is ‘Denied’.",
+					"label": {
+						"en_US": "Application Denied"
+					},
+					"name": "applicationDenied",
+					"objectActionExecutorKey": "notification",
+					"objectActionTriggerKey": "onAfterUpdate",
+					"parameters": {
+						"notificationTemplateExternalReferenceCode": "D4B8_APPLICATION_DENIED_APPLICANT_EMAIL",
+						"type": "email"
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
+					}
+				},
+				{
+					"active": true,
+					"description": "On after add, send notifications to applicants.",
+					"label": {
+						"en_US": "Application Received"
+					},
+					"name": "applicationReceived",
+					"objectActionExecutorKey": "notification",
+					"objectActionTriggerKey": "onAfterAdd",
+					"parameters": {
+						"notificationTemplateExternalReferenceCode": "D4B8_APPLICATION_RECEIVED_APPLICANT_EMAIL",
+						"type": "email"
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
+					}
+				},
+				{
+					"active": true,
+					"description": "On after add, send notifications to administrative users.",
+					"label": {
+						"en_US": "Application Submitted"
+					},
+					"name": "applicationSubmitted",
+					"objectActionExecutorKey": "notification",
+					"objectActionTriggerKey": "onAfterAdd",
+					"parameters": {
+						"notificationTemplateExternalReferenceCode": "D4B8_APPLICATION_SUBMITTED_ADMIN_USER",
+						"type": "userNotification"
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
+					}
+				},
+				{
+					"active": true,
+					"description": "Standalone, create a business account for an approved application.",
+					"errorMessage": {
+						"en_US": "Failed to create the business account."
+					},
+					"label": {
+						"en_US": "Set Up Account"
+					},
+					"name": "setUpAccount",
+					"objectActionExecutorKey": "function#liferay-clarity-etc-spring-boot-object-action-account",
+					"objectActionTriggerKey": "standalone",
+					"parameters": {
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
+					}
+				}
+			],
 			"objectFolderExternalReferenceCode": "default",
 			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {

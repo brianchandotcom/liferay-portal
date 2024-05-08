@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -16,6 +17,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -27,10 +29,12 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -53,12 +57,19 @@ import javax.portlet.MutableActionParameters;
 import javax.portlet.Portlet;
 import javax.portlet.PortletPreferences;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -75,14 +86,35 @@ public class PortletConfigurationPortletTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() throws PortalException {
+		Bundle bundle = FrameworkUtil.getBundle(
+			PortletConfigurationPortletTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		String testPortletId = "TEST_PORTLET_" + RandomTestUtil.randomString();
+
+		_serviceRegistration = bundleContext.registerService(
+			Portlet.class, new MVCPortlet(),
+			HashMapDictionaryBuilder.put(
+				"javax.portlet.name", testPortletId
+			).build());
+
+		_testPortlet = _portletLocalService.getPortletById(
+			TestPropsValues.getCompanyId(), testPortletId);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_serviceRegistration.unregister();
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
-
-		_testPortlet = _portletLocalService.getPortletById(
-			_company.getCompanyId(), PortletKeys.BLOGS);
 	}
 
 	@Test
@@ -348,6 +380,12 @@ public class PortletConfigurationPortletTest {
 		return themeDisplay;
 	}
 
+	@Inject
+	private static PortletLocalService _portletLocalService;
+
+	private static ServiceRegistration<?> _serviceRegistration;
+	private static com.liferay.portal.kernel.model.Portlet _testPortlet;
+
 	private Company _company;
 
 	@Inject
@@ -362,15 +400,10 @@ public class PortletConfigurationPortletTest {
 	private Portlet _portlet;
 
 	@Inject
-	private PortletLocalService _portletLocalService;
-
-	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	private com.liferay.portal.kernel.model.Portlet _testPortlet;
 
 	private static class MockActionRequest
 		extends MockLiferayPortletActionRequest {

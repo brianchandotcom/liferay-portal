@@ -273,35 +273,42 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8625 | Test Summary: Search the Segment Profile Distribution"
-	@ignore = "true"
 	@priority = 3
 	test CanSearchTheSegmentProfileDistribution {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-14011
-
 		var userList = "ac,dxp";
-		var emailList = "ac@liferay.com,dxp@liferay.com,userea@liferay.com";
-		var nameList = "ac ac,dxp dxp,userfn userln";
+		var emailList = "ac@liferay.com,dxp@liferay.com";
+		var nameList = "ac ac,dxp dxp";
 
 		task ("Create new users") {
 			for (var userCreate : list ${userList}) {
 				JSONUser.addUser(
-					jobTitle = "QA",
 					userEmailAddress = "${userCreate}@liferay.com",
 					userFirstName = ${userCreate},
 					userLastName = ${userCreate},
 					userScreenName = ${userCreate});
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "${userCreate}@liferay.com");
 			}
 		}
 
-		ACDXPSettings.syncNewContactData();
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
 
 		task ("View AC Page as new user") {
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4,5,6",
 				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -335,7 +342,7 @@ definition {
 		task ("Filter Attribute") {
 			ACNavigation.switchTab(tabName = "Distribution");
 
-			ACSegments.selectDistributionByAttribute(attribute = "jobTitle");
+			ACSegments.selectDistributionByAttribute(attribute = "birthDate");
 		}
 
 		task ("Click on the category in the dashboard") {
@@ -346,14 +353,14 @@ definition {
 			for (var userSearch : list ${userList}) {
 				ACSegments.searchTheSegmentProfile(searchTerm = "${userSearch} ${userSearch}");
 
-				ACInterests.viewIndividualInterestSpecificOrder(interestTopic = "${userSearch} ${userSearch}");
+				ACUtils.viewNameList(nameList = "${userSearch} ${userSearch}");
 			}
 		}
 
 		task ("Assert that a wrong word will be not found") {
 			ACSegments.searchTheSegmentProfile(searchTerm = "userfn");
 
-			ACUtils.viewGenericText(textValueList = "There are no results found.,Try choosing a different breakdown.,Learn more about distribution.");
+			ACUtils.viewGenericText(textValueList = "There are no results found.,Please try a different search term.");
 		}
 	}
 

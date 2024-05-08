@@ -20,7 +20,10 @@ const submitDocuments = async (
 
 	if (mdfClaim.activities?.length) {
 		for (const activity of mdfClaim.activities) {
-			if (activity.eventProgramFile && !activity.eventProgramFile.documentId) {
+			if (
+				activity.eventProgramFile &&
+				!activity.eventProgramFile.documentId
+			) {
 				activity.eventProgramFile.documentId = await uploadDocument(
 					activity.eventProgramFile,
 					claimParentFolderId

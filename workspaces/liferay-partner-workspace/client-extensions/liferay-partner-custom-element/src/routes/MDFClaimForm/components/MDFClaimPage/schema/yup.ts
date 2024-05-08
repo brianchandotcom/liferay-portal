@@ -25,6 +25,29 @@ const claimSchema = object({
 						schema
 							.of(
 								object({
+									invoiceAmount: number().when('selected', {
+										is: (selected: boolean) => selected,
+										then: (schema) =>
+											schema
+												.moreThan(
+													0,
+													'Need be bigger than 0'
+												)
+												.test(
+													'biggerAmount',
+													'Invoice amount is larger than the MDF requested amount',
+													(
+														invoiceAmount,
+														testContext
+													) =>
+														Number(invoiceAmount) <=
+														Number(
+															testContext.parent
+																.requestAmount
+														)
+												)
+												.required('Required'),
+									}),
 									invoiceFile: mixed().when('selected', {
 										is: (selected: boolean) => selected,
 										then: (schema) =>
@@ -69,29 +92,6 @@ const claimSchema = object({
 
 														return true;
 													}
-												)
-												.required('Required'),
-									}),
-									invoiceAmount: number().when('selected', {
-										is: (selected: boolean) => selected,
-										then: (schema) =>
-											schema
-												.moreThan(
-													0,
-													'Need be bigger than 0'
-												)
-												.test(
-													'biggerAmount',
-													'Invoice amount is larger than the MDF requested amount',
-													(
-														invoiceAmount,
-														testContext
-													) =>
-														Number(invoiceAmount) <=
-														Number(
-															testContext.parent
-																.requestAmount
-														)
 												)
 												.required('Required'),
 									}),
@@ -196,7 +196,7 @@ const claimSchema = object({
 							selected: boolean,
 							typeActivity: LiferayPicklist
 						) =>
-						checkRequiredListOfQualifiedLeads(
+							checkRequiredListOfQualifiedLeads(
 								selected,
 								typeActivity
 							),
@@ -279,7 +279,8 @@ const claimSchema = object({
 									) {
 										return (
 											Math.ceil(
-												telemarketingScriptFile.size / 1000
+												telemarketingScriptFile.size /
+													1000
 											) <=
 											validateDocument.fileSize.maxSize
 										);
@@ -348,7 +349,9 @@ const claimSchema = object({
 				Boolean(
 					activities?.some((activity) =>
 						Boolean(
-							activity.budgets?.some((budget) => budget.invoiceFile)
+							activity.budgets?.some(
+								(budget) => budget.invoiceFile
+							)
 						)
 					)
 				)
@@ -365,9 +368,8 @@ const claimSchema = object({
 							!reimbursementInvoice.documentId
 						) {
 							return (
-								Math.ceil(
-									reimbursementInvoice.size / 1000
-								) <= validateDocument.fileSize.maxSize
+								Math.ceil(reimbursementInvoice.size / 1000) <=
+								validateDocument.fileSize.maxSize
 							);
 						}
 

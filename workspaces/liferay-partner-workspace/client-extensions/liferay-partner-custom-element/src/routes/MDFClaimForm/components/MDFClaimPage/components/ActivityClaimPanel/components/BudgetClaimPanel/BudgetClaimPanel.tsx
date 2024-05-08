@@ -92,7 +92,9 @@ const BudgetClaimPanel = ({
 							name={`${budgetFieldName}.invoiceFile`}
 							onAccept={(liferayFile: LiferayFile) => {
 								if (budget.invoiceFile?.documentId) {
-									deleteDocument(budget.invoiceFile?.documentId);
+									deleteDocument(
+										budget.invoiceFile?.documentId
+									);
 								}
 
 								setFieldValue(

@@ -107,6 +107,7 @@ const usePublishSolutionSubmission = (
 			);
 
 			if (specification && specification.value.en_US === value) {
+
 				// No need to update the specification if the value is equal.
 
 				return;
@@ -126,7 +127,8 @@ const usePublishSolutionSubmission = (
 
 			if (specification) {
 				specification.value.en_US = value;
-			} else {
+			}
+			else {
 				productSpecifications.push(result);
 			}
 		};

@@ -149,11 +149,6 @@ const CreateLicense = () => {
 							ipAddresses: form.ipAddress,
 							macAddresses: form.macAddress,
 							orderId: orderId as string,
-							productId:
-								getValueFromDeliverySpecifications(
-									producSpecifications,
-									'app-entry-uuid'
-								) || undefined,
 							productPurchaseKey: form.subscription
 								?.productPurchasedKey as string,
 							productVersion:

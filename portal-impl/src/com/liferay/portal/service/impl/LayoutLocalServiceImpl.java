@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.exception.SitemapChangeFrequencyException;
 import com.liferay.portal.kernel.exception.SitemapIncludeException;
 import com.liferay.portal.kernel.exception.SitemapPagePriorityException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -117,6 +118,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.base.LayoutLocalServiceBaseImpl;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
+import com.liferay.portal.util.PortalDefaultPermissionsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.sites.kernel.util.Sites;
@@ -409,6 +411,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			user.getCompanyId(), groupId, user.getUserId(),
 			Layout.class.getName(), layout.getPlid(), false,
 			addGroupPermissions, addGuestPermissions);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-21265") &&
+			Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+
+			PortalDefaultPermissionsUtil.setModelDefaultPermissions(
+				layout, layout.getCompanyId(), groupId, serviceContext);
+		}
 
 		// Group
 

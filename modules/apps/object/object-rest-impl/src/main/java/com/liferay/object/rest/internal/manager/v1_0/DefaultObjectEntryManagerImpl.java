@@ -714,24 +714,17 @@ public class DefaultObjectEntryManagerImpl
 			return null;
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-183882")) {
-			SystemObjectDefinitionManager systemObjectDefinitionManager =
-				_systemObjectDefinitionManagerRegistry.
-					getSystemObjectDefinitionManager(
-						objectDefinition.getName());
+		SystemObjectDefinitionManager systemObjectDefinitionManager =
+			_systemObjectDefinitionManagerRegistry.
+				getSystemObjectDefinitionManager(objectDefinition.getName());
 
-			return ObjectEntryDTOConverterUtil.toDTO(
-				systemObjectDefinitionManager.
-					getBaseModelByExternalReferenceCode(
-						systemObjectDefinitionManager.
-							getBaseModelExternalReferenceCode(primaryKey),
-						objectDefinition.getCompanyId()),
-				_dtoConverterRegistry, systemObjectDefinitionManager,
-				dtoConverterContext.getUser());
-		}
-
-		return objectEntryLocalService.getSystemModelAttributes(
-			objectDefinition, primaryKey);
+		return ObjectEntryDTOConverterUtil.toDTO(
+			systemObjectDefinitionManager.getBaseModelByExternalReferenceCode(
+				systemObjectDefinitionManager.getBaseModelExternalReferenceCode(
+					primaryKey),
+				objectDefinition.getCompanyId()),
+			_dtoConverterRegistry, systemObjectDefinitionManager,
+			dtoConverterContext.getUser());
 	}
 
 	@Override

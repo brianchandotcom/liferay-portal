@@ -6,7 +6,7 @@
 package com.liferay.portal.defaultpermissions.web.internal.portlet.action;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.defaultpermissions.configuration.manager.PortalDefaultPermissionsConfigurationManager;
+import com.liferay.portal.defaultpermissions.kernel.configuration.manager.PortalDefaultPermissionsConfigurationManager;
 import com.liferay.portal.defaultpermissions.web.internal.constants.PortalDefaultPermissionsWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;

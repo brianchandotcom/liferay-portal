@@ -6,7 +6,7 @@
 package com.liferay.portal.defaultpermissions.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.defaultpermissions.configuration.manager.PortalDefaultPermissionsConfigurationManager;
+import com.liferay.portal.defaultpermissions.kernel.configuration.manager.PortalDefaultPermissionsConfigurationManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +37,7 @@ import com.liferay.roles.admin.search.RoleSearchTerms;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -119,28 +120,53 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 		Map<String, String[]> defaultPermissions = _getDefaultPermissions();
 
 		if (defaultPermissions == null) {
-			return Collections.emptyList();
+			defaultPermissions = new HashMap<>();
 		}
 
 		String[] actions = defaultPermissions.get(role.getName());
 
 		if (actions == null) {
+			if (Objects.equals(role.getName(), RoleConstants.GUEST)) {
+				return ResourceActionsUtil.getModelResourceGuestDefaultActions(
+					getModelResource());
+			}
+			else if (Objects.equals(
+						role.getName(), RoleConstants.SITE_MEMBER)) {
+
+				return ResourceActionsUtil.getModelResourceGroupDefaultActions(
+					getModelResource());
+			}
+
 			return Collections.emptyList();
 		}
 
 		return Arrays.asList(actions);
 	}
 
-	public List<String> getGuestUnsupportedActions() {
-		if (_guestUnsupportedActions != null) {
-			return _guestUnsupportedActions;
+	public List<String> getGroupDisabledActions() {
+		if (_groupDisabledActions != null) {
+			return _groupDisabledActions;
 		}
 
-		_guestUnsupportedActions =
-			ResourceActionsUtil.getResourceGuestUnsupportedActions(
-				_getPortletResource(), getModelResource());
+		_groupDisabledActions =
+			ResourceActionsUtil.getModelResourceGroupDefaultActions(
+				getModelResource());
 
-		return _guestUnsupportedActions;
+		return _groupDisabledActions;
+	}
+
+	public List<String> getGuestDisabledActions() {
+		if (_guestDisabledActions != null) {
+			return _guestDisabledActions;
+		}
+
+		_guestDisabledActions = ListUtil.concat(
+			ResourceActionsUtil.getModelResourceGuestDefaultActions(
+				getModelResource()),
+			ResourceActionsUtil.getModelResourceGuestUnsupportedActions(
+				getModelResource()));
+
+		return _guestDisabledActions;
 	}
 
 	public PortletURL getIteratorURL() throws Exception {
@@ -198,6 +224,7 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 		Set<String> excludedRoleNamesSet = new HashSet<String>() {
 			{
 				add(RoleConstants.ADMINISTRATOR);
+				add(RoleConstants.OWNER);
 			}
 		};
 
@@ -409,7 +436,8 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 	private List<String> _actions;
 	private Map<String, String[]> _defaultPermissions;
 	private final Group _group;
-	private List<String> _guestUnsupportedActions;
+	private List<String> _groupDisabledActions;
+	private List<String> _guestDisabledActions;
 	private final HttpServletRequest _httpServletRequest;
 	private String _modelResource;
 	private final PortalDefaultPermissionsConfigurationManager

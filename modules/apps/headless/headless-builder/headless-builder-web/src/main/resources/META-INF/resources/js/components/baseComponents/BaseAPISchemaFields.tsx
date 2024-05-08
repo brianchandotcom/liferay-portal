@@ -10,7 +10,7 @@ import {sub} from 'frontend-js-web';
 import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import {Select} from '../fieldComponents/Select';
-import {UNMODIFIABLE_OBJECTS_WHITELIST} from '../utils/constants';
+import {ALLOWED_UNMODIFIABLE_OBJECTS} from '../utils/constants';
 import {getAllItems} from '../utils/fetchUtil';
 
 interface BaseAPIApplicationFieldsProps {
@@ -41,7 +41,7 @@ export default function BaseAPISchemaFields({
 			const filteredResult = result.filter(
 				(option) =>
 					option.modifiable ||
-					UNMODIFIABLE_OBJECTS_WHITELIST.includes(
+					ALLOWED_UNMODIFIABLE_OBJECTS.includes(
 						option.externalReferenceCode
 					)
 			);

@@ -222,11 +222,11 @@ const objectDefinition1Data = {
 		},
 		{
 			deletionType: 'cascade',
-			externalReferenceCode: 'unmodifiable-system-whitelisted',
+			externalReferenceCode: 'unmodifiable-system-allowed',
 			label: {
-				en_US: 'Test Unmodifiable Whitelisted System Object',
+				en_US: 'Test Unmodifiable Allowed System Object',
 			},
-			name: 'testUnmodifiableSystemWhitelisted',
+			name: 'testUnmodifiableSystemAllowed',
 			objectDefinitionExternalReferenceCode1: 'objectDefinition1',
 			objectDefinitionExternalReferenceCode2: 'L_ACCOUNT',
 			objectDefinitionName2: 'AccountEntry',
@@ -280,7 +280,7 @@ const applicationData = {
 };
 
 testFeatureFlagsDisabled(
-	'can see whitelisted object definitions on schema creation',
+	'can see allowed object definitions on schema creation',
 	async ({apiHelpers, applicationPage, headlessBuilderPage}) => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postObjectDefinition(
@@ -324,7 +324,7 @@ testFeatureFlagsDisabled(
 );
 
 testFeatureFlagsEnabled(
-	'can see whitelisted object definitions on schema creation with feature flag',
+	'can see allowed object definitions on schema creation with feature flag',
 	async ({apiHelpers, applicationPage, headlessBuilderPage}) => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postObjectDefinition(
@@ -436,14 +436,14 @@ testFeatureFlagsDisabled(
 			'disabled'
 		);
 
-		// Assert that unmodifiable whitelisted system object properties are disabled without FF
+		// Assert that unmodifiable allowed system object properties are disabled without FF
 
 		await schemaPage.page.getByRole('button', {name: 'Account'}).click();
 		expectElementToHaveClass(
 			await schemaPage.page
 				.getByRole('button', {name: 'Account'})
 				.locator('..')
-				.getByLabel('Test Unmodifiable Whitelisted System Object')
+				.getByLabel('Test Unmodifiable Allowed System Object')
 				.getByLabel('Add Author Property')
 				.getByText('Author'),
 			'disabled'
@@ -573,7 +573,7 @@ testFeatureFlagsEnabled(
 			await schemaPage.page
 				.getByRole('button', {name: 'Account'})
 				.locator('..')
-				.getByLabel('Test Unmodifiable Whitelisted System Object')
+				.getByLabel('Test Unmodifiable Allowed System Object')
 				.getByLabel('Add Author Property')
 				.getByText('Author'),
 			'disabled'

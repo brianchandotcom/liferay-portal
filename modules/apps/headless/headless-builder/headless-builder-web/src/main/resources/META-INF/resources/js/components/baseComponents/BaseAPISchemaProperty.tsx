@@ -17,40 +17,34 @@ import React, {
 
 import {EditSchemaContext} from '../EditAPIApplicationContext';
 import {
+	ALLOWED_UNMODIFIABLE_OBJECTS,
 	BUSINESS_TYPES_TO_SYMBOLS,
-	UNMODIFIABLE_OBJECTS_WHITELIST,
 } from '../utils/constants';
 
 interface BaseAPISchemaPropertyProps {
 	added: boolean;
+	objectDefinition: ObjectDefinitionProps;
 	objectField: ObjectField;
 	objectRelationshipName?: string;
-	parentObjectDefinitionData: ParentObjectDefinitionProps;
 	setSchemaUIData: Dispatch<SetStateAction<APISchemaUIData>>;
 }
 
-interface ParentObjectDefinitionProps {
+interface ObjectDefinitionProps {
+	externalReferenceCode: string;
 	modifiable?: boolean;
-	objectDefinitionERC: string;
-	objectDefinitionName: string;
+	name: string;
 }
 
 export default function BaseAPISchemaProperty({
 	added,
+	objectDefinition,
 	objectField,
 	objectRelationshipName,
-	parentObjectDefinitionData,
 	setSchemaUIData,
 }: BaseAPISchemaPropertyProps) {
 	const {apiSchemaId} = useContext(EditSchemaContext);
 	const [disabled, setDisabled] = useState(false);
 	const [focused, setFocused] = useState(false);
-
-	const {
-		modifiable,
-		objectDefinitionERC,
-		objectDefinitionName,
-	} = parentObjectDefinitionData;
 
 	const localizedPropertyName = objectField.label[
 		Liferay.ThemeDisplay.getDefaultLanguageId()
@@ -62,7 +56,7 @@ export default function BaseAPISchemaProperty({
 				previous.schemaProperties.unshift({
 					businessType: objectField.businessType,
 					name: localizedPropertyName,
-					objectDefinitionName,
+					objectDefinitionName: objectDefinition.name,
 					objectFieldERC: objectField.externalReferenceCode,
 					objectFieldId: objectField.id,
 					objectFieldName: objectField.name,
@@ -86,12 +80,12 @@ export default function BaseAPISchemaProperty({
 	useEffect(() => {
 		setDisabled(
 			added ||
-				(!modifiable &&
-					!UNMODIFIABLE_OBJECTS_WHITELIST.includes(
-						objectDefinitionERC
+				(!objectDefinition.modifiable &&
+					!ALLOWED_UNMODIFIABLE_OBJECTS.includes(
+						objectDefinition.externalReferenceCode
 					))
 		);
-	}, [added, modifiable, objectDefinitionERC, parentObjectDefinitionData]);
+	}, [added, objectDefinition]);
 
 	return (
 		<ClayButton

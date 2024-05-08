@@ -194,16 +194,16 @@ function ObjectFieldsPanel({
 							<li key={field.id}>
 								<BaseAPISchemaProperty
 									added={!!field.added}
+									objectDefinition={{
+										externalReferenceCode:
+											localUIData.externalReferenceCode,
+										modifiable: localUIData.modifiable,
+										name: localUIData.name,
+									}}
 									objectField={field}
 									objectRelationshipName={
 										objectRelationshipName
 									}
-									parentObjectDefinitionData={{
-										modifiable: localUIData.modifiable,
-										objectDefinitionERC:
-											localUIData.externalReferenceCode,
-										objectDefinitionName: localUIData.name,
-									}}
 									setSchemaUIData={setSchemaUIData}
 								/>
 							</li>

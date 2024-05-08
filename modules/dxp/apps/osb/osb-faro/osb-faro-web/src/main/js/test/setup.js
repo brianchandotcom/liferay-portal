@@ -74,9 +74,5 @@ global.localStorage = (() => {
 	};
 })();
 
-global.pendo = {
-	initialize: () => {}
-};
-
 require('jest-extended');
 require('jest-canvas-mock');

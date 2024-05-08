@@ -43,7 +43,6 @@ import {FieldContexts, FieldTypes} from 'shared/util/constants';
 import {getBarColor} from 'shared/util/charts';
 import {getFinitePercent} from 'shared/util/numbers';
 import {hasChanges} from 'shared/util/react';
-import {INDIVIDUALS_DASHBOARD_DISTRUBTIONS_KEY} from 'shared/actions/distributions';
 import {List, Map} from 'immutable';
 import {noop, omit, pickBy, truncate} from 'lodash';
 import {paginationConfig, paginationDefaults} from 'shared/util/pagination';
@@ -248,17 +247,13 @@ export class Distribution extends React.Component {
 		const {
 			props: {
 				channelId,
-				distributionsKey,
 				fetchDistribution,
 				fieldMappingFieldName,
 				groupId,
 				id,
 				numberOfBins
 			},
-			state: {
-				fieldMappingSelected: {rawType},
-				selectedContext
-			}
+			state: {selectedContext}
 		} = this;
 
 		return fetchDistribution(
@@ -272,25 +267,7 @@ export class Distribution extends React.Component {
 				individualSegmentId: id,
 				numberOfBins
 			})
-		)
-			.then(response => {
-				analytics.track('Created Distribution Query', {
-					dataType: rawType,
-					distributionType:
-						selectedContext === FieldContexts.Demographics
-							? 'individual'
-							: 'account',
-					numberOfBins: this.getNumberOfBins(),
-					pageType:
-						distributionsKey ===
-						INDIVIDUALS_DASHBOARD_DISTRUBTIONS_KEY
-							? 'individualDistribution'
-							: 'segmentDistribution'
-				});
-
-				return response;
-			})
-			.catch(noop);
+		);
 	}
 
 	@autoCancel

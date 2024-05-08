@@ -24,25 +24,6 @@ interface ICustomNumberInputProps extends ISegmentEditorCustomInputBase {
 }
 
 export default class CustomNumberInput extends React.Component<ICustomNumberInputProps> {
-	_completedAnalytics = false;
-
-	componentDidUpdate() {
-		const {
-			id,
-			property: {entityName, type},
-			valid
-		} = this.props;
-
-		if (!id && valid && !this._completedAnalytics) {
-			this._completedAnalytics = true;
-
-			analytics.track('Dynamic Segment Creation - Completed Attribute', {
-				entityName,
-				type
-			});
-		}
-	}
-
 	getSelectedOperatorKey() {
 		const criterionIMap = this.props.value.getIn(
 			['criterionGroup', 'items', 0],

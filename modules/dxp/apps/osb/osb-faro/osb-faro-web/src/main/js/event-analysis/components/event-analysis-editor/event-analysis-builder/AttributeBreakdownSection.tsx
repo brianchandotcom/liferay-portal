@@ -50,17 +50,6 @@ export const AttributeBreakdownSection: React.FC<IAttributeBreakdownSectionProps
 		params: AddBreakdownParams
 	) => {
 		addBreakdown(params);
-
-		const {
-			attribute: {displayName, name, type},
-			breakdown: {attributeType}
-		} = params;
-
-		analytics.track('Event Analysis Editor - Selected a Breakdown', {
-			attributeName: displayName || name,
-			attributeType,
-			type
-		});
 	};
 
 	return (

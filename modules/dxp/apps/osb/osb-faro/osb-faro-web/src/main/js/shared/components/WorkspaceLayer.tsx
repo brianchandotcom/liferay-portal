@@ -1,6 +1,6 @@
 import BundleRouter from 'route-middleware/BundleRouter';
 import Loading from 'shared/components/Loading';
-import React, {lazy, Suspense, useEffect} from 'react';
+import React, {lazy, Suspense} from 'react';
 import RouteNotFound from './RouteNotFound';
 import {close, open} from 'shared/actions/modals';
 import {compose} from 'redux';
@@ -51,31 +51,7 @@ const connector = connect(
 	{close, open}
 );
 
-const WorkspaceLayer = ({
-	close,
-	currentUserId,
-	groupId,
-	open,
-	serverLocation,
-	subscriptionName,
-	workspaceName
-}) => {
-	useEffect(() => {
-		if (groupId !== '0' && workspaceName) {
-			analytics?.track(
-				'User accessed workspace',
-				{
-					groupId,
-					serverLocation,
-					subscriptionName,
-					userId: currentUserId,
-					workspaceName
-				},
-				{ip: '0'}
-			);
-		}
-	}, [groupId, workspaceName]);
-
+const WorkspaceLayer = ({close, groupId, open}) => {
 	useModalNotifications(close, groupId, open);
 
 	return (

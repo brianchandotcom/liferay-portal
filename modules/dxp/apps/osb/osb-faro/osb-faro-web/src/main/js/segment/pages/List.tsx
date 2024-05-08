@@ -305,9 +305,7 @@ export const List: React.FC<IListProps> = ({
 					groupId
 				})
 			),
-			label: Liferay.Language.get('dynamic-segment'),
-			onClick: () =>
-				analytics.track('Dynamic Segment Creation - Clicked Create')
+			label: Liferay.Language.get('dynamic-segment')
 		},
 		{
 			href: setUriQueryValues(
@@ -317,9 +315,7 @@ export const List: React.FC<IListProps> = ({
 					groupId
 				})
 			),
-			label: Liferay.Language.get('static-segment'),
-			onClick: () =>
-				analytics.track('Static Segment Creation - Clicked Create')
+			label: Liferay.Language.get('static-segment')
 		}
 	];
 

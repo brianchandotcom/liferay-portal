@@ -131,10 +131,6 @@ const SegmentEditStatic: React.FC<ISegmentEditStaticProps> = ({
 	});
 
 	const handleAddEntitiesModal = () => {
-		if (!id) {
-			analytics.track('Static Segment Creation - Clicked Add Members');
-		}
-
 		open(modalTypes.SEARCHABLE_TABLE_MODAL, {
 			checkDisabled: isCurrentMember,
 			columns: getColumns(),
@@ -149,10 +145,6 @@ const SegmentEditStatic: React.FC<ISegmentEditStaticProps> = ({
 			onClose: close,
 			onSubmit: itemsIOMap => {
 				handleStageEntityAdditions(itemsIOMap);
-
-				if (!id) {
-					analytics.track('Static Segment Creation - Added Members');
-				}
 
 				close();
 			},

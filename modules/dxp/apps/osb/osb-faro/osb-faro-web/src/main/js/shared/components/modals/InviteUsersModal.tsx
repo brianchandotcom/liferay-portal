@@ -26,15 +26,7 @@ const InviteUsersModal: React.FC<IInviteUsersModalProps> = ({
 			(emails.length && !inputValue) ||
 			(inputValue && validateEmail(inputValue))
 		) {
-			onSubmit(emails).then(users => {
-				analytics.track(
-					'Invited Users',
-					{
-						userIds: users.map(({id}) => id)
-					},
-					{ip: '0'}
-				);
-			});
+			onSubmit(emails);
 		}
 	};
 

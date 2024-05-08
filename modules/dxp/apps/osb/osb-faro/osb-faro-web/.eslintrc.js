@@ -20,8 +20,7 @@ module.exports = {
 		FARO_DEV_MODE: true,
 		FARO_ENV: true,
 		IncrementalDOM: true,
-		Liferay: true,
-		pendo: true
+		Liferay: true
 	},
 	parser: '@typescript-eslint/parser',
 	parserOptions: {

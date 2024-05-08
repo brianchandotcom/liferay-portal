@@ -15,21 +15,6 @@ interface IDateTimeInputProps extends ISegmentEditorInputBase {
 }
 
 export default class DateTimeInput extends React.Component<IDateTimeInputProps> {
-	componentDidMount() {
-		const {
-			id,
-			property: {entityName, type},
-			valid
-		} = this.props;
-
-		if (!id && valid) {
-			analytics.track('Dynamic Segment Creation - Completed Attribute', {
-				entityName,
-				type
-			});
-		}
-	}
-
 	@autobind
 	handleDateChange(value) {
 		this.props.onChange({

@@ -272,11 +272,6 @@ const RequestList: React.FC<IRequestListProps> = ({
 					}
 				})
 					.then(() => {
-						analytics.track('Created User Data Request', {
-							types,
-							uploadedFile: !!fileName
-						});
-
 						addAlert({
 							alertType: Alert.Types.Success,
 							message: Liferay.Language.get(
@@ -447,16 +442,6 @@ const RequestList: React.FC<IRequestListProps> = ({
 								{...(!itemsSelected && {
 									href: `/o/proxy/download/data-control-tasks/${id}?projectGroupId=${groupId}`
 								})}
-								onClick={() =>
-									analytics.track(
-										'Downloaded User Data Request'
-									)
-								}
-								onKeyDown={() =>
-									analytics.track(
-										'Downloaded User Data Request'
-									)
-								}
 								role='button'
 								tabIndex={0}
 							>
@@ -474,11 +459,6 @@ const RequestList: React.FC<IRequestListProps> = ({
 									href={`/o/proxy/download/data-control-tasks?projectGroupId=${groupId}&ids=${selectedItems
 										.map(({id}) => id)
 										.join('&ids=')}`}
-									onClick={() =>
-										analytics.track(
-											'Downloaded User Data Request'
-										)
-									}
 								>
 									{Liferay.Language.get('download-all')}
 								</ClayLink>

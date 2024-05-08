@@ -80,8 +80,6 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 		API.blockedKeywords
 			.insertMany({groupId, keywords})
 			.then(response => {
-				analytics.track('Added Interest Keywords to Block List');
-
 				const [duplicate, nonDuplicate] = partition(
 					response.items,
 					({duplicate}) => duplicate

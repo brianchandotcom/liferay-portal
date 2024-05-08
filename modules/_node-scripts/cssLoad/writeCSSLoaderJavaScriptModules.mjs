@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import getFlatName from "../util/getFlatName.mjs";
+import getFlatName from '../util/getFlatName.mjs';
 
 export default async function writeCSSLoaderJavaScriptModules(projectExports, projectWebContextPath) {
 	if (!projectExports) {

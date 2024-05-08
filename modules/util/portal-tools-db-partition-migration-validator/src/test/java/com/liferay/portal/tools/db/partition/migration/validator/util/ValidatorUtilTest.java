@@ -88,43 +88,6 @@ public class ValidatorUtilTest {
 	}
 
 	@Test
-	public void testValidateTables() throws Exception {
-		_testValidateTables(
-			new ArrayList<>(
-				Arrays.asList("table1", "table2", "table3", "table5")),
-			new ArrayList<>(
-				Arrays.asList("table1", "table3", "table4", "table5")),
-			() -> _assertValidateDatabases(
-				false, true,
-				Arrays.asList(
-					"[WARN] Table table2 is not present in the target database",
-					"[WARN] Table table4 is not present in the source " +
-						"database")));
-		_testValidateTables(
-			new ArrayList<>(Arrays.asList("table1", "table3", "table4")),
-			new ArrayList<>(
-				Arrays.asList(
-					"table1", "table2", "table3", "table4", "table5")),
-			() -> _assertValidateDatabases(
-				false, true,
-				Arrays.asList(
-					"[WARN] Table table2 is not present in the source database",
-					"[WARN] Table table5 is not present in the source " +
-						"database")));
-		_testValidateTables(
-			new ArrayList<>(
-				Arrays.asList(
-					"table1", "table2", "table3", "table4", "table5")),
-			new ArrayList<>(Arrays.asList("table1", "table3", "table4")),
-			() -> _assertValidateDatabases(
-				false, true,
-				Arrays.asList(
-					"[WARN] Table table2 is not present in the target database",
-					"[WARN] Table table5 is not present in the target " +
-						"database")));
-	}
-
-	@Test
 	public void testValidateReleaseMissingSourceModules() {
 		List<Release> targetReleases = new ArrayList<>();
 
@@ -224,6 +187,43 @@ public class ValidatorUtilTest {
 						"source database before the migration")));
 	}
 
+	@Test
+	public void testValidateTables() throws Exception {
+		_testValidateTables(
+			new ArrayList<>(
+				Arrays.asList("table1", "table2", "table3", "table5")),
+			new ArrayList<>(
+				Arrays.asList("table1", "table3", "table4", "table5")),
+			() -> _assertValidateDatabases(
+				false, true,
+				Arrays.asList(
+					"[WARN] Table table2 is not present in the target database",
+					"[WARN] Table table4 is not present in the source " +
+						"database")));
+		_testValidateTables(
+			new ArrayList<>(Arrays.asList("table1", "table3", "table4")),
+			new ArrayList<>(
+				Arrays.asList(
+					"table1", "table2", "table3", "table4", "table5")),
+			() -> _assertValidateDatabases(
+				false, true,
+				Arrays.asList(
+					"[WARN] Table table2 is not present in the source database",
+					"[WARN] Table table5 is not present in the source " +
+						"database")));
+		_testValidateTables(
+			new ArrayList<>(
+				Arrays.asList(
+					"table1", "table2", "table3", "table4", "table5")),
+			new ArrayList<>(Arrays.asList("table1", "table3", "table4")),
+			() -> _assertValidateDatabases(
+				false, true,
+				Arrays.asList(
+					"[WARN] Table table2 is not present in the target database",
+					"[WARN] Table table5 is not present in the target " +
+						"database")));
+	}
+
 	private void _assertValidateDatabases(
 		boolean hasErrors, boolean hasWarnings, List<String> messages) {
 
@@ -299,17 +299,6 @@ public class ValidatorUtilTest {
 
 		_targetLiferayDatabase.setCompanies(
 			Collections.singletonList(targetCompany));
-
-		unsafeRunnable.run();
-	}
-
-	private void _testValidateTables(
-			List<String> sourceTableNames, List<String> targetTableNames,
-			UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		_sourceLiferayDatabase.setTableNames(sourceTableNames);
-		_targetLiferayDatabase.setTableNames(targetTableNames);
 
 		unsafeRunnable.run();
 	}
@@ -429,6 +418,17 @@ public class ValidatorUtilTest {
 		}
 
 		_targetLiferayDatabase.setReleases(targetReleases);
+
+		unsafeRunnable.run();
+	}
+
+	private void _testValidateTables(
+			List<String> sourceTableNames, List<String> targetTableNames,
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		_sourceLiferayDatabase.setTableNames(sourceTableNames);
+		_targetLiferayDatabase.setTableNames(targetTableNames);
 
 		unsafeRunnable.run();
 	}

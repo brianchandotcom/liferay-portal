@@ -16,7 +16,7 @@ export default {
 	'activation-status': 'Activation Status',
 	'active': 'Active',
 	'add-packages': 'Add Package(s)',
-	'add-up-to-5-images': 'Add up to 5 images',
+	'add-up-to-x-images': 'Add up to {0} images',
 	'additional-apps-requested': 'Additional Apps Requested',
 	'address': 'Address',
 	'all-orders': 'All Orders',
@@ -374,14 +374,14 @@ export default {
 	'x-will-be-deleted-and-this-action-cant-be-undone-are-you-sure-you-want-to-delete-it':
 		'{0} will be deleted and this action can’t be undone. Are you sure you want to delete it?',
 	'yes': 'Yes',
-	'you-can-paste-links-directly-from-youTube':
+	'you-can-paste-links-directly-from-youtube':
 		'You can paste links directly from YouTube.',
 	'you-can-put-anything-you-want-here-but-a-good-guideline-is-no-more-than-4-5-paragraphs-this-field-does-not-allow-any-markup-tags-its-just-text-please-do-not-use-misleading-names-information-or-icons-descriptions-should-be-as-concise-as-possible-ensure-your-icons-images-descriptions-and-tags-are-free-of-profanity-or-other-offensive-material':
 		'You can put anything you want here, but a good guideline is no more than 4-5 paragraphs. This field does not allow any markup tags - it’s just text Please do not use misleading names, information, or icons. Descriptions should be as concise as possible. Ensure your icons, images, descriptions, and tags are free of profanity or other offensive material.',
 	'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb':
 		'You can upload one or many ZIP files. Max total size is 500MB.',
-	'you-cannot-upload-more-than-5-files':
-		'You cannot upload more than 5 files.',
+	'you-cannot-upload-more-than-x-files':
+		'You cannot upload more than {0} files.',
 	'your-request-completed-successfully':
 		'Your request completed successfully',
 	'zip-files-must-be-in-universal-file-format-archive-uffa-the-specially-structured-zip-encoded-archive-used-to-package-client-extension-project-outputs-this-format-must-support-the-following-use-cases-deliver-batch-engine-data-files-compatible-with-all-deployment-targets-deliver-dxp-configuration-resource-compatible-with-all-deployment-targets-deliver-static-resources-compatible-with-all-deployment-targets-deliver-the-infrastructure-metadata-necessary-to-deploy-to-lxc-sm-for-more-information-see':

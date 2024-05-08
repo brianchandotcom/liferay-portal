@@ -21,23 +21,23 @@ import TextAndImages from '../../components/Blocks/TextAndImages';
 import TextAndVideos from '../../components/Blocks/TextAndVideo';
 import TextBlock from '../../components/Blocks/TextBlock';
 
-const blockTypes = {
+export const blockTypes = {
 	'icons-block': IconsBlock,
 	'images-grid-block': ImagesGrid,
 	'single-image-block': SingleImage,
 	'text-block': TextBlock,
 	'text-images-block': TextAndImages,
 	'text-video-block': TextAndVideos,
-};
+} as const;
 
 const items = [
 	{label: 'Choose an option', value: ''},
 	{label: 'Text & Images Block', value: 'text-images-block'},
 	{label: 'Text & Video Block', value: 'text-video-block'},
 	{label: 'Text Block', value: 'text-block'},
-	{label: 'Single Image Block', value: 'single-image-block'},
-	{label: 'Icons Block', value: 'icons-block'},
-	{label: 'Images Grid Block', value: 'images-grid-block'},
+	{disabled: true, label: 'Single Image Block', value: 'single-image-block'},
+	{disabled: true, label: 'Icons Block', value: 'icons-block'},
+	{disabled: true, label: 'Images Grid Block', value: 'images-grid-block'},
 ];
 
 const Details = () => {
@@ -135,6 +135,7 @@ const Details = () => {
 						>
 							{items.map((item, index) => (
 								<ClaySelect.Option
+									disabled={item.disabled}
 									key={index}
 									label={item.label}
 									value={item.value}

@@ -26,7 +26,7 @@ import {
 } from 'react-router-dom';
 import {OnboardingContext} from 'shared/context/onboarding';
 import {PROD_MODE, spritemap} from 'shared/util/constants';
-import {Provider, useSelector} from 'react-redux';
+import {Provider} from 'react-redux';
 import {Routes} from 'shared/util/router';
 import {saveState} from 'shared/store/local-storage';
 import {setBackURL} from 'shared/actions/settings';
@@ -80,100 +80,17 @@ const RoutesContainer = ({children}) => {
 
 	const groupId = matchingPath?.params.groupId ?? '0';
 
-	const {data: currentUser, loading} = useFetchCurrentUser(groupId);
-
-	const project = useSelector<any, any>(state =>
-		state.getIn(['projects', groupId, 'data'])
-	);
-
-	const pendoFn =
-		pendo && pendo.isReady && pendo.isReady()
-			? pendo.identify
-			: pendo.initialize;
+	const {loading} = useFetchCurrentUser(groupId);
 
 	useEffect(() => {
 		const {
-			document: {referrer, title},
-			location: {href, pathname, search}
+			location: {pathname, search}
 		} = window;
-
-		analytics.page(
-			{
-				path: pathname,
-				referrer,
-				search,
-				title,
-				url: href
-			},
-			{ip: '0'}
-		);
 
 		if (!SETTINGS_PATH_REGEX.test(pathname)) {
 			store.dispatch(setBackURL(`${pathname}${search}`));
 		}
 	}, [location]);
-
-	useEffect(() => {
-		let account;
-		let visitor;
-
-		if (currentUser) {
-			// We use userId instead of id because userId persists across workspaces.
-			const {emailAddress, name, roleName, userId} = currentUser;
-
-			visitor = {
-				emailAddress,
-				id: userId,
-				name,
-				roleName
-			};
-
-			analytics && analytics.identify(userId, null, {ip: '0'});
-		}
-
-		if (project) {
-			const {
-				corpProjectName,
-				corpProjectUuid,
-				faroSubscription: faroSubscriptionIMap,
-				groupId,
-				name: workspaceName,
-				ownerEmailAddress: workspaceOwnerEmailAddress,
-				serverLocation
-			} = project;
-
-			const subscriptionName = faroSubscriptionIMap.get('name');
-
-			account = {
-				corpProjectNameId: `${corpProjectName}: ${corpProjectUuid}`,
-				id: groupId,
-				serverLocation,
-				subscriptionName,
-				workspaceName,
-				workspaceOwnerEmailAddress
-			};
-
-			analytics &&
-				analytics.group(
-					groupId,
-					{
-						groupId,
-						serverLocation,
-						subscriptionName,
-						workspaceName
-					},
-					{ip: '0'}
-				);
-		}
-
-		if (account || visitor) {
-			pendoFn &&
-				pendoFn({
-					account,
-					visitor
-				});
-		}
-	}, [location, currentUser, project]);
 
 	if (loading) {
 		return <Loading />;

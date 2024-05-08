@@ -58,8 +58,7 @@ const FilterOptions: React.FC<IFilterOptionsProps> = ({
 		description,
 		displayName,
 		id: attributeId,
-		name,
-		type
+		name
 	} = attribute;
 
 	const FilterBody = FILTERS_MAP[dataType];
@@ -83,13 +82,6 @@ const FilterOptions: React.FC<IFilterOptionsProps> = ({
 		onAttributeChange(null);
 
 		onActiveChange(false);
-
-		const {attributeType} = newFilter;
-		analytics.track('Event Analysis Editor - Selected a Filter', {
-			attributeName: displayName || name,
-			attributeType,
-			type
-		});
 	};
 
 	return (

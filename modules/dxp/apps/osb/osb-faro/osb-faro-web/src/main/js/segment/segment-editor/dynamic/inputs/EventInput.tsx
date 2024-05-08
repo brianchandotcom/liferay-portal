@@ -35,34 +35,13 @@ interface IEventInputProps extends ISegmentEditorCustomInputBase {
 
 const EventInput: React.FC<IEventInputProps> = ({
 	displayValue,
-	id,
 	onChange,
 	operatorRenderer: OperatorDropdown,
-	property: {entityName, options, type},
+	property: {options, type},
 	touched,
 	valid,
 	value: valueIMap
 }) => {
-	let _completedAnalytics = false;
-
-	useEffect(() => {
-		const {attributeValue, dateFilter, occurenceCount} = valid;
-
-		const inputsValid =
-			(isNil(attributeValue) || attributeValue) &&
-			(isNil(dateFilter) || dateFilter) &&
-			(isNil(occurenceCount) || occurenceCount);
-
-		if (!id && inputsValid && !_completedAnalytics) {
-			_completedAnalytics = true;
-
-			analytics.track('Dynamic Segment Creation - Completed Attribute', {
-				entityName,
-				type
-			});
-		}
-	}, [valid]);
-
 	// TODO: useEffect below is temporary. Remove it when LPD-23023 is merged and before sending LPD-23024.
 
 	useEffect(() => {

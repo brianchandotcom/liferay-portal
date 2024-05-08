@@ -14,7 +14,6 @@ import {
 	getContextLabel,
 	numberOfBinsMask
 } from 'contacts/components/Distribution';
-import {INDIVIDUALS_DASHBOARD_DISTRUBTIONS_KEY} from 'shared/actions/distributions';
 import {isBlank} from 'shared/util/util';
 import {List} from 'immutable';
 import {sequence} from 'shared/util/promise';
@@ -34,7 +33,6 @@ const validateNumberOfBins = numberOfBins => {
 
 const AddPropertyForm = ({
 	defaultContext = FieldContexts.Demographics,
-	distributionKey,
 	groupId,
 	onCancel,
 	onSubmit,
@@ -67,20 +65,6 @@ const AddPropertyForm = ({
 			})
 		)
 			.then(() => {
-				analytics.track('Created Distribution Query', {
-					dataType: rawType,
-					distributionType:
-						context === FieldContexts.Demographics
-							? 'individual'
-							: 'account',
-					numberOfBins: Number(numberOfBins),
-					pageType:
-						distributionKey ===
-						INDIVIDUALS_DASHBOARD_DISTRUBTIONS_KEY
-							? 'individualOverview'
-							: 'segmentOverview'
-				});
-
 				setSubmitting(false);
 			})
 			.catch(() => setSubmitting(false));

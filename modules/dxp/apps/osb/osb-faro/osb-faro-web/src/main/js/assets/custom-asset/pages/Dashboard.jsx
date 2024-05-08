@@ -193,8 +193,6 @@ class CustomAssetsDashboardPage extends React.Component {
 				modifiedByUserName
 			}
 		}).then(({data}) => {
-			analytics.track('Created Custom Asset Report');
-
 			const {definition} = data.dashboard;
 
 			this.setState({

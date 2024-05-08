@@ -14,20 +14,6 @@ interface IBooleanInputProps {
 	value: string;
 }
 export default class BooleanInput extends React.Component<IBooleanInputProps> {
-	componentDidMount() {
-		const {
-			id,
-			property: {entityName, type}
-		} = this.props;
-
-		if (!id) {
-			analytics.track('Dynamic Segment Creation - Completed Attribute', {
-				entityName,
-				type
-			});
-		}
-	}
-
 	@autobind
 	handleChange(value) {
 		this.props.onChange({value});

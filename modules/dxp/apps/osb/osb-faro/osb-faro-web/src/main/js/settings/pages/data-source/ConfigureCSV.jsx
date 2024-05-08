@@ -87,10 +87,6 @@ class ConfigureCSV extends React.Component {
 
 		request(data)
 			.then(response => {
-				if (!id) {
-					analytics.track('Created CSV Datasource');
-				}
-
 				history.push(
 					toRoute(Routes.SETTINGS_DATA_SOURCE, {
 						groupId,

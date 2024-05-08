@@ -102,10 +102,6 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 			}
 		})
 			.then(() => {
-				analytics.track('Updated Search Query Strings', {
-					searchQueryStrings
-				});
-
 				addAlert({
 					alertType: Alert.Types.Success,
 					message: Liferay.Language.get(

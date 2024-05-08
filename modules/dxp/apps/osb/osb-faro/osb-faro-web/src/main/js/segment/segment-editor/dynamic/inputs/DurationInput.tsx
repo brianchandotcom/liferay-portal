@@ -13,25 +13,6 @@ interface ISegmentDurationInputProps extends ISegmentEditorInputBase {
 }
 
 export default class SegmentDurationInput extends React.Component<ISegmentDurationInputProps> {
-	_completedAnalytics = false;
-
-	componentDidUpdate() {
-		const {
-			id,
-			property: {entityName, type},
-			valid
-		} = this.props;
-
-		if (!id && valid && !this._completedAnalytics) {
-			this._completedAnalytics = true;
-
-			analytics.track('Dynamic Segment Creation - Completed Attribute', {
-				entityName,
-				type
-			});
-		}
-	}
-
 	@autobind
 	handleBlur() {
 		const {onChange, value} = this.props;

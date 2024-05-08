@@ -89,12 +89,6 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 					key: DATA_RETENTION_PERIOD_KEY,
 					value
 				}
-			}).then(response => {
-				analytics.track('Updated Retention Period', {
-					retentionPeriod: Number(value)
-				});
-
-				return response;
 			});
 
 		if (curVal > newVal) {

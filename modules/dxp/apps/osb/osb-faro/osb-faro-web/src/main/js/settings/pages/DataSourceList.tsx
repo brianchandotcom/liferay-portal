@@ -230,13 +230,6 @@ const DataSourceList = ({className}) => {
 					href={toRoute(Routes.SETTINGS_ADD_DATA_SOURCE, {
 						groupId
 					})}
-					onClick={() => {
-						analytics.track(
-							'Clicked Add Data Source - TEST',
-							null,
-							{ip: '0'}
-						);
-					}}
 					small
 				>
 					{Liferay.Language.get('add-data-source')}

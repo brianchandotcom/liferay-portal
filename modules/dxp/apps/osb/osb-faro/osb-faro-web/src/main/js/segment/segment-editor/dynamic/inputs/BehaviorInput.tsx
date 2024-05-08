@@ -101,7 +101,6 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 	componentDidUpdate() {
 		const {
 			id,
-			property: {entityName, type},
 			valid: {asset, dateFilter, occurenceCount}
 		} = this.props;
 
@@ -111,11 +110,6 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 
 		if (!id && valid && !this._completedAnalytics) {
 			this._completedAnalytics = true;
-
-			analytics.track('Dynamic Segment Creation - Completed Attribute', {
-				entityName,
-				type
-			});
 		}
 	}
 

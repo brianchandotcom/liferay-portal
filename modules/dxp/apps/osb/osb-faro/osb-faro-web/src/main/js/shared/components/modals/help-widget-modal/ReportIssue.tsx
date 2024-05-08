@@ -31,10 +31,6 @@ const ReportIssue: React.FC<
 			.then(() => {
 				setSubmitting(false);
 
-				analytics.track('Submitted Free Tier Ticket', {
-					currentUrl: window.location.href
-				});
-
 				onNext();
 			})
 			.catch(() => {

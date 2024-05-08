@@ -79,18 +79,7 @@ export class AddWorkspace extends React.Component {
 				: createTrialProject;
 
 		return createFn(params)
-			.then(({payload: {friendlyURL, groupId, name}}) => {
-				analytics.track(
-					'Created Workspace',
-					{
-						createDate: Date.now(),
-						groupId: String(groupId),
-						serverLocation,
-						workspaceName: name
-					},
-					{ip: '0'}
-				);
-
+			.then(({payload: {friendlyURL, groupId}}) => {
 				this.setState({
 					friendlyURL: friendlyURL
 						? friendlyURL.replace('/', '')

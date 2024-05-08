@@ -33,14 +33,6 @@ export const AddDataSource: React.FC<IAddDataSourceProps> = ({
 					iconSize: 'xxxl',
 					name: Liferay.Language.get('liferay-dxp'),
 					onClick: () => {
-						analytics.track(
-							'Clicked Create DXP Data Source - TEST',
-							null,
-							{
-								ip: '0'
-							}
-						);
-
 						open(modalTypes.CONNECT_DXP_MODAL, {
 							groupId,
 							onClose: close

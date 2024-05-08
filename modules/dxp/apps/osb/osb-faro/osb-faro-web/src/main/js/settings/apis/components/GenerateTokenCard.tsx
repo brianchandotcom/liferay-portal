@@ -83,9 +83,8 @@ const GenerateTokenCard: React.FC<IGenerateTokenCardProps> = ({
 						API.apiTokens
 							.generate({expiresIn, groupId})
 							.then(() => {
-								analytics.track('Created API Token');
-
 								setLoading(false);
+
 								onSuccess(
 									Liferay.Language.get(
 										'new-token-was-generated'

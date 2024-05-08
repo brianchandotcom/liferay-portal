@@ -1,6 +1,6 @@
 import DXPUsersQuery from '../queries/DXPUsersQuery';
 import getDXPEntitiesQuery from '../queries/DXPEntitiesQuery';
-import React, {useEffect} from 'react';
+import React from 'react';
 import SelectEntityInput from './components/SelectEntityInput';
 import {createOrderIOMap, NAME} from 'shared/util/pagination';
 import {EntityType} from '../context/referencedObjects';
@@ -59,28 +59,12 @@ interface IIndividualSelectProps extends ISegmentEditorInputBase, IPagination {
 
 const IndividualSelectInput: React.FC<IIndividualSelectProps> = ({
 	channelId,
-	id,
 	onChange,
 	property,
 	valid,
 	value,
 	...otherProps
 }) => {
-	let _completedAnalytics = false;
-
-	const {entityName, type} = property;
-
-	useEffect(() => {
-		if (!id && valid && !_completedAnalytics) {
-			_completedAnalytics = true;
-
-			analytics.track('Dynamic Segment Creation - Completed Attribute', {
-				entityName,
-				type
-			});
-		}
-	});
-
 	const entityType: EntityType = ENTITY_MAP[property.name];
 
 	const graphqlEntityType =

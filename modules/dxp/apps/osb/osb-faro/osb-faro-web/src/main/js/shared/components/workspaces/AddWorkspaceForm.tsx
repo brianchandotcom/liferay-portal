@@ -112,14 +112,6 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 				.then(() => {
 					setSubmitting(false);
 
-					if (
-						editing &&
-						project.getIn(['timeZone', 'timeZoneId']) !==
-							values.timeZoneId
-					) {
-						analytics.track('Updated Timezone');
-					}
-
 					if (initialFriendlyURL === newFriendlyURL) {
 						resetForm(values);
 					}

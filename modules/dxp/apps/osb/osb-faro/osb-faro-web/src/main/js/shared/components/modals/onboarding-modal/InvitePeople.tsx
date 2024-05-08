@@ -50,17 +50,9 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 					groupId,
 					roleName: UserRoleNames.Member
 				})
-				.then(users => {
+				.then(() => {
 					setLoading(false);
 					setSent(true);
-
-					analytics.track(
-						'Invited Users',
-						{
-							userIds: users.map(({id}) => id)
-						},
-						{ip: '0'}
-					);
 				})
 				.catch(() => {
 					addAlert({

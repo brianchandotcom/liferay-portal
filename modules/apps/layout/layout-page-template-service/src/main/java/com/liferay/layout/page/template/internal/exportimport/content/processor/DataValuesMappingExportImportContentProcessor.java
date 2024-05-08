@@ -22,9 +22,11 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
+import com.liferay.info.staging.InfoStagingClassMapperRegistry;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -218,10 +220,17 @@ public class DataValuesMappingExportImportContentProcessor
 			}
 			else if (Objects.equals(
 						itemJSONObject.get("type"),
-						LayoutDataItemTypeConstants.TYPE_FORM) ||
-					 Objects.equals(
-						 itemJSONObject.get("type"),
-						 LayoutDataItemTypeConstants.TYPE_ROW)) {
+						LayoutDataItemTypeConstants.TYPE_FORM)) {
+
+				_exportFormReferences(
+					itemJSONObject, portletDataContext, stagedModel);
+				_exportFormOrRowContentReferences(
+					exportReferencedContent, itemJSONObject, portletDataContext,
+					stagedModel);
+			}
+			else if (Objects.equals(
+						itemJSONObject.get("type"),
+						LayoutDataItemTypeConstants.TYPE_ROW)) {
 
 				_exportFormOrRowContentReferences(
 					exportReferencedContent, itemJSONObject, portletDataContext,
@@ -278,6 +287,42 @@ public class DataValuesMappingExportImportContentProcessor
 				stylesJSONObject.getJSONObject("backgroundImage"),
 				portletDataContext, stagedModel);
 		}
+	}
+
+	private void _exportFormReferences(
+		JSONObject itemJSONObject, PortletDataContext portletDataContext,
+		StagedModel stagedModel) {
+
+		if (!itemJSONObject.has("config")) {
+			return;
+		}
+
+		JSONObject configJSONObject = itemJSONObject.getJSONObject("config");
+
+		if (!configJSONObject.has("classNameId")) {
+			return;
+		}
+
+		long classNameId = configJSONObject.getLong("classNameId");
+
+		String className = StringPool.BLANK;
+
+		try {
+			className = _portal.getClassName(classNameId);
+		}
+		catch (RuntimeException runtimeException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(runtimeException);
+			}
+
+			return;
+		}
+
+		Element element = portletDataContext.getExportDataElement(stagedModel);
+
+		element.addAttribute(
+			"formClassName",
+			_infoStagingClassMapperRegistry.getStagingClassName(className));
 	}
 
 	private void _exportLayoutContentReference(
@@ -525,6 +570,28 @@ public class DataValuesMappingExportImportContentProcessor
 		}
 	}
 
+	private void _replaceFormImportContentReferences(
+		JSONObject itemJSONObject, PortletDataContext portletDataContext,
+		StagedModel stagedModel) {
+
+		if (!itemJSONObject.has("config")) {
+			return;
+		}
+
+		JSONObject configJSONObject = itemJSONObject.getJSONObject("config");
+
+		Element element = portletDataContext.getImportDataStagedModelElement(
+			stagedModel);
+
+		String formClassName = GetterUtil.getString(
+			element.attributeValue("formClassName"));
+
+		configJSONObject.put(
+			"classNameId",
+			_portal.getClassNameId(
+				_infoStagingClassMapperRegistry.getClassName(formClassName)));
+	}
+
 	private void _replaceFormOrRowImportContentReferences(
 		JSONObject itemJSONObject, PortletDataContext portletDataContext) {
 
@@ -580,10 +647,16 @@ public class DataValuesMappingExportImportContentProcessor
 			}
 			else if (Objects.equals(
 						itemJSONObject.get("type"),
-						LayoutDataItemTypeConstants.TYPE_FORM) ||
-					 Objects.equals(
-						 itemJSONObject.get("type"),
-						 LayoutDataItemTypeConstants.TYPE_ROW)) {
+						LayoutDataItemTypeConstants.TYPE_FORM)) {
+
+				_replaceFormImportContentReferences(
+					itemJSONObject, portletDataContext, stagedModel);
+				_replaceFormOrRowImportContentReferences(
+					itemJSONObject, portletDataContext);
+			}
+			else if (Objects.equals(
+						itemJSONObject.get("type"),
+						LayoutDataItemTypeConstants.TYPE_ROW)) {
 
 				_replaceFormOrRowImportContentReferences(
 					itemJSONObject, portletDataContext);
@@ -706,6 +779,9 @@ public class DataValuesMappingExportImportContentProcessor
 
 	@Reference
 	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
+
+	@Reference
+	private InfoStagingClassMapperRegistry _infoStagingClassMapperRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

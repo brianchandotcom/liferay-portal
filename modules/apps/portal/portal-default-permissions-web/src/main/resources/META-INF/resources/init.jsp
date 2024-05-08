@@ -20,7 +20,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.defaultpermissions.configuration.manager.PortalDefaultPermissionsConfigurationManager" %><%@
+page import="com.liferay.portal.defaultpermissions.kernel.configuration.manager.PortalDefaultPermissionsConfigurationManager" %><%@
 page import="com.liferay.portal.defaultpermissions.web.internal.constants.PortalDefaultPermissionsWebKeys" %><%@
 page import="com.liferay.portal.defaultpermissions.web.internal.display.context.BaseViewPortalDefaultPermissionsConfigurationDisplayContext" %><%@
 page import="com.liferay.portal.defaultpermissions.web.internal.display.context.EditPortalDefaultPermissionsConfigurationDisplayContext" %><%@

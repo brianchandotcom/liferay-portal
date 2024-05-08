@@ -5,7 +5,7 @@
 
 import {Page} from '@playwright/test';
 
-import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
 export class FragmentEditorPage {
 	readonly page: Page;

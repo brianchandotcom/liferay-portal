@@ -5,9 +5,9 @@
 
 import {Page} from '@playwright/test';
 
-import fillAndClickOutside from '../../../utils/fillAndClickOutside';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
-import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
+import fillAndClickOutside from '../../utils/fillAndClickOutside';
+import {PORTLET_URLS} from '../../utils/portletUrls';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
 export class FragmentsPage {
 	readonly page: Page;

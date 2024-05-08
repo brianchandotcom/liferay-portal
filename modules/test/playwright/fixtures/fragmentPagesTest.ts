@@ -5,8 +5,8 @@
 
 import {test} from '@playwright/test';
 
-import {FragmentEditorPage} from '../pages/FragmentEditorPage';
-import {FragmentsPage} from '../pages/FragmentsPage';
+import {FragmentEditorPage} from '../pages/fragment-web/FragmentEditorPage';
+import {FragmentsPage} from '../pages/fragment-web/FragmentsPage';
 
 const fragmentsPagesTest = test.extend<{
 	fragmentEditorPage: FragmentEditorPage;

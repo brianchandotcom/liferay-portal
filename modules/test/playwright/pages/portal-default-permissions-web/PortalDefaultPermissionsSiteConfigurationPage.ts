@@ -14,9 +14,9 @@ export class PortalDefaultPermissionsSiteConfigurationPage {
 	readonly editDefaultPermissionsFrame: FrameLocator;
 	readonly editPageButton: Locator;
 	readonly frameSaveButton: Locator;
-	readonly ownerUpdateDiscussionCheckbox: Locator;
 	readonly page: Page;
 	readonly portalDefaultPermissionsSearchContainer: Locator;
+	readonly powerUserUpdateDiscussionCheckbox: Locator;
 	readonly resetPageButton: Locator;
 	readonly saveButton: Locator;
 
@@ -47,9 +47,10 @@ export class PortalDefaultPermissionsSiteConfigurationPage {
 			'button',
 			{name: 'Save'}
 		);
-		this.ownerUpdateDiscussionCheckbox = this.editDefaultPermissionsFrame
-			.getByTestId('owner_ACTION_UPDATE_DISCUSSION')
-			.getByRole('checkbox');
+		this.powerUserUpdateDiscussionCheckbox =
+			this.editDefaultPermissionsFrame
+				.getByTestId('power-user_ACTION_UPDATE_DISCUSSION')
+				.getByRole('checkbox');
 	}
 
 	async goto(siteName: string) {

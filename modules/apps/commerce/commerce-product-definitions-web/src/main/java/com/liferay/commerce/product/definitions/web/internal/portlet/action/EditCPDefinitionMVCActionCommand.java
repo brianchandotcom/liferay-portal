@@ -9,6 +9,8 @@ import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.exception.CPDefinitionInventoryMaxOrderQuantityException;
 import com.liferay.commerce.exception.CPDefinitionInventoryMinOrderQuantityException;
 import com.liferay.commerce.exception.CPDefinitionInventoryMultipleOrderQuantityException;
@@ -401,6 +403,25 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return map;
+	}
+
+	private ServiceContext _getServiceContext(
+			ActionRequest actionRequest, CPDefinition cpDefinition)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CPDefinition.class.getName(), actionRequest);
+
+		serviceContext.setAssetCategoryIds(
+			_assetCategoryLocalService.getCategoryIds(
+				CPDefinition.class.getName(),
+				cpDefinition.getCPDefinitionId()));
+		serviceContext.setAssetTagNames(
+			_assetTagLocalService.getTagNames(
+				CPDefinition.class.getName(),
+				cpDefinition.getCPDefinitionId()));
+
+		return serviceContext;
 	}
 
 	private void _reindexCPDefinition(long cpDefinitionId)
@@ -811,6 +832,12 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
 	private CommerceCatalogService _commerceCatalogService;
 
 	@Reference
@@ -869,10 +896,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			_updateShippingInfo(_actionRequest, cpDefinitionId);
 			_updateTaxCategoryInfo(_actionRequest, cpDefinitionId);
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CPDefinition.class.getName(), _actionRequest);
-
-			_updateCPDefinition(_cpDefinition, serviceContext);
+			_updateCPDefinition(
+				_cpDefinition,
+				_getServiceContext(_actionRequest, _cpDefinition));
 
 			return null;
 		}
@@ -900,10 +926,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			_updateSubscriptionInfo(_actionRequest, _cpDefinition);
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CPDefinition.class.getName(), _actionRequest);
-
-			_updateCPDefinition(_cpDefinition, serviceContext);
+			_updateCPDefinition(
+				_cpDefinition,
+				_getServiceContext(_actionRequest, _cpDefinition));
 
 			return null;
 		}
@@ -924,10 +949,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		@Override
 		public CPDefinition call() throws Exception {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CPDefinition.class.getName(), _actionRequest);
-
-			return _updateCPDefinition(_cpDefinition, serviceContext);
+			return _updateCPDefinition(
+				_cpDefinition,
+				_getServiceContext(_actionRequest, _cpDefinition));
 		}
 
 		private CPDefinitionUpdateCallable(
@@ -953,10 +977,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			_updateVisibility(
 				_actionRequest, _cpDefinition.getCPDefinitionId());
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CPDefinition.class.getName(), _actionRequest);
-
-			_updateCPDefinition(_cpDefinition, serviceContext);
+			_updateCPDefinition(
+				_cpDefinition,
+				_getServiceContext(_actionRequest, _cpDefinition));
 
 			return null;
 		}

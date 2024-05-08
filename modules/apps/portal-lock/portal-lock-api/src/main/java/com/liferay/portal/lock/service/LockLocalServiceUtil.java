@@ -289,6 +289,12 @@ public class LockLocalServiceUtil {
 		return getService().getLocks(start, end);
 	}
 
+	public static List<Lock> getLocks(
+		long companyId, long userId, String className) {
+
+		return getService().getLocks(companyId, userId, className);
+	}
+
 	/**
 	 * Returns the number of locks.
 	 *

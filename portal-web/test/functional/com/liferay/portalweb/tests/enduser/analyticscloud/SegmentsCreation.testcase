@@ -1292,13 +1292,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8475 | Test Summary: Dynamic segment members preview in real time"
-	@ignore = "true"
 	@priority = 3
 	test CanPreviewDynamicSegmentMembers {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-14011
-
 		property test.run.type = "single";
 
 		var emailList = "userea@liferay.com,user1@liferay.com";
@@ -1324,14 +1319,16 @@ definition {
 
 		task ("View the page as different users") {
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4,5",
 				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
-			ACUtils.closeAllSessionsAndWait();
-
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
@@ -1360,7 +1357,7 @@ definition {
 
 			ACUtils.viewNameList(nameList = ${usernameList});
 
-			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
+			ACUtils.closeModal();
 		}
 
 		task ("Add a jobTitle criteria") {
@@ -1376,9 +1373,7 @@ definition {
 
 			ACUtils.viewNameList(nameList = "user1 user1");
 
-			AssertElementNotPresent(
-				key_nameList = "userfn userln",
-				locator1 = "ACUtils#NAME_LIST");
+			ACUtils.closeModal();
 		}
 	}
 

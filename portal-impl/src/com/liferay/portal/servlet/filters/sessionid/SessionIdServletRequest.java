@@ -5,12 +5,10 @@
 
 package com.liferay.portal.servlet.filters.sessionid;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -70,15 +68,6 @@ public class SessionIdServletRequest extends HttpServletRequestWrapper {
 		Cookie cookie = new Cookie(_JSESSIONID, httpSession.getId());
 
 		cookie.setMaxAge(-1);
-
-		String contextPath = getContextPath();
-
-		if (Validator.isNotNull(contextPath)) {
-			cookie.setPath(contextPath);
-		}
-		else {
-			cookie.setPath(StringPool.SLASH);
-		}
 
 		CookiesManagerUtil.addCookie(
 			CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,

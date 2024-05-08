@@ -1710,7 +1710,6 @@ public class LanguageImpl implements Language, Serializable {
 		}
 
 		languageIdCookie.setMaxAge(CookiesConstants.MAX_AGE);
-		languageIdCookie.setPath(StringPool.SLASH);
 
 		CookiesManagerUtil.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL, languageIdCookie,

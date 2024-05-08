@@ -14,10 +14,13 @@ import ActiveViewSelector from './ActiveViewSelector';
 import CreationMenu from './CreationMenu';
 import CustomViewsControls from './CustomViewsControls';
 import MainSearch from './MainSearch';
+import OrderDropdown from './OrderDropdown';
 import FiltersDropdown from './filters/FiltersDropdown';
 
 function NavBar({creationMenu, showSearch}) {
-	const [{customViewsEnabled, filters, views}] = useContext(ViewsContext);
+	const [{customViewsEnabled, filters, sorts, views}] = useContext(
+		ViewsContext
+	);
 
 	const [showMobile, setShowMobile] = useState(false);
 
@@ -30,6 +33,12 @@ function NavBar({creationMenu, showSearch}) {
 				{!!filters.length && (
 					<ManagementToolbar.Item>
 						<FiltersDropdown />
+					</ManagementToolbar.Item>
+				)}
+
+				{!!sorts.length && Liferay.FeatureFlags['LPD-19465'] && (
+					<ManagementToolbar.Item>
+						<OrderDropdown />
 					</ManagementToolbar.Item>
 				)}
 			</ManagementToolbar.ItemList>

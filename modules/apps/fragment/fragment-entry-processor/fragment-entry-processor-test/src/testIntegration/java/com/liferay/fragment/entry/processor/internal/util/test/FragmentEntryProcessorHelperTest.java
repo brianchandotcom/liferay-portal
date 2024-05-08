@@ -6,6 +6,10 @@
 package com.liferay.fragment.entry.processor.internal.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
@@ -68,6 +72,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -474,6 +479,96 @@ public class FragmentEntryProcessorHelperTest {
 				fieldId, LocaleUtil.getSiteDefault()));
 	}
 
+	@FeatureFlags("LPD-11377")
+	@Test
+	public void testGetRepeatableAssetTags() throws Exception {
+		JournalArticle journalArticle = _addJournalArticle(
+			_addImageFileEntry(), "ImageFieldName",
+			RandomTestUtil.randomString());
+
+		JSONObject jsonObject = JSONUtil.put(
+			"className", JournalArticle.class.getName()
+		).put(
+			"classNameId",
+			_portal.getClassNameId(JournalArticle.class.getName())
+		).put(
+			"classPK", journalArticle.getResourcePrimKey()
+		).put(
+			"fieldId", "AssetTag_tagNames"
+		);
+
+		Assert.assertEquals(
+			"one",
+			_getFieldValue(
+				jsonObject.put(
+					"config", JSONUtil.put("iterationType", "first")),
+				LocaleUtil.SPAIN));
+
+		Assert.assertEquals(
+			"two",
+			_getFieldValue(
+				jsonObject.put(
+					"config",
+					JSONUtil.put(
+						"iterationNumber", "2"
+					).put(
+						"iterationType", "iteration-number"
+					)),
+				LocaleUtil.SPAIN));
+
+		Assert.assertEquals(
+			"three",
+			_getFieldValue(
+				jsonObject.put("config", JSONUtil.put("iterationType", "last")),
+				LocaleUtil.SPAIN));
+	}
+
+	@FeatureFlags("LPD-11377")
+	@Test
+	public void testGetRepeatableAssetVocabularies() throws Exception {
+		JournalArticle journalArticle = _addJournalArticle(
+			_addImageFileEntry(), "ImageFieldName",
+			RandomTestUtil.randomString());
+
+		JSONObject jsonObject = JSONUtil.put(
+			"className", JournalArticle.class.getName()
+		).put(
+			"classNameId",
+			_portal.getClassNameId(JournalArticle.class.getName())
+		).put(
+			"classPK", journalArticle.getResourcePrimKey()
+		).put(
+			"fieldId",
+			AssetVocabulary.class.getSimpleName() + StringPool.UNDERLINE +
+				_assetVocabulary.getVocabularyId()
+		);
+
+		Assert.assertEquals(
+			"category1",
+			_getFieldValue(
+				jsonObject.put(
+					"config", JSONUtil.put("iterationType", "first")),
+				LocaleUtil.SPAIN));
+
+		Assert.assertEquals(
+			"category2",
+			_getFieldValue(
+				jsonObject.put(
+					"config",
+					JSONUtil.put(
+						"iterationNumber", "2"
+					).put(
+						"iterationType", "iteration-number"
+					)),
+				LocaleUtil.SPAIN));
+
+		Assert.assertEquals(
+			"category3",
+			_getFieldValue(
+				jsonObject.put("config", JSONUtil.put("iterationType", "last")),
+				LocaleUtil.SPAIN));
+	}
+
 	private DDMStructure _addDDMStructure(Group group, String content)
 		throws Exception {
 
@@ -529,6 +624,28 @@ public class FragmentEntryProcessorHelperTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		_assetVocabulary = _assetVocabularyLocalService.addVocabulary(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(), "category1",
+			_assetVocabulary.getVocabularyId(), serviceContext);
+
+		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(), "category2",
+			_assetVocabulary.getVocabularyId(), serviceContext);
+
+		AssetCategory assetCategory3 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(), "category3",
+			_assetVocabulary.getVocabularyId(), serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {
+				assetCategory1.getCategoryId(), assetCategory2.getCategoryId(),
+				assetCategory3.getCategoryId()
+			});
 
 		serviceContext.setAssetTagNames(new String[] {"one", "two", "three"});
 
@@ -688,6 +805,14 @@ public class FragmentEntryProcessorHelperTest {
 
 	@Inject(filter = "ddm.form.deserializer.type=json")
 	private static DDMFormDeserializer _jsonDDMFormDeserializer;
+
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	private AssetVocabulary _assetVocabulary;
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

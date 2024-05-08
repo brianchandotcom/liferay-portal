@@ -32,7 +32,7 @@ public class TermsQueryTranslatorImpl implements TermsQueryTranslator {
 		}
 
 		ArrayList<String> termsList = new ArrayList<>();
-		BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
+		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
 		for (String term : terms) {
 			termsList.add(term);

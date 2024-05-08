@@ -29,23 +29,23 @@ interface IFDSCardsSection {
 interface ICardsSection {
 	externalReferenceCode?: IFDSCardsSection['externalReferenceCode'];
 	field?: IField;
+	fieldTreeItems: Array<IFieldTreeItem>;
 	label: string;
 	name: IFDSCardsSection['name'];
-	treeItems: Array<IFieldTreeItem>;
 }
 
 export default function Cards(props: IFDSViewSectionProps) {
-	const {fdsView, treeItems} = props;
+	const {fdsView, fieldTreeItems} = props;
 
 	const [cardsSections, setCardsSections] = useState<Array<ICardsSection>>([
-		{label: Liferay.Language.get('title'), name: 'title', treeItems},
+		{fieldTreeItems, label: Liferay.Language.get('title'), name: 'title'},
 		{
+			fieldTreeItems,
 			label: Liferay.Language.get('description'),
 			name: 'description',
-			treeItems,
 		},
-		{label: Liferay.Language.get('image'), name: 'image', treeItems},
-		{label: Liferay.Language.get('symbol'), name: 'symbol', treeItems},
+		{fieldTreeItems, label: Liferay.Language.get('image'), name: 'image'},
+		{fieldTreeItems, label: Liferay.Language.get('symbol'), name: 'symbol'},
 	]);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 
@@ -79,9 +79,9 @@ export default function Cards(props: IFDSViewSectionProps) {
 
 				if (!fdsCardsSection) {
 					return {
+						fieldTreeItems,
 						label: cardsSection.label,
 						name: cardsSection.name,
-						treeItems,
 					};
 				}
 
@@ -298,7 +298,7 @@ function CardsSection({
 	onSelect,
 	saveButtonDisabled,
 }: ICardsSectionProps) {
-	const {field, label, treeItems} = cardsSection;
+	const {field, fieldTreeItems, label} = cardsSection;
 
 	const openSelectFieldModal = () => {
 		openModal({
@@ -306,6 +306,7 @@ function CardsSection({
 				<FieldSelectModalContent
 					{...modalProps}
 					closeModal={closeModal}
+					fieldTreeItems={fieldTreeItems}
 					onSaveButtonClick={({
 						selectedFields,
 					}: {
@@ -318,7 +319,6 @@ function CardsSection({
 					}}
 					saveButtonDisabled={saveButtonDisabled}
 					selectedFields={field ? [field] : []}
-					treeItems={treeItems}
 				/>
 			),
 			size: 'full-screen',

@@ -13,12 +13,12 @@ interface IFDSViewSectionProps {
 	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
+	fieldTreeItems: Array<IFieldTreeItem>;
 	namespace: string;
 	onActiveSectionChange: (section: number) => void;
 	onFDSViewUpdate: (data: FDSViewType) => void;
 	saveFDSFieldsURL: string;
 	spritemap: string;
-	treeItems: Array<IFieldTreeItem>;
 }
 interface IFDSViewProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];

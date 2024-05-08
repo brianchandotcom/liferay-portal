@@ -8,6 +8,7 @@ package com.liferay.saml.internal.servlet.filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Stian Sigvartsen
@@ -34,6 +36,19 @@ public class AssertionConsumerServiceSamlPortalFilter
 	extends BaseSamlPortalFilter {
 
 	@Override
+	public boolean isFilterEnabled() {
+		return _samlProviderConfigurationHelper.isEnabled();
+	}
+
+	@Override
+	public boolean isFilterEnabled(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		return _samlProviderConfigurationHelper.isEnabled();
+	}
+
+	@Override
 	protected void doProcessFilter(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
@@ -51,5 +66,8 @@ public class AssertionConsumerServiceSamlPortalFilter
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssertionConsumerServiceSamlPortalFilter.class);
+
+	@Reference
+	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 
 }

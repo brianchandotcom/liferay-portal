@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.saml.helper.SamlHttpRequestHelper;
 import com.liferay.saml.persistence.model.SamlSpSession;
+import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.servlet.profile.SingleLogoutProfile;
 
 import javax.servlet.Filter;
@@ -46,7 +47,7 @@ public class SpSessionTerminationSamlPortalFilter extends BaseSamlPortalFilter {
 
 	@Override
 	public boolean isFilterEnabled() {
-		return true;
+		return _samlProviderConfigurationHelper.isEnabled();
 	}
 
 	@Override
@@ -54,7 +55,9 @@ public class SpSessionTerminationSamlPortalFilter extends BaseSamlPortalFilter {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		if (httpServletRequest.getSession(false) != null) {
+		if (_samlProviderConfigurationHelper.isEnabled() &&
+			(httpServletRequest.getSession(false) != null)) {
+
 			return true;
 		}
 
@@ -98,6 +101,9 @@ public class SpSessionTerminationSamlPortalFilter extends BaseSamlPortalFilter {
 
 	@Reference
 	private SamlHttpRequestHelper _samlHttpRequestHelper;
+
+	@Reference
+	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 
 	private ServletContext _servletContext;
 

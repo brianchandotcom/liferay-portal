@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
 import java.io.PrintWriter;
 
@@ -47,7 +48,11 @@ public class SameSiteLaxCookiesSamlPortalFilter extends BaseSamlPortalFilter {
 
 	@Override
 	public boolean isFilterEnabled() {
-		return _enabled;
+		if (_samlProviderConfigurationHelper.isEnabled()) {
+			return _enabled;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -55,7 +60,8 @@ public class SameSiteLaxCookiesSamlPortalFilter extends BaseSamlPortalFilter {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		if (Objects.equals(httpServletRequest.getMethod(), "GET") ||
+		if (!_samlProviderConfigurationHelper.isEnabled() ||
+			Objects.equals(httpServletRequest.getMethod(), "GET") ||
 			ParamUtil.getBoolean(httpServletRequest, "continue") ||
 			(!ParamUtil.getBoolean(httpServletRequest, "noscript") &&
 			 (httpServletRequest.getSession(false) != null))) {
@@ -147,5 +153,8 @@ public class SameSiteLaxCookiesSamlPortalFilter extends BaseSamlPortalFilter {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 
 }

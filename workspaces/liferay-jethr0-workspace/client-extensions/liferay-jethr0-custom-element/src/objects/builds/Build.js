@@ -23,7 +23,7 @@ export default class Build {
 		this.jobId = jobId;
 		this.name = name;
 
-		this.parameters = []
+		this.parameters = [];
 
 		if (parameters) {
 			this.parameters = JSON.parse(parameters);

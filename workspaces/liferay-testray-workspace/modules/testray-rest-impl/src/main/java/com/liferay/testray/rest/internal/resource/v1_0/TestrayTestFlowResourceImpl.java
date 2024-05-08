@@ -202,15 +202,14 @@ public class TestrayTestFlowResourceImpl
 
 		params.add(testraySubtaskId);
 
-		int rows = TestrayUtil.executeUpdate(
-			StringUtil.replace(
-				sb.toString(), "[%COMPANY_ID%]",
-				String.valueOf(contextCompany.getCompanyId())),
-			params);
+		testrayTestFlow.setCaseResultAmount(
+			TestrayUtil.executeUpdate(
+				StringUtil.replace(
+					sb.toString(), "[%COMPANY_ID%]",
+					String.valueOf(contextCompany.getCompanyId())),
+				params));
 
 		EntityCacheUtil.clearCache();
-
-		testrayTestFlow.setCaseResultAmount(rows);
 
 		return testrayTestFlow;
 	}

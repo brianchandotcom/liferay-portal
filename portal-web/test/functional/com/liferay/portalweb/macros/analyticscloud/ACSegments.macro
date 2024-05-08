@@ -616,10 +616,6 @@ definition {
 	macro selectDistributionByAttribute(attribute = null) {
 		Click(locator1 = "ACSegments#ATTRIBUTE_TEXT_INPUT");
 
-		Type(
-			locator1 = "ACSegments#ATTRIBUTE_TEXT_INPUT",
-			value1 = ${attribute});
-
 		Click(
 			locator1 = "ACSegments#ATTRIBUTE_DROPDOWN_MENU_ITEM",
 			menuItem = ${attribute});

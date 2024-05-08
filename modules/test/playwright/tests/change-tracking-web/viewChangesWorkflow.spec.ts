@@ -9,6 +9,7 @@ import moment from 'moment';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
+import {ApiHelpers} from '../../helpers/ApiHelpers';
 import getRandomString from '../../utils/getRandomString';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 
@@ -321,4 +322,60 @@ test('LPD-24645 Workflow tab is not present for draft', async ({
 	await changeTrackingPage.reviewChange(title);
 
 	await changeTrackingPage.viewDisplayTab('Workflow', {isHidden: true});
+});
+
+test('LPD-22771 Assign button added to workflow view', async ({
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	await changeTrackingPage.reviewChange(journalName);
+
+	await changeTrackingPage.selectTab('Workflow');
+
+	const assignButton = page.getByRole('button', {
+		exact: true,
+		name: 'Assign to...',
+	});
+
+	await expect(assignButton).toBeVisible();
+
+	await assignButton.click();
+
+	const doneButton = page
+		.frameLocator('iframe[title="Assign to..."]')
+		.getByRole('button', {exact: true, name: 'Done'});
+
+	await expect(doneButton).toBeVisible();
+
+	await doneButton.click();
+
+	await expect(
+		page.getByRole('cell').and(page.getByText('Test Test'))
+	).toBeVisible();
+});
+
+test('LPD-22771 Assign button is not visible in other publications', async ({
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	const apiHelpers = new ApiHelpers(page);
+
+	await apiHelpers.headlessChangeTracking.checkoutCTCollection('0');
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	await changeTrackingPage.reviewChange(journalName);
+
+	await changeTrackingPage.selectTab('Workflow');
+
+	const assignButton = page.getByRole('button', {
+		exact: true,
+		name: 'Assign to...',
+	});
+
+	await expect(assignButton).toBeVisible({visible: false});
 });

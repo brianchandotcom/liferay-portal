@@ -11,14 +11,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.felix.scr.impl.metadata.ComponentMetadata;
@@ -35,6 +35,10 @@ public class DotGraphUtil {
 	public static void endRegister(
 		AbstractComponentManager<?> abstractComponentManager) {
 
+		if (!_ENABLED) {
+			return;
+		}
+
 		Deque<Long> componentIdDeque = _componentIdDequeThreadLocal.get();
 
 		componentIdDeque.pop();
@@ -42,6 +46,10 @@ public class DotGraphUtil {
 
 	public static void startRegister(
 		AbstractComponentManager<?> abstractComponentManager) {
+
+		if (!_ENABLED) {
+			return;
+		}
 
 		Long id = abstractComponentManager.getId();
 
@@ -159,8 +167,10 @@ public class DotGraphUtil {
 		};
 
 	private static final AtomicLong _counter = new AtomicLong();
-	private static final List<Map.Entry<Long, Long>> _edges = new ArrayList<>();
-	private static final Map<Long, String> _nodes = new HashMap<>();
+	private static final List<Map.Entry<Long, Long>> _edges =
+		new CopyOnWriteArrayList<>();
+	private static final Map<Long, String> _nodes =
+		new ConcurrentHashMap<>();
 
 	static {
 		if (_ENABLED) {

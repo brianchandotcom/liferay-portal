@@ -7,7 +7,7 @@ export {default as InputAssetLinkDropdownDefaultPropsTransformer} from './InputA
 export {default as AssetCategoriesSelector} from './asset_categories_selector/AssetCategoriesSelector';
 export {default as AssetCategoriesSelectorTag} from './asset_categories_selector/AssetCategoriesSelectorTag';
 export {default as AssetVocabularyCategoriesSelector} from './asset_categories_selector/AssetVocabularyCategoriesSelector';
-export {assetVocabularyVisibilityTypes} from './asset_categories_selector/assetVocabularyVisibilityTypes';
+export {ASSET_VOCABULARY_VISIBILITY_TYPES} from './asset_categories_selector/assetVocabularyVisibilityTypes';
 export {default as AssetTagsSelector} from './asset_tags_selector/AssetTagsSelector';
 export {default as AssetTagsSelectorTag} from './asset_tags_selector/AssetTagsSelectorTag';
 export {default as AssetCategoriesNavigationTreeView} from './asset_categories_navigation/AssetCategoriesNavigationTreeView';

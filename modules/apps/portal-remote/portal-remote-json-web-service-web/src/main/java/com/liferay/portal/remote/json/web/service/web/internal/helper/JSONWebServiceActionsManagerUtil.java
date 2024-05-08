@@ -6,17 +6,11 @@
 package com.liferay.portal.remote.json.web.service.web.internal.helper;
 
 import com.liferay.portal.kernel.module.service.Snapshot;
-import com.liferay.portal.remote.json.web.service.JSONWebServiceAction;
 import com.liferay.portal.remote.json.web.service.JSONWebServiceActionMapping;
 import com.liferay.portal.remote.json.web.service.JSONWebServiceActionsManager;
-import com.liferay.portal.remote.json.web.service.exception.NoSuchJSONWebServiceException;
-
-import java.lang.reflect.Method;
 
 import java.util.List;
 import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Igor Spasic
@@ -28,17 +22,6 @@ public class JSONWebServiceActionsManagerUtil {
 			_jsonWebServiceActionsManagerSnapshot.get();
 
 		return jsonWebServiceActionsManager.getContextNames();
-	}
-
-	public static JSONWebServiceAction getJSONWebServiceAction(
-			HttpServletRequest httpServletRequest)
-		throws NoSuchJSONWebServiceException {
-
-		JSONWebServiceActionsManager jsonWebServiceActionsManager =
-			_jsonWebServiceActionsManagerSnapshot.get();
-
-		return jsonWebServiceActionsManager.getJSONWebServiceAction(
-			httpServletRequest);
 	}
 
 	public static JSONWebServiceActionMapping getJSONWebServiceActionMapping(
@@ -59,24 +42,6 @@ public class JSONWebServiceActionsManagerUtil {
 
 		return jsonWebServiceActionsManager.getJSONWebServiceActionMappings(
 			contextName);
-	}
-
-	public static JSONWebServiceActionsManager
-		getJSONWebServiceActionsManager() {
-
-		return _jsonWebServiceActionsManagerSnapshot.get();
-	}
-
-	public static void registerJSONWebServiceAction(
-		String contextName, String contextPath, Object actionObject,
-		Class<?> actionClass, Method actionMethod, String path, String method) {
-
-		JSONWebServiceActionsManager jsonWebServiceActionsManager =
-			_jsonWebServiceActionsManagerSnapshot.get();
-
-		jsonWebServiceActionsManager.registerJSONWebServiceAction(
-			contextName, contextPath, actionObject, actionClass, actionMethod,
-			path, method);
 	}
 
 	private static final Snapshot<JSONWebServiceActionsManager>

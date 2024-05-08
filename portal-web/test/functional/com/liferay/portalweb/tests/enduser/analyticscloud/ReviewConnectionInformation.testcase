@@ -48,12 +48,8 @@ definition {
 	}
 
 	@description = "Story: LRAC-11044 | Automation ID: LRAC-12677 | Test Summary: Check that you can modify the sync of contacts in the people review sidebar"
-	@ignore = "true"
 	@priority = 4
 	test CanModifyContactsSyncInPeopleReviewSidebar {
-
-		// AC Bug ticket: LRAC-15293
-
 		task ("Create 3 account groups") {
 			for (var accountGroupName : list "Brazilian,European,North American") {
 				JSONAccountGroup.addAccountGroup(accountGroupName = ${accountGroupName});

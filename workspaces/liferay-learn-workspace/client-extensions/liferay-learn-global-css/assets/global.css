@@ -710,7 +710,7 @@ pre[class*='language-'] {
 	}
 
 	h4 {
-		color: #000;
+		color: var(--body-color, #272833);
 		font-size: 1.125rem;
 		margin: 0;
 	}

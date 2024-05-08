@@ -130,9 +130,12 @@ export interface IQuickActions extends IBaseActions {
 	onClick: Function;
 }
 
-type TSorting = {
+export type TSorting = {
+	active?: boolean;
+	default?: boolean;
 	direction?: 'asc' | 'desc';
 	key?: string;
+	label?: string;
 };
 
 type TViews = {

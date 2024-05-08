@@ -121,9 +121,12 @@ export interface IItemActionsData {
 export interface IQuickActions extends IBaseActions {
 	onClick: Function;
 }
-declare type TSorting = {
+export declare type TSorting = {
+	active?: boolean;
+	default?: boolean;
 	direction?: 'asc' | 'desc';
 	key?: string;
+	label?: string;
 };
 declare type TViews = {
 	component?: any;

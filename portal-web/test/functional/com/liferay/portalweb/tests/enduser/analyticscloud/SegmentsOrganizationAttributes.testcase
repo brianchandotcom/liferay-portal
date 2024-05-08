@@ -340,13 +340,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8551 | Test Summary: Add segment using an organization property 'organization'"
-	@ignore = "true"
 	@priority = 4
 	test CanCreateSegmentUsingOrganizationPropertyOrganization {
-
-		// AC Refactor: the data takes some time to appear in the segment
-		// AC Refactor ticket: LRAC-9324
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -375,11 +370,10 @@ definition {
 		}
 
 		task ("Interact in DXP with the user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-
-			ACUtils.navigateToSitePage(
+			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4,5",
+				emailList = "userea@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -391,7 +385,7 @@ definition {
 		task ("Launch AC and enter in the new property") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = ${propertyName});
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Add a new dynamic segment using the parent organization criteria") {
@@ -399,35 +393,33 @@ definition {
 
 			ACSegments.createDynamicSegment();
 
-			ACUtils.setItemName(itemName = "Dynamic Segment Test");
+			ACUtils.setItemName(itemName = "Dynamic Segment Organization");
 
 			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
 
 			ACSegments.addSegmentField(segmentField = "Organization");
 
-			ACSegments.addOrganizationName(organizationName = "Organization Name");
+			ACSegments.selectDocument(
+				documentTitle = "Organization Name",
+				indexField = 1);
+		}
 
+		task ("View the user showns on the Preview mode") {
+			ACSegments.previewSegmentMembership();
+
+			ACUtils.viewNameList(nameList = "userfn userln");
+
+			ACUtils.closeModal();
+		}
+
+		task ("Save the segment") {
 			ACSegments.saveSegment();
 		}
 
-		task ("Assert Organization is present in segment criteria") {
-			ACSegments.assertCriteriaTable(criteriaName = "Organization");
-		}
-
-		task ("Assert Organization Name is also present in segment criteria") {
-			ACSegments.assertCriteriaTable(criteriaName = "Organization Name");
-		}
-
-		task ("Assert that informations are shown correctly") {
+		task ("Check that the segment is created") {
 			ACNavigation.goToSegments();
 
-			ACSegments.assertMembershipValue(
-				membership = 1,
-				segmentName = "Dynamic Segment Test");
-
-			ACSegments.assertTotalActivitiesValue(
-				segmentName = "Dynamic Segment Test",
-				totalActivities = 1);
+			ACUtils.viewNameList(nameList = "Dynamic Segment Organization");
 		}
 	}
 

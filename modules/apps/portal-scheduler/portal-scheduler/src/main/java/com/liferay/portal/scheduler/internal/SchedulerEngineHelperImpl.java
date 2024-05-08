@@ -9,7 +9,6 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterableContextThreadLocal;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.scheduler.internal.configuration.SchedulerEngineHelperConfiguration;
 import com.liferay.portal.scheduler.internal.messaging.config.ScriptingMessageListener;
 
 import java.util.ArrayList;
@@ -56,7 +54,6 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -336,13 +333,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_bundleContext = null;
 	}
 
-	@Modified
-	protected void modified(Map<String, Object> properties) throws Exception {
-		_schedulerEngineHelperConfiguration =
-			ConfigurableUtil.createConfigurable(
-				SchedulerEngineHelperConfiguration.class, properties);
-	}
-
 	private void _registerMessaging(
 		BundleContext bundleContext, String destinationName,
 		MessageListener messageListener) {
@@ -388,8 +378,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	@Reference(target = "(scheduler.engine.proxy=true)")
 	private SchedulerEngine _schedulerEngine;
 
-	private volatile SchedulerEngineHelperConfiguration
-		_schedulerEngineHelperConfiguration;
 	private ServiceTracker<SchedulerJobConfiguration, SchedulerJobConfiguration>
 		_schedulerJobConfigurationServiceTracker;
 	private final List<ServiceRegistration<?>> _serviceRegistrations =

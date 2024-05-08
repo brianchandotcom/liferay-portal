@@ -60,7 +60,7 @@ components:
             type: object
         TestrayRoutineMetric:
             properties:
-                createDate:
+                dueDate:
                     format: date-time
                     type: string
                 testrayRoutineId:

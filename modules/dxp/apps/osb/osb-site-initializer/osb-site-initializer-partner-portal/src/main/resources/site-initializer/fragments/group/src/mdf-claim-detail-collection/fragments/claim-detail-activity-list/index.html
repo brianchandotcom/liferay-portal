@@ -173,14 +173,14 @@
 											Event Program
 										</div>
 
-										[#if (activity.eventProgram?has_content)!false ]
+										[#if (activity.eventProgramFile?has_content)!false ]
 											<a class="align-items-end card-interactive d-flex mb-1 p-3 panel panel-secondary text-decoration-none" href="${activity.eventProgramFile.link.href}">
 												<span class="mr-2 text-neutral-5">
 													[@clay.icon symbol="document-default" /]
 												</span>
 
 												<div class="text-neutral-9">
-													${activity.eventProgram.name?keep_before("#")}
+													${activity.eventProgramFile.name?keep_before("#")}
 												</div>
 											</a>
 										[/#if]

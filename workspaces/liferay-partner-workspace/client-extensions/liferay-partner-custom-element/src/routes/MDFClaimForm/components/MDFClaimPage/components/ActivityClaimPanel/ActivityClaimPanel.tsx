@@ -247,28 +247,29 @@ const ActivityClaimPanel = ({
 							/>
 						))}
 
-							{isBudgetSelected &&
+						{isBudgetSelected &&
 							errors?.activities &&
 							!isBudgetSelected.includes(activityIndex) &&
 							(isButtonClicked || isEdit) && (
-									<>
-										{((errors.activities[activityIndex] as {
-											budgets?: boolean;
-										})?.budgets) && (
+								<>
+									{(errors.activities[activityIndex] as {
+										budgets?: boolean;
+									})?.budgets && (
 										<ClayAlert
 											displayType="danger"
 											hideCloseIcon={true}
 										>
 											{
-												(errors?.activities[activityIndex] as {
+												(errors?.activities[
+													activityIndex
+												] as {
 													budgets?: string;
 												})?.budgets
 											}
 										</ClayAlert>
-										)}
-									</>
-								)
-							}
+									)}
+								</>
+							)}
 
 						<div className="align-items-center d-flex justify-content-between">
 							<PRMFormik.Field

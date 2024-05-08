@@ -13,8 +13,8 @@ export default function getDTOFromMDFClaimBudget(
 ): MDFClaimBudgetDTO {
 	return {
 		expenseName: mdfClaimBudget.expenseName,
-		invoiceFile: mdfClaimBudget.invoiceFile?.documentId,
 		invoiceAmount: mdfClaimBudget.invoiceAmount,
+		invoiceFile: mdfClaimBudget.invoiceFile?.documentId,
 		r_accToMDFClmBgts_accountEntryId: companyId,
 		r_bgtToMDFClmBgts_c_budgetId:
 			mdfClaimBudget.r_bgtToMDFClmBgts_c_budgetId,

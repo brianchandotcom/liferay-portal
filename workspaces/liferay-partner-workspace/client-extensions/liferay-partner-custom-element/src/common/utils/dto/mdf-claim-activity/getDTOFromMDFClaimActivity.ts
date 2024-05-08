@@ -14,7 +14,8 @@ export default function getDTOFromMDFClaimActivity(
 	return {
 		currency: mdfClaimActivity.currency,
 		eventProgramFile: mdfClaimActivity.eventProgramFile?.documentId,
-		listOfQualifiedLeadsFile: mdfClaimActivity.listOfQualifiedLeadsFile?.documentId,
+		listOfQualifiedLeadsFile:
+			mdfClaimActivity.listOfQualifiedLeadsFile?.documentId,
 		metrics: mdfClaimActivity.metrics,
 		name: mdfClaimActivity.name,
 		r_accToMDFClmActs_accountEntryId: companyId,
@@ -23,7 +24,8 @@ export default function getDTOFromMDFClaimActivity(
 		r_mdfClmToMDFClmActs_c_mdfClaimId: mdfClaimId,
 		selected: mdfClaimActivity.selected,
 		telemarketingMetrics: mdfClaimActivity.telemarketingMetrics,
-		telemarketingScriptFile: mdfClaimActivity.telemarketingScriptFile?.documentId,
+		telemarketingScriptFile:
+			mdfClaimActivity.telemarketingScriptFile?.documentId,
 		totalCost: mdfClaimActivity.totalCost,
 		typeActivity: mdfClaimActivity.typeActivity,
 		videoLink: mdfClaimActivity.videoLink,

@@ -38,8 +38,8 @@ export function getMDFClaimFromDTO(mdfClaim: MDFClaimDTO): MDFClaim {
 								expenseName,
 								externalReferenceCode,
 								id,
-								invoiceFile,
 								invoiceAmount,
+								invoiceFile,
 								r_bgtToMDFClmBgts_c_budgetId,
 								selected,
 							} = budgetItem;
@@ -48,10 +48,10 @@ export function getMDFClaimFromDTO(mdfClaim: MDFClaimDTO): MDFClaim {
 								expenseName,
 								externalReferenceCode,
 								id,
+								invoiceAmount,
 								invoiceFile:
 									invoiceFile &&
 									getLiferayFileFromAttachment(invoiceFile),
-								invoiceAmount,
 								r_bgtToMDFClmBgts_c_budgetId,
 								selected,
 							};
@@ -73,7 +73,7 @@ export function getMDFClaimFromDTO(mdfClaim: MDFClaimDTO): MDFClaim {
 					selected,
 					telemarketingMetrics,
 					telemarketingScriptFile:
-					telemarketingScriptFile &&
+						telemarketingScriptFile &&
 						getLiferayFileFromAttachment(telemarketingScriptFile),
 					totalCost,
 					typeActivity,

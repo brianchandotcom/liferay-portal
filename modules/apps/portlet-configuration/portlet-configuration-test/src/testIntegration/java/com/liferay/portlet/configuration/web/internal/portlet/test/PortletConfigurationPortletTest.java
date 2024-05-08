@@ -112,9 +112,10 @@ public class PortletConfigurationPortletTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
 
-		_company = _companyLocalService.getCompany(_group.getCompanyId());
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test
@@ -269,21 +270,19 @@ public class PortletConfigurationPortletTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockActionRequest.setParameter("scope", "company");
-
-		mockHttpServletRequest.setParameter("scope", "company");
-
-		mockActionRequest.setParameter(
-			"portletResource", _testPortlet.getPortletId());
-
 		mockHttpServletRequest.setParameter(
 			"portletResource", _testPortlet.getPortletId());
+		mockHttpServletRequest.setParameter("scope", "company");
 
 		mockActionRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
 
 		mockActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+
+		mockActionRequest.setParameter(
+			"portletResource", _testPortlet.getPortletId());
+		mockActionRequest.setParameter("scope", "company");
 
 		return mockActionRequest;
 	}

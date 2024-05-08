@@ -1540,6 +1540,51 @@
 					]
 				}
 			],
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"externalReferenceCode": "R_APPLICATION_TO_EVALUATIONS",
+					"label": {
+						"en_US": "Application to Evaluations"
+					},
+					"name": "applicationToEvaluations",
+					"objectDefinitionExternalReferenceCode1": "D4B8_DISTRIBUTOR_APPLICATION",
+					"objectDefinitionExternalReferenceCode2": "D4B8_APPLICATION_EVALUATION",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "ApplicationEvaluation",
+					"objectDefinitionSystem2": false,
+					"objectField": {
+						"DBType": "Long",
+						"businessType": "Relationship",
+						"indexed": true,
+						"indexedAsKeyword": false,
+						"label": {
+							"en_US": "Application to Evaluations"
+						},
+						"localized": false,
+						"name": "r_applicationToEvaluations_c_d4b8DistributorApplicationId",
+						"objectFieldSettings": [
+							{
+								"name": "objectDefinition1ShortName",
+								"value": "D4B8DistributorApplication"
+							},
+							{
+								"name": "objectRelationshipERCObjectFieldName",
+								"value": "r_applicationToEvaluations_c_d4b8DistributorApplicationERC"
+							}
+						],
+						"readOnly": "false",
+						"relationshipType": "oneToMany",
+						"required": true,
+						"state": false,
+						"type": "Long",
+						"unique": false
+					},
+					"parameterObjectFieldId": 0,
+					"reverse": false,
+					"type": "oneToMany"
+				}
+			],
 			"objectViews": [
 				{
 					"defaultObjectView": true,

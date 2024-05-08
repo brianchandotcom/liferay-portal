@@ -6,7 +6,7 @@
 import Button from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import {TSorting} from '../../index';
 import ViewsContext from '../../views/ViewsContext';
@@ -21,14 +21,23 @@ function OrderDropdown() {
 		Function
 	] = useContext(ViewsContext);
 
-	const defaultSort = sorts?.find((sort: TSorting) => sort.default);
+	const activeSort = sorts?.find((sort: TSorting) => sort.active);
 
 	const [selectedDirection, setSelectedDirection] = useState<
 		TSorting['direction']
-	>(defaultSort?.direction ?? 'asc');
+	>(activeSort?.direction ?? 'asc');
 	const [selectedKey, setSelectedKey] = useState<TSorting['key']>(
-		defaultSort?.key
+		activeSort?.key
 	);
+
+	useEffect(() => {
+		const activeSort = sorts?.find((sort: TSorting) => sort.active);
+
+		if (activeSort) {
+			setSelectedDirection(activeSort.direction);
+			setSelectedKey(activeSort.key);
+		}
+	}, [sorts]);
 
 	return (
 		<DropDown

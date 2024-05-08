@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -41,6 +42,10 @@ public class SchedulerEngineAuditorImpl implements SchedulerEngineAuditor {
 	@Override
 	public void auditSchedulerJobs(Message message, TriggerState triggerState)
 		throws SchedulerException {
+
+		if (!_clusterMasterExecutor.isMaster()) {
+			return;
+		}
 
 		AuditRouter auditRouter = _auditRouterSnapshot.get();
 
@@ -78,6 +83,9 @@ public class SchedulerEngineAuditorImpl implements SchedulerEngineAuditor {
 	private static final Snapshot<AuditRouter> _auditRouterSnapshot =
 		new Snapshot<>(
 			SchedulerEngineHelperImpl.class, AuditRouter.class, null, true);
+
+	@Reference
+	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	@Reference
 	private JSONFactory _jsonFactory;

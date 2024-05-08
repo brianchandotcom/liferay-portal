@@ -59,32 +59,39 @@ testFeatureFlagsEnabled(
 			title
 		);
 
-		const otherUserPage = await getLoggedInPage(
-			browser,
-			'demo.company.admin'
-		);
-		await otherUserPage.goto(
-			knowledgeBaseUrls.getEditKBArticleUrl(
-				knowledgeBaseArticle.id,
-				true,
-				knowledgeBaseUrls.home
-			)
-		);
-		await expect(
-			otherUserPage.getByPlaceholder('Untitled Article')
-		).toHaveValue(title);
+		const browserContext = await browser.newContext();
 
-		await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticleWithSchedule(
-			`${content} test`,
-			`${title} test`
-		);
-		await expect(
-			page.getByText('Your changes cannot be saved.')
-		).toBeVisible();
+		try {
+			const otherUserPage = await getLoggedInPage(
+				browserContext,
+				'demo.company.admin'
+			);
+			await otherUserPage.goto(
+				knowledgeBaseUrls.getEditKBArticleUrl(
+					knowledgeBaseArticle.id,
+					true,
+					knowledgeBaseUrls.home
+				)
+			);
+			await expect(
+				otherUserPage.getByPlaceholder('Untitled Article')
+			).toHaveValue(title);
 
-		const otherUserKnowledgeBaseEditArticlePage =
-			new KnowledgeBaseEditArticlePage(otherUserPage);
-		await otherUserKnowledgeBaseEditArticlePage.cancel();
+			await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticleWithSchedule(
+				`${content} test`,
+				`${title} test`
+			);
+			await expect(
+				page.getByText('Your changes cannot be saved.')
+			).toBeVisible();
+
+			const otherUserKnowledgeBaseEditArticlePage =
+				new KnowledgeBaseEditArticlePage(otherUserPage);
+			await otherUserKnowledgeBaseEditArticlePage.cancel();
+		}
+		finally {
+			await browserContext.close();
+		}
 	}
 );
 

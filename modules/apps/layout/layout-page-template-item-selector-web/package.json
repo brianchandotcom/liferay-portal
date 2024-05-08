@@ -14,7 +14,7 @@
 	"main": "js/index.js",
 	"name": "@liferay/layout-page-template-item-selector-web",
 	"scripts": {
-		"build": "liferay-npm-scripts build",
+		"build": "node ../../../sdk/node-build/index.mjs",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},

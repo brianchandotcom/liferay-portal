@@ -100,7 +100,7 @@ public class EditClientExtensionEntryMVCActionCommand
 
 		_clientExtensionEntryService.addClientExtensionEntry(
 			cet.getExternalReferenceCode(), cet.getDescription(),
-			_localization.getLocalizationMap(cet.getName()),
+			_localization.getLocalizationMap(actionRequest, "name"),
 			ParamUtil.getString(actionRequest, "properties"),
 			cet.getSourceCodeURL(), cet.getType(), cet.getTypeSettings());
 	}
@@ -130,7 +130,7 @@ public class EditClientExtensionEntryMVCActionCommand
 		_clientExtensionEntryService.updateClientExtensionEntry(
 			clientExtensionEntry.getClientExtensionEntryId(),
 			cet.getDescription(),
-			_localization.getLocalizationMap(cet.getName()),
+			_localization.getLocalizationMap(actionRequest, "name"),
 			PropertiesUtil.toString(cet.getProperties()),
 			cet.getSourceCodeURL(), cet.getTypeSettings());
 	}

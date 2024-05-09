@@ -251,6 +251,212 @@
 					"required": true,
 					"state": true,
 					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Bank Account Number"
+					},
+					"name": "bankAccountNumber",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Bank Address Line One"
+					},
+					"name": "bankAddressLineOne",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Bank Address Line Two"
+					},
+					"name": "bankAddressLineTwo",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Bank City"
+					},
+					"name": "bankCity",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Bank Country"
+					},
+					"name": "bankCountry",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Bank Name"
+					},
+					"name": "bankName",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Bank Phone Number"
+					},
+					"name": "bankPhoneNumber",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Bank State, Province, Region"
+					},
+					"name": "bankStateProvinceRegion",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Bank ZIP, Postal Code"
+					},
+					"name": "bankZIPPostalCode",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Business Address Line One"
+					},
+					"name": "businessAddressLineOne",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Business Address Line Two"
+					},
+					"name": "businessAddressLineTwo",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Business Annual Revenue (in USD)"
+					},
+					"name": "businessAnnualRevenueInUSD",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Business City"
+					},
+					"name": "businessCity",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Business Country"
+					},
+					"name": "businessCountry",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"indexed": true,
+					"label": {
+						"en_US": "Business Employee Number"
+					},
+					"name": "businessEmployeeNumber",
+					"readOnly": "false",
+					"state": false,
+					"type": "Integer"
+				},
+				{
+					"DBType": "Date",
+					"businessType": "Date",
+					"indexed": true,
+					"label": {
+						"en_US": "Business Established Date"
+					},
+					"name": "businessEstablishedDate",
+					"readOnly": "false",
+					"state": false,
+					"type": "Date"
 				}
 			]
 		}

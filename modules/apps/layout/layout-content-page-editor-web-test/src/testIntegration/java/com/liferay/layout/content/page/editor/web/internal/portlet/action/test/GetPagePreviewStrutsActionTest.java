@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import org.hamcrest.CoreMatchers;
@@ -183,6 +184,12 @@ public class GetPagePreviewStrutsActionTest {
 	}
 
 	private void _assertContainsContent() throws Exception {
+		_assertContainsContent(PropsValues.DEFAULT_REGULAR_THEME_ID);
+	}
+
+	private void _assertContainsContent(String expectedThemeId)
+		throws Exception {
+
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
 
@@ -229,6 +236,8 @@ public class GetPagePreviewStrutsActionTest {
 			content, CoreMatchers.containsString(_fragmentEntryLink.getHtml()));
 		Assert.assertThat(
 			content, CoreMatchers.containsString(_fragmentEntryLink.getJs()));
+		Assert.assertThat(
+			content, CoreMatchers.containsString("themeId=" + expectedThemeId));
 	}
 
 	@Inject

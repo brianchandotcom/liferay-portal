@@ -920,7 +920,7 @@ definition {
 
 				Comments.addPG(entryComment = ${commentText});
 
-				ACUtils.waitForSendingRequest();
+				ACUtils.waitForSendingRequest(time = 10000);
 			}
 
 			if (${actionType} == "View DM") {

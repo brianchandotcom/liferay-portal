@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.exception.DuplicateSiteNavigationMenuException;
+import com.liferay.site.navigation.exception.DuplicateSiteNavigationMenuExternalReferenceCodeException;
 import com.liferay.site.navigation.exception.SiteNavigationMenuNameException;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
@@ -125,6 +127,28 @@ public class SiteNavigationMenuLocalServiceTest {
 			_group, StringPool.BLANK);
 	}
 
+	@Test(
+		expected = DuplicateSiteNavigationMenuExternalReferenceCodeException.class
+	)
+	public void testAddSiteNavigationMenuWithExistingExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		_siteNavigationMenuLocalService.addSiteNavigationMenu(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			SiteNavigationConstants.TYPE_DEFAULT, false,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+		_siteNavigationMenuLocalService.addSiteNavigationMenu(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			SiteNavigationConstants.TYPE_DEFAULT, false,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
 	@Test(expected = SiteNavigationMenuNameException.class)
 	public void testAddSiteNavigationMenuWithMaxLengthName() throws Exception {
 		int nameMaxLength = ModelHintsUtil.getMaxLength(
@@ -153,6 +177,28 @@ public class SiteNavigationMenuLocalServiceTest {
 		Assert.assertNull(
 			_siteNavigationMenuPersistence.fetchByPrimaryKey(
 				siteNavigationMenu.getSiteNavigationMenuId()));
+	}
+
+	@Test
+	public void testDeleteSiteNavigationMenuByExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		_siteNavigationMenuLocalService.addSiteNavigationMenu(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			SiteNavigationConstants.TYPE_DEFAULT, false,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		_siteNavigationMenuLocalService.deleteSiteNavigationMenu(
+			externalReferenceCode, _group.getGroupId());
+
+		Assert.assertNull(
+			_siteNavigationMenuLocalService.
+				fetchSiteNavigationMenuByExternalReferenceCode(
+					externalReferenceCode, _group.getGroupId()));
 	}
 
 	@Test

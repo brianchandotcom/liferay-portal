@@ -101,33 +101,33 @@ public class GetPagePreviewStrutsActionTest {
 		_serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 
-		_addLayout(LayoutConstants.TYPE_ASSET_DISPLAY, false);
+		_addLayout(false, LayoutConstants.TYPE_ASSET_DISPLAY);
 
 		_assertContainsContent();
 	}
 
 	@Test
 	public void testGetPagePreviewContentPage() throws Exception {
-		_addLayout(LayoutConstants.TYPE_CONTENT, false);
+		_addLayout(false, LayoutConstants.TYPE_CONTENT);
 
 		_assertContainsContent();
 	}
 
 	@Test
 	public void testGetPagePreviewPageTemplate() throws Exception {
-		_addLayout(LayoutConstants.TYPE_CONTENT, true);
+		_addLayout(true, LayoutConstants.TYPE_CONTENT);
 
 		_assertContainsContent();
 	}
 
-	private void _addLayout(String type, boolean pageTemplate)
+	private void _addLayout(boolean privateLayout, String type)
 		throws Exception {
 
 		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), pageTemplate,
+			TestPropsValues.getUserId(), _group.getGroupId(), privateLayout,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, type, false, pageTemplate, StringPool.BLANK,
+			StringPool.BLANK, type, false, privateLayout, StringPool.BLANK,
 			_serviceContext);
 
 		FragmentEntry fragmentEntry =

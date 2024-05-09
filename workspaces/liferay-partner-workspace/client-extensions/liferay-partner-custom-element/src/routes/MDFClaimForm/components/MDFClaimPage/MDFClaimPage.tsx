@@ -94,7 +94,6 @@ const MDFClaimPage = ({
 
 	const isDisplayableMDFActivityClaim = (activity: MDFClaimActivity) => {
 		const claimableActivityByStatus =
-			activity.activityStatus?.key !== Status.CANCELED.key &&
 			activity.activityStatus?.key !== Status.EXPIRED.key &&
 			!activity.claimed;
 

@@ -2,7 +2,7 @@
 [#setting date_format="yyyy-MM-dd" /]
 
 [#assign claim_status_style = { "claimed": "ml-3 label label-tonal-info ml-2", "unclaimed": "ml-3 label label-tonal-warning ml-2" } /]
-[#assign request_status_style = { "active": "label label-tonal-info ml-2", "approved": "label label-tonal-success ml-2", "canceled": "label label-tonal-danger ml-2", "expired": "label label-tonal-danger ml-2", "submitted": "label label-tonal-warning ml-2" } /]
+[#assign request_status_style = { "active": "label label-tonal-info ml-2", "completed": "label label-tonal-success ml-2", "expired": "label label-tonal-danger ml-2", "moreInfoRequested": "label label-tonal-warning ml-2", "rejected": "label label-tonal-danger ml-2", "submitted": "label label-tonal-warning ml-2" } /]
 
 [#assign mdf_request_id = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
 

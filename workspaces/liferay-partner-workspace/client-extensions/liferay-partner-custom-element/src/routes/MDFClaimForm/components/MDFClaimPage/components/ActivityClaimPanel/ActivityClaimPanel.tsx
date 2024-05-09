@@ -45,7 +45,6 @@ type TypeActivityComponent = {
 
 const ActivityStatus = {
 	ACTIVE: 'active',
-	APPROVED: 'approved',
 	CLAIMED: 'claimed',
 	EXPIRED: 'expired',
 	SUBMITTED: 'submitted',
@@ -54,9 +53,8 @@ const ActivityStatus = {
 
 const activityStatusClassName = {
 	[ActivityStatus.ACTIVE]: 'label label-tonal-info ml-2',
-	[ActivityStatus.SUBMITTED]: 'label label-tonal-warning ml-2',
-	[ActivityStatus.APPROVED]: 'label label-tonal-success ml-2',
 	[ActivityStatus.EXPIRED]: 'label label-tonal-danger ml-2',
+	[ActivityStatus.SUBMITTED]: 'label label-tonal-warning ml-2',
 };
 
 const activityClaimStatusClassName = {

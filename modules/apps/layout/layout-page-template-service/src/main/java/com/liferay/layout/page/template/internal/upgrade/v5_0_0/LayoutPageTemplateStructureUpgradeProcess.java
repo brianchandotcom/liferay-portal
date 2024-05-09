@@ -22,14 +22,15 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select layoutPageTemplateStructureId, classPK from " +
-					"LayoutPageTemplateStructure where classNameId = ?");
+				"select ctCollectionId, layoutPageTemplateStructureId, " +
+					"classPK from LayoutPageTemplateStructure where " +
+						"classNameId = ?");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update LayoutPageTemplateStructure set classNameId = ?, " +
-						"classPK = ? where layoutPageTemplateStructureId = " +
-							"?")) {
+						"classPK = ? where ctCollectionId = ? and " +
+							"layoutPageTemplateStructureId = ?")) {
 
 			preparedStatement1.setLong(
 				1, PortalUtil.getClassNameId(LayoutPageTemplateEntry.class));
@@ -38,15 +39,19 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 				long classNameId = PortalUtil.getClassNameId(Layout.class);
 
 				while (resultSet.next()) {
+					long ctCollectionId = resultSet.getLong("ctCollectionId");
 					long layoutPageTemplateStructureId = resultSet.getLong(
 						"layoutPageTemplateStructureId");
 					long classPK = resultSet.getLong("classPK");
 
 					preparedStatement2.setLong(1, classNameId);
 					preparedStatement2.setLong(
-						2, _getPlidFromLayoutPageTemplateEntry(classPK));
+						2,
+						_getPlidFromLayoutPageTemplateEntry(
+							ctCollectionId, classPK));
+					preparedStatement2.setLong(3, ctCollectionId);
 					preparedStatement2.setLong(
-						3, layoutPageTemplateStructureId);
+						4, layoutPageTemplateStructureId);
 
 					preparedStatement2.addBatch();
 				}
@@ -57,14 +62,15 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 	}
 
 	private long _getPlidFromLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId)
+			long ctCollectionId, long layoutPageTemplateEntryId)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select plid from LayoutPageTemplateEntry where " +
-					"layoutPageTemplateEntryId = ?")) {
+					"ctCollectionId = ? and layoutPageTemplateEntryId = ?")) {
 
-			preparedStatement.setLong(1, layoutPageTemplateEntryId);
+			preparedStatement.setLong(1, ctCollectionId);
+			preparedStatement.setLong(2, layoutPageTemplateEntryId);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {

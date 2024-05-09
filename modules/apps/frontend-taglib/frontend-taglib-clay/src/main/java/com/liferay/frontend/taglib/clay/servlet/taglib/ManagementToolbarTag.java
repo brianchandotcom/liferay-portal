@@ -1071,7 +1071,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 				jspWriter.write("\"");
 			}
 
-			jspWriter.write("role=\"search\"><div class=\"input-group\"><div");
+			jspWriter.write(" role=\"search\"><div class=\"input-group\"><div");
 			jspWriter.write(" class=\"input-group-item\"><input class=\"");
 			jspWriter.write("form-control form-control input-group-inset");
 			jspWriter.write(" input-group-inset-after\"");

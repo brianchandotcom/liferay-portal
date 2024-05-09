@@ -395,6 +395,7 @@ module.exports = {
 				'graphql-hooks',
 				'graphql',
 				'highlight.js/styles/monokai-sublime.css',
+				'liferay-ckeditor',
 				'qrcode',
 				'react-dropzone',
 				'react-transition-group',

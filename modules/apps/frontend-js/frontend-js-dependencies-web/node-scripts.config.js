@@ -36,6 +36,7 @@ module.exports = {
 		'highlight.js/lib/languages/javascript',
 		'highlight.js/lib/languages/plaintext',
 		'image-promise',
+		'liferay-ckeditor',
 		'lodash.groupby',
 		'lodash.isequal',
 		'moment',

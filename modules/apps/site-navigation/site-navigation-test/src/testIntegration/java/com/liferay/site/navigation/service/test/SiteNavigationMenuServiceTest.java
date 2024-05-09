@@ -148,9 +148,8 @@ public class SiteNavigationMenuServiceTest {
 		UserTestUtil.setUser(_groupUser);
 
 		_siteNavigationMenuService.addSiteNavigationMenu(
-			RandomTestUtil.randomString(), _group.getGroupId(),
-			RandomTestUtil.randomString(), SiteNavigationConstants.TYPE_DEFAULT,
-			serviceContext);
+			null, _group.getGroupId(), RandomTestUtil.randomString(),
+			SiteNavigationConstants.TYPE_DEFAULT, serviceContext);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -164,8 +163,8 @@ public class SiteNavigationMenuServiceTest {
 		UserTestUtil.setUser(_groupUser);
 
 		_siteNavigationMenuService.addSiteNavigationMenu(
-			RandomTestUtil.randomString(), _group.getGroupId(),
-			RandomTestUtil.randomString(), serviceContext);
+			null, _group.getGroupId(), RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 	@Test
@@ -181,9 +180,8 @@ public class SiteNavigationMenuServiceTest {
 		UserTestUtil.setUser(_groupUser);
 
 		_siteNavigationMenuService.addSiteNavigationMenu(
-			RandomTestUtil.randomString(), _group.getGroupId(),
-			RandomTestUtil.randomString(), SiteNavigationConstants.TYPE_DEFAULT,
-			serviceContext);
+			null, _group.getGroupId(), RandomTestUtil.randomString(),
+			SiteNavigationConstants.TYPE_DEFAULT, serviceContext);
 
 		_deleteSiteMemberRoleResourcePermissions(
 			SiteNavigationConstants.RESOURCE_NAME);
@@ -202,8 +200,8 @@ public class SiteNavigationMenuServiceTest {
 		UserTestUtil.setUser(_groupUser);
 
 		_siteNavigationMenuService.addSiteNavigationMenu(
-			RandomTestUtil.randomString(), _group.getGroupId(),
-			RandomTestUtil.randomString(), serviceContext);
+			null, _group.getGroupId(), RandomTestUtil.randomString(),
+			serviceContext);
 
 		_deleteSiteMemberRoleResourcePermissions(
 			SiteNavigationConstants.RESOURCE_NAME);

@@ -5,9 +5,12 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {ViewObjectDefinitionsPage} from '../ViewObjectDefinitionsPage';
+
 export class ObjectValidationsPage {
 	readonly addObjectValidationButton: Locator;
 	readonly validationTabItem: Locator;
+	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
 
 	constructor(page: Page) {
 		this.addObjectValidationButton = page.getByTitle(
@@ -16,9 +19,16 @@ export class ObjectValidationsPage {
 		this.validationTabItem = page
 			.getByRole('listitem')
 			.filter({hasText: 'Validations'});
+		this.viewObjectDefinitionsPage = new ViewObjectDefinitionsPage(page);
 	}
 
-	async goto() {
+	async goto(objectDefinitionLabel: string) {
+		await this.viewObjectDefinitionsPage.goto();
+
+		await this.viewObjectDefinitionsPage.editObjectDefinitionFDSLink(
+			objectDefinitionLabel
+		);
+
 		await this.validationTabItem.click();
 	}
 }

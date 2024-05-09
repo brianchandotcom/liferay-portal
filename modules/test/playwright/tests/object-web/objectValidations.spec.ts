@@ -52,7 +52,6 @@ test.describe('Object Unique Composite Key Validation', () => {
 		modalAddObjectValidationPage,
 		objectValidationsPage,
 		page,
-		viewObjectDefinitionsPage,
 		viewObjectEntriesPage,
 	}) => {
 		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
@@ -75,17 +74,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 			}
 		);
 
-		viewObjectDefinitionsPage.goto();
-
-		await expect(
-			page.locator(`a:has-text("${objectDefinition1.label['en_US']}")`)
-		).toBeVisible();
-
-		viewObjectDefinitionsPage.editObjectDefinitionFDSLink(
-			objectDefinition1.label['en_US']
-		);
-
-		objectValidationsPage.goto();
+		objectValidationsPage.goto(objectDefinition1.label['en_US']);
 
 		await objectValidationsPage.addObjectValidationButton.click();
 
@@ -107,7 +96,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 
 		await editObjectValidationPage.clickSelectAllFields();
 
-	await editObjectValidationPage.saveObjectValidationButton.click();
+		await editObjectValidationPage.saveObjectValidationButton.click();
 
 		const applicationName =
 			'c/' + objectDefinition1.name.toLowerCase() + 's';
@@ -123,7 +112,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 
 		await viewObjectEntriesPage.goto(objectDefinition1.id);
 
-	await viewObjectEntriesPage.addObjectEntryButton.click();
+		await viewObjectEntriesPage.addObjectEntryButton.click();
 
 		await viewObjectEntriesPage.fillObjectEntry('integerField', '0');
 		await viewObjectEntriesPage.fillObjectEntry('textField', 'entry');
@@ -133,7 +122,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 
 		await viewObjectEntriesPage.backButton.click();
 
-	await viewObjectEntriesPage.addObjectEntryButton.click();
+		await viewObjectEntriesPage.addObjectEntryButton.click();
 
 		await viewObjectEntriesPage.fillObjectEntry('integerField', '123');
 		await viewObjectEntriesPage.fillObjectEntry('textField', 'entry 2');
@@ -148,7 +137,6 @@ test.describe('Object Unique Composite Key Validation', () => {
 		modalAddObjectValidationPage,
 		objectValidationsPage,
 		page,
-		viewObjectDefinitionsPage,
 	}) => {
 		const autoIncrementFieldName = 'autoIncrementField' + getRandomInt();
 		const dateFieldName = 'dateField' + getRandomInt();
@@ -269,17 +257,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 			}
 		);
 
-		viewObjectDefinitionsPage.goto();
-
-		await expect(
-			page.locator(`a:has-text("${objectDefinition1.label['en_US']}")`)
-		).toBeVisible();
-
-		viewObjectDefinitionsPage.editObjectDefinitionFDSLink(
-			objectDefinition1.label['en_US']
-		);
-
-		objectValidationsPage.goto();
+		objectValidationsPage.goto(objectDefinition1.label['en_US']);
 
 		await objectValidationsPage.addObjectValidationButton.click();
 
@@ -320,7 +298,6 @@ test.describe('Object Unique Composite Key Validation', () => {
 		modalAddObjectValidationPage,
 		objectValidationsPage,
 		page,
-		viewObjectDefinitionsPage,
 	}) => {
 		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
 			objectDefinition1.externalReferenceCode,
@@ -354,17 +331,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 			applicationName
 		);
 
-		viewObjectDefinitionsPage.goto();
-
-		await expect(
-			page.locator(`a:has-text("${objectDefinition1.label['en_US']}")`)
-		).toBeVisible();
-
-		viewObjectDefinitionsPage.editObjectDefinitionFDSLink(
-			objectDefinition1.label['en_US']
-		);
-
-		objectValidationsPage.goto();
+		objectValidationsPage.goto(objectDefinition1.label['en_US']);
 
 		await objectValidationsPage.addObjectValidationButton.click();
 
@@ -402,19 +369,8 @@ test.describe('Object Unique Composite Key Validation', () => {
 		modalAddObjectValidationPage,
 		objectValidationsPage,
 		page,
-		viewObjectDefinitionsPage,
 	}) => {
-		viewObjectDefinitionsPage.goto();
-
-		await expect(
-			page.locator(`a:has-text("${objectDefinition1.label['en_US']}")`)
-		).toBeVisible();
-
-		viewObjectDefinitionsPage.editObjectDefinitionFDSLink(
-			objectDefinition1.label['en_US']
-		);
-
-		objectValidationsPage.goto();
+		objectValidationsPage.goto(objectDefinition1.label['en_US']);
 
 		await objectValidationsPage.addObjectValidationButton.click();
 

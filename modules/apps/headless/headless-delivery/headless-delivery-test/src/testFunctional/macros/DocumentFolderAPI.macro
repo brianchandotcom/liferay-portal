@@ -3,6 +3,7 @@ definition {
 	@summary = "Default summary"
 	macro _curlDocumentFolders(documentFolderId = null, depotName = null, groupName = null, parameter = null, parentDocumentFolderId = null, parameterValue = null, externalReferenceCode = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(depotName)) {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(
@@ -36,7 +37,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 		''';
 
@@ -199,7 +200,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''
@@ -226,7 +227,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''
@@ -247,7 +248,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -268,10 +269,11 @@ definition {
 	@summary = "Default summary"
 	macro putRatingWithFolderID(ratingValue = null, folderId = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 		var body = '''"creator": "","ratingValue": "${ratingValue}"''';
 		var curlWithoutBody = '''
 			${portalURL}/o/headless-delivery/v1.0/document-folders/${folderId}/my-rating \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json
 		''';
 

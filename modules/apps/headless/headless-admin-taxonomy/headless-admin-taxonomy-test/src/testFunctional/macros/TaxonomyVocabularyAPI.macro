@@ -3,6 +3,7 @@ definition {
 	@summary = "Default summary"
 	macro _curlTaxonomyKeywords(noSelenium = null, keywordId = null, depotName = null, groupName = null, parameter = null, parameterValue = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(depotName)) {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(
@@ -32,7 +33,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-taxonomy/v1.0/${api} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 		''';
 
@@ -42,6 +43,7 @@ definition {
 	@summary = "Default summary"
 	macro _curlTaxonomyVocabulary(depotName = null, groupName = null, filterValue = null, parameter = null, parameterValue = null, externalReferenceCode = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(depotName)) {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(
@@ -74,7 +76,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-taxonomy/v1.0/${api} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 		''';
 

@@ -14,10 +14,11 @@ definition {
 	@summary = "Default summary"
 	macro getOpenApiProfile() {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/openapi/openapi.json \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		var response = JSONCurlUtil.get(${curl});

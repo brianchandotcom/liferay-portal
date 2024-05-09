@@ -266,7 +266,7 @@ definition {
 				expected = "No FileEntry exists with the key {fileEntryId=40000}");
 
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 
 			DMDocument.downloadViaURL(dmDocumentTitle = "document_1-jpg");

@@ -3,6 +3,7 @@ definition {
 	@summary = "Default summary"
 	macro _curlKnowledgeBaseAttachment(knowledgeBaseAttachmentId = null, knowledgeBaseArticleId = null, knowledgeBaseArticleExternalReferenceCode = null, attachmentPath = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(knowledgeBaseArticleId)) {
 			var api = "knowledge-base-articles/${knowledgeBaseArticleId}/knowledge-base-attachments";
@@ -24,7 +25,7 @@ definition {
 			}
 
 			var body = '''
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: multipart/form-data \
 				-F file=@${attachmentPath} \
 				-F knowledgeBaseAttachment={"externalReferenceCode": "${externalReferenceCode}"}
@@ -34,7 +35,7 @@ definition {
 		}
 		else {
 			var body = '''
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H accept: application/json
 			''';
 

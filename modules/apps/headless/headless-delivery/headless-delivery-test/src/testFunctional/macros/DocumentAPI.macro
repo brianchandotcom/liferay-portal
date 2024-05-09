@@ -5,6 +5,7 @@ definition {
 		Variables.assertDefined(parameterList = ${filePath});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(depotName)) {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
@@ -29,7 +30,7 @@ definition {
 		if (!(isSet(fileName))) {
 			var curl = '''
 				${portalURL}/o/headless-delivery/v1.0/${api} \
-					-u test@liferay.com:test \
+					-u test@liferay.com:${userPassword} \
 					-H Content-Type: multipart/form-data \
 					-F document={"externalReferenceCode": "${externalReferenceCode}", "taxonomyCategoryIds": [${assetCategoryIds}]} \
 						-F file=@${filePath}
@@ -42,7 +43,7 @@ definition {
 
 			var curl = '''
 				${portalURL}/o/headless-delivery/v1.0/${api} \
-					-u test@liferay.com:test \
+					-u test@liferay.com:${userPassword} \
 					-H Content-Type: multipart/form-data \
 					-F document={"title": "${title}", "fileName": "${fileName}", "externalReferenceCode": "${externalReferenceCode}", "taxonomyCategoryIds": [${assetCategoryIds}]} \
 						-F file=@${filePath}
@@ -59,6 +60,7 @@ definition {
 		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(depotName)) {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
@@ -71,7 +73,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H accept: application/json
 		''';
 
@@ -85,6 +87,7 @@ definition {
 		Variables.assertDefined(parameterList = ${filtervalue});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(depotName)) {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
@@ -97,7 +100,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H accept: application/json
 		''';
 
@@ -111,6 +114,7 @@ definition {
 		Variables.assertDefined(parameterList = ${documentId});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(parameter)) {
 			var api = "documents/${documentId}?${parameter}=${parameterValue}";
@@ -121,7 +125,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json
 		''';
 
@@ -135,6 +139,7 @@ definition {
 		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (!(isSet(assetLibraryId))) {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
@@ -142,7 +147,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/documents/by-external-reference-code/${externalReferenceCode} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json
 		''';
 
@@ -169,10 +174,11 @@ definition {
 		}
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 		''';
 		var delimiter = " ";
 
@@ -325,7 +331,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''
@@ -393,7 +399,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''
@@ -420,7 +426,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''
@@ -467,7 +473,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''
@@ -488,6 +494,7 @@ definition {
 	@summary = "Default summary"
 	macro putDMPermissionsWithDocumentID(actionIds = null, roleName = null, documentId = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 		var body = '''
 			[
   				{
@@ -501,7 +508,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/documents/${documentId}/permissions \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d ${body}
 		''';
@@ -516,10 +523,11 @@ definition {
 		Variables.assertDefined(parameterList = ${documentId});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/documents/${documentId} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-F document={"title": "${title}", "fileName": "${fileName}"}
 		''';
 

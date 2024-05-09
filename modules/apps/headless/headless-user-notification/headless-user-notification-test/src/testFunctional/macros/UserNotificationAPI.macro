@@ -3,6 +3,7 @@ definition {
 	@summary = "Default summary"
 	macro _curlNotificationTemplates(notificationTemplateId = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(notificationTemplateId)) {
 			var api = "notification-templates/${notificationTemplateId}";
@@ -13,7 +14,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/notification/v1.0/${api} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H accept: application/json \
 				-H 'Content-Type: application/json' \
 		''';
@@ -24,6 +25,7 @@ definition {
 	@summary = "Default summary"
 	macro _curlUserNotifications(parameter = null, userAccountId = null, userNotificationId = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(userNotificationId)) {
 			var api = "user-notifications/${userNotificationId}";
@@ -43,7 +45,7 @@ definition {
 			${portalURL}/o/headless-user-notification/v1.0/${api} \
 				-H accept: application/json \
 				-H 'Content-Type: application/json' \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 		''';
 
 		return ${curl};

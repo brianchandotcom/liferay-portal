@@ -71,7 +71,7 @@ definition {
 				widgetName = "Documents and Media");
 
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 
 			Navigator.openSitePage(

@@ -4,6 +4,7 @@ definition {
 	macro _curlAPIEndpoint(path = null, baseURL = null, virtualHost = null) {
 		Variables.assertDefined(parameterList = "${baseURL},${path}");
 
+		var userPassword = PropsUtil.get("default.admin.password");
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -25,7 +26,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/c/${api} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json
 		''';
 

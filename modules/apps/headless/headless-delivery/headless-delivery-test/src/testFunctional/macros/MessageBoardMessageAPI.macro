@@ -3,6 +3,7 @@ definition {
 	@summary = "Default summary"
 	macro _curlMessageBoardMessage(headline = null, messageBoardMessageId = null, messageBoardThreadId = null, parentMessageBoardMessageId = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(messageBoardThreadId)) {
 			var api = "message-board-threads/${messageBoardThreadId}/message-board-messages";
@@ -15,7 +16,7 @@ definition {
 		}
 
 		var command = '''
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json
 		''';
 

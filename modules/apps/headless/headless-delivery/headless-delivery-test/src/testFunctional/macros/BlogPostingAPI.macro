@@ -8,6 +8,7 @@ definition {
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
 			site = "true");
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (!(isSet(externalReferenceCode))) {
 			var externalReferenceCode = "";
@@ -15,7 +16,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d {
 					"headline": "${headline}",
@@ -40,10 +41,11 @@ definition {
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
 			site = "true");
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings/batch?createStrategy=${createStrategy}\&importStrategy=${importStrategy} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d ${body}
 		''';
@@ -182,9 +184,10 @@ definition {
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
 			site = "true");
+		var userPassword = PropsUtil.get("default.admin.password");
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/blog-postings/batch \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d ${body}
 		''';
@@ -214,9 +217,10 @@ definition {
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
 			site = "true");
+		var userPassword = PropsUtil.get("default.admin.password");
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/blog-postings/batch?updateStrategy=${updateStrategy}\&importStrategy=${importStrategy} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d ${body}
 		''';
@@ -232,10 +236,11 @@ definition {
 
 		var bodyKeyValuePair = '''"${bodyParameterKey}": "${bodyParameterValue}"''';
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/blog-postings/batch?updateStrategy=${updateStrategy} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d [
 					{
@@ -311,6 +316,7 @@ definition {
 			groupName = "Guest",
 			site = "true");
 		var api = "blog-postings";
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(parameter)) {
 			var api = StringUtil.add(${api}, "?${parameter}=${restrictFieldsValue}", "");
@@ -318,7 +324,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/${api} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json
 		''';
 
@@ -375,10 +381,11 @@ definition {
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
 			site = "true");
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings/export-batch \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json
 		''';
 

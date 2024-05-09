@@ -3,6 +3,7 @@ definition {
 	@summary = "Default summary"
 	macro executeGraphQLQuery(query = null, token = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/graphql \
@@ -14,7 +15,7 @@ definition {
 			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
 		}
 		else {
-			var curl = StringUtil.add(${curl}, " -u test@liferay.com:test", "");
+			var curl = StringUtil.add(${curl}, " -u test@liferay.com:${userPassword}", "");
 		}
 
 		var response = JSONCurlUtil.post(${curl});

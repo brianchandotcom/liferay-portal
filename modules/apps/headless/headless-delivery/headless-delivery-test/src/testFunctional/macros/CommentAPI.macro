@@ -31,10 +31,11 @@ definition {
 		}
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}/comments/batch?createStrategy=${createStrategy} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d ${body}
 		''';
@@ -47,6 +48,7 @@ definition {
 	@summary = "Default summary"
 	macro _curlBlogPostingComments(blogPostingId = null, commentId = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(commentId)) {
 			var api = "comments/${commentId}/comments";
@@ -57,7 +59,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json
 		''';
 
@@ -72,6 +74,7 @@ definition {
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
 			site = "true");
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(blogPostingChildCommentErc)) {
 			var api = "comments/by-external-reference-code/${blogPostingCommentErc}/comments/by-external-reference-code/${blogPostingChildCommentErc}";
@@ -82,7 +85,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/${api} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H accept: application/json
 		''';
 

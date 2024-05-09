@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
@@ -292,7 +294,8 @@ public class ExportImportTaskResourcePerformanceTest {
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 		httpInvoker.path(url);
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+		httpInvoker.userNameAndPassword("test@liferay.com:" + PropsUtil.get(
+			PropsKeys.DEFAULT_ADMIN_PASSWORD));
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
@@ -355,7 +358,8 @@ public class ExportImportTaskResourcePerformanceTest {
 
 			httpInvoker.path(sb.toString());
 
-			httpInvoker.userNameAndPassword("test@liferay.com:test");
+			httpInvoker.userNameAndPassword("test@liferay.com:" + PropsUtil.get(
+				PropsKeys.DEFAULT_ADMIN_PASSWORD));
 
 			HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
@@ -398,7 +402,8 @@ public class ExportImportTaskResourcePerformanceTest {
 					"http://localhost:8080/o/headless-batch-engine/v1.0",
 					"/export-task/by-external-reference-code/",
 					externalReferenceCode, "/content"));
-			httpInvoker.userNameAndPassword("test@liferay.com:test");
+			httpInvoker.userNameAndPassword("test@liferay.com:" + PropsUtil.get(
+				PropsKeys.DEFAULT_ADMIN_PASSWORD));
 
 			HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
@@ -449,7 +454,8 @@ public class ExportImportTaskResourcePerformanceTest {
 
 			httpInvoker.path(sb.toString());
 
-			httpInvoker.userNameAndPassword("test@liferay.com:test");
+			httpInvoker.userNameAndPassword("test@liferay.com:" + PropsUtil.get(
+				PropsKeys.DEFAULT_ADMIN_PASSWORD));
 
 			HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 

@@ -3,6 +3,7 @@ definition {
 	@summary = "Default summary"
 	macro _curlMessageBoardAttachment(messageBoardMessageErc = null, messageBoardAttachmentErc = null, attachmentPath = null, messageBoardMessageId = null, messageBoardAttachmentId = null, messageBoardThreadId = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(messageBoardThreadId)) {
 			var api = "message-board-threads/${messageBoardThreadId}/message-board-attachments";
@@ -22,7 +23,7 @@ definition {
 		}
 
 		var command = '''
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 			''';
 
 		if (isSet(attachmentPath)) {

@@ -8,9 +8,10 @@ definition {
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
 			site = "true");
+		var userPassword = PropsUtil.get("default.admin.password");
 		var curl = '''
 			${portalURL}/o/headless-batch-engine/v1.0/import-task/${importTaskId} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json
 		''';
 
@@ -25,9 +26,10 @@ definition {
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
 			site = "true");
+		var userPassword = PropsUtil.get("default.admin.password");
 		var curl = '''
 			${portalURL}/o/headless-batch-engine/v1.0/import-task/com.liferay.headless.delivery.dto.v1_0.SitePage \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d [
 					{

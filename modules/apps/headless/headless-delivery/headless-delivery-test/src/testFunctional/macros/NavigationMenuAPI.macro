@@ -44,6 +44,7 @@ definition {
 	@summary = "Default summary"
 	macro getNavigationMenu(groupName = null, navigationMenuId = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(navigationMenuId)) {
 			var api = "navigation-menus/${navigationMenuId}";
@@ -58,7 +59,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H accept: application/json
 		''';
 

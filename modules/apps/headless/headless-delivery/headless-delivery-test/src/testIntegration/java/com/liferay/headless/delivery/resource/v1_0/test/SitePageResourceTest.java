@@ -99,6 +99,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -156,7 +158,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		SitePageResource.Builder builder = SitePageResource.builder();
 
 		sitePageResource = builder.authentication(
-			"test@liferay.com", "test"
+			"test@liferay.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
 		).header(
 			"X-Liferay-Accept-All-Languages", "true"
 		).locale(

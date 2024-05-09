@@ -20,6 +20,8 @@ import java.io.File;
 
 import java.util.Map;
 
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -109,7 +111,8 @@ public class BlogPostingImageResourceTest
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 		httpInvoker.path(url);
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+		httpInvoker.userNameAndPassword("test@liferay.com:" + PropsUtil.get(
+			PropsKeys.DEFAULT_ADMIN_PASSWORD));
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 

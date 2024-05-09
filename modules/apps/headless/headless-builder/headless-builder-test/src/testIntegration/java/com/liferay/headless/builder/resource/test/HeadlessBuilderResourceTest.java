@@ -66,6 +66,8 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.test.log.LogCapture;
@@ -123,7 +125,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		_documentResource = DocumentResource.builder(
 		).authentication(
-			"test@liferay.com", "test"
+			"test@liferay.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -249,7 +251,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		).withBaseURL(
 			"http://www.able.com:8080"
 		).withCredentials(
-			"test@able.com", "test"
+			"test@able.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
 		).apply(
 			() -> {
 				try (LogCapture logCapture =

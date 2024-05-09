@@ -4,6 +4,7 @@ definition {
 	macro deleteOrganizationByExternalReferenceCode(virtualHost = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
+		var userPassword = PropsUtil.get("default.admin.password");
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -19,7 +20,7 @@ definition {
 			${portalURL}/o/headless-admin-user/v1.0/organizations/by-external-reference-code/${externalReferenceCode} \
 				-H accept: application/json \
 				-H Content-Type: application/json \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 		''';
 
 		JSONCurlUtil.delete(${curl});

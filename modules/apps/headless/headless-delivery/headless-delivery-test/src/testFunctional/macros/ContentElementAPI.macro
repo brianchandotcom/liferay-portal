@@ -6,10 +6,11 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 		var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/content-elements?${parameter}=${fieldValue} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H accept: application/json
 		''';
 

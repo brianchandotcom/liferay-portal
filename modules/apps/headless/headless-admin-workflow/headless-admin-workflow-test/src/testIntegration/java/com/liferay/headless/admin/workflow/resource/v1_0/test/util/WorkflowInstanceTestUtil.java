@@ -13,6 +13,8 @@ import com.liferay.headless.admin.workflow.client.resource.v1_0.WorkflowInstance
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -32,7 +34,7 @@ public class WorkflowInstanceTestUtil {
 
 		WorkflowInstanceResource workflowInstanceResource =
 			builder.authentication(
-				"test@liferay.com", "test"
+				"test@liferay.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
 			).locale(
 				LocaleUtil.getDefault()
 			).build();

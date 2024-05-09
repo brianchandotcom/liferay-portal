@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
@@ -673,7 +675,7 @@ public class TaxonomyCategoryResourceTest
 			TaxonomyCategoryResource.builder();
 
 		taxonomyCategoryResource = builder.authentication(
-			"test@liferay.com", "test"
+			"test@liferay.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(

@@ -3,6 +3,7 @@ definition {
 	@summary = "Default summary"
 	macro _curlKnowledgeBaseArticle(articleBody = null, knowledgeBaseArticleId = null, parentKnowledgeBaseArticleId = null, title = null, knowledgeBaseFolderId = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(knowledgeBaseFolderId)) {
 			var api = "knowledge-base-folders/${knowledgeBaseFolderId}/knowledge-base-articles";
@@ -31,7 +32,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 		''';
 		var body = '''"articleBody": "${articleBody}","externalReferenceCode": "${externalReferenceCode}","title": "${title}","datePublished": "${datePublished}"''';

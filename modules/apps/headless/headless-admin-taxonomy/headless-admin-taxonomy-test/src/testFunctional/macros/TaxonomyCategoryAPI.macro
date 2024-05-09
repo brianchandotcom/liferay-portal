@@ -3,6 +3,8 @@ definition {
 	@summary = "Default summary"
 	macro _createTaxonomyCategory(taxonomyVocabularyId = null, name = null, parentTaxonomyCategoryId = null, externalReferenceCode = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
+
 
 		if (isSet(parentTaxonomyCategoryId)) {
 			var api = "taxonomy-categories/${parentTaxonomyCategoryId}/taxonomy-categories";
@@ -13,7 +15,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-admin-taxonomy/v1.0/${api} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d {
 					"externalReferenceCode": "${externalReferenceCode}",

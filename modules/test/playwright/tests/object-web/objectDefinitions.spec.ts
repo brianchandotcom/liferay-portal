@@ -13,6 +13,41 @@ import {getRandomInt} from '../../utils/getRandomInt';
 export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
 
 test.describe('Manage object definitions through Model Builder', () => {
+	test('can create an object definition by model builder', async ({
+		apiHelpers,
+		modalAddObjectDefinitionPage,
+		modelBuilderPage,
+	}) => {
+		await modelBuilderPage.goto({objectFolderName: 'Default'});
+
+		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
+
+		modelBuilderPage.createNewObjectDefinitionButton.click();
+
+		const objectDefinition =
+			await modalAddObjectDefinitionPage.createObjectDefinition(
+				objectDefinitionLabel
+			);
+
+		await expect(
+			modelBuilderPage.objectDefinitionNodes.filter({
+				hasText: objectDefinition.label['en_US'],
+			})
+		).toBeVisible();
+
+		await expect(
+			modelBuilderPage.leftSidebarItems.filter({
+				hasText: objectDefinition.label['en_US'],
+			})
+		).toBeVisible();
+
+		// Clean up
+
+		await apiHelpers.objectAdmin.deleteObjectDefinition(
+			objectDefinition.id
+		);
+	});
+
 	test('can create an object definition inside a folder and see if it renders correctly in the model builder', async ({
 		apiHelpers,
 		modalAddObjectDefinitionPage,
@@ -54,38 +89,99 @@ test.describe('Manage object definitions through Model Builder', () => {
 		);
 	});
 
-	test('can create an object definition by model builder', async ({
+	test('can delete an object definition by model builder leftsidebar', async ({
 		apiHelpers,
-		modalAddObjectDefinitionPage,
 		modelBuilderPage,
 	}) => {
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 2},
+			});
+
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 2},
+			});
+
 		await modelBuilderPage.goto({objectFolderName: 'Default'});
 
-		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
+		await modelBuilderPage.clickLeftSideBarItem(
+			objectDefinition1.label['en_US']
+		);
 
-		modelBuilderPage.createNewObjectDefinitionButton.click();
+		await modelBuilderPage.clickObjectDefinitionActionsButtonInLeftSidebar(
+			objectDefinition1.label['en_US']
+		);
 
-		const objectDefinition =
-			await modalAddObjectDefinitionPage.createObjectDefinition(
-				objectDefinitionLabel
-			);
+		await modelBuilderPage.clickDeleteObjectDefinition();
 
 		await expect(
-			modelBuilderPage.objectDefinitionNodes.filter({
-				hasText: objectDefinition.label['en_US'],
+			modelBuilderPage.leftSidebarItems.filter({
+				hasText: objectDefinition2.label['en_US'],
 			})
 		).toBeVisible();
 
 		await expect(
 			modelBuilderPage.leftSidebarItems.filter({
-				hasText: objectDefinition.label['en_US'],
+				hasText: objectDefinition1.label['en_US'],
 			})
-		).toBeVisible();
+		).toBeHidden();
 
 		// Clean up
 
 		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition.id
+			objectDefinition2.id
+		);
+	});
+
+	test('can delete an published object definition by model builder', async ({
+		apiHelpers,
+		modalAddObjectDefinitionPage,
+		modelBuilderPage,
+	}) => {
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		await modelBuilderPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderPage.createNewObjectDefinitionButton.click();
+
+		const objectDefinition2 =
+			await modalAddObjectDefinitionPage.createObjectDefinition(
+				'ObjectDefinition' + getRandomInt()
+			);
+
+		await modelBuilderPage.clickToggleSidebarsButton();
+
+		await modelBuilderPage.clickFitViewButton();
+
+		await modelBuilderPage.clickObjectDefinitionActionsButton(
+			objectDefinition1.label['en_US']
+		);
+
+		await modelBuilderPage.deleteObjectDefinition(objectDefinition1.name);
+
+		await expect(
+			modelBuilderPage.objectDefinitionNodes.filter({
+				hasText: objectDefinition2.label['en_US'],
+			})
+		).toBeVisible();
+
+		await expect(
+			modelBuilderPage.objectDefinitionNodes.filter({
+				hasText: objectDefinition1.label['en_US'],
+			})
+		).toBeHidden();
+
+		// Clean up
+
+		await apiHelpers.objectAdmin.deleteObjectDefinition(
+			objectDefinition2.id
 		);
 	});
 
@@ -177,35 +273,6 @@ test.describe('Manage object definitions through Model Builder', () => {
 		await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
 	});
 
-	test('show object definition details in "RightSidebar" after create object definition', async ({
-		apiHelpers,
-		modalAddObjectDefinitionPage,
-		modelBuilderPage,
-	}) => {
-		await modelBuilderPage.goto({objectFolderName: 'Default'});
-
-		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
-
-		modelBuilderPage.createNewObjectDefinitionButton.click();
-
-		const objectDefinition =
-			await modalAddObjectDefinitionPage.createObjectDefinition(
-				objectDefinitionLabel
-			);
-
-		await expect(
-			modelBuilderPage.rightSidebar.getByTitle(
-				objectDefinitionLabel + ' Details'
-			)
-		).toBeVisible();
-
-		// Clean up
-
-		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition.id
-		);
-	});
-
 	test('see object definition details', async ({
 		apiHelpers,
 		modelBuilderPage,
@@ -267,99 +334,32 @@ test.describe('Manage object definitions through Model Builder', () => {
 		);
 	});
 
-	test('can delete an published object definition by model builder', async ({
+	test('show object definition details in "RightSidebar" after create object definition', async ({
 		apiHelpers,
 		modalAddObjectDefinitionPage,
 		modelBuilderPage,
 	}) => {
-		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-			});
-
 		await modelBuilderPage.goto({objectFolderName: 'Default'});
 
-		await modelBuilderPage.createNewObjectDefinitionButton.click();
+		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
 
-		const objectDefinition2 =
+		modelBuilderPage.createNewObjectDefinitionButton.click();
+
+		const objectDefinition =
 			await modalAddObjectDefinitionPage.createObjectDefinition(
-				'ObjectDefinition' + getRandomInt()
+				objectDefinitionLabel
 			);
 
-		await modelBuilderPage.clickToggleSidebarsButton();
-
-		await modelBuilderPage.clickFitViewButton();
-
-		await modelBuilderPage.clickObjectDefinitionActionsButton(
-			objectDefinition1.label['en_US']
-		);
-
-		await modelBuilderPage.deleteObjectDefinition(objectDefinition1.name);
-
 		await expect(
-			modelBuilderPage.objectDefinitionNodes.filter({
-				hasText: objectDefinition2.label['en_US'],
-			})
+			modelBuilderPage.rightSidebar.getByTitle(
+				objectDefinitionLabel + ' Details'
+			)
 		).toBeVisible();
-
-		await expect(
-			modelBuilderPage.objectDefinitionNodes.filter({
-				hasText: objectDefinition1.label['en_US'],
-			})
-		).toBeHidden();
 
 		// Clean up
 
 		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition2.id
-		);
-	});
-
-	test('can delete an object definition by model builder leftsidebar', async ({
-		apiHelpers,
-		modelBuilderPage,
-	}) => {
-		const objectDefinition1 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 2},
-			});
-
-		const objectDefinition2 =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 2},
-			});
-
-		await modelBuilderPage.goto({objectFolderName: 'Default'});
-
-		await modelBuilderPage.clickLeftSideBarItem(
-			objectDefinition1.label['en_US']
-		);
-
-		await modelBuilderPage.clickObjectDefinitionActionsButtonInLeftSidebar(
-			objectDefinition1.label['en_US']
-		);
-
-		await modelBuilderPage.clickDeleteObjectDefinition();
-
-		await expect(
-			modelBuilderPage.leftSidebarItems.filter({
-				hasText: objectDefinition2.label['en_US'],
-			})
-		).toBeVisible();
-
-		await expect(
-			modelBuilderPage.leftSidebarItems.filter({
-				hasText: objectDefinition1.label['en_US'],
-			})
-		).toBeHidden();
-
-		// Clean up
-
-		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition2.id
+			objectDefinition.id
 		);
 	});
 });

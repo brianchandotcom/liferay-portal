@@ -263,14 +263,14 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubtask> {
 		const newSubtaskIndex = subtaskIndex + 1;
 
 		const newSubtask = await super.create({
-			dueStatus: selectedSubtask.dueStatus.key,
+			dueStatus: selectedSubtask?.dueStatus.key,
 			errors: selectedSubtaskCaseResults[0]?.errors || ' ',
 			name: `${this.PREFIX}-${newSubtaskIndex}`,
 			number: newSubtaskIndex,
 			score: newSubtaskScore,
-			splitFromSubtaskId: selectedSubtask.id,
+			splitFromSubtaskId: selectedSubtask?.id,
 			taskId,
-			userId: selectedSubtask.user?.id,
+			userId: selectedSubtask?.user?.id,
 		} as SubtaskForm);
 
 		for (const {id} of selectedSubtaskCaseResults) {

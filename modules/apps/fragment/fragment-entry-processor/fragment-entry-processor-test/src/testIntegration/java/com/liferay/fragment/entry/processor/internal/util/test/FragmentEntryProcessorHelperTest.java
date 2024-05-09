@@ -481,7 +481,6 @@ public class FragmentEntryProcessorHelperTest {
 				jsonObject.put(
 					"config", JSONUtil.put("iterationType", "first")),
 				LocaleUtil.SPAIN));
-
 		Assert.assertEquals(
 			"two",
 			_getFieldValue(
@@ -493,7 +492,6 @@ public class FragmentEntryProcessorHelperTest {
 						"iterationType", "iteration-number"
 					)),
 				LocaleUtil.SPAIN));
-
 		Assert.assertEquals(
 			"three",
 			_getFieldValue(
@@ -527,7 +525,6 @@ public class FragmentEntryProcessorHelperTest {
 				jsonObject.put(
 					"config", JSONUtil.put("iterationType", "first")),
 				LocaleUtil.SPAIN));
-
 		Assert.assertEquals(
 			"category2",
 			_getFieldValue(
@@ -539,7 +536,6 @@ public class FragmentEntryProcessorHelperTest {
 						"iterationType", "iteration-number"
 					)),
 				LocaleUtil.SPAIN));
-
 		Assert.assertEquals(
 			"category3",
 			_getFieldValue(
@@ -573,14 +569,12 @@ public class FragmentEntryProcessorHelperTest {
 
 		Assert.assertEquals(
 			"uno", _getFieldValue(jsonObject, LocaleUtil.SPAIN));
-
 		Assert.assertEquals(
 			"one",
 			_getFieldValue(
 				jsonObject.put(
 					"config", JSONUtil.put("iterationType", "first")),
 				LocaleUtil.US));
-
 		Assert.assertEquals(
 			"dos",
 			_getFieldValue(
@@ -592,7 +586,6 @@ public class FragmentEntryProcessorHelperTest {
 						"iterationType", "iteration-number"
 					)),
 				LocaleUtil.SPAIN));
-
 		Assert.assertEquals(
 			"three",
 			_getFieldValue(
@@ -675,11 +668,9 @@ public class FragmentEntryProcessorHelperTest {
 		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(), "category1",
 			_assetVocabulary.getVocabularyId(), serviceContext);
-
 		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(), "category2",
 			_assetVocabulary.getVocabularyId(), serviceContext);
-
 		AssetCategory assetCategory3 = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(), "category3",
 			_assetVocabulary.getVocabularyId(), serviceContext);

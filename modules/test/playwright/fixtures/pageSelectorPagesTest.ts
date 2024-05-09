@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {PageSelectorPage} from '../pages/PageSelectorPage';
+import {PageSelectorPage} from '../pages/layout-taglib/PageSelectorPage';
 
 const pageSelectorPagesTest = test.extend<{
 	pageSelectorPage: PageSelectorPage;

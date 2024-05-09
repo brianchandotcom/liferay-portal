@@ -28,7 +28,6 @@ import {config as knowledgeBaseWebConfig} from './tests/knowledge-base-web/confi
 import {config as layoutAdminWebConfig} from './tests/layout-admin-web/config';
 import {config as layoutContentPageEditorWebConfig} from './tests/layout-content-page-editor-web/config';
 import {config as layoutSetPrototypeWebConfig} from './tests/layout-set-prototype-web/config';
-import {config as layoutTaglib} from './tests/layout-taglib/config';
 import {config as lockedItemsConfig} from './tests/locked-items-web/config';
 import {config as loginWebConfig} from './tests/login-web/config';
 import {config as notificationWebConfig} from './tests/notification-web/config';
@@ -75,7 +74,6 @@ export default defineConfig({
 		layoutAdminWebConfig,
 		layoutContentPageEditorWebConfig,
 		layoutSetPrototypeWebConfig,
-		layoutTaglib,
 		lockedItemsConfig,
 		loginWebConfig,
 		notificationWebConfig,

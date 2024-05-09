@@ -141,9 +141,9 @@
 					"indexed": true,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Applicant Email"
+						"en_US": "Applicant Email Address"
 					},
-					"name": "applicantEmail",
+					"name": "applicantEmailAddress",
 					"objectFieldSettings": [
 						{
 							"name": "uniqueValues",
@@ -664,9 +664,9 @@
 					"indexed": true,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Business Website"
+						"en_US": "Business Website URL"
 					},
-					"name": "businessWebsite",
+					"name": "businessWebsiteURL",
 					"readOnly": "false",
 					"state": false,
 					"type": "String"
@@ -751,9 +751,9 @@
 					"indexed": true,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Primary Contact Email"
+						"en_US": "Primary Contact Email Address"
 					},
-					"name": "primaryContactEmail",
+					"name": "primaryContactEmailAddress",
 					"objectFieldSettings": [
 						{
 							"name": "uniqueValues",
@@ -974,7 +974,7 @@
 													"size": 6
 												},
 												{
-													"objectFieldName": "applicantEmail",
+													"objectFieldName": "applicantEmailAddress",
 													"priority": 0,
 													"size": 6
 												}
@@ -1074,7 +1074,7 @@
 										{
 											"objectLayoutColumns": [
 												{
-													"objectFieldName": "primaryContactEmail",
+													"objectFieldName": "primaryContactEmailAddress",
 													"priority": 0,
 													"size": 6
 												},
@@ -1114,7 +1114,7 @@
 										{
 											"objectLayoutColumns": [
 												{
-													"objectFieldName": "businessWebsite",
+													"objectFieldName": "businessWebsiteURL",
 													"priority": 0,
 													"size": 6
 												},
@@ -1372,10 +1372,206 @@
 									],
 									"priority": 0,
 									"type": "regular"
+								},
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "Credit Reference Details"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "referenceSupplierName",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "referencePhoneNumber",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "referenceAddressLine1",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "referenceAddressLine2",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "referenceCity",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "referenceZIPPostalCode",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "referenceStateProvinceRegion",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "referenceCountry",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
 								}
-							]
+							],
+							"priority": 0
+						},
+						{
+							"name": {
+								"en_US": "Evaluation Notes"
+							},
+							"objectRelationshipExternalReferenceCode": "APPLICATION_TO_EVALUATIONS",
+							"priority": 0
 						}
 					]
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"externalReferenceCode": "APPLICATION_TO_EVALUATIONS",
+					"label": {
+						"en_US": "Application to Evaluations"
+					},
+					"name": "applicationToEvaluations",
+					"objectDefinitionExternalReferenceCode1": "D4B8_DISTRIBUTOR_APPLICATION",
+					"objectDefinitionExternalReferenceCode2": "D4B8_APPLICATION_EVALUATION",
+					"type": "oneToMany"
+				}
+			],
+			"objectValidationRules": [
+				{
+					"active": true,
+					"engine": "ddm",
+					"engineLabel": "Expression Builder",
+					"errorLabel": {
+						"en_US": "Please enter a valid applicant email address."
+					},
+					"name": {
+						"en_US": "Email Address, applicantEmailAddress"
+					},
+					"objectDefinitionExternalReferenceCode": "D4B8_DISTRIBUTOR_APPLICATION",
+					"outputType": "fullValidation",
+					"script": "isEmailAddress(applicantEmailAddress) OR applicantEmailAddress == \"\""
+				},
+				{
+					"active": true,
+					"engine": "ddm",
+					"engineLabel": "Expression Builder",
+					"errorLabel": {
+						"en_US": "Please enter a valid primary contact email address."
+					},
+					"name": {
+						"en_US": "Email Address, primaryContactEmailAddress"
+					},
+					"objectDefinitionExternalReferenceCode": "D4B8_DISTRIBUTOR_APPLICATION",
+					"outputType": "fullValidation",
+					"script": "isEmailAddress(primaryContactEmailAddress) OR primaryContactEmailAddress == \"\""
+				},
+				{
+					"active": true,
+					"engine": "ddm",
+					"engineLabel": "Expression Builder",
+					"errorLabel": {
+						"en_US": "Please enter a valid phone number for the bank."
+					},
+					"name": {
+						"en_US": "Phone Number, bankPhoneNumber"
+					},
+					"objectDefinitionExternalReferenceCode": "D4B8_DISTRIBUTOR_APPLICATION",
+					"outputType": "fullValidation",
+					"script": "match(bankPhoneNumber, \"^(\\+\\d{1,3} ?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$\") OR bankPhoneNumber == \"\""
+				},
+				{
+					"active": true,
+					"engine": "ddm",
+					"engineLabel": "Expression Builder",
+					"errorLabel": {
+						"en_US": "Please enter a valid phone number for the business."
+					},
+					"name": {
+						"en_US": "Phone Number, businessPhoneNumber"
+					},
+					"objectDefinitionExternalReferenceCode": "D4B8_DISTRIBUTOR_APPLICATION",
+					"outputType": "fullValidation",
+					"script": "match(businessPhoneNumber, \"^(\\+\\d{1,3} ?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$\") OR businessPhoneNumber == \"\""
+				},
+				{
+					"active": true,
+					"engine": "ddm",
+					"engineLabel": "Expression Builder",
+					"errorLabel": {
+						"en_US": "Please enter a valid phone number for the primary contact."
+					},
+					"name": {
+						"en_US": "Phone Number, primaryContactPhoneNumber"
+					},
+					"objectDefinitionExternalReferenceCode": "D4B8_DISTRIBUTOR_APPLICATION",
+					"outputType": "fullValidation",
+					"script": "match(primaryContactPhoneNumber, \"^(\\+\\d{1,3} ?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$\") OR primaryContactPhoneNumber == \"\""
+				},
+				{
+					"active": true,
+					"engine": "ddm",
+					"engineLabel": "Expression Builder",
+					"errorLabel": {
+						"en_US": "Please enter a valid phone number for the reference."
+					},
+					"name": {
+						"en_US": "Phone Number, referencePhoneNumber"
+					},
+					"objectDefinitionExternalReferenceCode": "D4B8_DISTRIBUTOR_APPLICATION",
+					"outputType": "fullValidation",
+					"script": "match(referencePhoneNumber, \"^(\\+\\d{1,3} ?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$\") OR referencePhoneNumber == \"\""
+				},
+				{
+					"active": true,
+					"engine": "ddm",
+					"engineLabel": "Expression Builder",
+					"errorLabel": {
+						"en_US": "Please enter a valid website URL."
+					},
+					"name": {
+						"en_US": "URL, businessWebsiteURL"
+					},
+					"objectDefinitionExternalReferenceCode": "D4B8_DISTRIBUTOR_APPLICATION",
+					"outputType": "fullValidation",
+					"script": "isURL(businessWebsiteURL) OR businessWebsiteURL == \"\""
 				}
 			]
 		}

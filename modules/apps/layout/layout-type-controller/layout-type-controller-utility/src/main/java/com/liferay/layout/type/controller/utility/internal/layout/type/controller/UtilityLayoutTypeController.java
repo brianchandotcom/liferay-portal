@@ -211,6 +211,11 @@ public class UtilityLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	}
 
 	@Override
+	public boolean isInstanceable() {
+		return false;
+	}
+
+	@Override
 	public boolean isParentable() {
 		return false;
 	}

@@ -18,11 +18,14 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 	automaticURL: initialDisabled,
 	inputAddon = '',
 	portletNamespace,
-	selectCategoryURL,
+	selectCategoryURL: initialSelectCategoryURL,
 	selectedCategories = [],
 }) {
 	const [disabled, setDisabled] = useState(initialDisabled);
 	const [selectedItems, setSelectedItems] = useState(selectedCategories);
+	const [selectCategoryURL, setSelectCategoryURL] = useState(
+		initialSelectCategoryURL
+	);
 
 	const inputAddonNodeRef = useRef(
 		document.querySelector(
@@ -78,6 +81,16 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 		);
 
 		setSelectedItems(current);
+		setSelectCategoryURL(() => {
+			const url = new URL(initialSelectCategoryURL);
+
+			url.searchParams.set(
+				`_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_selectedCategoryIds`,
+				current.map(({value: categoryId}) => categoryId).join(',')
+			);
+
+			return url.href;
+		});
 	};
 
 	const handleSelectButtonClick = () => {

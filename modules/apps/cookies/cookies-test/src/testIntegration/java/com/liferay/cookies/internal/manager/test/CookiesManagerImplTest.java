@@ -22,6 +22,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -89,6 +90,30 @@ public class CookiesManagerImplTest {
 		CookiesManagerUtil.addCookie(
 			CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
 			_mockHttpServletRequest, _mockHttpServletResponse);
+
+		Assert.assertEquals(StringPool.SLASH, cookie.getPath());
+	}
+
+	@Test
+	public void testCookiePathIsSlashWhenUsingRootContextWithCustomModuleWebContextPath()
+		throws Exception {
+
+		Cookie cookie = new Cookie(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		HttpServletRequestWrapper httpServletRequestWrapper =
+			new HttpServletRequestWrapper(_mockHttpServletRequest) {
+
+				@Override
+				public String getContextPath() {
+					return StringPool.SLASH + RandomTestUtil.randomString();
+				}
+
+			};
+
+		CookiesManagerUtil.addCookie(
+			CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
+			httpServletRequestWrapper, _mockHttpServletResponse);
 
 		Assert.assertEquals(StringPool.SLASH, cookie.getPath());
 	}

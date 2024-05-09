@@ -248,7 +248,7 @@ public class PaginationBarTag extends BaseContainerTag {
 		jspWriter.write(_totalItems.toString());
 		jspWriter.write(StringPool.SPACE);
 		jspWriter.write("</div><ul class=\"pagination pagination-root\">");
-		jspWriter.write("<li class=\"page-item\"");
+		jspWriter.write("<li class=\"page-item");
 
 		boolean firstPage = false;
 
@@ -257,10 +257,10 @@ public class PaginationBarTag extends BaseContainerTag {
 		}
 
 		if (firstPage) {
-			jspWriter.write(" disabled\"");
+			jspWriter.write(" disabled");
 		}
 
-		jspWriter.write(">");
+		jspWriter.write("\">");
 
 		if (firstPage) {
 			jspWriter.write("<div class=\"page-link\">");
@@ -370,7 +370,7 @@ public class PaginationBarTag extends BaseContainerTag {
 			}
 		}
 
-		jspWriter.write("<li class=\"page-item\"");
+		jspWriter.write("<li class=\"page-item");
 
 		boolean lastPage = false;
 
@@ -379,10 +379,10 @@ public class PaginationBarTag extends BaseContainerTag {
 		}
 
 		if (lastPage) {
-			jspWriter.write(" disabled\"");
+			jspWriter.write(" disabled");
 		}
 
-		jspWriter.write(">");
+		jspWriter.write("\">");
 
 		if (lastPage) {
 			jspWriter.write("<div class=\"page-link\">");

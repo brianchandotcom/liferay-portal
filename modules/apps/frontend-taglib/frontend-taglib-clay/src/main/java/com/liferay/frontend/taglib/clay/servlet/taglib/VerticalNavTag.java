@@ -212,7 +212,7 @@ public class VerticalNavTag extends BaseContainerTag {
 
 		jspWriter.write("<ul aria-orientation=\"vertical\" role=\"menubar\"");
 
-		jspWriter.write("class=\"nav ");
+		jspWriter.write(" class=\"nav ");
 
 		if (depth == 0) {
 			jspWriter.write("nav-nested\">");

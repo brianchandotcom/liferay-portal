@@ -135,6 +135,12 @@
 			"r_gitUserToGitBranches_c_gitUserERC": "liferay-ac",
 			"type": "upstream",
 			"url": "https://github.com/liferay-ac/liferay-portal/tree/faro-v4.8.x"
+		},
+		{
+			"externalReferenceCode": "liferayQAWebsitesMaster",
+			"r_gitUserToGitBranches_c_gitUserERC": "liferay",
+			"type": "upstream",
+			"url": "https://github.com/liferay/liferay-qa-websites-ee/tree/master"
 		}
 	]
 }

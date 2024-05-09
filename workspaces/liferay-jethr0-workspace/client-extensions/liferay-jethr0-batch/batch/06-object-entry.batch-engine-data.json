@@ -925,6 +925,97 @@
 			"type": "cron"
 		},
 		{
+			"cron": "0 0 14 ? * 1-5 *",
+			"externalReferenceCode": "qaWebsitesDailyACGeneratorsController",
+			"jobName": "QA Websites AC Generators - $[current_date]",
+			"jobParameters": "[{\"key\":\"qaWebsitesBranchURL\",\"value\":\"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"},{\"key\":\"qaWebsitesProjectName\",\"value\":\"analytics-cloud\"},{\"key\":\"testSuiteName\",\"value\":\"analytics-cloud-generators\"}]",
+			"jobPriority": 4,
+			"jobType": "qaWebsitesDaily",
+			"name": "QA Websites AC Generators Controller",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 20 ? * 1-5 *",
+			"externalReferenceCode": "qaWebsitesDailyACVerifiersController",
+			"jobName": "QA Websites AC Verifiers - $[current_date]",
+			"jobParameters": "[{\"key\":\"qaWebsitesBranchURL\",\"value\":\"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"},{\"key\":\"qaWebsitesProjectName\",\"value\":\"analytics-cloud\"},{\"key\":\"testSuiteName\",\"value\":\"analytics-cloud-verifiers\"}]",
+			"jobPriority": 4,
+			"jobType": "qaWebsitesDaily",
+			"name": "QA Websites AC Verifiers Controller",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 19 ? * 1-5 *",
+			"externalReferenceCode": "qaWebsitesDailyLearnProductionController",
+			"jobName": "QA Websites - Learn Production - $[current_date]",
+			"jobParameters": "[{\"key\":\"qaWebsitesBranchURL\",\"value\":\"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"},{\"key\":\"qaWebsitesProjectName\",\"value\":\"learn\"},{\"key\":\"testrayProjectName\",\"value\":\"Learn\"},{\"key\":\"testrayRoutineName\",\"value\":\"Production\"},{\"key\":\"testSuiteName\",\"value\":\"learn_production\"}]",
+			"jobPriority": 4,
+			"jobType": "qaWebsitesDaily",
+			"name": "QA Websites - Learn Production - Controller",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 19 ? * 1-5 *",
+			"externalReferenceCode": "qaWebsitesDailyLearnUATController",
+			"jobName": "QA Websites - Learn UAT - $[current_date]",
+			"jobParameters": "[{\"key\":\"qaWebsitesBranchURL\",\"value\":\"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"},{\"key\":\"qaWebsitesProjectName\",\"value\":\"learn\"},{\"key\":\"testrayProjectName\",\"value\":\"Learn\"},{\"key\":\"testrayRoutineName\",\"value\":\"UAT\"},{\"key\":\"testSuiteName\",\"value\":\"learn_uat\"}]",
+			"jobPriority": 4,
+			"jobType": "qaWebsitesDaily",
+			"name": "QA Websites - Learn UAT - Controller",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 4 ? * 1-5 *",
+			"externalReferenceCode": "qaWebsitesDailyMarketplaceProductionController",
+			"jobName": "QA Websites - Marketplace Production - $[current_date]",
+			"jobParameters": "[{\"key\":\"qaWebsitesBranchURL\",\"value\":\"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"},{\"key\":\"qaWebsitesProjectName\",\"value\":\"marketplace\"},{\"key\":\"testrayProjectName\",\"value\":\"Marketplace\"},{\"key\":\"testrayRoutineName\",\"value\":\"Production\"},{\"key\":\"testSuiteName\",\"value\":\"marketplace-production\"}]",
+			"jobPriority": 4,
+			"jobType": "qaWebsitesDaily",
+			"name": "QA Websites - Marketplace Production - Controller",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 4 ? * 1-5 *",
+			"externalReferenceCode": "qaWebsitesDailyMarketplaceUATController",
+			"jobName": "QA Websites - Marketplace UAT - $[current_date]",
+			"jobParameters": "[{\"key\":\"qaWebsitesBranchURL\",\"value\":\"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"},{\"key\":\"qaWebsitesProjectName\",\"value\":\"marketplace\"},{\"key\":\"testrayProjectName\",\"value\":\"Marketplace\"},{\"key\":\"testrayRoutineName\",\"value\":\"UAT\"},{\"key\":\"testSuiteName\",\"value\":\"marketplace-uat\"}]",
+			"jobPriority": 4,
+			"jobType": "qaWebsitesDaily",
+			"name": "QA Websites - Marketplace UAT - Controller",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 19 ? * 1-5 *",
+			"externalReferenceCode": "qaWebsitesDailyPartnerUATController",
+			"jobName": "QA Websites - Partner UAT - $[current_date]",
+			"jobParameters": "[{\"key\":\"qaWebsitesBranchURL\",\"value\":\"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"},{\"key\":\"qaWebsitesProjectName\",\"value\":\"partner\"},{\"key\":\"testrayProjectName\",\"value\":\"Partner\"},{\"key\":\"testrayRoutineName\",\"value\":\"UAT\"}]",
+			"jobPriority": 4,
+			"jobType": "qaWebsitesDaily",
+			"name": "QA Websites - Partner UAT - Controller",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 4 ? * 1-5 *",
+			"externalReferenceCode": "qaWebsitesDailyWWWProductionController",
+			"jobName": "QA Websites - WWW Production - $[current_date]",
+			"jobParameters": "[{\"key\":\"qaWebsitesBranchURL\",\"value\":\"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"},{\"key\":\"qaWebsitesProjectName\",\"value\":\"www\"},{\"key\":\"testrayProjectName\",\"value\":\"WWW\"},{\"key\":\"testrayRoutineName\",\"value\":\"Production\"},{\"key\":\"testSuiteName\",\"value\":\"www-production\"}]",
+			"jobPriority": 4,
+			"jobType": "qaWebsitesDaily",
+			"name": "QA Websites - WWW Production - Controller",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 4 ? * 1-5 *",
+			"externalReferenceCode": "qaWebsitesDailyWWWUATController",
+			"jobName": "QA Websites - WWW UAT - $[current_date]",
+			"jobParameters": "[{\"key\":\"qaWebsitesBranchURL\",\"value\":\"https://github.com/liferay/liferay-qa-websites-ee/tree/master\"},{\"key\":\"qaWebsitesProjectName\",\"value\":\"www\"},{\"key\":\"testrayProjectName\",\"value\":\"WWW\"},{\"key\":\"testrayRoutineName\",\"value\":\"UAT\"},{\"key\":\"testSuiteName\",\"value\":\"www-uat\"}]",
+			"jobPriority": 4,
+			"jobType": "qaWebsitesDaily",
+			"name": "QA Websites - WWW UAT - Controller",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayQAWebsitesMaster",
+			"type": "cron"
+		},
+		{
 			"cron": "0 0 0 ? * *",
 			"externalReferenceCode": "repositoryArchiveController",
 			"jobName": "Repository Archive - $[current_date]",

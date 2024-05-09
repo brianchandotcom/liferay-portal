@@ -1046,8 +1046,8 @@ public class NodePlugin implements Plugin<Project> {
 				String name = entry.getKey();
 
 				if (Objects.equals(name, "build") &&
-					command.startsWith("node ") &&
-					command.endsWith("/liferay.mjs")) {
+					(Objects.equals(command, "node-scripts") ||
+					 command.startsWith("node-scripts "))) {
 
 					return true;
 				}

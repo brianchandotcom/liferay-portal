@@ -453,7 +453,7 @@ gradle.beforeProject {
 
 				if (scriptsJSONMap != null) {
 					for (Map.Entry<String, String> entry : scriptsJSONMap.entrySet()) {
-						if (Objects.equals(entry.key, "build") && entry.value.startsWith("node ") && entry.value.endsWith("/liferay.mjs")) {
+						if (Objects.equals(entry.key, "build") && (Objects.equals(entry.value, "node-scripts") || entry.value.startsWith("node-scripts "))) {
 							liferayESModule = true
 						}
 					}

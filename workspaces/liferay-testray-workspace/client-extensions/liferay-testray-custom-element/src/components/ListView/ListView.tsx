@@ -113,9 +113,9 @@ const ListView: React.FC<ListViewProps> = ({
 	const {updateUrlParams} = useQueryParams();
 	const [searchParams] = useSearchParams();
 
-	const urlPage = searchParams.get('page');
+	const currentPage = searchParams.get('page');
 
-	const urlPageSize = searchParams.get('pageSize');
+	const currentPageSize = searchParams.get('pageSize');
 
 	const onSelectRowNormalizer = useMemo(
 		() => normalizers.onSelectRow ?? noop,
@@ -208,24 +208,24 @@ const ListView: React.FC<ListViewProps> = ({
 			...filter,
 			forceRefetch,
 			page:
-				managementToolbarProps.applyFilters && urlPage
-					? Number(urlPage)
+				managementToolbarProps.applyFilters && currentPage
+					? Number(currentPage)
 					: listViewContext.page,
 			pageSize:
-				managementToolbarProps.applyFilters && urlPageSize
-					? Number(urlPageSize)
+				managementToolbarProps.applyFilters && currentPageSize
+					? Number(currentPageSize)
 					: listViewContext.pageSize,
 			sort: buildSort(sort),
 		}),
 		[
+			currentPage,
+			currentPageSize,
 			filter,
 			forceRefetch,
 			listViewContext.page,
 			listViewContext.pageSize,
 			managementToolbarProps.applyFilters,
 			sort,
-			urlPage,
-			urlPageSize,
 		]
 	);
 

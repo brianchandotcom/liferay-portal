@@ -119,7 +119,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		);
 
 		if (testrayModalParams) {
-			return testrayModalParams.textContent!;
+			return testrayModalParams.textContent;
 		}
 
 		return JSON.stringify({...params, ...customFilterFields});

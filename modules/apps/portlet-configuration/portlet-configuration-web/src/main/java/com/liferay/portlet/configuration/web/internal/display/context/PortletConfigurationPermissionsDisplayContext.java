@@ -367,7 +367,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 		RoleSearchTerms searchTerms =
 			(RoleSearchTerms)roleSearchContainer.getSearchTerms();
 
-		setKeywords(searchTerms.getKeywords());
+		_keywords = searchTerms.getKeywords();
 
 		boolean filterGroupRoles = !ResourceActionsUtil.isPortalModelResource(
 			getModelResource());
@@ -504,16 +504,16 @@ public class PortletConfigurationPermissionsDisplayContext {
 
 				roleSearchContainer.setResultsAndTotal(
 					RoleServiceUtil.getGroupRolesAndTeamRoles(
-						_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-						excludedRoleNames, searchTerms.getKeywords(), null,
+						_themeDisplay.getCompanyId(), _getKeywords(),
+						excludedRoleNames, _getKeywords(), null,
 						getRoleTypes(), modelResourceRoleId, teamGroupId,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 			}
 			else {
 				roleSearchContainer.setResultsAndTotal(
 					RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
-						_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-						excludedRoleNames, searchTerms.getKeywords(), null,
+						_themeDisplay.getCompanyId(), _getKeywords(),
+						excludedRoleNames, _getKeywords(), null,
 						getRoleTypes(), modelResourceRoleId, teamGroupId,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 			}
@@ -660,10 +660,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildPortletURL();
-	}
-
-	public void setKeywords(String keywords) {
-		_keywords = keywords;
 	}
 
 	private int[] _getGroupRoleTypes(Group group, int[] defaultRoleTypes) {
